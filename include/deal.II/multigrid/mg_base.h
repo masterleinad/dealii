@@ -48,7 +48,7 @@ public:
   /*
    * Virtual destructor.
    */
-  virtual ~MGMatrixBase() override = default;
+  virtual ~MGMatrixBase() override= default;
 
   /**
    * Matrix-vector-multiplication on a certain level.
@@ -56,7 +56,7 @@ public:
   virtual void
   vmult(const unsigned int level,
         VectorType&        dst,
-        const VectorType&  src) const = 0;
+        const VectorType&  src) const= 0;
 
   /**
    * Adding matrix-vector-multiplication on a certain level.
@@ -64,7 +64,7 @@ public:
   virtual void
   vmult_add(const unsigned int level,
             VectorType&        dst,
-            const VectorType&  src) const = 0;
+            const VectorType&  src) const= 0;
 
   /**
    * Transpose matrix-vector-multiplication on a certain level.
@@ -72,7 +72,7 @@ public:
   virtual void
   Tvmult(const unsigned int level,
          VectorType&        dst,
-         const VectorType&  src) const = 0;
+         const VectorType&  src) const= 0;
 
   /**
    * Adding transpose matrix-vector-multiplication on a certain level.
@@ -80,19 +80,19 @@ public:
   virtual void
   Tvmult_add(const unsigned int level,
              VectorType&        dst,
-             const VectorType&  src) const = 0;
+             const VectorType&  src) const= 0;
 
   /**
    * Return the minimal level for which matrices are stored.
    */
   virtual unsigned int
-  get_minlevel() const = 0;
+  get_minlevel() const= 0;
 
   /**
    * Return the minimal level for which matrices are stored.
    */
   virtual unsigned int
-  get_maxlevel() const = 0;
+  get_maxlevel() const= 0;
 };
 
 /**
@@ -109,7 +109,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~MGCoarseGridBase() override = default;
+  virtual ~MGCoarseGridBase() override= default;
 
   /**
    * Solution operator.
@@ -117,7 +117,7 @@ public:
   virtual void
   operator()(const unsigned int level,
              VectorType&        dst,
-             const VectorType&  src) const = 0;
+             const VectorType&  src) const= 0;
 };
 
 /**
@@ -174,7 +174,7 @@ public:
   /**
    * Destructor. Does nothing here, but needs to be declared virtual anyway.
    */
-  virtual ~MGTransferBase() override = default;
+  virtual ~MGTransferBase() override= default;
 
   /**
    * Prolongate a vector from level <tt>to_level-1</tt> to level
@@ -189,7 +189,7 @@ public:
   virtual void
   prolongate(const unsigned int to_level,
              VectorType&        dst,
-             const VectorType&  src) const = 0;
+             const VectorType&  src) const= 0;
 
   /**
    * Restrict a vector from level <tt>from_level</tt> to level
@@ -209,7 +209,7 @@ public:
   virtual void
   restrict_and_add(const unsigned int from_level,
                    VectorType&        dst,
-                   const VectorType&  src) const = 0;
+                   const VectorType&  src) const= 0;
 };
 
 /**
@@ -240,7 +240,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~MGSmootherBase() override = default;
+  virtual ~MGSmootherBase() override= default;
 
   /**
    * Release matrices.
@@ -256,7 +256,7 @@ public:
   virtual void
   smooth(const unsigned int level,
          VectorType&        u,
-         const VectorType&  rhs) const = 0;
+         const VectorType&  rhs) const= 0;
 
   /**
    * As opposed to the smooth() function, this function applies the action of

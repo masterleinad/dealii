@@ -52,8 +52,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int d = 0; d < dim; ++d)
-      values(d) = value(p, d);
+    for(unsigned int d= 0; d < dim; ++d)
+      values(d)= value(p, d);
   }
 };
 
@@ -92,7 +92,7 @@ check()
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_boundary_right_hand_side(
     dof, quadrature, MySquareFunction<dim>(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for(unsigned int i= 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

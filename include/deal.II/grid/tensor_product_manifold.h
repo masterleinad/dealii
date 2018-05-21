@@ -71,12 +71,12 @@ public:
    * The chart dimension is the sum of the chart dimensions of the manifolds
    * @p A and @p B.
    */
-  static const unsigned int chartdim = chartdim_A + chartdim_B;
+  static const unsigned int chartdim= chartdim_A + chartdim_B;
   /**
    * The space dimension is the sum of the space dimensions of the manifolds
    * @p A and @p B.
    */
-  static const unsigned int spacedim = spacedim_A + spacedim_B;
+  static const unsigned int spacedim= spacedim_A + spacedim_B;
 
   /**
    * Constructor.
@@ -142,10 +142,10 @@ namespace internal
     concat(const Tensor<1, dim1>& p1, const Tensor<1, dim2>& p2)
     {
       Tensor<1, dim1 + dim2> r;
-      for(unsigned int d = 0; d < dim1; ++d)
-        r[d] = p1[d];
-      for(unsigned int d = 0; d < dim2; ++d)
-        r[dim1 + d] = p2[d];
+      for(unsigned int d= 0; d < dim1; ++d)
+        r[d]= p1[d];
+      for(unsigned int d= 0; d < dim2; ++d)
+        r[dim1 + d]= p2[d];
       return r;
     }
 
@@ -154,10 +154,10 @@ namespace internal
     concat(const Point<dim1>& p1, const Point<dim2>& p2)
     {
       Point<dim1 + dim2> r;
-      for(unsigned int d = 0; d < dim1; ++d)
-        r[d] = p1[d];
-      for(unsigned int d = 0; d < dim2; ++d)
-        r[dim1 + d] = p2[d];
+      for(unsigned int d= 0; d < dim1; ++d)
+        r[d]= p1[d];
+      for(unsigned int d= 0; d < dim2; ++d)
+        r[dim1 + d]= p2[d];
       return r;
     }
 
@@ -167,10 +167,10 @@ namespace internal
                 Point<dim1>&              p1,
                 Point<dim2>&              p2)
     {
-      for(unsigned int d = 0; d < dim1; ++d)
-        p1[d] = source[d];
-      for(unsigned int d = 0; d < dim2; ++d)
-        p2[d] = source[dim1 + d];
+      for(unsigned int d= 0; d < dim1; ++d)
+        p1[d]= source[d];
+      for(unsigned int d= 0; d < dim2; ++d)
+        p2[d]= source[dim1 + d];
     }
 
   } // namespace TensorProductManifoldImplementation
@@ -262,8 +262,8 @@ TensorProductManifold<dim,
   internal::TensorProductManifoldImplementation::split_point(
     space_point, space_point_A, space_point_B);
 
-  Point<chartdim_A> result_A = manifold_A->pull_back(space_point_A);
-  Point<chartdim_B> result_B = manifold_B->pull_back(space_point_B);
+  Point<chartdim_A> result_A= manifold_A->pull_back(space_point_A);
+  Point<chartdim_B> result_B= manifold_B->pull_back(space_point_B);
 
   return internal::TensorProductManifoldImplementation::concat(result_A,
                                                                result_B);
@@ -304,8 +304,8 @@ TensorProductManifold<dim,
   internal::TensorProductManifoldImplementation::split_point(
     chart_point, chart_point_A, chart_point_B);
 
-  Point<spacedim_A> result_A = manifold_A->push_forward(chart_point_A);
-  Point<spacedim_B> result_B = manifold_B->push_forward(chart_point_B);
+  Point<spacedim_A> result_A= manifold_A->push_forward(chart_point_A);
+  Point<spacedim_B> result_B= manifold_B->push_forward(chart_point_B);
 
   return internal::TensorProductManifoldImplementation::concat(result_A,
                                                                result_B);
@@ -361,12 +361,12 @@ TensorProductManifold<dim,
     = manifold_B->push_forward_gradient(chart_point_B);
 
   DerivativeForm<1, chartdim, spacedim> result;
-  for(unsigned int i = 0; i < chartdim_A; ++i)
-    for(unsigned int j = 0; j < spacedim_A; ++j)
-      result[j][i] = result_A[j][i];
-  for(unsigned int i = 0; i < chartdim_B; ++i)
-    for(unsigned int j = 0; j < spacedim_B; ++j)
-      result[j + spacedim_A][i + chartdim_A] = result_B[j][i];
+  for(unsigned int i= 0; i < chartdim_A; ++i)
+    for(unsigned int j= 0; j < spacedim_A; ++j)
+      result[j][i]= result_A[j][i];
+  for(unsigned int i= 0; i < chartdim_B; ++i)
+    for(unsigned int j= 0; j < spacedim_B; ++j)
+      result[j + spacedim_A][i + chartdim_A]= result_B[j][i];
 
   return result;
 }

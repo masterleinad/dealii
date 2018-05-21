@@ -61,13 +61,13 @@ SparseDirectUMFPACK::clear()
   if(symbolic_decomposition != nullptr)
     {
       umfpack_dl_free_symbolic(&symbolic_decomposition);
-      symbolic_decomposition = nullptr;
+      symbolic_decomposition= nullptr;
     }
 
   if(numeric_decomposition != nullptr)
     {
       umfpack_dl_free_numeric(&numeric_decomposition);
-      numeric_decomposition = nullptr;
+      numeric_decomposition= nullptr;
     }
 
   {
@@ -99,7 +99,7 @@ SparseDirectUMFPACK::sort_arrays(const SparseMatrix<number>& matrix)
   // column index of the second entry in a row
   //
   // ignore rows with only one or no entry
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for(size_type row= 0; row < matrix.m(); ++row)
     {
       // we may have to move some elements that are left of the diagonal
       // but presently after the diagonal entry to the left, whereas the
@@ -112,7 +112,7 @@ SparseDirectUMFPACK::sort_arrays(const SparseMatrix<number>& matrix)
       // in the first loop, the condition in the while-header also checks
       // that the row has at least two entries and that the diagonal entry
       // is really in the wrong place
-      long int cursor = Ap[row];
+      long int cursor= Ap[row];
       while((cursor < Ap[row + 1] - 1) && (Ai[cursor] > Ai[cursor + 1]))
         {
           std::swap(Ai[cursor], Ai[cursor + 1]);
@@ -127,9 +127,9 @@ void
 SparseDirectUMFPACK::sort_arrays(const SparseMatrixEZ<number>& matrix)
 {
   //same thing for SparseMatrixEZ
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for(size_type row= 0; row < matrix.m(); ++row)
     {
-      long int cursor = Ap[row];
+      long int cursor= Ap[row];
       while((cursor < Ap[row + 1] - 1) && (Ai[cursor] > Ai[cursor + 1]))
         {
           std::swap(Ai[cursor], Ai[cursor + 1]);
@@ -148,10 +148,10 @@ SparseDirectUMFPACK::sort_arrays(const BlockSparseMatrix<number>& matrix)
   // first. however, that means that there may be as many entries per row
   // in the wrong place as there are block columns. we can do the same
   // thing as above, but we have to do it multiple times
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for(size_type row= 0; row < matrix.m(); ++row)
     {
-      long int cursor = Ap[row];
-      for(size_type block = 0; block < matrix.n_block_cols(); ++block)
+      long int cursor= Ap[row];
+      for(size_type block= 0; block < matrix.n_block_cols(); ++block)
         {
           // find the next out-of-order element
           while((cursor < Ap[row + 1] - 1) && (Ai[cursor] < Ai[cursor + 1]))
@@ -163,7 +163,7 @@ SparseDirectUMFPACK::sort_arrays(const BlockSparseMatrix<number>& matrix)
 
           // otherwise swap this entry with successive ones as long as
           // necessary
-          long int element = cursor;
+          long int element= cursor;
           while((element < Ap[row + 1] - 1) && (Ai[element] > Ai[element + 1]))
             {
               std::swap(Ai[element], Ai[element + 1]);
@@ -182,10 +182,10 @@ SparseDirectUMFPACK::factorize(const Matrix& matrix)
 
     clear();
 
-  _m = matrix.m();
-  _n = matrix.n();
+  _m= matrix.m();
+  _n= matrix.n();
 
-  const size_type N = matrix.m();
+  const size_type N= matrix.m();
 
   // copy over the data from the matrix to the data structures UMFPACK
   // wants. note two things: first, UMFPACK wants compressed column storage
@@ -210,9 +210,9 @@ SparseDirectUMFPACK::factorize(const Matrix& matrix)
   Ax.resize(matrix.n_nonzero_elements());
 
   // first fill row lengths array
-  Ap[0] = 0;
-  for(size_type row = 1; row <= N; ++row)
-    Ap[row] = Ap[row - 1] + matrix.get_row_length(row - 1);
+  Ap[0]= 0;
+  for(size_type row= 1; row <= N; ++row)
+    Ap[row]= Ap[row - 1] + matrix.get_row_length(row - 1);
   Assert(static_cast<size_type>(Ap.back()) == Ai.size(), ExcInternalError());
 
   // then copy over matrix elements. note that for sparse matrices,
@@ -222,19 +222,19 @@ SparseDirectUMFPACK::factorize(const Matrix& matrix)
   {
     // have an array that for each row points to the first entry not yet
     // written to
-    std::vector<long int> row_pointers = Ap;
+    std::vector<long int> row_pointers= Ap;
 
     // loop over the elements of the matrix row by row, as suggested in the
     // documentation of the sparse matrix iterator class
-    for(size_type row = 0; row < matrix.m(); ++row)
+    for(size_type row= 0; row < matrix.m(); ++row)
       {
-        for(typename Matrix::const_iterator p = matrix.begin(row);
+        for(typename Matrix::const_iterator p= matrix.begin(row);
             p != matrix.end(row);
             ++p)
           {
             // write entry into the first free one for this row
-            Ai[row_pointers[row]] = p->column();
-            Ax[row_pointers[row]] = p->value();
+            Ai[row_pointers[row]]= p->column();
+            Ax[row_pointers[row]]= p->value();
 
             // then move pointer ahead
             ++row_pointers[row];
@@ -242,7 +242,7 @@ SparseDirectUMFPACK::factorize(const Matrix& matrix)
       }
 
     // at the end, we should have written all rows completely
-    for(size_type i = 0; i < Ap.size() - 1; ++i)
+    for(size_type i= 0; i < Ap.size() - 1; ++i)
       Assert(row_pointers[i] == Ap[i + 1], ExcInternalError());
   }
 
@@ -252,24 +252,24 @@ SparseDirectUMFPACK::factorize(const Matrix& matrix)
   sort_arrays(matrix);
 
   int status;
-  status = umfpack_dl_symbolic(N,
-                               N,
-                               Ap.data(),
-                               Ai.data(),
-                               Ax.data(),
-                               &symbolic_decomposition,
-                               control.data(),
-                               nullptr);
+  status= umfpack_dl_symbolic(N,
+                              N,
+                              Ap.data(),
+                              Ai.data(),
+                              Ax.data(),
+                              &symbolic_decomposition,
+                              control.data(),
+                              nullptr);
   AssertThrow(status == UMFPACK_OK,
               ExcUMFPACKError("umfpack_dl_symbolic", status));
 
-  status = umfpack_dl_numeric(Ap.data(),
-                              Ai.data(),
-                              Ax.data(),
-                              symbolic_decomposition,
-                              &numeric_decomposition,
-                              control.data(),
-                              nullptr);
+  status= umfpack_dl_numeric(Ap.data(),
+                             Ai.data(),
+                             Ax.data(),
+                             symbolic_decomposition,
+                             &numeric_decomposition,
+                             control.data(),
+                             nullptr);
   AssertThrow(status == UMFPACK_OK,
               ExcUMFPACKError("umfpack_dl_numeric", status));
 
@@ -286,7 +286,7 @@ SparseDirectUMFPACK::solve(Vector<double>& rhs_and_solution,
   Assert(Ai.size() == Ax.size(), ExcNotInitialized());
 
   Vector<double> rhs(rhs_and_solution.size());
-  rhs = rhs_and_solution;
+  rhs= rhs_and_solution;
 
   // solve the system. note that since UMFPACK wants compressed column
   // storage instead of the compressed row storage format we use in
@@ -294,15 +294,15 @@ SparseDirectUMFPACK::solve(Vector<double>& rhs_and_solution,
 
   // Conversely, if we solve for the transpose, we have to use UMFPACK_A
   // instead.
-  const int status = umfpack_dl_solve(transpose ? UMFPACK_A : UMFPACK_At,
-                                      Ap.data(),
-                                      Ai.data(),
-                                      Ax.data(),
-                                      rhs_and_solution.begin(),
-                                      rhs.begin(),
-                                      numeric_decomposition,
-                                      control.data(),
-                                      nullptr);
+  const int status= umfpack_dl_solve(transpose ? UMFPACK_A : UMFPACK_At,
+                                     Ap.data(),
+                                     Ai.data(),
+                                     Ax.data(),
+                                     rhs_and_solution.begin(),
+                                     rhs.begin(),
+                                     numeric_decomposition,
+                                     control.data(),
+                                     nullptr);
   AssertThrow(status == UMFPACK_OK,
               ExcUMFPACKError("umfpack_dl_solve", status));
 }
@@ -315,9 +315,9 @@ SparseDirectUMFPACK::solve(BlockVector<double>& rhs_and_solution,
   // there is no way around copying data around. thus, just copy the
   // data into a regular vector and back
   Vector<double> tmp(rhs_and_solution.size());
-  tmp = rhs_and_solution;
+  tmp= rhs_and_solution;
   solve(tmp, transpose);
-  rhs_and_solution = tmp;
+  rhs_and_solution= tmp;
 }
 
 template <class Matrix>
@@ -414,7 +414,7 @@ SparseDirectUMFPACK::initialize(const Matrix& M, const AdditionalData)
 void
 SparseDirectUMFPACK::vmult(Vector<double>& dst, const Vector<double>& src) const
 {
-  dst = src;
+  dst= src;
   this->solve(dst);
 }
 
@@ -422,7 +422,7 @@ void
 SparseDirectUMFPACK::vmult(BlockVector<double>&       dst,
                            const BlockVector<double>& src) const
 {
-  dst = src;
+  dst= src;
   this->solve(dst);
 }
 
@@ -430,7 +430,7 @@ void
 SparseDirectUMFPACK::Tvmult(Vector<double>&       dst,
                             const Vector<double>& src) const
 {
-  dst = src;
+  dst= src;
   this->solve(dst, /*transpose=*/true);
 }
 
@@ -438,7 +438,7 @@ void
 SparseDirectUMFPACK::Tvmult(BlockVector<double>&       dst,
                             const BlockVector<double>& src) const
 {
-  dst = src;
+  dst= src;
   this->solve(dst, /*transpose=*/true);
 }
 

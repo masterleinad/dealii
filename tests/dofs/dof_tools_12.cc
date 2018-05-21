@@ -27,12 +27,12 @@ check_this(const DoFHandler<dim>& dof_handler)
   std::vector<bool> mask(dof_handler.get_fe().n_components(), false);
 
   // only select first component
-  mask[0] = true;
+  mask[0]= true;
   DoFTools::extract_dofs(dof_handler, ComponentMask(mask), selected_dofs);
   output_bool_vector(selected_dofs);
 
   // also select last component
-  mask.back() = true;
+  mask.back()= true;
   DoFTools::extract_dofs(dof_handler, ComponentMask(mask), selected_dofs);
   output_bool_vector(selected_dofs);
 }

@@ -27,28 +27,28 @@ test()
 {
   deallog << "Test " << M << " x " << N << std::endl;
   AlignedVector<double> shape(M * N);
-  for(unsigned int i = 0; i < M; ++i)
-    for(unsigned int j = 0; j < (N + 1) / 2; ++j)
+  for(unsigned int i= 0; i < M; ++i)
+    for(unsigned int j= 0; j < (N + 1) / 2; ++j)
       {
-        shape[i * N + j] = -1. + 2. * (double) Testing::rand() / RAND_MAX;
+        shape[i * N + j]= -1. + 2. * (double) Testing::rand() / RAND_MAX;
         if(((i + type) % 2) == 1)
-          shape[i * N + N - 1 - j] = -shape[i * N + j];
+          shape[i * N + N - 1 - j]= -shape[i * N + j];
         else
-          shape[i * N + N - 1 - j] = shape[i * N + j];
+          shape[i * N + N - 1 - j]= shape[i * N + j];
         if(j == N / 2 && ((i + type) % 2) == 1)
-          shape[i * N + j] = 0.;
+          shape[i * N + j]= 0.;
       }
 
   double x[N + M], x_ref[N], y_ref[M];
-  for(unsigned int i = 0; i < N; ++i)
-    x[i] = random_value<double>();
+  for(unsigned int i= 0; i < N; ++i)
+    x[i]= random_value<double>();
 
   // compute reference
-  for(unsigned int i = 0; i < M; ++i)
+  for(unsigned int i= 0; i < M; ++i)
     {
-      y_ref[i] = 0.;
-      for(unsigned int j = 0; j < N; ++j)
-        y_ref[i] += shape[i * N + j] * x[j];
+      y_ref[i]= 0.;
+      for(unsigned int j= 0; j < N; ++j)
+        y_ref[i]+= shape[i * N + j] * x[j];
     }
 
   // apply function for tensor product
@@ -66,19 +66,19 @@ test()
     evaluator.template hessians<0, false, false>(x, x);
 
   deallog << "Errors no transpose: ";
-  for(unsigned int i = 0; i < M; ++i)
+  for(unsigned int i= 0; i < M; ++i)
     deallog << x[i] - y_ref[i] << " ";
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < M; ++i)
-    x[i] = random_value<double>();
+  for(unsigned int i= 0; i < M; ++i)
+    x[i]= random_value<double>();
 
   // compute reference
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     {
-      x_ref[i] = 0.;
-      for(unsigned int j = 0; j < M; ++j)
-        x_ref[i] += shape[j * N + i] * x[j];
+      x_ref[i]= 0.;
+      for(unsigned int j= 0; j < M; ++j)
+        x_ref[i]+= shape[j * N + i] * x[j];
     }
 
   // apply function for tensor product
@@ -90,7 +90,7 @@ test()
     evaluator.template hessians<0, true, false>(x, x);
 
   deallog << "Errors transpose:    ";
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     deallog << x[i] - x_ref[i] << " ";
   deallog << std::endl;
 }

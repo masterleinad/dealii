@@ -83,20 +83,20 @@ FE_Q<dim, spacedim>::get_name() const
   // kept in synch
 
   std::ostringstream  namebuf;
-  bool                equidistant = true;
+  bool                equidistant= true;
   std::vector<double> points(this->degree + 1);
 
   // Decode the support points in one coordinate direction.
   std::vector<unsigned int> lexicographic
     = this->poly_space.get_numbering_inverse();
-  for(unsigned int j = 0; j <= this->degree; j++)
-    points[j] = this->unit_support_points[lexicographic[j]][0];
+  for(unsigned int j= 0; j <= this->degree; j++)
+    points[j]= this->unit_support_points[lexicographic[j]][0];
 
   // Check whether the support points are equidistant.
-  for(unsigned int j = 0; j <= this->degree; j++)
+  for(unsigned int j= 0; j <= this->degree; j++)
     if(std::fabs(points[j] - (double) j / this->degree) > 1e-15)
       {
-        equidistant = false;
+        equidistant= false;
         break;
       }
 
@@ -113,11 +113,11 @@ FE_Q<dim, spacedim>::get_name() const
     {
       // Check whether the support points come from QGaussLobatto.
       const QGaussLobatto<1> points_gl(this->degree + 1);
-      bool                   gauss_lobatto = true;
-      for(unsigned int j = 0; j <= this->degree; j++)
+      bool                   gauss_lobatto= true;
+      for(unsigned int j= 0; j <= this->degree; j++)
         if(points[j] != points_gl.point(j)(0))
           {
-            gauss_lobatto = false;
+            gauss_lobatto= false;
             break;
           }
       if(gauss_lobatto == true)
@@ -141,11 +141,11 @@ FE_Q<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(this->dofs_per_cell, nodal_values.size());
 
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
     {
       AssertDimension(support_point_values[i].size(), 1);
 
-      nodal_values[i] = support_point_values[i](0);
+      nodal_values[i]= support_point_values[i](0);
     }
 }
 

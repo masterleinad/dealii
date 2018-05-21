@@ -33,18 +33,18 @@ void
 do_set(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
 {
   BlockSparseMatrix<double>::size_type col_indices[5];
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     if(even_or_odd)
-      col_indices[i] = 2 * i;
+      col_indices[i]= 2 * i;
     else
-      col_indices[i] = 2 * i + 1;
+      col_indices[i]= 2 * i + 1;
 
   BlockSparseMatrix<double>::value_type values[5];
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     if(even_or_odd)
-      values[i] = 1;
+      values[i]= 1;
     else
-      values[i] = 2;
+      values[i]= 2;
 
   bsm.set(0, 5, col_indices, values, false);
 }
@@ -59,24 +59,24 @@ test()
 
   BlockSparsityPattern bsp(2, 2);
   // set sizes
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       bsp.block(i, j).reinit(5, 5, 5);
   bsp.collect_sizes();
 
   // make a full matrix
-  for(unsigned int row = 0; row < 10; ++row)
-    for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int row= 0; row < 10; ++row)
+    for(unsigned int i= 0; i < 10; ++i)
       bsp.add(row, i);
   bsp.compress();
 
   BlockSparseMatrix<double> bsm(bsp);
 
   Threads::ThreadGroup<> tg;
-  for(unsigned int i = 0; i < 100; ++i)
+  for(unsigned int i= 0; i < 100; ++i)
     {
-      tg += Threads::new_thread(&do_set, true, bsm);
-      tg += Threads::new_thread(&do_set, false, bsm);
+      tg+= Threads::new_thread(&do_set, true, bsm);
+      tg+= Threads::new_thread(&do_set, false, bsm);
     }
   tg.join_all();
 

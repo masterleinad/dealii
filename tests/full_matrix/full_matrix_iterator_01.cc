@@ -24,7 +24,7 @@ test()
   FullMatrix<double> A(3, 3);
 
   // test prefix operator
-  const FullMatrix<double>::const_iterator k = A.begin(), j = ++A.begin();
+  const FullMatrix<double>::const_iterator k= A.begin(), j= ++A.begin();
 
   AssertThrow(k < j, ExcInternalError());
   AssertThrow(j > k, ExcInternalError());
@@ -39,8 +39,8 @@ test()
   AssertThrow(!(k != k), ExcInternalError());
 
   // test postfix operator
-  FullMatrix<double>::const_iterator l = A.begin();
-  FullMatrix<double>::const_iterator m = l++;
+  FullMatrix<double>::const_iterator l= A.begin();
+  FullMatrix<double>::const_iterator m= l++;
 
   AssertThrow(m == k, ExcInternalError());
   AssertThrow(l > m, ExcInternalError());

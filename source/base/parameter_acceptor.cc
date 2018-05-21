@@ -36,7 +36,7 @@ ParameterAcceptor::ParameterAcceptor(const std::string& name)
 
 ParameterAcceptor::~ParameterAcceptor()
 {
-  class_list[acceptor_id] = nullptr;
+  class_list[acceptor_id]= nullptr;
 }
 
 std::string
@@ -159,7 +159,7 @@ ParameterAcceptor::parse_parameters(ParameterHandler&)
 void
 ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
 {
-  for(unsigned int i = 0; i < class_list.size(); ++i)
+  for(unsigned int i= 0; i < class_list.size(); ++i)
     if(class_list[i] != nullptr)
       {
         class_list[i]->enter_my_subsection(prm);
@@ -172,7 +172,7 @@ ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
 void
 ParameterAcceptor::declare_all_parameters(ParameterHandler& prm)
 {
-  for(unsigned int i = 0; i < class_list.size(); ++i)
+  for(unsigned int i= 0; i < class_list.size(); ++i)
     if(class_list[i] != nullptr)
       {
         class_list[i]->enter_my_subsection(prm);
@@ -186,8 +186,8 @@ std::vector<std::string>
 ParameterAcceptor::get_section_path() const
 {
   Assert(acceptor_id < class_list.size(), ExcInternalError());
-  const auto my_section_name = get_section_name();
-  const bool is_absolute     = (my_section_name.front() == sep);
+  const auto my_section_name= get_section_name();
+  const bool is_absolute    = (my_section_name.front() == sep);
 
   std::vector<std::string> sections
     = Utilities::split_string_list(my_section_name, sep);
@@ -203,11 +203,11 @@ ParameterAcceptor::get_section_path() const
       // to ours. This is tricky. If the previous class has a path with a
       // trailing /, then the full path is used, else only the path except the
       // last one
-      for(int i = acceptor_id - 1; i >= 0; --i)
+      for(int i= acceptor_id - 1; i >= 0; --i)
         if(class_list[i] != nullptr)
           {
             bool has_trailing = class_list[i]->get_section_name().back() == sep;
-            auto previous_path = class_list[i]->get_section_path();
+            auto previous_path= class_list[i]->get_section_path();
 
             // See if we need to remove last piece of the path
             if((previous_path.size() > 0) && has_trailing == false)
@@ -226,7 +226,7 @@ void
 ParameterAcceptor::enter_my_subsection(ParameterHandler& prm
                                        = ParameterAcceptor::prm)
 {
-  const auto sections = get_section_path();
+  const auto sections= get_section_path();
   for(const auto& sec : sections)
     {
       prm.enter_subsection(sec);
@@ -237,8 +237,8 @@ void
 ParameterAcceptor::leave_my_subsection(ParameterHandler& prm
                                        = ParameterAcceptor::prm)
 {
-  const auto sections = get_section_path();
-  for(unsigned int i = 0; i < sections.size(); ++i)
+  const auto sections= get_section_path();
+  for(unsigned int i= 0; i < sections.size(); ++i)
     {
       prm.leave_subsection();
     }

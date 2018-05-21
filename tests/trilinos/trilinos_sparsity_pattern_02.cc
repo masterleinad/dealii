@@ -77,17 +77,17 @@ namespace Step22
     dof_handler.distribute_dofs(fe);
 
     std::vector<unsigned int> block_component(dim + 1, 0);
-    block_component[dim] = 1;
+    block_component[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, block_component);
 
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
 
     {
       owned_partitioning.clear();
-      IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+      IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
       owned_partitioning.push_back(locally_owned_dofs.get_view(0, n_u));
       owned_partitioning.push_back(locally_owned_dofs.get_view(n_u, n_u + n_p));
 
@@ -123,8 +123,8 @@ namespace Step22
   StokesProblem<dim>::run()
   {
     Point<dim>   center;
-    const double inner_radius = .5;
-    const double outer_radius = 1.;
+    const double inner_radius= .5;
+    const double outer_radius= 1.;
 
     GridGenerator::quarter_hyper_shell(
       triangulation, center, inner_radius, outer_radius, 0, true);

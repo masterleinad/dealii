@@ -45,7 +45,7 @@ check()
 
   try
     {
-      std::string s = "set dim=2\nsubsection test\n\n"; // note: missing "end"
+      std::string s= "set dim=2\nsubsection test\n\n"; // note: missing "end"
       prm.parse_input_from_string(s.c_str());
     }
   catch(const ParameterHandler::ExcUnbalancedSubsections& exc)
@@ -71,7 +71,7 @@ check()
 
   {
     prm.enter_subsection("test");
-    std::string s = "set x=5\n";
+    std::string s= "set x=5\n";
     prm.parse_input_from_string(s.c_str());
     prm.leave_subsection();
   }
@@ -82,7 +82,7 @@ check()
     prm.enter_subsection("test");
     try
       {
-        std::string s = "end\nsubsection test2\nset y=7\n";
+        std::string s= "end\nsubsection test2\nset y=7\n";
         prm.parse_input_from_string(s.c_str());
       }
     catch(const ParameterHandler::ExcUnbalancedSubsections& exc)

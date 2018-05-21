@@ -62,20 +62,20 @@ test()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
 
     for(; cell != endc; cell++)
       {
-        Point<dim> center = cell->center();
+        Point<dim> center= cell->center();
 
         if(center[0] < 0)
           {
             cell->set_subdomain_id(1);
           }
 
-        double h = 0;
-        for(unsigned d = 0; d < dim; ++d)
-          h += center[d];
+        double h= 0;
+        for(unsigned d= 0; d < dim; ++d)
+          h+= center[d];
 
         if(std::fabs(h) + 1e-6 > 0.25 * dim)
           cell->set_refine_flag();
@@ -104,7 +104,7 @@ test()
   {
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; cell++)
       {

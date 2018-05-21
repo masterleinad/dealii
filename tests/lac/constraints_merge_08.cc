@@ -39,20 +39,20 @@ merge_check()
   // the test is the same as
   // constraints_merge_02, but we add very large
   // indices here
-  const unsigned int index_0  = local_lines.nth_index_in_set(0);
-  const unsigned int index_1  = local_lines.nth_index_in_set(1);
-  const unsigned int index_3  = local_lines.nth_index_in_set(3);
-  const unsigned int index_4  = local_lines.nth_index_in_set(4);
-  const unsigned int index_10 = local_lines.nth_index_in_set(10);
-  const unsigned int index_11 = local_lines.nth_index_in_set(11);
-  const unsigned int index_12 = local_lines.nth_index_in_set(12);
-  const unsigned int index_13 = local_lines.nth_index_in_set(13);
+  const unsigned int index_0 = local_lines.nth_index_in_set(0);
+  const unsigned int index_1 = local_lines.nth_index_in_set(1);
+  const unsigned int index_3 = local_lines.nth_index_in_set(3);
+  const unsigned int index_4 = local_lines.nth_index_in_set(4);
+  const unsigned int index_10= local_lines.nth_index_in_set(10);
+  const unsigned int index_11= local_lines.nth_index_in_set(11);
+  const unsigned int index_12= local_lines.nth_index_in_set(12);
+  const unsigned int index_13= local_lines.nth_index_in_set(13);
 
   deallog << "Number of local lines: " << local_lines.n_elements() << std::endl;
 
   // check twice, once with closed
   // objects, once with open ones
-  for(unsigned int run = 0; run < 2; ++run)
+  for(unsigned int run= 0; run < 2; ++run)
     {
       deallog << "Checking with " << (run == 0 ? "open" : "closed")
               << " objects" << std::endl;

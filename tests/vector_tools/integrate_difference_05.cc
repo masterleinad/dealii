@@ -52,18 +52,18 @@ public:
     switch(dim)
       {
         case 2:
-          values[0] = p[0] * p[0] + p[1];
-          values[1] = p[0] * p[0] + p[1] * p[1];
-          values[2] = 2 * (p[0] * p[0] + p[1]);
-          values[3] = 2 * (p[0] * p[0] + p[1] * p[1]);
+          values[0]= p[0] * p[0] + p[1];
+          values[1]= p[0] * p[0] + p[1] * p[1];
+          values[2]= 2 * (p[0] * p[0] + p[1]);
+          values[3]= 2 * (p[0] * p[0] + p[1] * p[1]);
           break;
         case 3:
-          values[0] = p[0] * p[0] + p[1] + p[2];
-          values[1] = p[0] * p[0] + p[1] * p[1];
-          values[2] = p[2] + p[0] * p[1];
-          values[3] = 2 * (p[0] * p[0] + p[1] + p[2]);
-          values[4] = 2 * (p[0] * p[0] + p[1] * p[1]);
-          values[5] = 2 * (p[2] + p[0] * p[1]);
+          values[0]= p[0] * p[0] + p[1] + p[2];
+          values[1]= p[0] * p[0] + p[1] * p[1];
+          values[2]= p[2] + p[0] * p[1];
+          values[3]= 2 * (p[0] * p[0] + p[1] + p[2]);
+          values[4]= 2 * (p[0] * p[0] + p[1] * p[1]);
+          values[5]= 2 * (p[2] + p[0] * p[1]);
           break;
         default:
           Assert(false, ExcNotImplemented());
@@ -97,9 +97,9 @@ test(VectorTools::NormType norm, double value)
                                     QGauss<dim>(5),
                                     norm);
 
-  double error = cellwise_errors.l2_norm();
+  double error= cellwise_errors.l2_norm();
 
-  const double difference_1 = std::abs(error - value);
+  const double difference_1= std::abs(error - value);
   deallog << "computed: " << error << " expected: " << value
           << " difference: " << difference_1 << std::endl;
   Assert(difference_1 < 1e-10,
@@ -113,8 +113,8 @@ test(VectorTools::NormType norm, double value)
                                     norm,
                                     &mask_2);
 
-  error                     = cellwise_errors.l2_norm();
-  const double difference_2 = std::abs(error - 2.0 * value);
+  error                    = cellwise_errors.l2_norm();
+  const double difference_2= std::abs(error - 2.0 * value);
   deallog << "computed: " << error << " expected: " << 2.0 * value
           << " difference: " << difference_2 << std::endl;
   Assert(difference_2 < 1e-10,
@@ -126,14 +126,14 @@ void
 test()
 {
   deallog << dim << " dimensions, Hdiv_seminorm:" << std::endl;
-  double true_value = 0;
+  double true_value= 0;
   switch(dim)
     {
       case 2:
-        true_value = std::sqrt(14.0 / 3.0);
+        true_value= std::sqrt(14.0 / 3.0);
         break;
       case 3:
-        true_value = std::sqrt(29.0 / 3.0);
+        true_value= std::sqrt(29.0 / 3.0);
         break;
       default:
         Assert(false, ExcNotImplemented());

@@ -28,8 +28,8 @@ test()
   TrilinosWrappers::SparsityPattern sp;
 
   sp.reinit(5, 7, 3);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 7; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 7; ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           deallog << "Creating sparsity pattern entry " << i << ' ' << j
@@ -39,31 +39,31 @@ test()
   sp.compress();
 
   // get an iterator to the first row, then copy it
-  TrilinosWrappers::SparsityPattern::const_iterator p = sp.begin(0);
+  TrilinosWrappers::SparsityPattern::const_iterator p= sp.begin(0);
   TrilinosWrappers::SparsityPattern::const_iterator q(p);
 
   // now reset 'p' to the second row, and output what elements both
   // 'p' and 'q' point to
-  p = sp.begin(1);
+  p= sp.begin(1);
 
-  for(unsigned int i = 0; i < 2; ++i, ++p)
+  for(unsigned int i= 0; i < 2; ++i, ++p)
     deallog << "p[" << i << "]: " << p->row() << ' ' << p->column()
             << std::endl;
 
-  for(unsigned int i = 0; i < 2; ++i, ++q)
+  for(unsigned int i= 0; i < 2; ++i, ++q)
     deallog << "q[" << i << "]: " << q->row() << ' ' << q->column()
             << std::endl;
 
   // do the same with copy assignment
-  p = sp.begin(0);
-  q = p;
-  p = sp.begin(1);
+  p= sp.begin(0);
+  q= p;
+  p= sp.begin(1);
 
-  for(unsigned int i = 0; i < 2; ++i, ++p)
+  for(unsigned int i= 0; i < 2; ++i, ++p)
     deallog << "p[" << i << "]: " << p->row() << ' ' << p->column()
             << std::endl;
 
-  for(unsigned int i = 0; i < 2; ++i, ++q)
+  for(unsigned int i= 0; i < 2; ++i, ++q)
     deallog << "q[" << i << "]: " << q->row() << ' ' << q->column()
             << std::endl;
 }

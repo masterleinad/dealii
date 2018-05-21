@@ -51,7 +51,7 @@ namespace TrilinosWrappers
   {
     preconditioner.reset();
 #  ifdef DEAL_II_WITH_MPI
-    communicator = MPI_COMM_SELF;
+    communicator= MPI_COMM_SELF;
 #  endif
     vector_distributor.reset();
   }
@@ -122,13 +122,13 @@ namespace TrilinosWrappers
     parameter_list.set("relaxation: min diagonal value",
                        additional_data.min_diagonal);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -171,13 +171,13 @@ namespace TrilinosWrappers
                        additional_data.min_diagonal);
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -220,13 +220,13 @@ namespace TrilinosWrappers
                        additional_data.min_diagonal);
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -282,13 +282,13 @@ namespace TrilinosWrappers
         / additional_data.block_size;
     parameter_list.set("partitioner: local parts", n_local_parts);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -346,13 +346,13 @@ namespace TrilinosWrappers
         / additional_data.block_size;
     parameter_list.set("partitioner: local parts", n_local_parts);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -410,13 +410,13 @@ namespace TrilinosWrappers
         / additional_data.block_size;
     parameter_list.set("partitioner: local parts", n_local_parts);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -453,13 +453,13 @@ namespace TrilinosWrappers
     parameter_list.set("fact: relative threshold", additional_data.ic_rtol);
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -500,13 +500,13 @@ namespace TrilinosWrappers
     parameter_list.set("fact: relative threshold", additional_data.ilu_rtol);
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -549,13 +549,13 @@ namespace TrilinosWrappers
     parameter_list.set("fact: relative threshold", additional_data.ilut_rtol);
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -587,13 +587,13 @@ namespace TrilinosWrappers
     Teuchos::ParameterList parameter_list;
     parameter_list.set("schwarz: combine mode", "Add");
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -643,13 +643,13 @@ namespace TrilinosWrappers
     parameter_list.set("chebyshev: zero starting solution",
                        !additional_data.nonzero_starting);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
@@ -689,40 +689,40 @@ namespace TrilinosWrappers
     parameter_list.set("relaxation: damping factor", 1.0);
     parameter_list.set("relaxation: min diagonal value", 0.0);
 
-    ierr = ifpack->SetParameters(parameter_list);
+    ierr= ifpack->SetParameters(parameter_list);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Initialize();
+    ierr= ifpack->Initialize();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-    ierr = ifpack->Compute();
+    ierr= ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
   void
   PreconditionIdentity::vmult(MPI::Vector& dst, const MPI::Vector& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   void
   PreconditionIdentity::Tvmult(MPI::Vector& dst, const MPI::Vector& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   void
   PreconditionIdentity::vmult(dealii::Vector<double>&       dst,
                               const dealii::Vector<double>& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   void
   PreconditionIdentity::Tvmult(dealii::Vector<double>&       dst,
                                const dealii::Vector<double>& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   void
@@ -730,7 +730,7 @@ namespace TrilinosWrappers
     LinearAlgebra::distributed::Vector<double>&       dst,
     const LinearAlgebra::distributed::Vector<double>& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   void
@@ -738,7 +738,7 @@ namespace TrilinosWrappers
     LinearAlgebra::distributed::Vector<double>&       dst,
     const LinearAlgebra::distributed::Vector<double>& src) const
   {
-    dst = src;
+    dst= src;
   }
 } // namespace TrilinosWrappers
 

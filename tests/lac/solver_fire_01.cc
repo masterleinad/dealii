@@ -23,15 +23,15 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 
-using vector_t = typename dealii::Vector<double>;
+using vector_t= typename dealii::Vector<double>;
 
 double
 compute(vector_t& G, const vector_t& X)
 {
   AssertThrow(X.size() == 2 && G.size() == 2, ExcInternalError());
 
-  G(0) = 2 * X(0);
-  G(1) = 2 * X(1);
+  G(0)= 2 * X(0);
+  G(1)= 2 * X(1);
 
   return X.norm_sqr();
 }
@@ -44,17 +44,17 @@ check_value(const double x, const double y, const double tol)
   X.reinit(2, true);
 
   // Use this to initialize DiagonalMatrix
-  X = 1.;
+  X= 1.;
 
   // Create inverse diagonal matrix.
   DiagonalMatrix<vector_t> inv_mass;
   inv_mass.reinit(X);
 
   // Set initial iterate.
-  X(0) = x;
-  X(1) = y;
+  X(0)= x;
+  X(1)= y;
 
-  auto additional_data = SolverFIRE<vector_t>::AdditionalData(0.1, 1., 1);
+  auto additional_data= SolverFIRE<vector_t>::AdditionalData(0.1, 1., 1);
 
   SolverControl solver_control(200, tol);
 

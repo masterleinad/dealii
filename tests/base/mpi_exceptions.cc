@@ -47,7 +47,7 @@ main(int argc, char** argv)
   mpi_error_codes.push_back(MPI_ERR_INTERN);
   mpi_error_codes.push_back(MPI_ERR_LASTCODE);
 
-  for(unsigned int i = 0; i < mpi_error_codes.size(); ++i)
+  for(unsigned int i= 0; i < mpi_error_codes.size(); ++i)
     {
       try
         {

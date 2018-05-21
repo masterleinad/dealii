@@ -42,34 +42,34 @@ namespace internal
        * element with nodes in the Gauss-Lobatto support points and
        * integration in the Gauss-Lobatto quadrature points of the same order.
        */
-      tensor_symmetric_collocation = 0,
+      tensor_symmetric_collocation= 0,
       /**
        * Symmetric tensor product shape functions fulfilling a Hermite
        * identity with values and first derivatives zero at the element end
        * points in 1D.
        */
-      tensor_symmetric_hermite = 1,
+      tensor_symmetric_hermite= 1,
       /**
        * Usual tensor product shape functions whose shape values and
        * quadrature points are symmetric about the midpoint of the unit
        * interval 0.5
        */
-      tensor_symmetric = 2,
+      tensor_symmetric= 2,
       /**
        * Tensor product shape functions without further particular properties
        */
-      tensor_general = 3,
+      tensor_general= 3,
       /**
        * Polynomials of complete degree rather than tensor degree which can be
        * described by a truncated tensor product
        */
-      truncated_tensor = 4,
+      truncated_tensor= 4,
       /**
        * Tensor product shape functions that are symmetric about the midpoint
        * of the unit interval 0.5 that additionally add a constant shape
        * function according to FE_Q_DG0.
        */
-      tensor_symmetric_plus_dg0 = 5
+      tensor_symmetric_plus_dg0= 5
     };
 
     /**
@@ -96,7 +96,7 @@ namespace internal
       template <int dim>
       ShapeInfo(const Quadrature<1>&      quad,
                 const FiniteElement<dim>& fe,
-                const unsigned int        base_element = 0);
+                const unsigned int        base_element= 0);
 
       /**
        * Initializes the data fields. Takes a one-dimensional quadrature
@@ -110,7 +110,7 @@ namespace internal
       void
       reinit(const Quadrature<1>&      quad,
              const FiniteElement<dim>& fe_dim,
-             const unsigned int        base_element = 0);
+             const unsigned int        base_element= 0);
 
       /**
        * Return the memory consumption of this class in bytes.

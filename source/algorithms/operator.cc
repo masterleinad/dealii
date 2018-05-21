@@ -38,7 +38,7 @@ namespace Algorithms
   void
   OperatorBase::notify(const Event& e)
   {
-    notifications += e;
+    notifications+= e;
   }
 
   void

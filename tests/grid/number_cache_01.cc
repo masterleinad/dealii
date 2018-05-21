@@ -42,7 +42,7 @@ output(const Triangulation<dim>& tria)
   deallog << "  " << tria.n_active_hexs() << std::endl;
   deallog << "  " << tria.n_hexs() << std::endl;
 
-  for(unsigned int i = 0; i < tria.n_levels(); ++i)
+  for(unsigned int i= 0; i < tria.n_levels(); ++i)
     {
       deallog << "  " << tria.n_active_cells(i) << std::endl;
       deallog << "  " << tria.n_cells(i) << std::endl;

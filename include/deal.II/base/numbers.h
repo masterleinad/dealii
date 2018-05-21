@@ -112,52 +112,52 @@ namespace numbers
   /**
    * e
    */
-  static const double E = 2.7182818284590452354;
+  static const double E= 2.7182818284590452354;
 
   /**
    * log_2 e
    */
-  static const double LOG2E = 1.4426950408889634074;
+  static const double LOG2E= 1.4426950408889634074;
 
   /**
    * log_10 e
    */
-  static const double LOG10E = 0.43429448190325182765;
+  static const double LOG10E= 0.43429448190325182765;
 
   /**
    * log_e 2
    */
-  static const double LN2 = 0.69314718055994530942;
+  static const double LN2= 0.69314718055994530942;
 
   /**
    * log_e 10
    */
-  static const double LN10 = 2.30258509299404568402;
+  static const double LN10= 2.30258509299404568402;
 
   /**
    * pi
    */
-  static const double PI = 3.14159265358979323846;
+  static const double PI= 3.14159265358979323846;
 
   /**
    * pi/2
    */
-  static const double PI_2 = 1.57079632679489661923;
+  static const double PI_2= 1.57079632679489661923;
 
   /**
    * pi/4
    */
-  static const double PI_4 = 0.78539816339744830962;
+  static const double PI_4= 0.78539816339744830962;
 
   /**
    * sqrt(2)
    */
-  static const double SQRT2 = 1.41421356237309504880;
+  static const double SQRT2= 1.41421356237309504880;
 
   /**
    * 1/sqrt(2)
    */
-  static const double SQRT1_2 = 0.70710678118654752440;
+  static const double SQRT1_2= 0.70710678118654752440;
 
   /**
    * Check whether a value is not a number.
@@ -328,7 +328,7 @@ namespace numbers
      * complex or real. Since the general template is selected for non-complex
      * types, the answer is <code>false</code>.
      */
-    static const bool is_complex = false;
+    static const bool is_complex= false;
 
     /**
      * For this data type, typedef the corresponding real type. Since the
@@ -377,7 +377,7 @@ namespace numbers
      * complex or real. Since this specialization of the general template is
      * selected for complex types, the answer is <code>true</code>.
      */
-    static const bool is_complex = true;
+    static const bool is_complex= true;
 
     /**
      * For this data type, typedef the corresponding real type. Since this
@@ -537,7 +537,7 @@ namespace internal
     }
 
   public:
-    static bool const value = test<From, To>(0);
+    static bool const value= test<From, To>(0);
   };
 
   /**
@@ -573,7 +573,7 @@ namespace internal
           typename std::enable_if<
             !std::is_same<typename std::decay<T>::type,
                           typename std::decay<F>::type>::value
-            && std::is_constructible<T, F>::value>::type* = nullptr)
+            && std::is_constructible<T, F>::value>::type*= nullptr)
     {
       return T(f);
     }
@@ -586,7 +586,7 @@ namespace internal
             !std::is_same<typename std::decay<T>::type,
                           typename std::decay<F>::type>::value
             && !std::is_constructible<T, F>::value
-            && is_explicitly_convertible<const F, T>::value>::type* = nullptr)
+            && is_explicitly_convertible<const F, T>::value>::type*= nullptr)
     {
       return static_cast<T>(f);
     }
@@ -603,7 +603,7 @@ namespace internal
                           typename std::decay<F>::type>::value
             && !std::is_constructible<T, F>::value
             && !is_explicitly_convertible<const F, T>::value
-            && Differentiation::AD::is_ad_number<F>::value>::type* = nullptr)
+            && Differentiation::AD::is_ad_number<F>::value>::type*= nullptr)
     {
       return Differentiation::AD::internal::NumberType<T>::value(f);
     }

@@ -66,7 +66,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::clear()
   dof_values_on_cell.clear();
   cell_map.clear();
 
-  prepared_for = none;
+  prepared_for= none;
 }
 
 template <int dim, typename VectorType, typename DoFHandlerType>
@@ -81,7 +81,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_for_pure_refinement()
 
   const unsigned int n_active_cells
     = dof_handler->get_triangulation().n_active_cells();
-  n_dofs_old = dof_handler->n_dofs();
+  n_dofs_old= dof_handler->n_dofs();
 
   // efficient reallocation of indices_on_cell
   std::vector<std::vector<types::global_dof_index>>(n_active_cells)
@@ -89,9 +89,9 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_for_pure_refinement()
 
   typename DoFHandlerType::active_cell_iterator cell
     = dof_handler->begin_active(),
-    endc = dof_handler->end();
+    endc= dof_handler->end();
 
-  for(unsigned int i = 0; cell != endc; ++cell, ++i)
+  for(unsigned int i= 0; cell != endc; ++cell, ++i)
     {
       indices_on_cell[i].resize(cell->get_fe().dofs_per_cell);
       // on each cell store the indices of the
@@ -104,7 +104,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_for_pure_refinement()
       cell_map[std::make_pair(cell->level(), cell->index())]
         = Pointerstruct(&indices_on_cell[i], cell->active_fe_index());
     }
-  prepared_for = pure_refinement;
+  prepared_for= pure_refinement;
 }
 
 template <int dim, typename VectorType, typename DoFHandlerType>
@@ -123,12 +123,12 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::refine_interpolate(
 
   Vector<typename VectorType::value_type> local_values(0);
 
-  typename DoFHandlerType::cell_iterator cell = dof_handler->begin(),
-                                         endc = dof_handler->end();
+  typename DoFHandlerType::cell_iterator cell= dof_handler->begin(),
+                                         endc= dof_handler->end();
 
   typename std::map<std::pair<unsigned int, unsigned int>,
                     Pointerstruct>::const_iterator pointerstruct,
-    cell_map_end = cell_map.end();
+    cell_map_end= cell_map.end();
 
   for(; cell != endc; ++cell)
     {
@@ -154,8 +154,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::refine_interpolate(
           // what this size should be
           Assert(dofs_per_cell == (*pointerstruct->second.indices_ptr).size(),
                  ExcInternalError());
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            local_values(i) = internal::ElementAccess<VectorType>::get(
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            local_values(i)= internal::ElementAccess<VectorType>::get(
               in, (*pointerstruct->second.indices_ptr)[i]);
           cell->set_dof_values_by_interpolation(
             local_values, out, this_fe_index);
@@ -190,10 +190,10 @@ namespace internal
     const dealii::hp::DoFHandler<dim, spacedim>& dof,
     dealii::Table<2, FullMatrix<double>>&        matrices)
   {
-    const dealii::hp::FECollection<dim, spacedim>& fe = dof.get_fe_collection();
+    const dealii::hp::FECollection<dim, spacedim>& fe= dof.get_fe_collection();
     matrices.reinit(fe.size(), fe.size());
-    for(unsigned int i = 0; i < fe.size(); ++i)
-      for(unsigned int j = 0; j < fe.size(); ++j)
+    for(unsigned int i= 0; i < fe.size(); ++i)
+      for(unsigned int j= 0; j < fe.size(); ++j)
         if(i != j)
           {
             matrices(i, j).reinit(fe[i].dofs_per_cell, fe[j].dofs_per_cell);
@@ -229,11 +229,11 @@ namespace internal
                        std::vector<std::vector<bool>>& restriction_is_additive)
   {
     restriction_is_additive.resize(fe.size());
-    for(unsigned int f = 0; f < fe.size(); ++f)
+    for(unsigned int f= 0; f < fe.size(); ++f)
       {
         restriction_is_additive[f].resize(fe[f].dofs_per_cell);
-        for(unsigned int i = 0; i < fe[f].dofs_per_cell; ++i)
-          restriction_is_additive[f][i] = fe[f].restriction_is_additive(i);
+        for(unsigned int i= 0; i < fe[f].dofs_per_cell; ++i)
+          restriction_is_additive[f][i]= fe[f].restriction_is_additive(i);
       }
   }
 } // namespace internal
@@ -247,7 +247,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   Assert(prepared_for != coarsening_and_refinement,
          ExcAlreadyPrepForCoarseAndRef());
 
-  const unsigned int in_size = all_in.size();
+  const unsigned int in_size= all_in.size();
   Assert(in_size != 0,
          ExcMessage("The array of input vectors you pass to this "
                     "function has no elements. This is not useful."));
@@ -257,9 +257,9 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   const unsigned int n_active_cells
     = dof_handler->get_triangulation().n_active_cells();
   (void) n_active_cells;
-  n_dofs_old = dof_handler->n_dofs();
+  n_dofs_old= dof_handler->n_dofs();
 
-  for(unsigned int i = 0; i < in_size; ++i)
+  for(unsigned int i= 0; i < in_size; ++i)
     {
       Assert(all_in[i].size() == n_dofs_old,
              ExcDimensionMismatch(all_in[i].size(), n_dofs_old));
@@ -268,8 +268,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   // first count the number
   // of cells that will be coarsened
   // and that'll stay or be refined
-  unsigned int n_cells_to_coarsen        = 0;
-  unsigned int n_cells_to_stay_or_refine = 0;
+  unsigned int n_cells_to_coarsen       = 0;
+  unsigned int n_cells_to_stay_or_refine= 0;
   for(typename DoFHandlerType::active_cell_iterator act_cell
       = dof_handler->begin_active();
       act_cell != dof_handler->end();
@@ -283,8 +283,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   Assert((n_cells_to_coarsen + n_cells_to_stay_or_refine) == n_active_cells,
          ExcInternalError());
 
-  unsigned int n_coarsen_fathers = 0;
-  for(typename DoFHandlerType::cell_iterator cell = dof_handler->begin();
+  unsigned int n_coarsen_fathers= 0;
+  for(typename DoFHandlerType::cell_iterator cell= dof_handler->begin();
       cell != dof_handler->end();
       ++cell)
     if(!cell->active() && cell->child(0)->coarsen_flag_set())
@@ -312,15 +312,15 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   // we need counters for
   // the 'to_stay_or_refine' cells 'n_sr' and
   // the 'coarsen_fathers' cells 'n_cf',
-  unsigned int n_sr = 0, n_cf = 0;
-  for(typename DoFHandlerType::cell_iterator cell = dof_handler->begin();
+  unsigned int n_sr= 0, n_cf= 0;
+  for(typename DoFHandlerType::cell_iterator cell= dof_handler->begin();
       cell != dof_handler->end();
       ++cell)
     {
       // CASE 1: active cell that remains as it is
       if(cell->active() && !cell->coarsen_flag_set())
         {
-          const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+          const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
           indices_on_cell[n_sr].resize(dofs_per_cell);
           // cell will not be coarsened,
           // so we get away by storing the
@@ -339,7 +339,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
           // coarsen flag, then all should
           // have if Tria::prepare_* has
           // worked correctly
-          for(unsigned int i = 1; i < cell->n_children(); ++i)
+          for(unsigned int i= 1; i < cell->n_children(); ++i)
             Assert(cell->child(i)->coarsen_flag_set(),
                    ExcMessage(
                      "It looks like you didn't call "
@@ -351,23 +351,23 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
           // we need to figure out which finite element space to interpolate
           // to since that is not implied by the global FE as in the non-hp
           // case.
-          bool different_fe_on_children = false;
-          for(unsigned int child = 1; child < cell->n_children(); ++child)
+          bool different_fe_on_children= false;
+          for(unsigned int child= 1; child < cell->n_children(); ++child)
             if(cell->child(child)->active_fe_index()
                != cell->child(0)->active_fe_index())
               {
-                different_fe_on_children = true;
+                different_fe_on_children= true;
                 break;
               }
 
           // take FE index from the child with most
           // degrees of freedom locally
-          unsigned int most_general_child = 0;
+          unsigned int most_general_child= 0;
           if(different_fe_on_children == true)
-            for(unsigned int child = 1; child < cell->n_children(); ++child)
+            for(unsigned int child= 1; child < cell->n_children(); ++child)
               if(cell->child(child)->get_fe().dofs_per_cell
                  > cell->child(most_general_child)->get_fe().dofs_per_cell)
-                most_general_child = child;
+                most_general_child= child;
           const unsigned int target_fe_index
             = cell->child(most_general_child)->active_fe_index();
 
@@ -382,7 +382,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
           // as interpolated onto a finite element space that encompasses
           // that of all the children. note that cell->get_interpolated_dof_values
           // already does all of the interpolations between spaces
-          for(unsigned int j = 0; j < in_size; ++j)
+          for(unsigned int j= 0; j < in_size; ++j)
             cell->get_interpolated_dof_values(
               all_in[j], dof_values_on_cell[n_cf][j], target_fe_index);
           cell_map[std::make_pair(cell->level(), cell->index())]
@@ -393,7 +393,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   Assert(n_sr == n_cells_to_stay_or_refine, ExcInternalError());
   Assert(n_cf == n_coarsen_fathers, ExcInternalError());
 
-  prepared_for = coarsening_and_refinement;
+  prepared_for= coarsening_and_refinement;
 }
 
 template <int dim, typename VectorType, typename DoFHandlerType>
@@ -401,7 +401,7 @@ void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::
   prepare_for_coarsening_and_refinement(const VectorType& in)
 {
-  std::vector<VectorType> all_in = std::vector<VectorType>(1, in);
+  std::vector<VectorType> all_in= std::vector<VectorType>(1, in);
   prepare_for_coarsening_and_refinement(all_in);
 }
 
@@ -412,16 +412,16 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
   std::vector<VectorType>&       all_out) const
 {
   Assert(prepared_for == coarsening_and_refinement, ExcNotPrepared());
-  const unsigned int size = all_in.size();
+  const unsigned int size= all_in.size();
   Assert(all_out.size() == size, ExcDimensionMismatch(all_out.size(), size));
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     Assert(all_in[i].size() == n_dofs_old,
            ExcDimensionMismatch(all_in[i].size(), n_dofs_old));
-  for(unsigned int i = 0; i < all_out.size(); ++i)
+  for(unsigned int i= 0; i < all_out.size(); ++i)
     Assert(all_out[i].size() == dof_handler->n_dofs(),
            ExcDimensionMismatch(all_out[i].size(), dof_handler->n_dofs()));
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j)
       Assert(&all_in[i] != &all_out[j],
              ExcMessage("Vectors cannot be used as input and output"
                         " at the same time!"));
@@ -431,14 +431,14 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
 
   typename std::map<std::pair<unsigned int, unsigned int>,
                     Pointerstruct>::const_iterator pointerstruct,
-    cell_map_end = cell_map.end();
+    cell_map_end= cell_map.end();
 
   Table<2, FullMatrix<double>> interpolation_hp;
   internal::extract_interpolation_matrices(*dof_handler, interpolation_hp);
   Vector<typename VectorType::value_type> tmp, tmp2;
 
-  typename DoFHandlerType::cell_iterator cell = dof_handler->begin(),
-                                         endc = dof_handler->end();
+  typename DoFHandlerType::cell_iterator cell= dof_handler->begin(),
+                                         endc= dof_handler->end();
   for(; cell != endc; ++cell)
     {
       pointerstruct
@@ -466,12 +466,12 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
               // data vectors on this
               // cell and prolong it
               // to its children
-              unsigned int in_size = indexptr->size();
-              for(unsigned int j = 0; j < size; ++j)
+              unsigned int in_size= indexptr->size();
+              for(unsigned int j= 0; j < size; ++j)
                 {
                   tmp.reinit(in_size, true);
-                  for(unsigned int i = 0; i < in_size; ++i)
-                    tmp(i) = internal::ElementAccess<VectorType>::get(
+                  for(unsigned int i= 0; i < in_size; ++i)
+                    tmp(i)= internal::ElementAccess<VectorType>::get(
                       all_in[j], (*indexptr)[i]);
 
                   cell->set_dof_values_by_interpolation(
@@ -485,7 +485,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
               Assert(!cell->has_children(), ExcInternalError());
               Assert(indexptr == nullptr, ExcInternalError());
 
-              const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+              const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
               dofs.resize(dofs_per_cell);
               // get the local
               // indices
@@ -494,7 +494,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
               // distribute the
               // stored data to the
               // new vectors
-              for(unsigned int j = 0; j < size; ++j)
+              for(unsigned int j= 0; j < size; ++j)
                 {
                   // make sure that the size of
                   // the stored indices is the
@@ -506,8 +506,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                   // test we would have to
                   // store the fe_index of all
                   // cells
-                  const Vector<typename VectorType::value_type>* data = nullptr;
-                  const unsigned int active_fe_index = cell->active_fe_index();
+                  const Vector<typename VectorType::value_type>* data= nullptr;
+                  const unsigned int active_fe_index= cell->active_fe_index();
                   if(active_fe_index != pointerstruct->second.active_fe_index)
                     {
                       const unsigned int old_index
@@ -521,12 +521,12 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                         interpolation_hp(active_fe_index, old_index).m());
                       interpolation_hp(active_fe_index, old_index)
                         .vmult(tmp, (*valuesptr)[j]);
-                      data = &tmp;
+                      data= &tmp;
                     }
                   else
-                    data = &(*valuesptr)[j];
+                    data= &(*valuesptr)[j];
 
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
                     internal::ElementAccess<VectorType>::set(
                       (*data)(i), dofs[i], all_out[j]);
                 }
@@ -549,11 +549,11 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
          ExcDimensionMismatch(out.size(), dof_handler->n_dofs()));
 
   std::vector<VectorType> all_in(1);
-  all_in[0] = in;
+  all_in[0]= in;
   std::vector<VectorType> all_out(1);
-  all_out[0] = out;
+  all_out[0]= out;
   interpolate(all_in, all_out);
-  out = all_out[0];
+  out= all_out[0];
 }
 
 template <int dim, typename VectorType, typename DoFHandlerType>

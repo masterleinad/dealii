@@ -23,12 +23,12 @@ void
 test_tensor()
 {
   Tensor<1, dim> t1, t2;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      t1[i] = i + 1;
-      t2[i] = 4. * i - 10.;
+      t1[i]= i + 1;
+      t2[i]= 4. * i - 10.;
     }
-  double res = t1 * t2;
+  double res= t1 * t2;
   deallog << "dim = " << dim << ": " << res << std::endl;
 }
 

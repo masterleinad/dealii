@@ -38,7 +38,7 @@ main()
     }
 
   deallog << "backwards order:" << std::endl;
-  auto it = table.end() - 1;
+  auto it= table.end() - 1;
   for(; it >= table.begin(); --it)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
@@ -48,17 +48,17 @@ main()
           << (it == table.begin() - 1) << std::endl;
 
   deallog << "every other entry:" << std::endl;
-  it = table.begin();
-  for(; it < table.end(); it += 2)
+  it= table.begin();
+  for(; it < table.end(); it+= 2)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
               << std::endl;
     }
 
   // print every other entry
-  it = table.end() - 1;
+  it= table.end() - 1;
   deallog << "every other entry:" << std::endl;
-  for(; it >= table.begin(); it -= 2)
+  for(; it >= table.begin(); it-= 2)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
               << std::endl;
@@ -72,7 +72,7 @@ main()
     std::is_same<decltype(table.end()->value()), double&>::value,
     "The iterator value for a non-const table should not be const.");
 
-  const TransposeTable<double>& ref = table;
+  const TransposeTable<double>& ref= table;
   static_assert(
     std::is_same<decltype(ref.begin()->value()), const double&>::value,
     "The iterator value for a constant table should be const.");

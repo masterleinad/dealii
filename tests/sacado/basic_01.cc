@@ -41,8 +41,8 @@ df(const double& x,
    double&       df_dx,
    double&       df_dy)
 {
-  df_dx = z * (1.0 + y);
-  df_dy = z * (z + x);
+  df_dx= z * (1.0 + y);
+  df_dy= z * (z + x);
 }
 
 int
@@ -51,12 +51,12 @@ main()
   initlog();
 
   // Values of function arguments
-  const double x = 5.0;
-  const double y = 10.0;
-  const double z = 4.0;
+  const double x= 5.0;
+  const double y= 10.0;
+  const double z= 4.0;
 
   // Number of independent variables
-  const int num_deriv = 2;
+  const int num_deriv= 2;
 
   // FAD objects: Independent variables
   const Sacado::Fad::DFad<double> x_ad(num_deriv, 0, x);
@@ -69,23 +69,23 @@ main()
   deallog << "z_ad: " << z_ad << std::endl;
 
   // Compute function
-  const double f = ::f(x, y, z);
+  const double f= ::f(x, y, z);
 
   // Compute derivative analytically
-  double df_dx = 0.0, df_dy = 0.0;
+  double df_dx= 0.0, df_dy= 0.0;
   df(x, y, z, df_dx, df_dy);
 
   // Compute function and derivative with AD
-  const Sacado::Fad::DFad<double> f_fad = ::f(x_ad, y_ad, z_ad);
+  const Sacado::Fad::DFad<double> f_fad= ::f(x_ad, y_ad, z_ad);
 
   deallog << "f_fad: " << f_fad << std::endl;
 
   // Extract value and derivatives
-  const double f_ad     = f_fad.val(); // f
-  const double df_dx_ad = f_fad.dx(0); // df/dx
-  const double df_dy_ad = f_fad.dx(1); // df/dy
+  const double f_ad    = f_fad.val(); // f
+  const double df_dx_ad= f_fad.dx(0); // df/dx
+  const double df_dy_ad= f_fad.dx(1); // df/dy
 
-  const double tol = 1.0e-14;
+  const double tol= 1.0e-14;
   Assert(std::fabs(f - f_ad) < tol, ExcMessage("Computation incorrect: Value"));
   Assert(std::fabs(df_dx - df_dx_ad) < tol && std::fabs(df_dy - df_dy_ad) < tol,
          ExcMessage("Computation incorrect: First derivative"));

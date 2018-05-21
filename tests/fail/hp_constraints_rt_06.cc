@@ -15,7 +15,7 @@
 
 // check that computation of hp constraints works for RT elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../hp/hp_constraints_common.h"
 #include <deal.II/fe/fe_raviart_thomas.h>
@@ -29,7 +29,7 @@ test()
 
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     {
       fe.push_back(FE_RaviartThomas<dim>(i));
       degrees.push_back(i);

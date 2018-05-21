@@ -25,9 +25,9 @@ main()
   deallog.attach(logfile);
 
   ConstraintMatrix constraints;
-  unsigned int     IDs[]  = {1, 2, 3, 5, 8, 13, 21};
-  double           vals[] = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
-  for(unsigned int i = 0; i < sizeof(IDs) / sizeof(IDs[0]); ++i)
+  unsigned int     IDs[] = {1, 2, 3, 5, 8, 13, 21};
+  double           vals[]= {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+  for(unsigned int i= 0; i < sizeof(IDs) / sizeof(IDs[0]); ++i)
     {
       constraints.add_line(IDs[i]);
       constraints.set_inhomogeneity(IDs[i], vals[i]);
@@ -40,7 +40,7 @@ main()
   cm.print(deallog.get_file_stream());
   deallog << constraints.n_constraints() << std::endl << std::endl;
 
-  constraints = std::move(cm);
+  constraints= std::move(cm);
   constraints.print(deallog.get_file_stream());
   deallog << cm.n_constraints() << std::endl;
 

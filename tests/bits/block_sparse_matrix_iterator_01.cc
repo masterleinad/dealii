@@ -55,12 +55,12 @@ test()
   // then set up a sparsity pattern and a
   // matrix on top of it
   std::vector<unsigned int> block_sizes(2);
-  block_sizes[0] = dof_handler.n_dofs() / 3;
-  block_sizes[1] = dof_handler.n_dofs() - block_sizes[0];
+  block_sizes[0]= dof_handler.n_dofs() / 3;
+  block_sizes[1]= dof_handler.n_dofs() - block_sizes[0];
 
   BlockSparsityPattern sparsity(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       sparsity.block(i, j).reinit(block_sizes[i],
                                   block_sizes[j],
                                   dof_handler.max_couplings_between_dofs());
@@ -74,17 +74,16 @@ test()
   // individual blocks, and later for all
   // together (which yielded an abort)
   deallog << "Blockwise output" << std::endl;
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
-      for(SparseMatrix<double>::const_iterator k = A.block(i, j).begin();
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
+      for(SparseMatrix<double>::const_iterator k= A.block(i, j).begin();
           k != A.block(i, j).end();
           ++k)
         deallog << i << ' ' << j << ' ' << k->row() << ' ' << k->column() << ' '
                 << k->value() << std::endl;
 
   deallog << "Global output" << std::endl;
-  for(BlockSparseMatrix<double>::const_iterator i = A.begin(); i != A.end();
-      ++i)
+  for(BlockSparseMatrix<double>::const_iterator i= A.begin(); i != A.end(); ++i)
     deallog << i->block_row() << ' ' << i->block_column() << ' ' << i->row()
             << ' ' << i->column() << ' ' << i->value() << std::endl;
 }

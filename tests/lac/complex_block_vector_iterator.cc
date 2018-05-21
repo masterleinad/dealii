@@ -27,7 +27,7 @@ operator==(const BlockVector<number>& v1, const BlockVector<number>& v2)
 {
   if(v1.size() != v2.size())
     return false;
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for(unsigned int i= 0; i < v1.size(); ++i)
     if(v1(i) != v2(i))
       return false;
   return true;
@@ -37,10 +37,10 @@ void
 test()
 {
   std::vector<types::global_dof_index> ivector(4);
-  ivector[0] = 2;
-  ivector[1] = 4;
-  ivector[2] = 3;
-  ivector[3] = 5;
+  ivector[0]= 2;
+  ivector[1]= 4;
+  ivector[2]= 3;
+  ivector[3]= 5;
 
   // Check 1: initialization via
   // iterators
@@ -51,13 +51,13 @@ test()
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = std::complex<double>(i, i + 1);
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= std::complex<double>(i, i + 1);
       // initialize other vector
       // through iterators
-      BlockVector<std::complex<double>>::iterator p2 = v2.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p2)
-        *p2 = std::complex<double>(i, i + 1);
+      BlockVector<std::complex<double>>::iterator p2= v2.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p2)
+        *p2= std::complex<double>(i, i + 1);
       Assert(p2 == v2.end(), ExcInternalError());
 
       // check that the two vectors are equal
@@ -72,8 +72,8 @@ test()
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = std::complex<double>(i, i + 1);
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= std::complex<double>(i, i + 1);
       // initialize other vector
       // through iterators into first
       // vector
@@ -90,11 +90,11 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = std::complex<double>(i, i + 1);
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= std::complex<double>(i, i + 1);
 
-      BlockVector<std::complex<double>>::iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      BlockVector<std::complex<double>>::iterator p1= v1.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p1)
         Assert(*p1 == std::complex<double>(i, i + 1), ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -104,7 +104,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for(unsigned int i= 0; i < v1.size(); ++i, --p1)
         Assert(*p1 == std::complex<double>(v1.size() - i - 1, v1.size() - i),
                ExcInternalError());
 
@@ -120,11 +120,11 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
-      BlockVector<std::complex<double>>::const_iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      BlockVector<std::complex<double>>::const_iterator p1= v1.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p1)
         Assert(*p1 == std::complex<double>(i, 0), ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -134,9 +134,9 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for(unsigned int i= 0; i < v1.size(); ++i, --p1)
         {
-          const std::complex<double> val = *p1;
+          const std::complex<double> val= *p1;
           const std::complex<double> ref(v1.size() - i - 1);
           Assert(val == ref, ExcInternalError());
         };
@@ -153,8 +153,8 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
       // check std::distance
       // algorithm
@@ -177,7 +177,7 @@ test()
                      std::bind(std::multiplies<std::complex<double>>(),
                                std::placeholders::_1,
                                2.0));
-      v2 *= std::complex<double>(1. / 2.);
+      v2*= std::complex<double>(1. / 2.);
       deallog << "Check 7: " << (v1 == v2 ? "true" : "false") << std::endl;
 
       // check operators +/-, +=/-=
@@ -194,21 +194,21 @@ test()
                     "false")
               << std::endl;
       deallog << "Check 11: "
-              << (std::distance(v1.begin(), (v1.begin() += 7)) == 7 ? "true" :
-                                                                      "false")
+              << (std::distance(v1.begin(), (v1.begin()+= 7)) == 7 ? "true" :
+                                                                     "false")
               << std::endl;
       deallog << "Check 12: "
-              << (std::distance((v1.end() -= 4), v1.end()) == 4 ? "true" :
-                                                                  "false")
+              << (std::distance((v1.end()-= 4), v1.end()) == 4 ? "true" :
+                                                                 "false")
               << std::endl;
 
       // check advance
-      BlockVector<std::complex<double>>::iterator p2 = v1.begin();
+      BlockVector<std::complex<double>>::iterator p2= v1.begin();
       std::advance(p2, v1.size());
       deallog << "Check 13: " << (p2 == v1.end() ? "true" : "false")
               << std::endl;
 
-      BlockVector<std::complex<double>>::const_iterator p3 = v1.begin();
+      BlockVector<std::complex<double>>::const_iterator p3= v1.begin();
       std::advance(p3, v1.size());
       deallog << "Check 14: " << (p3 == v1.end() ? "true" : "false")
               << std::endl;
@@ -221,8 +221,8 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
       // initialize a normal vector
       // from it
@@ -241,8 +241,8 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
       // initialize a normal vector
       // from it
@@ -261,8 +261,8 @@ test()
       BlockVector<std::complex<double>> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
       // initialize a normal vector
       // from it
@@ -281,10 +281,10 @@ test()
       BlockVector<std::complex<double>> v0(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v0.size(); ++i)
-        v0(i) = i;
+      for(unsigned int i= 0; i < v0.size(); ++i)
+        v0(i)= i;
 
-      const BlockVector<std::complex<double>> v1 = v0;
+      const BlockVector<std::complex<double>> v1= v0;
 
       // initialize a normal vector
       // from it
@@ -299,14 +299,13 @@ test()
   if(true)
     {
       BlockVector<std::complex<double>> v1(ivector);
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for(unsigned int i= 0; i < v1.size(); ++i)
         {
-          const BlockVector<std::complex<double>>::iterator p
-            = (v1.begin() + i);
-          for(unsigned int j = 0; j < v1.size(); ++j)
+          const BlockVector<std::complex<double>>::iterator p= (v1.begin() + i);
+          for(unsigned int j= 0; j < v1.size(); ++j)
             Assert(p[(signed) j - (signed) i] == std::complex<double>(j),
                    ExcInternalError());
         };

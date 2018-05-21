@@ -28,27 +28,27 @@ void
 test(std::ostream& out)
 {
   Point<dim> p1;
-  p1[0] = 2.;
+  p1[0]= 2.;
   if(dim > 1)
-    p1[1] = -1.;
+    p1[1]= -1.;
   if(dim > 2)
-    p1[2] = 0.;
+    p1[2]= 0.;
   Point<dim> p2;
-  p2[0] = 3.;
+  p2[0]= 3.;
   if(dim > 1)
-    p2[1] = 2.;
+    p2[1]= 2.;
   if(dim > 2)
-    p2[2] = 4.;
+    p2[2]= 4.;
   Point<dim> p3;
-  p3[0] = 2.;
+  p3[0]= 2.;
   if(dim > 1)
-    p3[1] = 1.;
+    p3[1]= 1.;
   if(dim > 2)
-    p3[2] = 4.;
+    p3[2]= 4.;
 
   SphericalManifold<dim> boundary_description(p1);
   GridOut                go;
-  GridOut::OutputFormat  format = GridOut::gnuplot;
+  GridOut::OutputFormat  format= GridOut::gnuplot;
 
   {
     deallog << "half_hyper_ball" << std::endl;

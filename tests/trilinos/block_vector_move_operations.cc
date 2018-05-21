@@ -17,14 +17,14 @@
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/trilinos_vector.h>
 
-#define PRINTBLOCK(name, var)                               \
-  deallog << "Block vector: " name << ":" << std::endl;     \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)          \
-    {                                                       \
-      deallog << "[block " << i << " ]  ";                  \
-      for(unsigned int j = 0; j < var.block(i).size(); ++j) \
-        deallog << var.block(i)[j] << " ";                  \
-      deallog << std::endl;                                 \
+#define PRINTBLOCK(name, var)                              \
+  deallog << "Block vector: " name << ":" << std::endl;    \
+  for(unsigned int i= 0; i < var.n_blocks(); ++i)          \
+    {                                                      \
+      deallog << "[block " << i << " ]  ";                 \
+      for(unsigned int j= 0; j < var.block(i).size(); ++j) \
+        deallog << var.block(i)[j] << " ";                 \
+      deallog << std::endl;                                \
     }
 
 int
@@ -44,9 +44,9 @@ main(int argc, char** argv)
       }
 
     TrilinosWrappers::MPI::BlockVector temp(local_owned, MPI_COMM_WORLD);
-    for(unsigned int i = 0; i < 5; ++i)
-      for(unsigned int j = 0; j < 2; ++j)
-        temp.block(i)[j] = (double) (10 * i + j);
+    for(unsigned int i= 0; i < 5; ++i)
+      for(unsigned int j= 0; j < 2; ++j)
+        temp.block(i)[j]= (double) (10 * i + j);
 
     PRINTBLOCK("BlockVector", temp);
 
@@ -54,12 +54,12 @@ main(int argc, char** argv)
     PRINTBLOCK("move constructor", u);
 
     TrilinosWrappers::MPI::BlockVector v;
-    v = u;
+    v= u;
     PRINTBLOCK("copy assignment", v);
     PRINTBLOCK("old object", u);
 
     v.reinit(0);
-    v = std::move(u);
+    v= std::move(u);
     PRINTBLOCK("move assignment", v);
     deallog << "old object size: " << u.n_blocks() << std::endl;
   }

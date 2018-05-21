@@ -122,7 +122,7 @@ namespace parallel
      */
     template <int dim,
               typename VectorType,
-              typename DoFHandlerType = DoFHandler<dim>>
+              typename DoFHandlerType= DoFHandler<dim>>
     class SolutionTransfer
     {
 #ifndef DEAL_II_MSVC
@@ -145,7 +145,7 @@ namespace parallel
       /**
        * Destructor.
        */
-      ~SolutionTransfer() = default;
+      ~SolutionTransfer()= default;
 
       /**
        * Prepare the current object for coarsening and refinement. It

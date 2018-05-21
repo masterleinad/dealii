@@ -51,7 +51,7 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup functions
  * @author Guido Kanschat, 1999
  */
-template <int rank, int dim, typename Number = double>
+template <int rank, int dim, typename Number= double>
 class TensorFunction : public FunctionTime<Number>, public Subscriptor
 {
 public:
@@ -66,14 +66,14 @@ public:
    * Constructor. May take an initial value for the time variable, which
    * defaults to zero.
    */
-  TensorFunction(const Number initial_time = Number(0.0));
+  TensorFunction(const Number initial_time= Number(0.0));
 
   /**
    * Virtual destructor; absolutely necessary in this case, as classes are
    * usually not used by their true type, but rather through pointers to this
    * base class.
    */
-  virtual ~TensorFunction() override = default;
+  virtual ~TensorFunction() override= default;
 
   /**
    * Return the value of the function at the given point.
@@ -113,7 +113,7 @@ public:
  * @ingroup functions
  * @author Matthias Maier, 2013
  */
-template <int rank, int dim, typename Number = double>
+template <int rank, int dim, typename Number= double>
 class ConstantTensorFunction : public TensorFunction<rank, dim, Number>
 {
 public:
@@ -125,9 +125,9 @@ public:
    * defaults to zero.
    */
   ConstantTensorFunction(const dealii::Tensor<rank, dim, Number>& value,
-                         const Number initial_time = 0.0);
+                         const Number initial_time= 0.0);
 
-  virtual ~ConstantTensorFunction() override = default;
+  virtual ~ConstantTensorFunction() override= default;
 
   virtual typename dealii::TensorFunction<rank, dim, Number>::value_type
   value(const Point<dim>& p) const override;
@@ -159,7 +159,7 @@ private:
  * @ingroup functions
  * @author Matthias Maier, 2013
  */
-template <int rank, int dim, typename Number = double>
+template <int rank, int dim, typename Number= double>
 class ZeroTensorFunction : public ConstantTensorFunction<rank, dim, Number>
 {
 public:
@@ -169,7 +169,7 @@ public:
    * An initial value for the time variable may be specified, otherwise it
    * defaults to zero.
    */
-  ZeroTensorFunction(const Number initial_time = 0.0);
+  ZeroTensorFunction(const Number initial_time= 0.0);
 };
 
 DEAL_II_NAMESPACE_CLOSE

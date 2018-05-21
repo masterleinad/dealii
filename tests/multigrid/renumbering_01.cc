@@ -49,11 +49,11 @@ check()
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
   DoFRenumbering::component_wise(mgdof);
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l);
 
-  typename DoFHandler<dim>::level_cell_iterator cell = mgdof.begin_mg(),
-                                                endc = mgdof.end_mg();
+  typename DoFHandler<dim>::level_cell_iterator cell= mgdof.begin_mg(),
+                                                endc= mgdof.end_mg();
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   std::vector<types::global_dof_index> mg_dof_indices(fe.dofs_per_cell);
   for(; cell != endc; ++cell)
@@ -62,14 +62,14 @@ check()
         {
           deallog << "Global numbering: ";
           cell->get_dof_indices(local_dof_indices);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             deallog << local_dof_indices[i] << ' ';
           deallog << std::endl;
         }
 
       deallog << "MG levelwise numbering: ";
       cell->get_mg_dof_indices(mg_dof_indices);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         deallog << mg_dof_indices[i] << ' ';
       deallog << std::endl;
 
@@ -77,8 +77,8 @@ check()
       // cell that dofs with lower
       // component also have lower
       // dof index
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = i + 1; j < fe.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= i + 1; j < fe.dofs_per_cell; ++j)
           {
             if(fe.system_to_component_index(i).first
                < fe.system_to_component_index(j).first)

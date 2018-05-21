@@ -23,7 +23,7 @@ template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)
 {
-  const types::global_dof_index n_dofs = dof_handler.n_dofs();
+  const types::global_dof_index n_dofs= dof_handler.n_dofs();
 
   std::vector<bool> hanging_node_dofs(n_dofs);
   DoFTools::extract_hanging_node_dofs(dof_handler, hanging_node_dofs);
@@ -32,7 +32,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  for(types::global_dof_index dof = 0; dof < n_dofs; ++dof)
+  for(types::global_dof_index dof= 0; dof < n_dofs; ++dof)
     if(hanging_node_dofs[dof])
       AssertThrow(constraints.is_constrained(dof), ExcInternalError());
 

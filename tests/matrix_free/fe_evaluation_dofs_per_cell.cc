@@ -31,17 +31,17 @@ print_info(const FEEval& eval)
 {
   // copy static variables to int to avoid taking references (with possibly
   // undefined references) when inside deallog::operator<<
-  unsigned int v = FEEval::dimension;
+  unsigned int v= FEEval::dimension;
   deallog << "FEEvaluation::dimension: " << v << std::endl;
-  v = FEEval::n_components;
+  v= FEEval::n_components;
   deallog << "FEEvaluation::n_components: " << v << std::endl;
-  v = FEEval::static_n_q_points;
+  v= FEEval::static_n_q_points;
   deallog << "FEEvaluation::static_n_q_points: " << v << std::endl;
-  v = FEEval::static_dofs_per_component;
+  v= FEEval::static_dofs_per_component;
   deallog << "FEEvaluation::static_dofs_per_component: " << v << std::endl;
-  v = FEEval::tensor_dofs_per_cell;
+  v= FEEval::tensor_dofs_per_cell;
   deallog << "FEEvaluation::tensor_dofs_per_cell: " << v << std::endl;
-  v = FEEval::static_dofs_per_cell;
+  v= FEEval::static_dofs_per_cell;
   deallog << "FEEvaluation::static_dofs_per_cell: " << v << std::endl;
   deallog << "FEEvaluation::dofs_per_component: " << eval.dofs_per_component
           << std::endl;
@@ -53,7 +53,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int               degree = 1;
+  const unsigned int               degree= 1;
   FESystem<dim>                    fe1(FE_Q<dim>(degree + 1), dim);
   FESystem<dim>                    fe2(FE_Q<dim>(degree + 1), 1);
   FESystem<dim>                    fe3(FE_DGP<dim>(degree + 1), 2);
@@ -63,7 +63,7 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   DoFHandler<dim> dof(tria);
-  for(unsigned int i = 0; i < fes.size(); ++i)
+  for(unsigned int i= 0; i < fes.size(); ++i)
     {
       deallog << "Checking " << fes[i]->get_name() << std::endl;
       dof.distribute_dofs(*fes[i]);

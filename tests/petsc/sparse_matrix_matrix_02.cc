@@ -49,8 +49,8 @@ test()
   A.Tmmult(C, B);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < C.m(); ++i)
-    for(unsigned int j = 0; j < C.n(); ++j)
+  for(unsigned int i= 0; i < C.m(); ++i)
+    for(unsigned int j= 0; j < C.n(); ++j)
       AssertThrow(C(i, j) == 3 * i + j + 1, ExcInternalError());
 
   deallog << "OK" << std::endl;

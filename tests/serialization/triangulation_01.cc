@@ -39,11 +39,11 @@ namespace dealii
     if(t1.n_faces() != t2.n_faces())
       return false;
 
-    typename Triangulation<dim, spacedim>::cell_iterator c1 = t1.begin(),
-                                                         c2 = t2.begin();
+    typename Triangulation<dim, spacedim>::cell_iterator c1= t1.begin(),
+                                                         c2= t2.begin();
     for(; (c1 != t1.end()) && (c2 != t2.end()); ++c1, ++c2)
       {
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           {
             if(c1->vertex(v) != c2->vertex(v))
               return false;
@@ -51,7 +51,7 @@ namespace dealii
               return false;
           }
 
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
           {
             if(c1->face(f)->at_boundary() != c2->face(f)->at_boundary())
               return false;
@@ -103,8 +103,8 @@ namespace dealii
 
     // also check the order of raw iterators as they contain
     // something about the history of the triangulation
-    typename Triangulation<dim, spacedim>::cell_iterator r1 = t1.begin(),
-                                                         r2 = t2.begin();
+    typename Triangulation<dim, spacedim>::cell_iterator r1= t1.begin(),
+                                                         r2= t2.begin();
     for(; (r1 != t1.end()) && (r2 != t2.end()); ++r1, ++r2)
       {
         if(r1->level() != r2->level())
@@ -121,9 +121,9 @@ template <int dim, int spacedim>
 void
 do_boundary(Triangulation<dim, spacedim>& t1)
 {
-  typename Triangulation<dim, spacedim>::cell_iterator c1 = t1.begin();
+  typename Triangulation<dim, spacedim>::cell_iterator c1= t1.begin();
   for(; c1 != t1.end(); ++c1)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(c1->at_boundary(f))
         {
           c1->face(f)->set_boundary_id(42);

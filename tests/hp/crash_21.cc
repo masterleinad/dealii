@@ -77,7 +77,7 @@ namespace Step
   Problem<dim>::Problem() : dof_handler(triangulation)
   {
     GridGenerator::hyper_cube(triangulation);
-    for(unsigned int degree = 1; degree <= 7; ++degree)
+    for(unsigned int degree= 1; degree <= 7; ++degree)
       {
         fe_collection.push_back(FE_DGQ<dim>(degree));
         quadrature_collection.push_back(QGauss<dim>(degree + 1));
@@ -132,7 +132,7 @@ test()
 
   Problem<dim> problem;
 
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for(unsigned int cycle= 0; cycle < 3; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
       problem.setup_system();

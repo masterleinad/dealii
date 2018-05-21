@@ -37,7 +37,7 @@ using namespace dealii;
 // 1: number of interior faces
 // 2: number of boundary faces
 
-const unsigned int n_functionals = 3;
+const unsigned int n_functionals= 3;
 
 template <int dim>
 class Local : public Subscriptor
@@ -60,14 +60,14 @@ template <int dim>
 void
 Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  info.value(0) = 1.;
+  info.value(0)= 1.;
 }
 
 template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  info.value(2) = 1.;
+  info.value(2)= 1.;
 }
 
 template <int dim>
@@ -77,19 +77,19 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
                  CellInfo&,
                  CellInfo&) const
 {
-  info1.value(1) = 1. / 2.;
-  info2.value(1) = 1. / 2.;
+  info1.value(1)= 1. / 2.;
+  info2.value(1)= 1. / 2.;
 }
 
 template <int dim>
 void
 test_mesh(DoFHandler<dim>& mgdofs)
 {
-  const DoFHandler<dim>& dofs = mgdofs;
+  const DoFHandler<dim>& dofs= mgdofs;
 
   BlockVector<double> cells(n_functionals);
   BlockVector<double> faces(n_functionals);
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     {
       cells.block(i).reinit(dofs.get_triangulation().n_cells());
       faces.block(i).reinit(dofs.get_triangulation().n_faces());
@@ -109,8 +109,8 @@ test_mesh(DoFHandler<dim>& mgdofs)
   assembler.initialize(out_data, true);
 
   MeshWorker::LoopControl lctrl;
-  lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.cells_first= true;
+  lctrl.own_faces  = MeshWorker::LoopControl::one;
 
   MeshWorker::loop<dim, dim, MeshWorker::DoFInfo<dim>, EmptyInfoBox>(
     dofs.begin_active(),
@@ -131,17 +131,17 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "  Results cells";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << cells.block(i).l1_norm();
   deallog << std::endl;
 
   deallog << "  Results faces";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << faces.block(i).l1_norm();
   deallog << std::endl;
 
-  cells = 0.;
-  faces = 0.;
+  cells= 0.;
+  faces= 0.;
 
   MeshWorker::DoFInfo<dim> mg_dof_info(mgdofs);
   MeshWorker::loop<dim, dim, MeshWorker::DoFInfo<dim>, EmptyInfoBox>(
@@ -163,12 +163,12 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "MGResults cells";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << cells.block(i).l1_norm();
   deallog << std::endl;
 
   deallog << "MGResults faces";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << faces.block(i).l1_norm();
   deallog << std::endl;
 }
@@ -205,7 +205,7 @@ test(const FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

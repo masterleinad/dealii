@@ -37,11 +37,11 @@ class F : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& p, const unsigned int = 0) const
+  value(const Point<dim>& p, const unsigned int= 0) const
   {
-    double s = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      s *= p[i];
+    double s= 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      s*= p[i];
     return s;
   }
 };
@@ -77,7 +77,7 @@ test()
       = dh.begin_active();
       cell != dh.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       {
         // check that the error is
         // somewhat small. it won't

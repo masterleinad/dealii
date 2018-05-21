@@ -53,7 +53,7 @@ main()
   initlog();
 
   {
-    const std::size_t n_tasks = MultithreadInfo::n_cores() * 2;
+    const std::size_t n_tasks= MultithreadInfo::n_cores() * 2;
 #ifdef _POSIX_C_SOURCE
     // get rid of the environment variable if it exists (this may not be
     // possible under MSVC, but the test will still pass; it just won't test
@@ -64,7 +64,7 @@ main()
     // reset the concurrency limit that exists in tests.h:
     MultithreadInfo::set_thread_limit(n_tasks);
     std::vector<Threads::Task<void>> tasks(n_tasks);
-    for(std::size_t task_n = 0; task_n < n_tasks; ++task_n)
+    for(std::size_t task_n= 0; task_n < n_tasks; ++task_n)
       {
         // We must save each task, otherwise it will join before the next loop
         // iteration

@@ -42,7 +42,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -66,16 +66,16 @@ test()
 
   //tr.begin_active()->set_level_subdomain_id(1+myid);
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     {
       MPI_Barrier(MPI_COMM_WORLD);
       if(myid == i)
         {
           deallog << "ID = " << i << std::endl;
-          for(unsigned int lvl = 0; lvl < tr.n_levels(); ++lvl)
+          for(unsigned int lvl= 0; lvl < tr.n_levels(); ++lvl)
             {
-              typename Triangulation<dim>::cell_iterator cell = tr.begin(lvl),
-                                                         endc = tr.end(lvl);
+              typename Triangulation<dim>::cell_iterator cell= tr.begin(lvl),
+                                                         endc= tr.end(lvl);
 
               for(; cell != endc; ++cell)
                 if(cell->level_subdomain_id() != 4294967294)

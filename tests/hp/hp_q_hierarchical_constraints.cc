@@ -39,7 +39,7 @@ test(const bool apply_constrains, const unsigned int hp)
     GridGenerator::hyper_cube(
       triangulationR, -1, 0); //create a square [-1,0]^d domain
     Point<dim> shift_vector;
-    shift_vector[0] = 1.0;
+    shift_vector[0]= 1.0;
     GridTools::shift(shift_vector, triangulationR);
     GridGenerator::merge_triangulations(
       triangulationL, triangulationR, triangulation);
@@ -66,13 +66,13 @@ test(const bool apply_constrains, const unsigned int hp)
   std::string hp_string;
   if(hp == 1)
     {
-      hp_string = "_hpSimple";
+      hp_string= "_hpSimple";
       cell->set_refine_flag();
     }
   // refine second cell
   else if(hp == 2)
     {
-      hp_string = "_hpComplex";
+      hp_string= "_hpComplex";
       cell++;
       cell->set_refine_flag();
     }
@@ -84,17 +84,17 @@ test(const bool apply_constrains, const unsigned int hp)
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  const unsigned int n_dofs = dof_handler.n_dofs();
+  const unsigned int n_dofs= dof_handler.n_dofs();
 
   Vector<double> v(n_dofs);
 
   if(apply_constrains)
     deallog << hp_string << std::endl;
 
-  for(unsigned int i = 0; i < n_dofs; i++)
+  for(unsigned int i= 0; i < n_dofs; i++)
     {
-      v    = 0.;
-      v[i] = 1.;
+      v   = 0.;
+      v[i]= 1.;
       if(apply_constrains)
         {
           constraints.distribute(v);

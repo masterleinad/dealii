@@ -49,7 +49,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
+    values(0)= value(p, 0);
   }
 };
 
@@ -64,9 +64,9 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const
   {
-    double val = 0.0;
+    double val= 0.0;
     if(std::abs(p(1) - 1.0) < 1e-5)
-      val = 2.0;
+      val= 2.0;
 
     deallog << "evaluate normal derivative at " << p << " with value " << val
             << std::endl;
@@ -76,7 +76,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
+    values(0)= value(p, 0);
   }
 };
 
@@ -122,7 +122,7 @@ check()
   dof.distribute_dofs(element);
 
   MappingQ<dim, spacedim> mapping(3);
-  Quadrature<dim - 1>&    q_face = get_q_face<dim>();
+  Quadrature<dim - 1>&    q_face= get_q_face<dim>();
 
   Vector<double> v(dof.n_dofs());
   VectorTools::interpolate(mapping, dof, function, v);
@@ -131,14 +131,14 @@ check()
 
   std::map<types::boundary_id, const Function<spacedim>*> neumann_bc;
   MyNormalDerivative<spacedim>                            function_normal;
-  neumann_bc[0] = &function_normal;
-  neumann_bc[1] = &function_normal;
+  neumann_bc[0]= &function_normal;
+  neumann_bc[1]= &function_normal;
 
   deallog << "estimating..." << std::endl;
   KellyErrorEstimator<dim, spacedim>::estimate(
     mapping, dof, q_face, neumann_bc, v, error);
   deallog << "Estimated error indicators:" << std::endl;
-  for(unsigned int i = 0; i < error.size(); ++i)
+  for(unsigned int i= 0; i < error.size(); ++i)
     deallog << error(i) << std::endl;
 
   {
@@ -148,8 +148,8 @@ check()
       v, "solution", DataOut<dim, DoFHandler<dim, spacedim>>::type_dof_data);
     data_out.add_data_vector(error, "error");
     data_out.build_patches();
-    std::string filename = spacedim == 2 ? "solution-2d-" : "solution-3d-";
-    filename += Utilities::int_to_string(0, 2) + ".vtk";
+    std::string filename= spacedim == 2 ? "solution-2d-" : "solution-3d-";
+    filename+= Utilities::int_to_string(0, 2) + ".vtk";
     std::ofstream output(filename.c_str());
     data_out.write_vtk(output);
   }

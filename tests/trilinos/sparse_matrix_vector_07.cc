@@ -28,14 +28,14 @@ test(TrilinosWrappers::MPI::Vector& v,
      TrilinosWrappers::MPI::Vector& x)
 {
   TrilinosWrappers::SparseMatrix m(v.size(), v.size(), v.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1;
+      v(i)= i;
+      w(i)= i + 1;
     }
 
   m.compress(VectorOperation::insert);
@@ -43,17 +43,17 @@ test(TrilinosWrappers::MPI::Vector& v,
   w.compress(VectorOperation::insert);
 
   // x=w-Mv
-  const double s = m.residual(x, v, w);
+  const double s= m.residual(x, v, w);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(v(i) == i, ExcInternalError());
       AssertThrow(w(i) == i + 1, ExcInternalError());
 
-      double result = i + 1;
-      for(unsigned int j = 0; j < m.m(); ++j)
-        result -= (i + 2 * j) * j;
+      double result= i + 1;
+      for(unsigned int j= 0; j < m.m(); ++j)
+        result-= (i + 2 * j) * j;
 
       AssertThrow(x(i) == result, ExcInternalError());
     }

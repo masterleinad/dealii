@@ -36,8 +36,8 @@ public:
   pull_back(const Point<spacedim>& space_point) const override
   {
     Point<spacedim> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
-      p[d] = space_point[d];
+    for(unsigned int d= 0; d < spacedim; ++d)
+      p[d]= space_point[d];
     return p;
   }
 
@@ -45,8 +45,8 @@ public:
   push_forward(const Point<spacedim>& chart_point) const override
   {
     Point<spacedim> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
-      p[d] = chart_point[d];
+    for(unsigned int d= 0; d < spacedim; ++d)
+      p[d]= chart_point[d];
     return p;
   }
 
@@ -54,8 +54,8 @@ public:
   push_forward_gradient(const Point<spacedim>& chart_point) const override
   {
     DerivativeForm<1, spacedim, spacedim> x;
-    for(unsigned int d = 0; d < spacedim; ++d)
-      x[d][d] = 1;
+    for(unsigned int d= 0; d < spacedim; ++d)
+      x[d][d]= 1;
     return x;
   }
 };
@@ -70,10 +70,10 @@ test()
   MyFlatManifold<dim, spacedim> manifold;
 
   Point<spacedim> x1, x2;
-  for(unsigned int d = 0; d < spacedim; ++d)
+  for(unsigned int d= 0; d < spacedim; ++d)
     {
-      x1[d] = 0.1;
-      x2[d] = 0.9;
+      x1[d]= 0.1;
+      x2[d]= 0.9;
     }
 
   // get the connecting vector between these two points. because we

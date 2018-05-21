@@ -34,13 +34,13 @@ void
 print_dofs(const DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
       deallog << "Cell " << cell << " -- ";
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(unsigned int i= 0; i < v.size(); ++i)
         deallog << v[i] << ' ';
       deallog << std::endl;
     }
@@ -51,13 +51,13 @@ void
 print_dofs(const DoFHandler<dim>& dof, unsigned int level)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
-  for(typename DoFHandler<dim>::cell_iterator cell = dof.begin(level);
+  for(typename DoFHandler<dim>::cell_iterator cell= dof.begin(level);
       cell != dof.end(level);
       ++cell)
     {
       deallog << "Cell " << cell << " -- ";
       cell->get_mg_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(unsigned int i= 0; i < v.size(); ++i)
         deallog << v[i] << ' ';
       deallog << std::endl;
     }
@@ -67,18 +67,18 @@ template <int dim>
 void
 check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
 {
-  const FiniteElement<dim>& element = mgdof.get_fe();
-  DoFHandler<dim>&          dof     = mgdof;
+  const FiniteElement<dim>& element= mgdof.get_fe();
+  DoFHandler<dim>&          dof    = mgdof;
 
   // Prepare a reordering of
   // components for later use
   std::vector<unsigned int> order(element.n_components());
-  for(unsigned int i = 0; i < order.size(); ++i)
-    order[i] = order.size() - i - 1;
+  for(unsigned int i= 0; i < order.size(); ++i)
+    order[i]= order.size() - i - 1;
 
   Tensor<1, dim> direction;
-  for(unsigned int i = 0; i < dim; ++i)
-    direction[i] = std::pow(10., static_cast<double>(i));
+  for(unsigned int i= 0; i < dim; ++i)
+    direction[i]= std::pow(10., static_cast<double>(i));
 
   // Check global ordering
   print_dofs(dof);
@@ -101,14 +101,14 @@ check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
   print_dofs(dof);
 
   std::vector<bool> selected_dofs(dof.n_dofs(), false);
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     if(i % 2 == 0)
-      selected_dofs[i] = true;
+      selected_dofs[i]= true;
   DoFRenumbering::sort_selected_dofs_back(dof, selected_dofs);
   print_dofs(dof);
 
   // Check level ordering
-  for(unsigned int level = 0; level < dof.get_triangulation().n_levels();
+  for(unsigned int level= 0; level < dof.get_triangulation().n_levels();
       ++level)
     {
       print_dofs(mgdof, level);

@@ -103,12 +103,12 @@ check()
   // compute reference: need to cancel constrained entries as these will in
   // general get different values
   matrix.add(-1., matrix_ref);
-  for(unsigned int i = 0; i < matrix.m(); ++i)
+  for(unsigned int i= 0; i < matrix.m(); ++i)
     if(constraints.is_constrained(i) == true)
-      matrix.diag_element(i) = 0;
+      matrix.diag_element(i)= 0;
   deallog << "Matrix error Frobenius: " << matrix.frobenius_norm() << std::endl;
 
-  rhs -= rhs_ref;
+  rhs-= rhs_ref;
   deallog << "RHS vector error l2: " << rhs.l2_norm() << std::endl;
 }
 

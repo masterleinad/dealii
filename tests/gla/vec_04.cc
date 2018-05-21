@@ -28,8 +28,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -45,15 +45,15 @@ test()
   typename LA::MPI::Vector vb(local_active, MPI_COMM_WORLD);
   typename LA::MPI::Vector v(local_active, local_relevant, MPI_COMM_WORLD);
 
-  vb = 1.0;
+  vb= 1.0;
 
   // set local values
-  vb(myid * 2)     = myid * 2.0;
-  vb(myid * 2 + 1) = myid * 2.0 + 1.0;
+  vb(myid * 2)    = myid * 2.0;
+  vb(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   vb.compress(VectorOperation::insert);
-  vb *= 2.0;
-  v = vb;
+  vb*= 2.0;
+  v= vb;
 
   Assert(vb.size() == numproc * 2, ExcInternalError());
   Assert(v.size() == numproc * 2, ExcInternalError());
@@ -66,21 +66,21 @@ test()
 
   {
     typename LA::MPI::Vector x;
-    x = v; // x is empty so it should copy layout(with ghosts) and data
+    x= v; // x is empty so it should copy layout(with ghosts) and data
     Assert(x.has_ghost_elements(), ExcInternalError());
     deallog << "ghosted value: " << get_real_assert_zero_imag(x(1))
             << std::endl;
-    x = vb; // import, so keep ghost elements
+    x= vb; // import, so keep ghost elements
     Assert(x.has_ghost_elements(), ExcInternalError());
     deallog << "ghosted value: " << get_real_assert_zero_imag(x(1))
             << std::endl;
   }
   {
     typename LA::MPI::Vector x;
-    x = vb;
+    x= vb;
     Assert(!x.has_ghost_elements(), ExcInternalError());
-    x = test;
-    x = v;
+    x= test;
+    x= v;
     Assert(x.has_ghost_elements(), ExcInternalError());
     deallog << "ghosted value: " << get_real_assert_zero_imag(x(1))
             << std::endl;

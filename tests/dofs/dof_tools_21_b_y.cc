@@ -54,7 +54,7 @@ using namespace dealii;
 /* The 2D case */
 void generate_grid(Triangulation<2>& triangulation)
 {
-  Point<2> vertices_1[] = {
+  Point<2> vertices_1[]= {
     Point<2>(-1., -3.),
     Point<2>(+1., -3.),
     Point<2>(-1., -1.),
@@ -69,34 +69,34 @@ void generate_grid(Triangulation<2>& triangulation)
   std::vector<CellData<2>> cells(2, CellData<2>());
 
   /* cell 0 */
-  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell] = {0, 1, 2, 3};
+  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell]= {0, 1, 2, 3};
 
   /* cell 1 */
-  int cell_vertices_1[GeometryInfo<2>::vertices_per_cell] = {7, 6, 5, 4};
+  int cell_vertices_1[GeometryInfo<2>::vertices_per_cell]= {7, 6, 5, 4};
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
-      cells[0].vertices[j] = cell_vertices_0[j];
-      cells[1].vertices[j] = cell_vertices_1[j];
+      cells[0].vertices[j]= cell_vertices_0[j];
+      cells[1].vertices[j]= cell_vertices_1[j];
     }
-  cells[0].material_id = 0;
-  cells[1].material_id = 0;
+  cells[0].material_id= 0;
+  cells[1].material_id= 0;
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
   triangulation.refine_global(1);
 
-  Triangulation<2>::cell_iterator cell_1 = triangulation.begin();
-  Triangulation<2>::cell_iterator cell_2 = cell_1++;
+  Triangulation<2>::cell_iterator cell_1= triangulation.begin();
+  Triangulation<2>::cell_iterator cell_2= cell_1++;
   Triangulation<2>::face_iterator face_1;
   Triangulation<2>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<2>::faces_per_cell; ++j)
     {
       if(cell_1->face(j)->center()(1) > 2.9)
-        face_1 = cell_1->face(j);
+        face_1= cell_1->face(j);
       if(cell_2->face(j)->center()(1) < -2.9)
-        face_2 = cell_2->face(j);
+        face_2= cell_2->face(j);
     }
   face_1->set_boundary_id(42);
   face_2->set_boundary_id(43);
@@ -110,7 +110,7 @@ template <int dim>
 void
 print_matching(DoFHandler<dim>& dof_handler)
 {
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim>& fe= dof_handler.get_fe();
   MappingQ<dim>             mapping(1);
 
   ConstraintMatrix        constraint_matrix;
@@ -121,8 +121,7 @@ print_matching(DoFHandler<dim>& dof_handler)
   // Look for the two outermost faces:
   typename DoFHandler<dim>::face_iterator face_1
     = (++dof_handler.begin(0))->face(2);
-  typename DoFHandler<dim>::face_iterator face_2
-    = dof_handler.begin(0)->face(2);
+  typename DoFHandler<dim>::face_iterator face_2= dof_handler.begin(0)->face(2);
 
   // Determine the orientation of the two faces:
 
@@ -133,18 +132,18 @@ print_matching(DoFHandler<dim>& dof_handler)
 
   // Print out all DoF support points on the two faces:
   deallog << "DoFs of face_1:" << std::endl;
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     deallog << dofs_1[i] << " is located at " << support_points[dofs_1[i]]
             << std::endl;
   deallog << "DoFs of face_2:" << std::endl;
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     deallog << dofs_2[i] << " is located at " << support_points[dofs_2[i]]
             << std::endl;
 
   std::bitset<3> orientation;
-  orientation[0] = 1;
-  orientation[1] = 1;
-  orientation[2] = 0;
+  orientation[0]= 1;
+  orientation[1]= 1;
+  orientation[2]= 0;
 
   DoFTools::make_periodicity_constraints(face_1,
                                          face_2,

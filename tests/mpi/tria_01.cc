@@ -31,7 +31,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tr);
@@ -53,7 +53,7 @@ test()
   //if (myid!=0)
   //   Assert(tr.begin(1)==tr.end(1), ExcInternalError());
 
-  const unsigned int checksum = tr.get_checksum();
+  const unsigned int checksum= tr.get_checksum();
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Checksum: " << checksum << std::endl;
 

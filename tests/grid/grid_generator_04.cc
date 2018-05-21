@@ -48,9 +48,9 @@ test(std::ostream& out)
   Nzs.push_back(3);
   Nzs.push_back(4);
 
-  for(unsigned int i = 0; i < radii.size(); ++i)
-    for(unsigned int k = 0; k < (dim == 2 ? 1 : Ls.size()); ++k)
-      for(unsigned int l = 0; l < (dim == 2 ? 1 : Ls.size()); ++l)
+  for(unsigned int i= 0; i < radii.size(); ++i)
+    for(unsigned int k= 0; k < (dim == 2 ? 1 : Ls.size()); ++k)
+      for(unsigned int l= 0; l < (dim == 2 ? 1 : Ls.size()); ++l)
         {
           out << "               ====================" << std::endl
               << "Inner radius = " << radii[i] << std::endl

@@ -28,13 +28,13 @@ void
 check_interpolation(const std::vector<Polynomial<double>>& p,
                     const std::vector<Point<1>>&           x)
 {
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for(unsigned int i= 0; i < p.size(); ++i)
     {
       deallog << i;
-      for(unsigned int k = 0; k < x.size(); ++k)
+      for(unsigned int k= 0; k < x.size(); ++k)
         {
           deallog << '.';
-          const double y = p[i].value(x[k](0));
+          const double y= p[i].value(x[k](0));
           if(i == k)
             {
               if(std::fabs(y - 1.) > 1e-13)
@@ -58,13 +58,13 @@ check_constant(const std::vector<Polynomial<double>>& p)
   // check whether the sum of all polynomials in
   // the basis gives one for a given point
   deallog << "Representation of one at random points";
-  for(unsigned int j = 0; j < 12; ++j)
+  for(unsigned int j= 0; j < 12; ++j)
     {
-      double x     = random_value<double>();
-      double value = 0;
-      for(unsigned int i = 0; i < p.size(); ++i)
+      double x    = random_value<double>();
+      double value= 0;
+      for(unsigned int i= 0; i < p.size(); ++i)
         {
-          value += p[i].value(x);
+          value+= p[i].value(x);
         }
       deallog << ".";
       if(std::fabs(1. - value) > 1e-13)
@@ -92,9 +92,9 @@ check_lge(unsigned int n)
   std::vector<Polynomial<double>> p
     = LagrangeEquidistant::generate_complete_basis(n);
   std::vector<Point<1>> x(n + 1);
-  const double          h = 1. / n;
-  for(unsigned int i = 0; i <= n; ++i)
-    x[i](0) = h * i;
+  const double          h= 1. / n;
+  for(unsigned int i= 0; i <= n; ++i)
+    x[i](0)= h * i;
   check_interpolation(p, x);
   check_constant(p);
   deallog << std::endl;
@@ -108,7 +108,7 @@ main()
   deallog.attach(logfile);
 
   deallog.push("LagrangeEquidistant");
-  for(unsigned i = 8; i < 18; i += 2)
+  for(unsigned i= 8; i < 18; i+= 2)
     check_lge(i);
   deallog.pop();
   deallog << std::endl;
@@ -117,7 +117,7 @@ main()
   // conditioning, so test to some very high
   // orders
   deallog.push("GaussLobatto");
-  for(unsigned i = 8; i < 40; i += 3)
+  for(unsigned i= 8; i < 40; i+= 3)
     check_poly(QGaussLobatto<1>(i + 1));
   deallog.pop();
 }

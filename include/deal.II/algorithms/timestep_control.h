@@ -73,12 +73,12 @@ namespace Algorithms
     /**
      * Constructor setting default values
      */
-    TimestepControl(double start      = 0.,
-                    double final      = 1.,
-                    double tolerance  = 1.e-2,
-                    double start_step = 1.e-2,
-                    double print_step = -1.,
-                    double max_step   = 1.);
+    TimestepControl(double start     = 0.,
+                    double final     = 1.,
+                    double tolerance = 1.e-2,
+                    double start_step= 1.e-2,
+                    double print_step= -1.,
+                    double max_step  = 1.);
 
     /**
      * Declare the control parameters for parameter handler.
@@ -236,49 +236,49 @@ namespace Algorithms
   inline void
   TimestepControl::start(double t)
   {
-    start_val = t;
+    start_val= t;
   }
 
   inline void
   TimestepControl::final(double t)
   {
-    final_val = t;
+    final_val= t;
   }
 
   inline void
   TimestepControl::tolerance(double t)
   {
-    tolerance_val = t;
+    tolerance_val= t;
   }
 
   inline void
   TimestepControl::strategy(Strategy t)
   {
-    strategy_val = t;
+    strategy_val= t;
   }
 
   inline void
   TimestepControl::start_step(const double t)
   {
-    start_step_val = t;
+    start_step_val= t;
   }
 
   inline void
   TimestepControl::max_step(double t)
   {
-    max_step_val = t;
+    max_step_val= t;
   }
 
   inline void
   TimestepControl::restart()
   {
-    now_val          = start_val;
-    step_val         = start_step_val;
-    current_step_val = step_val;
+    now_val         = start_val;
+    step_val        = start_step_val;
+    current_step_val= step_val;
     if(print_step > 0.)
-      next_print_val = now_val + print_step;
+      next_print_val= now_val + print_step;
     else
-      next_print_val = now_val - 1.;
+      next_print_val= now_val - 1.;
   }
 
   inline void

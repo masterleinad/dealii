@@ -39,7 +39,7 @@ namespace parallel
    * work in parallel, namely parallel::distributed::Triangulation and
    * parallel::shared::Triangulation.
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class Triangulation : public dealii::Triangulation<dim, spacedim>
   {
   public:
@@ -51,7 +51,7 @@ namespace parallel
       const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
         smooth_grid
       = (dealii::Triangulation<dim, spacedim>::none),
-      const bool check_for_distorted_cells = false);
+      const bool check_for_distorted_cells= false);
 
     /**
      * Destructor.

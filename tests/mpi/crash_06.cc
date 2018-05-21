@@ -82,7 +82,7 @@ testit()
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_DGQ<dim>(2)));
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Q_DG0<dim>(2)));
 
-  for(unsigned int i = 0; i < fes.size(); ++i)
+  for(unsigned int i= 0; i < fes.size(); ++i)
     {
       deallog << fes[i]->get_name() << std::endl;
       test<dim>(*fes[i]);

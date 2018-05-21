@@ -40,7 +40,7 @@ template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler)
 {
-  const types::global_dof_index n_dofs = dof_handler.n_dofs();
+  const types::global_dof_index n_dofs= dof_handler.n_dofs();
 
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -77,7 +77,7 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, 0., 1.);
   tria.refine_global(1);
-  for(unsigned int ref = 0; ref < 2; ++ref)
+  for(unsigned int ref= 0; ref < 2; ++ref)
     {
       for(auto cell : tria.active_cell_iterators())
         if(cell->is_locally_owned() && cell->center()(0) < .5

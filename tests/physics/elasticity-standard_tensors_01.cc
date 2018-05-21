@@ -22,8 +22,8 @@
 
 using namespace dealii::Physics::Elasticity;
 
-const double c10 = 10.0;
-const double c01 = 20.0;
+const double c10= 10.0;
+const double c01= 20.0;
 
 // Consider a Mooney-Rivlin material:
 // psi = c10.(I1 - dim) + c01.(I2 - dim)
@@ -34,8 +34,8 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_S(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> C  = symmetrize(transpose(F) * F);
-  const double                  I1 = first_invariant(C);
+  const SymmetricTensor<2, dim> C = symmetrize(transpose(F) * F);
+  const double                  I1= first_invariant(C);
   return 2.0 * c10 * StandardTensors<dim>::I
          + 2.0 * c01 * (I1 * StandardTensors<dim>::I - C);
 }
@@ -46,8 +46,8 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_tau(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> b  = symmetrize(F * transpose(F));
-  const double                  I1 = first_invariant(b);
+  const SymmetricTensor<2, dim> b = symmetrize(F * transpose(F));
+  const double                  I1= first_invariant(b);
   const SymmetricTensor<2, dim> tmp
     = 2.0 * c10 * StandardTensors<dim>::I
       + 2.0 * c01 * (I1 * StandardTensors<dim>::I - b);
@@ -60,9 +60,9 @@ void
 test_standard_tensors()
 {
   SymmetricTensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      t[i][j] = dim * i + j + 1.0;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      t[i][j]= dim * i + j + 1.0;
 
   // Check second-order identity tensor I:
   AssertThrow(std::fabs(StandardTensors<dim>::I * t - trace(t)) < 1e-14,
@@ -104,9 +104,9 @@ test_standard_tensors()
 
   // Check referential deviatoric tensor Dev_P:
   Tensor<2, dim> F(unit_symmetric_tensor<dim>());
-  F[0][1]                    = 0.5;
-  F[1][0]                    = 0.25;
-  const Tensor<2, dim> F_inv = invert(F);
+  F[0][1]                   = 0.5;
+  F[1][0]                   = 0.25;
+  const Tensor<2, dim> F_inv= invert(F);
 
   // Pull-back a fictitious stress tensor, project it onto a deviatoric space, and
   // then push it forward again
@@ -115,7 +115,7 @@ test_standard_tensors()
     = symmetrize(F_inv * static_cast<Tensor<2, dim>>(t) * transpose(F_inv));
   const SymmetricTensor<2, dim> Dev_P_T_x_s
     = StandardTensors<dim>::Dev_P_T(F) * s;
-  const SymmetricTensor<2, dim> s_x_Dev_P = s * StandardTensors<dim>::Dev_P(F);
+  const SymmetricTensor<2, dim> s_x_Dev_P= s * StandardTensors<dim>::Dev_P(F);
 
   // Note: The extra factor J^{2/dim} arises due to the definition of Dev_P
   //       including the factor J^{-2/dim}. Ultimately the stress definitions
@@ -138,15 +138,15 @@ test_standard_tensors()
               ExcInternalError());
 
   // Repeat the above exercise for a "real" material response
-  const Tensor<2, dim> F_bar = std::pow(determinant(F), -1.0 / dim) * F;
-  const SymmetricTensor<2, dim> S_bar = get_S(F_bar);
+  const Tensor<2, dim>          F_bar= std::pow(determinant(F), -1.0 / dim) * F;
+  const SymmetricTensor<2, dim> S_bar= get_S(F_bar);
   const SymmetricTensor<2, dim> tau_bar
     = symmetrize(F_bar * static_cast<Tensor<2, dim>>(S_bar)
                  * transpose(F_bar)); // Note: tau_bar = tau(F) |_{F = F_bar}
   AssertThrow(std::fabs((tau_bar - get_tau(F_bar)).norm()) < 1e-9,
               ExcInternalError());
-  const SymmetricTensor<2, dim> S_iso = S_bar * StandardTensors<dim>::Dev_P(F);
-  const SymmetricTensor<2, dim> tau_iso = StandardTensors<dim>::dev_P * tau_bar;
+  const SymmetricTensor<2, dim> S_iso  = S_bar * StandardTensors<dim>::Dev_P(F);
+  const SymmetricTensor<2, dim> tau_iso= StandardTensors<dim>::dev_P * tau_bar;
   AssertThrow(
     std::fabs((symmetrize(F * static_cast<Tensor<2, dim>>(S_iso) * transpose(F))
                - tau_iso)

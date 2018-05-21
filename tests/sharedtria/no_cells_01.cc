@@ -66,11 +66,11 @@ test()
   deallog << "n_locally_owned_dofs_per_processor: ";
   std::vector<types::global_dof_index> v
     = dof_handler.n_locally_owned_dofs_per_processor();
-  unsigned int sum = 0;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  unsigned int sum= 0;
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       deallog << v[i] << " ";
-      sum += v[i];
+      sum+= v[i];
     }
   deallog << " sum: " << sum << std::endl;
   deallog << " locally_owned_dofs: ";
@@ -85,7 +85,7 @@ test()
            == dof_handler.locally_owned_dofs().n_elements(),
          ExcInternalError());
 
-  const unsigned int N = dof_handler.n_dofs();
+  const unsigned int N= dof_handler.n_dofs();
 
   Assert(dof_handler.n_locally_owned_dofs() <= N, ExcInternalError());
   Assert(
@@ -96,7 +96,7 @@ test()
     ExcInternalError());
 
   IndexSet all(N);
-  for(unsigned int i = 0;
+  for(unsigned int i= 0;
       i < dof_handler.locally_owned_dofs_per_processor().size();
       ++i)
     {

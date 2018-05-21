@@ -77,7 +77,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -88,7 +88,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -96,9 +96,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 4 * std::pow(p(i), 4);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 4 * std::pow(p(i), 4);
 
   return return_value;
 }
@@ -159,8 +159,8 @@ LaplaceProblem<dim>::assemble_system()
                                   | update_quadrature_points
                                   | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe[0].dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula[0].size();
+  const unsigned int dofs_per_cell= fe[0].dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -169,23 +169,23 @@ LaplaceProblem<dim>::assemble_system()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       x_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim>& fe_values= x_fe_values.get_present_fe_values();
 
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                    * fe_values.shape_grad(j, q_point)
-                                    * fe_values.JxW(q_point));
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                   * fe_values.shape_grad(j, q_point)
+                                   * fe_values.JxW(q_point));
 
             cell_rhs(i)
               += (fe_values.shape_value(i, q_point)
@@ -194,13 +194,13 @@ LaplaceProblem<dim>::assemble_system()
           }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          system_rhs(local_dof_indices[i]) += cell_rhs(i);
+          system_rhs(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 

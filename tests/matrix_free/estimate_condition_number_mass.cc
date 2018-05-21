@@ -48,14 +48,14 @@ mass_operator(const MatrixFree<dim, Number>&               data,
               const std::pair<unsigned int, unsigned int>& cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-  const unsigned int n_q_points = fe_eval.n_q_points;
+  const unsigned int n_q_points= fe_eval.n_q_points;
 
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.read_dof_values(src);
       fe_eval.evaluate(true, false, false);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(fe_eval.get_value(q), q);
         }
@@ -75,12 +75,12 @@ public:
   void
   vmult(Vector<Number>& dst, const Vector<Number>& src) const
   {
-    dst = 0;
+    dst= 0;
     const std::function<void(const MatrixFree<dim, Number>&,
                              Vector<Number>&,
                              const Vector<Number>&,
                              const std::pair<unsigned int, unsigned int>&)>
-      wrap = mass_operator<dim, fe_degree, Number>;
+      wrap= mass_operator<dim, fe_degree, Number>;
     data.cell_loop(wrap, dst, src);
   };
 
@@ -109,7 +109,7 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
   {
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_block_size = 8 / VectorizedArray<number>::n_array_elements;
+    data.tasks_block_size= 8 / VectorizedArray<number>::n_array_elements;
     mf_data.reinit(dof, constraints, quad, data);
   }
 

@@ -31,11 +31,11 @@ namespace Algorithms
                                                    OperatorBase& i)
     : vtheta(0.5), adaptive(false), op_explicit(&e), op_implicit(&i)
   {
-    d_explicit.step = numbers::signaling_nan<double>();
-    d_explicit.time = numbers::signaling_nan<double>();
+    d_explicit.step= numbers::signaling_nan<double>();
+    d_explicit.time= numbers::signaling_nan<double>();
 
-    d_implicit.step = numbers::signaling_nan<double>();
-    d_implicit.time = numbers::signaling_nan<double>();
+    d_implicit.step= numbers::signaling_nan<double>();
+    d_implicit.time= numbers::signaling_nan<double>();
   }
 
   template <typename VectorType>
@@ -63,8 +63,8 @@ namespace Algorithms
   {
     param.enter_subsection("ThetaTimestepping");
     control.parse_parameters(param);
-    vtheta   = param.get_double("Theta");
-    adaptive = param.get_bool("Adaptive");
+    vtheta  = param.get_double("Theta");
+    adaptive= param.get_bool("Adaptive");
     param.leave_subsection();
   }
 
@@ -76,14 +76,14 @@ namespace Algorithms
 
     LogStream::Prefix prefix("Theta");
 
-    VectorType&                     solution = *out.entry<VectorType*>(0);
+    VectorType&                     solution= *out.entry<VectorType*>(0);
     GrowingVectorMemory<VectorType> mem;
     typename VectorMemory<VectorType>::Pointer aux(mem);
     aux->reinit(solution);
 
     control.restart();
 
-    d_explicit.time = control.now();
+    d_explicit.time= control.now();
 
     // The data used to compute the
     // vector associated with the old
@@ -110,12 +110,12 @@ namespace Algorithms
     if(output != nullptr)
       (*output) << 0U << out;
 
-    for(unsigned int count = 1; d_explicit.time < control.final(); ++count)
+    for(unsigned int count= 1; d_explicit.time < control.final(); ++count)
       {
-        const bool step_change = control.advance();
-        d_implicit.time        = control.now();
-        d_explicit.step        = (1. - vtheta) * control.step();
-        d_implicit.step        = vtheta * control.step();
+        const bool step_change= control.advance();
+        d_implicit.time       = control.now();
+        d_explicit.step       = (1. - vtheta) * control.step();
+        d_implicit.step       = vtheta * control.step();
         deallog << "Time step:" << d_implicit.time << std::endl;
 
         op_explicit->notify(Events::new_time);
@@ -134,7 +134,7 @@ namespace Algorithms
         if(output != nullptr && control.print())
           (*output) << count << out;
 
-        d_explicit.time = control.now();
+        d_explicit.time= control.now();
       }
   }
 } // namespace Algorithms

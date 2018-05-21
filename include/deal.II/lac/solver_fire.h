@@ -82,7 +82,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Vishal Boddu, Denis Davydov, 2017
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverFIRE : public Solver<VectorType>
 {
 public:
@@ -96,9 +96,9 @@ public:
      * Euler integration step to 0.1, the maximum time step to 1 and the
      * maximum change allowed in any variable (per iteration) to 1.
      */
-    explicit AdditionalData(const double initial_timestep    = 0.1,
-                            const double maximum_timestep    = 1,
-                            const double maximum_linfty_norm = 1);
+    explicit AdditionalData(const double initial_timestep   = 0.1,
+                            const double maximum_timestep   = 1,
+                            const double maximum_linfty_norm= 1);
 
     /**
      * Initial time step for the (forward) Euler integration step.
@@ -121,7 +121,7 @@ public:
    */
   SolverFIRE(SolverControl&            solver_control,
              VectorMemory<VectorType>& vector_memory,
-             const AdditionalData&     data = AdditionalData());
+             const AdditionalData&     data= AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
@@ -143,7 +143,7 @@ public:
    * passed in as first argument based on the second argument-- the state of
    * variables.
    */
-  template <typename PreconditionerType = DiagonalMatrix<VectorType>>
+  template <typename PreconditionerType= DiagonalMatrix<VectorType>>
   void
   solve(const std::function<double(VectorType&, const VectorType&)>& compute,
         VectorType&                                                  x,
@@ -230,13 +230,13 @@ SolverFIRE<VectorType>::solve(
   LogStream::Prefix prefix("FIRE");
 
   // FIRE algorithm constants
-  const double DELAYSTEP       = 5;
-  const double TIMESTEP_GROW   = 1.1;
-  const double TIMESTEP_SHRINK = 0.5;
-  const double ALPHA_0         = 0.1;
-  const double ALPHA_SHRINK    = 0.99;
+  const double DELAYSTEP      = 5;
+  const double TIMESTEP_GROW  = 1.1;
+  const double TIMESTEP_SHRINK= 0.5;
+  const double ALPHA_0        = 0.1;
+  const double ALPHA_SHRINK   = 0.99;
 
-  using real_type = typename VectorType::real_type;
+  using real_type= typename VectorType::real_type;
 
   typename VectorMemory<VectorType>::Pointer v(this->memory);
   typename VectorMemory<VectorType>::Pointer g(this->memory);
@@ -247,27 +247,27 @@ SolverFIRE<VectorType>::solve(
   g->reinit(x, true);
 
   // Refer to v and g with some readable names.
-  VectorType& velocities = *v;
-  VectorType& gradients  = *g;
+  VectorType& velocities= *v;
+  VectorType& gradients = *g;
 
   // Update gradients for the new x.
   compute(gradients, x);
 
-  unsigned int iter = 0;
+  unsigned int iter= 0;
 
-  SolverControl::State conv = SolverControl::iterate;
-  conv = this->iteration_status(iter, gradients * gradients, x);
+  SolverControl::State conv= SolverControl::iterate;
+  conv= this->iteration_status(iter, gradients * gradients, x);
   if(conv != SolverControl::iterate)
     return;
 
   // Refer to additional data members with some readable names.
-  const auto& maximum_timestep = additional_data.maximum_timestep;
-  double      timestep         = additional_data.initial_timestep;
+  const auto& maximum_timestep= additional_data.maximum_timestep;
+  double      timestep        = additional_data.initial_timestep;
 
   // First scaling factor.
-  double alpha = ALPHA_0;
+  double alpha= ALPHA_0;
 
-  unsigned int previous_iter_with_positive_v_dot_g = 0;
+  unsigned int previous_iter_with_positive_v_dot_g= 0;
 
   while(conv == SolverControl::iterate)
     {
@@ -280,17 +280,17 @@ SolverFIRE<VectorType>::solve(
       // Compute gradients for the new x.
       compute(gradients, x);
 
-      const real_type gradient_norm_squared = gradients * gradients;
-      conv = this->iteration_status(iter, gradient_norm_squared, x);
+      const real_type gradient_norm_squared= gradients * gradients;
+      conv= this->iteration_status(iter, gradient_norm_squared, x);
       if(conv != SolverControl::iterate)
         break;
 
       // v_dot_g = V * G
-      const real_type v_dot_g = velocities * gradients;
+      const real_type v_dot_g= velocities * gradients;
 
       if(v_dot_g < 0.)
         {
-          const real_type velocities_norm_squared = velocities * velocities;
+          const real_type velocities_norm_squared= velocities * velocities;
 
           // Check if we divide by zero in DEBUG mode.
           Assert(gradient_norm_squared > 0., ExcInternalError());
@@ -306,20 +306,20 @@ SolverFIRE<VectorType>::solve(
           if(iter - previous_iter_with_positive_v_dot_g > DELAYSTEP)
             {
               // Increase timestep and decrease alpha.
-              timestep = std::min(timestep * TIMESTEP_GROW, maximum_timestep);
-              alpha *= ALPHA_SHRINK;
+              timestep= std::min(timestep * TIMESTEP_GROW, maximum_timestep);
+              alpha*= ALPHA_SHRINK;
             }
         }
       else
         {
           // Decrease timestep, reset alpha and set V = 0.
-          previous_iter_with_positive_v_dot_g = iter;
-          timestep *= TIMESTEP_SHRINK;
-          alpha      = ALPHA_0;
-          velocities = 0.;
+          previous_iter_with_positive_v_dot_g= iter;
+          timestep*= TIMESTEP_SHRINK;
+          alpha     = ALPHA_0;
+          velocities= 0.;
         }
 
-      real_type vmax = velocities.linfty_norm();
+      real_type vmax= velocities.linfty_norm();
 
       // Change timestep if any dof would move more than maximum_linfty_norm.
       if(vmax > 0.)
@@ -327,7 +327,7 @@ SolverFIRE<VectorType>::solve(
           const double minimal_timestep
             = additional_data.maximum_linfty_norm / vmax;
           if(minimal_timestep < timestep)
-            timestep = minimal_timestep;
+            timestep= minimal_timestep;
         }
 
       print_vectors(iter, x, velocities, gradients);
@@ -355,7 +355,7 @@ SolverFIRE<VectorType>::solve(const MatrixType&         A,
     A.residual(g, x, b);
 
     // Gradient G = Ax -b.
-    g *= -1.;
+    g*= -1.;
 
     // The quadratic form $\frac{1}{2} xAx - xb $.
     return 0.5 * A.matrix_norm_square(x) - x * b;

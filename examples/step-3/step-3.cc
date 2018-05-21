@@ -362,8 +362,8 @@ Step3::assemble_system()
   // bit more readable. You will see them in many places in larger programs,
   // and `dofs_per_cell` and `n_q_points` are more or less by convention the
   // standard names for these purposes:
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   // Now, we said that we wanted to assemble the global matrix and vector
   // cell-by-cell. We could write the results directly into the global matrix,
@@ -411,13 +411,13 @@ Step3::assemble_system()
 
       // Next, reset the local cell's contributions to global matrix and
       // global right hand side to zero, before we fill them:
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       // Now it is time to start integration over the cell, which we
       // do by looping over all quadrature points, which we will
       // number by q_index.
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+      for(unsigned int q_index= 0; q_index < n_q_points; ++q_index)
         {
           // First assemble the matrix: For the Laplace problem, the
           // matrix on each cell is the integral over the gradients of
@@ -436,20 +436,20 @@ Step3::assemble_system()
           // determinant and the quadrature point weight (that one
           // gets together by the call to FEValues::JxW() ). Finally,
           // this is repeated for all shape functions $i$ and $j$:
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += (fe_values.shape_grad(i, q_index)
-                                    * fe_values.shape_grad(j, q_index)
-                                    * fe_values.JxW(q_index));
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= (fe_values.shape_grad(i, q_index)
+                                   * fe_values.shape_grad(j, q_index)
+                                   * fe_values.JxW(q_index));
 
           // We then do the same thing for the right hand side. Here,
           // the integral is over the shape function i times the right
           // hand side function, which we choose to be the function
           // with constant value one (more interesting examples will
           // be considered in the following programs).
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            cell_rhs(i) += (fe_values.shape_value(i, q_index) * 1
-                            * fe_values.JxW(q_index));
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            cell_rhs(i)+= (fe_values.shape_value(i, q_index) * 1
+                           * fe_values.JxW(q_index));
         }
       // Now that we have the contribution of this cell, we have to transfer
       // it to the global matrix and right hand side. To this end, we first
@@ -460,14 +460,14 @@ Step3::assemble_system()
       // Then again loop over all shape functions i and j and transfer the
       // local elements to the global matrix. The global numbers can be
       // obtained using local_dof_indices[i]:
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           system_matrix.add(
             local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
       // And again, we do the same thing for the right hand side vector.
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        system_rhs(local_dof_indices[i]) += cell_rhs(i);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        system_rhs(local_dof_indices[i])+= cell_rhs(i);
     }
 
   // Now almost everything is set up for the solution of the discrete

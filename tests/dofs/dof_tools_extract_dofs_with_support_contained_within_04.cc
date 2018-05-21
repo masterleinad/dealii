@@ -87,7 +87,7 @@ test()
   FE_Q<dim> fe(2);
   dh.distribute_dofs(fe);
 
-  const IndexSet& locally_owned_set = dh.locally_owned_dofs();
+  const IndexSet& locally_owned_set= dh.locally_owned_dofs();
   IndexSet        locally_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_set);
 
@@ -99,12 +99,12 @@ test()
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
 
   // get support on the predicate
-  IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
+  IndexSet support= DoFTools::extract_dofs_with_support_contained_within(
     dh,
     std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
       &pred_d<dim>),
     cm);
-  IndexSet local_support = support & locally_owned_set;
+  IndexSet local_support= support & locally_owned_set;
 
   // rhs vectors:
   LinearAlgebra::distributed::Vector<double> sparse_rhs;
@@ -116,7 +116,7 @@ test()
   rhs.zero_out_ghosts();
 
   // assemble RHS which has a local support:
-  const std::function<double(const Point<dim>&)> rhs_func =
+  const std::function<double(const Point<dim>&)> rhs_func=
     [=](const Point<dim>& p) -> double { return p[0] > 0.5 ? 0. : 0.5 - p[0]; };
 
   Vector<double> local_rhs(fe.dofs_per_cell);
@@ -125,7 +125,7 @@ test()
                           quadrature,
                           update_values | update_JxW_values
                             | update_quadrature_points);
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dh.begin_active();
       cell != dh.end();
       ++cell)
     if(cell->is_locally_owned() && pred_d<dim>(cell))
@@ -136,33 +136,33 @@ test()
         const std::vector<Point<dim>>& q_points
           = fe_values.get_quadrature_points();
 
-        local_rhs = 0.;
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
-            local_rhs[i] += fe_values.shape_value(i, q) * rhs_func(q_points[q])
-                            * fe_values.JxW(q);
+        local_rhs= 0.;
+        for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int q= 0; q < quadrature.size(); ++q)
+            local_rhs[i]+= fe_values.shape_value(i, q) * rhs_func(q_points[q])
+                           * fe_values.JxW(q);
 
         cm.distribute_local_to_global(local_rhs, local_dof_indices, rhs);
 
         // copy-paste of CM distribute_local_to_global and
         // add is_element() checks:
-        auto       local_vector_begin  = local_rhs.begin();
-        const auto local_vector_end    = local_rhs.end();
-        auto       local_indices_begin = local_dof_indices.begin();
+        auto       local_vector_begin = local_rhs.begin();
+        const auto local_vector_end   = local_rhs.end();
+        auto       local_indices_begin= local_dof_indices.begin();
         const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
         for(; local_vector_begin != local_vector_end;
             ++local_vector_begin, ++local_indices_begin)
           {
-            line_ptr = cm.get_constraint_entries(*local_indices_begin);
+            line_ptr= cm.get_constraint_entries(*local_indices_begin);
             if(line_ptr == NULL) // unconstrained
               {
                 if(support.is_element(*local_indices_begin))
-                  sparse_rhs(*local_indices_begin) += *local_vector_begin;
+                  sparse_rhs(*local_indices_begin)+= *local_vector_begin;
               }
             else
               {
-                const unsigned int line_size = line_ptr->size();
-                for(unsigned int j = 0; j < line_size; ++j)
+                const unsigned int line_size= line_ptr->size();
+                for(unsigned int j= 0; j < line_size; ++j)
                   if(support.is_element((*line_ptr)[j].first))
                     sparse_rhs((*line_ptr)[j].first)
                       += *local_vector_begin * (*line_ptr)[j].second;
@@ -191,7 +191,7 @@ test()
       const unsigned int n_mpi_processes
         = dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-      for(unsigned int i = 0; i < n_mpi_processes; ++i)
+      for(unsigned int i= 0; i < n_mpi_processes; ++i)
         {
           MPI_Barrier(MPI_COMM_WORLD);
           if(i == this_mpi_process)
@@ -243,27 +243,27 @@ test()
 
         std::vector<LinearAlgebra::distributed::Vector<double>> shape_functions(
           dh.n_dofs());
-        for(unsigned int i = 0; i < dh.n_dofs(); ++i)
+        for(unsigned int i= 0; i < dh.n_dofs(); ++i)
           {
             LinearAlgebra::distributed::Vector<double> sl(locally_owned_set,
                                                           MPI_COMM_WORLD);
-            sl = 0.;
+            sl= 0.;
             if(locally_owned_set.is_element(i))
-              sl[i] = 1.0;
+              sl[i]= 1.0;
             cm.distribute(sl);
 
-            LinearAlgebra::distributed::Vector<double>& s = shape_functions[i];
+            LinearAlgebra::distributed::Vector<double>& s= shape_functions[i];
             s.reinit(locally_owned_set, locally_relevant_set, MPI_COMM_WORLD);
-            s = 0.;
-            s = sl;
+            s= 0.;
+            s= sl;
 
             data_out.add_data_vector(
               s, std::string("N_") + dealii::Utilities::int_to_string(i));
           }
 
         Vector<float> subdomain(triangulation.n_active_cells());
-        for(unsigned int i = 0; i < subdomain.size(); ++i)
-          subdomain(i) = triangulation.locally_owned_subdomain();
+        for(unsigned int i= 0; i < subdomain.size(); ++i)
+          subdomain(i)= triangulation.locally_owned_subdomain();
         data_out.add_data_vector(subdomain, "subdomain");
         data_out.build_patches();
 
@@ -276,22 +276,22 @@ test()
         if(dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
           {
             std::vector<std::string> filenames;
-            for(unsigned int i = 0;
+            for(unsigned int i= 0;
                 i < dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
                 ++i)
               filenames.push_back(output_name(i));
 
-            const std::string master_name = "output.pvtu";
+            const std::string master_name= "output.pvtu";
             std::ofstream     pvtu_master(master_name.c_str());
             data_out.write_pvtu_record(pvtu_master, filenames);
           }
       }
     }
 
-  for(unsigned int i = 0; i < locally_owned_set.n_elements(); ++i)
+  for(unsigned int i= 0; i < locally_owned_set.n_elements(); ++i)
     {
-      const unsigned int ind = locally_owned_set.nth_index_in_set(i);
-      const double       v   = rhs[ind];
+      const unsigned int ind= locally_owned_set.nth_index_in_set(i);
+      const double       v  = rhs[ind];
       AssertThrow(
         std::abs(v) < 1e-12,
         ExcMessage("Element " + std::to_string(ind) + " has an error "

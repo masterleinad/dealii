@@ -28,12 +28,11 @@
 void
 test_real_to_unit_cell()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   // define a spherical cap boundary
   // to be used for one of the faces
-  const double radius
-    = Point<dim>(1.43757e-10, 4.48023e+06, 4.48023e+06).norm();
+  const double radius= Point<dim>(1.43757e-10, 4.48023e+06, 4.48023e+06).norm();
   SphericalManifold<dim> boundary;
 
   // create the mesh: a single cell
@@ -51,13 +50,13 @@ test_real_to_unit_cell()
   // enough digits to have the same
   // outer radius, so normalize the
   // four outer ones
-  for(unsigned int v = 4; v < 8; ++v)
-    vertices[v] *= radius / vertices[v].norm();
+  for(unsigned int v= 4; v < 8; ++v)
+    vertices[v]*= radius / vertices[v].norm();
   std::vector<CellData<dim>> cells;
   {
     CellData<dim> d;
-    for(unsigned int i = 0; i < 8; ++i)
-      d.vertices[i] = i;
+    for(unsigned int i= 0; i < 8; ++i)
+      d.vertices[i]= i;
     cells.push_back(d);
   }
   Triangulation<dim> triangulation;

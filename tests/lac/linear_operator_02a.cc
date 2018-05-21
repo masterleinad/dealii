@@ -47,7 +47,7 @@ main()
   initlog();
   deallog << std::setprecision(10);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -76,22 +76,22 @@ main()
 
   // Constructors and assignment:
 
-  auto op_a = linear_operator<dealii::Vector<std::complex<double>>>(a);
-  auto op_b = linear_operator<dealii::Vector<std::complex<double>>>(b);
+  auto op_a= linear_operator<dealii::Vector<std::complex<double>>>(a);
+  auto op_b= linear_operator<dealii::Vector<std::complex<double>>>(b);
 
   {
     LinearOperator<dealii::Vector<std::complex<double>>> op_x(a);
-    op_a = a;
-    op_b = b;
+    op_a= a;
+    op_b= b;
   }
 
   // vmult:
 
   Vector<std::complex<double>> u;
   op_a.reinit_domain_vector(u, true);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     {
-      u[i] = (std::complex<double>) (i + 1);
+      u[i]= (std::complex<double>) (i + 1);
     }
 
   deallog << "u: " << u << std::endl;
@@ -111,27 +111,27 @@ main()
 
   // operator+, operator-, operator+=, operator-=:
 
-  x = v;
-  x += w;
+  x= v;
+  x+= w;
   deallog << "Au+Bu: " << x << std::endl;
 
   (op_a + op_b).vmult(x, u);
   deallog << "(A+B)u: " << x << std::endl;
 
-  auto op_x = op_a;
-  op_x += op_b;
+  auto op_x= op_a;
+  op_x+= op_b;
   op_x.vmult(x, u);
   deallog << "(A+=B)u: " << x << std::endl;
 
-  x = v;
-  x -= w;
+  x= v;
+  x-= w;
   deallog << "Au-Bu: " << x << std::endl;
 
   (op_a - op_b).vmult(x, u);
   deallog << "(A-B)u: " << x << std::endl;
 
-  op_x = op_a;
-  op_x -= op_b;
+  op_x= op_a;
+  op_x-= op_b;
   op_x.vmult(x, u);
   deallog << "(A-=B)u: " << x << std::endl;
 
@@ -144,12 +144,12 @@ main()
   (op_a * op_b).vmult(x, u);
   deallog << "(A*B)u: " << x << std::endl;
 
-  op_x = op_a;
-  op_x *= op_b;
+  op_x= op_a;
+  op_x*= op_b;
   op_x.vmult(x, u);
   deallog << "(A*=B)u: " << x << std::endl;
 
-  op_x *= std::complex<double>(4.);
+  op_x*= std::complex<double>(4.);
   op_x.vmult(x, u);
   deallog << "(A*=B*=4.)u: " << x << std::endl;
 

@@ -35,14 +35,14 @@ helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
 {
   typedef typename VectorType::value_type                Number;
   FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
-  const unsigned int n_q_points = fe_eval.n_q_points;
+  const unsigned int n_q_points= fe_eval.n_q_points;
 
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.read_dof_values(src);
       fe_eval.evaluate(true, true, false);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(Number(10) * fe_eval.get_value(q), q);
           fe_eval.submit_gradient(fe_eval.get_gradient(q), q);
@@ -55,8 +55,8 @@ helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
 template <int dim,
           int fe_degree,
           typename Number,
-          typename VectorType = Vector<Number>,
-          int n_q_points_1d   = fe_degree + 1>
+          typename VectorType= Vector<Number>,
+          int n_q_points_1d  = fe_degree + 1>
 class MatrixFreeTest
 {
 public:
@@ -67,13 +67,13 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    dst = 0;
+    dst= 0;
     const std::function<void(
       const MatrixFree<dim, typename VectorType::value_type>&,
       VectorType&,
       const VectorType&,
       const std::pair<unsigned int, unsigned int>&)>
-      wrap = helmholtz_operator<dim, fe_degree, VectorType, n_q_points_1d>;
+      wrap= helmholtz_operator<dim, fe_degree, VectorType, n_q_points_1d>;
     data.cell_loop(wrap, dst, src);
   };
 

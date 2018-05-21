@@ -109,7 +109,7 @@ private:
   void
   init_structures()
   {
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     locally_owned_dofs.print(deallog);
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     locally_relevant_dofs.print(deallog);
@@ -136,14 +136,14 @@ private:
   {
     //DoFRenumbering::Cuthill_McKee(dof_handler);
 
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
 
     std::vector<types::global_dof_index> new_number(dof_handler.n_dofs());
-    for(types::global_dof_index i = 0; i < dof_handler.n_dofs(); i++)
-      new_number[i] = dof_handler.n_dofs() - i - 1;
+    for(types::global_dof_index i= 0; i < dof_handler.n_dofs(); i++)
+      new_number[i]= dof_handler.n_dofs() - i - 1;
 
     std::vector<types::global_dof_index> local_new_number;
-    for(IndexSet::ElementIterator dof = locally_owned_dofs.begin();
+    for(IndexSet::ElementIterator dof= locally_owned_dofs.begin();
         dof != locally_owned_dofs.end();
         ++dof)
       local_new_number.push_back(new_number[*dof]);
@@ -154,7 +154,7 @@ private:
     dof_handler.renumber_dofs(local_new_number);
 
     deallog << "after renumbering:" << std::endl;
-    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    locally_owned_dofs= dof_handler.locally_owned_dofs();
     locally_owned_dofs.print(dealii::deallog);
   }
 };

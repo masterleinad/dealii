@@ -45,37 +45,35 @@ main()
           << "the distance from (x,y) to four vertices of the square." << endl
           << endl;
 
-  double eps = 1e-10;
+  double eps= 1e-10;
 
-  for(unsigned int m = 1; m < 7; ++m)
+  for(unsigned int m= 1; m < 7; ++m)
     {
       deallog << " =========Quadrature Order: " << m
               << " =============================== " << endl;
       deallog
         << " ============================================================ "
         << endl;
-      for(unsigned int index = 0; index < 4; ++index)
+      for(unsigned int index= 0; index < 4; ++index)
         {
           deallog << " ===============Vertex Index: " << index
                   << " ============================= " << endl;
           QGaussOneOverR<2> quad(m, index);
           QGaussOneOverR<2> quad_de(m, index, true);
-          for(unsigned int i = 0; i < 6; ++i)
+          for(unsigned int i= 0; i < 6; ++i)
             {
-              for(unsigned int j = 0; j < 6; ++j)
+              for(unsigned int j= 0; j < 6; ++j)
                 {
-                  double exact_integral
-                    = exact_integral_one_over_r(index, i, j);
-                  double approx_integral   = 0;
-                  double approx_integral_2 = 0;
+                  double exact_integral= exact_integral_one_over_r(index, i, j);
+                  double approx_integral  = 0;
+                  double approx_integral_2= 0;
 
-                  for(unsigned int q = 0; q < quad.size(); ++q)
+                  for(unsigned int q= 0; q < quad.size(); ++q)
                     {
-                      double x = quad.point(q)[0];
-                      double y = quad.point(q)[1];
-                      approx_integral
-                        += (pow(x, (double) i) * pow(y, (double) j)
-                            * quad.weight(q));
+                      double x= quad.point(q)[0];
+                      double y= quad.point(q)[1];
+                      approx_integral+= (pow(x, (double) i) * pow(y, (double) j)
+                                         * quad.weight(q));
                       approx_integral_2
                         += (pow(x, (double) i) * pow(y, (double) j)
                             * quad_de.weight(q)

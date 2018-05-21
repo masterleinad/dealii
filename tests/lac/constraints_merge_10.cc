@@ -43,18 +43,18 @@ merge_check()
   // the test is the same as
   // constraints_merge_02, but we add very large
   // indices here
-  const unsigned int index_0  = 99999890;
-  const unsigned int index_1  = 99999891;
-  const unsigned int index_3  = 99999893;
-  const unsigned int index_4  = 99999894;
-  const unsigned int index_10 = 99999990;
-  const unsigned int index_11 = 99999991;
-  const unsigned int index_12 = 99999992;
-  const unsigned int index_13 = 99999993;
+  const unsigned int index_0 = 99999890;
+  const unsigned int index_1 = 99999891;
+  const unsigned int index_3 = 99999893;
+  const unsigned int index_4 = 99999894;
+  const unsigned int index_10= 99999990;
+  const unsigned int index_11= 99999991;
+  const unsigned int index_12= 99999992;
+  const unsigned int index_13= 99999993;
 
   // check twice, once with closed
   // objects, once with open ones
-  for(unsigned int run = 0; run < 2; ++run)
+  for(unsigned int run= 0; run < 2; ++run)
     {
       deallog << "Checking with " << (run == 0 ? "open" : "closed")
               << " objects" << std::endl;

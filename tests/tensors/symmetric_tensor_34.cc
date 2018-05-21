@@ -21,19 +21,19 @@
 template <int dim>
 void initialize(SymmetricTensor<2, dim>& st)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      st[i][j] = (i + 1) * dim + (j - i);
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      st[i][j]= (i + 1) * dim + (j - i);
 }
 
 template <int dim>
 void initialize(SymmetricTensor<4, dim>& st)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = k; l < dim; ++l)
-          st[i][j][k][l] = (i + 1) * dim + (j - i) + (k + 1) * dim + (l - k);
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= k; l < dim; ++l)
+          st[i][j][k][l]= (i + 1) * dim + (j - i) + (k + 1) * dim + (l - k);
 }
 
 template <int rank, int dim>
@@ -48,7 +48,7 @@ check()
   Tensor<rank, dim> t(st); // check conversion constructor
   deallog << "t =" << t << std::endl;
 
-  t = st; // check assignment operator
+  t= st; // check assignment operator
   deallog << "t =" << t << std::endl;
 }
 

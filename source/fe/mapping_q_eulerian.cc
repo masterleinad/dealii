@@ -69,7 +69,7 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerian(
       euler_dof_handler, euler_vector);
 
   // also reset the qp mapping pointer with our own class
-  this->qp_mapping = std::make_shared<MappingQEulerianGeneric>(degree, *this);
+  this->qp_mapping= std::make_shared<MappingQEulerianGeneric>(degree, *this);
 }
 
 template <int dim, class VectorType, int spacedim>
@@ -91,22 +91,22 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // order, which are (in accordance with MappingQ) the support points of
   // QGaussLobatto.
   const QGaussLobatto<dim> q_iterated(map_degree + 1);
-  const unsigned int       n_q_points = q_iterated.size();
+  const unsigned int       n_q_points= q_iterated.size();
 
   // we then need to define a renumbering vector that allows us to go from a
   // lexicographic numbering scheme to a hierarchic one.  this fragment is
   // taking almost verbatim from the MappingQ class.
   std::vector<unsigned int> renumber(n_q_points);
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
-    dpo[i] = dpo[i - 1] * (map_degree - 1);
+  for(unsigned int i= 1; i < dpo.size(); ++i)
+    dpo[i]= dpo[i - 1] * (map_degree - 1);
 
   FETools::lexicographic_to_hierarchic_numbering(
     FiniteElementData<dim>(dpo, 1, map_degree), renumber);
 
   // finally we assign the quadrature points in the required order.
-  for(unsigned int q = 0; q < n_q_points; ++q)
-    this->quadrature_points[renumber[q]] = q_iterated.point(q);
+  for(unsigned int q= 0; q < n_q_points; ++q)
+    this->quadrature_points[renumber[q]]= q_iterated.point(q);
 }
 
 // .... COMPUTE MAPPING SUPPORT POINTS
@@ -186,7 +186,7 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // actual shift vector we need, and simply ignores any components after
   // that. This implies that the user should order components appropriately,
   // or create a separate dof handler for the displacements.
-  const unsigned int n_support_pts = support_quadrature.size();
+  const unsigned int n_support_pts= support_quadrature.size();
   const unsigned int n_components
     = mapping_q_eulerian.euler_dof_handler->get_fe(0).n_components();
 
@@ -216,11 +216,11 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // and finally compute the positions of the support points in the deformed
   // configuration.
   std::vector<Point<spacedim>> a(n_support_pts);
-  for(unsigned int q = 0; q < n_support_pts; ++q)
+  for(unsigned int q= 0; q < n_support_pts; ++q)
     {
-      a[q] = fe_values.quadrature_point(q);
-      for(unsigned int d = 0; d < spacedim; ++d)
-        a[q](d) += shift_vector[q](d);
+      a[q]= fe_values.quadrature_point(q);
+      for(unsigned int d= 0; d < spacedim; ++d)
+        a[q](d)+= shift_vector[q](d);
     }
 
   return a;

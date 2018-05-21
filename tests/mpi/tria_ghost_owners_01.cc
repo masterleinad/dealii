@@ -33,12 +33,12 @@ void
 mpi_check(const std::set<types::subdomain_id>& s)
 {
   MPI_Barrier(MPI_COMM_WORLD);
-  unsigned int tag = 1234;
-  for(std::set<types::subdomain_id>::iterator it = s.begin(); it != s.end();
+  unsigned int tag= 1234;
+  for(std::set<types::subdomain_id>::iterator it= s.begin(); it != s.end();
       ++it)
     MPI_Send(nullptr, 0, MPI_INT, *it, tag, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < s.size(); ++i)
+  for(unsigned int i= 0; i < s.size(); ++i)
     {
       MPI_Status status;
       MPI_Recv(
@@ -54,7 +54,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(
     MPI_COMM_WORLD,
@@ -62,21 +62,21 @@ test()
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
 
   std::vector<unsigned int> sub(dim, 1);
-  sub[0] = 5;
+  sub[0]= 5;
   Point<dim> p;
-  p[0] = 5;
-  for(unsigned int i = 1; i < dim; ++i)
-    p[i] = 1;
+  p[0]= 5;
+  for(unsigned int i= 1; i < dim; ++i)
+    p[i]= 1;
   GridGenerator::subdivided_hyper_rectangle(tr, sub, Point<dim>(), p);
   tr.refine_global(2);
 
-  for(unsigned int ref = 0; ref <= 3; ++ref)
+  for(unsigned int ref= 0; ref <= 3; ++ref)
     {
       deallog << "* cycle " << ref << std::endl;
 
       deallog << "ghost owners: ";
-      std::set<types::subdomain_id> ghost_owners = tr.ghost_owners();
-      for(std::set<types::subdomain_id>::iterator it = ghost_owners.begin();
+      std::set<types::subdomain_id> ghost_owners= tr.ghost_owners();
+      for(std::set<types::subdomain_id>::iterator it= ghost_owners.begin();
           it != ghost_owners.end();
           ++it)
         deallog << *it << " ";
@@ -85,8 +85,7 @@ test()
       mpi_check(ghost_owners);
 
       deallog << "level ghost owners: ";
-      std::set<types::subdomain_id> level_ghost_owners
-        = tr.level_ghost_owners();
+      std::set<types::subdomain_id> level_ghost_owners= tr.level_ghost_owners();
       for(std::set<types::subdomain_id>::iterator it
           = level_ghost_owners.begin();
           it != level_ghost_owners.end();
@@ -97,10 +96,10 @@ test()
       mpi_check(level_ghost_owners);
 
       // owners need to be a subset of level owners:
-      bool is_subset = std::includes(level_ghost_owners.begin(),
-                                     level_ghost_owners.end(),
-                                     ghost_owners.begin(),
-                                     ghost_owners.end());
+      bool is_subset= std::includes(level_ghost_owners.begin(),
+                                    level_ghost_owners.end(),
+                                    ghost_owners.begin(),
+                                    ghost_owners.end());
       Assert(is_subset, ExcInternalError());
 
       Vector<float>                 indicators(tr.n_active_cells());
@@ -114,7 +113,7 @@ test()
             {
               if(cell->is_ghost())
                 neighbors.insert(cell->subdomain_id());
-              indicators[cell->index()] = cell->index();
+              indicators[cell->index()]= cell->index();
             }
       }
 

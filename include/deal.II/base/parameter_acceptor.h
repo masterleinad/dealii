@@ -351,7 +351,7 @@ public:
    * parameters in the given section, otherwise a pretty printed
    * version of the derived class is used.
    */
-  ParameterAcceptor(const std::string& section_name = "");
+  ParameterAcceptor(const std::string& section_name= "");
 
   /**
    * Destructor.
@@ -385,11 +385,11 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(const std::string&                  filename        = "",
-             const std::string&                  output_filename = "",
+  initialize(const std::string&                  filename       = "",
+             const std::string&                  output_filename= "",
              const ParameterHandler::OutputStyle output_style_for_prm_format
              = ParameterHandler::ShortText,
-             ParameterHandler& prm = ParameterAcceptor::prm);
+             ParameterHandler& prm= ParameterAcceptor::prm);
 
   /**
    * Call declare_all_parameters(), read the parameters from the `input_stream`
@@ -402,7 +402,7 @@ public:
    */
   static void
   initialize(std::istream&     input_stream,
-             ParameterHandler& prm = ParameterAcceptor::prm);
+             ParameterHandler& prm= ParameterAcceptor::prm);
 
   /**
    * Clear class list and global parameter file.
@@ -451,7 +451,7 @@ public:
    * and parses all parameters that were added using add_parameter().
    */
   static void
-  parse_all_parameters(ParameterHandler& prm = ParameterAcceptor::prm);
+  parse_all_parameters(ParameterHandler& prm= ParameterAcceptor::prm);
 
   /**
    * Initialize the global ParameterHandler with all derived classes
@@ -460,7 +460,7 @@ public:
    * that were added using add_parameter().
    */
   static void
-  declare_all_parameters(ParameterHandler& prm = ParameterAcceptor::prm);
+  declare_all_parameters(ParameterHandler& prm= ParameterAcceptor::prm);
 
   /**
    * Return the section name of this class. If a name was provided
@@ -490,8 +490,8 @@ public:
   void
   add_parameter(const std::string&           entry,
                 ParameterType&               parameter,
-                const std::string&           documentation = std::string(),
-                ParameterHandler&            prm_          = prm,
+                const std::string&           documentation= std::string(),
+                ParameterHandler&            prm_         = prm,
                 const Patterns::PatternBase& pattern
                 = *Patterns::Tools::Convert<ParameterType>::to_pattern());
 
@@ -526,7 +526,7 @@ private:
   /**
    * Separator between sections.
    */
-  static const char sep = '/';
+  static const char sep= '/';
 
 protected:
   /** The subsection name for this class. */

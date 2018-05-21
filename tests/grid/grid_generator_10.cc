@@ -27,9 +27,9 @@ void my_cylinder(Triangulation<3>& tria,
 {
   // Copy the base from hyper_ball<3>
   // and transform it to yz
-  const double d            = radius / std::sqrt(2.0);
-  const double a            = d / (1 + std::sqrt(2.0));
-  Point<3>     vertices[16] = {
+  const double d           = radius / std::sqrt(2.0);
+  const double a           = d / (1 + std::sqrt(2.0));
+  Point<3>     vertices[16]= {
     Point<3>(-d, 0, -d),
     Point<3>(d, 0, -d),
     Point<3>(-a, 0, -a),
@@ -48,26 +48,26 @@ void my_cylinder(Triangulation<3>& tria,
     Point<3>(d, half_length, d),
   };
   // Turn cylinder such that y->x
-  for(unsigned int i = 0; i < 16; ++i)
+  for(unsigned int i= 0; i < 16; ++i)
     {
-      const double h = vertices[i](1);
-      vertices[i](1) = -vertices[i](0);
-      vertices[i](0) = h;
+      const double h= vertices[i](1);
+      vertices[i](1)= -vertices[i](0);
+      vertices[i](0)= h;
     }
 
-  int cell_vertices[5][8] = {{0, 1, 8, 9, 2, 3, 10, 11},
-                             {0, 2, 8, 10, 6, 4, 14, 12},
-                             {2, 3, 10, 11, 4, 5, 12, 13},
-                             {1, 7, 9, 15, 3, 5, 11, 13},
-                             {6, 4, 14, 12, 7, 5, 15, 13}};
+  int cell_vertices[5][8]= {{0, 1, 8, 9, 2, 3, 10, 11},
+                            {0, 2, 8, 10, 6, 4, 14, 12},
+                            {2, 3, 10, 11, 4, 5, 12, 13},
+                            {1, 7, 9, 15, 3, 5, 11, 13},
+                            {6, 4, 14, 12, 7, 5, 15, 13}};
 
   std::vector<CellData<3>> cells(5, CellData<3>());
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     {
-      for(unsigned int j = 0; j < 8; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < 8; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     };
 
   GridReordering<3>::reorder_cells(cells);
@@ -79,17 +79,17 @@ void my_cylinder(Triangulation<3>& tria,
 void
 check_grid()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
   Triangulation<dim> triangulation;
 
   my_cylinder(triangulation, 0.5, 1.0);
 
-  Triangulation<dim>::active_cell_iterator cell = triangulation.begin(),
-                                           endc = triangulation.end();
+  Triangulation<dim>::active_cell_iterator cell= triangulation.begin(),
+                                           endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           deallog << face << ": "
@@ -98,7 +98,7 @@ check_grid()
                   << (cell->face_rotation(face) ? "true" : "false")
                   << std::endl;
         }
-      for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+      for(unsigned int line= 0; line < GeometryInfo<dim>::lines_per_cell;
           ++line)
         {
           deallog << line << ": "

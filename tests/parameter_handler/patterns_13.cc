@@ -31,7 +31,7 @@ main()
   typedef std::tuple<std::string, Point<3>, unsigned int> T;
 
   T a;
-  a = Convert<T>::to_value("Ciao : 1.0, 2.0, 3.0 : 33");
+  a= Convert<T>::to_value("Ciao : 1.0, 2.0, 3.0 : 33");
 
   ParameterHandler prm;
   prm.add_parameter("A tuple", a);

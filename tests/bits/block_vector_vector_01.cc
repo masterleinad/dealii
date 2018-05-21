@@ -25,8 +25,8 @@
 void
 test(BlockVector<double>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i + 1.;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i + 1.;
   BlockVector<float> w(v);
 
   AssertThrow(w == v, ExcInternalError());

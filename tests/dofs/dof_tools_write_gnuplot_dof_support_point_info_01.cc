@@ -34,13 +34,13 @@ template <int dim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream& out= deallog.get_file_stream();
 
   Triangulation<dim> triangulation;
-  const int          velocity_degree = 2;
+  const int          velocity_degree= 2;
 
   std::vector<unsigned int> rep(dim, 1);
-  rep[0] = 2;
+  rep[0]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, rep, Point<dim>(), Point<dim>(2.0, 1.0));
   FESystem<dim> fe(

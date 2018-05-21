@@ -24,16 +24,16 @@
 void
 test()
 {
-  const unsigned int         s = 10;
+  const unsigned int         s= 10;
   PETScWrappers::MPI::Vector v(MPI_COMM_WORLD, s, s);
-  for(unsigned int k = 0; k < v.size(); ++k)
-    v(k) = k;
+  for(unsigned int k= 0; k < v.size(); ++k)
+    v(k)= k;
 
   v.compress(VectorOperation::insert);
 
   PETScWrappers::MPI::Vector v2(MPI_COMM_WORLD, s, s);
-  for(int k = 0; k < v2.size(); ++k)
-    v2(k) = PetscScalar(k, -k);
+  for(int k= 0; k < v2.size(); ++k)
+    v2(k)= PetscScalar(k, -k);
 
   v2.compress(VectorOperation::insert);
 
@@ -42,21 +42,21 @@ test()
   // original vector back.
 
   deallog << "before: " << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << "(" << v(k).real() << "," << v(k).imag() << "i) ";
   deallog << std::endl;
 
   v.add(1.0, v2);
 
   deallog << "after: " << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << "(" << v(k).real() << "," << v(k).imag() << "i) ";
   deallog << std::endl;
 
   v.add(-1.0, v2);
 
   deallog << "back to original: " << std::endl;
-  for(unsigned int k = 0; k < s; ++k)
+  for(unsigned int k= 0; k < s; ++k)
     deallog << "(" << v(k).real() << "," << v(k).imag() << "i) ";
   deallog << std::endl;
 

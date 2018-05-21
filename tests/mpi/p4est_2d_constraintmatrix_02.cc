@@ -37,13 +37,13 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr);
 
-  for(int i = 0; i < 12; ++i)
+  for(int i= 0; i < 12; ++i)
     {
       if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "step " << i << std::endl;
@@ -89,7 +89,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

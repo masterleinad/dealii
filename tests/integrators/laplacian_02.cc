@@ -31,7 +31,7 @@ using namespace LocalIntegrators::Laplace;
 
 template <int dim>
 void
-test_boundary(const FiniteElement<dim>& fe, bool diff = false)
+test_boundary(const FiniteElement<dim>& fe, bool diff= false)
 {
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
@@ -51,9 +51,9 @@ test_boundary(const FiniteElement<dim>& fe, bool diff = false)
   FullMatrix<double>                   Mglobal(dof.n_dofs());
   std::vector<types::global_dof_index> indices(fe.dofs_per_cell);
 
-  typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
   cell->get_dof_indices(indices);
-  for(unsigned i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       fev.reinit(cell, i);
       nitsche_tangential_matrix(M, fev, 10.);
@@ -67,7 +67,7 @@ test_boundary(const FiniteElement<dim>& fe, bool diff = false)
 
 template <int dim>
 void
-test_face(const FiniteElement<dim>& fe, bool diff = false)
+test_face(const FiniteElement<dim>& fe, bool diff= false)
 {
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
@@ -96,8 +96,8 @@ test_face(const FiniteElement<dim>& fe, bool diff = false)
   std::vector<types::global_dof_index> indices1(fe.dofs_per_cell);
   std::vector<types::global_dof_index> indices2(fe.dofs_per_cell);
 
-  typename DoFHandler<dim>::active_cell_iterator cell1 = dof.begin_active();
-  typename DoFHandler<dim>::active_cell_iterator cell2 = ++dof.begin_active();
+  typename DoFHandler<dim>::active_cell_iterator cell1= dof.begin_active();
+  typename DoFHandler<dim>::active_cell_iterator cell2= ++dof.begin_active();
 
   cell1->get_dof_indices(indices1);
   cell2->get_dof_indices(indices2);

@@ -131,7 +131,7 @@ namespace internal
         PartitionWork(MFWorkerInterface& function_in,
                       const unsigned int partition_in,
                       const TaskInfo&    task_info_in,
-                      const bool         is_blocked_in = false)
+                      const bool         is_blocked_in= false)
           : dummy(nullptr),
             function(function_in),
             partition(partition_in),
@@ -144,8 +144,8 @@ namespace internal
         {
           tbb::empty_task* root
             = new(tbb::task::allocate_root()) tbb::empty_task;
-          const unsigned int evens = task_info.partition_evens[partition];
-          const unsigned int odds  = task_info.partition_odds[partition];
+          const unsigned int evens= task_info.partition_evens[partition];
+          const unsigned int odds = task_info.partition_odds[partition];
           const unsigned int n_blocked_workers
             = task_info.partition_n_blocked_workers[partition];
           const unsigned int n_workers
@@ -154,9 +154,9 @@ namespace internal
           std::vector<CellWork*> blocked_worker(n_blocked_workers);
 
           root->set_ref_count(evens + 1);
-          for(unsigned int j = 0; j < evens; j++)
+          for(unsigned int j= 0; j < evens; j++)
             {
-              worker[j] = new(root->allocate_child())
+              worker[j]= new(root->allocate_child())
                 CellWork(function,
                          task_info.partition_row_index[partition] + 2 * j,
                          task_info,
@@ -172,7 +172,7 @@ namespace internal
                 worker[j]->set_ref_count(1);
               if(j < evens - 1)
                 {
-                  blocked_worker[j] = new(worker[j]->allocate_child()) CellWork(
+                  blocked_worker[j]= new(worker[j]->allocate_child()) CellWork(
                     function,
                     task_info.partition_row_index[partition] + 2 * j + 1,
                     task_info,
@@ -182,7 +182,7 @@ namespace internal
                 {
                   if(odds == evens)
                     {
-                      worker[evens] = new(worker[j]->allocate_child()) CellWork(
+                      worker[evens]= new(worker[j]->allocate_child()) CellWork(
                         function,
                         task_info.partition_row_index[partition] + 2 * j + 1,
                         task_info,
@@ -233,7 +233,7 @@ namespace internal
           const unsigned int start_index
             = task_info.cell_partition_data[partition]
               + task_info.block_size * r.begin();
-          const unsigned int end_index = std::min(
+          const unsigned int end_index= std::min(
             start_index + task_info.block_size * (r.end() - r.begin()),
             task_info.cell_partition_data[partition + 1]);
           worker.cell(std::make_pair(start_index, end_index));
@@ -335,11 +335,11 @@ namespace internal
               MPICommunication* worker_compr
                 = new(root->allocate_child()) MPICommunication(funct, true);
               worker_compr->set_ref_count(1);
-              for(unsigned int j = 0; j < evens; j++)
+              for(unsigned int j= 0; j < evens; j++)
                 {
                   if(j > 0)
                     {
-                      worker[j] = new(root->allocate_child())
+                      worker[j]= new(root->allocate_child())
                         partition::PartitionWork(funct, 2 * j, *this, false);
                       worker[j]->set_ref_count(2);
                       blocked_worker[j - 1]->dummy
@@ -351,7 +351,7 @@ namespace internal
                     }
                   else
                     {
-                      worker[j] = new(worker_compr->allocate_child())
+                      worker[j]= new(worker_compr->allocate_child())
                         partition::PartitionWork(funct, 2 * j, *this, false);
                       worker[j]->set_ref_count(2);
                       MPICommunication* worker_dist
@@ -361,14 +361,14 @@ namespace internal
                     }
                   if(j < evens - 1)
                     {
-                      blocked_worker[j] = new(worker[j]->allocate_child())
+                      blocked_worker[j]= new(worker[j]->allocate_child())
                         partition::PartitionWork(funct, 2 * j + 1, *this, true);
                     }
                   else
                     {
                       if(odds == evens)
                         {
-                          worker[evens] = new(worker[j]->allocate_child())
+                          worker[evens]= new(worker[j]->allocate_child())
                             partition::PartitionWork(
                               funct, 2 * j + 1, *this, false);
                           worker[j]->spawn(*worker[evens]);
@@ -402,17 +402,17 @@ namespace internal
                   std::vector<color::PartitionWork*> worker(n_workers);
                   std::vector<color::PartitionWork*> blocked_worker(
                     n_blocked_workers);
-                  unsigned int      worker_index = 0, slice_index = 0;
-                  unsigned int      spawn_index       = 0;
-                  int               spawn_index_child = -2;
+                  unsigned int      worker_index= 0, slice_index= 0;
+                  unsigned int      spawn_index      = 0;
+                  int               spawn_index_child= -2;
                   MPICommunication* worker_compr
                     = new(root->allocate_child()) MPICommunication(funct, true);
                   worker_compr->set_ref_count(1);
-                  for(unsigned int part = 0;
+                  for(unsigned int part= 0;
                       part < partition_row_index.size() - 1;
                       part++)
                     {
-                      const unsigned int spawn_index_new = worker_index;
+                      const unsigned int spawn_index_new= worker_index;
                       if(part == 0)
                         worker[worker_index]
                           = new(worker_compr->allocate_child())
@@ -450,8 +450,8 @@ namespace internal
                               worker[spawn_index]->spawn(
                                 *worker[spawn_index_child]);
                             }
-                          spawn_index       = spawn_index_new;
-                          spawn_index_child = -2;
+                          spawn_index      = spawn_index_new;
+                          spawn_index_child= -2;
                         }
                       else
                         {
@@ -461,12 +461,12 @@ namespace internal
                           worker_dist->spawn(*worker_dist);
                           worker_index++;
                         }
-                      part += 1;
+                      part+= 1;
                       if(part < partition_row_index.size() - 1)
                         {
                           if(part < partition_row_index.size() - 2)
                             {
-                              blocked_worker[part / 2] = new(
+                              blocked_worker[part / 2]= new(
                                 worker[worker_index - 1]->allocate_child())
                                 color::PartitionWork(
                                   funct, slice_index, *this, true);
@@ -474,7 +474,7 @@ namespace internal
                               if(slice_index < partition_row_index[part + 1])
                                 {
                                   blocked_worker[part / 2]->set_ref_count(1);
-                                  worker[worker_index] = new(
+                                  worker[worker_index]= new(
                                     blocked_worker[part / 2]->allocate_child())
                                     color::PartitionWork(
                                       funct, slice_index, *this, false);
@@ -482,7 +482,7 @@ namespace internal
                                 }
                               else
                                 {
-                                  spawn_index_child = -1;
+                                  spawn_index_child= -1;
                                   continue;
                                 }
                             }
@@ -494,12 +494,12 @@ namespace internal
                                   worker[worker_index]->set_ref_count(1);
                                   worker_index++;
                                 }
-                              worker[worker_index] = new(
+                              worker[worker_index]= new(
                                 worker[worker_index - 1]->allocate_child())
                                 color::PartitionWork(
                                   funct, slice_index, *this, false);
                             }
-                          spawn_index_child = worker_index;
+                          spawn_index_child= worker_index;
                           worker_index++;
                         }
                       else
@@ -508,7 +508,7 @@ namespace internal
                             = new(worker[worker_index - 1]->allocate_child())
                               tbb::empty_task;
                           worker[spawn_index]->spawn(*final);
-                          spawn_index_child = worker_index - 1;
+                          spawn_index_child= worker_index - 1;
                         }
                     }
                   if(evens == odds)
@@ -526,13 +526,13 @@ namespace internal
                   Assert(evens <= 1, ExcInternalError());
                   funct.vector_update_ghosts_finish();
 
-                  for(unsigned int color = 0; color < partition_row_index[1];
+                  for(unsigned int color= 0; color < partition_row_index[1];
                       ++color)
                     {
                       tbb::empty_task* root
                         = new(tbb::task::allocate_root()) tbb::empty_task;
                       root->set_ref_count(2);
-                      color::PartitionWork* worker = new(root->allocate_child())
+                      color::PartitionWork* worker= new(root->allocate_child())
                         color::PartitionWork(funct, color, *this, false);
                       root->spawn(*worker);
                       root->wait_for_all();
@@ -548,13 +548,13 @@ namespace internal
         // serial loop, go through up to three times and do the MPI transfer at
         // the beginning/end of the second part
         {
-          for(unsigned int part = 0; part < partition_row_index.size() - 2;
+          for(unsigned int part= 0; part < partition_row_index.size() - 2;
               ++part)
             {
               if(part == 1)
                 funct.vector_update_ghosts_finish();
 
-              for(unsigned int i = partition_row_index[part];
+              for(unsigned int i= partition_row_index[part];
                   i < partition_row_index[part + 1];
                   ++i)
                 {
@@ -594,27 +594,27 @@ namespace internal
     void
     TaskInfo::clear()
     {
-      n_active_cells       = 0;
-      n_ghost_cells        = 0;
-      vectorization_length = 1;
-      block_size           = 0;
-      n_blocks             = 0;
-      scheme               = none;
+      n_active_cells      = 0;
+      n_ghost_cells       = 0;
+      vectorization_length= 1;
+      block_size          = 0;
+      n_blocks            = 0;
+      scheme              = none;
       partition_row_index.clear();
       cell_partition_data.clear();
       face_partition_data.clear();
       boundary_partition_data.clear();
-      evens             = 0;
-      odds              = 0;
-      n_blocked_workers = 0;
-      n_workers         = 0;
+      evens            = 0;
+      odds             = 0;
+      n_blocked_workers= 0;
+      n_workers        = 0;
       partition_evens.clear();
       partition_odds.clear();
       partition_n_blocked_workers.clear();
       partition_n_workers.clear();
-      communicator = MPI_COMM_SELF;
-      my_pid       = 0;
-      n_procs      = 1;
+      communicator= MPI_COMM_SELF;
+      my_pid      = 0;
+      n_procs     = 1;
     }
 
     template <typename StreamType>
@@ -653,9 +653,9 @@ namespace internal
       const unsigned int         vectorization_length_in,
       std::vector<unsigned int>& boundary_cells)
     {
-      vectorization_length = vectorization_length_in;
-      n_active_cells       = n_active_cells_in;
-      n_ghost_cells        = n_active_and_ghost_cells - n_active_cells;
+      vectorization_length= vectorization_length_in;
+      n_active_cells      = n_active_cells_in;
+      n_ghost_cells       = n_active_and_ghost_cells - n_active_cells;
 
       // try to make the number of boundary cells divisible by the number of
       // vectors in vectorization
@@ -670,7 +670,7 @@ namespace internal
           std::vector<unsigned int> new_boundary_cells;
           new_boundary_cells.reserve(boundary_cells.size());
 
-          unsigned int next_free_slot = 0, bound_index = 0;
+          unsigned int next_free_slot= 0, bound_index= 0;
           while(fillup_needed > 0 && bound_index < boundary_cells.size())
             {
               if(next_free_slot < boundary_cells[bound_index])
@@ -685,13 +685,13 @@ namespace internal
                           j < boundary_cells[bound_index];
                           ++j)
                         new_boundary_cells.push_back(j);
-                      fillup_needed = 0;
+                      fillup_needed= 0;
                     }
                   // ok, not enough indices, so just take them all up to the
                   // next boundary cell
                   else
                     {
-                      for(unsigned int j = next_free_slot;
+                      for(unsigned int j= next_free_slot;
                           j < boundary_cells[bound_index];
                           ++j)
                         new_boundary_cells.push_back(j);
@@ -700,7 +700,7 @@ namespace internal
                     }
                 }
               new_boundary_cells.push_back(boundary_cells[bound_index]);
-              next_free_slot = boundary_cells[bound_index] + 1;
+              next_free_slot= boundary_cells[bound_index] + 1;
               ++bound_index;
             }
           while(fillup_needed > 0
@@ -737,7 +737,7 @@ namespace internal
         = (n_active_cells + vectorization_length - 1) / vectorization_length;
       const unsigned int n_ghost_slots
         = (n_ghost_cells + vectorization_length - 1) / vectorization_length;
-      const unsigned int n_boundary_cells = boundary_cells.size();
+      const unsigned int n_boundary_cells= boundary_cells.size();
 
       incompletely_filled_vectorization.resize(n_macro_cells + n_ghost_slots);
       renumbering.resize(n_active_cells + n_ghost_cells,
@@ -754,8 +754,8 @@ namespace internal
       std::vector<unsigned char> cell_marked(n_active_cells + n_ghost_cells, 0);
       if(n_procs > 1)
         {
-          for(unsigned int i = 0; i < n_boundary_cells; ++i)
-            cell_marked[boundary_cells[i]] = 2;
+          for(unsigned int i= 0; i < n_boundary_cells; ++i)
+            cell_marked[boundary_cells[i]]= 2;
 
           Assert(boundary_cells.size() % vectorization_length == 0
                    || boundary_cells.size() == n_active_cells,
@@ -764,8 +764,8 @@ namespace internal
           const unsigned int n_second_slot
             = ((n_active_cells - n_boundary_cells) / 2 / vectorization_length)
               * vectorization_length;
-          unsigned int count = 0;
-          for(unsigned int i = 0; i < cells_close_to_boundary.size(); ++i)
+          unsigned int count= 0;
+          for(unsigned int i= 0; i < cells_close_to_boundary.size(); ++i)
             if(cell_marked[cells_close_to_boundary[i]] == 0)
               {
                 cell_marked[cells_close_to_boundary[i]]
@@ -773,27 +773,27 @@ namespace internal
                 ++count;
               }
 
-          unsigned int c = 0;
+          unsigned int c= 0;
           for(; c < n_active_cells && count < n_second_slot; ++c)
             if(cell_marked[c] == 0)
               {
-                cell_marked[c] = 1;
+                cell_marked[c]= 1;
                 ++count;
               }
           for(; c < n_active_cells; ++c)
             if(cell_marked[c] == 0)
-              cell_marked[c] = 3;
+              cell_marked[c]= 3;
           for(; c < n_active_cells + n_ghost_cells; ++c)
             if(cell_marked[c] == 0)
-              cell_marked[c] = 4;
+              cell_marked[c]= 4;
         }
       else
         std::fill(cell_marked.begin(), cell_marked.end(), 1);
 
-      for(unsigned int i = 0; i < cell_marked.size(); ++i)
+      for(unsigned int i= 0; i < cell_marked.size(); ++i)
         Assert(cell_marked[i] != 0, ExcInternalError());
 
-      unsigned int              n_categories = 1;
+      unsigned int              n_categories= 1;
       std::vector<unsigned int> tight_category_map;
       if(cell_vectorization_categories.empty() == false)
         {
@@ -805,14 +805,14 @@ namespace internal
           // old one.
           tight_category_map.resize(n_active_cells + n_ghost_cells);
           std::set<unsigned int> used_categories;
-          for(unsigned int i = 0; i < n_active_cells + n_ghost_cells; ++i)
+          for(unsigned int i= 0; i < n_active_cells + n_ghost_cells; ++i)
             used_categories.insert(cell_vectorization_categories[i]);
           std::vector<unsigned int> used_categories_vector(
             used_categories.size());
-          n_categories = 0;
+          n_categories= 0;
           for(auto& it : used_categories)
-            used_categories_vector[n_categories++] = it;
-          for(unsigned int i = 0; i < n_active_cells + n_ghost_cells; ++i)
+            used_categories_vector[n_categories++]= it;
+          for(unsigned int i= 0; i < n_active_cells + n_ghost_cells; ++i)
             {
               const unsigned int index
                 = std::lower_bound(used_categories_vector.begin(),
@@ -820,7 +820,7 @@ namespace internal
                                    cell_vectorization_categories[i])
                   - used_categories_vector.begin();
               AssertIndexRange(index, used_categories_vector.size());
-              tight_category_map[i] = index;
+              tight_category_map[i]= index;
             }
 
           // leave some more space for empty lanes
@@ -831,30 +831,30 @@ namespace internal
         tight_category_map.resize(n_active_cells + n_ghost_cells, 0);
       else
         {
-          n_categories = 2;
+          n_categories= 2;
           tight_category_map.resize(n_active_cells + n_ghost_cells, 1);
-          for(unsigned int i = 0; i < cells_close_to_boundary.size(); ++i)
-            tight_category_map[cells_close_to_boundary[i]] = 0;
+          for(unsigned int i= 0; i < cells_close_to_boundary.size(); ++i)
+            tight_category_map[cells_close_to_boundary[i]]= 0;
         }
 
       cell_partition_data.clear();
       cell_partition_data.resize(1, 0);
-      unsigned int                           counter = 0;
-      unsigned int                           n_cells = 0;
+      unsigned int                           counter= 0;
+      unsigned int                           n_cells= 0;
       std::vector<std::vector<unsigned int>> renumbering_category(n_categories);
-      for(unsigned int block = 1; block < (n_procs > 1u ? 5u : 3u); ++block)
+      for(unsigned int block= 1; block < (n_procs > 1u ? 5u : 3u); ++block)
         {
           // step 1: sort by category
-          for(unsigned int i = 0; i < n_active_cells + n_ghost_cells; ++i)
+          for(unsigned int i= 0; i < n_active_cells + n_ghost_cells; ++i)
             if(cell_marked[i] == block)
               renumbering_category[tight_category_map[i]].push_back(i);
 
           // step 2: if we want to fill up the ranges in vectorization, promote
           // some of the cells to a higher category
           if(cell_vectorization_categories_strict == false && n_categories > 1)
-            for(unsigned int j = n_categories - 1; j > 0; --j)
+            for(unsigned int j= n_categories - 1; j > 0; --j)
               {
-                unsigned int lower_index = j - 1;
+                unsigned int lower_index= j - 1;
                 while(renumbering_category[j].size() % vectorization_length)
                   {
                     while(renumbering_category[j].size() % vectorization_length
@@ -872,11 +872,10 @@ namespace internal
               }
 
           // step 3: append cells according to categories
-          for(unsigned int j = 0; j < n_categories; ++j)
+          for(unsigned int j= 0; j < n_categories; ++j)
             {
-              for(unsigned int jj = 0; jj < renumbering_category[j].size();
-                  jj++)
-                renumbering[counter++] = renumbering_category[j][jj];
+              for(unsigned int jj= 0; jj < renumbering_category[j].size(); jj++)
+                renumbering[counter++]= renumbering_category[j][jj];
               unsigned int remainder
                 = renumbering_category[j].size() % vectorization_length;
               if(remainder)
@@ -894,14 +893,14 @@ namespace internal
               const unsigned int block_size
                 = std::max((2048U / dofs_per_cell) / 8 * 4, 2U);
               if(block < 4)
-                for(unsigned int k = 0; k < n_my_macro_cells; k += block_size)
+                for(unsigned int k= 0; k < n_my_macro_cells; k+= block_size)
                   cell_partition_data.push_back(
                     n_cells + std::min(k + block_size, n_my_macro_cells));
               else
-                cell_partition_data.back() += n_my_macro_cells;
-              n_cells += n_my_macro_cells;
+                cell_partition_data.back()+= n_my_macro_cells;
+              n_cells+= n_my_macro_cells;
             }
-          partition_row_index[block] = cell_partition_data.size() - 1;
+          partition_row_index[block]= cell_partition_data.size() - 1;
           if(block == 3 || (block == 1 && n_procs == 1))
             cell_partition_data.push_back(n_cells);
         }
@@ -938,17 +937,17 @@ namespace internal
 
       std::vector<unsigned int> reverse_numbering(
         n_active_cells, numbers::invalid_unsigned_int);
-      for(unsigned int j = 0; j < boundary_cells.size(); ++j)
-        reverse_numbering[boundary_cells[j]] = j;
-      unsigned int counter = boundary_cells.size();
-      for(unsigned int j = 0; j < n_active_cells; ++j)
+      for(unsigned int j= 0; j < boundary_cells.size(); ++j)
+        reverse_numbering[boundary_cells[j]]= j;
+      unsigned int counter= boundary_cells.size();
+      for(unsigned int j= 0; j < n_active_cells; ++j)
         if(reverse_numbering[j] == numbers::invalid_unsigned_int)
-          reverse_numbering[j] = counter++;
+          reverse_numbering[j]= counter++;
 
       AssertDimension(counter, n_active_cells);
-      renumbering = Utilities::invert_permutation(reverse_numbering);
+      renumbering= Utilities::invert_permutation(reverse_numbering);
 
-      for(unsigned int j = n_active_cells; j < n_active_cells + n_ghost_cells;
+      for(unsigned int j= n_active_cells; j < n_active_cells + n_ghost_cells;
           ++j)
         renumbering.push_back(j);
 
@@ -971,12 +970,12 @@ namespace internal
       cell_partition_data.push_back(n_macro_cells);
       cell_partition_data.push_back(cell_partition_data.back() + n_ghost_slots);
       partition_row_index.resize(n_procs > 1 ? 4 : 2);
-      partition_row_index[0] = 0;
-      partition_row_index[1] = 1;
+      partition_row_index[0]= 0;
+      partition_row_index[1]= 1;
       if(n_procs > 1)
         {
-          partition_row_index[2] = 2;
-          partition_row_index[3] = 3;
+          partition_row_index[2]= 2;
+          partition_row_index[3]= 3;
         }
     }
 
@@ -994,16 +993,16 @@ namespace internal
 
           // if there are too few degrees of freedom per cell, need to
           // increase the block size
-          const unsigned int minimum_parallel_grain_size = 200;
+          const unsigned int minimum_parallel_grain_size= 200;
           if(dofs_per_cell * block_size < minimum_parallel_grain_size)
-            block_size = (minimum_parallel_grain_size / dofs_per_cell + 1);
+            block_size= (minimum_parallel_grain_size / dofs_per_cell + 1);
           if(dofs_per_cell * block_size > 10000)
-            block_size /= 4;
+            block_size/= 4;
 
-          block_size = 1 << (unsigned int) (log2(block_size + 1));
+          block_size= 1 << (unsigned int) (log2(block_size + 1));
         }
       if(block_size > n_active_cells)
-        block_size = std::max(1U, n_active_cells);
+        block_size= std::max(1U, n_active_cells);
     }
 
     void
@@ -1013,13 +1012,13 @@ namespace internal
       std::vector<unsigned char>& irregular_cells,
       const bool)
     {
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int n_macro_cells= *(cell_partition_data.end() - 2);
       if(n_macro_cells == 0)
         return;
 
       Assert(vectorization_length > 0, ExcInternalError());
 
-      unsigned int partition = 0, counter = 0;
+      unsigned int partition= 0, counter= 0;
 
       // Create connectivity graph for blocks based on connectivity graph for cells.
       DynamicSparsityPattern connectivity(n_blocks, n_blocks);
@@ -1046,7 +1045,7 @@ namespace internal
 
       // The cluster_size in make_partitioning defines that the no. of cells
       // in each partition should be a multiple of cluster_size.
-      unsigned int cluster_size = 1;
+      unsigned int cluster_size= 1;
 
       // Make the partitioning of the first layer of the blocks of cells.
       make_partitioning(connectivity,
@@ -1064,14 +1063,14 @@ namespace internal
                                                   partition_size,
                                                   partition_color_list);
 
-      partition_list = renumbering;
+      partition_list= renumbering;
 
 #ifdef DEBUG
       // in debug mode, check that the partition color list is one-to-one
       {
         std::vector<unsigned int> sorted_pc_list(partition_color_list);
         std::sort(sorted_pc_list.begin(), sorted_pc_list.end());
-        for(unsigned int i = 0; i < sorted_pc_list.size(); ++i)
+        for(unsigned int i= 0; i < sorted_pc_list.size(); ++i)
           Assert(sorted_pc_list[i] == i, ExcInternalError());
       }
 #endif
@@ -1081,52 +1080,51 @@ namespace internal
       std::vector<unsigned int>  block_start(n_macro_cells + 1);
       std::vector<unsigned char> irregular(n_macro_cells);
 
-      unsigned int mcell_start = 0;
-      block_start[0]           = 0;
-      for(unsigned int block = 0; block < n_blocks; block++)
+      unsigned int mcell_start= 0;
+      block_start[0]          = 0;
+      for(unsigned int block= 0; block < n_blocks; block++)
         {
-          block_start[block + 1] = block_start[block];
-          for(unsigned int mcell = mcell_start;
+          block_start[block + 1]= block_start[block];
+          for(unsigned int mcell= mcell_start;
               mcell < std::min(mcell_start + block_size, n_macro_cells);
               ++mcell)
             {
-              unsigned int n_comp = (irregular_cells[mcell] > 0) ?
-                                      irregular_cells[mcell] :
-                                      vectorization_length;
-              block_start[block + 1] += n_comp;
+              unsigned int n_comp= (irregular_cells[mcell] > 0) ?
+                                     irregular_cells[mcell] :
+                                     vectorization_length;
+              block_start[block + 1]+= n_comp;
               ++counter;
             }
-          mcell_start += block_size;
+          mcell_start+= block_size;
         }
-      counter                    = 0;
-      unsigned int counter_macro = 0;
-      unsigned int block_size_last
-        = n_macro_cells - block_size * (n_blocks - 1);
+      counter                     = 0;
+      unsigned int counter_macro  = 0;
+      unsigned int block_size_last= n_macro_cells - block_size * (n_blocks - 1);
       if(block_size_last == 0)
-        block_size_last = block_size;
+        block_size_last= block_size;
 
-      unsigned int tick = 0;
-      for(unsigned int block = 0; block < n_blocks; block++)
+      unsigned int tick= 0;
+      for(unsigned int block= 0; block < n_blocks; block++)
         {
-          unsigned int present_block = partition_color_list[block];
-          for(unsigned int cell = block_start[present_block];
+          unsigned int present_block= partition_color_list[block];
+          for(unsigned int cell= block_start[present_block];
               cell < block_start[present_block + 1];
               ++cell)
-            renumbering[counter++] = partition_list[cell];
+            renumbering[counter++]= partition_list[cell];
           unsigned int this_block_size
             = (present_block == n_blocks - 1) ? block_size_last : block_size;
 
           // Also re-compute the content of cell_partition_data to
           // contain the numbers of cells, not blocks
           if(cell_partition_data[tick] == block)
-            cell_partition_data[tick++] = counter_macro;
+            cell_partition_data[tick++]= counter_macro;
 
-          for(unsigned int j = 0; j < this_block_size; j++)
+          for(unsigned int j= 0; j < this_block_size; j++)
             irregular[counter_macro++]
               = irregular_cells[present_block * block_size + j];
         }
       AssertDimension(tick + 1, cell_partition_data.size());
-      cell_partition_data.back() = counter_macro;
+      cell_partition_data.back()= counter_macro;
 
       irregular_cells.swap(irregular);
       AssertDimension(counter, n_active_cells);
@@ -1137,7 +1135,7 @@ namespace internal
       {
         std::vector<unsigned int> sorted_renumbering(renumbering);
         std::sort(sorted_renumbering.begin(), sorted_renumbering.end());
-        for(unsigned int i = 0; i < sorted_renumbering.size(); ++i)
+        for(unsigned int i= 0; i < sorted_renumbering.size(); ++i)
           Assert(sorted_renumbering[i] == i, ExcInternalError());
       }
 #endif
@@ -1156,7 +1154,7 @@ namespace internal
       std::vector<unsigned char>&      irregular_cells,
       const bool                       hp_bool)
     {
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int n_macro_cells= *(cell_partition_data.end() - 2);
       if(n_macro_cells == 0)
         return;
 
@@ -1168,12 +1166,12 @@ namespace internal
       make_connectivity_cells_to_blocks(
         irregular_cells, connectivity, connectivity_blocks);
 
-      unsigned int n_blocks = 0;
+      unsigned int n_blocks= 0;
       if(scheme == partition_color
          || scheme == color) // blocking_connectivity == true
-        n_blocks = this->n_blocks;
+        n_blocks= this->n_blocks;
       else
-        n_blocks = n_active_cells;
+        n_blocks= n_active_cells;
 
       // For each block of cells, this variable saves to which partitions the
       // block belongs. Initialize all to -1 to mark them as not yet assigned
@@ -1190,15 +1188,15 @@ namespace internal
       // This vector points to the start of each partition.
       std::vector<unsigned int> partition_size(2, 0);
 
-      unsigned int partition = 0;
+      unsigned int partition= 0;
 
       // Within the partitions we want to be able to block for the case that
       // we do not block already in the connectivity. The cluster_size in
       // make_partitioning defines that the no. of cells in each partition
       // should be a multiple of cluster_size.
-      unsigned int cluster_size = 1;
+      unsigned int cluster_size= 1;
       if(scheme == partition_partition)
-        cluster_size = block_size * vectorization_length;
+        cluster_size= block_size * vectorization_length;
 
       // Make the partitioning of the first layer of the blocks of cells.
       if(scheme == partition_color || scheme == color)
@@ -1248,7 +1246,7 @@ namespace internal
       {
         std::vector<unsigned int> sorted_pc_list(partition_2layers_list);
         std::sort(sorted_pc_list.begin(), sorted_pc_list.end());
-        for(unsigned int i = 0; i < sorted_pc_list.size(); ++i)
+        for(unsigned int i= 0; i < sorted_pc_list.size(); ++i)
           Assert(sorted_pc_list[i] == i, ExcInternalError());
       }
 #endif
@@ -1261,10 +1259,10 @@ namespace internal
           // This is the simple case. The renumbering is just a combination of
           // the renumbering that we were given as an input and the
           // renumbering of partition/coloring given in partition_2layers_list
-          for(unsigned int j = 0; j < renumbering.size(); j++)
-            renumbering[j] = renumbering_in[partition_2layers_list[j]];
+          for(unsigned int j= 0; j < renumbering.size(); j++)
+            renumbering[j]= renumbering_in[partition_2layers_list[j]];
           // Account for the ghost cells, finally.
-          for(unsigned int i = 0; i < n_ghost_cells; ++i)
+          for(unsigned int i= 0; i < n_ghost_cells; ++i)
             renumbering.push_back(i + n_active_cells);
         }
       else
@@ -1274,54 +1272,54 @@ namespace internal
           std::vector<unsigned int>  block_start(n_macro_cells + 1);
           std::vector<unsigned char> irregular(n_macro_cells);
 
-          unsigned int counter     = 0;
-          unsigned int mcell_start = 0;
-          block_start[0]           = 0;
-          for(unsigned int block = 0; block < n_blocks; block++)
+          unsigned int counter    = 0;
+          unsigned int mcell_start= 0;
+          block_start[0]          = 0;
+          for(unsigned int block= 0; block < n_blocks; block++)
             {
-              block_start[block + 1] = block_start[block];
-              for(unsigned int mcell = mcell_start;
+              block_start[block + 1]= block_start[block];
+              for(unsigned int mcell= mcell_start;
                   mcell < std::min(mcell_start + block_size, n_macro_cells);
                   ++mcell)
                 {
-                  unsigned int n_comp = (irregular_cells[mcell] > 0) ?
-                                          irregular_cells[mcell] :
-                                          vectorization_length;
-                  block_start[block + 1] += n_comp;
+                  unsigned int n_comp= (irregular_cells[mcell] > 0) ?
+                                         irregular_cells[mcell] :
+                                         vectorization_length;
+                  block_start[block + 1]+= n_comp;
                   ++counter;
                 }
-              mcell_start += block_size;
+              mcell_start+= block_size;
             }
-          counter                    = 0;
-          unsigned int counter_macro = 0;
+          counter                   = 0;
+          unsigned int counter_macro= 0;
           unsigned int block_size_last
             = n_macro_cells - block_size * (n_blocks - 1);
           if(block_size_last == 0)
-            block_size_last = block_size;
+            block_size_last= block_size;
 
-          unsigned int tick = 0;
-          for(unsigned int block = 0; block < n_blocks; block++)
+          unsigned int tick= 0;
+          for(unsigned int block= 0; block < n_blocks; block++)
             {
-              unsigned int present_block = partition_2layers_list[block];
-              for(unsigned int cell = block_start[present_block];
+              unsigned int present_block= partition_2layers_list[block];
+              for(unsigned int cell= block_start[present_block];
                   cell < block_start[present_block + 1];
                   ++cell)
-                renumbering[counter++] = renumbering_in[cell];
-              unsigned int this_block_size = (present_block == n_blocks - 1) ?
-                                               block_size_last :
-                                               block_size;
+                renumbering[counter++]= renumbering_in[cell];
+              unsigned int this_block_size= (present_block == n_blocks - 1) ?
+                                              block_size_last :
+                                              block_size;
 
               // Also re-compute the content of cell_partition_data to
               // contain the numbers of cells, not blocks
               if(cell_partition_data[tick] == block)
-                cell_partition_data[tick++] = counter_macro;
+                cell_partition_data[tick++]= counter_macro;
 
-              for(unsigned int j = 0; j < this_block_size; j++)
+              for(unsigned int j= 0; j < this_block_size; j++)
                 irregular[counter_macro++]
                   = irregular_cells[present_block * block_size + j];
             }
           AssertDimension(tick + 1, cell_partition_data.size());
-          cell_partition_data.back() = counter_macro;
+          cell_partition_data.back()= counter_macro;
 
           irregular_cells.swap(irregular);
           AssertDimension(counter, n_active_cells);
@@ -1331,7 +1329,7 @@ namespace internal
           {
             std::vector<unsigned int> sorted_renumbering(renumbering);
             std::sort(sorted_renumbering.begin(), sorted_renumbering.end());
-            for(unsigned int i = 0; i < sorted_renumbering.size(); ++i)
+            for(unsigned int i= 0; i < sorted_renumbering.size(); ++i)
               Assert(sorted_renumbering[i] == i, ExcInternalError());
           }
 #endif
@@ -1349,11 +1347,11 @@ namespace internal
       std::vector<unsigned char>&      irregular_cells,
       const bool                       hp_bool)
     {
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int n_macro_cells= *(cell_partition_data.end() - 2);
       if(n_macro_cells == 0)
         return;
 
-      const unsigned int cluster_size = block_size * vectorization_length;
+      const unsigned int cluster_size= block_size * vectorization_length;
 
       // Create cell-block  partitioning.
 
@@ -1371,7 +1369,7 @@ namespace internal
       // This vector points to the start of each partition.
       std::vector<unsigned int> partition_size(2, 0);
 
-      unsigned int partition = 0;
+      unsigned int partition= 0;
       // Here, we do not block inside the connectivity graph
       //blocking_connectivity = false;
 
@@ -1397,10 +1395,10 @@ namespace internal
 
       partition_list.swap(renumbering);
 
-      for(unsigned int j = 0; j < renumbering.size(); j++)
-        renumbering[j] = partition_list[partition_partition_list[j]];
+      for(unsigned int j= 0; j < renumbering.size(); j++)
+        renumbering[j]= partition_list[partition_partition_list[j]];
 
-      for(unsigned int i = 0; i < n_ghost_cells; ++i)
+      for(unsigned int i= 0; i < n_ghost_cells; ++i)
         renumbering.push_back(i + n_active_cells);
 
       update_task_info(partition);
@@ -1414,26 +1412,26 @@ namespace internal
     {
       std::vector<std::vector<unsigned int>> cell_blocks(n_blocks);
       std::vector<unsigned int>              touched_cells(n_active_cells);
-      unsigned int                           cell = 0;
-      for(unsigned int i = 0, mcell = 0; i < n_blocks; ++i)
+      unsigned int                           cell= 0;
+      for(unsigned int i= 0, mcell= 0; i < n_blocks; ++i)
         {
-          for(unsigned int c = 0;
+          for(unsigned int c= 0;
               c < block_size && mcell < *(cell_partition_data.end() - 2);
               ++c, ++mcell)
             {
-              unsigned int ncomp = (irregular_cells[mcell] > 0) ?
-                                     irregular_cells[mcell] :
-                                     vectorization_length;
-              for(unsigned int c = 0; c < ncomp; ++c, ++cell)
+              unsigned int ncomp= (irregular_cells[mcell] > 0) ?
+                                    irregular_cells[mcell] :
+                                    vectorization_length;
+              for(unsigned int c= 0; c < ncomp; ++c, ++cell)
                 {
                   cell_blocks[i].push_back(cell);
-                  touched_cells[cell] = i;
+                  touched_cells[cell]= i;
                 }
             }
         }
       AssertDimension(cell, n_active_cells);
-      for(unsigned int i = 0; i < cell_blocks.size(); ++i)
-        for(unsigned int col = 0; col < cell_blocks[i].size(); ++col)
+      for(unsigned int i= 0; i < cell_blocks.size(); ++i)
+        for(unsigned int col= 0; col < cell_blocks[i].size(); ++col)
           {
             for(DynamicSparsityPattern::iterator it
                 = connectivity_cells.begin(cell_blocks[i][col]);
@@ -1461,7 +1459,7 @@ namespace internal
       std::vector<unsigned int>&       partition_partition_list,
       std::vector<unsigned char>&      irregular_cells)
     {
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int n_macro_cells= *(cell_partition_data.end() - 2);
       const unsigned int n_ghost_slots
         = *(cell_partition_data.end() - 1) - n_macro_cells;
 
@@ -1472,17 +1470,17 @@ namespace internal
 
       std::vector<unsigned int> renumbering(n_active_cells);
 
-      irregular_cells.back() = 0;
+      irregular_cells.back()= 0;
       irregular_cells.resize(n_active_cells + n_ghost_slots);
 
-      unsigned int max_fe_index = 0;
-      for(unsigned int i = 0; i < cell_active_fe_index.size(); ++i)
-        max_fe_index = std::max(cell_active_fe_index[i], max_fe_index);
+      unsigned int max_fe_index= 0;
+      for(unsigned int i= 0; i < cell_active_fe_index.size(); ++i)
+        max_fe_index= std::max(cell_active_fe_index[i], max_fe_index);
       Assert(!hp_bool || cell_active_fe_index.size() == n_active_cells,
              ExcInternalError());
 
       {
-        unsigned int n_macro_cells_before = 0;
+        unsigned int n_macro_cells_before= 0;
         // Create partitioning within partitions.
 
         // For each block of cells, this variable saves to which partitions
@@ -1494,31 +1492,31 @@ namespace internal
         partition_row_index.resize(partition + 1, 0);
         cell_partition_data.resize(1, 0);
 
-        unsigned int counter = 0;
+        unsigned int counter= 0;
         unsigned int missing_macros;
-        for(unsigned int part = 0; part < partition; ++part)
+        for(unsigned int part= 0; part < partition; ++part)
           {
             neighbor_neighbor_list.resize(0);
             neighbor_list.resize(0);
-            bool         work              = true;
-            unsigned int partition_l2      = 0;
-            unsigned int start_up          = partition_size[part];
-            unsigned int partition_counter = 0;
+            bool         work             = true;
+            unsigned int partition_l2     = 0;
+            unsigned int start_up         = partition_size[part];
+            unsigned int partition_counter= 0;
             while(work)
               {
                 if(neighbor_list.size() == 0)
                   {
-                    work              = false;
-                    partition_counter = 0;
-                    for(unsigned int j = start_up; j < partition_size[part + 1];
+                    work             = false;
+                    partition_counter= 0;
+                    for(unsigned int j= start_up; j < partition_size[part + 1];
                         ++j)
                       if(cell_partition[partition_list[j]] == part
                          && cell_partition_l2[partition_list[j]]
                               == numbers::invalid_unsigned_int)
                         {
-                          start_up          = j;
-                          work              = true;
-                          partition_counter = 1;
+                          start_up         = j;
+                          work             = true;
+                          partition_counter= 1;
                           // To start up, set the start_up cell to partition
                           // and list all its neighbors.
                           AssertIndexRange(start_up, partition_size[part + 1]);
@@ -1534,8 +1532,8 @@ namespace internal
                   }
                 else
                   {
-                    partition_counter = 0;
-                    for(unsigned int j = 0; j < neighbor_list.size(); ++j)
+                    partition_counter= 0;
+                    for(unsigned int j= 0; j < neighbor_list.size(); ++j)
                       {
                         Assert(cell_partition[neighbor_list[j]] == part,
                                ExcInternalError());
@@ -1544,7 +1542,7 @@ namespace internal
                                ExcInternalError());
                         DynamicSparsityPattern::iterator neighbor
                           = connectivity.begin(neighbor_list[j]),
-                          end = connectivity.end(neighbor_list[j]);
+                          end= connectivity.end(neighbor_list[j]);
                         for(; neighbor != end; ++neighbor)
                           {
                             if(cell_partition[neighbor->column()] == part
@@ -1564,23 +1562,22 @@ namespace internal
                   }
                 if(partition_counter > 0)
                   {
-                    int index_before = neighbor_neighbor_list.size(),
-                        index        = index_before;
+                    int index_before= neighbor_neighbor_list.size(),
+                        index       = index_before;
                     {
                       // put the cells into separate lists for each FE index
                       // within one partition-partition
-                      missing_macros = 0;
+                      missing_macros= 0;
                       std::vector<unsigned int> remaining_per_macro_cell(
                         max_fe_index + 1);
                       std::vector<std::vector<unsigned int>>
                                    renumbering_fe_index;
                       unsigned int cell;
-                      bool         filled = true;
+                      bool         filled= true;
                       if(hp_bool == true)
                         {
                           renumbering_fe_index.resize(max_fe_index + 1);
-                          for(cell = counter - partition_counter;
-                              cell < counter;
+                          for(cell= counter - partition_counter; cell < counter;
                               ++cell)
                             {
                               renumbering_fe_index
@@ -1591,16 +1588,16 @@ namespace internal
                                   .push_back(partition_partition_list[cell]);
                             }
                           // check how many more cells are needed in the lists
-                          for(unsigned int j = 0; j < max_fe_index + 1; j++)
+                          for(unsigned int j= 0; j < max_fe_index + 1; j++)
                             {
                               remaining_per_macro_cell[j]
                                 = renumbering_fe_index[j].size()
                                   % vectorization_length;
                               if(remaining_per_macro_cell[j] != 0)
-                                filled = false;
-                              missing_macros += ((renumbering_fe_index[j].size()
-                                                  + vectorization_length - 1)
-                                                 / vectorization_length);
+                                filled= false;
+                              missing_macros+= ((renumbering_fe_index[j].size()
+                                                 + vectorization_length - 1)
+                                                / vectorization_length);
                             }
                         }
                       else
@@ -1612,7 +1609,7 @@ namespace internal
                             = partition_counter / vectorization_length;
                           if(remaining_per_macro_cell[0] != 0)
                             {
-                              filled = false;
+                              filled= false;
                               missing_macros++;
                             }
                         }
@@ -1624,7 +1621,7 @@ namespace internal
                         {
                           if(index == 0)
                             {
-                              index = neighbor_neighbor_list.size();
+                              index= neighbor_neighbor_list.size();
                               if(index == index_before)
                                 {
                                   if(missing_macros != 0)
@@ -1634,7 +1631,7 @@ namespace internal
                                   start_up--;
                                   break; // not connected - start again
                                 }
-                              index_before = index;
+                              index_before= index;
                             }
                           index--;
                           unsigned int additional
@@ -1645,14 +1642,14 @@ namespace internal
                           // fill up with.
                           DynamicSparsityPattern::iterator neighbor
                             = connectivity.begin(additional),
-                            end = connectivity.end(additional);
+                            end= connectivity.end(additional);
                           for(; neighbor != end; ++neighbor)
                             {
                               if(cell_partition[neighbor->column()] == part
                                  && cell_partition_l2[neighbor->column()]
                                       == numbers::invalid_unsigned_int)
                                 {
-                                  unsigned int this_index = 0;
+                                  unsigned int this_index= 0;
                                   if(hp_bool == true)
                                     this_index
                                       = cell_active_fe_index.empty() ?
@@ -1692,13 +1689,13 @@ namespace internal
                                         }
                                       if(missing_macros == 0)
                                         {
-                                          filled = true;
-                                          for(unsigned int fe_ind = 0;
+                                          filled= true;
+                                          for(unsigned int fe_ind= 0;
                                               fe_ind < max_fe_index + 1;
                                               ++fe_ind)
                                             if(remaining_per_macro_cell[fe_ind]
                                                != 0)
-                                              filled = false;
+                                              filled= false;
                                         }
                                       if(filled == true)
                                         break;
@@ -1711,10 +1708,10 @@ namespace internal
                           // set the renumbering according to their active FE
                           // index within one partition-partition which was
                           // implicitly assumed above
-                          cell = counter - partition_counter;
-                          for(unsigned int j = 0; j < max_fe_index + 1; j++)
+                          cell= counter - partition_counter;
+                          for(unsigned int j= 0; j < max_fe_index + 1; j++)
                             {
-                              for(unsigned int jj = 0;
+                              for(unsigned int jj= 0;
                                   jj < renumbering_fe_index[j].size();
                                   jj++)
                                 renumbering[cell++]
@@ -1749,7 +1746,7 @@ namespace internal
                     cell_partition_data.push_back(n_macro_cells_before);
                     partition_l2++;
                   }
-                neighbor_list = neighbor_neighbor_list;
+                neighbor_list= neighbor_neighbor_list;
                 neighbor_neighbor_list.resize(0);
               }
             partition_row_index[part + 1]
@@ -1772,68 +1769,68 @@ namespace internal
       const std::vector<unsigned int>& partition_size,
       std::vector<unsigned int>&       partition_color_list)
     {
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int        n_macro_cells= *(cell_partition_data.end() - 2);
       std::vector<unsigned int> cell_color(n_blocks, n_macro_cells);
       std::vector<bool>         color_finder;
 
       partition_row_index.resize(partition + 1);
       cell_partition_data.clear();
-      unsigned int color_counter = 0, index_counter = 0;
-      for(unsigned int part = 0; part < partition; part++)
+      unsigned int color_counter= 0, index_counter= 0;
+      for(unsigned int part= 0; part < partition; part++)
         {
-          partition_row_index[part] = index_counter;
-          unsigned int max_color    = 0;
-          for(unsigned int k = partition_size[part];
+          partition_row_index[part]= index_counter;
+          unsigned int max_color   = 0;
+          for(unsigned int k= partition_size[part];
               k < partition_size[part + 1];
               k++)
             {
-              unsigned int cell        = partition_list[k];
-              unsigned int n_neighbors = connectivity.row_length(cell);
+              unsigned int cell       = partition_list[k];
+              unsigned int n_neighbors= connectivity.row_length(cell);
 
               // In the worst case, each neighbor has a different color. So we
               // find at least one available color between 0 and n_neighbors.
               color_finder.resize(n_neighbors + 1);
-              for(unsigned int j = 0; j <= n_neighbors; ++j)
-                color_finder[j] = true;
+              for(unsigned int j= 0; j <= n_neighbors; ++j)
+                color_finder[j]= true;
               DynamicSparsityPattern::iterator neighbor
                 = connectivity.begin(cell),
-                end = connectivity.end(cell);
+                end= connectivity.end(cell);
               for(; neighbor != end; ++neighbor)
                 {
                   // Mark the color that a neighbor within the partition has
                   // as taken
                   if(cell_partition[neighbor->column()] == part
                      && cell_color[neighbor->column()] <= n_neighbors)
-                    color_finder[cell_color[neighbor->column()]] = false;
+                    color_finder[cell_color[neighbor->column()]]= false;
                 }
               // Choose the smallest color that is not taken for the block
-              cell_color[cell] = 0;
+              cell_color[cell]= 0;
               while(color_finder[cell_color[cell]] == false)
                 cell_color[cell]++;
               if(cell_color[cell] > max_color)
-                max_color = cell_color[cell];
+                max_color= cell_color[cell];
             }
           // Reorder within partition: First, all blocks that belong the 0 and
           // then so on until those with color max (Note that the smaller the
           // number the larger the partition)
-          for(unsigned int color = 0; color <= max_color; color++)
+          for(unsigned int color= 0; color <= max_color; color++)
             {
               cell_partition_data.push_back(color_counter);
               index_counter++;
-              for(unsigned int k = partition_size[part];
+              for(unsigned int k= partition_size[part];
                   k < partition_size[part + 1];
                   k++)
                 {
-                  unsigned int cell = partition_list[k];
+                  unsigned int cell= partition_list[k];
                   if(cell_color[cell] == color)
                     {
-                      partition_color_list[color_counter++] = cell;
+                      partition_color_list[color_counter++]= cell;
                     }
                 }
             }
         }
       cell_partition_data.push_back(n_blocks);
-      partition_row_index[partition] = index_counter;
+      partition_row_index[partition]= index_counter;
       AssertDimension(color_counter, n_blocks);
     }
 
@@ -1864,35 +1861,35 @@ namespace internal
       // This vector points to the start of each partition.
       //std::vector<unsigned int> partition_size(2,0);
 
-      partition            = 0;
-      unsigned int counter = 0;
+      partition           = 0;
+      unsigned int counter= 0;
       unsigned int start_nonboundary
         = cell_partition_data.size() == 5 ?
             vectorization_length
               * (cell_partition_data[2] - cell_partition_data[1]) :
             0;
 
-      const unsigned int n_macro_cells = *(cell_partition_data.end() - 2);
+      const unsigned int n_macro_cells= *(cell_partition_data.end() - 2);
       if(n_macro_cells == 0)
         return;
       if(scheme == color)
-        start_nonboundary = n_macro_cells;
+        start_nonboundary= n_macro_cells;
       if(scheme == partition_color
          || scheme == color) // blocking_connectivity == true
-        start_nonboundary = ((start_nonboundary + block_size - 1) / block_size);
+        start_nonboundary= ((start_nonboundary + block_size - 1) / block_size);
       unsigned int n_blocks;
       if(scheme == partition_color
          || scheme == color) // blocking_connectivity == true
-        n_blocks = this->n_blocks;
+        n_blocks= this->n_blocks;
       else
-        n_blocks = n_active_cells;
+        n_blocks= n_active_cells;
 
       if(start_nonboundary > n_blocks)
-        start_nonboundary = n_blocks;
+        start_nonboundary= n_blocks;
 
-      unsigned int start_up  = 0;
-      bool         work      = true;
-      unsigned int remainder = cluster_size;
+      unsigned int start_up = 0;
+      bool         work     = true;
+      unsigned int remainder= cluster_size;
 
       // this performs a classical breath-first search in the connectivity
       // graph of the cells under the restriction that the size of the
@@ -1902,61 +1899,61 @@ namespace internal
           // put the cells with neighbors on remote MPI processes up front
           if(start_nonboundary > 0)
             {
-              for(unsigned int cell = 0; cell < start_nonboundary; ++cell)
+              for(unsigned int cell= 0; cell < start_nonboundary; ++cell)
                 {
-                  const unsigned int cell_nn = cell;
-                  cell_partition[cell_nn]    = partition;
+                  const unsigned int cell_nn= cell;
+                  cell_partition[cell_nn]   = partition;
                   neighbor_list.push_back(cell_nn);
-                  partition_list[counter++] = cell_nn;
+                  partition_list[counter++]= cell_nn;
                   partition_size.back()++;
                 }
-              start_nonboundary = 0;
-              remainder -= (start_nonboundary % cluster_size);
+              start_nonboundary= 0;
+              remainder-= (start_nonboundary % cluster_size);
               if(remainder == cluster_size)
-                remainder = 0;
+                remainder= 0;
             }
           else
             {
               // To start up, set the start_up cell to partition and list all
               // its neighbors.
-              cell_partition[start_up] = partition;
+              cell_partition[start_up]= partition;
               neighbor_list.push_back(start_up);
-              partition_list[counter++] = start_up;
+              partition_list[counter++]= start_up;
               partition_size.back()++;
               start_up++;
               remainder--;
               if(remainder == cluster_size)
-                remainder = 0;
+                remainder= 0;
             }
-          int index_before = neighbor_list.size(), index = index_before,
-              index_stop = 0;
+          int index_before= neighbor_list.size(), index= index_before,
+              index_stop= 0;
           while(remainder > 0)
             {
               if(index == index_stop)
                 {
-                  index = neighbor_list.size();
+                  index= neighbor_list.size();
                   if(index == index_before)
                     {
                       neighbor_list.resize(0);
                       goto not_connect;
                     }
-                  index_stop   = index_before;
-                  index_before = index;
+                  index_stop  = index_before;
+                  index_before= index;
                 }
               index--;
-              unsigned int additional = neighbor_list[index];
+              unsigned int                     additional= neighbor_list[index];
               DynamicSparsityPattern::iterator neighbor
                 = connectivity.begin(additional),
-                end = connectivity.end(additional);
+                end= connectivity.end(additional);
               for(; neighbor != end; ++neighbor)
                 {
                   if(cell_partition[neighbor->column()]
                      == numbers::invalid_unsigned_int)
                     {
                       partition_size.back()++;
-                      cell_partition[neighbor->column()] = partition;
+                      cell_partition[neighbor->column()]= partition;
                       neighbor_list.push_back(neighbor->column());
-                      partition_list[counter++] = neighbor->column();
+                      partition_list[counter++]= neighbor->column();
                       remainder--;
                       if(remainder == 0)
                         break;
@@ -1969,69 +1966,69 @@ namespace internal
               partition++;
 
               // counter for number of cells so far in current partition
-              unsigned int partition_counter = 0;
+              unsigned int partition_counter= 0;
 
               // Mark the start of the new partition
               partition_size.push_back(partition_size.back());
 
               // Loop through the list of cells in previous partition and put
               // all their neighbors in current partition
-              for(unsigned int j = 0; j < neighbor_list.size(); ++j)
+              for(unsigned int j= 0; j < neighbor_list.size(); ++j)
                 {
                   Assert(cell_partition[neighbor_list[j]] == partition - 1,
                          ExcInternalError());
                   DynamicSparsityPattern::iterator neighbor
                     = connectivity.begin(neighbor_list[j]),
-                    end = connectivity.end(neighbor_list[j]);
+                    end= connectivity.end(neighbor_list[j]);
                   for(; neighbor != end; ++neighbor)
                     {
                       if(cell_partition[neighbor->column()]
                          == numbers::invalid_unsigned_int)
                         {
                           partition_size.back()++;
-                          cell_partition[neighbor->column()] = partition;
+                          cell_partition[neighbor->column()]= partition;
 
                           // collect the cells of the current partition for
                           // use as neighbors in next partition
                           neighbor_neighbor_list.push_back(neighbor->column());
-                          partition_list[counter++] = neighbor->column();
+                          partition_list[counter++]= neighbor->column();
                           partition_counter++;
                         }
                     }
                 }
-              remainder = cluster_size - (partition_counter % cluster_size);
+              remainder= cluster_size - (partition_counter % cluster_size);
               if(remainder == cluster_size)
-                remainder = 0;
-              int index_stop   = 0;
-              int index_before = neighbor_neighbor_list.size(),
-                  index        = index_before;
+                remainder= 0;
+              int index_stop  = 0;
+              int index_before= neighbor_neighbor_list.size(),
+                  index       = index_before;
               while(remainder > 0)
                 {
                   if(index == index_stop)
                     {
-                      index = neighbor_neighbor_list.size();
+                      index= neighbor_neighbor_list.size();
                       if(index == index_before)
                         {
                           neighbor_neighbor_list.resize(0);
                           break;
                         }
-                      index_stop   = index_before;
-                      index_before = index;
+                      index_stop  = index_before;
+                      index_before= index;
                     }
                   index--;
-                  unsigned int additional = neighbor_neighbor_list[index];
+                  unsigned int additional= neighbor_neighbor_list[index];
                   DynamicSparsityPattern::iterator neighbor
                     = connectivity.begin(additional),
-                    end = connectivity.end(additional);
+                    end= connectivity.end(additional);
                   for(; neighbor != end; ++neighbor)
                     {
                       if(cell_partition[neighbor->column()]
                          == numbers::invalid_unsigned_int)
                         {
                           partition_size.back()++;
-                          cell_partition[neighbor->column()] = partition;
+                          cell_partition[neighbor->column()]= partition;
                           neighbor_neighbor_list.push_back(neighbor->column());
-                          partition_list[counter++] = neighbor->column();
+                          partition_list[counter++]= neighbor->column();
                           remainder--;
                           if(remainder == 0)
                             break;
@@ -2039,20 +2036,20 @@ namespace internal
                     }
                 }
 
-              neighbor_list = neighbor_neighbor_list;
+              neighbor_list= neighbor_neighbor_list;
               neighbor_neighbor_list.resize(0);
             }
         not_connect:
           // One has to check if the graph is not connected so we have to find
           // another partition.
-          work = false;
-          for(unsigned int j = start_up; j < n_blocks; ++j)
+          work= false;
+          for(unsigned int j= start_up; j < n_blocks; ++j)
             if(cell_partition[j] == numbers::invalid_unsigned_int)
               {
-                start_up = j;
-                work     = true;
+                start_up= j;
+                work    = true;
                 if(remainder == 0)
-                  remainder = cluster_size;
+                  remainder= cluster_size;
                 break;
               }
         }
@@ -2065,16 +2062,16 @@ namespace internal
     void
     TaskInfo::update_task_info(const unsigned int partition)
     {
-      evens             = (partition + 1) / 2;
-      odds              = partition / 2;
-      n_blocked_workers = odds - (odds + evens + 1) % 2;
-      n_workers         = evens + odds - n_blocked_workers;
+      evens            = (partition + 1) / 2;
+      odds             = partition / 2;
+      n_blocked_workers= odds - (odds + evens + 1) % 2;
+      n_workers        = evens + odds - n_blocked_workers;
       // From here only used for partition partition option.
       partition_evens.resize(partition);
       partition_odds.resize(partition);
       partition_n_blocked_workers.resize(partition);
       partition_n_workers.resize(partition);
-      for(unsigned int part = 0; part < partition; part++)
+      for(unsigned int part= 0; part < partition; part++)
         {
           partition_evens[part]
             = (partition_row_index[part + 1] - partition_row_index[part] + 1)
@@ -2084,9 +2081,9 @@ namespace internal
           partition_n_blocked_workers[part]
             = partition_odds[part]
               - (partition_odds[part] + partition_evens[part] + 1) % 2;
-          partition_n_workers[part] = partition_evens[part]
-                                      + partition_odds[part]
-                                      - partition_n_blocked_workers[part];
+          partition_n_workers[part]= partition_evens[part]
+                                     + partition_odds[part]
+                                     - partition_n_blocked_workers[part];
         }
     }
   } // namespace MatrixFreeFunctions

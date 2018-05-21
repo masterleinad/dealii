@@ -37,11 +37,11 @@ void
 check()
 {
   std::vector<Point<dim>> points;
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
-        p[d] = d;
+      for(unsigned int d= 0; d < dim; ++d)
+        p[d]= d;
       points.push_back(p);
     }
 
@@ -49,7 +49,7 @@ check()
   std::vector<double> laplacians(10);
   f.laplacian_list(points, laplacians);
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     AssertThrow(points[i].norm() == laplacians[i], ExcInternalError());
 
   deallog << "OK" << std::endl;
@@ -58,7 +58,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

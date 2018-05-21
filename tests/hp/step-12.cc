@@ -50,7 +50,7 @@ public:
   virtual void
   value_list(const std::vector<Point<dim>>& points,
              std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             const unsigned int             component= 0) const;
 };
 
 template <int dim>
@@ -60,7 +60,7 @@ public:
   virtual void
   value_list(const std::vector<Point<dim>>& points,
              std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             const unsigned int             component= 0) const;
 };
 
 template <int dim>
@@ -83,8 +83,8 @@ RHS<dim>::value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = 0;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= 0;
 }
 
 template <int dim>
@@ -95,14 +95,14 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for(unsigned int i= 0; i < points.size(); ++i)
     {
-      const Point<dim>& p    = points[i];
-      Point<dim>&       beta = values[i];
+      const Point<dim>& p   = points[i];
+      Point<dim>&       beta= values[i];
 
-      beta(0) = -p(1);
-      beta(1) = p(0);
-      beta /= std::sqrt(beta.square());
+      beta(0)= -p(1);
+      beta(1)= p(0);
+      beta/= std::sqrt(beta.square());
     }
 }
 
@@ -115,12 +115,12 @@ BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < values.size(); ++i)
+  for(unsigned int i= 0; i < values.size(); ++i)
     {
       if(points[i](0) < 0.5)
-        values[i] = 1.;
+        values[i]= 1.;
       else
-        values[i] = 0.;
+        values[i]= 0.;
     }
 }
 
@@ -173,8 +173,7 @@ DGTransportEquation<dim>::assemble_cell_term(const hp::FEValues<dim>& fe_v,
                                              FullMatrix<double>& ui_vi_matrix,
                                              Vector<double>& cell_vector) const
 {
-  const std::vector<double>& JxW
-    = fe_v.get_present_fe_values().get_JxW_values();
+  const std::vector<double>& JxW= fe_v.get_present_fe_values().get_JxW_values();
 
   std::vector<Point<dim>> beta(
     fe_v.get_present_fe_values().n_quadrature_points);
@@ -185,21 +184,21 @@ DGTransportEquation<dim>::assemble_cell_term(const hp::FEValues<dim>& fe_v,
   rhs_function.value_list(fe_v.get_present_fe_values().get_quadrature_points(),
                           rhs);
 
-  for(unsigned int point = 0;
+  for(unsigned int point= 0;
       point < fe_v.get_present_fe_values().n_quadrature_points;
       ++point)
-    for(unsigned int i = 0; i < fe_v.get_present_fe_values().dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell; ++i)
       {
-        for(unsigned int j = 0; j < fe_v.get_present_fe_values().dofs_per_cell;
+        for(unsigned int j= 0; j < fe_v.get_present_fe_values().dofs_per_cell;
             ++j)
           ui_vi_matrix(i, j)
             -= beta[point] * fe_v.get_present_fe_values().shape_grad(i, point)
                * fe_v.get_present_fe_values().shape_value(j, point)
                * JxW[point];
 
-        cell_vector(i) += rhs[point]
-                          * fe_v.get_present_fe_values().shape_value(i, point)
-                          * JxW[point];
+        cell_vector(i)+= rhs[point]
+                         * fe_v.get_present_fe_values().shape_value(i, point)
+                         * JxW[point];
       }
 }
 
@@ -210,8 +209,7 @@ DGTransportEquation<dim>::assemble_boundary_term(
   FullMatrix<double>&          ui_vi_matrix,
   Vector<double>&              cell_vector) const
 {
-  const std::vector<double>& JxW
-    = fe_v.get_present_fe_values().get_JxW_values();
+  const std::vector<double>& JxW= fe_v.get_present_fe_values().get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals
     = fe_v.get_present_fe_values().get_all_normal_vectors();
 
@@ -224,27 +222,26 @@ DGTransportEquation<dim>::assemble_boundary_term(
   boundary_function.value_list(
     fe_v.get_present_fe_values().get_quadrature_points(), g);
 
-  for(unsigned int point = 0;
+  for(unsigned int point= 0;
       point < fe_v.get_present_fe_values().n_quadrature_points;
       ++point)
     {
-      const double beta_n = beta[point] * normals[point];
+      const double beta_n= beta[point] * normals[point];
       if(beta_n > 0)
-        for(unsigned int i = 0; i < fe_v.get_present_fe_values().dofs_per_cell;
+        for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
             ++i)
-          for(unsigned int j = 0;
-              j < fe_v.get_present_fe_values().dofs_per_cell;
+          for(unsigned int j= 0; j < fe_v.get_present_fe_values().dofs_per_cell;
               ++j)
             ui_vi_matrix(i, j)
               += beta_n * fe_v.get_present_fe_values().shape_value(j, point)
                  * fe_v.get_present_fe_values().shape_value(i, point)
                  * JxW[point];
       else
-        for(unsigned int i = 0; i < fe_v.get_present_fe_values().dofs_per_cell;
+        for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
             ++i)
-          cell_vector(i) -= beta_n * g[point]
-                            * fe_v.get_present_fe_values().shape_value(i, point)
-                            * JxW[point];
+          cell_vector(i)-= beta_n * g[point]
+                           * fe_v.get_present_fe_values().shape_value(i, point)
+                           * JxW[point];
     }
 }
 
@@ -257,8 +254,7 @@ DGTransportEquation<dim>::assemble_face_term1(
   FullMatrix<double>& ui_vi_matrix,
   FullMatrix<double>& ue_vi_matrix) const
 {
-  const std::vector<double>& JxW
-    = fe_v.get_present_fe_values().get_JxW_values();
+  const std::vector<double>& JxW= fe_v.get_present_fe_values().get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals
     = fe_v.get_present_fe_values().get_all_normal_vectors();
 
@@ -267,25 +263,24 @@ DGTransportEquation<dim>::assemble_face_term1(
   beta_function.value_list(fe_v.get_present_fe_values().get_quadrature_points(),
                            beta);
 
-  for(unsigned int point = 0;
+  for(unsigned int point= 0;
       point < fe_v.get_present_fe_values().n_quadrature_points;
       ++point)
     {
-      const double beta_n = beta[point] * normals[point];
+      const double beta_n= beta[point] * normals[point];
       if(beta_n > 0)
-        for(unsigned int i = 0; i < fe_v.get_present_fe_values().dofs_per_cell;
+        for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
             ++i)
-          for(unsigned int j = 0;
-              j < fe_v.get_present_fe_values().dofs_per_cell;
+          for(unsigned int j= 0; j < fe_v.get_present_fe_values().dofs_per_cell;
               ++j)
             ui_vi_matrix(i, j)
               += beta_n * fe_v.get_present_fe_values().shape_value(j, point)
                  * fe_v.get_present_fe_values().shape_value(i, point)
                  * JxW[point];
       else
-        for(unsigned int i = 0; i < fe_v.get_present_fe_values().dofs_per_cell;
+        for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
             ++i)
-          for(unsigned int k = 0;
+          for(unsigned int k= 0;
               k < fe_v_neighbor.get_present_fe_values().dofs_per_cell;
               ++k)
             ue_vi_matrix(i, k)
@@ -307,8 +302,7 @@ DGTransportEquation<dim>::assemble_face_term2(
   FullMatrix<double>& ui_ve_matrix,
   FullMatrix<double>& ue_ve_matrix) const
 {
-  const std::vector<double>& JxW
-    = fe_v.get_present_fe_values().get_JxW_values();
+  const std::vector<double>& JxW= fe_v.get_present_fe_values().get_JxW_values();
   const std::vector<Tensor<1, dim>>& normals
     = fe_v.get_present_fe_values().get_all_normal_vectors();
 
@@ -318,17 +312,16 @@ DGTransportEquation<dim>::assemble_face_term2(
   beta_function.value_list(fe_v.get_present_fe_values().get_quadrature_points(),
                            beta);
 
-  for(unsigned int point = 0;
+  for(unsigned int point= 0;
       point < fe_v.get_present_fe_values().n_quadrature_points;
       ++point)
     {
-      const double beta_n = beta[point] * normals[point];
+      const double beta_n= beta[point] * normals[point];
       if(beta_n > 0)
         {
-          for(unsigned int i = 0;
-              i < fe_v.get_present_fe_values().dofs_per_cell;
+          for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
               ++i)
-            for(unsigned int j = 0;
+            for(unsigned int j= 0;
                 j < fe_v.get_present_fe_values().dofs_per_cell;
                 ++j)
               ui_vi_matrix(i, j)
@@ -336,10 +329,10 @@ DGTransportEquation<dim>::assemble_face_term2(
                    * fe_v.get_present_fe_values().shape_value(i, point)
                    * JxW[point];
 
-          for(unsigned int k = 0;
+          for(unsigned int k= 0;
               k < fe_v_neighbor.get_present_fe_values().dofs_per_cell;
               ++k)
-            for(unsigned int j = 0;
+            for(unsigned int j= 0;
                 j < fe_v.get_present_fe_values().dofs_per_cell;
                 ++j)
               ui_ve_matrix(k, j)
@@ -349,10 +342,9 @@ DGTransportEquation<dim>::assemble_face_term2(
         }
       else
         {
-          for(unsigned int i = 0;
-              i < fe_v.get_present_fe_values().dofs_per_cell;
+          for(unsigned int i= 0; i < fe_v.get_present_fe_values().dofs_per_cell;
               ++i)
-            for(unsigned int l = 0;
+            for(unsigned int l= 0;
                 l < fe_v_neighbor.get_present_fe_values().dofs_per_cell;
                 ++l)
               ue_vi_matrix(i, l)
@@ -361,10 +353,10 @@ DGTransportEquation<dim>::assemble_face_term2(
                    * fe_v.get_present_fe_values().shape_value(i, point)
                    * JxW[point];
 
-          for(unsigned int k = 0;
+          for(unsigned int k= 0;
               k < fe_v_neighbor.get_present_fe_values().dofs_per_cell;
               ++k)
-            for(unsigned int l = 0;
+            for(unsigned int l= 0;
                 l < fe_v_neighbor.get_present_fe_values().dofs_per_cell;
                 ++l)
               ue_ve_matrix(k, l)
@@ -463,19 +455,19 @@ template <int dim>
 void
 DGMethod<dim>::assemble_system1()
 {
-  const unsigned int dofs_per_cell = dof_handler.get_fe()[0].dofs_per_cell;
+  const unsigned int dofs_per_cell= dof_handler.get_fe()[0].dofs_per_cell;
   std::vector<types::global_dof_index> dofs(dofs_per_cell);
   std::vector<types::global_dof_index> dofs_neighbor(dofs_per_cell);
 
-  const UpdateFlags update_flags = update_values | update_gradients
-                                   | update_quadrature_points
-                                   | update_JxW_values;
+  const UpdateFlags update_flags= update_values | update_gradients
+                                  | update_quadrature_points
+                                  | update_JxW_values;
 
-  const UpdateFlags face_update_flags = update_values | update_quadrature_points
-                                        | update_JxW_values
-                                        | update_normal_vectors;
+  const UpdateFlags face_update_flags= update_values | update_quadrature_points
+                                       | update_JxW_values
+                                       | update_normal_vectors;
 
-  const UpdateFlags neighbor_face_update_flags = update_values;
+  const UpdateFlags neighbor_face_update_flags= update_values;
 
   hp::FEValues<dim> fe_v(mapping, fe, quadrature, update_flags);
 
@@ -495,12 +487,12 @@ DGMethod<dim>::assemble_system1()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
-      ui_vi_matrix = 0;
-      cell_vector  = 0;
+      ui_vi_matrix= 0;
+      cell_vector = 0;
 
       fe_v.reinit(cell);
 
@@ -508,13 +500,12 @@ DGMethod<dim>::assemble_system1()
 
       cell->get_dof_indices(dofs);
 
-      for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
           ++face_no)
         {
-          typename hp::DoFHandler<dim>::face_iterator face
-            = cell->face(face_no);
+          typename hp::DoFHandler<dim>::face_iterator face= cell->face(face_no);
 
-          ue_vi_matrix = 0;
+          ue_vi_matrix= 0;
 
           if(face->at_boundary())
             {
@@ -533,7 +524,7 @@ DGMethod<dim>::assemble_system1()
                   const unsigned int neighbor2
                     = cell->neighbor_of_neighbor(face_no);
 
-                  for(unsigned int subface_no = 0;
+                  for(unsigned int subface_no= 0;
                       subface_no < face->n_children();
                       ++subface_no)
                     {
@@ -547,7 +538,7 @@ DGMethod<dim>::assemble_system1()
                       Assert(!neighbor_child->has_children(),
                              ExcInternalError());
 
-                      ue_vi_matrix = 0;
+                      ue_vi_matrix= 0;
 
                       fe_v_subface.reinit(cell, face_no, subface_no);
                       fe_v_face_neighbor.reinit(neighbor_child, neighbor2);
@@ -559,8 +550,8 @@ DGMethod<dim>::assemble_system1()
 
                       neighbor_child->get_dof_indices(dofs_neighbor);
 
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                        for(unsigned int k= 0; k < dofs_per_cell; ++k)
                           system_matrix.add(
                             dofs[i], dofs_neighbor[k], ue_vi_matrix(i, k));
                     }
@@ -590,7 +581,7 @@ DGMethod<dim>::assemble_system1()
                         = cell->neighbor_of_coarser_neighbor(face_no);
                       const unsigned int neighbor_face_no
                         = faceno_subfaceno.first,
-                        neighbor_subface_no = faceno_subfaceno.second;
+                        neighbor_subface_no= faceno_subfaceno.second;
 
                       Assert(neighbor->neighbor_child_on_subface(
                                neighbor_face_no, neighbor_subface_no)
@@ -609,20 +600,20 @@ DGMethod<dim>::assemble_system1()
 
                   neighbor->get_dof_indices(dofs_neighbor);
 
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                    for(unsigned int k = 0; k < dofs_per_cell; ++k)
+                  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                    for(unsigned int k= 0; k < dofs_per_cell; ++k)
                       system_matrix.add(
                         dofs[i], dofs_neighbor[k], ue_vi_matrix(i, k));
                 }
             }
         }
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           system_matrix.add(dofs[i], dofs[j], ui_vi_matrix(i, j));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        right_hand_side(dofs[i]) += cell_vector(i);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        right_hand_side(dofs[i])+= cell_vector(i);
     }
 }
 
@@ -630,19 +621,19 @@ template <int dim>
 void
 DGMethod<dim>::assemble_system2()
 {
-  const unsigned int dofs_per_cell = dof_handler.get_fe()[0].dofs_per_cell;
+  const unsigned int dofs_per_cell= dof_handler.get_fe()[0].dofs_per_cell;
   std::vector<types::global_dof_index> dofs(dofs_per_cell);
   std::vector<types::global_dof_index> dofs_neighbor(dofs_per_cell);
 
-  const UpdateFlags update_flags = update_values | update_gradients
-                                   | update_quadrature_points
-                                   | update_JxW_values;
+  const UpdateFlags update_flags= update_values | update_gradients
+                                  | update_quadrature_points
+                                  | update_JxW_values;
 
-  const UpdateFlags face_update_flags = update_values | update_quadrature_points
-                                        | update_JxW_values
-                                        | update_normal_vectors;
+  const UpdateFlags face_update_flags= update_values | update_quadrature_points
+                                       | update_JxW_values
+                                       | update_normal_vectors;
 
-  const UpdateFlags neighbor_face_update_flags = update_values;
+  const UpdateFlags neighbor_face_update_flags= update_values;
 
   hp::FEValues<dim>     fe_v(mapping, fe, quadrature, update_flags);
   hp::FEFaceValues<dim> fe_v_face(
@@ -662,11 +653,11 @@ DGMethod<dim>::assemble_system2()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      ui_vi_matrix = 0;
-      cell_vector  = 0;
+      ui_vi_matrix= 0;
+      cell_vector = 0;
 
       fe_v.reinit(cell);
 
@@ -674,11 +665,10 @@ DGMethod<dim>::assemble_system2()
 
       cell->get_dof_indices(dofs);
 
-      for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face_no= 0; face_no < GeometryInfo<dim>::faces_per_cell;
           ++face_no)
         {
-          typename hp::DoFHandler<dim>::face_iterator face
-            = cell->face(face_no);
+          typename hp::DoFHandler<dim>::face_iterator face= cell->face(face_no);
 
           if(face->at_boundary())
             {
@@ -697,7 +687,7 @@ DGMethod<dim>::assemble_system2()
                   const unsigned int neighbor2
                     = cell->neighbor_of_neighbor(face_no);
 
-                  for(unsigned int subface_no = 0;
+                  for(unsigned int subface_no= 0;
                       subface_no < face->n_children();
                       ++subface_no)
                     {
@@ -709,9 +699,9 @@ DGMethod<dim>::assemble_system2()
                       Assert(!neighbor_child->has_children(),
                              ExcInternalError());
 
-                      ue_vi_matrix = 0;
-                      ui_ve_matrix = 0;
-                      ue_ve_matrix = 0;
+                      ue_vi_matrix= 0;
+                      ui_ve_matrix= 0;
+                      ue_ve_matrix= 0;
 
                       fe_v_subface.reinit(cell, face_no, subface_no);
                       fe_v_face_neighbor.reinit(neighbor_child, neighbor2);
@@ -725,8 +715,8 @@ DGMethod<dim>::assemble_system2()
 
                       neighbor_child->get_dof_indices(dofs_neighbor);
 
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                        for(unsigned int j= 0; j < dofs_per_cell; ++j)
                           {
                             system_matrix.add(
                               dofs[i], dofs_neighbor[j], ue_vi_matrix(i, j));
@@ -746,9 +736,9 @@ DGMethod<dim>::assemble_system2()
                       const unsigned int neighbor2
                         = cell->neighbor_of_neighbor(face_no);
 
-                      ue_vi_matrix = 0;
-                      ui_ve_matrix = 0;
-                      ue_ve_matrix = 0;
+                      ue_vi_matrix= 0;
+                      ui_ve_matrix= 0;
+                      ue_ve_matrix= 0;
 
                       fe_v_face.reinit(cell, face_no);
                       fe_v_face_neighbor.reinit(neighbor, neighbor2);
@@ -762,8 +752,8 @@ DGMethod<dim>::assemble_system2()
 
                       neighbor->get_dof_indices(dofs_neighbor);
 
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                        for(unsigned int j= 0; j < dofs_per_cell; ++j)
                           {
                             system_matrix.add(
                               dofs[i], dofs_neighbor[j], ue_vi_matrix(i, j));
@@ -778,12 +768,12 @@ DGMethod<dim>::assemble_system2()
             }
         }
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < dofs_per_cell; ++j)
           system_matrix.add(dofs[i], dofs[j], ui_vi_matrix(i, j));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        right_hand_side(dofs[i]) += cell_vector(i);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        right_hand_side(dofs[i])+= cell_vector(i);
     }
 }
 
@@ -812,10 +802,9 @@ DGMethod<dim>::refine_grid()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
-  for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
-    gradient_indicator(cell_no)
-      *= std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
+    endc= dof_handler.end();
+  for(unsigned int cell_no= 0; cell != endc; ++cell, ++cell_no)
+    gradient_indicator(cell_no)*= std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
 
   GridRefinement::refine_and_coarsen_fixed_number(
     triangulation, gradient_indicator, 0.3, 0.1);
@@ -827,21 +816,21 @@ template <int dim>
 void
 DGMethod<dim>::output_results(const unsigned int cycle) const
 {
-  std::string filename = "grid-";
-  filename += ('0' + cycle);
+  std::string filename= "grid-";
+  filename+= ('0' + cycle);
   Assert(cycle < 10, ExcInternalError());
 
-  filename += ".eps";
+  filename+= ".eps";
   deallog << "Writing grid to <" << filename << ">..." << std::endl;
 
   GridOut grid_out;
   grid_out.write_eps(triangulation, deallog.get_file_stream());
 
-  filename = "sol-";
-  filename += ('0' + cycle);
+  filename= "sol-";
+  filename+= ('0' + cycle);
   Assert(cycle < 10, ExcInternalError());
 
-  filename += ".gnuplot";
+  filename+= ".gnuplot";
   deallog << "Writing solution to <" << filename << ">..." << std::endl
           << std::endl;
 
@@ -858,7 +847,7 @@ template <int dim>
 void
 DGMethod<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 6; ++cycle)
+  for(unsigned int cycle= 0; cycle < 6; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
@@ -883,16 +872,16 @@ DGMethod<dim>::run()
       assemble_system1();
       solve(solution1);
 
-      system_matrix   = 0;
-      right_hand_side = 0;
+      system_matrix  = 0;
+      right_hand_side= 0;
       assemble_timer.reset();
 
       assemble_timer.start();
       assemble_system2();
       solve(solution2);
 
-      solution1 -= solution2;
-      const double difference = solution1.linfty_norm();
+      solution1-= solution2;
+      const double difference= solution1.linfty_norm();
       if(difference > 1e-13)
         deallog << "solution1 and solution2 differ!!" << std::endl;
       else

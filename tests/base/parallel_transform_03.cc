@@ -26,14 +26,14 @@ main()
 {
   initlog();
 
-  const unsigned int N = 10000;
+  const unsigned int N= 10000;
   Vector<double>     x(N), y(N), z(N), a(N);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     {
-      x(i) = i;
-      y(i) = 2 * i;
-      z(i) = 3 * i;
+      x(i)= i;
+      y(i)= 2 * i;
+      z(i)= 3 * i;
     }
 
   // set a=x+y-z, which happens to be

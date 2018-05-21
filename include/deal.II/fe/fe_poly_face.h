@@ -51,8 +51,8 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat, 2009
  */
 template <class PolynomialType,
-          int dim      = PolynomialType::dimension + 1,
-          int spacedim = dim>
+          int dim     = PolynomialType::dimension + 1,
+          int spacedim= dim>
 class FE_PolyFace : public FiniteElement<dim, spacedim>
 {
 public:
@@ -102,10 +102,10 @@ protected:
   {
     // generate a new data object and
     // initialize some fields
-    auto data         = std_cxx14::make_unique<InternalData>();
-    data->update_each = requires_update_flags(update_flags);
+    auto data        = std_cxx14::make_unique<InternalData>();
+    data->update_each= requires_update_flags(update_flags);
 
-    const unsigned int n_q_points = quadrature.size();
+    const unsigned int n_q_points= quadrature.size();
 
     // some scratch arrays
     std::vector<double>             values(0);
@@ -122,7 +122,7 @@ protected:
         values.resize(poly_space.n());
         data->shape_values.resize(poly_space.n(),
                                   std::vector<double>(n_q_points));
-        for(unsigned int i = 0; i < n_q_points; ++i)
+        for(unsigned int i= 0; i < n_q_points; ++i)
           {
             poly_space.compute(quadrature.point(i),
                                values,
@@ -131,8 +131,8 @@ protected:
                                empty_vector_of_3rd_order_tensors,
                                empty_vector_of_4th_order_tensors);
 
-            for(unsigned int k = 0; k < poly_space.n(); ++k)
-              data->shape_values[k][i] = values[k];
+            for(unsigned int k= 0; k < poly_space.n(); ++k)
+              data->shape_values[k][i]= values[k];
           }
       }
     // No derivatives of this element

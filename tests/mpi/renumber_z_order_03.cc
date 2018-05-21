@@ -39,7 +39,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();
 
-  const int dim = 2;
+  const int dim= 2;
 
   dealii::FE_DGQ<dim> fe(0);
 
@@ -69,8 +69,8 @@ main(int argc, char* argv[])
 
   typename dealii::DoFHandler<dim>::active_cell_iterator cell_world
     = dh_world.begin_active(),
-    endc_world = dh_world.end(), cell_self = dh_self.begin_active(),
-    endc_self = dh_self.end();
+    endc_world= dh_world.end(), cell_self= dh_self.begin_active(),
+    endc_self= dh_self.end();
   for(; cell_world != endc_world && cell_self != endc_self;
       ++cell_world, ++cell_self)
     if(cell_world->is_locally_owned())

@@ -51,8 +51,8 @@ public:
   push_forward_gradient(const Point<spacedim>& chart_point) const
   {
     DerivativeForm<1, spacedim, spacedim> x;
-    for(unsigned int d = 0; d < spacedim; ++d)
-      x[d][d] = 1;
+    for(unsigned int d= 0; d < spacedim; ++d)
+      x[d][d]= 1;
     return x;
   }
 };
@@ -66,14 +66,14 @@ test()
 
   // make the domain periodic in the first direction with periodicity 1.1
   Tensor<1, spacedim> periodicity;
-  periodicity[0] = 1.1;
+  periodicity[0]= 1.1;
   MyFlatManifold<dim, spacedim> manifold(periodicity);
 
   Point<spacedim> x1, x2;
-  for(unsigned int d = 0; d < spacedim; ++d)
+  for(unsigned int d= 0; d < spacedim; ++d)
     {
-      x1[d] = 0.1;
-      x2[d] = 0.9;
+      x1[d]= 0.1;
+      x2[d]= 0.9;
     }
 
   // get the connecting vector between these two points. because we

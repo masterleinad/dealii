@@ -156,11 +156,11 @@ namespace Step25
   class ExactSolution : public Function<dim>
   {
   public:
-    ExactSolution(const unsigned int n_components = 1, const double time = 0.)
+    ExactSolution(const unsigned int n_components= 1, const double time= 0.)
       : Function<dim>(n_components, time)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -168,15 +168,15 @@ namespace Step25
   ExactSolution<dim>::value(const Point<dim>& p,
                             const unsigned int /*component*/) const
   {
-    double t = this->get_time();
+    double t= this->get_time();
 
     switch(dim)
       {
         case 1:
           {
-            const double m  = 0.5;
-            const double c1 = 0.;
-            const double c2 = 0.;
+            const double m = 0.5;
+            const double c1= 0.;
+            const double c2= 0.;
             return -4.
                    * std::atan(m / std::sqrt(1. - m * m)
                                * std::sin(std::sqrt(1. - m * m) * t + c2)
@@ -185,10 +185,10 @@ namespace Step25
 
         case 2:
           {
-            const double theta  = numbers::PI / 4.;
-            const double lambda = 1.;
-            const double a0     = 1.;
-            const double s      = 1.;
+            const double theta = numbers::PI / 4.;
+            const double lambda= 1.;
+            const double a0    = 1.;
+            const double s     = 1.;
             const double arg
               = p[0] * std::cos(theta)
                 + std::sin(theta)
@@ -198,11 +198,11 @@ namespace Step25
 
         case 3:
           {
-            const double theta = numbers::PI / 4;
-            const double phi   = numbers::PI / 4;
-            const double tau   = 1.;
-            const double c0    = 1.;
-            const double s     = 1.;
+            const double theta= numbers::PI / 4;
+            const double phi  = numbers::PI / 4;
+            const double tau  = 1.;
+            const double c0   = 1.;
+            const double s    = 1.;
             const double arg
               = p[0] * std::cos(theta) + p[1] * std::sin(theta) * std::cos(phi)
                 + std::sin(theta) * std::sin(phi)
@@ -225,12 +225,12 @@ namespace Step25
   class InitialValues : public Function<dim>
   {
   public:
-    InitialValues(const unsigned int n_components = 1, const double time = 0.)
+    InitialValues(const unsigned int n_components= 1, const double time= 0.)
       : Function<dim>(n_components, time)
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -355,7 +355,7 @@ namespace Step25
     // Next we compute the right-hand side vector. This is just the
     // combination of matrix-vector products implied by the description of
     // $-F_h(U^{n,l})$ in the introduction.
-    system_rhs = 0.;
+    system_rhs= 0.;
 
     Vector<double> tmp_vector(solution.size());
 
@@ -373,7 +373,7 @@ namespace Step25
     compute_nl_term(old_solution, solution, tmp_vector);
     system_rhs.add(std::pow(time_step, 2) * theta, tmp_vector);
 
-    system_rhs *= -1.;
+    system_rhs*= -1.;
   }
 
   // @sect4{SineGordonProblem::compute_nl_term}
@@ -404,15 +404,15 @@ namespace Step25
                                           const Vector<double>& new_data,
                                           Vector<double>&       nl_term) const
   {
-    nl_term = 0;
+    nl_term= 0;
     const QGauss<dim> quadrature_formula(3);
     FEValues<dim>     fe_values(fe,
                             quadrature_formula,
                             update_values | update_JxW_values
                               | update_quadrature_points);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     Vector<double>                       local_nl_term(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -421,11 +421,11 @@ namespace Step25
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
-        local_nl_term = 0;
+        local_nl_term= 0;
         // Once we re-initialize our <code>FEValues</code> instantiation to
         // the current cell, we make use of the
         // <code>get_function_values</code> routine to get the values of the
@@ -439,8 +439,8 @@ namespace Step25
         // Now, we can evaluate $\int_K \sin\left[\theta w_{\mathrm{new}} +
         // (1-\theta) w_{\mathrm{old}}\right] \,\varphi_j\,\mathrm{d}x$ using
         // the desired quadrature formula.
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             local_nl_term(i)
               += (std::sin(theta * new_data_values[q_point]
                            + (1 - theta) * old_data_values[q_point])
@@ -450,8 +450,8 @@ namespace Step25
         // the cells to the global integral.
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          nl_term(local_dof_indices[i]) += local_nl_term(i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          nl_term(local_dof_indices[i])+= local_nl_term(i);
       }
   }
 
@@ -476,8 +476,8 @@ namespace Step25
                             update_values | update_JxW_values
                               | update_quadrature_points);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_nl_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -486,11 +486,11 @@ namespace Step25
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
-        local_nl_matrix = 0;
+        local_nl_matrix= 0;
         // Again, first we re-initialize our <code>FEValues</code>
         // instantiation to the current cell.
         fe_values.reinit(cell);
@@ -500,9 +500,9 @@ namespace Step25
         // Then, we evaluate $\int_K \cos\left[\theta w_{\mathrm{new}} +
         // (1-\theta) w_{\mathrm{old}}\right]\, \varphi_i\,
         // \varphi_j\,\mathrm{d}x$ using the desired quadrature formula.
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               local_nl_matrix(i, j)
                 += (std::cos(theta * new_data_values[q_point]
                              + (1 - theta) * old_data_values[q_point])
@@ -514,8 +514,8 @@ namespace Step25
         // cells to the global integral.
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             nl_matrix.add(local_dof_indices[i],
                           local_dof_indices[j],
                           local_nl_matrix(i, j));
@@ -624,11 +624,11 @@ namespace Step25
     // matrix equation(s) corresponding to the finite element discretization
     // of the problem, and then advance our solution according to the time
     // stepping formulas we discussed in the Introduction.
-    unsigned int timestep_number = 1;
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    unsigned int timestep_number= 1;
+    for(time+= time_step; time <= final_time;
+        time+= time_step, ++timestep_number)
       {
-        old_solution = solution;
+        old_solution= solution;
 
         std::cout << std::endl
                   << "Time step #" << timestep_number << "; "
@@ -644,24 +644,24 @@ namespace Step25
         // At the end of each iteration, we output to the console how many
         // linear solver iterations it took us. When the loop below is done,
         // we have (an approximation of) $U^n$.
-        double initial_rhs_norm = 0.;
-        bool   first_iteration  = true;
+        double initial_rhs_norm= 0.;
+        bool   first_iteration = true;
         do
           {
             assemble_system();
 
             if(first_iteration == true)
-              initial_rhs_norm = system_rhs.l2_norm();
+              initial_rhs_norm= system_rhs.l2_norm();
 
-            const unsigned int n_iterations = solve();
+            const unsigned int n_iterations= solve();
 
-            solution += solution_update;
+            solution+= solution_update;
 
             if(first_iteration == true)
               std::cout << "    " << n_iterations;
             else
               std::cout << '+' << n_iterations;
-            first_iteration = false;
+            first_iteration= false;
           }
         while(system_rhs.l2_norm() > 1e-6 * initial_rhs_norm);
 

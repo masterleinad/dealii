@@ -99,13 +99,13 @@ LaplaceProblem<dim>::setup_system()
   DoFTools::extract_boundary_dofs(
     dof_handler, std::vector<bool>(1, true), boundary_dofs);
 
-  const unsigned int first_boundary_dof = std::distance(
+  const unsigned int first_boundary_dof= std::distance(
     boundary_dofs.begin(),
     std::find(boundary_dofs.begin(), boundary_dofs.end(), true));
 
   mean_value_constraints.clear();
   mean_value_constraints.add_line(first_boundary_dof);
-  for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
     if(boundary_dofs[i] == true)
       mean_value_constraints.add_entry(first_boundary_dof, i, -1);
   mean_value_constraints.close();
@@ -122,7 +122,7 @@ template <int dim>
 void
 LaplaceProblem<dim>::assemble_and_solve()
 {
-  const unsigned int gauss_degree = std::max(
+  const unsigned int gauss_degree= std::max(
     static_cast<unsigned int>(std::ceil(1. * (mapping.get_degree() + 1) / 2)),
     2U);
   MatrixTools::create_laplace_matrix(
@@ -139,7 +139,7 @@ LaplaceProblem<dim>::assemble_and_solve()
     QGauss<dim - 1>(gauss_degree),
     Functions::ConstantFunction<dim>(1),
     tmp);
-  system_rhs += tmp;
+  system_rhs+= tmp;
 
   mean_value_constraints.condense(system_matrix);
   mean_value_constraints.condense(system_rhs);
@@ -155,14 +155,14 @@ LaplaceProblem<dim>::assemble_and_solve()
                                     norm_per_cell,
                                     QGauss<dim>(gauss_degree + 1),
                                     VectorTools::H1_seminorm);
-  const double norm = norm_per_cell.l2_norm();
+  const double norm= norm_per_cell.l2_norm();
 
   output_table.add_value("cells", triangulation.n_active_cells());
   output_table.add_value("|u|_1", norm);
   output_table.add_value("error",
                          std::fabs(norm - std::sqrt(3.14159265358 / 2)));
 
-  last_error = std::fabs(norm - std::sqrt(3.14159265358 / 2));
+  last_error= std::fabs(norm - std::sqrt(3.14159265358 / 2));
 }
 
 template <int dim>
@@ -186,8 +186,7 @@ LaplaceProblem<dim>::run()
   static const SphericalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);
 
-  for(unsigned int cycle = 0; cycle < 6;
-      ++cycle, triangulation.refine_global(1))
+  for(unsigned int cycle= 0; cycle < 6; ++cycle, triangulation.refine_global(1))
     {
       setup_system();
       assemble_and_solve();

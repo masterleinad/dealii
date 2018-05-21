@@ -111,8 +111,8 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat
  * @date 2000-2005, 2010
  */
-template <typename number          = double,
-          typename BlockVectorType = BlockVector<number>>
+template <typename number         = double,
+          typename BlockVectorType= BlockVector<number>>
 class DEAL_II_DEPRECATED BlockMatrixArray : public Subscriptor
 {
 public:
@@ -161,8 +161,8 @@ public:
   enter(const MatrixType&  matrix,
         const unsigned int row,
         const unsigned int col,
-        const number       prefix    = 1.,
-        const bool         transpose = false);
+        const number       prefix   = 1.,
+        const bool         transpose= false);
 
   /**
    * Delete all entries, i.e. reset the matrix to an empty state.
@@ -414,8 +414,8 @@ private:
  * @ingroup Preconditioners
  * @author Guido Kanschat, 2001, 2005
  */
-template <typename number          = double,
-          typename BlockVectorType = BlockVector<number>>
+template <typename number         = double,
+          typename BlockVectorType= BlockVector<number>>
 class DEAL_II_DEPRECATED BlockTrianglePrecondition
   : private BlockMatrixArray<number, BlockVectorType>
 {
@@ -452,8 +452,8 @@ public:
   enter(const MatrixType& matrix,
         const size_type   row,
         const size_type   col,
-        const number      prefix    = 1.,
-        const bool        transpose = false);
+        const number      prefix   = 1.,
+        const bool        transpose= false);
 
   /**
    * Preconditioning.
@@ -583,22 +583,22 @@ BlockMatrixArray<number, BlockVectorType>::print_latex(StreamType& out) const
           NameMap;
   NameMap matrix_names;
 
-  typename std::vector<Entry>::const_iterator m   = entries.begin();
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  typename std::vector<Entry>::const_iterator m  = entries.begin();
+  typename std::vector<Entry>::const_iterator end= entries.end();
 
-  size_type matrix_number = 0;
+  size_type matrix_number= 0;
   for(; m != end; ++m)
     {
       if(matrix_names.find(m->matrix) == matrix_names.end())
         {
-          std::pair<typename NameMap::iterator, bool> x = matrix_names.insert(
+          std::pair<typename NameMap::iterator, bool> x= matrix_names.insert(
             std::pair<
               const PointerMatrixBase<typename BlockVectorType::BlockType>*,
               std::string>(m->matrix, std::string("M")));
           std::ostringstream stream;
           stream << matrix_number++;
 
-          x.first->second += stream.str();
+          x.first->second+= stream.str();
         }
 
       std::ostringstream stream;
@@ -612,10 +612,10 @@ BlockMatrixArray<number, BlockVectorType>::print_latex(StreamType& out) const
       if(m->transpose)
         stream << "^T";
 
-      array(m->row, m->col) += stream.str();
+      array(m->row, m->col)+= stream.str();
     }
-  for(unsigned int i = 0; i < n_block_rows(); ++i)
-    for(unsigned int j = 0; j < n_block_cols(); ++j)
+  for(unsigned int i= 0; i < n_block_rows(); ++i)
+    for(unsigned int j= 0; j < n_block_cols(); ++j)
       {
         out << '\t' << array(i, j);
         if(j == n_block_cols() - 1)

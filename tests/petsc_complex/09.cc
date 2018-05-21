@@ -23,19 +23,19 @@ void
 test(PETScWrappers::SparseMatrix& m)
 {
   // first set a few entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, std::complex<double>(i * j * .5 + .5, i * j * .5));
 
   m.compress(VectorOperation::insert);
 
   // then multiply everything by 1.25
-  m *= 1.25;
+  m*= 1.25;
 
   // and make sure we retrieve the values we expect
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           AssertThrow(m(i, j)

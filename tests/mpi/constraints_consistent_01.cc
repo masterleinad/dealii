@@ -44,7 +44,7 @@ check(parallel::distributed::Triangulation<dim>& tria)
 
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_active_dofs;
 
   DoFTools::extract_locally_active_dofs(dof_handler, locally_active_dofs);
@@ -58,7 +58,7 @@ check(parallel::distributed::Triangulation<dim>& tria)
   constraints.reinit(locally_relevant_dofs);
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
-  for(unsigned int id = 0; id < 1; ++id)
+  for(unsigned int id= 0; id < 1; ++id)
     dealii::VectorTools::interpolate_boundary_values(
       dof_handler,
       id,
@@ -106,7 +106,7 @@ test()
 
     GridGenerator::subdivided_hyper_cube(tr, 2);
     tr.refine_global(1);
-    for(auto cell = tr.begin_active(); cell != tr.end(); ++cell)
+    for(auto cell= tr.begin_active(); cell != tr.end(); ++cell)
       {
         if(cell->id().to_string() == "0_1:0")
           cell->set_refine_flag();
@@ -124,7 +124,7 @@ test()
     GridGenerator::hyper_cube(tr, 0.0, 1.0, false);
     tr.refine_global(2);
 
-    for(auto cell = tr.begin_active(); cell != tr.end(); ++cell)
+    for(auto cell= tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())
         {
           for(unsigned int f(0); f < GeometryInfo<2>::faces_per_cell; ++f)

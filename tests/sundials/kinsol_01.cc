@@ -52,27 +52,27 @@ main(int argc, char** argv)
   prm.parse_input(ifile);
 
   // Size of the problem
-  unsigned int N = 10;
+  unsigned int N= 10;
 
   SUNDIALS::KINSOL<VectorType> kinsol(data);
 
-  kinsol.reinit_vector = [N](VectorType& v) { v.reinit(N); };
+  kinsol.reinit_vector= [N](VectorType& v) { v.reinit(N); };
 
-  kinsol.residual = [](const VectorType& u, VectorType& F) -> int {
-    for(unsigned int i = 0; i < u.size(); ++i)
-      F[i] = u[i] * u[i] - (i + 1) * (i + 1);
+  kinsol.residual= [](const VectorType& u, VectorType& F) -> int {
+    for(unsigned int i= 0; i < u.size(); ++i)
+      F[i]= u[i] * u[i] - (i + 1) * (i + 1);
     return 0;
   };
 
-  kinsol.iteration_function = [](const VectorType& u, VectorType& F) -> int {
-    for(unsigned int i = 0; i < u.size(); ++i)
-      F[i] = u[i] * u[i] - i * i - u[i];
+  kinsol.iteration_function= [](const VectorType& u, VectorType& F) -> int {
+    for(unsigned int i= 0; i < u.size(); ++i)
+      F[i]= u[i] * u[i] - i * i - u[i];
     return 0;
   };
 
   VectorType v(N);
-  v          = 1.0;
-  auto niter = kinsol.solve(v);
+  v         = 1.0;
+  auto niter= kinsol.solve(v);
   deallog << v << std::endl;
   deallog << "Converged in " << niter << " iterations." << std::endl;
 }

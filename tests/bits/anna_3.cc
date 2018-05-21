@@ -77,15 +77,15 @@ template <int dim>
 void
 SystemTest<dim>::check()
 {
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for(unsigned int c= 0; c < fe.n_components(); ++c)
     {
       deallog << "Checking for component " << c << std::endl;
       std::vector<bool> x(fe.n_components(), false);
-      x[c] = true;
+      x[c]= true;
       std::vector<bool> sel(dof_handler.n_dofs());
       DoFTools::extract_dofs(dof_handler, ComponentMask(x), sel);
 
-      for(unsigned int i = 0; i < sel.size(); ++i)
+      for(unsigned int i= 0; i < sel.size(); ++i)
         if(sel[i])
           deallog << "  DoF " << i << std::endl;
     };
@@ -94,7 +94,7 @@ SystemTest<dim>::check()
     fe.n_components(), static_cast<types::global_dof_index>(0));
   DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
   deallog << "DoFs per component: ";
-  for(unsigned int i = 0; i < fe.n_components(); ++i)
+  for(unsigned int i= 0; i < fe.n_components(); ++i)
     deallog << dofs_per_component[i] << ' ';
   deallog << std::endl;
 }

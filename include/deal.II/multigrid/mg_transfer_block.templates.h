@@ -42,13 +42,13 @@ MGTransferBlockSelect<number>::copy_from_mg(
   BlockVector<number2>&                dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  for(unsigned int level = 0;
+  for(unsigned int level= 0;
       level < mg_dof_handler.get_triangulation().n_levels();
       ++level)
-    for(IT i = copy_indices[selected_block][level].begin();
+    for(IT i= copy_indices[selected_block][level].begin();
         i != copy_indices[selected_block][level].end();
         ++i)
-      dst.block(selected_block)(i->first) = src[level](i->second);
+      dst.block(selected_block)(i->first)= src[level](i->second);
 }
 
 template <typename number>
@@ -59,13 +59,13 @@ MGTransferBlockSelect<number>::copy_from_mg(
   Vector<number2>&                     dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  for(unsigned int level = 0;
+  for(unsigned int level= 0;
       level < mg_dof_handler.get_triangulation().n_levels();
       ++level)
-    for(IT i = copy_indices[selected_block][level].begin();
+    for(IT i= copy_indices[selected_block][level].begin();
         i != copy_indices[selected_block][level].end();
         ++i)
-      dst(i->first) = src[level](i->second);
+      dst(i->first)= src[level](i->second);
 }
 
 template <typename number>
@@ -76,13 +76,13 @@ MGTransferBlockSelect<number>::copy_from_mg_add(
   BlockVector<number2>&                dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  for(unsigned int level = 0;
+  for(unsigned int level= 0;
       level < mg_dof_handler.get_triangulation().n_levels();
       ++level)
-    for(IT i = copy_indices[selected_block][level].begin();
+    for(IT i= copy_indices[selected_block][level].begin();
         i != copy_indices[selected_block][level].end();
         ++i)
-      dst.block(selected_block)(i->first) += src[level](i->second);
+      dst.block(selected_block)(i->first)+= src[level](i->second);
 }
 
 template <typename number>
@@ -93,13 +93,13 @@ MGTransferBlockSelect<number>::copy_from_mg_add(
   Vector<number2>&                     dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  for(unsigned int level = 0;
+  for(unsigned int level= 0;
       level < mg_dof_handler.get_triangulation().n_levels();
       ++level)
-    for(IT i = copy_indices[selected_block][level].begin();
+    for(IT i= copy_indices[selected_block][level].begin();
         i != copy_indices[selected_block][level].end();
         ++i)
-      dst(i->first) += src[level](i->second);
+      dst(i->first)+= src[level](i->second);
 }
 
 template <typename number>
@@ -119,12 +119,12 @@ MGTransferBlock<number>::copy_from_mg(
   BlockVector<number2>&                     dst,
   const MGLevelObject<BlockVector<number>>& src) const
 {
-  for(unsigned int block = 0; block < selected.size(); ++block)
+  for(unsigned int block= 0; block < selected.size(); ++block)
     if(selected[block])
-      for(unsigned int level = 0;
+      for(unsigned int level= 0;
           level < mg_dof_handler.get_triangulation().n_levels();
           ++level)
-        for(IT i = copy_indices[block][level].begin();
+        for(IT i= copy_indices[block][level].begin();
             i != copy_indices[block][level].end();
             ++i)
           dst.block(block)(i->first)
@@ -139,12 +139,12 @@ MGTransferBlock<number>::copy_from_mg_add(
   BlockVector<number2>&                     dst,
   const MGLevelObject<BlockVector<number>>& src) const
 {
-  for(unsigned int block = 0; block < selected.size(); ++block)
+  for(unsigned int block= 0; block < selected.size(); ++block)
     if(selected[block])
-      for(unsigned int level = 0;
+      for(unsigned int level= 0;
           level < mg_dof_handler.get_triangulation().n_levels();
           ++level)
-        for(IT i = copy_indices[block][level].begin();
+        for(IT i= copy_indices[block][level].begin();
             i != copy_indices[block][level].end();
             ++i)
           dst.block(block)(i->first)

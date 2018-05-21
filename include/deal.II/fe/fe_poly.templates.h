@@ -169,22 +169,22 @@ UpdateFlags
 FE_Poly<PolynomialType, dim, spacedim>::requires_update_flags(
   const UpdateFlags flags) const
 {
-  UpdateFlags out = update_default;
+  UpdateFlags out= update_default;
 
   if(flags & update_values)
-    out |= update_values;
+    out|= update_values;
   if(flags & update_gradients)
-    out |= update_gradients | update_covariant_transformation;
+    out|= update_gradients | update_covariant_transformation;
   if(flags & update_hessians)
-    out |= update_hessians | update_covariant_transformation | update_gradients
-           | update_jacobian_pushed_forward_grads;
+    out|= update_hessians | update_covariant_transformation | update_gradients
+          | update_jacobian_pushed_forward_grads;
   if(flags & update_3rd_derivatives)
-    out |= update_3rd_derivatives | update_covariant_transformation
-           | update_hessians | update_gradients
-           | update_jacobian_pushed_forward_grads
-           | update_jacobian_pushed_forward_2nd_derivatives;
+    out|= update_3rd_derivatives | update_covariant_transformation
+          | update_hessians | update_gradients
+          | update_jacobian_pushed_forward_grads
+          | update_jacobian_pushed_forward_2nd_derivatives;
   if(flags & update_normal_vectors)
-    out |= update_normal_vectors | update_JxW_values;
+    out|= update_normal_vectors | update_JxW_values;
 
   return out;
 }
@@ -215,7 +215,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
   // possible
   Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData& fe_data= static_cast<const InternalData&>(fe_internal);
 
   const UpdateFlags flags(fe_data.update_each);
 
@@ -223,7 +223,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
   // for values since we already emplaced them into output_data when
   // we were in get_data()
   if(flags & update_gradients && cell_similarity != CellSimilarity::translation)
-    for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+    for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
       mapping.transform(make_array_view(fe_data.shape_gradients, k),
                         mapping_covariant,
                         mapping_internal,
@@ -231,15 +231,15 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
 
   if(flags & update_hessians && cell_similarity != CellSimilarity::translation)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(make_array_view(fe_data.shape_hessians, k),
                           mapping_covariant_gradient,
                           mapping_internal,
                           make_array_view(output_data.shape_hessians, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-        for(unsigned int i = 0; i < quadrature.size(); ++i)
-          for(unsigned int j = 0; j < spacedim; ++j)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+        for(unsigned int i= 0; i < quadrature.size(); ++i)
+          for(unsigned int j= 0; j < spacedim; ++j)
             output_data.shape_hessians[k][i]
               -= mapping_data.jacobian_pushed_forward_grads[i][j]
                  * output_data.shape_gradients[k][i][j];
@@ -248,14 +248,14 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
   if(flags & update_3rd_derivatives
      && cell_similarity != CellSimilarity::translation)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(
           make_array_view(fe_data.shape_3rd_derivatives, k),
           mapping_covariant_hessian,
           mapping_internal,
           make_array_view(output_data.shape_3rd_derivatives, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         correct_third_derivatives(
           output_data, mapping_data, quadrature.size(), k);
     }
@@ -283,7 +283,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData& fe_data= static_cast<const InternalData&>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all
@@ -302,12 +302,12 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
   // the values (unlike in the case of fill_fe_values()) since
   // we need to take into account the offsets
   if(flags & update_values)
-    for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-      for(unsigned int i = 0; i < quadrature.size(); ++i)
-        output_data.shape_values(k, i) = fe_data.shape_values[k][i + offset];
+    for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int i= 0; i < quadrature.size(); ++i)
+        output_data.shape_values(k, i)= fe_data.shape_values[k][i + offset];
 
   if(flags & update_gradients)
-    for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+    for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
       mapping.transform(
         make_array_view(fe_data.shape_gradients, k, offset, quadrature.size()),
         mapping_covariant,
@@ -316,16 +316,16 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
 
   if(flags & update_hessians)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(
           make_array_view(fe_data.shape_hessians, k, offset, quadrature.size()),
           mapping_covariant_gradient,
           mapping_internal,
           make_array_view(output_data.shape_hessians, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-        for(unsigned int i = 0; i < quadrature.size(); ++i)
-          for(unsigned int j = 0; j < spacedim; ++j)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+        for(unsigned int i= 0; i < quadrature.size(); ++i)
+          for(unsigned int j= 0; j < spacedim; ++j)
             output_data.shape_hessians[k][i]
               -= mapping_data.jacobian_pushed_forward_grads[i][j]
                  * output_data.shape_gradients[k][i][j];
@@ -333,7 +333,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
 
   if(flags & update_3rd_derivatives)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(
           make_array_view(
             fe_data.shape_3rd_derivatives, k, offset, quadrature.size()),
@@ -341,7 +341,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
           mapping_internal,
           make_array_view(output_data.shape_3rd_derivatives, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         correct_third_derivatives(
           output_data, mapping_data, quadrature.size(), k);
     }
@@ -370,7 +370,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   // possible
   Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData& fe_data= static_cast<const InternalData&>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all
@@ -392,12 +392,12 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   // the values (unlike in the case of fill_fe_values()) since
   // we need to take into account the offsets
   if(flags & update_values)
-    for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-      for(unsigned int i = 0; i < quadrature.size(); ++i)
-        output_data.shape_values(k, i) = fe_data.shape_values[k][i + offset];
+    for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int i= 0; i < quadrature.size(); ++i)
+        output_data.shape_values(k, i)= fe_data.shape_values[k][i + offset];
 
   if(flags & update_gradients)
-    for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+    for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
       mapping.transform(
         make_array_view(fe_data.shape_gradients, k, offset, quadrature.size()),
         mapping_covariant,
@@ -406,16 +406,16 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
 
   if(flags & update_hessians)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(
           make_array_view(fe_data.shape_hessians, k, offset, quadrature.size()),
           mapping_covariant_gradient,
           mapping_internal,
           make_array_view(output_data.shape_hessians, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-        for(unsigned int i = 0; i < quadrature.size(); ++i)
-          for(unsigned int j = 0; j < spacedim; ++j)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+        for(unsigned int i= 0; i < quadrature.size(); ++i)
+          for(unsigned int j= 0; j < spacedim; ++j)
             output_data.shape_hessians[k][i]
               -= mapping_data.jacobian_pushed_forward_grads[i][j]
                  * output_data.shape_gradients[k][i][j];
@@ -423,7 +423,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
 
   if(flags & update_3rd_derivatives)
     {
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         mapping.transform(
           make_array_view(
             fe_data.shape_3rd_derivatives, k, offset, quadrature.size()),
@@ -431,7 +431,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
           mapping_internal,
           make_array_view(output_data.shape_3rd_derivatives, k));
 
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+      for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
         correct_third_derivatives(
           output_data, mapping_data, quadrature.size(), k);
     }
@@ -447,11 +447,11 @@ FE_Poly<PolynomialType, dim, spacedim>::correct_third_derivatives(
   const unsigned int n_q_points,
   const unsigned int dof) const
 {
-  for(unsigned int i = 0; i < n_q_points; ++i)
-    for(unsigned int j = 0; j < spacedim; ++j)
-      for(unsigned int k = 0; k < spacedim; ++k)
-        for(unsigned int l = 0; l < spacedim; ++l)
-          for(unsigned int m = 0; m < spacedim; ++m)
+  for(unsigned int i= 0; i < n_q_points; ++i)
+    for(unsigned int j= 0; j < spacedim; ++j)
+      for(unsigned int k= 0; k < spacedim; ++k)
+        for(unsigned int l= 0; l < spacedim; ++l)
+          for(unsigned int m= 0; m < spacedim; ++m)
             {
               output_data.shape_3rd_derivatives[dof][i][j][k][l]
                 -= (mapping_data.jacobian_pushed_forward_grads[i][m][j][l]

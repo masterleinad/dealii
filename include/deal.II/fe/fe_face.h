@@ -50,7 +50,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat, Martin Kronbichler
  * @date 2009, 2011, 2013
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_FaceQ
   : public FE_PolyFace<TensorProductPolynomials<dim - 1>, dim, spacedim>
 {
@@ -366,11 +366,11 @@ protected:
       FiniteElementRelatedData<1, spacedim>& /*output_data*/) const override
   {
     // generate a new data object and initialize some fields
-    auto data = std_cxx14::make_unique<
+    auto data= std_cxx14::make_unique<
       typename FiniteElement<1, spacedim>::InternalDataBase>();
-    data->update_each = requires_update_flags(update_flags);
+    data->update_each= requires_update_flags(update_flags);
 
-    const unsigned int n_q_points = quadrature.size();
+    const unsigned int n_q_points= quadrature.size();
     AssertDimension(n_q_points, 1);
     (void) n_q_points;
 
@@ -467,7 +467,7 @@ private:
  * @author Martin Kronbichler
  * @date 2013
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_FaceP : public FE_PolyFace<PolynomialSpace<dim - 1>, dim, spacedim>
 {
 public:

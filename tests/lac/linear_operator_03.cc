@@ -50,7 +50,7 @@ main()
   initlog();
   deallog << std::setprecision(10);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -64,7 +64,7 @@ main()
 
   std::vector<types::global_dof_index> dofs_per_component(2);
   DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
-  const unsigned int n_u = dofs_per_component[0], n_p = dofs_per_component[1];
+  const unsigned int n_u= dofs_per_component[0], n_p= dofs_per_component[1];
 
   BlockDynamicSparsityPattern dsp(2, 2);
   dsp.block(0, 0).reinit(n_u, n_u);
@@ -81,7 +81,7 @@ main()
   BlockSparseMatrix<double> a(sparsity_pattern);
   BlockSparseMatrix<double> b(sparsity_pattern);
 
-  for(unsigned int i = 0; i < a.n(); ++i)
+  for(unsigned int i= 0; i < a.n(); ++i)
     {
       a.set(i, i, 1.);
       b.set(i, i, 5.);
@@ -89,22 +89,22 @@ main()
 
   // Constructors and assignment:
 
-  auto op_a = linear_operator<BlockVector<double>>(a);
-  auto op_b = linear_operator<BlockVector<double>>(b);
+  auto op_a= linear_operator<BlockVector<double>>(a);
+  auto op_b= linear_operator<BlockVector<double>>(b);
 
   {
     decltype(op_a) op_x(a);
-    op_a = a;
-    op_b = b;
+    op_a= a;
+    op_b= b;
   }
 
   // vmult:
 
   BlockVector<double> u;
   op_a.reinit_domain_vector(u, true);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i]= (double) (i + 1);
     }
 
   PRINTME("u", u);
@@ -124,27 +124,27 @@ main()
 
   // operator+, operator-, operator+=, operator-=:
 
-  x = v;
-  x += w;
+  x= v;
+  x+= w;
   PRINTME("Au+Bu", x);
 
   (op_a + op_b).vmult(x, u);
   PRINTME("(A+B)u", x);
 
-  auto op_x = op_a;
-  op_x += op_b;
+  auto op_x= op_a;
+  op_x+= op_b;
   op_x.vmult(x, u);
   PRINTME("(A+=B)u", x);
 
-  x = v;
-  x -= w;
+  x= v;
+  x-= w;
   PRINTME("Au-Bu", x);
 
   (op_a - op_b).vmult(x, u);
   PRINTME("(A-B)u", x);
 
-  op_x = op_a;
-  op_x -= op_b;
+  op_x= op_a;
+  op_x-= op_b;
   op_x.vmult(x, u);
   PRINTME("(A-=B)u", x);
 
@@ -157,8 +157,8 @@ main()
   (op_a * op_b).vmult(x, u);
   PRINTME("(A*B)u", x);
 
-  op_x = op_a;
-  op_x *= op_b;
+  op_x= op_a;
+  op_x*= op_b;
   op_x.vmult(x, u);
   PRINTME("(A*=B)u", x);
 

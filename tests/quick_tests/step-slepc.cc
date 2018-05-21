@@ -91,7 +91,7 @@ LaplaceEigenspectrumProblem::setup_system()
   x.resize(1);
   x[0].reinit(MPI_COMM_WORLD, dof_handler.n_dofs(), dof_handler.n_dofs());
   lambda.resize(1);
-  lambda[0] = 0.;
+  lambda[0]= 0.;
 
   // some output
   output_table.add_value("cells", triangulation.n_active_cells());
@@ -108,35 +108,34 @@ LaplaceEigenspectrumProblem::assemble_system()
                         update_values | update_gradients
                           | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_A(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> cell_B(dofs_per_cell, dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  typename DoFHandler<2>::active_cell_iterator cell
-    = dof_handler.begin_active(),
-    endc = dof_handler.end();
+  typename DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                               endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      cell_A = 0;
-      cell_B = 0;
+      cell_A= 0;
+      cell_B= 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             {
-              cell_A(i, j) += fe_values.shape_grad(i, q_point)
-                              * fe_values.shape_grad(j, q_point)
-                              * fe_values.JxW(q_point);
+              cell_A(i, j)+= fe_values.shape_grad(i, q_point)
+                             * fe_values.shape_grad(j, q_point)
+                             * fe_values.JxW(q_point);
 
-              cell_B(i, j) += fe_values.shape_value(i, q_point)
-                              * fe_values.shape_value(j, q_point)
-                              * fe_values.JxW(q_point);
+              cell_B(i, j)+= fe_values.shape_value(i, q_point)
+                             * fe_values.shape_value(j, q_point)
+                             * fe_values.JxW(q_point);
             }
 
       cell->get_dof_indices(local_dof_indices);
@@ -158,13 +157,13 @@ LaplaceEigenspectrumProblem::solve()
   eigensolver.solve(A, B, lambda, x, x.size());
 
   {
-    const double               precision = 1e-7;
+    const double               precision= 1e-7;
     PETScWrappers::MPI::Vector Ax(x[0]), Bx(x[0]);
-    for(unsigned int i = 0; i < x.size(); ++i)
+    for(unsigned int i= 0; i < x.size(); ++i)
       {
         B.vmult(Bx, x[i]);
 
-        for(unsigned int j = 0; j < x.size(); j++)
+        for(unsigned int j= 0; j < x.size(); j++)
           if(j != i)
             Assert(std::abs(x[j] * Bx) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
@@ -187,13 +186,13 @@ LaplaceEigenspectrumProblem::solve()
 void
 LaplaceEigenspectrumProblem::run()
 {
-  const double radius = dealii::numbers::PI / 2.;
+  const double radius= dealii::numbers::PI / 2.;
   GridGenerator::hyper_cube(triangulation, -radius, radius);
 
   // set the old eigenvalue to a silly number.
-  double old_lambda = 1000;
+  double old_lambda= 1000;
 
-  for(unsigned int c = 0; c < 5; ++c)
+  for(unsigned int c= 0; c < 5; ++c)
     {
       // obtain numerical result
       triangulation.refine_global(1);
@@ -204,7 +203,7 @@ LaplaceEigenspectrumProblem::run()
       // check energy convergence with previous result
       AssertThrow(lambda[0] < old_lambda,
                   ExcMessage("solution is not converging"));
-      old_lambda = lambda[0];
+      old_lambda= lambda[0];
     }
 
   // push back analytic result

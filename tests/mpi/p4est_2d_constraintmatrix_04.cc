@@ -42,10 +42,10 @@
 
 #include <sstream>
 
-const double R0 = 0.5; //6371000.-2890000.;
-const double R1 = 1.0; //6371000.-  35000.;
-const double T0 = 1.0;
-const double T1 = 2.0;
+const double R0= 0.5; //6371000.-2890000.;
+const double R1= 1.0; //6371000.-  35000.;
+const double T0= 1.0;
+const double T1= 2.0;
 
 template <int dim>
 class FilteredDataOut : public DataOut<dim>
@@ -92,7 +92,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& value) const;
@@ -111,8 +111,8 @@ void
 TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
                                             Vector<double>&   values) const
 {
-  for(unsigned int c = 0; c < this->n_components; ++c)
-    values(c) = TemperatureInitialValues<dim>::value(p, c);
+  for(unsigned int c= 0; c < this->n_components; ++c)
+    values(c)= TemperatureInitialValues<dim>::value(p, c);
 }
 
 template <int dim>
@@ -131,11 +131,11 @@ test()
 
   tr.refine_global(3);
   if(1)
-    for(unsigned int step = 0; step < 5; ++step)
+    for(unsigned int step= 0; step < 5; ++step)
       {
         typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active(),
-          endc = tr.end();
+          endc= tr.end();
 
         for(; cell != endc; ++cell)
           if(Testing::rand() % 42 == 1)
@@ -150,7 +150,7 @@ test()
 
   dofh.distribute_dofs(fe);
 
-  IndexSet owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set= dofh.locally_owned_dofs();
 
   IndexSet dof_set;
   DoFTools::extract_locally_active_dofs(dofh, dof_set);
@@ -164,14 +164,14 @@ test()
   VectorTools::interpolate(dofh, TemperatureInitialValues<dim>(), x);
   TrilinosWrappers::MPI::Vector x_rel;
   x_rel.reinit(relevant_set, MPI_COMM_WORLD);
-  x_rel = x;
+  x_rel= x;
 
-  for(unsigned int steps = 0; steps < 3; ++steps)
+  for(unsigned int steps= 0; steps < 3; ++steps)
     {
       {
         typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active(),
-          endc = tr.end();
+          endc= tr.end();
 
         for(; cell != endc; ++cell)
           if(!cell->is_artificial() && !cell->is_ghost())
@@ -182,22 +182,22 @@ test()
                 cell->set_coarsen_flag();
             }
       }
-      for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
+      for(typename Triangulation<dim>::cell_iterator cell= tr.begin();
           cell != tr.end();
           ++cell)
         {
           if(!cell->has_children())
             continue;
 
-          bool coarsen_me = false;
-          for(unsigned int i = 0; i < cell->n_children(); ++i)
+          bool coarsen_me= false;
+          for(unsigned int i= 0; i < cell->n_children(); ++i)
             if(cell->child(i)->coarsen_flag_set())
               {
-                coarsen_me = true;
+                coarsen_me= true;
                 break;
               }
           if(coarsen_me)
-            for(unsigned int i = 0; i < cell->n_children(); ++i)
+            for(unsigned int i= 0; i < cell->n_children(); ++i)
               {
                 if(cell->child(i)->active()
                    && cell->child(i)->is_locally_owned())
@@ -221,7 +221,7 @@ test()
 
       dofh.distribute_dofs(fe);
 
-      owned_set = dofh.locally_owned_dofs();
+      owned_set= dofh.locally_owned_dofs();
 
       DoFTools::extract_locally_active_dofs(dofh, dof_set);
 
@@ -248,7 +248,7 @@ test()
       cm.close();
 
       cm.distribute(x);
-      x_rel = x;
+      x_rel= x;
     }
 
   TrilinosWrappers::MPI::Vector x_ref;
@@ -256,8 +256,8 @@ test()
 
   VectorTools::interpolate(dofh, TemperatureInitialValues<dim>(), x_ref);
 
-  x_ref -= x;
-  double err = x_ref.linfty_norm();
+  x_ref-= x;
+  double err= x_ref.linfty_norm();
   if(err > 1.0e-12)
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
@@ -289,7 +289,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

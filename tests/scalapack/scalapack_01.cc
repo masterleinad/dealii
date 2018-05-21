@@ -54,20 +54,20 @@ test(const unsigned int size, const unsigned int block_size)
         << " " << grid->get_process_grid_columns() << std::endl;
 
   {
-    unsigned int index = 0;
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
-        full_in(i, j) = index++;
+    unsigned int index= 0;
+    for(unsigned int i= 0; i < size; ++i)
+      for(unsigned int j= 0; j < size; ++j)
+        full_in(i, j)= index++;
   }
 
-  scalapack_matrix = full_in;
+  scalapack_matrix= full_in;
   scalapack_matrix.copy_to(full_out);
 
-  diff = 0;
+  diff= 0;
   diff.add(1., full_in);
   diff.add(-1., full_out);
 
-  const NumberType error = diff.frobenius_norm();
+  const NumberType error= diff.frobenius_norm();
 
   if(error > 1e-10 && this_mpi_process == 0)
     {
@@ -87,8 +87,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{64, 120, 320, 640}};
-  const std::vector<unsigned int> blocks = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{64, 120, 320, 640}};
+  const std::vector<unsigned int> blocks= {{32, 64}};
 
   for(const auto& s : sizes)
     for(const auto& b : blocks)

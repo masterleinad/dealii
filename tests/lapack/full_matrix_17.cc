@@ -32,16 +32,16 @@ test(const unsigned int size)
   FullMatrix<NumberType> F(size), invF(size);
   create_spd(F);
   invF.invert(F);
-  const double l1     = F.l1_norm();
-  const double inv_l1 = invF.l1_norm();
+  const double l1    = F.l1_norm();
+  const double inv_l1= invF.l1_norm();
 
   // Lapack:
   LAPACKFullMatrix<NumberType> M(size);
-  M = F;
+  M= F;
   M.set_property(LAPACKSupport::symmetric);
-  const double la_l1 = M.l1_norm();
+  const double la_l1= M.l1_norm();
   M.compute_cholesky_factorization();
-  const double rcond = M.reciprocal_condition_number(la_l1);
+  const double rcond= M.reciprocal_condition_number(la_l1);
 
   deallog << 1. / (l1 * inv_l1) << " " << rcond << std::endl;
 }
@@ -49,12 +49,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
+  const std::vector<unsigned int> sizes= {{1, 3, 11, 17, 32, 64, 200, 391}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

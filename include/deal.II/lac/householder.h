@@ -83,7 +83,7 @@ public:
   /**
    * Create an empty object.
    */
-  Householder() = default;
+  Householder()= default;
 
   /**
    * Create an object holding the QR-decomposition of the matrix $A$.
@@ -163,7 +163,7 @@ template <typename number2>
 void
 Householder<number>::initialize(const FullMatrix<number2>& M)
 {
-  const size_type m = M.n_rows(), n = M.n_cols();
+  const size_type m= M.n_rows(), n= M.n_cols();
   storage.reinit(m, n);
   storage.fill(M);
   Assert(!storage.empty(), typename FullMatrix<number2>::ExcEmptyMatrix());
@@ -173,42 +173,42 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
   Assert(storage.n_cols() <= storage.n_rows(),
          ExcDimensionMismatch(storage.n_cols(), storage.n_rows()));
 
-  for(size_type j = 0; j < n; ++j)
+  for(size_type j= 0; j < n; ++j)
     {
-      number2   sigma = 0;
+      number2   sigma= 0;
       size_type i;
       // sigma = ||v||^2
-      for(i = j; i < m; ++i)
-        sigma += storage(i, j) * storage(i, j);
+      for(i= j; i < m; ++i)
+        sigma+= storage(i, j) * storage(i, j);
       // We are ready if the column is
       // empty. Are we?
       if(std::fabs(sigma) < 1.e-15)
         return;
 
-      number2 s = (storage(j, j) < 0) ? std::sqrt(sigma) : -std::sqrt(sigma);
+      number2 s= (storage(j, j) < 0) ? std::sqrt(sigma) : -std::sqrt(sigma);
       //
-      number2 beta = std::sqrt(1. / (sigma - s * storage(j, j)));
+      number2 beta= std::sqrt(1. / (sigma - s * storage(j, j)));
 
       // Make column j the Householder
       // vector, store first entry in
       // diagonal
-      diagonal[j]   = beta * (storage(j, j) - s);
-      storage(j, j) = s;
+      diagonal[j]  = beta * (storage(j, j) - s);
+      storage(j, j)= s;
 
-      for(i = j + 1; i < m; ++i)
-        storage(i, j) *= beta;
+      for(i= j + 1; i < m; ++i)
+        storage(i, j)*= beta;
 
       // For all subsequent columns do
       // the Householder reflection
-      for(size_type k = j + 1; k < n; ++k)
+      for(size_type k= j + 1; k < n; ++k)
         {
-          number2 sum = diagonal[j] * storage(j, k);
-          for(i = j + 1; i < m; ++i)
-            sum += storage(i, j) * storage(i, k);
+          number2 sum= diagonal[j] * storage(j, k);
+          for(i= j + 1; i < m; ++i)
+            sum+= storage(i, j) * storage(i, k);
 
-          storage(j, k) -= sum * this->diagonal[j];
-          for(i = j + 1; i < m; ++i)
-            storage(i, k) -= sum * storage(i, j);
+          storage(j, k)-= sum * this->diagonal[j];
+          for(i= j + 1; i < m; ++i)
+            storage(i, k)-= sum * storage(i, j);
         }
     }
 }
@@ -230,31 +230,31 @@ Householder<number>::least_squares(Vector<number2>&       dst,
   AssertDimension(dst.size(), storage.n());
   AssertDimension(src.size(), storage.m());
 
-  const size_type m = storage.m(), n = storage.n();
+  const size_type m= storage.m(), n= storage.n();
 
   GrowingVectorMemory<Vector<number2>>            mem;
   typename VectorMemory<Vector<number2>>::Pointer aux(mem);
   aux->reinit(src, true);
-  *aux = src;
+  *aux= src;
   // m > n, m = src.n, n = dst.n
 
   // Multiply Q_n ... Q_2 Q_1 src
   // Where Q_i = I - v_i v_i^T
-  for(size_type j = 0; j < n; ++j)
+  for(size_type j= 0; j < n; ++j)
     {
       // sum = v_i^T dst
-      number2 sum = diagonal[j] * (*aux)(j);
-      for(size_type i = j + 1; i < m; ++i)
-        sum += static_cast<number2>(storage(i, j)) * (*aux)(i);
+      number2 sum= diagonal[j] * (*aux)(j);
+      for(size_type i= j + 1; i < m; ++i)
+        sum+= static_cast<number2>(storage(i, j)) * (*aux)(i);
       // dst -= v * sum
-      (*aux)(j) -= sum * diagonal[j];
-      for(size_type i = j + 1; i < m; ++i)
-        (*aux)(i) -= sum * static_cast<number2>(storage(i, j));
+      (*aux)(j)-= sum * diagonal[j];
+      for(size_type i= j + 1; i < m; ++i)
+        (*aux)(i)-= sum * static_cast<number2>(storage(i, j));
     }
   // Compute norm of residual
-  number2 sum = 0.;
-  for(size_type i = n; i < m; ++i)
-    sum += (*aux)(i) * (*aux)(i);
+  number2 sum= 0.;
+  for(size_type i= n; i < m; ++i)
+    sum+= (*aux)(i) * (*aux)(i);
   AssertIsFinite(sum);
 
   // Compute solution
@@ -273,44 +273,44 @@ Householder<number>::least_squares(BlockVector<number2>&       dst,
   AssertDimension(dst.size(), storage.n());
   AssertDimension(src.size(), storage.m());
 
-  const size_type m = storage.m(), n = storage.n();
+  const size_type m= storage.m(), n= storage.n();
 
   GrowingVectorMemory<BlockVector<number2>>            mem;
   typename VectorMemory<BlockVector<number2>>::Pointer aux(mem);
   aux->reinit(src, true);
-  *aux = src;
+  *aux= src;
   // m > n, m = src.n, n = dst.n
 
   // Multiply Q_n ... Q_2 Q_1 src
   // Where Q_i = I-v_i v_i^T
-  for(size_type j = 0; j < n; ++j)
+  for(size_type j= 0; j < n; ++j)
     {
       // sum = v_i^T dst
-      number2 sum = diagonal[j] * (*aux)(j);
-      for(size_type i = j + 1; i < m; ++i)
-        sum += storage(i, j) * (*aux)(i);
+      number2 sum= diagonal[j] * (*aux)(j);
+      for(size_type i= j + 1; i < m; ++i)
+        sum+= storage(i, j) * (*aux)(i);
       // dst -= v * sum
-      (*aux)(j) -= sum * diagonal[j];
-      for(size_type i = j + 1; i < m; ++i)
-        (*aux)(i) -= sum * storage(i, j);
+      (*aux)(j)-= sum * diagonal[j];
+      for(size_type i= j + 1; i < m; ++i)
+        (*aux)(i)-= sum * storage(i, j);
     }
   // Compute norm of residual
-  number2 sum = 0.;
-  for(size_type i = n; i < m; ++i)
-    sum += (*aux)(i) * (*aux)(i);
+  number2 sum= 0.;
+  for(size_type i= n; i < m; ++i)
+    sum+= (*aux)(i) * (*aux)(i);
   AssertIsFinite(sum);
 
   //backward works for
   //Vectors only, so copy
   //them before
   Vector<number2> v_dst, v_aux;
-  v_dst = dst;
-  v_aux = *aux;
+  v_dst= dst;
+  v_aux= *aux;
   // Compute solution
   storage.backward(v_dst, v_aux);
   //copy the result back
   //to the BlockVector
-  dst = v_dst;
+  dst= v_dst;
 
   return std::sqrt(sum);
 }

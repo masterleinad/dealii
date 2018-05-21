@@ -60,7 +60,7 @@ namespace Evaluation
 
     virtual void
     operator()(const DoFHandler<dim>& dof_handler,
-               const Vector<double>&  solution) const = 0;
+               const Vector<double>&  solution) const= 0;
 
   protected:
     unsigned int refinement_cycle;
@@ -74,7 +74,7 @@ namespace Evaluation
   void
   EvaluationBase<dim>::set_refinement_cycle(const unsigned int step)
   {
-    refinement_cycle = step;
+    refinement_cycle= step;
   }
 
   template <int dim>
@@ -110,21 +110,20 @@ namespace Evaluation
   PointValueEvaluation<dim>::operator()(const DoFHandler<dim>& dof_handler,
                                         const Vector<double>&  solution) const
   {
-    double point_value = 1e20;
+    double point_value= 1e20;
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc                      = dof_handler.end();
-    bool evaluation_point_found = false;
+      endc                     = dof_handler.end();
+    bool evaluation_point_found= false;
     for(; (cell != endc) && !evaluation_point_found; ++cell)
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<dim>::vertices_per_cell;
           ++vertex)
         if(cell->vertex(vertex) == evaluation_point)
           {
-            point_value = solution(cell->vertex_dof_index(vertex, 0));
+            point_value= solution(cell->vertex_dof_index(vertex, 0));
 
-            evaluation_point_found = true;
+            evaluation_point_found= true;
             break;
           };
 
@@ -192,12 +191,12 @@ namespace LaplaceSolver
     solve_problem()
       = 0;
     virtual void
-    postprocess(const Evaluation::EvaluationBase<dim>& postprocessor) const = 0;
+    postprocess(const Evaluation::EvaluationBase<dim>& postprocessor) const= 0;
     virtual void
     refine_grid()
       = 0;
     virtual unsigned int
-    n_dofs() const = 0;
+    n_dofs() const= 0;
 
   protected:
     const SmartPointer<Triangulation<dim>> triangulation;
@@ -238,7 +237,7 @@ namespace LaplaceSolver
     const SmartPointer<const Function<dim>>      boundary_values;
 
     virtual void
-    assemble_rhs(Vector<double>& rhs) const = 0;
+    assemble_rhs(Vector<double>& rhs) const= 0;
 
   private:
     struct LinearSystem
@@ -316,20 +315,20 @@ namespace LaplaceSolver
   {
     typedef typename DoFHandler<dim>::active_cell_iterator active_cell_iterator;
 
-    const unsigned int n_threads = MultithreadInfo::n_threads();
+    const unsigned int n_threads= MultithreadInfo::n_threads();
     std::vector<std::pair<active_cell_iterator, active_cell_iterator>>
-      thread_ranges = Threads::split_range<active_cell_iterator>(
+      thread_ranges= Threads::split_range<active_cell_iterator>(
         dof_handler.begin_active(), dof_handler.end(), n_threads);
 
     Threads::Mutex         mutex;
     Threads::ThreadGroup<> threads;
-    for(unsigned int thread = 0; thread < n_threads; ++thread)
-      threads += Threads::new_thread(&Solver<dim>::assemble_matrix,
-                                     *this,
-                                     linear_system,
-                                     thread_ranges[thread].first,
-                                     thread_ranges[thread].second,
-                                     mutex);
+    for(unsigned int thread= 0; thread < n_threads; ++thread)
+      threads+= Threads::new_thread(&Solver<dim>::assemble_matrix,
+                                    *this,
+                                    linear_system,
+                                    thread_ranges[thread].first,
+                                    thread_ranges[thread].second,
+                                    mutex);
 
     assemble_rhs(linear_system.rhs);
     linear_system.hanging_node_constraints.condense(linear_system.rhs);
@@ -356,33 +355,33 @@ namespace LaplaceSolver
     FEValues<dim> fe_values(
       *fe, *quadrature, update_gradients | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe->dofs_per_cell;
-    const unsigned int n_q_points    = quadrature->size();
+    const unsigned int dofs_per_cell= fe->dofs_per_cell;
+    const unsigned int n_q_points   = quadrature->size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    for(typename DoFHandler<dim>::active_cell_iterator cell = begin_cell;
+    for(typename DoFHandler<dim>::active_cell_iterator cell= begin_cell;
         cell != end_cell;
         ++cell)
       {
-        cell_matrix = 0;
+        cell_matrix= 0;
 
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                    * fe_values.shape_grad(j, q_point)
-                                    * fe_values.JxW(q_point));
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                   * fe_values.shape_grad(j, q_point)
+                                   * fe_values.JxW(q_point));
 
         cell->get_dof_indices(local_dof_indices);
 
         Threads::Mutex::ScopedLock lock(mutex);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             linear_system.matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       };
@@ -464,8 +463,8 @@ namespace LaplaceSolver
                             update_values | update_quadrature_points
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = this->fe->dofs_per_cell;
-    const unsigned int n_q_points    = this->quadrature->size();
+    const unsigned int dofs_per_cell= this->fe->dofs_per_cell;
+    const unsigned int n_q_points   = this->quadrature->size();
 
     Vector<double>                       cell_rhs(dofs_per_cell);
     std::vector<double>                  rhs_values(n_q_points);
@@ -473,21 +472,21 @@ namespace LaplaceSolver
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = this->dof_handler.begin_active(),
-      endc = this->dof_handler.end();
+      endc= this->dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_rhs = 0;
+        cell_rhs= 0;
         fe_values.reinit(cell);
         rhs_function->value_list(fe_values.get_quadrature_points(), rhs_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                            * rhs_values[q_point] * fe_values.JxW(q_point));
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                           * rhs_values[q_point] * fe_values.JxW(q_point));
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          rhs(local_dof_indices[i]) += cell_rhs(i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          rhs(local_dof_indices[i])+= cell_rhs(i);
       };
   }
 
@@ -588,10 +587,10 @@ double
 Solution<dim>::value(const Point<dim>& p,
                      const unsigned int /*component*/) const
 {
-  double q = p(0);
-  for(unsigned int i = 1; i < dim; ++i)
-    q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-  const double exponential = std::exp(q);
+  double q= p(0);
+  for(unsigned int i= 1; i < dim; ++i)
+    q+= std::sin(10 * p(i) + 5 * p(0) * p(0));
+  const double exponential= std::exp(q);
   return exponential;
 }
 
@@ -611,21 +610,21 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double q = p(0);
-  for(unsigned int i = 1; i < dim; ++i)
-    q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-  const double u  = std::exp(q);
-  double       t1 = 1, t2 = 0, t3 = 0;
-  for(unsigned int i = 1; i < dim; ++i)
+  double q= p(0);
+  for(unsigned int i= 1; i < dim; ++i)
+    q+= std::sin(10 * p(i) + 5 * p(0) * p(0));
+  const double u = std::exp(q);
+  double       t1= 1, t2= 0, t3= 0;
+  for(unsigned int i= 1; i < dim; ++i)
     {
-      t1 += std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
-      t2 += 10 * std::cos(10 * p(i) + 5 * p(0) * p(0))
-            - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0)) * p(0) * p(0);
-      t3 += 100 * std::cos(10 * p(i) + 5 * p(0) * p(0))
-              * std::cos(10 * p(i) + 5 * p(0) * p(0))
-            - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0));
+      t1+= std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
+      t2+= 10 * std::cos(10 * p(i) + 5 * p(0) * p(0))
+           - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0)) * p(0) * p(0);
+      t3+= 100 * std::cos(10 * p(i) + 5 * p(0) * p(0))
+             * std::cos(10 * p(i) + 5 * p(0) * p(0))
+           - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0));
     };
-  t1 = t1 * t1;
+  t1= t1 * t1;
 
   return -u * (t1 + t2 + t3);
 }
@@ -638,7 +637,7 @@ run_simulation(
 {
   deallog << "Refinement cycle: ";
 
-  for(unsigned int step = 0; true; ++step)
+  for(unsigned int step= 0; true; ++step)
     {
       deallog << step << " " << std::flush;
 
@@ -679,12 +678,12 @@ solve_problem(const std::string& solver_name)
   const RightHandSide<dim> rhs_function;
   const Solution<dim>      boundary_values;
 
-  LaplaceSolver::Base<dim>* solver = nullptr;
+  LaplaceSolver::Base<dim>* solver= nullptr;
   if(solver_name == "global")
-    solver = new LaplaceSolver::RefinementGlobal<dim>(
+    solver= new LaplaceSolver::RefinementGlobal<dim>(
       triangulation, fe, quadrature, rhs_function, boundary_values);
   else if(solver_name == "kelly")
-    solver = new LaplaceSolver::RefinementKelly<dim>(
+    solver= new LaplaceSolver::RefinementKelly<dim>(
       triangulation, fe, quadrature, rhs_function, boundary_values);
   else
     AssertThrow(false, ExcNotImplemented());

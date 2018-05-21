@@ -92,7 +92,7 @@ check_fe(FiniteElement<dim>& fe)
     //std::map<std::string,std::vector<types::global_dof_index> > dofmap;
     std::map<std::string, std::vector<types::global_dof_index>> mgdofmap;
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
+    for(typename DoFHandler<dim>::level_cell_iterator cell= dofhref.begin();
         cell != dofhref.end();
         ++cell)
       {
@@ -105,7 +105,7 @@ check_fe(FiniteElement<dim>& fe)
         cell->get_mg_dof_indices(d);
       }
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
+    for(typename DoFHandler<dim>::level_cell_iterator cell= dofh.begin();
         cell != dofh.end();
         ++cell)
       {
@@ -120,7 +120,7 @@ check_fe(FiniteElement<dim>& fe)
 
     typename FunctionMap<dim>::type dirichlet_boundary;
     Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-    dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+    dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
 
@@ -128,19 +128,19 @@ check_fe(FiniteElement<dim>& fe)
 
   typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-  dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+  dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
-  const unsigned int n_levels = tr.n_global_levels();
-  for(unsigned int level = 0; level < n_levels; ++level)
+  const unsigned int n_levels= tr.n_global_levels();
+  for(unsigned int level= 0; level < n_levels; ++level)
     {
       deallog << "Level " << level << ":" << std::endl;
 
-      IndexSet rei = mg_constrained_dofs.get_refinement_edge_indices(level);
+      IndexSet rei= mg_constrained_dofs.get_refinement_edge_indices(level);
       deallog << "get_refinement_edge_indices:" << std::endl;
       rei.print(deallog);
 
-      IndexSet bi = mg_constrained_dofs.get_boundary_indices(level);
+      IndexSet bi= mg_constrained_dofs.get_boundary_indices(level);
       deallog << "get_boundary_indices:" << std::endl;
       bi.print(deallog);
 

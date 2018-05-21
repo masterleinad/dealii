@@ -23,12 +23,12 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int k = 0; k < v.size(); ++k)
-    v(k) = std::complex<double>(k, k * k);
+  for(unsigned int k= 0; k < v.size(); ++k)
+    v(k)= std::complex<double>(k, k * k);
 
   // copy elements by reference
-  for(unsigned int k = 0; k < v.size(); ++k)
-    w(k) = v(k);
+  for(unsigned int k= 0; k < v.size(); ++k)
+    w(k)= v(k);
 
   // check that they're equal
   AssertThrow(v == w, ExcInternalError());

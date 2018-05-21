@@ -121,7 +121,7 @@ namespace DerivativeApproximation
 
     // static variables
     template <int dim>
-    const UpdateFlags Gradient<dim>::update_flags = update_values;
+    const UpdateFlags Gradient<dim>::update_flags= update_values;
 
     template <int dim>
     template <class InputVector, int spacedim>
@@ -152,9 +152,9 @@ namespace DerivativeApproximation
     inline double
     Gradient<dim>::derivative_norm(const Derivative& d)
     {
-      double s = 0;
-      for(unsigned int i = 0; i < dim; ++i)
-        s += d[i] * d[i];
+      double s= 0;
+      for(unsigned int i= 0; i < dim; ++i)
+        s+= d[i] * d[i];
       return std::sqrt(s);
     }
 
@@ -231,7 +231,7 @@ namespace DerivativeApproximation
     };
 
     template <int dim>
-    const UpdateFlags SecondDerivative<dim>::update_flags = update_gradients;
+    const UpdateFlags SecondDerivative<dim>::update_flags= update_gradients;
 
     template <int dim>
     template <class InputVector, int spacedim>
@@ -402,28 +402,28 @@ namespace DerivativeApproximation
 
        */
 
-      const double am = trace(d) / 3.;
+      const double am= trace(d) / 3.;
 
       // s := d - trace(d) I
-      Tensor<2, 3> s = d;
-      for(unsigned int i = 0; i < 3; ++i)
-        s[i][i] -= am;
+      Tensor<2, 3> s= d;
+      for(unsigned int i= 0; i < 3; ++i)
+        s[i][i]-= am;
 
-      const double ss01 = s[0][1] * s[0][1], ss12 = s[1][2] * s[1][2],
-                   ss02 = s[0][2] * s[0][2];
+      const double ss01= s[0][1] * s[0][1], ss12= s[1][2] * s[1][2],
+                   ss02= s[0][2] * s[0][2];
 
-      const double J2 = (s[0][0] * s[0][0] + s[1][1] * s[1][1]
-                         + s[2][2] * s[2][2] + 2 * (ss01 + ss02 + ss12))
-                        / 2.;
+      const double J2= (s[0][0] * s[0][0] + s[1][1] * s[1][1]
+                        + s[2][2] * s[2][2] + 2 * (ss01 + ss02 + ss12))
+                       / 2.;
       const double J3
         = (std::pow(s[0][0], 3) + std::pow(s[1][1], 3) + std::pow(s[2][2], 3)
            + 3. * s[0][0] * (ss01 + ss02) + 3. * s[1][1] * (ss01 + ss12)
            + 3. * s[2][2] * (ss02 + ss12) + 6. * s[0][1] * s[0][2] * s[1][2])
           / 3.;
 
-      const double R = std::sqrt(4. * J2 / 3.);
+      const double R= std::sqrt(4. * J2 / 3.);
 
-      double EE[3] = {0, 0, 0};
+      double EE[3]= {0, 0, 0};
       // the eigenvalues are away from
       // @p{am} in the order of R. thus,
       // if R<<AM, then we have the
@@ -431,30 +431,30 @@ namespace DerivativeApproximation
       // identical eigenvalues. check
       // this first
       if(R <= 1e-14 * std::fabs(am))
-        EE[0] = EE[1] = EE[2] = am;
+        EE[0]= EE[1]= EE[2]= am;
       else
         {
           // at least two eigenvalues are
           // distinct
-          const double R3 = R * R * R;
-          const double XX = 4. * J3 / R3;
-          const double YY = 1. - std::fabs(XX);
+          const double R3= R * R * R;
+          const double XX= 4. * J3 / R3;
+          const double YY= 1. - std::fabs(XX);
 
           Assert(YY > -1e-14, ExcInternalError());
 
           if(YY < 0)
             {
               // two roots are equal
-              const double a = (XX > 0 ? -1. : 1.) * R / 2;
-              EE[0] = EE[1] = am + a;
-              EE[2]         = am - 2. * a;
+              const double a= (XX > 0 ? -1. : 1.) * R / 2;
+              EE[0]= EE[1]= am + a;
+              EE[2]       = am - 2. * a;
             }
           else
             {
-              const double theta = std::acos(XX) / 3.;
-              EE[0]              = am + R * std::cos(theta);
-              EE[1] = am + R * std::cos(theta + 2. / 3. * numbers::PI);
-              EE[2] = am + R * std::cos(theta + 4. / 3. * numbers::PI);
+              const double theta= std::acos(XX) / 3.;
+              EE[0]             = am + R * std::cos(theta);
+              EE[1]= am + R * std::cos(theta + 2. / 3. * numbers::PI);
+              EE[2]= am + R * std::cos(theta + 4. / 3. * numbers::PI);
             };
         };
 
@@ -488,11 +488,11 @@ namespace DerivativeApproximation
     SecondDerivative<dim>::symmetrize(Derivative& d)
     {
       // symmetrize non-diagonal entries
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= i + 1; j < dim; ++j)
           {
-            const double s = (d[i][j] + d[j][i]) / 2;
-            d[i][j] = d[j][i] = s;
+            const double s= (d[i][j] + d[j][i]) / 2;
+            d[i][j]= d[j][i]= s;
           };
     }
 
@@ -555,7 +555,7 @@ namespace DerivativeApproximation
     };
 
     template <int dim>
-    const UpdateFlags ThirdDerivative<dim>::update_flags = update_hessians;
+    const UpdateFlags ThirdDerivative<dim>::update_flags= update_hessians;
 
     template <int dim>
     template <class InputVector, int spacedim>
@@ -610,30 +610,30 @@ namespace DerivativeApproximation
       // first do it in the case, that i,j,k are
       // pairwise different (which can onlky happen
       // in dim >= 3)
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
-          for(unsigned int k = j + 1; k < dim; ++k)
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= i + 1; j < dim; ++j)
+          for(unsigned int k= j + 1; k < dim; ++k)
             {
-              const double s = (d[i][j][k] + d[i][k][j] + d[j][i][k]
-                                + d[j][k][i] + d[k][i][j] + d[k][j][i])
-                               / 6;
-              d[i][j][k] = d[i][k][j] = d[j][i][k] = d[j][k][i] = d[k][i][j]
-                = d[k][j][i]                                    = s;
+              const double s= (d[i][j][k] + d[i][k][j] + d[j][i][k] + d[j][k][i]
+                               + d[k][i][j] + d[k][j][i])
+                              / 6;
+              d[i][j][k]= d[i][k][j]= d[j][i][k]= d[j][k][i]= d[k][i][j]
+                = d[k][j][i]                                = s;
             }
       // now do the case, where two indices are
       // equal
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= i + 1; j < dim; ++j)
           {
             // case 1: index i (lower one) is
             // double
-            const double s = (d[i][i][j] + d[i][j][i] + d[j][i][i]) / 3;
-            d[i][i][j] = d[i][j][i] = d[j][i][i] = s;
+            const double s= (d[i][i][j] + d[i][j][i] + d[j][i][i]) / 3;
+            d[i][i][j]= d[i][j][i]= d[j][i][i]= s;
 
             // case 2: index j (higher one) is
             // double
-            const double t = (d[i][j][j] + d[j][i][j] + d[j][j][i]) / 3;
-            d[i][j][j] = d[j][i][j] = d[j][j][i] = t;
+            const double t= (d[i][j][j] + d[j][i][j] + d[j][j][i]) / 3;
+            d[i][j][j]= d[j][i][j]= d[j][j][i]= t;
           }
     }
 
@@ -681,12 +681,12 @@ namespace DerivativeApproximation
     {
       struct Scratch
       {
-        Scratch() = default;
+        Scratch()= default;
       };
 
       struct CopyData
       {
-        CopyData() = default;
+        CopyData()= default;
       };
     } // namespace Assembler
   }   // namespace internal
@@ -770,7 +770,7 @@ namespace DerivativeApproximation
         = DerivativeDescription::get_projected_derivative(
           fe_midpoint_value, solution, component);
       // ...and the place where it lives
-      const Point<dim> this_center = fe_midpoint_value.quadrature_point(0);
+      const Point<dim> this_center= fe_midpoint_value.quadrature_point(0);
 
       // loop over all neighbors and
       // accumulate the difference
@@ -798,7 +798,7 @@ namespace DerivativeApproximation
         {
           const TriaActiveIterator<
             dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>
-            neighbor = *neighbor_ptr;
+            neighbor= *neighbor_ptr;
 
           // reinit fe values object...
           x_fe_midpoint_value.reinit(neighbor);
@@ -821,10 +821,10 @@ namespace DerivativeApproximation
           // direction between
           // the centers of two
           // cells
-          Tensor<1, dim> y        = neighbor_center - this_center;
-          const double   distance = y.norm();
+          Tensor<1, dim> y       = neighbor_center - this_center;
+          const double   distance= y.norm();
           // normalize y
-          y /= distance;
+          y/= distance;
           // *** note that unlike in
           // the docs, y denotes the
           // normalized vector
@@ -836,9 +836,9 @@ namespace DerivativeApproximation
           // add up the
           // contribution of
           // this cell to Y
-          for(unsigned int i = 0; i < dim; ++i)
-            for(unsigned int j = 0; j < dim; ++j)
-              Y[i][j] += y[i] * y[j];
+          for(unsigned int i= 0; i < dim; ++i)
+            for(unsigned int j= 0; j < dim; ++j)
+              Y[i][j]+= y[i] * y[j];
 
           // then update the sum
           // of difference
@@ -846,9 +846,9 @@ namespace DerivativeApproximation
           typename DerivativeDescription::ProjectedDerivative
             projected_finite_difference
             = (neighbor_midpoint_value - this_midpoint_value);
-          projected_finite_difference /= distance;
+          projected_finite_difference/= distance;
 
-          projected_derivative += outer_product(y, projected_finite_difference);
+          projected_derivative+= outer_product(y, projected_finite_difference);
         };
 
       // can we determine an
@@ -863,9 +863,9 @@ namespace DerivativeApproximation
       AssertThrow(determinant(Y) != 0, ExcInsufficientDirections());
 
       // compute Y^-1 g
-      const Tensor<2, dim> Y_inverse = invert(Y);
+      const Tensor<2, dim> Y_inverse= invert(Y);
 
-      derivative = Y_inverse * projected_derivative;
+      derivative= Y_inverse * projected_derivative;
 
       // finally symmetrize the derivative
       DerivativeDescription::symmetrize(derivative);
@@ -894,7 +894,7 @@ namespace DerivativeApproximation
     {
       // if the cell is not locally owned, then there is nothing to do
       if(std::get<0>(*cell)->is_locally_owned() == false)
-        *std::get<1>(*cell) = 0;
+        *std::get<1>(*cell)= 0;
       else
         {
           typename DerivativeDescription::Derivative derivative;

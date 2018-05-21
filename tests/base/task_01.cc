@@ -34,6 +34,6 @@ main()
 {
   initlog();
 
-  Threads::Task<> t = Threads::new_task(test);
+  Threads::Task<> t= Threads::new_task(test);
   t.join();
 }

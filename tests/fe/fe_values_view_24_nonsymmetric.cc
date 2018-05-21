@@ -38,8 +38,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    fe_function(i) = i + 1;
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    fe_function(i)= i + 1;
 
   const QGauss<dim> quadrature(2);
   FEValues<dim>     fe_values(fe, quadrature, update_values | update_gradients);
@@ -51,11 +51,11 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   FEValuesExtractors::Tensor<2> extractor(0);
   fe_values[extractor].get_function_divergences(fe_function, divergences);
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     {
       deallog << "i=" << i << std::endl;
 
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for(unsigned int q= 0; q < quadrature.size(); ++q)
         deallog << "  q_point=" << q << std::endl
                 << "    div= " << fe_values[extractor].divergence(i, q)
                 << std::endl;

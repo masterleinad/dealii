@@ -67,28 +67,28 @@ public:
   {
     typedef Vector<double> VectorType;
 
-    time_stepper.reinit_vector = [&](VectorType& v) { v.reinit(2); };
+    time_stepper.reinit_vector= [&](VectorType& v) { v.reinit(2); };
 
-    time_stepper.residual = [&](const double      t,
-                                const VectorType& y,
-                                const VectorType& y_dot,
-                                VectorType&       res) -> int {
-      res = y_dot;
+    time_stepper.residual= [&](const double      t,
+                               const VectorType& y,
+                               const VectorType& y_dot,
+                               VectorType&       res) -> int {
+      res= y_dot;
       A.vmult_add(res, y);
       return 0;
     };
 
-    time_stepper.setup_jacobian = [&](const double,
-                                      const VectorType&,
-                                      const VectorType&,
-                                      const double alpha) -> int {
-      A(0, 1) = -1.0;
-      A(1, 0) = kappa * kappa;
+    time_stepper.setup_jacobian= [&](const double,
+                                     const VectorType&,
+                                     const VectorType&,
+                                     const double alpha) -> int {
+      A(0, 1)= -1.0;
+      A(1, 0)= kappa * kappa;
 
-      J = A;
+      J= A;
 
-      J(0, 0) = alpha;
-      J(1, 1) = alpha;
+      J(0, 0)= alpha;
+      J(1, 1)= alpha;
 
       Jinv.invert(J);
       return 0;
@@ -100,10 +100,10 @@ public:
       return 0;
     };
 
-    time_stepper.output_step = [&](const double       t,
-                                   const VectorType&  sol,
-                                   const VectorType&  sol_dot,
-                                   const unsigned int step_number) -> int {
+    time_stepper.output_step= [&](const double       t,
+                                  const VectorType&  sol,
+                                  const VectorType&  sol_dot,
+                                  const unsigned int step_number) -> int {
       out << t << " " << sol[0] << " " << sol[1] << " " << sol_dot[0] << " "
           << sol_dot[1] << std::endl;
       return 0;
@@ -113,8 +113,8 @@ public:
   void
   run()
   {
-    y[1]     = kappa;
-    y_dot[0] = kappa;
+    y[1]    = kappa;
+    y_dot[0]= kappa;
     time_stepper.solve_dae(y, y_dot);
   }
   SUNDIALS::IDA<Vector<double>> time_stepper;

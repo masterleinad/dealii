@@ -44,26 +44,26 @@ using namespace dealii;
 
 void create_coarse_grid(Triangulation<2>& coarse_grid)
 {
-  static const Point<2> vertices_1[] = {
+  static const Point<2> vertices_1[]= {
     Point<2>(9.6982181981258408e-02, 1.1255621492491609e+03), //0
     Point<2>(6.1219285295807092e-02, 1.1256062663438720e+03), //1
     Point<2>(0.00000, 1.1255179557007179e+03),                //2
     Point<2>(0.00000, 1.1255994426210491e+03),                //3
   };
-  const unsigned int n_vertices = sizeof(vertices_1) / sizeof(vertices_1[0]);
+  const unsigned int n_vertices= sizeof(vertices_1) / sizeof(vertices_1[0]);
 
   const std::vector<Point<2>> vertices(&vertices_1[0], &vertices_1[n_vertices]);
 
   static const int cell_vertices[][GeometryInfo<2>::vertices_per_cell]
     = {{0, 1, 2, 3}};
-  const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
+  const unsigned int n_cells= sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<2>> cells(n_cells, CellData<2>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for(unsigned int i= 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
 
   coarse_grid.create_triangulation(vertices, cells, SubCellData());
@@ -76,23 +76,23 @@ test()
   deallog.precision(16);
 
   Point<2> ePos;
-  ePos(0) = 0.0653630060373507487669897386695;
-  ePos(1) = 1125.59175030825804242340382189;
+  ePos(0)= 0.0653630060373507487669897386695;
+  ePos(1)= 1125.59175030825804242340382189;
 
   MappingQ<2>         mapping(1);
-  MappingQGeneric<2>& mapping2 = StaticMappingQ1<2>::mapping;
+  MappingQGeneric<2>& mapping2= StaticMappingQ1<2>::mapping;
 
   Triangulation<2> triangulation;
   create_coarse_grid(triangulation); // first Tria with just one cell
 
-  Triangulation<2>::active_cell_iterator it = triangulation.begin();
+  Triangulation<2>::active_cell_iterator it= triangulation.begin();
 
   Point<2> p;
-  p = mapping.transform_real_to_unit_cell(it, ePos);
+  p= mapping.transform_real_to_unit_cell(it, ePos);
   deallog << "A: " << p << std::endl;
 
   // throws:
-  p = mapping2.transform_real_to_unit_cell(it, ePos);
+  p= mapping2.transform_real_to_unit_cell(it, ePos);
   deallog << "B: " << p << std::endl;
 
   deallog << "done" << std::endl;

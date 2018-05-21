@@ -26,10 +26,10 @@ void
 test(VectorType& v)
 {
   // set some elements of the vector
-  unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  for(unsigned int i = 5 * my_id; i < 5 * (my_id + 1); ++i)
+  unsigned int my_id= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  for(unsigned int i= 5 * my_id; i < 5 * (my_id + 1); ++i)
     {
-      v(i) = i;
+      v(i)= i;
     }
   v.compress(VectorOperation::insert);
 
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();
 
-  unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int my_id= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   try
     {

@@ -21,6 +21,6 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int p = 0; p < 6 - dim; ++p)
+  for(unsigned int p= 0; p < 6 - dim; ++p)
     test_with_2d_deformed_refined_mesh(FE_DGQ<dim>(p), p);
 }

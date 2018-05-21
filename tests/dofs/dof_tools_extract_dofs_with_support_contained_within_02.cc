@@ -68,7 +68,7 @@ test(const unsigned int flag)
   DoFHandler<dim> dh(triangulation);
 
   // Extra refinement to generate hanging nodes
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dh.begin_active();
       cell != dh.end();
       ++cell)
     if(cell->is_locally_owned()
@@ -93,12 +93,12 @@ test(const unsigned int flag)
   DoFTools::make_hanging_node_constraints(dh, cm);
   cm.close();
 
-  const IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
+  const IndexSet support= DoFTools::extract_dofs_with_support_contained_within(
     dh,
     std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
       &pred_d<dim>),
     cm);
-  const IndexSet support_local = support & dh.locally_owned_dofs();
+  const IndexSet support_local= support & dh.locally_owned_dofs();
 
   deallog << support.n_elements() << std::endl;
 
@@ -120,14 +120,14 @@ test(const unsigned int flag)
 
       std::vector<LinearAlgebra::distributed::Vector<double>> shape_functions(
         dh.n_dofs());
-      for(unsigned int i = 0; i < dh.n_dofs(); ++i)
+      for(unsigned int i= 0; i < dh.n_dofs(); ++i)
         {
-          LinearAlgebra::distributed::Vector<double>& s = shape_functions[i];
+          LinearAlgebra::distributed::Vector<double>& s= shape_functions[i];
           s.reinit(
             dh.locally_owned_dofs(), locally_relevant_set, MPI_COMM_WORLD);
-          s = 0.;
+          s= 0.;
           if(dh.locally_owned_dofs().is_element(i))
-            s[i] = 1.0;
+            s[i]= 1.0;
           s.compress(VectorOperation::insert);
           cm.distribute(s);
           s.update_ghost_values();
@@ -137,8 +137,8 @@ test(const unsigned int flag)
         }
 
       Vector<float> subdomain(triangulation.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
-        subdomain(i) = triangulation.locally_owned_subdomain();
+      for(unsigned int i= 0; i < subdomain.size(); ++i)
+        subdomain(i)= triangulation.locally_owned_subdomain();
       data_out.add_data_vector(subdomain, "subdomain");
       data_out.build_patches();
 
@@ -151,7 +151,7 @@ test(const unsigned int flag)
       if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::vector<std::string> filenames;
-          for(unsigned int i = 0;
+          for(unsigned int i= 0;
               i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
               ++i)
             filenames.push_back(output_name(flag, i));
@@ -171,7 +171,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   MPILogInitAll log;
 

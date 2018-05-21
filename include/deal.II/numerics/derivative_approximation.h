@@ -178,7 +178,7 @@ namespace DerivativeApproximation
                        const DoFHandlerType<dim, spacedim>& dof,
                        const InputVector&                   solution,
                        Vector<float>&                       derivative_norm,
-                       const unsigned int                   component = 0);
+                       const unsigned int                   component= 0);
 
   /**
    * Call the @p interpolate function, see above, with
@@ -192,7 +192,7 @@ namespace DerivativeApproximation
   approximate_gradient(const DoFHandlerType<dim, spacedim>& dof,
                        const InputVector&                   solution,
                        Vector<float>&                       derivative_norm,
-                       const unsigned int                   component = 0);
+                       const unsigned int                   component= 0);
 
   /**
    * This function is the analogue to the one above, computing finite
@@ -220,7 +220,7 @@ namespace DerivativeApproximation
                                 const DoFHandlerType<dim, spacedim>& dof,
                                 const InputVector&                   solution,
                                 Vector<float>&     derivative_norm,
-                                const unsigned int component = 0);
+                                const unsigned int component= 0);
 
   /**
    * Call the @p interpolate function, see above, with
@@ -234,7 +234,7 @@ namespace DerivativeApproximation
   approximate_second_derivative(const DoFHandlerType<dim, spacedim>& dof,
                                 const InputVector&                   solution,
                                 Vector<float>&     derivative_norm,
-                                const unsigned int component = 0);
+                                const unsigned int component= 0);
 
   /**
    * This function calculates the <tt>order</tt>-th order approximate
@@ -263,7 +263,7 @@ namespace DerivativeApproximation
       cell,
 #endif
     Tensor<order, DoFHandlerType::dimension>& derivative,
-    const unsigned int                        component = 0);
+    const unsigned int                        component= 0);
 
   /**
    * Same as above, with <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
@@ -280,7 +280,7 @@ namespace DerivativeApproximation
       cell,
 #endif
     Tensor<order, DoFHandlerType::dimension>& derivative,
-    const unsigned int                        component = 0);
+    const unsigned int                        component= 0);
 
   /**
    * Return the norm of the derivative.

@@ -37,15 +37,15 @@ main(int argc, char** argv)
   if(true)
     {
       TrilinosWrappers::SparsityPattern sparsity(4, 8, 7);
-      for(unsigned int i = 0; i < 4; ++i)
-        for(unsigned int j = 0; j < 8; ++j)
+      for(unsigned int i= 0; i < 4; ++i)
+        for(unsigned int j= 0; j < 8; ++j)
           if(i == j + 1)
             sparsity.add(i, j);
       sparsity.compress();
 
       TrilinosWrappers::SparseMatrix sparse_matrix(sparsity);
-      for(unsigned int i = 0; i < 4; ++i)
-        for(unsigned int j = 0; j < 8; ++j)
+      for(unsigned int i= 0; i < 4; ++i)
+        for(unsigned int j= 0; j < 8; ++j)
           if(i == j + 1)
             sparse_matrix.set(i, j, i + 3 * j);
 

@@ -22,33 +22,33 @@ void
 test()
 {
   SparsityPattern sp(5, 5, 3);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if(((i + 2 * j + 1) % 3 == 0) || (i == j))
         sp.add(i, j);
   sp.compress();
 
   SparseMatrix<double> m(sp);
 
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp.n_rows(); ++row)
     AssertThrow(m.begin(row) - m.begin(row) == 0, ExcInternalError());
 
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp.n_rows(); ++row)
     AssertThrow(m.end(row) - m.begin(row) == (int) sp.row_length(row),
                 ExcInternalError());
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp.n_rows(); ++row)
     AssertThrow(m.begin(row) - m.end(row) == -(int) sp.row_length(row),
                 ExcInternalError());
 
   {
-    unsigned int counter = 0;
-    for(unsigned int row = 0; row < sp.n_rows(); ++row)
+    unsigned int counter= 0;
+    for(unsigned int row= 0; row < sp.n_rows(); ++row)
       {
         AssertThrow(m.begin(row) - m.begin(0) == (int) counter,
                     ExcInternalError());
         AssertThrow(m.begin(0) - m.begin(row) == -(int) counter,
                     ExcInternalError());
-        counter += sp.row_length(row);
+        counter+= sp.row_length(row);
       }
   }
 

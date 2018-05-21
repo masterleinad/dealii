@@ -97,21 +97,21 @@ namespace Step8
     Assert(dim >= 2, ExcNotImplemented());
 
     Point<dim> point_1, point_2;
-    point_1(0) = 0.5;
-    point_2(0) = -0.5;
+    point_1(0)= 0.5;
+    point_2(0)= -0.5;
 
-    for(unsigned int point_n = 0; point_n < points.size(); ++point_n)
+    for(unsigned int point_n= 0; point_n < points.size(); ++point_n)
       {
         if(((points[point_n] - point_1).norm_square() < 0.2 * 0.2)
            || ((points[point_n] - point_2).norm_square() < 0.2 * 0.2))
-          values[point_n][0] = 1.0;
+          values[point_n][0]= 1.0;
         else
-          values[point_n][0] = 0.0;
+          values[point_n][0]= 0.0;
 
         if(points[point_n].norm_square() < 0.2 * 0.2)
-          values[point_n][1] = 1.0;
+          values[point_n][1]= 1.0;
         else
-          values[point_n][1] = 0.0;
+          values[point_n][1]= 0.0;
       }
   }
 
@@ -160,8 +160,8 @@ namespace Step8
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -177,11 +177,11 @@ namespace Step8
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         fe_values.reinit(cell);
 
@@ -189,17 +189,17 @@ namespace Step8
         mu.value_list(fe_values.get_quadrature_points(), mu_values);
         right_hand_side(fe_values.get_quadrature_points(), rhs_values);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 const unsigned int component_j
                   = fe.system_to_component_index(j).first;
 
-                for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                   {
                     cell_matrix(i, j)
                       += ((fe_values.shape_grad(i, q_point)[component_i]
@@ -218,25 +218,25 @@ namespace Step8
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-              cell_rhs(i) += fe_values.shape_value(i, q_point)
-                             * rhs_values[q_point][component_i]
-                             * fe_values.JxW(q_point);
+            for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+              cell_rhs(i)+= fe_values.shape_value(i, q_point)
+                            * rhs_values[q_point][component_i]
+                            * fe_values.JxW(q_point);
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-            system_rhs(local_dof_indices[i]) += cell_rhs(i);
+            system_rhs(local_dof_indices[i])+= cell_rhs(i);
           }
       }
 
@@ -299,12 +299,12 @@ namespace Step8
       AssertDimension(input_data.solution_gradients.size(),
                       computed_quantities.size());
 
-      for(unsigned int p = 0; p < input_data.solution_gradients.size(); ++p)
+      for(unsigned int p= 0; p < input_data.solution_gradients.size(); ++p)
         {
           AssertDimension(computed_quantities[p].size(),
                           (Tensor<2, dim>::n_independent_components));
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
+          for(unsigned int d= 0; d < dim; ++d)
+            for(unsigned int e= 0; e < dim; ++e)
               computed_quantities[p]
                                  [Tensor<2, dim>::component_to_unrolled_index(
                                    TableIndices<2>(d, e))]
@@ -319,8 +319,8 @@ namespace Step8
   void
   ElasticProblem<dim>::output_results(const unsigned int cycle) const
   {
-    std::string filename = "solution-";
-    filename += ('0' + cycle);
+    std::string filename= "solution-";
+    filename+= ('0' + cycle);
     Assert(cycle < 10, ExcInternalError());
 
     StrainPostprocessor<dim> grad_u;
@@ -344,7 +344,7 @@ namespace Step8
   void
   ElasticProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 1; ++cycle)
+    for(unsigned int cycle= 0; cycle < 1; ++cycle)
       {
         deallog << "Cycle " << cycle << ':' << std::endl;
 

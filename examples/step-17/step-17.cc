@@ -214,19 +214,19 @@ namespace Step17
     Assert(dim >= 2, ExcInternalError());
 
     Point<dim> point_1, point_2;
-    point_1(0) = 0.5;
-    point_2(0) = -0.5;
+    point_1(0)= 0.5;
+    point_2(0)= -0.5;
 
     if(((p - point_1).norm_square() < 0.2 * 0.2)
        || ((p - point_2).norm_square() < 0.2 * 0.2))
-      values(0) = 1;
+      values(0)= 1;
     else
-      values(0) = 0;
+      values(0)= 0;
 
     if(p.square() < 0.2 * 0.2)
-      values(1) = 1;
+      values(1)= 1;
     else
-      values(1) = 0;
+      values(1)= 0;
   }
 
   template <int dim>
@@ -235,12 +235,12 @@ namespace Step17
     const std::vector<Point<dim>>& points,
     std::vector<Vector<double>>&   value_list) const
   {
-    const unsigned int n_points = points.size();
+    const unsigned int n_points= points.size();
 
     Assert(value_list.size() == n_points,
            ExcDimensionMismatch(value_list.size(), n_points));
 
-    for(unsigned int p = 0; p < n_points; ++p)
+    for(unsigned int p= 0; p < n_points; ++p)
       RightHandSide<dim>::vector_value(points[p], value_list[p]);
   }
 
@@ -461,8 +461,8 @@ namespace Step17
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -499,29 +499,29 @@ namespace Step17
     // same way as is done in step-6.
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->subdomain_id() == this_mpi_process)
         {
-          cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_matrix= 0;
+          cell_rhs   = 0;
 
           fe_values.reinit(cell);
 
           lambda.value_list(fe_values.get_quadrature_points(), lambda_values);
           mu.value_list(fe_values.get_quadrature_points(), mu_values);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
               const unsigned int component_i
                 = fe.system_to_component_index(i).first;
 
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 {
                   const unsigned int component_j
                     = fe.system_to_component_index(j).first;
 
-                  for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                  for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                     {
                       cell_matrix(i, j)
                         += ((fe_values.shape_grad(i, q_point)[component_i]
@@ -542,15 +542,15 @@ namespace Step17
 
           right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                             rhs_values);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
               const unsigned int component_i
                 = fe.system_to_component_index(i).first;
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-                cell_rhs(i) += fe_values.shape_value(i, q_point)
-                               * rhs_values[q_point](component_i)
-                               * fe_values.JxW(q_point);
+              for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+                cell_rhs(i)+= fe_values.shape_value(i, q_point)
+                              * rhs_values[q_point](component_i)
+                              * fe_values.JxW(q_point);
             }
 
           cell->get_dof_indices(local_dof_indices);
@@ -696,7 +696,7 @@ namespace Step17
     //
     // We end the function by returning the number of iterations it
     // took to converge, to allow for some output.
-    solution = localized_solution;
+    solution= localized_solution;
 
     return solver_control.last_step();
   }
@@ -810,9 +810,9 @@ namespace Step17
     PETScWrappers::MPI::Vector distributed_all_errors(
       mpi_communicator, triangulation.n_active_cells(), n_local_cells);
 
-    for(unsigned int i = 0; i < local_error_per_cell.size(); ++i)
+    for(unsigned int i= 0; i < local_error_per_cell.size(); ++i)
       if(local_error_per_cell(i) != 0)
-        distributed_all_errors(i) = local_error_per_cell(i);
+        distributed_all_errors(i)= local_error_per_cell(i);
     distributed_all_errors.compress(VectorOperation::insert);
 
     // So now we have this distributed vector that contains the
@@ -978,7 +978,7 @@ namespace Step17
   void
   ElasticProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 10; ++cycle)
+    for(unsigned int cycle= 0; cycle < 10; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 
@@ -997,14 +997,14 @@ namespace Step17
 
         pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs()
               << " (by partition:";
-        for(unsigned int p = 0; p < n_mpi_processes; ++p)
+        for(unsigned int p= 0; p < n_mpi_processes; ++p)
           pcout << (p == 0 ? ' ' : '+')
                 << (DoFTools::count_dofs_with_subdomain_association(dof_handler,
                                                                     p));
         pcout << ")" << std::endl;
 
         assemble_system();
-        const unsigned int n_iterations = solve();
+        const unsigned int n_iterations= solve();
 
         pcout << "   Solver converged in " << n_iterations << " iterations."
               << std::endl;

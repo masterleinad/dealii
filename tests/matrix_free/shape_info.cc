@@ -35,7 +35,7 @@ template <int dim>
 void
 test(const FiniteElement<dim>& fe, const Quadrature<1>& quad)
 {
-  for(unsigned int i = 0; i < fe.n_base_elements(); ++i)
+  for(unsigned int i= 0; i < fe.n_base_elements(); ++i)
     {
       internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
       shape_info.reinit(quad, fe, i);
@@ -122,10 +122,10 @@ main()
   // define quadrature rule that is not symmetric around 0.5
   deallog << "Non-symmetric quadrature" << std::endl;
   std::vector<Point<1>> points(4);
-  points[0][0] = 0.2;
-  points[1][0] = 0.4;
-  points[2][0] = 0.5;
-  points[3][0] = 0.7;
+  points[0][0]= 0.2;
+  points[1][0]= 0.4;
+  points[2][0]= 0.5;
+  points[3][0]= 0.7;
   Quadrature<1> quad(points);
   test(FE_Q<2>(6), quad);
   test(FE_DGQ<2>(6), quad);

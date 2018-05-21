@@ -1263,7 +1263,7 @@ namespace internal
  * @ingroup grid aniso
  * @author Wolfgang Bangerth, 1998; Ralf Hartmann, 2005
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class Triangulation : public Subscriptor
 {
 private:
@@ -1286,7 +1286,7 @@ public:
      * No mesh smoothing at all, except that meshes have to remain one-
      * irregular.
      */
-    none = 0x0,
+    none= 0x0,
     /**
      * It can be shown, that degradation of approximation occurs if the
      * triangulation contains vertices which are member of cells with levels
@@ -1329,7 +1329,7 @@ public:
      * set. On the other hand, the implementation of multigrid methods in
      * deal.II requires that this bit be set.
      */
-    limit_level_difference_at_vertices = 0x1,
+    limit_level_difference_at_vertices= 0x1,
     /**
      * Single cells which are not refined and are surrounded by cells which
      * are refined usually also lead to a sharp decline in approximation
@@ -1350,7 +1350,7 @@ public:
      * flag may indicate. However, no better name came to mind to the author
      * by now.
      */
-    eliminate_unrefined_islands = 0x2,
+    eliminate_unrefined_islands= 0x2,
     /**
      * A triangulation of patch level 1 consists of patches, i.e. of cells
      * that are refined once. This flag ensures that a mesh of patch level 1
@@ -1366,7 +1366,7 @@ public:
      * #eliminate_refined_boundary_islands will be ignored as they will be
      * fulfilled automatically.
      */
-    patch_level_1 = 0x4,
+    patch_level_1= 0x4,
     /**
      * Each coarse grid cell is refined at least once, i.e. the triangulation
      * might have active cells on level 1 but not on level 0. This flag
@@ -1387,7 +1387,7 @@ public:
      * unless all cells already have at least one neighbor in each coordinate
      * direction on the coarsest level.
      */
-    coarsest_level_1 = 0x8,
+    coarsest_level_1= 0x8,
     /**
      * This flag is not included in @p maximum_smoothing. The flag is
      * concerned with the following case: consider the case that an unrefined
@@ -1412,7 +1412,7 @@ public:
      * written for the additional cases that can happen with anisotropic
      * meshes, see the discussion in the introduction to step-30.
      */
-    allow_anisotropic_smoothing = 0x10,
+    allow_anisotropic_smoothing= 0x10,
     /**
      * This algorithm seeks for isolated cells which are refined or flagged
      * for refinement. This definition is unlike that for
@@ -1445,18 +1445,18 @@ public:
      * according to a criterion associated with a boundary integral or if one
      * has rough boundary data.
      */
-    eliminate_refined_inner_islands = 0x100,
+    eliminate_refined_inner_islands= 0x100,
     /**
      * The result of this flag is very similar to
      * #eliminate_refined_inner_islands. See the documentation there.
      */
-    eliminate_refined_boundary_islands = 0x200,
+    eliminate_refined_boundary_islands= 0x200,
     /**
      * This flag prevents the occurrence of unrefined islands. In more detail:
      * It prohibits the coarsening of a cell if 'most of the neighbors' will
      * be refined after the step.
      */
-    do_not_produce_unrefined_islands = 0x400,
+    do_not_produce_unrefined_islands= 0x400,
 
     /**
      * This flag sums up all smoothing algorithms which may be performed upon
@@ -1477,7 +1477,7 @@ public:
      * smoothing algorithms implemented with the exception of anisotropic
      * smoothing.
      */
-    maximum_smoothing = 0xffff ^ allow_anisotropic_smoothing
+    maximum_smoothing= 0xffff ^ allow_anisotropic_smoothing
   };
 
   /**
@@ -1617,12 +1617,12 @@ public:
   /**
    * Make the dimension available in function templates.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Make the space-dimension available in function templates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Create an empty triangulation. Do not create any cells.
@@ -1638,8 +1638,8 @@ public:
    * If set, these two functions may throw an exception if they encounter
    * distorted cells.
    */
-  Triangulation(const MeshSmoothing smooth_grid               = none,
-                const bool          check_for_distorted_cells = false);
+  Triangulation(const MeshSmoothing smooth_grid              = none,
+                const bool          check_for_distorted_cells= false);
 
   /**
    * Copy constructor.
@@ -1656,7 +1656,7 @@ public:
    * Finally, through the exception, one easily finds the places where code
    * has to be changed to avoid copies.
    */
-  Triangulation(const Triangulation<dim, spacedim>&) = delete;
+  Triangulation(const Triangulation<dim, spacedim>&)= delete;
 
   /**
    * Move constructor.
@@ -1978,7 +1978,7 @@ public:
    * this class.
    */
   void
-  refine_global(const unsigned int times = 1);
+  refine_global(const unsigned int times= 1);
 
   /**
    * Execute both refinement and coarsening of the triangulation.
@@ -2634,7 +2634,7 @@ public:
    * Iterator to the first used cell on level @p level.
    */
   cell_iterator
-  begin(const unsigned int level = 0) const;
+  begin(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first active cell on level @p level. If the given level
@@ -2649,7 +2649,7 @@ public:
    * this level.
    */
   active_cell_iterator
-  begin_active(const unsigned int level = 0) const;
+  begin_active(const unsigned int level= 0) const;
 
   /**
    * Iterator past the end; this iterator serves for comparisons of iterators
@@ -3438,7 +3438,7 @@ private:
    * has no cells, a past-the-end iterator is returned.
    */
   raw_cell_iterator
-  begin_raw(const unsigned int level = 0) const;
+  begin_raw(const unsigned int level= 0) const;
 
   /**
    * Return a raw iterator which is the first iterator not on level. If @p
@@ -3463,19 +3463,19 @@ private:
    * applies for all the other functions above, of course.
    */
   raw_line_iterator
-  begin_raw_line(const unsigned int level = 0) const;
+  begin_raw_line(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first used line on level @p level.
    */
   line_iterator
-  begin_line(const unsigned int level = 0) const;
+  begin_line(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first active line on level @p level.
    */
   active_line_iterator
-  begin_active_line(const unsigned int level = 0) const;
+  begin_active_line(const unsigned int level= 0) const;
 
   /**
    * Iterator past the end; this iterator serves for comparisons of iterators
@@ -3499,19 +3499,19 @@ private:
    * cells, i.e. for $dim>2$ no level argument must be given.
    */
   raw_quad_iterator
-  begin_raw_quad(const unsigned int level = 0) const;
+  begin_raw_quad(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first used quad on level @p level.
    */
   quad_iterator
-  begin_quad(const unsigned int level = 0) const;
+  begin_quad(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first active quad on level @p level.
    */
   active_quad_iterator
-  begin_active_quad(const unsigned int level = 0) const;
+  begin_active_quad(const unsigned int level= 0) const;
 
   /**
    * Iterator past the end; this iterator serves for comparisons of iterators
@@ -3534,19 +3534,19 @@ private:
    * no hexs, a past-the-end iterator is returned.
    */
   raw_hex_iterator
-  begin_raw_hex(const unsigned int level = 0) const;
+  begin_raw_hex(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first used hex on level @p level.
    */
   hex_iterator
-  begin_hex(const unsigned int level = 0) const;
+  begin_hex(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first active hex on level @p level.
    */
   active_hex_iterator
-  begin_active_hex(const unsigned int level = 0) const;
+  begin_active_hex(const unsigned int level= 0) const;
 
   /**
    * Iterator past the end; this iterator serves for comparisons of iterators
@@ -3742,13 +3742,13 @@ private:
 template <int structdim>
 inline CellData<structdim>::CellData()
 {
-  for(unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
-    vertices[i] = numbers::invalid_unsigned_int;
+  for(unsigned int i= 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
+    vertices[i]= numbers::invalid_unsigned_int;
 
-  material_id = 0;
+  material_id= 0;
 
   // And the manifold to be invalid
-  manifold_id = numbers::invalid_manifold_id;
+  manifold_id= numbers::invalid_manifold_id;
 }
 
 namespace internal
@@ -3833,15 +3833,15 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // well as boundary and manifold description but everything else
   ar& smooth_grid;
 
-  unsigned int n_levels = levels.size();
+  unsigned int n_levels= levels.size();
   ar&          n_levels;
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for(unsigned int i= 0; i < levels.size(); ++i)
     ar& levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
-  bool faces_is_nullptr = (faces.get() == nullptr);
+  bool faces_is_nullptr= (faces.get() == nullptr);
   ar&  faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
@@ -3876,16 +3876,16 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   unsigned int size;
   ar&          size;
   levels.resize(size);
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for(unsigned int i= 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>
           level;
       ar& level;
-      levels[i] = std::move(level);
+      levels[i]= std::move(level);
     }
 
   //Workaround for nullptr, see in save().
-  bool faces_is_nullptr = true;
+  bool faces_is_nullptr= true;
   ar&  faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
@@ -3900,7 +3900,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   // they are easy enough to rebuild upon re-loading data. do
   // this here. don't forget to first resize the fields appropriately
   {
-    for(unsigned int l = 0; l < levels.size(); ++l)
+    for(unsigned int l= 0; l < levels.size(); ++l)
       levels[l]->active_cell_indices.resize(levels[l]->refine_flags.size());
     reset_active_cell_indices();
   }

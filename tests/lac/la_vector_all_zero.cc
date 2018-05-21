@@ -26,7 +26,7 @@ check_all_zero()
 
   AssertThrow(v.all_zero() == true, ExcInternalError());
 
-  v[0] = 1.;
+  v[0]= 1.;
   AssertThrow(v.all_zero() == false, ExcInternalError());
 }
 

@@ -47,8 +47,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   std::unique_ptr<DoFHandler<dim>> dof1(make_dof_handler(tria, fe1));
 
   Vector<double> in(dof1->n_dofs());
-  for(unsigned int i = 0; i < in.size(); ++i)
-    in(i) = i;
+  for(unsigned int i= 0; i < in.size(); ++i)
+    in(i)= i;
   Vector<double> out(dof1->n_dofs());
 
   FETools::back_interpolate(*dof1, in, fe2, out);

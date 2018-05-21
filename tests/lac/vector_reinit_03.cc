@@ -60,9 +60,9 @@ do_test()
     MPI_Comm communicator
       = Utilities::MPI::duplicate_communicator(MPI_COMM_WORLD);
     v2.reinit(set, communicator);
-    v1 = v2;
+    v1= v2;
     deallog << "assign " << v1.size() << " ";
-    v1 = v2;
+    v1= v2;
     deallog << v1.size() << std::endl;
 
 #ifdef DEAL_II_WITH_MPI

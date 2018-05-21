@@ -30,17 +30,17 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
 
-  const MPI_Comm&    mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm&    mpi_communicator= MPI_COMM_WORLD;
   const unsigned int this_mpi_process
     = Utilities::MPI::this_mpi_process(mpi_communicator);
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
-  const unsigned int n_blocks         = 2;
-  const unsigned int n_dofs_per_block = 10;
+  const unsigned int n_blocks        = 2;
+  const unsigned int n_dofs_per_block= 10;
 
   std::vector<IndexSet> locally_owned_partitioning(n_blocks);
-  for(unsigned int b = 0; b < n_blocks; ++b)
+  for(unsigned int b= 0; b < n_blocks; ++b)
     {
       locally_owned_partitioning[b].set_size(n_dofs_per_block);
       locally_owned_partitioning[b].add_range(
@@ -56,7 +56,7 @@ main(int argc, char** argv)
   // Set entries in parallel vector
   for(auto idx : parallel_vector.locally_owned_elements())
     {
-      parallel_vector[idx] = 10.0 * idx;
+      parallel_vector[idx]= 10.0 * idx;
     }
   deallog << "Parallel vector" << std::endl;
   parallel_vector.print(deallog.get_file_stream());
@@ -68,7 +68,7 @@ main(int argc, char** argv)
 
   // Copy distributed vector to local vector
   deallog << "Localized vector (operator =)" << std::endl;
-  const BlockVectorLocal local_vector_2 = parallel_vector;
+  const BlockVectorLocal local_vector_2= parallel_vector;
   local_vector_2.print(deallog.get_file_stream());
 
   Assert(local_vector_1 == local_vector_2, ExcMessage("Vectors don't match"));

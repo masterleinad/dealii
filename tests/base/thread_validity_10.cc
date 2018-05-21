@@ -22,7 +22,7 @@
 #include <deal.II/base/thread_management.h>
 
 Threads::Mutex mutex;
-int            spin_lock = 0;
+int            spin_lock= 0;
 
 int
 worker()
@@ -42,7 +42,7 @@ main()
 
   // now assign a thread object and
   // wait for it
-  t = Threads::new_thread(worker);
+  t= Threads::new_thread(worker);
   deallog << (t.valid() ? "true" : "false") << std::endl;
   deallog << "return value = " << t.return_value() << std::endl;
 }

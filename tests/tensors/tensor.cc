@@ -24,10 +24,10 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  double a[3][3] = {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
-  double b[3][3] = {{25, 31, 37}, {45, 57, 69}, {75, 96, 117}};
+  double a[3][3]= {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
+  double b[3][3]= {{25, 31, 37}, {45, 57, 69}, {75, 96, 117}};
 
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
   Tensor<2, dim>     t(a);
   Tensor<2, dim>     tt;
   Tensor<2, dim>     result(b);
@@ -38,24 +38,24 @@ main()
 
   t.unroll(unrolled);
   deallog << "unrolled:";
-  for(unsigned i = 0; i < 9; i++)
+  for(unsigned i= 0; i < 9; i++)
     deallog << ' ' << unrolled(i);
   deallog << std::endl;
 
   deallog << "t=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int j= 0; j < dim; ++j)
         deallog << t[i][j] << ' ';
       deallog << std::endl;
     };
 
-  tt = t * t;
+  tt= t * t;
 
   deallog << "tt=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int j= 0; j < dim; ++j)
         deallog << tt[i][j] << ' ';
       deallog << std::endl;
     };
@@ -66,18 +66,18 @@ main()
       Tensor<1, 3> e1;
       Tensor<1, 3> e2;
       Tensor<1, 3> e3;
-      e1[0]               = 1.;
-      e2[1]               = 1.;
-      e3[2]               = 1.;
-      Tensor<1, 3> result = cross_product_3d(e1, e2);
+      e1[0]              = 1.;
+      e2[1]              = 1.;
+      e3[2]              = 1.;
+      Tensor<1, 3> result= cross_product_3d(e1, e2);
       deallog << '\t' << result[0] << '\t' << result[1] << '\t' << result[2]
               << std::endl;
 
-      result = cross_product_3d(e2, e3);
+      result= cross_product_3d(e2, e3);
       deallog << '\t' << result[0] << '\t' << result[1] << '\t' << result[2]
               << std::endl;
 
-      result = cross_product_3d(e3, e1);
+      result= cross_product_3d(e3, e1);
       deallog << '\t' << result[0] << '\t' << result[1] << '\t' << result[2]
               << std::endl;
 

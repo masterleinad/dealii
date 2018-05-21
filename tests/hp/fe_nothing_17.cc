@@ -53,14 +53,14 @@ transfer(std::ostream& out)
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());
 
-  for(unsigned int i = 0; i < solution.size(); ++i)
-    solution(i) = i;
+  for(unsigned int i= 0; i < solution.size(); ++i)
+    solution(i)= i;
 
   SolutionTransfer<dim> soltrans(dof_handler);
 
   // test a): pure refinement
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   ++cell;
   ++cell;
   for(; cell != endc; ++cell)
@@ -74,18 +74,18 @@ transfer(std::ostream& out)
   Vector<double> tmp_q(dof_handler.n_dofs());
   soltrans.refine_interpolate(solution, tmp_q);
   solution.reinit(dof_handler.n_dofs());
-  solution = tmp_q;
+  solution= tmp_q;
 
   // test b): with coarsening
   soltrans.clear();
 
-  cell = tria.begin_active(tria.n_levels() - 1);
-  endc = tria.end(tria.n_levels() - 1);
+  cell= tria.begin_active(tria.n_levels() - 1);
+  endc= tria.end(tria.n_levels() - 1);
   cell->set_refine_flag();
   ++cell;
   for(; cell != endc; ++cell)
     cell->set_coarsen_flag();
-  Vector<double> old_solution = solution;
+  Vector<double> old_solution= solution;
   tria.prepare_coarsening_and_refinement();
   soltrans.prepare_for_coarsening_and_refinement(old_solution);
   tria.execute_coarsening_and_refinement();

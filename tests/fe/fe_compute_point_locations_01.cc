@@ -55,7 +55,7 @@ test_compute_pt_loc(unsigned int n_points)
   // Creating the random points
   std::vector<Point<dim>> points;
 
-  for(size_t i = 0; i < n_points; ++i)
+  for(size_t i= 0; i < n_points; ++i)
     points.push_back(random_point<dim>());
 
   std::vector<typename DoFHandler<dim>::active_cell_iterator> cells;
@@ -74,18 +74,18 @@ test_compute_pt_loc(unsigned int n_points)
   // testing if the transformation is correct:
   // For each cell check if the quadrature points in the i-th FE
   // are the same as maps[i]
-  for(unsigned int i = 0; i < cells.size(); ++i)
+  for(unsigned int i= 0; i < cells.size(); ++i)
     {
-      auto& cell      = cells[i];
-      auto& quad      = qpoints[i];
-      auto& local_map = maps[i];
+      auto& cell     = cells[i];
+      auto& quad     = qpoints[i];
+      auto& local_map= maps[i];
 
       // Given the qpoints of the current cell, compute the real points
       FEValues<dim> fev(fe, quad, update_quadrature_points);
       fev.reinit(cell);
-      const auto& real_quad = fev.get_quadrature_points();
+      const auto& real_quad= fev.get_quadrature_points();
 
-      for(unsigned int q = 0; q < real_quad.size(); ++q)
+      for(unsigned int q= 0; q < real_quad.size(); ++q)
         {
           // Check if points are the same as real points
           if(real_quad[q].distance(points[local_map[q]]) > 1e-10)

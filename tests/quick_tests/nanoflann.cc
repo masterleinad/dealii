@@ -45,7 +45,7 @@ main()
 
   for(auto& p : test_points)
     {
-      auto res = kdtree.get_closest_points(p, 1)[0];
+      auto res= kdtree.get_closest_points(p, 1)[0];
       deallog << "P: " << p << ", distance: " << res.second
               << ", index: " << res.first << std::endl;
     }
@@ -55,7 +55,7 @@ main()
     << std::endl;
   for(auto& p : points)
     {
-      auto res = kdtree.get_closest_points(p, 1)[0];
+      auto res= kdtree.get_closest_points(p, 1)[0];
       deallog << "P: " << p << ", distance: " << res.second
               << ", index: " << res.first << std::endl;
       Assert(res.second < 1e-10, ExcMessage("Should be zero!"));

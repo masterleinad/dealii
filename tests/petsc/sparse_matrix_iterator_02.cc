@@ -22,23 +22,23 @@
 void
 test()
 {
-  const types::global_dof_index n_rows = 5;
+  const types::global_dof_index n_rows= 5;
   PETScWrappers::SparseMatrix   matrix(n_rows, n_rows, 2);
   matrix.set(0, 0, 1.0);
   matrix.set(0, n_rows - 1, -1.0);
-  for(unsigned int row_n = 1; row_n < n_rows; ++row_n)
+  for(unsigned int row_n= 1; row_n < n_rows; ++row_n)
     {
       matrix.set(row_n, row_n, 1.0);
       matrix.set(row_n, row_n - 1, -1.0);
     }
   matrix.compress(VectorOperation::insert);
 
-  for(PETScWrappers::SparseMatrix::const_iterator iterator = matrix.begin();
+  for(PETScWrappers::SparseMatrix::const_iterator iterator= matrix.begin();
       iterator != matrix.end();
       ++iterator)
     {
       // This is what we want to test.
-      PETScWrappers::SparseMatrix::const_iterator duplicate = iterator;
+      PETScWrappers::SparseMatrix::const_iterator duplicate= iterator;
       deallog << "row: " << duplicate->row() << std::endl;
       deallog << "column: " << duplicate->column() << std::endl;
       deallog << "value: " << duplicate->value() << std::endl;

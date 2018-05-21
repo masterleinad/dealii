@@ -22,12 +22,12 @@
 void
 test()
 {
-  double              c1[3] = {1., 2., 3.};
+  double              c1[3]= {1., 2., 3.};
   std::vector<double> coefficients1(c1, &c1[3]);
 
   Polynomials::Polynomial<double> p1(coefficients1);
 
-  double              c2[3] = {4., 5., 6.};
+  double              c2[3]= {4., 5., 6.};
   std::vector<double> coefficients2(c2, &c2[3]);
 
   Polynomials::Polynomial<double> p2(coefficients2);

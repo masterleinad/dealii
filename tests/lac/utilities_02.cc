@@ -60,20 +60,20 @@
 
 #include <iostream>
 
-const unsigned int dim = 2;
+const unsigned int dim= 2;
 
 using namespace dealii;
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
-const unsigned int fe_degree = 1;
+const unsigned int fe_degree= 1;
 
 void
 test()
 {
-  const unsigned int global_mesh_refinement_steps = 5;
+  const unsigned int global_mesh_refinement_steps= 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm           mpi_communicator= MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -128,32 +128,32 @@ test()
   DiagonalMatrix<LinearAlgebra::distributed::Vector<double>> diagonal_mass_inv;
   {
     LinearAlgebra::distributed::Vector<double> inv_mass_matrix;
-    VectorizedArray<double>                    one = make_vectorized_array(1.);
+    VectorizedArray<double>                    one= make_vectorized_array(1.);
     mf_data->initialize_dof_vector(inv_mass_matrix);
     FEEvaluation<dim, fe_degree> fe_eval(*mf_data);
-    const unsigned int           n_q_points = fe_eval.n_q_points;
-    for(unsigned int cell = 0; cell < mf_data->n_macro_cells(); ++cell)
+    const unsigned int           n_q_points= fe_eval.n_q_points;
+    for(unsigned int cell= 0; cell < mf_data->n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+    for(unsigned int k= 0; k < inv_mass_matrix.local_size(); ++k)
       if(inv_mass_matrix.local_element(k) > 1e-15)
         {
           inv_mass_matrix.local_element(k)
             = std::sqrt(1. / inv_mass_matrix.local_element(k));
         }
       else
-        inv_mass_matrix.local_element(k) = 0;
+        inv_mass_matrix.local_element(k)= 0;
 
     diagonal_mass_inv.reinit(inv_mass_matrix);
   }
 
-  const auto invM = linear_operator<LinearAlgebra::distributed::Vector<double>>(
+  const auto invM= linear_operator<LinearAlgebra::distributed::Vector<double>>(
     diagonal_mass_inv);
   const auto OP
     = invM
@@ -163,15 +163,15 @@ test()
   // Do actuall work:
   LinearAlgebra::distributed::Vector<double> init_vector;
   mf_data->initialize_dof_vector(init_vector);
-  for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
-    *it = random_value<double>();
+  for(auto it= init_vector.begin(); it != init_vector.end(); ++it)
+    *it= random_value<double>();
 
   constraints.set_zero(init_vector);
 
   GrowingVectorMemory<LinearAlgebra::distributed::Vector<double>> vector_memory;
-  for(unsigned int k = 4; k < 10; ++k)
+  for(unsigned int k= 4; k < 10; ++k)
     {
-      const double est = Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
+      const double est= Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
         OP, init_vector, k, vector_memory);
       deallog << k << " " << est << std::endl;
     }
@@ -179,18 +179,18 @@ test()
     // exact eigenvectors via PArpack
 #ifdef PARPACK
   {
-    const unsigned int number_of_eigenvalues = 5;
+    const unsigned int number_of_eigenvalues= 5;
 
     std::vector<LinearAlgebra::distributed::Vector<double>> eigenfunctions;
     std::vector<double>                                     eigenvalues;
     eigenfunctions.resize(number_of_eigenvalues);
     eigenvalues.resize(number_of_eigenvalues);
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
       mf_data->initialize_dof_vector(eigenfunctions[i]);
 
     std::vector<std::complex<double>> lambda(number_of_eigenvalues);
 
-    const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 10;
+    const unsigned int num_arnoldi_vectors= 2 * eigenvalues.size() + 10;
     PArpackSolver<LinearAlgebra::distributed::Vector<double>>::AdditionalData
     additional_data(
       num_arnoldi_vectors,
@@ -212,32 +212,32 @@ test()
     {
       LinearAlgebra::distributed::Vector<double> init_vector;
       mf_data->initialize_dof_vector(init_vector);
-      for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
-        *it = random_value<double>();
+      for(auto it= init_vector.begin(); it != init_vector.end(); ++it)
+        *it= random_value<double>();
 
       constraints.set_zero(init_vector);
       eigensolver.set_initial_vector(init_vector);
     }
     // avoid output of iterative solver:
-    const unsigned int previous_depth = deallog.depth_file(0);
+    const unsigned int previous_depth= deallog.depth_file(0);
     eigensolver.solve(OP, mass, OP, lambda, eigenfunctions, eigenvalues.size());
     deallog.depth_file(previous_depth);
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
-      eigenvalues[i] = lambda[i].real();
+    for(unsigned int i= 0; i < lambda.size(); i++)
+      eigenvalues[i]= lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for(unsigned int i= 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
     // a) (A*x_i-\lambda*x_i).L2() == 0
     // b) x_j*x_i=\delta_{ij}
     {
-      const double                               precision = 1e-7;
+      const double                               precision= 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
         {
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for(unsigned int j= 0; j < eigenfunctions.size(); j++)
             {
               const double err
                 = std::abs(eigenfunctions[j] * eigenfunctions[i] - (i == j));
@@ -250,7 +250,7 @@ test()
 
           OP.vmult(Ax, eigenfunctions[i]);
           Ax.add(-1.0 * eigenvalues[i], eigenfunctions[i]);
-          const double err = Ax.l2_norm();
+          const double err= Ax.l2_norm();
           Assert(
             err < precision,
             ExcMessage("Returned vector " + Utilities::int_to_string(i)

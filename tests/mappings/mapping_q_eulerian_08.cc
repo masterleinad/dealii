@@ -78,14 +78,14 @@ public:
   {
     Tensor<1, dim, VectorizedArray<NumberType>> shift_vec;
     Point<dim>                                  p;
-    for(unsigned int v = 0; v < VectorizedArray<NumberType>::n_array_elements;
+    for(unsigned int v= 0; v < VectorizedArray<NumberType>::n_array_elements;
         ++v)
       {
-        for(unsigned int d = 0; d < dim; ++d)
-          p[d] = p_vec[d][v];
+        for(unsigned int d= 0; d < dim; ++d)
+          p[d]= p_vec[d][v];
 
-        for(unsigned int d = 0; d < dim; ++d)
-          shift_vec[d][v] = this->value(p, d);
+        for(unsigned int d= 0; d < dim; ++d)
+          shift_vec[d][v]= this->value(p, d);
       }
 
     return shift_vec;
@@ -93,20 +93,20 @@ public:
 };
 
 template <int dim,
-          int fe_degree            = 2,
-          int n_q_points           = fe_degree + 1,
-          typename NumberType      = double,
-          typename LevelNumberType = NumberType>
+          int fe_degree           = 2,
+          int n_q_points          = fe_degree + 1,
+          typename NumberType     = double,
+          typename LevelNumberType= NumberType>
 void
-test(const unsigned int n_ref = 0)
+test(const unsigned int n_ref= 0)
 {
   Displacement<dim>  displacement_function;
-  const unsigned int euler_fe_degree = 2;
+  const unsigned int euler_fe_degree= 2;
 
   deallog << "dim=" << dim << std::endl;
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   deallog << "numproc=" << numproc << std::endl;
 
@@ -118,7 +118,7 @@ test(const unsigned int n_ref = 0)
   triangulation.refine_global(3);
 
   // do some adaptive refinement
-  for(unsigned int ref = 0; ref < n_ref; ++ref)
+  for(unsigned int ref= 0; ref < n_ref; ++ref)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
@@ -152,7 +152,7 @@ test(const unsigned int n_ref = 0)
   DoFTools::extract_locally_relevant_dofs(dof_handler_euler,
                                           locally_relevant_dofs_euler);
 
-  const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
+  const IndexSet& locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet        locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -192,7 +192,7 @@ test(const unsigned int n_ref = 0)
   // now the core of the test:
   const unsigned int max_level
     = dof_handler.get_triangulation().n_global_levels() - 1;
-  const unsigned int min_level = 0;
+  const unsigned int min_level= 0;
   MGLevelObject<LinearAlgebra::distributed::Vector<LevelNumberType>>
     displacement_level(min_level, max_level);
   mg_transfer_euler.interpolate_to_mg(
@@ -207,8 +207,8 @@ test(const unsigned int n_ref = 0)
     typename MatrixFree<dim, NumberType>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, NumberType>::AdditionalData::partition_color;
-    data.mapping_update_flags = update_values | update_gradients
-                                | update_JxW_values | update_quadrature_points;
+    data.mapping_update_flags= update_values | update_gradients
+                               | update_JxW_values | update_quadrature_points;
     matrix_free_euler.reinit(
       euler_fine, dof_handler, constraints, quadrature_formula, data);
 
@@ -221,21 +221,21 @@ test(const unsigned int n_ref = 0)
         matrix_free_euler);
       FEEvaluation<dim, fe_degree, n_q_points, 1, NumberType> fe_eval(
         matrix_free);
-      const unsigned int n_cells = matrix_free_euler.n_macro_cells();
+      const unsigned int n_cells= matrix_free_euler.n_macro_cells();
       Assert(matrix_free_euler.n_macro_cells() == matrix_free.n_macro_cells(),
              ExcInternalError());
-      const unsigned int nqp = fe_eval.n_q_points;
-      for(unsigned int cell = 0; cell < n_cells; ++cell)
+      const unsigned int nqp= fe_eval.n_q_points;
+      for(unsigned int cell= 0; cell < n_cells; ++cell)
         {
           fe_eval_euler.reinit(cell);
           fe_eval.reinit(cell);
-          for(unsigned int q = 0; q < nqp; ++q)
+          for(unsigned int q= 0; q < nqp; ++q)
             {
-              const auto& v1 = fe_eval_euler.quadrature_point(q);
-              const auto& qp = fe_eval.quadrature_point(q);
-              const auto  v2 = qp + displacement_function.shift_value(qp);
-              VectorizedArray<NumberType> dist = v1.distance(v2);
-              for(unsigned int v = 0;
+              const auto& v1= fe_eval_euler.quadrature_point(q);
+              const auto& qp= fe_eval.quadrature_point(q);
+              const auto  v2= qp + displacement_function.shift_value(qp);
+              VectorizedArray<NumberType> dist= v1.distance(v2);
+              for(unsigned int v= 0;
                   v < VectorizedArray<NumberType>::n_array_elements;
                   ++v)
                 AssertThrow(dist[v] < 1e-8,
@@ -253,16 +253,16 @@ test(const unsigned int n_ref = 0)
   mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                      dirichlet_boundary_ids);
 
-  for(unsigned int level = min_level; level <= max_level; ++level)
+  for(unsigned int level= min_level; level <= max_level; ++level)
     {
       typename MatrixFree<dim, LevelNumberType>::AdditionalData
         mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
         = MatrixFree<dim, LevelNumberType>::AdditionalData::partition_color;
-      mg_additional_data.level_mg_handler     = level;
-      mg_additional_data.mapping_update_flags = update_values | update_gradients
-                                                | update_JxW_values
-                                                | update_quadrature_points;
+      mg_additional_data.level_mg_handler    = level;
+      mg_additional_data.mapping_update_flags= update_values | update_gradients
+                                               | update_JxW_values
+                                               | update_quadrature_points;
 
       ConstraintMatrix level_constraints;
       IndexSet         relevant_dofs;
@@ -295,21 +295,21 @@ test(const unsigned int n_ref = 0)
           mg_level_euler);
         FEEvaluation<dim, fe_degree, n_q_points, 1, NumberType> fe_eval(
           mg_level);
-        const unsigned int n_cells = mg_level_euler.n_macro_cells();
+        const unsigned int n_cells= mg_level_euler.n_macro_cells();
         Assert(mg_level_euler.n_macro_cells() == mg_level.n_macro_cells(),
                ExcInternalError());
-        const unsigned int nqp = fe_eval.n_q_points;
-        for(unsigned int cell = 0; cell < n_cells; ++cell)
+        const unsigned int nqp= fe_eval.n_q_points;
+        for(unsigned int cell= 0; cell < n_cells; ++cell)
           {
             fe_eval_euler.reinit(cell);
             fe_eval.reinit(cell);
-            for(unsigned int q = 0; q < nqp; ++q)
+            for(unsigned int q= 0; q < nqp; ++q)
               {
-                const auto& v1 = fe_eval_euler.quadrature_point(q);
-                const auto& qp = fe_eval.quadrature_point(q);
-                const auto  v2 = qp + displacement_function.shift_value(qp);
-                VectorizedArray<NumberType> dist = v1.distance(v2);
-                for(unsigned int v = 0;
+                const auto& v1= fe_eval_euler.quadrature_point(q);
+                const auto& qp= fe_eval.quadrature_point(q);
+                const auto  v2= qp + displacement_function.shift_value(qp);
+                VectorizedArray<NumberType> dist= v1.distance(v2);
+                for(unsigned int v= 0;
                     v < VectorizedArray<NumberType>::n_array_elements;
                     ++v)
                   AssertThrow(

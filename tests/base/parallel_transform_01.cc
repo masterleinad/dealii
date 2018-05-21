@@ -26,19 +26,19 @@ main()
 {
   initlog();
 
-  const unsigned int N = 10000;
+  const unsigned int N= 10000;
   Vector<double>     x(N), y(N);
 
-  for(unsigned int i = 0; i < N; ++i)
-    x(i) = i;
+  for(unsigned int i= 0; i < N; ++i)
+    x(i)= i;
 
   // set y=2*x
   parallel::transform(
     x.begin(), x.end(), y.begin(), (2 * boost::lambda::_1), 10);
 
   // compute y=0 from the previous result
-  y -= x;
-  y -= x;
+  y-= x;
+  y-= x;
 
   AssertThrow(y.l2_norm() == 0, ExcInternalError());
 

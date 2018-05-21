@@ -39,14 +39,14 @@ check_solve(SolverControl&      solver_control,
 {
   SolverCG<VectorType> solver(solver_control);
 
-  u            = 0.;
-  f            = 1.;
-  bool success = false;
+  u           = 0.;
+  f           = 1.;
+  bool success= false;
   try
     {
       solver.solve(A, u, f, P);
       deallog << "Success. ";
-      success = true;
+      success= true;
     }
   catch(std::exception& e)
     {
@@ -66,8 +66,8 @@ main(int argc, char** argv)
   deallog.attach(logfile);
 
   {
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -81,7 +81,7 @@ main(int argc, char** argv)
 
     Vector<double> f(dim);
     Vector<double> u(dim);
-    f = 1.;
+    f= 1.;
 
     PreconditionJacobi<> preconditioner;
     preconditioner.initialize(A);

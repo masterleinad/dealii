@@ -35,11 +35,11 @@ plot_shape_functions(const unsigned int degree)
   deallog.push(prefix.str());
   FE_RaviartThomas<dim> fe_rt(degree);
 
-  const unsigned int div = 2;
-  for(unsigned int mz = 0; mz <= ((dim > 2) ? div : 0); ++mz)
-    for(unsigned int my = 0; my <= ((dim > 1) ? div : 0); ++my)
+  const unsigned int div= 2;
+  for(unsigned int mz= 0; mz <= ((dim > 2) ? div : 0); ++mz)
+    for(unsigned int my= 0; my <= ((dim > 1) ? div : 0); ++my)
       {
-        for(unsigned int mx = 0; mx <= div; ++mx)
+        for(unsigned int mx= 0; mx <= div; ++mx)
           {
             const Point<dim> p
               = (dim == 2 ?
@@ -52,19 +52,19 @@ plot_shape_functions(const unsigned int degree)
             // vector of dim entries
             // for each chape function
             deallog << "value " << p;
-            for(unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < fe_rt.dofs_per_cell; ++i)
               {
-                for(unsigned int c = 0; c < dim; ++c)
+                for(unsigned int c= 0; c < dim; ++c)
                   deallog << " " << fe_rt.shape_value_component(i, p, c);
                 deallog << "  ";
               }
             deallog << std::endl << "grad " << p;
-            for(unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < fe_rt.dofs_per_cell; ++i)
               {
-                for(unsigned int c = 0; c < dim; ++c)
+                for(unsigned int c= 0; c < dim; ++c)
                   {
                     deallog << ' ';
-                    for(unsigned int d = 0; d < dim; ++d)
+                    for(unsigned int d= 0; d < dim; ++d)
                       deallog << ' ' << fe_rt.shape_grad_component(i, p, c)[d];
                   }
               }
@@ -85,7 +85,7 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int degree = 0; degree < 4; ++degree)
+  for(unsigned int degree= 0; degree < 4; ++degree)
     plot_shape_functions<2>(degree);
   //  plot_shape_functions<3>(degree);
 

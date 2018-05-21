@@ -59,11 +59,11 @@ public:
   void
   test_functions(Vector<Number>& dst, Vector<Number>& dst_deal) const
   {
-    dst      = 0;
-    dst_deal = 0;
+    dst     = 0;
+    dst_deal= 0;
     VectorType dst_data(2);
-    dst_data[0] = &dst;
-    dst_data[1] = &dst_deal;
+    dst_data[0]= &dst;
+    dst_data[1]= &dst_deal;
     VectorType src_dummy;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number>::operator(),
                    this,
@@ -85,50 +85,49 @@ operator()(const MatrixFree<dim, Number>& data,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-  const unsigned int                     n_q_points    = fe_eval.n_q_points;
-  const unsigned int                     dofs_per_cell = fe_eval.dofs_per_cell;
+  const unsigned int                     n_q_points   = fe_eval.n_q_points;
+  const unsigned int                     dofs_per_cell= fe_eval.dofs_per_cell;
   AlignedVector<VectorizedArray<Number>> values(n_q_points);
   AlignedVector<VectorizedArray<Number>> gradients(dim * n_q_points);
   std::vector<types::global_dof_index>   dof_indices(dofs_per_cell);
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       // compare values with the ones the FEValues
       // gives us. Those are seen as reference
-      for(unsigned int j = 0; j < data.n_components_filled(cell); ++j)
+      for(unsigned int j= 0; j < data.n_components_filled(cell); ++j)
         {
           // generate random numbers at quadrature
           // points and test them with basis functions
           // and their gradients
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for(unsigned int q= 0; q < n_q_points; ++q)
             {
-              values[q][j] = random_value<double>();
-              for(unsigned int d = 0; d < dim; ++d)
-                gradients[q * dim + d][j] = -1. + 2. * (random_value<double>());
+              values[q][j]= random_value<double>();
+              for(unsigned int d= 0; d < dim; ++d)
+                gradients[q * dim + d][j]= -1. + 2. * (random_value<double>());
             }
           fe_val.reinit(data.get_cell_iterator(cell, j));
           data.get_cell_iterator(cell, j)->get_dof_indices(dof_indices);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              double sum = 0.;
-              for(unsigned int q = 0; q < n_q_points; ++q)
+              double sum= 0.;
+              for(unsigned int q= 0; q < n_q_points; ++q)
                 {
-                  sum
-                    += values[q][j] * fe_val.shape_value(i, q) * fe_val.JxW(q);
-                  for(unsigned int d = 0; d < dim; ++d)
-                    sum += (gradients[q * dim + d][j]
-                            * fe_val.shape_grad(i, q)[d] * fe_val.JxW(q));
+                  sum+= values[q][j] * fe_val.shape_value(i, q) * fe_val.JxW(q);
+                  for(unsigned int d= 0; d < dim; ++d)
+                    sum+= (gradients[q * dim + d][j]
+                           * fe_val.shape_grad(i, q)[d] * fe_val.JxW(q));
                 }
-              (*dst[1])(dof_indices[i]) += sum;
+              (*dst[1])(dof_indices[i])+= sum;
             }
         }
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(values[q], q);
           Tensor<1, dim, VectorizedArray<Number>> submit;
-          for(unsigned int d = 0; d < dim; ++d)
-            submit[d] = gradients[q * dim + d];
+          for(unsigned int d= 0; d < dim; ++d)
+            submit[d]= gradients[q * dim + d];
           fe_eval.submit_gradient(submit, q);
         }
       fe_eval.integrate(true, true);
@@ -144,20 +143,20 @@ test()
   const SphericalManifold<dim> manifold;
   Triangulation<dim>           tria;
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
 
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
+  cell= tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 0.2)
       cell->set_refine_flag();
@@ -167,11 +166,11 @@ test()
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 7 - 2 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 7 - 2 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
           cell->set_refine_flag();
@@ -208,8 +207,8 @@ test()
   constraints.condense(solution);
 
   Vector<number> compare(solution_dist);
-  compare -= solution;
-  const double diff_norm = compare.linfty_norm();
+  compare-= solution;
+  const double diff_norm= compare.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }

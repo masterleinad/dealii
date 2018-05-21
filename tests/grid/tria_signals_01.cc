@@ -19,14 +19,14 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
-int signal_counter_create                  = 0;
-int signal_counter_pre_refinement          = 0;
-int signal_counter_post_refinement         = 0;
-int signal_counter_pre_coarsening_on_cell  = 0;
-int signal_counter_post_refinement_on_cell = 0;
-int signal_counter_copy                    = 0;
-int signal_counter_clear                   = 0;
-int signal_counter_any_change              = 0;
+int signal_counter_create                 = 0;
+int signal_counter_pre_refinement         = 0;
+int signal_counter_post_refinement        = 0;
+int signal_counter_pre_coarsening_on_cell = 0;
+int signal_counter_post_refinement_on_cell= 0;
+int signal_counter_copy                   = 0;
+int signal_counter_clear                  = 0;
+int signal_counter_any_change             = 0;
 
 void
 f_create()
@@ -93,18 +93,18 @@ template <int dim, int spacedim>
 void
 test()
 {
-  signal_counter_create                  = 0;
-  signal_counter_pre_refinement          = 0;
-  signal_counter_post_refinement         = 0;
-  signal_counter_pre_coarsening_on_cell  = 0;
-  signal_counter_post_refinement_on_cell = 0;
-  signal_counter_copy                    = 0;
-  signal_counter_clear                   = 0;
-  signal_counter_any_change              = 0;
+  signal_counter_create                 = 0;
+  signal_counter_pre_refinement         = 0;
+  signal_counter_post_refinement        = 0;
+  signal_counter_pre_coarsening_on_cell = 0;
+  signal_counter_post_refinement_on_cell= 0;
+  signal_counter_copy                   = 0;
+  signal_counter_clear                  = 0;
+  signal_counter_any_change             = 0;
 
   {
-    const std::string title = Utilities::int_to_string(dim, 1) + "d-"
-                              + Utilities::int_to_string(spacedim, 1) + "d";
+    const std::string title= Utilities::int_to_string(dim, 1) + "d-"
+                             + Utilities::int_to_string(spacedim, 1) + "d";
     deallog.push(title.c_str());
   }
 
@@ -170,38 +170,38 @@ main(int argc, char* argv[])
   initlog();
 
   {
-    const int dim      = 1;
-    const int spacedim = 1;
+    const int dim     = 1;
+    const int spacedim= 1;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 1;
-    const int spacedim = 2;
+    const int dim     = 1;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 1;
-    const int spacedim = 3;
+    const int dim     = 1;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 2;
-    const int spacedim = 2;
+    const int dim     = 2;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 2;
-    const int spacedim = 3;
+    const int dim     = 2;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 3;
-    const int spacedim = 3;
+    const int dim     = 3;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 

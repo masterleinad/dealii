@@ -56,8 +56,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int i = 0; i < 2 * dim + 1; ++i)
-      values(i) = value(p, i);
+    for(unsigned int i= 0; i < 2 * dim + 1; ++i)
+      values(i)= value(p, i);
   }
 };
 
@@ -80,7 +80,7 @@ check()
   // Create a system element composed
   // of one RT-i and one DGQ-i.
   hp::FECollection<dim> element;
-  for(unsigned int i = 0; i < 5 - dim; ++i)
+  for(unsigned int i= 0; i < 5 - dim; ++i)
     element.push_back(FESystem<dim>(FE_RaviartThomasNodal<dim>(i),
                                     1,
                                     FE_DGQ<dim>(i),
@@ -90,7 +90,7 @@ check()
 
   // ... also add Q-(i+1) ^ dim
   // to this system
-  for(unsigned int i = 1; i < 3; ++i)
+  for(unsigned int i= 1; i < 3; ++i)
     element.push_back(FESystem<dim>(
       FE_Nothing<dim>(dim), 1, FE_Nothing<dim>(), 1, FE_Q<dim>(i), dim));
 
@@ -105,10 +105,10 @@ check()
 
   MySquareFunction<dim>           coefficient;
   typename FunctionMap<dim>::type function_map;
-  function_map[0] = &coefficient;
+  function_map[0]= &coefficient;
 
   hp::QCollection<dim - 1> face_quadrature;
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for(unsigned int i= 0; i < 7 - dim; ++i)
     face_quadrature.push_back(QGauss<dim - 1>(4 + i));
 
   std::vector<types::global_dof_index> dof_to_boundary_mapping;
@@ -134,7 +134,7 @@ check()
 
   // Multiply matrix by 100 to
   // make test more sensitive
-  matrix *= 100;
+  matrix*= 100;
 
   // Write out matrix
   matrix.print(deallog.get_file_stream());

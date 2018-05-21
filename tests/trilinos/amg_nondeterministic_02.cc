@@ -497,10 +497,10 @@ double matv[]
 void
 run()
 {
-  int                dim = 2300;
+  int                dim= 2300;
   int                ierr;
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int       numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int       numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   IndexSet owned(dim);
 
@@ -513,12 +513,12 @@ run()
 
   TrilinosWrappers::SparsityPattern sp(owned);
 
-  unsigned int n = sizeof(mati) / sizeof(*mati);
+  unsigned int n= sizeof(mati) / sizeof(*mati);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     sp.add(mati[i], matj[i]);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     sp.add(i, i);
 
   sp.compress();
@@ -528,13 +528,13 @@ run()
   TrilinosWrappers::MPI::Vector  x2(owned, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector  b(owned, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     mat.set(i, i, 1.0);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
       mat.set(mati[i], matj[i], matv[i]);
-      b(mati[i]) = 1.0;
+      b(mati[i])= 1.0;
     }
   mat.compress(VectorOperation::insert);
   b.compress(VectorOperation::insert);
@@ -542,7 +542,7 @@ run()
   deallog << "SA:" << std::endl;
 
   TrilinosWrappers::PreconditionAMG::AdditionalData data;
-  data.elliptic = true;
+  data.elliptic= true;
 
   {
     TrilinosWrappers::PreconditionAMG prec;
@@ -557,7 +557,7 @@ run()
 
   if(myid == 0)
     {
-      for(unsigned int j = 0; j < 10; ++j)
+      for(unsigned int j= 0; j < 10; ++j)
         {
           if(x1[j] != x2[j])
             deallog << "FAIL: j=" << j << ": " << x1[j] << " != " << x2[j]
@@ -566,7 +566,7 @@ run()
     }
 
   deallog << "NSSA:" << std::endl;
-  data.elliptic = false;
+  data.elliptic= false;
 
   {
     TrilinosWrappers::PreconditionAMG prec;
@@ -583,7 +583,7 @@ run()
 
   if(myid == 0)
     {
-      for(unsigned int j = 0; j < 10; ++j)
+      for(unsigned int j= 0; j < 10; ++j)
         {
           if(x1[j] != x2[j])
             deallog << "FAIL: j=" << j << ": " << x1[j] << " != " << x2[j]

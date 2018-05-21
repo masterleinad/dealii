@@ -193,22 +193,22 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclExceptionMsg(Exception, defaulttext)               \
-    class Exception : public dealii::ExceptionBase               \
-    {                                                            \
-    public:                                                      \
-      Exception(const std::string& msg = defaulttext) : arg(msg) \
-      {}                                                         \
-      virtual ~Exception() noexcept                              \
-      {}                                                         \
-      virtual void                                               \
-      print_info(std::ostream& out) const override               \
-      {                                                          \
-        out << "    " << arg << std::endl;                       \
-      }                                                          \
-                                                                 \
-    private:                                                     \
-      const std::string arg;                                     \
+#  define DeclExceptionMsg(Exception, defaulttext)              \
+    class Exception : public dealii::ExceptionBase              \
+    {                                                           \
+    public:                                                     \
+      Exception(const std::string& msg= defaulttext) : arg(msg) \
+      {}                                                        \
+      virtual ~Exception() noexcept                             \
+      {}                                                        \
+      virtual void                                              \
+      print_info(std::ostream& out) const override              \
+      {                                                         \
+        out << "    " << arg << std::endl;                      \
+      }                                                         \
+                                                                \
+    private:                                                    \
+      const std::string arg;                                    \
     }
 
 /**
@@ -1353,7 +1353,7 @@ namespace deal_II_exceptions
  */
 #define AssertVectorVectorDimension(vec, dim1, dim2) \
   AssertDimension((vec).size(), (dim1));             \
-  for(unsigned int i = 0; i < dim1; ++i)             \
+  for(unsigned int i= 0; i < dim1; ++i)              \
     {                                                \
       AssertDimension((vec)[i].size(), (dim2));      \
     }

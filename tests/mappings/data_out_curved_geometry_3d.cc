@@ -39,7 +39,7 @@ main()
 
   const CylindricalManifold<3> boundary_description;
 
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for(unsigned int degree= 1; degree <= 4; ++degree)
     {
       deallog << "===== Mapping degree " << degree << std::endl;
 
@@ -63,9 +63,8 @@ main()
             cell->set_material_id(0);
         }
 
-      Triangulation<3>::active_cell_iterator cell
-        = triangulation.begin_active(),
-        endc = triangulation.end();
+      Triangulation<3>::active_cell_iterator cell= triangulation.begin_active(),
+                                             endc= triangulation.end();
 
       for(; cell != endc; ++cell)
         if(cell->material_id() != 1)
@@ -80,7 +79,7 @@ main()
           = triangulation.begin_active();
           cell != triangulation.end();
           ++cell)
-        dummy(cell->active_cell_index()) = cell->material_id();
+        dummy(cell->active_cell_index())= cell->material_id();
 
       DataOut<3> data_out;
       data_out.attach_dof_handler(dof_handler);

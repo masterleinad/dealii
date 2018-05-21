@@ -118,9 +118,9 @@ public:
     const size_type                                           n_rows,
     const size_type                                           n_columns,
     const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
-    const size_type               row_block_size    = 32,
-    const size_type               column_block_size = 32,
-    const LAPACKSupport::Property property = LAPACKSupport::Property::general);
+    const size_type               row_block_size   = 32,
+    const size_type               column_block_size= 32,
+    const LAPACKSupport::Property property= LAPACKSupport::Property::general);
 
   /**
    * Constructor for a square matrix of size @p size, and distributed
@@ -129,14 +129,13 @@ public:
   ScaLAPACKMatrix(
     const size_type                                          size,
     const std::shared_ptr<const Utilities::MPI::ProcessGrid> process_grid,
-    const size_type                                          block_size = 32,
-    const LAPACKSupport::Property                            property
-    = LAPACKSupport::Property::symmetric);
+    const size_type                                          block_size= 32,
+    const LAPACKSupport::Property property= LAPACKSupport::Property::symmetric);
 
   /**
    * Destructor
    */
-  ~ScaLAPACKMatrix() override = default;
+  ~ScaLAPACKMatrix() override= default;
 
   /**
    * Initialize the rectangular matrix with @p n_rows and @p n_cols
@@ -146,8 +145,8 @@ public:
   reinit(const size_type                                           n_rows,
          const size_type                                           n_columns,
          const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
-         const size_type               row_block_size    = 32,
-         const size_type               column_block_size = 32,
+         const size_type               row_block_size   = 32,
+         const size_type               column_block_size= 32,
          const LAPACKSupport::Property property
          = LAPACKSupport::Property::general);
 
@@ -157,7 +156,7 @@ public:
   void
   reinit(const size_type                                          size,
          const std::shared_ptr<const Utilities::MPI::ProcessGrid> process_grid,
-         const size_type               block_size = 32,
+         const size_type               block_size= 32,
          const LAPACKSupport::Property property
          = LAPACKSupport::Property::symmetric);
 
@@ -253,9 +252,9 @@ public:
    */
   void
   add(const ScaLAPACKMatrix<NumberType>& B,
-      const NumberType                   a           = 0.,
-      const NumberType                   b           = 1.,
-      const bool                         transpose_B = false);
+      const NumberType                   a          = 0.,
+      const NumberType                   b          = 1.,
+      const bool                         transpose_B= false);
 
   /**
    * Matrix-addition:
@@ -301,8 +300,8 @@ public:
        const ScaLAPACKMatrix<NumberType>& B,
        const NumberType                   c,
        ScaLAPACKMatrix<NumberType>&       C,
-       const bool                         transpose_A = false,
-       const bool                         transpose_B = false) const;
+       const bool                         transpose_A= false,
+       const bool                         transpose_B= false) const;
 
   /**
    * Matrix-matrix-multiplication.
@@ -322,7 +321,7 @@ public:
   void
   mmult(ScaLAPACKMatrix<NumberType>&       C,
         const ScaLAPACKMatrix<NumberType>& B,
-        const bool                         adding = false) const;
+        const bool                         adding= false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of $\mathbf{A}$.
@@ -342,7 +341,7 @@ public:
   void
   Tmmult(ScaLAPACKMatrix<NumberType>&       C,
          const ScaLAPACKMatrix<NumberType>& B,
-         const bool                         adding = false) const;
+         const bool                         adding= false) const;
 
   /**
    * Matrix-matrix-multiplication using the transpose of $\mathbf{B}$.
@@ -362,7 +361,7 @@ public:
   void
   mTmult(ScaLAPACKMatrix<NumberType>&       C,
          const ScaLAPACKMatrix<NumberType>& B,
-         const bool                         adding = false) const;
+         const bool                         adding= false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of $\mathbf{A}$ and
@@ -383,7 +382,7 @@ public:
   void
   TmTmult(ScaLAPACKMatrix<NumberType>&       C,
           const ScaLAPACKMatrix<NumberType>& B,
-          const bool                         adding = false) const;
+          const bool                         adding= false) const;
 
   /**
    * Stores the distributed matrix in @p filename using HDF5.
@@ -540,8 +539,8 @@ public:
   * for @p U and/or @p VT.
   */
   std::vector<NumberType>
-  compute_SVD(ScaLAPACKMatrix<NumberType>* U  = nullptr,
-              ScaLAPACKMatrix<NumberType>* VT = nullptr);
+  compute_SVD(ScaLAPACKMatrix<NumberType>* U = nullptr,
+              ScaLAPACKMatrix<NumberType>* VT= nullptr);
 
   /**
   * Solving overdetermined or underdetermined real linear
@@ -574,7 +573,7 @@ public:
   * The matrices $\mathbf{A}$ and $\mathbf{B}$ must have an identical block cyclic distribution for rows and columns.
   */
   void
-  least_squares(ScaLAPACKMatrix<NumberType>& B, const bool transpose = false);
+  least_squares(ScaLAPACKMatrix<NumberType>& B, const bool transpose= false);
 
   /**
    * Compute the pseudoinverse $\mathbf{A}^+ \in \mathbb{R}^{N \times M}$ (Moore-Penrose inverse)

@@ -53,60 +53,60 @@ test(const unsigned int block_size, const NumberType tol)
   //FIXME: Add more tests for different cases!!!
   pcout << "Solving least squares problem ||B - A*X||" << std::endl;
 
-  full_A_I(0, 0) = 1.;
-  full_A_I(0, 1) = -2.;
-  full_A_I(0, 2) = -1.;
-  full_A_I(1, 0) = 2.;
-  full_A_I(1, 1) = 0.;
-  full_A_I(1, 2) = 1.;
-  full_A_I(2, 0) = 2.;
-  full_A_I(2, 1) = -4.;
-  full_A_I(2, 2) = 2.;
-  full_A_I(3, 0) = 4.;
-  full_A_I(3, 1) = 0.;
-  full_A_I(3, 2) = 0.;
+  full_A_I(0, 0)= 1.;
+  full_A_I(0, 1)= -2.;
+  full_A_I(0, 2)= -1.;
+  full_A_I(1, 0)= 2.;
+  full_A_I(1, 1)= 0.;
+  full_A_I(1, 2)= 1.;
+  full_A_I(2, 0)= 2.;
+  full_A_I(2, 1)= -4.;
+  full_A_I(2, 2)= 2.;
+  full_A_I(3, 0)= 4.;
+  full_A_I(3, 1)= 0.;
+  full_A_I(3, 2)= 0.;
 
-  full_B_I(0, 0) = -1.;
-  full_B_I(0, 1) = -2.;
-  full_B_I(0, 2) = -7.;
-  full_B_I(0, 3) = 0.;
-  full_B_I(0, 4) = -5.;
-  full_B_I(1, 0) = 1.;
-  full_B_I(1, 1) = 3.;
-  full_B_I(1, 2) = 4.;
-  full_B_I(1, 3) = 3.;
-  full_B_I(1, 4) = 5.;
-  full_B_I(2, 0) = 1.;
-  full_B_I(2, 1) = 0.;
-  full_B_I(2, 2) = 4.;
-  full_B_I(2, 3) = 2.;
-  full_B_I(2, 4) = 2.;
-  full_B_I(3, 0) = -2.;
-  full_B_I(3, 1) = 4.;
-  full_B_I(3, 2) = 4.;
-  full_B_I(3, 3) = 0.;
-  full_B_I(3, 4) = 4.;
+  full_B_I(0, 0)= -1.;
+  full_B_I(0, 1)= -2.;
+  full_B_I(0, 2)= -7.;
+  full_B_I(0, 3)= 0.;
+  full_B_I(0, 4)= -5.;
+  full_B_I(1, 0)= 1.;
+  full_B_I(1, 1)= 3.;
+  full_B_I(1, 2)= 4.;
+  full_B_I(1, 3)= 3.;
+  full_B_I(1, 4)= 5.;
+  full_B_I(2, 0)= 1.;
+  full_B_I(2, 1)= 0.;
+  full_B_I(2, 2)= 4.;
+  full_B_I(2, 3)= 2.;
+  full_B_I(2, 4)= 2.;
+  full_B_I(3, 0)= -2.;
+  full_B_I(3, 1)= 4.;
+  full_B_I(3, 2)= 4.;
+  full_B_I(3, 3)= 0.;
+  full_B_I(3, 4)= 4.;
 
-  full_X_I(0, 0) = -0.4;
-  full_X_I(0, 1) = 1.;
-  full_X_I(0, 2) = 0.8;
-  full_X_I(0, 3) = 0.2;
-  full_X_I(0, 4) = 1.;
-  full_X_I(1, 0) = 0.;
-  full_X_I(1, 1) = 1.;
-  full_X_I(1, 2) = 1.5;
-  full_X_I(1, 3) = 0.;
-  full_X_I(1, 4) = 1.5;
-  full_X_I(2, 0) = 1.;
-  full_X_I(2, 1) = 1.;
-  full_X_I(2, 2) = 4.;
-  full_X_I(2, 3) = 1.;
-  full_X_I(2, 4) = 3.;
-  full_X_I(3, 0) = -1.;
-  full_X_I(3, 1) = 0.;
-  full_X_I(3, 2) = 2.;
-  full_X_I(3, 3) = -2.;
-  full_X_I(3, 4) = 0.;
+  full_X_I(0, 0)= -0.4;
+  full_X_I(0, 1)= 1.;
+  full_X_I(0, 2)= 0.8;
+  full_X_I(0, 3)= 0.2;
+  full_X_I(0, 4)= 1.;
+  full_X_I(1, 0)= 0.;
+  full_X_I(1, 1)= 1.;
+  full_X_I(1, 2)= 1.5;
+  full_X_I(1, 3)= 0.;
+  full_X_I(1, 4)= 1.5;
+  full_X_I(2, 0)= 1.;
+  full_X_I(2, 1)= 1.;
+  full_X_I(2, 2)= 4.;
+  full_X_I(2, 3)= 1.;
+  full_X_I(2, 4)= 3.;
+  full_X_I(3, 0)= -1.;
+  full_X_I(3, 1)= 0.;
+  full_X_I(3, 2)= 2.;
+  full_X_I(3, 3)= -2.;
+  full_X_I(3, 4)= 0.;
 
   //compute eigenpairs of s.p.d matrix
   ScaLAPACKMatrix<NumberType> scalapack_A(
@@ -114,8 +114,8 @@ test(const unsigned int block_size, const NumberType tol)
   ScaLAPACKMatrix<NumberType> scalapack_B(
     4, 5, grid_2d, block_size, block_size);
   scalapack_A.set_property(LAPACKSupport::Property::general);
-  scalapack_A = full_A_I;
-  scalapack_B = full_B_I;
+  scalapack_A= full_A_I;
+  scalapack_B= full_B_I;
   scalapack_A.least_squares(scalapack_B, false);
   FullMatrix<NumberType> result(4, 5);
   scalapack_B.copy_to(result);
@@ -131,9 +131,9 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks     = {{1, 2}};
-  const double                    tol_double = 1e-10;
-  const float                     tol_float  = 1e-5;
+  const std::vector<unsigned int> blocks    = {{1, 2}};
+  const double                    tol_double= 1e-10;
+  const float                     tol_float = 1e-5;
 
   for(const auto& b : blocks)
     test<double>(b, tol_double);

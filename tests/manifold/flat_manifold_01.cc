@@ -28,7 +28,7 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
@@ -38,7 +38,7 @@ test(unsigned int ref = 1)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for(cell= tria.begin_active(); cell != tria.end(); ++cell)
     {
       // check that FlatManifold returns the middle of the cell.
       deallog << "Cell: " << cell << std::endl;

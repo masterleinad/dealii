@@ -32,9 +32,9 @@ test()
   tria.begin_active()->face(0)->set_boundary_id(2);
   tria.begin_active()->face(1)->set_boundary_id(4);
 
-  std::vector<types::boundary_id> boundary_ids = tria.get_boundary_ids();
+  std::vector<types::boundary_id> boundary_ids= tria.get_boundary_ids();
 
-  for(unsigned int i = 0; i < boundary_ids.size(); ++i)
+  for(unsigned int i= 0; i < boundary_ids.size(); ++i)
     deallog << (int) boundary_ids[i] << std::endl;
 }
 

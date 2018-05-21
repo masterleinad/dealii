@@ -188,7 +188,7 @@ namespace Step22
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -212,8 +212,8 @@ namespace Step22
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = BoundaryValues<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= BoundaryValues<dim>::value(p, c);
   }
 
   // We implement similar functions for the right hand side which for the
@@ -226,7 +226,7 @@ namespace Step22
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -245,8 +245,8 @@ namespace Step22
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = RightHandSide<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= RightHandSide<dim>::value(p, c);
   }
 
   // @sect3{Linear solvers and preconditioners}
@@ -308,7 +308,7 @@ namespace Step22
     SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
     SolverCG<>    cg(solver_control);
 
-    dst = 0;
+    dst= 0;
 
     cg.solve(*matrix, dst, src, *preconditioner);
   }
@@ -444,7 +444,7 @@ namespace Step22
     DoFRenumbering::Cuthill_McKee(dof_handler);
 
     std::vector<unsigned int> block_component(dim + 1, 0);
-    block_component[dim] = 1;
+    block_component[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, block_component);
 
     // Now comes the implementation of Dirichlet boundary conditions, which
@@ -491,7 +491,7 @@ namespace Step22
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
 
     std::cout << "   Number of active cells: " << triangulation.n_active_cells()
               << std::endl
@@ -534,12 +534,12 @@ namespace Step22
 
       Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
 
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(!((c == dim) && (d == dim)))
-            coupling[c][d] = DoFTools::always;
+            coupling[c][d]= DoFTools::always;
           else
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
 
       DoFTools::make_sparsity_pattern(
         dof_handler, coupling, dsp, constraints, false);
@@ -559,12 +559,12 @@ namespace Step22
 
       Table<2, DoFTools::Coupling> preconditioner_coupling(dim + 1, dim + 1);
 
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(((c == dim) && (d == dim)))
-            preconditioner_coupling[c][d] = DoFTools::always;
+            preconditioner_coupling[c][d]= DoFTools::always;
           else
-            preconditioner_coupling[c][d] = DoFTools::none;
+            preconditioner_coupling[c][d]= DoFTools::none;
 
       DoFTools::make_sparsity_pattern(dof_handler,
                                       preconditioner_coupling,
@@ -602,9 +602,9 @@ namespace Step22
   void
   StokesProblem<dim>::assemble_system()
   {
-    system_matrix         = 0;
-    system_rhs            = 0;
-    preconditioner_matrix = 0;
+    system_matrix        = 0;
+    system_rhs           = 0;
+    preconditioner_matrix= 0;
 
     QGauss<dim> quadrature_formula(degree + 2);
 
@@ -613,9 +613,9 @@ namespace Step22
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
-    const unsigned int n_q_points = quadrature_formula.size();
+    const unsigned int n_q_points= quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> local_preconditioner_matrix(dofs_per_cell,
@@ -661,30 +661,30 @@ namespace Step22
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix                = 0;
-        local_preconditioner_matrix = 0;
-        local_rhs                   = 0;
+        local_matrix               = 0;
+        local_preconditioner_matrix= 0;
+        local_rhs                  = 0;
 
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                div_phi_u[k]= fe_values[velocities].divergence(k, q);
+                phi_p[k]    = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -709,8 +709,8 @@ namespace Step22
 
                 const unsigned int component_i
                   = fe.system_to_component_index(i).first;
-                local_rhs(i) += fe_values.shape_value(i, q)
-                                * rhs_values[q](component_i) * fe_values.JxW(q);
+                local_rhs(i)+= fe_values.shape_value(i, q)
+                               * rhs_values[q](component_i) * fe_values.JxW(q);
               }
           }
 
@@ -727,10 +727,10 @@ namespace Step22
         // in order to use the standard functions for solving. This is done
         // by flipping the indices in case we are pointing into the empty part
         // of the local matrices.
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
             {
-              local_matrix(i, j) = local_matrix(j, i);
+              local_matrix(i, j)= local_matrix(j, i);
               local_preconditioner_matrix(i, j)
                 = local_preconditioner_matrix(j, i);
             }
@@ -790,7 +790,7 @@ namespace Step22
       Vector<double> schur_rhs(solution.block(1).size());
       A_inverse.vmult(tmp, system_rhs.block(0));
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
-      schur_rhs -= system_rhs.block(1);
+      schur_rhs-= system_rhs.block(1);
 
       SchurComplement<typename InnerPreconditioner<dim>::type> schur_complement(
         system_matrix, A_inverse);
@@ -852,8 +852,8 @@ namespace Step22
     // obtain a consistent flow field:
     {
       system_matrix.block(0, 1).vmult(tmp, solution.block(1));
-      tmp *= -1;
-      tmp += system_rhs.block(0);
+      tmp*= -1;
+      tmp+= system_rhs.block(0);
 
       A_inverse.vmult(solution.block(0), tmp);
 
@@ -962,7 +962,7 @@ namespace Step22
   {
     {
       std::vector<unsigned int> subdivisions(dim, 1);
-      subdivisions[0] = 4;
+      subdivisions[0]= 4;
 
       const Point<dim> bottom_left
         = (dim == 2 ? Point<dim>(-2, -1) : Point<dim>(-2, 0, -1));
@@ -981,7 +981,7 @@ namespace Step22
         = triangulation.begin_active();
         cell != triangulation.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->center()[dim - 1] == 0)
           cell->face(f)->set_all_boundary_ids(1);
 
@@ -993,7 +993,7 @@ namespace Step22
     // As first seen in step-6, we cycle over the different refinement levels
     // and refine (except for the first cycle), setup the degrees of freedom
     // and matrices, assemble, solve and create output:
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 6;
+    for(unsigned int refinement_cycle= 0; refinement_cycle < 6;
         ++refinement_cycle)
       {
         std::cout << "Refinement cycle " << refinement_cycle << std::endl;

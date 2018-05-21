@@ -34,19 +34,19 @@ test(const unsigned int size)
 
   // Lapack:
   LAPACKFullMatrix<NumberType> M(size);
-  M = F;
+  M= F;
   M.set_property(LAPACKSupport::symmetric);
   M.compute_cholesky_factorization();
   // factorization is stored in the lower diagonal part
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = i + 1; j < size; ++j)
-      M(i, j) = 0.;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= i + 1; j < size; ++j)
+      M(i, j)= 0.;
 
   FullMatrix<NumberType> diff(size);
-  diff = M;
+  diff= M;
   diff.add(-1., C);
 
-  const NumberType error = diff.frobenius_norm();
+  const NumberType error= diff.frobenius_norm();
   deallog << size << " : " << diff.frobenius_norm() << std::endl;
   if(false)
     {
@@ -62,12 +62,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
+  const std::vector<unsigned int> sizes= {{1, 3, 11, 17, 32, 64, 200, 391}};
   for(const auto& s : sizes)
     {
       // test<float>(s);

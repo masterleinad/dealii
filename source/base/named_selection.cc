@@ -22,8 +22,8 @@ void
 NamedSelection::initialize(const AnyData& data)
 {
   indices.resize(names.size());
-  for(unsigned int i = 0; i < names.size(); ++i)
-    indices[i] = data.find(names[i]);
+  for(unsigned int i= 0; i < names.size(); ++i)
+    indices[i]= data.find(names[i]);
 }
 
 DEAL_II_NAMESPACE_CLOSE

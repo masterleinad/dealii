@@ -29,18 +29,18 @@ template <int dim, int spacedim>
 void
 check(DataOutBase::VtkFlags flags, std::ostream& out)
 {
-  const unsigned int np = 4;
+  const unsigned int np= 4;
 
   std::vector<DataOutBase::Patch<dim, spacedim>> patches(np);
 
   create_patches(patches);
 
   std::vector<std::string> names(5);
-  names[0] = "x1";
-  names[1] = "x2";
-  names[2] = "x3";
-  names[3] = "x4";
-  names[4] = "i";
+  names[0]= "x1";
+  names[1]= "x2";
+  names[2]= "x3";
+  names[3]= "x4";
+  names[4]= "i";
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_vtu(patches, names, vectors, flags, out);
 }
@@ -51,8 +51,8 @@ check_all(std::ostream& log)
 {
   DataOutBase::VtkFlags flags;
 
-  flags.time  = numbers::PI;
-  flags.cycle = 42;
+  flags.time = numbers::PI;
+  flags.cycle= 42;
 
   log << "==============================" << std::endl
       << dim << spacedim << ".vtu" << std::endl

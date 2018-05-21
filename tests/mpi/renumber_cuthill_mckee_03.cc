@@ -38,8 +38,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int nprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int nprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -69,7 +69,7 @@ test()
   std::set<types::global_dof_index> starting_indices;
   for(const auto& cell : dofh.active_cell_iterators())
     if(cell->is_locally_owned())
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(!cell->at_boundary(f) && cell->neighbor(f)->is_ghost())
           {
             // we've identified a subdomain interface. use these DoFs

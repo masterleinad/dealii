@@ -74,7 +74,7 @@ namespace FETools
    *
    * @author Guido Kanschat, 2006
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class FEFactoryBase : public Subscriptor
   {
   public:
@@ -82,7 +82,7 @@ namespace FETools
      * Create a FiniteElement and return a pointer to it.
      */
     virtual std::unique_ptr<FiniteElement<dim, spacedim>>
-    get(const unsigned int degree) const = 0;
+    get(const unsigned int degree) const= 0;
 
     /**
      * Create a FiniteElement from a quadrature formula (currently only
@@ -90,12 +90,12 @@ namespace FETools
      */
 
     virtual std::unique_ptr<FiniteElement<dim, spacedim>>
-    get(const Quadrature<1>& quad) const = 0;
+    get(const Quadrature<1>& quad) const= 0;
 
     /**
      * Virtual destructor doing nothing but making the compiler happy.
      */
-    virtual ~FEFactoryBase() override = default;
+    virtual ~FEFactoryBase() override= default;
   };
 
   /**
@@ -168,7 +168,7 @@ namespace FETools
   compute_block_renumbering(const FiniteElement<dim, spacedim>&   fe,
                             std::vector<types::global_dof_index>& renumbering,
                             std::vector<types::global_dof_index>& block_data,
-                            bool return_start_indices = true);
+                            bool return_start_indices= true);
 
   /**
    * @name Generation of local matrices
@@ -346,8 +346,8 @@ namespace FETools
   compute_embedding_matrices(
     const FiniteElement<dim, spacedim>&           fe,
     std::vector<std::vector<FullMatrix<number>>>& matrices,
-    const bool                                    isotropic_only = false,
-    const double                                  threshold      = 1.e-12);
+    const bool                                    isotropic_only= false,
+    const double                                  threshold     = 1.e-12);
 
   /**
    * Compute the embedding matrices on faces needed for constraint matrices.
@@ -377,7 +377,7 @@ namespace FETools
     FullMatrix<number> (&matrices)[GeometryInfo<dim>::max_children_per_face],
     const unsigned int face_coarse,
     const unsigned int face_fine,
-    const double       threshold = 1.e-12);
+    const double       threshold= 1.e-12);
 
   /**
    * For all possible (isotropic and anisotropic) refinement cases compute the
@@ -415,7 +415,7 @@ namespace FETools
   compute_projection_matrices(
     const FiniteElement<dim, spacedim>&           fe,
     std::vector<std::vector<FullMatrix<number>>>& matrices,
-    const bool                                    isotropic_only = false);
+    const bool                                    isotropic_only= false);
 
   /**
    * Project scalar data defined in quadrature points to a finite element
@@ -1012,7 +1012,7 @@ namespace FETools
     multiply_dof_numbers(
       const std::vector<const FiniteElement<dim, spacedim>*>& fes,
       const std::vector<unsigned int>&                        multiplicities,
-      const bool do_tensor_product = true);
+      const bool do_tensor_product= true);
 
     /**
      * Same as above for an arbitrary number of parameters of type
@@ -1033,14 +1033,14 @@ namespace FETools
     FiniteElementData<dim>
     multiply_dof_numbers(const FiniteElement<dim, spacedim>* fe1,
                          const unsigned int                  N1,
-                         const FiniteElement<dim, spacedim>* fe2 = nullptr,
-                         const unsigned int                  N2  = 0,
-                         const FiniteElement<dim, spacedim>* fe3 = nullptr,
-                         const unsigned int                  N3  = 0,
-                         const FiniteElement<dim, spacedim>* fe4 = nullptr,
-                         const unsigned int                  N4  = 0,
-                         const FiniteElement<dim, spacedim>* fe5 = nullptr,
-                         const unsigned int                  N5  = 0);
+                         const FiniteElement<dim, spacedim>* fe2= nullptr,
+                         const unsigned int                  N2 = 0,
+                         const FiniteElement<dim, spacedim>* fe3= nullptr,
+                         const unsigned int                  N3 = 0,
+                         const FiniteElement<dim, spacedim>* fe4= nullptr,
+                         const unsigned int                  N4 = 0,
+                         const FiniteElement<dim, spacedim>* fe5= nullptr,
+                         const unsigned int                  N5 = 0);
 
     /**
      * Compute the "restriction is additive" flags (see the
@@ -1090,14 +1090,14 @@ namespace FETools
     compute_restriction_is_additive_flags(
       const FiniteElement<dim, spacedim>* fe1,
       const unsigned int                  N1,
-      const FiniteElement<dim, spacedim>* fe2 = nullptr,
-      const unsigned int                  N2  = 0,
-      const FiniteElement<dim, spacedim>* fe3 = nullptr,
-      const unsigned int                  N3  = 0,
-      const FiniteElement<dim, spacedim>* fe4 = nullptr,
-      const unsigned int                  N4  = 0,
-      const FiniteElement<dim, spacedim>* fe5 = nullptr,
-      const unsigned int                  N5  = 0);
+      const FiniteElement<dim, spacedim>* fe2= nullptr,
+      const unsigned int                  N2 = 0,
+      const FiniteElement<dim, spacedim>* fe3= nullptr,
+      const unsigned int                  N3 = 0,
+      const FiniteElement<dim, spacedim>* fe4= nullptr,
+      const unsigned int                  N4 = 0,
+      const FiniteElement<dim, spacedim>* fe5= nullptr,
+      const unsigned int                  N5 = 0);
 
     /**
      * Compute the nonzero components for each shape function of a
@@ -1120,7 +1120,7 @@ namespace FETools
     compute_nonzero_components(
       const std::vector<const FiniteElement<dim, spacedim>*>& fes,
       const std::vector<unsigned int>&                        multiplicities,
-      const bool do_tensor_product = true);
+      const bool do_tensor_product= true);
 
     /**
      * Same as above for an arbitrary number of parameters of type
@@ -1154,18 +1154,17 @@ namespace FETools
      */
     template <int dim, int spacedim>
     std::vector<ComponentMask>
-    compute_nonzero_components(
-      const FiniteElement<dim, spacedim>* fe1,
-      const unsigned int                  N1,
-      const FiniteElement<dim, spacedim>* fe2               = nullptr,
-      const unsigned int                  N2                = 0,
-      const FiniteElement<dim, spacedim>* fe3               = nullptr,
-      const unsigned int                  N3                = 0,
-      const FiniteElement<dim, spacedim>* fe4               = nullptr,
-      const unsigned int                  N4                = 0,
-      const FiniteElement<dim, spacedim>* fe5               = nullptr,
-      const unsigned int                  N5                = 0,
-      const bool                          do_tensor_product = true);
+    compute_nonzero_components(const FiniteElement<dim, spacedim>* fe1,
+                               const unsigned int                  N1,
+                               const FiniteElement<dim, spacedim>* fe2= nullptr,
+                               const unsigned int                  N2 = 0,
+                               const FiniteElement<dim, spacedim>* fe3= nullptr,
+                               const unsigned int                  N3 = 0,
+                               const FiniteElement<dim, spacedim>* fe4= nullptr,
+                               const unsigned int                  N4 = 0,
+                               const FiniteElement<dim, spacedim>* fe5= nullptr,
+                               const unsigned int                  N5 = 0,
+                               const bool do_tensor_product           = true);
 
     /**
      * For a given (composite) @p finite_element build @p
@@ -1193,7 +1192,7 @@ namespace FETools
       std::vector<std::pair<std::pair<unsigned int, unsigned int>,
                             unsigned int>>& component_to_base_table,
       const FiniteElement<dim, spacedim>&   finite_element,
-      const bool                            do_tensor_product = true);
+      const bool                            do_tensor_product= true);
 
     /**
      * For a given (composite) @p finite_element build @p face_system_to_base_table,
@@ -1218,7 +1217,7 @@ namespace FETools
       std::vector<std::pair<unsigned int, unsigned int>>&
                                           face_system_to_component_table,
       const FiniteElement<dim, spacedim>& finite_element,
-      const bool                          do_tensor_product = true);
+      const bool                          do_tensor_product= true);
 
   } // namespace Compositing
 
@@ -1255,7 +1254,7 @@ namespace FETools
    * function, use the add_fe_name() function.  This function does not work if
    * one wants to get a codimension 1 finite element.
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   std::unique_ptr<FiniteElement<dim, spacedim>>
   get_fe_by_name(const std::string& name);
 

@@ -34,7 +34,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -49,14 +49,14 @@ test()
       if(tr.n_locally_owned_active_cells() > 0)
         {
           std::vector<bool> flags(tr.n_locally_owned_active_cells(), false);
-          for(unsigned int i = 0; i < tr.n_locally_owned_active_cells() / 5 + 1;
+          for(unsigned int i= 0; i < tr.n_locally_owned_active_cells() / 5 + 1;
               ++i)
             {
-              const unsigned int x = Testing::rand() % flags.size();
-              flags[x]             = true;
+              const unsigned int x= Testing::rand() % flags.size();
+              flags[x]            = true;
             }
 
-          unsigned int index = 0;
+          unsigned int index= 0;
           for(typename Triangulation<dim>::active_cell_iterator cell
               = tr.begin_active();
               cell != tr.end();
@@ -89,9 +89,9 @@ test()
                   << dofh.n_locally_owned_dofs() << std::endl;
         }
 
-      typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active();
+      typename DoFHandler<dim>::active_cell_iterator cell= dofh.begin_active();
 
-      const unsigned int dofs_per_cell = dofh.get_fe().dofs_per_cell;
+      const unsigned int dofs_per_cell= dofh.get_fe().dofs_per_cell;
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
       for(; cell != dofh.end(); ++cell)
@@ -114,7 +114,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

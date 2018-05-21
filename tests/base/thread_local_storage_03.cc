@@ -43,7 +43,7 @@ test()
 {
   X                    x;
   Threads::Thread<int> t;
-  t = Threads::new_thread(&X::f, x);
+  t= Threads::new_thread(&X::f, x);
 
   AssertThrow(t.return_value() == 42, ExcInternalError());
 }

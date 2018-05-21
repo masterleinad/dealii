@@ -607,7 +607,7 @@ namespace TensorAccessors
       inline DEAL_II_ALWAYS_INLINE static void
       contract(T1& result, const T2& left, const T3& right)
       {
-        for(unsigned int i = 0; i < dim; ++i)
+        for(unsigned int i= 0; i < dim; ++i)
           Contract<no_contr, rank_1 - 1, rank_2, dim>::contract(
             result[i], left[i], right);
       }
@@ -635,7 +635,7 @@ namespace TensorAccessors
       inline DEAL_II_ALWAYS_INLINE static void
       contract(T1& result, const T2& left, const T3& right)
       {
-        for(unsigned int i = 0; i < dim; ++i)
+        for(unsigned int i= 0; i < dim; ++i)
           Contract<no_contr, no_contr, rank_2 - 1, dim>::contract(
             result[i], left, right[i]);
       }
@@ -663,7 +663,7 @@ namespace TensorAccessors
       inline DEAL_II_ALWAYS_INLINE static void
       contract(T1& result, const T2& left, const T3& right)
       {
-        result = Contract2<no_contr, dim>::template contract2<T1>(left, right);
+        result= Contract2<no_contr, dim>::template contract2<T1>(left, right);
       }
     };
 
@@ -681,9 +681,9 @@ namespace TensorAccessors
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
-        T1 result = dealii::internal::NumberType<T1>::value(0.0);
-        for(unsigned int i = 0; i < dim; ++i)
-          result += Contract2<no_contr - 1, dim>::template contract2<T1>(
+        T1 result= dealii::internal::NumberType<T1>::value(0.0);
+        for(unsigned int i= 0; i < dim; ++i)
+          result+= Contract2<no_contr - 1, dim>::template contract2<T1>(
             left[i], right[i]);
         return result;
       }
@@ -728,9 +728,9 @@ namespace TensorAccessors
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
-        T1 result = dealii::internal::NumberType<T1>::value(0.0);
-        for(unsigned int i = 0; i < dim; ++i)
-          result += Contract3<rank_1 - 1, rank_2, dim>::template contract3<T1>(
+        T1 result= dealii::internal::NumberType<T1>::value(0.0);
+        for(unsigned int i= 0; i < dim; ++i)
+          result+= Contract3<rank_1 - 1, rank_2, dim>::template contract3<T1>(
             left[i], middle[i], right);
         return result;
       }
@@ -757,9 +757,9 @@ namespace TensorAccessors
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
-        T1 result = dealii::internal::NumberType<T1>::value(0.0);
-        for(unsigned int i = 0; i < dim; ++i)
-          result += Contract3<0, rank_2 - 1, dim>::template contract3<T1>(
+        T1 result= dealii::internal::NumberType<T1>::value(0.0);
+        for(unsigned int i= 0; i < dim; ++i)
+          result+= Contract3<0, rank_2 - 1, dim>::template contract3<T1>(
             left, middle[i], right[i]);
         return result;
       }

@@ -26,16 +26,16 @@ main()
   deallog.attach(logfile);
 
   SymmetricTensor<4, 2> t;
-  t[0][0][0][0] = 1;
-  t[1][1][1][1] = 2;
-  t[0][1][0][1] = 3;
+  t[0][0][0][0]= 1;
+  t[1][1][1][1]= 2;
+  t[0][1][0][1]= 3;
 
   AssertThrow(t[0][1][0][1] == t[1][0][1][0], ExcInternalError());
 
   // check that if a single element is
   // accessed, its transpose element gets the
   // same value
-  t[1][0][0][1] = 4;
+  t[1][0][0][1]= 4;
   AssertThrow(t[0][1][1][0] == 4, ExcInternalError());
 
   // make sure transposition doesn't change
@@ -47,12 +47,12 @@ main()
 
   // make sure norm is induced by scalar
   // product
-  double norm_sqr = 0;
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
-      for(unsigned int k = 0; k < 2; ++k)
-        for(unsigned int l = 0; l < 2; ++l)
-          norm_sqr += t[i][j][k][l] * t[i][j][k][l];
+  double norm_sqr= 0;
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
+      for(unsigned int k= 0; k < 2; ++k)
+        for(unsigned int l= 0; l < 2; ++l)
+          norm_sqr+= t[i][j][k][l] * t[i][j][k][l];
 
   AssertThrow(std::fabs(t.norm() * t.norm() - norm_sqr) < 1e-14,
               ExcInternalError());

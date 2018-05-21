@@ -157,7 +157,7 @@ namespace hp
    *
    * @author Wolfgang Bangerth, Oliver Kayser-Herold, 2003, 2004, 2017
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class DoFHandler : public Subscriptor
   {
     typedef dealii::internal::DoFHandlerImplementation::
@@ -226,12 +226,12 @@ namespace hp
     /**
      * Make the dimension available in function templates.
      */
-    static const unsigned int dimension = dim;
+    static const unsigned int dimension= dim;
 
     /**
      * Make the space dimension available in function templates.
      */
-    static const unsigned int space_dimension = spacedim;
+    static const unsigned int space_dimension= spacedim;
 
     /**
      * When the arrays holding the DoF indices are set up, but before they are
@@ -258,7 +258,7 @@ namespace hp
      * used on different cells. The default index consequently corresponds to
      * an invalid value.
      */
-    static const unsigned int default_fe_index = numbers::invalid_unsigned_int;
+    static const unsigned int default_fe_index= numbers::invalid_unsigned_int;
 
     /**
      * Default Constructor.
@@ -276,7 +276,7 @@ namespace hp
      * rather deliberately constructed. As a consequence, this constructor
      * is explicitly removed from the interface of this class.
      */
-    DoFHandler(const DoFHandler&) = delete;
+    DoFHandler(const DoFHandler&)= delete;
 
     /**
      * Destructor.
@@ -450,7 +450,7 @@ namespace hp
      * Iterator to the first used cell on level @p level.
      */
     cell_iterator
-    begin(const unsigned int level = 0) const;
+    begin(const unsigned int level= 0) const;
 
     /**
      * Iterator to the first active cell on level @p level. If the given level
@@ -465,7 +465,7 @@ namespace hp
      * on this level.
      */
     active_cell_iterator
-    begin_active(const unsigned int level = 0) const;
+    begin_active(const unsigned int level= 0) const;
 
     /**
      * Iterator past the end; this iterator serves for comparisons of
@@ -1075,30 +1075,30 @@ namespace hp
     // some versions of gcc have trouble with loading vectors of
     // std::unique_ptr objects because std::unique_ptr does not
     // have a copy constructor. do it one level at a time
-    const unsigned int n_levels = levels.size();
+    const unsigned int n_levels= levels.size();
     ar&                n_levels;
-    for(unsigned int i = 0; i < n_levels; ++i)
+    for(unsigned int i= 0; i < n_levels; ++i)
       ar& levels[i];
 
     // boost dereferences a nullptr when serializing a nullptr
     // at least up to 1.65.1. This causes problems with clang-5.
     // Therefore, work around it.
-    bool faces_is_nullptr = (faces.get() == nullptr);
+    bool faces_is_nullptr= (faces.get() == nullptr);
     ar&  faces_is_nullptr;
     if(!faces_is_nullptr)
       ar& faces;
 
     // the same issue as above
-    const unsigned int n_has_children = has_children.size();
+    const unsigned int n_has_children= has_children.size();
     ar&                n_has_children;
-    for(unsigned int i = 0; i < n_has_children; ++i)
+    for(unsigned int i= 0; i < n_has_children; ++i)
       ar& has_children[i];
 
     // write out the number of triangulation cells and later check during
     // loading that this number is indeed correct; same with something that
     // identifies the policy
-    const unsigned int n_cells = tria->n_cells();
-    std::string policy_name    = dealii::internal::policy_to_string(*policy);
+    const unsigned int n_cells    = tria->n_cells();
+    std::string        policy_name= dealii::internal::policy_to_string(*policy);
 
     ar& n_cells& policy_name;
   }
@@ -1127,15 +1127,15 @@ namespace hp
     unsigned int size;
     ar&          size;
     levels.resize(size);
-    for(unsigned int i = 0; i < size; ++i)
+    for(unsigned int i= 0; i < size; ++i)
       {
         std::unique_ptr<dealii::internal::hp::DoFLevel> level;
         ar&                                             level;
-        levels[i] = std::move(level);
+        levels[i]= std::move(level);
       }
 
     //Workaround for nullptr, see in save().
-    bool faces_is_nullptr = true;
+    bool faces_is_nullptr= true;
     ar&  faces_is_nullptr;
     if(!faces_is_nullptr)
       ar& faces;
@@ -1143,11 +1143,11 @@ namespace hp
     // the same issue as above
     ar& size;
     has_children.resize(size);
-    for(unsigned int i = 0; i < size; ++i)
+    for(unsigned int i= 0; i < size; ++i)
       {
         std::unique_ptr<std::vector<bool>> has_children_on_level;
         ar&                                has_children_on_level;
-        has_children[i] = std::move(has_children_on_level);
+        has_children[i]= std::move(has_children_on_level);
       }
 
     // these are the checks that correspond to the last block in the save()

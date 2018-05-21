@@ -47,7 +47,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a distributed mesh
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -59,14 +59,14 @@ test()
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  IndexSet                      owned_set = dofh.locally_owned_dofs();
+  IndexSet                      owned_set= dofh.locally_owned_dofs();
   TrilinosWrappers::MPI::Vector x;
 
   x.reinit(owned_set, MPI_COMM_WORLD);
 
   // Select the first of the two components
   std::vector<bool> components(2);
-  components[0] = true;
+  components[0]= true;
 
   // This failed before this test was introduced.
   // Interpolate onto the first component only.
@@ -78,7 +78,7 @@ test()
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
   TrilinosWrappers::MPI::Vector x_rel(relevant_set, MPI_COMM_WORLD);
-  x_rel = x;
+  x_rel= x;
   Vector<double>               error(tr.n_active_cells());
   ComponentSelectFunction<dim> right_component_select(0, 2);
   ComponentSelectFunction<dim> wrong_component_select(1, 2);
@@ -110,7 +110,7 @@ test()
                                     VectorTools::L2_norm,
                                     &wrong_component_select);
 
-  norm = VectorTools::compute_global_error(tr, error, VectorTools::L2_norm);
+  norm= VectorTools::compute_global_error(tr, error, VectorTools::L2_norm);
 
   if(myid == 0)
     deallog << "Error of not interpolated component: " << norm << std::endl;
@@ -128,7 +128,7 @@ main(int argc, char* argv[])
   compile_time_error;
 #endif
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

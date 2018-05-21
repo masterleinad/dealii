@@ -123,7 +123,7 @@ public:
       SparseMatrix(const IndexSet& local,
                    const IndexSet&,
                    SP&             sp,
-                   const MPI_Comm& comm = MPI_COMM_WORLD)
+                   const MPI_Comm& comm= MPI_COMM_WORLD)
       {}
 
       void

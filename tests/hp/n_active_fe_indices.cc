@@ -38,7 +38,7 @@ check_cells(const hp::DoFHandler<dim>& dof_handler)
       deallog << "cell=" << cell << std::endl;
       deallog << "n=" << cell->n_active_fe_indices() << std::endl;
       deallog << "x=";
-      for(unsigned int i = 0; i < dof_handler.get_fe().size(); ++i)
+      for(unsigned int i= 0; i < dof_handler.get_fe().size(); ++i)
         deallog << cell->fe_index_is_active(i);
       deallog << std::endl;
 
@@ -58,12 +58,12 @@ check_faces(const hp::DoFHandler<dim>& dof_handler)
       = dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         deallog << "face=" << cell->face(f) << std::endl;
         deallog << "n=" << cell->face(f)->n_active_fe_indices() << std::endl;
         deallog << "x=";
-        for(unsigned int i = 0; i < dof_handler.get_fe().size(); ++i)
+        for(unsigned int i= 0; i < dof_handler.get_fe().size(); ++i)
           deallog << cell->face(f)->fe_index_is_active(i);
         deallog << std::endl;
 
@@ -88,12 +88,12 @@ check_edges(const hp::DoFHandler<dim>& dof_handler)
       = dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int e = 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
+    for(unsigned int e= 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
       {
         deallog << "edge=" << cell->line(e) << std::endl;
         deallog << "n=" << cell->line(e)->n_active_fe_indices() << std::endl;
         deallog << "x=";
-        for(unsigned int i = 0; i < dof_handler.get_fe().size(); ++i)
+        for(unsigned int i= 0; i < dof_handler.get_fe().size(); ++i)
           deallog << cell->line(e)->fe_index_is_active(i);
         deallog << std::endl;
 

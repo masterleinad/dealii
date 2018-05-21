@@ -46,9 +46,9 @@ check_solve(SolverType&               solver,
       solver.set_problem_type(EPS_HEP);
       // reset vectors and set them as initial space
       // to avoid dependency on random numbers:
-      for(unsigned int i = 0; i < u.size(); i++)
-        for(unsigned int j = 0; j < u[i].size(); ++j)
-          u[i][j] = random_value<double>();
+      for(unsigned int i= 0; i < u.size(); i++)
+        for(unsigned int j= 0; j < u[i].size(); ++j)
+          u[i][j]= random_value<double>();
 
       for(auto& vector : u)
         vector.compress(VectorOperation::insert);
@@ -94,7 +94,7 @@ check_solve(SolverType&               solver,
     }
 
   deallog << "Eigenvalues:";
-  for(unsigned int i = 0; i < v.size(); i++)
+  for(unsigned int i= 0; i < v.size(); i++)
     {
       deallog << " " << v[i];
       if(i != (v.size() - 1))
@@ -114,10 +114,10 @@ main(int argc, char** argv)
     SolverControl control(
       500, 1e-12 /*1000*PETSC_MACHINE_EPSILON*/, false, false);
 
-    const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    const unsigned int size= 31;
+    unsigned int       dim = (size - 1);
 
-    const unsigned n_eigenvalues = 4;
+    const unsigned n_eigenvalues= 4;
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl << std::endl;
 

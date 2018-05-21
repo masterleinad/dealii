@@ -32,7 +32,7 @@
   deallog.push(#precond);                   \
   try                                       \
     {                                       \
-      u = 0.;                               \
+      u= 0.;                                \
       solver.method(A, u, f, precond);      \
     }                                       \
   catch(...)                                \
@@ -60,17 +60,17 @@ check_vmult_quadratic(std::vector<double>& residuals,
 
   const types::global_dof_index block_size
     = (types::global_dof_index) std::sqrt(A.n() + .3);
-  const unsigned int n_blocks = A.n() / block_size;
+  const unsigned int n_blocks= A.n() / block_size;
 
   typename PreconditionBlock<MatrixType, float>::AdditionalData data(block_size,
                                                                      1.2);
   std::vector<types::global_dof_index>                          perm(A.n());
   std::vector<types::global_dof_index>                          iperm(A.n());
-  for(unsigned int i = 0; i < n_blocks; ++i)
-    for(unsigned int j = 0; j < block_size; ++j)
+  for(unsigned int i= 0; i < n_blocks; ++i)
+    for(unsigned int j= 0; j < block_size; ++j)
       {
-        perm[block_size * i + j]        = block_size * ((i + 1) % n_blocks) + j;
-        iperm[perm[block_size * i + j]] = block_size * i + j;
+        perm[block_size * i + j]       = block_size * ((i + 1) % n_blocks) + j;
+        iperm[perm[block_size * i + j]]= block_size * i + j;
       }
 
   PreconditionIdentity           identity;
@@ -93,7 +93,7 @@ check_vmult_quadratic(std::vector<double>& residuals,
   block_psor.set_permutation(perm, iperm);
   block_psor.initialize(A, data);
 
-  f = 1.;
+  f= 1.;
 
   PREC_CHECK(rich, solve, identity);
   PREC_CHECK(prich, solve, jacobi);
@@ -144,19 +144,19 @@ check_vmult_quadratic(std::vector<double>&             residuals,
   PreconditionBlockJacobi<BlockSparseMatrix<double>, float> block_jacobi;
   block_jacobi.initialize(A, data);
 
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
 
   PREC_CHECK(rich, solve, identity);
   PREC_CHECK(prich, solve, jacobi);
-  u = 0.;
+  u= 0.;
   PREC_CHECK(prich, solve, block_jacobi);
 
-  u = 0.;
+  u= 0.;
   deallog << "Transpose" << std::endl;
   PREC_CHECK(rich, Tsolve, identity);
   PREC_CHECK(prich, Tsolve, jacobi);
-  u = 0.;
+  u= 0.;
   PREC_CHECK(prich, Tsolve, block_jacobi);
   deallog.pop();
 }
@@ -167,33 +167,33 @@ check_iterator(const MatrixType& A)
 {
   //  deallog.push("it");
 
-  typename MatrixType::const_iterator E = A.end();
+  typename MatrixType::const_iterator E= A.end();
 
   if(A.m() < 10)
-    for(unsigned int r = 0; r < A.m(); ++r)
+    for(unsigned int r= 0; r < A.m(); ++r)
       {
-        typename MatrixType::const_iterator b = A.begin(r);
+        typename MatrixType::const_iterator b= A.begin(r);
         if(b == E)
           deallog << "Final" << std::endl;
         else
           deallog << r << '\t' << b->row() << '\t' << b->column() << '\t'
                   << b->value() << std::endl;
-        typename MatrixType::const_iterator e = A.end(r);
+        typename MatrixType::const_iterator e= A.end(r);
         if(e == E)
           deallog << "Final" << std::endl;
         else
           deallog << '\t' << e->row() << std::endl;
         deallog << "cols:";
 
-        for(typename MatrixType::const_iterator i = b; i != e; ++i)
+        for(typename MatrixType::const_iterator i= b; i != e; ++i)
           deallog << '\t' << ',' << i->column();
         deallog << std::endl;
       }
-  for(typename MatrixType::const_iterator i = A.begin(); i != A.end(); ++i)
+  for(typename MatrixType::const_iterator i= A.begin(); i != A.end(); ++i)
     deallog << '\t' << i->row() << '\t' << i->column() << '\t' << i->value()
             << std::endl;
   deallog << "Repeat row 2" << std::endl;
-  for(typename MatrixType::const_iterator i = A.begin(2); i != A.end(2); ++i)
+  for(typename MatrixType::const_iterator i= A.begin(2); i != A.end(2); ++i)
     deallog << '\t' << i->row() << '\t' << i->column() << '\t' << i->value()
             << std::endl;
 
@@ -272,14 +272,14 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  const unsigned int size       = 5;
-  const unsigned int row_length = 3;
+  const unsigned int size      = 5;
+  const unsigned int row_length= 3;
 
   check_ez_iterator();
   check_conjugate(logfile);
 
   FDMatrix     testproblem(size, size);
-  unsigned int dim = (size - 1) * (size - 1);
+  unsigned int dim= (size - 1) * (size - 1);
 
   std::vector<double> A_res;
   std::vector<double> E_res;
@@ -349,7 +349,7 @@ main()
   check_vmult_quadratic(E_res, E, "9-SparseMatrixEZ<double>");
   E.print_statistics(deallog, true);
 
-  for(unsigned int i = 0; i < E_res.size(); ++i)
+  for(unsigned int i= 0; i < E_res.size(); ++i)
     if(std::fabs(A_res[i] - E_res[i]) > 1.e-13)
       deallog << "SparseMatrix and SparseMatrixEZ differ!!!" << std::endl;
   // dump A into a file, and re-read
@@ -367,7 +367,7 @@ main()
 
   std::remove("sparse_matrices.tmp");
 
-  SparseMatrix<double>::const_iterator p = A.begin(), p_tmp = A_tmp.begin();
+  SparseMatrix<double>::const_iterator p= A.begin(), p_tmp= A_tmp.begin();
   for(; p != A.end(); ++p, ++p_tmp)
     if(std::fabs(p->value() - p_tmp->value()) <= std::fabs(1e-14 * p->value()))
       deallog << "write/read-error at global position " << (p - A.begin())

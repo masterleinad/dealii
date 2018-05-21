@@ -37,7 +37,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 1)
     deallog << "hyper_cube" << std::endl;
@@ -58,11 +58,11 @@ test()
       deallog << "dofh.n_locally_owned_dofs() " << dofh.n_locally_owned_dofs()
               << std::endl;
 
-      const IndexSet set = DoFTools::dof_indices_with_subdomain_association(
+      const IndexSet set= DoFTools::dof_indices_with_subdomain_association(
         dofh, tr.locally_owned_subdomain());
 
       deallog << set.n_elements() << std::endl;
-      for(unsigned int i = 0; i < set.n_elements(); ++i)
+      for(unsigned int i= 0; i < set.n_elements(); ++i)
         deallog << "   " << set.nth_index_in_set(i) << std::endl;
     }
 }
@@ -72,7 +72,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

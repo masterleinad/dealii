@@ -113,7 +113,7 @@ test_with_hanging_nodes_random(const hp::FECollection<dim>& fe)
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for(unsigned int i= 0; i < 7 - dim; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
@@ -135,7 +135,7 @@ test_with_hanging_nodes_random_aniso(const hp::FECollection<dim>& fe)
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for(unsigned int i= 0; i < 7 - dim; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
@@ -167,7 +167,7 @@ test_with_wrong_face_orientation(const hp::FECollection<dim>& fe)
   if(dim != 3)
     return;
 
-  for(unsigned int i = 0; i < 7; ++i)
+  for(unsigned int i= 0; i < 7; ++i)
     {
       Triangulation<dim> triangulation;
       GridGenerator::hyper_ball(triangulation);
@@ -205,23 +205,23 @@ test_with_2d_deformed_mesh(const hp::FECollection<dim>& fe)
   // Prepare cell data
   std::vector<CellData<dim>> cells(3);
 
-  cells[0].vertices[0] = 0;
-  cells[0].vertices[1] = 1;
-  cells[0].vertices[2] = 4;
-  cells[0].vertices[3] = 2;
-  cells[0].material_id = 0;
+  cells[0].vertices[0]= 0;
+  cells[0].vertices[1]= 1;
+  cells[0].vertices[2]= 4;
+  cells[0].vertices[3]= 2;
+  cells[0].material_id= 0;
 
-  cells[1].vertices[0] = 4;
-  cells[1].vertices[1] = 2;
-  cells[1].vertices[2] = 5;
-  cells[1].vertices[3] = 3;
-  cells[1].material_id = 0;
+  cells[1].vertices[0]= 4;
+  cells[1].vertices[1]= 2;
+  cells[1].vertices[2]= 5;
+  cells[1].vertices[3]= 3;
+  cells[1].material_id= 0;
 
-  cells[2].vertices[0] = 0;
-  cells[2].vertices[1] = 4;
-  cells[2].vertices[2] = 6;
-  cells[2].vertices[3] = 5;
-  cells[2].material_id = 0;
+  cells[2].vertices[0]= 0;
+  cells[2].vertices[1]= 4;
+  cells[2].vertices[2]= 6;
+  cells[2].vertices[3]= 5;
+  cells[2].material_id= 0;
 
   Triangulation<dim> triangulation;
   triangulation.create_triangulation(points_glob, cells, SubCellData());
@@ -238,7 +238,7 @@ test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
   if(dim != 2)
     return;
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     {
       std::vector<Point<dim>> points_glob;
       std::vector<Point<dim>> points;
@@ -254,23 +254,23 @@ test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
       // Prepare cell data
       std::vector<CellData<dim>> cells(3);
 
-      cells[0].vertices[0] = 0;
-      cells[0].vertices[1] = 1;
-      cells[0].vertices[2] = 4;
-      cells[0].vertices[3] = 2;
-      cells[0].material_id = 0;
+      cells[0].vertices[0]= 0;
+      cells[0].vertices[1]= 1;
+      cells[0].vertices[2]= 4;
+      cells[0].vertices[3]= 2;
+      cells[0].material_id= 0;
 
-      cells[1].vertices[0] = 4;
-      cells[1].vertices[1] = 2;
-      cells[1].vertices[2] = 5;
-      cells[1].vertices[3] = 3;
-      cells[1].material_id = 0;
+      cells[1].vertices[0]= 4;
+      cells[1].vertices[1]= 2;
+      cells[1].vertices[2]= 5;
+      cells[1].vertices[3]= 3;
+      cells[1].material_id= 0;
 
-      cells[2].vertices[0] = 0;
-      cells[2].vertices[1] = 4;
-      cells[2].vertices[2] = 6;
-      cells[2].vertices[3] = 5;
-      cells[2].material_id = 0;
+      cells[2].vertices[0]= 0;
+      cells[2].vertices[1]= 4;
+      cells[2].vertices[2]= 6;
+      cells[2].vertices[3]= 5;
+      cells[2].material_id= 0;
 
       Triangulation<dim> triangulation;
       triangulation.create_triangulation(points_glob, cells, SubCellData());
@@ -314,7 +314,7 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
   // we get hanging nodes
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> subdivisions(dim, 1);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation,
     subdivisions,
@@ -332,8 +332,8 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
 
   // for every pair of finite elements,
   // assign them to each of the two sides of the domain
-  for(unsigned int fe1 = 0; fe1 < fe.size(); ++fe1)
-    for(unsigned int fe2 = 0; fe2 < fe.size(); ++fe2)
+  for(unsigned int fe1= 0; fe1 < fe.size(); ++fe1)
+    for(unsigned int fe2= 0; fe2 < fe.size(); ++fe2)
       {
         // skip elements that don't have
         // support points defined
@@ -380,15 +380,15 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
         // VectorTools::interpolate...)
         const unsigned int min_degree
           = std::min(polynomial_degrees[fe1], polynomial_degrees[fe2]);
-        for(unsigned int test = 0; test < dim + 1; ++test)
+        for(unsigned int test= 0; test < dim + 1; ++test)
           {
             Tensor<1, dim> exponents;
             if(test < dim)
-              exponents[test] = min_degree;
+              exponents[test]= min_degree;
             else
               {
-                for(unsigned int i = 0; i < dim; ++i)
-                  exponents[i] = min_degree;
+                for(unsigned int i= 0; i < dim; ++i)
+                  exponents[i]= min_degree;
               }
 
             const Functions::Monomial<dim> test_function(exponents,
@@ -416,10 +416,10 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
             // should be zero, since our
             // original polynomial was in the
             // ansatz space
-            interpolant_2 = interpolant_1;
+            interpolant_2= interpolant_1;
             constraints.distribute(interpolant_2);
 
-            interpolant_2 -= interpolant_1;
+            interpolant_2-= interpolant_1;
 
             Assert(interpolant_2.l2_norm() < 1e-12 * interpolant_1.l2_norm(),
                    ExcInternalError());

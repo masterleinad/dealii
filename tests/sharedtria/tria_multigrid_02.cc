@@ -38,7 +38,7 @@ test()
       parallel::shared::Triangulation<dim>::partition_zorder
       | parallel::shared::Triangulation<dim>::construct_multigrid_hierarchy));
 
-  unsigned int refinements = 2;
+  unsigned int refinements= 2;
   GridGenerator::subdivided_hyper_cube(shared_tria, 2, -1, 1);
   shared_tria.refine_global(refinements);
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -68,10 +68,10 @@ test()
     }
 
   deallog << "(CellId,level_subdomain_id) for each active cell:" << std::endl;
-  for(unsigned int lvl = 0; lvl < shared_tria.n_levels(); ++lvl)
+  for(unsigned int lvl= 0; lvl < shared_tria.n_levels(); ++lvl)
     {
-      typename Triangulation<dim>::cell_iterator cell = shared_tria.begin(lvl),
-                                                 endc = shared_tria.end(lvl);
+      typename Triangulation<dim>::cell_iterator cell= shared_tria.begin(lvl),
+                                                 endc= shared_tria.end(lvl);
       for(; cell != endc; ++cell)
         if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
           deallog << "(" << cell->id().to_string() << ","

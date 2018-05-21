@@ -266,7 +266,7 @@ template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators
 IteratorRange<Iterator>::IteratorOverIterators::operator++(int)
 {
-  const IteratorOverIterators old_value = *this;
+  const IteratorOverIterators old_value= *this;
   ++element_of_iterator_collection;
   return *old_value;
 }

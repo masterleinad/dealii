@@ -57,10 +57,10 @@ int
 main()
 {
   FullMatrix<double> matrix(2);
-  matrix(0, 0) = 0.;
-  matrix(1, 1) = 0.;
-  matrix(0, 1) = 3.14;
-  matrix(1, 0) = -3.14;
+  matrix(0, 0)= 0.;
+  matrix(1, 1)= 0.;
+  matrix(0, 1)= 3.14;
+  matrix(1, 0)= -3.14;
 
   OutputOperator<Vector<double>> out;
   out.initialize_stream(std::cout);
@@ -71,7 +71,7 @@ main()
   solver.set_output(out);
 
   Vector<double> value(2);
-  value(0) = 1.;
+  value(0)= 1.;
   AnyData indata;
   AnyData outdata;
   outdata.add(&value, "value");
@@ -88,13 +88,13 @@ Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 void
 Explicit::operator()(AnyData& out, const AnyData& in)
 {
-  const double timestep = *in.read_ptr<double>("Timestep");
+  const double timestep= *in.read_ptr<double>("Timestep");
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
     {
       m.equ(-timestep, *matrix);
-      for(unsigned int i = 0; i < m.m(); ++i)
-        m(i, i) += 1.;
+      for(unsigned int i= 0; i < m.m(); ++i)
+        m(i, i)+= 1.;
     }
   this->notifications.clear();
   m.vmult(*out.entry<Vector<double>*>(0),
@@ -109,13 +109,13 @@ Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 void
 Implicit::operator()(AnyData& out, const AnyData& in)
 {
-  const double timestep = *in.read_ptr<double>("Timestep");
+  const double timestep= *in.read_ptr<double>("Timestep");
   if(this->notifications.test(Events::initial)
      || this->notifications.test(Events::new_timestep_size))
     {
       m.equ(timestep, *matrix);
-      for(unsigned int i = 0; i < m.m(); ++i)
-        m(i, i) += 1.;
+      for(unsigned int i= 0; i < m.m(); ++i)
+        m(i, i)+= 1.;
       m.gauss_jordan();
     }
   this->notifications.clear();

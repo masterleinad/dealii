@@ -59,29 +59,29 @@ enum MappingType
    * No mapping, i.e., shape functions are not mapped from a reference cell
    * but instead are defined right on the real-space cell.
    */
-  mapping_none = 0x0000,
+  mapping_none= 0x0000,
 
   /**
    * Covariant mapping (see Mapping::transform() for details).
    */
-  mapping_covariant = 0x0001,
+  mapping_covariant= 0x0001,
 
   /**
    * Contravariant mapping (see Mapping::transform() for details).
    */
-  mapping_contravariant = 0x0002,
+  mapping_contravariant= 0x0002,
 
   /**
    * Mapping of the gradient of a covariant vector field (see
    * Mapping::transform() for details).
    */
-  mapping_covariant_gradient = 0x0003,
+  mapping_covariant_gradient= 0x0003,
 
   /**
    * Mapping of the gradient of a contravariant vector field (see
    * Mapping::transform() for details).
    */
-  mapping_contravariant_gradient = 0x0004,
+  mapping_contravariant_gradient= 0x0004,
 
   /**
    * The Piola transform usually used for Hdiv elements. Piola transform is
@@ -89,13 +89,13 @@ enum MappingType
    * It amounts to a contravariant transformation scaled by the inverse of the
    * volume element.
    */
-  mapping_piola = 0x0100,
+  mapping_piola= 0x0100,
 
   /**
    * Transformation for the gradient of a vector field corresponding to a
    * mapping_piola transformation (see Mapping::transform() for details).
    */
-  mapping_piola_gradient = 0x0101,
+  mapping_piola_gradient= 0x0101,
 
   /**
    * The mapping used for Nedelec elements.
@@ -104,17 +104,17 @@ enum MappingType
    * we introduce a separate mapping type, such that we can use the same flag
    * for the vector and its gradient (see Mapping::transform() for details).
    */
-  mapping_nedelec = 0x0200,
+  mapping_nedelec= 0x0200,
 
   /**
    * The mapping used for Raviart-Thomas elements.
    */
-  mapping_raviart_thomas = 0x0300,
+  mapping_raviart_thomas= 0x0300,
 
   /**
    * The mapping used for BDM elements.
    */
-  mapping_bdm = mapping_raviart_thomas,
+  mapping_bdm= mapping_raviart_thomas,
 
   /**
    * The mappings for 2-forms and third order tensors.
@@ -288,14 +288,14 @@ enum MappingType
  * @ingroup mapping
  * @author Guido Kanschat, Ralf Hartmann 2000, 2001
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class Mapping : public Subscriptor
 {
 public:
   /**
    * Virtual destructor.
    */
-  virtual ~Mapping() override = default;
+  virtual ~Mapping() override= default;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
@@ -307,7 +307,7 @@ public:
    * This function is mainly used by the hp::MappingCollection class.
    */
   virtual std::unique_ptr<Mapping<dim, spacedim>>
-  clone() const = 0;
+  clone() const= 0;
 
   /**
    * Return the mapped vertices of a cell.
@@ -339,7 +339,7 @@ public:
    * MappingQEulerian, MappingQ1Eulerian, and MappingFEField.
    */
   virtual bool
-  preserves_vertex_locations() const = 0;
+  preserves_vertex_locations() const= 0;
 
   /**
    * @name Mapping points between reference and real cells
@@ -360,7 +360,7 @@ public:
   virtual Point<spacedim>
   transform_unit_to_real_cell(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<dim>&                                           p) const = 0;
+    const Point<dim>&                                           p) const= 0;
 
   /**
    * Map the point @p p on the real @p cell to the corresponding point on the
@@ -393,7 +393,7 @@ public:
   virtual Point<dim>
   transform_real_to_unit_cell(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<spacedim>&                                      p) const = 0;
+    const Point<spacedim>&                                      p) const= 0;
 
   /**
    * Transform the point @p p on the real @p cell to the corresponding point
@@ -541,12 +541,12 @@ public:
     /**
      * Copy construction is forbidden.
      */
-    InternalDataBase(const InternalDataBase&) = delete;
+    InternalDataBase(const InternalDataBase&)= delete;
 
     /**
      * Virtual destructor for derived classes
      */
-    virtual ~InternalDataBase() = default;
+    virtual ~InternalDataBase()= default;
 
     /**
      * A set of update flags specifying the kind of information that an
@@ -596,7 +596,7 @@ protected:
    * @see UpdateFlags
    */
   virtual UpdateFlags
-  requires_update_flags(const UpdateFlags update_flags) const = 0;
+  requires_update_flags(const UpdateFlags update_flags) const= 0;
 
   /**
    * Create and return a pointer to an object into which mappings can store
@@ -648,7 +648,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_data(const UpdateFlags      update_flags,
-           const Quadrature<dim>& quadrature) const = 0;
+           const Quadrature<dim>& quadrature) const= 0;
 
   /**
    * Like get_data(), but in preparation for later calls to transform() or
@@ -679,7 +679,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_face_data(const UpdateFlags          update_flags,
-                const Quadrature<dim - 1>& quadrature) const = 0;
+                const Quadrature<dim - 1>& quadrature) const= 0;
 
   /**
    * Like get_data() and get_face_data(), but in preparation for later calls
@@ -711,7 +711,7 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_subface_data(const UpdateFlags          update_flags,
-                   const Quadrature<dim - 1>& quadrature) const = 0;
+                   const Quadrature<dim - 1>& quadrature) const= 0;
 
   /**
    * Compute information about the mapping from the reference cell to the real
@@ -803,7 +803,7 @@ protected:
     const Quadrature<dim>&                                      quadrature,
     const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+      output_data) const= 0;
 
   /**
    * This function is the equivalent to Mapping::fill_fe_values(), but for
@@ -836,7 +836,7 @@ protected:
     const Quadrature<dim - 1>&                                  quadrature,
     const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+      output_data) const= 0;
 
   /**
    * This function is the equivalent to Mapping::fill_fe_values(), but for
@@ -872,7 +872,7 @@ protected:
     const Quadrature<dim - 1>&                                  quadrature,
     const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
     dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-      output_data) const = 0;
+      output_data) const= 0;
 
   /**
    * @}
@@ -950,7 +950,7 @@ public:
   transform(const ArrayView<const Tensor<1, dim>>&                   input,
             const MappingType                                        type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<1, spacedim>>& output) const = 0;
+            const ArrayView<Tensor<1, spacedim>>& output) const= 0;
 
   /**
    * Transform a field of differential forms from the reference cell to the
@@ -1002,7 +1002,7 @@ public:
   transform(const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
             const MappingType                                        type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<2, spacedim>>& output) const = 0;
+            const ArrayView<Tensor<2, spacedim>>& output) const= 0;
 
   /**
    * Transform a tensor field from the reference cell to the physical cell.
@@ -1059,7 +1059,7 @@ public:
   transform(const ArrayView<const Tensor<2, dim>>&                   input,
             const MappingType                                        type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<2, spacedim>>& output) const = 0;
+            const ArrayView<Tensor<2, spacedim>>& output) const= 0;
 
   /**
    * Transform a tensor field from the reference cell to the physical cell.
@@ -1104,7 +1104,7 @@ public:
   transform(const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
             const MappingType                                        type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<3, spacedim>>& output) const = 0;
+            const ArrayView<Tensor<3, spacedim>>& output) const= 0;
 
   /**
    * Transform a field of 3-differential forms from the reference cell to the
@@ -1157,7 +1157,7 @@ public:
   transform(const ArrayView<const Tensor<3, dim>>&                   input,
             const MappingType                                        type,
             const typename Mapping<dim, spacedim>::InternalDataBase& internal,
-            const ArrayView<Tensor<3, spacedim>>& output) const = 0;
+            const ArrayView<Tensor<3, spacedim>>& output) const= 0;
 
   /**
    * @}

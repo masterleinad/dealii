@@ -23,6 +23,6 @@ void
 check()
 {
   FullMatrix<number> m;
-  m = IdentityMatrix(5);
+  m= IdentityMatrix(5);
   print_matrix(m);
 }

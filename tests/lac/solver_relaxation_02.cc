@@ -38,16 +38,16 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  double result = 0.;
-  u             = 0.;
-  f             = 1.;
+  double result= 0.;
+  u            = 0.;
+  f            = 1.;
   try
     {
       solver.solve(A, u, f, P);
     }
   catch(SolverControl::NoConvergence& e)
     {
-      result = e.last_residual;
+      result= e.last_residual;
     }
   return result;
 }
@@ -55,7 +55,7 @@ check_solve(SolverType&         solver,
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   //  logfile.setf(std::ios::fixed);
   deallog << std::setprecision(4);
@@ -65,9 +65,9 @@ main()
   SolverRichardson<> rich(control);
   SolverRelaxation<> relax(control);
 
-  for(unsigned int size = 33; size <= 33; size *= 3)
+  for(unsigned int size= 33; size <= 33; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -79,20 +79,20 @@ main()
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
 
-      for(unsigned int blocksize = 2; blocksize < 32; blocksize <<= 1)
+      for(unsigned int blocksize= 2; blocksize < 32; blocksize<<= 1)
         {
           deallog << "Block size " << blocksize << std::endl;
 
-          const unsigned int n_blocks = dim / blocksize;
+          const unsigned int n_blocks= dim / blocksize;
           RelaxationBlock<SparseMatrix<double>, double>::AdditionalData
             relax_data(0.8);
           PreconditionBlock<SparseMatrix<double>, double>::AdditionalData
             prec_data(blocksize, 0.8);
 
           relax_data.block_list.reinit(n_blocks, dim, blocksize);
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for(unsigned int block= 0; block < n_blocks; ++block)
             {
-              for(unsigned int i = 0; i < blocksize; ++i)
+              for(unsigned int i= 0; i < blocksize; ++i)
                 relax_data.block_list.add(block, i + block * blocksize);
             }
           relax_data.block_list.compress();
@@ -115,34 +115,34 @@ main()
           Vector<double> u(dim);
           Vector<double> res(dim);
 
-          f = 1.;
-          u = 1.;
+          f= 1.;
+          u= 1.;
 
           try
             {
               double r1, r2;
 
               deallog.push("Jacobi");
-              r1 = check_solve(rich, A, u, f, prec_jacobi);
-              r2 = check_solve(relax, A, u, f, prec_jacobi);
+              r1= check_solve(rich, A, u, f, prec_jacobi);
+              r2= check_solve(relax, A, u, f, prec_jacobi);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
-              r2 = check_solve(relax, A, u, f, relax_jacobi);
+              r2= check_solve(relax, A, u, f, relax_jacobi);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
 
               deallog.push("SOR   ");
-              r1 = check_solve(rich, A, u, f, prec_sor);
-              r2 = check_solve(relax, A, u, f, prec_sor);
+              r1= check_solve(rich, A, u, f, prec_sor);
+              r2= check_solve(relax, A, u, f, prec_sor);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
-              r2 = check_solve(relax, A, u, f, relax_sor);
+              r2= check_solve(relax, A, u, f, relax_sor);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
 
               deallog.push("SSOR  ");
-              r1 = check_solve(rich, A, u, f, prec_ssor);
-              r2 = check_solve(relax, A, u, f, prec_ssor);
+              r1= check_solve(rich, A, u, f, prec_ssor);
+              r2= check_solve(relax, A, u, f, prec_ssor);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
-              r2 = check_solve(relax, A, u, f, relax_ssor);
+              r2= check_solve(relax, A, u, f, relax_ssor);
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
             }

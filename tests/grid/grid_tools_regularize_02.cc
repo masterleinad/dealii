@@ -34,8 +34,8 @@ main()
 
   Triangulation<2>          tria;
   std::vector<unsigned int> subdivisions(2);
-  subdivisions[0] = 4;
-  subdivisions[1] = 1;
+  subdivisions[0]= 4;
+  subdivisions[1]= 1;
   GridGenerator::subdivided_hyper_rectangle(tria, subdivisions, p0, p1, true);
 
   GridTools::copy_boundary_to_manifold_id(tria);

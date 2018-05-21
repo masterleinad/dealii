@@ -52,8 +52,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(
     MPI_COMM_WORLD,
@@ -63,7 +63,7 @@ test()
   GridGenerator::subdivided_hyper_cube(tr, 16);
   tr.refine_global(1);
 
-  current_cell_weight = 1;
+  current_cell_weight= 1;
 
   // repartition the mesh as described above, first in some arbitrary
   // way, and then with all equal weights
@@ -78,7 +78,7 @@ test()
   tr.repartition();
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    for(unsigned int p = 0; p < numproc; ++p)
+    for(unsigned int p= 0; p < numproc; ++p)
       deallog << "processor " << p << ": "
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
@@ -89,7 +89,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(myid == 0)
     {

@@ -119,7 +119,7 @@ namespace PETScWrappers
     /**
      * Destructor.
      */
-    virtual ~SolverBase() = default;
+    virtual ~SolverBase()= default;
 
     /**
      * Solve the linear system <tt>Ax=b</tt>. Depending on the information
@@ -180,7 +180,7 @@ namespace PETScWrappers
      * the type of solver that is requested by the derived class.
      */
     virtual void
-    set_solver_type(KSP& ksp) const = 0;
+    set_solver_type(KSP& ksp) const= 0;
 
     /**
      * Solver prefix name to qualify options specific to the PETSc KSP object
@@ -267,7 +267,7 @@ namespace PETScWrappers
       /**
        * Constructor. By default, set the damping parameter to one.
        */
-      explicit AdditionalData(const double omega = 1);
+      explicit AdditionalData(const double omega= 1);
 
       /**
        * Relaxation parameter.
@@ -292,8 +292,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverRichardson(SolverControl&        cn,
-                     const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                     const AdditionalData& data             = AdditionalData());
+                     const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                     const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -342,8 +342,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverChebychev(SolverControl&        cn,
-                    const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                    const AdditionalData& data             = AdditionalData());
+                    const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                    const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -391,8 +391,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverCG(SolverControl&        cn,
-             const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-             const AdditionalData& data             = AdditionalData());
+             const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+             const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -440,8 +440,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverBiCG(SolverControl&        cn,
-               const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-               const AdditionalData& data             = AdditionalData());
+               const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+               const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -475,8 +475,8 @@ namespace PETScWrappers
        * Constructor. By default, set the number of temporary vectors to 30,
        * i.e. do a restart every 30 iterations.
        */
-      AdditionalData(const unsigned int restart_parameter     = 30,
-                     const bool         right_preconditioning = false);
+      AdditionalData(const unsigned int restart_parameter    = 30,
+                     const bool         right_preconditioning= false);
 
       /**
        * Maximum number of tmp vectors.
@@ -506,8 +506,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverGMRES(SolverControl&        cn,
-                const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+                const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -556,8 +556,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverBicgstab(SolverControl&        cn,
-                   const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                   const AdditionalData& data             = AdditionalData());
+                   const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                   const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -606,8 +606,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverCGS(SolverControl&        cn,
-              const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-              const AdditionalData& data             = AdditionalData());
+              const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+              const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -655,8 +655,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverTFQMR(SolverControl&        cn,
-                const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+                const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -709,8 +709,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverTCQMR(SolverControl&        cn,
-                const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+                const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -758,8 +758,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverCR(SolverControl&        cn,
-             const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-             const AdditionalData& data             = AdditionalData());
+             const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+             const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -808,8 +808,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverLSQR(SolverControl&        cn,
-               const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-               const AdditionalData& data             = AdditionalData());
+               const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+               const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -863,8 +863,8 @@ namespace PETScWrappers
      * track down errors, see the documentation of the SolverBase class.
      */
     SolverPreOnly(SolverControl&        cn,
-                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+                  const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                  const AdditionalData& data            = AdditionalData());
 
   protected:
     /**
@@ -916,8 +916,8 @@ namespace PETScWrappers
      * Constructor
      */
     SparseDirectMUMPS(SolverControl&        cn,
-                      const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                      const AdditionalData& data = AdditionalData());
+                      const MPI_Comm&       mpi_communicator= PETSC_COMM_SELF,
+                      const AdditionalData& data            = AdditionalData());
 
     /**
      * The method to solve the linear system.

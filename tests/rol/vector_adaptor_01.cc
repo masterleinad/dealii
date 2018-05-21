@@ -33,7 +33,7 @@ test(const VectorType& given_vector)
   AssertThrow(given_vector == *given_vector_rol.getVector(),
               ExcInternalError());
 
-  Teuchos::RCP<VectorType>       w_rcp = Teuchos::rcp(new VectorType);
+  Teuchos::RCP<VectorType>       w_rcp= Teuchos::rcp(new VectorType);
   Rol::VectorAdaptor<VectorType> w_rol(w_rcp);
 
   // --- Testing VectorAdaptor::set()
@@ -45,8 +45,8 @@ test(const VectorType& given_vector)
   // --- Testing VectorAdaptor::plus()
   {
     VectorType u;
-    u = given_vector;
-    u *= 2.;
+    u= given_vector;
+    u*= 2.;
     w_rol.plus(given_vector_rol);
     AssertThrow(u == *w_rol.getVector(), ExcInternalError());
   }
@@ -69,8 +69,8 @@ main(int argc, char** argv)
         trilinos_vector.reinit(complete_index_set(100), MPI_COMM_WORLD);
 
         // set the first vector
-        for(unsigned int i = 0; i < trilinos_vector.size(); ++i)
-          trilinos_vector(i) = i;
+        for(unsigned int i= 0; i < trilinos_vector.size(); ++i)
+          trilinos_vector(i)= i;
 
         test(trilinos_vector);
       }

@@ -39,10 +39,9 @@ test()
   if(dim == 2)
     tria.refine_global(1);
   {
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active();
-    typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
-    unsigned int                                      counter = 0;
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active();
+    typename Triangulation<dim>::active_cell_iterator endc= tria.end();
+    unsigned int                                      counter= 0;
     for(; cell != endc; ++cell, ++counter)
       if(cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
@@ -71,13 +70,12 @@ test()
   MatrixFree<dim, double>                          mf_data_orig;
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
+  data.tasks_block_size     = 3;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
-  data.initialize_mapping = true;
+  data.initialize_mapping= true;
 
   mf_data_orig.reinit(mapping, dof_orig, constraints, quad, data);
   mf_data_orig.initialize_dof_vector(in_orig);
@@ -85,7 +83,7 @@ test()
 
   // create MatrixFree with renumbered degrees of freedom
   MatrixFree<dim, double> mf_data;
-  data.initialize_mapping = false;
+  data.initialize_mapping= false;
 
   mf_data.reinit(mapping, dof, constraints, quad, data);
 
@@ -93,7 +91,7 @@ test()
   mf_data.renumber_dofs(renumbering);
   dof.renumber_dofs(renumbering);
 
-  data.initialize_mapping = true;
+  data.initialize_mapping= true;
   mf_data.reinit(mapping, dof, constraints, quad, data);
 
   mf_data.initialize_dof_vector(in);
@@ -101,11 +99,11 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in_orig.local_size(); ++i)
+  for(unsigned int i= 0; i < in_orig.local_size(); ++i)
     {
-      const double entry       = Testing::rand() / (double) RAND_MAX;
-      in_orig.local_element(i) = entry;
-      in(renumbering[i])       = entry;
+      const double entry      = Testing::rand() / (double) RAND_MAX;
+      in_orig.local_element(i)= entry;
+      in(renumbering[i])      = entry;
     }
 
   MatrixFreeAdvection<dim,
@@ -124,17 +122,17 @@ test()
     mf2(mf_data);
   mf2.vmult(out, in);
 
-  for(unsigned int i = 0; i < out.local_size(); ++i)
-    out(renumbering[i]) -= out_orig.local_element(i);
+  for(unsigned int i= 0; i < out.local_size(); ++i)
+    out(renumbering[i])-= out_orig.local_element(i);
 
-  double diff_norm = out.linfty_norm() / out_orig.linfty_norm();
+  double diff_norm= out.linfty_norm() / out_orig.linfty_norm();
   deallog << "Norm of difference:          " << diff_norm << " ";
 
   // test again, now doing matrix-vector product twice
   mf2.vmult(out, in);
   mf2.vmult(out, in);
-  for(unsigned int i = 0; i < out.local_size(); ++i)
-    out(renumbering[i]) -= out_orig.local_element(i);
-  diff_norm = out.linfty_norm() / out_orig.linfty_norm();
+  for(unsigned int i= 0; i < out.local_size(); ++i)
+    out(renumbering[i])-= out_orig.local_element(i);
+  diff_norm= out.linfty_norm() / out_orig.linfty_norm();
   deallog << diff_norm << std::endl;
 }

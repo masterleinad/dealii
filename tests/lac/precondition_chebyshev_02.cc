@@ -32,15 +32,15 @@ public:
   set_vector_one(const unsigned int size)
   {
     diagonal.reinit(size);
-    diagonal = 1;
+    diagonal= 1;
   }
 
   void
   reinit(const FullMatrix<double> f)
   {
     diagonal.reinit(f.m());
-    for(unsigned int i = 0; i < f.m(); ++i)
-      diagonal(i) = 1. / f(i, i);
+    for(unsigned int i= 0; i < f.m(); ++i)
+      diagonal(i)= 1. / f(i, i);
     diagonal.print(deallog);
   }
 
@@ -53,7 +53,7 @@ public:
   void
   vmult(Vector<double>& dst, const Vector<double>& src) const
   {
-    dst = src;
+    dst= src;
     dst.scale(diagonal);
   }
 
@@ -64,14 +64,14 @@ private:
 void
 check()
 {
-  const unsigned int size = 10;
+  const unsigned int size= 10;
   FullMatrix<double> m(size, size);
-  for(unsigned int i = 0; i < size; ++i)
-    m(i, i) = i + 1;
+  for(unsigned int i= 0; i < size; ++i)
+    m(i, i)= i + 1;
 
   Vector<double> in(size), out(size);
-  for(unsigned int i = 0; i < size; ++i)
-    in(i) = random_value<double>();
+  for(unsigned int i= 0; i < size; ++i)
+    in(i)= random_value<double>();
 
   PreconditionChebyshev<FullMatrix<double>,
                         Vector<double>,
@@ -80,43 +80,43 @@ check()
   PreconditionChebyshev<FullMatrix<double>,
                         Vector<double>,
                         DiagonalMatrixManual>::AdditionalData data;
-  data.smoothing_range = 2 * size;
-  data.degree          = 3;
+  data.smoothing_range= 2 * size;
+  data.degree         = 3;
   data.preconditioner.reset(new DiagonalMatrixManual());
   data.preconditioner->set_vector_one(size);
   prec.initialize(m, data);
 
   deallog << "Exact inverse:     ";
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     deallog << in(i) / m(i, i) << " ";
   deallog << std::endl;
 
   deallog << "Check  vmult ones: ";
   prec.vmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
   deallog << "Check Tvmult ones: ";
   prec.Tvmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
   data.preconditioner->reinit(m);
-  data.smoothing_range = 2;
-  data.degree          = 5;
+  data.smoothing_range= 2;
+  data.degree         = 5;
   prec.initialize(m, data);
 
   deallog << "Check  vmult diag: ";
   prec.vmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
   deallog << "Check Tvmult diag: ";
   prec.Tvmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for(unsigned int i= 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 }

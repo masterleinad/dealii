@@ -70,8 +70,8 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // function plus a trend on this
   // grid
   Vector<double> tmp(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < tmp.size(); ++i)
-    tmp(i) = i; //(i + 13*i%17);
+  for(unsigned int i= 0; i < tmp.size(); ++i)
+    tmp(i)= i; //(i + 13*i%17);
 
   // restrict this function to the
   // next coarser level and
@@ -79,7 +79,7 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // higher level
   Vector<double> x(tmp.size());
   Vector<double> v(fe.dofs_per_cell);
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
     if(cell->has_children() && cell->child(0)->active())
@@ -89,7 +89,7 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
         // this, _all_ children have
         // to be active, not only
         // some of them
-        for(unsigned int c = 0; c < cell->n_children(); ++c)
+        for(unsigned int c= 0; c < cell->n_children(); ++c)
           AssertThrow(cell->child(c)->active(), ExcInternalError());
 
         // then restrict and prolongate
@@ -103,7 +103,7 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // cycle should not alter it any
   // more:
   Vector<double> x2(x.size());
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+  for(typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
     if(cell->has_children() && cell->child(0)->active())
@@ -113,10 +113,10 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       };
 
   // then check that this is so:
-  x2 -= x;
-  const double relative_residual = (x2.l2_norm() / x.l2_norm());
+  x2-= x;
+  const double relative_residual= (x2.l2_norm() / x.l2_norm());
 
-  const double threshold = 1e-6;
+  const double threshold= 1e-6;
   deallog << ", dofs_per_cell=" << fe.dofs_per_cell << "; relative residual: "
           << (relative_residual < threshold ? "ok" : "botched up!")
           << std::endl;
@@ -126,21 +126,21 @@ template <int dim>
 void
 test()
 {
-  const std::string ref_case_names[7] = {"RefinementCase<dim>::cut_x",
-                                         "RefinementCase<dim>::cut_y",
-                                         "RefinementCase<dim>::cut_xy",
-                                         "RefinementCase<dim>::cut_z",
-                                         "RefinementCase<dim>::cut_xz",
-                                         "RefinementCase<dim>::cut_yz",
-                                         "RefinementCase<dim>::cut_xyz"};
+  const std::string ref_case_names[7]= {"RefinementCase<dim>::cut_x",
+                                        "RefinementCase<dim>::cut_y",
+                                        "RefinementCase<dim>::cut_xy",
+                                        "RefinementCase<dim>::cut_z",
+                                        "RefinementCase<dim>::cut_xz",
+                                        "RefinementCase<dim>::cut_yz",
+                                        "RefinementCase<dim>::cut_xyz"};
 
-  const unsigned int n_ref_cases_for_dim[4] = {0, 1, 3, 7};
+  const unsigned int n_ref_cases_for_dim[4]= {0, 1, 3, 7};
 
   // now for a list of finite
   // elements, for which we want to
   // test. we happily waste tons of
   // memory here, but who cares...
-  const FiniteElement<dim>* fe_list[] = {
+  const FiniteElement<dim>* fe_list[]= {
     // FE_DGQ
     new FE_DGQ<dim>(0),
     new FE_DGQ<dim>(1),
@@ -196,7 +196,7 @@ test()
       FE_Q<dim>(3),
       1)};
 
-  for(unsigned int j = 0; j < n_ref_cases_for_dim[dim]; ++j)
+  for(unsigned int j= 0; j < n_ref_cases_for_dim[dim]; ++j)
     {
       // make a coarse triangulation as a
       // hypercube. if in more than 1d, distort it
@@ -206,18 +206,17 @@ test()
       // and refine again in an anisotropic way
       Triangulation<dim> tr;
       GridGenerator::hyper_cube(tr, 0., 1.);
-      Point<dim> (*p)(Point<dim>) = &transform<dim>;
+      Point<dim> (*p)(Point<dim>)= &transform<dim>;
       GridTools::transform(p, tr);
       tr.refine_global(1);
-      typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active(),
-        endc = tr.end();
+      typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active(),
+                                                        endc= tr.end();
       for(; cell != endc; ++cell)
         cell->set_refine_flag(RefinementCase<dim>(j + 1));
 
       tr.execute_coarsening_and_refinement();
 
-      for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
+      for(unsigned int i= 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
         if(fe_list[i] != nullptr)
           {
             deallog << dim << "d, uniform grid, fe #" << i << ", "
@@ -226,7 +225,7 @@ test()
           }
     }
 
-  for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
+  for(unsigned int i= 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
     if(fe_list[i] != nullptr)
       delete fe_list[i];
 }

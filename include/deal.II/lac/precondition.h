@@ -87,7 +87,7 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData() = default;
+    AdditionalData()= default;
   };
 
   /**
@@ -102,7 +102,7 @@ public:
   template <typename MatrixType>
   void
   initialize(const MatrixType&     matrix,
-             const AdditionalData& additional_data = AdditionalData());
+             const AdditionalData& additional_data= AdditionalData());
 
   /**
    * Apply preconditioner.
@@ -205,7 +205,7 @@ public:
      * Constructor. Block size must be given since there is no reasonable
      * default parameter.
      */
-    AdditionalData(const double relaxation = 1.);
+    AdditionalData(const double relaxation= 1.);
 
     /**
      * Relaxation parameter.
@@ -348,8 +348,8 @@ private:
  *
  * @author Guido Kanschat, Wolfgang Bangerth, 1999
  */
-template <typename MatrixType = SparseMatrix<double>,
-          class VectorType    = Vector<double>>
+template <typename MatrixType= SparseMatrix<double>,
+          class VectorType   = Vector<double>>
 class PreconditionUseMatrix : public Subscriptor
 {
 public:
@@ -393,7 +393,7 @@ private:
  * @author Guido Kanschat, 2000; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
-template <typename MatrixType = SparseMatrix<double>>
+template <typename MatrixType= SparseMatrix<double>>
 class PreconditionRelaxation : public Subscriptor
 {
 public:
@@ -411,7 +411,7 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const double relaxation = 1.);
+    AdditionalData(const double relaxation= 1.);
 
     /**
      * Relaxation parameter.
@@ -426,7 +426,7 @@ public:
    */
   void
   initialize(const MatrixType&     A,
-             const AdditionalData& parameters = AdditionalData());
+             const AdditionalData& parameters= AdditionalData());
 
   /**
    * Release the matrix and reset its pointer.
@@ -487,7 +487,7 @@ protected:
  *
  * @author Guido Kanschat, 2000
  */
-template <typename MatrixType = SparseMatrix<double>>
+template <typename MatrixType= SparseMatrix<double>>
 class PreconditionJacobi : public PreconditionRelaxation<MatrixType>
 {
 public:
@@ -573,7 +573,7 @@ public:
  *
  * @author Guido Kanschat, 2000
  */
-template <typename MatrixType = SparseMatrix<double>>
+template <typename MatrixType= SparseMatrix<double>>
 class PreconditionSOR : public PreconditionRelaxation<MatrixType>
 {
 public:
@@ -639,7 +639,7 @@ public:
  *
  * @author Guido Kanschat, 2000
  */
-template <typename MatrixType = SparseMatrix<double>>
+template <typename MatrixType= SparseMatrix<double>>
 class PreconditionSSOR : public PreconditionRelaxation<MatrixType>
 {
 public:
@@ -738,7 +738,7 @@ private:
  * @author Guido Kanschat, 2003; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
-template <typename MatrixType = SparseMatrix<double>>
+template <typename MatrixType= SparseMatrix<double>>
 class PreconditionPSOR : public PreconditionRelaxation<MatrixType>
 {
 public:
@@ -929,9 +929,9 @@ private:
  * @author Martin Kronbichler, 2009, 2016; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
-template <typename MatrixType         = SparseMatrix<double>,
-          typename VectorType         = Vector<double>,
-          typename PreconditionerType = DiagonalMatrix<VectorType>>
+template <typename MatrixType        = SparseMatrix<double>,
+          typename VectorType        = Vector<double>,
+          typename PreconditionerType= DiagonalMatrix<VectorType>>
 class PreconditionChebyshev : public Subscriptor
 {
 public:
@@ -951,12 +951,12 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const unsigned int degree              = 0,
-                   const double       smoothing_range     = 0.,
-                   const bool         nonzero_starting    = false,
-                   const unsigned int eig_cg_n_iterations = 8,
-                   const double       eig_cg_residual     = 1e-2,
-                   const double       max_eigenvalue      = 1);
+    AdditionalData(const unsigned int degree             = 0,
+                   const double       smoothing_range    = 0.,
+                   const bool         nonzero_starting   = false,
+                   const unsigned int eig_cg_n_iterations= 8,
+                   const double       eig_cg_residual    = 1e-2,
+                   const double       max_eigenvalue     = 1);
 
     /**
      * This determines the degree of the Chebyshev polynomial. The degree of
@@ -1046,7 +1046,7 @@ public:
    */
   void
   initialize(const MatrixType&     matrix,
-             const AdditionalData& additional_data = AdditionalData());
+             const AdditionalData& additional_data= AdditionalData());
 
   /**
    * Compute the action of the preconditioner on <tt>src</tt>, storing the
@@ -1186,36 +1186,36 @@ inline void
 PreconditionIdentity::initialize(const MatrixType& matrix,
                                  const PreconditionIdentity::AdditionalData&)
 {
-  n_rows    = matrix.m();
-  n_columns = matrix.n();
+  n_rows   = matrix.m();
+  n_columns= matrix.n();
 }
 
 template <class VectorType>
 inline void
 PreconditionIdentity::vmult(VectorType& dst, const VectorType& src) const
 {
-  dst = src;
+  dst= src;
 }
 
 template <class VectorType>
 inline void
 PreconditionIdentity::Tvmult(VectorType& dst, const VectorType& src) const
 {
-  dst = src;
+  dst= src;
 }
 
 template <class VectorType>
 inline void
 PreconditionIdentity::vmult_add(VectorType& dst, const VectorType& src) const
 {
-  dst += src;
+  dst+= src;
 }
 
 template <class VectorType>
 inline void
 PreconditionIdentity::Tvmult_add(VectorType& dst, const VectorType& src) const
 {
-  dst += src;
+  dst+= src;
 }
 
 inline PreconditionIdentity::size_type
@@ -1243,14 +1243,14 @@ inline PreconditionRichardson::PreconditionRichardson()
   : relaxation(0), n_rows(0), n_columns(0)
 {
   AdditionalData add_data;
-  relaxation = add_data.relaxation;
+  relaxation= add_data.relaxation;
 }
 
 inline void
 PreconditionRichardson::initialize(
   const PreconditionRichardson::AdditionalData& parameters)
 {
-  relaxation = parameters.relaxation;
+  relaxation= parameters.relaxation;
 }
 
 template <typename MatrixType>
@@ -1259,9 +1259,9 @@ PreconditionRichardson::initialize(
   const MatrixType&                             matrix,
   const PreconditionRichardson::AdditionalData& parameters)
 {
-  relaxation = parameters.relaxation;
-  n_rows     = matrix.m();
-  n_columns  = matrix.n();
+  relaxation= parameters.relaxation;
+  n_rows    = matrix.m();
+  n_columns = matrix.n();
 }
 
 template <class VectorType>
@@ -1329,15 +1329,15 @@ inline void
 PreconditionRelaxation<MatrixType>::initialize(const MatrixType&     rA,
                                                const AdditionalData& parameters)
 {
-  A          = &rA;
-  relaxation = parameters.relaxation;
+  A         = &rA;
+  relaxation= parameters.relaxation;
 }
 
 template <typename MatrixType>
 inline void
 PreconditionRelaxation<MatrixType>::clear()
 {
-  A = nullptr;
+  A= nullptr;
 }
 
 template <typename MatrixType>
@@ -1491,9 +1491,9 @@ PreconditionSSOR<MatrixType>::initialize(
   // calculate the positions first after the diagonal.
   if(mat != nullptr)
     {
-      const size_type n = this->A->n();
+      const size_type n= this->A->n();
       pos_right_of_diagonal.resize(n, static_cast<std::size_t>(-1));
-      for(size_type row = 0; row < n; ++row)
+      for(size_type row= 0; row < n; ++row)
         {
           // find the first element in this line which is on the right of the
           // diagonal.  we need to precondition with the elements on the left
@@ -1505,7 +1505,7 @@ PreconditionSSOR<MatrixType>::initialize(
           for(; it < mat->end(row); ++it)
             if(it->column() > row)
               break;
-          pos_right_of_diagonal[row] = it - mat->begin();
+          pos_right_of_diagonal[row]= it - mat->begin();
         }
     }
 }
@@ -1578,8 +1578,8 @@ PreconditionPSOR<MatrixType>::initialize(
   const std::vector<size_type>&                                      ip,
   const typename PreconditionRelaxation<MatrixType>::AdditionalData& parameters)
 {
-  permutation         = &p;
-  inverse_permutation = &ip;
+  permutation        = &p;
+  inverse_permutation= &ip;
   PreconditionRelaxation<MatrixType>::initialize(rA, parameters);
 }
 
@@ -1606,7 +1606,7 @@ PreconditionPSOR<MatrixType>::vmult(VectorType&       dst,
     "PreconditionPSOR and VectorType must have the same size_type.");
 
   Assert(this->A != nullptr, ExcNotInitialized());
-  dst = src;
+  dst= src;
   this->A->PSOR(dst, *permutation, *inverse_permutation, this->relaxation);
 }
 
@@ -1622,7 +1622,7 @@ PreconditionPSOR<MatrixType>::Tvmult(VectorType&       dst,
     "PreconditionPSOR and VectorType must have the same size_type.");
 
   Assert(this->A != nullptr, ExcNotInitialized());
-  dst = src;
+  dst= src;
   this->A->TPSOR(dst, *permutation, *inverse_permutation, this->relaxation);
 }
 
@@ -1694,14 +1694,14 @@ namespace internal
         }
       else
         {
-          update2 -= src;
+          update2-= src;
           preconditioner.vmult(update3, update2);
-          update2 = update3;
+          update2= update3;
           if(factor1 == 0.)
             update1.equ(factor2, update2);
           else
             update1.sadd(factor1, factor2, update2);
-          dst -= update1;
+          dst-= update1;
         }
     }
 
@@ -1737,35 +1737,35 @@ namespace internal
         // (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63945), we create copies
         // of the variables factor1 and factor2 and do not check based on
         // factor1.
-        const Number factor1 = this->factor1;
-        const Number factor2 = this->factor2;
+        const Number factor1= this->factor1;
+        const Number factor2= this->factor2;
         if(do_startup)
           {
             if(start_zero)
               DEAL_II_OPENMP_SIMD_PRAGMA
-            for(std::size_t i = begin; i < end; ++i)
+            for(std::size_t i= begin; i < end; ++i)
               {
-                dst[i]     = factor2 * src[i] * matrix_diagonal_inverse[i];
-                update1[i] = -dst[i];
+                dst[i]    = factor2 * src[i] * matrix_diagonal_inverse[i];
+                update1[i]= -dst[i];
               }
-            else DEAL_II_OPENMP_SIMD_PRAGMA for(std::size_t i = begin; i < end;
+            else DEAL_II_OPENMP_SIMD_PRAGMA for(std::size_t i= begin; i < end;
                                                 ++i)
             {
-              update1[i] = ((update2[i] - src[i]) * factor2
-                            * matrix_diagonal_inverse[i]);
-              dst[i] -= update1[i];
+              update1[i]= ((update2[i] - src[i]) * factor2
+                           * matrix_diagonal_inverse[i]);
+              dst[i]-= update1[i];
             }
           }
         else
           DEAL_II_OPENMP_SIMD_PRAGMA
-        for(std::size_t i = begin; i < end; ++i)
+        for(std::size_t i= begin; i < end; ++i)
           {
             const Number update
               = factor1 * update1[i]
                 + factor2
                     * ((update2[i] - src[i]) * matrix_diagonal_inverse[i]);
-            update1[i] = update;
-            dst[i] -= update;
+            update1[i]= update;
+            dst[i]-= update;
           }
       }
 
@@ -1796,7 +1796,7 @@ namespace internal
             internal::VectorImplementation::minimum_parallel_grain_size);
       }
 
-      ~VectorUpdatesRange() override = default;
+      ~VectorUpdatesRange() override= default;
 
       virtual void
       apply_to_subrange(const std::size_t begin,
@@ -1881,7 +1881,7 @@ namespace internal
       if(preconditioner.get() == nullptr || preconditioner->m() != matrix.m())
         {
           if(preconditioner.get() == nullptr)
-            preconditioner = std::make_shared<DiagonalMatrix<VectorType>>();
+            preconditioner= std::make_shared<DiagonalMatrix<VectorType>>();
 
           Assert(
             preconditioner->m() == 0,
@@ -1900,8 +1900,8 @@ namespace internal
           if(preconditioner->m() != matrix.m())
             {
               preconditioner->get_vector().reinit(matrix.m());
-              for(typename VectorType::size_type i = 0; i < matrix.m(); ++i)
-                preconditioner->get_vector()(i) = 1. / matrix.el(i, i);
+              for(typename VectorType::size_type i= 0; i < matrix.m(); ++i)
+                preconditioner->get_vector()(i)= 1. / matrix.el(i, i);
             }
         }
     }
@@ -1910,9 +1910,9 @@ namespace internal
     void
     set_initial_guess(VectorType& vector)
     {
-      vector = 1. / std::sqrt(static_cast<double>(vector.size()));
+      vector= 1. / std::sqrt(static_cast<double>(vector.size()));
       if(vector.locally_owned_elements().is_element(0))
-        vector(0) = 0.;
+        vector(0)= 0.;
     }
 
     template <typename Number>
@@ -1923,10 +1923,10 @@ namespace internal
       // that is cheap to compute (cheaper than random numbers) but avoids
       // obviously re-occurring numbers in multi-component systems by choosing
       // a period of 11
-      for(unsigned int i = 0; i < vector.size(); ++i)
-        vector(i) = i % 11;
+      for(unsigned int i= 0; i < vector.size(); ++i)
+        vector(i)= i % 11;
 
-      const Number mean_value = vector.mean_value();
+      const Number mean_value= vector.mean_value();
       vector.add(-mean_value);
     }
 
@@ -1941,13 +1941,13 @@ namespace internal
       // a period of 11.
       // Make initial guess robust with respect to number of processors
       // by operating on the global index.
-      types::global_dof_index first_local_range = 0;
+      types::global_dof_index first_local_range= 0;
       if(!vector.locally_owned_elements().is_empty())
-        first_local_range = vector.locally_owned_elements().nth_index_in_set(0);
-      for(unsigned int i = 0; i < vector.local_size(); ++i)
-        vector.local_element(i) = (i + first_local_range) % 11;
+        first_local_range= vector.locally_owned_elements().nth_index_in_set(0);
+      for(unsigned int i= 0; i < vector.local_size(); ++i)
+        vector.local_element(i)= (i + first_local_range) % 11;
 
-      const Number mean_value = vector.mean_value();
+      const Number mean_value= vector.mean_value();
       vector.add(-mean_value);
     }
 
@@ -1957,7 +1957,7 @@ namespace internal
       void
       slot(const std::vector<double>& eigenvalues)
       {
-        values = eigenvalues;
+        values= eigenvalues;
       }
 
       std::vector<double> values;
@@ -2001,20 +2001,20 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::initialize(
   const MatrixType&     matrix,
   const AdditionalData& additional_data)
 {
-  matrix_ptr = &matrix;
-  data       = additional_data;
+  matrix_ptr= &matrix;
+  data      = additional_data;
   internal::PreconditionChebyshevImplementation::initialize_preconditioner(
     matrix, data.preconditioner, data.matrix_diagonal_inverse);
-  eigenvalues_are_initialized = false;
+  eigenvalues_are_initialized= false;
 }
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::clear()
 {
-  eigenvalues_are_initialized = false;
-  theta = delta = 1.0;
-  matrix_ptr    = nullptr;
+  eigenvalues_are_initialized= false;
+  theta= delta= 1.0;
+  matrix_ptr  = nullptr;
   {
     VectorType empty_vector;
     data.matrix_diagonal_inverse.reinit(empty_vector);
@@ -2076,25 +2076,25 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
 
       // read the eigenvalues from the attached eigenvalue tracker
       if(eigenvalue_tracker.values.empty())
-        min_eigenvalue = max_eigenvalue = 1;
+        min_eigenvalue= max_eigenvalue= 1;
       else
         {
-          min_eigenvalue = eigenvalue_tracker.values.front();
+          min_eigenvalue= eigenvalue_tracker.values.front();
 
           // include a safety factor since the CG method will in general not
           // be converged
-          max_eigenvalue = 1.2 * eigenvalue_tracker.values.back();
+          max_eigenvalue= 1.2 * eigenvalue_tracker.values.back();
         }
     }
   else
     {
-      max_eigenvalue = data.max_eigenvalue;
-      min_eigenvalue = data.max_eigenvalue / data.smoothing_range;
+      max_eigenvalue= data.max_eigenvalue;
+      min_eigenvalue= data.max_eigenvalue / data.smoothing_range;
     }
 
-  const double alpha = (data.smoothing_range > 1. ?
-                          max_eigenvalue / data.smoothing_range :
-                          std::min(0.9 * max_eigenvalue, min_eigenvalue));
+  const double alpha= (data.smoothing_range > 1. ?
+                         max_eigenvalue / data.smoothing_range :
+                         std::min(0.9 * max_eigenvalue, min_eigenvalue));
 
   // in case the user set the degree to invalid unsigned int, we have to
   // determine the number of necessary iterations from the Chebyshev error
@@ -2103,10 +2103,10 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   // R. S. Varga, Matrix iterative analysis, 2nd ed., Springer, 2009
   if(data.degree == numbers::invalid_unsigned_int)
     {
-      const double actual_range = max_eigenvalue / alpha;
-      const double sigma        = (1. - std::sqrt(1. / actual_range))
-                           / (1. + std::sqrt(1. / actual_range));
-      const double eps = data.smoothing_range;
+      const double actual_range= max_eigenvalue / alpha;
+      const double sigma       = (1. - std::sqrt(1. / actual_range))
+                          / (1. + std::sqrt(1. / actual_range));
+      const double eps= data.smoothing_range;
       const_cast<
         PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>*>(
         this)
@@ -2154,13 +2154,13 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   if(std::abs(delta) < 1e-40)
     return;
 
-  double rhok = delta / theta, sigma = theta / delta;
-  for(unsigned int k = 0; k < data.degree; ++k)
+  double rhok= delta / theta, sigma= theta / delta;
+  for(unsigned int k= 0; k < data.degree; ++k)
     {
       matrix_ptr->vmult(update2, dst);
-      const double rhokp   = 1. / (2. * sigma - rhok);
-      const double factor1 = rhokp * rhok, factor2 = 2. * rhokp / delta;
-      rhok = rhokp;
+      const double rhokp  = 1. / (2. * sigma - rhok);
+      const double factor1= rhokp * rhok, factor2= 2. * rhokp / delta;
+      rhok= rhokp;
       internal::PreconditionChebyshevImplementation::vector_updates(
         src,
         *data.preconditioner,
@@ -2179,13 +2179,13 @@ inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   do_transpose_chebyshev_loop(VectorType& dst, const VectorType& src) const
 {
-  double rhok = delta / theta, sigma = theta / delta;
-  for(unsigned int k = 0; k < data.degree; ++k)
+  double rhok= delta / theta, sigma= theta / delta;
+  for(unsigned int k= 0; k < data.degree; ++k)
     {
       matrix_ptr->Tvmult(update2, dst);
-      const double rhokp   = 1. / (2. * sigma - rhok);
-      const double factor1 = rhokp * rhok, factor2 = 2. * rhokp / delta;
-      rhok = rhokp;
+      const double rhokp  = 1. / (2. * sigma - rhok);
+      const double factor1= rhokp * rhok, factor2= 2. * rhokp / delta;
+      rhok= rhokp;
       internal::PreconditionChebyshevImplementation::vector_updates(
         src,
         *data.preconditioner,

@@ -17,7 +17,7 @@
 #include <memory>
 
 // counter for how many objects of type X there are
-int counter = 0;
+int counter= 0;
 
 struct X
 {
@@ -46,7 +46,7 @@ main()
   {
     AssertThrow(counter == 0, ExcInternalError());
     {
-      X* p = new X;
+      X* p= new X;
       AssertThrow(counter == 1, ExcInternalError());
       delete p;
     }
@@ -71,7 +71,7 @@ main()
       std::unique_ptr<X> p(new X);
       AssertThrow(counter == 1, ExcInternalError());
 
-      std::unique_ptr<X> q = std::move(p);
+      std::unique_ptr<X> q= std::move(p);
       AssertThrow(counter == 1, ExcInternalError());
     }
     AssertThrow(counter == 0, ExcInternalError());

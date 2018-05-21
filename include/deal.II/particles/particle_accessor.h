@@ -29,7 +29,7 @@ namespace Particles
   template <int, int>
   class ParticleHandler;
 
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class ParticleAccessor
   {
   public:

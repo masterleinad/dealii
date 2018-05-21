@@ -138,7 +138,7 @@ public:
   evaluate_vector_field(const DataPostprocessorInputs::Vector<dim>& input_data,
                         std::vector<Vector<double>>& computed_quantities) const
   {
-    for(unsigned int q = 0; q < input_data.solution_values.size(); ++q)
+    for(unsigned int q= 0; q < input_data.solution_values.size(); ++q)
       {
         AssertThrow(computed_quantities[q].size() == 1, ExcInternalError());
 

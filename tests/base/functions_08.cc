@@ -40,13 +40,13 @@ check1()
 
   AssertThrow(object.n_components == dim + 2, ExcInternalError());
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
-        p[d] = i + d;
+      for(unsigned int d= 0; d < dim; ++d)
+        p[d]= i + d;
 
-      for(unsigned int c = 0; c < dim + 2; ++c)
+      for(unsigned int c= 0; c < dim + 2; ++c)
         if(c == 0 || c == dim + 1)
           AssertThrow(object.value(p, c) == 0,
                       ExcInternalError()) else AssertThrow(object.value(p, c)
@@ -55,7 +55,7 @@ check1()
 
       Vector<double> v(dim + 2);
       object.vector_value(p, v);
-      for(unsigned int c = 0; c < dim + 2; ++c)
+      for(unsigned int c= 0; c < dim + 2; ++c)
         if(c == 0 || c == dim + 1)
           AssertThrow(v(c) == 0, ExcInternalError()) else AssertThrow(
             v(c) == p[c - 1], ExcInternalError());
@@ -67,7 +67,7 @@ check1()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

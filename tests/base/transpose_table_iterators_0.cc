@@ -26,8 +26,8 @@ test()
 {
   Container table(3, 4);
 
-  auto it = table.begin();
-  auto t2 = it;
+  auto it= table.begin();
+  auto t2= it;
   deallog << std::boolalpha;
   deallog << boost::core::demangle(typeid(Container).name()) << std::endl;
   deallog << "++it == it:           " << (++table.begin() == table.begin())
@@ -68,12 +68,12 @@ test()
           << std::endl;
   deallog << "end - 5 < begin:      " << ((table.end() - 6) < table.begin())
           << std::endl;
-  t2 = it + 5;
+  t2= it + 5;
   deallog << "it+5 == (t2 = (it+5)):" << (it + 5 == t2) << std::endl;
-  const auto it2 = table.end() - 5;
+  const auto it2= table.end() - 5;
   deallog << "end - 5 position:     " << it2->row() << ", " << it2->column()
           << std::endl;
-  const auto it3 = table.begin() + 5;
+  const auto it3= table.begin() + 5;
   deallog << "begin + 5 position:   " << it3->row() << ", " << it3->column()
           << std::endl;
 }
@@ -89,8 +89,8 @@ main()
     Assert(transpose_table.begin() == transpose_table.end(),
            ExcMessage("The beginning and end iterators should be equal for an "
                       "empty table."));
-    TransposeTable<double>::const_iterator begin = transpose_table.begin();
-    TransposeTable<double>::const_iterator end   = transpose_table.end();
+    TransposeTable<double>::const_iterator begin= transpose_table.begin();
+    TransposeTable<double>::const_iterator end  = transpose_table.end();
     Assert(begin == end,
            ExcMessage("The beginning and end const iterators should"
                       " be equal for an empty table."));
@@ -115,8 +115,8 @@ main()
   {
     // check that we can convert
     TransposeTable<double>                 table(3, 4);
-    TransposeTable<double>::iterator       it0 = table.begin();
-    TransposeTable<double>::const_iterator it1 = it0;
+    TransposeTable<double>::iterator       it0= table.begin();
+    TransposeTable<double>::const_iterator it1= it0;
     deallog << "converted iterators are equal: " << (it1 == it0) << std::endl;
   }
 

@@ -45,23 +45,23 @@ namespace deal_II_exceptions
   void
   set_additional_assert_output(const char* const p)
   {
-    additional_assert_output = p;
+    additional_assert_output= p;
   }
 
-  bool show_stacktrace = true;
+  bool show_stacktrace= true;
 
   void
   suppress_stacktrace_in_exceptions()
   {
-    show_stacktrace = false;
+    show_stacktrace= false;
   }
 
-  bool abort_on_exception = true;
+  bool abort_on_exception= true;
 
   void
   disable_abort_on_exception()
   {
-    abort_on_exception = false;
+    abort_on_exception= false;
   }
 
 } // namespace deal_II_exceptions
@@ -77,10 +77,9 @@ ExceptionBase::ExceptionBase()
     what_str("")
 {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  for(unsigned int i = 0;
-      i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
+  for(unsigned int i= 0; i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
       ++i)
-    raw_stacktrace[i] = nullptr;
+    raw_stacktrace[i]= nullptr;
 #endif
 }
 
@@ -97,17 +96,16 @@ ExceptionBase::ExceptionBase(const ExceptionBase& exc)
       "") // don't copy the error message, it gets generated dynamically by what()
 {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  for(unsigned int i = 0;
-      i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
+  for(unsigned int i= 0; i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
       ++i)
-    raw_stacktrace[i] = nullptr;
+    raw_stacktrace[i]= nullptr;
 #endif
 }
 
 ExceptionBase::~ExceptionBase() noexcept
 {
   free(stacktrace); // free(NULL) is allowed
-  stacktrace = nullptr;
+  stacktrace= nullptr;
 }
 
 void
@@ -117,11 +115,11 @@ ExceptionBase::set_fields(const char* f,
                           const char* c,
                           const char* e)
 {
-  file     = f;
-  line     = l;
-  function = func;
-  cond     = c;
-  exc      = e;
+  file    = f;
+  line    = l;
+  function= func;
+  cond    = c;
+  exc     = e;
 
   // If the system supports this, get a stacktrace how we got here:
   // Note that we defer the symbol lookup done by backtrace_symbols()
@@ -129,7 +127,7 @@ ExceptionBase::set_fields(const char* f,
   // reasons, as this requires loading libraries and can take in the
   // order of seconds on some machines.
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  n_stacktrace_frames = backtrace(raw_stacktrace, 25);
+  n_stacktrace_frames= backtrace(raw_stacktrace, 25);
 #endif
 }
 
@@ -146,7 +144,7 @@ ExceptionBase::what() const noexcept
 
       // first delete old stacktrace if necessary
       free(stacktrace); // free(NULL) is allowed
-      stacktrace = backtrace_symbols(raw_stacktrace, n_stacktrace_frames);
+      stacktrace= backtrace_symbols(raw_stacktrace, n_stacktrace_frames);
 #endif
 
       generate_message();
@@ -214,7 +212,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
   // ExceptionBase or deal_II_exceptions in their names, as these
   // correspond to the exception raising mechanism themselves, rather than
   // the place where the exception was triggered
-  int frame = 0;
+  int frame= 0;
   while((frame < n_stacktrace_frames)
         && ((std::string(stacktrace[frame]).find("ExceptionBase")
              != std::string::npos)
@@ -223,7 +221,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
     ++frame;
 
   // output the rest
-  const unsigned int first_significant_frame = frame;
+  const unsigned int first_significant_frame= frame;
   for(; frame < n_stacktrace_frames; ++frame)
     {
       out << '#' << frame - first_significant_frame << "  ";
@@ -232,13 +230,13 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       // "filename(functionname+offset) [address]". let's try to get the
       // mangled functionname out:
       std::string        stacktrace_entry(stacktrace[frame]);
-      const unsigned int pos_start = stacktrace_entry.find('('),
-                         pos_end   = stacktrace_entry.find('+');
+      const unsigned int pos_start= stacktrace_entry.find('('),
+                         pos_end  = stacktrace_entry.find('+');
       std::string functionname
         = stacktrace_entry.substr(pos_start + 1, pos_end - pos_start - 1);
 
-      stacktrace_entry = stacktrace_entry.substr(0, pos_start);
-      stacktrace_entry += ": ";
+      stacktrace_entry= stacktrace_entry.substr(0, pos_start);
+      stacktrace_entry+= ": ";
 
       // demangle, and if successful replace old mangled string by
       // unmangled one (skipping address and offset). treat "main"
@@ -263,16 +261,16 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
             realname.erase(realname.find(", boost::tuples::null_type>"),
                            std::string(", boost::tuples::null_type").size());
 
-          stacktrace_entry += realname;
+          stacktrace_entry+= realname;
         }
       else
-        stacktrace_entry += functionname;
+        stacktrace_entry+= functionname;
 
       free(p);
 
 #else
 
-      stacktrace_entry += functionname;
+      stacktrace_entry+= functionname;
 #endif
 
       // then output what we have
@@ -315,12 +313,12 @@ ExceptionBase::generate_message() const
       converter << "--------------------------------------------------------"
                 << std::endl;
 
-      what_str = converter.str();
+      what_str= converter.str();
     }
   catch(...)
     {
       // On error, resume next. There is nothing better we can do...
-      what_str = "ExceptionBase::generate_message () failed";
+      what_str= "ExceptionBase::generate_message () failed";
     }
 }
 
@@ -334,26 +332,26 @@ namespace StandardExceptions
   ExcMPI::print_info(std::ostream& out) const
   {
     char error_name[MPI_MAX_ERROR_STRING];
-    error_name[0]        = '\0';
-    int resulting_length = MPI_MAX_ERROR_STRING;
+    error_name[0]       = '\0';
+    int resulting_length= MPI_MAX_ERROR_STRING;
 
-    bool error_name_known = false;
+    bool error_name_known= false;
     // workaround for Open MPI 1.6.5 not accepting
     // MPI_ERR_LASTCODE in MPI_Error_class
     if(error_code < MPI_ERR_LASTCODE)
       {
         // get the string name of the error code by first converting it to an
         // error class.
-        int error_class  = 0;
-        int ierr         = MPI_Error_class(error_code, &error_class);
-        error_name_known = (ierr == MPI_SUCCESS);
+        int error_class = 0;
+        int ierr        = MPI_Error_class(error_code, &error_class);
+        error_name_known= (ierr == MPI_SUCCESS);
 
         // Check the output of the error printing functions. If either MPI
         // function fails we should just print a less descriptive message.
         if(error_name_known)
           {
-            ierr = MPI_Error_string(error_class, error_name, &resulting_length);
-            error_name_known = error_name_known && (ierr == MPI_SUCCESS);
+            ierr= MPI_Error_string(error_class, error_name, &resulting_length);
+            error_name_known= error_name_known && (ierr == MPI_SUCCESS);
           }
       }
 
@@ -403,7 +401,7 @@ namespace
       {
         // do the same as in Utilities::MPI::n_mpi_processes() here,
         // but without error checking to not throw again.
-        int n_proc = 1;
+        int n_proc= 1;
         MPI_Comm_size(MPI_COMM_WORLD, &n_proc);
         if(n_proc > 1)
           {

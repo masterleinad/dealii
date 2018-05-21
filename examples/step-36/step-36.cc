@@ -213,10 +213,10 @@ namespace Step36
     // an IndexSet where every valid index is part of the set. Note that this
     // program can only be run sequentially and will throw an exception if used
     // in parallel.
-    IndexSet eigenfunction_index_set = dof_handler.locally_owned_dofs();
+    IndexSet eigenfunction_index_set= dof_handler.locally_owned_dofs();
     eigenfunctions.resize(
       parameters.get_integer("Number of eigenvalues/eigenfunctions"));
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
       eigenfunctions[i].reinit(eigenfunction_index_set, MPI_COMM_WORLD);
 
     eigenvalues.resize(eigenfunctions.size());
@@ -246,8 +246,8 @@ namespace Step36
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_stiffness_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -263,19 +263,19 @@ namespace Step36
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_stiffness_matrix= 0;
+        cell_mass_matrix     = 0;
 
         potential.value_list(fe_values.get_quadrature_points(),
                              potential_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -285,9 +285,9 @@ namespace Step36
                           * fe_values.shape_value(j, q_point))
                      * fe_values.JxW(q_point);
 
-                cell_mass_matrix(i, j) += (fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                          * fe_values.JxW(q_point);
+                cell_mass_matrix(i, j)+= (fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                         * fe_values.JxW(q_point);
               }
 
         // Now that we have the local matrix contributions, we transfer them
@@ -315,15 +315,15 @@ namespace Step36
     // Below, we output the interval within which they all lie to
     // ensure that we can ignore them should they show up in our
     // computations.
-    double min_spurious_eigenvalue = std::numeric_limits<double>::max(),
-           max_spurious_eigenvalue = -std::numeric_limits<double>::max();
+    double min_spurious_eigenvalue= std::numeric_limits<double>::max(),
+           max_spurious_eigenvalue= -std::numeric_limits<double>::max();
 
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
       if(constraints.is_constrained(i))
         {
-          const double ev         = stiffness_matrix(i, i) / mass_matrix(i, i);
-          min_spurious_eigenvalue = std::min(min_spurious_eigenvalue, ev);
-          max_spurious_eigenvalue = std::max(max_spurious_eigenvalue, ev);
+          const double ev        = stiffness_matrix(i, i) / mass_matrix(i, i);
+          min_spurious_eigenvalue= std::min(min_spurious_eigenvalue, ev);
+          max_spurious_eigenvalue= std::max(max_spurious_eigenvalue, ev);
         }
 
     std::cout << "   Spurious eigenvalues are all in the interval "
@@ -386,8 +386,8 @@ namespace Step36
     // does not necessarily have to be attained at a node, and so
     // $\max_{\mathbf x}\phi_i(\mathbf x)\ge\max_j (\Phi_i)_j$ (although the
     // equality is usually nearly true).
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
-      eigenfunctions[i] /= eigenfunctions[i].linfty_norm();
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
+      eigenfunctions[i]/= eigenfunctions[i].linfty_norm();
 
     // Finally return the number of iterations it took to converge:
     return solver_control.last_step();
@@ -408,7 +408,7 @@ namespace Step36
 
     data_out.attach_dof_handler(dof_handler);
 
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for(unsigned int i= 0; i < eigenfunctions.size(); ++i)
       data_out.add_data_vector(eigenfunctions[i],
                                std::string("eigenfunction_")
                                  + Utilities::int_to_string(i));
@@ -454,14 +454,14 @@ namespace Step36
 
     assemble_system();
 
-    const unsigned int n_iterations = solve();
+    const unsigned int n_iterations= solve();
     std::cout << "   Solver converged in " << n_iterations << " iterations."
               << std::endl;
 
     output_results();
 
     std::cout << std::endl;
-    for(unsigned int i = 0; i < eigenvalues.size(); ++i)
+    for(unsigned int i= 0; i < eigenvalues.size(); ++i)
       std::cout << "      Eigenvalue " << i << " : " << eigenvalues[i]
                 << std::endl;
   }

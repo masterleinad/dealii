@@ -96,7 +96,7 @@ public:
    * <code>hp::QCollection@<dim@> q_collection(QGauss@<dim@>(3))</code> was
    * meant.
    */
-  explicit Quadrature(const unsigned int n_quadrature_points = 0);
+  explicit Quadrature(const unsigned int n_quadrature_points= 0);
 
   /**
    * Build this quadrature formula as the tensor product of a formula in a
@@ -135,7 +135,7 @@ public:
    * Move constructor. Construct a new quadrature object by transferring the
    * internal data of another quadrature object.
    */
-  Quadrature(Quadrature<dim>&&) noexcept = default;
+  Quadrature(Quadrature<dim>&&) noexcept= default;
 
   /**
    * Construct a quadrature formula from given vectors of quadrature points
@@ -163,7 +163,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~Quadrature() override = default;
+  virtual ~Quadrature() override= default;
 
   /**
    * Assignment operator. Copies contents of #weights and #quadrature_points

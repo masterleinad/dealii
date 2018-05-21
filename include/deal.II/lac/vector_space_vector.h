@@ -61,7 +61,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const VectorSpaceVector<Number>& V,
-           const bool                       omit_zeroing_entries = false)
+           const bool                       omit_zeroing_entries= false)
       = 0;
 
     /**
@@ -118,7 +118,7 @@ namespace LinearAlgebra
     /**
      * Return the scalar product of two vectors.
      */
-    virtual Number operator*(const VectorSpaceVector<Number>& V) const = 0;
+    virtual Number operator*(const VectorSpaceVector<Number>& V) const= 0;
 
     /**
      * Add @p a to all components. Note that @p a is a scalar not a vector.
@@ -172,34 +172,34 @@ namespace LinearAlgebra
      * Return whether the vector contains only elements with value zero.
      */
     virtual bool
-    all_zero() const = 0;
+    all_zero() const= 0;
 
     /**
      * Return the mean value of all the entries of this vector.
      */
     virtual value_type
-    mean_value() const = 0;
+    mean_value() const= 0;
 
     /**
      * Return the l<sub>1</sub> norm of the vector (i.e., the sum of the
      * absolute values of all entries among all processors).
      */
     virtual real_type
-    l1_norm() const = 0;
+    l1_norm() const= 0;
 
     /**
      * Return the l<sub>2</sub> norm of the vector (i.e., the square root of
      * the sum of the square of all entries among all processors).
      */
     virtual real_type
-    l2_norm() const = 0;
+    l2_norm() const= 0;
 
     /**
      * Return the maximum norm of the vector (i.e., the maximum absolute value
      * among all entries and among all processors).
      */
     virtual real_type
-    linfty_norm() const = 0;
+    linfty_norm() const= 0;
 
     /**
      * Perform a combined operation of a vector addition and a subsequent
@@ -237,7 +237,7 @@ namespace LinearAlgebra
      * locally owned indices among all processors.
      */
     virtual size_type
-    size() const = 0;
+    size() const= 0;
 
     /**
      * Return an index set that describes which elements of this vector are
@@ -251,28 +251,28 @@ namespace LinearAlgebra
      * @endcode
      */
     virtual dealii::IndexSet
-    locally_owned_elements() const = 0;
+    locally_owned_elements() const= 0;
 
     /**
      * Print the vector to the output stream @p out.
      */
     virtual void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const = 0;
+          const unsigned int precision = 3,
+          const bool         scientific= true,
+          const bool         across    = true) const= 0;
 
     /**
      * Return the memory consumption of this class in bytes.
      */
     virtual std::size_t
-    memory_consumption() const = 0;
+    memory_consumption() const= 0;
 
     /**
      * Destructor. Declared as virtual so that inheriting classes (which may
      * manage their own memory) are destroyed correctly.
      */
-    virtual ~VectorSpaceVector() = default;
+    virtual ~VectorSpaceVector()= default;
   };
   /*@}*/
 } // namespace LinearAlgebra

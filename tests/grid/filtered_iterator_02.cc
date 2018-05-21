@@ -62,19 +62,19 @@ test()
   // ids based on their position, in
   // particular we take the quadrant
   // (octant)
-  active_cell_iterator cell = tria.begin_active(), endc = tria.end();
+  active_cell_iterator cell= tria.begin_active(), endc= tria.end();
   for(; cell != endc; ++cell)
     {
-      unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < 2; ++d)
+      unsigned int subdomain= 0;
+      for(unsigned int d= 0; d < 2; ++d)
         if(cell->center()(d) > 0)
-          subdomain |= (1 << d);
+          subdomain|= (1 << d);
       AssertThrow(subdomain < (1 << 2), ExcInternalError());
 
       cell->set_subdomain_id(subdomain);
     };
 
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream& logfile= deallog.get_file_stream();
 
   // check 1: count number of cells
   // on some level
@@ -83,7 +83,7 @@ test()
       const IteratorFilters::LevelEqualTo    predicate(3);
       FilteredIterator<active_cell_iterator> begin
         = make_filtered_iterator(tria.begin_active(), predicate),
-        end = make_filtered_iterator(
+        end= make_filtered_iterator(
           static_cast<active_cell_iterator>(tria.end()), predicate);
 
       Assert(std::distance(begin, end)
@@ -175,7 +175,7 @@ test()
       FI                                             cell(predicate);
       cell.set_to_next_positive(tria.begin_active());
       active_cell_iterator endc(tria.end());
-      active_cell_iterator cell1 = tria.begin_active();
+      active_cell_iterator cell1= tria.begin_active();
 
       while(cell1->subdomain_id() != 1)
         ++cell1;

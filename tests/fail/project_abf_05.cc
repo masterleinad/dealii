@@ -15,7 +15,7 @@
 
 // check that VectorTools::project works for ABF elements correctly
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../deal.II/project_common.h"
 
@@ -24,6 +24,6 @@ void
 test()
 {
   if(dim > 1)
-    for(unsigned int p = 0; p < 6 - dim; ++p)
+    for(unsigned int p= 0; p < 6 - dim; ++p)
       test_with_2d_deformed_refined_mesh(FE_ABF<dim>(p), p);
 }

@@ -21,7 +21,7 @@ bool
 BoundingBox<spacedim, Number>::point_inside(
   const Point<spacedim, Number>& p) const
 {
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for(unsigned int i= 0; i < spacedim; ++i)
     {
       //Bottom left-top right convention: the point is outside if it's smaller than the
       //first or bigger than the second boundary point
@@ -42,11 +42,11 @@ void
 BoundingBox<spacedim, Number>::merge_with(
   const BoundingBox<spacedim, Number>& other_bbox)
 {
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for(unsigned int i= 0; i < spacedim; ++i)
     {
-      this->boundary_points.first[i] = std::min(
+      this->boundary_points.first[i]= std::min(
         this->boundary_points.first[i], other_bbox.boundary_points.first[i]);
-      this->boundary_points.second[i] = std::max(
+      this->boundary_points.second[i]= std::max(
         this->boundary_points.second[i], other_bbox.boundary_points.second[i]);
     }
 }
@@ -75,7 +75,7 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
       bbox2.push_back(other_bbox.get_boundary_points().second);
 
       // Step 1: testing if the boxes are close enough to intersect
-      for(unsigned int d = 0; d < spacedim; ++d)
+      for(unsigned int d= 0; d < spacedim; ++d)
         if(bbox1[0][d] * (1 - std::numeric_limits<Number>::epsilon())
              > bbox2[1][d]
            || bbox2[0][d] * (1 - std::numeric_limits<Number>::epsilon())
@@ -86,7 +86,7 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
       // We begin by computing the intersection:
       std::vector<double> intersect_bbox_min;
       std::vector<double> intersect_bbox_max;
-      for(unsigned int d = 0; d < spacedim; ++d)
+      for(unsigned int d= 0; d < spacedim; ++d)
         {
           intersect_bbox_min.push_back(std::max(bbox1[0][d], bbox2[0][d]));
           intersect_bbox_max.push_back(std::min(bbox1[1][d], bbox2[1][d]));
@@ -94,8 +94,8 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
 
       // Finding the intersection's dimension
 
-      unsigned int intersect_dim = spacedim;
-      for(unsigned int d = 0; d < spacedim; ++d)
+      unsigned int intersect_dim= spacedim;
+      for(unsigned int d= 0; d < spacedim; ++d)
         if(std::abs(intersect_bbox_min[d] - intersect_bbox_max[d])
            <= std::numeric_limits<Number>::epsilon()
                 * (std::abs(intersect_bbox_min[d])
@@ -106,9 +106,9 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
         return NeighborType::simple_neighbors;
 
       // Checking the two mergeable cases: first if the boxes are aligned so that they can be merged
-      unsigned int not_align_1 = 0, not_align_2 = 0;
-      bool         same_direction = true;
-      for(unsigned int d = 0; d < spacedim; ++d)
+      unsigned int not_align_1= 0, not_align_2= 0;
+      bool         same_direction= true;
+      for(unsigned int d= 0; d < spacedim; ++d)
         {
           if(std::abs(bbox2[0][d] - bbox1[0][d])
              > std::numeric_limits<double>::epsilon()
@@ -120,7 +120,7 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
             ++not_align_2;
           if(not_align_1 != not_align_2)
             {
-              same_direction = false;
+              same_direction= false;
               break;
             }
         }
@@ -150,9 +150,9 @@ template <int spacedim, typename Number>
 double
 BoundingBox<spacedim, Number>::volume() const
 {
-  double vol = 1.0;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    vol *= (this->boundary_points.second[i] - this->boundary_points.first[i]);
+  double vol= 1.0;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    vol*= (this->boundary_points.second[i] - this->boundary_points.first[i]);
   return vol;
 }
 

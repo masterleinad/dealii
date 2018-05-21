@@ -31,16 +31,15 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int nprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int nprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr, -1.0, 1.0);
   tr.refine_global(8 - 2 * dim);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     if(!cell->is_ghost() && !cell->is_artificial())
@@ -66,8 +65,8 @@ test()
   std::vector<types::global_dof_index> complete_renumbering(dofh.n_dofs());
   std::copy(
     renumbering.begin(), renumbering.end(), complete_renumbering.begin());
-  unsigned int offset = renumbering.size();
-  for(unsigned int i = 1; i < nprocs; ++i)
+  unsigned int offset= renumbering.size();
+  for(unsigned int i= 1; i < nprocs; ++i)
     {
       if(myid == i)
         MPI_Send(
@@ -86,13 +85,13 @@ test()
           i,
           MPI_COMM_WORLD,
           MPI_STATUSES_IGNORE);
-      offset += dofh.locally_owned_dofs_per_processor()[i].n_elements();
+      offset+= dofh.locally_owned_dofs_per_processor()[i].n_elements();
     }
 
   if(myid == 0)
     {
       AssertDimension(offset, complete_renumbering.size());
-      for(unsigned int i = 0; i < complete_renumbering.size(); ++i)
+      for(unsigned int i= 0; i < complete_renumbering.size(); ++i)
         deallog << complete_renumbering[i] << std::endl;
     }
 }
@@ -102,7 +101,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

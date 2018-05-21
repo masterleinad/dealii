@@ -33,11 +33,11 @@
 int
 main()
 {
-  const int dim = 2;
+  const int dim= 2;
 
   Triangulation<dim>                 tria;
   std::map<unsigned int, Point<dim>> new_points;
-  const unsigned int                 N = 8;
+  const unsigned int                 N= 8;
   GridGenerator::subdivided_hyper_cube(tria, N, -5, 5);
 
   // find the vertex at the origin
@@ -46,38 +46,38 @@ main()
 
   unsigned int best_vertex
     = cell->vertex_index(0); //vertex number on local triangulation
-  Point<dim> best_pos  = cell->vertex(0);
-  double     best_dist = Point<dim>().distance(best_pos);
+  Point<dim> best_pos = cell->vertex(0);
+  double     best_dist= Point<dim>().distance(best_pos);
 
-  for(unsigned int vertex_no = 1;
+  for(unsigned int vertex_no= 1;
       vertex_no < GeometryInfo<dim>::vertices_per_cell;
       vertex_no++)
     {
-      const double dist = Point<dim>().distance(cell->vertex(vertex_no));
+      const double dist= Point<dim>().distance(cell->vertex(vertex_no));
       if(dist < best_dist)
         {
-          best_pos    = cell->vertex(vertex_no);
-          best_vertex = cell->vertex_index(vertex_no);
-          best_dist   = dist;
+          best_pos   = cell->vertex(vertex_no);
+          best_vertex= cell->vertex_index(vertex_no);
+          best_dist  = dist;
         }
     }
   // move the point at the origin by 1 unit to the right
-  new_points[best_vertex] = Point<dim>();
-  new_points[best_vertex][0] += 1.;
+  new_points[best_vertex]= Point<dim>();
+  new_points[best_vertex][0]+= 1.;
 
   // now pin all of the points on the boundary
-  cell                                          = tria.begin_active();
-  Triangulation<dim>::active_cell_iterator endc = tria.end();
+  cell                                         = tria.begin_active();
+  Triangulation<dim>::active_cell_iterator endc= tria.end();
 
   for(; cell != endc; ++cell)
     if(cell->at_boundary() == true)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         if(cell->face(face)->at_boundary() == true)
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
             {
-              unsigned int vertex_number = cell->face(face)->vertex_index(v);
-              new_points[vertex_number]  = cell->face(face)->vertex(v);
+              unsigned int vertex_number= cell->face(face)->vertex_index(v);
+              new_points[vertex_number] = cell->face(face)->vertex(v);
             }
 
   // then compute new point locations and output the result

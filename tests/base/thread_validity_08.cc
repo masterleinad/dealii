@@ -33,7 +33,7 @@ worker()
   mutex.acquire();
   mutex.release();
   deallog << "OK." << std::endl;
-  spin_lock = 1;
+  spin_lock= 1;
 }
 
 int

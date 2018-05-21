@@ -34,59 +34,59 @@ test()
   if(fe_degree > 1)
     return;
 
-  const double       h  = 1;
-  const double       Lx = 30 * h;
-  const double       Li = 10 * h;
-  const double       Ly = 6 * h;
-  const double       Lz = 4 * h;
-  const double       ER = Ly / (Ly - h);
+  const double       h = 1;
+  const double       Lx= 30 * h;
+  const double       Li= 10 * h;
+  const double       Ly= 6 * h;
+  const double       Lz= 4 * h;
+  const double       ER= Ly / (Ly - h);
   Triangulation<dim> left, right, bottom, temp;
   Point<dim> left_one, left_two, right_one, right_two, bottom_one, bottom_two;
 
-  left_one[0] = -Li;
-  left_one[1] = h;
+  left_one[0]= -Li;
+  left_one[1]= h;
 
-  left_two[0] = 0;
-  left_two[1] = Ly;
+  left_two[0]= 0;
+  left_two[1]= Ly;
 
-  right_one[0] = 0;
-  right_one[1] = h;
+  right_one[0]= 0;
+  right_one[1]= h;
 
-  right_two[0] = Lx - Li;
-  right_two[1] = Ly;
+  right_two[0]= Lx - Li;
+  right_two[1]= Ly;
 
-  bottom_one[0] = 0;
-  bottom_one[1] = 0;
+  bottom_one[0]= 0;
+  bottom_one[1]= 0;
 
-  bottom_two[0] = Lx - Li;
-  bottom_two[1] = h;
+  bottom_two[0]= Lx - Li;
+  bottom_two[1]= h;
 
   if(dim == 3)
     {
-      left_one[2]   = 0;
-      right_one[2]  = 0;
-      bottom_one[2] = 0;
-      left_two[2]   = Lz;
-      right_two[2]  = Lz;
-      bottom_two[2] = Lz;
+      left_one[2]  = 0;
+      right_one[2] = 0;
+      bottom_one[2]= 0;
+      left_two[2]  = Lz;
+      right_two[2] = Lz;
+      bottom_two[2]= Lz;
     }
 
   std::vector<unsigned int> refinements_left(dim, 1);
   std::vector<unsigned int> refinements_right(dim, 1);
   std::vector<unsigned int> refinements_bottom(dim, 1);
 
-  refinements_left[1]   = 5;
-  refinements_right[1]  = 5;
-  refinements_bottom[1] = 1;
-  refinements_left[0]   = 10;
-  refinements_right[0]  = 20;
-  refinements_bottom[0] = 20;
+  refinements_left[1]  = 5;
+  refinements_right[1] = 5;
+  refinements_bottom[1]= 1;
+  refinements_left[0]  = 10;
+  refinements_right[0] = 20;
+  refinements_bottom[0]= 20;
 
   if(dim == 3)
     {
-      refinements_left[2]   = 4;
-      refinements_right[2]  = 4;
-      refinements_bottom[2] = 4;
+      refinements_left[2]  = 4;
+      refinements_right[2] = 4;
+      refinements_bottom[2]= 4;
     }
   GridGenerator::subdivided_hyper_rectangle(
     left, refinements_left, left_one, left_two, false);
@@ -109,7 +109,7 @@ test()
         = triangulation.begin();
         cell != triangulation.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->at_boundary())
           {
             if(std::abs(cell->face(f)->center()[2]) < 1e-12)
@@ -163,13 +163,12 @@ test()
   MatrixFree<dim, double>                          mf_data_orig;
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
+  data.tasks_block_size     = 3;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
-  data.initialize_mapping = true;
+  data.initialize_mapping= true;
 
   mf_data_orig.reinit(mapping, dof_orig, constraints, quad, data);
   mf_data_orig.initialize_dof_vector(in_orig);
@@ -177,7 +176,7 @@ test()
 
   // create MatrixFree with renumbered degrees of freedom
   MatrixFree<dim, double> mf_data;
-  data.initialize_mapping = false;
+  data.initialize_mapping= false;
 
   mf_data.reinit(mapping, dof, constraints, quad, data);
 
@@ -185,7 +184,7 @@ test()
   mf_data.renumber_dofs(renumbering);
   dof.renumber_dofs(renumbering);
 
-  data.initialize_mapping = true;
+  data.initialize_mapping= true;
   mf_data.reinit(mapping, dof, constraints, quad, data);
 
   mf_data.initialize_dof_vector(in);
@@ -193,11 +192,11 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in_orig.local_size(); ++i)
+  for(unsigned int i= 0; i < in_orig.local_size(); ++i)
     {
-      const double entry       = Testing::rand() / (double) RAND_MAX;
-      in_orig.local_element(i) = entry;
-      in(renumbering[i])       = entry;
+      const double entry      = Testing::rand() / (double) RAND_MAX;
+      in_orig.local_element(i)= entry;
+      in(renumbering[i])      = entry;
     }
 
   MatrixFreeAdvection<dim,
@@ -216,17 +215,17 @@ test()
     mf2(mf_data);
   mf2.vmult(out, in);
 
-  for(unsigned int i = 0; i < out.local_size(); ++i)
-    out(renumbering[i]) -= out_orig.local_element(i);
+  for(unsigned int i= 0; i < out.local_size(); ++i)
+    out(renumbering[i])-= out_orig.local_element(i);
 
-  double diff_norm = out.linfty_norm() / out_orig.linfty_norm();
+  double diff_norm= out.linfty_norm() / out_orig.linfty_norm();
   deallog << "Norm of difference:          " << diff_norm << " ";
 
   // test again, now doing matrix-vector product twice
   mf2.vmult(out, in);
   mf2.vmult(out, in);
-  for(unsigned int i = 0; i < out.local_size(); ++i)
-    out(renumbering[i]) -= out_orig.local_element(i);
-  diff_norm = out.linfty_norm() / out_orig.linfty_norm();
+  for(unsigned int i= 0; i < out.local_size(); ++i)
+    out(renumbering[i])-= out_orig.local_element(i);
+  diff_norm= out.linfty_norm() / out_orig.linfty_norm();
   deallog << diff_norm << std::endl;
 }

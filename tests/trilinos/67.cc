@@ -30,30 +30,30 @@ test(TrilinosWrappers::SparseMatrix& m)
   Assert(m.n() != 0, ExcInternalError());
 
   // build a tri-diagonal pattern
-  double             norm_sqr = 0;
-  unsigned int       nnz      = 0;
-  const unsigned int N        = m.m();
-  for(unsigned int i = 0; i < N; ++i)
+  double             norm_sqr= 0;
+  unsigned int       nnz     = 0;
+  const unsigned int N       = m.m();
+  for(unsigned int i= 0; i < N; ++i)
     {
       if(i >= 5)
         {
-          const double s = Testing::rand();
+          const double s= Testing::rand();
           m.set(i, i - 5, s);
-          norm_sqr += s * s;
+          norm_sqr+= s * s;
           ++nnz;
         }
 
       if(i < N - 5)
         {
-          const double s = Testing::rand();
+          const double s= Testing::rand();
           m.set(i, i + 5, s);
-          norm_sqr += s * s;
+          norm_sqr+= s * s;
           ++nnz;
         }
 
-      const double s = Testing::rand();
+      const double s= Testing::rand();
       m.set(i, i, s);
-      norm_sqr += s * s;
+      norm_sqr+= s * s;
       ++nnz;
     }
   m.compress(VectorOperation::insert);
@@ -67,17 +67,17 @@ test(TrilinosWrappers::SparseMatrix& m)
   Assert(m.n_nonzero_elements() - nnz == 0, ExcInternalError());
 
   // now remove the entries of rows N/2 and N/3
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     {
-      const double s = m.el(N / 2, i);
-      norm_sqr -= s * s;
+      const double s= m.el(N / 2, i);
+      norm_sqr-= s * s;
     }
-  for(unsigned int i = 0; i < N; ++i)
+  for(unsigned int i= 0; i < N; ++i)
     {
-      const double s = m.el(N / 3, i);
-      norm_sqr -= s * s;
+      const double s= m.el(N / 3, i);
+      norm_sqr-= s * s;
     }
-  const types::global_dof_index rows[2] = {N / 3, N / 2};
+  const types::global_dof_index rows[2]= {N / 3, N / 2};
   m.clear_rows(std::vector<types::global_dof_index>(&rows[0], &rows[2]));
 
   deallog << m.frobenius_norm() << ' ' << std::sqrt(norm_sqr) << std::endl;

@@ -16,7 +16,7 @@
 // a test where a degree of freedom was constrained multiple times,
 // but with different weights. see the hp paper for more on this
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -56,7 +56,7 @@ main()
   // *---*---*
   Triangulation<3>          triangulation;
   std::vector<unsigned int> subdivisions(3, 2);
-  subdivisions[2] = 1;
+  subdivisions[2]= 1;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, subdivisions, Point<3>(), Point<3>(2, 2, 1));
 
@@ -90,7 +90,7 @@ main()
   // a Q1. this leads to conflicts
   // with the constraints previously
   // entered
-  hp::DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  hp::DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
   cell->set_active_fe_index(0);
   ++cell;
   cell->set_active_fe_index(1);
@@ -109,20 +109,20 @@ main()
   // with it). note that there is
   // only one such line so we can
   // quit the loop once we find it
-  for(hp::DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  for(hp::DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int l = 0; l < GeometryInfo<3>::lines_per_cell; ++l)
+    for(unsigned int l= 0; l < GeometryInfo<3>::lines_per_cell; ++l)
       if(cell->line(l)->n_active_fe_indices() == 3)
         {
           deallog << "Shared line: " << cell->line(l) << std::endl;
-          for(unsigned int i = 0; i < 3; ++i)
+          for(unsigned int i= 0; i < 3; ++i)
             {
               deallog << "DoF indices for fe_index=" << i << ": ";
               std::vector<types::global_dof_index> line_dofs(
                 fe[i].dofs_per_line + 2 * fe[i].dofs_per_vertex);
               cell->line(l)->get_dof_indices(line_dofs, i);
-              for(unsigned int j = 0;
+              for(unsigned int j= 0;
                   j < fe[i].dofs_per_line + 2 * fe[i].dofs_per_vertex;
                   ++j)
                 deallog << line_dofs[j] << ' ';

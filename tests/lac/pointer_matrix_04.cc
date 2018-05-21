@@ -37,12 +37,12 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {2, 3, 4, 5};
+  const double Adata[]= {2, 3, 4, 5};
 
   FullMatrix<double> A(2, 2);
   A.fill(Adata);
 
-  char* name = "Matrix A";
+  char* name= "Matrix A";
 
   checkConstructor4<double>(A, name);
 }

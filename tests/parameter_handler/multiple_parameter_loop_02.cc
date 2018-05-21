@@ -28,7 +28,7 @@ public:
   virtual void
   create_new(unsigned int run_no)
   {
-    this->run_no = run_no;
+    this->run_no= run_no;
   }
   virtual void
   declare_parameters(ParameterHandler& prm);

@@ -145,7 +145,7 @@ public:
   template <class Matrix>
   void
   initialize(const Matrix&        matrix,
-             const AdditionalData additional_data = AdditionalData());
+             const AdditionalData additional_data= AdditionalData());
 
   /**
    * @}
@@ -230,14 +230,14 @@ public:
    * the matrix, i.e. $x=A^{-T}b$.
    */
   void
-  solve(Vector<double>& rhs_and_solution, const bool transpose = false) const;
+  solve(Vector<double>& rhs_and_solution, const bool transpose= false) const;
 
   /**
    * Same as before, but for block vectors.
    */
   void
   solve(BlockVector<double>& rhs_and_solution,
-        const bool           transpose = false) const;
+        const bool           transpose= false) const;
 
   /**
    * Call the two functions factorize() and solve() in that order, i.e.
@@ -249,7 +249,7 @@ public:
   void
   solve(const Matrix&   matrix,
         Vector<double>& rhs_and_solution,
-        const bool      transpose = false);
+        const bool      transpose= false);
 
   /**
    * Same as before, but for block vectors.
@@ -258,7 +258,7 @@ public:
   void
   solve(const Matrix&        matrix,
         BlockVector<double>& rhs_and_solution,
-        const bool           transpose = false);
+        const bool           transpose= false);
 
   /**
    * @}

@@ -119,12 +119,12 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component= 0) const;
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               const unsigned int             component= 0) const;
   };
 
   template <int dim>
@@ -143,15 +143,15 @@ namespace Step50
                                std::vector<double>&           values,
                                const unsigned int             component) const
   {
-    const unsigned int n_points = points.size();
+    const unsigned int n_points= points.size();
 
     Assert(values.size() == n_points,
            ExcDimensionMismatch(values.size(), n_points));
 
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    for(unsigned int i = 0; i < n_points; ++i)
-      values[i] = Coefficient<dim>::value(points[i]);
+    for(unsigned int i= 0; i < n_points; ++i)
+      values[i]= Coefficient<dim>::value(points[i]);
   }
 
   template <int dim>
@@ -174,7 +174,7 @@ namespace Step50
 
     deallog << "Number of degrees of freedom: " << mg_dof_handler.n_dofs();
 
-    for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+    for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
       deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
     deallog << std::endl;
 
@@ -188,7 +188,7 @@ namespace Step50
 
     typename FunctionMap<dim>::type dirichlet_boundary;
     Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-    dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+    dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
     VectorTools::interpolate_boundary_values(
       static_cast<const DoFHandler<dim>&>(mg_dof_handler),
       dirichlet_boundary,
@@ -204,14 +204,14 @@ namespace Step50
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler, dirichlet_boundary);
 
-    const unsigned int n_levels = triangulation.n_global_levels();
+    const unsigned int n_levels= triangulation.n_global_levels();
 
     mg_interface_matrices.resize(0, n_levels - 1);
     mg_interface_matrices.clear_elements();
     mg_matrices.resize(0, n_levels - 1);
     mg_matrices.clear_elements();
 
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for(unsigned int level= 0; level < n_levels; ++level)
       {
         DynamicSparsityPattern csp;
         csp.reinit(mg_dof_handler.n_dofs(level), mg_dof_handler.n_dofs(level));
@@ -243,8 +243,8 @@ namespace Step50
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -256,29 +256,29 @@ namespace Step50
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = mg_dof_handler.begin_active(),
-      endc = mg_dof_handler.end();
+      endc= mg_dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_matrix= 0;
+          cell_rhs   = 0;
 
           fe_values.reinit(cell);
 
           coefficient.value_list(fe_values.get_quadrature_points(),
                                  coefficient_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (coefficient_values[q_point]
-                                        * fe_values.shape_grad(i, q_point)
-                                        * fe_values.shape_grad(j, q_point)
-                                        * fe_values.JxW(q_point));
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (coefficient_values[q_point]
+                                       * fe_values.shape_grad(i, q_point)
+                                       * fe_values.shape_grad(j, q_point)
+                                       * fe_values.JxW(q_point));
 
-                cell_rhs(i) += (fe_values.shape_value(i, q_point) * 1.0
-                                * fe_values.JxW(q_point));
+                cell_rhs(i)+= (fe_values.shape_value(i, q_point) * 1.0
+                               * fe_values.JxW(q_point));
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -304,8 +304,8 @@ namespace Step50
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -318,7 +318,7 @@ namespace Step50
       triangulation.n_levels());
     std::vector<ConstraintMatrix> boundary_interface_constraints(
       triangulation.n_levels());
-    for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+    for(unsigned int level= 0; level < triangulation.n_levels(); ++level)
       {
         boundary_constraints[level].add_lines(
           mg_constrained_dofs.get_refinement_edge_indices(level));
@@ -331,38 +331,38 @@ namespace Step50
         boundary_interface_constraints[level].close();
       }
 
-    typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
-                                            endc = mg_dof_handler.end();
+    typename DoFHandler<dim>::cell_iterator cell= mg_dof_handler.begin(),
+                                            endc= mg_dof_handler.end();
 
     for(; cell != endc; ++cell)
       if(cell->level_subdomain_id() == triangulation.locally_owned_subdomain())
         {
-          cell_matrix = 0;
+          cell_matrix= 0;
           fe_values.reinit(cell);
 
           coefficient.value_list(fe_values.get_quadrature_points(),
                                  coefficient_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                cell_matrix(i, j) += (coefficient_values[q_point]
-                                      * fe_values.shape_grad(i, q_point)
-                                      * fe_values.shape_grad(j, q_point)
-                                      * fe_values.JxW(q_point));
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                cell_matrix(i, j)+= (coefficient_values[q_point]
+                                     * fe_values.shape_grad(i, q_point)
+                                     * fe_values.shape_grad(j, q_point)
+                                     * fe_values.JxW(q_point));
 
           cell->get_mg_dof_indices(local_dof_indices);
 
           boundary_constraints[cell->level()].distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               if(!mg_constrained_dofs.at_refinement_edge(cell->level(),
                                                          local_dof_indices[i])
                  || mg_constrained_dofs.at_refinement_edge(
                       cell->level(), local_dof_indices[j]))
-                cell_matrix(i, j) = 0;
+                cell_matrix(i, j)= 0;
 
           boundary_interface_constraints[cell->level()]
             .distribute_local_to_global(cell_matrix,
@@ -370,7 +370,7 @@ namespace Step50
                                         mg_interface_matrices[cell->level()]);
         }
 
-    for(unsigned int i = 0; i < triangulation.n_global_levels(); ++i)
+    for(unsigned int i= 0; i < triangulation.n_global_levels(); ++i)
       {
         mg_matrices[i].compress(VectorOperation::add);
         mg_interface_matrices[i].compress(VectorOperation::add);
@@ -421,7 +421,7 @@ namespace Step50
     SolverControl      solver_control(50, 1e-12, false);
     SolverCG<vector_t> cg(solver_control);
 
-    solution = 0;
+    solution= 0;
 
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
     constraints.distribute(solution);
@@ -448,7 +448,7 @@ namespace Step50
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 3; ++cycle)
+    for(unsigned int cycle= 0; cycle < 3; ++cycle)
       {
         deallog << "Cycle " << cycle << ':' << std::endl;
 
@@ -474,7 +474,7 @@ namespace Step50
 
         deallog << "   Number of degrees of freedom: "
                 << mg_dof_handler.n_dofs() << " (by level: ";
-        for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+        for(unsigned int level= 0; level < triangulation.n_levels(); ++level)
           deallog << mg_dof_handler.n_dofs(level)
                   << (level == triangulation.n_levels() - 1 ? ")" : ", ");
         deallog << std::endl;

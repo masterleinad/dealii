@@ -23,8 +23,8 @@ void
 test(PETScWrappers::FullMatrix& m)
 {
   // first set a few entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, i * j * .5 + .5);
 
@@ -33,10 +33,10 @@ test(PETScWrappers::FullMatrix& m)
   // then multiply everything by 1.25 and
   // make sure we retrieve the values we
   // expect
-  m *= 1.25;
+  m*= 1.25;
 
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           AssertThrow(m(i, j) == (i * j * .5 + .5) * 1.25, ExcInternalError());

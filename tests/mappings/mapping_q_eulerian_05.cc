@@ -61,17 +61,17 @@ test(unsigned int degree)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = tria.begin_active(),
-    endc = tria.end();
+    endc= tria.end();
   Point<spacedim> real;
   Point<dim>      unit;
-  double          eps = 1e-10;
+  double          eps= 1e-10;
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;
-      for(unsigned int q = 0; q < quad.size(); ++q)
+      for(unsigned int q= 0; q < quad.size(); ++q)
         {
-          real = mapping.transform_unit_to_real_cell(cell, quad.point(q));
-          unit = mapping.transform_real_to_unit_cell(cell, real);
+          real= mapping.transform_unit_to_real_cell(cell, quad.point(q));
+          unit= mapping.transform_real_to_unit_cell(cell, real);
           deallog << quad.point(q) << " -> " << real << std::endl;
           if((unit - quad.point(q)).norm() > eps)
             deallog << quad.point(q) << " != " << unit << std::endl;

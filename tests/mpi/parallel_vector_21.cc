@@ -28,8 +28,8 @@
 void
 test()
 {
-  unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   IndexSet locally_owned(n_procs * 2);
   locally_owned.add_range(my_id * 2, my_id * 2 + 2);
@@ -46,12 +46,12 @@ test()
   v2.reinit(v, true);
 
   // set locally owned range of v2 manually
-  for(unsigned int i = 0; i < v2.local_size(); ++i)
-    v2.local_element(i) = 1.;
+  for(unsigned int i= 0; i < v2.local_size(); ++i)
+    v2.local_element(i)= 1.;
 
   // add entries to ghost values
-  v2(0) += 1.;
-  v2(2) += 1.;
+  v2(0)+= 1.;
+  v2(2)+= 1.;
   v2.compress(VectorOperation::add);
 
   // now we should have the correct data, not some uninitialized trash that

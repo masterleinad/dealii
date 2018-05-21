@@ -77,11 +77,11 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    DX(const bool write_cells     = true,
-       const bool write_faces     = false,
-       const bool write_diameter  = false,
-       const bool write_measure   = false,
-       const bool write_all_faces = true);
+    DX(const bool write_cells    = true,
+       const bool write_faces    = false,
+       const bool write_diameter = false,
+       const bool write_measure  = false,
+       const bool write_all_faces= true);
 
     /**
      * Declare parameters in ParameterHandler.
@@ -135,7 +135,7 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Msh(const bool write_faces = false, const bool write_lines = false);
+    Msh(const bool write_faces= false, const bool write_lines= false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -200,9 +200,9 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Ucd(const bool write_preamble = false,
-        const bool write_faces    = false,
-        const bool write_lines    = false);
+    Ucd(const bool write_preamble= false,
+        const bool write_faces   = false,
+        const bool write_lines   = false);
 
     /**
      * Declare parameters in ParameterHandler.
@@ -253,9 +253,9 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Gnuplot(const bool         write_cell_number      = false,
-            const unsigned int n_boundary_face_points = 2,
-            const bool         curved_inner_cells     = false);
+    Gnuplot(const bool         write_cell_number     = false,
+            const unsigned int n_boundary_face_points= 2,
+            const bool         curved_inner_cells    = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -349,12 +349,12 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    EpsFlagsBase(const SizeType     size_type                = width,
-                 const unsigned int size                     = 300,
-                 const double       line_width               = 0.5,
-                 const bool         color_lines_on_user_flag = false,
-                 const unsigned int n_boundary_face_points   = 2,
-                 const bool         color_lines_level        = false);
+    EpsFlagsBase(const SizeType     size_type               = width,
+                 const unsigned int size                    = 300,
+                 const double       line_width              = 0.5,
+                 const bool         color_lines_on_user_flag= false,
+                 const unsigned int n_boundary_face_points  = 2,
+                 const bool         color_lines_level       = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -393,11 +393,11 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2);
+    Eps(const SizeType     size_type               = width,
+        const unsigned int size                    = 300,
+        const double       line_width              = 0.5,
+        const bool         color_lines_on_user_flag= false,
+        const unsigned int n_boundary_face_points  = 2);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -446,15 +446,15 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2,
-        const bool         write_cell_numbers       = false,
-        const bool         write_cell_number_level  = true,
-        const bool         write_vertex_numbers     = false,
-        const bool         color_lines_level        = false);
+    Eps(const SizeType     size_type               = width,
+        const unsigned int size                    = 300,
+        const double       line_width              = 0.5,
+        const bool         color_lines_on_user_flag= false,
+        const unsigned int n_boundary_face_points  = 2,
+        const bool         write_cell_numbers      = false,
+        const bool         write_cell_number_level = true,
+        const bool         write_vertex_numbers    = false,
+        const bool         color_lines_level       = false);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -496,13 +496,13 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Eps(const SizeType     size_type                = width,
-        const unsigned int size                     = 300,
-        const double       line_width               = 0.5,
-        const bool         color_lines_on_user_flag = false,
-        const unsigned int n_boundary_face_points   = 2,
-        const double       azimut_angle             = 60,
-        const double       turn_angle               = 30);
+    Eps(const SizeType     size_type               = width,
+        const unsigned int size                    = 300,
+        const double       line_width              = 0.5,
+        const bool         color_lines_on_user_flag= false,
+        const unsigned int n_boundary_face_points  = 2,
+        const double       azimut_angle            = 60,
+        const double       turn_angle              = 30);
     /**
      * Declare parameters in ParameterHandler.
      */
@@ -704,20 +704,20 @@ namespace GridOutFlags
     /**
      * Constructor.
      */
-    Svg(const unsigned int line_thickness                 = 2,
-        const unsigned int boundary_line_thickness        = 4,
-        bool               margin                         = true,
-        const Background   background                     = white,
-        const int          azimuth_angle                  = 0,
-        const int          polar_angle                    = 0,
-        const Coloring     coloring                       = level_number,
-        const bool         convert_level_number_to_height = false,
-        const bool         label_level_number             = true,
-        const bool         label_cell_index               = true,
-        const bool         label_material_id              = false,
-        const bool         label_subdomain_id             = false,
-        const bool         draw_colorbar                  = true,
-        const bool         draw_legend                    = true);
+    Svg(const unsigned int line_thickness                = 2,
+        const unsigned int boundary_line_thickness       = 4,
+        bool               margin                        = true,
+        const Background   background                    = white,
+        const int          azimuth_angle                 = 0,
+        const int          polar_angle                   = 0,
+        const Coloring     coloring                      = level_number,
+        const bool         convert_level_number_to_height= false,
+        const bool         label_level_number            = true,
+        const bool         label_cell_index              = true,
+        const bool         label_material_id             = false,
+        const bool         label_subdomain_id            = false,
+        const bool         draw_colorbar                 = true,
+        const bool         draw_legend                   = true);
   };
 
   /**
@@ -929,7 +929,7 @@ public:
   void
   write_gnuplot(const Triangulation<dim, spacedim>& tria,
                 std::ostream&                       out,
-                const Mapping<dim, spacedim>*       mapping = nullptr) const;
+                const Mapping<dim, spacedim>*       mapping= nullptr) const;
 
   /**
    * Write the triangulation in the msh format.
@@ -1009,7 +1009,7 @@ public:
   void
   write_eps(const Triangulation<dim, spacedim>& tria,
             std::ostream&                       out,
-            const Mapping<dim, spacedim>*       mapping = nullptr) const;
+            const Mapping<dim, spacedim>*       mapping= nullptr) const;
 
   /**
    * Write two-dimensional XFig-file.
@@ -1033,7 +1033,7 @@ public:
   void
   write_xfig(const Triangulation<dim, spacedim>& tria,
              std::ostream&                       out,
-             const Mapping<dim, spacedim>*       mapping = nullptr) const;
+             const Mapping<dim, spacedim>*       mapping= nullptr) const;
 
   /**
    * Write the triangulation in the SVG format.
@@ -1158,8 +1158,8 @@ public:
   void
   write_mesh_per_processor_as_vtu(const Triangulation<dim, spacedim>& tria,
                                   const std::string& filename_without_extension,
-                                  const bool         view_levels = false,
-                                  const bool include_artificial  = false) const;
+                                  const bool         view_levels= false,
+                                  const bool include_artificial = false) const;
 
   /**
    * Write grid to @p out according to the given data format. This function
@@ -1170,7 +1170,7 @@ public:
   write(const Triangulation<dim, spacedim>& tria,
         std::ostream&                       out,
         const OutputFormat                  output_format,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+        const Mapping<dim, spacedim>*       mapping= nullptr) const;
 
   /**
    * Write mesh in default format set by ParameterHandler.
@@ -1179,7 +1179,7 @@ public:
   void
   write(const Triangulation<dim, spacedim>& tria,
         std::ostream&                       out,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+        const Mapping<dim, spacedim>*       mapping= nullptr) const;
 
   /**
    * Set flags for DX output

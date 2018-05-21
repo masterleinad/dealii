@@ -43,18 +43,18 @@ test(const Point<spacedim>& p)
 
   // Displacement vector.
   Vector<double> disp(dh.n_dofs());
-  for(unsigned int i = 0; i < dh.n_dofs(); ++i)
-    disp[i] = .5;
+  for(unsigned int i= 0; i < dh.n_dofs(); ++i)
+    disp[i]= .5;
 
   // mapping
   MappingQEulerian<dim, Vector<double>, spacedim> mapping(1, dh, disp);
 
-  auto m = GridTools::extract_used_vertices(tria, mapping);
+  auto m= GridTools::extract_used_vertices(tria, mapping);
 
   for(auto& e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 
-  auto i = GridTools::find_closest_vertex(m, p);
+  auto i= GridTools::find_closest_vertex(m, p);
   deallog << "Closest vertex to " << p << ", v[" << i << "] :" << m[i]
           << std::endl;
 };

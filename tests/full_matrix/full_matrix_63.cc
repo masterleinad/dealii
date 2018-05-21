@@ -26,7 +26,7 @@ check()
   make_matrix(m);
 
   FullMatrix<number> n;
-  n = m;
+  n= m;
 
   print_matrix(n);
 }

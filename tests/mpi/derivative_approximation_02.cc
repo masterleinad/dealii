@@ -47,7 +47,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -72,7 +72,7 @@ test()
   // create such a vector with ghost elements and use it to compute
   // derivative information
   TrilinosWrappers::MPI::Vector vec_rel(locally_relevant_set);
-  vec_rel = vec;
+  vec_rel= vec;
 
   Vector<float> indicators(tr.n_active_cells());
   DerivativeApproximation::approximate_gradient(dofh, vec_rel, indicators);
@@ -81,7 +81,7 @@ test()
   // cell of the distributed mesh. they need to be the same, no matter
   // how many processors we use. So, the sum of absolute values must
   // be the same for any processor number
-  const double sum = Utilities::MPI::sum(indicators.l1_norm(), MPI_COMM_WORLD);
+  const double sum= Utilities::MPI::sum(indicators.l1_norm(), MPI_COMM_WORLD);
   if(myid == 0)
     deallog << sum << std::endl;
 }

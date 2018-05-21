@@ -31,7 +31,7 @@ operator==(const PETScWrappers::MPI::BlockVector& v1,
 {
   if(v1.size() != v2.size())
     return false;
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for(unsigned int i= 0; i < v1.size(); ++i)
     if(v1(i) != v2(i))
       return false;
   return true;
@@ -41,10 +41,10 @@ void
 test()
 {
   std::vector<types::global_dof_index> ivector(4);
-  ivector[0] = 2;
-  ivector[1] = 4;
-  ivector[2] = 3;
-  ivector[3] = 5;
+  ivector[0]= 2;
+  ivector[1]= 4;
+  ivector[2]= 3;
+  ivector[3]= 5;
 
   // Check 1: initialization via
   // iterators
@@ -55,13 +55,13 @@ test()
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
       // initialize other vector
       // through iterators
-      PETScWrappers::MPI::BlockVector::iterator p2 = v2.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p2)
-        *p2 = i;
+      PETScWrappers::MPI::BlockVector::iterator p2= v2.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p2)
+        *p2= i;
       Assert(p2 == v2.end(), ExcInternalError());
 
       // check that the two vectors are equal
@@ -76,11 +76,11 @@ test()
       PETScWrappers::MPI::BlockVector v1(ivector, MPI_COMM_WORLD, ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
-      PETScWrappers::MPI::BlockVector::iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      PETScWrappers::MPI::BlockVector::iterator p1= v1.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p1)
         AssertThrow(*p1 == i, ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -90,7 +90,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for(unsigned int i= 0; i < v1.size(); ++i, --p1)
         AssertThrow(*p1 == v1.size() - i - 1, ExcInternalError());
 
       // if we came thus far,
@@ -105,11 +105,11 @@ test()
       PETScWrappers::MPI::BlockVector v1(ivector, MPI_COMM_WORLD, ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
-      PETScWrappers::MPI::BlockVector::const_iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      PETScWrappers::MPI::BlockVector::const_iterator p1= v1.begin();
+      for(unsigned int i= 0; i < v1.size(); ++i, ++p1)
         AssertThrow(*p1 == i, ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -119,10 +119,10 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for(unsigned int i= 0; i < v1.size(); ++i, --p1)
         {
-          const double val = *p1;
-          const double ref = v1.size() - i - 1;
+          const double val= *p1;
+          const double ref= v1.size() - i - 1;
           AssertThrow(val == ref, ExcInternalError());
         };
 
@@ -138,8 +138,8 @@ test()
       PETScWrappers::MPI::BlockVector v1(ivector, MPI_COMM_WORLD, ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
       // check std::distance
       // algorithm
@@ -162,7 +162,7 @@ test()
         v2.begin(),
         std::bind(std::multiplies<double>(), std::placeholders::_1, 2.0));
       v2.compress(VectorOperation::insert);
-      v2 *= 1. / 2.;
+      v2*= 1. / 2.;
       deallog << "Check 6: " << (v1 == v2 ? "true" : "false") << std::endl;
 
       // check operators +/-, +=/-=
@@ -179,21 +179,21 @@ test()
                     "false")
               << std::endl;
       deallog << "Check 10: "
-              << (std::distance(v1.begin(), (v1.begin() += 7)) == 7 ? "true" :
-                                                                      "false")
+              << (std::distance(v1.begin(), (v1.begin()+= 7)) == 7 ? "true" :
+                                                                     "false")
               << std::endl;
       deallog << "Check 11: "
-              << (std::distance((v1.end() -= 4), v1.end()) == 4 ? "true" :
-                                                                  "false")
+              << (std::distance((v1.end()-= 4), v1.end()) == 4 ? "true" :
+                                                                 "false")
               << std::endl;
 
       // check advance
-      PETScWrappers::MPI::BlockVector::iterator p2 = v1.begin();
+      PETScWrappers::MPI::BlockVector::iterator p2= v1.begin();
       std::advance(p2, v1.size());
       deallog << "Check 12: " << (p2 == v1.end() ? "true" : "false")
               << std::endl;
 
-      PETScWrappers::MPI::BlockVector::const_iterator p3 = v1.begin();
+      PETScWrappers::MPI::BlockVector::const_iterator p3= v1.begin();
       std::advance(p3, v1.size());
       deallog << "Check 13: " << (p3 == v1.end() ? "true" : "false")
               << std::endl;
@@ -203,13 +203,13 @@ test()
   if(true)
     {
       PETScWrappers::MPI::BlockVector v1(ivector, MPI_COMM_WORLD, ivector);
-      for(unsigned int i = 0; i < v1.size(); ++i)
-        v1(i) = i;
+      for(unsigned int i= 0; i < v1.size(); ++i)
+        v1(i)= i;
 
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for(unsigned int i= 0; i < v1.size(); ++i)
         {
-          const PETScWrappers::MPI::BlockVector::iterator p = (v1.begin() + i);
-          for(unsigned int j = 0; j < v1.size(); ++j)
+          const PETScWrappers::MPI::BlockVector::iterator p= (v1.begin() + i);
+          for(unsigned int j= 0; j < v1.size(); ++j)
             AssertThrow(p[(signed) j - (signed) i] == j, ExcInternalError());
         };
 

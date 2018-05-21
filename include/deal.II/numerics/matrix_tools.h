@@ -247,8 +247,8 @@ namespace MatrixCreator
                      const DoFHandler<dim, spacedim>&        dof,
                      const Quadrature<dim>&                  q,
                      SparseMatrix<number>&                   matrix,
-                     const Function<spacedim, number>* const a = nullptr,
-                     const ConstraintMatrix& constraints = ConstraintMatrix());
+                     const Function<spacedim, number>* const a= nullptr,
+                     const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Call the create_mass_matrix() function, see above, with
@@ -259,8 +259,8 @@ namespace MatrixCreator
   create_mass_matrix(const DoFHandler<dim, spacedim>&        dof,
                      const Quadrature<dim>&                  q,
                      SparseMatrix<number>&                   matrix,
-                     const Function<spacedim, number>* const a = nullptr,
-                     const ConstraintMatrix& constraints = ConstraintMatrix());
+                     const Function<spacedim, number>* const a= nullptr,
+                     const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Assemble the mass matrix and a right hand side vector. If no coefficient
@@ -293,7 +293,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Call the create_mass_matrix() function, see above, with
@@ -310,7 +310,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Same function as above, but for hp objects.
@@ -321,8 +321,8 @@ namespace MatrixCreator
                      const hp::DoFHandler<dim, spacedim>&        dof,
                      const hp::QCollection<dim>&                 q,
                      SparseMatrix<number>&                       matrix,
-                     const Function<spacedim, number>* const     a = nullptr,
-                     const ConstraintMatrix& constraints = ConstraintMatrix());
+                     const Function<spacedim, number>* const     a= nullptr,
+                     const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Same function as above, but for hp objects.
@@ -332,8 +332,8 @@ namespace MatrixCreator
   create_mass_matrix(const hp::DoFHandler<dim, spacedim>&    dof,
                      const hp::QCollection<dim>&             q,
                      SparseMatrix<number>&                   matrix,
-                     const Function<spacedim, number>* const a = nullptr,
-                     const ConstraintMatrix& constraints = ConstraintMatrix());
+                     const Function<spacedim, number>* const a= nullptr,
+                     const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Same function as above, but for hp objects.
@@ -350,7 +350,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Same function as above, but for hp objects.
@@ -366,7 +366,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    const ConstraintMatrix& constraints = ConstraintMatrix());
+    const ConstraintMatrix& constraints= ConstraintMatrix());
 
   /**
    * Assemble the mass matrix and a right hand side vector along the boundary.
@@ -408,7 +408,7 @@ namespace MatrixCreator
                    typename numbers::NumberTraits<number>::real_type>* const
       weight
     = 0,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Call the create_boundary_mass_matrix() function, see above, with
@@ -427,7 +427,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Same function as above, but for hp objects.
@@ -446,7 +446,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Same function as above, but for hp objects.
@@ -464,7 +464,7 @@ namespace MatrixCreator
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a
     = nullptr,
-    std::vector<unsigned int> component_mapping = std::vector<unsigned int>());
+    std::vector<unsigned int> component_mapping= std::vector<unsigned int>());
 
   /**
    * Assemble the Laplace matrix. If no coefficient is given (i.e., if the
@@ -491,7 +491,7 @@ namespace MatrixCreator
                         const DoFHandler<dim, spacedim>& dof,
                         const Quadrature<dim>&           q,
                         SparseMatrix<double>&            matrix,
-                        const Function<spacedim>* const  a = nullptr,
+                        const Function<spacedim>* const  a= nullptr,
                         const ConstraintMatrix&          constraints
                         = ConstraintMatrix());
 
@@ -504,7 +504,7 @@ namespace MatrixCreator
   create_laplace_matrix(const DoFHandler<dim, spacedim>& dof,
                         const Quadrature<dim>&           q,
                         SparseMatrix<double>&            matrix,
-                        const Function<spacedim>* const  a = nullptr,
+                        const Function<spacedim>* const  a= nullptr,
                         const ConstraintMatrix&          constraints
                         = ConstraintMatrix());
 
@@ -534,7 +534,7 @@ namespace MatrixCreator
                         SparseMatrix<double>&            matrix,
                         const Function<spacedim>&        rhs,
                         Vector<double>&                  rhs_vector,
-                        const Function<spacedim>* const  a = nullptr,
+                        const Function<spacedim>* const  a= nullptr,
                         const ConstraintMatrix&          constraints
                         = ConstraintMatrix());
 
@@ -549,7 +549,7 @@ namespace MatrixCreator
                         SparseMatrix<double>&            matrix,
                         const Function<spacedim>&        rhs,
                         Vector<double>&                  rhs_vector,
-                        const Function<spacedim>* const  a = nullptr,
+                        const Function<spacedim>* const  a= nullptr,
                         const ConstraintMatrix&          constraints
                         = ConstraintMatrix());
 
@@ -563,7 +563,7 @@ namespace MatrixCreator
                         const hp::DoFHandler<dim, spacedim>&        dof,
                         const hp::QCollection<dim>&                 q,
                         SparseMatrix<double>&                       matrix,
-                        const Function<spacedim>* const             a = nullptr,
+                        const Function<spacedim>* const             a= nullptr,
                         const ConstraintMatrix&                     constraints
                         = ConstraintMatrix());
 
@@ -576,7 +576,7 @@ namespace MatrixCreator
   create_laplace_matrix(const hp::DoFHandler<dim, spacedim>& dof,
                         const hp::QCollection<dim>&          q,
                         SparseMatrix<double>&                matrix,
-                        const Function<spacedim>* const      a = nullptr,
+                        const Function<spacedim>* const      a= nullptr,
                         const ConstraintMatrix&              constraints
                         = ConstraintMatrix());
 
@@ -592,7 +592,7 @@ namespace MatrixCreator
                         SparseMatrix<double>&                       matrix,
                         const Function<spacedim>&                   rhs,
                         Vector<double>&                             rhs_vector,
-                        const Function<spacedim>* const             a = nullptr,
+                        const Function<spacedim>* const             a= nullptr,
                         const ConstraintMatrix&                     constraints
                         = ConstraintMatrix());
 
@@ -607,7 +607,7 @@ namespace MatrixCreator
                         SparseMatrix<double>&                matrix,
                         const Function<spacedim>&            rhs,
                         Vector<double>&                      rhs_vector,
-                        const Function<spacedim>* const      a = nullptr,
+                        const Function<spacedim>* const      a= nullptr,
                         const ConstraintMatrix&              constraints
                         = ConstraintMatrix());
 
@@ -836,7 +836,7 @@ namespace MatrixTools
     SparseMatrix<number>&                            matrix,
     Vector<number>&                                  solution,
     Vector<number>&                                  right_hand_side,
-    const bool                                       eliminate_columns = true);
+    const bool                                       eliminate_columns= true);
 
   /**
    * Apply Dirichlet boundary conditions to the system matrix and vectors as
@@ -850,7 +850,7 @@ namespace MatrixTools
     BlockSparseMatrix<number>&                       matrix,
     BlockVector<number>&                             solution,
     BlockVector<number>&                             right_hand_side,
-    const bool                                       eliminate_columns = true);
+    const bool                                       eliminate_columns= true);
 
 #ifdef DEAL_II_WITH_PETSC
   /**
@@ -894,7 +894,7 @@ namespace MatrixTools
     PETScWrappers::MatrixBase&                            matrix,
     PETScWrappers::VectorBase&                            solution,
     PETScWrappers::VectorBase&                            right_hand_side,
-    const bool eliminate_columns = true);
+    const bool eliminate_columns= true);
 
   /**
    * Same as above but for the parallel BlockSparseMatrix.
@@ -905,7 +905,7 @@ namespace MatrixTools
     PETScWrappers::MPI::BlockSparseMatrix&                matrix,
     PETScWrappers::MPI::BlockVector&                      solution,
     PETScWrappers::MPI::BlockVector&                      right_hand_side,
-    const bool eliminate_columns = true);
+    const bool eliminate_columns= true);
 
 #endif
 
@@ -949,7 +949,7 @@ namespace MatrixTools
     TrilinosWrappers::SparseMatrix&                          matrix,
     TrilinosWrappers::MPI::Vector&                           solution,
     TrilinosWrappers::MPI::Vector&                           right_hand_side,
-    const bool eliminate_columns = true);
+    const bool eliminate_columns= true);
 
   /**
    * This function does the same as the one above, except now working on block
@@ -961,7 +961,7 @@ namespace MatrixTools
     TrilinosWrappers::BlockSparseMatrix&                     matrix,
     TrilinosWrappers::MPI::BlockVector&                      solution,
     TrilinosWrappers::MPI::BlockVector&                      right_hand_side,
-    const bool eliminate_columns = true);
+    const bool eliminate_columns= true);
 #endif
 
   /**

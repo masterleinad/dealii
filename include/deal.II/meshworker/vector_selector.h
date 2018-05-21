@@ -56,9 +56,9 @@ namespace MeshWorker
      */
     void
     add(const std::string& name,
-        const bool         values    = true,
-        const bool         gradients = false,
-        const bool         hessians  = false);
+        const bool         values   = true,
+        const bool         gradients= false,
+        const bool         hessians = false);
 
     /**
      * Does the same as the function above but it is possible to select a
@@ -186,14 +186,14 @@ namespace MeshWorker
    * @ingroup MeshWorker
    * @author Guido Kanschat, 2009
    */
-  template <int dim, int spacedim = dim, typename Number = double>
+  template <int dim, int spacedim= dim, typename Number= double>
   class VectorDataBase : public VectorSelector
   {
   public:
     /**
      * Constructor
      */
-    VectorDataBase() = default;
+    VectorDataBase()= default;
 
     /**
      * Constructor from a base class object
@@ -213,7 +213,7 @@ namespace MeshWorker
     /**
      * Virtual, but empty destructor.
      */
-    virtual ~VectorDataBase() override = default;
+    virtual ~VectorDataBase() override= default;
 
     /**
      * The only function added to VectorSelector is an abstract virtual
@@ -298,7 +298,7 @@ namespace MeshWorker
    * @ingroup MeshWorker
    * @author Guido Kanschat, 2009
    */
-  template <typename VectorType, int dim, int spacedim = dim>
+  template <typename VectorType, int dim, int spacedim= dim>
   class VectorData
     : public VectorDataBase<dim, spacedim, typename VectorType::value_type>
   {
@@ -306,7 +306,7 @@ namespace MeshWorker
     /**
      * Constructor.
      */
-    VectorData() = default;
+    VectorData()= default;
 
     /**
      * Constructor using a prefilled VectorSelector
@@ -378,14 +378,14 @@ namespace MeshWorker
    * @ingroup MeshWorker
    * @author Guido Kanschat, 2010
    */
-  template <typename VectorType, int dim, int spacedim = dim>
+  template <typename VectorType, int dim, int spacedim= dim>
   class MGVectorData : public VectorData<VectorType, dim, spacedim>
   {
   public:
     /**
      * Constructor.
      */
-    MGVectorData() = default;
+    MGVectorData()= default;
 
     /**
      * Constructor using a prefilled VectorSelector
@@ -517,13 +517,13 @@ namespace MeshWorker
   VectorSelector::print(StreamType& s, const AnyData& v) const
   {
     s << "values:   ";
-    for(unsigned int i = 0; i < n_values(); ++i)
+    for(unsigned int i= 0; i < n_values(); ++i)
       s << " '" << v.name(value_selection(i)) << '\'';
     s << std::endl << "gradients:";
-    for(unsigned int i = 0; i < n_gradients(); ++i)
+    for(unsigned int i= 0; i < n_gradients(); ++i)
       s << " '" << v.name(gradient_selection(i)) << '\'';
     s << std::endl << "hessians: ";
-    for(unsigned int i = 0; i < n_hessians(); ++i)
+    for(unsigned int i= 0; i < n_hessians(); ++i)
       s << " '" << v.name(hessian_selection(i)) << '\'';
     s << std::endl;
   }

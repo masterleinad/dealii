@@ -129,7 +129,7 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -151,7 +151,7 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -175,7 +175,7 @@ namespace Step41
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -250,7 +250,7 @@ namespace Step41
     system_matrix.reinit(dsp);
     complete_system_matrix.reinit(dsp);
 
-    IndexSet solution_index_set = dof_handler.locally_owned_dofs();
+    IndexSet solution_index_set= dof_handler.locally_owned_dofs();
     solution.reinit(solution_index_set, MPI_COMM_WORLD);
     system_rhs.reinit(solution_index_set, MPI_COMM_WORLD);
     complete_system_rhs.reinit(solution_index_set, MPI_COMM_WORLD);
@@ -265,8 +265,8 @@ namespace Step41
     mass_matrix.reinit(dsp);
     assemble_mass_matrix_diagonal(mass_matrix);
     diagonal_of_mass_matrix.reinit(solution_index_set);
-    for(unsigned int j = 0; j < solution.size(); j++)
-      diagonal_of_mass_matrix(j) = mass_matrix.diag_element(j);
+    for(unsigned int j= 0; j < solution.size(); j++)
+      diagonal_of_mass_matrix(j)= mass_matrix.diag_element(j);
   }
 
   // @sect4{ObstacleProblem::assemble_system}
@@ -281,8 +281,8 @@ namespace Step41
   {
     std::cout << "   Assembling system..." << std::endl;
 
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     const QGauss<dim>        quadrature_formula(fe.degree + 1);
     const RightHandSide<dim> right_hand_side;
@@ -292,8 +292,8 @@ namespace Step41
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -302,21 +302,21 @@ namespace Step41
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                      * fe_values.shape_grad(j, q_point)
-                                      * fe_values.JxW(q_point));
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                     * fe_values.shape_grad(j, q_point)
+                                     * fe_values.JxW(q_point));
 
               cell_rhs(i)
                 += (fe_values.shape_value(i, q_point)
@@ -368,23 +368,23 @@ namespace Step41
     FEValues<dim>      fe_values(
       fe, quadrature_formula, update_values | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_matrix = 0;
+        cell_matrix= 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             cell_matrix(i, i)
               += (fe_values.shape_value(i, q_point)
                   * fe_values.shape_value(i, q_point) * fe_values.JxW(q_point));
@@ -421,16 +421,16 @@ namespace Step41
   {
     std::cout << "   Updating active set..." << std::endl;
 
-    const double penalty_parameter = 100.0;
+    const double penalty_parameter= 100.0;
 
     TrilinosWrappers::MPI::Vector lambda(
       complete_index_set(dof_handler.n_dofs()));
     complete_system_matrix.residual(lambda, solution, complete_system_rhs);
 
     // compute contact_force[i] = - lambda[i] * diagonal_of_mass_matrix[i]
-    contact_force = lambda;
+    contact_force= lambda;
     contact_force.scale(diagonal_of_mass_matrix);
-    contact_force *= -1;
+    contact_force*= -1;
 
     // The next step is to reset the active set and constraints objects and to
     // start the loop over all degrees of freedom. This is made slightly more
@@ -465,18 +465,18 @@ namespace Step41
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
           Assert(dof_handler.get_fe().dofs_per_cell
                    == GeometryInfo<dim>::vertices_per_cell,
                  ExcNotImplemented());
 
-          const unsigned int dof_index = cell->vertex_dof_index(v, 0);
+          const unsigned int dof_index= cell->vertex_dof_index(v, 0);
 
           if(dof_touched[dof_index] == false)
-            dof_touched[dof_index] = true;
+            dof_touched[dof_index]= true;
           else
             continue;
 
@@ -499,8 +499,8 @@ namespace Step41
           // residual will therefore only consist of the residual in the
           // non-contact zone. We output the norm of this residual along with
           // the size of the active set after the loop.
-          const double obstacle_value = obstacle.value(cell->vertex(v));
-          const double solution_value = solution(dof_index);
+          const double obstacle_value= obstacle.value(cell->vertex(v));
+          const double solution_value= solution(dof_index);
 
           if(lambda(dof_index)
                + penalty_parameter * diagonal_of_mass_matrix(dof_index)
@@ -511,9 +511,9 @@ namespace Step41
               constraints.add_line(dof_index);
               constraints.set_inhomogeneity(dof_index, obstacle_value);
 
-              solution(dof_index) = obstacle_value;
+              solution(dof_index)= obstacle_value;
 
-              lambda(dof_index) = 0;
+              lambda(dof_index)= 0;
             }
         }
     std::cout << "      Size of active set: " << active_set.n_elements()
@@ -613,7 +613,7 @@ namespace Step41
     setup_system();
 
     IndexSet active_set_old(active_set);
-    for(unsigned int iteration = 0; iteration <= solution.size(); ++iteration)
+    for(unsigned int iteration= 0; iteration <= solution.size(); ++iteration)
       {
         std::cout << "Newton iteration " << iteration << std::endl;
 
@@ -622,7 +622,7 @@ namespace Step41
         if(iteration == 0)
           {
             complete_system_matrix.copy_from(system_matrix);
-            complete_system_rhs = system_rhs;
+            complete_system_rhs= system_rhs;
           }
 
         solve();
@@ -632,7 +632,7 @@ namespace Step41
         if(active_set == active_set_old)
           break;
 
-        active_set_old = active_set;
+        active_set_old= active_set;
 
         std::cout << std::endl;
       }

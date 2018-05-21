@@ -50,7 +50,7 @@ public:
    * Constructor. This constructor is deleted because no instance of
    * this class needs to be constructed (all members are static).
    */
-  MultithreadInfo() = delete;
+  MultithreadInfo()= delete;
 
   /**
    * The number of CPUs in the system. At the moment detection of CPUs is only

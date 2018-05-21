@@ -26,18 +26,18 @@ JobIdentifier dealjobid;
 
 JobIdentifier::JobIdentifier()
 {
-  time_t t = std::time(nullptr);
-  id       = std::string("JobId ");
+  time_t t= std::time(nullptr);
+  id      = std::string("JobId ");
 
 #if defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETHOSTNAME)
   char name[100];
   gethostname(name, 99);
-  id += std::string(name) + std::string(" ");
+  id+= std::string(name) + std::string(" ");
 #else
-  id += std::string("unknown ");
+  id+= std::string("unknown ");
 #endif
 
-  id += std::string(std::ctime(&t));
+  id+= std::string(std::ctime(&t));
 }
 
 const std::string
@@ -51,10 +51,10 @@ JobIdentifier::base_name(const char* filename)
 {
   std::string            name(filename);
   std::string::size_type pos;
-  pos = name.rfind('/');
+  pos= name.rfind('/');
   if(pos != std::string::npos)
     name.erase(0, pos + 1);
-  pos = name.rfind('.');
+  pos= name.rfind('.');
   if(pos != std::string::npos)
     name.erase(pos, name.size());
   return name;

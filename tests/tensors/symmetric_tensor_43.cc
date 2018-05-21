@@ -25,9 +25,9 @@ template <int rank, int dim, typename NumberType>
 void
 fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
 {
-  for(unsigned int i = 0; i != t.n_independent_components; ++i)
+  for(unsigned int i= 0; i != t.n_independent_components; ++i)
     {
-      t.access_raw_entry(i) = i + 1;
+      t.access_raw_entry(i)= i + 1;
     }
 }
 
@@ -35,30 +35,30 @@ template <int dim, int rank, typename NumberType, typename OtherNumberType>
 void
 test_operators()
 {
-  const OtherNumberType s1 = 2.0;
-  const OtherNumberType s2 = 0.5;
+  const OtherNumberType s1= 2.0;
+  const OtherNumberType s2= 0.5;
 
   deallog << "operator *=" << std::endl;
   SymmetricTensor<rank, dim, NumberType> t1;
   fill_tensor(t1);
-  t1 *= s1;
+  t1*= s1;
   deallog << t1 << std::endl;
 
   deallog << "operator /=" << std::endl;
   SymmetricTensor<rank, dim, NumberType> t2;
   fill_tensor(t2);
-  t2 /= s2;
+  t2/= s2;
   deallog << t2 << std::endl;
 
   SymmetricTensor<rank, dim, OtherNumberType> t3;
   fill_tensor(t3);
 
   deallog << "operator +=" << std::endl;
-  t1 += t3;
+  t1+= t3;
   deallog << t1 << std::endl;
 
   deallog << "operator -=" << std::endl;
-  t2 -= t3;
+  t2-= t3;
   deallog << t2 << std::endl;
 }
 

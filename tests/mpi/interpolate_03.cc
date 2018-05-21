@@ -64,7 +64,7 @@ test()
                                              MPI_COMM_WORLD);
   VectorTools::interpolate(dofh, LinearFunction<dim>(), interpolated);
 
-  double norm = interpolated.l2_norm();
+  double norm= interpolated.l2_norm();
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "norm = " << norm << std::endl;
 }
@@ -74,7 +74,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

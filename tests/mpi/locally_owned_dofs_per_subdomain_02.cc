@@ -31,7 +31,7 @@ test()
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.refine_global(1);
 
-  const unsigned int nproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int nproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   GridTools::partition_triangulation(nproc, triangulation);
 
@@ -42,7 +42,7 @@ test()
   std::vector<IndexSet> locally_owned_dofs_per_proc
     = DoFTools::locally_owned_dofs_per_subdomain(dof_handler);
 
-  for(unsigned int p = 0; p < nproc; ++p)
+  for(unsigned int p= 0; p < nproc; ++p)
     {
       deallog << "proc " << p << ": " << std::endl;
       locally_owned_dofs_per_proc[p].print(deallog.get_file_stream());

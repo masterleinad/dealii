@@ -195,7 +195,7 @@ namespace MeshWorker
      * @ingroup MeshWorker
      * @author Guido Kanschat, 2009
      */
-    template <typename MatrixType, typename number = double>
+    template <typename MatrixType, typename number= double>
     class MatrixLocalBlocksToGlobalBlocks
     {
     public:
@@ -203,7 +203,7 @@ namespace MeshWorker
        * Constructor, initializing the #threshold, which limits how small
        * numbers may be to be entered into the matrix.
        */
-      MatrixLocalBlocksToGlobalBlocks(double threshold = 1.e-12);
+      MatrixLocalBlocksToGlobalBlocks(double threshold= 1.e-12);
 
       /**
        * Copy the BlockInfo and the matrix pointers into local variables and
@@ -307,7 +307,7 @@ namespace MeshWorker
      * @ingroup MeshWorker
      * @author Guido Kanschat, 2009
      */
-    template <typename MatrixType, typename number = double>
+    template <typename MatrixType, typename number= double>
     class MGMatrixLocalBlocksToGlobalBlocks
     {
     public:
@@ -321,7 +321,7 @@ namespace MeshWorker
        * Constructor, initializing the #threshold, which limits how small
        * numbers may be to be entered into the matrix.
        */
-      MGMatrixLocalBlocksToGlobalBlocks(double threshold = 1.e-12);
+      MGMatrixLocalBlocksToGlobalBlocks(double threshold= 1.e-12);
 
       /**
        * Copy the BlockInfo and the matrix pointers into local variables and
@@ -390,7 +390,7 @@ namespace MeshWorker
                const std::vector<types::global_dof_index>& dof2,
                const unsigned int                          level1,
                const unsigned int                          level2,
-               bool                                        transpose = false);
+               bool                                        transpose= false);
 
       /**
        * Assemble a single local matrix into a global one.
@@ -516,8 +516,8 @@ namespace MeshWorker
       const BlockInfo* b,
       AnyData&         m)
     {
-      block_info = b;
-      residuals  = m;
+      block_info= b;
+      residuals = m;
     }
 
     template <typename VectorType>
@@ -525,7 +525,7 @@ namespace MeshWorker
     ResidualLocalBlocksToGlobalBlocks<VectorType>::initialize(
       const ConstraintMatrix& c)
     {
-      constraints = &c;
+      constraints= &c;
     }
 
     template <typename VectorType>
@@ -547,8 +547,8 @@ namespace MeshWorker
     {
       if(constraints == 0)
         {
-          for(unsigned int b = 0; b < local.n_blocks(); ++b)
-            for(unsigned int j = 0; j < local.block(b).size(); ++j)
+          for(unsigned int b= 0; b < local.n_blocks(); ++b)
+            for(unsigned int j= 0; j < local.block(b).size(); ++j)
               {
                 // The coordinates of
                 // the current entry in
@@ -560,7 +560,7 @@ namespace MeshWorker
                 // our local vectors
                 const unsigned int jcell
                   = this->block_info->local().local_to_global(b, j);
-                global(dof[jcell]) += local.block(b)(j);
+                global(dof[jcell])+= local.block(b)(j);
               }
         }
       else
@@ -572,7 +572,7 @@ namespace MeshWorker
     inline void
     ResidualLocalBlocksToGlobalBlocks<VectorType>::assemble(const DOFINFO& info)
     {
-      for(unsigned int i = 0; i < residuals.size(); ++i)
+      for(unsigned int i= 0; i < residuals.size(); ++i)
         assemble(
           *(residuals.entry<VectorType>(i)), info.vector(i), info.indices);
     }
@@ -584,7 +584,7 @@ namespace MeshWorker
       const DOFINFO& info1,
       const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < residuals.size(); ++i)
+      for(unsigned int i= 0; i < residuals.size(); ++i)
         {
           assemble(
             *(residuals.entry<VectorType>(i)), info1.vector(i), info1.indices);
@@ -607,8 +607,8 @@ namespace MeshWorker
       const BlockInfo*               b,
       MatrixBlockVector<MatrixType>& m)
     {
-      block_info = b;
-      matrices   = &m;
+      block_info= b;
+      matrices  = &m;
     }
 
     template <typename MatrixType, typename number>
@@ -616,7 +616,7 @@ namespace MeshWorker
     MatrixLocalBlocksToGlobalBlocks<MatrixType, number>::initialize(
       const ConstraintMatrix& c)
     {
-      constraints = &c;
+      constraints= &c;
     }
 
     template <typename MatrixType, typename number>
@@ -641,8 +641,8 @@ namespace MeshWorker
     {
       if(constraints == nullptr)
         {
-          for(unsigned int j = 0; j < local.n_rows(); ++j)
-            for(unsigned int k = 0; k < local.n_cols(); ++k)
+          for(unsigned int j= 0; j < local.n_rows(); ++j)
+            for(unsigned int k= 0; k < local.n_cols(); ++k)
               if(std::fabs(local(j, k)) >= threshold)
                 {
                   // The coordinates of
@@ -663,16 +663,16 @@ namespace MeshWorker
         }
       else
         {
-          const BlockIndices&                  bi = this->block_info->local();
+          const BlockIndices&                  bi= this->block_info->local();
           std::vector<types::global_dof_index> sliced_row_indices(
             bi.block_size(block_row));
-          for(unsigned int i = 0; i < sliced_row_indices.size(); ++i)
-            sliced_row_indices[i] = dof1[bi.block_start(block_row) + i];
+          for(unsigned int i= 0; i < sliced_row_indices.size(); ++i)
+            sliced_row_indices[i]= dof1[bi.block_start(block_row) + i];
 
           std::vector<types::global_dof_index> sliced_col_indices(
             bi.block_size(block_col));
-          for(unsigned int i = 0; i < sliced_col_indices.size(); ++i)
-            sliced_col_indices[i] = dof2[bi.block_start(block_col) + i];
+          for(unsigned int i= 0; i < sliced_col_indices.size(); ++i)
+            sliced_col_indices[i]= dof2[bi.block_start(block_col) + i];
 
           constraints->distribute_local_to_global(
             local, sliced_row_indices, sliced_col_indices, global);
@@ -685,12 +685,12 @@ namespace MeshWorker
     MatrixLocalBlocksToGlobalBlocks<MatrixType, number>::assemble(
       const DOFINFO& info)
     {
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for(unsigned int i= 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
-          const types::global_dof_index row = matrices->block(i).row;
-          const types::global_dof_index col = matrices->block(i).column;
+          const types::global_dof_index row= matrices->block(i).row;
+          const types::global_dof_index col= matrices->block(i).column;
 
           assemble(matrices->block(i),
                    info.matrix(i, false).matrix,
@@ -708,12 +708,12 @@ namespace MeshWorker
       const DOFINFO& info1,
       const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for(unsigned int i= 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
-          const types::global_dof_index row = matrices->block(i).row;
-          const types::global_dof_index col = matrices->block(i).column;
+          const types::global_dof_index row= matrices->block(i).row;
+          const types::global_dof_index col= matrices->block(i).column;
 
           assemble(matrices->block(i),
                    info1.matrix(i, false).matrix,
@@ -756,9 +756,9 @@ namespace MeshWorker
       const BlockInfo* b,
       MatrixPtrVector& m)
     {
-      block_info = b;
+      block_info= b;
       AssertDimension(block_info->local().size(), block_info->global().size());
-      matrices = &m;
+      matrices= &m;
     }
 
     template <typename MatrixType, typename number>
@@ -766,7 +766,7 @@ namespace MeshWorker
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::initialize(
       const MGConstrainedDoFs& mg_c)
     {
-      mg_constrained_dofs = &mg_c;
+      mg_constrained_dofs= &mg_c;
     }
 
     template <typename MatrixType, typename number>
@@ -785,8 +785,8 @@ namespace MeshWorker
       MatrixPtrVector& up,
       MatrixPtrVector& down)
     {
-      flux_up   = up;
-      flux_down = down;
+      flux_up  = up;
+      flux_down= down;
     }
 
     template <typename MatrixType, typename number>
@@ -794,8 +794,8 @@ namespace MeshWorker
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::
       initialize_interfaces(MatrixPtrVector& in, MatrixPtrVector& out)
     {
-      interface_in  = in;
-      interface_out = out;
+      interface_in = in;
+      interface_out= out;
     }
 
     template <typename MatrixType, typename number>
@@ -811,8 +811,8 @@ namespace MeshWorker
       const unsigned int                          level2,
       bool                                        transpose)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
@@ -836,12 +836,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 {
@@ -898,8 +898,8 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
@@ -923,12 +923,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
@@ -961,8 +961,8 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
@@ -986,12 +986,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
@@ -1024,8 +1024,8 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(k, j)) >= threshold)
             {
               // The coordinates of
@@ -1049,12 +1049,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(k, j));
@@ -1090,8 +1090,8 @@ namespace MeshWorker
       //      AssertDimension(local.n(), dof1.size());
       //      AssertDimension(local.m(), dof2.size());
 
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
@@ -1115,12 +1115,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
@@ -1165,8 +1165,8 @@ namespace MeshWorker
       //      AssertDimension(local.n(), dof1.size());
       //      AssertDimension(local.m(), dof2.size());
 
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
+      for(unsigned int j= 0; j < local.n_rows(); ++j)
+        for(unsigned int k= 0; k < local.n_cols(); ++k)
           if(std::fabs(local(k, j)) >= threshold)
             {
               // The coordinates of
@@ -1190,12 +1190,12 @@ namespace MeshWorker
               // different cells, we
               // provide two sets of
               // dof indices.
-              const unsigned int jglobal = this->block_info->level(level1)
-                                             .global_to_local(dof1[jcell])
-                                             .second;
-              const unsigned int kglobal = this->block_info->level(level2)
-                                             .global_to_local(dof2[kcell])
-                                             .second;
+              const unsigned int jglobal= this->block_info->level(level1)
+                                            .global_to_local(dof1[jcell])
+                                            .second;
+              const unsigned int kglobal= this->block_info->level(level2)
+                                            .global_to_local(dof2[kcell])
+                                            .second;
 
               if(mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(k, j));
@@ -1231,14 +1231,14 @@ namespace MeshWorker
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::assemble(
       const DOFINFO& info)
     {
-      const unsigned int level = info.cell->level();
+      const unsigned int level= info.cell->level();
 
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for(unsigned int i= 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
-          const unsigned int row = matrices->block(i)[level].row;
-          const unsigned int col = matrices->block(i)[level].column;
+          const unsigned int row= matrices->block(i)[level].row;
+          const unsigned int col= matrices->block(i)[level].column;
 
           assemble(matrices->block(i)[level].matrix,
                    info.matrix(i, false).matrix,
@@ -1296,17 +1296,17 @@ namespace MeshWorker
       const DOFINFO& info1,
       const DOFINFO& info2)
     {
-      const unsigned int level1 = info1.cell->level();
-      const unsigned int level2 = info2.cell->level();
+      const unsigned int level1= info1.cell->level();
+      const unsigned int level2= info2.cell->level();
 
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for(unsigned int i= 0; i < matrices->size(); ++i)
         {
-          MGLevelObject<MatrixBlock<MatrixType>>& o = matrices->block(i);
+          MGLevelObject<MatrixBlock<MatrixType>>& o= matrices->block(i);
 
           // Row and column index of
           // the block we are dealing with
-          const unsigned int row = o[level1].row;
-          const unsigned int col = o[level1].column;
+          const unsigned int row= o[level1].row;
+          const unsigned int col= o[level1].column;
 
           if(level1 == level2)
             {

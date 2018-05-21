@@ -48,7 +48,7 @@
 
 using namespace dealii;
 
-static const unsigned int dim = 2;
+static const unsigned int dim= 2;
 
 void
 test()
@@ -71,13 +71,13 @@ test()
   GridGenerator::hyper_cube(tria, -1, 0);
   tria.refine_global(2);
 
-  const unsigned int poly_degree = 1;
+  const unsigned int poly_degree= 1;
   FE_Q<dim>          fe(poly_degree);
 
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -96,19 +96,19 @@ test()
   vector_Im_locally_relevant.reinit(
     locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
 
-  const types::global_dof_index n_local_dofs = locally_owned_dofs.n_elements();
+  const types::global_dof_index n_local_dofs= locally_owned_dofs.n_elements();
 
   ConstraintMatrix constraints;
   constraints.reinit(locally_relevant_dofs);
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
   //set vector:
-  unsigned int myid = Utilities::MPI::this_mpi_process(mpi_communicator);
-  for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
+  unsigned int myid= Utilities::MPI::this_mpi_process(mpi_communicator);
+  for(unsigned int i= 0; i < locally_owned_dofs.n_elements(); i++)
     {
-      const PetscScalar val = 1.0 + myid + (myid + i % 2) * 2.0 * PETSC_i;
-      vector(locally_owned_dofs.nth_index_in_set(i))    = val;
-      vector_Re(locally_owned_dofs.nth_index_in_set(i)) = PetscRealPart(val);
+      const PetscScalar val= 1.0 + myid + (myid + i % 2) * 2.0 * PETSC_i;
+      vector(locally_owned_dofs.nth_index_in_set(i))   = val;
+      vector_Re(locally_owned_dofs.nth_index_in_set(i))= PetscRealPart(val);
       vector_Im(locally_owned_dofs.nth_index_in_set(i))
         = PetscImaginaryPart(val);
     }
@@ -116,9 +116,9 @@ test()
   vector_Re.compress(VectorOperation::insert);
   vector_Im.compress(VectorOperation::insert);
 
-  vector_locally_relevant    = vector;
-  vector_Re_locally_relevant = vector_Re;
-  vector_Im_locally_relevant = vector_Im;
+  vector_locally_relevant   = vector;
+  vector_Re_locally_relevant= vector_Re;
+  vector_Im_locally_relevant= vector_Im;
 
   //test get_function_values:
   {
@@ -128,8 +128,8 @@ test()
     FEValues<dim> fe_values(
       fe, quadrature_formula, update_values | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     std::vector<PetscScalar> values(n_q_points);
     std::vector<double>      values_Re(n_q_points), values_Im(n_q_points);
@@ -138,7 +138,7 @@ test()
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
@@ -147,7 +147,7 @@ test()
           fe_values.get_function_values(vector_Re_locally_relevant, values_Re);
           fe_values.get_function_values(vector_Im_locally_relevant, values_Im);
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for(unsigned int q= 0; q < n_q_points; ++q)
             {
               AssertThrow(PetscRealPart(values[q]) == values_Re[q],
                           ExcInternalError());

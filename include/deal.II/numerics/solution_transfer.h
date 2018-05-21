@@ -287,8 +287,8 @@ DEAL_II_NAMESPACE_OPEN
  * 2006, Wolfgang Bangerth 2014
  */
 template <int dim,
-          typename VectorType     = Vector<double>,
-          typename DoFHandlerType = DoFHandler<dim>>
+          typename VectorType    = Vector<double>,
+          typename DoFHandlerType= DoFHandler<dim>>
 class SolutionTransfer
 {
 #  ifndef DEAL_II_MSVC
@@ -489,14 +489,14 @@ private:
       : indices_ptr(nullptr), dof_values_ptr(nullptr), active_fe_index(0)
     {}
     Pointerstruct(std::vector<types::global_dof_index>* indices_ptr_in,
-                  const unsigned int                    active_fe_index_in = 0)
+                  const unsigned int                    active_fe_index_in= 0)
       : indices_ptr(indices_ptr_in),
         dof_values_ptr(nullptr),
         active_fe_index(active_fe_index_in)
     {}
     Pointerstruct(
       std::vector<Vector<typename VectorType::value_type>>* dof_values_ptr_in,
-      const unsigned int active_fe_index_in = 0)
+      const unsigned int active_fe_index_in= 0)
       : indices_ptr(nullptr),
         dof_values_ptr(dof_values_ptr_in),
         active_fe_index(active_fe_index_in)

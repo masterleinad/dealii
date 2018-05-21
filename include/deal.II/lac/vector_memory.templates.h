@@ -53,14 +53,14 @@ GrowingVectorMemory<VectorType>::Pool::initialize(const size_type size)
 {
   if(data == nullptr)
     {
-      data = new std::vector<entry_type>(size);
+      data= new std::vector<entry_type>(size);
 
-      for(typename std::vector<entry_type>::iterator i = data->begin();
+      for(typename std::vector<entry_type>::iterator i= data->begin();
           i != data->end();
           ++i)
         {
-          i->first  = false;
-          i->second = std_cxx14::make_unique<VectorType>();
+          i->first = false;
+          i->second= std_cxx14::make_unique<VectorType>();
         }
     }
 }
@@ -100,13 +100,13 @@ GrowingVectorMemory<VectorType>::alloc()
   ++current_alloc;
   // see if there is a free vector
   // available in our list
-  for(typename std::vector<entry_type>::iterator i = pool.data->begin();
+  for(typename std::vector<entry_type>::iterator i= pool.data->begin();
       i != pool.data->end();
       ++i)
     {
       if(i->first == false)
         {
-          i->first = true;
+          i->first= true;
           return i->second.get();
         }
     }
@@ -124,13 +124,13 @@ GrowingVectorMemory<VectorType>::free(const VectorType* const v)
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
-  for(typename std::vector<entry_type>::iterator i = pool.data->begin();
+  for(typename std::vector<entry_type>::iterator i= pool.data->begin();
       i != pool.data->end();
       ++i)
     {
       if(v == i->second.get())
         {
-          i->first = false;
+          i->first= false;
           --current_alloc;
           return;
         }
@@ -154,12 +154,12 @@ GrowingVectorMemory<VectorType>::memory_consumption() const
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
-  std::size_t                                            result = sizeof(*this);
-  const typename std::vector<entry_type>::const_iterator end = pool.data->end();
-  for(typename std::vector<entry_type>::const_iterator i = pool.data->begin();
+  std::size_t                                            result= sizeof(*this);
+  const typename std::vector<entry_type>::const_iterator end= pool.data->end();
+  for(typename std::vector<entry_type>::const_iterator i= pool.data->begin();
       i != end;
       ++i)
-    result += sizeof(*i) + MemoryConsumption::memory_consumption(i->second);
+    result+= sizeof(*i) + MemoryConsumption::memory_consumption(i->second);
 
   return result;
 }

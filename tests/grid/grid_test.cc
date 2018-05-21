@@ -38,12 +38,12 @@ public:
     Point<dim> middle
       = FlatManifold<dim>::get_new_point(surrounding_points, weights);
 
-    for(int i = 0; i < dim; ++i)
-      middle(i) -= .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)-= .5;
     middle
       *= std::sqrt(static_cast<double>(dim)) / (std::sqrt(middle.square()) * 2);
-    for(int i = 0; i < dim; ++i)
-      middle(i) += .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)+= .5;
 
     return middle;
   }
@@ -73,7 +73,7 @@ Point<dim>
 CurvedLine<dim>::get_new_point_on_line(
   const typename Triangulation<dim>::line_iterator& line) const
 {
-  Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
+  Point<dim> middle= FlatManifold<dim>::get_new_point_on_line(line);
 
   // if the line is at the top of bottom
   // face: do a special treatment on
@@ -98,18 +98,18 @@ CurvedLine<dim>::get_new_point_on_line(
        && (line->manifold_id() == 1))
       return middle;
 
-  double x = middle(0), y = middle(1);
+  double x= middle(0), y= middle(1);
 
   if(y < x)
     if(y < 1 - x)
-      middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
+      middle(1)= 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
-      middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
+      middle(0)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
   else if(y < 1 - x)
-    middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
+    middle(0)= 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
-    middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
+    middle(1)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
 
   return middle;
 }
@@ -119,7 +119,7 @@ Point<dim>
 CurvedLine<dim>::get_new_point_on_quad(
   const typename Triangulation<dim>::quad_iterator& quad) const
 {
-  Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
+  Point<dim> middle= FlatManifold<dim>::get_new_point_on_quad(quad);
 
   // if the face is at the top of bottom
   // face: do not move the midpoint in
@@ -130,18 +130,18 @@ CurvedLine<dim>::get_new_point_on_quad(
   if((middle(2) == 0) || (middle(2) == 1))
     return middle;
 
-  double x = middle(0), y = middle(1);
+  double x= middle(0), y= middle(1);
 
   if(y < x)
     if(y < 1 - x)
-      middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
+      middle(1)= 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
-      middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
+      middle(0)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
   else if(y < 1 - x)
-    middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
+    middle(0)= 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
-    middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
+    middle(1)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
 
   return middle;
 }
@@ -181,12 +181,12 @@ test(const int test_case)
           tria.execute_coarsening_and_refinement();
 
           typename Triangulation<dim>::active_cell_iterator cell;
-          for(int i = 0; i < (dim == 2 ? 3 : 2); ++i)
+          for(int i= 0; i < (dim == 2 ? 3 : 2); ++i)
             {
               // refine the presently
               // last cell several
               // times
-              cell = tria.last_active();
+              cell= tria.last_active();
               cell->set_refine_flag();
               tria.execute_coarsening_and_refinement();
             };
@@ -216,11 +216,11 @@ test(const int test_case)
           tria.execute_coarsening_and_refinement();
 
           typename Triangulation<dim>::active_cell_iterator cell, endc;
-          const unsigned int steps[4] = {0, 2, 2, 2};
-          for(unsigned int i = 0; i < steps[dim]; ++i)
+          const unsigned int steps[4]= {0, 2, 2, 2};
+          for(unsigned int i= 0; i < steps[dim]; ++i)
             {
-              cell = tria.begin_active();
-              endc = tria.end();
+              cell= tria.begin_active();
+              endc= tria.end();
 
               // refine all
               // boundary cells
@@ -255,9 +255,9 @@ main()
   logfile << std::setprecision(8);
   deallog.attach(logfile);
 
-  for(unsigned int i = 1; i <= 3; ++i)
+  for(unsigned int i= 1; i <= 3; ++i)
     test<2>(i);
-  for(unsigned int i = 1; i <= 3; ++i)
+  for(unsigned int i= 1; i <= 3; ++i)
     test<3>(i);
 
   return 0;

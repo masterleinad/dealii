@@ -41,13 +41,13 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
 
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int size = 500;
+  const unsigned int size= 500;
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
-  unsigned int           count = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j, ++count)
-      full(i, j) = count;
+  unsigned int           count= 0;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j, ++count)
+      full(i, j)= count;
 
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid
@@ -63,10 +63,10 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         << grid->get_process_grid_columns() << std::endl
         << std::endl;
 
-  scalapack_matrix                               = full;
-  unsigned int                          sub_size = 100;
-  std::pair<unsigned int, unsigned int> offset_A = std::make_pair(49, 99);
-  std::pair<unsigned int, unsigned int> offset_B = std::make_pair(4, 7);
+  scalapack_matrix                              = full;
+  unsigned int                          sub_size= 100;
+  std::pair<unsigned int, unsigned int> offset_A= std::make_pair(49, 99);
+  std::pair<unsigned int, unsigned int> offset_B= std::make_pair(4, 7);
   std::pair<unsigned int, unsigned int> submatrix_size
     = std::make_pair(sub_size, sub_size);
   ScaLAPACKMatrix<NumberType> scalapack_matrix_dest(sub_size + offset_B.first,
@@ -80,8 +80,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
                               sub_size + offset_B.second);
   scalapack_matrix_dest.copy_to(dest);
 
-  for(unsigned int i = 0; i < sub_size; ++i)
-    for(unsigned int j = 0; j < sub_size; ++j)
+  for(unsigned int i= 0; i < sub_size; ++i)
+    for(unsigned int j= 0; j < sub_size; ++j)
       dest(i + offset_B.first, j + offset_B.second)
         -= full(offset_A.first + i, offset_A.second + j);
   AssertThrow(dest.frobenius_norm() < 1e-12, ExcInternalError());
@@ -93,8 +93,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks_i = {{16, 32, 64}};
-  const std::vector<unsigned int> blocks_j = {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_i= {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_j= {{16, 32, 64}};
 
   for(const auto& s : blocks_i)
     for(const auto& b : blocks_j)

@@ -44,7 +44,7 @@ test()
   triangulation.refine_global(3);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  for(unsigned int i= 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
       ++i)
     fe.push_back(FE_Q<dim>(1));
 

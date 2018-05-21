@@ -31,8 +31,8 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
 
   deallog << "Multiplying with all ones vector" << std::endl;
   Vector<number> V(A.n());
-  for(unsigned int i = 0; i < V.size(); ++i)
-    V(i) = 1;
+  for(unsigned int i= 0; i < V.size(); ++i)
+    V(i)= 1;
 
   Vector<number> O(A.m());
   P.vmult(O, V);
@@ -48,7 +48,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for(unsigned int i= 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 
@@ -59,12 +59,12 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
 
   deallog << "Assigning pointer matrix to matrix 2" << std::endl;
 
-  P = &B;
+  P= &B;
 
   deallog << "Multiplying with all ones vector" << std::endl;
   Vector<number> V_(B.n());
-  for(unsigned int i = 0; i < V_.size(); ++i)
-    V_(i) = 1;
+  for(unsigned int i= 0; i < V_.size(); ++i)
+    V_(i)= 1;
 
   Vector<number> OU(B.m());
   P.vmult(OU, V_);
@@ -80,7 +80,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
   Assert(OU == OU_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < OU.size(); ++i)
+  for(unsigned int i= 0; i < OU.size(); ++i)
     deallog << OU(i) << '\t';
   deallog << std::endl;
 }
@@ -93,9 +93,9 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {2, 3, 4, 5};
+  const double Adata[]= {2, 3, 4, 5};
 
-  const double Bdata[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  const double Bdata[]= {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
   FullMatrix<double> A(2, 2);
   A.fill(Adata);

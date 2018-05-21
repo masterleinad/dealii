@@ -69,7 +69,7 @@ DoFToolsEx::transfer(const DoFHandler<dim>& source_dof,
 
   // iterate over all active source cells
   typedef typename DoFHandler<dim>::active_cell_iterator cell_iterator;
-  cell_iterator cell = source_dof.begin_active(), endc = source_dof.end();
+  cell_iterator cell= source_dof.begin_active(), endc= source_dof.end();
   for(; cell != endc; ++cell)
     {
       if(cell->level() == source2target[cell]->level())
@@ -126,10 +126,10 @@ main()
   coarse_tria.refine_global(1);
   GridGenerator::hyper_cube(both_tria, 0, 1);
   both_tria.refine_global(2);
-  Triangulation<2>::active_cell_iterator it = both_tria.begin_active();
+  Triangulation<2>::active_cell_iterator it= both_tria.begin_active();
   it->set_refine_flag();
   (++it)->set_refine_flag();
-  for(int i = 1; i < 8; ++i, ++it)
+  for(int i= 1; i < 8; ++i, ++it)
     ;
   it->set_coarsen_flag();
   (++it)->set_coarsen_flag();

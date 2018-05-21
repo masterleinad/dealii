@@ -70,7 +70,7 @@ public:
   enum State
   {
     /// Continue iteration
-    iterate = 0,
+    iterate= 0,
     /// Stop iteration, goal reached
     success,
     /// Stop iteration, goal not reached
@@ -94,7 +94,7 @@ public:
       : last_step(last_step), last_residual(last_residual)
     {}
 
-    virtual ~NoConvergence() noexcept override = default;
+    virtual ~NoConvergence() noexcept override= default;
 
     virtual void
     print_info(std::ostream& out) const override
@@ -140,16 +140,16 @@ public:
    * specifies the whether the final result is logged to @p deallog. Default
    * is yes.
    */
-  SolverControl(const unsigned int n           = 100,
-                const double       tol         = 1.e-10,
-                const bool         log_history = false,
-                const bool         log_result  = true);
+  SolverControl(const unsigned int n          = 100,
+                const double       tol        = 1.e-10,
+                const bool         log_history= false,
+                const bool         log_result = true);
 
   /**
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~SolverControl() override = default;
+  virtual ~SolverControl() override= default;
 
   /**
    * Interface to parameter file.
@@ -422,11 +422,11 @@ public:
    * have the same meaning as those of the constructor of the SolverControl
    * constructor.
    */
-  ReductionControl(const unsigned int maxiter     = 100,
-                   const double       tolerance   = 1.e-10,
-                   const double       reduce      = 1.e-2,
-                   const bool         log_history = false,
-                   const bool         log_result  = true);
+  ReductionControl(const unsigned int maxiter    = 100,
+                   const double       tolerance  = 1.e-10,
+                   const double       reduce     = 1.e-2,
+                   const bool         log_history= false,
+                   const bool         log_result = true);
 
   /**
    * Initialize with a SolverControl object. The result will emulate
@@ -445,7 +445,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~ReductionControl() override = default;
+  virtual ~ReductionControl() override= default;
 
   /**
    * Interface to parameter file.
@@ -511,10 +511,10 @@ public:
    * Constructor.  Provide exactly the same arguments as the constructor of
    * the SolverControl class.
    */
-  IterationNumberControl(const unsigned int maxiter     = 100,
-                         const double       tolerance   = 1e-12,
-                         const bool         log_history = false,
-                         const bool         log_result  = true);
+  IterationNumberControl(const unsigned int maxiter    = 100,
+                         const double       tolerance  = 1e-12,
+                         const bool         log_history= false,
+                         const bool         log_result = true);
 
   /**
    * Initialize with a SolverControl object. The result will emulate
@@ -534,7 +534,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~IterationNumberControl() override = default;
+  virtual ~IterationNumberControl() override= default;
 
   /**
    * Decide about success or failure of an iteration. This function bases
@@ -566,11 +566,11 @@ public:
    * convergence. Other arguments have the same meaning as those of the
    * constructor of the SolverControl.
    */
-  ConsecutiveControl(const unsigned int maxiter                  = 100,
-                     const double       tolerance                = 1.e-10,
-                     const unsigned int n_consecutive_iterations = 2,
-                     const bool         log_history              = false,
-                     const bool         log_result               = false);
+  ConsecutiveControl(const unsigned int maxiter                 = 100,
+                     const double       tolerance               = 1.e-10,
+                     const unsigned int n_consecutive_iterations= 2,
+                     const bool         log_history             = false,
+                     const bool         log_result              = false);
 
   /**
    * Initialize with a SolverControl object. The result will emulate
@@ -590,7 +590,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~ConsecutiveControl() override = default;
+  virtual ~ConsecutiveControl() override= default;
 
   /**
    * Decide about success or failure of an iteration, see the class description
@@ -626,24 +626,24 @@ SolverControl::max_steps() const
 inline unsigned int
 SolverControl::set_max_steps(const unsigned int newval)
 {
-  unsigned int old = maxsteps;
-  maxsteps         = newval;
+  unsigned int old= maxsteps;
+  maxsteps        = newval;
   return old;
 }
 
 inline void
 SolverControl::set_failure_criterion(const double rel_failure_residual)
 {
-  relative_failure_residual = rel_failure_residual;
-  check_failure             = true;
+  relative_failure_residual= rel_failure_residual;
+  check_failure            = true;
 }
 
 inline void
 SolverControl::clear_failure_criterion()
 {
-  relative_failure_residual = 0;
-  failure_residual          = 0;
-  check_failure             = false;
+  relative_failure_residual= 0;
+  failure_residual         = 0;
+  check_failure            = false;
 }
 
 inline double
@@ -655,15 +655,15 @@ SolverControl::tolerance() const
 inline double
 SolverControl::set_tolerance(const double t)
 {
-  double old = tol;
-  tol        = t;
+  double old= tol;
+  tol       = t;
   return old;
 }
 
 inline void
 SolverControl::log_history(const bool newval)
 {
-  m_log_history = newval;
+  m_log_history= newval;
 }
 
 inline bool
@@ -675,7 +675,7 @@ SolverControl::log_history() const
 inline void
 SolverControl::log_result(const bool newval)
 {
-  m_log_result = newval;
+  m_log_result= newval;
 }
 
 inline bool
@@ -693,8 +693,8 @@ ReductionControl::reduction() const
 inline double
 ReductionControl::set_reduction(const double t)
 {
-  double old = reduce;
-  reduce     = t;
+  double old= reduce;
+  reduce    = t;
   return old;
 }
 

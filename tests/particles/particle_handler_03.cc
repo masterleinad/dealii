@@ -39,10 +39,10 @@ test()
     std::vector<Point<spacedim>> position(2);
     std::vector<Point<dim>>      reference_position(2);
 
-    for(unsigned int i = 0; i < dim; ++i)
+    for(unsigned int i= 0; i < dim; ++i)
       {
-        position[0](i) = 0.25;
-        position[1](i) = 0.75;
+        position[0](i)= 0.25;
+        position[1](i)= 0.75;
       }
 
     Particles::Particle<dim, spacedim> particle1(
@@ -58,7 +58,7 @@ test()
     particle_handler.insert_particle(particle1, cell1);
     particle_handler.insert_particle(particle2, cell2);
 
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "Before sort particle id " << particle->get_id()
@@ -67,7 +67,7 @@ test()
 
     particle_handler.sort_particles_into_subdomains_and_cells();
 
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "After sort particle id " << particle->get_id()
@@ -78,14 +78,14 @@ test()
     // move particle 2 out of the domain. Note that we need to change the coordinate
     // dim-1 despite having a spacedim point.
     Point<spacedim> shift;
-    shift(dim - 1) = 0.5;
-    for(auto particle = particle_handler.begin();
+    shift(dim - 1)= 0.5;
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       particle->set_location(particle->get_location() + shift);
 
     particle_handler.sort_particles_into_subdomains_and_cells();
-    for(auto particle = particle_handler.begin();
+    for(auto particle= particle_handler.begin();
         particle != particle_handler.end();
         ++particle)
       deallog << "After shift particle id " << particle->get_id()

@@ -51,8 +51,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
-    values(1) = value(p, 1);
+    values(0)= value(p, 0);
+    values(1)= value(p, 1);
   }
 };
 
@@ -63,10 +63,10 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
 {
   MySquareFunction<dim>           coefficient;
   typename FunctionMap<dim>::type function_map;
-  function_map[0] = &coefficient;
+  function_map[0]= &coefficient;
 
   hp::QCollection<dim - 1> face_quadrature;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     face_quadrature.push_back(QGauss<dim - 1>(3 + i));
 
   std::vector<types::global_dof_index> dof_to_boundary_mapping;
@@ -98,7 +98,7 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
   // range of 1 or below,
   // multiply matrix by 100 to
   // make test more sensitive
-  matrix *= 100;
+  matrix*= 100;
 
   // finally write out matrix
   matrix.print(deallog.get_file_stream());
@@ -127,7 +127,7 @@ check()
   // create a system element composed
   // of one Q1 and one Q2 element
   hp::FECollection<dim> element;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     element.push_back(
       FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)),
                     1,
@@ -147,11 +147,11 @@ check()
   // formula suited to the elements
   // we have here
   hp::MappingCollection<dim> mapping;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     mapping.push_back(MappingQ<dim>(i + 1));
 
   hp::QCollection<dim> quadrature;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for(unsigned int i= 1; i < 7 - dim; ++i)
     quadrature.push_back(QGauss<dim>(3 + i));
 
   // create sparsity pattern. note
@@ -159,8 +159,8 @@ check()
   // not couple, so use pattern
   SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2, 2);
-  mask(0, 0) = mask(1, 1) = DoFTools::always;
-  mask(0, 1) = mask(1, 0) = DoFTools::none;
+  mask(0, 0)= mask(1, 1)= DoFTools::always;
+  mask(0, 1)= mask(1, 0)= DoFTools::none;
   DoFTools::make_sparsity_pattern(dof, mask, sparsity);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
@@ -173,9 +173,9 @@ check()
   Functions::ExpFunction<dim> coefficient;
 
   typename FunctionMap<dim>::type function_map;
-  function_map[0] = &coefficient;
+  function_map[0]= &coefficient;
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for(unsigned int test= 0; test < 2; ++test)
     {
       matrix.reinit(sparsity);
       switch(test)
@@ -199,7 +199,7 @@ check()
       // range of 1 or below,
       // multiply matrix by 100 to
       // make test more sensitive
-      for(SparseMatrix<double>::const_iterator p = matrix.begin();
+      for(SparseMatrix<double>::const_iterator p= matrix.begin();
           p != matrix.end();
           ++p)
         deallog.get_file_stream() << p->value() * 100 << std::endl;

@@ -42,10 +42,10 @@ public:
   }
 
 private:
-  double      a = 1.0;
-  int         b = 2;
-  std::string c = "Ciao";
-  bool        d = true;
+  double      a= 1.0;
+  int         b= 2;
+  std::string c= "Ciao";
+  bool        d= true;
 };
 
 int
@@ -55,7 +55,7 @@ main()
   Test<1> a;
   Test<2> b;
 
-  auto& prm = ParameterAcceptor::prm;
+  auto& prm= ParameterAcceptor::prm;
 
   ParameterAcceptor::declare_all_parameters();
   ParameterAcceptor::parse_all_parameters();

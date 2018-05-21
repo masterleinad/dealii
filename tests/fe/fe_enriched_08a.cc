@@ -43,13 +43,13 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 using namespace dealii;
 
 template <int dim>
 void
-test2cellsFESystem(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
+test2cellsFESystem(const unsigned int p_feq= 2, const unsigned int p_feen= 1)
 {
   deallog << "2cells: " << dim << " " << p_feq << " " << p_feen << std::endl;
   Triangulation<dim> triangulation;
@@ -61,7 +61,7 @@ test2cellsFESystem(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
     GridGenerator::hyper_cube(
       triangulationR, -1, 0); //create a square [-1,0]^d domain
     Point<dim> shift_vector;
-    shift_vector[0] = 1.0;
+    shift_vector[0]= 1.0;
     GridTools::shift(shift_vector, triangulationR);
     GridGenerator::merge_triangulations(
       triangulationL, triangulationR, triangulation);

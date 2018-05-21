@@ -56,7 +56,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Luca Heltai, Mauro Bardelloni, 2014-2016
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class PolarManifold : public ChartManifold<dim, spacedim, spacedim>
 {
 public:
@@ -68,7 +68,7 @@ public:
    * it takes the middle point, and project it along the radius using the
    * average radius of the surrounding points.
    */
-  PolarManifold(const Point<spacedim> center = Point<spacedim>());
+  PolarManifold(const Point<spacedim> center= Point<spacedim>());
 
   /**
    * Make a clone of this Manifold object.
@@ -214,14 +214,14 @@ private:
  *
  * @author Mauro Bardelloni, Luca Heltai, Daniel Arndt, 2016, 2017
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class SphericalManifold : public Manifold<dim, spacedim>
 {
 public:
   /**
    * The Constructor takes the center of the spherical coordinates.
    */
-  SphericalManifold(const Point<spacedim> center = Point<spacedim>());
+  SphericalManifold(const Point<spacedim> center= Point<spacedim>());
 
   /**
    * Make a clone of this Manifold object.
@@ -369,7 +369,7 @@ private:
  *
  * @author Luca Heltai, Daniel Arndt, 2014, 2017
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class CylindricalManifold : public ChartManifold<dim, spacedim, 3>
 {
 public:
@@ -379,8 +379,8 @@ public:
    * <tt>axis=2</tt> for a tube along the y- or z-axis, respectively. The
    * tolerance value is used to determine if a point is on the axis.
    */
-  CylindricalManifold(const unsigned int axis      = 0,
-                      const double       tolerance = 1e-10);
+  CylindricalManifold(const unsigned int axis     = 0,
+                      const double       tolerance= 1e-10);
 
   /**
    * Constructor. If constructed with this constructor, the manifold described
@@ -391,7 +391,7 @@ public:
    */
   CylindricalManifold(const Tensor<1, spacedim>& direction,
                       const Point<spacedim>&     point_on_axis,
-                      const double               tolerance = 1e-10);
+                      const double               tolerance= 1e-10);
 
   /**
    * Make a clone of this Manifold object.
@@ -471,7 +471,7 @@ private:
  *
  * @author Luca Heltai, 2014
  */
-template <int dim, int spacedim = dim, int chartdim = dim>
+template <int dim, int spacedim= dim, int chartdim= dim>
 class FunctionManifold : public ChartManifold<dim, spacedim, chartdim>
 {
 public:
@@ -488,7 +488,7 @@ public:
                    const Function<spacedim>&  pull_back_function,
                    const Tensor<1, chartdim>& periodicity
                    = Tensor<1, chartdim>(),
-                   const double tolerance = 1e-10);
+                   const double tolerance= 1e-10);
 
   /**
    * Expressions constructor. Takes the expressions of the push_forward
@@ -514,8 +514,8 @@ public:
                    = FunctionParser<chartdim>::default_variable_names(),
                    const std::string space_vars
                    = FunctionParser<spacedim>::default_variable_names(),
-                   const double tolerance = 1e-10,
-                   const double h         = 1e-8);
+                   const double tolerance= 1e-10,
+                   const double h        = 1e-8);
 
   /**
    * If needed, we delete the pointers we own.
@@ -647,8 +647,8 @@ template <int dim>
 class TorusManifold : public ChartManifold<dim, 3, 3>
 {
 public:
-  static const int chartdim = 3;
-  static const int spacedim = 3;
+  static const int chartdim= 3;
+  static const int spacedim= 3;
 
   /**
    * Constructor. Specify the radius of the centerline @p R and the radius
@@ -818,7 +818,7 @@ private:
  *
  * @author Martin Kronbichler, Luca Heltai, 2017
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class TransfiniteInterpolationManifold : public Manifold<dim, spacedim>
 {
 public:

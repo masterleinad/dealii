@@ -71,7 +71,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -82,7 +82,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -90,9 +90,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double return_value = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    return_value += 4 * std::pow(p(i), 4);
+  double return_value= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    return_value+= 4 * std::pow(p(i), 4);
 
   return return_value;
 }
@@ -150,8 +150,8 @@ Step4<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -160,21 +160,21 @@ Step4<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                    * fe_values.shape_grad(j, q_point)
-                                    * fe_values.JxW(q_point));
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
+              cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                   * fe_values.shape_grad(j, q_point)
+                                   * fe_values.JxW(q_point));
 
             cell_rhs(i)
               += (fe_values.shape_value(i, q_point)
@@ -199,7 +199,7 @@ Step4<dim>::solve(int cycle)
     deallog.push("Jacobi");
     static constexpr std::array<int, 2>  lower{49, 100};
     TrilinosWrappers::PreconditionJacobi preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -215,7 +215,7 @@ Step4<dim>::solve(int cycle)
     deallog.push("SSOR");
     static constexpr std::array<int, 2> lower{40, 77};
     TrilinosWrappers::PreconditionSSOR  preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -231,7 +231,7 @@ Step4<dim>::solve(int cycle)
     deallog.push("SOR");
     static constexpr std::array<int, 2> lower{31, 62};
     TrilinosWrappers::PreconditionSOR   preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl    solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -248,8 +248,8 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2>                       lower{73, 145};
     TrilinosWrappers::PreconditionBlockJacobi                 preconditioner;
     TrilinosWrappers::PreconditionBlockJacobi::AdditionalData data;
-    data.block_size = 16;
-    solution        = 0;
+    data.block_size= 16;
+    solution       = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -266,9 +266,9 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2>                     lower{30, 59};
     TrilinosWrappers::PreconditionBlockSSOR                 preconditioner;
     TrilinosWrappers::PreconditionBlockSSOR::AdditionalData data;
-    data.block_size = 16;
-    data.omega      = 1.2;
-    solution        = 0;
+    data.block_size= 16;
+    data.omega     = 1.2;
+    solution       = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -285,9 +285,9 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2>                    lower{18, 37};
     TrilinosWrappers::PreconditionBlockSOR                 preconditioner;
     TrilinosWrappers::PreconditionBlockSOR::AdditionalData data;
-    data.block_size = 16;
-    data.omega      = 0.8;
-    solution        = 0;
+    data.block_size= 16;
+    data.omega     = 0.8;
+    solution       = 0;
     SolverControl    solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -303,7 +303,7 @@ Step4<dim>::solve(int cycle)
     deallog.push("IC");
     static constexpr std::array<int, 2> lower{49, 67};
     TrilinosWrappers::PreconditionIC    preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -319,7 +319,7 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2> lower{30, 56};
     deallog.push("ILU");
     TrilinosWrappers::PreconditionILU preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -336,9 +336,9 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2>                lower{11, 19};
     TrilinosWrappers::PreconditionILUT                 preconditioner;
     TrilinosWrappers::PreconditionILUT::AdditionalData data;
-    data.ilut_drop = 1e-6;
-    data.ilut_fill = 3;
-    solution       = 0;
+    data.ilut_drop= 1e-6;
+    data.ilut_fill= 3;
+    solution      = 0;
     SolverControl    solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -355,9 +355,9 @@ Step4<dim>::solve(int cycle)
     static constexpr std::array<int, 2>                     lower{23, 46};
     TrilinosWrappers::PreconditionChebyshev                 preconditioner;
     TrilinosWrappers::PreconditionChebyshev::AdditionalData data;
-    data.max_eigenvalue = 2.5;
-    data.degree         = 3;
-    solution            = 0;
+    data.max_eigenvalue= 2.5;
+    data.degree        = 3;
+    solution           = 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -372,7 +372,7 @@ Step4<dim>::solve(int cycle)
   {
     deallog.push("Direct");
     TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix);
@@ -391,7 +391,7 @@ template <int dim>
 void
 Step4<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 2; ++cycle)
+  for(unsigned int cycle= 0; cycle < 2; ++cycle)
     {
       if(cycle == 0)
         make_grid();

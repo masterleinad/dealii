@@ -52,8 +52,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    fe_function(i) = i + 1;
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    fe_function(i)= i + 1;
 
   const QGauss<dim> quadrature(2);
   FEValues<dim>     fe_values(fe,
@@ -72,7 +72,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   fe_values[extractor].get_function_gradients(fe_function, grads);
 
   // now compare
-  for(unsigned int q = 0; q < quadrature.size(); ++q)
+  for(unsigned int q= 0; q < quadrature.size(); ++q)
     {
       deallog << "  curls[q]= " << curls[q] << std::endl
               << "  grads[q]= " << grads[q] << std::endl;

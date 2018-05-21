@@ -137,7 +137,7 @@ namespace Utilities
                                const VectorType&         v0,
                                const unsigned int        k,
                                VectorMemory<VectorType>& vector_memory,
-                               std::vector<double>*      eigenvalues = nullptr);
+                               std::vector<double>*      eigenvalues= nullptr);
 
     /**
      * Apply Chebyshev polynomial of the operator @p H to @p x. For a
@@ -224,7 +224,7 @@ namespace Utilities
     hyperbolic_rotation(const NumberType& f, const NumberType& g)
     {
       Assert(f != 0, ExcDivideByZero());
-      const NumberType tau = g / f;
+      const NumberType tau= g / f;
       AssertThrow(
         std::abs(tau) < 1.,
         ExcMessage("real-valued Hyperbolic rotation does not exist for ("
@@ -233,9 +233,9 @@ namespace Utilities
         = std::copysign(sqrt((1. - tau) * (1. + tau)),
                         f); // <-- more stable than std::sqrt(1.-tau*tau)
       std::array<NumberType, 3> csr;
-      csr[0] = 1. / u;       // c
-      csr[1] = csr[0] * tau; // s
-      csr[2] = f * u;        // r
+      csr[0]= 1. / u;       // c
+      csr[1]= csr[0] * tau; // s
+      csr[2]= f * u;        // r
       return csr;
     }
 
@@ -269,31 +269,31 @@ namespace Utilities
       // We implement the latter below:
       if(g == NumberType())
         {
-          res[0] = std::copysign(1., f);
-          res[1] = NumberType();
-          res[2] = std::abs(f);
+          res[0]= std::copysign(1., f);
+          res[1]= NumberType();
+          res[2]= std::abs(f);
         }
       else if(f == NumberType())
         {
-          res[0] = NumberType();
-          res[1] = std::copysign(1., g);
-          res[2] = std::abs(g);
+          res[0]= NumberType();
+          res[1]= std::copysign(1., g);
+          res[2]= std::abs(g);
         }
       else if(std::abs(f) > std::abs(g))
         {
-          const NumberType tau = g / f;
-          const NumberType u   = std::copysign(std::sqrt(1. + tau * tau), f);
-          res[0]               = 1. / u;       // c
-          res[1]               = res[0] * tau; // s
-          res[2]               = f * u;        // r
+          const NumberType tau= g / f;
+          const NumberType u  = std::copysign(std::sqrt(1. + tau * tau), f);
+          res[0]              = 1. / u;       // c
+          res[1]              = res[0] * tau; // s
+          res[2]              = f * u;        // r
         }
       else
         {
-          const NumberType tau = f / g;
-          const NumberType u   = std::copysign(std::sqrt(1. + tau * tau), g);
-          res[1]               = 1. / u;       // s
-          res[0]               = res[1] * tau; // c
-          res[2]               = g * u;        // r
+          const NumberType tau= f / g;
+          const NumberType u  = std::copysign(std::sqrt(1. + tau * tau), g);
+          res[1]              = 1. / u;       // s
+          res[0]              = res[1] * tau; // c
+          res[2]              = g * u;        // r
         }
 
       return res;
@@ -323,32 +323,32 @@ namespace Utilities
       std::vector<double> subdiagonal;
 
       // 1. Normalize input vector
-      (*v)     = v0_;
-      double a = v->l2_norm();
+      (*v)    = v0_;
+      double a= v->l2_norm();
       Assert(a != 0, ExcDivideByZero());
-      (*v) *= 1. / a;
+      (*v)*= 1. / a;
 
       // 2. Compute f = Hv; a = f*v; f <- f - av; T(0,0)=a;
       H.vmult(*f, *v);
-      a = (*f) * (*v);
+      a= (*f) * (*v);
       f->add(-a, *v);
       diagonal.push_back(a);
 
       // 3. Loop over steps
-      for(unsigned int i = 1; i < k; ++i)
+      for(unsigned int i= 1; i < k; ++i)
         {
           // 4. L2 norm of f
-          const double b = f->l2_norm();
+          const double b= f->l2_norm();
           Assert(b != 0, ExcDivideByZero());
           // 5. v0 <- v; v <- f/b
-          *v0 = *v;
-          *v  = *f;
-          (*v) *= 1. / b;
+          *v0= *v;
+          *v = *f;
+          (*v)*= 1. / b;
           // 6. f = Hv; f <- f - b v0;
           H.vmult(*f, *v);
           f->add(-b, *v0);
           // 7. a = f*v; f <- f - a v;
-          a = (*f) * (*v);
+          a= (*f) * (*v);
           f->add(-a, *v);
           // 8. T(i,i-1) = T(i-1,i) = b;  T(i,i) = a;
           diagonal.push_back(a);
@@ -360,10 +360,10 @@ namespace Utilities
 
       // Use Lapack dstev to get ||T||_2 norm, i.e. the largest eigenvalue
       // of T
-      const types::blas_int n = k;
-      std::vector<double>   Z;       // unused for eigenvalues-only ("N") job
-      const types::blas_int ldz = 1; // ^^   (>=1)
-      std::vector<double>   work;    // ^^
+      const types::blas_int n= k;
+      std::vector<double>   Z;      // unused for eigenvalues-only ("N") job
+      const types::blas_int ldz= 1; // ^^   (>=1)
+      std::vector<double>   work;   // ^^
       types::blas_int       info;
       // call lapack_templates.h wrapper:
       stev("N",
@@ -398,11 +398,11 @@ namespace Utilities
                      const double                    a_L,
                      VectorMemory<VectorType>&       vector_memory)
     {
-      const double a = unwanted_spectrum.first;
-      const double b = unwanted_spectrum.second;
+      const double a= unwanted_spectrum.first;
+      const double b= unwanted_spectrum.second;
       Assert(degree > 0, ExcMessage("Only positive degrees make sense."));
 
-      const bool scale = (a_L < std::numeric_limits<double>::infinity());
+      const bool scale= (a_L < std::numeric_limits<double>::infinity());
       Assert(
         a < b,
         ExcMessage(
@@ -420,8 +420,8 @@ namespace Utilities
       p_yn->reinit(x);
 
       // convenience to avoid pointers
-      VectorType& y  = *p_y;
-      VectorType& yn = *p_yn;
+      VectorType& y = *p_y;
+      VectorType& yn= *p_yn;
 
       // Below is an implementation of
       // Algorithm 3.2 in Zhou et al, Journal of Computational Physics 274 (2014) 770-782
@@ -435,27 +435,27 @@ namespace Utilities
       //   Yt =(H∗Y−c∗Y)∗(2∗σnew/e)−(σ∗σnew)∗X;
       //   X =Y; Y =Yt; σ =σnew;
 
-      const double e     = (b - a) / 2.;
-      const double c     = (a + b) / 2.;
-      const double alpha = 1. / e;
-      const double beta  = -c / e;
+      const double e    = (b - a) / 2.;
+      const double c    = (a + b) / 2.;
+      const double alpha= 1. / e;
+      const double beta = -c / e;
 
       const double sigma1
         = e / (a_L - c); // BUGFIX which is relevant for odd degrees
-      double       sigma = scale ? sigma1 : 1.;
-      const double tau   = 2. / sigma;
+      double       sigma= scale ? sigma1 : 1.;
+      const double tau  = 2. / sigma;
       op.vmult(y, x);
       y.sadd(alpha * sigma, beta * sigma, x);
 
-      for(unsigned int i = 2; i <= degree; ++i)
+      for(unsigned int i= 2; i <= degree; ++i)
         {
-          const double sigma_new = scale ? 1. / (tau - sigma) : 1.;
+          const double sigma_new= scale ? 1. / (tau - sigma) : 1.;
           op.vmult(yn, y);
           yn.sadd(2. * alpha * sigma_new, 2. * beta * sigma_new, y);
           yn.add(-sigma * sigma_new, x);
           x.swap(y);
           y.swap(yn);
-          sigma = sigma_new;
+          sigma= sigma_new;
         }
 
       x.swap(y);

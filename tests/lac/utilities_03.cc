@@ -83,59 +83,59 @@ cheb2(const unsigned int d, const double x)
 
 void
 check(const int          degree,
-      const bool         scale = false,
-      const double       a_L   = -0.1,
-      const double       a     = -0.01,
-      const double       b     = 0.01,
-      const unsigned int size  = 1000)
+      const bool         scale= false,
+      const double       a_L  = -0.1,
+      const double       a    = -0.01,
+      const double       b    = 0.01,
+      const unsigned int size = 1000)
 {
   deallog << "Degree " << degree << std::endl;
   LinearAlgebra::distributed::Vector<double> ev(size), x(size), y(size),
     exact(size), diff(size);
   GrowingVectorMemory<LinearAlgebra::distributed::Vector<double>> vector_memory;
 
-  for(unsigned int i = 0; i < size; ++i)
-    ev(i) = -1. + 2. * (1. + i) / (1. + size);
+  for(unsigned int i= 0; i < size; ++i)
+    ev(i)= -1. + 2. * (1. + i) / (1. + size);
   DiagonalMatrix<LinearAlgebra::distributed::Vector<double>> mat;
   mat.reinit(ev);
 
-  x = 0.;
+  x= 0.;
   // prevent overflow by not perturbing modes far away from the region
   // to be filtered
-  unsigned int n_in  = 0;
-  unsigned int n_out = 0;
-  for(unsigned int i = 0; i < size; ++i)
+  unsigned int n_in = 0;
+  unsigned int n_out= 0;
+  for(unsigned int i= 0; i < size; ++i)
     if(std::abs(ev(i)) <= std::abs(a_L))
       {
         if(ev(i) >= a && ev(i) <= b)
           n_in++;
         else
           n_out++;
-        x(i) = random_value<double>();
+        x(i)= random_value<double>();
       }
 
   deallog << " Modes inside/outside: " << n_in << " " << n_out << std::endl;
 
   // for x = x_i v_i , where v_i are eigenvectors
   // p[H]x = \sum_i x_i p(\lambda_i) v_i
-  const double c = (a + b) / 2.;
-  const double e = (b - a) / 2.;
-  auto         L = [&](const double& x) { return (x - c) / e; };
+  const double c= (a + b) / 2.;
+  const double e= (b - a) / 2.;
+  auto         L= [&](const double& x) { return (x - c) / e; };
 
-  const double scaling = scale ? cheb2(degree, L(a_L)) : 1.; // p(L(a_L))
+  const double scaling= scale ? cheb2(degree, L(a_L)) : 1.; // p(L(a_L))
   deallog << " Scaling: " << scaling << " @ " << a_L << std::endl;
-  exact = 0.;
-  for(unsigned int i = 0; i < size; ++i)
-    exact(i) = x(i) * cheb2(degree, L(ev(i))) / scaling;
+  exact= 0.;
+  for(unsigned int i= 0; i < size; ++i)
+    exact(i)= x(i) * cheb2(degree, L(ev(i))) / scaling;
   deallog << " Input norm: " << x.l2_norm() << std::endl;
   deallog << " Exact norm: " << exact.l2_norm() << std::endl;
 
-  const double g_ = (scale ? a_L : std::numeric_limits<double>::infinity());
-  y               = x;
+  const double g_= (scale ? a_L : std::numeric_limits<double>::infinity());
+  y              = x;
   Utilities::LinearAlgebra::chebyshev_filter(
     y, mat, degree, std::make_pair(a, b), g_, vector_memory);
-  diff = y;
-  diff -= exact;
+  diff= y;
+  diff-= exact;
 
   deallog << " Filter [" << a << "," << b << "]" << std::endl;
   deallog << " Error: " << diff.linfty_norm() / exact.linfty_norm()
@@ -143,10 +143,10 @@ check(const int          degree,
 
 #ifdef EXTRA_OUTPUT
   // extra output for debugging:
-  unsigned int max_i = 0;
-  for(unsigned int i = 1; i < size; ++i)
+  unsigned int max_i= 0;
+  for(unsigned int i= 1; i < size; ++i)
     if(std::abs(diff(i)) > std::abs(diff(max_i)))
-      max_i = i;
+      max_i= i;
 
   deallog << " i =" << max_i << std::endl
           << " d =" << diff(max_i) << std::endl

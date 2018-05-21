@@ -28,12 +28,12 @@ test()
   // randomly add 90 elements to each
   // set, some of which may be
   // repetitions of previous ones
-  for(unsigned int i = 0; i < 9 * is1.size() / 10; ++i)
+  for(unsigned int i= 0; i < 9 * is1.size() / 10; ++i)
     is1.add_index(Testing::rand() % is1.size());
 
   is1.compress();
 
-  IndexSet is2 = is1.get_view(20, 50);
+  IndexSet is2= is1.get_view(20, 50);
 
   deallog << "Original index set: " << std::endl;
   is1.print(deallog);

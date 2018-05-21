@@ -56,26 +56,26 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim>& p, const unsigned int component= 0) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
-    double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
-        val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
+    double val= 0;
+    for(unsigned int d= 0; d < dim; ++d)
+      for(unsigned int i= 0; i <= q; ++i)
+        val+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
 
   VectorizedArray<double>
   value(const Point<dim, VectorizedArray<double>>& p_vec) const
   {
-    VectorizedArray<double> res = make_vectorized_array(0.);
+    VectorizedArray<double> res= make_vectorized_array(0.);
     Point<dim>              p;
-    for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+    for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements; ++v)
       {
-        for(unsigned int d = 0; d < dim; d++)
-          p[d] = p_vec[d][v];
-        res[v] = value(p);
+        for(unsigned int d= 0; d < dim; d++)
+          p[d]= p_vec[d][v];
+        res[v]= value(p);
       }
     return res;
   }
@@ -93,7 +93,7 @@ void
 do_project(const parallel::distributed::Triangulation<dim>& triangulation,
            const std::vector<const FiniteElement<dim>*>&    fes,
            const unsigned int                               p,
-           const unsigned int                               fe_index = 0)
+           const unsigned int                               fe_index= 0)
 {
   // we only project scalar value function
   AssertThrow(fes[fe_index]->n_components() == 1, ExcNotImplemented());
@@ -106,9 +106,9 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 
   std::vector<const DoFHandler<dim>*>  dof_handlers_mf(fes.size());
   std::vector<const ConstraintMatrix*> constraints_mf(fes.size());
-  for(unsigned int i = 0; i < fes.size(); ++i)
+  for(unsigned int i= 0; i < fes.size(); ++i)
     {
-      dof_handlers[i] = std::make_shared<DoFHandler<dim>>(triangulation);
+      dof_handlers[i]= std::make_shared<DoFHandler<dim>>(triangulation);
       dof_handlers[i]->distribute_dofs(*fes[i]);
       deallog << "n_dofs=" << dof_handlers[i]->n_dofs() << std::endl;
 
@@ -119,8 +119,8 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       DoFTools::make_hanging_node_constraints(*dof_handlers[i], constraints[i]);
       constraints[i].close();
 
-      dof_handlers_mf[i] = dof_handlers[i].get();
-      constraints_mf[i]  = &constraints[i];
+      dof_handlers_mf[i]= dof_handlers[i].get();
+      constraints_mf[i] = &constraints[i];
     }
 
   QGauss<1> quadrature_formula_1d(n_q_points_1d);
@@ -136,7 +136,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   data->reinit(
     dof_handlers_mf, constraints_mf, quadrature_formula_1d, additional_data);
 
-  for(unsigned int q = 0; q <= p; ++q)
+  for(unsigned int q= 0; q <= p; ++q)
     {
       // setup quadrature data:
       F<dim> function(q, fes[fe_index]->n_components());
@@ -145,15 +145,15 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       {
         FEEvaluation<dim, fe_degree, n_q_points_1d, 1, double> fe_eval(
           *data, fe_index);
-        const unsigned int n_cells    = data->n_macro_cells();
-        const unsigned int n_q_points = fe_eval.n_q_points;
+        const unsigned int n_cells   = data->n_macro_cells();
+        const unsigned int n_q_points= fe_eval.n_q_points;
 
         qp_data.reinit(n_cells, n_q_points);
-        for(unsigned int cell = 0; cell < n_cells; ++cell)
+        for(unsigned int cell= 0; cell < n_cells; ++cell)
           {
             fe_eval.reinit(cell);
-            for(unsigned int q = 0; q < n_q_points; ++q)
-              qp_data(cell, q) = function.value(fe_eval.quadrature_point(q));
+            for(unsigned int q= 0; q < n_q_points; ++q)
+              qp_data(cell, q)= function.value(fe_eval.quadrature_point(q));
           }
       }
 
@@ -170,10 +170,10 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 
       field.update_ghost_values();
 
-      const double field_l2_norm = field.l2_norm();
+      const double field_l2_norm= field.l2_norm();
 
       // L2 norm of the difference between FE field and the function
-      double L2_norm = 0.;
+      double L2_norm= 0.;
       {
         QGauss<dim>   quadrature_formula_error(std::max(p, q) + 1);
         FEValues<dim> fe_values(*fes[fe_index],
@@ -181,20 +181,20 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
                                 update_values | update_quadrature_points
                                   | update_JxW_values);
 
-        const unsigned int  dofs_per_cell = fes[fe_index]->dofs_per_cell;
-        const unsigned int  n_q_points    = quadrature_formula_error.size();
+        const unsigned int  dofs_per_cell= fes[fe_index]->dofs_per_cell;
+        const unsigned int  n_q_points   = quadrature_formula_error.size();
         std::vector<double> values(n_q_points);
 
         typename DoFHandler<dim>::active_cell_iterator cell
           = dof_handlers[fe_index]->begin_active(),
-          endc = dof_handlers[fe_index]->end();
+          endc= dof_handlers[fe_index]->end();
         for(; cell != endc; ++cell)
           if(cell->is_locally_owned())
             {
               fe_values.reinit(cell);
               fe_values.get_function_values(field, values);
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                 L2_norm
                   += Utilities::fixed_power<2>(
                        values[q_point]
@@ -203,8 +203,8 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
             }
       }
 
-      L2_norm = Utilities::MPI::sum(L2_norm, MPI_COMM_WORLD);
-      L2_norm = std::sqrt(L2_norm);
+      L2_norm= Utilities::MPI::sum(L2_norm, MPI_COMM_WORLD);
+      L2_norm= std::sqrt(L2_norm);
 
       deallog << fes[fe_index]->get_name() << ", P_" << q
               << ", rel. error=" << L2_norm / field_l2_norm << std::endl;

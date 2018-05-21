@@ -24,8 +24,8 @@
 void
 test(Vector<std::complex<double>>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = std::complex<double>(i + 1., i + 2.);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= std::complex<double>(i + 1., i + 2.);
   Vector<std::complex<float>> w(v);
 
   AssertThrow(w == v, ExcInternalError());

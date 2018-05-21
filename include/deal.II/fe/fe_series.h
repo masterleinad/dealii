@@ -286,13 +286,13 @@ namespace
                    const TableIndices<dim>&)>&           predicate,
                  std::map<unsigned int, std::vector<T>>& pred_to_values)
   {
-    const std::pair<bool, unsigned int> pred_pair = predicate(ind);
+    const std::pair<bool, unsigned int> pred_pair= predicate(ind);
     // don't add a value if predicate is false
     if(pred_pair.first == false)
       return;
 
-    const unsigned int& pred_value  = pred_pair.second;
-    const T&            coeff_value = coefficients(ind);
+    const unsigned int& pred_value = pred_pair.second;
+    const T&            coeff_value= coefficients(ind);
     // If pred_value is not in the pred_to_values map, the element will be created.
     // Otherwise a reference to the existing element is returned.
     pred_to_values[pred_value].push_back(coeff_value);
@@ -306,7 +306,7 @@ namespace
                                             predicate,
     std::map<unsigned int, std::vector<T>>& pred_to_values)
   {
-    for(unsigned int i = 0; i < coefficients.size(0); i++)
+    for(unsigned int i= 0; i < coefficients.size(0); i++)
       {
         const TableIndices<1> ind(i);
         fill_map_index(coefficients, ind, predicate, pred_to_values);
@@ -321,8 +321,8 @@ namespace
                                             predicate,
     std::map<unsigned int, std::vector<T>>& pred_to_values)
   {
-    for(unsigned int i = 0; i < coefficients.size(0); i++)
-      for(unsigned int j = 0; j < coefficients.size(1); j++)
+    for(unsigned int i= 0; i < coefficients.size(0); i++)
+      for(unsigned int j= 0; j < coefficients.size(1); j++)
         {
           const TableIndices<2> ind(i, j);
           fill_map_index(coefficients, ind, predicate, pred_to_values);
@@ -337,9 +337,9 @@ namespace
                                             predicate,
     std::map<unsigned int, std::vector<T>>& pred_to_values)
   {
-    for(unsigned int i = 0; i < coefficients.size(0); i++)
-      for(unsigned int j = 0; j < coefficients.size(1); j++)
-        for(unsigned int k = 0; k < coefficients.size(2); k++)
+    for(unsigned int i= 0; i < coefficients.size(0); i++)
+      for(unsigned int j= 0; j < coefficients.size(1); j++)
+        for(unsigned int k= 0; k < coefficients.size(2); k++)
           {
             const TableIndices<3> ind(i, j, k);
             fill_map_index(coefficients, ind, predicate, pred_to_values);

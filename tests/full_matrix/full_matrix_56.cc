@@ -18,32 +18,32 @@
 #include "../tests.h"
 #include "full_matrix_common.h"
 
-const double entries2[4] = {0.814723686393179,
-                            0.516389376684563,
-                            0.516389376684563,
-                            0.913375856139019};
+const double entries2[4]= {0.814723686393179,
+                           0.516389376684563,
+                           0.516389376684563,
+                           0.913375856139019};
 
-const double entries3[9] = {1.808621732261680,
-                            0.845866689167942,
-                            0.667106522517665,
-                            0.845866689167942,
-                            1.398873167281503,
-                            0.281706853672865,
-                            0.667106522517665,
-                            0.281706853672865,
-                            0.741757766593798};
+const double entries3[9]= {1.808621732261680,
+                           0.845866689167942,
+                           0.667106522517665,
+                           0.845866689167942,
+                           1.398873167281503,
+                           0.281706853672865,
+                           0.667106522517665,
+                           0.281706853672865,
+                           0.741757766593798};
 
 // Create a positive definite random matrix
 
 void
 random_matrix(FullMatrix<double>& A)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
-    for(unsigned int j = 0; j < A.n(); ++j)
+  for(unsigned int i= 0; i < A.m(); ++i)
+    for(unsigned int j= 0; j < A.n(); ++j)
       {
-        double rnd = Testing::rand();
-        rnd /= RAND_MAX;
-        A(i, j) = (i == j) ? A.m() + rnd : rnd;
+        double rnd= Testing::rand();
+        rnd/= RAND_MAX;
+        A(i, j)= (i == j) ? A.m() + rnd : rnd;
       }
 }
 

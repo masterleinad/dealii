@@ -227,10 +227,10 @@ public:
      * vectors if the problem is symmetric) to 15. Set the solver to find the
      * eigenvalues of largest magnitude for a non-symmetric problem).
      */
-    explicit AdditionalData(const unsigned int number_of_arnoldi_vectors = 15,
+    explicit AdditionalData(const unsigned int number_of_arnoldi_vectors= 15,
                             const WhichEigenvalues eigenvalue_of_interest
                             = largest_magnitude,
-                            const bool symmetric = false);
+                            const bool symmetric= false);
 
     /**
      * Number of Arnoldi/Lanczos vectors. This number should be less than the
@@ -260,7 +260,7 @@ public:
    * Constructor.
    */
   ArpackSolver(SolverControl&        control,
-               const AdditionalData& data = AdditionalData());
+               const AdditionalData& data= AdditionalData());
 
   /**
    * Set initial vector for building Krylov space.
@@ -336,7 +336,7 @@ public:
         const INVERSE&                     inverse,
         std::vector<std::complex<double>>& eigenvalues,
         std::vector<VectorType>&           eigenvectors,
-        const unsigned int                 n_eigenvalues = 0);
+        const unsigned int                 n_eigenvalues= 0);
 
 protected:
   /**
@@ -490,18 +490,18 @@ inline ArpackSolver::ArpackSolver(SolverControl&        control,
 inline void
 ArpackSolver::set_shift(const std::complex<double> sigma)
 {
-  sigmar = sigma.real();
-  sigmai = sigma.imag();
+  sigmar= sigma.real();
+  sigmai= sigma.imag();
 }
 
 template <typename VectorType>
 inline void
 ArpackSolver::set_initial_vector(const VectorType& vec)
 {
-  initial_vector_provided = true;
+  initial_vector_provided= true;
   resid.resize(vec.size());
-  for(size_type i = 0; i < vec.size(); ++i)
-    resid[i] = vec[i];
+  for(size_type i= 0; i < vec.size(); ++i)
+    resid[i]= vec[i];
 }
 
 template <typename VectorType,
@@ -517,13 +517,13 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                     const unsigned int                 n_eigenvalues)
 {
   // Problem size
-  unsigned int n = eigenvectors[0].size();
+  unsigned int n= eigenvectors[0].size();
 
   // Number of eigenvalues
   const unsigned int nev_const
     = (n_eigenvalues == 0) ? eigenvalues.size() : n_eigenvalues;
   // nev for arpack, which might change by plus one during dneupd
-  unsigned int nev = nev_const;
+  unsigned int nev= nev_const;
 
   // check input sizes
   if(additional_data.symmetric)
@@ -552,13 +552,13 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
            additional_data.number_of_arnoldi_vectors, nev));
 
   // ARPACK mode for dsaupd/dnaupd, here only mode 3, i.e. shift-invert mode
-  int mode = 3;
+  int mode= 3;
 
   // reverse communication parameter
-  int ido = 0;
+  int ido= 0;
 
   // 'G' generalized eigenvalue problem 'I' standard eigenvalue problem
-  char bmat[2] = "G";
+  char bmat[2]= "G";
 
   // Specify the eigenvalues of interest, possible parameters "LA" algebraically
   // largest "SA" algebraically smallest "LM" largest magnitude "SM" smallest
@@ -598,7 +598,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
     }
 
   // tolerance for ARPACK
-  double tol = control().tolerance();
+  double tol= control().tolerance();
 
   // if the starting vector is used it has to be in resid
   if(!initial_vector_provided || resid.size() != n)
@@ -606,23 +606,23 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
 
   // number of Arnoldi basis vectors specified
   // in additional_data
-  int ncv = additional_data.number_of_arnoldi_vectors;
+  int ncv= additional_data.number_of_arnoldi_vectors;
 
-  int                 ldv = n;
+  int                 ldv= n;
   std::vector<double> v(ldv * ncv, 0.0);
 
   //information to the routines
   std::vector<int> iparam(11, 0);
 
-  iparam[0] = 1; // shift strategy
+  iparam[0]= 1; // shift strategy
 
   // maximum number of iterations
-  iparam[2] = control().max_steps();
+  iparam[2]= control().max_steps();
 
   // Set the mode of dsaupd. 1 is exact shifting, 2 is user-supplied shifts,
   // 3 is shift-invert mode, 4 is buckling mode, 5 is Cayley mode.
 
-  iparam[6] = mode;
+  iparam[6]= mode;
   std::vector<int> ipntr(14, 0);
 
   // work arrays for ARPACK
@@ -632,7 +632,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   std::vector<double> workl(lworkl, 0.);
 
   //information out of the iteration
-  int info = 1;
+  int info= 1;
 
   while(ido != 99)
     {
@@ -688,16 +688,16 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       dst.reinit(src);
                       tmp.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
-                        src(i) = workd[ipntr[0] - 1 + i];
+                      for(size_type i= 0; i < src.size(); ++i)
+                        src(i)= workd[ipntr[0] - 1 + i];
 
                       // multiplication with mass matrix M
                       mass_matrix.vmult(tmp, src);
                       // solving linear system
                       inverse.vmult(dst, tmp);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
-                        workd[ipntr[1] - 1 + i] = dst(i);
+                      for(size_type i= 0; i < dst.size(); ++i)
+                        workd[ipntr[1] - 1 + i]= dst(i);
                     }
                     break;
 
@@ -709,16 +709,16 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       tmp.reinit(src);
                       tmp2.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
+                      for(size_type i= 0; i < src.size(); ++i)
                         {
-                          src(i) = workd[ipntr[2] - 1 + i];
-                          tmp(i) = workd[ipntr[0] - 1 + i];
+                          src(i)= workd[ipntr[2] - 1 + i];
+                          tmp(i)= workd[ipntr[0] - 1 + i];
                         }
                       // solving linear system
                       inverse.vmult(dst, src);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
-                        workd[ipntr[1] - 1 + i] = dst(i);
+                      for(size_type i= 0; i < dst.size(); ++i)
+                        workd[ipntr[1] - 1 + i]= dst(i);
                     }
                     break;
 
@@ -728,14 +728,14 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       src.reinit(eigenvectors[0]);
                       dst.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
-                        src(i) = workd[ipntr[0] - 1 + i];
+                      for(size_type i= 0; i < src.size(); ++i)
+                        src(i)= workd[ipntr[0] - 1 + i];
 
                       // Multiplication with mass matrix M
                       mass_matrix.vmult(dst, src);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
-                        workd[ipntr[1] - 1 + i] = dst(i);
+                      for(size_type i= 0; i < dst.size(); ++i)
+                        workd[ipntr[1] - 1 + i]= dst(i);
                     }
                     break;
 
@@ -763,14 +763,14 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   else
     {
       // 1 - compute eigenvectors, 0 - only eigenvalues
-      int rvec = 1;
+      int rvec= 1;
 
       // which eigenvectors
-      char howmany = 'A';
+      char howmany= 'A';
 
       std::vector<int> select(ncv, 1);
 
-      int ldz = n;
+      int ldz= n;
 
       std::vector<double> eigenvalues_real(nev + 1, 0.);
       std::vector<double> eigenvalues_im(nev + 1, 0.);
@@ -850,11 +850,11 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
             Assert(false, ArpackExcArpackInfodneupd(info));
         }
 
-      for(unsigned int i = 0; i < nev; ++i)
-        for(unsigned int j = 0; j < n; ++j)
-          eigenvectors[i](j) = v[i * n + j];
+      for(unsigned int i= 0; i < nev; ++i)
+        for(unsigned int j= 0; j < n; ++j)
+          eigenvectors[i](j)= v[i * n + j];
 
-      for(unsigned int i = 0; i < nev_const; ++i)
+      for(unsigned int i= 0; i < nev_const; ++i)
         eigenvalues[i]
           = std::complex<double>(eigenvalues_real[i], eigenvalues_im[i]);
     }

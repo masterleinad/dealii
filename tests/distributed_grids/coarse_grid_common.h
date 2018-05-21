@@ -35,7 +35,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   // copy the .pvtu and .vtu files
   // into the logstream
   {
-    unsigned int  c = 0;
+    unsigned int  c= 0;
     std::ifstream in((std::string(filename) + ".pvtu").c_str());
     while(in && ++c < 20)
       {
@@ -46,7 +46,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   }
 
   {
-    unsigned int  c = 0;
+    unsigned int  c= 0;
     std::ifstream in((std::string(filename) + "_0000.vtu").c_str());
     while(in && ++c < 20)
       {
@@ -63,8 +63,8 @@ assert_tria_equal(const Triangulation<dim>& a, const Triangulation<dim>& b)
 {
   Assert(a.n_active_cells() == b.n_active_cells(), ExcInternalError());
 
-  std::string file1 = "tmp_grid1";
-  std::string file2 = "tmp_grid2";
+  std::string file1= "tmp_grid1";
+  std::string file2= "tmp_grid2";
 
   std::ofstream out1(file1.c_str());
   GridOut().write_gnuplot(a, out1);
@@ -75,7 +75,7 @@ assert_tria_equal(const Triangulation<dim>& a, const Triangulation<dim>& b)
   out2.close();
 
   //compare the two files
-  std::string cmd = std::string("diff -q ") + file1 + std::string(" ") + file2;
+  std::string cmd= std::string("diff -q ") + file1 + std::string(" ") + file2;
   Assert(system(cmd.c_str()) == 0, ExcInternalError());
 
   //and delete them

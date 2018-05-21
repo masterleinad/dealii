@@ -45,7 +45,7 @@ check()
       ++cell)
     cells.push_back(cell);
 
-  const unsigned int n_cells = tria.n_active_cells();
+  const unsigned int n_cells= tria.n_active_cells();
   deallog << n_cells << std::endl;
 
   // refine the mesh globally, then coarsen
@@ -64,7 +64,7 @@ check()
 
   Assert(tria.n_active_cells() == n_cells, ExcInternalError());
 
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
       cell != tria.end();

@@ -27,28 +27,28 @@ test()
   deallog << "dim=" << dim << std::endl;
 
   SymmetricTensor<4, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
           t[i][j][k][l]
             = 10000 * (i == j && k == l ? 1 : 0)
               + 100 * ((i == k && j == l ? 1 : 0) + (i == l && j == k ? 1 : 0));
 
   deallog << "t=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
           deallog << i << ' ' << j << ' ' << k << ' ' << l << ": "
                   << (int) t[i][j][k][l] << std::endl;
 
   // multiply t by the unit symmetric tensor
-  const SymmetricTensor<2, dim> t_times_1 = t * unit_symmetric_tensor<dim>();
+  const SymmetricTensor<2, dim> t_times_1= t * unit_symmetric_tensor<dim>();
 
   deallog << "t*1=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       deallog << i << ' ' << j << ": " << (int) (t_times_1[i][j]) << std::endl;
 
   // t_times_1 should be a multiple of the

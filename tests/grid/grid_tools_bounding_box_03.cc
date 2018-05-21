@@ -25,10 +25,10 @@ void
 test_tria_bounding_box()
 {
   dealii::Point<dim> p1, p2;
-  for(unsigned int k = 0; k < dim; ++k)
+  for(unsigned int k= 0; k < dim; ++k)
     {
-      p1[k] = k;
-      p2[k] = 2 * k + 1;
+      p1[k]= k;
+      p2[k]= 2 * k + 1;
     }
 
   Triangulation<dim, spacedim> tria;

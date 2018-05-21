@@ -34,21 +34,21 @@ main()
         v.reinit(3, omit_zeroing_entries);
       };
 
-  auto       id     = identity_operator(reinit_vector);
-  const auto filter = mean_value_filter(id);
+  auto       id    = identity_operator(reinit_vector);
+  const auto filter= mean_value_filter(id);
 
-  const auto block_filter = block_diagonal_operator<3>(filter);
+  const auto block_filter= block_diagonal_operator<3>(filter);
 
   BlockVector<double> block_vector(3, 3);
-  block_vector.block(0)[0] = 1;
-  block_vector.block(0)[1] = 2;
-  block_vector.block(0)[2] = 3;
-  block_vector.block(1)[0] = 4;
-  block_vector.block(1)[1] = 6;
-  block_vector.block(1)[2] = 8;
-  block_vector.block(2)[0] = 9;
-  block_vector.block(2)[1] = 12;
-  block_vector.block(2)[2] = 15;
+  block_vector.block(0)[0]= 1;
+  block_vector.block(0)[1]= 2;
+  block_vector.block(0)[2]= 3;
+  block_vector.block(1)[0]= 4;
+  block_vector.block(1)[1]= 6;
+  block_vector.block(1)[2]= 8;
+  block_vector.block(2)[0]= 9;
+  block_vector.block(2)[1]= 12;
+  block_vector.block(2)[2]= 15;
 
   deallog << block_vector.block(0) << std::endl;
   deallog << block_vector.block(1) << std::endl;

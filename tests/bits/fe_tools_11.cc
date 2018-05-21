@@ -26,14 +26,14 @@ template <int dim>
 std::string
 modify_name(const std::string& name)
 {
-  std::string new_name = name;
-  std::string dim_name = std::string("<");
-  const char  dim_char = '0' + dim;
-  dim_name += dim_char;
-  dim_name += '>';
+  std::string new_name= name;
+  std::string dim_name= std::string("<");
+  const char  dim_char= '0' + dim;
+  dim_name+= dim_char;
+  dim_name+= '>';
 
   std::string::size_type pos;
-  while((pos = new_name.find(dim_name)) != std::string::npos)
+  while((pos= new_name.find(dim_name)) != std::string::npos)
     new_name.replace(pos, 3, "");
 
   return new_name;

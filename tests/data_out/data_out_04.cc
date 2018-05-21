@@ -115,7 +115,7 @@ check_this(const DoFHandler<dim>& dof_handler,
   Assert(data_out.get_patches().size() == reader.get_patches().size(),
          ExcInternalError());
 
-  for(unsigned int i = 0; i < reader.get_patches().size(); ++i)
+  for(unsigned int i= 0; i < reader.get_patches().size(); ++i)
     Assert(data_out.get_patches()[i] == reader.get_patches()[i],
            ExcInternalError());
 
@@ -123,7 +123,7 @@ check_this(const DoFHandler<dim>& dof_handler,
   Assert(data_out.get_vector_data_ranges().size()
            == reader.get_vector_data_ranges().size(),
          ExcInternalError());
-  for(unsigned int i = 0; i < data_out.get_vector_data_ranges().size(); ++i)
+  for(unsigned int i= 0; i < data_out.get_vector_data_ranges().size(); ++i)
     {
       deallog << std::get<0>(data_out.get_vector_data_ranges()[i]) << ' '
               << std::get<1>(data_out.get_vector_data_ranges()[i]) << ' '

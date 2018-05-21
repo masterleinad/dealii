@@ -158,7 +158,7 @@ inline IdentityMatrix::IdentityMatrix(const size_type n) : size(n)
 inline void
 IdentityMatrix::reinit(const size_type n)
 {
-  size = n;
+  size= n;
 }
 
 inline IdentityMatrix::size_type
@@ -180,7 +180,7 @@ IdentityMatrix::vmult(OutVectorType& out, const InVectorType& in) const
   Assert(out.size() == size, ExcDimensionMismatch(out.size(), size));
   Assert(in.size() == size, ExcDimensionMismatch(in.size(), size));
 
-  out = in;
+  out= in;
 }
 
 template <typename OutVectorType, typename InVectorType>
@@ -190,7 +190,7 @@ IdentityMatrix::vmult_add(OutVectorType& out, const InVectorType& in) const
   Assert(out.size() == size, ExcDimensionMismatch(out.size(), size));
   Assert(in.size() == size, ExcDimensionMismatch(in.size(), size));
 
-  out += in;
+  out+= in;
 }
 
 template <typename OutVectorType, typename InVectorType>
@@ -200,7 +200,7 @@ IdentityMatrix::Tvmult(OutVectorType& out, const InVectorType& in) const
   Assert(out.size() == size, ExcDimensionMismatch(out.size(), size));
   Assert(in.size() == size, ExcDimensionMismatch(in.size(), size));
 
-  out = in;
+  out= in;
 }
 
 template <typename OutVectorType, typename InVectorType>
@@ -210,7 +210,7 @@ IdentityMatrix::Tvmult_add(OutVectorType& out, const InVectorType& in) const
   Assert(out.size() == size, ExcDimensionMismatch(out.size(), size));
   Assert(in.size() == size, ExcDimensionMismatch(in.size(), size));
 
-  out += in;
+  out+= in;
 }
 
 #endif

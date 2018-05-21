@@ -174,8 +174,8 @@ public:
    */
   SparseVanka(const SparseMatrix<number>& M,
               const std::vector<bool>&    selected,
-              const bool                  conserve_memory = false,
-              const unsigned int n_threads = MultithreadInfo::n_threads());
+              const bool                  conserve_memory= false,
+              const unsigned int n_threads= MultithreadInfo::n_threads());
 
   /**
    * Destructor. Delete all allocated matrices.
@@ -192,8 +192,8 @@ public:
      * Constructor. For the parameters' description, see below.
      */
     AdditionalData(const std::vector<bool>& selected,
-                   const bool               conserve_memory = false,
-                   const unsigned int n_threads = MultithreadInfo::n_threads());
+                   const bool               conserve_memory= false,
+                   const unsigned int n_threads= MultithreadInfo::n_threads());
 
     /**
      * Indices of those degrees of freedom that we shall work on.
@@ -288,7 +288,7 @@ protected:
   void
   apply_preconditioner(Vector<number2>&               dst,
                        const Vector<number2>&         src,
-                       const std::vector<bool>* const dof_mask = nullptr) const;
+                       const std::vector<bool>* const dof_mask= nullptr) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -542,8 +542,8 @@ public:
                    const std::vector<bool>&    selected,
                    const unsigned int          n_blocks,
                    const BlockingStrategy      blocking_strategy,
-                   const bool                  conserve_memory = false,
-                   const unsigned int n_threads = MultithreadInfo::n_threads());
+                   const bool                  conserve_memory= false,
+                   const unsigned int n_threads= MultithreadInfo::n_threads());
 
   /**
    * Apply the preconditioner.

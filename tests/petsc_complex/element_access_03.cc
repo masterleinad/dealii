@@ -31,29 +31,29 @@ test_matrix(PETScWrappers::SparseMatrix& m)
 {
   deallog << "Check matrix access" << std::endl;
 
-  const double r = dealii::numbers::PI;
-  const double i = -1. * dealii::numbers::PI;
+  const double r= dealii::numbers::PI;
+  const double i= -1. * dealii::numbers::PI;
 
   // fill up a matrix with some numbers
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       m.set(k, l, PetscScalar((k + l) * r, (k + l) * i));
 
   m.compress(VectorOperation::insert);
 
   // Check elements have the correct value
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       AssertThrow((m(k, l).real() == (k + l) * dealii::numbers::PI)
                     && (m(k, l).imag() == -1. * (k + l) * dealii::numbers::PI),
                   ExcInternalError());
 
   // Use the conjugate to check elements have equal (and opposite)
   // values.
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       {
-        PetscScalar m_conjugate = PetscConj(m(k, l));
+        PetscScalar m_conjugate= PetscConj(m(k, l));
 
         AssertThrow(m_conjugate.real() == m_conjugate.imag(),
                     ExcInternalError());

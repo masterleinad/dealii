@@ -132,7 +132,7 @@ namespace Step11
     DoFTools::extract_boundary_dofs(
       dof_handler, ComponentMask(), boundary_dofs);
 
-    const unsigned int first_boundary_dof = std::distance(
+    const unsigned int first_boundary_dof= std::distance(
       boundary_dofs.begin(),
       std::find(boundary_dofs.begin(), boundary_dofs.end(), true));
 
@@ -146,7 +146,7 @@ namespace Step11
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     constraints.add_line(first_boundary_dof);
-    for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
       if(boundary_dofs[i] == true)
         constraints.add_entry(first_boundary_dof, i, -1);
     constraints.close();
@@ -207,9 +207,9 @@ namespace Step11
   {
     typedef decltype(dof_handler.begin_active()) Iterator;
 
-    auto cell_worker = [](const Iterator&   cell,
-                          ScratchData<dim>& scratch_data,
-                          CopyData&         copy_data) {
+    auto cell_worker= [](const Iterator&   cell,
+                         ScratchData<dim>& scratch_data,
+                         CopyData&         copy_data) {
       const unsigned int dofs_per_cell
         = scratch_data.fe_values.get_fe().dofs_per_cell;
       const unsigned int n_q_points
@@ -230,10 +230,10 @@ namespace Step11
 
       // ... and assemble the local contributions to the system matrix and
       // right hand side as also discussed above:
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               copy_data.cell_matrix(i, j)
                 += (scratch_data.fe_values.shape_grad(i, q_point)
                     * scratch_data.fe_values.shape_grad(j, q_point)
@@ -245,10 +245,10 @@ namespace Step11
           }
     };
 
-    auto boundary_worker = [](const Iterator&     cell,
-                              const unsigned int& face_no,
-                              ScratchData<dim>&   scratch_data,
-                              CopyData&           copy_data) {
+    auto boundary_worker= [](const Iterator&     cell,
+                             const unsigned int& face_no,
+                             ScratchData<dim>&   scratch_data,
+                             CopyData&           copy_data) {
       const unsigned int dofs_per_cell
         = scratch_data.fe_values.get_fe().dofs_per_cell;
       const unsigned int n_face_q_points
@@ -262,15 +262,15 @@ namespace Step11
         scratch_data.fe_face_values.get_quadrature_points(),
         face_boundary_values);
 
-      for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_face_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           copy_data.cell_rhs(i)
             -= (face_boundary_values[q_point]
                 * scratch_data.fe_face_values.shape_value(i, q_point)
                 * scratch_data.fe_face_values.JxW(q_point));
     };
 
-    auto copier = [&](const CopyData& c) {
+    auto copier= [&](const CopyData& c) {
       constraints.distribute_local_to_global(c.cell_matrix,
                                              c.cell_rhs,
                                              c.local_dof_indices,
@@ -278,7 +278,7 @@ namespace Step11
                                              system_rhs);
     };
 
-    const unsigned int gauss_degree = std::max(
+    const unsigned int gauss_degree= std::max(
       static_cast<unsigned int>(std::ceil(1. * (mapping.get_degree() + 1) / 2)),
       2U);
 
@@ -322,7 +322,7 @@ namespace Step11
     // Then, the function just called returns its results as a vector of
     // values each of which denotes the norm on one cell. To get the global
     // norm, we do the following:
-    const double norm = VectorTools::compute_global_error(
+    const double norm= VectorTools::compute_global_error(
       triangulation, norm_per_cell, VectorTools::H1_seminorm);
 
     // Last task -- generate output:
@@ -360,7 +360,7 @@ namespace Step11
     triangulation.set_all_manifold_ids_on_boundary(0);
     triangulation.set_manifold(0, boundary);
 
-    for(unsigned int cycle = 0; cycle < 5; ++cycle)
+    for(unsigned int cycle= 0; cycle < 5; ++cycle)
       {
         if(cycle > 0)
           triangulation.refine_global(1);
@@ -383,7 +383,7 @@ main()
 {
   initlog();
 
-  for(unsigned int mapping_degree = 1; mapping_degree <= 3; ++mapping_degree)
+  for(unsigned int mapping_degree= 1; mapping_degree <= 3; ++mapping_degree)
     Step11::LaplaceProblem<2>(mapping_degree).run();
 
   return 0;

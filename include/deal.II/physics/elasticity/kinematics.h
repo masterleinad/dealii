@@ -324,7 +324,7 @@ template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::Kinematics::e(const Tensor<2, dim, Number>& F)
 {
-  const Tensor<2, dim, Number> F_inv = invert(F);
+  const Tensor<2, dim, Number> F_inv= invert(F);
   return internal::NumberType<Number>::value(0.5)
          * symmetrize(static_cast<SymmetricTensor<2, dim, Number>>(
                         StandardTensors<dim>::I)
@@ -354,7 +354,7 @@ Physics::Elasticity::Kinematics::w(const Tensor<2, dim, Number>& F,
 {
   // This could be implemented as w = l-d, but that would mean computing "l"
   // a second time.
-  const Tensor<2, dim> grad_v = l(F, dF_dt);
+  const Tensor<2, dim> grad_v= l(F, dF_dt);
   return internal::NumberType<Number>::value(0.5)
          * (grad_v - transpose(grad_v));
 }

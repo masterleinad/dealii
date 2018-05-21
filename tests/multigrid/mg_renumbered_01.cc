@@ -65,9 +65,9 @@ void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
               MGLevelObject<dealii::Vector<number>>&   v)
 {
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for(unsigned int level= v.min_level(); level <= v.max_level(); ++level)
     {
-      unsigned int n = mg_dof.n_dofs(level);
+      unsigned int n= mg_dof.n_dofs(level);
       v[level].reinit(n);
     }
 }
@@ -76,16 +76,16 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
-  unsigned int       counter       = 0;
-  const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
+  unsigned int       counter      = 0;
+  const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
       cell->get_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        u(dof_indices[i]) = ++counter;
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        u(dof_indices[i])= ++counter;
     }
 }
 
@@ -93,13 +93,13 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
-  unsigned int              counter       = 0;
-  const unsigned int        dofs_per_cell = dof.get_fe().dofs_per_cell;
+  unsigned int              counter      = 0;
+  const unsigned int        dofs_per_cell= dof.get_fe().dofs_per_cell;
   std::vector<unsigned int> dof_indices(dofs_per_cell);
-  typename DoFHandler<dim>::cell_iterator cell = dof.begin(0);
+  typename DoFHandler<dim>::cell_iterator cell= dof.begin(0);
   cell->get_mg_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
-    u[0](dof_indices[i]) = ++counter;
+  for(unsigned int i= 0; i < dofs_per_cell; ++i)
+    u[0](dof_indices[i])= ++counter;
 }
 
 template <int dim>
@@ -111,19 +111,19 @@ print_diff(const DoFHandler<dim>& dof_1,
 {
   Vector<double> diff;
   diff.reinit(u);
-  const unsigned int dofs_per_cell = dof_1.get_fe().dofs_per_cell;
+  const unsigned int dofs_per_cell= dof_1.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices_1(dofs_per_cell);
   std::vector<types::global_dof_index> dof_indices_2(dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell_1
       = dof_1.begin_active(),
-      cell_2 = dof_2.begin_active();
+      cell_2= dof_2.begin_active();
       cell_1 != dof_1.end();
       ++cell_1, ++cell_2)
     {
       cell_1->get_dof_indices(dof_indices_1);
       cell_2->get_dof_indices(dof_indices_2);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        diff(dof_indices_1[i]) = u(dof_indices_1[i]) - v(dof_indices_2[i]);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        diff(dof_indices_1[i])= u(dof_indices_1[i]) - v(dof_indices_2[i]);
     }
   deallog << std::endl;
   deallog << "diff " << diff.l2_norm() << std::endl;
@@ -134,18 +134,18 @@ void
 print(const DoFHandler<dim>&          dof,
       std::vector<std::vector<bool>>& interface_dofs)
 {
-  const unsigned int        dofs_per_cell = dof.get_fe().dofs_per_cell;
+  const unsigned int        dofs_per_cell= dof.get_fe().dofs_per_cell;
   std::vector<unsigned int> dof_indices(dofs_per_cell);
-  for(unsigned int l = 0; l < dof.get_triangulation().n_levels(); ++l)
+  for(unsigned int l= 0; l < dof.get_triangulation().n_levels(); ++l)
     {
       deallog << std::endl;
       deallog << "Level " << l << std::endl;
-      for(typename DoFHandler<dim>::cell_iterator cell = dof.begin(l);
+      for(typename DoFHandler<dim>::cell_iterator cell= dof.begin(l);
           cell != dof.end(l);
           ++cell)
         {
           cell->get_mg_dof_indices(dof_indices);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             deallog << ' ' << interface_dofs[l][dof_indices[i]];
         }
     }
@@ -207,15 +207,15 @@ LaplaceProblem<dim>::setup_system()
   mg_dof_handler_renumbered.distribute_mg_dofs(fe);
 
   std::vector<unsigned int> block_component(2 * dim, 0);
-  for(unsigned int c = dim; c < 2 * dim; ++c)
-    block_component[c] = 1;
+  for(unsigned int c= dim; c < 2 * dim; ++c)
+    block_component[c]= 1;
 
-  const unsigned int nlevels = triangulation.n_levels();
+  const unsigned int nlevels= triangulation.n_levels();
 
-  DoFHandler<dim>& dof = mg_dof_handler_renumbered;
+  DoFHandler<dim>& dof= mg_dof_handler_renumbered;
   DoFRenumbering::component_wise(dof, block_component);
   //DoFRenumbering::Cuthill_McKee (dof);
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for(unsigned int level= 0; level < nlevels; ++level)
     {
       DoFRenumbering::component_wise(
         mg_dof_handler_renumbered, level, block_component);
@@ -224,14 +224,14 @@ LaplaceProblem<dim>::setup_system()
 
   deallog << "Number of degrees of freedom: " << mg_dof_handler.n_dofs();
 
-  for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+  for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
     deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
   deallog << std::endl;
 
   boundary_indices.resize(triangulation.n_levels());
   boundary_indices_renumbered.resize(triangulation.n_levels());
 
-  for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+  for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
     {
       boundary_indices_renumbered[l].clear();
       boundary_indices[l].clear();
@@ -244,7 +244,7 @@ LaplaceProblem<dim>::setup_system()
   mg_sparsity.resize(0, nlevels - 1);
   mg_sparsity_renumbered.resize(0, nlevels - 1);
 
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for(unsigned int level= 0; level < nlevels; ++level)
     {
       mg_sparsity[level].reinit(mg_dof_handler.n_dofs(level),
                                 mg_dof_handler.n_dofs(level),
@@ -269,7 +269,7 @@ LaplaceProblem<dim>::test_interface_dofs()
 {
   std::vector<std::vector<bool>> interface_dofs;
   std::vector<std::vector<bool>> boundary_interface_dofs;
-  for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+  for(unsigned int level= 0; level < triangulation.n_levels(); ++level)
     {
       std::vector<bool> tmp(mg_dof_handler.n_dofs(level));
       interface_dofs.push_back(tmp);
@@ -295,7 +295,7 @@ void
 LaplaceProblem<dim>::test_renumber()
 {
   std::vector<std::vector<bool>> v(triangulation.n_levels());
-  for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+  for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
     {
       v[l].resize(mg_dof_handler_renumbered.n_dofs(l));
       std::fill(v[l].begin(), v[l].end(), false);
@@ -310,14 +310,13 @@ LaplaceProblem<dim>::test_renumber()
       ++cell)
     {
       cell->get_mg_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        v[cell->level()][dof_indices[i]] = true;
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        v[cell->level()][dof_indices[i]]= true;
     }
-  for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+  for(unsigned int l= 0; l < triangulation.n_levels(); ++l)
     {
       deallog << "Level " << l << std::endl;
-      for(unsigned int dof = 0; dof < mg_dof_handler_renumbered.n_dofs(l);
-          ++dof)
+      for(unsigned int dof= 0; dof < mg_dof_handler_renumbered.n_dofs(l); ++dof)
         if(!v[l][dof])
           deallog << "FALSE " << dof << std::endl;
     }
@@ -329,14 +328,14 @@ LaplaceProblem<dim>::test()
 {
   typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ZeroFunction<dim>    dirichlet_bc(fe.n_components());
-  dirichlet_boundary[0] = &dirichlet_bc;
+  dirichlet_boundary[0]= &dirichlet_bc;
 
-  const unsigned int min_l = mg_matrices.min_level();
-  const unsigned int max_l = mg_matrices.max_level();
-  for(unsigned int l = min_l; l < max_l; ++l)
+  const unsigned int min_l= mg_matrices.min_level();
+  const unsigned int max_l= mg_matrices.max_level();
+  for(unsigned int l= min_l; l < max_l; ++l)
     {
-      mg_matrices[l]            = IdentityMatrix(mg_dof_handler.n_dofs(l));
-      mg_matrices_renumbered[l] = IdentityMatrix(mg_dof_handler.n_dofs(l));
+      mg_matrices[l]           = IdentityMatrix(mg_dof_handler.n_dofs(l));
+      mg_matrices_renumbered[l]= IdentityMatrix(mg_dof_handler.n_dofs(l));
     }
 
   MGConstrainedDoFs mg_constrained_dofs;
@@ -422,24 +421,23 @@ template <int dim>
 void
 LaplaceProblem<dim>::refine_local()
 {
-  bool cell_refined = false;
+  bool cell_refined= false;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     {
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<dim>::vertices_per_cell;
           ++vertex)
         {
-          const Point<dim> p = cell->vertex(vertex);
+          const Point<dim> p= cell->vertex(vertex);
           const Point<dim> origin
             = (dim == 2 ? Point<dim>(0, 0) : Point<dim>(0, 0, 0));
-          const double dist = p.distance(origin);
+          const double dist= p.distance(origin);
           if(dist < 0.25 / numbers::PI)
             {
               cell->set_refine_flag();
-              cell_refined = true;
+              cell_refined= true;
               break;
             }
         }
@@ -459,7 +457,7 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 7; ++cycle)
+  for(unsigned int cycle= 0; cycle < 7; ++cycle)
     {
       deallog << "Cycle " << cycle << std::endl;
 

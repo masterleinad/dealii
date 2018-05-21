@@ -52,7 +52,7 @@ namespace internal
     /**
      * Default constructor.
      */
-    TableEntry() = default;
+    TableEntry()= default;
 
     /**
      * Constructor. Initialize this table element with the value
@@ -494,7 +494,7 @@ public:
    * <tt>c</tt>.
    */
   void
-  set_tex_format(const std::string& key, const std::string& format = "c");
+  set_tex_format(const std::string& key, const std::string& format= "c");
 
   /**
    * Write table as formatted text to the given stream. The text is formatted
@@ -509,7 +509,7 @@ public:
    */
   void
   write_text(std::ostream&          out,
-             const TextOutputFormat format = table_with_headers) const;
+             const TextOutputFormat format= table_with_headers) const;
 
   /**
    * Write table as a tex file. If @p with_header is set to false, then no
@@ -519,7 +519,7 @@ public:
    * <code>\\input{table_file}</code>.
    */
   void
-  write_tex(std::ostream& file, const bool with_header = true) const;
+  write_tex(std::ostream& file, const bool with_header= true) const;
 
   /**
    * Clear the rows of the table, i.e. calls clear() on all the underlying
@@ -789,30 +789,30 @@ namespace internal
     // write first an identifier for the kind
     // of data stored and then the actual
     // data, in its correct data type
-    if(const int* p = boost::get<int>(&value))
+    if(const int* p= boost::get<int>(&value))
       {
-        char c = 'i';
+        char c= 'i';
         ar& c&* p;
       }
-    else if(const unsigned int* p = boost::get<unsigned int>(&value))
+    else if(const unsigned int* p= boost::get<unsigned int>(&value))
       {
-        char c = 'u';
+        char c= 'u';
         ar& c&* p;
       }
-    else if(const double* p = boost::get<double>(&value))
+    else if(const double* p= boost::get<double>(&value))
       {
-        char c = 'd';
+        char c= 'd';
         ar& c&* p;
       }
-    else if(const std::string* p = boost::get<std::string>(&value))
+    else if(const std::string* p= boost::get<std::string>(&value))
       {
-        char c = 's';
+        char c= 's';
         ar& c&* p;
       }
     else if(const unsigned long long int* p
             = boost::get<unsigned long long int>(&value))
       {
-        char c = 'l';
+        char c= 'l';
         ar& c&* p;
       }
     else
@@ -836,7 +836,7 @@ namespace internal
           {
             int val;
             ar& val;
-            value = val;
+            value= val;
             break;
           }
 
@@ -844,7 +844,7 @@ namespace internal
           {
             unsigned int val;
             ar&          val;
-            value = val;
+            value= val;
             break;
           }
 
@@ -852,7 +852,7 @@ namespace internal
           {
             double val;
             ar&    val;
-            value = val;
+            value= val;
             break;
           }
 
@@ -860,7 +860,7 @@ namespace internal
           {
             std::string val;
             ar&         val;
-            value = val;
+            value= val;
             break;
           }
 
@@ -868,7 +868,7 @@ namespace internal
           {
             unsigned long long int val;
             ar&                    val;
-            value = val;
+            value= val;
             break;
           }
 
@@ -890,19 +890,19 @@ TableHandler::add_value(const std::string& key, const T value)
     {
       // follow the algorithm given in the introduction to this class
       // of padding columns as necessary
-      unsigned int max_col_length = 0;
-      for(std::map<std::string, Column>::iterator p = columns.begin();
+      unsigned int max_col_length= 0;
+      for(std::map<std::string, Column>::iterator p= columns.begin();
           p != columns.end();
           ++p)
-        max_col_length = std::max(
+        max_col_length= std::max(
           max_col_length, static_cast<unsigned int>(p->second.entries.size()));
 
       while(columns[key].entries.size() + 1 < max_col_length)
         {
           columns[key].entries.push_back(internal::TableEntry(T()));
-          internal::TableEntry& entry = columns[key].entries.back();
+          internal::TableEntry& entry= columns[key].entries.back();
           entry.cache_string(columns[key].scientific, columns[key].precision);
-          columns[key].max_length = std::max(
+          columns[key].max_length= std::max(
             columns[key].max_length,
             static_cast<unsigned int>(entry.get_cached_string().length()));
         }
@@ -910,7 +910,7 @@ TableHandler::add_value(const std::string& key, const T value)
 
   // now push the value given to this function
   columns[key].entries.push_back(internal::TableEntry(value));
-  internal::TableEntry& entry = columns[key].entries.back();
+  internal::TableEntry& entry= columns[key].entries.back();
   entry.cache_string(columns[key].scientific, columns[key].precision);
   columns[key].max_length
     = std::max(columns[key].max_length,

@@ -396,7 +396,7 @@ namespace internal
           "This function can no longer be called after compressing the dof_indices array"));
       Assert(fe_index == active_fe_indices[obj_index],
              ExcMessage("FE index does not match that of the present cell"));
-      dof_indices[dof_offsets[obj_index] + local_index] = global_index;
+      dof_indices[dof_offsets[obj_index] + local_index]= global_index;
     }
 
     inline unsigned int
@@ -436,7 +436,7 @@ namespace internal
                    "internal limitation for these objects. Try to work with "
                    "hp::FECollection objects that have a more modest size."));
 
-      active_fe_indices[obj_index] = fe_index;
+      active_fe_indices[obj_index]= fe_index;
     }
 
     inline const types::global_dof_index*

@@ -30,7 +30,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // create a mesh twice refined and move those vertices we locally own
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -50,16 +50,16 @@ test()
 
   // now do the move
   Point<dim> shift;
-  for(unsigned int d = 0; d < dim; ++d)
-    shift[d] = 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    shift[d]= 1;
 
-  unsigned int n_vertices_moved = 0;
-  for(unsigned int v = 0; v < tr.n_vertices(); ++v)
+  unsigned int n_vertices_moved= 0;
+  for(unsigned int v= 0; v < tr.n_vertices(); ++v)
     if(locally_owned_vertices[v] == true)
       {
         // maybe not the most elegant way to do it, but it works for the purpose
         // of the test...
-        const_cast<Point<dim>&>(tr.get_vertices()[v]) += shift;
+        const_cast<Point<dim>&>(tr.get_vertices()[v])+= shift;
         ++n_vertices_moved;
       }
   Assert(Utilities::MPI::sum(n_vertices_moved, MPI_COMM_WORLD)
@@ -82,7 +82,7 @@ test()
 
   if(myid == 0)
     {
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         {

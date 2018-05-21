@@ -27,8 +27,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -43,14 +43,14 @@ test()
 
   typename LA::MPI::Vector x;
   x.reinit(local_active, MPI_COMM_WORLD);
-  x = 0;
+  x= 0;
   typename LA::MPI::Vector g(local_active, local_relevant, MPI_COMM_WORLD);
-  g = x;
+  g= x;
   deallog << "all_zero? " << g.all_zero() << " (should be true)" << std::endl;
   if(myid == 0)
-    x(0) = 1.0;
+    x(0)= 1.0;
   x.compress(VectorOperation::insert);
-  g = x;
+  g= x;
   deallog << "all_zero? " << g.all_zero() << " (should be false)" << std::endl;
 
   // done
@@ -63,7 +63,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   {
     deallog.push("PETSc");

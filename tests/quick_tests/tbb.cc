@@ -25,14 +25,14 @@ using namespace dealii;
 void
 add_one(unsigned int& var)
 {
-  var += 1;
+  var+= 1;
 }
 
 void
 test1()
 {
-  unsigned int    tmp  = 1;
-  Threads::Task<> task = Threads::new_task(&add_one, tmp);
+  unsigned int    tmp = 1;
+  Threads::Task<> task= Threads::new_task(&add_one, tmp);
   task.join();
   if(tmp != 2)
     exit(1);
@@ -51,23 +51,23 @@ assemble(const std::vector<int>::iterator& it,
          scratch_data&                     scratch,
          copy_data&                        data)
 {
-  data.value = (*it);
+  data.value= (*it);
 }
 
 void
 copy(int& value, const copy_data& data)
 {
-  value += data.value;
+  value+= data.value;
 }
 
 void
 test2()
 {
-  const int        maxi = 10000;
+  const int        maxi= 10000;
   std::vector<int> v(maxi);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v[i] = i + 1;
-  int result = 0;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v[i]= i + 1;
+  int result= 0;
   WorkStream::run(v.begin(),
                   v.end(),
                   &assemble,

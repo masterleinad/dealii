@@ -50,26 +50,26 @@ test(const unsigned int m,
   create_random(BL);
   create_random(DL);
 
-  A = AL;
-  B = BL;
-  D = NumberType();
-  for(unsigned int i = 0; i < k; ++i)
-    D(i, i) = DL(i);
+  A= AL;
+  B= BL;
+  D= NumberType();
+  for(unsigned int i= 0; i < k; ++i)
+    D(i, i)= DL(i);
 
   // non-symmetric
   C.triple_product(D, A, B, true);
   AL.Tmmult(CL, BL, DL);
 
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for(unsigned int i= 0; i < m; ++i)
+    for(unsigned int j= 0; j < n; ++j)
       AssertThrow(std::abs(C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, C(i, j), CL(i, j), C(i, j) - CL(i, j)));
 
   deallog << "OK non-symmetric" << std::endl;
 
   AL.Tmmult(CL, BL, DL, true);
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for(unsigned int i= 0; i < m; ++i)
+    for(unsigned int j= 0; j < n; ++j)
       AssertThrow(std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
 
@@ -78,13 +78,13 @@ test(const unsigned int m,
   // symmetric (B==A)
   if(m == n)
     {
-      C = 0.;
+      C= 0.;
       C.triple_product(D, A, A, true, false, 1.);
 
       AL.Tmmult(CL, AL, DL);
 
-      for(unsigned int i = 0; i < m; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      for(unsigned int i= 0; i < m; ++i)
+        for(unsigned int j= 0; j < n; ++j)
           AssertThrow(std::abs(C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                       ExcEl(i, j, C(i, j), CL(i, j), C(i, j) - CL(i, j)));
 
@@ -92,8 +92,8 @@ test(const unsigned int m,
 
       AL.Tmmult(CL, AL, DL, true);
 
-      for(unsigned int i = 0; i < m; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      for(unsigned int i= 0; i < m; ++i)
+        for(unsigned int j= 0; j < n; ++j)
           AssertThrow(
             std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
             ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
@@ -105,19 +105,19 @@ test(const unsigned int m,
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<std::array<unsigned int, 3>> sizes = {{3, 3, 3},
-                                                          {7, 7, 7},
-                                                          {51, 51, 51},
-                                                          {320, 320, 320},
-                                                          {3, 5, 9},
-                                                          {7, 7, 9},
-                                                          {10, 5, 10},
-                                                          {320, 320, 120}};
+  const std::vector<std::array<unsigned int, 3>> sizes= {{3, 3, 3},
+                                                         {7, 7, 7},
+                                                         {51, 51, 51},
+                                                         {320, 320, 320},
+                                                         {3, 5, 9},
+                                                         {7, 7, 9},
+                                                         {10, 5, 10},
+                                                         {320, 320, 120}};
 
   deallog.push("double");
   for(auto el : sizes)

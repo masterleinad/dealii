@@ -54,7 +54,7 @@ template <typename number>
 MGTransferBlock<number>::~MGTransferBlock()
 {
   if(memory != nullptr)
-    memory = nullptr;
+    memory= nullptr;
 }
 
 template <typename number>
@@ -62,8 +62,8 @@ void
 MGTransferBlock<number>::initialize(const std::vector<number>&    f,
                                     VectorMemory<Vector<number>>& mem)
 {
-  factors = f;
-  memory  = &mem;
+  factors= f;
+  memory = &mem;
 }
 
 template <typename number>
@@ -82,7 +82,7 @@ MGTransferBlock<number>::prolongate(const unsigned int         to_level,
   // Multiplicate with prolongation
   // matrix, but only those blocks
   // selected.
-  for(unsigned int b = 0; b < this->mg_block.size(); ++b)
+  for(unsigned int b= 0; b < this->mg_block.size(); ++b)
     {
       if(this->selected[b])
         prolongation_matrices[to_level - 1]->block(b, b).vmult(
@@ -103,14 +103,14 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
   Assert(dst.n_blocks() == this->n_mg_blocks,
          ExcDimensionMismatch(dst.n_blocks(), this->n_mg_blocks));
 
-  for(unsigned int b = 0; b < this->mg_block.size(); ++b)
+  for(unsigned int b= 0; b < this->mg_block.size(); ++b)
     {
       if(this->selected[b])
         {
           if(factors.size() != 0)
             {
               Assert(memory != nullptr, ExcNotInitialized());
-              Vector<number>* aux = memory->alloc();
+              Vector<number>* aux= memory->alloc();
               aux->reinit(dst.block(this->mg_block[b]));
               prolongation_matrices[from_level - 1]->block(b, b).Tvmult(
                 *aux, src.block(this->mg_block[b]));
@@ -130,20 +130,20 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
 std::size_t
 MGTransferComponentBase::memory_consumption() const
 {
-  std::size_t result = sizeof(*this);
-  result += MemoryConsumption::memory_consumption(component_mask)
-            - sizeof(ComponentMask);
-  result += MemoryConsumption::memory_consumption(target_component)
-            - sizeof(mg_target_component);
-  result += MemoryConsumption::memory_consumption(sizes) - sizeof(sizes);
-  result += MemoryConsumption::memory_consumption(component_start)
-            - sizeof(component_start);
-  result += MemoryConsumption::memory_consumption(mg_component_start)
-            - sizeof(mg_component_start);
-  result += MemoryConsumption::memory_consumption(prolongation_sparsities)
-            - sizeof(prolongation_sparsities);
-  result += MemoryConsumption::memory_consumption(prolongation_matrices)
-            - sizeof(prolongation_matrices);
+  std::size_t result= sizeof(*this);
+  result+= MemoryConsumption::memory_consumption(component_mask)
+           - sizeof(ComponentMask);
+  result+= MemoryConsumption::memory_consumption(target_component)
+           - sizeof(mg_target_component);
+  result+= MemoryConsumption::memory_consumption(sizes) - sizeof(sizes);
+  result+= MemoryConsumption::memory_consumption(component_start)
+           - sizeof(component_start);
+  result+= MemoryConsumption::memory_consumption(mg_component_start)
+           - sizeof(mg_component_start);
+  result+= MemoryConsumption::memory_consumption(prolongation_sparsities)
+           - sizeof(prolongation_sparsities);
+  result+= MemoryConsumption::memory_consumption(prolongation_matrices)
+           - sizeof(prolongation_matrices);
   //TODO:[GK] Add this.
   //   result += MemoryConsumption::memory_consumption(copy_to_and_from_indices)
   //          - sizeof(copy_to_and_from_indices);
@@ -154,18 +154,18 @@ MGTransferComponentBase::memory_consumption() const
 std::size_t
 MGTransferBlockBase::memory_consumption() const
 {
-  std::size_t result = sizeof(*this);
-  result += sizeof(unsigned int) * sizes.size();
-  result += MemoryConsumption::memory_consumption(selected) - sizeof(selected);
-  result += MemoryConsumption::memory_consumption(mg_block) - sizeof(mg_block);
+  std::size_t result= sizeof(*this);
+  result+= sizeof(unsigned int) * sizes.size();
+  result+= MemoryConsumption::memory_consumption(selected) - sizeof(selected);
+  result+= MemoryConsumption::memory_consumption(mg_block) - sizeof(mg_block);
   result
     += MemoryConsumption::memory_consumption(block_start) - sizeof(block_start);
-  result += MemoryConsumption::memory_consumption(mg_block_start)
-            - sizeof(mg_block_start);
-  result += MemoryConsumption::memory_consumption(prolongation_sparsities)
-            - sizeof(prolongation_sparsities);
-  result += MemoryConsumption::memory_consumption(prolongation_matrices)
-            - sizeof(prolongation_matrices);
+  result+= MemoryConsumption::memory_consumption(mg_block_start)
+           - sizeof(mg_block_start);
+  result+= MemoryConsumption::memory_consumption(prolongation_sparsities)
+           - sizeof(prolongation_sparsities);
+  result+= MemoryConsumption::memory_consumption(prolongation_matrices)
+           - sizeof(prolongation_matrices);
   //TODO:[GK] Add this.
   //   result += MemoryConsumption::memory_consumption(copy_indices)
   //          - sizeof(copy_indices);

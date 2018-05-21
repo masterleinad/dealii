@@ -26,7 +26,7 @@
 void
 test()
 {
-  const int dim = 2;
+  const int dim= 2;
   //setup system
   dealii::parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD);

@@ -36,7 +36,7 @@ using namespace dealii;
 class RefineTest
 {
 public:
-  static constexpr int dim = 2;
+  static constexpr int dim= 2;
 
 public:
   RefineTest(const unsigned int refine_case)
@@ -53,9 +53,9 @@ private:
     if(refine_case == 1)
       {
         std::vector<unsigned int> repetitions(dim);
-        repetitions[0] = repetitions[1]
+        repetitions[0]= repetitions[1]
           = 5; // Non-unity number of initial partitions
-        const std::array<double, dim> L = {{1.0, 1.0}};
+        const std::array<double, dim> L= {{1.0, 1.0}};
         GridGenerator::subdivided_hyper_rectangle(triangulation,
                                                   repetitions,
                                                   Point<dim>(0.0, 0.0),
@@ -66,9 +66,9 @@ private:
     else if(refine_case == 2)
       {
         std::vector<unsigned int> repetitions(dim);
-        repetitions[0] = repetitions[1]
+        repetitions[0]= repetitions[1]
           = 5; // Non-unity number of initial partitions
-        const std::array<double, dim> L = {{1.0, 1.0}};
+        const std::array<double, dim> L= {{1.0, 1.0}};
         GridGenerator::subdivided_hyper_rectangle(triangulation,
                                                   repetitions,
                                                   Point<dim>(0.0, 0.0),
@@ -79,8 +79,8 @@ private:
     else if(refine_case == 3)
       {
         std::vector<unsigned int> repetitions(dim);
-        repetitions[0] = repetitions[1] = 10; // Finer initial mesh
-        const std::array<double, dim> L = {{1.0, 1.0}};
+        repetitions[0]= repetitions[1] = 10; // Finer initial mesh
+        const std::array<double, dim> L= {{1.0, 1.0}};
         GridGenerator::subdivided_hyper_rectangle(triangulation,
                                                   repetitions,
                                                   Point<dim>(0.0, 0.0),
@@ -91,8 +91,8 @@ private:
     else if(refine_case == 4)
       {
         std::vector<unsigned int> repetitions(dim);
-        repetitions[0] = repetitions[1] = 1; // Single cell
-        const std::array<double, dim> L = {{1.0, 1.0}};
+        repetitions[0]= repetitions[1] = 1; // Single cell
+        const std::array<double, dim> L= {{1.0, 1.0}};
         GridGenerator::subdivided_hyper_rectangle(triangulation,
                                                   repetitions,
                                                   Point<dim>(0.0, 0.0),
@@ -109,34 +109,33 @@ private:
   void
   test_mapping()
   {
-    const double               tol = 1e-8;
+    const double               tol= 1e-8;
     const MappingQGeneric<dim> mapping(1);
 
     deallog << "Number of active cells: " << triangulation.n_active_cells()
             << std::endl;
 
-    auto       cell = dof_handler.begin_active();
-    const auto endc = dof_handler.end();
-    for(unsigned int index = 0; cell != endc; ++cell, ++index)
+    auto       cell= dof_handler.begin_active();
+    const auto endc= dof_handler.end();
+    for(unsigned int index= 0; cell != endc; ++cell, ++index)
       {
-        const auto P1 = cell->vertex(0);
-        const auto P2 = cell->vertex(1);
-        const auto P3 = cell->vertex(2);
+        const auto P1= cell->vertex(0);
+        const auto P2= cell->vertex(1);
+        const auto P3= cell->vertex(2);
 
         // Find the mid-point of the cell
         Point<dim> test;
-        test[0] = (P1[0] + P2[0]) / 2.0;
-        test[1] = (P2[1] + P3[1]) / 2.0;
+        test[0]= (P1[0] + P2[0]) / 2.0;
+        test[1]= (P2[1] + P3[1]) / 2.0;
 
         // Map to and from the unit cell
-        const Point<dim> dp = mapping.transform_real_to_unit_cell(cell, test);
-        const Point<dim> dp_real
-          = mapping.transform_unit_to_real_cell(cell, dp);
+        const Point<dim> dp= mapping.transform_real_to_unit_cell(cell, test);
+        const Point<dim> dp_real= mapping.transform_unit_to_real_cell(cell, dp);
 
         // Now we start off at the mid-point of the unit cell
         Point<dim> test_unit_mid;
-        test_unit_mid[0] = 0.5;
-        test_unit_mid[1] = 0.5;
+        test_unit_mid[0]= 0.5;
+        test_unit_mid[1]= 0.5;
 
         // And map to and from the real cell
         const Point<dim> dp_real_mid

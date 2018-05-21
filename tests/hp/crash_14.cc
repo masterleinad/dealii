@@ -37,16 +37,16 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  for(unsigned int k = 1; k < 4; ++k)
+  for(unsigned int k= 1; k < 4; ++k)
     {
       hp::FECollection<dim> fe_collection;
-      for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
+      for(unsigned int i= 0; i < tria.n_active_cells(); ++i)
         fe_collection.push_back(
           FESystem<dim>(FE_Q<dim>(k), 1, FE_DGQ<dim>(i % 4), 1));
 
       hp::DoFHandler<dim> dof_handler(tria);
 
-      unsigned int fe_index = 0;
+      unsigned int fe_index= 0;
       for(typename hp::DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active();
           cell != dof_handler.end();
@@ -65,7 +65,7 @@ test()
           = dof_handler.begin_active();
           cell != dof_handler.end();
           ++cell)
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           if(!cell->at_boundary(face))
             {
@@ -88,7 +88,7 @@ test()
                       << ", fe2=" << cell->neighbor(face)->get_fe().get_name()
                       << std::endl;
 
-              for(unsigned int i = 0; i < face_dof_indices.size(); ++i)
+              for(unsigned int i= 0; i < face_dof_indices.size(); ++i)
                 {
                   deallog << face_dof_indices[i] << std::endl;
 

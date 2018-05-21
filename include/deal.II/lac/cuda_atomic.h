@@ -53,11 +53,11 @@ namespace LinearAlgebra
 
       unsigned long long int* address_as_ull
         = reinterpret_cast<unsigned long long int*>(address);
-      unsigned long long int old = *address_as_ull, assumed;
+      unsigned long long int old= *address_as_ull, assumed;
       do
         {
-          assumed = old;
-          old     = atomicCAS(
+          assumed= old;
+          old    = atomicCAS(
             address_as_ull,
             assumed,
             __double_as_longlong(val + __longlong_as_double(assumed)));
@@ -76,14 +76,14 @@ namespace LinearAlgebra
     inline __device__ float
     atomicMax_wrapper(float* address, float val)
     {
-      int* address_as_int = reinterpret_cast<int*>(address);
-      int  old            = *address_as_int, assumed;
+      int* address_as_int= reinterpret_cast<int*>(address);
+      int  old           = *address_as_int, assumed;
       do
         {
-          assumed = old;
-          old     = atomicCAS(address_as_int,
-                          assumed,
-                          atomicMax(address_as_int, __float_as_int(val)));
+          assumed= old;
+          old    = atomicCAS(address_as_int,
+                         assumed,
+                         atomicMax(address_as_int, __float_as_int(val)));
         }
       while(assumed != old);
 
@@ -100,15 +100,15 @@ namespace LinearAlgebra
     {
       unsigned long long int* address_as_ull
         = reinterpret_cast<unsigned long long int*>(address);
-      unsigned long long int old = *address_as_ull, assumed;
+      unsigned long long int old= *address_as_ull, assumed;
       do
         {
-          assumed = old;
-          old     = atomicCAS(address_as_ull,
-                          assumed,
-                          atomicMax(address_as_ull,
-                                    static_cast<unsigned long long int>(
-                                      __double_as_longlong(val))));
+          assumed= old;
+          old    = atomicCAS(address_as_ull,
+                         assumed,
+                         atomicMax(address_as_ull,
+                                   static_cast<unsigned long long int>(
+                                     __double_as_longlong(val))));
         }
       while(assumed != old);
 

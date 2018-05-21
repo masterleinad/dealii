@@ -30,14 +30,14 @@
 void
 test()
 {
-  const unsigned int N = 200;
+  const unsigned int N= 200;
 
   // build the sparse matrix
   TrilinosWrappers::SparseMatrix matrix(N * N, N * N, 5U);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for(unsigned int i= 0; i < N; i++)
+    for(unsigned int j= 0; j < N; j++)
       {
-        const unsigned int global = i * N + j;
+        const unsigned int global= i * N + j;
         matrix.set(global, global, 4);
         if(j > 0)
           {
@@ -69,8 +69,8 @@ test()
   v1.reinit(complete_index_set(N * N), MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v2;
   v2.reinit(complete_index_set(N * N), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < N * N; ++i)
-    v1(i) = i;
+  for(unsigned int i= 0; i < N * N; ++i)
+    v1(i)= i;
   matrix.vmult(v2, v1);
 
   deallog << v1 * v2 << std::endl;

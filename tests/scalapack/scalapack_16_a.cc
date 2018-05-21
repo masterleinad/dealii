@@ -60,7 +60,7 @@ test(const unsigned int size_1,
   // Create randomly filled matrix of requested dimension size_1xsize_2:
   FullMatrix<NumberType> full_A(size_1, size_2);
   create_random(full_A);
-  const NumberType ratio = 1e-8;
+  const NumberType ratio= 1e-8;
 
   ScaLAPACKMatrix<NumberType> pseudoinverse_A(size_1,
                                               size_2,
@@ -68,8 +68,8 @@ test(const unsigned int size_1,
                                               block_size,
                                               block_size,
                                               LAPACKSupport::Property::general);
-  pseudoinverse_A         = full_A;
-  const unsigned int rank = pseudoinverse_A.pseudoinverse(ratio);
+  pseudoinverse_A        = full_A;
+  const unsigned int rank= pseudoinverse_A.pseudoinverse(ratio);
 
   // The pseudoinverse_A has to fulfill: A * A+ * A = A
 
@@ -79,7 +79,7 @@ test(const unsigned int size_1,
                                           block_size,
                                           block_size,
                                           LAPACKSupport::Property::general);
-  scalapack_A = full_A;
+  scalapack_A= full_A;
   ScaLAPACKMatrix<NumberType> scalapack_tmp(size_2,
                                             size_2,
                                             grid,
@@ -100,7 +100,7 @@ test(const unsigned int size_1,
 
   // compute difference
   scalapack_result.add(-1, scalapack_A);
-  const double norm = scalapack_result.frobenius_norm();
+  const double norm= scalapack_result.frobenius_norm();
 
   if(this_mpi_process == 0)
     {
@@ -117,11 +117,11 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes_1 = {{200, 400}};
-  const std::vector<unsigned int> sizes_2 = {{250, 350}};
-  const std::vector<unsigned int> blocks  = {{16, 32}};
+  const std::vector<unsigned int> sizes_1= {{200, 400}};
+  const std::vector<unsigned int> sizes_2= {{250, 350}};
+  const std::vector<unsigned int> blocks = {{16, 32}};
 
-  const double tol = 1e-10;
+  const double tol= 1e-10;
 
   for(const auto& s_1 : sizes_1)
     for(const auto& s_2 : sizes_2)

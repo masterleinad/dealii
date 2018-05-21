@@ -36,7 +36,7 @@ class AnyData : public Subscriptor
 {
 public:
   /// Default constructor for empty object
-  AnyData() = default;
+  AnyData()= default;
 
   /// Number of stored data objects.
   unsigned int
@@ -228,7 +228,7 @@ inline type
 AnyData::entry(const unsigned int i)
 {
   AssertIndexRange(i, size());
-  type* p = boost::any_cast<type>(&data[i]);
+  type* p= boost::any_cast<type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -239,9 +239,9 @@ inline const type
 AnyData::entry(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type* p = boost::any_cast<type>(&data[i]);
+  const type* p= boost::any_cast<type>(&data[i]);
   if(p == nullptr)
-    p = boost::any_cast<const type>(&data[i]);
+    p= boost::any_cast<const type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -252,9 +252,9 @@ inline const type
 AnyData::read(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type* p = boost::any_cast<type>(&data[i]);
+  const type* p= boost::any_cast<type>(&data[i]);
   if(p == nullptr)
-    p = boost::any_cast<const type>(&data[i]);
+    p= boost::any_cast<const type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -265,9 +265,9 @@ inline const type*
 AnyData::read_ptr(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type* const* p = boost::any_cast<type*>(&data[i]);
+  const type* const* p= boost::any_cast<type*>(&data[i]);
   if(p == nullptr)
-    p = boost::any_cast<const type*>(&data[i]);
+    p= boost::any_cast<const type*>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type*).name(), data[i].type().name()));
   return *p;
@@ -278,9 +278,9 @@ inline const type*
 AnyData::try_read_ptr(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type* const* p = boost::any_cast<type*>(&data[i]);
+  const type* const* p= boost::any_cast<type*>(&data[i]);
   if(p == nullptr)
-    p = boost::any_cast<const type*>(&data[i]);
+    p= boost::any_cast<const type*>(&data[i]);
   if(p == nullptr)
     return nullptr;
   return *p;
@@ -291,9 +291,9 @@ inline const type*
 AnyData::try_read(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type* p = boost::any_cast<type>(&data[i]);
+  const type* p= boost::any_cast<type>(&data[i]);
   if(p == 0)
-    p = boost::any_cast<const type>(&data[i]);
+    p= boost::any_cast<const type>(&data[i]);
   return p;
 }
 
@@ -319,7 +319,7 @@ AnyData::try_find(const std::string& n) const
 inline unsigned int
 AnyData::find(const std::string& n) const
 {
-  const unsigned int i = try_find(n);
+  const unsigned int i= try_find(n);
   Assert(i != numbers::invalid_unsigned_int, ExcNameNotFound(n));
 
   return i;
@@ -336,8 +336,8 @@ template <typename type>
 inline type
 AnyData::entry(const std::string& n)
 {
-  const unsigned int i = find(n);
-  type*              p = boost::any_cast<type>(&data[i]);
+  const unsigned int i= find(n);
+  type*              p= boost::any_cast<type>(&data[i]);
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
@@ -346,8 +346,8 @@ template <typename type>
 inline const type
 AnyData::entry(const std::string& n) const
 {
-  const unsigned int i = find(n);
-  const type*        p = boost::any_cast<type>(&data[i]);
+  const unsigned int i= find(n);
+  const type*        p= boost::any_cast<type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -357,8 +357,8 @@ template <typename type>
 inline const type
 AnyData::read(const std::string& n) const
 {
-  const unsigned int i = find(n);
-  const type*        p = boost::any_cast<type>(&data[i]);
+  const unsigned int i= find(n);
+  const type*        p= boost::any_cast<type>(&data[i]);
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
@@ -367,10 +367,10 @@ template <typename type>
 inline const type*
 AnyData::read_ptr(const std::string& n) const
 {
-  const unsigned int i = find(n);
-  const type* const* p = boost::any_cast<type*>(&data[i]);
+  const unsigned int i= find(n);
+  const type* const* p= boost::any_cast<type*>(&data[i]);
   if(p == nullptr)
-    p = boost::any_cast<const type*>(&data[i]);
+    p= boost::any_cast<const type*>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -380,13 +380,13 @@ template <typename type>
 inline const type*
 AnyData::try_read_ptr(const std::string& n) const
 {
-  const unsigned int i = try_find(n);
+  const unsigned int i= try_find(n);
   if(i == numbers::invalid_unsigned_int)
     return 0;
 
-  const type* const* p = boost::any_cast<type*>(&data[i]);
+  const type* const* p= boost::any_cast<type*>(&data[i]);
   if(p == 0)
-    p = boost::any_cast<const type*>(&data[i]);
+    p= boost::any_cast<const type*>(&data[i]);
   return *p;
 }
 
@@ -402,8 +402,8 @@ AnyData::try_read(const std::string& n) const
     return nullptr;
 
   // Compute index and return casted pointer
-  unsigned int i = it - names.begin();
-  const type*  p = boost::any_cast<type>(&data[i]);
+  unsigned int i= it - names.begin();
+  const type*  p= boost::any_cast<type>(&data[i]);
   return p;
 }
 
@@ -411,7 +411,7 @@ template <typename type>
 inline void
 AnyData::add(type ent, const std::string& n)
 {
-  boost::any e = ent;
+  boost::any e= ent;
   data.push_back(e);
   names.push_back(n);
 }
@@ -419,7 +419,7 @@ AnyData::add(type ent, const std::string& n)
 inline void
 AnyData::merge(const AnyData& other)
 {
-  for(unsigned int i = 0; i < other.size(); ++i)
+  for(unsigned int i= 0; i < other.size(); ++i)
     {
       names.push_back(other.names[i]);
       data.push_back(other.data[i]);
@@ -430,7 +430,7 @@ template <class StreamType>
 inline void
 AnyData::list(StreamType& os) const
 {
-  for(unsigned int i = 0; i < names.size(); ++i)
+  for(unsigned int i= 0; i < names.size(); ++i)
     {
       os << i << '\t' << names[i] << '\t' << data[i].type().name() << std::endl;
     }

@@ -36,7 +36,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr);
@@ -58,7 +58,7 @@ test()
         dof_set.print(deallog);
     }
 
-    unsigned int n_dofs = dofh.n_dofs();
+    unsigned int n_dofs= dofh.n_dofs();
     if(myid == 0)
       deallog << "**** n_dofs = " << n_dofs << std::endl;
 
@@ -76,16 +76,15 @@ test()
       if(myid == 0)
         {
           std::vector<types::global_dof_index>           local_dof_indices;
-          typename DoFHandler<dim>::active_cell_iterator cell,
-            endc = dofh.end();
+          typename DoFHandler<dim>::active_cell_iterator cell, endc= dofh.end();
 
           if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-            for(cell = dofh.begin_active(); cell != endc; ++cell)
+            for(cell= dofh.begin_active(); cell != endc; ++cell)
               if(!cell->is_artificial() && !cell->is_ghost())
                 {
                   local_dof_indices.resize(cell->get_fe().dofs_per_cell);
                   cell->get_dof_indices(local_dof_indices);
-                  for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < cell->get_fe().dofs_per_cell; ++i)
                     deallog << local_dof_indices[i] << " ";
                   deallog << std::endl;
                 }
@@ -109,7 +108,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

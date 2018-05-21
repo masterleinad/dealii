@@ -87,7 +87,7 @@ class PreconditionIdentity;
  *
  * @author W. Bangerth, G. Kanschat, R. Becker and F.-T. Suttmeier
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverCG : public Solver<VectorType>
 {
 public:
@@ -109,18 +109,18 @@ public:
    */
   SolverCG(SolverControl&            cn,
            VectorMemory<VectorType>& mem,
-           const AdditionalData&     data = AdditionalData());
+           const AdditionalData&     data= AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverCG(SolverControl& cn, const AdditionalData& data = AdditionalData());
+  SolverCG(SolverControl& cn, const AdditionalData& data= AdditionalData());
 
   /**
    * Virtual destructor.
    */
-  virtual ~SolverCG() override = default;
+  virtual ~SolverCG() override= default;
 
   /**
    * Solve the linear system $Ax=b$ for x.
@@ -149,7 +149,7 @@ public:
    */
   boost::signals2::connection
   connect_condition_number_slot(const std::function<void(double)>& slot,
-                                const bool every_iteration = false);
+                                const bool every_iteration= false);
 
   /**
    * Connect a slot to retrieve the estimated eigenvalues. Called on each
@@ -160,7 +160,7 @@ public:
   boost::signals2::connection
   connect_eigenvalues_slot(
     const std::function<void(const std::vector<double>&)>& slot,
-    const bool every_iteration = false);
+    const bool every_iteration= false);
 
 protected:
   /**
@@ -262,17 +262,17 @@ SolverCG<VectorType>::compute_eigs_and_cond(
   if(!cond_signal.empty() || !eigenvalues_signal.empty())
     {
       TridiagonalMatrix<double> T(diagonal.size(), true);
-      for(size_type i = 0; i < diagonal.size(); ++i)
+      for(size_type i= 0; i < diagonal.size(); ++i)
         {
-          T(i, i) = diagonal[i];
+          T(i, i)= diagonal[i];
           if(i < diagonal.size() - 1)
-            T(i, i + 1) = offdiagonal[i];
+            T(i, i + 1)= offdiagonal[i];
         }
       T.compute_eigenvalues();
       //Need two eigenvalues to estimate the condition number.
       if(diagonal.size() > 1)
         {
-          double condition_number = T.eigenvalue(T.n() - 1) / T.eigenvalue(0);
+          double condition_number= T.eigenvalue(T.n() - 1) / T.eigenvalue(0);
           cond_signal(condition_number);
         }
       //Avoid copying the eigenvalues of T to a vector unless a signal is
@@ -280,9 +280,9 @@ SolverCG<VectorType>::compute_eigs_and_cond(
       if(!eigenvalues_signal.empty())
         {
           std::vector<double> eigenvalues(T.n());
-          for(unsigned int j = 0; j < T.n(); ++j)
+          for(unsigned int j= 0; j < T.n(); ++j)
             {
-              eigenvalues.at(j) = T.eigenvalue(j);
+              eigenvalues.at(j)= T.eigenvalue(j);
             }
           eigenvalues_signal(eigenvalues);
         }
@@ -297,7 +297,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
                             const VectorType&         b,
                             const PreconditionerType& preconditioner)
 {
-  SolverControl::State conv = SolverControl::iterate;
+  SolverControl::State conv= SolverControl::iterate;
 
   LogStream::Prefix prefix("cg");
 
@@ -307,9 +307,9 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   typename VectorMemory<VectorType>::Pointer h_pointer(this->memory);
 
   // define some aliases for simpler access
-  VectorType& g = *g_pointer;
-  VectorType& d = *d_pointer;
-  VectorType& h = *h_pointer;
+  VectorType& g= *g_pointer;
+  VectorType& d= *d_pointer;
+  VectorType& h= *h_pointer;
 
   // Should we build the matrix for eigenvalue computations?
   const bool do_eigenvalues
@@ -321,10 +321,10 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   std::vector<double> diagonal;
   std::vector<double> offdiagonal;
 
-  int    it  = 0;
-  double res = -std::numeric_limits<double>::max();
+  int    it = 0;
+  double res= -std::numeric_limits<double>::max();
 
-  double eigen_beta_alpha = 0;
+  double eigen_beta_alpha= 0;
 
   // resize the vectors, but do not set
   // the values since they'd be overwritten
@@ -345,9 +345,9 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
     }
   else
     g.equ(-1., b);
-  res = g.l2_norm();
+  res= g.l2_norm();
 
-  conv = this->iteration_status(0, res, x);
+  conv= this->iteration_status(0, res, x);
   if(conv != SolverControl::iterate)
     return;
 
@@ -357,12 +357,12 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
 
       d.equ(-1., h);
 
-      gh = g * h;
+      gh= g * h;
     }
   else
     {
       d.equ(-1., g);
-      gh = res * res;
+      gh= res * res;
     }
 
   while(conv == SolverControl::iterate)
@@ -370,16 +370,16 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
       it++;
       A.vmult(h, d);
 
-      double alpha = d * h;
+      double alpha= d * h;
       Assert(alpha != 0., ExcDivideByZero());
-      alpha = gh / alpha;
+      alpha= gh / alpha;
 
       x.add(alpha, d);
-      res = std::sqrt(g.add_and_dot(alpha, h, g));
+      res= std::sqrt(g.add_and_dot(alpha, h, g));
 
       print_vectors(it, x, g, d);
 
-      conv = this->iteration_status(it, res, x);
+      conv= this->iteration_status(it, res, x);
       if(conv != SolverControl::iterate)
         break;
 
@@ -387,17 +387,17 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
         {
           preconditioner.vmult(h, g);
 
-          beta = gh;
+          beta= gh;
           Assert(beta != 0., ExcDivideByZero());
-          gh   = g * h;
-          beta = gh / beta;
+          gh  = g * h;
+          beta= gh / beta;
           d.sadd(beta, -1., h);
         }
       else
         {
-          beta = gh;
-          gh   = res * res;
-          beta = gh / beta;
+          beta= gh;
+          gh  = res * res;
+          beta= gh / beta;
           d.sadd(beta, -1., g);
         }
 
@@ -409,7 +409,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
       if(do_eigenvalues)
         {
           diagonal.push_back(1. / alpha + eigen_beta_alpha);
-          eigen_beta_alpha = beta / alpha;
+          eigen_beta_alpha= beta / alpha;
           offdiagonal.push_back(std::sqrt(beta) / alpha);
         }
       compute_eigs_and_cond(diagonal,

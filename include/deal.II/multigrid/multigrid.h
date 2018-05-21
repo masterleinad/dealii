@@ -169,9 +169,9 @@ public:
             const MGTransferBase<VectorType>&   transfer,
             const MGSmootherBase<VectorType>&   pre_smooth,
             const MGSmootherBase<VectorType>&   post_smooth,
-            const unsigned int                  minlevel = 0,
-            const unsigned int maxlevel = numbers::invalid_unsigned_int,
-            Cycle              cycle    = v_cycle);
+            const unsigned int                  minlevel= 0,
+            const unsigned int maxlevel= numbers::invalid_unsigned_int,
+            Cycle              cycle   = v_cycle);
 
   /**
    * Constructor. <tt>transfer</tt> is an object performing prolongation and
@@ -187,9 +187,9 @@ public:
             const MGTransferBase<VectorType>&   transfer,
             const MGSmootherBase<VectorType>&   pre_smooth,
             const MGSmootherBase<VectorType>&   post_smooth,
-            const unsigned int                  minlevel = 0,
-            const unsigned int maxlevel = numbers::invalid_unsigned_int,
-            Cycle              cycle    = v_cycle);
+            const unsigned int                  minlevel= 0,
+            const unsigned int maxlevel= numbers::invalid_unsigned_int,
+            Cycle              cycle   = v_cycle);
 
   /**
    * Reinit this class according to #minlevel and #maxlevel.
@@ -285,7 +285,7 @@ public:
    * your coarse grid solver!
    */
   void
-  set_minlevel(const unsigned int level, bool relative = false);
+  set_minlevel(const unsigned int level, bool relative= false);
 
   /**
    * Chance #cycle_type used in cycle().
@@ -552,7 +552,7 @@ public:
    * are returned.
    */
   IndexSet
-  locally_owned_range_indices(const unsigned int block = 0) const;
+  locally_owned_range_indices(const unsigned int block= 0) const;
 
   /**
    * Return the partitioning of the domain space of this preconditioner, i.e.,
@@ -561,7 +561,7 @@ public:
    * are returned.
    */
   IndexSet
-  locally_owned_domain_indices(const unsigned int block = 0) const;
+  locally_owned_domain_indices(const unsigned int block= 0) const;
 
   /**
    * Return the MPI communicator object in use with this preconditioner.
@@ -649,9 +649,9 @@ Multigrid<VectorType>::Multigrid(const DoFHandler<dim>&          mg_dof_handler,
   const unsigned int dof_handler_max_level
     = mg_dof_handler.get_triangulation().n_global_levels() - 1;
   if(max_level == numbers::invalid_unsigned_int)
-    maxlevel = dof_handler_max_level;
+    maxlevel= dof_handler_max_level;
   else
-    maxlevel = max_level;
+    maxlevel= max_level;
 
   reinit(minlevel, maxlevel);
 }
@@ -678,9 +678,9 @@ Multigrid<VectorType>::Multigrid(const MGMatrixBase<VectorType>&     matrix,
     debug(0)
 {
   if(max_level == numbers::invalid_unsigned_int)
-    maxlevel = matrix.get_maxlevel();
+    maxlevel= matrix.get_maxlevel();
   else
-    maxlevel = max_level;
+    maxlevel= max_level;
   reinit(min_level, maxlevel);
 }
 
@@ -851,10 +851,10 @@ PreconditionMG<dim, VectorType, TRANSFER>::PreconditionMG(
     transfer(&transfer),
     uses_dof_handler_vector(true)
 {
-  for(unsigned int i = 0; i < dof_handler.size(); ++i)
+  for(unsigned int i= 0; i < dof_handler.size(); ++i)
     {
-      dof_handler_vector[i]     = dof_handler[i];
-      dof_handler_vector_raw[i] = dof_handler[i];
+      dof_handler_vector[i]    = dof_handler[i];
+      dof_handler_vector_raw[i]= dof_handler[i];
     }
 }
 
@@ -906,7 +906,7 @@ PreconditionMG<dim, VectorType, TRANSFER>::get_mpi_communicator() const
 {
   // currently parallel GMG works with distributed Triangulation only,
   // so it should be a safe bet to use it to query MPI communicator:
-  const Triangulation<dim>& tria = dof_handler_vector[0]->get_triangulation();
+  const Triangulation<dim>& tria= dof_handler_vector[0]->get_triangulation();
   const parallel::distributed::Triangulation<dim>* ptria
     = dynamic_cast<const parallel::distributed::Triangulation<dim>*>(&tria);
   Assert(ptria != nullptr, ExcInternalError());

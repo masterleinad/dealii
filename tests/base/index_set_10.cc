@@ -35,7 +35,7 @@ test()
 
   index_set.add_index(5);
 
-  for(unsigned int i = 0; i < index_set.n_elements(); ++i)
+  for(unsigned int i= 0; i < index_set.n_elements(); ++i)
     {
       deallog << index_set.nth_index_in_set(i) << std::endl;
       AssertThrow(index_set.index_within_set(index_set.nth_index_in_set(i))
@@ -44,7 +44,7 @@ test()
     }
   deallog << "OK" << std::endl;
 
-  for(unsigned int i = 0; i < index_set.size(); ++i)
+  for(unsigned int i= 0; i < index_set.size(); ++i)
     if(index_set.is_element(i))
       deallog << i << ' ' << index_set.index_within_set(i) << std::endl;
 }

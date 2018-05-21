@@ -129,8 +129,8 @@ namespace Step53
   AfricaTopography::get_endpoints()
   {
     std::array<std::pair<double, double>, 2> endpoints;
-    endpoints[0] = std::make_pair(-6.983333, 11.966667);
-    endpoints[1] = std::make_pair(25, 35.95);
+    endpoints[0]= std::make_pair(-6.983333, 11.966667);
+    endpoints[1]= std::make_pair(25, 35.95);
     return endpoints;
   }
 
@@ -138,8 +138,8 @@ namespace Step53
   AfricaTopography::n_intervals()
   {
     std::array<unsigned int, 2> endpoints;
-    endpoints[0] = 379;
-    endpoints[1] = 219;
+    endpoints[0]= 379;
+    endpoints[1]= 219;
     return endpoints;
   }
 
@@ -178,7 +178,7 @@ namespace Step53
     in.push(boost::iostreams::basic_gzip_decompressor<>());
     in.push(boost::iostreams::file_source("topography.txt.gz"));
 
-    for(unsigned int line = 0; line < 83600; ++line)
+    for(unsigned int line= 0; line < 83600; ++line)
       {
         try
           {
@@ -232,8 +232,8 @@ namespace Step53
     pull_back_topo(const Point<3>& phi_theta_d) const;
   };
 
-  const double AfricaGeometry::R           = 6378137;
-  const double AfricaGeometry::ellipticity = 8.1819190842622e-2;
+  const double AfricaGeometry::R          = 6378137;
+  const double AfricaGeometry::ellipticity= 8.1819190842622e-2;
 
   // The implementation, as well, is pretty straightforward if you have
   // read the introduction. In particular, both of the pull back and
@@ -277,14 +277,14 @@ namespace Step53
   Point<3>
   AfricaGeometry::push_forward_wgs84(const Point<3>& phi_theta_d) const
   {
-    const double phi   = phi_theta_d[0];
-    const double theta = phi_theta_d[1];
-    const double d     = phi_theta_d[2];
+    const double phi  = phi_theta_d[0];
+    const double theta= phi_theta_d[1];
+    const double d    = phi_theta_d[2];
 
-    const double R_bar = R
-                         / std::sqrt(1
-                                     - (ellipticity * ellipticity
-                                        * std::sin(theta) * std::sin(theta)));
+    const double R_bar= R
+                        / std::sqrt(1
+                                    - (ellipticity * ellipticity
+                                       * std::sin(theta) * std::sin(theta)));
 
     return Point<3>((R_bar + d) * std::cos(phi) * std::cos(theta),
                     (R_bar + d) * std::sin(phi) * std::cos(theta),
@@ -295,29 +295,29 @@ namespace Step53
   Point<3>
   AfricaGeometry::pull_back_wgs84(const Point<3>& x) const
   {
-    const double b     = std::sqrt(R * R * (1 - ellipticity * ellipticity));
-    const double ep    = std::sqrt((R * R - b * b) / (b * b));
-    const double p     = std::sqrt(x(0) * x(0) + x(1) * x(1));
-    const double th    = std::atan2(R * x(2), b * p);
-    const double phi   = std::atan2(x(1), x(0));
-    const double theta = std::atan2(
+    const double b    = std::sqrt(R * R * (1 - ellipticity * ellipticity));
+    const double ep   = std::sqrt((R * R - b * b) / (b * b));
+    const double p    = std::sqrt(x(0) * x(0) + x(1) * x(1));
+    const double th   = std::atan2(R * x(2), b * p);
+    const double phi  = std::atan2(x(1), x(0));
+    const double theta= std::atan2(
       x(2) + ep * ep * b * std::pow(std::sin(th), 3),
       (p - (ellipticity * ellipticity * R * std::pow(std::cos(th), 3))));
     const double R_bar
       = R
         / (std::sqrt(
             1 - ellipticity * ellipticity * std::sin(theta) * std::sin(theta)));
-    const double R_plus_d = p / std::cos(theta);
+    const double R_plus_d= p / std::cos(theta);
 
     Point<3> phi_theta_d;
     if(phi < 0)
-      phi_theta_d[0] = phi + 2 * numbers::PI;
+      phi_theta_d[0]= phi + 2 * numbers::PI;
     else if(phi > 2 * numbers::PI)
-      phi_theta_d[0] = phi - 2 * numbers::PI;
+      phi_theta_d[0]= phi - 2 * numbers::PI;
     else
-      phi_theta_d[0] = phi;
-    phi_theta_d[1] = theta;
-    phi_theta_d[2] = R_plus_d - R_bar;
+      phi_theta_d[0]= phi;
+    phi_theta_d[1]= theta;
+    phi_theta_d[2]= R_plus_d - R_bar;
     return phi_theta_d;
   }
 
@@ -327,9 +327,9 @@ namespace Step53
   Point<3>
   AfricaGeometry::push_forward_topo(const Point<3>& phi_theta_d_hat) const
   {
-    const double   d_hat = phi_theta_d_hat[2];
-    const double   h = topography.value(phi_theta_d_hat[0], phi_theta_d_hat[1]);
-    const double   d = d_hat + (d_hat + 500000) / 500000 * h;
+    const double   d_hat= phi_theta_d_hat[2];
+    const double   h= topography.value(phi_theta_d_hat[0], phi_theta_d_hat[1]);
+    const double   d= d_hat + (d_hat + 500000) / 500000 * h;
     const Point<3> phi_theta_d(phi_theta_d_hat[0], phi_theta_d_hat[1], d);
     return phi_theta_d;
   }
@@ -337,9 +337,9 @@ namespace Step53
   Point<3>
   AfricaGeometry::pull_back_topo(const Point<3>& phi_theta_d) const
   {
-    const double   d     = phi_theta_d[2];
-    const double   h     = topography.value(phi_theta_d[0], phi_theta_d[1]);
-    const double   d_hat = 500000 * (d - h) / (500000 + h);
+    const double   d    = phi_theta_d[2];
+    const double   h    = topography.value(phi_theta_d[0], phi_theta_d[1]);
+    const double   d_hat= 500000 * (d - h) / (500000 + h);
     const Point<3> phi_theta_d_hat(phi_theta_d[0], phi_theta_d[1], d_hat);
     return phi_theta_d_hat;
   }
@@ -382,9 +382,9 @@ namespace Step53
         = {Point<3>(26 * numbers::PI / 180, -10 * numbers::PI / 180, -500000),
            Point<3>(35 * numbers::PI / 180, 5 * numbers::PI / 180, 0)};
       std::vector<unsigned int> subdivisions(3);
-      subdivisions[0] = 1;
-      subdivisions[1] = 2;
-      subdivisions[2] = 1;
+      subdivisions[0]= 1;
+      subdivisions[1]= 2;
+      subdivisions[2]= 1;
       GridGenerator::subdivided_hyper_rectangle(
         triangulation, subdivisions, corner_points[0], corner_points[1], true);
 
@@ -420,13 +420,13 @@ namespace Step53
     // surface of the domain (and this is what the last <code>true</code> argument
     // in the call to GridGenerator::subdivided_hyper_rectangle() above meant: to
     // "color" the boundaries by assigning each boundary a unique boundary indicator).
-    for(unsigned int i = 0; i < 6; ++i)
+    for(unsigned int i= 0; i < 6; ++i)
       {
         for(Triangulation<3>::active_cell_iterator cell
             = triangulation.begin_active();
             cell != triangulation.end();
             ++cell)
-          for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+          for(unsigned int f= 0; f < GeometryInfo<3>::faces_per_cell; ++f)
             if(cell->face(f)->boundary_id() == 5)
               {
                 cell->set_refine_flag();
@@ -441,7 +441,7 @@ namespace Step53
       }
 
     // Having done this all, we can now output the mesh into a file of its own:
-    const std::string filename = "mesh.vtu";
+    const std::string filename= "mesh.vtu";
     std::ofstream     out(filename);
     GridOut           grid_out;
     grid_out.write_vtu(triangulation, out);

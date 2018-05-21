@@ -33,12 +33,12 @@ main()
         v.reinit(3, omit_zeroing_entries);
       };
 
-  const auto filter = mean_value_filter(reinit_vector);
+  const auto filter= mean_value_filter(reinit_vector);
 
   Vector<double> vec(3);
-  vec[0] = 1.;
-  vec[1] = 2.;
-  vec[2] = 3.;
+  vec[0]= 1.;
+  vec[1]= 2.;
+  vec[2]= 3.;
 
   deallog << vec << std::endl;
 

@@ -25,12 +25,12 @@ namespace CUDAWrappers
   /**
    * Define the size of a block when launching a CUDA kernel.
    */
-  constexpr int block_size = 512;
+  constexpr int block_size= 512;
 
   /**
    * Define the size of chunk of data worked on by a thread.
    */
-  constexpr int chunk_size = 8;
+  constexpr int chunk_size= 8;
 } // namespace CUDAWrappers
 
 DEAL_II_NAMESPACE_CLOSE

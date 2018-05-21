@@ -42,16 +42,16 @@ write_dof_data(DoFHandler<dim>& dof_handler)
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs();
 
-  unsigned int n_levels = dof_handler.get_triangulation().n_global_levels();
-  for(unsigned int lvl = 0; lvl < n_levels; ++lvl)
+  unsigned int n_levels= dof_handler.get_triangulation().n_global_levels();
+  for(unsigned int lvl= 0; lvl < n_levels; ++lvl)
     {
       std::vector<IndexSet> dof_index_per_proc
         = dof_handler.locally_owned_mg_dofs_per_processor(lvl);
-      for(unsigned int i = 0; i < dof_index_per_proc.size(); ++i)
+      for(unsigned int i= 0; i < dof_index_per_proc.size(); ++i)
         dof_index_per_proc[i].print(deallog);
 
-      typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(lvl),
-                                              endc = dof_handler.end(lvl);
+      typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin(lvl),
+                                              endc= dof_handler.end(lvl);
       for(; cell != endc; ++cell)
         {
           if(cell->level_subdomain_id() == numbers::artificial_subdomain_id)
@@ -63,7 +63,7 @@ write_dof_data(DoFHandler<dim>& dof_handler)
           deallog << "proc " << Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)
                   << ", "
                   << "cell " << cell->id() << ", mg_dof_indices: ";
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             deallog << local_mg_dof_indices[i] << " ";
           deallog << std::endl;
         }

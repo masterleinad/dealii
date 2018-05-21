@@ -33,12 +33,12 @@
 
 void check_this(Triangulation<3>& tria)
 {
-  Triangulation<3>::active_cell_iterator cell = tria.begin_active();
+  Triangulation<3>::active_cell_iterator cell= tria.begin_active();
   for(; cell != tria.end(); ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
+    for(unsigned int face_no= 0; face_no < GeometryInfo<3>::faces_per_cell;
         ++face_no)
       if(!cell->at_boundary(face_no) && cell->neighbor(face_no)->has_children())
-        for(unsigned int subface_no = 0;
+        for(unsigned int subface_no= 0;
             subface_no < GeometryInfo<3>::max_children_per_face;
             ++subface_no)
           {
@@ -52,7 +52,7 @@ void check_this(Triangulation<3>& tria)
               = cell->neighbor_of_neighbor(face_no);
             const bool orientation_flag
               = (neighbor->face_orientation(neighbor_neighbor) == true);
-            static const unsigned int subface_translation[4] = {0, 2, 1, 3};
+            static const unsigned int subface_translation[4]= {0, 2, 1, 3};
             const unsigned int        neighbor_child_index
               = (GeometryInfo<3>::child_cell_on_face(
                 RefinementCase<3>::isotropic_refinement,
@@ -78,7 +78,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 3; ++r)
+  for(unsigned int r= 0; r < 3; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

@@ -38,13 +38,13 @@ public:
 int
 main()
 {
-  const unsigned int     dim = 2;
+  const unsigned int     dim= 2;
   Point<dim>             origin;
   SphericalManifold<dim> boundary(origin);
   MappingQ<dim>          mapping(2);
   Triangulation<dim>     tria;
-  const double           inner_radius = 1.;
-  const double           outer_radius = 5.;
+  const double           inner_radius= 1.;
+  const double           outer_radius= 5.;
   GridGenerator::hyper_shell(tria, origin, inner_radius, outer_radius, 8);
   tria.set_all_manifold_ids(numbers::flat_manifold_id);
   GridTools::copy_boundary_to_manifold_id(tria);
@@ -59,25 +59,24 @@ main()
   // new center and new radius
   // of the inner circle.
   const Point<dim> n_center(0, -1);
-  const double     n_radius = 0.5;
+  const double     n_radius= 0.5;
 
-  Triangulation<dim>::cell_iterator cell = tria.begin_active(),
-                                    endc = tria.end();
+  Triangulation<dim>::cell_iterator cell= tria.begin_active(), endc= tria.end();
   Triangulation<dim>::face_iterator face;
   for(; cell != endc; ++cell)
     {
       if(cell->at_boundary())
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
           {
-            face = cell->face(face_no);
+            face= cell->face(face_no);
             if(face->at_boundary())
-              for(unsigned int vertex_no = 0;
+              for(unsigned int vertex_no= 0;
                   vertex_no < GeometryInfo<dim>::vertices_per_face;
                   ++vertex_no)
                 {
-                  const Point<dim>& v = face->vertex(vertex_no);
+                  const Point<dim>& v= face->vertex(vertex_no);
                   if(std::fabs(std::sqrt(v.square()) - outer_radius) < 1e-12)
                     {
                       // leave the

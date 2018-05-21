@@ -124,11 +124,11 @@ namespace Threads
   this_thread_id()
   {
 #ifdef SYS_gettid
-    const pid_t this_id = syscall(SYS_gettid);
+    const pid_t this_id= syscall(SYS_gettid);
 #elif defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETPID)
-    const pid_t this_id = getpid();
+    const pid_t this_id= getpid();
 #else
-    const unsigned int this_id = 0;
+    const unsigned int this_id= 0;
 #endif
 
     return static_cast<unsigned int>(this_id);
@@ -216,15 +216,15 @@ namespace Threads
   {
     Assert(end >= begin, ExcInternalError());
 
-    const unsigned int n_elements              = end - begin;
-    const unsigned int n_elements_per_interval = n_elements / n_intervals;
-    const unsigned int residual                = n_elements % n_intervals;
+    const unsigned int n_elements             = end - begin;
+    const unsigned int n_elements_per_interval= n_elements / n_intervals;
+    const unsigned int residual               = n_elements % n_intervals;
 
     std::vector<std::pair<unsigned int, unsigned int>> return_values(
       n_intervals);
 
-    return_values[0].first = begin;
-    for(unsigned int i = 0; i < n_intervals; ++i)
+    return_values[0].first= begin;
+    for(unsigned int i= 0; i < n_intervals; ++i)
       {
         if(i != n_intervals - 1)
           {
@@ -236,10 +236,10 @@ namespace Threads
             // subintervals
             if(i < residual)
               ++return_values[i].second;
-            return_values[i + 1].first = return_values[i].second;
+            return_values[i + 1].first= return_values[i].second;
           }
         else
-          return_values[i].second = end;
+          return_values[i].second= end;
       };
     return return_values;
   }

@@ -31,7 +31,7 @@ template <int dim>
 void
 test()
 {
-  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator= MPI_COMM_WORLD;
   deallog << "dim = " << dim << std::endl;
 
   parallel::distributed::Triangulation<dim> tria(mpi_communicator);
@@ -46,11 +46,11 @@ test()
 
   typedef typename DoFHandler<dim>::active_cell_iterator cell_iterator;
   typedef short                                          DT;
-  short                                                  counter = 0;
+  short                                                  counter= 0;
   GridTools::exchange_cell_data_to_ghosts<DT, DoFHandler<dim>>(
     dofhandler,
     [&](const cell_iterator& cell) {
-      DT value = ++counter;
+      DT value= ++counter;
 
       deallog << "pack " << cell->id() << " " << value << std::endl;
       return value;

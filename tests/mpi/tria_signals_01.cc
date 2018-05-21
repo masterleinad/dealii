@@ -20,14 +20,14 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
-int signal_counter_create                  = 0;
-int signal_counter_pre_refinement          = 0;
-int signal_counter_post_refinement         = 0;
-int signal_counter_pre_coarsening_on_cell  = 0;
-int signal_counter_post_refinement_on_cell = 0;
-int signal_counter_copy                    = 0;
-int signal_counter_clear                   = 0;
-int signal_counter_any_change              = 0;
+int signal_counter_create                 = 0;
+int signal_counter_pre_refinement         = 0;
+int signal_counter_post_refinement        = 0;
+int signal_counter_pre_coarsening_on_cell = 0;
+int signal_counter_post_refinement_on_cell= 0;
+int signal_counter_copy                   = 0;
+int signal_counter_clear                  = 0;
+int signal_counter_any_change             = 0;
 
 std::ofstream logfile;
 
@@ -96,20 +96,20 @@ template <int dim, int spacedim>
 void
 test()
 {
-  signal_counter_create                  = 0;
-  signal_counter_pre_refinement          = 0;
-  signal_counter_post_refinement         = 0;
-  signal_counter_pre_coarsening_on_cell  = 0;
-  signal_counter_post_refinement_on_cell = 0;
-  signal_counter_copy                    = 0;
-  signal_counter_clear                   = 0;
-  signal_counter_any_change              = 0;
+  signal_counter_create                 = 0;
+  signal_counter_pre_refinement         = 0;
+  signal_counter_post_refinement        = 0;
+  signal_counter_pre_coarsening_on_cell = 0;
+  signal_counter_post_refinement_on_cell= 0;
+  signal_counter_copy                   = 0;
+  signal_counter_clear                  = 0;
+  signal_counter_any_change             = 0;
 
   typedef parallel::distributed::Triangulation<dim, spacedim> TriaType;
 
   {
-    const std::string prefix = Utilities::int_to_string(dim, 1) + "d-"
-                               + Utilities::int_to_string(spacedim, 1) + "d";
+    const std::string prefix= Utilities::int_to_string(dim, 1) + "d-"
+                              + Utilities::int_to_string(spacedim, 1) + "d";
     deallog.push(prefix.c_str());
   }
 
@@ -138,8 +138,8 @@ test()
 
   // Test signal on coarsening
   {
-    typename TriaType::active_cell_iterator       cell = tria.begin_active();
-    const typename TriaType::active_cell_iterator endc = tria.end();
+    typename TriaType::active_cell_iterator       cell= tria.begin_active();
+    const typename TriaType::active_cell_iterator endc= tria.end();
 
     for(; cell != endc; ++cell)
       {
@@ -176,20 +176,20 @@ main(int argc, char* argv[])
 
   // parallel::distributed::Triangulation<1, spacedim> is not valid.
   {
-    const int dim      = 2;
-    const int spacedim = 2;
+    const int dim     = 2;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 2;
-    const int spacedim = 3;
+    const int dim     = 2;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 3;
-    const int spacedim = 3;
+    const int dim     = 3;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 

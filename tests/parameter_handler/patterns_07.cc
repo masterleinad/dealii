@@ -29,8 +29,8 @@ main()
   initlog();
 
   std::map<unsigned int, double> a;
-  a[3] = 1.0;
-  a[2] = 3.0;
+  a[3]= 1.0;
+  a[2]= 3.0;
 
   ParameterHandler prm;
   prm.add_parameter("A map", a);

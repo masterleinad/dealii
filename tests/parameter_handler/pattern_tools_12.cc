@@ -28,9 +28,9 @@ main()
 {
   initlog();
 
-  auto a = std::make_tuple(1, std::string("ciao"));
+  auto a= std::make_tuple(1, std::string("ciao"));
 
-  auto s = to_string(a);
+  auto s= to_string(a);
   to_value("2 : mondo", a);
 
   deallog << "From: " << s << " to " << to_string(a) << std::endl;

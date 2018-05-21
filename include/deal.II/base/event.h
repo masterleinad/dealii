@@ -174,7 +174,7 @@ namespace Algorithms
   {
     if(all_true)
       return true;
-    for(std::vector<bool>::const_iterator i = flags.begin(); i != flags.end();
+    for(std::vector<bool>::const_iterator i= flags.begin(); i != flags.end();
         ++i)
       if(*i)
         return true;
@@ -188,9 +188,9 @@ namespace Algorithms
     if(all_true)
       return true;
 
-    const unsigned int n     = flags.size();
-    const unsigned int m     = event.flags.size();
-    const unsigned int n_min = (n < m) ? n : m;
+    const unsigned int n    = flags.size();
+    const unsigned int m    = event.flags.size();
+    const unsigned int n_min= (n < m) ? n : m;
 
     // Now, if all_true set in the
     // other, then all must be true
@@ -205,7 +205,7 @@ namespace Algorithms
         // Test all flags separately
         // and return false if one is
         // not set
-        for(std::vector<bool>::const_iterator i = flags.begin();
+        for(std::vector<bool>::const_iterator i= flags.begin();
             i != flags.end();
             ++i)
           if(!*i)
@@ -216,10 +216,10 @@ namespace Algorithms
 
     // Finally, compare each flag
     // separately
-    for(unsigned int i = 0; i < n_min; ++i)
+    for(unsigned int i= 0; i < n_min; ++i)
       if(event.flags[i] && !flags[i])
         return false;
-    for(unsigned int i = n_min; i < m; ++i)
+    for(unsigned int i= n_min; i < m; ++i)
       if(event.flags[i])
         return false;
     return true;
@@ -228,14 +228,14 @@ namespace Algorithms
   inline Event&
   Event::operator+=(const Event& event)
   {
-    all_true |= event.all_true;
+    all_true|= event.all_true;
     if(all_true)
       return *this;
 
     if(flags.size() < event.flags.size())
       flags.resize(event.flags.size());
-    for(unsigned int i = 0; i < event.flags.size(); ++i)
-      flags[i] = flags[i] || event.flags[i];
+    for(unsigned int i= 0; i < event.flags.size(); ++i)
+      flags[i]= flags[i] || event.flags[i];
 
     return *this;
   }
@@ -246,20 +246,19 @@ namespace Algorithms
     if(!event.any())
       return *this;
 
-    all_true = false;
+    all_true= false;
     if(event.all_true)
       {
-        for(std::vector<bool>::iterator i = flags.begin(); i != flags.end();
-            ++i)
-          *i = false;
+        for(std::vector<bool>::iterator i= flags.begin(); i != flags.end(); ++i)
+          *i= false;
         return *this;
       }
 
     if(flags.size() < event.flags.size())
       flags.resize(event.flags.size());
-    for(unsigned int i = 0; i < event.flags.size(); ++i)
+    for(unsigned int i= 0; i < event.flags.size(); ++i)
       if(event.flags[i])
-        flags[i] = false;
+        flags[i]= false;
 
     return *this;
   }
@@ -271,7 +270,7 @@ namespace Algorithms
     if(all_true)
       os << " ALL";
 
-    for(unsigned int i = 0; i < flags.size(); ++i)
+    for(unsigned int i= 0; i < flags.size(); ++i)
       if(flags[i])
         os << ' ' << names[i];
   }
@@ -280,7 +279,7 @@ namespace Algorithms
   inline void
   Event::print_assigned(OS& os)
   {
-    for(unsigned int i = 0; i < names.size(); ++i)
+    for(unsigned int i= 0; i < names.size(); ++i)
       os << i << '\t' << names[i] << std::endl;
   }
 

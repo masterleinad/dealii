@@ -25,11 +25,11 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set only certain elements of each vector
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for(unsigned int k= 0; k < v.size(); ++k)
     {
-      v(k) = std::complex<double>(k, k);
+      v(k)= std::complex<double>(k, k);
       if(k % 3 == 0)
-        w(k) = std::complex<double>(k + 1., k + 1.);
+        w(k)= std::complex<double>(k + 1., k + 1.);
     }
 
   AssertThrow(!(v == w), ExcInternalError());

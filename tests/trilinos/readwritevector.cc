@@ -27,7 +27,7 @@ void
 test()
 {
   IndexSet     is(8);
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     is.add_range(0, 4);
   if(rank == 1)
@@ -35,9 +35,9 @@ test()
   is.compress();
   TrilinosWrappers::MPI::Vector tril_vector(is);
   Vector<double>                tmp(8);
-  for(unsigned int i = 0; i < 8; ++i)
-    tmp[i] = i;
-  tril_vector = tmp;
+  for(unsigned int i= 0; i < 8; ++i)
+    tmp[i]= i;
+  tril_vector= tmp;
 
   tril_vector.compress(VectorOperation::insert);
 
@@ -57,11 +57,11 @@ test()
   if(rank == 0)
     {
       std::vector<double> comp(4);
-      comp[0] = 0.;
-      comp[1] = 1.;
-      comp[2] = 6.;
-      comp[3] = 7.;
-      for(unsigned int i = 0; i < 4; ++i)
+      comp[0]= 0.;
+      comp[1]= 1.;
+      comp[2]= 6.;
+      comp[3]= 7.;
+      for(unsigned int i= 0; i < 4; ++i)
         AssertThrow(readwrite.local_element(i) == comp[i],
                     ExcMessage("Element not copied correctly"));
     }
@@ -69,11 +69,11 @@ test()
   if(rank == 1)
     {
       std::vector<double> comp(4);
-      comp[0] = 2.;
-      comp[1] = 3.;
-      comp[2] = 4.;
-      comp[3] = 5.;
-      for(unsigned int i = 0; i < 4; ++i)
+      comp[0]= 2.;
+      comp[1]= 3.;
+      comp[2]= 4.;
+      comp[3]= 5.;
+      for(unsigned int i= 0; i < 4; ++i)
         AssertThrow(readwrite.local_element(i) == comp[i],
                     ExcMessage("Element not copied correctly"));
     }
@@ -83,11 +83,11 @@ test()
   if(rank == 0)
     {
       std::vector<double> comp(4);
-      comp[0] = 0.;
-      comp[1] = 2.;
-      comp[2] = 12.;
-      comp[3] = 14.;
-      for(unsigned int i = 0; i < 4; ++i)
+      comp[0]= 0.;
+      comp[1]= 2.;
+      comp[2]= 12.;
+      comp[3]= 14.;
+      for(unsigned int i= 0; i < 4; ++i)
         AssertThrow(readwrite.local_element(i) == comp[i],
                     ExcMessage("Element not copied correctly"));
     }
@@ -95,11 +95,11 @@ test()
   if(rank == 1)
     {
       std::vector<double> comp(4);
-      comp[0] = 4.;
-      comp[1] = 6.;
-      comp[2] = 8.;
-      comp[3] = 10.;
-      for(unsigned int i = 0; i < 4; ++i)
+      comp[0]= 4.;
+      comp[1]= 6.;
+      comp[2]= 8.;
+      comp[3]= 10.;
+      for(unsigned int i= 0; i < 4; ++i)
         AssertThrow(readwrite.local_element(i) == comp[i],
                     ExcMessage("Element not copied correctly"));
     }

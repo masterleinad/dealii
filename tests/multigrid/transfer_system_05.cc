@@ -48,12 +48,12 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   mg_dof_handler.distribute_mg_dofs(fe);
 
   std::vector<unsigned int> block_component(5, 0);
-  block_component[2] = 1;
-  block_component[3] = 1;
-  block_component[4] = 2;
+  block_component[2]= 1;
+  block_component[3]= 1;
+  block_component[4]= 2;
 
   DoFRenumbering::component_wise(mg_dof_handler, block_component);
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
 
   MGTransferSelect<double> transfer;
@@ -74,46 +74,46 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     mg_dof_handler, mg_dofs_per_block, block_component);
 
   deallog << "Global  dofs:";
-  for(unsigned int i = 0; i < dofs_per_block.size(); ++i)
+  for(unsigned int i= 0; i < dofs_per_block.size(); ++i)
     deallog << ' ' << dofs_per_block[i];
   deallog << std::endl;
-  for(unsigned int l = 0; l < mg_dofs_per_block.size(); ++l)
+  for(unsigned int l= 0; l < mg_dofs_per_block.size(); ++l)
     {
       deallog << "Level " << l << " dofs:";
-      for(unsigned int i = 0; i < mg_dofs_per_block[l].size(); ++i)
+      for(unsigned int i= 0; i < mg_dofs_per_block[l].size(); ++i)
         deallog << ' ' << mg_dofs_per_block[l][i];
       deallog << std::endl;
     }
 
   BlockVector<double> u;
   u.reinit(dofs_per_block);
-  for(unsigned int i = 0; i < u.size(); ++i)
-    u(i) = i;
+  for(unsigned int i= 0; i < u.size(); ++i)
+    u(i)= i;
 
   MGLevelObject<Vector<double>> v(0, tr.n_levels() - 1);
-  for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
+  for(unsigned int l= 0; l < tr.n_levels() - 1; ++l)
     v[l].reinit(mg_dofs_per_block[l][2]);
 
   transfer.copy_to_mg(mg_dof_handler, v, u);
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     {
       deallog << "Level " << l << std::endl;
-      for(unsigned int i = 0; i < v[l].size(); ++i)
+      for(unsigned int i= 0; i < v[l].size(); ++i)
         deallog << ' ' << (int) v[l](i);
       deallog << std::endl;
     }
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
-    for(unsigned int i = 0; i < v[l].size(); ++i)
-      v[l](i) = i;
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
+    for(unsigned int i= 0; i < v[l].size(); ++i)
+      v[l](i)= i;
 
-  u = 0;
+  u= 0;
   transfer.copy_from_mg(mg_dof_handler, u, v);
   deallog << "Global" << std::endl;
-  for(unsigned int i = 0; i < u.block(selected_block).size(); ++i)
+  for(unsigned int i= 0; i < u.block(selected_block).size(); ++i)
     deallog << ' ' << (int) u.block(selected_block)(i);
   deallog << std::endl;
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     deallog << ' ' << (int) u(i);
   deallog << std::endl;
 }

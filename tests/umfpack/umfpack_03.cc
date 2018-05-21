@@ -40,7 +40,7 @@
 
 template <int dim>
 void
-test(bool transpose = false)
+test(bool transpose= false)
 {
   deallog << dim << 'd' << std::endl;
 
@@ -76,14 +76,14 @@ test(bool transpose = false)
   // scale lower left part of the matrix by
   // 1/2 and upper right part by 2 to make
   // matrix nonsymmetric
-  for(SparseMatrix<double>::iterator p = B.begin(); p != B.end(); ++p)
+  for(SparseMatrix<double>::iterator p= B.begin(); p != B.end(); ++p)
     if(p->column() < p->row())
-      p->value() = p->value() / 2;
+      p->value()= p->value() / 2;
     else if(p->column() > p->row())
-      p->value() = p->value() * 2;
+      p->value()= p->value() * 2;
 
   // check that we've done it right
-  for(SparseMatrix<double>::iterator p = B.begin(); p != B.end(); ++p)
+  for(SparseMatrix<double>::iterator p= B.begin(); p != B.end(); ++p)
     if(p->column() != p->row())
       AssertThrow(B(p->row(), p->column()) != B(p->column(), p->row()),
                   ExcInternalError());
@@ -91,24 +91,24 @@ test(bool transpose = false)
   // for a number of different solution
   // vectors, make up a matching rhs vector
   // and check what the UMFPACK solver finds
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     {
       Vector<double> solution(dof_handler.n_dofs());
       Vector<double> x(dof_handler.n_dofs());
       Vector<double> b(dof_handler.n_dofs());
 
-      for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
-        solution(j) = j + j * (i + 1) * (i + 1);
+      for(unsigned int j= 0; j < dof_handler.n_dofs(); ++j)
+        solution(j)= j + j * (i + 1) * (i + 1);
 
       if(transpose)
         B.Tvmult(b, solution);
       else
         B.vmult(b, solution);
 
-      x = b;
+      x= b;
       SparseDirectUMFPACK().solve(B, x, transpose);
 
-      x -= solution;
+      x-= solution;
       deallog << "relative norm distance = " << x.l2_norm() / solution.l2_norm()
               << std::endl;
       deallog << "absolute norms = " << x.l2_norm() << ' ' << solution.l2_norm()

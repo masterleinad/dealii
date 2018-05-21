@@ -54,14 +54,14 @@ test()
   // create a parallel matrix where the first
   // process has 10 rows, the second one 20,
   // the third one 30, and so on
-  unsigned int           N = 0;
+  unsigned int           N= 0;
   std::vector<size_type> local_rows_per_process(get_n_mpi_processes());
   std::vector<size_type> start_row(get_n_mpi_processes());
-  for(unsigned int i = 0; i < get_n_mpi_processes(); ++i)
+  for(unsigned int i= 0; i < get_n_mpi_processes(); ++i)
     {
-      N += (i + 1) * 10;
-      local_rows_per_process[i] = (i + 1) * 10;
-      start_row[i] += i * 10;
+      N+= (i + 1) * 10;
+      local_rows_per_process[i]= (i + 1) * 10;
+      start_row[i]+= i * 10;
     }
 
   // here is a sparsity pattern for which we
@@ -69,8 +69,8 @@ test()
   // processes. note that only one of the
   // four blocks uses Inodes
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for(unsigned int i= 0; i < N; ++i)
+    for(unsigned int j= 0; j < N; ++j)
       {
         csp.add(i, i);
         if(i + local_rows_per_process.back() < N)
@@ -101,8 +101,8 @@ test()
   // no write into the exact same matrix
   // entries as have been created by the
   // sparsity pattern above
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < csp.row_length(i); ++j)
+  for(unsigned int i= 0; i < N; ++i)
+    for(unsigned int j= 0; j < csp.row_length(i); ++j)
       m.add(i, csp.column_number(i, j), 1.);
 
   m.compress(VectorOperation::add);

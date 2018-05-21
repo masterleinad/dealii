@@ -31,14 +31,14 @@ main()
   ps.push_back(std_cxx14::make_unique<Patterns::Anything>());
 
   Patterns::Tuple   pattern(ps, ";");
-  const std::string desc = pattern.description();
+  const std::string desc= pattern.description();
 
   // now let the same class re-create
   // a pattern object from the
   // description and verify that the
   // result is the same as what we
   // started out with
-  std::unique_ptr<Patterns::Tuple> pattern2 = Patterns::Tuple::create(desc);
+  std::unique_ptr<Patterns::Tuple> pattern2= Patterns::Tuple::create(desc);
 
   AssertThrow(pattern2 != nullptr, ExcInternalError());
   AssertThrow(desc == pattern2->description(), ExcInternalError());

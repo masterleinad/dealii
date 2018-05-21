@@ -39,29 +39,28 @@ main()
 
   // SparseMatrix:
   {
-    const unsigned int rc = 2;
+    const unsigned int rc= 2;
     SparsityPattern    sparsity_pattern(rc, rc, 0);
     sparsity_pattern.compress();
 
     SparseMatrix<double> A(sparsity_pattern);
     Vector<double>       b(rc);
-    for(unsigned int i = 0; i < rc; ++i)
+    for(unsigned int i= 0; i < rc; ++i)
       {
-        A.diag_element(i) = 5.0;
-        b(i)              = 1.0;
+        A.diag_element(i)= 5.0;
+        b(i)             = 1.0;
       }
 
-    const auto lo_A   = linear_operator(A);
-    const auto lo_A_t = transpose_operator(lo_A);
+    const auto lo_A  = linear_operator(A);
+    const auto lo_A_t= transpose_operator(lo_A);
 
     // build transpose of inverse
     SolverControl                            solver_control_A_1(100, 1.0e-10);
     SolverCG<Vector<double>>                 solver_A_1(solver_control_A_1);
     PreconditionJacobi<SparseMatrix<double>> preconditioner_A_1;
     preconditioner_A_1.initialize(A);
-    const auto lo_A_inv
-      = inverse_operator(lo_A, solver_A_1, preconditioner_A_1);
-    const auto lo_A_inv_t = transpose_operator(lo_A_inv);
+    const auto lo_A_inv= inverse_operator(lo_A, solver_A_1, preconditioner_A_1);
+    const auto lo_A_inv_t= transpose_operator(lo_A_inv);
 
     // build inverse of transpose
     SolverControl                            solver_control_A_2(100, 1.0e-10);
@@ -73,11 +72,11 @@ main()
 
     deallog << "Normal and inverse multiplication operations" << std::endl;
 
-    const Vector<double> x1  = lo_A * b;
-    const Vector<double> x2  = lo_A_t * b;
-    const Vector<double> x3  = lo_A_inv * b;
-    const Vector<double> x4a = lo_A_inv_t * b;
-    const Vector<double> x4b = lo_A_t_inv * b;
+    const Vector<double> x1 = lo_A * b;
+    const Vector<double> x2 = lo_A_t * b;
+    const Vector<double> x3 = lo_A_inv * b;
+    const Vector<double> x4a= lo_A_inv_t * b;
+    const Vector<double> x4b= lo_A_t_inv * b;
 
     //   PRINTME("x1", x1);
     //   PRINTME("x2", x2);
@@ -92,31 +91,31 @@ main()
     SparseMatrix<double> C(sparsity_pattern);
     SparseMatrix<double> D(sparsity_pattern);
 
-    for(unsigned int i = 0; i < rc; ++i)
+    for(unsigned int i= 0; i < rc; ++i)
       {
-        B.diag_element(i) = 4.0;
-        C.diag_element(i) = 4.0; // K = [A,B ; C,D] is symmetric
-        D.diag_element(i) = 3.0;
+        B.diag_element(i)= 4.0;
+        C.diag_element(i)= 4.0; // K = [A,B ; C,D] is symmetric
+        D.diag_element(i)= 3.0;
       }
 
-    const auto lo_B   = linear_operator(B);
-    const auto lo_C   = linear_operator(C);
-    const auto lo_D   = linear_operator(D);
-    const auto lo_B_t = transpose_operator(lo_B);
-    const auto lo_C_t = transpose_operator(lo_C);
-    const auto lo_D_t = transpose_operator(lo_D);
+    const auto lo_B  = linear_operator(B);
+    const auto lo_C  = linear_operator(C);
+    const auto lo_D  = linear_operator(D);
+    const auto lo_B_t= transpose_operator(lo_B);
+    const auto lo_C_t= transpose_operator(lo_C);
+    const auto lo_D_t= transpose_operator(lo_D);
 
     deallog << "Single packaged operation" << std::endl;
     {
-      const auto S = lo_D - lo_C * lo_A_inv * lo_B;
+      const auto S= lo_D - lo_C * lo_A_inv * lo_B;
       const auto S_t_1
         = lo_D_t - lo_B_t * lo_A_inv_t * lo_C_t; // using transpose of inverse
       const auto S_t_2
         = lo_D_t - lo_B_t * lo_A_t_inv * lo_C_t; // using inverse of transpose
 
-      const Vector<double> x5  = S * b;
-      const Vector<double> x6a = S_t_1 * b;
-      const Vector<double> x6b = S_t_2 * b;
+      const Vector<double> x5 = S * b;
+      const Vector<double> x6a= S_t_1 * b;
+      const Vector<double> x6b= S_t_2 * b;
 
       deallog << "x5==x6a : " << (x5 == x6a)
               << std::endl; // using transpose of inverse
@@ -129,19 +128,19 @@ main()
 
     deallog << "Manual operations" << std::endl;
     {
-      const Vector<double> x5a = lo_B * b;
-      const Vector<double> x5b = lo_A_inv * x5a;
-      const Vector<double> x5c = lo_C * x5b;
-      const Vector<double> x5d = lo_D * b - x5c;
-      const Vector<double> x6a = lo_C_t * b;
+      const Vector<double> x5a= lo_B * b;
+      const Vector<double> x5b= lo_A_inv * x5a;
+      const Vector<double> x5c= lo_C * x5b;
+      const Vector<double> x5d= lo_D * b - x5c;
+      const Vector<double> x6a= lo_C_t * b;
       const Vector<double> x6b_1
         = lo_A_inv_t * x6a; // using transpose of inverse
-      const Vector<double> x6c_1 = lo_B_t * x6b_1;
-      const Vector<double> x6d_1 = lo_D_t * b - x6c_1;
+      const Vector<double> x6c_1= lo_B_t * x6b_1;
+      const Vector<double> x6d_1= lo_D_t * b - x6c_1;
       const Vector<double> x6b_2
         = lo_A_t_inv * x6a; // using inverse of transpose
-      const Vector<double> x6c_2 = lo_B_t * x6b_2;
-      const Vector<double> x6d_2 = lo_D_t * b - x6c_2;
+      const Vector<double> x6c_2= lo_B_t * x6b_2;
+      const Vector<double> x6d_2= lo_D_t * b - x6c_2;
 
       deallog << "x5a==x6a : " << (x5a == x6a) << std::endl;
       deallog << "x5b==x6b_1 : " << (x5b == x6b_1)

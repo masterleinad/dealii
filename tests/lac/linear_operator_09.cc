@@ -44,24 +44,24 @@ main(int argc, char* argv[])
   deallog << std::setprecision(10);
 
   {
-    unsigned int np = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+    unsigned int np= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
     if(4 % np == 0 && np <= 4)
       {
         PETScWrappers::MPI::SparseMatrix a(
           MPI_COMM_WORLD, 4, 4, 4 / np, 4 / np, 1);
-        for(unsigned int i = 0; i < 4; ++i)
-          for(unsigned int j = 0; j < 4; ++j)
+        for(unsigned int i= 0; i < 4; ++i)
+          for(unsigned int j= 0; j < 4; ++j)
             a.add(i, i, 1);
         a.compress(VectorOperation::add);
-        auto op_a = linear_operator<PETScWrappers::MPI::Vector>(a);
+        auto op_a= linear_operator<PETScWrappers::MPI::Vector>(a);
 
         PETScWrappers::MPI::Vector u, v;
         op_a.reinit_domain_vector(u, true);
         op_a.reinit_range_vector(v, true);
         for(auto i : u.locally_owned_elements())
-          u[i] = 1;
+          u[i]= 1;
         for(auto i : v.locally_owned_elements())
-          v[i] = 1;
+          v[i]= 1;
 
         op_a.vmult(v, u);
       }
@@ -70,7 +70,7 @@ main(int argc, char* argv[])
 
   {
     PETScWrappers::MPI::BlockSparseMatrix a;
-    auto op_a = linear_operator<PETScWrappers::MPI::BlockVector>(a);
+    auto op_a= linear_operator<PETScWrappers::MPI::BlockVector>(a);
     deallog << "BlockSparseMatrix MPI -> OK" << std::endl;
   }
 

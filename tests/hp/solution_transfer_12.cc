@@ -51,11 +51,11 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double f = 0.25 + 2 * p[0];
+    double f= 0.25 + 2 * p[0];
     if(dim > 1)
-      f += 0.772 * p[1];
+      f+= 0.772 * p[1];
     if(dim > 2)
-      f -= 3.112 * p[2];
+      f-= 3.112 * p[2];
     return f;
   };
 };
@@ -68,9 +68,9 @@ transfer(std::ostream& out)
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
-  const unsigned int    max_degree = 6 - dim;
+  const unsigned int    max_degree= 6 - dim;
   hp::FECollection<dim> fe_q;
-  for(unsigned int deg = 1; deg <= max_degree; ++deg)
+  for(unsigned int deg= 1; deg <= max_degree; ++deg)
     {
       fe_q.push_back(FE_Q_Hierarchical<dim>(deg));
     }
@@ -79,8 +79,8 @@ transfer(std::ostream& out)
   MappingQGeneric<dim> mapping(1);
 
   // refine a few cells
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   ++cell;
   ++cell;
   for(; cell != endc; ++cell)
@@ -89,11 +89,11 @@ transfer(std::ostream& out)
   tria.execute_coarsening_and_refinement();
 
   // randomly assign FE orders
-  unsigned int counter = 0;
+  unsigned int counter= 0;
   {
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
-      endc = q_dof_handler.end();
+      endc= q_dof_handler.end();
     for(; cell != endc; ++cell, ++counter)
       {
         if(counter < 15)
@@ -114,7 +114,7 @@ transfer(std::ostream& out)
   // which correspond to vertices and assign a value of shape function there
   // while keeping other modes zero.
   {
-    q_solution = 0.;
+    q_solution= 0.;
 
     hp::QCollection<dim> quad;
     quad.push_back(QTrapez<dim>());
@@ -123,11 +123,11 @@ transfer(std::ostream& out)
     std::vector<types::global_dof_index>               local_dof_indices;
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
-      endc = q_dof_handler.end();
+      endc= q_dof_handler.end();
     for(; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
-        const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
+        const FEValues<dim>& fe_val= hp_fe_val.get_present_fe_values();
         local_dof_indices.resize(fe_val.dofs_per_cell);
 
         cell->get_dof_indices(local_dof_indices);
@@ -135,7 +135,7 @@ transfer(std::ostream& out)
         Assert(local_dof_indices.size() >= fe_val.n_quadrature_points,
                ExcInternalError());
 
-        for(unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
+        for(unsigned int q= 0; q < fe_val.n_quadrature_points; ++q)
           {
             q_solution[local_dof_indices[q]]
               = func.value(fe_val.quadrature_point(q), 0);
@@ -150,9 +150,9 @@ transfer(std::ostream& out)
   // refinement
   q_soltrans.clear();
 
-  counter = 0;
-  cell    = tria.begin_active();
-  endc    = tria.end();
+  counter= 0;
+  cell   = tria.begin_active();
+  endc   = tria.end();
   for(; cell != endc; ++cell, ++counter)
     {
       if(counter > 120)
@@ -163,16 +163,16 @@ transfer(std::ostream& out)
         cell->set_coarsen_flag();
     }
 
-  Vector<double> q_old_solution = q_solution;
+  Vector<double> q_old_solution= q_solution;
   tria.prepare_coarsening_and_refinement();
   q_soltrans.prepare_for_coarsening_and_refinement(q_old_solution);
   tria.execute_coarsening_and_refinement();
 
-  counter = 0;
+  counter= 0;
   {
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
-      endc = q_dof_handler.end();
+      endc= q_dof_handler.end();
     for(; cell != endc; ++cell, ++counter)
       {
         if(counter > 20 && counter < 90)
@@ -189,20 +189,20 @@ transfer(std::ostream& out)
   // check correctness by comparing the values
   // on points of QGauss of order 2.
   {
-    double                     error = 0;
+    double                     error= 0;
     const hp::QCollection<dim> quad(QGauss<dim>(2));
     hp::FEValues<dim>          hp_fe_val(
       fe_q, quad, update_values | update_quadrature_points);
     std::vector<double>                                vals(quad[0].size());
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
-      endc = q_dof_handler.end();
+      endc= q_dof_handler.end();
     for(; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
-        const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
+        const FEValues<dim>& fe_val= hp_fe_val.get_present_fe_values();
         fe_val.get_function_values(q_solution, vals);
-        for(unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
+        for(unsigned int q= 0; q < fe_val.n_quadrature_points; ++q)
           {
             error
               += std::fabs(func.value(fe_val.quadrature_point(q), 0) - vals[q]);

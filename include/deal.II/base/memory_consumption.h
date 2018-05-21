@@ -315,12 +315,12 @@ namespace MemoryConsumption
       }
     else
       {
-        std::size_t mem = sizeof(std::vector<T>);
-        for(unsigned int i = 0; i < v.size(); ++i)
+        std::size_t mem= sizeof(std::vector<T>);
+        for(unsigned int i= 0; i < v.size(); ++i)
           {
-            mem += memory_consumption(v[i]);
+            mem+= memory_consumption(v[i]);
           }
-        mem += (v.capacity() - v.size()) * sizeof(T);
+        mem+= (v.capacity() - v.size()) * sizeof(T);
         return mem;
       }
   }
@@ -336,9 +336,9 @@ namespace MemoryConsumption
       }
     else
       {
-        std::size_t mem = 0;
-        for(std::size_t i = 0; i != N; ++i)
-          mem += memory_consumption(v[i]);
+        std::size_t mem= 0;
+        for(std::size_t i= 0; i != N; ++i)
+          mem+= memory_consumption(v[i]);
         return mem;
       }
   }
@@ -347,9 +347,9 @@ namespace MemoryConsumption
   std::size_t
   memory_consumption(const T (&v)[N])
   {
-    std::size_t mem = 0;
-    for(unsigned int i = 0; i < N; ++i)
-      mem += memory_consumption(v[i]);
+    std::size_t mem= 0;
+    for(unsigned int i= 0; i < N; ++i)
+      mem+= memory_consumption(v[i]);
     return mem;
   }
 

@@ -42,19 +42,19 @@ using namespace dealii;
 template <int dim, int spacedim>
 void
 check(const FiniteElement<dim, spacedim>& fe,
-      const bool                          isotropic_only = false,
-      unsigned int                        nested_size    = 0)
+      const bool                          isotropic_only= false,
+      unsigned int                        nested_size   = 0)
 {
   deallog << fe.get_name() << std::endl;
-  const unsigned int dpc = fe.dofs_per_cell;
+  const unsigned int dpc= fe.dofs_per_cell;
 
   if(nested_size == 0)
-    nested_size = dpc;
+    nested_size= dpc;
 
   // loop over all possible refinement cases
-  unsigned int ref_case = (isotropic_only) ?
-                            RefinementCase<dim>::isotropic_refinement :
-                            RefinementCase<dim>::cut_x;
+  unsigned int ref_case= (isotropic_only) ?
+                           RefinementCase<dim>::isotropic_refinement :
+                           RefinementCase<dim>::cut_x;
   for(; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
     {
       deallog << "RefinementCase " << ref_case << std::endl;
@@ -67,7 +67,7 @@ check(const FiniteElement<dim, spacedim>& fe,
       DoFHandler<dim, spacedim> dh(tr);
       dh.distribute_dofs(fe);
 
-      const unsigned int n_dofs = dh.n_dofs();
+      const unsigned int n_dofs= dh.n_dofs();
 
       FullMatrix<double> restriction_global(dpc, n_dofs);
       FullMatrix<double> prolongation_global(n_dofs, dpc);
@@ -76,28 +76,28 @@ check(const FiniteElement<dim, spacedim>& fe,
 
       //now create the matrix coarse to fine (prolongation)
       //and fine to coarse (restriction) with respect to all dofs
-      unsigned int child_no = 0;
+      unsigned int child_no= 0;
       typename dealii::DoFHandler<dim, spacedim>::active_cell_iterator cell
         = dh.begin_active();
       for(; cell != dh.end(); ++cell, ++child_no)
         {
-          FullMatrix<double> restriction_local = fe.get_restriction_matrix(
+          FullMatrix<double> restriction_local= fe.get_restriction_matrix(
             child_no, RefinementCase<dim>(ref_case));
-          FullMatrix<double> prolongation_local = fe.get_prolongation_matrix(
+          FullMatrix<double> prolongation_local= fe.get_prolongation_matrix(
             child_no, RefinementCase<dim>(ref_case));
 
           cell->get_dof_indices(ldi);
 
-          for(unsigned int j = 0; j < dpc; ++j)
+          for(unsigned int j= 0; j < dpc; ++j)
             {
-              const bool add = fe.restriction_is_additive(j);
-              for(unsigned int i = 0; i < dpc; ++i)
+              const bool add= fe.restriction_is_additive(j);
+              for(unsigned int i= 0; i < dpc; ++i)
                 {
-                  prolongation_global(ldi[i], j) = prolongation_local(i, j);
+                  prolongation_global(ldi[i], j)= prolongation_local(i, j);
                   if(add)
-                    restriction_global(j, ldi[i]) += restriction_local(j, i);
+                    restriction_global(j, ldi[i])+= restriction_local(j, i);
                   else if(restriction_local(j, i) != 0)
-                    restriction_global(j, ldi[i]) = restriction_local(j, i);
+                    restriction_global(j, ldi[i])= restriction_local(j, i);
                 }
             }
         }
@@ -135,15 +135,15 @@ check(const FiniteElement<dim, spacedim>& fe,
       //     }
       //     deallog<<std::endl;
 
-      bool is_identity = true;
-      for(unsigned int i = 0; i < nested_size; ++i)
-        for(unsigned int j = 0; j < nested_size; ++j)
+      bool is_identity= true;
+      for(unsigned int i= 0; i < nested_size; ++i)
+        for(unsigned int j= 0; j < nested_size; ++j)
           {
-            const double expected = (i == j) ? 1. : 0.;
+            const double expected= (i == j) ? 1. : 0.;
             if(std::fabs(result(i, j) - expected) > 1.e-12)
               {
                 deallog << i << " " << j << " " << result(i, j) << std::endl;
-                is_identity = false;
+                is_identity= false;
               }
           }
 
@@ -157,7 +157,7 @@ main()
 {
   initlog();
   deallog.depth_file(1);
-  for(unsigned int i = 1; i <= 3; ++i)
+  for(unsigned int i= 1; i <= 3; ++i)
     {
       {
         FE_Q<2> fe(i);
@@ -177,12 +177,12 @@ main()
       }
       {
         FE_Q_Bubbles<2>    fe(i);
-        const unsigned int n_q_dofs = FE_Q<2>(i).dofs_per_cell;
+        const unsigned int n_q_dofs= FE_Q<2>(i).dofs_per_cell;
         check(fe, false, n_q_dofs);
       }
       {
         FE_Q_Bubbles<3>    fe(i);
-        const unsigned int n_q_dofs = FE_Q<3>(i).dofs_per_cell;
+        const unsigned int n_q_dofs= FE_Q<3>(i).dofs_per_cell;
         check(fe, false, n_q_dofs);
       }
     }

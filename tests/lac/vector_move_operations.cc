@@ -31,23 +31,23 @@ main()
 
   {
     Vector<double> u(10);
-    for(unsigned int i = 0; i < u.size(); ++i)
-      u[i] = (double) (i + 1);
+    for(unsigned int i= 0; i < u.size(); ++i)
+      u[i]= (double) (i + 1);
 
     deallog << "vector:          " << u;
 
     Vector<double> v;
-    v = u;
+    v= u;
     deallog << "copy assignment: " << v;
     deallog << "old object:      " << u;
 
-    v = std::move(u);
+    v= std::move(u);
     deallog << "move assignment: " << v;
     deallog << "old object size: " << u.size() << std::endl;
 
     // and swap again with different sizes
     u.reinit(0);
-    u = std::move(v);
+    u= std::move(v);
     deallog << "move assignment: " << u;
     deallog << "old object size: " << v.size() << std::endl;
   }

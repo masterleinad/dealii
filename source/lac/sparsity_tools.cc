@@ -70,8 +70,8 @@ namespace SparsityTools
       // simple, since METIS wants exactly our
       // compressed row storage format. we only
       // have to set up a few auxiliary arrays
-      idx_t n    = static_cast<signed int>(sparsity_pattern.n_rows()),
-            ncon = 1, // number of balancing constraints (should be >0)
+      idx_t n   = static_cast<signed int>(sparsity_pattern.n_rows()),
+            ncon= 1, // number of balancing constraints (should be >0)
         nparts
         = static_cast<int>(n_partitions), // number of subdomains to create
         dummy;                            // the numbers of edges cut by the
@@ -82,7 +82,7 @@ namespace SparsityTools
       // and complain with a message (but won't return an error code!):
       // ***Cannot bisect a graph with 0 vertices!
       // ***You are trying to partition a graph into too many parts!
-      nparts = std::min(n, nparts);
+      nparts= std::min(n, nparts);
 
       // use default options for METIS
       idx_t options[METIS_NOPTIONS];
@@ -94,10 +94,10 @@ namespace SparsityTools
       int_rowstart.reserve(sparsity_pattern.n_rows() + 1);
       std::vector<idx_t> int_colnums;
       int_colnums.reserve(sparsity_pattern.n_nonzero_elements());
-      for(SparsityPattern::size_type row = 0; row < sparsity_pattern.n_rows();
+      for(SparsityPattern::size_type row= 0; row < sparsity_pattern.n_rows();
           ++row)
         {
-          for(SparsityPattern::iterator col = sparsity_pattern.begin(row);
+          for(SparsityPattern::iterator col= sparsity_pattern.begin(row);
               col < sparsity_pattern.end(row);
               ++col)
             int_colnums.push_back(col->column());
@@ -129,35 +129,35 @@ namespace SparsityTools
 
       // Use recursive if the number of partitions is less than or equal to 8
       if(nparts <= 8)
-        ierr = METIS_PartGraphRecursive(&n,
-                                        &ncon,
-                                        int_rowstart.data(),
-                                        int_colnums.data(),
-                                        p_int_cell_weights,
-                                        nullptr,
-                                        nullptr,
-                                        &nparts,
-                                        nullptr,
-                                        nullptr,
-                                        options,
-                                        &dummy,
-                                        int_partition_indices.data());
+        ierr= METIS_PartGraphRecursive(&n,
+                                       &ncon,
+                                       int_rowstart.data(),
+                                       int_colnums.data(),
+                                       p_int_cell_weights,
+                                       nullptr,
+                                       nullptr,
+                                       &nparts,
+                                       nullptr,
+                                       nullptr,
+                                       options,
+                                       &dummy,
+                                       int_partition_indices.data());
 
       // Otherwise use kway
       else
-        ierr = METIS_PartGraphKway(&n,
-                                   &ncon,
-                                   int_rowstart.data(),
-                                   int_colnums.data(),
-                                   p_int_cell_weights,
-                                   nullptr,
-                                   nullptr,
-                                   &nparts,
-                                   nullptr,
-                                   nullptr,
-                                   options,
-                                   &dummy,
-                                   int_partition_indices.data());
+        ierr= METIS_PartGraphKway(&n,
+                                  &ncon,
+                                  int_rowstart.data(),
+                                  int_colnums.data(),
+                                  p_int_cell_weights,
+                                  nullptr,
+                                  nullptr,
+                                  &nparts,
+                                  nullptr,
+                                  nullptr,
+                                  options,
+                                  &dummy,
+                                  int_partition_indices.data());
 
       // If metis returns normally, an error code METIS_OK=1 is returned from
       // the above functions (see metish.h)
@@ -176,9 +176,9 @@ namespace SparsityTools
     int
     get_number_of_objects(void* data, int* ierr)
     {
-      SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
+      SparsityPattern* graph= reinterpret_cast<SparsityPattern*>(data);
 
-      *ierr = ZOLTAN_OK;
+      *ierr= ZOLTAN_OK;
 
       return graph->n_rows();
     }
@@ -193,19 +193,19 @@ namespace SparsityTools
                     float* /*obj_wgts*/,
                     int* ierr)
     {
-      SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
-      *ierr                  = ZOLTAN_OK;
+      SparsityPattern* graph= reinterpret_cast<SparsityPattern*>(data);
+      *ierr                 = ZOLTAN_OK;
 
       Assert(globalID != nullptr, ExcInternalError());
       Assert(localID != nullptr, ExcInternalError());
 
       //set global degrees of freedom
-      auto n_dofs = graph->n_rows();
+      auto n_dofs= graph->n_rows();
 
-      for(unsigned int i = 0; i < n_dofs; i++)
+      for(unsigned int i= 0; i < n_dofs; i++)
         {
-          globalID[i] = i;
-          localID[i]  = i; //Same as global ids.
+          globalID[i]= i;
+          localID[i] = i; //Same as global ids.
         }
     }
 
@@ -219,18 +219,18 @@ namespace SparsityTools
                        int* numEdges,
                        int* ierr)
     {
-      SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
+      SparsityPattern* graph= reinterpret_cast<SparsityPattern*>(data);
 
-      *ierr = ZOLTAN_OK;
+      *ierr= ZOLTAN_OK;
 
       Assert(numEdges != nullptr, ExcInternalError());
 
-      for(int i = 0; i < num_obj; ++i)
+      for(int i= 0; i < num_obj; ++i)
         {
           if(graph->exists(i, i)) //Check if diagonal element is present
-            numEdges[i] = graph->row_length(globalID[i]) - 1;
+            numEdges[i]= graph->row_length(globalID[i]) - 1;
           else
-            numEdges[i] = graph->row_length(globalID[i]);
+            numEdges[i]= graph->row_length(globalID[i]);
         }
     }
 
@@ -248,19 +248,19 @@ namespace SparsityTools
                   float* /*ewgts*/,
                   int* ierr)
     {
-      SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
-      *ierr                  = ZOLTAN_OK;
+      SparsityPattern* graph= reinterpret_cast<SparsityPattern*>(data);
+      *ierr                 = ZOLTAN_OK;
 
-      ZOLTAN_ID_PTR nextNborGID  = nborGID;
-      int*          nextNborProc = nborProc;
+      ZOLTAN_ID_PTR nextNborGID = nborGID;
+      int*          nextNborProc= nborProc;
 
       //Loop through rows corresponding to indices in globalID implicitly
-      for(SparsityPattern::size_type i = 0;
+      for(SparsityPattern::size_type i= 0;
           i < static_cast<SparsityPattern::size_type>(num_obj);
           ++i)
         {
           //Loop through each column to find neighbours
-          for(SparsityPattern::iterator col = graph->begin(i);
+          for(SparsityPattern::iterator col= graph->begin(i);
               col < graph->end(i);
               ++col)
             //Ignore diagonal entries. Not needed for partitioning.
@@ -269,8 +269,8 @@ namespace SparsityTools
                 Assert(nextNborGID != nullptr, ExcInternalError());
                 Assert(nextNborProc != nullptr, ExcInternalError());
 
-                *nextNborGID++  = col->column();
-                *nextNborProc++ = 0; //All the vertices on processor 0
+                *nextNborGID++ = col->column();
+                *nextNborProc++= 0; //All the vertices on processor 0
               }
         }
     }
@@ -299,8 +299,7 @@ namespace SparsityTools
       (void) cell_weights;
 
       //MPI environment must have been initialized by this point.
-      std::unique_ptr<Zoltan> zz
-        = std_cxx14::make_unique<Zoltan>(MPI_COMM_SELF);
+      std::unique_ptr<Zoltan> zz= std_cxx14::make_unique<Zoltan>(MPI_COMM_SELF);
 
       //General parameters
       // DEBUG_LEVEL call must precede the call to LB_METHOD
@@ -336,34 +335,34 @@ namespace SparsityTools
       zz->Set_Edge_List_Multi_Fn(get_edge_list, &graph);
 
       //Variables needed by partition function
-      int           changes           = 0;
-      int           num_gid_entries   = 1;
-      int           num_lid_entries   = 1;
-      int           num_import        = 0;
-      ZOLTAN_ID_PTR import_global_ids = nullptr;
-      ZOLTAN_ID_PTR import_local_ids  = nullptr;
-      int*          import_procs      = nullptr;
-      int*          import_to_part    = nullptr;
-      int           num_export        = 0;
-      ZOLTAN_ID_PTR export_global_ids = nullptr;
-      ZOLTAN_ID_PTR export_local_ids  = nullptr;
-      int*          export_procs      = nullptr;
-      int*          export_to_part    = nullptr;
+      int           changes          = 0;
+      int           num_gid_entries  = 1;
+      int           num_lid_entries  = 1;
+      int           num_import       = 0;
+      ZOLTAN_ID_PTR import_global_ids= nullptr;
+      ZOLTAN_ID_PTR import_local_ids = nullptr;
+      int*          import_procs     = nullptr;
+      int*          import_to_part   = nullptr;
+      int           num_export       = 0;
+      ZOLTAN_ID_PTR export_global_ids= nullptr;
+      ZOLTAN_ID_PTR export_local_ids = nullptr;
+      int*          export_procs     = nullptr;
+      int*          export_to_part   = nullptr;
 
       //call partitioner
-      const int rc = zz->LB_Partition(changes,
-                                      num_gid_entries,
-                                      num_lid_entries,
-                                      num_import,
-                                      import_global_ids,
-                                      import_local_ids,
-                                      import_procs,
-                                      import_to_part,
-                                      num_export,
-                                      export_global_ids,
-                                      export_local_ids,
-                                      export_procs,
-                                      export_to_part);
+      const int rc= zz->LB_Partition(changes,
+                                     num_gid_entries,
+                                     num_lid_entries,
+                                     num_import,
+                                     import_global_ids,
+                                     import_local_ids,
+                                     import_procs,
+                                     import_to_part,
+                                     num_export,
+                                     export_global_ids,
+                                     export_local_ids,
+                                     export_procs,
+                                     export_to_part);
       (void) rc;
 
       //check for error code in partitioner
@@ -374,8 +373,8 @@ namespace SparsityTools
       std::fill(partition_indices.begin(), partition_indices.end(), 0);
 
       //copy from export_to_part to partition_indices, whose part_ids != 0.
-      for(int i = 0; i < num_export; i++)
-        partition_indices[export_local_ids[i]] = export_to_part[i];
+      for(int i= 0; i < num_export; i++)
+        partition_indices[export_local_ids[i]]= export_to_part[i];
 #endif
     }
   } // namespace
@@ -443,7 +442,7 @@ namespace SparsityTools
     return 0;
 #else
     //coloring algorithm is run in serial by each processor.
-    std::unique_ptr<Zoltan> zz = std_cxx14::make_unique<Zoltan>(MPI_COMM_SELF);
+    std::unique_ptr<Zoltan> zz= std_cxx14::make_unique<Zoltan>(MPI_COMM_SELF);
 
     //Coloring parameters
     // DEBUG_LEVEL must precede all other calls
@@ -465,19 +464,19 @@ namespace SparsityTools
     zz->Set_Edge_List_Multi_Fn(get_edge_list, &graph);
 
     //Variables needed by coloring function
-    int num_gid_entries = 1;
-    const int num_objects = graph.n_rows();
+    int num_gid_entries= 1;
+    const int num_objects= graph.n_rows();
 
     //Preallocate input variables. Element type fixed by ZOLTAN.
     std::vector<ZOLTAN_ID_TYPE> global_ids(num_objects);
     std::vector<int> color_exp(num_objects);
 
     //Set ids for which coloring needs to be done
-    for(int i = 0; i < num_objects; i++)
-      global_ids[i] = i;
+    for(int i= 0; i < num_objects; i++)
+      global_ids[i]= i;
 
     //Call ZOLTAN coloring algorithm
-    int rc = zz->Color(
+    int rc= zz->Color(
       num_gid_entries, num_objects, global_ids.data(), color_exp.data());
 
     (void) rc;
@@ -511,16 +510,16 @@ namespace SparsityTools
     {
       DynamicSparsityPattern::size_type starting_point
         = numbers::invalid_size_type;
-      DynamicSparsityPattern::size_type min_coordination = sparsity.n_rows();
-      for(DynamicSparsityPattern::size_type row = 0; row < sparsity.n_rows();
+      DynamicSparsityPattern::size_type min_coordination= sparsity.n_rows();
+      for(DynamicSparsityPattern::size_type row= 0; row < sparsity.n_rows();
           ++row)
         // look over all as-yet unnumbered indices
         if(new_indices[row] == numbers::invalid_size_type)
           {
             if(sparsity.row_length(row) < min_coordination)
               {
-                min_coordination = sparsity.row_length(row);
-                starting_point   = row;
+                min_coordination= sparsity.row_length(row);
+                starting_point  = row;
               }
           }
 
@@ -533,11 +532,11 @@ namespace SparsityTools
       // starting point, e.g. the first unnumbered one
       if(starting_point == numbers::invalid_size_type)
         {
-          for(DynamicSparsityPattern::size_type i = 0; i < new_indices.size();
+          for(DynamicSparsityPattern::size_type i= 0; i < new_indices.size();
               ++i)
             if(new_indices[i] == numbers::invalid_size_type)
               {
-                starting_point = i;
+                starting_point= i;
                 break;
               }
 
@@ -566,7 +565,7 @@ namespace SparsityTools
       sparsity.row_index_set().size() == 0
         || sparsity.row_index_set().size() == sparsity.n_rows(),
       ExcMessage("Only valid for sparsity patterns which store all rows."));
-    for(SparsityPattern::size_type i = 0; i < starting_indices.size(); ++i)
+    for(SparsityPattern::size_type i= 0; i < starting_indices.size(); ++i)
       Assert(starting_indices[i] < sparsity.n_rows(),
              ExcMessage("Invalid starting index: All starting indices need "
                         "to be between zero and the number of rows in the "
@@ -587,12 +586,12 @@ namespace SparsityTools
         internal::find_unnumbered_starting_index(sparsity, new_indices));
 
     // store next free dof index
-    DynamicSparsityPattern::size_type next_free_number = 0;
+    DynamicSparsityPattern::size_type next_free_number= 0;
 
     // enumerate the first round dofs
-    for(DynamicSparsityPattern::size_type i = 0; i != last_round_dofs.size();
+    for(DynamicSparsityPattern::size_type i= 0; i != last_round_dofs.size();
         ++i)
-      new_indices[last_round_dofs[i]] = next_free_number++;
+      new_indices[last_round_dofs[i]]= next_free_number++;
 
     // now do as many steps as needed to renumber all dofs
     while(true)
@@ -601,7 +600,7 @@ namespace SparsityTools
         std::vector<DynamicSparsityPattern::size_type> next_round_dofs;
 
         // find all neighbors of the dofs numbered in the last round
-        for(DynamicSparsityPattern::size_type i = 0; i < last_round_dofs.size();
+        for(DynamicSparsityPattern::size_type i= 0; i < last_round_dofs.size();
             ++i)
           for(DynamicSparsityPattern::iterator j
               = sparsity.begin(last_round_dofs[i]);
@@ -614,12 +613,11 @@ namespace SparsityTools
 
         // delete multiple entries
         std::vector<DynamicSparsityPattern::size_type>::iterator end_sorted;
-        end_sorted
-          = std::unique(next_round_dofs.begin(), next_round_dofs.end());
+        end_sorted= std::unique(next_round_dofs.begin(), next_round_dofs.end());
         next_round_dofs.erase(end_sorted, next_round_dofs.end());
 
         // eliminate dofs which are already numbered
-        for(int s = next_round_dofs.size() - 1; s >= 0; --s)
+        for(int s= next_round_dofs.size() - 1; s >= 0; --s)
           if(new_indices[next_round_dofs[s]] != numbers::invalid_size_type)
             next_round_dofs.erase(next_round_dofs.begin() + s);
 
@@ -675,12 +673,12 @@ namespace SparsityTools
 
         // assign new DoF numbers to the elements of the present front:
         std::multimap<DynamicSparsityPattern::size_type, int>::iterator i;
-        for(i = dofs_by_coordination.begin(); i != dofs_by_coordination.end();
+        for(i= dofs_by_coordination.begin(); i != dofs_by_coordination.end();
             ++i)
-          new_indices[i->second] = next_free_number++;
+          new_indices[i->second]= next_free_number++;
 
         // after that: copy this round's dofs for the next round
-        last_round_dofs = next_round_dofs;
+        last_round_dofs= next_round_dofs;
       }
 
     // test for all indices numbered. this mostly tests whether the
@@ -720,9 +718,9 @@ namespace SparsityTools
       // on this field. We also cache the row lengths because we need this
       // data frequently and getting it from the sparsity pattern is more
       // expensive.
-      for(types::global_dof_index row = 0; row < connectivity.n_rows(); ++row)
+      for(types::global_dof_index row= 0; row < connectivity.n_rows(); ++row)
         {
-          row_lengths[row] = connectivity.row_length(row);
+          row_lengths[row]= connectivity.row_length(row);
           Assert(row_lengths[row] > 0, ExcInternalError());
         }
       std::vector<unsigned int> n_remaining_neighbors(row_lengths);
@@ -741,11 +739,11 @@ namespace SparsityTools
           std::pair<types::global_dof_index, types::global_dof_index>
             min_neighbors(numbers::invalid_dof_index,
                           numbers::invalid_dof_index);
-          for(types::global_dof_index i = 0; i < touched_nodes.size(); ++i)
+          for(types::global_dof_index i= 0; i < touched_nodes.size(); ++i)
             if(touched_nodes[i] == numbers::invalid_dof_index)
               if(row_lengths[i] < min_neighbors.second)
                 {
-                  min_neighbors = std::make_pair(i, n_remaining_neighbors[i]);
+                  min_neighbors= std::make_pair(i, n_remaining_neighbors[i]);
                   if(n_remaining_neighbors[i] <= 1)
                     break;
                 }
@@ -760,8 +758,8 @@ namespace SparsityTools
             {
               // Find node with minimum number of untouched neighbors among the
               // next set of possible neighbors
-              min_neighbors = std::make_pair(numbers::invalid_dof_index,
-                                             numbers::invalid_dof_index);
+              min_neighbors= std::make_pair(numbers::invalid_dof_index,
+                                            numbers::invalid_dof_index);
               for(std::set<types::global_dof_index>::iterator it
                   = current_neighbors.begin();
                   it != current_neighbors.end();
@@ -785,15 +783,15 @@ namespace SparsityTools
                   ++it)
                 if(n_remaining_neighbors[*it] == best_row_length)
                   if(row_lengths[*it] > min_neighbors.second)
-                    min_neighbors = std::make_pair(*it, row_lengths[*it]);
+                    min_neighbors= std::make_pair(*it, row_lengths[*it]);
 
               // Add the pivot and all direct neighbors of the pivot node not
               // yet touched to the list of new entries.
               groups.emplace_back();
-              std::vector<types::global_dof_index>& next_group = groups.back();
+              std::vector<types::global_dof_index>& next_group= groups.back();
 
               next_group.push_back(min_neighbors.first);
-              touched_nodes[min_neighbors.first] = groups.size() - 1;
+              touched_nodes[min_neighbors.first]= groups.size() - 1;
               for(DynamicSparsityPattern::iterator it
                   = connectivity.begin(min_neighbors.first);
                   it != connectivity.end(min_neighbors.first);
@@ -801,7 +799,7 @@ namespace SparsityTools
                 if(touched_nodes[it->column()] == numbers::invalid_dof_index)
                   {
                     next_group.push_back(it->column());
-                    touched_nodes[it->column()] = groups.size() - 1;
+                    touched_nodes[it->column()]= groups.size() - 1;
                   }
 
               // Add all neighbors of the current list not yet touched to the
@@ -809,7 +807,7 @@ namespace SparsityTools
               // valid neighbor (here we assume symmetry of the
               // connectivity). Delete the entries of the current list from
               // the set of possible next pivots.
-              for(unsigned int i = 0; i < next_group.size(); ++i)
+              for(unsigned int i= 0; i < next_group.size(); ++i)
                 {
                   for(DynamicSparsityPattern::iterator it
                       = connectivity.begin(next_group[i]);
@@ -827,7 +825,7 @@ namespace SparsityTools
         }
 
       // Sanity check: for all nodes, there should not be any neighbors left
-      for(types::global_dof_index row = 0; row < connectivity.n_rows(); ++row)
+      for(types::global_dof_index row= 0; row < connectivity.n_rows(); ++row)
         Assert(n_remaining_neighbors[row] == 0, ExcInternalError());
 
       // If the number of groups is smaller than the number of nodes, we
@@ -837,8 +835,8 @@ namespace SparsityTools
           // Form the connectivity of the groups
           DynamicSparsityPattern connectivity_next(groups.size(),
                                                    groups.size());
-          for(types::global_dof_index i = 0; i < groups.size(); ++i)
-            for(types::global_dof_index col = 0; col < groups[i].size(); ++col)
+          for(types::global_dof_index i= 0; i < groups.size(); ++i)
+            for(types::global_dof_index col= 0; col < groups[i].size(); ++col)
               for(DynamicSparsityPattern::iterator it
                   = connectivity.begin(groups[i][col]);
                   it != connectivity.end(groups[i][col]);
@@ -851,20 +849,20 @@ namespace SparsityTools
 
           // Renumber the indices group by group according to the incoming
           // ordering for the groups
-          for(types::global_dof_index i = 0, count = 0; i < groups.size(); ++i)
-            for(types::global_dof_index col = 0;
+          for(types::global_dof_index i= 0, count= 0; i < groups.size(); ++i)
+            for(types::global_dof_index col= 0;
                 col < groups[renumbering_next[i]].size();
                 ++col, ++count)
-              renumbering[count] = groups[renumbering_next[i]][col];
+              renumbering[count]= groups[renumbering_next[i]][col];
         }
       else
         {
           // All groups should have size one and no more recursion is possible,
           // so use the numbering of the groups
-          for(types::global_dof_index i = 0, count = 0; i < groups.size(); ++i)
-            for(types::global_dof_index col = 0; col < groups[i].size();
+          for(types::global_dof_index i= 0, count= 0; i < groups.size(); ++i)
+            for(types::global_dof_index col= 0; col < groups[i].size();
                 ++col, ++count)
-              renumbering[count] = groups[i][col];
+              renumbering[count]= groups[i][col];
         }
     }
   } // namespace internal
@@ -878,7 +876,7 @@ namespace SparsityTools
     // we cannot invert the numbering inside that method because it is used
     // recursively), so invert it here
     internal::reorder_hierarchical(connectivity, renumbering);
-    renumbering = Utilities::invert_permutation(renumbering);
+    renumbering= Utilities::invert_permutation(renumbering);
   }
 
 #ifdef DEAL_II_WITH_MPI
@@ -889,12 +887,12 @@ namespace SparsityTools
     const MPI_Comm&                                       mpi_comm,
     const IndexSet&                                       myrange)
   {
-    const unsigned int myid = Utilities::MPI::this_mpi_process(mpi_comm);
+    const unsigned int myid= Utilities::MPI::this_mpi_process(mpi_comm);
     std::vector<DynamicSparsityPattern::size_type> start_index(
       rows_per_cpu.size() + 1);
-    start_index[0] = 0;
-    for(DynamicSparsityPattern::size_type i = 0; i < rows_per_cpu.size(); ++i)
-      start_index[i + 1] = start_index[i] + rows_per_cpu[i];
+    start_index[0]= 0;
+    for(DynamicSparsityPattern::size_type i= 0; i < rows_per_cpu.size(); ++i)
+      start_index[i + 1]= start_index[i] + rows_per_cpu[i];
 
     typedef std::map<DynamicSparsityPattern::size_type,
                      std::vector<DynamicSparsityPattern::size_type>>
@@ -903,10 +901,10 @@ namespace SparsityTools
     map_vec_t send_data;
 
     {
-      unsigned int dest_cpu = 0;
+      unsigned int dest_cpu= 0;
 
-      DynamicSparsityPattern::size_type n_local_rel_rows = myrange.n_elements();
-      for(DynamicSparsityPattern::size_type row_idx = 0;
+      DynamicSparsityPattern::size_type n_local_rel_rows= myrange.n_elements();
+      for(DynamicSparsityPattern::size_type row_idx= 0;
           row_idx < n_local_rel_rows;
           ++row_idx)
         {
@@ -920,11 +918,11 @@ namespace SparsityTools
           //skip myself
           if(dest_cpu == myid)
             {
-              row_idx += rows_per_cpu[myid] - 1;
+              row_idx+= rows_per_cpu[myid] - 1;
               continue;
             }
 
-          DynamicSparsityPattern::size_type rlen = dsp.row_length(row);
+          DynamicSparsityPattern::size_type rlen= dsp.row_length(row);
 
           //skip empty lines
           if(!rlen)
@@ -936,7 +934,7 @@ namespace SparsityTools
 
           dst.push_back(rlen); // number of entries
           dst.push_back(row);  // row index
-          for(DynamicSparsityPattern::size_type c = 0; c < rlen; ++c)
+          for(DynamicSparsityPattern::size_type c= 0; c < rlen; ++c)
             {
               //columns
               DynamicSparsityPattern::size_type column
@@ -946,35 +944,34 @@ namespace SparsityTools
         }
     }
 
-    unsigned int num_receive = 0;
+    unsigned int num_receive= 0;
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for(map_vec_t::iterator it = send_data.begin(); it != send_data.end();
+      for(map_vec_t::iterator it= send_data.begin(); it != send_data.end();
           ++it)
         send_to.push_back(it->first);
 
-      num_receive
-        = Utilities::MPI::compute_point_to_point_communication_pattern(mpi_comm,
-                                                                       send_to)
-            .size();
+      num_receive= Utilities::MPI::compute_point_to_point_communication_pattern(
+                     mpi_comm, send_to)
+                     .size();
     }
 
     std::vector<MPI_Request> requests(send_data.size());
 
     // send data
     {
-      unsigned int idx = 0;
-      for(map_vec_t::iterator it = send_data.begin(); it != send_data.end();
+      unsigned int idx= 0;
+      for(map_vec_t::iterator it= send_data.begin(); it != send_data.end();
           ++it, ++idx)
         {
-          const int ierr = MPI_Isend(&(it->second[0]),
-                                     it->second.size(),
-                                     DEAL_II_DOF_INDEX_MPI_TYPE,
-                                     it->first,
-                                     124,
-                                     mpi_comm,
-                                     &requests[idx]);
+          const int ierr= MPI_Isend(&(it->second[0]),
+                                    it->second.size(),
+                                    DEAL_II_DOF_INDEX_MPI_TYPE,
+                                    it->first,
+                                    124,
+                                    mpi_comm,
+                                    &requests[idx]);
           AssertThrowMPI(ierr);
         }
     }
@@ -982,24 +979,24 @@ namespace SparsityTools
     {
       //receive
       std::vector<DynamicSparsityPattern::size_type> recv_buf;
-      for(unsigned int index = 0; index < num_receive; ++index)
+      for(unsigned int index= 0; index < num_receive; ++index)
         {
           MPI_Status status;
           int        len;
-          int ierr = MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, mpi_comm, &status);
+          int ierr= MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, mpi_comm, &status);
           AssertThrowMPI(ierr);
           Assert(status.MPI_TAG == 124, ExcInternalError());
 
-          ierr = MPI_Get_count(&status, DEAL_II_DOF_INDEX_MPI_TYPE, &len);
+          ierr= MPI_Get_count(&status, DEAL_II_DOF_INDEX_MPI_TYPE, &len);
           AssertThrowMPI(ierr);
           recv_buf.resize(len);
-          ierr = MPI_Recv(recv_buf.data(),
-                          len,
-                          DEAL_II_DOF_INDEX_MPI_TYPE,
-                          status.MPI_SOURCE,
-                          status.MPI_TAG,
-                          mpi_comm,
-                          &status);
+          ierr= MPI_Recv(recv_buf.data(),
+                         len,
+                         DEAL_II_DOF_INDEX_MPI_TYPE,
+                         status.MPI_SOURCE,
+                         status.MPI_TAG,
+                         mpi_comm,
+                         &status);
           AssertThrowMPI(ierr);
 
           std::vector<DynamicSparsityPattern::size_type>::const_iterator ptr
@@ -1008,10 +1005,10 @@ namespace SparsityTools
             = recv_buf.end();
           while(ptr != end)
             {
-              DynamicSparsityPattern::size_type num = *(ptr++);
+              DynamicSparsityPattern::size_type num= *(ptr++);
               Assert(ptr != end, ExcInternalError());
-              DynamicSparsityPattern::size_type row = *(ptr++);
-              for(unsigned int c = 0; c < num; ++c)
+              DynamicSparsityPattern::size_type row= *(ptr++);
+              for(unsigned int c= 0; c < num; ++c)
                 {
                   Assert(ptr != end, ExcInternalError());
                   dsp.add(row, *ptr);
@@ -1037,7 +1034,7 @@ namespace SparsityTools
                               const MPI_Comm&              mpi_comm,
                               const IndexSet&              myrange)
   {
-    const unsigned int myid = Utilities::MPI::this_mpi_process(mpi_comm);
+    const unsigned int myid= Utilities::MPI::this_mpi_process(mpi_comm);
 
     typedef std::map<BlockDynamicSparsityPattern::size_type,
                      std::vector<BlockDynamicSparsityPattern::size_type>>
@@ -1045,11 +1042,11 @@ namespace SparsityTools
     map_vec_t send_data;
 
     {
-      unsigned int dest_cpu = 0;
+      unsigned int dest_cpu= 0;
 
       BlockDynamicSparsityPattern::size_type n_local_rel_rows
         = myrange.n_elements();
-      for(BlockDynamicSparsityPattern::size_type row_idx = 0;
+      for(BlockDynamicSparsityPattern::size_type row_idx= 0;
           row_idx < n_local_rel_rows;
           ++row_idx)
         {
@@ -1063,14 +1060,14 @@ namespace SparsityTools
             {
               ++dest_cpu;
               if(dest_cpu == owned_set_per_cpu.size()) // wrap around
-                dest_cpu = 0;
+                dest_cpu= 0;
             }
 
           //skip myself
           if(dest_cpu == myid)
             continue;
 
-          BlockDynamicSparsityPattern::size_type rlen = dsp.row_length(row);
+          BlockDynamicSparsityPattern::size_type rlen= dsp.row_length(row);
 
           //skip empty lines
           if(!rlen)
@@ -1082,7 +1079,7 @@ namespace SparsityTools
 
           dst.push_back(rlen); // number of entries
           dst.push_back(row);  // row index
-          for(BlockDynamicSparsityPattern::size_type c = 0; c < rlen; ++c)
+          for(BlockDynamicSparsityPattern::size_type c= 0; c < rlen; ++c)
             {
               //columns
               BlockDynamicSparsityPattern::size_type column
@@ -1092,35 +1089,34 @@ namespace SparsityTools
         }
     }
 
-    unsigned int num_receive = 0;
+    unsigned int num_receive= 0;
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for(map_vec_t::iterator it = send_data.begin(); it != send_data.end();
+      for(map_vec_t::iterator it= send_data.begin(); it != send_data.end();
           ++it)
         send_to.push_back(it->first);
 
-      num_receive
-        = Utilities::MPI::compute_point_to_point_communication_pattern(mpi_comm,
-                                                                       send_to)
-            .size();
+      num_receive= Utilities::MPI::compute_point_to_point_communication_pattern(
+                     mpi_comm, send_to)
+                     .size();
     }
 
     std::vector<MPI_Request> requests(send_data.size());
 
     // send data
     {
-      unsigned int idx = 0;
-      for(map_vec_t::iterator it = send_data.begin(); it != send_data.end();
+      unsigned int idx= 0;
+      for(map_vec_t::iterator it= send_data.begin(); it != send_data.end();
           ++it, ++idx)
         {
-          const int ierr = MPI_Isend(&(it->second[0]),
-                                     it->second.size(),
-                                     DEAL_II_DOF_INDEX_MPI_TYPE,
-                                     it->first,
-                                     124,
-                                     mpi_comm,
-                                     &requests[idx]);
+          const int ierr= MPI_Isend(&(it->second[0]),
+                                    it->second.size(),
+                                    DEAL_II_DOF_INDEX_MPI_TYPE,
+                                    it->first,
+                                    124,
+                                    mpi_comm,
+                                    &requests[idx]);
           AssertThrowMPI(ierr);
         }
     }
@@ -1128,24 +1124,24 @@ namespace SparsityTools
     {
       //receive
       std::vector<BlockDynamicSparsityPattern::size_type> recv_buf;
-      for(unsigned int index = 0; index < num_receive; ++index)
+      for(unsigned int index= 0; index < num_receive; ++index)
         {
           MPI_Status status;
           int        len;
-          int ierr = MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, mpi_comm, &status);
+          int ierr= MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, mpi_comm, &status);
           AssertThrowMPI(ierr);
           Assert(status.MPI_TAG == 124, ExcInternalError());
 
-          ierr = MPI_Get_count(&status, DEAL_II_DOF_INDEX_MPI_TYPE, &len);
+          ierr= MPI_Get_count(&status, DEAL_II_DOF_INDEX_MPI_TYPE, &len);
           AssertThrowMPI(ierr);
           recv_buf.resize(len);
-          ierr = MPI_Recv(recv_buf.data(),
-                          len,
-                          DEAL_II_DOF_INDEX_MPI_TYPE,
-                          status.MPI_SOURCE,
-                          status.MPI_TAG,
-                          mpi_comm,
-                          &status);
+          ierr= MPI_Recv(recv_buf.data(),
+                         len,
+                         DEAL_II_DOF_INDEX_MPI_TYPE,
+                         status.MPI_SOURCE,
+                         status.MPI_TAG,
+                         mpi_comm,
+                         &status);
           AssertThrowMPI(ierr);
 
           std::vector<BlockDynamicSparsityPattern::size_type>::const_iterator
@@ -1156,10 +1152,10 @@ namespace SparsityTools
             = recv_buf.end();
           while(ptr != end)
             {
-              BlockDynamicSparsityPattern::size_type num = *(ptr++);
+              BlockDynamicSparsityPattern::size_type num= *(ptr++);
               Assert(ptr != end, ExcInternalError());
-              BlockDynamicSparsityPattern::size_type row = *(ptr++);
-              for(unsigned int c = 0; c < num; ++c)
+              BlockDynamicSparsityPattern::size_type row= *(ptr++);
+              for(unsigned int c= 0; c < num; ++c)
                 {
                   Assert(ptr != end, ExcInternalError());
                   dsp.add(row, *ptr);

@@ -33,31 +33,31 @@ namespace FESeries
   void set_k_vectors(Table<1, Tensor<1, 1>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<1>(N));
-    for(unsigned int i = 0; i < N; ++i)
-      k_vectors(i)[0] = 2. * numbers::PI * i;
+    for(unsigned int i= 0; i < N; ++i)
+      k_vectors(i)[0]= 2. * numbers::PI * i;
   }
 
   void set_k_vectors(Table<2, Tensor<1, 2>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<2>(N, N));
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
+    for(unsigned int i= 0; i < N; ++i)
+      for(unsigned int j= 0; j < N; ++j)
         {
-          k_vectors(i, j)[0] = 2. * numbers::PI * i;
-          k_vectors(i, j)[1] = 2. * numbers::PI * j;
+          k_vectors(i, j)[0]= 2. * numbers::PI * i;
+          k_vectors(i, j)[1]= 2. * numbers::PI * j;
         }
   }
 
   void set_k_vectors(Table<3, Tensor<1, 3>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<3>(N, N, N));
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
-        for(unsigned int k = 0; k < N; ++k)
+    for(unsigned int i= 0; i < N; ++i)
+      for(unsigned int j= 0; j < N; ++j)
+        for(unsigned int k= 0; k < N; ++k)
           {
-            k_vectors(i, j, k)[0] = 2. * numbers::PI * i;
-            k_vectors(i, j, k)[0] = 2. * numbers::PI * j;
-            k_vectors(i, j, k)[0] = 2. * numbers::PI * k;
+            k_vectors(i, j, k)[0]= 2. * numbers::PI * i;
+            k_vectors(i, j, k)[0]= 2. * numbers::PI * j;
+            k_vectors(i, j, k)[0]= 2. * numbers::PI * k;
           }
   }
 
@@ -93,9 +93,9 @@ namespace FESeries
     Assert(local_dof_values.size() == matrix.n(),
            ExcDimensionMismatch(local_dof_values.size(), matrix.n()));
 
-    for(unsigned int i = 0; i < unrolled_coefficients.size(); i++)
-      for(unsigned int j = 0; j < local_dof_values.size(); j++)
-        unrolled_coefficients[i] += matrix[i][j] * local_dof_values[j];
+    for(unsigned int i= 0; i < unrolled_coefficients.size(); i++)
+      for(unsigned int j= 0; j < local_dof_values.size(); j++)
+        unrolled_coefficients[i]+= matrix[i][j] * local_dof_values[j];
 
     fourier_coefficients.fill(unrolled_coefficients.begin());
   }
@@ -107,12 +107,12 @@ namespace FESeries
             const Tensor<1, dim>&     k_vector,
             const unsigned int        j)
   {
-    std::complex<double> sum = 0;
-    for(unsigned int q = 0; q < quadrature.size(); ++q)
+    std::complex<double> sum= 0;
+    for(unsigned int q= 0; q < quadrature.size(); ++q)
       {
-        const Point<dim>& x_q = quadrature.point(q);
-        sum += std::exp(std::complex<double>(0, 1) * (k_vector * x_q))
-               * fe.shape_value(j, x_q) * quadrature.weight(q);
+        const Point<dim>& x_q= quadrature.point(q);
+        sum+= std::exp(std::complex<double>(0, 1) * (k_vector * x_q))
+              * fe.shape_value(j, x_q) * quadrature.weight(q);
       }
     return sum;
   }
@@ -129,11 +129,11 @@ namespace FESeries
       fourier_transform_matrices[fe].reinit(k_vectors.n_elements(),
                                             (*fe_collection)[fe].dofs_per_cell);
 
-      unsigned int k = 0;
-      for(unsigned int k1 = 0; k1 < k_vectors.size(0); ++k1)
-        for(unsigned int k2 = 0; k2 < k_vectors.size(1); ++k2, k++)
-          for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
-            fourier_transform_matrices[fe](k, j) = integrate(
+      unsigned int k= 0;
+      for(unsigned int k1= 0; k1 < k_vectors.size(0); ++k1)
+        for(unsigned int k2= 0; k2 < k_vectors.size(1); ++k2, k++)
+          for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+            fourier_transform_matrices[fe](k, j)= integrate(
               (*fe_collection)[fe], (*q_collection)[fe], k_vectors(k1, k2), j);
     }
   }
@@ -150,11 +150,11 @@ namespace FESeries
       fourier_transform_matrices[fe].reinit(k_vectors.n_elements(),
                                             (*fe_collection)[fe].dofs_per_cell);
 
-      unsigned int k = 0;
-      for(unsigned int k1 = 0; k1 < k_vectors.size(0); ++k1)
-        for(unsigned int k2 = 0; k2 < k_vectors.size(1); ++k2)
-          for(unsigned int k3 = 0; k3 < k_vectors.size(2); ++k3, k++)
-            for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+      unsigned int k= 0;
+      for(unsigned int k1= 0; k1 < k_vectors.size(0); ++k1)
+        for(unsigned int k2= 0; k2 < k_vectors.size(1); ++k2)
+          for(unsigned int k3= 0; k3 < k_vectors.size(2); ++k3, k++)
+            for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
               fourier_transform_matrices[fe](k, j)
                 = integrate((*fe_collection)[fe],
                             (*q_collection)[fe],
@@ -175,9 +175,9 @@ namespace FESeries
       fourier_transform_matrices[fe].reinit(k_vectors.n_elements(),
                                             (*fe_collection)[fe].dofs_per_cell);
 
-      for(unsigned int k = 0; k < k_vectors.size(0); ++k)
-        for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
-          fourier_transform_matrices[fe](k, j) = integrate(
+      for(unsigned int k= 0; k < k_vectors.size(0); ++k)
+        for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+          fourier_transform_matrices[fe](k, j)= integrate(
             (*fe_collection)[fe], (*q_collection)[fe], k_vectors(k), j);
     }
   }
@@ -196,13 +196,13 @@ namespace FESeries
   Lh(const Point<dim>& x_q, const TableIndices<dim>& indices)
   {
 #ifdef DEAL_II_WITH_GSL
-    double res = 1.0;
-    for(unsigned int d = 0; d < dim; d++)
+    double res= 1.0;
+    for(unsigned int d= 0; d < dim; d++)
       {
-        const double x = 2.0 * (x_q[d] - 0.5);
+        const double x= 2.0 * (x_q[d] - 0.5);
         Assert((x_q[d] <= 1.0) && (x_q[d] >= 0.), ExcLegendre(d, x_q[d]));
-        const int ind = indices[d];
-        res *= sqrt(2.0) * gsl_sf_legendre_Pl(ind, x);
+        const int ind= indices[d];
+        res*= sqrt(2.0) * gsl_sf_legendre_Pl(ind, x);
       }
     return res;
 
@@ -224,9 +224,9 @@ namespace FESeries
   double
   multiplier(const TableIndices<dim>& indices)
   {
-    double res = 1.0;
-    for(unsigned int d = 0; d < dim; d++)
-      res *= (0.5 + indices[d]);
+    double res= 1.0;
+    for(unsigned int d= 0; d < dim; d++)
+      res*= (0.5 + indices[d]);
 
     return res;
   }
@@ -259,9 +259,9 @@ namespace FESeries
     Assert(local_dof_values.size() == matrix.n(),
            ExcDimensionMismatch(local_dof_values.size(), matrix.n()));
 
-    for(unsigned int i = 0; i < unrolled_coefficients.size(); i++)
-      for(unsigned int j = 0; j < local_dof_values.size(); j++)
-        unrolled_coefficients[i] += matrix[i][j] * local_dof_values[j];
+    for(unsigned int i= 0; i < unrolled_coefficients.size(); i++)
+      for(unsigned int j= 0; j < local_dof_values.size(); j++)
+        unrolled_coefficients[i]+= matrix[i][j] * local_dof_values[j];
 
     legendre_coefficients.fill(unrolled_coefficients.begin());
   }
@@ -273,10 +273,10 @@ namespace FESeries
                      const TableIndices<dim>&  indices,
                      const unsigned int        dof)
   {
-    double sum = 0;
-    for(unsigned int q = 0; q < quadrature.size(); ++q)
+    double sum= 0;
+    for(unsigned int q= 0; q < quadrature.size(); ++q)
       {
-        const Point<dim>& x_q = quadrature.point(q);
+        const Point<dim>& x_q= quadrature.point(q);
         sum
           += Lh(x_q, indices) * fe.shape_value(dof, x_q) * quadrature.weight(q);
       }
@@ -296,9 +296,9 @@ namespace FESeries
       legendre_transform_matrices[fe].reinit(
         N, (*fe_collection)[fe].dofs_per_cell);
 
-      for(unsigned int k = 0; k < N; ++k)
-        for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
-          legendre_transform_matrices[fe](k, j) = integrate_Legendre(
+      for(unsigned int k= 0; k < N; ++k)
+        for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+          legendre_transform_matrices[fe](k, j)= integrate_Legendre(
             (*fe_collection)[fe], (*q_collection)[fe], TableIndices<1>(k), j);
     }
   }
@@ -315,10 +315,10 @@ namespace FESeries
       legendre_transform_matrices[fe].reinit(
         N * N, (*fe_collection)[fe].dofs_per_cell);
 
-      unsigned int k = 0;
-      for(unsigned int k1 = 0; k1 < N; ++k1)
-        for(unsigned int k2 = 0; k2 < N; ++k2, k++)
-          for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+      unsigned int k= 0;
+      for(unsigned int k1= 0; k1 < N; ++k1)
+        for(unsigned int k2= 0; k2 < N; ++k2, k++)
+          for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
             legendre_transform_matrices[fe](k, j)
               = integrate_Legendre((*fe_collection)[fe],
                                    (*q_collection)[fe],
@@ -339,11 +339,11 @@ namespace FESeries
       legendre_transform_matrices[fe].reinit(
         N * N * N, (*fe_collection)[fe].dofs_per_cell);
 
-      unsigned int k = 0;
-      for(unsigned int k1 = 0; k1 < N; ++k1)
-        for(unsigned int k2 = 0; k2 < N; ++k2)
-          for(unsigned int k3 = 0; k3 < N; ++k3, k++)
-            for(unsigned int j = 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
+      unsigned int k= 0;
+      for(unsigned int k1= 0; k1 < N; ++k1)
+        for(unsigned int k2= 0; k2 < N; ++k2)
+          for(unsigned int k3= 0; k3 < N; ++k3, k++)
+            for(unsigned int j= 0; j < (*fe_collection)[fe].dofs_per_cell; ++j)
               legendre_transform_matrices[fe](k, j)
                 = integrate_Legendre((*fe_collection)[fe],
                                      (*q_collection)[fe],
@@ -366,24 +366,24 @@ namespace FESeries
            dealii::ExcMessage(
              "at least two points are required for linear regression fit"));
 
-    double sum_1 = 0.0, sum_x = 0.0, sum_x2 = 0.0, sum_y = 0.0, sum_xy = 0.0;
+    double sum_1= 0.0, sum_x= 0.0, sum_x2= 0.0, sum_y= 0.0, sum_xy= 0.0;
 
-    for(unsigned int i = 0; i < x.size(); i++)
+    for(unsigned int i= 0; i < x.size(); i++)
       {
-        sum_1 += 1.0;
-        sum_x += x[i];
-        sum_x2 += x[i] * x[i];
-        sum_y += y[i];
-        sum_xy += x[i] * y[i];
+        sum_1+= 1.0;
+        sum_x+= x[i];
+        sum_x2+= x[i] * x[i];
+        sum_y+= y[i];
+        sum_xy+= x[i] * y[i];
       }
 
-    K(0, 0) = sum_1;
-    K(0, 1) = sum_x;
-    K(1, 0) = sum_x;
-    K(1, 1) = sum_x2;
+    K(0, 0)= sum_1;
+    K(0, 1)= sum_x;
+    K(1, 0)= sum_x;
+    K(1, 1)= sum_x2;
 
-    B(0) = sum_y;
-    B(1) = sum_xy;
+    B(0)= sum_y;
+    B(1)= sum_xy;
 
     invK.invert(K);
     invK.vmult(X, B, false);

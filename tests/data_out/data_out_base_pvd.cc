@@ -29,11 +29,11 @@ void
 check(std::ostream& out)
 {
   std::vector<std::pair<double, std::string>> names(5);
-  names[0] = std::make_pair(0, "x1");
-  names[1] = std::make_pair(1, "x2");
-  names[2] = std::make_pair(1e1, "x3");
-  names[3] = std::make_pair(3.141, "d");
-  names[4] = std::make_pair(42e19, "i");
+  names[0]= std::make_pair(0, "x1");
+  names[1]= std::make_pair(1, "x2");
+  names[2]= std::make_pair(1e1, "x3");
+  names[3]= std::make_pair(3.141, "d");
+  names[4]= std::make_pair(42e19, "i");
 
   DataOutBase::write_pvd_record(out, names);
 }

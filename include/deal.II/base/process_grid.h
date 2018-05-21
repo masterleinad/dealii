@@ -120,7 +120,7 @@ namespace Utilities
        */
       template <typename NumberType>
       void
-      send_to_inactive(NumberType* value, const int count = 1) const;
+      send_to_inactive(NumberType* value, const int count= 1) const;
 
       /**
        * Return <code>true</code> if the process is active within the grid.

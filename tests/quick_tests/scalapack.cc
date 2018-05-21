@@ -34,22 +34,22 @@ template <typename FullMatrix>
 void
 create_spd(FullMatrix& A)
 {
-  const unsigned int size = A.n();
+  const unsigned int size= A.n();
   Assert(size == A.m(), ExcDimensionMismatch(size, A.m()));
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = i; j < size; ++j)
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= i; j < size; ++j)
       {
-        const double val = random_value<typename FullMatrix::value_type>();
+        const double val= random_value<typename FullMatrix::value_type>();
         Assert(val >= 0. && val <= 1., ExcInternalError());
         if(i == j)
           // since A(i,j) < 1 and
           // a symmetric diagonally dominant matrix is SPD
-          A(i, j) = val + size;
+          A(i, j)= val + size;
         else
           {
-            A(i, j) = val;
-            A(j, i) = val;
+            A(i, j)= val;
+            A(j, i)= val;
           }
       }
 }
@@ -85,15 +85,15 @@ test(const unsigned int size, const unsigned int block_size)
   inverse.cholesky(full_in);
 
   // invert via ScaLAPACK
-  scalapack_matrix = full_in;
+  scalapack_matrix= full_in;
   scalapack_matrix.compute_cholesky_factorization();
   scalapack_matrix.copy_to(full_out);
 
-  diff = 0;
+  diff= 0;
   diff.add(1., inverse);
   diff.add(-1., full_out);
 
-  const double error = diff.frobenius_norm();
+  const double error= diff.frobenius_norm();
 
   if(error > 1e-10 && this_mpi_process == 0)
     {

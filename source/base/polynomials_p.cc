@@ -37,13 +37,13 @@ PolynomialsP<1>::create_polynomial_ordering(
          ExcDimensionMismatch(index_map.size(), this->n()));
 
   // identity
-  for(unsigned int i = 0; i < this->n(); ++i)
-    index_map[i] = i;
+  for(unsigned int i= 0; i < this->n(); ++i)
+    index_map[i]= i;
 }
 
 namespace
 {
-  const unsigned int imap2[6][21] = {
+  const unsigned int imap2[6][21]= {
     {0},
     {0, 1, 2},
     {0, 1, 3, 4, 2, 5},
@@ -67,8 +67,8 @@ PolynomialsP<2>::create_polynomial_ordering(
   // index_map[i] gives the number of
   // the polynomial in
   // PolynomialSpace.
-  for(unsigned int i = 0; i < this->n(); ++i)
-    index_map[i] = imap2[p][i];
+  for(unsigned int i= 0; i < this->n(); ++i)
+    index_map[i]= imap2[p][i];
 }
 
 namespace
@@ -95,8 +95,8 @@ PolynomialsP<3>::create_polynomial_ordering(
   // index_map[i] gives the number of
   // the polynomial in
   // PolynomialSpace.
-  for(unsigned int i = 0; i < this->n(); ++i)
-    index_map[i] = imap3[p][i];
+  for(unsigned int i= 0; i < this->n(); ++i)
+    index_map[i]= imap3[p][i];
 }
 
 template class PolynomialsP<1>;

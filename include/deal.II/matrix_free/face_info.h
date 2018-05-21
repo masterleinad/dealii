@@ -124,7 +124,7 @@ namespace internal
       void
       clear()
       {
-        faces = std::vector<FaceToCellTopology<vectorization_width>>();
+        faces= std::vector<FaceToCellTopology<vectorization_width>>();
         cell_and_face_to_plain_faces.reinit(TableIndices<3>(0, 0, 0));
         cell_and_face_boundary_id.reinit(TableIndices<3>(0, 0, 0));
       }

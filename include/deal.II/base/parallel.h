@@ -49,7 +49,7 @@ namespace parallel
     template <typename Number>
     struct EnableOpenMPSimdFor
     {
-      static const bool value = true;
+      static const bool value= true;
     };
 
 #ifdef __INTEL_COMPILER
@@ -60,7 +60,7 @@ namespace parallel
     template <>
     struct EnableOpenMPSimdFor<long double>
     {
-      static const bool value = false;
+      static const bool value= false;
     };
 #endif
 
@@ -81,7 +81,7 @@ namespace parallel
       void
       operator()(const Range& range) const
       {
-        for(typename Range::const_iterator p = range.begin(); p != range.end();
+        for(typename Range::const_iterator p= range.begin(); p != range.end();
             ++p)
           apply(f, *p);
       }
@@ -99,7 +99,7 @@ namespace parallel
       static void
       apply(const F& f, const std::tuple<I1, I2>& p)
       {
-        *std::get<1>(p) = f(*std::get<0>(p));
+        *std::get<1>(p)= f(*std::get<0>(p));
       }
 
       /**
@@ -109,7 +109,7 @@ namespace parallel
       static void
       apply(const F& f, const std::tuple<I1, I2, I3>& p)
       {
-        *std::get<2>(p) = f(*std::get<0>(p), *std::get<1>(p));
+        *std::get<2>(p)= f(*std::get<0>(p), *std::get<1>(p));
       }
 
       /**
@@ -119,7 +119,7 @@ namespace parallel
       static void
       apply(const F& f, const std::tuple<I1, I2, I3, I4>& p)
       {
-        *std::get<3>(p) = f(*std::get<0>(p), *std::get<1>(p), *std::get<2>(p));
+        *std::get<3>(p)= f(*std::get<0>(p), *std::get<1>(p), *std::get<2>(p));
       }
     };
 
@@ -173,8 +173,8 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in = begin_in; in != end_in;)
-      *out++ = predicate(*in++);
+    for(OutputIterator in= begin_in; in != end_in;)
+      *out++= predicate(*in++);
 #else
     typedef std::tuple<InputIterator, OutputIterator> Iterators;
     typedef SynchronousIterators<Iterators>           SyncIterators;
@@ -227,8 +227,8 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in1 = begin_in1; in1 != end_in1;)
-      *out++ = predicate(*in1++, *in2++);
+    for(OutputIterator in1= begin_in1; in1 != end_in1;)
+      *out++= predicate(*in1++, *in2++);
 #else
     typedef std::tuple<InputIterator1, InputIterator2, OutputIterator>
                                             Iterators;
@@ -284,8 +284,8 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in1 = begin_in1; in1 != end_in1;)
-      *out++ = predicate(*in1++, *in2++, *in3++);
+    for(OutputIterator in1= begin_in1; in1 != end_in1;)
+      *out++= predicate(*in1++, *in2++, *in3++);
 #else
     typedef std::
       tuple<InputIterator1, InputIterator2, InputIterator3, OutputIterator>
@@ -406,7 +406,7 @@ namespace parallel
 #  else
     // work around a problem with MS VC++ where there is no const
     // operator() in 'Function' if 'Function' is the result of std::bind
-    Function ff = f;
+    Function ff= f;
     ff(begin, end);
 #  endif
 #else
@@ -452,7 +452,7 @@ namespace parallel
      * Destructor. Made virtual to ensure that derived classes also have
      * virtual destructors.
      */
-    virtual ~ParallelForInteger() = default;
+    virtual ~ParallelForInteger()= default;
 
     /**
      * This function runs the for loop over the given range
@@ -474,7 +474,7 @@ namespace parallel
      * when several threads work with the same data simultaneously.
      */
     virtual void
-    apply_to_subrange(const std::size_t, const std::size_t) const = 0;
+    apply_to_subrange(const std::size_t, const std::size_t) const= 0;
   };
 
   namespace internal
@@ -506,7 +506,7 @@ namespace parallel
       template <typename Reductor>
       ReductionOnSubranges(const Function&  f,
                            const Reductor&  reductor,
-                           const ResultType neutral_element = ResultType())
+                           const ResultType neutral_element= ResultType())
         : result(neutral_element),
           f(f),
           neutral_element(neutral_element),
@@ -530,7 +530,7 @@ namespace parallel
       void
       join(const ReductionOnSubranges& r)
       {
-        result = reductor(result, r.result);
+        result= reductor(result, r.result);
       }
 
       /**
@@ -540,7 +540,7 @@ namespace parallel
       void
       operator()(const tbb::blocked_range<RangeType>& range)
       {
-        result = reductor(result, f(range.begin(), range.end()));
+        result= reductor(result, f(range.begin(), range.end()));
       }
 
     private:
@@ -641,7 +641,7 @@ namespace parallel
 #  else
     // work around a problem with MS VC++ where there is no const
     // operator() in 'Function' if 'Function' is the result of std::bind
-    Function ff = f;
+    Function ff= f;
     return ff(begin, end);
 #  endif
 #else

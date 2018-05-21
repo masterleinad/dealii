@@ -26,7 +26,7 @@ double
 TensorProductPolynomialsConst<dim>::compute_value(const unsigned int i,
                                                   const Point<dim>&  p) const
 {
-  const unsigned int max_indices = this->n_tensor_pols;
+  const unsigned int max_indices= this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
 
   // treat the regular basis functions
@@ -51,7 +51,7 @@ Tensor<1, dim>
 TensorProductPolynomialsConst<dim>::compute_grad(const unsigned int i,
                                                  const Point<dim>&  p) const
 {
-  const unsigned int max_indices = this->n_tensor_pols;
+  const unsigned int max_indices= this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
 
   // treat the regular basis functions
@@ -67,7 +67,7 @@ Tensor<2, dim>
 TensorProductPolynomialsConst<dim>::compute_grad_grad(const unsigned int i,
                                                       const Point<dim>& p) const
 {
-  const unsigned int max_indices = this->n_tensor_pols;
+  const unsigned int max_indices= this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
 
   // treat the regular basis functions
@@ -105,32 +105,32 @@ TensorProductPolynomialsConst<dim>::compute(
 
   // remove slot for const value, go into the base class compute method and
   // finally append the const value again
-  bool do_values = false, do_grads = false, do_grad_grads = false;
-  bool do_3rd_derivatives = false, do_4th_derivatives = false;
+  bool do_values= false, do_grads= false, do_grad_grads= false;
+  bool do_3rd_derivatives= false, do_4th_derivatives= false;
   if(values.empty() == false)
     {
       values.pop_back();
-      do_values = true;
+      do_values= true;
     }
   if(grads.empty() == false)
     {
       grads.pop_back();
-      do_grads = true;
+      do_grads= true;
     }
   if(grad_grads.empty() == false)
     {
       grad_grads.pop_back();
-      do_grad_grads = true;
+      do_grad_grads= true;
     }
   if(third_derivatives.empty() == false)
     {
       third_derivatives.resize(this->n_tensor_pols);
-      do_3rd_derivatives = true;
+      do_3rd_derivatives= true;
     }
   if(fourth_derivatives.empty() == false)
     {
       fourth_derivatives.resize(this->n_tensor_pols);
-      do_4th_derivatives = true;
+      do_4th_derivatives= true;
     }
 
   this->TensorProductPolynomials<dim>::compute(

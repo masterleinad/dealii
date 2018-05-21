@@ -42,7 +42,7 @@ test()
   dof_handler.distribute_dofs(fe);
 
   // this used to crash here:
-  const IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  const IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
 
   deallog << "dim=" << dim << std::endl
           << "rank=" << Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)

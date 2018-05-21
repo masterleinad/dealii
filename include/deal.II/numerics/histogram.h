@@ -110,7 +110,7 @@ public:
   evaluate(const std::vector<Vector<number>>& values,
            const std::vector<double>&         y_values,
            const unsigned int                 n_intervals,
-           const IntervalSpacing              interval_spacing = linear);
+           const IntervalSpacing              interval_spacing= linear);
 
   /**
    * This function is only a wrapper to the above one in case you have only
@@ -120,7 +120,7 @@ public:
   void
   evaluate(const Vector<number>& values,
            const unsigned int    n_intervals,
-           const IntervalSpacing interval_spacing = linear);
+           const IntervalSpacing interval_spacing= linear);
 
   /**
    * Write the histogram computed by the @p evaluate function to a stream in a

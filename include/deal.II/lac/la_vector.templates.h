@@ -61,7 +61,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     Assert(
       down_V.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
@@ -76,7 +76,7 @@ namespace LinearAlgebra
     if(PointerComparison::equal(this, &in_vector))
       return *this;
 
-    this->thread_loop_partitioner = in_vector.thread_loop_partitioner;
+    this->thread_loop_partitioner= in_vector.thread_loop_partitioner;
     if(this->size() != in_vector.size())
       this->reinit(in_vector, true);
 
@@ -93,7 +93,7 @@ namespace LinearAlgebra
   Vector<Number>&
   Vector<Number>::operator=(const Vector<Number2>& in_vector)
   {
-    this->thread_loop_partitioner = in_vector.thread_loop_partitioner;
+    this->thread_loop_partitioner= in_vector.thread_loop_partitioner;
     if(this->size() != in_vector.size())
       ReadWriteVector<Number>::reinit(in_vector, true);
 
@@ -155,7 +155,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     Assert(
       down_V.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
@@ -177,7 +177,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage(
              "Cannot subtract two vectors with different numbers of elements"));
@@ -197,7 +197,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage("Cannot compute the scalar product "
                       "of two vectors with different numbers of elements"));
@@ -240,7 +240,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -267,9 +267,9 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
+    const Vector<Number>& down_W= dynamic_cast<const Vector<Number>&>(W);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -299,7 +299,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. It fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     internal::VectorOperations::Vectorization_sadd_xav<Number> vector_sadd_xav(
       this->values.get(), down_V.values.get(), a, s);
     internal::VectorOperations::parallel_for(
@@ -338,7 +338,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     internal::VectorOperations::Vectorization_equ_au<Number> vector_equ(
       this->values.get(), down_V.values.get(), a);
     internal::VectorOperations::parallel_for(
@@ -351,8 +351,8 @@ namespace LinearAlgebra
   {
     Assert(this->size(), ExcEmptyObject());
 
-    const size_type size = this->size();
-    for(size_type i = 0; i < size; ++i)
+    const size_type size= this->size();
+    for(size_type i= 0; i < size; ++i)
       if(this->values[i] != Number())
         return false;
 
@@ -413,10 +413,10 @@ namespace LinearAlgebra
       return std::sqrt(norm_square);
     else
       {
-        real_type       scale = 0.;
-        real_type       sum   = 1.;
-        const size_type size  = this->size();
-        for(size_type i = 0; i < size; ++i)
+        real_type       scale= 0.;
+        real_type       sum  = 1.;
+        const size_type size = this->size();
+        for(size_type i= 0; i < size; ++i)
           {
             if(this->values[i] != Number())
               {
@@ -424,11 +424,11 @@ namespace LinearAlgebra
                   = numbers::NumberTraits<Number>::abs(this->values[i]);
                 if(scale < abs_x)
                   {
-                    sum   = 1. + sum * (scale / abs_x) * (scale / abs_x);
-                    scale = abs_x;
+                    sum  = 1. + sum * (scale / abs_x) * (scale / abs_x);
+                    scale= abs_x;
                   }
                 else
-                  sum += (abs_x / scale) * (abs_x / scale);
+                  sum+= (abs_x / scale) * (abs_x / scale);
               }
           }
         AssertIsFinite(scale * std::sqrt(sum));
@@ -440,10 +440,10 @@ namespace LinearAlgebra
   typename VectorSpaceVector<Number>::real_type
   Vector<Number>::linfty_norm() const
   {
-    typename ReadWriteVector<Number>::real_type norm = 0.;
-    const size_type                             size = this->size();
-    for(size_type i = 0; i < size; ++i)
-      norm = std::max(std::abs(this->values[i]), norm);
+    typename ReadWriteVector<Number>::real_type norm= 0.;
+    const size_type                             size= this->size();
+    for(size_type i= 0; i < size; ++i)
+      norm= std::max(std::abs(this->values[i]), norm);
 
     return norm;
   }
@@ -462,9 +462,9 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
+    const Vector<Number>& down_V= dynamic_cast<const Vector<Number>&>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
+    const Vector<Number>& down_W= dynamic_cast<const Vector<Number>&>(W);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -493,7 +493,7 @@ namespace LinearAlgebra
     //  out << size() << std::endl << '[';
     // Reason: operator<< seems to use some resources  that lead to problems in
     // a multithreaded environment.
-    const size_type sz = this->size();
+    const size_type sz= this->size();
     char            buf[16];
 #ifdef DEAL_II_WITH_64BIT_INDICES
     std::sprintf(buf, "%llu", sz);
@@ -508,7 +508,7 @@ namespace LinearAlgebra
                 - reinterpret_cast<const char*>(this->begin()));
 
     // out << ']';
-    const char outro = ']';
+    const char outro= ']';
     out.write(&outro, 1);
 
     AssertThrow(out, ExcIO());
@@ -525,7 +525,7 @@ namespace LinearAlgebra
     char buf[16];
 
     in.getline(buf, 16, '\n');
-    sz = std::atoi(buf);
+    sz= std::atoi(buf);
     ReadWriteVector<Number>::reinit(sz, true);
 
     char c;

@@ -46,10 +46,10 @@
 
 using namespace dealii;
 
-static const unsigned int               fe_order          = 4;
-static const dealii::types::boundary_id boundary_id       = 0;
-static const dealii::types::manifold_id cubic_manifold_id = 1;
-static const double                     pi                = numbers::PI;
+static const unsigned int               fe_order         = 4;
+static const dealii::types::boundary_id boundary_id      = 0;
+static const dealii::types::manifold_id cubic_manifold_id= 1;
+static const double                     pi               = numbers::PI;
 
 // ----------------------------------------------------------------------------
 // Manufactured solution and manufactured forcing
@@ -62,8 +62,8 @@ public:
   virtual double
   value(const Point<dim>& point, const unsigned int) const
   {
-    const double& x = point[0];
-    const double& y = point[1];
+    const double& x= point[0];
+    const double& y= point[1];
 
     return (Utilities::fixed_power<3>(y)
             + std::exp(-Utilities::fixed_power<2>(y))
@@ -80,8 +80,8 @@ public:
   virtual double
   value(const Point<dim>& point, const unsigned int) const
   {
-    const double& x = point[0];
-    const double& y = point[1];
+    const double& x= point[0];
+    const double& y= point[1];
     return -40.0
              * (Utilities::fixed_power<3>(y)
                 + std::exp(-Utilities::fixed_power<2>(y))
@@ -114,7 +114,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     switch(component)
       {
@@ -122,7 +122,7 @@ public:
           return point[0];
         case 1:
           {
-            const double& x = point[0];
+            const double& x= point[0];
             return point[1] + 0.25 * (2 * x - 1.0) * (x - 1.0) * x;
           }
         default:
@@ -140,7 +140,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     switch(component)
       {
@@ -148,7 +148,7 @@ public:
           return point[0];
         case 1:
           {
-            const double& x = point[0];
+            const double& x= point[0];
             return point[1] - 0.25 * (2 * x - 1.0) * (x - 1.0) * x;
           }
         default:
@@ -244,7 +244,7 @@ JxWError<dim>::JxWError(const unsigned int n_global_refines)
     cell_mapping(fe_order)
 
 {
-  boundary_manifold = cubic_roof(triangulation);
+  boundary_manifold= cubic_roof(triangulation);
   triangulation.refine_global(n_global_refines);
 }
 
@@ -276,34 +276,34 @@ JxWError<dim>::setup_matrices()
   system_matrix.reinit(sparsity_pattern);
   system_rhs.reinit(dof_handler.n_dofs());
 
-  const UpdateFlags flags = update_values | update_gradients | update_JxW_values
-                            | update_quadrature_points;
+  const UpdateFlags flags= update_values | update_gradients | update_JxW_values
+                           | update_quadrature_points;
   FEValues<dim> fe_values(cell_mapping, finite_element, cell_quadrature, flags);
 
-  const unsigned int dofs_per_cell = finite_element.dofs_per_cell;
+  const unsigned int dofs_per_cell= finite_element.dofs_per_cell;
   FullMatrix<double> cell_system(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
-      cell_system = 0.0;
-      cell_rhs    = 0.0;
+      cell_system= 0.0;
+      cell_rhs   = 0.0;
       fe_values.reinit(cell);
 
-      for(unsigned int q_point_n = 0; q_point_n < fe_values.n_quadrature_points;
+      for(unsigned int q_point_n= 0; q_point_n < fe_values.n_quadrature_points;
           ++q_point_n)
         {
-          const double point_forcing = manufactured_forcing->value(
+          const double point_forcing= manufactured_forcing->value(
             fe_values.quadrature_point(q_point_n));
 
-          for(unsigned int test_n = 0; test_n < dofs_per_cell; ++test_n)
+          for(unsigned int test_n= 0; test_n < dofs_per_cell; ++test_n)
             {
-              for(unsigned int trial_n = 0; trial_n < dofs_per_cell; ++trial_n)
+              for(unsigned int trial_n= 0; trial_n < dofs_per_cell; ++trial_n)
                 {
                   cell_system(test_n, trial_n)
                     += fe_values.JxW(q_point_n)
@@ -311,9 +311,9 @@ JxWError<dim>::setup_matrices()
                           * fe_values.shape_grad(trial_n, q_point_n));
                 }
 
-              cell_rhs[test_n] += fe_values.JxW(q_point_n)
-                                  * fe_values.shape_value(test_n, q_point_n)
-                                  * point_forcing;
+              cell_rhs[test_n]+= fe_values.JxW(q_point_n)
+                                 * fe_values.shape_value(test_n, q_point_n)
+                                 * point_forcing;
             }
         }
 
@@ -353,7 +353,7 @@ JxWError<dim>::solve()
     QIterated<dim>(QGauss<1>(finite_element.degree), 2),
     VectorTools::L2_norm);
 
-  const double l2_error = VectorTools::compute_global_error(
+  const double l2_error= VectorTools::compute_global_error(
     triangulation, cell_l2_error, VectorTools::L2_norm);
   return l2_error;
 }
@@ -364,7 +364,7 @@ JxWError<dim>::run()
 {
   setup_dofs();
   setup_matrices();
-  const double error = solve();
+  const double error= solve();
   return error;
 }
 
@@ -374,12 +374,12 @@ main(int argc, char** argv)
   // Use exactly one thread so that the CellSimilarity checks are not disabled.
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   std::ofstream logfile("output");
   deallog << std::setprecision(10);
   deallog.attach(logfile);
-  for(unsigned int n_global_refines = 3; n_global_refines < 6;
+  for(unsigned int n_global_refines= 3; n_global_refines < 6;
       ++n_global_refines)
     {
       JxWError<dim> solver(n_global_refines);

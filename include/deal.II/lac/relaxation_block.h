@@ -51,8 +51,8 @@ DEAL_II_NAMESPACE_OPEN
  * @date 2010
  */
 template <typename MatrixType,
-          typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename InverseNumberType= typename MatrixType::value_type,
+          typename VectorType       = Vector<double>>
 class RelaxationBlock : protected PreconditionBlockBase<InverseNumberType>
 {
 private:
@@ -84,14 +84,14 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const double relaxation      = 1.,
-                   const bool   invert_diagonal = true,
-                   const bool   same_diagonal   = false,
+    AdditionalData(const double relaxation     = 1.,
+                   const bool   invert_diagonal= true,
+                   const bool   same_diagonal  = false,
                    const typename PreconditionBlockBase<
                      InverseNumberType>::Inversion inversion
                    = PreconditionBlockBase<InverseNumberType>::gauss_jordan,
-                   const double threshold         = 0.,
-                   VectorType*  temp_ghost_vector = nullptr);
+                   const double threshold        = 0.,
+                   VectorType*  temp_ghost_vector= nullptr);
 
     /**
      * The mapping from indices to blocks. Each row of this pattern enumerates
@@ -136,7 +136,7 @@ public:
      * This parameter is used in the call to
      * LAPACKFullMatrix::compute_inverse_svd().
      */
-    double threshold = 0.;
+    double threshold= 0.;
 
     /**
      * If #inversion is SVD, we can compute the Penrose-Moore inverse of the
@@ -147,7 +147,7 @@ public:
      * This parameter is used in the call to
      * LAPACKFullMatrix::compute_inverse_svd().
      */
-    unsigned int kernel_size = 0;
+    unsigned int kernel_size= 0;
 
     /**
      * The order in which blocks should be traversed. This vector can initiate
@@ -282,8 +282,8 @@ private:
  * @date 2010
  */
 template <typename MatrixType,
-          typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename InverseNumberType= typename MatrixType::value_type,
+          typename VectorType       = Vector<double>>
 class RelaxationBlockJacobi
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>
@@ -379,8 +379,8 @@ public:
  * @date 2010
  */
 template <typename MatrixType,
-          typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename InverseNumberType= typename MatrixType::value_type,
+          typename VectorType       = Vector<double>>
 class RelaxationBlockSOR
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>
@@ -476,8 +476,8 @@ public:
  * @date 2010
  */
 template <typename MatrixType,
-          typename InverseNumberType = typename MatrixType::value_type,
-          typename VectorType        = Vector<double>>
+          typename InverseNumberType= typename MatrixType::value_type,
+          typename VectorType       = Vector<double>>
 class RelaxationBlockSSOR
   : public virtual Subscriptor,
     protected RelaxationBlock<MatrixType, InverseNumberType, VectorType>

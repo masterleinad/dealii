@@ -20,7 +20,7 @@
 #include <deal.II/lac/householder.h>
 #include <deal.II/lac/vector.h>
 
-const double rect[] = {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
+const double rect[]= {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
 
 int
 main()
@@ -36,7 +36,7 @@ main()
   Vector<double> v1(3);
   Vector<double> v2(3);
 
-  for(unsigned int i = 0; i < u.size(); ++i)
-    u(i) = i * i;
+  for(unsigned int i= 0; i < u.size(); ++i)
+    u(i)= i * i;
   deallog << "Distance " << H.least_squares(v1, u) << std::endl;
 }

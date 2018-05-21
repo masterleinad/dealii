@@ -29,24 +29,24 @@ check_2()
 
   SymmetricTensor<2, dim> change_with_brackets;
   SymmetricTensor<2, dim> change_with_parentheses;
-  for(unsigned int k = 0; k < dim; ++k)
+  for(unsigned int k= 0; k < dim; ++k)
     {
-      for(unsigned int l = 0; l < dim; ++l)
+      for(unsigned int l= 0; l < dim; ++l)
         {
-          const double    entry = double(Testing::rand());
+          const double    entry= double(Testing::rand());
           TableIndices<2> indices(k, l);
 
           // check assignment
-          change_with_brackets[indices]    = entry;
-          change_with_parentheses(indices) = entry;
+          change_with_brackets[indices]   = entry;
+          change_with_parentheses(indices)= entry;
           AssertThrow(change_with_brackets[k][l] == entry,
                       ExcMessage("Entries should match"));
           AssertThrow(change_with_parentheses[k][l] == entry,
                       ExcMessage("Entries should match"));
 
           // and access
-          const double brackets_entry    = change_with_brackets[indices];
-          const double parentheses_entry = change_with_parentheses(indices);
+          const double brackets_entry   = change_with_brackets[indices];
+          const double parentheses_entry= change_with_parentheses(indices);
           AssertThrow(brackets_entry == entry,
                       ExcMessage("Entries should match"));
           AssertThrow(parentheses_entry == entry,
@@ -64,27 +64,27 @@ check_4()
 
   SymmetricTensor<4, dim> change_with_brackets;
   SymmetricTensor<4, dim> change_with_parentheses;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int j= 0; j < dim; ++j)
         {
-          for(unsigned int k = 0; k < dim; ++k)
+          for(unsigned int k= 0; k < dim; ++k)
             {
-              for(unsigned int l = 0; l < dim; ++l)
+              for(unsigned int l= 0; l < dim; ++l)
                 {
-                  const double    entry = double(Testing::rand());
+                  const double    entry= double(Testing::rand());
                   TableIndices<4> indices(i, j, k, l);
 
                   // check assignment
-                  change_with_brackets[indices]    = entry;
-                  change_with_parentheses(indices) = entry;
+                  change_with_brackets[indices]   = entry;
+                  change_with_parentheses(indices)= entry;
                   AssertThrow(change_with_brackets[i][j][k][l] == entry,
                               ExcMessage("Entries should match"));
                   AssertThrow(change_with_parentheses[i][j][k][l] == entry,
                               ExcMessage("Entries should match"));
 
                   // and access
-                  const double brackets_entry = change_with_brackets[indices];
+                  const double brackets_entry= change_with_brackets[indices];
                   const double parentheses_entry
                     = change_with_parentheses(indices);
                   AssertThrow(brackets_entry == entry,

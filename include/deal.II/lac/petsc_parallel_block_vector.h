@@ -84,7 +84,7 @@ namespace PETScWrappers
       /**
        * Default constructor. Generate an empty vector without any blocks.
        */
-      BlockVector() = default;
+      BlockVector()= default;
 
       /**
        * Constructor. Generate a block vector with @p n_blocks blocks, each of
@@ -119,7 +119,7 @@ namespace PETScWrappers
        * initialized with the given IndexSet.
        */
       explicit BlockVector(const std::vector<IndexSet>& parallel_partitioning,
-                           const MPI_Comm& communicator = MPI_COMM_WORLD);
+                           const MPI_Comm& communicator= MPI_COMM_WORLD);
 
       /**
        * Same as above, but include ghost elements
@@ -131,7 +131,7 @@ namespace PETScWrappers
       /**
        * Destructor. Clears memory
        */
-      ~BlockVector() override = default;
+      ~BlockVector() override= default;
 
       /**
        * Copy operator: fill all components of the vector that are locally
@@ -160,7 +160,7 @@ namespace PETScWrappers
              const MPI_Comm&    communicator,
              const size_type    block_size,
              const size_type    local_size,
-             const bool         omit_zeroing_entries = false);
+             const bool         omit_zeroing_entries= false);
 
       /**
        * Reinitialize the BlockVector such that it contains
@@ -186,7 +186,7 @@ namespace PETScWrappers
       reinit(const std::vector<size_type>& block_sizes,
              const MPI_Comm&               communicator,
              const std::vector<size_type>& local_sizes,
-             const bool                    omit_zeroing_entries = false);
+             const bool                    omit_zeroing_entries= false);
 
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
@@ -203,7 +203,7 @@ namespace PETScWrappers
        * be routed to the wrong block.
        */
       void
-      reinit(const BlockVector& V, const bool omit_zeroing_entries = false);
+      reinit(const BlockVector& V, const bool omit_zeroing_entries= false);
 
       /**
        * Reinitialize the BlockVector using IndexSets. See the constructor
@@ -268,9 +268,9 @@ namespace PETScWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const;
 
       /**
        * Exception
@@ -306,10 +306,10 @@ namespace PETScWrappers
       : BlockVectorBase<Vector>()
     {
       this->components.resize(v.n_blocks());
-      this->block_indices = v.block_indices;
+      this->block_indices= v.block_indices;
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
-        this->components[i] = v.components[i];
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
+        this->components[i]= v.components[i];
     }
 
     inline BlockVector::BlockVector(
@@ -345,8 +345,8 @@ namespace PETScWrappers
       if(this->n_blocks() != v.n_blocks())
         reinit(v.n_blocks());
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
-        this->components[i] = v.block(i);
+      for(size_type i= 0; i < this->n_blocks(); ++i)
+        this->components[i]= v.block(i);
 
       collect_sizes();
 
@@ -376,7 +376,7 @@ namespace PETScWrappers
       if(this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         this->components[i].reinit(
           communicator, block_sizes[i], local_sizes[i], omit_zeroing_entries);
     }
@@ -384,11 +384,11 @@ namespace PETScWrappers
     inline void
     BlockVector::reinit(const BlockVector& v, const bool omit_zeroing_entries)
     {
-      this->block_indices = v.get_block_indices();
+      this->block_indices= v.get_block_indices();
       if(this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         block(i).reinit(v.block(i), omit_zeroing_entries);
     }
 
@@ -397,14 +397,14 @@ namespace PETScWrappers
                         const MPI_Comm&              communicator)
     {
       std::vector<size_type> sizes(parallel_partitioning.size());
-      for(unsigned int i = 0; i < parallel_partitioning.size(); ++i)
-        sizes[i] = parallel_partitioning[i].size();
+      for(unsigned int i= 0; i < parallel_partitioning.size(); ++i)
+        sizes[i]= parallel_partitioning[i].size();
 
       this->block_indices.reinit(sizes);
       if(this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         block(i).reinit(parallel_partitioning[i], communicator);
     }
 
@@ -414,14 +414,14 @@ namespace PETScWrappers
                         const MPI_Comm&              communicator)
     {
       std::vector<types::global_dof_index> sizes(parallel_partitioning.size());
-      for(unsigned int i = 0; i < parallel_partitioning.size(); ++i)
-        sizes[i] = parallel_partitioning[i].size();
+      for(unsigned int i= 0; i < parallel_partitioning.size(); ++i)
+        sizes[i]= parallel_partitioning[i].size();
 
       this->block_indices.reinit(sizes);
       if(this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         block(i).reinit(
           parallel_partitioning[i], ghost_entries[i], communicator);
     }
@@ -435,9 +435,9 @@ namespace PETScWrappers
     inline bool
     BlockVector::has_ghost_elements() const
     {
-      bool ghosted = block(0).has_ghost_elements();
+      bool ghosted= block(0).has_ghost_elements();
 #  ifdef DEBUG
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
 #  endif
       return ghosted;
@@ -457,7 +457,7 @@ namespace PETScWrappers
                        const bool         scientific,
                        const bool         across) const
     {
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         {
           if(across)
             out << 'C' << i << ':';

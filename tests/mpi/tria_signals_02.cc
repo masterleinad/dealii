@@ -56,7 +56,7 @@ private:
   count_on_refine(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
-    n_active_cells += cell->n_children();
+    n_active_cells+= cell->n_children();
     --n_active_cells;
 
     return;
@@ -67,7 +67,7 @@ private:
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
     ++n_active_cells;
-    n_active_cells -= cell->n_children();
+    n_active_cells-= cell->n_children();
 
     return;
   }
@@ -83,8 +83,8 @@ test()
   typedef parallel::distributed::Triangulation<dim, spacedim> TriaType;
 
   {
-    const std::string prefix = Utilities::int_to_string(dim, 1) + "d-"
-                               + Utilities::int_to_string(spacedim, 1) + "d";
+    const std::string prefix= Utilities::int_to_string(dim, 1) + "d-"
+                              + Utilities::int_to_string(spacedim, 1) + "d";
     deallog.push(prefix.c_str());
   }
 
@@ -100,8 +100,8 @@ test()
 
   // Test signal on coarsening
   {
-    typename TriaType::active_cell_iterator       cell = tria.begin_active();
-    const typename TriaType::active_cell_iterator endc = tria.end();
+    typename TriaType::active_cell_iterator       cell= tria.begin_active();
+    const typename TriaType::active_cell_iterator endc= tria.end();
 
     for(; cell != endc; ++cell)
       {
@@ -126,20 +126,20 @@ main(int argc, char* argv[])
 
   // parallel::distributed::Triangulation<1, spacedim> is not valid.
   {
-    const int dim      = 2;
-    const int spacedim = 2;
+    const int dim     = 2;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 2;
-    const int spacedim = 3;
+    const int dim     = 2;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 3;
-    const int spacedim = 3;
+    const int dim     = 3;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 

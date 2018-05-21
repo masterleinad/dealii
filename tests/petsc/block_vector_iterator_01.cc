@@ -23,13 +23,13 @@ void
 test()
 {
   PETScWrappers::MPI::BlockVector v(2, MPI_COMM_WORLD, 1, 1);
-  v(0) = 1;
-  v(1) = 2;
+  v(0)= 1;
+  v(1)= 2;
 
   // first check reading through a const
   // iterator
   {
-    PETScWrappers::MPI::BlockVector::const_iterator i = v.begin();
+    PETScWrappers::MPI::BlockVector::const_iterator i= v.begin();
     AssertThrow(*i == 1, ExcInternalError());
     ++i;
     AssertThrow(*i == 2, ExcInternalError());
@@ -47,7 +47,7 @@ test()
 
   // read through a read-write iterator
   {
-    PETScWrappers::MPI::BlockVector::iterator i = v.begin();
+    PETScWrappers::MPI::BlockVector::iterator i= v.begin();
     AssertThrow(*i == 1, ExcInternalError());
     ++i;
     AssertThrow(*i == 2, ExcInternalError());
@@ -55,16 +55,16 @@ test()
 
   // write through a read-write iterator
   {
-    PETScWrappers::MPI::BlockVector::iterator i = v.begin();
+    PETScWrappers::MPI::BlockVector::iterator i= v.begin();
 
-    *i = 2;
+    *i= 2;
     ++i;
-    *i = 3;
+    *i= 3;
   }
 
   // and read again
   {
-    PETScWrappers::MPI::BlockVector::iterator i = v.begin();
+    PETScWrappers::MPI::BlockVector::iterator i= v.begin();
     AssertThrow(*i == 2, ExcInternalError());
     ++i;
     AssertThrow(*i == 3, ExcInternalError());

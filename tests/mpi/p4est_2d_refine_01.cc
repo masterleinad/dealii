@@ -29,7 +29,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -46,7 +46,7 @@ test()
       GridTools::get_subdomain_association(tr, cell_subd);
       if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
-          for(unsigned int i = 0; i < tr.n_active_cells(); ++i)
+          for(unsigned int i= 0; i < tr.n_active_cells(); ++i)
             deallog << cell_subd[i] << " ";
           deallog << std::endl;
         }
@@ -56,7 +56,7 @@ test()
           deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
         }
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       if(myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
@@ -70,7 +70,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

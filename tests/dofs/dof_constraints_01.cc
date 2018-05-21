@@ -43,11 +43,11 @@ test()
   // generate as many hanging node
   // constraints as possible
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -89,15 +89,15 @@ test()
       ++cell)
     {
       cell->get_dof_indices(local_dofs);
-      local_matrix = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      local_matrix= 0;
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           local_matrix(i, j)
             = (i + 1.) * (j + 1.) * (local_dofs[i] + 1.) * (local_dofs[j] + 1.);
 
       // copy local to global by ourselves
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
 
       // or let other functions do that
@@ -111,7 +111,7 @@ test()
   // for constrained nodes. we can do so at
   // will, since these values don't matter
   // anyway
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     if(constraints.is_constrained(i))
       B.set(i, i, A(i, i));
 

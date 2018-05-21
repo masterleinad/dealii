@@ -92,13 +92,13 @@ namespace NonMatching
             == nullptr),
            ExcNotImplemented());
 
-    const auto& space_fe    = space_dh.get_fe();
-    const auto& immersed_fe = immersed_dh.get_fe();
+    const auto& space_fe   = space_dh.get_fe();
+    const auto& immersed_fe= immersed_dh.get_fe();
 
     // Now we run on ech cell, get a quadrature formula
     typename DoFHandler<dim1, spacedim>::active_cell_iterator cell
       = immersed_dh.begin_active(),
-      endc = immersed_dh.end();
+      endc= immersed_dh.end();
 
     // Dof indices
     std::vector<types::global_dof_index> dofs(immersed_fe.dofs_per_cell);
@@ -126,13 +126,13 @@ namespace NonMatching
     std::vector<unsigned int> immersed_gtl(immersed_fe.n_components(),
                                            numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
+    for(unsigned int i= 0, j= 0; i < space_gtl.size(); ++i)
       if(space_c[i])
-        space_gtl[i] = j++;
+        space_gtl[i]= j++;
 
-    for(unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
+    for(unsigned int i= 0, j= 0; i < immersed_gtl.size(); ++i)
       if(immersed_c[i])
-        immersed_gtl[i] = j++;
+        immersed_gtl[i]= j++;
 
     // [TODO]: when the add_entries_local_to_global below will implement
     // the version with the dof_mask, this should be uncommented.
@@ -163,10 +163,10 @@ namespace NonMatching
           = fe_v.get_quadrature_points();
 
         // Get a list of outer cells, qpoints and maps.
-        const auto  cpm   = GridTools::compute_point_locations(cache, Xpoints);
-        const auto& cells = std::get<0>(cpm);
+        const auto  cpm  = GridTools::compute_point_locations(cache, Xpoints);
+        const auto& cells= std::get<0>(cpm);
 
-        for(unsigned int c = 0; c < cells.size(); ++c)
+        for(unsigned int c= 0; c < cells.size(); ++c)
           {
             // Get the ones in the current outer cell
             typename DoFHandler<dim0, spacedim>::cell_iterator ocell(*cells[c],
@@ -231,8 +231,8 @@ namespace NonMatching
             == nullptr),
            ExcNotImplemented());
 
-    const auto& space_fe    = space_dh.get_fe();
-    const auto& immersed_fe = immersed_dh.get_fe();
+    const auto& space_fe   = space_dh.get_fe();
+    const auto& immersed_fe= immersed_dh.get_fe();
 
     // Dof indices
     std::vector<types::global_dof_index> dofs(immersed_fe.dofs_per_cell);
@@ -257,13 +257,13 @@ namespace NonMatching
     std::vector<unsigned int> immersed_gtl(immersed_fe.n_components(),
                                            numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
+    for(unsigned int i= 0, j= 0; i < space_gtl.size(); ++i)
       if(space_c[i])
-        space_gtl[i] = j++;
+        space_gtl[i]= j++;
 
-    for(unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
+    for(unsigned int i= 0, j= 0; i < immersed_gtl.size(); ++i)
       if(immersed_c[i])
-        immersed_gtl[i] = j++;
+        immersed_gtl[i]= j++;
 
     FullMatrix<typename Matrix::value_type> cell_matrix(
       space_dh.get_fe().dofs_per_cell, immersed_dh.get_fe().dofs_per_cell);
@@ -277,7 +277,7 @@ namespace NonMatching
     // Now we run on ech cell, get a quadrature formula
     typename DoFHandler<dim1, spacedim>::active_cell_iterator cell
       = immersed_dh.begin_active(),
-      endc = immersed_dh.end();
+      endc= immersed_dh.end();
 
     for(; cell != endc; ++cell)
       {
@@ -289,12 +289,12 @@ namespace NonMatching
           = fe_v.get_quadrature_points();
 
         // Get a list of outer cells, qpoints and maps.
-        const auto  cpm   = GridTools::compute_point_locations(cache, Xpoints);
-        const auto& cells = std::get<0>(cpm);
-        const auto& qpoints = std::get<1>(cpm);
-        const auto& maps    = std::get<2>(cpm);
+        const auto  cpm    = GridTools::compute_point_locations(cache, Xpoints);
+        const auto& cells  = std::get<0>(cpm);
+        const auto& qpoints= std::get<1>(cpm);
+        const auto& maps   = std::get<2>(cpm);
 
-        for(unsigned int c = 0; c < cells.size(); ++c)
+        for(unsigned int c= 0; c < cells.size(); ++c)
           {
             // Get the ones in the current outer cell
             typename DoFHandler<dim0, spacedim>::active_cell_iterator ocell(
@@ -302,8 +302,8 @@ namespace NonMatching
             // Make sure we act only on locally_owned cells
             if(ocell->is_locally_owned())
               {
-                const std::vector<Point<dim0>>&  qps = qpoints[c];
-                const std::vector<unsigned int>& ids = maps[c];
+                const std::vector<Point<dim0>>&  qps= qpoints[c];
+                const std::vector<unsigned int>& ids= maps[c];
 
                 FEValues<dim0, spacedim> o_fe_v(
                   cache.get_mapping(), space_dh.get_fe(), qps, update_values);
@@ -311,33 +311,31 @@ namespace NonMatching
                 ocell->get_dof_indices(odofs);
 
                 // Reset the matrices.
-                cell_matrix = typename Matrix::value_type();
+                cell_matrix= typename Matrix::value_type();
 
-                for(unsigned int i = 0; i < space_dh.get_fe().dofs_per_cell;
-                    ++i)
+                for(unsigned int i= 0; i < space_dh.get_fe().dofs_per_cell; ++i)
                   {
                     const auto comp_i
                       = space_dh.get_fe().system_to_component_index(i).first;
                     if(space_gtl[comp_i] != numbers::invalid_unsigned_int)
-                      for(unsigned int j = 0;
+                      for(unsigned int j= 0;
                           j < immersed_dh.get_fe().dofs_per_cell;
                           ++j)
                         {
-                          const auto comp_j = immersed_dh.get_fe()
-                                                .system_to_component_index(j)
-                                                .first;
+                          const auto comp_j= immersed_dh.get_fe()
+                                               .system_to_component_index(j)
+                                               .first;
                           if(space_gtl[comp_i] == immersed_gtl[comp_j])
-                            for(unsigned int oq = 0;
+                            for(unsigned int oq= 0;
                                 oq < o_fe_v.n_quadrature_points;
                                 ++oq)
                               {
                                 // Get the corresponding q point
-                                const unsigned int q = ids[oq];
+                                const unsigned int q= ids[oq];
 
-                                cell_matrix(i, j)
-                                  += (fe_v.shape_value(j, q)
-                                      * o_fe_v.shape_value(i, oq)
-                                      * fe_v.JxW(q));
+                                cell_matrix(i, j)+= (fe_v.shape_value(j, q)
+                                                     * o_fe_v.shape_value(i, oq)
+                                                     * fe_v.JxW(q));
                               }
                         }
                   }

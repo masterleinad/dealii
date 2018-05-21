@@ -27,7 +27,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     return;
 
   // check all combinations of fe1 and fe2
-  for(unsigned int subface = 0;
+  for(unsigned int subface= 0;
       subface < GeometryInfo<dim>::max_children_per_face;
       ++subface)
     {

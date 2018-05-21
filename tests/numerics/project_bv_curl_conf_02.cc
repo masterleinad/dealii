@@ -48,8 +48,8 @@ void
 BoundaryFunction<dim>::vector_value(const Point<dim>&,
                                     Vector<double>& values) const
 {
-  for(unsigned int d = 0; d < dim; ++d)
-    values(d) = d + 1.0;
+  for(unsigned int d= 0; d < dim; ++d)
+    values(d)= d + 1.0;
 }
 
 template <int dim>
@@ -88,9 +88,9 @@ test(unsigned order)
 
   if(constraints_fes.n_constraints() == constraints_fe.n_constraints())
     {
-      const IndexSet& lines = constraints_fes.get_local_lines();
+      const IndexSet& lines= constraints_fes.get_local_lines();
 
-      for(unsigned i = 0; i < lines.n_elements(); ++i)
+      for(unsigned i= 0; i < lines.n_elements(); ++i)
         {
           if(!constraints_fe.is_constrained(lines.nth_index_in_set(i)))
             {
@@ -104,7 +104,7 @@ test(unsigned order)
           const std::vector<std::pair<types::global_dof_index, double>>& c2
             = *constraints_fe.get_constraint_entries(lines.nth_index_in_set(i));
 
-          for(size_t j = 0; j < c1.size(); ++j)
+          for(size_t j= 0; j < c1.size(); ++j)
             if((c1[j].first != c2[j].first)
                || (fabs(c1[j].second - c2[j].second) > 1e-14))
               {

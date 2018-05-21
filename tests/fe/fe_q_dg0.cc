@@ -145,8 +145,8 @@ namespace Step22
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
-    double x = p[0];
-    double y = p[1];
+    double x= p[0];
+    double y= p[1];
 
     switch(component)
       {
@@ -179,8 +179,8 @@ namespace Step22
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
-    double x = p[0];
-    double y = p[1];
+    double x= p[0];
+    double y= p[1];
 
     Tensor<1, dim> gradient;
 
@@ -188,32 +188,32 @@ namespace Step22
       {
         //velocity
         case 0:
-          gradient[0] = x
-                        * (x
-                             * (x * y * (y * (16 * y - 24) + 8)
-                                + y * ((36 - 24 * y) * y - 12))
-                           + y * (y * (8 * y - 12) + 4));
+          gradient[0]= x
+                       * (x
+                            * (x * y * (y * (16 * y - 24) + 8)
+                               + y * ((36 - 24 * y) * y - 12))
+                          + y * (y * (8 * y - 12) + 4));
           gradient[1]
             = x * x
               * (x * (x * (y * (12 * y - 12) + 2) + (24 - 24 * y) * y - 4)
                  + y * (12 * y - 12) + 2);
           break;
         case 1:
-          gradient[0] = x
-                          * (x * ((24 - 12 * y) * y - 12) * y * y
-                             + (y * (12 * y - 24) + 12) * y * y)
-                        + ((4 - 2 * y) * y - 2) * y * y;
-          gradient[1] = x
-                        * (x
-                             * (x * y * ((24 - 16 * y) * y - 8)
-                                + y * (y * (24 * y - 36) + 12))
-                           + y * ((12 - 8 * y) * y - 4));
+          gradient[0]= x
+                         * (x * ((24 - 12 * y) * y - 12) * y * y
+                            + (y * (12 * y - 24) + 12) * y * y)
+                       + ((4 - 2 * y) * y - 2) * y * y;
+          gradient[1]= x
+                       * (x
+                            * (x * y * ((24 - 16 * y) * y - 8)
+                               + y * (y * (24 * y - 36) + 12))
+                          + y * ((12 - 8 * y) * y - 4));
           break;
         //pressure
         case 2:
           //discontinuous Boffi
-          gradient[0] = -exp((x - .5) * (x - .5)) * (2 * x - 1) * (y - 1) * y;
-          gradient[1] = -exp((x - .5) * (x - .5)) * (2 * y - 1);
+          gradient[0]= -exp((x - .5) * (x - .5)) * (2 * x - 1) * (y - 1) * y;
+          gradient[1]= -exp((x - .5) * (x - .5)) * (2 * y - 1);
           //discontinuous simple
           //gradient[0]=0;
           //gradient[1]=0;
@@ -233,8 +233,8 @@ namespace Step22
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
-    double x = p[0];
-    double y = p[1];
+    double x= p[0];
+    double y= p[1];
 
     switch(component)
       {
@@ -273,8 +273,8 @@ namespace Step22
   JumpFunction<dim>::jump(const Point<dim>&     p,
                           const Tensor<1, dim>& normal) const
   {
-    double x = p[0];
-    double y = p[1];
+    double x= p[0];
+    double y= p[1];
     //discontinuous
     if(std::abs(x - .5) > 1e-10)
       return 0;
@@ -341,7 +341,7 @@ namespace Step22
     SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
     SolverCG<>    cg(solver_control);
 
-    dst = 0;
+    dst= 0;
 
     cg.solve(*matrix, dst, src, *preconditioner);
 
@@ -411,13 +411,13 @@ namespace Step22
     DoFRenumbering::Cuthill_McKee(dof_handler);
 
     std::vector<unsigned int> block_component(dim + 1, 0);
-    block_component[dim] = 1;
+    block_component[dim]= 1;
     DoFRenumbering::component_wise(dof_handler, block_component);
 
     {
       constraints.clear();
       std::vector<bool> component_mask(dim + 1, true);
-      component_mask[dim] = false;
+      component_mask[dim]= false;
 
       DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
@@ -465,7 +465,7 @@ namespace Step22
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
 
     deallog << "   Number of active cells: " << triangulation.n_active_cells()
             << std::endl
@@ -503,8 +503,8 @@ namespace Step22
   void
   StokesProblem<dim>::assemble_system()
   {
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     QGauss<dim>     quadrature_formula(degree + 2);
     QGauss<dim - 1> quadrature_face(degree + 2);
@@ -519,10 +519,10 @@ namespace Step22
                                 update_values | update_quadrature_points
                                   | update_JxW_values | update_normal_vectors);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
-    const unsigned int n_q_points = quadrature_formula.size();
-    const unsigned int n_q_face   = quadrature_face.size();
+    const unsigned int n_q_points= quadrature_formula.size();
+    const unsigned int n_q_face  = quadrature_face.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
@@ -543,28 +543,28 @@ namespace Step22
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
 
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                div_phi_u[k]= fe_values[velocities].divergence(k, q);
+                phi_p[k]    = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * symgrad_phi_u[i] * symgrad_phi_u[j]
@@ -575,20 +575,20 @@ namespace Step22
 
                 const unsigned int component_i
                   = fe.system_to_component_index(i).first;
-                local_rhs(i) += fe_values.shape_value(i, q)
-                                * rhs_values[q](component_i) * fe_values.JxW(q);
+                local_rhs(i)+= fe_values.shape_value(i, q)
+                               * rhs_values[q](component_i) * fe_values.JxW(q);
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            local_matrix(i, j) = local_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            local_matrix(i, j)= local_matrix(j, i);
 
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
           {
-            typename DoFHandler<dim>::face_iterator face = cell->face(face_no);
+            typename DoFHandler<dim>::face_iterator face= cell->face(face_no);
             if(face->at_boundary() == false)
               {
                 typename DoFHandler<dim>::cell_iterator neighbor
@@ -602,18 +602,18 @@ namespace Step22
                     const std::vector<Point<dim>>& quad_points
                       = fe_v_face.get_quadrature_points();
 
-                    for(unsigned int q = 0; q < n_q_face; ++q)
+                    for(unsigned int q= 0; q < n_q_face; ++q)
                       {
                         double jump
                           = jumpfunction.jump(quad_points[q], normals[q]);
-                        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                        for(unsigned int i= 0; i < dofs_per_cell; ++i)
                           {
                             const unsigned int component_i
                               = fe.system_to_component_index(i).first;
                             if(component_i < dim)
-                              local_rhs(i) += fe_v_face.shape_value(i, q) * jump
-                                              * normals[q][component_i]
-                                              * fe_v_face.JxW(q);
+                              local_rhs(i)+= fe_v_face.shape_value(i, q) * jump
+                                             * normals[q][component_i]
+                                             * fe_v_face.JxW(q);
                           }
                       }
                   }
@@ -628,7 +628,7 @@ namespace Step22
                                                system_rhs);
       }
 
-    A_preconditioner = std::shared_ptr<typename InnerPreconditioner<dim>::type>(
+    A_preconditioner= std::shared_ptr<typename InnerPreconditioner<dim>::type>(
       new typename InnerPreconditioner<dim>::type());
     A_preconditioner->initialize(
       system_matrix.block(0, 0),
@@ -648,7 +648,7 @@ namespace Step22
       Vector<double> schur_rhs(solution.block(1).size());
       A_inverse.vmult(tmp, system_rhs.block(0));
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
-      schur_rhs -= system_rhs.block(1);
+      schur_rhs-= system_rhs.block(1);
 
       SchurComplement<typename InnerPreconditioner<dim>::type> schur_complement(
         system_matrix, A_inverse);
@@ -671,8 +671,8 @@ namespace Step22
 
     {
       system_matrix.block(0, 1).vmult(tmp, solution.block(1));
-      tmp *= -1;
-      tmp += system_rhs.block(0);
+      tmp*= -1;
+      tmp+= system_rhs.block(0);
 
       A_inverse.vmult(solution.block(0), tmp);
 
@@ -690,7 +690,7 @@ namespace Step22
 
     ExactSolution<dim> exactsolution;
 
-    const unsigned int n_active_cells = triangulation.n_active_cells();
+    const unsigned int n_active_cells= triangulation.n_active_cells();
 
     Vector<double> difference_per_cell(n_active_cells);
 
@@ -703,7 +703,7 @@ namespace Step22
                                       quadrature,
                                       VectorTools::L2_norm,
                                       &velocity_mask);
-    const double L2_error_velocity = difference_per_cell.l2_norm();
+    const double L2_error_velocity= difference_per_cell.l2_norm();
 
     VectorTools::integrate_difference(dof_handler,
                                       solution,
@@ -712,7 +712,7 @@ namespace Step22
                                       quadrature,
                                       VectorTools::H1_seminorm,
                                       &velocity_mask);
-    const double H1_error_velocity = difference_per_cell.l2_norm();
+    const double H1_error_velocity= difference_per_cell.l2_norm();
 
     VectorTools::integrate_difference(dof_handler,
                                       solution,
@@ -721,7 +721,7 @@ namespace Step22
                                       quadrature,
                                       VectorTools::Linfty_norm,
                                       &velocity_mask);
-    const double Linfty_error_velocity = difference_per_cell.linfty_norm();
+    const double Linfty_error_velocity= difference_per_cell.linfty_norm();
 
     divergence_velocity(solution, difference_per_cell, quadrature, true);
 
@@ -757,12 +757,12 @@ namespace Step22
                                       quadrature,
                                       VectorTools::mean,
                                       &pressure_mask);
-    double integral = difference_per_cell.mean_value() * n_active_cells;
+    double integral= difference_per_cell.mean_value() * n_active_cells;
     //std::cout<<"mean difference "<<integral *integral<<std::endl;
-    L2_error_pressure -= integral * integral;
+    L2_error_pressure-= integral * integral;
 
     //    std::cout<<"Pressure error squared: "<<L2_error_pressure<<std::endl;
-    L2_error_pressure = (L2_error_pressure > 0) ? sqrt(L2_error_pressure) : 0;
+    L2_error_pressure= (L2_error_pressure > 0) ? sqrt(L2_error_pressure) : 0;
 
     /*Vector<double> difference(dim+1);
     const Point<dim> point(.25,0);
@@ -777,7 +777,7 @@ namespace Step22
                                       quadrature,
                                       VectorTools::H1_seminorm,
                                       &pressure_mask);
-    const double H1_error_pressure = difference_per_cell.l2_norm();
+    const double H1_error_pressure= difference_per_cell.l2_norm();
 
     VectorTools::integrate_difference(dof_handler,
                                       solution,
@@ -786,7 +786,7 @@ namespace Step22
                                       quadrature,
                                       VectorTools::Linfty_norm,
                                       &pressure_mask);
-    const double Linfty_error_pressure = difference_per_cell.linfty_norm();
+    const double Linfty_error_pressure= difference_per_cell.linfty_norm();
 
     convergence_table.add_value("cycle", refinement_cycle);
     convergence_table.add_value("cells", n_active_cells);
@@ -825,7 +825,7 @@ namespace Step22
     GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(1);
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 5;
+    for(unsigned int refinement_cycle= 0; refinement_cycle < 5;
         ++refinement_cycle)
       {
         deallog << "Refinement cycle " << refinement_cycle << std::endl;
@@ -912,16 +912,16 @@ namespace Step22
     const Quadrature<dim>&     quadrature,
     bool                       norm)
   {
-    output_vector = 0;
+    output_vector= 0;
 
     FEValues<dim> fe_v(fe, quadrature, update_gradients | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature.size();
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     for(; cell != endc; ++cell)
@@ -929,22 +929,21 @@ namespace Step22
         fe_v.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            double div = 0;
-            for(unsigned int i = 0; i < dofs_per_cell - 1; ++i)
+            double div= 0;
+            for(unsigned int i= 0; i < dofs_per_cell - 1; ++i)
               {
-                double tmp = 0;
-                for(unsigned int d = 0; d < dim; ++d)
-                  tmp += fe_v.shape_grad_component(i, q, d)[d];
+                double tmp= 0;
+                for(unsigned int d= 0; d < dim; ++d)
+                  tmp+= fe_v.shape_grad_component(i, q, d)[d];
 
-                div += tmp * calc_solution(local_dof_indices[i]);
+                div+= tmp * calc_solution(local_dof_indices[i]);
               }
             if(norm)
-              output_vector(cell->index())
-                += div * div * fe_v.JxW(q); //L^2-Norm
+              output_vector(cell->index())+= div * div * fe_v.JxW(q); //L^2-Norm
             else
-              output_vector(cell->index()) += div * fe_v.JxW(q); //Integral
+              output_vector(cell->index())+= div * fe_v.JxW(q); //Integral
           }
       }
   }
@@ -961,23 +960,23 @@ main()
   deallog.depth_file(1);
 
   unsigned int       degree;
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
   {
-    degree = 1;
+    degree= 1;
     FESystem<dim> fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1);
     deallog << fe.get_name() << ":" << std::endl;
     StokesProblem<2> flow_problem(degree, fe);
     flow_problem.run();
   }
   {
-    degree = 1;
+    degree= 1;
     FESystem<2> fe(FE_Q<dim>(degree + 1), dim, FE_Q_DG0<dim>(degree), 1);
     deallog << fe.get_name() << ":" << std::endl;
     StokesProblem<2> flow_problem(degree, fe);
     flow_problem.run();
   }
   {
-    degree = 2;
+    degree= 2;
     FESystem<2> fe(FE_Q<dim>(degree + 1), dim, FE_Q_DG0<dim>(degree), 1);
     deallog << fe.get_name() << ":" << std::endl;
     StokesProblem<2> flow_problem(degree, fe);

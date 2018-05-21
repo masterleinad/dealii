@@ -23,14 +23,14 @@ void
 test(Vector<std::complex<double>>& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = std::complex<double>(i + 1., i + 2.);
+      v(i)= std::complex<double>(i + 1., i + 2.);
   v.compress();
 
   // then copy it
   Vector<std::complex<double>> w(v.size());
-  w = v;
+  w= v;
 
   // make sure they're equal
   deallog << std::abs(v * w) << ' ' << v.l2_norm() * w.l2_norm() << ' '

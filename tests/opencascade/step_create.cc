@@ -34,12 +34,12 @@ main()
   pts.push_back(Point<3>(1, 1, 0));
   pts.push_back(Point<3>(1, 0, 0));
 
-  TopoDS_Edge edge = interpolation_curve(pts);
+  TopoDS_Edge edge= interpolation_curve(pts);
   write_STEP(edge, "tmp.step");
   std::ifstream in("tmp.step");
   std::ofstream out("output");
   std::string   line;
-  unsigned int  counter = 0;
+  unsigned int  counter= 0;
 
   while(std::getline(in, line))
     {

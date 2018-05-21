@@ -21,7 +21,7 @@
 class FirstClass : public ParameterAcceptor
 {
 public:
-  FirstClass(const std::string& name = "First Class") : ParameterAcceptor(name)
+  FirstClass(const std::string& name= "First Class") : ParameterAcceptor(name)
   {
     add_parameter("First int", f_i);
     add_parameter("First double", f_d);
@@ -30,17 +30,16 @@ public:
   };
 
 private:
-  int         f_i = 3;
-  double      f_d = 7.7;
-  bool        f_b = true;
-  std::string f_s = "hello";
+  int         f_i= 3;
+  double      f_d= 7.7;
+  bool        f_b= true;
+  std::string f_s= "hello";
 };
 
 class SecondClass : public ParameterAcceptor
 {
 public:
-  SecondClass(const std::string& name = "Second Class")
-    : ParameterAcceptor(name)
+  SecondClass(const std::string& name= "Second Class") : ParameterAcceptor(name)
   {
     add_parameter("Second int", s_i);
     add_parameter("Second double", s_d);
@@ -49,10 +48,10 @@ public:
   };
 
 private:
-  int         s_i = 5;
-  double      s_d = 9.9;
-  bool        s_b = false;
-  std::string s_s = "bye bye";
+  int         s_i= 5;
+  double      s_d= 9.9;
+  bool        s_b= false;
+  std::string s_s= "bye bye";
 };
 
 int
@@ -62,7 +61,7 @@ main()
 
   FirstClass  f;
   SecondClass s;
-  std::string output_name = "used_parameter_acceptor_06.tex";
+  std::string output_name= "used_parameter_acceptor_06.tex";
   ParameterAcceptor::initialize(
     SOURCE_DIR "/parameter_acceptor_parameters/parameter_acceptor_05.prm",
     output_name);

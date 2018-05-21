@@ -39,26 +39,26 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           size = 3;
+  const unsigned int           size= 3;
   LAPACKFullMatrix<NumberType> M(size);
   M.set_property(LAPACKSupport::symmetric);
 
-  M(0, 0) = 10;
-  M(0, 1) = 2;
-  M(1, 0) = 2;
-  M(0, 2) = 3;
-  M(2, 0) = 3;
-  M(1, 1) = 20;
-  M(1, 2) = 6;
-  M(2, 1) = 6;
-  M(2, 2) = 90;
+  M(0, 0)= 10;
+  M(0, 1)= 2;
+  M(1, 0)= 2;
+  M(0, 2)= 3;
+  M(2, 0)= 3;
+  M(1, 1)= 20;
+  M(1, 2)= 6;
+  M(2, 1)= 6;
+  M(2, 2)= 90;
 
   Vector<NumberType> x(size), y(size);
-  x[0] = 2;
-  x[1] = -7;
-  x[2] = 1;
+  x[0]= 2;
+  x[1]= -7;
+  x[2]= 1;
 
-  y = x;
+  y= x;
   M.compute_cholesky_factorization();
   M.solve(y);
   y.print(deallog.get_file_stream(), 6, false);
@@ -67,7 +67,7 @@ test()
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);

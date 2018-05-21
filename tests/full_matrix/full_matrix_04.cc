@@ -24,7 +24,7 @@
 void
 diff(FullMatrix<double>& M)
 {
-  const double err = M.frobenius_norm();
+  const double err= M.frobenius_norm();
   if(err < 1.e-14)
     deallog << "ok" << std::endl;
   else
@@ -42,19 +42,19 @@ test(const unsigned int n, const unsigned int m)
   FullMatrix<double> Bt(m, n);
   FullMatrix<double> Dt(n, m);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
-      for(unsigned int j = 0; j < n; ++j)
-        A(i, j) = random_value<double>();
-      for(unsigned int j = 0; j < m; ++j)
+      for(unsigned int j= 0; j < n; ++j)
+        A(i, j)= random_value<double>();
+      for(unsigned int j= 0; j < m; ++j)
         {
-          B(i, j) = Bt(j, i) = random_value<double>();
-          D(j, i) = Dt(i, j) = random_value<double>();
+          B(i, j)= Bt(j, i)= random_value<double>();
+          D(j, i)= Dt(i, j)= random_value<double>();
         }
     }
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < m; ++j)
-      C(i, j) = random_value<double>();
+  for(unsigned int i= 0; i < m; ++i)
+    for(unsigned int j= 0; j < m; ++j)
+      C(i, j)= random_value<double>();
 
   // Compare first Schur complement
   // with mmult.
@@ -81,28 +81,28 @@ test(const unsigned int n, const unsigned int m)
   diff(aux4);
 
   // Check transpose versions
-  aux2 = 0.;
+  aux2= 0.;
   aux2.triple_product(A, Dt, B, true, false);
   aux2.add(-1., S1);
   diff(aux2);
-  aux2 = 0.;
+  aux2= 0.;
   aux2.triple_product(A, D, Bt, false, true);
   aux2.add(-1., S1);
   diff(aux2);
-  aux2 = 0.;
+  aux2= 0.;
   aux2.triple_product(A, Dt, Bt, true, true);
   aux2.add(-1., S1);
   diff(aux2);
 
-  aux4 = 0.;
+  aux4= 0.;
   aux4.triple_product(C, Bt, D, true, false);
   aux4.add(-1., S2);
   diff(aux4);
-  aux4 = 0.;
+  aux4= 0.;
   aux4.triple_product(C, B, Dt, false, true);
   aux4.add(-1., S2);
   diff(aux4);
-  aux4 = 0.;
+  aux4= 0.;
   aux4.triple_product(C, Bt, Dt, true, true);
   aux4.add(-1., S2);
   diff(aux4);

@@ -57,7 +57,7 @@ public:
 
 template <int dim>
 void
-test(VectorTools::NormType norm, double value, double exp = 2.0)
+test(VectorTools::NormType norm, double value, double exp= 2.0)
 {
   parallel::shared::Triangulation<dim> tria(
     MPI_COMM_WORLD,
@@ -79,12 +79,12 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
   TrilinosWrappers::MPI::Vector solution(relevant_set, MPI_COMM_WORLD);
-  solution = interpolated;
+  solution= interpolated;
 
   Vector<double> cellwise_errors(tria.n_active_cells());
   QIterated<dim> quadrature(QTrapez<1>(), 5);
 
-  const dealii::Function<dim, double>* w = nullptr;
+  const dealii::Function<dim, double>* w= nullptr;
   VectorTools::integrate_difference(dofh,
                                     solution,
                                     Functions::ZeroFunction<dim>(dim),
@@ -97,7 +97,7 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   const double error
     = VectorTools::compute_global_error(tria, cellwise_errors, norm, exp);
 
-  const double difference = std::abs(error - value);
+  const double difference= std::abs(error - value);
   deallog << "computed: " << error << " expected: " << value
           << " difference: " << difference << std::endl;
   Assert(difference < 2e-3, ExcMessage("Error in integrate_difference"));

@@ -71,8 +71,8 @@ public:
 private:
   enum
   {
-    u_block      = 0,
-    lambda_block = 1
+    u_block     = 0,
+    lambda_block= 1
   };
 
   void
@@ -125,13 +125,13 @@ SymmetricTensor<4, dim>
 get_stress_strain_tensor(const double lambda, const double mu)
 {
   SymmetricTensor<4, dim> tmp;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
-          tmp[i][j][k][l] = (((i == k) && (j == l) ? mu : 0.0)
-                             + ((i == l) && (j == k) ? mu : 0.0)
-                             + ((i == j) && (k == l) ? lambda : 0.0));
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
+          tmp[i][j][k][l]= (((i == k) && (j == l) ? mu : 0.0)
+                            + ((i == l) && (j == k) ? mu : 0.0)
+                            + ((i == j) && (k == l) ? lambda : 0.0));
   return tmp;
 }
 
@@ -155,7 +155,7 @@ inline void
 BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  values(0) = -0.001;
+  values(0)= -0.001;
 }
 
 template <int dim>
@@ -199,7 +199,7 @@ ConstrainValues<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(values.size(),
                               dim)); //check is the size of "values" is correct
   //Assert (dim >= 2, ExcNotImplemented());//not implemented for 1d
-  values[0] = 0.0;
+  values[0]= 0.0;
 }
 
 template <int dim>
@@ -216,7 +216,7 @@ ConstrainValues<dim>::vector_value_list(
   const unsigned int n_points
     = points.size(); //number of points at which the function is to be evaluated
 
-  for(unsigned int p = 0; p < n_points; ++p)
+  for(unsigned int p= 0; p < n_points; ++p)
     ConstrainValues<dim>::vector_value(points[p], value_list[p]);
 }
 
@@ -252,8 +252,8 @@ ElasticProblem<dim>::ElasticProblem()
   quadrature_formula.push_back(QGauss<dim>(degree + 2));
   quadrature_formula.push_back(QGauss<dim>(degree + 2));
 
-  stress_strain_tensor = get_stress_strain_tensor<dim>(/*lambda = */ 9.695e10,
-                                                       /*mu     = */ 7.617e10);
+  stress_strain_tensor= get_stress_strain_tensor<dim>(/*lambda = */ 9.695e10,
+                                                      /*mu     = */ 7.617e10);
 }
 
 template <int dim>
@@ -273,15 +273,15 @@ ElasticProblem<dim>::make_grid()
   GridGenerator::hyper_cube(
     triangulationR, -1, 0); //create a square [-1,1]^d domain
   Point<dim> shift_vector;
-  shift_vector[0] = 1.0;
+  shift_vector[0]= 1.0;
   GridTools::shift(shift_vector, triangulationR);
 
-  const unsigned int n_faces_per_cell = GeometryInfo<dim>::faces_per_cell;
+  const unsigned int n_faces_per_cell= GeometryInfo<dim>::faces_per_cell;
 
   triangulationL.begin_active()->set_material_id(0);
   triangulationR.begin_active()->set_material_id(id_of_lagrange_mult);
 
-  for(unsigned int i = 0; i < n_faces_per_cell; i++)
+  for(unsigned int i= 0; i < n_faces_per_cell; i++)
     {
       triangulationL.begin_active()->face(i)->set_boundary_id(i);
       triangulationR.begin_active()->face(i)->set_boundary_id(n_faces_per_cell
@@ -300,15 +300,15 @@ ElasticProblem<dim>::setup_system()
 {
   std::vector<unsigned int> block_component(
     n_components, u_block); // init to represent u everywhere
-  for(unsigned int i = 0; i < dim; i++)
-    block_component[i + dim] = lambda_block;
+  for(unsigned int i= 0; i < dim; i++)
+    block_component[i + dim]= lambda_block;
 
   //(1) set active FE indices based in material id...
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc                          = dof_handler.end();
-  unsigned int n_lagrange_cells   = 0;
-  unsigned int n_elasticity_cells = 0;
+    endc                         = dof_handler.end();
+  unsigned int n_lagrange_cells  = 0;
+  unsigned int n_elasticity_cells= 0;
   for(; cell != endc; ++cell) //loop over all cells
     {
       if(cell->material_id() == id_of_lagrange_mult)
@@ -365,14 +365,14 @@ ElasticProblem<dim>::setup_system()
   dynamic_sparsity_pattern.collect_sizes();
 
   Table<2, DoFTools::Coupling> coupling(n_components, n_components);
-  for(unsigned int ii = 0; ii < n_components; ++ii)
-    for(unsigned int jj = 0; jj < n_components; ++jj)
+  for(unsigned int ii= 0; ii < n_components; ++ii)
+    for(unsigned int jj= 0; jj < n_components; ++jj)
       {
         if((block_component[ii] == lambda_block)
            && (block_component[jj] == lambda_block))
-          coupling[ii][jj] = DoFTools::none; //diagonal = 0
+          coupling[ii][jj]= DoFTools::none; //diagonal = 0
         else
-          coupling[ii][jj] = DoFTools::always; //full coupling (u,u), (u,lambda)
+          coupling[ii][jj]= DoFTools::always; //full coupling (u,u), (u,lambda)
       }
 
   hanging_node_constraints.condense(dynamic_sparsity_pattern);

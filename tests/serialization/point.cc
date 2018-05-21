@@ -21,7 +21,7 @@
 void
 test()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   Point<dim> p1(1., 2., 3.);
 

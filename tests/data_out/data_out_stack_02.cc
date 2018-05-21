@@ -39,7 +39,7 @@ check_this<1>(const DoFHandler<1>&  dof_handler,
               const Vector<double>& v_node,
               const Vector<double>& v_cell)
 {
-  const unsigned int dim = 1;
+  const unsigned int dim= 1;
 
   DataOutStack<dim> data_out_stack;
   data_out_stack.declare_data_vector("node_data",
@@ -59,11 +59,11 @@ check_this<1>(const DoFHandler<1>&  dof_handler,
   data_out_stack.finish_parameter_value();
 
   Vector<double> vn1(v_node.size());
-  vn1 = v_node;
-  vn1 *= 2.;
+  vn1= v_node;
+  vn1*= 2.;
   Vector<double> vc1(v_cell.size());
-  vc1 = v_cell;
-  vc1 *= 3.;
+  vc1= v_cell;
+  vc1*= 3.;
   data_out_stack.new_parameter_value(1., 1.);
   data_out_stack.attach_dof_handler(dof_handler);
   data_out_stack.add_data_vector(vn1, names_1);

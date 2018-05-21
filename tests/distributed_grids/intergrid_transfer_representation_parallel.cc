@@ -41,7 +41,7 @@ template <int dim>
 void
 test(unsigned n_refinements)
 {
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(rank == 0)
     {
@@ -61,11 +61,11 @@ test(unsigned n_refinements)
 
   // do some local refinement
   Point<dim> p0;
-  p0 *= 0.;
-  for(int i = 0; i < n_refinements; ++i)
+  p0*= 0.;
+  for(int i= 0; i < n_refinements; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell;
-      for(cell = tria2.begin_active(); cell != tria2.end(); ++cell)
+      for(cell= tria2.begin_active(); cell != tria2.end(); ++cell)
         {
           if(cell->is_locally_owned()
              && (cell->center().distance(p0) < 0.71 / double(i + 1)))
@@ -93,16 +93,16 @@ test(unsigned n_refinements)
 
   // For this test case, all weights are one and their sum
   // should be equal to number of degrees of freedom
-  unsigned local_sum = 0.;
-  for(size_t i = 0; i < transfer_representation.size(); ++i)
+  unsigned local_sum= 0.;
+  for(size_t i= 0; i < transfer_representation.size(); ++i)
     {
-      TransferRep::value_type m = transfer_representation[i];
-      for(TransferRep::value_type::const_iterator it = m.begin(); it != m.end();
+      TransferRep::value_type m= transfer_representation[i];
+      for(TransferRep::value_type::const_iterator it= m.begin(); it != m.end();
           ++it)
-        local_sum += it->second;
+        local_sum+= it->second;
     }
 
-  unsigned global_sum = Utilities::MPI::sum(local_sum, MPI_COMM_WORLD);
+  unsigned global_sum= Utilities::MPI::sum(local_sum, MPI_COMM_WORLD);
 
   if(rank == 0)
     {
@@ -120,11 +120,11 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(rank));
 
-  unsigned n_refinements = 2;
+  unsigned n_refinements= 2;
 
   if(rank == 0)
     {

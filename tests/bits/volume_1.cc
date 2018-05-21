@@ -46,7 +46,7 @@ check(const Triangulation<dim>& tria)
     q_face,
     update_normal_vectors | update_quadrature_points | update_JxW_values);
 
-  double v1 = 0, v2 = 0;
+  double v1= 0, v2= 0;
   for(typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active();
       cell != dof_handler.end();
@@ -56,29 +56,28 @@ check(const Triangulation<dim>& tria)
       // and make sure that the
       // result of the integration is
       // close to zero
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->at_boundary(f))
           {
             fe_face_values.reinit(cell, f);
-            for(unsigned int q = 0; q < q_face.size(); ++q)
-              v1 += (fe_face_values.normal_vector(q)
-                     * fe_face_values.quadrature_point(q))
-                    * fe_face_values.JxW(q);
+            for(unsigned int q= 0; q < q_face.size(); ++q)
+              v1+= (fe_face_values.normal_vector(q)
+                    * fe_face_values.quadrature_point(q))
+                   * fe_face_values.JxW(q);
           }
 
       // now same for subface
       // integration
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->at_boundary(f))
-          for(unsigned int sf = 0;
-              sf < GeometryInfo<dim>::max_children_per_face;
+          for(unsigned int sf= 0; sf < GeometryInfo<dim>::max_children_per_face;
               ++sf)
             {
               fe_subface_values.reinit(cell, f, sf);
-              for(unsigned int q = 0; q < q_face.size(); ++q)
-                v2 += (fe_subface_values.normal_vector(q)
-                       * fe_subface_values.quadrature_point(q))
-                      * fe_subface_values.JxW(q);
+              for(unsigned int q= 0; q < q_face.size(); ++q)
+                v2+= (fe_subface_values.normal_vector(q)
+                      * fe_subface_values.quadrature_point(q))
+                     * fe_subface_values.JxW(q);
             }
     }
 

@@ -359,7 +359,7 @@ namespace DoFRenumbering
     bool
     operator()(const Iterator& c1, const Iterator& c2) const
     {
-      const Tensor<1, dim> diff = c2->center() - c1->center();
+      const Tensor<1, dim> diff= c2->center() - c1->center();
       return (diff * dir > 0);
     }
 
@@ -392,7 +392,7 @@ namespace DoFRenumbering
     operator()(const std::pair<Point<dim>, types::global_dof_index>& c1,
                const std::pair<Point<dim>, types::global_dof_index>& c2) const
     {
-      const Tensor<1, dim> diff = c2.first - c1.first;
+      const Tensor<1, dim> diff= c2.first - c1.first;
       return (diff * dir > 0 || (diff * dir == 0 && c1.second < c2.second));
     }
 
@@ -432,8 +432,8 @@ namespace DoFRenumbering
     template <typename DoFHandlerType>
     void
     Cuthill_McKee(DoFHandlerType& dof_handler,
-                  const bool      reversed_numbering = false,
-                  const bool      use_constraints    = false);
+                  const bool      reversed_numbering= false,
+                  const bool      use_constraints   = false);
 
     /**
      * Compute the renumbering vector needed by the Cuthill_McKee() function.
@@ -444,8 +444,8 @@ namespace DoFRenumbering
     void
     compute_Cuthill_McKee(std::vector<types::global_dof_index>& new_dof_indices,
                           const DoFHandlerType&,
-                          const bool reversed_numbering = false,
-                          const bool use_constraints    = false);
+                          const bool reversed_numbering= false,
+                          const bool use_constraints   = false);
 
     /**
      * Renumber the degrees of freedom based on the BOOST implementation of
@@ -462,8 +462,8 @@ namespace DoFRenumbering
     template <typename DoFHandlerType>
     void
     king_ordering(DoFHandlerType& dof_handler,
-                  const bool      reversed_numbering = false,
-                  const bool      use_constraints    = false);
+                  const bool      reversed_numbering= false,
+                  const bool      use_constraints   = false);
 
     /**
      * Compute the renumbering for the King algorithm but do not actually
@@ -473,8 +473,8 @@ namespace DoFRenumbering
     void
     compute_king_ordering(std::vector<types::global_dof_index>& new_dof_indices,
                           const DoFHandlerType&,
-                          const bool reversed_numbering = false,
-                          const bool use_constraints    = false);
+                          const bool reversed_numbering= false,
+                          const bool use_constraints   = false);
 
     /**
      * Renumber the degrees of freedom based on the BOOST implementation of
@@ -490,8 +490,8 @@ namespace DoFRenumbering
     template <typename DoFHandlerType>
     void
     minimum_degree(DoFHandlerType& dof_handler,
-                   const bool      reversed_numbering = false,
-                   const bool      use_constraints    = false);
+                   const bool      reversed_numbering= false,
+                   const bool      use_constraints   = false);
 
     /**
      * Compute the renumbering for the minimum degree algorithm but do not
@@ -502,8 +502,8 @@ namespace DoFRenumbering
     compute_minimum_degree(
       std::vector<types::global_dof_index>& new_dof_indices,
       const DoFHandlerType&,
-      const bool reversed_numbering = false,
-      const bool use_constraints    = false);
+      const bool reversed_numbering= false,
+      const bool use_constraints   = false);
   } // namespace boost
 
   /**
@@ -573,8 +573,8 @@ namespace DoFRenumbering
   template <typename DoFHandlerType>
   void
   Cuthill_McKee(DoFHandlerType& dof_handler,
-                const bool      reversed_numbering = false,
-                const bool      use_constraints    = false,
+                const bool      reversed_numbering= false,
+                const bool      use_constraints   = false,
                 const std::vector<types::global_dof_index>& starting_indices
                 = std::vector<types::global_dof_index>());
 
@@ -590,8 +590,8 @@ namespace DoFRenumbering
   compute_Cuthill_McKee(
     std::vector<types::global_dof_index>& new_dof_indices,
     const DoFHandlerType&,
-    const bool                                  reversed_numbering = false,
-    const bool                                  use_constraints    = false,
+    const bool                                  reversed_numbering= false,
+    const bool                                  use_constraints   = false,
     const std::vector<types::global_dof_index>& starting_indices
     = std::vector<types::global_dof_index>());
 
@@ -612,7 +612,7 @@ namespace DoFRenumbering
   void
   Cuthill_McKee(DoFHandlerType&    dof_handler,
                 const unsigned int level,
-                const bool         reversed_numbering = false,
+                const bool         reversed_numbering= false,
                 const std::vector<types::global_dof_index>& starting_indices
                 = std::vector<types::global_dof_index>());
 
@@ -956,7 +956,7 @@ namespace DoFRenumbering
   void
   downstream(DoFHandlerType&                                   dof_handler,
              const Tensor<1, DoFHandlerType::space_dimension>& direction,
-             const bool dof_wise_renumbering = false);
+             const bool dof_wise_renumbering= false);
 
   /**
    * Cell-wise downstream numbering with respect to a constant flow direction
@@ -967,7 +967,7 @@ namespace DoFRenumbering
   downstream(DoFHandlerType&                                   dof_handler,
              const unsigned int                                level,
              const Tensor<1, DoFHandlerType::space_dimension>& direction,
-             const bool dof_wise_renumbering = false);
+             const bool dof_wise_renumbering= false);
 
   /**
    * Compute the set of renumbering indices needed by the downstream() function. Does
@@ -1010,7 +1010,7 @@ namespace DoFRenumbering
   void
   clockwise_dg(DoFHandlerType&                               dof_handler,
                const Point<DoFHandlerType::space_dimension>& center,
-               const bool                                    counter = false);
+               const bool                                    counter= false);
 
   /**
    * Cell-wise clockwise numbering on one level of a multigrid
@@ -1021,7 +1021,7 @@ namespace DoFRenumbering
   clockwise_dg(DoFHandlerType&                               dof_handler,
                const unsigned int                            level,
                const Point<DoFHandlerType::space_dimension>& center,
-               const bool                                    counter = false);
+               const bool                                    counter= false);
 
   /**
    * Compute the renumbering vector needed by the clockwise_dg() functions.

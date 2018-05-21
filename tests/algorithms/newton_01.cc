@@ -66,22 +66,22 @@ public:
 void
 SquareRoot::residual(AnyData& out, const AnyData& in)
 {
-  Vector<double>& v = *out.entry<Vector<double>*>(0);
+  Vector<double>& v= *out.entry<Vector<double>*>(0);
   //residuum = 0
-  v(0)                    = 0.;
-  const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
-  v(0)                    = x * x - 2.;
+  v(0)                   = 0.;
+  const Vector<double>& x= *in.entry<const Vector<double>*>("Newton iterate");
+  v(0)                   = x * x - 2.;
 }
 
 void
 SquareRoot::solve(AnyData& out, const AnyData& in)
 {
-  Vector<double>& v       = *out.entry<Vector<double>*>(0);
-  v(0)                    = 0;
-  const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
-  const Vector<double>& r = *in.entry<const Vector<double>*>("Newton residual");
+  Vector<double>& v      = *out.entry<Vector<double>*>(0);
+  v(0)                   = 0;
+  const Vector<double>& x= *in.entry<const Vector<double>*>("Newton iterate");
+  const Vector<double>& r= *in.entry<const Vector<double>*>("Newton residual");
 
-  v(0) = 1. / 2. / x(0) * r(0);
+  v(0)= 1. / 2. / x(0) * r(0);
 }
 
 void
@@ -100,12 +100,12 @@ test()
   AnyData out_data;
 
   Vector<double> solution(1);
-  solution = 10.;
+  solution= 10.;
   out_data.add<Vector<double>*>(&solution, "solution");
 
   newton.control.set_reduction(1.e-20);
   newton.control.log_history(true);
-  newton.debug_vectors = true;
+  newton.debug_vectors= true;
   newton(out_data, in_data);
   deallog << " square root " << (*out_data.read<Vector<double>*>(0))(0)
           << std::endl;
@@ -114,7 +114,7 @@ test()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

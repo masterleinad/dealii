@@ -59,15 +59,15 @@ public:
 };
 
 template <int dim,
-          int fe_degree       = 2,
-          int n_q_points      = fe_degree + 1,
-          typename NumberType = double>
+          int fe_degree      = 2,
+          int n_q_points     = fe_degree + 1,
+          typename NumberType= double>
 void
 test()
 {
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   parallel::distributed::Triangulation<dim> triangulation(
     mpi_communicator,
@@ -81,7 +81,7 @@ test()
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs();
 
-  const unsigned int euler_fe_degree = 1;
+  const unsigned int euler_fe_degree= 1;
   FESystem<dim>      fe_euler(FE_Q<dim>(euler_fe_degree), dim);
   DoFHandler<dim>    dof_handler_euler(triangulation);
   dof_handler_euler.distribute_dofs(fe_euler);
@@ -94,7 +94,7 @@ test()
   DoFTools::extract_locally_relevant_dofs(dof_handler_euler,
                                           locally_relevant_dofs_euler);
 
-  const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
+  const IndexSet& locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet        locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -113,7 +113,7 @@ test()
   LinearAlgebra::distributed::Vector<NumberType> displacement;
   displacement.reinit(
     locally_owned_dofs_euler, locally_relevant_dofs_euler, mpi_communicator);
-  displacement = 0.;
+  displacement= 0.;
 
   Displacement<dim> displacement_function;
 
@@ -146,8 +146,8 @@ test()
   matrix_free->initialize_dof_vector(dst3);
   matrix_free->initialize_dof_vector(dst4);
 
-  for(unsigned int i = 0; i < src.local_size(); ++i)
-    src.local_element(i) = random_value<NumberType>();
+  for(unsigned int i= 0; i < src.local_size(); ++i)
+    src.local_element(i)= random_value<NumberType>();
 
   MatrixFreeOperators::MassOperator<
     dim,
@@ -170,29 +170,29 @@ test()
   mf_laplace.vmult(dst3, src);
 
   // now move manually
-  displacement = 0.;
+  displacement= 0.;
   displacement.update_ghost_values();
   {
-    typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin_active(),
-                                            endc = dof_handler.end();
+    typename DoFHandler<dim>::cell_iterator cell= dof_handler.begin_active(),
+                                            endc= dof_handler.end();
     std::vector<bool> vertex_touched(triangulation.n_vertices(), false);
-    for(cell = dof_handler.begin_active(); cell != endc; ++cell)
-      for(unsigned int vertex_no = 0;
+    for(cell= dof_handler.begin_active(); cell != endc; ++cell)
+      for(unsigned int vertex_no= 0;
           vertex_no < GeometryInfo<dim>::vertices_per_cell;
           ++vertex_no)
         if(vertex_touched[cell->vertex_index(vertex_no)] == false)
           {
-            Point<dim>&    v = cell->vertex(vertex_no);
+            Point<dim>&    v= cell->vertex(vertex_no);
             Tensor<1, dim> d;
-            for(unsigned int i = 0; i < dim; ++i)
-              d[i] = displacement_function.value(v, i);
+            for(unsigned int i= 0; i < dim; ++i)
+              d[i]= displacement_function.value(v, i);
 
-            v += d;
-            vertex_touched[cell->vertex_index(vertex_no)] = true;
+            v+= d;
+            vertex_touched[cell->vertex_index(vertex_no)]= true;
           }
   }
   // minimize the data that is re-computed
-  data.initialize_indices = false;
+  data.initialize_indices= false;
   matrix_free->reinit(
     euler_mapping, dof_handler, constraints, quadrature_formula, data);
 

@@ -43,11 +43,11 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int) const
   {
-    double f = p[0] * 2.0 + 1.0;
+    double f= p[0] * 2.0 + 1.0;
     if(dim > 1)
-      f *= p[1] * 3.3 - 1.0;
+      f*= p[1] * 3.3 - 1.0;
     if(dim > 2)
-      f *= p[2] * 5.0;
+      f*= p[2] * 5.0;
     return f;
   };
 };
@@ -68,8 +68,7 @@ test(std::ostream& /*out*/)
 
   parallel::distributed::SolutionTransfer<dim, Vector<double>> soltrans(dofh);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     {

@@ -3067,485 +3067,476 @@ main()
   X<6>                     x6;
   X<7>                     x7;
   X<8>                     x8;
-  tgr += new_thread(&U::ref_foo_0, u);
-  tgr += new_thread(&U::ref_foo_0_const, u);
-  tgr += new_thread(&U::ref_foo_const_ref_0, u);
-  tgr += new_thread(&U::ref_foo_const_ref_0_const, u);
-  tgr += new_thread(&U::ref_foo_ref_0, u);
-  tgr += new_thread(&U::ref_foo_ref_0_const, u);
-  tgcr += new_thread(&U::const_ref_foo_0, u);
-  tgcr += new_thread(&U::const_ref_foo_0_const, u);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_0, u);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_0_const, u);
-  tgcr += new_thread(&U::const_ref_foo_ref_0, u);
-  tgcr += new_thread(&U::const_ref_foo_ref_0_const, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_0, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_0_const, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_0, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_0_const, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_0, u);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_0_const, u);
-  tg += new_thread(&U::foo_0, u);
-  tg += new_thread(&U::foo_0_const, u);
-  tg += new_thread(&U::foo_const_ref_0, u);
-  tg += new_thread(&U::foo_const_ref_0_const, u);
-  tg += new_thread(&U::foo_ref_0, u);
-  tg += new_thread(&U::foo_ref_0_const, u);
-  tgr += new_thread(&U::virtual_ref_foo_0, u);
-  tgr += new_thread(&U::virtual_ref_foo_0_const, u);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_0, u);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_0_const, u);
-  tgr += new_thread(&U::virtual_ref_foo_ref_0, u);
-  tgr += new_thread(&U::virtual_ref_foo_ref_0_const, u);
-  tg += new_thread(&U::virtual_foo_0, u);
-  tg += new_thread(&U::virtual_foo_0_const, u);
-  tg += new_thread(&U::virtual_foo_const_ref_0, u);
-  tg += new_thread(&U::virtual_foo_const_ref_0_const, u);
-  tg += new_thread(&U::virtual_foo_ref_0, u);
-  tg += new_thread(&U::virtual_foo_ref_0_const, u);
+  tgr+= new_thread(&U::ref_foo_0, u);
+  tgr+= new_thread(&U::ref_foo_0_const, u);
+  tgr+= new_thread(&U::ref_foo_const_ref_0, u);
+  tgr+= new_thread(&U::ref_foo_const_ref_0_const, u);
+  tgr+= new_thread(&U::ref_foo_ref_0, u);
+  tgr+= new_thread(&U::ref_foo_ref_0_const, u);
+  tgcr+= new_thread(&U::const_ref_foo_0, u);
+  tgcr+= new_thread(&U::const_ref_foo_0_const, u);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_0, u);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_0_const, u);
+  tgcr+= new_thread(&U::const_ref_foo_ref_0, u);
+  tgcr+= new_thread(&U::const_ref_foo_ref_0_const, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_0, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_0_const, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_0, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_0_const, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_0, u);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_0_const, u);
+  tg+= new_thread(&U::foo_0, u);
+  tg+= new_thread(&U::foo_0_const, u);
+  tg+= new_thread(&U::foo_const_ref_0, u);
+  tg+= new_thread(&U::foo_const_ref_0_const, u);
+  tg+= new_thread(&U::foo_ref_0, u);
+  tg+= new_thread(&U::foo_ref_0_const, u);
+  tgr+= new_thread(&U::virtual_ref_foo_0, u);
+  tgr+= new_thread(&U::virtual_ref_foo_0_const, u);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_0, u);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_0_const, u);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_0, u);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_0_const, u);
+  tg+= new_thread(&U::virtual_foo_0, u);
+  tg+= new_thread(&U::virtual_foo_0_const, u);
+  tg+= new_thread(&U::virtual_foo_const_ref_0, u);
+  tg+= new_thread(&U::virtual_foo_const_ref_0_const, u);
+  tg+= new_thread(&U::virtual_foo_ref_0, u);
+  tg+= new_thread(&U::virtual_foo_ref_0_const, u);
 
-  tgr += new_thread(&U::static_ref_foo_0);
-  tgr += new_thread(&U::static_ref_foo_const_ref_0);
-  tgr += new_thread(&U::static_ref_foo_ref_0);
-  tgcr += new_thread(&U::static_const_ref_foo_0);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_0);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_0);
-  tg += new_thread(&U::static_foo_0);
-  tg += new_thread(&U::static_foo_const_ref_0);
-  tg += new_thread(&U::static_foo_ref_0);
-  tgr += new_thread(&U::ref_foo_1, u, x1);
-  tgr += new_thread(&U::ref_foo_1_const, u, x1);
-  tgr += new_thread(&U::ref_foo_const_ref_1, u, x1);
-  tgr += new_thread(&U::ref_foo_const_ref_1_const, u, x1);
-  tgr += new_thread(&U::ref_foo_ref_1, u, x1);
-  tgr += new_thread(&U::ref_foo_ref_1_const, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_1, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_1_const, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_1, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_1_const, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_ref_1, u, x1);
-  tgcr += new_thread(&U::const_ref_foo_ref_1_const, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_1, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_1_const, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_1, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_1_const, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_1, u, x1);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_1_const, u, x1);
-  tg += new_thread(&U::foo_1, u, x1);
-  tg += new_thread(&U::foo_1_const, u, x1);
-  tg += new_thread(&U::foo_const_ref_1, u, x1);
-  tg += new_thread(&U::foo_const_ref_1_const, u, x1);
-  tg += new_thread(&U::foo_ref_1, u, x1);
-  tg += new_thread(&U::foo_ref_1_const, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_1, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_1_const, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_1, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_1_const, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_ref_1, u, x1);
-  tgr += new_thread(&U::virtual_ref_foo_ref_1_const, u, x1);
-  tg += new_thread(&U::virtual_foo_1, u, x1);
-  tg += new_thread(&U::virtual_foo_1_const, u, x1);
-  tg += new_thread(&U::virtual_foo_const_ref_1, u, x1);
-  tg += new_thread(&U::virtual_foo_const_ref_1_const, u, x1);
-  tg += new_thread(&U::virtual_foo_ref_1, u, x1);
-  tg += new_thread(&U::virtual_foo_ref_1_const, u, x1);
+  tgr+= new_thread(&U::static_ref_foo_0);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_0);
+  tgr+= new_thread(&U::static_ref_foo_ref_0);
+  tgcr+= new_thread(&U::static_const_ref_foo_0);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_0);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_0);
+  tg+= new_thread(&U::static_foo_0);
+  tg+= new_thread(&U::static_foo_const_ref_0);
+  tg+= new_thread(&U::static_foo_ref_0);
+  tgr+= new_thread(&U::ref_foo_1, u, x1);
+  tgr+= new_thread(&U::ref_foo_1_const, u, x1);
+  tgr+= new_thread(&U::ref_foo_const_ref_1, u, x1);
+  tgr+= new_thread(&U::ref_foo_const_ref_1_const, u, x1);
+  tgr+= new_thread(&U::ref_foo_ref_1, u, x1);
+  tgr+= new_thread(&U::ref_foo_ref_1_const, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_1, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_1_const, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_1, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_1_const, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_ref_1, u, x1);
+  tgcr+= new_thread(&U::const_ref_foo_ref_1_const, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_1, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_1_const, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_1, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_1_const, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_1, u, x1);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_1_const, u, x1);
+  tg+= new_thread(&U::foo_1, u, x1);
+  tg+= new_thread(&U::foo_1_const, u, x1);
+  tg+= new_thread(&U::foo_const_ref_1, u, x1);
+  tg+= new_thread(&U::foo_const_ref_1_const, u, x1);
+  tg+= new_thread(&U::foo_ref_1, u, x1);
+  tg+= new_thread(&U::foo_ref_1_const, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_1, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_1_const, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_1, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_1_const, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_1, u, x1);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_1_const, u, x1);
+  tg+= new_thread(&U::virtual_foo_1, u, x1);
+  tg+= new_thread(&U::virtual_foo_1_const, u, x1);
+  tg+= new_thread(&U::virtual_foo_const_ref_1, u, x1);
+  tg+= new_thread(&U::virtual_foo_const_ref_1_const, u, x1);
+  tg+= new_thread(&U::virtual_foo_ref_1, u, x1);
+  tg+= new_thread(&U::virtual_foo_ref_1_const, u, x1);
 
-  tgr += new_thread(&U::static_ref_foo_1, x1);
-  tgr += new_thread(&U::static_ref_foo_const_ref_1, x1);
-  tgr += new_thread(&U::static_ref_foo_ref_1, x1);
-  tgcr += new_thread(&U::static_const_ref_foo_1, x1);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_1, x1);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_1, x1);
-  tg += new_thread(&U::static_foo_1, x1);
-  tg += new_thread(&U::static_foo_const_ref_1, x1);
-  tg += new_thread(&U::static_foo_ref_1, x1);
-  tgr += new_thread(&U::ref_foo_2, u, x1, x2);
-  tgr += new_thread(&U::ref_foo_2_const, u, x1, x2);
-  tgr += new_thread(&U::ref_foo_const_ref_2, u, x1, x2);
-  tgr += new_thread(&U::ref_foo_const_ref_2_const, u, x1, x2);
-  tgr += new_thread(&U::ref_foo_ref_2, u, x1, x2);
-  tgr += new_thread(&U::ref_foo_ref_2_const, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_2, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_2_const, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_2, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_2_const, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_ref_2, u, x1, x2);
-  tgcr += new_thread(&U::const_ref_foo_ref_2_const, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_2, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_2_const, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_2, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_2_const, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_2, u, x1, x2);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_2_const, u, x1, x2);
-  tg += new_thread(&U::foo_2, u, x1, x2);
-  tg += new_thread(&U::foo_2_const, u, x1, x2);
-  tg += new_thread(&U::foo_const_ref_2, u, x1, x2);
-  tg += new_thread(&U::foo_const_ref_2_const, u, x1, x2);
-  tg += new_thread(&U::foo_ref_2, u, x1, x2);
-  tg += new_thread(&U::foo_ref_2_const, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_2, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_2_const, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_2, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_2_const, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_ref_2, u, x1, x2);
-  tgr += new_thread(&U::virtual_ref_foo_ref_2_const, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_2, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_2_const, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_const_ref_2, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_const_ref_2_const, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_ref_2, u, x1, x2);
-  tg += new_thread(&U::virtual_foo_ref_2_const, u, x1, x2);
+  tgr+= new_thread(&U::static_ref_foo_1, x1);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_1, x1);
+  tgr+= new_thread(&U::static_ref_foo_ref_1, x1);
+  tgcr+= new_thread(&U::static_const_ref_foo_1, x1);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_1, x1);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_1, x1);
+  tg+= new_thread(&U::static_foo_1, x1);
+  tg+= new_thread(&U::static_foo_const_ref_1, x1);
+  tg+= new_thread(&U::static_foo_ref_1, x1);
+  tgr+= new_thread(&U::ref_foo_2, u, x1, x2);
+  tgr+= new_thread(&U::ref_foo_2_const, u, x1, x2);
+  tgr+= new_thread(&U::ref_foo_const_ref_2, u, x1, x2);
+  tgr+= new_thread(&U::ref_foo_const_ref_2_const, u, x1, x2);
+  tgr+= new_thread(&U::ref_foo_ref_2, u, x1, x2);
+  tgr+= new_thread(&U::ref_foo_ref_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_2, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_2, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_ref_2, u, x1, x2);
+  tgcr+= new_thread(&U::const_ref_foo_ref_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_2, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_2, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_2_const, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_2, u, x1, x2);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_2_const, u, x1, x2);
+  tg+= new_thread(&U::foo_2, u, x1, x2);
+  tg+= new_thread(&U::foo_2_const, u, x1, x2);
+  tg+= new_thread(&U::foo_const_ref_2, u, x1, x2);
+  tg+= new_thread(&U::foo_const_ref_2_const, u, x1, x2);
+  tg+= new_thread(&U::foo_ref_2, u, x1, x2);
+  tg+= new_thread(&U::foo_ref_2_const, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_2, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_2_const, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_2, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_2_const, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_2, u, x1, x2);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_2_const, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_2, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_2_const, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_const_ref_2, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_const_ref_2_const, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_ref_2, u, x1, x2);
+  tg+= new_thread(&U::virtual_foo_ref_2_const, u, x1, x2);
 
-  tgr += new_thread(&U::static_ref_foo_2, x1, x2);
-  tgr += new_thread(&U::static_ref_foo_const_ref_2, x1, x2);
-  tgr += new_thread(&U::static_ref_foo_ref_2, x1, x2);
-  tgcr += new_thread(&U::static_const_ref_foo_2, x1, x2);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_2, x1, x2);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_2, x1, x2);
-  tg += new_thread(&U::static_foo_2, x1, x2);
-  tg += new_thread(&U::static_foo_const_ref_2, x1, x2);
-  tg += new_thread(&U::static_foo_ref_2, x1, x2);
-  tgr += new_thread(&U::ref_foo_3, u, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_3_const, u, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_const_ref_3, u, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_const_ref_3_const, u, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_ref_3, u, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_ref_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_3, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_3, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_ref_3, u, x1, x2, x3);
-  tgcr += new_thread(&U::const_ref_foo_ref_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::virtual_const_ref_foo_3, u, x1, x2, x3);
-  tgcr += new_thread(&U::virtual_const_ref_foo_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_3, u, x1, x2, x3);
-  tgcr
-    += new_thread(&U::virtual_const_ref_foo_const_ref_3_const, u, x1, x2, x3);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_3, u, x1, x2, x3);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::foo_3, u, x1, x2, x3);
-  tg += new_thread(&U::foo_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::foo_const_ref_3, u, x1, x2, x3);
-  tg += new_thread(&U::foo_const_ref_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::foo_ref_3, u, x1, x2, x3);
-  tg += new_thread(&U::foo_ref_3_const, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_3, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_3_const, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_3, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_3_const, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_ref_3, u, x1, x2, x3);
-  tgr += new_thread(&U::virtual_ref_foo_ref_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_3, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_const_ref_3, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_const_ref_3_const, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_ref_3, u, x1, x2, x3);
-  tg += new_thread(&U::virtual_foo_ref_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::static_ref_foo_2, x1, x2);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_2, x1, x2);
+  tgr+= new_thread(&U::static_ref_foo_ref_2, x1, x2);
+  tgcr+= new_thread(&U::static_const_ref_foo_2, x1, x2);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_2, x1, x2);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_2, x1, x2);
+  tg+= new_thread(&U::static_foo_2, x1, x2);
+  tg+= new_thread(&U::static_foo_const_ref_2, x1, x2);
+  tg+= new_thread(&U::static_foo_ref_2, x1, x2);
+  tgr+= new_thread(&U::ref_foo_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_const_ref_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_const_ref_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_ref_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_ref_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_ref_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::const_ref_foo_ref_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_3_const, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_3, u, x1, x2, x3);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_3, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_const_ref_3, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_const_ref_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_ref_3, u, x1, x2, x3);
+  tg+= new_thread(&U::foo_ref_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_3_const, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_3, u, x1, x2, x3);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_3, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_const_ref_3, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_const_ref_3_const, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_ref_3, u, x1, x2, x3);
+  tg+= new_thread(&U::virtual_foo_ref_3_const, u, x1, x2, x3);
 
-  tgr += new_thread(&U::static_ref_foo_3, x1, x2, x3);
-  tgr += new_thread(&U::static_ref_foo_const_ref_3, x1, x2, x3);
-  tgr += new_thread(&U::static_ref_foo_ref_3, x1, x2, x3);
-  tgcr += new_thread(&U::static_const_ref_foo_3, x1, x2, x3);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_3, x1, x2, x3);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_3, x1, x2, x3);
-  tg += new_thread(&U::static_foo_3, x1, x2, x3);
-  tg += new_thread(&U::static_foo_const_ref_3, x1, x2, x3);
-  tg += new_thread(&U::static_foo_ref_3, x1, x2, x3);
-  tgr += new_thread(&U::ref_foo_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_4_const, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_const_ref_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_ref_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_ref_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_ref_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::const_ref_foo_ref_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::virtual_const_ref_foo_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::virtual_const_ref_foo_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(
+  tgr+= new_thread(&U::static_ref_foo_3, x1, x2, x3);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_3, x1, x2, x3);
+  tgr+= new_thread(&U::static_ref_foo_ref_3, x1, x2, x3);
+  tgcr+= new_thread(&U::static_const_ref_foo_3, x1, x2, x3);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_3, x1, x2, x3);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_3, x1, x2, x3);
+  tg+= new_thread(&U::static_foo_3, x1, x2, x3);
+  tg+= new_thread(&U::static_foo_const_ref_3, x1, x2, x3);
+  tg+= new_thread(&U::static_foo_ref_3, x1, x2, x3);
+  tgr+= new_thread(&U::ref_foo_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_4_const, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_const_ref_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_ref_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_ref_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_ref_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::const_ref_foo_ref_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_4, u, x1, x2, x3, x4);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_const_ref_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_ref_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::foo_ref_4_const, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_4_const, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_ref_4, u, x1, x2, x3, x4);
-  tgr += new_thread(&U::virtual_ref_foo_ref_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_const_ref_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_const_ref_4_const, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_ref_4, u, x1, x2, x3, x4);
-  tg += new_thread(&U::virtual_foo_ref_4_const, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_4, u, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_const_ref_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_const_ref_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_ref_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::foo_ref_4_const, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_4_const, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_4_const, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_4, u, x1, x2, x3, x4);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_const_ref_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_const_ref_4_const, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_ref_4, u, x1, x2, x3, x4);
+  tg+= new_thread(&U::virtual_foo_ref_4_const, u, x1, x2, x3, x4);
 
-  tgr += new_thread(&U::static_ref_foo_4, x1, x2, x3, x4);
-  tgr += new_thread(&U::static_ref_foo_const_ref_4, x1, x2, x3, x4);
-  tgr += new_thread(&U::static_ref_foo_ref_4, x1, x2, x3, x4);
-  tgcr += new_thread(&U::static_const_ref_foo_4, x1, x2, x3, x4);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_4, x1, x2, x3, x4);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_4, x1, x2, x3, x4);
-  tg += new_thread(&U::static_foo_4, x1, x2, x3, x4);
-  tg += new_thread(&U::static_foo_const_ref_4, x1, x2, x3, x4);
-  tg += new_thread(&U::static_foo_ref_4, x1, x2, x3, x4);
-  tgr += new_thread(&U::ref_foo_5, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_5_const, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_ref_5, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::const_ref_foo_5, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::const_ref_foo_5_const, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
-  tgcr
-    += new_thread(&U::const_ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::const_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::const_ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::virtual_const_ref_foo_5, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::virtual_const_ref_foo_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::static_ref_foo_4, x1, x2, x3, x4);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_4, x1, x2, x3, x4);
+  tgr+= new_thread(&U::static_ref_foo_ref_4, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::static_const_ref_foo_4, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_4, x1, x2, x3, x4);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_4, x1, x2, x3, x4);
+  tg+= new_thread(&U::static_foo_4, x1, x2, x3, x4);
+  tg+= new_thread(&U::static_foo_const_ref_4, x1, x2, x3, x4);
+  tg+= new_thread(&U::static_foo_ref_4, x1, x2, x3, x4);
+  tgr+= new_thread(&U::ref_foo_5, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_ref_5, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_5, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_5_const, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::const_ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_5, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_5_const, u, x1, x2, x3, x4, x5);
   tgcr
     += new_thread(&U::virtual_const_ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::virtual_const_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
   tgcr
     += new_thread(&U::virtual_const_ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_const_ref_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_ref_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::foo_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::virtual_ref_foo_5, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::virtual_ref_foo_5_const, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_5_const, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_const_ref_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_ref_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::foo_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::virtual_ref_foo_5, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::virtual_ref_foo_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_5, u, x1, x2, x3, x4, x5);
   tgr
     += new_thread(&U::virtual_ref_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::virtual_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::virtual_ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_const_ref_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_ref_5, u, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::virtual_foo_ref_5_const, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_5, u, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_5_const, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_5_const, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_const_ref_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_const_ref_5_const, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_ref_5, u, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::virtual_foo_ref_5_const, u, x1, x2, x3, x4, x5);
 
-  tgr += new_thread(&U::static_ref_foo_5, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::static_ref_foo_const_ref_5, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::static_ref_foo_ref_5, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::static_const_ref_foo_5, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::static_const_ref_foo_const_ref_5, x1, x2, x3, x4, x5);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_5, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::static_foo_5, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::static_foo_const_ref_5, x1, x2, x3, x4, x5);
-  tg += new_thread(&U::static_foo_ref_5, x1, x2, x3, x4, x5);
-  tgr += new_thread(&U::ref_foo_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::const_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::const_ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::const_ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(
+  tgr+= new_thread(&U::static_ref_foo_5, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_5, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::static_ref_foo_ref_5, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::static_const_ref_foo_5, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::static_const_ref_foo_const_ref_5, x1, x2, x3, x4, x5);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_5, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::static_foo_5, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::static_foo_const_ref_5, x1, x2, x3, x4, x5);
+  tg+= new_thread(&U::static_foo_ref_5, x1, x2, x3, x4, x5);
+  tgr+= new_thread(&U::ref_foo_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::const_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::const_ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::const_ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(
     &U::const_ref_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::const_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::const_ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::virtual_const_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::const_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::const_ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::virtual_const_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
   tgcr
     += new_thread(&U::virtual_const_ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgcr
-    += new_thread(&U::virtual_const_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(
+  tgcr+= new_thread(&U::virtual_const_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_6, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::virtual_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::virtual_ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::virtual_ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(
+  tg+= new_thread(&U::foo_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::foo_6_const, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::virtual_ref_foo_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::virtual_ref_foo_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::virtual_ref_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(
     &U::virtual_ref_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::virtual_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::virtual_ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::virtual_foo_6, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::virtual_foo_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::virtual_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tg
-    += new_thread(&U::virtual_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::virtual_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::virtual_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::virtual_ref_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_6_const, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_const_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_const_ref_6_const, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_ref_6, u, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::virtual_foo_ref_6_const, u, x1, x2, x3, x4, x5, x6);
 
-  tgr += new_thread(&U::static_ref_foo_6, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::static_ref_foo_const_ref_6, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::static_ref_foo_ref_6, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::static_const_ref_foo_6, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::static_ref_foo_6, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_6, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::static_ref_foo_ref_6, x1, x2, x3, x4, x5, x6);
+  tgcr+= new_thread(&U::static_const_ref_foo_6, x1, x2, x3, x4, x5, x6);
   tgcr
     += new_thread(&U::static_const_ref_foo_const_ref_6, x1, x2, x3, x4, x5, x6);
-  tgcr += new_thread(&U::static_const_ref_foo_ref_6, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::static_foo_6, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::static_foo_const_ref_6, x1, x2, x3, x4, x5, x6);
-  tg += new_thread(&U::static_foo_ref_6, x1, x2, x3, x4, x5, x6);
-  tgr += new_thread(&U::ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::ref_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_6, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::static_foo_6, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::static_foo_const_ref_6, x1, x2, x3, x4, x5, x6);
+  tg+= new_thread(&U::static_foo_ref_6, x1, x2, x3, x4, x5, x6);
+  tgr+= new_thread(&U::ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::ref_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
   tgr
     += new_thread(&U::ref_foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::ref_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(&U::const_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(&U::const_ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::ref_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(&U::const_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(&U::const_ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
   tgcr
     += new_thread(&U::const_ref_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::const_ref_foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(&U::const_ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(&U::const_ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
   tgcr
     += new_thread(&U::const_ref_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr
-    += new_thread(&U::virtual_const_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(&U::virtual_const_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::virtual_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::virtual_ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(
+  tg+= new_thread(&U::foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::virtual_ref_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::virtual_ref_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(
     &U::virtual_ref_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(
+  tgr+= new_thread(
     &U::virtual_ref_foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::virtual_ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(
+  tgr+= new_thread(&U::virtual_ref_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(
     &U::virtual_ref_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::virtual_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::virtual_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::virtual_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(
+  tg+= new_thread(&U::virtual_foo_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::virtual_foo_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::virtual_foo_const_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(
     &U::virtual_foo_const_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::virtual_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::virtual_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::virtual_foo_ref_7, u, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::virtual_foo_ref_7_const, u, x1, x2, x3, x4, x5, x6, x7);
 
-  tgr += new_thread(&U::static_ref_foo_7, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::static_ref_foo_const_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::static_ref_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(&U::static_const_ref_foo_7, x1, x2, x3, x4, x5, x6, x7);
-  tgcr += new_thread(
+  tgr+= new_thread(&U::static_ref_foo_7, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::static_ref_foo_const_ref_7, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::static_ref_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(&U::static_const_ref_foo_7, x1, x2, x3, x4, x5, x6, x7);
+  tgcr+= new_thread(
     &U::static_const_ref_foo_const_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tgcr
-    += new_thread(&U::static_const_ref_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::static_foo_7, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::static_foo_const_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tg += new_thread(&U::static_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
-  tgr += new_thread(&U::ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::ref_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::ref_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tgcr+= new_thread(&U::static_const_ref_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::static_foo_7, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::static_foo_const_ref_7, x1, x2, x3, x4, x5, x6, x7);
+  tg+= new_thread(&U::static_foo_ref_7, x1, x2, x3, x4, x5, x6, x7);
+  tgr+= new_thread(&U::ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(&U::ref_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(&U::ref_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(
     &U::ref_foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::ref_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(&U::const_ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(&U::ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(&U::ref_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgcr+= new_thread(&U::const_ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
   tgcr
     += new_thread(&U::const_ref_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::const_ref_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::const_ref_foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr
-    += new_thread(&U::const_ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(&U::const_ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgcr+= new_thread(
     &U::const_ref_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(&U::virtual_const_ref_foo_const_ref_8_const,
-                     u,
-                     x1,
-                     x2,
-                     x3,
-                     x4,
-                     x5,
-                     x6,
-                     x7,
-                     x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(&U::virtual_const_ref_foo_const_ref_8_const,
+                    u,
+                    x1,
+                    x2,
+                    x3,
+                    x4,
+                    x5,
+                    x6,
+                    x7,
+                    x8);
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::virtual_const_ref_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg
-    += new_thread(&U::foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::virtual_ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tg+= new_thread(&U::foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(&U::virtual_ref_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(
     &U::virtual_ref_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tgr+= new_thread(
     &U::virtual_ref_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tgr+= new_thread(
     &U::virtual_ref_foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
   tgr
     += new_thread(&U::virtual_ref_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tgr+= new_thread(
     &U::virtual_ref_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::virtual_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::virtual_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(
+  tg+= new_thread(&U::virtual_foo_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::virtual_foo_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(
     &U::virtual_foo_const_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(
+  tg+= new_thread(
     &U::virtual_foo_const_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::virtual_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(
+  tg+= new_thread(&U::virtual_foo_ref_8, u, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(
     &U::virtual_foo_ref_8_const, u, x1, x2, x3, x4, x5, x6, x7, x8);
 
-  tgr += new_thread(&U::static_ref_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(
+  tgr+= new_thread(&U::static_ref_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgr+= new_thread(
     &U::static_ref_foo_const_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgr += new_thread(&U::static_ref_foo_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr
-    += new_thread(&U::static_const_ref_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgr+= new_thread(&U::static_ref_foo_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgcr+= new_thread(&U::static_const_ref_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tgcr+= new_thread(
     &U::static_const_ref_foo_const_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tgcr += new_thread(
+  tgcr+= new_thread(
     &U::static_const_ref_foo_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::static_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::static_foo_const_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
-  tg += new_thread(&U::static_foo_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::static_foo_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::static_foo_const_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
+  tg+= new_thread(&U::static_foo_ref_8, x1, x2, x3, x4, x5, x6, x7, x8);
   tg.join_all();
   tgr.join_all();
   tgcr.join_all();

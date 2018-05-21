@@ -65,7 +65,7 @@ MGTransferSelect<number>::copy_from_mg(
   BlockVector<number2>&                dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  dst = 0;
+  dst= 0;
   do_copy_from_mg(
     mg_dof_handler, dst.block(target_component[selected_component]), src);
   if(constraints != nullptr)
@@ -80,7 +80,7 @@ MGTransferSelect<number>::copy_from_mg(
   Vector<number2>&                     dst,
   const MGLevelObject<Vector<number>>& src) const
 {
-  dst = 0;
+  dst= 0;
   do_copy_from_mg(mg_dof_handler, dst, src);
   if(constraints != nullptr)
     {
@@ -100,12 +100,12 @@ MGTransferSelect<number>::copy_from_mg(
         mg_dof_handler, dofs_per_block, target_component);
       BlockVector<number> tmp;
       tmp.reinit(n_blocks);
-      for(unsigned int b = 0; b < n_blocks; ++b)
+      for(unsigned int b= 0; b < n_blocks; ++b)
         tmp.block(b).reinit(dofs_per_block[b]);
       tmp.collect_sizes();
-      tmp.block(target_component[selected_component]) = dst;
+      tmp.block(target_component[selected_component])= dst;
       constraints->condense(tmp);
-      dst = tmp.block(target_component[selected_component]);
+      dst= tmp.block(target_component[selected_component]);
     }
 }
 
@@ -149,16 +149,16 @@ MGTransferSelect<number>::do_copy_from_mg(
   // vector
 
   // Note that the level is increasing monotonically
-  dst = 0;
+  dst= 0;
   for(; level_cell != endc; ++level_cell)
     {
-      const unsigned int level = level_cell->level();
+      const unsigned int level= level_cell->level();
       typedef std::vector<
         std::pair<types::global_dof_index, unsigned int>>::const_iterator IT;
-      for(IT i = copy_to_and_from_indices[level].begin();
+      for(IT i= copy_to_and_from_indices[level].begin();
           i != copy_to_and_from_indices[level].end();
           ++i)
-        dst(i->first) = src[level](i->second);
+        dst(i->first)= src[level](i->second);
     }
 }
 
@@ -180,16 +180,16 @@ MGTransferSelect<number>::do_copy_from_mg_add(
   // vector
 
   // Note that the level is increasing monotonically
-  dst = 0;
+  dst= 0;
   for(; level_cell != endc; ++level_cell)
     {
-      const unsigned int level = level_cell->level();
+      const unsigned int level= level_cell->level();
       typedef std::vector<
         std::pair<types::global_dof_index, unsigned int>>::const_iterator IT;
-      for(IT i = copy_to_and_from_indices[level].begin();
+      for(IT i= copy_to_and_from_indices[level].begin();
           i != copy_to_and_from_indices[level].end();
           ++i)
-        dst(i->first) += src[level](i->second);
+        dst(i->first)+= src[level](i->second);
     }
 }
 

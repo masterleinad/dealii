@@ -44,8 +44,8 @@ check_solve(const MatrixType&                          A,
   SolverControl         control(100, 1.e-3);
   SolverType            solver(control, mem, additional_data);
   PreconditionIdentity  prec_no;
-  u = 0.;
-  f = 0.;
+  u= 0.;
+  f= 0.;
 
   try
     {
@@ -65,9 +65,9 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for(unsigned int size= 4; size <= 30; size*= 3)
     {
-      unsigned int dim = (size - 1) * (size - 1);
+      unsigned int dim= (size - 1) * (size - 1);
 
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 

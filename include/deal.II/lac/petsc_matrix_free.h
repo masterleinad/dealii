@@ -193,7 +193,7 @@ namespace PETScWrappers
      * not distributed, then neither of the vectors may be.
      */
     virtual void
-    vmult(VectorBase& dst, const VectorBase& src) const = 0;
+    vmult(VectorBase& dst, const VectorBase& src) const= 0;
 
     /**
      * Matrix-vector multiplication: let <i>dst = M<sup>T</sup>*src</i> with
@@ -208,7 +208,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    Tvmult(VectorBase& dst, const VectorBase& src) const = 0;
+    Tvmult(VectorBase& dst, const VectorBase& src) const= 0;
 
     /**
      * Adding Matrix-vector multiplication. Add <i>M*src</i> on <i>dst</i>
@@ -222,7 +222,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    vmult_add(VectorBase& dst, const VectorBase& src) const = 0;
+    vmult_add(VectorBase& dst, const VectorBase& src) const= 0;
 
     /**
      * Adding Matrix-vector multiplication. Add <i>M<sup>T</sup>*src</i> to
@@ -237,7 +237,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    Tvmult_add(VectorBase& dst, const VectorBase& src) const = 0;
+    Tvmult_add(VectorBase& dst, const VectorBase& src) const= 0;
 
     /**
      * The matrix-vector multiplication called by @p matrix_free_mult(). This

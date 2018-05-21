@@ -27,8 +27,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -45,16 +45,16 @@ test()
   typename LA::MPI::Vector v(local_active, local_relevant, MPI_COMM_WORLD);
   typename LA::MPI::Vector v2(local_active, local_relevant, MPI_COMM_WORLD);
 
-  vb = 1.0;
-  v2 = vb;
+  vb= 1.0;
+  v2= vb;
 
   // set local values
-  vb(myid * 2)     = myid * 2.0;
-  vb(myid * 2 + 1) = myid * 2.0 + 1.0;
+  vb(myid * 2)    = myid * 2.0;
+  vb(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   vb.compress(VectorOperation::insert);
-  vb *= 2.0;
-  v = vb;
+  vb*= 2.0;
+  v= vb;
 
   Assert(vb.size() == numproc * 2, ExcInternalError());
   Assert(v.size() == numproc * 2, ExcInternalError());
@@ -72,7 +72,7 @@ test()
     }
 
   //assignment from ghosted to ghosted
-  v2 = v;
+  v2= v;
   Assert(get_real_assert_zero_imag(v2(1)) == 2.0, ExcInternalError());
   Assert(get_real_assert_zero_imag(v2(myid * 2)) == myid * 4.0,
          ExcInternalError());
@@ -98,7 +98,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

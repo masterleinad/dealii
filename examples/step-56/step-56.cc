@@ -108,10 +108,10 @@ namespace Step56
     Solution() : Function<dim>(dim + 1)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
     virtual Tensor<1, dim>
     gradient(const Point<dim>&  p,
-             const unsigned int component = 0) const override;
+             const unsigned int component= 0) const override;
   };
 
   template <>
@@ -121,8 +121,8 @@ namespace Step56
     Assert(component <= 2 + 1, ExcIndexRange(component, 0, 2 + 1));
 
     using numbers::PI;
-    const double x = p(0);
-    const double y = p(1);
+    const double x= p(0);
+    const double y= p(1);
 
     if(component == 0)
       return sin(PI * x);
@@ -141,9 +141,9 @@ namespace Step56
     Assert(component <= 3 + 1, ExcIndexRange(component, 0, 3 + 1));
 
     using numbers::PI;
-    const double x = p(0);
-    const double y = p(1);
-    const double z = p(2);
+    const double x= p(0);
+    const double y= p(1);
+    const double z= p(2);
 
     if(component == 0)
       return 2.0 * sin(PI * x);
@@ -165,24 +165,24 @@ namespace Step56
     Assert(component <= 2, ExcIndexRange(component, 0, 2 + 1));
 
     using numbers::PI;
-    const double x = p(0);
-    const double y = p(1);
+    const double x= p(0);
+    const double y= p(1);
 
     Tensor<1, 2> return_value;
     if(component == 0)
       {
-        return_value[0] = PI * cos(PI * x);
-        return_value[1] = 0.0;
+        return_value[0]= PI * cos(PI * x);
+        return_value[1]= 0.0;
       }
     else if(component == 1)
       {
-        return_value[0] = y * PI * PI * sin(PI * x);
-        return_value[1] = -PI * cos(PI * x);
+        return_value[0]= y * PI * PI * sin(PI * x);
+        return_value[1]= -PI * cos(PI * x);
       }
     else if(component == 2)
       {
-        return_value[0] = PI * cos(PI * x) * cos(PI * y);
-        return_value[1] = -PI * sin(PI * x) * sin(PI * y);
+        return_value[0]= PI * cos(PI * x) * cos(PI * y);
+        return_value[1]= -PI * sin(PI * x) * sin(PI * y);
       }
 
     return return_value;
@@ -195,34 +195,34 @@ namespace Step56
     Assert(component <= 3, ExcIndexRange(component, 0, 3 + 1));
 
     using numbers::PI;
-    const double x = p(0);
-    const double y = p(1);
-    const double z = p(2);
+    const double x= p(0);
+    const double y= p(1);
+    const double z= p(2);
 
     Tensor<1, 3> return_value;
     if(component == 0)
       {
-        return_value[0] = 2 * PI * cos(PI * x);
-        return_value[1] = 0.0;
-        return_value[2] = 0.0;
+        return_value[0]= 2 * PI * cos(PI * x);
+        return_value[1]= 0.0;
+        return_value[2]= 0.0;
       }
     else if(component == 1)
       {
-        return_value[0] = y * PI * PI * sin(PI * x);
-        return_value[1] = -PI * cos(PI * x);
-        return_value[2] = 0.0;
+        return_value[0]= y * PI * PI * sin(PI * x);
+        return_value[1]= -PI * cos(PI * x);
+        return_value[2]= 0.0;
       }
     else if(component == 2)
       {
-        return_value[0] = z * PI * PI * sin(PI * x);
-        return_value[1] = 0.0;
-        return_value[2] = -PI * cos(PI * x);
+        return_value[0]= z * PI * PI * sin(PI * x);
+        return_value[1]= 0.0;
+        return_value[2]= -PI * cos(PI * x);
       }
     else if(component == 3)
       {
-        return_value[0] = PI * cos(PI * x) * cos(PI * y) * sin(PI * z);
-        return_value[1] = -PI * sin(PI * x) * sin(PI * y) * sin(PI * z);
-        return_value[2] = PI * sin(PI * x) * cos(PI * y) * cos(PI * z);
+        return_value[0]= PI * cos(PI * x) * cos(PI * y) * sin(PI * z);
+        return_value[1]= -PI * sin(PI * x) * sin(PI * y) * sin(PI * z);
+        return_value[2]= PI * sin(PI * x) * cos(PI * y) * cos(PI * z);
       }
 
     return return_value;
@@ -237,7 +237,7 @@ namespace Step56
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <>
@@ -247,8 +247,8 @@ namespace Step56
     Assert(component <= 2, ExcIndexRange(component, 0, 2 + 1));
 
     using numbers::PI;
-    double x = p(0);
-    double y = p(1);
+    double x= p(0);
+    double y= p(1);
     if(component == 0)
       return PI * PI * sin(PI * x) + PI * cos(PI * x) * cos(PI * y);
     if(component == 1)
@@ -266,9 +266,9 @@ namespace Step56
     Assert(component <= 3, ExcIndexRange(component, 0, 3 + 1));
 
     using numbers::PI;
-    double x = p(0);
-    double y = p(1);
-    double z = p(2);
+    double x= p(0);
+    double y= p(1);
+    double z= p(2);
     if(component == 0)
       return 2 * PI * PI * sin(PI * x)
              + PI * cos(PI * x) * cos(PI * y) * sin(PI * z);
@@ -361,19 +361,19 @@ namespace Step56
       SolverControl solver_control(1000, 1e-6 * src.block(1).l2_norm());
       SolverCG<>    cg(solver_control);
 
-      dst.block(1) = 0.0;
+      dst.block(1)= 0.0;
       cg.solve(
         schur_complement_matrix, dst.block(1), src.block(1), preconditioner_S);
 
-      n_iterations_S += solver_control.last_step();
-      dst.block(1) *= -1.0;
+      n_iterations_S+= solver_control.last_step();
+      dst.block(1)*= -1.0;
     }
 
     // Second, apply the top right block (B^T)
     {
       system_matrix.block(0, 1).vmult(utmp, dst.block(1));
-      utmp *= -1.0;
-      utmp += src.block(0);
+      utmp*= -1.0;
+      utmp+= src.block(0);
     }
 
     // Finally, either solve with the top left block
@@ -383,16 +383,16 @@ namespace Step56
         SolverControl solver_control(10000, utmp.l2_norm() * 1e-4);
         SolverCG<>    cg(solver_control);
 
-        dst.block(0) = 0.0;
+        dst.block(0)= 0.0;
         cg.solve(
           system_matrix.block(0, 0), dst.block(0), utmp, preconditioner_A);
 
-        n_iterations_A += solver_control.last_step();
+        n_iterations_A+= solver_control.last_step();
       }
     else
       {
         preconditioner_A.vmult(dst.block(0), utmp);
-        n_iterations_A += 1;
+        n_iterations_A+= 1;
       }
   }
 
@@ -485,8 +485,8 @@ namespace Step56
     // 2 instead of dim+1 blocks like in step-22, because our FESystem
     // is nested and the dim velocity components appear as one block.
     std::vector<unsigned int> block_component(2);
-    block_component[0] = 0;
-    block_component[1] = 1;
+    block_component[0]= 0;
+    block_component[1]= 1;
 
     // Velocities start at component 0:
     const FEValuesExtractors::Vector velocities(0);
@@ -530,13 +530,13 @@ namespace Step56
         mg_constrained_dofs.initialize(velocity_dof_handler);
         mg_constrained_dofs.make_zero_boundary_constraints(velocity_dof_handler,
                                                            zero_boundary_ids);
-        const unsigned int n_levels = triangulation.n_levels();
+        const unsigned int n_levels= triangulation.n_levels();
 
         mg_interface_matrices.resize(0, n_levels - 1);
         mg_matrices.resize(0, n_levels - 1);
         mg_sparsity_patterns.resize(0, n_levels - 1);
 
-        for(unsigned int level = 0; level < n_levels; ++level)
+        for(unsigned int level= 0; level < n_levels; ++level)
           {
             DynamicSparsityPattern csp(velocity_dof_handler.n_dofs(level),
                                        velocity_dof_handler.n_dofs(level));
@@ -551,7 +551,7 @@ namespace Step56
     std::vector<types::global_dof_index> dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       dof_handler, dofs_per_block, block_component);
-    const unsigned int n_u = dofs_per_block[0], n_p = dofs_per_block[1];
+    const unsigned int n_u= dofs_per_block[0], n_p= dofs_per_block[1];
 
     {
       constraints.clear();
@@ -601,8 +601,8 @@ namespace Step56
   StokesProblem<dim>::assemble_system()
   {
     TimerOutput::Scope assemble(computing_timer, "Assemble");
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     // If true, we will assemble the pressure mass matrix in the (1,1) block:
     const bool assemble_pressure_mass_matrix
@@ -615,9 +615,9 @@ namespace Step56
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
-    const unsigned int n_q_points = quadrature_formula.size();
+    const unsigned int n_q_points= quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
@@ -636,29 +636,29 @@ namespace Step56
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
 
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                div_phi_u[k]= fe_values[velocities].divergence(k, q);
+                phi_p[k]    = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -671,14 +671,14 @@ namespace Step56
 
                 const unsigned int component_i
                   = fe.system_to_component_index(i).first;
-                local_rhs(i) += fe_values.shape_value(i, q)
-                                * rhs_values[q](component_i) * fe_values.JxW(q);
+                local_rhs(i)+= fe_values.shape_value(i, q)
+                               * rhs_values[q](component_i) * fe_values.JxW(q);
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            local_matrix(i, j) = local_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            local_matrix(i, j)= local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
         constraints.distribute_local_to_global(local_matrix,
@@ -692,7 +692,7 @@ namespace Step56
       {
         pressure_mass_matrix.reinit(sparsity_pattern.block(1, 1));
         pressure_mass_matrix.copy_from(system_matrix.block(1, 1));
-        system_matrix.block(1, 1) = 0;
+        system_matrix.block(1, 1)= 0;
       }
   }
 
@@ -709,7 +709,7 @@ namespace Step56
     TimerOutput::Scope assemble_multigrid(computing_timer,
                                           "Assemble Multigrid");
 
-    mg_matrices = 0.;
+    mg_matrices= 0.;
 
     QGauss<dim> quadrature_formula(pressure_degree + 2);
 
@@ -718,8 +718,8 @@ namespace Step56
                             update_values | update_quadrature_points
                               | update_JxW_values | update_gradients);
 
-    const unsigned int dofs_per_cell = velocity_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= velocity_fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -733,7 +733,7 @@ namespace Step56
       triangulation.n_levels());
     std::vector<ConstraintMatrix> boundary_interface_constraints(
       triangulation.n_levels());
-    for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+    for(unsigned int level= 0; level < triangulation.n_levels(); ++level)
       {
         boundary_constraints[level].add_lines(
           mg_constrained_dofs.get_refinement_edge_indices(level));
@@ -741,51 +741,51 @@ namespace Step56
           mg_constrained_dofs.get_boundary_indices(level));
         boundary_constraints[level].close();
 
-        IndexSet idx = mg_constrained_dofs.get_refinement_edge_indices(level)
-                       & mg_constrained_dofs.get_boundary_indices(level);
+        IndexSet idx= mg_constrained_dofs.get_refinement_edge_indices(level)
+                      & mg_constrained_dofs.get_boundary_indices(level);
 
         boundary_interface_constraints[level].add_lines(idx);
         boundary_interface_constraints[level].close();
       }
 
     // This iterator goes over all cells (not just active)
-    typename DoFHandler<dim>::cell_iterator cell = velocity_dof_handler.begin(),
-                                            endc = velocity_dof_handler.end();
+    typename DoFHandler<dim>::cell_iterator cell= velocity_dof_handler.begin(),
+                                            endc= velocity_dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        cell_matrix = 0;
+        cell_matrix= 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
-              symgrad_phi_u[k] = fe_values[velocities].symmetric_gradient(k, q);
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
+              symgrad_phi_u[k]= fe_values[velocities].symmetric_gradient(k, q);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j <= i; ++j)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              for(unsigned int j= 0; j <= i; ++j)
                 {
                   cell_matrix(i, j)
                     += (symgrad_phi_u[i] * symgrad_phi_u[j]) * fe_values.JxW(q);
                 }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            cell_matrix(i, j) = cell_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            cell_matrix(i, j)= cell_matrix(j, i);
 
         cell->get_mg_dof_indices(local_dof_indices);
 
         boundary_constraints[cell->level()].distribute_local_to_global(
           cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             if(!mg_constrained_dofs.at_refinement_edge(cell->level(),
                                                        local_dof_indices[i])
                || mg_constrained_dofs.at_refinement_edge(cell->level(),
                                                          local_dof_indices[j]))
-              cell_matrix(i, j) = 0;
+              cell_matrix(i, j)= 0;
 
         boundary_interface_constraints[cell->level()]
           .distribute_local_to_global(cell_matrix,
@@ -839,7 +839,7 @@ namespace Step56
     // the preconditioner.  One could change this to false to see if
     // there is still convergence and if so does the program then run
     // faster or slower
-    const bool use_expensive = true;
+    const bool use_expensive= true;
 
     SolverFGMRES<BlockVector<double>> solver(solver_control);
 
@@ -871,8 +871,8 @@ namespace Step56
           TimerOutput::Scope solve_fmgres(computing_timer, "Solve - FGMRES");
 
           solver.solve(system_matrix, solution, system_rhs, preconditioner);
-          n_iterations_A = preconditioner.n_iterations_A;
-          n_iterations_S = preconditioner.n_iterations_S;
+          n_iterations_A= preconditioner.n_iterations_A;
+          n_iterations_S= preconditioner.n_iterations_S;
         }
       }
     else
@@ -932,8 +932,8 @@ namespace Step56
         {
           TimerOutput::Scope solve_fmgres(computing_timer, "Solve - FGMRES");
           solver.solve(system_matrix, solution, system_rhs, preconditioner);
-          n_iterations_A = preconditioner.n_iterations_A;
-          n_iterations_S = preconditioner.n_iterations_S;
+          n_iterations_A= preconditioner.n_iterations_A;
+          n_iterations_S= preconditioner.n_iterations_S;
         }
       }
 
@@ -963,7 +963,7 @@ namespace Step56
     // in a pressure with mean value zero. Here we make use of the fact that
     // the pressure is component $dim$ and that the finite element space
     // is nodal.
-    const double mean_pressure = VectorTools::compute_mean_value(
+    const double mean_pressure= VectorTools::compute_mean_value(
       dof_handler, QGauss<dim>(pressure_degree + 2), solution, dim);
     solution.block(1).add(-mean_pressure);
     std::cout << "   Note: The mean value was adjusted by " << -mean_pressure
@@ -982,7 +982,7 @@ namespace Step56
                                       VectorTools::L2_norm,
                                       &velocity_mask);
 
-    const double Velocity_L2_error = VectorTools::compute_global_error(
+    const double Velocity_L2_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     VectorTools::integrate_difference(dof_handler,
@@ -993,7 +993,7 @@ namespace Step56
                                       VectorTools::L2_norm,
                                       &pressure_mask);
 
-    const double Pressure_L2_error = VectorTools::compute_global_error(
+    const double Pressure_L2_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::L2_norm);
 
     VectorTools::integrate_difference(dof_handler,
@@ -1004,7 +1004,7 @@ namespace Step56
                                       VectorTools::H1_norm,
                                       &velocity_mask);
 
-    const double Velocity_H1_error = VectorTools::compute_global_error(
+    const double Velocity_H1_error= VectorTools::compute_global_error(
       triangulation, difference_per_cell, VectorTools::H1_norm);
 
     std::cout << std::endl
@@ -1061,7 +1061,7 @@ namespace Step56
     else
       std::cout << "Now running with UMFPACK" << std::endl;
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
+    for(unsigned int refinement_cycle= 0; refinement_cycle < 3;
         ++refinement_cycle)
       {
         std::cout << "Refinement cycle " << refinement_cycle << std::endl;
@@ -1108,8 +1108,8 @@ main()
       using namespace dealii;
       using namespace Step56;
 
-      const int degree = 1;
-      const int dim    = 3;
+      const int degree= 1;
+      const int dim   = 3;
       // options for SolverType: UMFPACK FGMRES_ILU FGMRES_GMG
       StokesProblem<dim> flow_problem(degree, SolverType::FGMRES_GMG);
 

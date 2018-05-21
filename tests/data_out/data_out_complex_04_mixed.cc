@@ -52,12 +52,12 @@ check()
   dof_handler.distribute_dofs(fe);
 
   Vector<std::complex<double>> v(tria.n_active_cells());
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = std::complex<double>(1. * i, -1. * i);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= std::complex<double>(1. * i, -1. * i);
 
   Vector<double> w(tria.n_active_cells());
-  for(unsigned int i = 0; i < w.size(); ++i)
-    w(i) = 2 * i;
+  for(unsigned int i= 0; i < w.size(); ++i)
+    w(i)= 2 * i;
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);

@@ -42,29 +42,29 @@ test_real_to_unit_cell()
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation);
 
-  const unsigned int      n_points = 4;
+  const unsigned int      n_points= 4;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
 
   switch(dim)
     {
       case 1:
-        for(unsigned int x = 0; x < n_points; ++x)
-          unit_points[x][0] = double(x) / double(n_points);
+        for(unsigned int x= 0; x < n_points; ++x)
+          unit_points[x][0]= double(x) / double(n_points);
         break;
 
       case 2:
-        for(unsigned int x = 0; x < n_points; ++x)
-          for(unsigned int y = 0; y < n_points; ++y)
+        for(unsigned int x= 0; x < n_points; ++x)
+          for(unsigned int y= 0; y < n_points; ++y)
             {
-              unit_points[y * n_points + x][0] = double(x) / double(n_points);
-              unit_points[y * n_points + x][1] = double(y) / double(n_points);
+              unit_points[y * n_points + x][0]= double(x) / double(n_points);
+              unit_points[y * n_points + x][1]= double(y) / double(n_points);
             }
         break;
 
       case 3:
-        for(unsigned int x = 0; x < n_points; ++x)
-          for(unsigned int y = 0; y < n_points; ++y)
-            for(unsigned int z = 0; z < n_points; ++z)
+        for(unsigned int x= 0; x < n_points; ++x)
+          for(unsigned int y= 0; y < n_points; ++y)
+            for(unsigned int z= 0; z < n_points; ++z)
               {
                 unit_points[z * n_points * n_points + y * n_points + x][0]
                   = double(x) / double(n_points);
@@ -94,20 +94,20 @@ test_real_to_unit_cell()
     = triangulation.begin_active();
 
   //Move a vertex a little bit
-  const unsigned int n_dx = 5;
-  const double       dx   = 0.4 / n_dx;
+  const unsigned int n_dx= 5;
+  const double       dx  = 0.4 / n_dx;
   Point<spacedim>    direction;
-  for(unsigned int j = 0; j < spacedim; ++j)
-    direction[j] = dx;
+  for(unsigned int j= 0; j < spacedim; ++j)
+    direction[j]= dx;
 
   // in a loop, make the cell more
   // and more distorted
-  for(unsigned int j = 0; j < n_dx; ++j)
+  for(unsigned int j= 0; j < n_dx; ++j)
     {
       deallog << "Vertex displacement: " << double(j) * direction << std::endl;
-      cell->vertex(0) = double(j) * direction;
+      cell->vertex(0)= double(j) * direction;
 
-      for(unsigned int i = 0; i < unit_points.size(); ++i)
+      for(unsigned int i= 0; i < unit_points.size(); ++i)
         {
           // for each of the points,
           // verify that if we apply
@@ -117,7 +117,7 @@ test_real_to_unit_cell()
 
           const Point<spacedim> p
             = map.transform_unit_to_real_cell(cell, unit_points[i]);
-          const Point<dim> p_unit = map.transform_real_to_unit_cell(cell, p);
+          const Point<dim> p_unit= map.transform_real_to_unit_cell(cell, p);
 
           Assert(unit_points[i].distance(p_unit) < 1e-10, ExcInternalError());
         }

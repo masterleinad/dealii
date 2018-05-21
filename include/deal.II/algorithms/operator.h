@@ -72,7 +72,7 @@ namespace Algorithms
     /**
      * The virtual destructor.
      */
-    virtual ~OperatorBase() override = default;
+    virtual ~OperatorBase() override= default;
 
     /**
      * The actual operation, which is implemented in a derived class.
@@ -119,12 +119,12 @@ namespace Algorithms
      * The copy constructor is deleted since objects of this class
      * should not be copied.
      */
-    OutputOperator(const OutputOperator<VectorType>&) = delete;
+    OutputOperator(const OutputOperator<VectorType>&)= delete;
 
     /**
      * Empty virtual destructor.
      */
-    virtual ~OutputOperator() override = default;
+    virtual ~OutputOperator() override= default;
 
     /**
      * Set the stream @p os to which data is written. If no stream is selected
@@ -154,7 +154,7 @@ namespace Algorithms
   inline void
   OutputOperator<VectorType>::set_step(const unsigned int s)
   {
-    step = s;
+    step= s;
   }
 
   /**

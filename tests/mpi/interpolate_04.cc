@@ -55,8 +55,8 @@ test()
   ConstraintMatrix cm2;
   cm2.close();
 
-  IndexSet dof1_locally_owned_dofs = dofh1.locally_owned_dofs();
-  IndexSet dof2_locally_owned_dofs = dofh2.locally_owned_dofs();
+  IndexSet dof1_locally_owned_dofs= dofh1.locally_owned_dofs();
+  IndexSet dof2_locally_owned_dofs= dofh2.locally_owned_dofs();
   IndexSet dof1_locally_relevant_dofs;
   IndexSet dof2_locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dofh2, dof2_locally_relevant_dofs);
@@ -69,7 +69,7 @@ test()
 
   FETools::interpolation_difference(dofh1, cm1, u1, dofh2, cm2, out);
 
-  double norm = out.l2_norm();
+  double norm= out.l2_norm();
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "norm = " << norm << std::endl;
@@ -80,7 +80,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

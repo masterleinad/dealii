@@ -53,9 +53,9 @@ inline double
 gradient_power(const Tensor<1, dim>& v, const unsigned int n)
 {
   Assert((n / 2) * 2 == n, ExcMessage("Value of 'n' must be even"));
-  double p = 1;
-  for(unsigned int k = 0; k < n; k += 2)
-    p *= (v * v);
+  double p= 1;
+  for(unsigned int k= 0; k < n; k+= 2)
+    p*= (v * v);
   return p;
 }
 
@@ -66,14 +66,14 @@ public:
   {}
 
   virtual double
-  value(const Point<1>& p, const unsigned int component = 0) const;
+  value(const Point<1>& p, const unsigned int component= 0) const;
 };
 
 double
 InitializationValues::value(const Point<1>& p, const unsigned int) const
 {
-  const double base   = std::pow(p(0), 1. / 3.);
-  const double random = random_value<double>(-1., 1.);
+  const double base  = std::pow(p(0), 1. / 3.);
+  const double random= random_value<double>(-1., 1.);
   return std::max(base + .1 * random, 0.);
 }
 
@@ -135,19 +135,19 @@ MinimizationProblem<1>::initialize_solution()
     dof_handler, InitializationValues(), present_solution);
 
   hp::DoFHandler<1>::cell_iterator cell;
-  cell = dof_handler.begin(0);
+  cell= dof_handler.begin(0);
   while(cell->at_boundary(0) == false)
-    cell = cell->neighbor(0);
+    cell= cell->neighbor(0);
   while(cell->has_children() == true)
-    cell = cell->child(0);
-  present_solution(cell->vertex_dof_index(0, 0)) = 0;
+    cell= cell->child(0);
+  present_solution(cell->vertex_dof_index(0, 0))= 0;
 
-  cell = dof_handler.begin(0);
+  cell= dof_handler.begin(0);
   while(cell->at_boundary(1) == false)
-    cell = cell->neighbor(1);
+    cell= cell->neighbor(1);
   while(cell->has_children())
-    cell = cell->child(1);
-  present_solution(cell->vertex_dof_index(1, 0)) = 1;
+    cell= cell->child(1);
+  present_solution(cell->vertex_dof_index(1, 0))= 1;
 }
 
 template <int dim>
@@ -182,8 +182,8 @@ MinimizationProblem<dim>::assemble_step()
                               update_values | update_gradients
                                 | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe[0].dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula[0].size();
+  const unsigned int dofs_per_cell= fe[0].dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -195,11 +195,11 @@ MinimizationProblem<dim>::assemble_step()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       fe_values.reinit(cell);
 
@@ -208,16 +208,16 @@ MinimizationProblem<dim>::assemble_step()
       fe_values.get_present_fe_values().get_function_gradients(
         present_solution, local_solution_grads);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
           const double u
             = local_solution_values[q_point],
-            x = fe_values.get_present_fe_values().quadrature_point(q_point)(0);
-          const double         x_minus_u3 = (x - std::pow(u, 3));
-          const Tensor<1, dim> u_prime    = local_solution_grads[q_point];
+            x= fe_values.get_present_fe_values().quadrature_point(q_point)(0);
+          const double         x_minus_u3= (x - std::pow(u, 3));
+          const Tensor<1, dim> u_prime   = local_solution_grads[q_point];
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.get_present_fe_values().shape_grad(i, q_point)
                       * fe_values.get_present_fe_values().shape_grad(j, q_point)
@@ -227,7 +227,7 @@ MinimizationProblem<dim>::assemble_step()
                             j, q_point))
                    * fe_values.get_present_fe_values().JxW(q_point);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             cell_rhs(i)
               += -((6. * x_minus_u3 * gradient_power(u_prime, 4)
                     * fe_values.get_present_fe_values().shape_value(i, q_point)
@@ -242,13 +242,13 @@ MinimizationProblem<dim>::assemble_step()
         }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          residual(local_dof_indices[i]) += cell_rhs(i);
+          residual(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 
@@ -269,26 +269,26 @@ template <int dim>
 double
 MinimizationProblem<dim>::line_search(const Vector<double>& update) const
 {
-  double         alpha = 0.;
+  double         alpha= 0.;
   Vector<double> tmp(present_solution.size());
 
-  for(unsigned int step = 0; step < 5; ++step)
+  for(unsigned int step= 0; step < 5; ++step)
     {
-      tmp = present_solution;
+      tmp= present_solution;
       tmp.add(alpha, update);
-      const double f_a = energy(dof_handler, tmp);
+      const double f_a= energy(dof_handler, tmp);
 
-      const double dalpha = (alpha != 0 ? alpha / 100 : 0.01);
+      const double dalpha= (alpha != 0 ? alpha / 100 : 0.01);
 
-      tmp = present_solution;
+      tmp= present_solution;
       tmp.add(alpha + dalpha, update);
-      const double f_a_plus = energy(dof_handler, tmp);
+      const double f_a_plus= energy(dof_handler, tmp);
 
-      tmp = present_solution;
+      tmp= present_solution;
       tmp.add(alpha - dalpha, update);
-      const double f_a_minus = energy(dof_handler, tmp);
+      const double f_a_minus= energy(dof_handler, tmp);
 
-      const double f_a_prime = (f_a_plus - f_a_minus) / (2 * dalpha);
+      const double f_a_prime= (f_a_plus - f_a_minus) / (2 * dalpha);
       const double f_a_doubleprime
         = ((f_a_plus - 2 * f_a + f_a_minus) / (dalpha * dalpha));
 
@@ -298,21 +298,21 @@ MinimizationProblem<dim>::line_search(const Vector<double>& update) const
       if(std::fabs(f_a_doubleprime) < 1e-7 * std::fabs(f_a_prime))
         break;
 
-      double step_length = -f_a_prime / f_a_doubleprime;
+      double step_length= -f_a_prime / f_a_doubleprime;
 
-      for(unsigned int i = 0; i < 3; ++i)
+      for(unsigned int i= 0; i < 3; ++i)
         {
-          tmp = present_solution;
+          tmp= present_solution;
           tmp.add(alpha + step_length, update);
-          const double e = energy(dof_handler, tmp);
+          const double e= energy(dof_handler, tmp);
 
           if(e >= f_a)
-            step_length /= 2;
+            step_length/= 2;
           else
             break;
         }
 
-      alpha += step_length;
+      alpha+= step_length;
     }
 
   return alpha;
@@ -336,7 +336,7 @@ MinimizationProblem<dim>::do_step()
     hanging_node_constraints.distribute(update);
   }
 
-  const double step_length = line_search(update);
+  const double step_length= line_search(update);
   present_solution.add(step_length, update);
 }
 
@@ -359,7 +359,7 @@ template <>
 void
 MinimizationProblem<1>::refine_grid()
 {
-  const unsigned int dim = 1;
+  const unsigned int dim= 1;
 
   Vector<float> error_indicators(triangulation.n_active_cells());
 
@@ -376,9 +376,9 @@ MinimizationProblem<1>::refine_grid()
   std::vector<Tensor<1, dim>> local_gradients(quadrature[0].size());
   std::vector<Tensor<2, dim>> local_2nd_derivs(quadrature[0].size());
 
-  hp::DoFHandler<dim>::active_cell_iterator cell = dof_handler.begin_active(),
-                                            endc = dof_handler.end();
-  for(unsigned int cell_index = 0; cell != endc; ++cell, ++cell_index)
+  hp::DoFHandler<dim>::active_cell_iterator cell= dof_handler.begin_active(),
+                                            endc= dof_handler.end();
+  for(unsigned int cell_index= 0; cell != endc; ++cell, ++cell_index)
     {
       fe_values.reinit(cell);
       fe_values.get_present_fe_values().get_function_values(present_solution,
@@ -388,22 +388,22 @@ MinimizationProblem<1>::refine_grid()
       fe_values.get_present_fe_values().get_function_hessians(present_solution,
                                                               local_2nd_derivs);
 
-      double cell_residual_norm = 0;
-      for(unsigned int q = 0; q < quadrature[0].size(); ++q)
+      double cell_residual_norm= 0;
+      for(unsigned int q= 0; q < quadrature[0].size(); ++q)
         {
           const double x
             = fe_values.get_present_fe_values().quadrature_point(q)[0];
-          const double u             = local_values[q];
-          const double u_prime       = local_gradients[q][0];
-          const double u_doubleprime = local_2nd_derivs[q][0][0];
+          const double u            = local_values[q];
+          const double u_prime      = local_gradients[q][0];
+          const double u_doubleprime= local_2nd_derivs[q][0][0];
           const double local_residual_value
             = ((x - u * u * u) * std::pow(u_prime, 4)
                * (u * u * u_prime * u_prime
                   + 5 * (x - u * u * u) * u_doubleprime
                   + 2 * u_prime * (1 - 3 * u * u * u_prime)));
 
-          cell_residual_norm += (local_residual_value * local_residual_value
-                                 * fe_values.get_present_fe_values().JxW(q));
+          cell_residual_norm+= (local_residual_value * local_residual_value
+                                * fe_values.get_present_fe_values().JxW(q));
         }
       error_indicators(cell_index)
         = cell_residual_norm * cell->diameter() * cell->diameter();
@@ -416,46 +416,46 @@ MinimizationProblem<1>::refine_grid()
       Assert(x_left == cell->vertex(0)[0], ExcInternalError());
       Assert(x_right == cell->vertex(1)[0], ExcInternalError());
 
-      const double u_left  = local_values[0];
-      const double u_right = local_values[1];
+      const double u_left = local_values[0];
+      const double u_right= local_values[1];
 
-      const double u_prime_left  = local_gradients[0][0];
-      const double u_prime_right = local_gradients[1][0];
+      const double u_prime_left = local_gradients[0][0];
+      const double u_prime_right= local_gradients[1][0];
 
       if(cell->at_boundary(0) == false)
         {
-          hp::DoFHandler<dim>::cell_iterator left_neighbor = cell->neighbor(0);
+          hp::DoFHandler<dim>::cell_iterator left_neighbor= cell->neighbor(0);
           while(left_neighbor->has_children())
-            left_neighbor = left_neighbor->child(1);
+            left_neighbor= left_neighbor->child(1);
 
           neighbor_fe_values.reinit(left_neighbor);
           neighbor_fe_values.get_present_fe_values().get_function_gradients(
             present_solution, local_gradients);
 
-          const double neighbor_u_prime_left = local_gradients[1][0];
+          const double neighbor_u_prime_left= local_gradients[1][0];
 
-          const double left_jump = std::pow(x_left - std::pow(u_left, 3), 2)
-                                   * (std::pow(neighbor_u_prime_left, 5)
-                                      - std::pow(u_prime_left, 5));
+          const double left_jump= std::pow(x_left - std::pow(u_left, 3), 2)
+                                  * (std::pow(neighbor_u_prime_left, 5)
+                                     - std::pow(u_prime_left, 5));
           error_indicators(cell_index)
             += left_jump * left_jump * cell->diameter();
         }
 
       if(cell->at_boundary(1) == false)
         {
-          hp::DoFHandler<dim>::cell_iterator right_neighbor = cell->neighbor(1);
+          hp::DoFHandler<dim>::cell_iterator right_neighbor= cell->neighbor(1);
           while(right_neighbor->has_children())
-            right_neighbor = right_neighbor->child(0);
+            right_neighbor= right_neighbor->child(0);
 
           neighbor_fe_values.reinit(right_neighbor);
           neighbor_fe_values.get_present_fe_values().get_function_gradients(
             present_solution, local_gradients);
 
-          const double neighbor_u_prime_right = local_gradients[0][0];
+          const double neighbor_u_prime_right= local_gradients[0][0];
 
-          const double right_jump = std::pow(x_right - std::pow(u_right, 3), 2)
-                                    * (std::pow(neighbor_u_prime_right, 5)
-                                       - std::pow(u_prime_right, 5));
+          const double right_jump= std::pow(x_right - std::pow(u_right, 3), 2)
+                                   * (std::pow(neighbor_u_prime_right, 5)
+                                      - std::pow(u_prime_right, 5));
           error_indicators(cell_index)
             += right_jump * right_jump * cell->diameter();
         }
@@ -473,7 +473,7 @@ MinimizationProblem<1>::refine_grid()
 
   Vector<double> tmp(dof_handler.n_dofs());
   solution_transfer.interpolate(present_solution, tmp);
-  present_solution = tmp;
+  present_solution= tmp;
 
   hanging_node_constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler,
@@ -493,16 +493,16 @@ MinimizationProblem<dim>::energy(const hp::DoFHandler<dim>& dof_handler,
                               update_values | update_gradients
                                 | update_quadrature_points | update_JxW_values);
 
-  const unsigned int n_q_points = quadrature_formula[0].size();
+  const unsigned int n_q_points= quadrature_formula[0].size();
 
   std::vector<double>         local_solution_values(n_q_points);
   std::vector<Tensor<1, dim>> local_solution_grads(n_q_points);
 
-  double energy = 0.;
+  double energy= 0.;
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
@@ -511,13 +511,13 @@ MinimizationProblem<dim>::energy(const hp::DoFHandler<dim>& dof_handler,
       fe_values.get_present_fe_values().get_function_gradients(
         function, local_solution_grads);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        energy += (std::pow(fe_values.get_present_fe_values().quadrature_point(
-                              q_point)(0)
-                              - std::pow(local_solution_values[q_point], 3),
-                            2)
-                   * gradient_power(local_solution_grads[q_point], 6)
-                   * fe_values.get_present_fe_values().JxW(q_point));
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        energy+= (std::pow(fe_values.get_present_fe_values().quadrature_point(
+                             q_point)(0)
+                             - std::pow(local_solution_values[q_point], 3),
+                           2)
+                  * gradient_power(local_solution_grads[q_point], 6)
+                  * fe_values.get_present_fe_values().JxW(q_point));
     }
 
   return energy;
@@ -532,22 +532,22 @@ MinimizationProblem<dim>::run()
   dof_handler.distribute_dofs(fe);
   initialize_solution();
 
-  double last_energy = energy(dof_handler, present_solution);
+  double last_energy= energy(dof_handler, present_solution);
 
   while(true)
     {
       setup_system_on_mesh();
 
-      for(unsigned int iteration = 0; iteration < 5; ++iteration)
+      for(unsigned int iteration= 0; iteration < 5; ++iteration)
         do_step();
 
-      const double this_energy = energy(dof_handler, present_solution);
+      const double this_energy= energy(dof_handler, present_solution);
       deallog << "   Energy: " << this_energy << std::endl;
 
       if((last_energy - this_energy) < 1e-5 * last_energy)
         break;
 
-      last_energy = this_energy;
+      last_energy= this_energy;
 
       refine_grid();
     }
@@ -566,8 +566,8 @@ main()
 
       deallog.attach(logfile);
 
-      const unsigned int n_realizations = 10;
-      for(unsigned int realization = 0; realization < n_realizations;
+      const unsigned int n_realizations= 10;
+      for(unsigned int realization= 0; realization < n_realizations;
           ++realization)
         {
           deallog << "Realization " << realization << ":" << std::endl;

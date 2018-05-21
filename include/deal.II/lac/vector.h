@@ -221,7 +221,7 @@ public:
    * Destructor, deallocates memory. Made virtual to allow for derived classes
    * to behave properly.
    */
-  virtual ~Vector() override = default;
+  virtual ~Vector() override= default;
 
   /**
    * This function does nothing but exists for compatibility with the parallel
@@ -256,7 +256,7 @@ public:
    * memory separately.
    */
   virtual void
-  reinit(const size_type N, const bool omit_zeroing_entries = false);
+  reinit(const size_type N, const bool omit_zeroing_entries= false);
 
   /**
    * Same as above, but will preserve the values of vector upon resizing.
@@ -293,7 +293,7 @@ public:
    */
   template <typename Number2>
   void
-  reinit(const Vector<Number2>& V, const bool omit_zeroing_entries = false);
+  reinit(const Vector<Number2>& V, const bool omit_zeroing_entries= false);
 
   /**
    * Swap the contents of this vector and the other vector @p v. One could do
@@ -814,7 +814,7 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  print(const char* format = nullptr) const;
+  print(const char* format= nullptr) const;
 
   /**
    * Print to a stream. @p precision denotes the desired precision with which
@@ -824,9 +824,9 @@ public:
    */
   void
   print(std::ostream&      out,
-        const unsigned int precision  = 3,
-        const bool         scientific = true,
-        const bool         across     = true) const;
+        const unsigned int precision = 3,
+        const bool         scientific= true,
+        const bool         across    = true) const;
 
   /**
    * Print to a LogStream. <tt>width</tt> is used as argument to the std::setw
@@ -839,8 +839,8 @@ public:
   DEAL_II_DEPRECATED
   void
   print(LogStream&         out,
-        const unsigned int width  = 6,
-        const bool         across = true) const;
+        const unsigned int width = 6,
+        const bool         across= true) const;
 
   /**
    * Write the vector en bloc to a file. This is done in a binary mode, so the
@@ -1006,7 +1006,7 @@ private:
    * @p copy_n_el from the old values.
    */
   void
-  allocate(const size_type copy_n_el = 0);
+  allocate(const size_type copy_n_el= 0);
 };
 
 /*@}*/
@@ -1128,8 +1128,8 @@ inline void
 Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
                                      std::vector<OtherNumber>&     values) const
 {
-  for(size_type i = 0; i < indices.size(); ++i)
-    values[i] = operator()(indices[i]);
+  for(size_type i= 0; i < indices.size(); ++i)
+    values[i]= operator()(indices[i]);
 }
 
 template <typename Number>
@@ -1141,7 +1141,7 @@ Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
 {
   while(indices_begin != indices_end)
     {
-      *values_begin = operator()(*indices_begin);
+      *values_begin= operator()(*indices_begin);
       indices_begin++;
       values_begin++;
     }
@@ -1187,7 +1187,7 @@ Vector<Number>::add(const size_type    n_indices,
                     const size_type*   indices,
                     const OtherNumber* values)
 {
-  for(size_type i = 0; i < n_indices; ++i)
+  for(size_type i= 0; i < n_indices; ++i)
     {
       Assert(indices[i] < vec_size, ExcIndexRange(indices[i], 0, vec_size));
       Assert(
@@ -1195,7 +1195,7 @@ Vector<Number>::add(const size_type    n_indices,
         ExcMessage(
           "The given value is not finite but either infinite or Not A Number (NaN)"));
 
-      this->values[indices[i]] += values[i];
+      this->values[indices[i]]+= values[i];
     }
 }
 

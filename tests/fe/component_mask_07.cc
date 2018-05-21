@@ -24,7 +24,7 @@ void
 test()
 {
   std::vector<bool> v(12, false);
-  v[3] = true;
+  v[3]= true;
 
   ComponentMask m(v);
 

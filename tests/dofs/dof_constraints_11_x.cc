@@ -62,12 +62,12 @@ test()
   // then set up a sparsity pattern and a
   // matrix on top of it
   std::vector<unsigned int> block_sizes(2);
-  block_sizes[0] = dof_handler.n_dofs() / 3;
-  block_sizes[1] = dof_handler.n_dofs() - block_sizes[0];
+  block_sizes[0]= dof_handler.n_dofs() / 3;
+  block_sizes[1]= dof_handler.n_dofs() - block_sizes[0];
 
   BlockDynamicSparsityPattern sparsity(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       sparsity.block(i, j).reinit(block_sizes[i], block_sizes[j]);
   sparsity.collect_sizes();
 
@@ -77,9 +77,9 @@ test()
   // and output what we have
   BlockSparsityPattern A;
   A.copy_from(sparsity);
-  for(unsigned int r = 0; r < A.n_block_rows(); ++r)
-    for(unsigned int c = 0; c < A.n_block_rows(); ++c)
-      for(SparsityPattern::const_iterator i = A.block(r, c).begin();
+  for(unsigned int r= 0; r < A.n_block_rows(); ++r)
+    for(unsigned int c= 0; c < A.n_block_rows(); ++c)
+      for(SparsityPattern::const_iterator i= A.block(r, c).begin();
           i != A.block(r, c).end();
           ++i)
         deallog << r << ' ' << c << ' ' << i->row() << ' ' << i->column()

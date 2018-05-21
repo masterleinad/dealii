@@ -43,8 +43,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   std::cout << std::setprecision(10);
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int proc_rows    = std::floor(std::sqrt(n_mpi_processes));
-  const unsigned int proc_columns = std::floor(n_mpi_processes / proc_rows);
+  const unsigned int proc_rows   = std::floor(std::sqrt(n_mpi_processes));
+  const unsigned int proc_columns= std::floor(n_mpi_processes / proc_rows);
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid
     = std::make_shared<Utilities::MPI::ProcessGrid>(
@@ -53,7 +53,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         << grid->get_process_grid_columns() << std::endl
         << std::endl;
 
-  const std::vector<unsigned int> sizes = {{400, 500}};
+  const std::vector<unsigned int> sizes= {{400, 500}};
 
   FullMatrix<NumberType> full_A(sizes[0], sizes[1]);
   FullMatrix<NumberType> full_B(sizes[1], sizes[0]);
@@ -61,19 +61,19 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   create_random(full_B);
 
   // conditions for block sizes: mb_A=mb_C, nb_B=nb_C, nb_A=mb_B
-  const unsigned int mb_A = block_size_i, nb_A = block_size_j;
-  const unsigned int mb_B = nb_A, nb_B = mb_A;
+  const unsigned int mb_A= block_size_i, nb_A= block_size_j;
+  const unsigned int mb_B= nb_A, nb_B= mb_A;
 
   ScaLAPACKMatrix<NumberType> scalapack_A(
     full_A.m(), full_A.n(), grid, mb_A, nb_A);
   ScaLAPACKMatrix<NumberType> scalapack_B(
     full_B.m(), full_B.n(), grid, mb_B, nb_B);
-  scalapack_A = full_A;
-  scalapack_B = full_B;
+  scalapack_A= full_A;
+  scalapack_B= full_B;
 
-  const NumberType alpha = 1.2, beta = -0.7;
+  const NumberType alpha= 1.2, beta= -0.7;
 
-  full_A *= alpha;
+  full_A*= alpha;
   FullMatrix<NumberType> full_B_t(sizes[0], sizes[1]);
   full_B_t.copy_transposed(full_B);
   full_A.add(beta, full_B_t);
@@ -99,8 +99,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> blocks_i = {{16, 32, 64}};
-  const std::vector<unsigned int> blocks_j = {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_i= {{16, 32, 64}};
+  const std::vector<unsigned int> blocks_j= {{16, 32, 64}};
 
   for(const auto& s : blocks_i)
     for(const auto& b : blocks_j)

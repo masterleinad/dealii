@@ -46,7 +46,7 @@ namespace internal
                                  const types::global_dof_index         i,
                                  VectorType&                           V)
   {
-    V(i) += value;
+    V(i)+= value;
   }
 
   template <typename VectorType>
@@ -55,7 +55,7 @@ namespace internal
                                  const types::global_dof_index         i,
                                  VectorType&                           V)
   {
-    V(i) = value;
+    V(i)= value;
   }
 
   template <typename VectorType>
@@ -75,11 +75,11 @@ namespace internal
     LinearAlgebra::EpetraWrappers::Vector& V)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector                   vector = V.trilinos_vector();
+    Epetra_FEVector                   vector= V.trilinos_vector();
     TrilinosWrappers::types::int_type trilinos_i
       = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 
-    vector[0][trilinos_i] += value;
+    vector[0][trilinos_i]+= value;
   }
 
   template <>
@@ -90,11 +90,11 @@ namespace internal
     LinearAlgebra::EpetraWrappers::Vector& V)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector                   vector = V.trilinos_vector();
+    Epetra_FEVector                   vector= V.trilinos_vector();
     TrilinosWrappers::types::int_type trilinos_i
       = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 
-    vector[0][trilinos_i] = value;
+    vector[0][trilinos_i]= value;
   }
 
   template <>
@@ -104,7 +104,7 @@ namespace internal
     const types::global_dof_index                i)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector                   vector = V.trilinos_vector();
+    Epetra_FEVector                   vector= V.trilinos_vector();
     TrilinosWrappers::types::int_type trilinos_i
       = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 

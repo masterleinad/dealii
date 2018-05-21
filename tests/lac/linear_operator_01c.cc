@@ -34,8 +34,8 @@ main()
   initlog();
 
   Vector<double> answer(2);
-  answer[0] = 0.25;
-  answer[1] = 0.25;
+  answer[0]= 0.25;
+  answer[1]= 0.25;
 
   SparsityPattern sparsity_pattern(2, 2, 1);
   sparsity_pattern.add(0, 0);
@@ -47,10 +47,10 @@ main()
   A.set(1, 1, 4.0);
 
   Vector<double> b(2);
-  b[0] = 1.0;
-  b[1] = 1.0;
+  b[0]= 1.0;
+  b[1]= 1.0;
 
-  const auto lo_A = linear_operator(A);
+  const auto lo_A= linear_operator(A);
 
   // As we all remember from numerical analysis class, CG will converge in
   // at most two iterations
@@ -59,8 +59,8 @@ main()
   SolverCG<Vector<double>> solver_A(solver_control_A);
   PreconditionIdentity     preconditioner_A;
 
-  const auto lo_A_inv   = inverse_operator(lo_A, solver_A, preconditioner_A);
-  const auto lo_A_inv_t = transpose_operator(lo_A_inv);
+  const auto lo_A_inv  = inverse_operator(lo_A, solver_A, preconditioner_A);
+  const auto lo_A_inv_t= transpose_operator(lo_A_inv);
 
   deallog.depth_file(0);
 
@@ -68,16 +68,16 @@ main()
 
   Vector<double> residual; // keep storage location to trigger bug.
 
-  for(unsigned int j = 0; j < 1000; ++j)
+  for(unsigned int j= 0; j < 1000; ++j)
     {
       // test Tvmult:
-      residual = lo_A_inv_t * b;
-      residual -= answer;
+      residual= lo_A_inv_t * b;
+      residual-= answer;
       if(residual.l2_norm() > 1e-10)
         ++n_mistakes;
 
       // test Tvmult_add:
-      residual = lo_A_inv_t * b - answer;
+      residual= lo_A_inv_t * b - answer;
       if(residual.l2_norm() > 1e-10)
         ++n_mistakes;
     }

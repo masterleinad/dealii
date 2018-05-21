@@ -40,7 +40,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // create sparsity pattern
   typename FunctionMap<dim>::type boundary_ids;
-  boundary_ids[0] = nullptr;
+  boundary_ids[0]= nullptr;
   SparsityPattern sp(dof_handler.n_boundary_dofs(boundary_ids),
                      dof_handler.max_couplings_between_dofs());
   DoFTools::make_boundary_sparsity_pattern(dof_handler, boundary_ids, map, sp);
@@ -50,10 +50,10 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < 20; ++l)
+  for(unsigned int l= 0; l < 20; ++l)
     {
-      const unsigned int line = l * (sp.n_rows() / 20);
-      for(unsigned int c = 0; c < sp.row_length(line); ++c)
+      const unsigned int line= l * (sp.n_rows() / 20);
+      for(unsigned int c= 0; c < sp.row_length(line); ++c)
         deallog << sp.column_number(line, c) << " ";
       deallog << std::endl;
     }
@@ -63,11 +63,10 @@ check_this(const DoFHandler<dim>& dof_handler)
           << sp.max_entries_per_row() << std::endl
           << sp.n_nonzero_elements() << std::endl;
 
-  unsigned int hash = 0;
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
-    hash
-      += l
-         * (sp.row_length(l) + (sp.begin(l) - sp.begin())
-            + (sp.row_length(l) > 1 ? ++sp.begin(l) : sp.begin(l))->column());
+  unsigned int hash= 0;
+  for(unsigned int l= 0; l < sp.n_rows(); ++l)
+    hash+= l
+           * (sp.row_length(l) + (sp.begin(l) - sp.begin())
+              + (sp.row_length(l) > 1 ? ++sp.begin(l) : sp.begin(l))->column());
   deallog << hash << std::endl;
 }

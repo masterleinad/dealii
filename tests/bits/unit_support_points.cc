@@ -30,7 +30,7 @@ template <int dim>
 void
 check_cell1(const FiniteElement<dim>& fe)
 {
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     AssertThrow(fe.get_unit_support_points()[i] == fe.unit_support_point(i),
                 ExcInternalError());
   deallog << "dim=" << dim << ", cell=ok" << std::endl;
@@ -40,7 +40,7 @@ template <int dim>
 void
 check_face1(const FiniteElement<dim>& fe)
 {
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     AssertThrow(fe.get_unit_face_support_points()[i]
                   == fe.unit_face_support_point(i),
                 ExcInternalError());
@@ -63,7 +63,7 @@ template <int dim>
 void
 check_cell2(const FiniteElement<dim>& fe, const unsigned int comp)
 {
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     if(fe.system_to_component_index(i).first == comp)
       deallog << i << " " << fe.unit_support_point(i) << std::endl;
   deallog << "dim=" << dim << ", cell=ok" << std::endl;
@@ -73,7 +73,7 @@ template <int dim>
 void
 check_face2(const FiniteElement<dim>& fe, const unsigned int comp)
 {
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     if(fe.face_system_to_component_index(i).first == comp)
       deallog << i << " " << fe.unit_face_support_point(i) << std::endl;
   deallog << "dim=" << dim << ", face=ok" << std::endl;

@@ -19,7 +19,7 @@
 
 #define PRINTME(name, var)                        \
   deallog << "Vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.size(); ++i)    \
+  for(unsigned int i= 0; i < var.size(); ++i)     \
     deallog << var[i] << " ";                     \
   deallog << std::endl;
 
@@ -36,8 +36,8 @@ main(int argc, char** argv)
     local_owned.add_range(0, 10);
 
     TrilinosWrappers::MPI::Vector temp(local_owned, MPI_COMM_WORLD);
-    for(unsigned int i = 0; i < temp.size(); ++i)
-      temp[i] = (double) (i + 1);
+    for(unsigned int i= 0; i < temp.size(); ++i)
+      temp[i]= (double) (i + 1);
 
     PRINTME("Vector", temp);
 
@@ -45,12 +45,12 @@ main(int argc, char** argv)
     PRINTME("move constructor", u);
 
     TrilinosWrappers::MPI::Vector v;
-    v = u;
+    v= u;
     PRINTME("copy assignment", v);
     PRINTME("old object", u);
 
     v.clear();
-    v = std::move(u);
+    v= std::move(u);
     PRINTME("move assignment", v);
     deallog << "old object size: " << u.size() << std::endl;
   }

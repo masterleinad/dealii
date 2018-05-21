@@ -35,7 +35,7 @@ check()
   GridGenerator::subdivided_hyper_cube(triangulation, 2);
   hp::FECollection<dim> fe_collection;
 
-  for(unsigned int i = 1; i <= triangulation.n_active_cells(); ++i)
+  for(unsigned int i= 1; i <= triangulation.n_active_cells(); ++i)
     fe_collection.push_back(FE_Q<dim>(i));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
@@ -44,8 +44,8 @@ check()
 
   Vector<double> vector(dof_handler.n_dofs());
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    vector(i) = i;
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
+    vector(i)= i;
 
   Functions::FEFieldFunction<dim, hp::DoFHandler<dim>> fe_field(dof_handler,
                                                                 vector);
@@ -57,7 +57,7 @@ check()
 
   fe_field.value_list(quadrature.get_points(), values);
 
-  for(unsigned int q_point = 0; q_point < quadrature.size(); ++q_point)
+  for(unsigned int q_point= 0; q_point < quadrature.size(); ++q_point)
     deallog << values[q_point] << std::endl;
 
   deallog << "gradients:" << std::endl;
@@ -66,7 +66,7 @@ check()
 
   fe_field.gradient_list(quadrature.get_points(), gradients);
 
-  for(unsigned int q_point = 0; q_point < quadrature.size(); ++q_point)
+  for(unsigned int q_point= 0; q_point < quadrature.size(); ++q_point)
     deallog << gradients[q_point] << std::endl;
 }
 

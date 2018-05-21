@@ -26,40 +26,40 @@ test(Vector<double>& v, Vector<double>& w)
   // set some entries in the
   // matrix. actually, set them all
   SparsityPattern sp(v.size(), v.size(), v.size());
-  for(unsigned int i = 0; i < v.size(); ++i)
-    for(unsigned int j = 0; j < v.size(); ++j)
+  for(unsigned int i= 0; i < v.size(); ++i)
+    for(unsigned int j= 0; j < v.size(); ++j)
       sp.add(i, j);
   sp.compress();
 
   // then create a matrix from that
   SparseMatrix<double> m(sp);
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1;
+      v(i)= i;
+      w(i)= i + 1;
     }
 
   v.compress();
   w.compress();
 
   // <w,Mv>
-  const double s = m.matrix_scalar_product(w, v);
+  const double s= m.matrix_scalar_product(w, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(v(i) == i, ExcInternalError());
       AssertThrow(w(i) == i + 1, ExcInternalError());
     }
 
-  double result = 0;
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
-      result += (i + 2 * j) * j * (i + 1);
+  double result= 0;
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
+      result+= (i + 2 * j) * j * (i + 1);
 
   AssertThrow(s == result, ExcInternalError());
 

@@ -55,10 +55,10 @@ check(const MatrixType& A, const VectorType& f)
   std::vector<std::string>::const_iterator name;
 
   solver.set_control(mycont);
-  for(name = names.begin(); name != names.end(); ++name)
+  for(name= names.begin(); name != names.end(); ++name)
     {
       solver.select(*name);
-      u = 0.;
+      u= 0.;
       solver.solve(A, u, f, pre);
     }
 }
@@ -70,8 +70,8 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  unsigned int size = 37;
-  unsigned int dim  = (size - 1) * (size - 1);
+  unsigned int size= 37;
+  unsigned int dim = (size - 1) * (size - 1);
 
   deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -83,7 +83,7 @@ main()
   SparseMatrix<double> A(structure);
   testproblem.five_point(A);
   Vector<double> f(dim);
-  f = 1.;
+  f= 1.;
 
   check(A, f);
 }

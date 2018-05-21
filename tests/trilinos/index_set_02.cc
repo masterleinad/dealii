@@ -27,8 +27,8 @@ test()
   IndexSet set_my(100);
   IndexSet set_ghost(100);
 
-  unsigned int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int n_proc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(myid == 0)
     {
@@ -44,7 +44,7 @@ test()
   else
     {}
 
-  auto check = [&](IndexSet& idxset) {
+  auto check= [&](IndexSet& idxset) {
     deallog << "IndexSet before size=" << idxset.size() << " values: ";
     idxset.print(deallog);
     IndexSet back(idxset.make_trilinos_map(MPI_COMM_WORLD, true));

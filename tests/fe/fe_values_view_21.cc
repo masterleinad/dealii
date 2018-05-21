@@ -100,8 +100,8 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
-    block_component[ii] = 0;
+  for(unsigned int ii= 0; ii < n_stress_components; ii++)
+    block_component[ii]= 0;
 
   DoFRenumbering::component_wise(dof_handler);
 
@@ -109,8 +109,8 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   std::vector<types::global_dof_index> dofs_per_block(2);
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, block_component);
 
-  const unsigned int n_stress_dof = dofs_per_block[0];
-  const unsigned int n_gamma_dof  = dofs_per_block[1];
+  const unsigned int n_stress_dof= dofs_per_block[0];
+  const unsigned int n_gamma_dof = dofs_per_block[1];
 
   deallog << "Number of active cells: " << triangulation.n_active_cells()
           << std::endl
@@ -146,8 +146,8 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   system_rhs.block(1).reinit(n_gamma_dof);
   system_rhs.collect_sizes();
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    system_rhs(i) = i;
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
+    system_rhs(i)= i;
 }
 
 template <int dim>
@@ -161,7 +161,7 @@ MixedElastoPlasticity<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
   deallog << "dofs_per_cell: " << fe.dofs_per_cell << std::endl;
 
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
@@ -183,7 +183,7 @@ MixedElastoPlasticity<dim>::assemble_system()
   fe_values[stress].get_function_values(system_rhs, local_values);
   fe_values[stress].get_function_divergences(system_rhs, local_divergences);
 
-  for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+  for(unsigned int q= 0; q < quadrature_formula.size(); ++q)
     deallog << local_values[q] << std::endl
             << local_divergences[q] << std::endl;
 }

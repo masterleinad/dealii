@@ -51,13 +51,13 @@ using namespace dealii;
 template <class PRECONDITIONER,
           typename MatrixType,
           typename VectorType,
-          class ADDITIONAL_DATA = typename PRECONDITIONER::AdditionalData>
+          class ADDITIONAL_DATA= typename PRECONDITIONER::AdditionalData>
 void
 test_preconditioner_block(const MatrixType&      A,
                           const VectorType&      b,
-                          const ADDITIONAL_DATA& data = ADDITIONAL_DATA())
+                          const ADDITIONAL_DATA& data= ADDITIONAL_DATA())
 {
-  const auto lo_A = linear_operator<VectorType>(A);
+  const auto lo_A= linear_operator<VectorType>(A);
 
   PRECONDITIONER preconditioner;
   preconditioner.initialize(A, data);
@@ -66,20 +66,20 @@ test_preconditioner_block(const MatrixType&      A,
   SolverCG<VectorType> solver(solver_control);
 
   // Exact inverse
-  const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
+  const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
 
-  const VectorType x = lo_A_inv * b;
+  const VectorType x= lo_A_inv * b;
 
   // Approximate inverse
   {
     // Using exemplar matrix
-    const auto lo_A_inv_approx = linear_operator<VectorType>(A, preconditioner);
-    const VectorType x_approx  = lo_A_inv_approx * b;
+    const auto lo_A_inv_approx= linear_operator<VectorType>(A, preconditioner);
+    const VectorType x_approx = lo_A_inv_approx * b;
   }
   {
     // Stand-alone
-    const auto lo_A_inv_approx = linear_operator<VectorType>(preconditioner);
-    const VectorType x_approx  = lo_A_inv_approx * b;
+    const auto lo_A_inv_approx= linear_operator<VectorType>(preconditioner);
+    const VectorType x_approx = lo_A_inv_approx * b;
   }
 }
 
@@ -93,7 +93,7 @@ test_preconditioner(const SparseMatrix<double>&                    A,
                     const typename PRECONDITIONER::AdditionalData& data
                     = typename PRECONDITIONER::AdditionalData())
 {
-  const auto lo_A = linear_operator(A);
+  const auto lo_A= linear_operator(A);
 
   PRECONDITIONER preconditioner;
   preconditioner.initialize(A, data);
@@ -103,9 +103,9 @@ test_preconditioner(const SparseMatrix<double>&                    A,
     deallog.push("Exact inverse");
     SolverControl            solver_control(100, 1.0e-10);
     SolverCG<Vector<double>> solver(solver_control);
-    const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
+    const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
 
-    const Vector<double> x = lo_A_inv * b;
+    const Vector<double> x= lo_A_inv * b;
     deallog.pop();
   }
 
@@ -113,15 +113,15 @@ test_preconditioner(const SparseMatrix<double>&                    A,
   // Using an exemplar matrix
   {
     deallog.push("Exemplar matrix");
-    const auto           lo_A_inv_approx = linear_operator(A, preconditioner);
-    const Vector<double> x_approx        = lo_A_inv_approx * b;
+    const auto           lo_A_inv_approx= linear_operator(A, preconditioner);
+    const Vector<double> x_approx       = lo_A_inv_approx * b;
     deallog.pop();
   }
   // Stand-alone
   {
     deallog.push("Stand-alone");
-    const auto           lo_A_inv_approx = linear_operator(preconditioner);
-    const Vector<double> x_approx        = lo_A_inv_approx * b;
+    const auto           lo_A_inv_approx= linear_operator(preconditioner);
+    const Vector<double> x_approx       = lo_A_inv_approx * b;
     deallog.pop();
   }
 }
@@ -149,7 +149,7 @@ test_solver(const SparseMatrix<double>& A, const Vector<double>& b)
   // Linear operator
   {
     deallog.push("Linear operator");
-    const auto lo_A = linear_operator(A);
+    const auto lo_A= linear_operator(A);
 
     SolverControl solver_control(100, 1.0e-10);
     SolverType    solver(solver_control);
@@ -157,8 +157,8 @@ test_solver(const SparseMatrix<double>& A, const Vector<double>& b)
     PreconditionJacobi<SparseMatrix<double>> preconditioner;
     preconditioner.initialize(A);
 
-    const auto lo_A_inv    = inverse_operator(lo_A, solver, preconditioner);
-    const Vector<double> x = lo_A_inv * b;
+    const auto lo_A_inv   = inverse_operator(lo_A, solver, preconditioner);
+    const Vector<double> x= lo_A_inv * b;
     deallog.pop();
   }
 }
@@ -178,10 +178,10 @@ public:
 
   void
   initialize(const BlockMatrixBase<MatrixType>& matrix,
-             const AdditionalData& additional_data = AdditionalData())
+             const AdditionalData& additional_data= AdditionalData())
   {
-    this->row_block_indices    = matrix.get_row_indices();
-    this->column_block_indices = matrix.get_column_indices();
+    this->row_block_indices   = matrix.get_row_indices();
+    this->column_block_indices= matrix.get_column_indices();
 
     this->sub_objects.reinit(matrix.n_block_rows(), matrix.n_block_cols());
   }
@@ -190,14 +190,14 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    dst = src;
+    dst= src;
   }
 
   template <typename VectorType>
   void
   Tvmult(VectorType& dst, const VectorType& src) const
   {
-    dst = src;
+    dst= src;
   }
 };
 
@@ -219,16 +219,16 @@ main()
 
   // deal.II SparseMatrix
   {
-    const unsigned int rc = 10;
+    const unsigned int rc= 10;
     SparsityPattern    sparsity_pattern(rc, rc, 0);
     sparsity_pattern.compress();
 
     SparseMatrix<double> A(sparsity_pattern);
     Vector<double>       b(rc);
-    for(unsigned int i = 0; i < rc; ++i)
+    for(unsigned int i= 0; i < rc; ++i)
       {
-        A.diag_element(i) = 2.0;
-        b(i)              = i;
+        A.diag_element(i)= 2.0;
+        b(i)             = i;
       }
 
     // === PRECONDITIONERS ===
@@ -265,7 +265,7 @@ main()
     }
     {
       deallog << "PreconditionSelector" << std::endl;
-      const auto lo_A = linear_operator(A);
+      const auto lo_A= linear_operator(A);
 
       PreconditionSelector<SparseMatrix<double>, Vector<double>> preconditioner(
         "jacobi");
@@ -275,13 +275,13 @@ main()
       SolverCG<Vector<double>> solver(solver_control);
 
       // Exact inverse
-      const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
+      const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
 
-      const Vector<double> x = lo_A_inv * b;
+      const Vector<double> x= lo_A_inv * b;
 
       // Approximate inverse
-      const auto           lo_A_inv_approx = linear_operator(preconditioner);
-      const Vector<double> x_approx        = lo_A_inv_approx * b;
+      const auto           lo_A_inv_approx= linear_operator(preconditioner);
+      const Vector<double> x_approx       = lo_A_inv_approx * b;
     }
     {
       deallog << "PreconditionSOR" << std::endl;
@@ -358,7 +358,7 @@ main()
     }
     {
       deallog << "SolverSelector" << std::endl;
-      const auto lo_A = linear_operator(A);
+      const auto lo_A= linear_operator(A);
 
       ReductionControl               solver_control(10, 1.e-30, 1.e-2);
       SolverSelector<Vector<double>> solver;
@@ -368,21 +368,21 @@ main()
       PreconditionJacobi<SparseMatrix<double>> preconditioner;
       preconditioner.initialize(A);
 
-      const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
+      const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
 
       const Vector<double> b(rc);
-      const Vector<double> x = lo_A_inv * b;
+      const Vector<double> x= lo_A_inv * b;
     }
 #ifdef DEAL_II_WITH_UMFPACK
     {
       deallog << "SparseDirectUMFPACK" << std::endl;
-      const auto lo_A = linear_operator(A);
+      const auto lo_A= linear_operator(A);
 
       SparseDirectUMFPACK solver;
       solver.initialize(A);
 
-      const auto           lo_A_inv = linear_operator(solver);
-      const Vector<double> x        = lo_A_inv * b;
+      const auto           lo_A_inv= linear_operator(solver);
+      const Vector<double> x       = lo_A_inv * b;
     }
 #endif
     deallog.pop();
@@ -392,13 +392,13 @@ main()
 
   // deal.II BlockSparseMatrix
   {
-    const unsigned int   blks = 2;
-    const unsigned int   rc   = 10;
+    const unsigned int   blks= 2;
+    const unsigned int   rc  = 10;
     BlockSparsityPattern sparsity_pattern;
     {
       BlockDynamicSparsityPattern csp(blks, blks);
-      for(unsigned int bi = 0; bi < blks; ++bi)
-        for(unsigned int bj = 0; bj < blks; ++bj)
+      for(unsigned int bi= 0; bi < blks; ++bi)
+        for(unsigned int bj= 0; bj < blks; ++bj)
           csp.block(bi, bj).reinit(rc, rc);
 
       csp.collect_sizes();
@@ -407,11 +407,11 @@ main()
 
     BlockSparseMatrix<double> A(sparsity_pattern);
     BlockVector<double>       b(blks, rc);
-    for(unsigned int bi = 0; bi < blks; ++bi)
-      for(unsigned int i = 0; i < rc; ++i)
+    for(unsigned int bi= 0; bi < blks; ++bi)
+      for(unsigned int i= 0; i < rc; ++i)
         {
-          A.block(bi, bi).diag_element(i) = 2.0;
-          b.block(bi)(i)                  = bi * rc + i;
+          A.block(bi, bi).diag_element(i)= 2.0;
+          b.block(bi)(i)                 = bi * rc + i;
         }
 
     // === PRECONDITIONERS ===

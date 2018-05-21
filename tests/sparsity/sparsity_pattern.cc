@@ -28,13 +28,13 @@ main()
   deallog.attach(logfile);
 
   // generate usual sparsity pattern
-  const unsigned int N = 15;
+  const unsigned int N= 15;
   SparsityPattern    sp1((N - 1) * (N - 1), (N - 1) * (N - 1), 5);
   FDMatrix(N, N).five_point_structure(sp1);
   sp1.compress();
   deallog << sp1.n_rows() << " " << sp1.n_cols() << " " << sp1.bandwidth()
           << " " << sp1.n_nonzero_elements() << std::endl;
-  for(unsigned int i = 0; i < sp1.n_rows(); ++i)
+  for(unsigned int i= 0; i < sp1.n_rows(); ++i)
     deallog << sp1.row_length(i) << std::endl;
   sp1.print_gnuplot(deallog.get_file_stream());
 
@@ -44,7 +44,7 @@ main()
   sp2.compress();
   deallog << sp2.n_rows() << " " << sp2.n_cols() << " " << sp2.bandwidth()
           << " " << sp2.n_nonzero_elements() << std::endl;
-  for(unsigned int i = 0; i < sp2.n_rows(); ++i)
+  for(unsigned int i= 0; i < sp2.n_rows(); ++i)
     deallog << sp2.row_length(i) << std::endl;
   sp2.print_gnuplot(deallog.get_file_stream());
 
@@ -53,13 +53,13 @@ main()
   // non-symmetric elements and
   // symmetrize again
   SparsityPattern sp3(sp1, (N - 1) * (N - 1), 2);
-  for(unsigned int i = 0; i < (N - 1) * (N - 1); ++i)
+  for(unsigned int i= 0; i < (N - 1) * (N - 1); ++i)
     sp3.add(0, i);
   sp3.symmetrize();
   sp3.compress();
   deallog << sp3.n_rows() << " " << sp3.n_cols() << " " << sp3.bandwidth()
           << " " << sp3.n_nonzero_elements() << std::endl;
-  for(unsigned int i = 0; i < sp3.n_rows(); ++i)
+  for(unsigned int i= 0; i < sp3.n_rows(); ++i)
     deallog << sp3.row_length(i) << std::endl;
   sp3.print_gnuplot(deallog.get_file_stream());
 
@@ -69,10 +69,10 @@ main()
   // order as the order should not
   // matter to that function
   std::list<std::set<unsigned int, std::greater<unsigned int>>> sparsity;
-  for(unsigned int row = 0; row < sp3.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp3.n_rows(); ++row)
     {
       sparsity.push_back(std::set<unsigned int, std::greater<unsigned int>>());
-      for(SparsityPattern::const_iterator p = sp3.begin(row); p != sp3.end(row);
+      for(SparsityPattern::const_iterator p= sp3.begin(row); p != sp3.end(row);
           ++p)
         sparsity.back().insert(p->column());
     };
@@ -81,9 +81,9 @@ main()
     (N - 1) * (N - 1), (N - 1) * (N - 1), sparsity.begin(), sparsity.end());
 
   // now check for equivalence of sp3 and sp4
-  for(unsigned int row = 0; row < sp3.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp3.n_rows(); ++row)
     {
-      SparsityPattern::const_iterator p3 = sp3.begin(row), p4 = sp4.begin(row);
+      SparsityPattern::const_iterator p3= sp3.begin(row), p4= sp4.begin(row);
       for(; p3 != sp3.end(row); ++p3, ++p4)
         AssertThrow(p3->column() == p4->column(), ExcInternalError());
     };
@@ -96,16 +96,16 @@ main()
   //
   // check inverseness property first
   // forward, then backward
-  for(unsigned int loop = 1; loop <= 4; ++loop)
+  for(unsigned int loop= 1; loop <= 4; ++loop)
     {
       const SparsityPattern& sp
         = (loop == 1 ? sp1 : (loop == 2 ? sp2 : (loop == 3 ? sp3 : sp4)));
-      for(unsigned int i = 0; i < sp.n_nonzero_elements(); ++i)
+      for(unsigned int i= 0; i < sp.n_nonzero_elements(); ++i)
         AssertThrow(
           sp(sp.matrix_position(i).first, sp.matrix_position(i).second) == i,
           ExcInternalError());
-      for(types::global_dof_index row = 0; row < sp.n_rows(); ++row)
-        for(types::global_dof_index col = 0; col < sp.n_cols(); ++col)
+      for(types::global_dof_index row= 0; row < sp.n_rows(); ++row)
+        for(types::global_dof_index col= 0; col < sp.n_cols(); ++col)
           if(sp(row, col) != SparsityPattern::invalid_entry)
             AssertThrow(sp.matrix_position(sp(row, col))
                           == std::make_pair(row, col),
@@ -134,9 +134,9 @@ main()
           << ' ' << (sp3.is_compressed() ^ sp5.is_compressed()) << ' '
           << (sp3.is_compressed() ^ sp5.is_compressed()) << ' ' << std::endl;
 
-  for(unsigned int row = 0; row < sp3.n_rows(); ++row)
+  for(unsigned int row= 0; row < sp3.n_rows(); ++row)
     {
-      SparsityPattern::const_iterator p3 = sp3.begin(row), p5 = sp5.begin(row);
+      SparsityPattern::const_iterator p3= sp3.begin(row), p5= sp5.begin(row);
       for(; p3 != sp3.end(row); ++p3, ++p5)
         AssertThrow(p3->column() == p5->column(), ExcInternalError());
     }

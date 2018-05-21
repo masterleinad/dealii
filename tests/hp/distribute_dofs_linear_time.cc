@@ -47,8 +47,8 @@
 
 using namespace dealii;
 
-static const types::manifold_id circular_manifold_id = 1;
-static const types::manifold_id straight_manifold_id = 3;
+static const types::manifold_id circular_manifold_id= 1;
+static const types::manifold_id straight_manifold_id= 3;
 
 /*
  * Declaration has default arguments
@@ -59,8 +59,8 @@ static const types::manifold_id straight_manifold_id = 3;
 template <int dim>
 std::shared_ptr<dealii::Manifold<dim>>
 ladutenko_circle(dealii::Triangulation<dim>& triangulation,
-                 const dealii::Point<dim>    center = dealii::Point<dim>(),
-                 const double                radius = 1.0);
+                 const dealii::Point<dim>    center= dealii::Point<dim>(),
+                 const double                radius= 1.0);
 
 template <int dim>
 std::shared_ptr<Manifold<dim>>
@@ -73,8 +73,8 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   triangulation.set_all_manifold_ids(circular_manifold_id);
   triangulation.set_manifold(circular_manifold_id, *boundary);
 
-  const double core_radius  = 1.0 / 4.8 * radius;
-  const double inner_radius = 1.0 / 2.4 * radius;
+  const double core_radius = 1.0 / 4.8 * radius;
+  const double inner_radius= 1.0 / 2.4 * radius;
 
   // Step 1: Shrink the inner cell
   // and
@@ -83,12 +83,12 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   // Step 3: Refine all cells except the central one
   typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active(),
-    endc = triangulation.end();
+    endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
       if(cell->center().distance(center) < 1e-10)
         {
-          for(unsigned int vertex_n = 0;
+          for(unsigned int vertex_n= 0;
               vertex_n < GeometryInfo<dim>::vertices_per_cell;
               ++vertex_n)
             {
@@ -107,14 +107,14 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   // Step 4: Resize the inner children of the outer cells
   // and
   // Step 5: Refine the outer loop
-  cell = triangulation.begin_active();
+  cell= triangulation.begin_active();
   for(; cell != endc; ++cell)
     {
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
-          const double dist = center.distance(cell->vertex(v));
+          const double dist= center.distance(cell->vertex(v));
           if(dist > core_radius * 1.0001 && dist < radius - 1.0e-5)
-            cell->vertex(v) *= inner_radius / dist;
+            cell->vertex(v)*= inner_radius / dist;
         }
       if(cell->at_boundary())
         {
@@ -151,10 +151,10 @@ QuadraticTimeCircle<dim>::QuadraticTimeCircle(
   const unsigned int n_global_refines)
   : n_global_refines(n_global_refines), dof_handler(triangulation)
 {
-  boundary_manifold = ladutenko_circle(triangulation);
+  boundary_manifold= ladutenko_circle(triangulation);
   typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active(),
-    endc = triangulation.end();
+    endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
       // do not use any curved cells on the interior.
@@ -177,7 +177,7 @@ QuadraticTimeCircle<dim>::setup_dofs()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   {
     cell->set_active_fe_index(0);
   }
@@ -200,14 +200,14 @@ main(int argc, char** argv)
 {
   initlog();
 
-  static const int          dim      = 2;
-  static const unsigned int n_cycles = 6;
+  static const int          dim     = 2;
+  static const unsigned int n_cycles= 6;
 
-  unsigned int n_global_refines = 2;
+  unsigned int n_global_refines= 2;
 
-  for(unsigned int i = 0; i < n_cycles; ++i)
+  for(unsigned int i= 0; i < n_cycles; ++i)
     {
-      n_global_refines += 1;
+      n_global_refines+= 1;
       QuadraticTimeCircle<dim> quadratic_time_circle(n_global_refines);
       quadratic_time_circle.run();
     }

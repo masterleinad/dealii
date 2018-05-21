@@ -188,7 +188,7 @@ namespace internal
  * @author Wolfgang Bangerth, Markus Buerg, Timo Heister, Guido Kanschat,
  * @date 1998, 1999, 2000, 2012
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class DoFHandler : public Subscriptor
 {
   typedef dealii::internal::DoFHandlerImplementation::
@@ -301,12 +301,12 @@ public:
   /**
    * Make the dimension available in function templates.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Make the space dimension available in function templates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * When the arrays holding the DoF indices are set up, but before they are
@@ -332,7 +332,7 @@ public:
    * finite element indices may be used on different cells, and the default
    * index there corresponds to an invalid value.
    */
-  static const unsigned int default_fe_index = 0;
+  static const unsigned int default_fe_index= 0;
 
   /**
    * Standard constructor, not initializing any data. After constructing an
@@ -352,7 +352,7 @@ public:
    * rather deliberately constructed. As a consequence, this constructor
    * is explicitly removed from the interface of this class.
    */
-  DoFHandler(const DoFHandler&) = delete;
+  DoFHandler(const DoFHandler&)= delete;
 
   /**
    * Destructor.
@@ -601,7 +601,7 @@ public:
    * Iterator to the first used cell on level @p level.
    */
   cell_iterator
-  begin(const unsigned int level = 0) const;
+  begin(const unsigned int level= 0) const;
 
   /**
    * Iterator to the first active cell on level @p level. If the given level
@@ -616,7 +616,7 @@ public:
    * this level.
    */
   active_cell_iterator
-  begin_active(const unsigned int level = 0) const;
+  begin_active(const unsigned int level= 0) const;
 
   /**
    * Iterator past the end; this iterator serves for comparisons of iterators
@@ -645,7 +645,7 @@ public:
    * level_cell_iterator that returns level dofs when dof_indices() is called.
    */
   level_cell_iterator
-  begin_mg(const unsigned int level = 0) const;
+  begin_mg(const unsigned int level= 0) const;
 
   /**
    * Iterator past the last cell on level @p level. This returns a
@@ -974,7 +974,7 @@ public:
    * which is also the default value.
    */
   const FiniteElement<dim, spacedim>&
-  get_fe(const unsigned int index = 0) const;
+  get_fe(const unsigned int index= 0) const;
 
   /**
     * Return a constant reference to the set of finite element objects that
@@ -1440,15 +1440,15 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // some versions of gcc have trouble with loading vectors of
   // std::unique_ptr objects because std::unique_ptr does not
   // have a copy constructor. do it one level at a time
-  unsigned int n_levels = levels.size();
+  unsigned int n_levels= levels.size();
   ar&          n_levels;
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for(unsigned int i= 0; i < levels.size(); ++i)
     ar& levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
-  bool faces_is_nullptr = (faces.get() == nullptr);
+  bool faces_is_nullptr= (faces.get() == nullptr);
   ar&  faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
@@ -1456,9 +1456,9 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // write out the number of triangulation cells and later check during
   // loading that this number is indeed correct; same with something that
   // identifies the FE and the policy
-  unsigned int n_cells     = tria->n_cells();
-  std::string  fe_name     = this->get_fe(0).get_name();
-  std::string  policy_name = internal::policy_to_string(*policy);
+  unsigned int n_cells    = tria->n_cells();
+  std::string  fe_name    = this->get_fe(0).get_name();
+  std::string  policy_name= internal::policy_to_string(*policy);
 
   ar& n_cells& fe_name& policy_name;
 }
@@ -1485,15 +1485,15 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
   unsigned int size;
   ar&          size;
   levels.resize(size);
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for(unsigned int i= 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<dim>> level;
       ar&                                                                level;
-      levels[i] = std::move(level);
+      levels[i]= std::move(level);
     }
 
   //Workaround for nullptr, see in save().
-  bool faces_is_nullptr = true;
+  bool faces_is_nullptr= true;
   ar&  faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
@@ -1546,7 +1546,7 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::set_index(
 {
   Assert((level >= coarsest_level) && (level <= finest_level),
          ExcInvalidLevel(level));
-  indices[dofs_per_vertex * (level - coarsest_level) + dof_number] = index;
+  indices[dofs_per_vertex * (level - coarsest_level) + dof_number]= index;
 }
 
 #endif // DOXYGEN

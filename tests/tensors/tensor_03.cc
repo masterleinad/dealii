@@ -26,13 +26,13 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  double a[3] = {1, 2, 3};
+  double a[3]= {1, 2, 3};
 
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
   Tensor<1, dim>     t(a);
 
   deallog << t.norm() << std::endl;
-  t = 0;
+  t= 0;
   deallog << t.norm() << std::endl;
 
   Assert(t.norm() == 0, ExcInternalError());

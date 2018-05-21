@@ -25,8 +25,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -36,7 +36,7 @@ test()
   IndexSet local_active(numproc * 2);
   local_active.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(numproc * 2);
-  local_relevant = local_active;
+  local_relevant= local_active;
   local_relevant.add_range(1, 2);
 
   TrilinosWrappers::MPI::Vector v(local_active, MPI_COMM_WORLD);
@@ -47,7 +47,7 @@ test()
   if(myid == 0)
     {
       deallog << v_tmp.has_ghost_elements() << std::endl;
-      int dummy = 0;
+      int dummy= 0;
       MPI_Send(&dummy, 1, MPI_INT, 1, 12345, MPI_COMM_WORLD);
     }
 
@@ -55,8 +55,8 @@ test()
     {
       MPI_Status  status;
       MPI_Request request;
-      int         flag  = 0;
-      int         tests = 0;
+      int         flag = 0;
+      int         tests= 0;
 
       while(!flag && tests < 10)
         {
@@ -84,7 +84,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

@@ -109,7 +109,7 @@ namespace internal
  * @ingroup output
  * @author Wolfgang Bangerth, Guido Kanschat, 2000, 2011
  */
-template <int dim, typename DoFHandlerType = DoFHandler<dim>>
+template <int dim, typename DoFHandlerType= DoFHandler<dim>>
 class DataOutFaces : public DataOut_DoFData<DoFHandlerType,
                                             DoFHandlerType::dimension - 1,
                                             DoFHandlerType::dimension>
@@ -119,13 +119,13 @@ public:
    * An abbreviation for the dimension of the DoFHandler object we work with.
    * Faces are then <code>dimension-1</code> dimensional objects.
    */
-  static const unsigned int dimension = DoFHandlerType::dimension;
+  static const unsigned int dimension= DoFHandlerType::dimension;
 
   /**
    * An abbreviation for the spatial dimension within which the triangulation
    * and DoFHandler are embedded in.
    */
-  static const unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static const unsigned int space_dimension= DoFHandlerType::space_dimension;
 
   /**
    * Typedef to the iterator type of the dof handler class under
@@ -138,7 +138,7 @@ public:
    * Constructor determining whether a surface mesh (default) or the whole
    * wire basket is written.
    */
-  DataOutFaces(const bool surface_only = true);
+  DataOutFaces(const bool surface_only= true);
 
   /**
    * This is the central function of this class since it builds the list of
@@ -155,7 +155,7 @@ public:
    * description of this parameter.
    */
   virtual void
-  build_patches(const unsigned int n_subdivisions = 0);
+  build_patches(const unsigned int n_subdivisions= 0);
 
   /**
    * Same as above, except that the additional first parameter defines a
@@ -179,7 +179,7 @@ public:
    */
   virtual void
   build_patches(const Mapping<dimension>& mapping,
-                const unsigned int        n_subdivisions = 0);
+                const unsigned int        n_subdivisions= 0);
 
   /**
    * Declare a way to describe a face which we would like to generate output

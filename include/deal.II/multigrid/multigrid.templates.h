@@ -34,8 +34,8 @@ Multigrid<VectorType>::reinit(const unsigned int min_level,
          ExcLowerRangeType<unsigned int>(matrix->get_maxlevel(), max_level));
   Assert(min_level <= max_level,
          ExcLowerRangeType<unsigned int>(max_level, min_level));
-  minlevel = min_level;
-  maxlevel = max_level;
+  minlevel= min_level;
+  maxlevel= max_level;
   // solution, t and defect2 are resized in cycle()
   defect.resize(minlevel, maxlevel);
 }
@@ -51,7 +51,7 @@ template <typename VectorType>
 void
 Multigrid<VectorType>::set_minlevel(const unsigned int l, const bool relative)
 {
-  const unsigned int new_minlevel = (relative) ? (maxlevel - l) : l;
+  const unsigned int new_minlevel= (relative) ? (maxlevel - l) : l;
   reinit(new_minlevel, maxlevel);
 }
 
@@ -59,14 +59,14 @@ template <typename VectorType>
 void
 Multigrid<VectorType>::set_cycle(typename Multigrid<VectorType>::Cycle c)
 {
-  cycle_type = c;
+  cycle_type= c;
 }
 
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_debug(const unsigned int d)
 {
-  debug = d;
+  debug= d;
 }
 
 template <typename VectorType>
@@ -74,8 +74,8 @@ void
 Multigrid<VectorType>::set_edge_matrices(const MGMatrixBase<VectorType>& down,
                                          const MGMatrixBase<VectorType>& up)
 {
-  edge_out = &down;
-  edge_in  = &up;
+  edge_out= &down;
+  edge_in = &up;
 }
 
 template <typename VectorType>
@@ -84,8 +84,8 @@ Multigrid<VectorType>::set_edge_flux_matrices(
   const MGMatrixBase<VectorType>& down,
   const MGMatrixBase<VectorType>& up)
 {
-  edge_down = &down;
-  edge_up   = &up;
+  edge_down= &down;
+  edge_up  = &up;
 }
 
 template <typename VectorType>
@@ -141,7 +141,7 @@ Multigrid<VectorType>::level_v_step(const unsigned int level)
   if(edge_down != nullptr)
     {
       edge_down->vmult(level, t[level - 1], solution[level]);
-      defect[level - 1] -= t[level - 1];
+      defect[level - 1]-= t[level - 1];
     }
 
   this->signals.restriction(true, level);
@@ -158,18 +158,18 @@ Multigrid<VectorType>::level_v_step(const unsigned int level)
 
   if(debug > 2)
     deallog << "Prolongate norm        " << t[level].l2_norm() << std::endl;
-  solution[level] += t[level];
+  solution[level]+= t[level];
 
   // get in contribution from edge matrices to the defect
   if(edge_in != nullptr)
     {
       edge_in->Tvmult(level, t[level], solution[level]);
-      defect[level] -= t[level];
+      defect[level]-= t[level];
     }
   if(edge_up != nullptr)
     {
       edge_up->Tvmult(level, t[level], solution[level - 1]);
-      defect[level] -= t[level];
+      defect[level]-= t[level];
     }
 
   if(debug > 2)
@@ -195,17 +195,17 @@ template <typename VectorType>
 void
 Multigrid<VectorType>::level_step(const unsigned int level, Cycle cycle)
 {
-  char cychar = '?';
+  char cychar= '?';
   switch(cycle)
     {
       case v_cycle:
-        cychar = 'V';
+        cychar= 'V';
         break;
       case f_cycle:
-        cychar = 'F';
+        cychar= 'F';
         break;
       case w_cycle:
-        cychar = 'W';
+        cychar= 'W';
         break;
       default:
         Assert(false, ExcNotImplemented());
@@ -216,8 +216,8 @@ Multigrid<VectorType>::level_step(const unsigned int level, Cycle cycle)
 
   // Combine the defect from the initial copy_to_mg with the one that has come
   // from the finer level by the transfer
-  defect2[level] += defect[level];
-  defect[level] = typename VectorType::value_type(0.);
+  defect2[level]+= defect[level];
+  defect[level]= typename VectorType::value_type(0.);
 
   if(debug > 2)
     deallog << cychar << "-cycle defect norm     " << defect2[level].l2_norm()
@@ -258,7 +258,7 @@ Multigrid<VectorType>::level_step(const unsigned int level, Cycle cycle)
   if(edge_down != nullptr)
     edge_down->vmult(level, defect2[level - 1], solution[level]);
   else
-    defect2[level - 1] = typename VectorType::value_type(0.);
+    defect2[level - 1]= typename VectorType::value_type(0.);
 
   transfer->restrict_and_add(level, defect2[level - 1], t[level]);
 
@@ -280,19 +280,19 @@ Multigrid<VectorType>::level_step(const unsigned int level, Cycle cycle)
 
   // do coarse grid correction
   transfer->prolongate(level, t[level], solution[level - 1]);
-  solution[level] += t[level];
+  solution[level]+= t[level];
 
   // get in contribution from edge matrices to the defect
   if(edge_in != nullptr)
     {
       edge_in->Tvmult(level, t[level], solution[level]);
-      defect2[level] -= t[level];
+      defect2[level]-= t[level];
     }
 
   if(edge_up != nullptr)
     {
       edge_up->Tvmult(level, t[level], solution[level - 1]);
-      defect2[level] -= t[level];
+      defect2[level]-= t[level];
     }
 
   if(debug > 2)
@@ -323,7 +323,7 @@ Multigrid<VectorType>::cycle()
   if(cycle_type != v_cycle)
     defect2.resize(minlevel, maxlevel);
 
-  for(unsigned int level = minlevel; level <= maxlevel; ++level)
+  for(unsigned int level= minlevel; level <= maxlevel; ++level)
     {
       // the vectors for level>minlevel will be overwritten by the apply()
       // method of the smoother -> do not force them to be zeroed out here
@@ -348,7 +348,7 @@ Multigrid<VectorType>::vcycle()
   solution.resize(minlevel, maxlevel);
   t.resize(minlevel, maxlevel);
 
-  for(unsigned int level = minlevel; level <= maxlevel; ++level)
+  for(unsigned int level= minlevel; level <= maxlevel; ++level)
     {
       solution[level].reinit(defect[level], level > minlevel);
       t[level].reinit(defect[level], level > minlevel);

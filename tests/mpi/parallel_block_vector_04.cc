@@ -30,8 +30,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -44,7 +44,7 @@ test()
   if(myid < 8)
     local_owned.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(numproc * 2);
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(1, 2);
 
   LinearAlgebra::distributed::Vector<double> v(
@@ -64,8 +64,8 @@ test()
     }
 
   LinearAlgebra::distributed::BlockVector<double> w(3);
-  for(unsigned int i = 0; i < 3; ++i)
-    w.block(i) = v;
+  for(unsigned int i= 0; i < 3; ++i)
+    w.block(i)= v;
   w.collect_sizes();
 
   // set up v for comparison purposes below
@@ -75,20 +75,20 @@ test()
 
   if(myid < 8)
     {
-      for(unsigned int i = 0; i < 3; ++i)
+      for(unsigned int i= 0; i < 3; ++i)
         {
           // update the values in w
           w.add(indices, values);
           // update indices to point to the next block
-          indices[0] += v.size();
-          indices[1] += v.size();
+          indices[0]+= v.size();
+          indices[1]+= v.size();
         }
     }
   w.compress(VectorOperation::add);
 
   // check l2 norm
   {
-    const double l2_norm = w.l2_norm();
+    const double l2_norm= w.l2_norm();
     if(myid == 0)
       deallog << "l2 norm: " << l2_norm << std::endl;
     AssertThrow(std::abs(v.l2_norm() * std::sqrt(3.) - w.l2_norm()) < 1e-13,
@@ -97,7 +97,7 @@ test()
 
   // check l1 norm
   {
-    const double l1_norm = w.l1_norm();
+    const double l1_norm= w.l1_norm();
     if(myid == 0)
       deallog << "l1 norm: " << l1_norm << std::endl;
     AssertThrow(std::abs(v.l1_norm() * 3. - w.l1_norm()) < 1e-14,
@@ -106,7 +106,7 @@ test()
 
   // check linfty norm
   {
-    const double linfty_norm = w.linfty_norm();
+    const double linfty_norm= w.linfty_norm();
     if(myid == 0)
       deallog << "linfty norm: " << linfty_norm << std::endl;
     AssertThrow(v.linfty_norm() == w.linfty_norm(), ExcInternalError());
@@ -114,7 +114,7 @@ test()
 
   // check lp norm
   {
-    const double lp_norm = w.lp_norm(2.2);
+    const double lp_norm= w.lp_norm(2.2);
     if(myid == 0)
       deallog << "l2.2 norm: " << lp_norm << std::endl;
 
@@ -126,7 +126,7 @@ test()
   // norm divided by vector size here since we
   // have no negative entries)
   {
-    const double mean = w.mean_value();
+    const double mean= w.mean_value();
     if(myid == 0)
       deallog << "Mean value: " << mean << std::endl;
 
@@ -135,34 +135,34 @@ test()
   }
   // check inner product
   {
-    const double norm_sqr = w.l2_norm() * w.l2_norm();
+    const double norm_sqr= w.l2_norm() * w.l2_norm();
     AssertThrow(std::fabs(w * w - norm_sqr) < 1e-12, ExcInternalError());
     LinearAlgebra::distributed::BlockVector<double> w2;
-    w2 = w;
+    w2= w;
     AssertThrow(std::fabs(w2 * w - norm_sqr) < 1e-12, ExcInternalError());
 
     if(myid < 8)
-      w2.block(0).local_element(0) = -1;
-    const double inner_prod = w * w2;
+      w2.block(0).local_element(0)= -1;
+    const double inner_prod= w * w2;
     if(myid == 0)
       deallog << "Inner product: " << inner_prod << std::endl;
   }
 
   // check all_zero
   {
-    bool allzero = w.all_zero();
+    bool allzero= w.all_zero();
     if(myid == 0)
       deallog << " v==0 ? " << allzero << std::endl;
     LinearAlgebra::distributed::BlockVector<double> w2;
     w2.reinit(w);
-    allzero = w2.all_zero();
+    allzero= w2.all_zero();
     if(myid == 0)
       deallog << " v2==0 ? " << allzero << std::endl;
 
     // now change one element to nonzero
     if(myid == 0)
-      w2.block(1).local_element(1) = 1;
-    allzero = w2.all_zero();
+      w2.block(1).local_element(1)= 1;
+    allzero= w2.all_zero();
     if(myid == 0)
       deallog << " v2==0 ? " << allzero << std::endl;
   }
@@ -177,7 +177,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

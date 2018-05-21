@@ -68,17 +68,17 @@ check()
   // that different blocks should
   // not couple, so use pattern
   SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
-  const unsigned int           n_components = 2 * dim;
+  const unsigned int           n_components= 2 * dim;
   Table<2, DoFTools::Coupling> mask(n_components, n_components);
-  for(unsigned int i = 0; i < n_components; ++i)
-    for(unsigned int j = 0; j < n_components; ++j)
-      mask(i, j) = DoFTools::none;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      mask[i][j] = DoFTools::always;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      mask[dim + i][dim + j] = DoFTools::always;
+  for(unsigned int i= 0; i < n_components; ++i)
+    for(unsigned int j= 0; j < n_components; ++j)
+      mask(i, j)= DoFTools::none;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      mask[i][j]= DoFTools::always;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      mask[dim + i][dim + j]= DoFTools::always;
   DoFTools::make_sparsity_pattern(dof, mask, sparsity);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
@@ -99,8 +99,7 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
+  for(SparseMatrix<double>::const_iterator p= matrix.begin(); p != matrix.end();
       ++p)
     deallog << p->value() * 100 << std::endl;
 }

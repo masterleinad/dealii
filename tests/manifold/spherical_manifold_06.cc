@@ -36,7 +36,7 @@ main()
     points.push_back(P2);
     weights.push_back(0.5);
     weights.push_back(0.5);
-    Point<2> mid_point = manifold.get_new_point(points, weights);
+    Point<2> mid_point= manifold.get_new_point(points, weights);
     deallog << mid_point << std::endl;
   }
 
@@ -51,7 +51,7 @@ main()
     points.push_back(P2);
     weights.push_back(0.5);
     weights.push_back(0.5);
-    Point<3> mid_point = manifold.get_new_point(points, weights);
+    Point<3> mid_point= manifold.get_new_point(points, weights);
     deallog << mid_point << std::endl;
   }
 

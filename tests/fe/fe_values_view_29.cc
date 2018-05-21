@@ -38,8 +38,8 @@ public:
   vector_value(const Point<2>& p, Vector<double>& v) const
   {
     // make the function equal to (0,x^2)
-    v[0] = 0;
-    v[1] = p[0] * p[0];
+    v[0]= 0;
+    v[1]= p[0] * p[0];
   }
 };
 
@@ -92,7 +92,7 @@ test(const Triangulation<dim>& tr,
   fe_values[extractor].get_function_gradients(fe_function, grads);
 
   // now compare
-  for(unsigned int q = 0; q < quadrature.size(); ++q)
+  for(unsigned int q= 0; q < quadrature.size(); ++q)
     {
       deallog << "  curls[q]= " << curls[q] << std::endl
               << "  grads[q]= " << grads[q] << std::endl;
@@ -116,7 +116,7 @@ test_hyper_cube()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  for(unsigned int degree = 2; degree < 5; ++degree)
+  for(unsigned int degree= 2; degree < 5; ++degree)
     {
       FE_Nedelec<dim> fe(degree);
       test(tr, fe, degree);

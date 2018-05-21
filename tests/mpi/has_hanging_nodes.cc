@@ -65,7 +65,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
+test_int(const unsigned int n_global= 0, const unsigned int n_local= 0)
 {
   MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
@@ -88,7 +88,7 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
     GridGenerator::hyper_cube(
       triangulation2, -1, 0); //create a square [-1,0]^d domain
     Point<dim> shift_vector;
-    shift_vector[0] = 1.0;
+    shift_vector[0]= 1.0;
     GridTools::shift(shift_vector, triangulation2);
     GridGenerator::merge_triangulations(
       triangulation1, triangulation2, tria_distrib);
@@ -99,7 +99,7 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
   tria_distrib.refine_global(n_global);
   tria_sequential.refine_global(n_global);
 
-  for(unsigned int i = 0; i < n_local; i++)
+  for(unsigned int i= 0; i < n_local; i++)
     {
       // refine both the distributed and the sequential triangulation. the
       // following relies on the fact that the first cell of the "global"

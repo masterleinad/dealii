@@ -83,7 +83,7 @@ public:
   inline bool
   operator<(const Location<dim>& op) const
   {
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       {
         if((*this)[d] == op[d])
           {
@@ -100,15 +100,14 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, /* int max_num_threads */ 1);
-  const bool I_am_host
-    = (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0);
+  const bool I_am_host= (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0);
   // Although most part of this test is designed to run in parallel, there is still
   // one place that doesn't work perfectly in parallel. Now the sorting of final cell
   // centers is just a local operation and won't produce any reasonable result in parallel.
   AssertThrow(I_am_host,
               ExcMessage("Current code works properly only with one process."));
 
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
   std::ofstream      logfile;
   if(I_am_host)
     {
@@ -144,9 +143,9 @@ main(int argc, char* argv[])
       deallog << "Compare result:" << std::endl;
     }
   {
-    bool n_cells_are_same = (n_cell_smooth.size() == n_cell_no_smooth.size());
+    bool n_cells_are_same= (n_cell_smooth.size() == n_cell_no_smooth.size());
 
-    for(unsigned int i = 0; n_cells_are_same && (i < n_cell_smooth.size()); ++i)
+    for(unsigned int i= 0; n_cells_are_same && (i < n_cell_smooth.size()); ++i)
       {
         n_cells_are_same
           = n_cells_are_same && (n_cell_smooth[i] == n_cell_no_smooth[i]);
@@ -198,11 +197,11 @@ TriaTest<dim>::TriaTest(
   Point<dim>                p1;
   Point<dim>                p2;
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
       repetitions.push_back(2);
-      p1[d] = 0.0;
-      p2[d] = 1.0;
+      p1[d]= 0.0;
+      p2[d]= 1.0;
     }
   GridGenerator::subdivided_hyper_rectangle(triangulation, repetitions, p1, p2);
 
@@ -218,7 +217,7 @@ TriaTest<dim>::run(std::vector<unsigned int>& n_cell,
   n_cell.clear();
   position_list.clear();
 
-  unsigned int counter = 0;
+  unsigned int counter= 0;
   if(I_am_host)
     {
       deallog << "n_loop  n_cell" << std::endl;
@@ -231,9 +230,9 @@ TriaTest<dim>::run(std::vector<unsigned int>& n_cell,
     {
       {
         Point<dim> p;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           {
-            p[d] = 0.5 - std::pow(0.5, 1.0 + counter);
+            p[d]= 0.5 - std::pow(0.5, 1.0 + counter);
           }
         typename TypeTria::active_cell_iterator cell
           = triangulation.begin_active();
@@ -295,12 +294,12 @@ TriaTest<dim>::write_vtu(const unsigned int counter) const
   {
     refine_mark.reinit(triangulation.n_active_cells());
 
-    typename TypeTria::active_cell_iterator cell = triangulation.begin_active();
-    const typename TypeTria::active_cell_iterator endc = triangulation.end();
+    typename TypeTria::active_cell_iterator cell= triangulation.begin_active();
+    const typename TypeTria::active_cell_iterator endc= triangulation.end();
     for(; cell != endc; ++cell)
       if(cell->is_locally_owned())
         {
-          refine_mark[cell->active_cell_index()] = cell->refine_flag_set();
+          refine_mark[cell->active_cell_index()]= cell->refine_flag_set();
         }
   }
 
@@ -316,7 +315,7 @@ TriaTest<dim>::write_vtu(const unsigned int counter) const
 
   const std::string output_tag
     = case_name + Utilities::int_to_string(counter, 4);
-  const std::string slot_itag = ".slot-" + Utilities::int_to_string(myid, 4);
+  const std::string slot_itag= ".slot-" + Utilities::int_to_string(myid, 4);
 
   std::ofstream output((output_tag + slot_itag + ".vtu").c_str());
   data_out.write_vtu(output);
@@ -324,7 +323,7 @@ TriaTest<dim>::write_vtu(const unsigned int counter) const
   if(I_am_host)
     {
       std::vector<std::string> filenames;
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(mpi_communicator);
           ++i)
         {

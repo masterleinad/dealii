@@ -27,19 +27,19 @@ check1()
 
   Assert(object.n_components == 3, ExcInternalError());
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
-        p[d] = i + d;
+      for(unsigned int d= 0; d < dim; ++d)
+        p[d]= i + d;
 
-      for(unsigned int c = 0; c < 3; ++c)
+      for(unsigned int c= 0; c < 3; ++c)
         AssertThrow(object.value(p, c) == (c == 1 ? p.norm() : 0),
                     ExcInternalError());
 
       Vector<double> v(3);
       object.vector_value(p, v);
-      for(unsigned int c = 0; c < 3; ++c)
+      for(unsigned int c= 0; c < 3; ++c)
         AssertThrow(v(c) == (c == 1 ? p.norm() : 0), ExcInternalError());
     }
 
@@ -51,17 +51,17 @@ void
 check2()
 {
   Point<dim> q;
-  for(unsigned int d = 0; d < dim; ++d)
-    q[d] = d;
+  for(unsigned int d= 0; d < dim; ++d)
+    q[d]= d;
 
   ScalarFunctionFromFunctionObject<dim> object(
     std::bind(&Point<dim>::distance, q, std::placeholders::_1));
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for(unsigned int i= 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
-        p[d] = i + d;
+      for(unsigned int d= 0; d < dim; ++d)
+        p[d]= i + d;
 
       AssertThrow(object.value(p) == q.distance(p), ExcInternalError());
     }
@@ -72,7 +72,7 @@ check2()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

@@ -48,9 +48,8 @@ test()
   DoFHandler<dim> dof_handler(tria);
   GridGenerator::subdivided_hyper_cube(tria, 3, -1, 1);
   {
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
       {
         if(cell->index() == 0 || cell->index() == 5 || cell->index() == 6)
@@ -67,13 +66,13 @@ test()
 
   std::vector<IndexSet> shared_dofs_per_proc
     = dof_handler.locally_owned_dofs_per_processor();
-  for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  for(unsigned int i= 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
       ++i)
     shared_dofs_per_proc[i].print(deallog.get_file_stream());
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       if(cell->subdomain_id() == numbers::artificial_subdomain_id)
@@ -82,7 +81,7 @@ test()
       std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
       cell->get_dof_indices(local_dof_indices);
       deallog << "cell" << cell->index() << " has dofs: ";
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         deallog << local_dof_indices[i] << " ";
       deallog << std::endl;
     }

@@ -25,11 +25,11 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 {
   // set only certain elements of each
   // vector, but disjoint sets of elements
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = std::complex<double>(i + 1., i + 2.);
+      v(i)= std::complex<double>(i + 1., i + 2.);
     else
-      w(i) = std::complex<double>(i + 1., i + 2.);
+      w(i)= std::complex<double>(i + 1., i + 2.);
   v.compress();
   w.compress();
 

@@ -1567,13 +1567,13 @@ plamch(const int* /*ictxt*/, const char* /*cmach*/, number& /*val*/)
 inline void
 plamch(const int* ictxt, const char* cmach, double& val)
 {
-  val = pdlamch_(ictxt, cmach);
+  val= pdlamch_(ictxt, cmach);
 }
 
 inline void
 plamch(const int* ictxt, const char* cmach, float& val)
 {
-  val = pslamch_(ictxt, cmach);
+  val= pslamch_(ictxt, cmach);
 }
 
 template <typename number>

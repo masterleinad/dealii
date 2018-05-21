@@ -65,13 +65,13 @@ void create_triangulation(Triangulation<3>& triangulation)
   const unsigned n_vertices
     = sizeof(vertices_parallelograms) / sizeof(vertices_parallelograms[0]);
 
-  const unsigned n_cells = 8;
+  const unsigned n_cells= 8;
 
   const std::vector<Point<3>> vertices(&vertices_parallelograms[0],
                                        &vertices_parallelograms[n_vertices]);
 
   // create grid with all possible combintations of face_flip, face_orientation and face_rotation flags
-  static const int cell_vertices[][GeometryInfo<3>::vertices_per_cell] = {
+  static const int cell_vertices[][GeometryInfo<3>::vertices_per_cell]= {
     {0, 1, 9, 10, 3, 4, 12, 13},      // cell 1 standard
     {10, 11, 13, 14, 1, 2, 4, 5},     // cell 2 rotated by 270 deg
     {9, 10, 18, 19, 12, 13, 21, 22},  // cell 3 standard
@@ -83,11 +83,11 @@ void create_triangulation(Triangulation<3>& triangulation)
   };
 
   std::vector<CellData<3>> cells(n_cells, CellData<3>());
-  for(unsigned i = 0; i < n_cells; ++i)
+  for(unsigned i= 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
@@ -102,14 +102,14 @@ evaluate(const FE_Nedelec<3>&  fe,
 {
   const FEValuesExtractors::Vector component(0);
   const QGauss<3>                  quadrature(2);
-  const unsigned int               n_q_points = quadrature.size();
+  const unsigned int               n_q_points= quadrature.size();
   Functions::FEFieldFunction<3>    fe_field_function(dof_handler, u);
   FEValues<3>                      fe_values(
     fe, quadrature, update_quadrature_points | update_values);
   std::vector<Vector<double>> values(n_q_points, Vector<double>(3));
   std::vector<Tensor<1, 3>>   values_ref(n_q_points);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler_ref.begin_active();
+  for(DoFHandler<3>::active_cell_iterator cell= dof_handler_ref.begin_active();
       cell != dof_handler_ref.end();
       ++cell)
     {
@@ -119,9 +119,9 @@ evaluate(const FE_Nedelec<3>&  fe,
                                           values);
       std::vector<types::global_dof_index> dof_indices(fe.dofs_per_cell);
       cell->get_dof_indices(dof_indices);
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          for(unsigned int d = 0; d < 3; ++d)
+          for(unsigned int d= 0; d < 3; ++d)
             deallog << values_ref[q_point][d] - values[q_point](d) << "  ";
 
           deallog << std::endl;
@@ -132,8 +132,8 @@ evaluate(const FE_Nedelec<3>&  fe,
 void
 set_reference_solution(Vector<double>& vector)
 {
-  for(unsigned int i = 0; i < vector.size(); ++i)
-    vector(i) = 1.0;
+  for(unsigned int i= 0; i < vector.size(); ++i)
+    vector(i)= 1.0;
 }
 
 void

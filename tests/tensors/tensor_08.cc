@@ -24,17 +24,17 @@ void
 test_select(double f1, double f2)
 {
   Tensor<2, dim> t;
-  unsigned int   k = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      t[i][j] = ++k;
+  unsigned int   k= 0;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      t[i][j]= ++k;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       {
         Tensor<1, dim> u, v;
-        u[i] = f1;
-        v[j] = f2;
+        u[i]= f1;
+        v[j]= f2;
         deallog << '\t' << contract3(u, t, v);
       }
   deallog << std::endl;
@@ -43,7 +43,7 @@ test_select(double f1, double f2)
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
   deallog << std::setprecision(3);

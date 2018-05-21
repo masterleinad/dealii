@@ -103,31 +103,31 @@ LaplaceProblem::assemble_system()
                         update_values | update_gradients
                           | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_A(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_b(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                      endc = dof_handler.end();
+  DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active(),
+                                      endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      cell_A = 0;
-      cell_b = 0;
+      cell_A= 0;
+      cell_b= 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
-                cell_A(i, j) += fe_values.shape_grad(i, q_point)
-                                * fe_values.shape_grad(j, q_point)
-                                * fe_values.JxW(q_point);
+                cell_A(i, j)+= fe_values.shape_grad(i, q_point)
+                               * fe_values.shape_grad(j, q_point)
+                               * fe_values.JxW(q_point);
               }
 
             cell_b(i)
@@ -163,7 +163,7 @@ LaplaceProblem::run()
 {
   GridGenerator::hyper_cube(triangulation, -1, 1);
 
-  for(unsigned int c = 0; c < 5; ++c)
+  for(unsigned int c= 0; c < 5; ++c)
     {
       triangulation.refine_global(1);
       setup_system();

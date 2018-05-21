@@ -99,9 +99,9 @@ double
 RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
-  double product = 1;
-  for(unsigned int d = 0; d < dim; ++d)
-    product *= (p[d] + 1);
+  double product= 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    product*= (p[d] + 1);
   return product;
 }
 
@@ -166,19 +166,18 @@ AdvectionProblem<dim>::test_equality()
   // need to manually go through the
   // matrix, since we can have different
   // entries in constrained lines.
-  for(unsigned int i = 0; i < reference_matrix.m(); ++i)
+  for(unsigned int i= 0; i < reference_matrix.m(); ++i)
     {
-      SparseMatrix<double>::const_iterator reference
-        = reference_matrix.begin(i);
-      SparseMatrix<double>::iterator test = test_matrix.begin(i);
+      SparseMatrix<double>::const_iterator reference= reference_matrix.begin(i);
+      SparseMatrix<double>::iterator       test     = test_matrix.begin(i);
       if(test_all_constraints.is_constrained(i) == false)
         {
           for(; test != test_matrix.end(i); ++test, ++reference)
-            test->value() -= reference->value();
+            test->value()-= reference->value();
         }
       else
         for(; test != test_matrix.end(i); ++test)
-          test->value() = 0;
+          test->value()= 0;
     }
 
   deallog << "  Matrix difference norm: " << test_matrix.frobenius_norm()
@@ -189,11 +188,11 @@ AdvectionProblem<dim>::test_equality()
   // nonzero rhs, whereas we will have zero
   // rhs when using inhomogeneous
   // constraints.
-  for(unsigned int i = 0; i < reference_matrix.m(); ++i)
+  for(unsigned int i= 0; i < reference_matrix.m(); ++i)
     if(test_all_constraints.is_constrained(i) == false)
-      test_rhs(i) -= reference_rhs(i);
+      test_rhs(i)-= reference_rhs(i);
     else
-      test_rhs(i) = 0;
+      test_rhs(i)= 0;
 
   deallog << "  RHS difference norm: " << test_rhs.l2_norm() << std::endl;
 
@@ -204,8 +203,8 @@ template <int dim>
 void
 AdvectionProblem<dim>::assemble_reference()
 {
-  reference_matrix = 0;
-  reference_rhs    = 0;
+  reference_matrix= 0;
+  reference_rhs   = 0;
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -214,8 +213,8 @@ AdvectionProblem<dim>::assemble_reference()
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int       n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -225,39 +224,39 @@ AdvectionProblem<dim>::assemble_reference()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
-      advection_direction[dim - 1] = -1;
+      advection_direction[0]      = 1;
+      advection_direction[1]      = 1;
+      advection_direction[dim - 1]= -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
                     * fe_values.JxW(q_point));
 
-            cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                            * rhs_values[q_point] * fe_values.JxW(q_point));
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                           * rhs_values[q_point] * fe_values.JxW(q_point));
           }
 
       local_dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(local_dof_indices);
 
       reference_matrix.add(local_dof_indices, cell_matrix);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        reference_rhs(local_dof_indices[i]) += cell_rhs(i);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        reference_rhs(local_dof_indices[i])+= cell_rhs(i);
     }
 
   hanging_nodes_only.condense(reference_matrix, reference_rhs);
@@ -275,8 +274,8 @@ template <int dim>
 void
 AdvectionProblem<dim>::assemble_test_1()
 {
-  test_matrix = 0;
-  test_rhs    = 0;
+  test_matrix= 0;
+  test_rhs   = 0;
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -285,8 +284,8 @@ AdvectionProblem<dim>::assemble_test_1()
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int       n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -296,39 +295,39 @@ AdvectionProblem<dim>::assemble_test_1()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
-      advection_direction[dim - 1] = -1;
+      advection_direction[0]      = 1;
+      advection_direction[1]      = 1;
+      advection_direction[dim - 1]= -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
                     * fe_values.JxW(q_point));
 
-            cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                            * rhs_values[q_point] * fe_values.JxW(q_point));
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                           * rhs_values[q_point] * fe_values.JxW(q_point));
           }
 
       local_dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(local_dof_indices);
 
       test_matrix.add(local_dof_indices, cell_matrix);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        test_rhs(local_dof_indices[i]) += cell_rhs(i);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        test_rhs(local_dof_indices[i])+= cell_rhs(i);
     }
 
   test_all_constraints.condense(test_matrix, test_rhs);
@@ -340,8 +339,8 @@ template <int dim>
 void
 AdvectionProblem<dim>::assemble_test_2()
 {
-  test_matrix = 0;
-  test_rhs    = 0;
+  test_matrix= 0;
+  test_rhs   = 0;
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -350,8 +349,8 @@ AdvectionProblem<dim>::assemble_test_2()
                             | update_quadrature_points | update_JxW_values);
 
   const RightHandSide<dim> rhs_function;
-  const unsigned int       dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int       n_q_points    = quadrature_formula.size();
+  const unsigned int       dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int       n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -361,31 +360,31 @@ AdvectionProblem<dim>::assemble_test_2()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
       fe_values.reinit(cell);
 
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
       Tensor<1, dim> advection_direction;
-      advection_direction[0]       = 1;
-      advection_direction[1]       = 1;
-      advection_direction[dim - 1] = -1;
+      advection_direction[0]      = 1;
+      advection_direction[1]      = 1;
+      advection_direction[dim - 1]= -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
                     * fe_values.JxW(q_point));
 
-            cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                            * rhs_values[q_point] * fe_values.JxW(q_point));
+            cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                           * rhs_values[q_point] * fe_values.JxW(q_point));
           }
 
       local_dof_indices.resize(dofs_per_cell);

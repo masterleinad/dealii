@@ -30,8 +30,8 @@ BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry& e)
     transpose(e.transpose),
     matrix(e.matrix)
 {
-  Entry& e2 = const_cast<Entry&>(e);
-  e2.matrix = nullptr;
+  Entry& e2= const_cast<Entry&>(e);
+  e2.matrix= nullptr;
 }
 
 template <typename number, typename BlockVectorType>
@@ -59,8 +59,8 @@ BlockMatrixArray<number, BlockVectorType>::initialize(
   const unsigned int n_block_rows,
   const unsigned int n_block_cols)
 {
-  block_rows = n_block_rows;
-  block_cols = n_block_cols;
+  block_rows= n_block_rows;
+  block_cols= n_block_cols;
 }
 
 template <typename number, typename BlockVectorType>
@@ -70,8 +70,8 @@ BlockMatrixArray<number, BlockVectorType>::reinit(
   const unsigned int n_block_cols)
 {
   clear();
-  block_rows = n_block_rows;
-  block_cols = n_block_cols;
+  block_rows= n_block_rows;
+  block_cols= n_block_cols;
 }
 
 template <typename number, typename BlockVectorType>
@@ -95,10 +95,10 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType& aux = *p_aux;
+  typename BlockVectorType::BlockType& aux= *p_aux;
 
-  typename std::vector<Entry>::const_iterator m   = entries.begin();
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  typename std::vector<Entry>::const_iterator m  = entries.begin();
+  typename std::vector<Entry>::const_iterator end= entries.end();
 
   for(; m != end; ++m)
     {
@@ -117,7 +117,7 @@ BlockMatrixArray<number, BlockVectorType>::vmult(
   BlockVectorType&       dst,
   const BlockVectorType& src) const
 {
-  dst = 0.;
+  dst= 0.;
   vmult_add(dst, src);
 }
 
@@ -133,12 +133,12 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
   Assert(src.n_blocks() == block_rows,
          ExcDimensionMismatch(src.n_blocks(), block_rows));
 
-  typename std::vector<Entry>::const_iterator m   = entries.begin();
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  typename std::vector<Entry>::const_iterator m  = entries.begin();
+  typename std::vector<Entry>::const_iterator end= entries.end();
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType& aux = *p_aux;
+  typename BlockVectorType::BlockType& aux= *p_aux;
 
   for(; m != end; ++m)
     {
@@ -157,7 +157,7 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult(
   BlockVectorType&       dst,
   const BlockVectorType& src) const
 {
-  dst = 0.;
+  dst= 0.;
   Tvmult_add(dst, src);
 }
 
@@ -175,17 +175,17 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType& aux = *p_aux;
+  typename BlockVectorType::BlockType& aux= *p_aux;
 
   typename std::vector<Entry>::const_iterator m;
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  typename std::vector<Entry>::const_iterator end= entries.end();
 
-  number result = 0.;
+  number result= 0.;
 
-  for(unsigned int i = 0; i < block_rows; ++i)
+  for(unsigned int i= 0; i < block_rows; ++i)
     {
       aux.reinit(u.block(i));
-      for(m = entries.begin(); m != end; ++m)
+      for(m= entries.begin(); m != end; ++m)
         {
           if(m->row != i)
             continue;
@@ -194,7 +194,7 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
           else
             m->matrix->vmult(aux, v.block(m->col));
         }
-      result += u.block(i) * aux;
+      result+= u.block(i) * aux;
     }
 
   return result;
@@ -263,7 +263,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType& aux = *p_aux;
+  typename BlockVectorType::BlockType& aux= *p_aux;
 
   aux.reinit(dst.block(row_num), true);
 
@@ -271,12 +271,12 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
   // they are not ordered by rows.
   for(; m != end; ++m)
     {
-      const size_type i = m->row;
+      const size_type i= m->row;
       // Ignore everything not in
       // this row
       if(i != row_num)
         continue;
-      const size_type j = m->col;
+      const size_type j= m->col;
       // Only use the lower (upper)
       // triangle for forward
       // (backward) substitution
@@ -310,21 +310,21 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
     }
   else
     {
-      aux = 0.;
-      for(size_type i = 0; i < diagonals.size(); ++i)
+      aux= 0.;
+      for(size_type i= 0; i < diagonals.size(); ++i)
         {
-          m = diagonals[i];
+          m= diagonals[i];
           // First, divide by the current
           // factor, such that we can
           // multiply by it later.
-          aux /= m->prefix;
+          aux/= m->prefix;
           if(m->transpose)
             m->matrix->Tvmult_add(aux, dst.block(row_num));
           else
             m->matrix->vmult_add(aux, dst.block(row_num));
-          aux *= m->prefix;
+          aux*= m->prefix;
         }
-      dst.block(row_num) = aux;
+      dst.block(row_num)= aux;
     }
 }
 
@@ -342,7 +342,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
   BlockVectorType aux;
   aux.reinit(dst);
   vmult(aux, src);
-  dst += aux;
+  dst+= aux;
 }
 
 template <typename number, typename BlockVectorType>
@@ -360,12 +360,12 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult(
 
   if(backward)
     {
-      for(unsigned int i = n_block_rows(); i > 0;)
+      for(unsigned int i= n_block_rows(); i > 0;)
         do_row(dst, --i);
     }
   else
     {
-      for(unsigned int i = 0; i < n_block_rows(); ++i)
+      for(unsigned int i= 0; i < n_block_rows(); ++i)
         do_row(dst, i);
     }
 }

@@ -40,17 +40,17 @@ void check_this(Triangulation<3>& tria)
   DoFHandler<3> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  unsigned int global_face = 0;
+  unsigned int global_face= 0;
 
   // look at all faces, not only
   // active ones
-  for(DoFHandler<3>::cell_iterator cell = dof_handler.begin();
+  for(DoFHandler<3>::cell_iterator cell= dof_handler.begin();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<3>::faces_per_cell; ++f)
       if(!cell->at_boundary(f))
         {
-          const unsigned int nn = cell->neighbor_of_neighbor(f);
+          const unsigned int nn= cell->neighbor_of_neighbor(f);
           fe_face_values1.reinit(cell, f);
           fe_face_values2.reinit(cell->neighbor(f), nn);
 
@@ -85,7 +85,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 3; ++r)
+  for(unsigned int r= 0; r < 3; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

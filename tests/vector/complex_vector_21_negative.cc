@@ -28,18 +28,18 @@ test(Vector<std::complex<double>>& v)
   // vector. have a bit pattern of where we
   // actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i)       = 1. * i * std::complex<double>(i + 1., i + 2.);
-      pattern[i] = true;
+      v(i)      = 1. * i * std::complex<double>(i + 1., i + 2.);
+      pattern[i]= true;
     }
   v.compress();
 
   // multiply v with 3/4
-  v /= -4. / 3.;
+  v/= -4. / 3.;
 
   // check that the entries are ok
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(
       ((pattern[i] == true)
        && (v(i) - (-1. * i * std::complex<double>(i + 1., i + 2.) * 3. / 4.)

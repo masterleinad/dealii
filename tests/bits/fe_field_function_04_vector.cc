@@ -39,8 +39,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    v    = 0;
-    v[0] = p.square();
+    v   = 0;
+    v[0]= p.square();
   }
 };
 
@@ -78,15 +78,15 @@ test()
   // too far away from that cell, and
   // the inverse mapping does not
   // converge
-  for(unsigned int i = 0; i < 20; ++i)
-    for(unsigned int j = 0; j < 20; ++j)
+  for(unsigned int i= 0; i < 20; ++i)
+    for(unsigned int j= 0; j < 20; ++j)
       points.push_back(Point<dim>(-0.7 + i * 0.07, -0.7 + j * 0.07));
   points.push_back(Point<dim>(-0.27999999999999992, -0.62999999999999989));
 
   std::vector<Vector<double>> m(points.size(), Vector<double>(2));
   fe_function.vector_value_list(points, m);
 
-  for(unsigned int i = 0; i < m.size(); ++i)
+  for(unsigned int i= 0; i < m.size(); ++i)
     {
       Assert(std::fabs(m[i](0) - points[i].square())
                < 1e-10 * std::fabs(m[i](0) + points[i].square()),

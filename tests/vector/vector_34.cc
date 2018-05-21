@@ -23,16 +23,16 @@ void
 test(Vector<double>& v)
 {
   // set some elements of the vector
-  double sum = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  double sum= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = i;
-      sum += i * i * i;
+      v(i)= i;
+      sum+= i * i * i;
     }
   v.compress();
 
   // set them to zero again
-  v = 0;
+  v= 0;
 
   // then check all_zero
   AssertThrow(v.all_zero() == true, ExcInternalError());

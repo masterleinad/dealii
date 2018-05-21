@@ -29,7 +29,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-const double xy_angle = numbers::PI / 6;
+const double xy_angle= numbers::PI / 6;
 
 template <int dim>
 Point<dim>
@@ -61,7 +61,7 @@ check()
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       deallog << cell->vertex(i) << std::endl;
 }
 

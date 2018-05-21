@@ -69,14 +69,14 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       fe_scalar, quadrature, update_values | update_gradients);
     fe_values_scalar.reinit(dof_scalar.begin_active());
 
-    for(unsigned int i = 0; i < fe_scalar.dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < fe_scalar.dofs_per_cell; ++i)
       {
-        const unsigned int i_node = fe_scalar.system_to_base_index(i).second;
+        const unsigned int i_node= fe_scalar.system_to_base_index(i).second;
         Assert(i_node < fe_scalar.dofs_per_cell, ExcInternalError());
-        for(unsigned int q = 0; q < quadrature.size(); ++q)
+        for(unsigned int q= 0; q < quadrature.size(); ++q)
           {
-            scalar_values[i_node][q]    = fe_values_scalar.shape_value(i, q);
-            scalar_gradients[i_node][q] = fe_values_scalar.shape_grad(i, q);
+            scalar_values[i_node][q]   = fe_values_scalar.shape_value(i, q);
+            scalar_gradients[i_node][q]= fe_values_scalar.shape_grad(i, q);
           }
       }
   }
@@ -94,8 +94,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // also compare get_function_values/gradients/divergences
   // the manual evaluation
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    fe_function(i) = (i + 1) * (3 + i);
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    fe_function(i)= (i + 1) * (3 + i);
 
   std::vector<Tensor<1, dim>> divergences(quadrature.size()),
     divergences_manual(quadrature.size());
@@ -112,42 +112,41 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   dof.begin_active()->get_dof_indices(local_dof_indices);
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     {
-      const double f_val = fe_function(local_dof_indices[i]);
-      const auto   val   = fe_values[extractor].value(i, 0);
+      const double f_val= fe_function(local_dof_indices[i]);
+      const auto   val  = fe_values[extractor].value(i, 0);
       // find out which component is non-zero
       TableIndices<2> nonzero_ind;
-      for(unsigned int k = 0; k < Tensor<2, dim>::n_independent_components; ++k)
+      for(unsigned int k= 0; k < Tensor<2, dim>::n_independent_components; ++k)
         {
-          nonzero_ind
-            = dealii::Tensor<2, dim>::unrolled_to_component_indices(k);
+          nonzero_ind= dealii::Tensor<2, dim>::unrolled_to_component_indices(k);
           if(std::abs(val[nonzero_ind]) > 1e-10)
             break;
         }
 
       // the support point (node) id
-      const unsigned int i_node = fe.system_to_base_index(i).second;
+      const unsigned int i_node= fe.system_to_base_index(i).second;
 
       deallog << "i=" << i << " ii=" << nonzero_ind[0]
               << " jj=" << nonzero_ind[1] << " node=" << i_node << std::endl;
 
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for(unsigned int q= 0; q < quadrature.size(); ++q)
         {
-          const auto val_q  = fe_values[extractor].value(i, q);
-          const auto grad_q = fe_values[extractor].gradient(i, q);
-          const auto div_q  = fe_values[extractor].divergence(i, q);
+          const auto val_q = fe_values[extractor].value(i, q);
+          const auto grad_q= fe_values[extractor].gradient(i, q);
+          const auto div_q = fe_values[extractor].divergence(i, q);
           deallog << "  q_point=" << fe_values.quadrature_point(q) << std::endl
                   << "    value= " << val_q << std::endl
                   << "    grad= " << grad_q << std::endl
                   << "    div= " << div_q << std::endl;
 
-          values_manual[q] += val_q * f_val;
-          gradients_manual[q] += grad_q * f_val;
-          divergences_manual[q] += div_q * f_val;
+          values_manual[q]+= val_q * f_val;
+          gradients_manual[q]+= grad_q * f_val;
+          divergences_manual[q]+= div_q * f_val;
 
           // check value and gradients:
-          for(unsigned int k = 0; k < Tensor<2, dim>::n_independent_components;
+          for(unsigned int k= 0; k < Tensor<2, dim>::n_independent_components;
               ++k)
             {
               const TableIndices<2> ind_k
@@ -173,11 +172,11 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           // finally check consistency between gradient and divergence, namely
           // G : I = Div or
           // \sum_j G_{ijj} = Div_i
-          for(unsigned int i = 0; i < dim; ++i)
+          for(unsigned int i= 0; i < dim; ++i)
             {
-              double div_tmp = 0.;
-              for(unsigned int j = 0; j < dim; ++j)
-                div_tmp += grad_q[i][j][j];
+              double div_tmp= 0.;
+              for(unsigned int j= 0; j < dim; ++j)
+                div_tmp+= grad_q[i][j][j];
 
               AssertThrow(div_tmp == div_q[i], ExcInternalError());
             }
@@ -185,7 +184,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 
   // compare function values/gradients/divergences:
-  for(unsigned int q = 0; q < quadrature.size(); ++q)
+  for(unsigned int q= 0; q < quadrature.size(); ++q)
     {
       AssertThrow(values_manual[q] == values[q], ExcInternalError());
       AssertThrow(gradients_manual[q] == gradients[q], ExcInternalError());

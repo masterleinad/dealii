@@ -44,12 +44,12 @@ main()
   pts.push_back(Point<3>(1, 1, 0));
   pts.push_back(Point<3>(1, 0, 0));
 
-  TopoDS_Edge edge1 = interpolation_curve(pts);
-  for(unsigned int i = 0; i < pts.size(); ++i)
-    pts[i] += Point<3>(0, 0, 1);
-  TopoDS_Edge edge2 = interpolation_curve(pts);
+  TopoDS_Edge edge1= interpolation_curve(pts);
+  for(unsigned int i= 0; i < pts.size(); ++i)
+    pts[i]+= Point<3>(0, 0, 1);
+  TopoDS_Edge edge2= interpolation_curve(pts);
 
-  TopoDS_Face face = BRepFill::Face(edge1, edge2);
+  TopoDS_Face face= BRepFill::Face(edge1, edge2);
 
   NormalToMeshProjectionBoundary<1, 3> manifold(face);
 

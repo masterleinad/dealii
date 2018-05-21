@@ -35,7 +35,7 @@ main()
 {
   std::ofstream logfile("output");
 
-  TopoDS_Shape new_edge = read_IGES(SOURCE_DIR "/iges_files/line_03.iges", 1.0);
+  TopoDS_Shape new_edge= read_IGES(SOURCE_DIR "/iges_files/line_03.iges", 1.0);
 
   ArclengthProjectionLineManifold<1, 3> manifold(new_edge);
 

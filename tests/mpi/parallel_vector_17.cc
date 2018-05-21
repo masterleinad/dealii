@@ -26,8 +26,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -36,7 +36,7 @@ test()
   IndexSet local_owned(numproc * 2);
   local_owned.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(local_owned.size());
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(1, 2);
 
   LinearAlgebra::distributed::Vector<double> v1, v2, v3, v4, v5, v6;

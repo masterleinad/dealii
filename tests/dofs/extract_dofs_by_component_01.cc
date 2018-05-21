@@ -54,17 +54,17 @@ check()
   // try all possible component
   // masks, which we encode as bit
   // strings
-  for(unsigned int int_mask = 0; int_mask < (1U << element.n_components());
+  for(unsigned int int_mask= 0; int_mask < (1U << element.n_components());
       ++int_mask)
     {
       std::vector<bool> component_mask(element.n_components());
-      for(unsigned int c = 0; c < element.n_components(); ++c)
-        component_mask[c] = (int_mask & (1 << c));
+      for(unsigned int c= 0; c < element.n_components(); ++c)
+        component_mask[c]= (int_mask & (1 << c));
 
       std::vector<bool> dofs(dof.n_dofs());
       DoFTools::extract_dofs(dof, ComponentMask(component_mask), dofs);
 
-      for(unsigned int d = 0; d < dof.n_dofs(); ++d)
+      for(unsigned int d= 0; d < dof.n_dofs(); ++d)
         deallog << dofs[d];
       deallog << std::endl;
     }

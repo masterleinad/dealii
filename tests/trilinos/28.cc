@@ -26,21 +26,21 @@ void
 test(TrilinosWrappers::MPI::Vector& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = i + 1.;
+      v(i)= i + 1.;
   v.compress(VectorOperation::insert);
 
   // then copy it to a vector of different
   // size
   TrilinosWrappers::MPI::Vector w;
   w.reinit(complete_index_set(1), MPI_COMM_WORLD);
-  w = v;
+  w= v;
 
   // make sure they're equal
   deallog << v * w << ' ' << v.l2_norm() * w.l2_norm() << ' '
           << v * w - v.l2_norm() * w.l2_norm() << std::endl;
-  const double eps = typeid(TrilinosScalar) == typeid(double) ? 1e-14 : 1e-5;
+  const double eps= typeid(TrilinosScalar) == typeid(double) ? 1e-14 : 1e-5;
   Assert(std::fabs(v * w - v.l2_norm() * w.l2_norm()) < eps * (v * w),
          ExcInternalError());
 

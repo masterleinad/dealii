@@ -26,26 +26,26 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  float a[3][3] = {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
-  float b[3]    = {25, 31, 37};
+  float a[3][3]= {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
+  float b[3]   = {25, 31, 37};
 
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
 
   // rank 2
   {
     Tensor<2, dim, float>  t(a);
     Tensor<2, dim, double> dt(t), dt2;
-    dt2 = t;
+    dt2= t;
     AssertThrow(dt2 == dt, ExcInternalError());
     AssertThrow(dt == dt2, ExcInternalError());
 
     Tensor<2, dim, float> ft(dt), ft2;
-    ft2 = dt;
+    ft2= dt;
     AssertThrow(ft2 == ft, ExcInternalError());
     AssertThrow(ft == ft2, ExcInternalError());
 
     Tensor<2, dim, std::complex<double>> ct(dt), ct2;
-    ct2 = dt;
+    ct2= dt;
     AssertThrow(ct2 == ct, ExcInternalError());
     AssertThrow(ct == ct2, ExcInternalError());
   }
@@ -54,17 +54,17 @@ main()
   {
     Tensor<1, dim, float>  t(b);
     Tensor<1, dim, double> dt(t), dt2;
-    dt2 = t;
+    dt2= t;
     AssertThrow(dt2 == dt, ExcInternalError());
     AssertThrow(dt == dt2, ExcInternalError());
 
     Tensor<1, dim, float> ft(dt), ft2;
-    ft2 = dt;
+    ft2= dt;
     AssertThrow(ft2 == ft, ExcInternalError());
     AssertThrow(ft == ft2, ExcInternalError());
 
     Tensor<1, dim, std::complex<double>> ct(dt), ct2;
-    ct2 = dt;
+    ct2= dt;
     AssertThrow(ct2 == ct, ExcInternalError());
     AssertThrow(ct == ct2, ExcInternalError());
   }

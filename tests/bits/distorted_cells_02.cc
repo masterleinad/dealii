@@ -39,14 +39,14 @@ check()
 
   gi.attach_triangulation(coarse_grid);
 
-  bool flag = false;
+  bool flag= false;
   try
     {
       gi.read_ucd(in);
     }
   catch(typename Triangulation<dim>::DistortedCellList& dcv)
     {
-      flag = true;
+      flag= true;
 
       deallog << dcv.distorted_cells.size() << " distorted cells" << std::endl;
       Assert(dcv.distorted_cells.front() == coarse_grid.begin(0),

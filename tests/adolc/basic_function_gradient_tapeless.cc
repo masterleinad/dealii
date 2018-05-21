@@ -30,31 +30,31 @@ main(void)
 {
   initlog();
 
-  const unsigned int n = 10;
+  const unsigned int n= 10;
   adtl::setNumDir(n);
 
-  adtl::adouble* x = new adtl::adouble[n];
-  for(unsigned int i = 0; i < n; i++)
+  adtl::adouble* x= new adtl::adouble[n];
+  for(unsigned int i= 0; i < n; i++)
     {
-      x[i] = (i + 1.0) / (2.0 + i);
+      x[i]= (i + 1.0) / (2.0 + i);
       x[i].setADValue(i, 1);
     }
 
-  adtl::adouble y = 1.0;
-  for(unsigned int i = 0; i < n; i++)
-    y *= x[i];
+  adtl::adouble y= 1.0;
+  for(unsigned int i= 0; i < n; i++)
+    y*= x[i];
 
   // --- Function ---
 
-  const double error_func = y.getValue() - 1.0 / (1.0 + n);
+  const double error_func= y.getValue() - 1.0 / (1.0 + n);
 
   deallog << "Error (function): " << error_func << std::endl;
 
   // --- Gradient ---
 
-  double err_grad = 0;
-  for(unsigned int i = 0; i < n; i++)
-    err_grad += std::abs(y.getADValue(i) - y.getValue() / x[i].getValue());
+  double err_grad= 0;
+  for(unsigned int i= 0; i < n; i++)
+    err_grad+= std::abs(y.getADValue(i) - y.getValue() / x[i].getValue());
 
   deallog << "Error (gradient): " << err_grad << std::endl;
 

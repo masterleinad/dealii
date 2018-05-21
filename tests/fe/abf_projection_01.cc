@@ -18,13 +18,13 @@
  * elements can represent it exactly.
  */
 
-char logname[] = "output";
+char logname[]= "output";
 #include "deformed_projection.h"
 
 void
 test()
 {
   FE_ABF<2>                         fe(0);
-  const std::array<unsigned int, 3> min_convergence_steps = {{8, 7, 7}};
+  const std::array<unsigned int, 3> min_convergence_steps= {{8, 7, 7}};
   check(fe, min_convergence_steps);
 }

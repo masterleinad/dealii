@@ -60,7 +60,7 @@ DEAL_II_NAMESPACE_OPEN
  * @date 2013, 2015
  */
 
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_Bernstein
   : public FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>
 {

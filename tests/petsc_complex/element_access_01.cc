@@ -31,21 +31,21 @@ test_matrix(PETScWrappers::SparseMatrix& m)
   deallog << "Check 01 matrix access" << std::endl;
 
   // fill up a matrix with some numbers
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       {
-        PetscReal el_r = static_cast<double>(k + l);
-        PetscReal el_i = static_cast<double>(-1. * (k + l));
+        PetscReal el_r= static_cast<double>(k + l);
+        PetscReal el_i= static_cast<double>(-1. * (k + l));
         m.set(k, l, std::complex<double>(el_r, el_i));
       }
 
   m.compress(VectorOperation::insert);
 
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       {
-        PetscReal el_r = static_cast<double>(k + l);
-        PetscReal el_i = static_cast<double>(-1. * (k + l));
+        PetscReal el_r= static_cast<double>(k + l);
+        PetscReal el_i= static_cast<double>(-1. * (k + l));
 
         AssertThrow((m(k, l).real() == el_r) && (m(k, l).imag() == el_i),
                     ExcInternalError());

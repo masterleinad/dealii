@@ -33,20 +33,20 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   deallog << numproc << std::endl;
 
   // set up disjoint index sets and some overlapping ghosted elements
   IndexSet local_active(numproc * 2);
   local_active.add_range(myid * 2, myid * 2 + 2);
-  IndexSet local_relevant = local_active;
+  IndexSet local_relevant= local_active;
   local_relevant.add_range(0, 1);
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 2 * numproc; ++i)
+  for(unsigned int i= 0; i < 2 * numproc; ++i)
     if(local_relevant.is_element(i))
       csp.add(i, i);
 
@@ -67,11 +67,11 @@ test()
   //////////////////////////////////////////////
   /////This is a test for the local matrix iterator
   //////////////////////////////////////////////
-  unsigned int start_row = mat.local_range().first;
-  unsigned int end_row   = mat.local_range().second;
-  for(auto r = start_row; r < end_row; ++r)
+  unsigned int start_row= mat.local_range().first;
+  unsigned int end_row  = mat.local_range().second;
+  for(auto r= start_row; r < end_row; ++r)
     {
-      for(auto itr = mat.begin(r); itr != mat.end(r); ++itr)
+      for(auto itr= mat.begin(r); itr != mat.end(r); ++itr)
         {
           deallog << itr->row() << ' ' << itr->column() << ' ' << itr->value()
                   << std::endl;

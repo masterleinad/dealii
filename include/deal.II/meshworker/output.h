@@ -165,14 +165,14 @@ namespace MeshWorker
     inline void
     GnuplotPatch::initialize(const unsigned int np, const unsigned int nv)
     {
-      n_vectors = nv;
-      n_points  = np;
+      n_vectors= nv;
+      n_points = np;
     }
 
     inline void
     GnuplotPatch::initialize_stream(std::ostream& stream)
     {
-      os = &stream;
+      os= &stream;
     }
 
     template <int dim>
@@ -191,11 +191,11 @@ namespace MeshWorker
     inline void
     GnuplotPatch::assemble(const DoFInfo<dim>& info)
     {
-      const unsigned int np = info.n_quadrature_points();
-      const unsigned int nv = info.n_quadrature_values();
+      const unsigned int np= info.n_quadrature_points();
+      const unsigned int nv= info.n_quadrature_values();
       const unsigned int patch_dim
         = (info.face_number == numbers::invalid_unsigned_int) ? dim : (dim - 1);
-      const unsigned int row_length = n_points;
+      const unsigned int row_length= n_points;
       // If patches are 1D, end the
       // patch after a row, else end
       // it after a square
@@ -205,14 +205,14 @@ namespace MeshWorker
       //      AssertDimension(np, Utilities::fixed_power<dim>(n_points));
       AssertDimension(nv, n_vectors + dim);
 
-      for(unsigned int k = 0; k < np; ++k)
+      for(unsigned int k= 0; k < np; ++k)
         {
           if(k % row_length == 0)
             write_endl();
           if(k % row_length2 == 0)
             write_endl();
 
-          for(unsigned int i = 0; i < nv; ++i)
+          for(unsigned int i= 0; i < nv; ++i)
             {
               write(info.quadrature_value(k, i));
               write('\t');

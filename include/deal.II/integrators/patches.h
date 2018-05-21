@@ -41,17 +41,17 @@ namespace LocalIntegrators
       const FEValuesBase<dim>&                                   fe,
       const VectorSlice<const std::vector<std::vector<double>>>& input)
     {
-      const unsigned int n_comp = fe.get_fe().n_components();
+      const unsigned int n_comp= fe.get_fe().n_components();
       AssertVectorVectorDimension(input, n_comp, fe.n_quadrature_points);
       AssertDimension(result.n_rows(), fe.n_quadrature_points);
       AssertDimension(result.n_cols(), n_comp + dim);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for(unsigned int k= 0; k < fe.n_quadrature_points; ++k)
         {
-          for(unsigned int d = 0; d < dim; ++d)
-            result(k, d) = fe.quadrature_point(k)[d];
-          for(unsigned int i = 0; i < n_comp; ++i)
-            result(k, dim + i) = input[i][k];
+          for(unsigned int d= 0; d < dim; ++d)
+            result(k, d)= fe.quadrature_point(k)[d];
+          for(unsigned int i= 0; i < n_comp; ++i)
+            result(k, dim + i)= input[i][k];
         }
     }
   } // namespace Patches

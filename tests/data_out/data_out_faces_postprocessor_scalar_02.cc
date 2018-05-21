@@ -46,7 +46,7 @@ public:
   evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim>& input_data,
                         std::vector<Vector<double>>& computed_quantities) const
   {
-    for(unsigned int q = 0; q < input_data.solution_values.size(); ++q)
+    for(unsigned int q= 0; q < input_data.solution_values.size(); ++q)
       {
         Assert(computed_quantities[q].size() == 1, ExcInternalError());
 
@@ -58,7 +58,7 @@ public:
                  == double(cell->active_cell_index()),
                ExcInternalError());
 
-        computed_quantities[q][0] = input_data.solution_values[q];
+        computed_quantities[q][0]= input_data.solution_values[q];
       }
   }
 };
@@ -90,8 +90,8 @@ test()
       std::vector<types::global_dof_index> local_dof_indices(
         cell->get_fe().dofs_per_cell);
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < local_dof_indices.size(); ++i)
-        solution(local_dof_indices[i]) = cell->active_cell_index();
+      for(unsigned int i= 0; i < local_dof_indices.size(); ++i)
+        solution(local_dof_indices[i])= cell->active_cell_index();
     }
 
   MyPostprocessor<dim> p;

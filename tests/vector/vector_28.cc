@@ -24,15 +24,15 @@ void
 test(Vector<double>& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     if(i % 3 == 0)
-      v(i) = i + 1.;
+      v(i)= i + 1.;
   v.compress();
 
   // then copy it to a vector of different
   // size
   Vector<double> w(1);
-  w = v;
+  w= v;
 
   // make sure they're equal
   deallog << v * w << ' ' << v.l2_norm() * w.l2_norm() << ' '

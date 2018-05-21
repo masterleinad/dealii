@@ -66,7 +66,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <typename Range, typename Domain = Range, typename Matrix>
+  template <typename Range, typename Domain= Range, typename Matrix>
   inline LinearOperator<
     Range,
     Domain,
@@ -96,7 +96,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <typename Range, typename Domain = Range>
+  template <typename Range, typename Domain= Range>
   inline LinearOperator<
     Range,
     Domain,
@@ -129,7 +129,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <typename Range, typename Domain = Range>
+  template <typename Range, typename Domain= Range>
   inline BlockLinearOperator<
     Range,
     Domain,
@@ -163,7 +163,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <size_t m, size_t n, typename Range, typename Domain = Range>
+  template <size_t m, size_t n, typename Range, typename Domain= Range>
   inline BlockLinearOperator<
     Range,
     Domain,
@@ -205,7 +205,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <typename Range, typename Domain = Range>
+  template <typename Range, typename Domain= Range>
   inline BlockLinearOperator<
     Range,
     Domain,
@@ -241,7 +241,7 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    */
-  template <size_t m, typename Range, typename Domain = Range>
+  template <size_t m, typename Range, typename Domain= Range>
   inline BlockLinearOperator<
     Range,
     Domain,

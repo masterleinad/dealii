@@ -25,8 +25,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -36,24 +36,24 @@ test()
   IndexSet local_owned(numproc * 2);
   local_owned.add_range(myid * 2, myid * 2 + 2);
   IndexSet local_relevant(numproc * 2);
-  local_relevant = local_owned;
+  local_relevant= local_owned;
   local_relevant.add_range(1, 2);
 
   LinearAlgebra::distributed::Vector<double> v(
     local_owned, local_relevant, MPI_COMM_WORLD);
 
   // set local values and check them
-  v(myid * 2)     = myid * 2.0;
-  v(myid * 2 + 1) = myid * 2.0 + 1.0;
+  v(myid * 2)    = myid * 2.0;
+  v(myid * 2 + 1)= myid * 2.0 + 1.0;
 
   v.compress(VectorOperation::add);
-  v *= 2.0;
+  v*= 2.0;
 
   AssertThrow(v(myid * 2) == myid * 4.0, ExcInternalError());
   AssertThrow(v(myid * 2 + 1) == myid * 4.0 + 2.0, ExcInternalError());
 
   // set ghost dof, compress
-  v(1) = 7;
+  v(1)= 7;
   v.compress(VectorOperation::add);
 
   if(myid == 0)
@@ -67,7 +67,7 @@ test()
   AssertThrow(v(1) == 7. * numproc, ExcInternalError());
 
   // check l2 norm
-  const double l2_norm = v.l2_norm();
+  const double l2_norm= v.l2_norm();
   if(myid == 0)
     deallog << "L2 norm: " << l2_norm << std::endl;
 
@@ -81,7 +81,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

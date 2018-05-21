@@ -27,8 +27,8 @@ void
 test(const unsigned int size_1, const unsigned int size_2)
 {
   TrilinosWrappers::SparseMatrix m(size_1, size_2, size_2);
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       m.set(i, j, i + 2 * j);
   m.compress(VectorOperation::insert);
 
@@ -43,34 +43,34 @@ test(const unsigned int size_1, const unsigned int size_2)
   w.block(1).reinit(size_1);
   w.collect_sizes();
   Vector<double> v(size_2);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i;
 
   // w:=Mv
   m_block.vmult(w, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for(unsigned int i= 0; i < m.m(); ++i)
     {
-      double result = 0;
-      for(unsigned int j = 0; j < m.n(); ++j)
-        result += (i + 2 * j) * j;
+      double result= 0;
+      for(unsigned int j= 0; j < m.n(); ++j)
+        result+= (i + 2 * j) * j;
       AssertThrow(w(i) == result, ExcInternalError());
       AssertThrow(w(i + m.m()) == result, ExcInternalError());
     }
 
-  for(unsigned int i = 0; i < w.size(); ++i)
-    w(i) = i;
+  for(unsigned int i= 0; i < w.size(); ++i)
+    w(i)= i;
 
   m_block.Tvmult(v, w);
   // make sure we get the expected result
-  for(unsigned int i = 0; i < m.n(); ++i)
+  for(unsigned int i= 0; i < m.n(); ++i)
     {
-      double result = 0;
-      for(unsigned int j = 0; j < m.m(); ++j)
-        result += (j + 2 * i) * j;
-      for(unsigned int j = 0; j < m.m(); ++j)
-        result += (j + 2 * i) * (j + m.m());
+      double result= 0;
+      for(unsigned int j= 0; j < m.m(); ++j)
+        result+= (j + 2 * i) * j;
+      for(unsigned int j= 0; j < m.m(); ++j)
+        result+= (j + 2 * i) * (j + m.m());
       AssertThrow(v(i) == result, ExcInternalError());
     }
 

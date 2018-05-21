@@ -28,7 +28,7 @@
 
 void create_coarse_grid(Triangulation<2>& coarse_grid)
 {
-  static const Point<2> vertices_1[] = {
+  static const Point<2> vertices_1[]= {
     Point<2>(0., 0.), //0
     Point<2>(1., 0.), //1
     Point<2>(1., 1.), //2
@@ -39,22 +39,22 @@ void create_coarse_grid(Triangulation<2>& coarse_grid)
     Point<2>(1.3, 0.),      //6
     Point<2>(1.3, 1. / 2.), //7
   };
-  const unsigned int n_vertices = sizeof(vertices_1) / sizeof(vertices_1[0]);
+  const unsigned int n_vertices= sizeof(vertices_1) / sizeof(vertices_1[0]);
 
   const std::vector<Point<2>> vertices(&vertices_1[0], &vertices_1[n_vertices]);
 
-  static const int cell_vertices[][GeometryInfo<2>::vertices_per_cell] = {
+  static const int cell_vertices[][GeometryInfo<2>::vertices_per_cell]= {
     {0, 1, 3, 2},
     {4, 6, 5, 7},
   };
-  const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
+  const unsigned int n_cells= sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<2>> cells(n_cells, CellData<2>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for(unsigned int i= 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
-        cells[i].vertices[j] = cell_vertices[i][j];
-      cells[i].material_id = 0;
+      for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+        cells[i].vertices[j]= cell_vertices[i][j];
+      cells[i].material_id= 0;
     }
 
   coarse_grid.create_triangulation(vertices, cells, SubCellData());
@@ -68,7 +68,7 @@ void check(Triangulation<2>& tria)
     = GridTools::find_active_cell_around_point(tria, p);
 
   deallog << cell << std::endl;
-  for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
     deallog << "<" << cell->vertex(v) << "> ";
   deallog << std::endl;
 

@@ -70,8 +70,8 @@ public:
   void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int i = 0; i < dim; ++i)
-      v(i) = p[i] * p[0] / 2;
+    for(unsigned int i= 0; i < dim; ++i)
+      v(i)= p[i] * p[0] / 2;
   }
 };
 
@@ -80,8 +80,8 @@ void
 test()
 {
   deallog << "dim=" << dim << std::endl;
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -98,7 +98,7 @@ test()
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -107,7 +107,7 @@ test()
     locally_owned_dofs, locally_relevant_dofs, MPI_COMM_WORLD);
 
   VectorTools::interpolate(dof_handler, Displacement<dim>(), x);
-  x_relevant = x;
+  x_relevant= x;
 
   MappingQEulerian<dim, PETScWrappers::MPI::Vector> euler(
     2, dof_handler, x_relevant);

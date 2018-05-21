@@ -34,7 +34,7 @@ struct X
   X&
   operator=(const X& x)
   {
-    i = x.i + 1;
+    i= x.i + 1;
     return *this;
   }
   int i;
@@ -63,12 +63,12 @@ test()
 {
   {
     X                     x;
-    Threads::Thread<void> t = Threads::new_thread(&execute_ref, x);
+    Threads::Thread<void> t= Threads::new_thread(&execute_ref, x);
     t.join();
   }
   {
     X                     x;
-    Threads::Thread<void> t = Threads::new_thread(&execute_value, x);
+    Threads::Thread<void> t= Threads::new_thread(&execute_value, x);
     t.join();
   }
 }

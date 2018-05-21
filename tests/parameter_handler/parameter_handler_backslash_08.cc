@@ -26,7 +26,7 @@ main()
 {
   initlog();
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       ParameterHandler prm;
       prm.enter_subsection("Testing");
@@ -47,7 +47,7 @@ main()
 
       std::string list;
       prm.enter_subsection("Testing");
-      list = prm.get("value");
+      list= prm.get("value");
       prm.leave_subsection();
 
       deallog << list << std::endl;

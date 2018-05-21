@@ -32,7 +32,7 @@ main()
   csp.block(0, 1).reinit(2, 1);
   csp.block(1, 1).reinit(1, 1);
   csp.collect_sizes();
-  for(int i = 0; i < 3; ++i)
+  for(int i= 0; i < 3; ++i)
     csp.add(i, i);
   csp.add(1, 0);
   csp.add(1, 2);
@@ -47,11 +47,11 @@ main()
   csp.print(logfile);
 
   deallog << std::endl;
-  for(unsigned int i = 0; i < 3; ++i)
+  for(unsigned int i= 0; i < 3; ++i)
     {
       deallog << "row " << i << ": ";
 
-      for(unsigned int j = 0; j < csp.row_length(i); ++j)
+      for(unsigned int j= 0; j < csp.row_length(i); ++j)
         deallog << csp.column_number(i, j) << " ";
 
       deallog << std::endl;

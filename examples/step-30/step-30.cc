@@ -62,7 +62,7 @@ namespace Step30
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
   };
 
   template <int dim>
@@ -72,7 +72,7 @@ namespace Step30
     virtual void
     value_list(const std::vector<Point<dim>>& points,
                std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               const unsigned int             component= 0) const override;
   };
 
   template <int dim>
@@ -96,8 +96,8 @@ namespace Step30
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < values.size(); ++i)
-      values[i] = 0;
+    for(unsigned int i= 0; i < values.size(); ++i)
+      values[i]= 0;
   }
 
   // The flow field is chosen to be a quarter circle with counterclockwise
@@ -118,17 +118,17 @@ namespace Step30
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for(unsigned int i= 0; i < points.size(); ++i)
       {
         if(points[i](0) > 0)
           {
-            values[i](0) = -points[i](1);
-            values[i](1) = points[i](0);
+            values[i](0)= -points[i](1);
+            values[i](1)= points[i](0);
           }
         else
           {
-            values[i]    = Point<dim>();
-            values[i](0) = -points[i](1);
+            values[i]   = Point<dim>();
+            values[i](0)= -points[i](1);
           }
       }
   }
@@ -142,12 +142,12 @@ namespace Step30
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for(unsigned int i= 0; i < values.size(); ++i)
       {
         if(points[i](0) < 0.5)
-          values[i] = 1.;
+          values[i]= 1.;
         else
-          values[i] = 0.;
+          values[i]= 0.;
       }
   }
 
@@ -207,7 +207,7 @@ namespace Step30
     FullMatrix<double>&  ui_vi_matrix,
     Vector<double>&      cell_vector) const
   {
-    const std::vector<double>& JxW = fe_v.get_JxW_values();
+    const std::vector<double>& JxW= fe_v.get_JxW_values();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
     std::vector<double>     rhs(fe_v.n_quadrature_points);
@@ -215,15 +215,14 @@ namespace Step30
     beta_function.value_list(fe_v.get_quadrature_points(), beta);
     rhs_function.value_list(fe_v.get_quadrature_points(), rhs);
 
-    for(unsigned int point = 0; point < fe_v.n_quadrature_points; ++point)
-      for(unsigned int i = 0; i < fe_v.dofs_per_cell; ++i)
+    for(unsigned int point= 0; point < fe_v.n_quadrature_points; ++point)
+      for(unsigned int i= 0; i < fe_v.dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < fe_v.dofs_per_cell; ++j)
-            ui_vi_matrix(i, j) -= beta[point] * fe_v.shape_grad(i, point)
-                                  * fe_v.shape_value(j, point) * JxW[point];
+          for(unsigned int j= 0; j < fe_v.dofs_per_cell; ++j)
+            ui_vi_matrix(i, j)-= beta[point] * fe_v.shape_grad(i, point)
+                                 * fe_v.shape_value(j, point) * JxW[point];
 
-          cell_vector(i)
-            += rhs[point] * fe_v.shape_value(i, point) * JxW[point];
+          cell_vector(i)+= rhs[point] * fe_v.shape_value(i, point) * JxW[point];
         }
   }
 
@@ -234,8 +233,8 @@ namespace Step30
     FullMatrix<double>&      ui_vi_matrix,
     Vector<double>&          cell_vector) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
-    const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
+    const std::vector<double>&         JxW    = fe_v.get_JxW_values();
+    const std::vector<Tensor<1, dim>>& normals= fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
     std::vector<double>     g(fe_v.n_quadrature_points);
@@ -243,16 +242,16 @@ namespace Step30
     beta_function.value_list(fe_v.get_quadrature_points(), beta);
     boundary_function.value_list(fe_v.get_quadrature_points(), g);
 
-    for(unsigned int point = 0; point < fe_v.n_quadrature_points; ++point)
+    for(unsigned int point= 0; point < fe_v.n_quadrature_points; ++point)
       {
-        const double beta_n = beta[point] * normals[point];
+        const double beta_n= beta[point] * normals[point];
         if(beta_n > 0)
-          for(unsigned int i = 0; i < fe_v.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < fe_v.dofs_per_cell; ++j)
-              ui_vi_matrix(i, j) += beta_n * fe_v.shape_value(j, point)
-                                    * fe_v.shape_value(i, point) * JxW[point];
+          for(unsigned int i= 0; i < fe_v.dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < fe_v.dofs_per_cell; ++j)
+              ui_vi_matrix(i, j)+= beta_n * fe_v.shape_value(j, point)
+                                   * fe_v.shape_value(i, point) * JxW[point];
         else
-          for(unsigned int i = 0; i < fe_v.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe_v.dofs_per_cell; ++i)
             cell_vector(i)
               -= beta_n * g[point] * fe_v.shape_value(i, point) * JxW[point];
       }
@@ -268,39 +267,39 @@ namespace Step30
     FullMatrix<double>&          ui_ve_matrix,
     FullMatrix<double>&          ue_ve_matrix) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
-    const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
+    const std::vector<double>&         JxW    = fe_v.get_JxW_values();
+    const std::vector<Tensor<1, dim>>& normals= fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
 
     beta_function.value_list(fe_v.get_quadrature_points(), beta);
 
-    for(unsigned int point = 0; point < fe_v.n_quadrature_points; ++point)
+    for(unsigned int point= 0; point < fe_v.n_quadrature_points; ++point)
       {
-        const double beta_n = beta[point] * normals[point];
+        const double beta_n= beta[point] * normals[point];
         if(beta_n > 0)
           {
-            for(unsigned int i = 0; i < fe_v.dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < fe_v.dofs_per_cell; ++j)
-                ui_vi_matrix(i, j) += beta_n * fe_v.shape_value(j, point)
-                                      * fe_v.shape_value(i, point) * JxW[point];
+            for(unsigned int i= 0; i < fe_v.dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < fe_v.dofs_per_cell; ++j)
+                ui_vi_matrix(i, j)+= beta_n * fe_v.shape_value(j, point)
+                                     * fe_v.shape_value(i, point) * JxW[point];
 
-            for(unsigned int k = 0; k < fe_v_neighbor.dofs_per_cell; ++k)
-              for(unsigned int j = 0; j < fe_v.dofs_per_cell; ++j)
-                ui_ve_matrix(k, j) -= beta_n * fe_v.shape_value(j, point)
-                                      * fe_v_neighbor.shape_value(k, point)
-                                      * JxW[point];
+            for(unsigned int k= 0; k < fe_v_neighbor.dofs_per_cell; ++k)
+              for(unsigned int j= 0; j < fe_v.dofs_per_cell; ++j)
+                ui_ve_matrix(k, j)-= beta_n * fe_v.shape_value(j, point)
+                                     * fe_v_neighbor.shape_value(k, point)
+                                     * JxW[point];
           }
         else
           {
-            for(unsigned int i = 0; i < fe_v.dofs_per_cell; ++i)
-              for(unsigned int l = 0; l < fe_v_neighbor.dofs_per_cell; ++l)
-                ue_vi_matrix(i, l) += beta_n
-                                      * fe_v_neighbor.shape_value(l, point)
-                                      * fe_v.shape_value(i, point) * JxW[point];
+            for(unsigned int i= 0; i < fe_v.dofs_per_cell; ++i)
+              for(unsigned int l= 0; l < fe_v_neighbor.dofs_per_cell; ++l)
+                ue_vi_matrix(i, l)+= beta_n
+                                     * fe_v_neighbor.shape_value(l, point)
+                                     * fe_v.shape_value(i, point) * JxW[point];
 
-            for(unsigned int k = 0; k < fe_v_neighbor.dofs_per_cell; ++k)
-              for(unsigned int l = 0; l < fe_v_neighbor.dofs_per_cell; ++l)
+            for(unsigned int k= 0; k < fe_v_neighbor.dofs_per_cell; ++k)
+              for(unsigned int l= 0; l < fe_v_neighbor.dofs_per_cell; ++l)
                 ue_ve_matrix(k, l)
                   -= beta_n * fe_v_neighbor.shape_value(l, point)
                      * fe_v_neighbor.shape_value(k, point) * JxW[point];
@@ -431,19 +430,19 @@ namespace Step30
   void
   DGMethod<dim>::assemble_system2()
   {
-    const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
+    const unsigned int dofs_per_cell= dof_handler.get_fe().dofs_per_cell;
     std::vector<types::global_dof_index> dofs(dofs_per_cell);
     std::vector<types::global_dof_index> dofs_neighbor(dofs_per_cell);
 
-    const UpdateFlags update_flags = update_values | update_gradients
-                                     | update_quadrature_points
-                                     | update_JxW_values;
+    const UpdateFlags update_flags= update_values | update_gradients
+                                    | update_quadrature_points
+                                    | update_JxW_values;
 
     const UpdateFlags face_update_flags
       = update_values | update_quadrature_points | update_JxW_values
         | update_normal_vectors;
 
-    const UpdateFlags neighbor_face_update_flags = update_values;
+    const UpdateFlags neighbor_face_update_flags= update_values;
 
     FEValues<dim>     fe_v(mapping, fe, quadrature, update_flags);
     FEFaceValues<dim> fe_v_face(
@@ -463,11 +462,11 @@ namespace Step30
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        ui_vi_matrix = 0;
-        cell_vector  = 0;
+        ui_vi_matrix= 0;
+        cell_vector = 0;
 
         fe_v.reinit(cell);
 
@@ -475,11 +474,11 @@ namespace Step30
 
         cell->get_dof_indices(dofs);
 
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
           {
-            typename DoFHandler<dim>::face_iterator face = cell->face(face_no);
+            typename DoFHandler<dim>::face_iterator face= cell->face(face_no);
 
             // Case a)
             if(face->at_boundary())
@@ -509,7 +508,7 @@ namespace Step30
 
                     // Now we loop over all subfaces, i.e. the children and
                     // possibly grandchildren of the current face.
-                    for(unsigned int subface_no = 0;
+                    for(unsigned int subface_no= 0;
                         subface_no < face->number_of_children();
                         ++subface_no)
                       {
@@ -524,9 +523,9 @@ namespace Step30
                                ExcInternalError());
 
                         // The remaining part of this case is unchanged.
-                        ue_vi_matrix = 0;
-                        ui_ve_matrix = 0;
-                        ue_ve_matrix = 0;
+                        ue_vi_matrix= 0;
+                        ui_ve_matrix= 0;
+                        ue_ve_matrix= 0;
 
                         fe_v_subface.reinit(cell, face_no, subface_no);
                         fe_v_face_neighbor.reinit(neighbor_child, neighbor2);
@@ -540,8 +539,8 @@ namespace Step30
 
                         neighbor_child->get_dof_indices(dofs_neighbor);
 
-                        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                          for(unsigned int j= 0; j < dofs_per_cell; ++j)
                             {
                               system_matrix.add(
                                 dofs[i], dofs_neighbor[j], ue_vi_matrix(i, j));
@@ -577,9 +576,9 @@ namespace Step30
                         const unsigned int neighbor2
                           = cell->neighbor_of_neighbor(face_no);
 
-                        ue_vi_matrix = 0;
-                        ui_ve_matrix = 0;
-                        ue_ve_matrix = 0;
+                        ue_vi_matrix= 0;
+                        ui_ve_matrix= 0;
+                        ue_ve_matrix= 0;
 
                         fe_v_face.reinit(cell, face_no);
                         fe_v_face_neighbor.reinit(neighbor, neighbor2);
@@ -593,8 +592,8 @@ namespace Step30
 
                         neighbor->get_dof_indices(dofs_neighbor);
 
-                        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                          for(unsigned int j= 0; j < dofs_per_cell; ++j)
                             {
                               system_matrix.add(
                                 dofs[i], dofs_neighbor[j], ue_vi_matrix(i, j));
@@ -612,12 +611,12 @@ namespace Step30
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(dofs[i], dofs[j], ui_vi_matrix(i, j));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          right_hand_side(dofs[i]) += cell_vector(i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          right_hand_side(dofs[i])+= cell_vector(i);
       }
   }
 
@@ -656,8 +655,8 @@ namespace Step30
     // and scale it to obtain an error indicator.
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
-    for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+      endc= dof_handler.end();
+    for(unsigned int cell_no= 0; cell != endc; ++cell, ++cell_no)
       gradient_indicator(cell_no)
         *= std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
     // Then we use this indicator to flag the 30 percent of the cells with
@@ -701,7 +700,7 @@ namespace Step30
     // Now we need to loop over all active cells.
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       // We only need to consider cells which are flagged for refinement.
@@ -710,12 +709,11 @@ namespace Step30
           Point<dim> jump;
           Point<dim> area;
 
-          for(unsigned int face_no = 0;
+          for(unsigned int face_no= 0;
               face_no < GeometryInfo<dim>::faces_per_cell;
               ++face_no)
             {
-              typename DoFHandler<dim>::face_iterator face
-                = cell->face(face_no);
+              typename DoFHandler<dim>::face_iterator face= cell->face(face_no);
 
               if(!face->at_boundary())
                 {
@@ -737,9 +735,9 @@ namespace Step30
                       // information, which of the neighbor's faces points in
                       // the direction of our current cell. This property is
                       // inherited to the children.
-                      unsigned int neighbor2 = cell->neighbor_face_no(face_no);
+                      unsigned int neighbor2= cell->neighbor_face_no(face_no);
                       // Now we loop over all subfaces,
-                      for(unsigned int subface_no = 0;
+                      for(unsigned int subface_no= 0;
                           subface_no < face->number_of_children();
                           ++subface_no)
                         {
@@ -763,7 +761,7 @@ namespace Step30
                           const std::vector<double>& JxW
                             = fe_v_subface.get_JxW_values();
                           // Now we loop over all quadrature points
-                          for(unsigned int x = 0;
+                          for(unsigned int x= 0;
                               x < fe_v_subface.n_quadrature_points;
                               ++x)
                             {
@@ -782,7 +780,7 @@ namespace Step30
                                 += std::fabs(u[x] - u_neighbor[x]) * JxW[x];
                               // We also sum up the scaled weights to obtain
                               // the measure of the face.
-                              area[face_no / 2] += JxW[x];
+                              area[face_no / 2]+= JxW[x];
                             }
                         }
                     }
@@ -808,13 +806,13 @@ namespace Step30
                           const std::vector<double>& JxW
                             = fe_v_face.get_JxW_values();
 
-                          for(unsigned int x = 0;
+                          for(unsigned int x= 0;
                               x < fe_v_face.n_quadrature_points;
                               ++x)
                             {
                               jump[face_no / 2]
                                 += std::fabs(u[x] - u_neighbor[x]) * JxW[x];
-                              area[face_no / 2] += JxW[x];
+                              area[face_no / 2]+= JxW[x];
                             }
                         }
                       else //i.e. neighbor is coarser than cell
@@ -854,13 +852,13 @@ namespace Step30
                           const std::vector<double>& JxW
                             = fe_v_face.get_JxW_values();
 
-                          for(unsigned int x = 0;
+                          for(unsigned int x= 0;
                               x < fe_v_face.n_quadrature_points;
                               ++x)
                             {
                               jump[face_no / 2]
                                 += std::fabs(u[x] - u_neighbor[x]) * JxW[x];
-                              area[face_no / 2] += JxW[x];
+                              area[face_no / 2]+= JxW[x];
                             }
                         }
                     }
@@ -869,11 +867,11 @@ namespace Step30
           // Now we analyze the size of the mean jumps, which we get dividing
           // the jumps by the measure of the respective faces.
           double average_jumps[dim];
-          double sum_of_average_jumps = 0.;
-          for(unsigned int i = 0; i < dim; ++i)
+          double sum_of_average_jumps= 0.;
+          for(unsigned int i= 0; i < dim; ++i)
             {
-              average_jumps[i] = jump(i) / area(i);
-              sum_of_average_jumps += average_jumps[i];
+              average_jumps[i]= jump(i) / area(i);
+              sum_of_average_jumps+= average_jumps[i];
             }
 
           // Now we loop over the <code>dim</code> coordinate directions of
@@ -883,7 +881,7 @@ namespace Step30
           // than the latter by a given factor, we refine only along hat
           // axis. Otherwise we leave the refinement flag unchanged, resulting
           // in isotropic refinement.
-          for(unsigned int i = 0; i < dim; ++i)
+          for(unsigned int i= 0; i < dim; ++i)
             if(average_jumps[i] > anisotropic_threshold_ratio
                                     * (sum_of_average_jumps - average_jumps[i]))
               cell->set_refine_flag(RefinementCase<dim>::cut_axis(i));
@@ -901,36 +899,36 @@ namespace Step30
   {
     std::string refine_type;
     if(anisotropic)
-      refine_type = ".aniso";
+      refine_type= ".aniso";
     else
-      refine_type = ".iso";
+      refine_type= ".iso";
 
-    std::string filename = "grid-";
-    filename += ('0' + cycle);
+    std::string filename= "grid-";
+    filename+= ('0' + cycle);
     Assert(cycle < 10, ExcInternalError());
 
-    filename += refine_type + ".eps";
+    filename+= refine_type + ".eps";
     std::cout << "Writing grid to <" << filename << ">..." << std::endl;
     std::ofstream eps_output(filename);
 
     GridOut grid_out;
     grid_out.write_eps(triangulation, eps_output);
 
-    filename = "grid-";
-    filename += ('0' + cycle);
+    filename= "grid-";
+    filename+= ('0' + cycle);
     Assert(cycle < 10, ExcInternalError());
 
-    filename += refine_type + ".gnuplot";
+    filename+= refine_type + ".gnuplot";
     std::cout << "Writing grid to <" << filename << ">..." << std::endl;
     std::ofstream gnuplot_grid_output(filename);
 
     grid_out.write_gnuplot(triangulation, gnuplot_grid_output);
 
-    filename = "sol-";
-    filename += ('0' + cycle);
+    filename= "sol-";
+    filename+= ('0' + cycle);
     Assert(cycle < 10, ExcInternalError());
 
-    filename += refine_type + ".gnuplot";
+    filename+= refine_type + ".gnuplot";
     std::cout << "Writing solution to <" << filename << ">..." << std::endl;
     std::ofstream gnuplot_output(filename);
 
@@ -947,7 +945,7 @@ namespace Step30
   void
   DGMethod<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for(unsigned int cycle= 0; cycle < 6; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
@@ -955,14 +953,14 @@ namespace Step30
           {
             // Create the rectangular domain.
             Point<dim> p1, p2;
-            p1(0) = 0;
-            p1(0) = -1;
-            for(unsigned int i = 0; i < dim; ++i)
-              p2(i) = 1.;
+            p1(0)= 0;
+            p1(0)= -1;
+            for(unsigned int i= 0; i < dim; ++i)
+              p2(i)= 1.;
             // Adjust the number of cells in different directions to obtain
             // completely isotropic cells for the original mesh.
             std::vector<unsigned int> repetitions(dim, 1);
-            repetitions[0] = 2;
+            repetitions[0]= 2;
             GridGenerator::subdivided_hyper_rectangle(
               triangulation, repetitions, p1, p2);
 
@@ -1000,7 +998,7 @@ main()
 
       // If you want to run the program in 3D, simply change the following
       // line to <code>const unsigned int dim = 3;</code>.
-      const unsigned int dim = 2;
+      const unsigned int dim= 2;
 
       {
         // First, we perform a run with isotropic refinement.

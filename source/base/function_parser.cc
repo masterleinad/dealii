@@ -49,7 +49,7 @@ FunctionParser<dim>::FunctionParser(const unsigned int n_components,
 // so that we don't need to include the definition of mu::Parser
 // in the header file.
 template <int dim>
-FunctionParser<dim>::~FunctionParser() = default;
+FunctionParser<dim>::~FunctionParser()= default;
 
 #ifdef DEAL_II_WITH_MUPARSER
 
@@ -62,9 +62,9 @@ FunctionParser<dim>::initialize(const std::string&              variables,
 {
   this->fp.clear(); // this will reset all thread-local objects
 
-  this->constants   = constants;
-  this->var_names   = Utilities::split_string_list(variables, ',');
-  this->expressions = expressions;
+  this->constants  = constants;
+  this->var_names  = Utilities::split_string_list(variables, ',');
+  this->expressions= expressions;
   AssertThrow(((time_dependent) ? dim + 1 : dim) == var_names.size(),
               ExcMessage("Wrong number of variables"));
 
@@ -90,9 +90,9 @@ FunctionParser<dim>::initialize(const std::string&              variables,
   // none of this is the case, then
   // an exception is thrown.
   if(time_dependent)
-    n_vars = dim + 1;
+    n_vars= dim + 1;
   else
-    n_vars = dim;
+    n_vars= dim;
 
   // create a parser object for the current thread we can then query
   // in value() and vector_value(). this is not strictly necessary
@@ -102,7 +102,7 @@ FunctionParser<dim>::initialize(const std::string&              variables,
   init_muparser();
 
   // finally set the initialization bit
-  initialized = true;
+  initialized= true;
 }
 
 namespace internal
@@ -205,7 +205,7 @@ namespace internal
     static std::map<double, boost::random::mt19937> rng_map;
 
     if(rng_map.find(seed) == rng_map.end())
-      rng_map[seed] = boost::random::mt19937(static_cast<unsigned int>(seed));
+      rng_map[seed]= boost::random::mt19937(static_cast<unsigned int>(seed));
 
     return uniform_distribution(rng_map[seed]);
   }
@@ -238,7 +238,7 @@ FunctionParser<dim>::init_muparser() const
   // vars.get())
   fp.get().reserve(this->n_components);
   vars.get().resize(var_names.size());
-  for(unsigned int component = 0; component < this->n_components; ++component)
+  for(unsigned int component= 0; component < this->n_components; ++component)
     {
       fp.get().emplace_back(new mu::Parser());
 
@@ -251,7 +251,7 @@ FunctionParser<dim>::init_muparser() const
                                            constant->second);
         }
 
-      for(unsigned int iv = 0; iv < var_names.size(); ++iv)
+      for(unsigned int iv= 0; iv < var_names.size(); ++iv)
         fp.get()[component]->DefineVar(var_names[iv].c_str(), &vars.get()[iv]);
 
       // define some compatibility functions:
@@ -279,59 +279,59 @@ FunctionParser<dim>::init_muparser() const
           // (the fparser library) but also makes no real sense.
           // consequently, in the expressions we set, remove any space
           // we may find after function names
-          std::string transformed_expression = expressions[component];
+          std::string transformed_expression= expressions[component];
 
-          const char* function_names[] = {// functions predefined by muparser
-                                          "sin",
-                                          "cos",
-                                          "tan",
-                                          "asin",
-                                          "acos",
-                                          "atan",
-                                          "sinh",
-                                          "cosh",
-                                          "tanh",
-                                          "asinh",
-                                          "acosh",
-                                          "atanh",
-                                          "atan2",
-                                          "log2",
-                                          "log10",
-                                          "log",
-                                          "ln",
-                                          "exp",
-                                          "sqrt",
-                                          "sign",
-                                          "rint",
-                                          "abs",
-                                          "min",
-                                          "max",
-                                          "sum",
-                                          "avg",
-                                          // functions we define ourselves above
-                                          "if",
-                                          "int",
-                                          "ceil",
-                                          "cot",
-                                          "csc",
-                                          "floor",
-                                          "sec",
-                                          "pow",
-                                          "erfc",
-                                          "rand",
-                                          "rand_seed"};
-          for(unsigned int f = 0;
+          const char* function_names[]= {// functions predefined by muparser
+                                         "sin",
+                                         "cos",
+                                         "tan",
+                                         "asin",
+                                         "acos",
+                                         "atan",
+                                         "sinh",
+                                         "cosh",
+                                         "tanh",
+                                         "asinh",
+                                         "acosh",
+                                         "atanh",
+                                         "atan2",
+                                         "log2",
+                                         "log10",
+                                         "log",
+                                         "ln",
+                                         "exp",
+                                         "sqrt",
+                                         "sign",
+                                         "rint",
+                                         "abs",
+                                         "min",
+                                         "max",
+                                         "sum",
+                                         "avg",
+                                         // functions we define ourselves above
+                                         "if",
+                                         "int",
+                                         "ceil",
+                                         "cot",
+                                         "csc",
+                                         "floor",
+                                         "sec",
+                                         "pow",
+                                         "erfc",
+                                         "rand",
+                                         "rand_seed"};
+          for(unsigned int f= 0;
               f < sizeof(function_names) / sizeof(function_names[0]);
               ++f)
             {
-              const std::string  function_name        = function_names[f];
-              const unsigned int function_name_length = function_name.size();
+              const std::string  function_name       = function_names[f];
+              const unsigned int function_name_length= function_name.size();
 
-              std::string::size_type pos = 0;
+              std::string::size_type pos= 0;
               while(true)
                 {
                   // try to find any occurrences of the function name
-                  pos = transformed_expression.find(function_name, pos);
+                  pos= transformed_expression.find(function_name, pos);
                   if(pos == std::string::npos)
                     break;
 
@@ -347,7 +347,7 @@ FunctionParser<dim>::init_muparser() const
 
                   // move the current search position by the size of the
                   // actual function name
-                  pos += function_name_length;
+                  pos+= function_name_length;
                 }
             }
 
@@ -392,10 +392,10 @@ FunctionParser<dim>::value(const Point<dim>&  p,
   if(fp.get().size() == 0)
     init_muparser();
 
-  for(unsigned int i = 0; i < dim; ++i)
-    vars.get()[i] = p(i);
+  for(unsigned int i= 0; i < dim; ++i)
+    vars.get()[i]= p(i);
   if(dim != n_vars)
-    vars.get()[dim] = this->get_time();
+    vars.get()[dim]= this->get_time();
 
   try
     {
@@ -426,13 +426,13 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
   if(fp.get().size() == 0)
     init_muparser();
 
-  for(unsigned int i = 0; i < dim; ++i)
-    vars.get()[i] = p(i);
+  for(unsigned int i= 0; i < dim; ++i)
+    vars.get()[i]= p(i);
   if(dim != n_vars)
-    vars.get()[dim] = this->get_time();
+    vars.get()[dim]= this->get_time();
 
-  for(unsigned int component = 0; component < this->n_components; ++component)
-    values(component) = fp.get()[component]->Eval();
+  for(unsigned int component= 0; component < this->n_components; ++component)
+    values(component)= fp.get()[component]->Eval();
 }
 
 #else

@@ -196,9 +196,9 @@ namespace MeshWorker
       = (cell->get_triangulation().locally_owned_subdomain()
          == numbers::invalid_subdomain_id);
 
-    types::subdomain_id csid = (cell->is_level_cell()) ?
-                                 cell->level_subdomain_id() :
-                                 cell->subdomain_id();
+    types::subdomain_id csid= (cell->is_level_cell()) ?
+                                cell->level_subdomain_id() :
+                                cell->subdomain_id();
 
     const bool own_cell
       = ignore_subdomain
@@ -210,11 +210,11 @@ namespace MeshWorker
       return;
 
     dof_info.cell.reinit(cell);
-    dof_info.cell_valid = true;
+    dof_info.cell_valid= true;
 
-    const bool integrate_cell          = (cell_worker != nullptr);
-    const bool integrate_boundary      = (boundary_worker != nullptr);
-    const bool integrate_interior_face = (face_worker != nullptr);
+    const bool integrate_cell         = (cell_worker != nullptr);
+    const bool integrate_boundary     = (boundary_worker != nullptr);
+    const bool integrate_interior_face= (face_worker != nullptr);
 
     if(integrate_cell)
       info.cell.reinit(dof_info.cell);
@@ -233,7 +233,7 @@ namespace MeshWorker
     info.post_cell(dof_info);
 
     if(integrate_interior_face || integrate_boundary)
-      for(unsigned int face_no = 0;
+      for(unsigned int face_no= 0;
           face_no
           < GeometryInfo<
               ITERATOR::AccessorType::Container::dimension>::faces_per_cell;
@@ -247,7 +247,7 @@ namespace MeshWorker
               // only integrate boundary faces of own cells
               if(integrate_boundary && own_cell)
                 {
-                  dof_info.interior_face_available[face_no] = true;
+                  dof_info.interior_face_available[face_no]= true;
                   dof_info.interior[face_no].reinit(cell, face, face_no);
                   info.boundary.reinit(dof_info.interior[face_no]);
                   boundary_worker(dof_info.interior[face_no], info.boundary);
@@ -259,12 +259,12 @@ namespace MeshWorker
               TriaIterator<typename ITERATOR::AccessorType> neighbor
                 = cell->neighbor_or_periodic_neighbor(face_no);
 
-              types::subdomain_id neighbid = numbers::artificial_subdomain_id;
+              types::subdomain_id neighbid= numbers::artificial_subdomain_id;
               if(neighbor->is_level_cell())
-                neighbid = neighbor->level_subdomain_id();
+                neighbid= neighbor->level_subdomain_id();
               //subdomain id is only valid for active cells
               else if(neighbor->active())
-                neighbid = neighbor->subdomain_id();
+                neighbid= neighbor->subdomain_id();
 
               const bool own_neighbor
                 = ignore_subdomain
@@ -312,8 +312,8 @@ namespace MeshWorker
                     face_iterator nface
                     = neighbor->face(neighbor_face_no.first);
 
-                  dof_info.interior_face_available[face_no] = true;
-                  dof_info.exterior_face_available[face_no] = true;
+                  dof_info.interior_face_available[face_no]= true;
+                  dof_info.exterior_face_available[face_no]= true;
                   dof_info.interior[face_no].reinit(cell, face, face_no);
                   info.face.reinit(dof_info.interior[face_no]);
                   dof_info.exterior[face_no].reinit(neighbor,
@@ -376,8 +376,8 @@ namespace MeshWorker
                            || neighbor->face(neighbor_face_no) == face,
                          ExcInternalError());
                   // Regular interior face
-                  dof_info.interior_face_available[face_no] = true;
-                  dof_info.exterior_face_available[face_no] = true;
+                  dof_info.interior_face_available[face_no]= true;
+                  dof_info.exterior_face_available[face_no]= true;
                   dof_info.interior[face_no].reinit(cell, face, face_no);
                   info.face.reinit(dof_info.interior[face_no]);
                   dof_info.exterior[face_no].reinit(
@@ -442,12 +442,12 @@ namespace MeshWorker
                                 typename INFOBOX::CellInfo&,
                                 typename INFOBOX::CellInfo&)>& face_worker,
        ASSEMBLER&                                              assembler,
-       const LoopControl& lctrl = LoopControl())
+       const LoopControl& lctrl= LoopControl())
   {
     DoFInfoBox<dim, DOFINFO> dof_info(dinfo);
 
     assembler.initialize_info(dof_info.cell, false);
-    for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       {
         assembler.initialize_info(dof_info.interior[i], true);
         assembler.initialize_info(dof_info.exterior[i], true);
@@ -487,7 +487,7 @@ namespace MeshWorker
                    IntegrationInfoBox<dim, spacedim>&    box,
                    const LocalIntegrator<dim, spacedim>& integrator,
                    ASSEMBLER&                            assembler,
-                   const LoopControl&                    lctrl = LoopControl())
+                   const LoopControl&                    lctrl= LoopControl())
   {
     std::function<void(DoFInfo<dim, spacedim>&,
                        IntegrationInfo<dim, spacedim>&)>
@@ -501,22 +501,22 @@ namespace MeshWorker
                        IntegrationInfo<dim, spacedim>&)>
       face_worker;
     if(integrator.use_cell)
-      cell_worker = std::bind(&LocalIntegrator<dim, spacedim>::cell,
-                              &integrator,
-                              std::placeholders::_1,
-                              std::placeholders::_2);
+      cell_worker= std::bind(&LocalIntegrator<dim, spacedim>::cell,
+                             &integrator,
+                             std::placeholders::_1,
+                             std::placeholders::_2);
     if(integrator.use_boundary)
-      boundary_worker = std::bind(&LocalIntegrator<dim, spacedim>::boundary,
-                                  &integrator,
-                                  std::placeholders::_1,
-                                  std::placeholders::_2);
+      boundary_worker= std::bind(&LocalIntegrator<dim, spacedim>::boundary,
+                                 &integrator,
+                                 std::placeholders::_1,
+                                 std::placeholders::_2);
     if(integrator.use_face)
-      face_worker = std::bind(&LocalIntegrator<dim, spacedim>::face,
-                              &integrator,
-                              std::placeholders::_1,
-                              std::placeholders::_2,
-                              std::placeholders::_3,
-                              std::placeholders::_4);
+      face_worker= std::bind(&LocalIntegrator<dim, spacedim>::face,
+                             &integrator,
+                             std::placeholders::_1,
+                             std::placeholders::_2,
+                             std::placeholders::_3,
+                             std::placeholders::_4);
 
     loop<dim, spacedim>(begin,
                         end,

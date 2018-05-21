@@ -60,7 +60,7 @@ private:
   count_on_refine(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
-    n_active_cells += cell->n_children();
+    n_active_cells+= cell->n_children();
     --n_active_cells;
 
     return;
@@ -71,7 +71,7 @@ private:
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
     ++n_active_cells;
-    n_active_cells -= cell->n_children();
+    n_active_cells-= cell->n_children();
 
     return;
   }
@@ -87,8 +87,8 @@ test()
   typedef parallel::distributed::Triangulation<dim, spacedim> TriaType;
 
   {
-    const std::string prefix = Utilities::int_to_string(dim, 1) + "d-"
-                               + Utilities::int_to_string(spacedim, 1) + "d";
+    const std::string prefix= Utilities::int_to_string(dim, 1) + "d-"
+                              + Utilities::int_to_string(spacedim, 1) + "d";
     deallog.push(prefix.c_str());
   }
 
@@ -106,7 +106,7 @@ test()
   tria.refine_global(1);
 
   // The following loop is borrowed from p4est_3d_refine_01 with some modifications.
-  for(int n_loop = 0;
+  for(int n_loop= 0;
       // Terminate loop on global information to prevent premature termination
       // on only part of processors. (n_loop < 20) is just a passive safety to
       // avoid infinite loop.
@@ -119,14 +119,14 @@ test()
       // Note that only the own marked cells will be refined.
       // But refine flags on own cells could be effected by flags on ghost cells
       // through mesh smoothing.
-      for(unsigned int i = 0; i < tria.n_active_cells() / 3 + 1; ++i)
+      for(unsigned int i= 0; i < tria.n_active_cells() / 3 + 1; ++i)
         {
-          const unsigned int x = Testing::rand() % flags.size();
-          flags[x]             = true;
+          const unsigned int x= Testing::rand() % flags.size();
+          flags[x]            = true;
         }
 
-      unsigned int index  = 0;
-      unsigned int locals = 0;
+      unsigned int index = 0;
+      unsigned int locals= 0;
 
       for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
           = tria.begin_active();
@@ -144,13 +144,13 @@ test()
           // Coarsen some cells randomly only if we have enough local cells
           // marked to be refined
           std::fill(flags.begin(), flags.end(), false);
-          for(unsigned int i = 0; i < tria.n_active_cells() / 3; ++i)
+          for(unsigned int i= 0; i < tria.n_active_cells() / 3; ++i)
             {
-              const unsigned int x = Testing::rand() % flags.size();
-              flags[x]             = true;
+              const unsigned int x= Testing::rand() % flags.size();
+              flags[x]            = true;
             }
 
-          index = 0;
+          index= 0;
           for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
               = tria.begin_active();
               cell != tria.end();
@@ -181,20 +181,20 @@ main(int argc, char* argv[])
 
   // parallel::distributed::Triangulation<1, spacedim> is not valid.
   {
-    const int dim      = 2;
-    const int spacedim = 2;
+    const int dim     = 2;
+    const int spacedim= 2;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 2;
-    const int spacedim = 3;
+    const int dim     = 2;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 
   {
-    const int dim      = 3;
-    const int spacedim = 3;
+    const int dim     = 3;
+    const int spacedim= 3;
     test<dim, spacedim>();
   }
 

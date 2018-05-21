@@ -37,7 +37,7 @@ test()
     typename parallel::shared::Triangulation<dim>::Settings(
       parallel::shared::Triangulation<dim>::partition_zorder));
 
-  unsigned int refinements = 2;
+  unsigned int refinements= 2;
   GridGenerator::subdivided_hyper_cube(shared_tria, 2, -1, 1);
   shared_tria.refine_global(refinements);
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -69,7 +69,7 @@ test()
   deallog << "(CellId,subdomain_id) for each active cell:" << std::endl;
   typename Triangulation<dim>::active_cell_iterator cell
     = shared_tria.begin_active(),
-    endc = shared_tria.end();
+    endc= shared_tria.end();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       deallog << "(" << cell->id().to_string() << "," << cell->subdomain_id()

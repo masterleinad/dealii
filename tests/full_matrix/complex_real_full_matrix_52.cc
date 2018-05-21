@@ -30,7 +30,7 @@ check()
   make_range_vector(x);
   make_domain_vector(y);
   for(std::complex<number>& entry : y)
-    entry += std::complex<number>(1.0, 0.0);
+    entry+= std::complex<number>(1.0, 0.0);
 
   m.backward(x, y);
   print_vector(x);

@@ -31,18 +31,18 @@ test(TrilinosWrappers::SparseMatrix& m)
 
   // first set a few entries one-by-one and
   // initialize the sparsity pattern for m2
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.n(); ++j)
       if(std::fabs((double) i - j) < 2)
         {
           double value;
           if(i == j)
             if(i > 0 && i < m.m() - 1)
-              value = 2.;
+              value= 2.;
             else
-              value = 1.;
+              value= 1.;
           else
-            value = -1.;
+            value= -1.;
 
           m.set(i, j, value);
           m2.set(i, j, 0.);
@@ -55,14 +55,14 @@ test(TrilinosWrappers::SparseMatrix& m)
   // matrix
   {
     FullMatrix<double> full_matrix(2, 2);
-    full_matrix(0, 0) = full_matrix(1, 1) = 1.;
-    full_matrix(0, 1) = full_matrix(1, 0) = -1.;
+    full_matrix(0, 0)= full_matrix(1, 1)= 1.;
+    full_matrix(0, 1)= full_matrix(1, 0)= -1.;
     std::vector<types::global_dof_index> local_indices(2);
 
-    for(unsigned int i = 0; i < m.m() - 1; ++i)
+    for(unsigned int i= 0; i < m.m() - 1; ++i)
       {
-        local_indices[0] = i;
-        local_indices[1] = i + 1;
+        local_indices[0]= i;
+        local_indices[1]= i + 1;
 
         m2.add(local_indices, local_indices, full_matrix);
       }
@@ -76,7 +76,7 @@ test(TrilinosWrappers::SparseMatrix& m)
   // calculate the Frobenius norm of the
   // matrix in order to check whether all
   // elements really are zero
-  double norm = m2.frobenius_norm();
+  double norm= m2.frobenius_norm();
   AssertThrow(norm == 0, ExcInternalError());
 
   deallog << "OK" << std::endl;

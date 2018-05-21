@@ -50,8 +50,8 @@ test(FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
   dof.initialize_local_block_info();
 
-  typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-  typename DoFHandler<dim>::face_iterator        face = cell->face(1);
+  typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
+  typename DoFHandler<dim>::face_iterator        face= cell->face(1);
 
   MeshWorker::Assembler::MGMatrixSimple<FullMatrix<double>> ass;
   MeshWorker::DoFInfo<dim> info(dof.block_info());
@@ -77,7 +77,7 @@ test(FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

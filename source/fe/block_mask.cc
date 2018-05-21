@@ -27,7 +27,7 @@ operator<<(std::ostream& out, const BlockMask& mask)
   else
     {
       out << '[';
-      for(unsigned int i = 0; i < mask.block_mask.size(); ++i)
+      for(unsigned int i= 0; i < mask.block_mask.size(); ++i)
         {
           out << (mask.block_mask[i] ? "true" : "false");
           if(i != mask.block_mask.size() - 1)

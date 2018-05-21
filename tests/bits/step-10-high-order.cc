@@ -35,7 +35,7 @@ std::ofstream logfile("output");
 
 #include <deal.II/fe/mapping_q.h>
 
-const long double pi = 3.141592653589793238462643;
+const long double pi= 3.141592653589793238462643;
 
 template <int dim>
 void
@@ -44,7 +44,7 @@ compute_pi_by_area()
   deallog << "Computation of Pi by the area:" << std::endl
           << "==============================" << std::endl;
 
-  const unsigned int degree = 10 - dim;
+  const unsigned int degree= 10 - dim;
   deallog << "Degree = " << degree << std::endl;
 
   Triangulation<dim> triangulation;
@@ -64,22 +64,22 @@ compute_pi_by_area()
   // in 3D, we obtain many digits only on a finer mesh
   if(dim == 3)
     triangulation.refine_global(1);
-  for(int refinement = 0; refinement < 4 - dim;
+  for(int refinement= 0; refinement < 4 - dim;
       ++refinement, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(dummy_fe);
 
-      long double area = 0;
+      long double area= 0;
 
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc = dof_handler.end();
+        endc= dof_handler.end();
       for(; cell != endc; ++cell)
         {
           x_fe_values.reinit(cell);
-          const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
-          for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
-            area += fe_values.JxW(i);
+          const FEValues<dim>& fe_values= x_fe_values.get_present_fe_values();
+          for(unsigned int i= 0; i < fe_values.n_quadrature_points; ++i)
+            area+= fe_values.JxW(i);
         };
 
       // As a variation from step-10, no convergence table here because we
@@ -97,7 +97,7 @@ compute_pi_by_area()
         }
       else
         {
-          area *= 0.75;
+          area*= 0.75;
           deallog << "Evaluation of pi on in 3D "
                   << triangulation.n_active_cells() << " cells: " << area
                   << std::endl;
@@ -115,7 +115,7 @@ compute_pi_by_perimeter()
   deallog << "Computation of Pi by the perimeter:" << std::endl
           << "===================================" << std::endl;
 
-  const unsigned int degree = 20;
+  const unsigned int degree= 20;
   deallog << "Degree = " << degree << std::endl;
   Triangulation<dim> triangulation;
   GridGenerator::hyper_ball(triangulation);
@@ -131,17 +131,17 @@ compute_pi_by_perimeter()
 
   FEFaceValues<dim> x_fe_face_values(
     mapping, fe, quadrature, update_JxW_values);
-  for(unsigned int refinement = 0; refinement < 2;
+  for(unsigned int refinement= 0; refinement < 2;
       ++refinement, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(fe);
 
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc                = dof_handler.end();
-      long double perimeter = 0;
+        endc               = dof_handler.end();
+      long double perimeter= 0;
       for(; cell != endc; ++cell)
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<dim>::faces_per_cell;
             ++face_no)
           if(cell->face(face_no)->at_boundary())
@@ -150,9 +150,9 @@ compute_pi_by_perimeter()
               const FEFaceValues<dim>& fe_face_values
                 = x_fe_face_values.get_present_fe_values();
 
-              for(unsigned int i = 0; i < fe_face_values.n_quadrature_points;
+              for(unsigned int i= 0; i < fe_face_values.n_quadrature_points;
                   ++i)
-                perimeter += fe_face_values.JxW(i);
+                perimeter+= fe_face_values.JxW(i);
             };
       deallog << "Evaluation of pi on " << triangulation.n_active_cells()
               << " cells: " << perimeter / 2. << std::endl;

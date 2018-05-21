@@ -17,7 +17,7 @@
 // constraint between degrees of freedom 3->14->17->6->3 with the algorithm
 // that is presently in make_hanging_node_constraints
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -67,7 +67,7 @@ main()
   hp::DoFHandler<2> dof_handler(triangulation);
 
   // subdivide cells 1, 3, 5, 7
-  hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
+  hp::DoFHandler<2>::active_cell_iterator cell= dof_handler.begin_active();
   ++cell;
   cell->set_refine_flag();
   ++cell;
@@ -83,7 +83,7 @@ main()
 
   // now set fe_index as described in the
   // paper
-  cell = dof_handler.begin_active();
+  cell= dof_handler.begin_active();
   cell->set_active_fe_index(0);
   ++cell;
   cell->set_active_fe_index(0);

@@ -217,10 +217,10 @@ namespace MatrixCreator
       const FEValues<dim, spacedim>& fe_values
         = data.x_fe_values.get_present_fe_values();
 
-      const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
-                         n_q_points          = fe_values.n_quadrature_points;
-      const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
-      const unsigned int                  n_components = fe.n_components();
+      const unsigned int dofs_per_cell      = fe_values.dofs_per_cell,
+                         n_q_points         = fe_values.n_quadrature_points;
+      const FiniteElement<dim, spacedim>& fe= fe_values.get_fe();
+      const unsigned int                  n_components= fe.n_components();
 
       Assert(data.rhs_function == nullptr
                || data.rhs_function->n_components == 1
@@ -236,7 +236,7 @@ namespace MatrixCreator
       copy_data.dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(copy_data.dof_indices);
 
-      const bool use_rhs_function = data.rhs_function != nullptr;
+      const bool use_rhs_function= data.rhs_function != nullptr;
       if(use_rhs_function)
         {
           if(data.rhs_function->n_components == 1)
@@ -254,7 +254,7 @@ namespace MatrixCreator
             }
         }
 
-      const bool use_coefficient = data.coefficient != nullptr;
+      const bool use_coefficient= data.coefficient != nullptr;
       if(use_coefficient)
         {
           if(data.coefficient->n_components == 1)
@@ -276,99 +276,97 @@ namespace MatrixCreator
             }
         }
 
-      const std::vector<double>& JxW = fe_values.get_JxW_values();
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      const std::vector<double>& JxW= fe_values.get_JxW_values();
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         if(fe.is_primitive())
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
-            const double* phi_i = &fe_values.shape_value(i, 0);
+            const double* phi_i= &fe_values.shape_value(i, 0);
 
             // use symmetry in the mass matrix here:
             // just need to calculate the diagonal
             // and half of the elements above the
             // diagonal
-            for(unsigned int j = i; j < dofs_per_cell; ++j)
+            for(unsigned int j= i; j < dofs_per_cell; ++j)
               if((n_components == 1)
                  || (fe.system_to_component_index(j).first == component_i))
                 {
-                  const double* phi_j = &fe_values.shape_value(j, 0);
-                  typename numbers::NumberTraits<number>::real_type add_data
-                    = 0;
+                  const double* phi_j= &fe_values.shape_value(j, 0);
+                  typename numbers::NumberTraits<number>::real_type add_data= 0;
                   if(use_coefficient)
                     {
                       if(data.coefficient->n_components == 1)
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += (data.coefficient_values[point] * phi_i[point]
                                 * phi_j[point] * JxW[point]);
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += (data.coefficient_vector_values[point](
                                   component_i)
                                 * phi_i[point] * phi_j[point] * JxW[point]);
                     }
                   else
-                    for(unsigned int point = 0; point < n_q_points; ++point)
-                      add_data += phi_i[point] * phi_j[point] * JxW[point];
+                    for(unsigned int point= 0; point < n_q_points; ++point)
+                      add_data+= phi_i[point] * phi_j[point] * JxW[point];
 
                   // this is even ok for i==j, since then
                   // we just write the same value twice.
-                  copy_data.cell_matrix(i, j) = add_data;
-                  copy_data.cell_matrix(j, i) = add_data;
+                  copy_data.cell_matrix(i, j)= add_data;
+                  copy_data.cell_matrix(j, i)= add_data;
                 }
 
             if(use_rhs_function)
               {
-                number add_data = 0;
+                number add_data= 0;
                 if(data.rhs_function->n_components == 1)
-                  for(unsigned int point = 0; point < n_q_points; ++point)
+                  for(unsigned int point= 0; point < n_q_points; ++point)
                     add_data
                       += data.rhs_values[point] * phi_i[point] * JxW[point];
                 else
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    add_data += data.rhs_vector_values[point](component_i)
-                                * phi_i[point] * JxW[point];
-                copy_data.cell_rhs(i) = add_data;
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    add_data+= data.rhs_vector_values[point](component_i)
+                               * phi_i[point] * JxW[point];
+                copy_data.cell_rhs(i)= add_data;
               }
           }
         else
           {
             // non-primitive vector-valued FE, using
             // symmetry again
-            for(unsigned int j = i; j < dofs_per_cell; ++j)
+            for(unsigned int j= i; j < dofs_per_cell; ++j)
               {
-                typename numbers::NumberTraits<number>::real_type add_data = 0;
-                for(unsigned int comp_i = 0; comp_i < n_components; ++comp_i)
+                typename numbers::NumberTraits<number>::real_type add_data= 0;
+                for(unsigned int comp_i= 0; comp_i < n_components; ++comp_i)
                   if(fe.get_nonzero_components(i)[comp_i]
                      && fe.get_nonzero_components(j)[comp_i])
                     {
                       if(use_coefficient)
                         {
                           if(data.coefficient->n_components == 1)
-                            for(unsigned int point = 0; point < n_q_points;
+                            for(unsigned int point= 0; point < n_q_points;
                                 ++point)
-                              add_data += (data.coefficient_values[point]
-                                           * fe_values.shape_value_component(
-                                               i, point, comp_i)
-                                           * fe_values.shape_value_component(
-                                               j, point, comp_i)
-                                           * JxW[point]);
+                              add_data+= (data.coefficient_values[point]
+                                          * fe_values.shape_value_component(
+                                              i, point, comp_i)
+                                          * fe_values.shape_value_component(
+                                              j, point, comp_i)
+                                          * JxW[point]);
                           else
-                            for(unsigned int point = 0; point < n_q_points;
+                            for(unsigned int point= 0; point < n_q_points;
                                 ++point)
-                              add_data
-                                += (data.coefficient_vector_values[point](
-                                      comp_i)
-                                    * fe_values.shape_value_component(
-                                        i, point, comp_i)
-                                    * fe_values.shape_value_component(
-                                        j, point, comp_i)
-                                    * JxW[point]);
+                              add_data+= (data.coefficient_vector_values[point](
+                                            comp_i)
+                                          * fe_values.shape_value_component(
+                                              i, point, comp_i)
+                                          * fe_values.shape_value_component(
+                                              j, point, comp_i)
+                                          * JxW[point]);
                         }
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += fe_values.shape_value_component(i, point, comp_i)
                                * fe_values.shape_value_component(
@@ -376,30 +374,30 @@ namespace MatrixCreator
                                * JxW[point];
                     }
 
-                copy_data.cell_matrix(i, j) = add_data;
-                copy_data.cell_matrix(j, i) = add_data;
+                copy_data.cell_matrix(i, j)= add_data;
+                copy_data.cell_matrix(j, i)= add_data;
               }
 
             if(use_rhs_function)
               {
-                number add_data = 0;
-                for(unsigned int comp_i = 0; comp_i < n_components; ++comp_i)
+                number add_data= 0;
+                for(unsigned int comp_i= 0; comp_i < n_components; ++comp_i)
                   if(fe.get_nonzero_components(i)[comp_i])
                     {
                       if(data.rhs_function->n_components == 1)
-                        for(unsigned int point = 0; point < n_q_points; ++point)
-                          add_data += data.rhs_values[point]
-                                      * fe_values.shape_value_component(
-                                          i, point, comp_i)
-                                      * JxW[point];
+                        for(unsigned int point= 0; point < n_q_points; ++point)
+                          add_data+= data.rhs_values[point]
+                                     * fe_values.shape_value_component(
+                                         i, point, comp_i)
+                                     * JxW[point];
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
-                          add_data += data.rhs_vector_values[point](comp_i)
-                                      * fe_values.shape_value_component(
-                                          i, point, comp_i)
-                                      * JxW[point];
+                        for(unsigned int point= 0; point < n_q_points; ++point)
+                          add_data+= data.rhs_vector_values[point](comp_i)
+                                     * fe_values.shape_value_component(
+                                         i, point, comp_i)
+                                     * JxW[point];
                     }
-                copy_data.cell_rhs(i) = add_data;
+                copy_data.cell_rhs(i)= add_data;
               }
           }
     }
@@ -416,10 +414,10 @@ namespace MatrixCreator
       const FEValues<dim, spacedim>& fe_values
         = data.x_fe_values.get_present_fe_values();
 
-      const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
-                         n_q_points          = fe_values.n_quadrature_points;
-      const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
-      const unsigned int                  n_components = fe.n_components();
+      const unsigned int dofs_per_cell      = fe_values.dofs_per_cell,
+                         n_q_points         = fe_values.n_quadrature_points;
+      const FiniteElement<dim, spacedim>& fe= fe_values.get_fe();
+      const unsigned int                  n_components= fe.n_components();
 
       Assert(data.rhs_function == nullptr
                || data.rhs_function->n_components == 1
@@ -434,7 +432,7 @@ namespace MatrixCreator
       copy_data.dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(copy_data.dof_indices);
 
-      const bool use_rhs_function = data.rhs_function != nullptr;
+      const bool use_rhs_function= data.rhs_function != nullptr;
       if(use_rhs_function)
         {
           if(data.rhs_function->n_components == 1)
@@ -452,7 +450,7 @@ namespace MatrixCreator
             }
         }
 
-      const bool use_coefficient = data.coefficient != nullptr;
+      const bool use_coefficient= data.coefficient != nullptr;
       if(use_coefficient)
         {
           if(data.coefficient->n_components == 1)
@@ -471,84 +469,84 @@ namespace MatrixCreator
             }
         }
 
-      const std::vector<double>& JxW = fe_values.get_JxW_values();
+      const std::vector<double>& JxW= fe_values.get_JxW_values();
       double                     add_data;
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         if(fe.is_primitive())
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
-            const Tensor<1, spacedim>* grad_phi_i = &fe_values.shape_grad(i, 0);
+            const Tensor<1, spacedim>* grad_phi_i= &fe_values.shape_grad(i, 0);
 
             // can use symmetry
-            for(unsigned int j = i; j < dofs_per_cell; ++j)
+            for(unsigned int j= i; j < dofs_per_cell; ++j)
               if((n_components == 1)
                  || (fe.system_to_component_index(j).first == component_i))
                 {
                   const Tensor<1, spacedim>* grad_phi_j
                     = &fe_values.shape_grad(j, 0);
-                  add_data = 0;
+                  add_data= 0;
                   if(use_coefficient)
                     {
                       if(data.coefficient->n_components == 1)
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += ((grad_phi_i[point] * grad_phi_j[point])
                                 * JxW[point] * data.coefficient_values[point]);
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
-                          add_data += ((grad_phi_i[point] * grad_phi_j[point])
-                                       * JxW[point]
-                                       * data.coefficient_vector_values[point](
-                                           component_i));
+                        for(unsigned int point= 0; point < n_q_points; ++point)
+                          add_data+= ((grad_phi_i[point] * grad_phi_j[point])
+                                      * JxW[point]
+                                      * data.coefficient_vector_values[point](
+                                          component_i));
                     }
                   else
-                    for(unsigned int point = 0; point < n_q_points; ++point)
+                    for(unsigned int point= 0; point < n_q_points; ++point)
                       add_data
                         += (grad_phi_i[point] * grad_phi_j[point]) * JxW[point];
 
-                  copy_data.cell_matrix(i, j) = add_data;
-                  copy_data.cell_matrix(j, i) = add_data;
+                  copy_data.cell_matrix(i, j)= add_data;
+                  copy_data.cell_matrix(j, i)= add_data;
                 }
 
             if(use_rhs_function)
               {
-                const double* phi_i = &fe_values.shape_value(i, 0);
-                add_data            = 0;
+                const double* phi_i= &fe_values.shape_value(i, 0);
+                add_data           = 0;
                 if(data.rhs_function->n_components == 1)
-                  for(unsigned int point = 0; point < n_q_points; ++point)
+                  for(unsigned int point= 0; point < n_q_points; ++point)
                     add_data
                       += phi_i[point] * JxW[point] * data.rhs_values[point];
                 else
-                  for(unsigned int point = 0; point < n_q_points; ++point)
-                    add_data += phi_i[point] * JxW[point]
-                                * data.rhs_vector_values[point](component_i);
-                copy_data.cell_rhs(i) = add_data;
+                  for(unsigned int point= 0; point < n_q_points; ++point)
+                    add_data+= phi_i[point] * JxW[point]
+                               * data.rhs_vector_values[point](component_i);
+                copy_data.cell_rhs(i)= add_data;
               }
           }
         else
           {
             // non-primitive vector-valued FE
-            for(unsigned int j = i; j < dofs_per_cell; ++j)
+            for(unsigned int j= i; j < dofs_per_cell; ++j)
               {
-                add_data = 0;
-                for(unsigned int comp_i = 0; comp_i < n_components; ++comp_i)
+                add_data= 0;
+                for(unsigned int comp_i= 0; comp_i < n_components; ++comp_i)
                   if(fe.get_nonzero_components(i)[comp_i]
                      && fe.get_nonzero_components(j)[comp_i])
                     {
                       if(use_coefficient)
                         {
                           if(data.coefficient->n_components == 1)
-                            for(unsigned int point = 0; point < n_q_points;
+                            for(unsigned int point= 0; point < n_q_points;
                                 ++point)
-                              add_data += ((fe_values.shape_grad_component(
-                                              i, point, comp_i)
-                                            * fe_values.shape_grad_component(
-                                                j, point, comp_i))
-                                           * JxW[point]
-                                           * data.coefficient_values[point]);
+                              add_data+= ((fe_values.shape_grad_component(
+                                             i, point, comp_i)
+                                           * fe_values.shape_grad_component(
+                                               j, point, comp_i))
+                                          * JxW[point]
+                                          * data.coefficient_values[point]);
                           else
-                            for(unsigned int point = 0; point < n_q_points;
+                            for(unsigned int point= 0; point < n_q_points;
                                 ++point)
                               add_data
                                 += ((fe_values.shape_grad_component(
@@ -560,7 +558,7 @@ namespace MatrixCreator
                                         comp_i));
                         }
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += (fe_values.shape_grad_component(i, point, comp_i)
                                 * fe_values.shape_grad_component(
@@ -568,29 +566,29 @@ namespace MatrixCreator
                                * JxW[point];
                     }
 
-                copy_data.cell_matrix(i, j) = add_data;
-                copy_data.cell_matrix(j, i) = add_data;
+                copy_data.cell_matrix(i, j)= add_data;
+                copy_data.cell_matrix(j, i)= add_data;
               }
 
             if(use_rhs_function)
               {
-                add_data = 0;
-                for(unsigned int comp_i = 0; comp_i < n_components; ++comp_i)
+                add_data= 0;
+                for(unsigned int comp_i= 0; comp_i < n_components; ++comp_i)
                   if(fe.get_nonzero_components(i)[comp_i])
                     {
                       if(data.rhs_function->n_components == 1)
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += fe_values.shape_value_component(i, point, comp_i)
                                * JxW[point] * data.rhs_values[point];
                       else
-                        for(unsigned int point = 0; point < n_q_points; ++point)
+                        for(unsigned int point= 0; point < n_q_points; ++point)
                           add_data
                             += fe_values.shape_value_component(i, point, comp_i)
                                * JxW[point]
                                * data.rhs_vector_values[point](comp_i);
                     }
-                copy_data.cell_rhs(i) = add_data;
+                copy_data.cell_rhs(i)= add_data;
               }
           }
     }
@@ -601,7 +599,7 @@ namespace MatrixCreator
                          MatrixType*                            matrix,
                          VectorType*                            right_hand_side)
     {
-      const unsigned int dofs_per_cell = data.dof_indices.size();
+      const unsigned int dofs_per_cell= data.dof_indices.size();
       (void) dofs_per_cell;
 
       Assert(data.cell_matrix.m() == dofs_per_cell, ExcInternalError());
@@ -625,7 +623,7 @@ namespace MatrixCreator
     {
       struct Scratch
       {
-        Scratch() = default;
+        Scratch()= default;
       };
 
       template <typename DoFHandlerType, typename number>
@@ -699,7 +697,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -773,7 +771,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -849,7 +847,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -920,7 +918,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -987,16 +985,16 @@ namespace MatrixCreator
     {
       // Most assertions for this function are in the calling function
       // before creating threads.
-      const unsigned int n_components = fe.n_components();
+      const unsigned int n_components= fe.n_components();
       const unsigned int n_function_components
         = boundary_functions.begin()->second->n_components;
-      const bool fe_is_system    = (n_components != 1);
-      const bool fe_is_primitive = fe.is_primitive();
+      const bool fe_is_system   = (n_components != 1);
+      const bool fe_is_primitive= fe.is_primitive();
 
-      const unsigned int dofs_per_face = fe.dofs_per_face;
+      const unsigned int dofs_per_face= fe.dofs_per_face;
 
-      copy_data.cell          = cell;
-      copy_data.dofs_per_cell = fe.dofs_per_cell;
+      copy_data.cell         = cell;
+      copy_data.dofs_per_cell= fe.dofs_per_cell;
 
       UpdateFlags update_flags
         = UpdateFlags(update_values | update_JxW_values | update_normal_vectors
@@ -1031,7 +1029,7 @@ namespace MatrixCreator
       copy_data.cell_matrix.clear();
       copy_data.cell_vector.clear();
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         // check if this face is on that part of the boundary we are
         // interested in
@@ -1065,7 +1063,7 @@ namespace MatrixCreator
                       coefficient->value_list(fe_values.get_quadrature_points(),
                                               coefficient_values);
                     // Copy scalar values into vector
-                    for(unsigned int point = 0;
+                    for(unsigned int point= 0;
                         point < fe_values.n_quadrature_points;
                         ++point)
                       coefficient_vector_values[point]
@@ -1083,7 +1081,7 @@ namespace MatrixCreator
                   fe_values.n_quadrature_points,
                   std::vector<double>(n_components, 1.));
 
-                for(unsigned int comp = 0; comp < n_components; ++comp)
+                for(unsigned int comp= 0; comp < n_components; ++comp)
                   {
                     const FiniteElement<dim, spacedim>& base
                       = fe.base_element(fe.component_to_base_index(comp).first);
@@ -1101,7 +1099,7 @@ namespace MatrixCreator
 
                     if(!base.conforms(FiniteElementData<dim>::H1)
                        && base.conforms(FiniteElementData<dim>::Hdiv))
-                      for(unsigned int point = 0;
+                      for(unsigned int point= 0;
                           point < fe_values.n_quadrature_points;
                           ++point)
                         normal_adjustment[point][comp]
@@ -1109,15 +1107,15 @@ namespace MatrixCreator
                             * fe_values.normal_vector(point)[bcomp];
                   }
 
-                for(unsigned int point = 0;
+                for(unsigned int point= 0;
                     point < fe_values.n_quadrature_points;
                     ++point)
                   {
-                    const double weight = fe_values.JxW(point);
-                    for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+                    const double weight= fe_values.JxW(point);
+                    for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
                       if(fe_is_primitive)
                         {
-                          for(unsigned int j = 0; j < fe_values.dofs_per_cell;
+                          for(unsigned int j= 0; j < fe_values.dofs_per_cell;
                               ++j)
                             {
                               if(fe.system_to_component_index(j).first
@@ -1139,10 +1137,9 @@ namespace MatrixCreator
                         }
                       else
                         {
-                          for(unsigned int comp = 0; comp < n_components;
-                              ++comp)
+                          for(unsigned int comp= 0; comp < n_components; ++comp)
                             {
-                              for(unsigned int j = 0;
+                              for(unsigned int j= 0;
                                   j < fe_values.dofs_per_cell;
                                   ++j)
                                 copy_data.cell_matrix.back()(i, j)
@@ -1172,18 +1169,17 @@ namespace MatrixCreator
                 if(coefficient != nullptr)
                   coefficient->value_list(fe_values.get_quadrature_points(),
                                           coefficient_values);
-                for(unsigned int point = 0;
+                for(unsigned int point= 0;
                     point < fe_values.n_quadrature_points;
                     ++point)
                   {
-                    const double weight = fe_values.JxW(point);
-                    for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+                    const double weight= fe_values.JxW(point);
+                    for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
                       {
-                        const double v = fe_values.shape_value(i, point);
-                        for(unsigned int j = 0; j < fe_values.dofs_per_cell;
-                            ++j)
+                        const double v= fe_values.shape_value(i, point);
+                        for(unsigned int j= 0; j < fe_values.dofs_per_cell; ++j)
                           {
-                            const double u = fe_values.shape_value(j, point);
+                            const double u= fe_values.shape_value(j, point);
                             copy_data.cell_matrix.back()(i, j)
                               += (coefficient_values[point] * u * v * weight);
                           }
@@ -1199,7 +1195,7 @@ namespace MatrixCreator
             copy_data.dof_is_on_face.emplace_back(copy_data.dofs_per_cell);
             // check for each of the dofs on this cell whether it is
             // on the face
-            for(unsigned int i = 0; i < copy_data.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < copy_data.dofs_per_cell; ++i)
               copy_data.dof_is_on_face.back()[i]
                 = (std::find(dofs_on_face_vector.begin(),
                              dofs_on_face_vector.end(),
@@ -1246,7 +1242,7 @@ namespace MatrixCreator
       // inefficient, so we copy the dofs into a set, which enables binary
       // searches.
       unsigned int pos(0);
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           // check if this face is on that part of
@@ -1254,13 +1250,13 @@ namespace MatrixCreator
           if(boundary_functions.find(copy_data.cell->face(face)->boundary_id())
              != boundary_functions.end())
             {
-              for(unsigned int i = 0; i < copy_data.dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < copy_data.dofs_per_cell; ++i)
                 {
                   if(copy_data.dof_is_on_face[pos][i]
                      && dof_to_boundary_mapping[copy_data.dofs[i]]
                           != numbers::invalid_dof_index)
                     {
-                      for(unsigned int j = 0; j < copy_data.dofs_per_cell; ++j)
+                      for(unsigned int j= 0; j < copy_data.dofs_per_cell; ++j)
                         if(copy_data.dof_is_on_face[pos][j]
                            && dof_to_boundary_mapping[copy_data.dofs[j]]
                                 != numbers::invalid_dof_index)
@@ -1342,8 +1338,8 @@ namespace MatrixCreator
         return;
       }
 
-    const FiniteElement<dim, spacedim>& fe           = dof.get_fe();
-    const unsigned int                  n_components = fe.n_components();
+    const FiniteElement<dim, spacedim>& fe          = dof.get_fe();
+    const unsigned int                  n_components= fe.n_components();
 
     Assert(matrix.n() == dof.n_boundary_dofs(boundary_functions),
            ExcInternalError());
@@ -1359,7 +1355,7 @@ namespace MatrixCreator
       {
         AssertDimension(n_components,
                         boundary_functions.begin()->second->n_components);
-        for(unsigned int i = 0; i < n_components; ++i)
+        for(unsigned int i= 0; i < n_components; ++i)
           component_mapping.push_back(i);
       }
     else
@@ -1421,16 +1417,16 @@ namespace MatrixCreator
                                        coefficient,
       std::vector<unsigned int> const& component_mapping)
     {
-      const unsigned int n_components = fe_collection.n_components();
+      const unsigned int n_components= fe_collection.n_components();
       const unsigned int n_function_components
         = boundary_functions.begin()->second->n_components;
-      const FiniteElement<dim, spacedim>& fe              = cell->get_fe();
-      const bool                          fe_is_system    = (n_components != 1);
-      const bool                          fe_is_primitive = fe.is_primitive();
-      const unsigned int                  dofs_per_face   = fe.dofs_per_face;
+      const FiniteElement<dim, spacedim>& fe             = cell->get_fe();
+      const bool                          fe_is_system   = (n_components != 1);
+      const bool                          fe_is_primitive= fe.is_primitive();
+      const unsigned int                  dofs_per_face  = fe.dofs_per_face;
 
-      copy_data.cell          = cell;
-      copy_data.dofs_per_cell = fe.dofs_per_cell;
+      copy_data.cell         = cell;
+      copy_data.dofs_per_cell= fe.dofs_per_cell;
       copy_data.dofs.resize(copy_data.dofs_per_cell);
       cell->get_dof_indices(copy_data.dofs);
 
@@ -1466,7 +1462,7 @@ namespace MatrixCreator
       copy_data.cell_matrix.clear();
       copy_data.cell_vector.clear();
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         // check if this face is on that part of
         // the boundary we are interested in
@@ -1510,7 +1506,7 @@ namespace MatrixCreator
                       coefficient->value_list(fe_values.get_quadrature_points(),
                                               coefficient_values);
 
-                    for(unsigned int point = 0;
+                    for(unsigned int point= 0;
                         point < fe_values.n_quadrature_points;
                         ++point)
                       coefficient_vector_values[point]
@@ -1528,7 +1524,7 @@ namespace MatrixCreator
                   fe_values.n_quadrature_points,
                   std::vector<double>(n_components, 1.));
 
-                for(unsigned int comp = 0; comp < n_components; ++comp)
+                for(unsigned int comp= 0; comp < n_components; ++comp)
                   {
                     const FiniteElement<dim, spacedim>& base
                       = fe.base_element(fe.component_to_base_index(comp).first);
@@ -1546,7 +1542,7 @@ namespace MatrixCreator
 
                     if(!base.conforms(FiniteElementData<dim>::H1)
                        && base.conforms(FiniteElementData<dim>::Hdiv))
-                      for(unsigned int point = 0;
+                      for(unsigned int point= 0;
                           point < fe_values.n_quadrature_points;
                           ++point)
                         normal_adjustment[point][comp]
@@ -1554,15 +1550,15 @@ namespace MatrixCreator
                             * fe_values.normal_vector(point)[bcomp];
                   }
 
-                for(unsigned int point = 0;
+                for(unsigned int point= 0;
                     point < fe_values.n_quadrature_points;
                     ++point)
                   {
-                    const double weight = fe_values.JxW(point);
-                    for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+                    const double weight= fe_values.JxW(point);
+                    for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
                       if(fe_is_primitive)
                         {
-                          for(unsigned int j = 0; j < fe_values.dofs_per_cell;
+                          for(unsigned int j= 0; j < fe_values.dofs_per_cell;
                               ++j)
                             {
                               if(fe.system_to_component_index(i).first
@@ -1585,10 +1581,9 @@ namespace MatrixCreator
                         }
                       else
                         {
-                          for(unsigned int comp = 0; comp < n_components;
-                              ++comp)
+                          for(unsigned int comp= 0; comp < n_components; ++comp)
                             {
-                              for(unsigned int j = 0;
+                              for(unsigned int j= 0;
                                   j < fe_values.dofs_per_cell;
                                   ++j)
                                 copy_data.cell_matrix.back()(i, j)
@@ -1624,18 +1619,17 @@ namespace MatrixCreator
                                             coefficient_values);
                   }
 
-                for(unsigned int point = 0;
+                for(unsigned int point= 0;
                     point < fe_values.n_quadrature_points;
                     ++point)
                   {
-                    const double weight = fe_values.JxW(point);
-                    for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+                    const double weight= fe_values.JxW(point);
+                    for(unsigned int i= 0; i < fe_values.dofs_per_cell; ++i)
                       {
-                        const double v = fe_values.shape_value(i, point);
-                        for(unsigned int j = 0; j < fe_values.dofs_per_cell;
-                            ++j)
+                        const double v= fe_values.shape_value(i, point);
+                        for(unsigned int j= 0; j < fe_values.dofs_per_cell; ++j)
                           {
-                            const double u = fe_values.shape_value(j, point);
+                            const double u= fe_values.shape_value(j, point);
                             copy_data.cell_matrix.back()(i, j)
                               += (coefficient_values[point] * v * u * weight);
                           }
@@ -1652,7 +1646,7 @@ namespace MatrixCreator
             copy_data.dof_is_on_face.emplace_back(copy_data.dofs_per_cell);
             // check for each of the dofs on this cell
             // whether it is on the face
-            for(unsigned int i = 0; i < copy_data.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < copy_data.dofs_per_cell; ++i)
               copy_data.dof_is_on_face.back()[i]
                 = (std::find(dofs_on_face_vector.begin(),
                              dofs_on_face_vector.end(),
@@ -1699,7 +1693,7 @@ namespace MatrixCreator
       // inefficient, so we copy the dofs into a set, which enables binary
       // searches.
       unsigned int pos(0);
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           // check if this face is on that part of
@@ -1727,22 +1721,22 @@ namespace MatrixCreator
                   i != dof_to_boundary_mapping.end();
                   ++i)
                 if((*i != numbers::invalid_dof_index) && (*i > max_element))
-                  max_element = *i;
+                  max_element= *i;
               Assert(max_element == matrix.n() - 1, ExcInternalError());
 
-              double max_diag_entry = 0;
-              for(unsigned int i = 0; i < copy_data.dofs_per_cell; ++i)
+              double max_diag_entry= 0;
+              for(unsigned int i= 0; i < copy_data.dofs_per_cell; ++i)
                 if(std::abs(copy_data.cell_matrix[pos](i, i)) > max_diag_entry)
-                  max_diag_entry = std::abs(copy_data.cell_matrix[pos](i, i));
+                  max_diag_entry= std::abs(copy_data.cell_matrix[pos](i, i));
 #endif
 
-              for(unsigned int i = 0; i < copy_data.dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < copy_data.dofs_per_cell; ++i)
                 {
                   if(copy_data.dof_is_on_face[pos][i]
                      && dof_to_boundary_mapping[copy_data.dofs[i]]
                           != numbers::invalid_dof_index)
                     {
-                      for(unsigned int j = 0; j < copy_data.dofs_per_cell; ++j)
+                      for(unsigned int j= 0; j < copy_data.dofs_per_cell; ++j)
                         if(copy_data.dof_is_on_face[pos][j]
                            && dof_to_boundary_mapping[copy_data.dofs[j]]
                                 != numbers::invalid_dof_index)
@@ -1815,7 +1809,7 @@ namespace MatrixCreator
 
     const hp::FECollection<dim, spacedim>& fe_collection
       = dof.get_fe_collection();
-    const unsigned int n_components = fe_collection.n_components();
+    const unsigned int n_components= fe_collection.n_components();
 
     Assert(matrix.n() == dof.n_boundary_dofs(boundary_functions),
            ExcInternalError());
@@ -1831,7 +1825,7 @@ namespace MatrixCreator
       {
         AssertDimension(n_components,
                         boundary_functions.begin()->second->n_components);
-        for(unsigned int i = 0; i < n_components; ++i)
+        for(unsigned int i= 0; i < n_components; ++i)
           component_mapping.push_back(i);
       }
     else
@@ -1931,7 +1925,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -2001,7 +1995,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -2071,7 +2065,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),
@@ -2139,7 +2133,7 @@ namespace MatrixCreator
     copy_data.cell_rhs.reinit(assembler_data.fe_collection.max_dofs_per_cell());
     copy_data.dof_indices.resize(
       assembler_data.fe_collection.max_dofs_per_cell());
-    copy_data.constraints = &constraints;
+    copy_data.constraints= &constraints;
 
     WorkStream::run(
       dof.begin_active(),

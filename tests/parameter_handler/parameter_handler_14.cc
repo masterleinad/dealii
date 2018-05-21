@@ -23,9 +23,9 @@
 void
 check()
 {
-  std::string input = "subsection bar\n"
-                      "  set value = 1.0\n"
-                      "end\n";
+  std::string input= "subsection bar\n"
+                     "  set value = 1.0\n"
+                     "end\n";
 
   ParameterHandler foo;
   foo.enter_subsection("bar");

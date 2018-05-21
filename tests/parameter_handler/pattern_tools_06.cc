@@ -30,9 +30,9 @@ template <class T>
 void
 test(T t)
 {
-  auto p = Convert<T>::to_pattern();
+  auto p= Convert<T>::to_pattern();
   deallog << "Pattern  : " << p->description() << std::endl;
-  auto s = Convert<T>::to_string(t);
+  auto s= Convert<T>::to_string(t);
   deallog << "To String: " << s << std::endl;
   deallog << "To value : " << Convert<T>::to_string(Convert<T>::to_value(s))
           << std::endl;
@@ -48,9 +48,9 @@ main()
   std::multimap<int, double>           t2;
   std::unordered_multimap<int, double> t3;
 
-  auto p  = std::make_pair(5, 1.0);
-  auto p2 = std::make_pair(5, 2.0);
-  auto p3 = std::make_pair(1, 3.0);
+  auto p = std::make_pair(5, 1.0);
+  auto p2= std::make_pair(5, 2.0);
+  auto p3= std::make_pair(1, 3.0);
 
   t0.insert(p);
   t1.insert(p);

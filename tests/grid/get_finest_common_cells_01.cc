@@ -51,7 +51,7 @@ test()
 
   const CellList cell_list
     = GridTools::get_finest_common_cells(tria[0], tria[1]);
-  for(typename CellList::const_iterator cell_pair = cell_list.begin();
+  for(typename CellList::const_iterator cell_pair= cell_list.begin();
       cell_pair != cell_list.end();
       ++cell_pair)
     deallog << cell_pair->first << ' ' << cell_pair->second << std::endl;

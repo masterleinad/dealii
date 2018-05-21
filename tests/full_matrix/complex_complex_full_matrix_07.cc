@@ -26,6 +26,6 @@ check()
 {
   FullMatrix<std::complex<number>> m;
   make_complex_matrix(m);
-  m = std::complex<number>(0);
+  m= std::complex<number>(0);
   print_matrix(m);
 }

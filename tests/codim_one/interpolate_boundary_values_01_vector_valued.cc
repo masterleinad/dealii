@@ -65,7 +65,7 @@ test(std::string filename)
   VectorTools::interpolate_boundary_values(dof_handler, 0, X<spacedim>(), bv);
   deallog << bv.size() << " boundary degrees of freedom" << std::endl;
 
-  for(std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
+  for(std::map<types::global_dof_index, double>::const_iterator i= bv.begin();
       i != bv.end();
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
@@ -74,10 +74,10 @@ test(std::string filename)
       = dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
-          for(unsigned int i = 0; i < fe.dofs_per_vertex; ++i)
+        for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+          for(unsigned int i= 0; i < fe.dofs_per_vertex; ++i)
             {
               Assert(bv.find(cell->face(f)->vertex_dof_index(v, i)) != bv.end(),
                      ExcInternalError());

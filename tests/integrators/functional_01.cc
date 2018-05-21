@@ -36,7 +36,7 @@ using namespace dealii;
 // 1: number of interior faces
 // 2: number of boundary faces
 
-const unsigned int n_functionals = 3;
+const unsigned int n_functionals= 3;
 
 template <int dim>
 class Local : public Subscriptor
@@ -59,14 +59,14 @@ template <int dim>
 void
 Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  info.value(0) = 1.;
+  info.value(0)= 1.;
 }
 
 template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  info.value(2) = 1.;
+  info.value(2)= 1.;
 }
 
 template <int dim>
@@ -76,15 +76,15 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
                  CellInfo&,
                  CellInfo&) const
 {
-  info1.value(1) = 1. / 2.;
-  info2.value(1) = 1. / 2.;
+  info1.value(1)= 1. / 2.;
+  info2.value(1)= 1. / 2.;
 }
 
 template <int dim>
 void
 test_mesh(DoFHandler<dim>& mgdofs)
 {
-  const DoFHandler<dim>& dofs = mgdofs;
+  const DoFHandler<dim>& dofs= mgdofs;
 
   Local<dim>               local;
   EmptyInfoBox             info_box;
@@ -94,8 +94,8 @@ test_mesh(DoFHandler<dim>& mgdofs)
   assembler.initialize(n_functionals);
 
   MeshWorker::LoopControl lctrl;
-  lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.cells_first= true;
+  lctrl.own_faces  = MeshWorker::LoopControl::one;
 
   MeshWorker::loop<dim, dim, MeshWorker::DoFInfo<dim>, EmptyInfoBox>(
     dofs.begin_active(),
@@ -116,7 +116,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "  Results";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << assembler(i);
   deallog << std::endl;
 
@@ -141,7 +141,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "MGResults";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for(unsigned int i= 0; i < n_functionals; ++i)
     deallog << '\t' << assembler(i);
   deallog << std::endl;
 }
@@ -178,7 +178,7 @@ test(const FiniteElement<dim>& fe)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

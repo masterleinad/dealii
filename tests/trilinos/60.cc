@@ -29,20 +29,20 @@ test(TrilinosWrappers::MPI::Vector& v)
   // set only certain elements of the
   // vector.
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) += i;
-      pattern[i] = true;
+      v(i)+= i;
+      pattern[i]= true;
     }
 
   v.compress(VectorOperation::add);
 
   Vector<double> w;
-  w = v;
+  w= v;
   Vector<float> x;
-  x = v;
+  x= v;
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(v(i) == w(i), ExcInternalError());
       AssertThrow(v(i) == x(i), ExcInternalError());

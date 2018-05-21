@@ -202,9 +202,9 @@ public:
    * before the initialize() method has been called, then an exception
    * is thrown.
    */
-  FunctionParser(const unsigned int n_components = 1,
-                 const double       initial_time = 0.0,
-                 const double       h            = 1e-8);
+  FunctionParser(const unsigned int n_components= 1,
+                 const double       initial_time= 0.0,
+                 const double       h           = 1e-8);
 
   /**
    * Destructor. Explicitly delete the FunctionParser objects (there is one
@@ -260,7 +260,7 @@ public:
   initialize(const std::string&              vars,
              const std::vector<std::string>& expressions,
              const ConstMap&                 constants,
-             const bool                      time_dependent = false);
+             const bool                      time_dependent= false);
 
   /**
    * Initialize the function. Same as above, but accepts a string rather than
@@ -273,7 +273,7 @@ public:
   initialize(const std::string& vars,
              const std::string& expression,
              const ConstMap&    constants,
-             const bool         time_dependent = false);
+             const bool         time_dependent= false);
 
   /**
    * A function that returns default names for variables, to be used in the
@@ -290,7 +290,7 @@ public:
    * component.
    */
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override;
+  value(const Point<dim>& p, const unsigned int component= 0) const override;
 
   /**
    * Return all components of a vector-valued function at the given point @p

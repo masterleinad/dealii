@@ -20,7 +20,7 @@
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
 
-int counter = 10;
+int counter= 10;
 
 struct X
 {
@@ -33,7 +33,7 @@ struct X
   f()
   {
     // use TLS::operator=
-    tls_data = counter++;
+    tls_data= counter++;
     // access TLS data and have it
     // converted to the right data type
     // without the need to call
@@ -48,12 +48,12 @@ test()
   X x;
   {
     Threads::Thread<int> t;
-    t = Threads::new_thread(&X::f, x);
+    t= Threads::new_thread(&X::f, x);
     AssertThrow(t.return_value() == 10, ExcInternalError());
   }
   {
     Threads::Thread<int> t;
-    t = Threads::new_thread(&X::f, x);
+    t= Threads::new_thread(&X::f, x);
     AssertThrow(t.return_value() == 11, ExcInternalError());
   }
 

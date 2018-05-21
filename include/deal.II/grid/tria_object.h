@@ -39,7 +39,7 @@ namespace internal
     class TriaObject
     {
     public:
-      static const unsigned int dimension = structdim;
+      static const unsigned int dimension= structdim;
 
       /**
        * Default constructor, setting all face indices to invalid values.
@@ -114,16 +114,16 @@ namespace internal
     template <int structdim>
     inline TriaObject<structdim>::TriaObject()
     {
-      for(unsigned int i = 0; i < GeometryInfo<structdim>::faces_per_cell; ++i)
-        faces[i] = -1;
+      for(unsigned int i= 0; i < GeometryInfo<structdim>::faces_per_cell; ++i)
+        faces[i]= -1;
     }
 
     template <int structdim>
     inline TriaObject<structdim>::TriaObject(const int i0, const int i1)
     {
       Assert(structdim == 1, ExcImpossibleInDim(structdim));
-      faces[0] = i0;
-      faces[1] = i1;
+      faces[0]= i0;
+      faces[1]= i1;
     }
 
     template <int structdim>
@@ -133,10 +133,10 @@ namespace internal
                                              const int i3)
     {
       Assert(structdim == 2, ExcImpossibleInDim(structdim));
-      faces[0] = i0;
-      faces[1] = i1;
-      faces[2] = i2;
-      faces[3] = i3;
+      faces[0]= i0;
+      faces[1]= i1;
+      faces[2]= i2;
+      faces[3]= i3;
     }
 
     template <int structdim>
@@ -148,12 +148,12 @@ namespace internal
                                              const int i5)
     {
       Assert(structdim == 3, ExcImpossibleInDim(structdim));
-      faces[0] = i0;
-      faces[1] = i1;
-      faces[2] = i2;
-      faces[3] = i3;
-      faces[4] = i4;
-      faces[5] = i5;
+      faces[0]= i0;
+      faces[1]= i1;
+      faces[2]= i2;
+      faces[3]= i3;
+      faces[4]= i4;
+      faces[5]= i5;
     }
 
     template <int structdim>
@@ -171,7 +171,7 @@ namespace internal
     {
       Assert(i < GeometryInfo<structdim>::faces_per_cell,
              ExcIndexRange(i, 0, GeometryInfo<structdim>::faces_per_cell));
-      faces[i] = index;
+      faces[i]= index;
     }
 
     template <int structdim>

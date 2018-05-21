@@ -32,18 +32,18 @@ template <int dim, int spacedim>
 void
 check(DataOutBase::PovrayFlags flags, std::ostream& out)
 {
-  const unsigned int np = 4;
+  const unsigned int np= 4;
 
   std::vector<DataOutBase::Patch<dim, spacedim>> patches(np);
 
   create_patches(patches);
 
   std::vector<std::string> names(5);
-  names[0] = "x1";
-  names[1] = "x2";
-  names[2] = "x3";
-  names[3] = "x4";
-  names[4] = "i";
+  names[0]= "x1";
+  names[1]= "x2";
+  names[2]= "x3";
+  names[3]= "x4";
+  names[4]= "i";
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_povray(patches, names, vectors, flags, out);
 }
@@ -60,7 +60,7 @@ check_cont(unsigned int             ncells,
   create_continuous_patches(patches, ncells, nsub);
 
   std::vector<std::string> names(1);
-  names[0] = "CutOff";
+  names[0]= "CutOff";
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_povray(patches, names, vectors, flags, out);
 }
@@ -70,7 +70,7 @@ void
 check_all(std::ostream& log)
 {
 #if SEPARATE_FILES == 0
-  std::ostream& out = log;
+  std::ostream& out= log;
 #endif
 
   char name[100];
@@ -89,7 +89,7 @@ check_all(std::ostream& log)
       check_cont<dim>(4, 4, flags, out);
     }
 
-  flags.external_data = true;
+  flags.external_data= true;
   if(true)
     {
       sprintf(name, "cont%d%d%dtri.pov", dim, 4, 4);
@@ -102,7 +102,7 @@ check_all(std::ostream& log)
       check_cont<dim>(4, 4, flags, out);
     }
 
-  flags.smooth = true;
+  flags.smooth= true;
   if(true)
     {
       sprintf(name, "cont%d%d%dsmooth.pov", dim, 4, 4);
@@ -115,7 +115,7 @@ check_all(std::ostream& log)
       check_cont<dim>(4, 4, flags, out);
     }
 
-  flags.bicubic_patch = true;
+  flags.bicubic_patch= true;
   if(true)
     {
       sprintf(name, "cont%d%d%dbic.pov", dim, 4, 3);

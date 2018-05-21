@@ -51,17 +51,17 @@ FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree)
   this->poly_space.set_numbering(renumber);
 
   // Initialize face support points
-  this->unit_face_support_points = fe_q.get_unit_face_support_points();
+  this->unit_face_support_points= fe_q.get_unit_face_support_points();
 
   // initialize unit support points (this makes it possible to assign initial
   // values to FE_TraceQ). Note that we simply take the points of fe_q but
   // skip the last ones which are associated with the interior of FE_Q.
   this->unit_support_points.resize(this->dofs_per_cell);
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-    this->unit_support_points[i] = fe_q.get_unit_support_points()[i];
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+    this->unit_support_points[i]= fe_q.get_unit_support_points()[i];
 
   // Initialize constraint matrices
-  this->interface_constraints = fe_q.constraints();
+  this->interface_constraints= fe_q.constraints();
 }
 
 template <int dim, int spacedim>
@@ -110,8 +110,8 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_TraceQ<dim, spacedim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(1, this->dofs_per_cell);
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-    constant_modes(0, i) = true;
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+    constant_modes(0, i)= true;
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
 }
@@ -128,11 +128,11 @@ FE_TraceQ<dim, spacedim>::
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(this->dofs_per_cell, nodal_values.size());
 
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
     {
       AssertDimension(support_point_values[i].size(), 1);
 
-      nodal_values[i] = support_point_values[i](0);
+      nodal_values[i]= support_point_values[i](0);
     }
 }
 
@@ -145,10 +145,10 @@ FE_TraceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   // in 2D, hex in 3D).
   AssertThrow(deg > 0, ExcMessage("FE_TraceQ needs to be of degree > 0."));
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  dpo[dim] = 0;
-  dpo[0]   = 1;
-  for(unsigned int i = 1; i < dim; ++i)
-    dpo[i] = dpo[i - 1] * (deg - 1);
+  dpo[dim]= 0;
+  dpo[0]  = 1;
+  for(unsigned int i= 1; i < dim; ++i)
+    dpo[i]= dpo[i - 1] * (deg - 1);
   return dpo;
 }
 

@@ -45,10 +45,10 @@ test(const unsigned int n, const unsigned int k, const NumberType eps)
   create_random(AL);
   create_random(DL);
 
-  A = AL;
-  D = NumberType();
-  for(unsigned int i = 0; i < k; ++i)
-    D(i, i) = DL(i);
+  A= AL;
+  D= NumberType();
+  for(unsigned int i= 0; i < k; ++i)
+    D(i, i)= DL(i);
 
   // C = D*A
   D.mmult(C, A);
@@ -56,8 +56,8 @@ test(const unsigned int n, const unsigned int k, const NumberType eps)
   // A = D * A
   AL.scale_rows(DL);
 
-  for(unsigned int i = 0; i < k; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for(unsigned int i= 0; i < k; ++i)
+    for(unsigned int j= 0; j < n; ++j)
       AssertThrow(std::abs(C(i, j) - AL(i, j)) < eps * std::abs(AL(i, j)),
                   ExcEl(i, j, C(i, j), AL(i, j), C(i, j) - AL(i, j)));
 
@@ -67,12 +67,12 @@ test(const unsigned int n, const unsigned int k, const NumberType eps)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<std::array<unsigned int, 2>> sizes = {
+  const std::vector<std::array<unsigned int, 2>> sizes= {
     {3, 3}, {7, 7}, {51, 51}, {320, 320}, {3, 9}, {9, 7}, {5, 17}, {320, 121}};
 
   deallog.push("double");

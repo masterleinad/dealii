@@ -83,7 +83,7 @@ FiniteElement<dim, spacedim>::FiniteElement(
          ExcDimensionMismatch(restriction_is_additive_flags.size(),
                               this->dofs_per_cell));
   AssertDimension(nonzero_components.size(), this->dofs_per_cell);
-  for(unsigned int i = 0; i < nonzero_components.size(); ++i)
+  for(unsigned int i= 0; i < nonzero_components.size(); ++i)
     {
       Assert(nonzero_components[i].size() == this->n_components(),
              ExcInternalError());
@@ -101,16 +101,16 @@ FiniteElement<dim, spacedim>::FiniteElement(
     {
       system_to_component_table.resize(this->dofs_per_cell);
       face_system_to_component_table.resize(this->dofs_per_face);
-      for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-        system_to_component_table[j] = std::pair<unsigned, unsigned>(0, j);
-      for(unsigned int j = 0; j < this->dofs_per_face; ++j)
-        face_system_to_component_table[j] = std::pair<unsigned, unsigned>(0, j);
+      for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
+        system_to_component_table[j]= std::pair<unsigned, unsigned>(0, j);
+      for(unsigned int j= 0; j < this->dofs_per_face; ++j)
+        face_system_to_component_table[j]= std::pair<unsigned, unsigned>(0, j);
     }
 
-  for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-    system_to_base_table[j] = std::make_pair(std::make_pair(0U, 0U), j);
-  for(unsigned int j = 0; j < this->dofs_per_face; ++j)
-    face_system_to_base_table[j] = std::make_pair(std::make_pair(0U, 0U), j);
+  for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
+    system_to_base_table[j]= std::make_pair(std::make_pair(0U, 0U), j);
+  for(unsigned int j= 0; j < this->dofs_per_face; ++j)
+    face_system_to_base_table[j]= std::make_pair(std::make_pair(0U, 0U), j);
 
   // Fill with default value; may be changed by constructor of derived class.
   base_to_block_indices.reinit(1, 1);
@@ -119,7 +119,7 @@ FiniteElement<dim, spacedim>::FiniteElement(
   // constructor of FullMatrix<dim> initializes them with size zero
   prolongation.resize(RefinementCase<dim>::isotropic_refinement);
   restriction.resize(RefinementCase<dim>::isotropic_refinement);
-  for(unsigned int ref = RefinementCase<dim>::cut_x;
+  for(unsigned int ref= RefinementCase<dim>::cut_x;
       ref < RefinementCase<dim>::isotropic_refinement + 1;
       ++ref)
     {
@@ -245,14 +245,14 @@ FiniteElement<dim, spacedim>::reinit_restriction_and_prolongation_matrices(
   const bool isotropic_restriction_only,
   const bool isotropic_prolongation_only)
 {
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
+  for(unsigned int ref_case= RefinementCase<dim>::cut_x;
       ref_case <= RefinementCase<dim>::isotropic_refinement;
       ++ref_case)
     {
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
-      for(unsigned int i = 0; i < nc; ++i)
+      for(unsigned int i= 0; i < nc; ++i)
         {
           if(this->restriction[ref_case - 1][i].m() != this->dofs_per_cell
              && (!isotropic_restriction_only
@@ -348,7 +348,7 @@ FiniteElement<dim, spacedim>::component_mask(
   // way to write such a condition...
 
   std::vector<bool> mask(this->n_components(), false);
-  mask[scalar.component] = true;
+  mask[scalar.component]= true;
   return mask;
 }
 
@@ -366,10 +366,10 @@ FiniteElement<dim, spacedim>::component_mask(
   // unfortunately, there is no simple way to write such a condition...
 
   std::vector<bool> mask(this->n_components(), false);
-  for(unsigned int c = vector.first_vector_component;
+  for(unsigned int c= vector.first_vector_component;
       c < vector.first_vector_component + dim;
       ++c)
-    mask[c] = true;
+    mask[c]= true;
   return mask;
 }
 
@@ -388,11 +388,11 @@ FiniteElement<dim, spacedim>::component_mask(
   // unfortunately, there is no simple way to write such a condition...
 
   std::vector<bool> mask(this->n_components(), false);
-  for(unsigned int c = sym_tensor.first_tensor_component;
+  for(unsigned int c= sym_tensor.first_tensor_component;
       c < sym_tensor.first_tensor_component
             + SymmetricTensor<2, dim>::n_independent_components;
       ++c)
-    mask[c] = true;
+    mask[c]= true;
   return mask;
 }
 
@@ -408,9 +408,9 @@ FiniteElement<dim, spacedim>::component_mask(const BlockMask& block_mask) const
   AssertDimension(block_mask.size(), this->n_blocks());
 
   std::vector<bool> component_mask(this->n_components(), false);
-  for(unsigned int c = 0; c < this->n_components(); ++c)
+  for(unsigned int c= 0; c < this->n_components(); ++c)
     if(block_mask[component_to_block_index(c)] == true)
-      component_mask[c] = true;
+      component_mask[c]= true;
 
   return component_mask;
 }
@@ -467,11 +467,11 @@ FiniteElement<dim, spacedim>::block_mask(
   // component mask is set for all of
   // them
   std::vector<bool> block_mask(this->n_blocks(), false);
-  for(unsigned int c = 0; c < this->n_components();)
+  for(unsigned int c= 0; c < this->n_components();)
     {
-      const unsigned int block = component_to_block_index(c);
+      const unsigned int block= component_to_block_index(c);
       if(component_mask[c] == true)
-        block_mask[block] = true;
+        block_mask[block]= true;
 
       // now check all of the other
       // components that correspond
@@ -536,7 +536,7 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
     {
       // get the number of the vertex on the face that corresponds to this DoF,
       // along with the number of the DoF on this vertex
-      const unsigned int face_vertex = face_index / this->dofs_per_vertex;
+      const unsigned int face_vertex= face_index / this->dofs_per_vertex;
       const unsigned int dof_index_on_vertex
         = face_index % this->dofs_per_vertex;
 
@@ -552,10 +552,10 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
     {
       // do the same kind of translation as before. we need to only consider
       // DoFs on the lines, i.e., ignoring those on the vertices
-      const unsigned int index = face_index - this->first_face_line_index;
+      const unsigned int index= face_index - this->first_face_line_index;
 
-      const unsigned int face_line         = index / this->dofs_per_line;
-      const unsigned int dof_index_on_line = index % this->dofs_per_line;
+      const unsigned int face_line        = index / this->dofs_per_line;
+      const unsigned int dof_index_on_line= index % this->dofs_per_line;
 
       return (this->first_line_index
               + GeometryInfo<dim>::face_to_cell_lines(
@@ -569,7 +569,7 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
       Assert(dim >= 3, ExcInternalError());
 
       // ignore vertex and line dofs
-      const unsigned int index = face_index - this->first_face_quad_index;
+      const unsigned int index= face_index - this->first_face_quad_index;
 
       return (this->first_quad_index + face * this->dofs_per_quad + index);
     }
@@ -638,10 +638,10 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::prolongation_is_implemented() const
 {
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
+  for(unsigned int ref_case= RefinementCase<dim>::cut_x;
       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
       ++ref_case)
-    for(unsigned int c = 0;
+    for(unsigned int c= 0;
         c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
         ++c)
       {
@@ -664,10 +664,10 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::restriction_is_implemented() const
 {
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
+  for(unsigned int ref_case= RefinementCase<dim>::cut_x;
       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
       ++ref_case)
-    for(unsigned int c = 0;
+    for(unsigned int c= 0;
         c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
         ++c)
       {
@@ -690,10 +690,9 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::isotropic_prolongation_is_implemented() const
 {
-  const RefinementCase<dim> ref_case
-    = RefinementCase<dim>::isotropic_refinement;
+  const RefinementCase<dim> ref_case= RefinementCase<dim>::isotropic_refinement;
 
-  for(unsigned int c = 0;
+  for(unsigned int c= 0;
       c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
       ++c)
     {
@@ -716,10 +715,9 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::isotropic_restriction_is_implemented() const
 {
-  const RefinementCase<dim> ref_case
-    = RefinementCase<dim>::isotropic_refinement;
+  const RefinementCase<dim> ref_case= RefinementCase<dim>::isotropic_refinement;
 
-  for(unsigned int c = 0;
+  for(unsigned int c= 0;
       c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
       ++c)
     {
@@ -1021,12 +1019,11 @@ FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask& mask) const
 {
   // Translate the ComponentMask into first_selected and n_components after
   // some error checking:
-  const unsigned int n_total_components = this->n_components();
+  const unsigned int n_total_components= this->n_components();
   Assert((n_total_components == mask.size()) || (mask.size() == 0),
          ExcMessage("The given ComponentMask has the wrong size."));
 
-  const unsigned int n_selected
-    = mask.n_selected_components(n_total_components);
+  const unsigned int n_selected= mask.n_selected_components(n_total_components);
   Assert(n_selected > 0,
          ExcMessage("You need at least one selected component."));
 
@@ -1035,7 +1032,7 @@ FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask& mask) const
 
 #ifdef DEBUG
   // check that it is contiguous:
-  for(unsigned int c = 0; c < n_total_components; ++c)
+  for(unsigned int c= 0; c < n_total_components; ++c)
     Assert(
       (c < first_selected && (!mask[c]))
         || (c >= first_selected && c < first_selected + n_selected && mask[c])
@@ -1114,8 +1111,8 @@ FiniteElement<dim, spacedim>::compute_n_nonzero_components(
   const std::vector<ComponentMask>& nonzero_components)
 {
   std::vector<unsigned int> retval(nonzero_components.size());
-  for(unsigned int i = 0; i < nonzero_components.size(); ++i)
-    retval[i] = nonzero_components[i].n_selected_components();
+  for(unsigned int i= 0; i < nonzero_components.size(); ++i)
+    retval[i]= nonzero_components[i].n_selected_components();
   return retval;
 }
 

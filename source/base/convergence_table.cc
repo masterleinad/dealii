@@ -36,34 +36,34 @@ ConvergenceTable::evaluate_convergence_rates(
   // the top that don't yet exist
   set_auto_fill_mode(false);
 
-  std::vector<internal::TableEntry>& entries = columns[data_column_key].entries;
+  std::vector<internal::TableEntry>& entries= columns[data_column_key].entries;
   std::vector<internal::TableEntry>& ref_entries
     = columns[reference_column_key].entries;
-  std::string rate_key = data_column_key + "...";
+  std::string rate_key= data_column_key + "...";
 
-  const unsigned int n     = entries.size();
-  const unsigned int n_ref = ref_entries.size();
+  const unsigned int n    = entries.size();
+  const unsigned int n_ref= ref_entries.size();
   Assert(n == n_ref, ExcDimensionMismatch(n, n_ref));
 
   std::vector<double> values(n);
   std::vector<double> ref_values(n_ref);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
-      values[i]     = entries[i].get_numeric_value();
-      ref_values[i] = ref_entries[i].get_numeric_value();
+      values[i]    = entries[i].get_numeric_value();
+      ref_values[i]= ref_entries[i].get_numeric_value();
     }
 
-  unsigned int no_rate_entries = 0;
+  unsigned int no_rate_entries= 0;
 
   switch(rate_mode)
     {
       // case none: already considered above
       case reduction_rate:
-        rate_key += "red.rate";
-        no_rate_entries = columns[rate_key].entries.size();
+        rate_key+= "red.rate";
+        no_rate_entries= columns[rate_key].entries.size();
         // Calculate all missing rate values:
-        for(unsigned int i = no_rate_entries; i < n; ++i)
+        for(unsigned int i= no_rate_entries; i < n; ++i)
           {
             if(i == 0)
               {
@@ -79,10 +79,10 @@ ConvergenceTable::evaluate_convergence_rates(
           }
         break;
       case reduction_rate_log2:
-        rate_key += "red.rate.log2";
-        no_rate_entries = columns[rate_key].entries.size();
+        rate_key+= "red.rate.log2";
+        no_rate_entries= columns[rate_key].entries.size();
         // Calculate all missing rate values:
-        for(unsigned int i = no_rate_entries; i < n; ++i)
+        for(unsigned int i= no_rate_entries; i < n; ++i)
           {
             if(i == 0)
               {
@@ -103,10 +103,10 @@ ConvergenceTable::evaluate_convergence_rates(
     }
 
   Assert(columns.count(rate_key), ExcInternalError());
-  columns[rate_key].flag = 1;
+  columns[rate_key].flag= 1;
   set_precision(rate_key, 2);
 
-  const std::string& superkey = data_column_key;
+  const std::string& superkey= data_column_key;
   if(!supercolumns.count(superkey))
     {
       add_column_to_supercolumn(data_column_key, superkey);
@@ -131,15 +131,15 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
   set_auto_fill_mode(false);
 
   std::vector<internal::TableEntry>& entries = columns[data_column_key].entries;
-  std::string                        rate_key = data_column_key + "...";
+  std::string                        rate_key= data_column_key + "...";
 
-  const unsigned int n = entries.size();
+  const unsigned int n= entries.size();
 
   std::vector<double> values(n);
-  for(unsigned int i = 0; i < n; ++i)
-    values[i] = entries[i].get_numeric_value();
+  for(unsigned int i= 0; i < n; ++i)
+    values[i]= entries[i].get_numeric_value();
 
-  unsigned int no_rate_entries = 0;
+  unsigned int no_rate_entries= 0;
 
   switch(rate_mode)
     {
@@ -147,10 +147,10 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
         break;
 
       case reduction_rate:
-        rate_key += "red.rate";
-        no_rate_entries = columns[rate_key].entries.size();
+        rate_key+= "red.rate";
+        no_rate_entries= columns[rate_key].entries.size();
         // Calculate all missing rate values:
-        for(unsigned int i = no_rate_entries; i < n; ++i)
+        for(unsigned int i= no_rate_entries; i < n; ++i)
           {
             if(i == 0)
               {
@@ -165,10 +165,10 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
         break;
 
       case reduction_rate_log2:
-        rate_key += "red.rate.log2";
-        no_rate_entries = columns[rate_key].entries.size();
+        rate_key+= "red.rate.log2";
+        no_rate_entries= columns[rate_key].entries.size();
         // Calculate all missing rate values:
-        for(unsigned int i = no_rate_entries; i < n; ++i)
+        for(unsigned int i= no_rate_entries; i < n; ++i)
           {
             if(i == 0)
               {
@@ -189,11 +189,11 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
     }
 
   Assert(columns.count(rate_key), ExcInternalError());
-  columns[rate_key].flag = 1;
+  columns[rate_key].flag= 1;
   set_precision(rate_key, 2);
 
   // set the superkey equal to the key
-  const std::string& superkey = data_column_key;
+  const std::string& superkey= data_column_key;
   // and set the tex caption of the supercolumn to the tex caption of the
   // data_column.
   if(!supercolumns.count(superkey))
@@ -215,8 +215,8 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
 
-  const std::map<std::string, Column>::iterator col_iter = columns.find(key);
-  col_iter->second.flag                                  = 1;
+  const std::map<std::string, Column>::iterator col_iter= columns.find(key);
+  col_iter->second.flag                                 = 1;
 }
 
 void
@@ -224,7 +224,7 @@ ConvergenceTable::evaluate_all_convergence_rates(
   const std::string& reference_column_key,
   const RateMode     rate_mode)
 {
-  for(std::map<std::string, Column>::const_iterator col_iter = columns.begin();
+  for(std::map<std::string, Column>::const_iterator col_iter= columns.begin();
       col_iter != columns.end();
       ++col_iter)
     if(!col_iter->second.flag)
@@ -235,7 +235,7 @@ ConvergenceTable::evaluate_all_convergence_rates(
 void
 ConvergenceTable::evaluate_all_convergence_rates(const RateMode rate_mode)
 {
-  for(std::map<std::string, Column>::const_iterator col_iter = columns.begin();
+  for(std::map<std::string, Column>::const_iterator col_iter= columns.begin();
       col_iter != columns.end();
       ++col_iter)
     if(!col_iter->second.flag)

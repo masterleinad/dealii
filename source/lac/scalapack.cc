@@ -130,32 +130,32 @@ ScaLAPACKMatrix<NumberType>::reinit(
     ExcMessage(
       "Column block size can not be greater than the number of columns of the matrix"));
 
-  state             = LAPACKSupport::State::matrix;
-  property          = property_;
-  grid              = process_grid;
-  n_rows            = n_rows_;
-  n_columns         = n_columns_;
-  row_block_size    = row_block_size_;
-  column_block_size = column_block_size_;
+  state            = LAPACKSupport::State::matrix;
+  property         = property_;
+  grid             = process_grid;
+  n_rows           = n_rows_;
+  n_columns        = n_columns_;
+  row_block_size   = row_block_size_;
+  column_block_size= column_block_size_;
 
   if(grid->mpi_process_is_active)
     {
       // Get local sizes:
-      n_local_rows    = numroc_(&n_rows,
-                             &row_block_size,
-                             &(grid->this_process_row),
-                             &first_process_row,
-                             &(grid->n_process_rows));
-      n_local_columns = numroc_(&n_columns,
-                                &column_block_size,
-                                &(grid->this_process_column),
-                                &first_process_column,
-                                &(grid->n_process_columns));
+      n_local_rows   = numroc_(&n_rows,
+                            &row_block_size,
+                            &(grid->this_process_row),
+                            &first_process_row,
+                            &(grid->n_process_rows));
+      n_local_columns= numroc_(&n_columns,
+                               &column_block_size,
+                               &(grid->this_process_column),
+                               &first_process_column,
+                               &(grid->n_process_columns));
 
       // LLD_A = MAX(1,NUMROC(M_A, MB_A, MYROW, RSRC_A, NPROW)), different between processes
-      int lda = std::max(1, n_local_rows);
+      int lda= std::max(1, n_local_rows);
 
-      int info = 0;
+      int info= 0;
       descinit_(descriptor,
                 &n_rows,
                 &n_columns,
@@ -173,10 +173,10 @@ ScaLAPACKMatrix<NumberType>::reinit(
   else
     {
       // set process-local variables to something telling:
-      n_local_rows    = -1;
-      n_local_columns = -1;
-      for(unsigned int i = 0; i < 9; ++i)
-        descriptor[i] = -1;
+      n_local_rows   = -1;
+      n_local_columns= -1;
+      for(unsigned int i= 0; i < 9; ++i)
+        descriptor[i]= -1;
     }
 }
 
@@ -196,7 +196,7 @@ void
 ScaLAPACKMatrix<NumberType>::set_property(
   const LAPACKSupport::Property property_)
 {
-  property = property_;
+  property= property_;
 }
 
 template <typename NumberType>
@@ -228,17 +228,17 @@ ScaLAPACKMatrix<NumberType>::operator=(const FullMatrix<NumberType>& matrix)
 
   if(grid->mpi_process_is_active)
     {
-      for(int i = 0; i < n_local_rows; ++i)
+      for(int i= 0; i < n_local_rows; ++i)
         {
-          const int glob_i = global_row(i);
-          for(int j = 0; j < n_local_columns; ++j)
+          const int glob_i= global_row(i);
+          for(int j= 0; j < n_local_columns; ++j)
             {
-              const int glob_j = global_column(j);
-              local_el(i, j)   = matrix(glob_i, glob_j);
+              const int glob_j= global_column(j);
+              local_el(i, j)  = matrix(glob_i, glob_j);
             }
         }
     }
-  state = LAPACKSupport::matrix;
+  state= LAPACKSupport::matrix;
   return *this;
 }
 
@@ -248,7 +248,7 @@ ScaLAPACKMatrix<NumberType>::global_row(const unsigned int loc_row) const
 {
   Assert(n_local_rows >= 0 && loc_row < static_cast<unsigned int>(n_local_rows),
          ExcIndexRange(loc_row, 0, n_local_rows));
-  const int i = loc_row + 1;
+  const int i= loc_row + 1;
   return indxl2g_(&i,
                   &row_block_size,
                   &(grid->this_process_row),
@@ -264,7 +264,7 @@ ScaLAPACKMatrix<NumberType>::global_column(const unsigned int loc_column) const
   Assert(n_local_columns >= 0
            && loc_column < static_cast<unsigned int>(n_local_columns),
          ExcIndexRange(loc_column, 0, n_local_columns));
-  const int j = loc_column + 1;
+  const int j= loc_column + 1;
   return indxl2g_(&j,
                   &column_block_size,
                   &(grid->this_process_column),
@@ -287,14 +287,14 @@ ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType>& matrix) const
 
   if(grid->mpi_process_is_active)
     {
-      matrix = 0.;
-      for(int i = 0; i < n_local_rows; ++i)
+      matrix= 0.;
+      for(int i= 0; i < n_local_rows; ++i)
         {
-          const int glob_i = global_row(i);
-          for(int j = 0; j < n_local_columns; ++j)
+          const int glob_i= global_row(i);
+          for(int j= 0; j < n_local_columns; ++j)
             {
-              const int glob_j       = global_column(j);
-              matrix(glob_i, glob_j) = local_el(i, j);
+              const int glob_j      = global_column(j);
+              matrix(glob_i, glob_j)= local_el(i, j);
             }
         }
     }
@@ -304,13 +304,13 @@ ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType>& matrix) const
   // but they would be dependent on glob_i and glob_j, which
   // won't make it much prettier
   if(property == LAPACKSupport::lower_triangular)
-    for(unsigned int i = 0; i < matrix.n(); ++i)
-      for(unsigned int j = i + 1; j < matrix.m(); ++j)
+    for(unsigned int i= 0; i < matrix.n(); ++i)
+      for(unsigned int j= i + 1; j < matrix.m(); ++j)
         matrix(i, j)
           = (state == LAPACKSupport::inverse_matrix ? matrix(j, i) : 0.);
   else if(property == LAPACKSupport::upper_triangular)
-    for(unsigned int i = 0; i < matrix.n(); ++i)
-      for(unsigned int j = 0; j < i; ++j)
+    for(unsigned int i= 0; i < matrix.n(); ++i)
+      for(unsigned int j= 0; j < i; ++j)
         matrix(i, j)
           = (state == LAPACKSupport::inverse_matrix ? matrix(j, i) : 0.);
 }
@@ -343,7 +343,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
 
   //Currently, copying of matrices will only be supported if A and B share the same MPI communicator
   int ierr, comparison;
-  ierr = MPI_Comm_compare(
+  ierr= MPI_Comm_compare(
     grid->mpi_communicator, B.grid->mpi_communicator, &comparison);
   AssertThrowMPI(ierr);
   Assert(comparison == MPI_IDENT,
@@ -355,11 +355,11 @@ ScaLAPACKMatrix<NumberType>::copy_to(
    * As A and B share the same MPI communicator, there is no need to create a union MPI
    * communicator to initialise the BLACS context
    */
-  int union_blacs_context = Csys2blacs_handle(this->grid->mpi_communicator);
-  const char* order       = "Col";
+  int union_blacs_context= Csys2blacs_handle(this->grid->mpi_communicator);
+  const char* order      = "Col";
   int         union_n_process_rows
     = Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator);
-  int union_n_process_columns = 1;
+  int union_n_process_columns= 1;
   Cblacs_gridinit(
     &union_blacs_context, order, union_n_process_rows, union_n_process_columns);
 
@@ -387,17 +387,17 @@ ScaLAPACKMatrix<NumberType>::copy_to(
     = (my_row_B >= 0 && my_row_B < n_grid_rows_B)
       && (my_column_B >= 0 && my_column_B < n_grid_columns_B);
 
-  const int n_rows_submatrix    = submatrix_size.first;
-  const int n_columns_submatrix = submatrix_size.second;
+  const int n_rows_submatrix   = submatrix_size.first;
+  const int n_columns_submatrix= submatrix_size.second;
 
   // due to Fortran indexing one has to be added
-  int ia = offset_A.first + 1, ja = offset_A.second + 1;
-  int ib = offset_B.first + 1, jb = offset_B.second + 1;
+  int ia= offset_A.first + 1, ja= offset_A.second + 1;
+  int ib= offset_B.first + 1, jb= offset_B.second + 1;
 
   std::array<int, 9> desc_A, desc_B;
 
-  const NumberType* loc_vals_A = nullptr;
-  NumberType*       loc_vals_B = nullptr;
+  const NumberType* loc_vals_A= nullptr;
+  NumberType*       loc_vals_B= nullptr;
 
   // Note: the function pgemr2d has to be called for all processes in the union BLACS context
   // If the calling process is not part of the BLACS context of A, desc_A[1] has to be -1
@@ -407,24 +407,24 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   if(in_context_A)
     {
       if(this->values.size() != 0)
-        loc_vals_A = &this->values[0];
+        loc_vals_A= &this->values[0];
 
-      for(unsigned int i = 0; i < desc_A.size(); ++i)
-        desc_A[i] = this->descriptor[i];
+      for(unsigned int i= 0; i < desc_A.size(); ++i)
+        desc_A[i]= this->descriptor[i];
     }
   else
-    desc_A[1] = -1;
+    desc_A[1]= -1;
 
   if(in_context_B)
     {
       if(B.values.size() != 0)
-        loc_vals_B = &B.values[0];
+        loc_vals_B= &B.values[0];
 
-      for(unsigned int i = 0; i < desc_B.size(); ++i)
-        desc_B[i] = B.descriptor[i];
+      for(unsigned int i= 0; i < desc_B.size(); ++i)
+        desc_B[i]= B.descriptor[i];
     }
   else
-    desc_B[1] = -1;
+    desc_B[1]= -1;
 
   pgemr2d(&n_rows_submatrix,
           &n_columns_submatrix,
@@ -438,7 +438,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
           desc_B.data(),
           &union_blacs_context);
 
-  B.state = LAPACKSupport::matrix;
+  B.state= LAPACKSupport::matrix;
 
   //releasing the union BLACS context
   Cblacs_gridexit(union_blacs_context);
@@ -474,13 +474,13 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
       /*
        * get the MPI communicator, which is the union of the source and destination MPI communicator
        */
-      int       ierr = 0;
+      int       ierr= 0;
       MPI_Group group_source, group_dest, group_union;
-      ierr = MPI_Comm_group(this->grid->mpi_communicator, &group_source);
+      ierr= MPI_Comm_group(this->grid->mpi_communicator, &group_source);
       AssertThrowMPI(ierr);
-      ierr = MPI_Comm_group(dest.grid->mpi_communicator, &group_dest);
+      ierr= MPI_Comm_group(dest.grid->mpi_communicator, &group_dest);
       AssertThrowMPI(ierr);
-      ierr = MPI_Group_union(group_source, group_dest, &group_union);
+      ierr= MPI_Group_union(group_source, group_dest, &group_union);
       AssertThrowMPI(ierr);
       MPI_Comm mpi_communicator_union;
 
@@ -495,7 +495,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
       // first argument, even if the program we are currently running
       // and that is calling this function only works on a subset of
       // processes. the same holds for the wrapper/fallback we are using here.
-      ierr = Utilities::MPI::create_group(
+      ierr= Utilities::MPI::create_group(
         MPI_COMM_WORLD, group_union, 5, &mpi_communicator_union);
       AssertThrowMPI(ierr);
 
@@ -503,25 +503,25 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
        * The routine pgemr2d requires a BLACS context resembling at least the union of process grids
        * described by the BLACS contexts of matrix A and B
        */
-      int union_blacs_context = Csys2blacs_handle(mpi_communicator_union);
-      const char* order       = "Col";
+      int union_blacs_context= Csys2blacs_handle(mpi_communicator_union);
+      const char* order      = "Col";
       int         union_n_process_rows
         = Utilities::MPI::n_mpi_processes(mpi_communicator_union);
-      int union_n_process_columns = 1;
+      int union_n_process_columns= 1;
       Cblacs_gridinit(&union_blacs_context,
                       order,
                       union_n_process_rows,
                       union_n_process_columns);
 
-      const NumberType* loc_vals_source = nullptr;
-      NumberType*       loc_vals_dest   = nullptr;
+      const NumberType* loc_vals_source= nullptr;
+      NumberType*       loc_vals_dest  = nullptr;
 
       if(this->grid->mpi_process_is_active && (this->values.size() > 0))
         {
           AssertThrow(this->values.size() > 0,
                       dealii::ExcMessage(
                         "source: process is active but local matrix empty"));
-          loc_vals_source = &this->values[0];
+          loc_vals_source= &this->values[0];
         }
       if(dest.grid->mpi_process_is_active && (dest.values.size() > 0))
         {
@@ -529,7 +529,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
             dest.values.size() > 0,
             dealii::ExcMessage(
               "destination: process is active but local matrix empty"));
-          loc_vals_dest = &dest.values[0];
+          loc_vals_dest= &dest.values[0];
         }
       pgemr2d(&n_rows,
               &n_columns,
@@ -547,23 +547,23 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
 
       if(mpi_communicator_union != MPI_COMM_NULL)
         {
-          ierr = MPI_Comm_free(&mpi_communicator_union);
+          ierr= MPI_Comm_free(&mpi_communicator_union);
           AssertThrowMPI(ierr);
         }
-      ierr = MPI_Group_free(&group_source);
+      ierr= MPI_Group_free(&group_source);
       AssertThrowMPI(ierr);
-      ierr = MPI_Group_free(&group_dest);
+      ierr= MPI_Group_free(&group_dest);
       AssertThrowMPI(ierr);
-      ierr = MPI_Group_free(&group_union);
+      ierr= MPI_Group_free(&group_union);
       AssertThrowMPI(ierr);
     }
   else
     //process is active in the process grid
     if(this->grid->mpi_process_is_active)
-    dest.values = this->values;
+    dest.values= this->values;
 
-  dest.state    = state;
-  dest.property = property;
+  dest.state   = state;
+  dest.property= property;
 }
 
 template <typename NumberType>
@@ -605,10 +605,9 @@ ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType>& B,
 
   if(this->grid->mpi_process_is_active)
     {
-      char        trans_b = transpose_B ? 'T' : 'N';
-      NumberType* A_loc
-        = (this->values.size() > 0) ? &this->values[0] : nullptr;
-      const NumberType* B_loc = (B.values.size() > 0) ? &B.values[0] : nullptr;
+      char        trans_b= transpose_B ? 'T' : 'N';
+      NumberType* A_loc= (this->values.size() > 0) ? &this->values[0] : nullptr;
+      const NumberType* B_loc= (B.values.size() > 0) ? &B.values[0] : nullptr;
 
       pgeadd(&trans_b,
              &n_rows,
@@ -624,7 +623,7 @@ ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType>& B,
              &submatrix_column,
              descriptor);
     }
-  state = LAPACKSupport::matrix;
+  state= LAPACKSupport::matrix;
 }
 
 template <typename NumberType>
@@ -723,17 +722,17 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
 
   if(this->grid->mpi_process_is_active)
     {
-      char trans_a = transpose_A ? 'T' : 'N';
-      char trans_b = transpose_B ? 'T' : 'N';
+      char trans_a= transpose_A ? 'T' : 'N';
+      char trans_b= transpose_B ? 'T' : 'N';
 
       const NumberType* A_loc
         = (this->values.size() > 0) ? (&(this->values[0])) : nullptr;
       const NumberType* B_loc
         = (B.values.size() > 0) ? (&(B.values[0])) : nullptr;
-      NumberType* C_loc = (C.values.size() > 0) ? (&(C.values[0])) : nullptr;
-      int         m     = C.n_rows;
-      int         n     = C.n_columns;
-      int         k     = transpose_A ? this->n_rows : this->n_columns;
+      NumberType* C_loc= (C.values.size() > 0) ? (&(C.values[0])) : nullptr;
+      int         m    = C.n_rows;
+      int         n    = C.n_columns;
+      int         k    = transpose_A ? this->n_rows : this->n_columns;
 
       pgemm(&trans_a,
             &trans_b,
@@ -755,7 +754,7 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
             &C.submatrix_column,
             C.descriptor);
     }
-  C.state = LAPACKSupport::matrix;
+  C.state= LAPACKSupport::matrix;
 }
 
 template <typename NumberType>
@@ -820,8 +819,8 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
 
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
-      NumberType* A_loc = &this->values[0];
+      int         info = 0;
+      NumberType* A_loc= &this->values[0];
       //pdpotrf_(&uplo,&n_columns,A_loc,&submatrix_row,&submatrix_column,descriptor,&info);
       ppotrf(&uplo,
              &n_columns,
@@ -832,9 +831,9 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
              &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("ppotrf", info));
     }
-  state    = LAPACKSupport::cholesky;
-  property = (uplo == 'L' ? LAPACKSupport::lower_triangular :
-                            LAPACKSupport::upper_triangular);
+  state   = LAPACKSupport::cholesky;
+  property= (uplo == 'L' ? LAPACKSupport::lower_triangular :
+                           LAPACKSupport::upper_triangular);
 }
 
 template <typename NumberType>
@@ -847,19 +846,19 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
 
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
-      NumberType* A_loc = &this->values[0];
+      int         info = 0;
+      NumberType* A_loc= &this->values[0];
 
-      const int iarow = indxg2p_(&submatrix_row,
-                                 &row_block_size,
-                                 &(grid->this_process_row),
-                                 &first_process_row,
-                                 &(grid->n_process_rows));
-      const int mp    = numroc_(&n_rows,
-                             &row_block_size,
-                             &(grid->this_process_row),
-                             &iarow,
-                             &(grid->n_process_rows));
+      const int iarow= indxg2p_(&submatrix_row,
+                                &row_block_size,
+                                &(grid->this_process_row),
+                                &first_process_row,
+                                &(grid->n_process_rows));
+      const int mp   = numroc_(&n_rows,
+                            &row_block_size,
+                            &(grid->this_process_row),
+                            &iarow,
+                            &(grid->n_process_rows));
       ipiv.resize(mp + row_block_size);
 
       pgetrf(&n_rows,
@@ -872,8 +871,8 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
              &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgetrf", info));
     }
-  state    = LAPACKSupport::State::lu;
-  property = LAPACKSupport::Property::general;
+  state   = LAPACKSupport::State::lu;
+  property= LAPACKSupport::Property::general;
 }
 
 template <typename NumberType>
@@ -883,8 +882,8 @@ ScaLAPACKMatrix<NumberType>::invert()
   // Check whether matrix is symmetric and save flag.
   // If a Cholesky factorization has been applied previously,
   // the original matrix was symmetric.
-  const bool is_symmetric = (property == LAPACKSupport::symmetric
-                             || state == LAPACKSupport::State::cholesky);
+  const bool is_symmetric= (property == LAPACKSupport::symmetric
+                            || state == LAPACKSupport::State::cholesky);
 
   // Matrix is neither in Cholesky nor LU state.
   // Compute the required factorizations based on the property of the matrix.
@@ -898,8 +897,8 @@ ScaLAPACKMatrix<NumberType>::invert()
     }
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
-      NumberType* A_loc = &this->values[0];
+      int         info = 0;
+      NumberType* A_loc= &this->values[0];
 
       if(is_symmetric)
         {
@@ -914,7 +913,7 @@ ScaLAPACKMatrix<NumberType>::invert()
         }
       else
         {
-          int lwork = -1, liwork = -1;
+          int lwork= -1, liwork= -1;
           work.resize(1);
           iwork.resize(1);
 
@@ -931,8 +930,8 @@ ScaLAPACKMatrix<NumberType>::invert()
                  &info);
 
           AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgetri", info));
-          lwork  = work[0];
-          liwork = iwork[0];
+          lwork = work[0];
+          liwork= iwork[0];
           work.resize(lwork);
           iwork.resize(liwork);
 
@@ -951,7 +950,7 @@ ScaLAPACKMatrix<NumberType>::invert()
           AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgetri", info));
         }
     }
-  state = LAPACKSupport::State::inverse_matrix;
+  state= LAPACKSupport::State::inverse_matrix;
 }
 
 template <typename NumberType>
@@ -988,7 +987,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value(
   Assert(!std::isnan(value_limits.second),
          ExcMessage("value_limits.second is NaN"));
 
-  std::pair<unsigned int, unsigned int> indices = std::make_pair(
+  std::pair<unsigned int, unsigned int> indices= std::make_pair(
     numbers::invalid_unsigned_int, numbers::invalid_unsigned_int);
 
   return eigenpairs_symmetric(compute_eigenvectors, indices, value_limits);
@@ -1009,10 +1008,10 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
 
   Threads::Mutex::ScopedLock lock(mutex);
 
-  const bool use_values = (std::isnan(eigenvalue_limits.first)
-                           || std::isnan(eigenvalue_limits.second)) ?
-                            false :
-                            true;
+  const bool use_values= (std::isnan(eigenvalue_limits.first)
+                          || std::isnan(eigenvalue_limits.second)) ?
+                           false :
+                           true;
   const bool use_indices
     = ((eigenvalue_idx.first == numbers::invalid_unsigned_int)
        || (eigenvalue_idx.second == numbers::invalid_unsigned_int)) ?
@@ -1032,33 +1031,33 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
         std_cxx14::make_unique<ScaLAPACKMatrix<NumberType>>(
           grid->n_process_rows, grid->n_process_columns, grid, 1, 1);
 
-  eigenvectors->property = property;
+  eigenvectors->property= property;
   // number of eigenvalues to be returned from psyevx; upon successful exit ev contains the m seclected eigenvalues in ascending order
   // set to all eigenvaleus in case we will be using psyev.
-  int                     m = n_rows;
+  int                     m= n_rows;
   std::vector<NumberType> ev(n_rows);
 
   if(grid->mpi_process_is_active)
     {
-      int info = 0;
+      int info= 0;
       /*
        * for jobz==N only eigenvalues are computed, for jobz='V' also the eigenvectors of the matrix are computed
        */
-      char jobz  = compute_eigenvectors ? 'V' : 'N';
-      char range = 'A';
+      char jobz = compute_eigenvectors ? 'V' : 'N';
+      char range= 'A';
       // default value is to compute all eigenvalues and optionally eigenvectors
-      bool       all_eigenpairs = true;
-      NumberType vl = NumberType(), vu = NumberType();
-      int        il = 1, iu = 1;
+      bool       all_eigenpairs= true;
+      NumberType vl= NumberType(), vu= NumberType();
+      int        il= 1, iu= 1;
       // number of eigenvectors to be returned;
       // upon successful exit the first m=nz columns contain the selected eigenvectors (only if jobz=='V')
-      int        nz     = 0;
-      NumberType abstol = NumberType();
+      int        nz    = 0;
+      NumberType abstol= NumberType();
 
       // orfac decides which eigenvectors should be reorthogonalized
       // see http://www.netlib.org/scalapack/explore-html/df/d1a/pdsyevx_8f_source.html for explanation
       // to keeps simple no reorthogonalized will be done by setting orfac to 0
-      NumberType orfac = 0;
+      NumberType orfac= 0;
       //contains the indices of eigenvectors that failed to converge
       std::vector<int> ifail;
       // This array contains indices of eigenvectors corresponding to
@@ -1077,31 +1076,31 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
           // interval for eigenvalues is not specified and consequently all eigenvalues/eigenpairs will be computed
           if(!use_values)
             {
-              range          = 'A';
-              all_eigenpairs = true;
+              range         = 'A';
+              all_eigenpairs= true;
             }
           else
             {
-              range          = 'V';
-              all_eigenpairs = false;
-              vl = std::min(eigenvalue_limits.first, eigenvalue_limits.second);
-              vu = std::max(eigenvalue_limits.first, eigenvalue_limits.second);
+              range         = 'V';
+              all_eigenpairs= false;
+              vl= std::min(eigenvalue_limits.first, eigenvalue_limits.second);
+              vu= std::max(eigenvalue_limits.first, eigenvalue_limits.second);
             }
         }
       else
         {
-          range          = 'I';
-          all_eigenpairs = false;
+          range         = 'I';
+          all_eigenpairs= false;
           //as Fortran starts counting/indexing from 1 unlike C/C++, where it starts from 0
-          il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
-          iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
+          il= std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
+          iu= std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
-      NumberType* A_loc = &this->values[0];
+      NumberType* A_loc= &this->values[0];
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
-      int         lwork  = -1;
-      int         liwork = -1;
+      int         lwork = -1;
+      int         liwork= -1;
       NumberType* eigenvectors_loc
         = (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
       work.resize(1);
@@ -1128,9 +1127,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
         }
       else
         {
-          char cmach = compute_eigenvectors ? 'U' : 'S';
+          char cmach= compute_eigenvectors ? 'U' : 'S';
           plamch(&(this->grid->blacs_context), &cmach, abstol);
-          abstol *= 2;
+          abstol*= 2;
           ifail.resize(n_rows);
           iclustr.resize(2 * grid->n_process_rows * grid->n_process_columns);
           gap.resize(grid->n_process_rows * grid->n_process_columns);
@@ -1166,7 +1165,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
                  &info);
           AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("psyevx", info));
         }
-      lwork = work[0];
+      lwork= work[0];
       work.resize(lwork);
 
       if(all_eigenpairs)
@@ -1191,7 +1190,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
         }
       else
         {
-          liwork = iwork[0];
+          liwork= iwork[0];
           AssertThrow(liwork > 0, ExcInternalError());
           iwork.resize(liwork);
 
@@ -1258,11 +1257,11 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
    */
   if(compute_eigenvectors)
     {
-      property = LAPACKSupport::Property::general;
-      state    = LAPACKSupport::eigenvalues;
+      property= LAPACKSupport::Property::general;
+      state   = LAPACKSupport::eigenvalues;
     }
   else
-    state = LAPACKSupport::unusable;
+    state= LAPACKSupport::unusable;
 
   return ev;
 }
@@ -1297,7 +1296,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value_MRRR(
   AssertIsFinite(value_limits.first);
   AssertIsFinite(value_limits.second);
 
-  const std::pair<unsigned int, unsigned int> indices = std::make_pair(
+  const std::pair<unsigned int, unsigned int> indices= std::make_pair(
     numbers::invalid_unsigned_int, numbers::invalid_unsigned_int);
 
   return eigenpairs_symmetric_MRRR(compute_eigenvectors, indices, value_limits);
@@ -1318,10 +1317,10 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
 
   Threads::Mutex::ScopedLock lock(mutex);
 
-  const bool use_values = (std::isnan(eigenvalue_limits.first)
-                           || std::isnan(eigenvalue_limits.second)) ?
-                            false :
-                            true;
+  const bool use_values= (std::isnan(eigenvalue_limits.first)
+                          || std::isnan(eigenvalue_limits.second)) ?
+                           false :
+                           true;
   const bool use_indices
     = ((eigenvalue_idx.first == numbers::invalid_unsigned_int)
        || (eigenvalue_idx.second == numbers::invalid_unsigned_int)) ?
@@ -1341,26 +1340,26 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
         std_cxx14::make_unique<ScaLAPACKMatrix<NumberType>>(
           grid->n_process_rows, grid->n_process_columns, grid, 1, 1);
 
-  eigenvectors->property = property;
+  eigenvectors->property= property;
   // Number of eigenvalues to be returned from psyevr; upon successful exit ev contains the m seclected eigenvalues in ascending order.
-  int                     m = n_rows;
+  int                     m= n_rows;
   std::vector<NumberType> ev(n_rows);
 
   // Number of eigenvectors to be returned;
   // Upon successful exit the first m=nz columns contain the selected eigenvectors (only if jobz=='V').
-  int nz = 0;
+  int nz= 0;
 
   if(grid->mpi_process_is_active)
     {
-      int info = 0;
+      int info= 0;
       /*
        * For jobz==N only eigenvalues are computed, for jobz='V' also the eigenvectors of the matrix are computed.
        */
-      char jobz = compute_eigenvectors ? 'V' : 'N';
+      char jobz= compute_eigenvectors ? 'V' : 'N';
       // Default value is to compute all eigenvalues and optionally eigenvectors.
-      char       range = 'A';
-      NumberType vl = NumberType(), vu = NumberType();
-      int        il = 1, iu = 1;
+      char       range= 'A';
+      NumberType vl= NumberType(), vu= NumberType();
+      int        il= 1, iu= 1;
 
       // Index range for eigenvalues is not specified.
       if(!use_indices)
@@ -1368,29 +1367,29 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
           // Interval for eigenvalues is not specified and consequently all eigenvalues/eigenpairs will be computed.
           if(!use_values)
             {
-              range = 'A';
+              range= 'A';
             }
           else
             {
-              range = 'V';
-              vl = std::min(eigenvalue_limits.first, eigenvalue_limits.second);
-              vu = std::max(eigenvalue_limits.first, eigenvalue_limits.second);
+              range= 'V';
+              vl= std::min(eigenvalue_limits.first, eigenvalue_limits.second);
+              vu= std::max(eigenvalue_limits.first, eigenvalue_limits.second);
             }
         }
       else
         {
-          range = 'I';
+          range= 'I';
           // As Fortran starts counting/indexing from 1 unlike C/C++, where it starts from 0.
-          il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
-          iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
+          il= std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
+          iu= std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
-      NumberType* A_loc = &this->values[0];
+      NumberType* A_loc= &this->values[0];
 
       /*
        * By setting lwork to -1 a workspace query for optimal length of work is performed.
        */
-      int         lwork  = -1;
-      int         liwork = -1;
+      int         lwork = -1;
+      int         liwork= -1;
       NumberType* eigenvectors_loc
         = (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
       work.resize(1);
@@ -1423,9 +1422,9 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
 
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("psyevr", info));
 
-      lwork = work[0];
+      lwork= work[0];
       work.resize(lwork);
-      liwork = iwork[0];
+      liwork= iwork[0];
       iwork.resize(liwork);
 
       psyevr(&jobz,
@@ -1492,11 +1491,11 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
    */
   if(compute_eigenvectors)
     {
-      property = LAPACKSupport::Property::general;
-      state    = LAPACKSupport::eigenvalues;
+      property= LAPACKSupport::Property::general;
+      state   = LAPACKSupport::eigenvalues;
     }
   else
-    state = LAPACKSupport::unusable;
+    state= LAPACKSupport::unusable;
 
   return ev;
 }
@@ -1512,8 +1511,8 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
   Assert(row_block_size == column_block_size,
          ExcDimensionMismatch(row_block_size, column_block_size));
 
-  const bool left_singluar_vectors  = (U != nullptr) ? true : false;
-  const bool right_singluar_vectors = (VT != nullptr) ? true : false;
+  const bool left_singluar_vectors = (U != nullptr) ? true : false;
+  const bool right_singluar_vectors= (VT != nullptr) ? true : false;
 
   if(left_singluar_vectors)
     {
@@ -1547,16 +1546,16 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
 
   if(grid->mpi_process_is_active)
     {
-      char        jobu   = left_singluar_vectors ? 'V' : 'N';
-      char        jobvt  = right_singluar_vectors ? 'V' : 'N';
-      NumberType* A_loc  = &this->values[0];
-      NumberType* U_loc  = left_singluar_vectors ? &(U->values[0]) : nullptr;
-      NumberType* VT_loc = right_singluar_vectors ? &(VT->values[0]) : nullptr;
-      int         info   = 0;
+      char        jobu  = left_singluar_vectors ? 'V' : 'N';
+      char        jobvt = right_singluar_vectors ? 'V' : 'N';
+      NumberType* A_loc = &this->values[0];
+      NumberType* U_loc = left_singluar_vectors ? &(U->values[0]) : nullptr;
+      NumberType* VT_loc= right_singluar_vectors ? &(VT->values[0]) : nullptr;
+      int         info  = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
-      int lwork = -1;
+      int lwork= -1;
       work.resize(1);
 
       pgesvd(&jobu,
@@ -1581,7 +1580,7 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
              &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgesvd", info));
 
-      lwork = work[0];
+      lwork= work[0];
       work.resize(lwork);
 
       pgesvd(&jobu,
@@ -1612,8 +1611,8 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
    */
   grid->send_to_inactive(sv.data(), sv.size());
 
-  property = LAPACKSupport::Property::general;
-  state    = LAPACKSupport::State::unusable;
+  property= LAPACKSupport::Property::general;
+  state   = LAPACKSupport::State::unusable;
 
   return sv;
 }
@@ -1656,14 +1655,14 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
 
   if(grid->mpi_process_is_active)
     {
-      char        trans = transpose ? 'T' : 'N';
-      NumberType* A_loc = &this->values[0];
-      NumberType* B_loc = &B.values[0];
-      int         info  = 0;
+      char        trans= transpose ? 'T' : 'N';
+      NumberType* A_loc= &this->values[0];
+      NumberType* B_loc= &B.values[0];
+      int         info = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
-      int lwork = -1;
+      int lwork= -1;
       work.resize(1);
 
       pgels(&trans,
@@ -1683,7 +1682,7 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
             &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgels", info));
 
-      lwork = work[0];
+      lwork= work[0];
       work.resize(lwork);
 
       pgels(&trans,
@@ -1703,7 +1702,7 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
             &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgels", info));
     }
-  state = LAPACKSupport::State::unusable;
+  state= LAPACKSupport::State::unusable;
 }
 
 template <typename NumberType>
@@ -1733,7 +1732,7 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
                                  row_block_size,
                                  row_block_size,
                                  LAPACKSupport::Property::general);
-  std::vector<NumberType>     sv = this->compute_SVD(&U, &VT);
+  std::vector<NumberType>     sv= this->compute_SVD(&U, &VT);
   AssertThrow(sv[0] > std::numeric_limits<NumberType>::min(),
               ExcMessage("Matrix has rank 0"));
 
@@ -1741,11 +1740,11 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
   // Obviously, 0-th element already satisfies sv[0] > sv[0] * ratio
   // The singular values in sv are ordered by descending value so we break out of the loop
   // if a singular value is smaller than sv[0] * ratio.
-  unsigned int            n_sv = 1;
+  unsigned int            n_sv= 1;
   std::vector<NumberType> inv_sigma;
   inv_sigma.push_back(1 / sv[0]);
 
-  for(unsigned int i = 1; i < sv.size(); ++i)
+  for(unsigned int i= 1; i < sv.size(); ++i)
     if(sv[i] > sv[0] * ratio)
       {
         ++n_sv;
@@ -1786,7 +1785,7 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
                column_block_size,
                LAPACKSupport::Property::general);
   VT_R.mult(1, U_R, 0, *this, true, true);
-  state = LAPACKSupport::State::inverse_matrix;
+  state= LAPACKSupport::State::inverse_matrix;
   return n_sv;
 }
 
@@ -1799,18 +1798,18 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
          ExcMessage(
            "Matrix has to be in Cholesky state before calling this function."));
   Threads::Mutex::ScopedLock lock(mutex);
-  NumberType                 rcond = 0.;
+  NumberType                 rcond= 0.;
 
   if(grid->mpi_process_is_active)
     {
-      int liwork = n_local_rows;
+      int liwork= n_local_rows;
       iwork.resize(liwork);
 
-      int               info  = 0;
-      const NumberType* A_loc = &this->values[0];
+      int               info = 0;
+      const NumberType* A_loc= &this->values[0];
 
       // by setting lwork to -1 a workspace query for optimal length of work is performed
-      int lwork = -1;
+      int lwork= -1;
       work.resize(1);
       ppocon(&uplo,
              &n_columns,
@@ -1826,7 +1825,7 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
              &liwork,
              &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pdpocon", info));
-      lwork = std::ceil(work[0]);
+      lwork= std::ceil(work[0]);
       work.resize(lwork);
 
       // now the actual run:
@@ -1893,50 +1892,50 @@ ScaLAPACKMatrix<NumberType>::norm_general(const char type) const
            || state == LAPACKSupport::inverse_matrix,
          ExcMessage("norms can be called in matrix state only."));
   Threads::Mutex::ScopedLock lock(mutex);
-  NumberType                 res = 0.;
+  NumberType                 res= 0.;
 
   if(grid->mpi_process_is_active)
     {
-      const int iarow = indxg2p_(&submatrix_row,
-                                 &row_block_size,
-                                 &(grid->this_process_row),
-                                 &first_process_row,
-                                 &(grid->n_process_rows));
-      const int iacol = indxg2p_(&submatrix_column,
-                                 &column_block_size,
-                                 &(grid->this_process_column),
-                                 &first_process_column,
-                                 &(grid->n_process_columns));
-      const int mp0   = numroc_(&n_rows,
-                              &row_block_size,
-                              &(grid->this_process_row),
-                              &iarow,
-                              &(grid->n_process_rows));
-      const int nq0   = numroc_(&n_columns,
-                              &column_block_size,
-                              &(grid->this_process_column),
-                              &iacol,
-                              &(grid->n_process_columns));
+      const int iarow= indxg2p_(&submatrix_row,
+                                &row_block_size,
+                                &(grid->this_process_row),
+                                &first_process_row,
+                                &(grid->n_process_rows));
+      const int iacol= indxg2p_(&submatrix_column,
+                                &column_block_size,
+                                &(grid->this_process_column),
+                                &first_process_column,
+                                &(grid->n_process_columns));
+      const int mp0  = numroc_(&n_rows,
+                             &row_block_size,
+                             &(grid->this_process_row),
+                             &iarow,
+                             &(grid->n_process_rows));
+      const int nq0  = numroc_(&n_columns,
+                             &column_block_size,
+                             &(grid->this_process_column),
+                             &iacol,
+                             &(grid->n_process_columns));
 
       // type='M': compute largest absolute value
       // type='F' || type='E': compute Frobenius norm
       // type='0' || type='1': compute infinity norm
-      int lwork = 0; // for type == 'M' || type == 'F' || type == 'E'
+      int lwork= 0; // for type == 'M' || type == 'F' || type == 'E'
       if(type == 'O' || type == '1')
-        lwork = nq0;
+        lwork= nq0;
       else if(type == 'I')
-        lwork = mp0;
+        lwork= mp0;
 
       work.resize(lwork);
-      const NumberType* A_loc = this->values.begin();
-      res                     = plange(&type,
-                   &n_rows,
-                   &n_columns,
-                   A_loc,
-                   &submatrix_row,
-                   &submatrix_column,
-                   descriptor,
-                   work.data());
+      const NumberType* A_loc= this->values.begin();
+      res                    = plange(&type,
+                  &n_rows,
+                  &n_columns,
+                  A_loc,
+                  &submatrix_row,
+                  &submatrix_column,
+                  descriptor,
+                  work.data());
     }
   grid->send_to_inactive(&res);
   return res;
@@ -1952,54 +1951,53 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
   Assert(property == LAPACKSupport::symmetric,
          ExcMessage("Matrix has to be symmetric for this operation."));
   Threads::Mutex::ScopedLock lock(mutex);
-  NumberType                 res = 0.;
+  NumberType                 res= 0.;
 
   if(grid->mpi_process_is_active)
     {
       //int IROFFA = MOD( IA-1, MB_A )
       //int ICOFFA = MOD( JA-1, NB_A )
-      const int lcm
-        = ilcm_(&(grid->n_process_rows), &(grid->n_process_columns));
+      const int lcm= ilcm_(&(grid->n_process_rows), &(grid->n_process_columns));
       const int v2 = lcm / (grid->n_process_rows);
 
-      const int IAROW = indxg2p_(&submatrix_row,
-                                 &row_block_size,
-                                 &(grid->this_process_row),
-                                 &first_process_row,
-                                 &(grid->n_process_rows));
-      const int IACOL = indxg2p_(&submatrix_column,
-                                 &column_block_size,
-                                 &(grid->this_process_column),
-                                 &first_process_column,
-                                 &(grid->n_process_columns));
-      const int Np0   = numroc_(&n_columns /*+IROFFA*/,
-                              &row_block_size,
-                              &(grid->this_process_row),
-                              &IAROW,
-                              &(grid->n_process_rows));
-      const int Nq0   = numroc_(&n_columns /*+ICOFFA*/,
-                              &column_block_size,
-                              &(grid->this_process_column),
-                              &IACOL,
-                              &(grid->n_process_columns));
+      const int IAROW= indxg2p_(&submatrix_row,
+                                &row_block_size,
+                                &(grid->this_process_row),
+                                &first_process_row,
+                                &(grid->n_process_rows));
+      const int IACOL= indxg2p_(&submatrix_column,
+                                &column_block_size,
+                                &(grid->this_process_column),
+                                &first_process_column,
+                                &(grid->n_process_columns));
+      const int Np0  = numroc_(&n_columns /*+IROFFA*/,
+                             &row_block_size,
+                             &(grid->this_process_row),
+                             &IAROW,
+                             &(grid->n_process_rows));
+      const int Nq0  = numroc_(&n_columns /*+ICOFFA*/,
+                             &column_block_size,
+                             &(grid->this_process_column),
+                             &IACOL,
+                             &(grid->n_process_columns));
 
-      const int v1  = iceil_(&Np0, &row_block_size);
-      const int ldw = (n_local_rows == n_local_columns) ?
-                        0 :
-                        row_block_size * iceil_(&v1, &v2);
+      const int v1 = iceil_(&Np0, &row_block_size);
+      const int ldw= (n_local_rows == n_local_columns) ?
+                       0 :
+                       row_block_size * iceil_(&v1, &v2);
 
       const int lwork
         = (type == 'M' || type == 'F' || type == 'E') ? 0 : 2 * Nq0 + Np0 + ldw;
       work.resize(lwork);
-      const NumberType* A_loc = this->values.begin();
-      res                     = plansy(&type,
-                   &uplo,
-                   &n_columns,
-                   A_loc,
-                   &submatrix_row,
-                   &submatrix_column,
-                   descriptor,
-                   work.data());
+      const NumberType* A_loc= this->values.begin();
+      res                    = plansy(&type,
+                  &uplo,
+                  &n_columns,
+                  A_loc,
+                  &submatrix_row,
+                  &submatrix_column,
+                  descriptor,
+                  work.data());
     }
   grid->send_to_inactive(&res);
   return res;
@@ -2015,30 +2013,30 @@ namespace internal
     {
       // create HDF5 enum type for LAPACKSupport::State
       LAPACKSupport::State val;
-      state_enum_id = H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::State));
-      val           = LAPACKSupport::State::cholesky;
-      herr_t status = H5Tenum_insert(state_enum_id, "cholesky", (int*) &val);
+      state_enum_id= H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::State));
+      val          = LAPACKSupport::State::cholesky;
+      herr_t status= H5Tenum_insert(state_enum_id, "cholesky", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::eigenvalues;
-      status = H5Tenum_insert(state_enum_id, "eigenvalues", (int*) &val);
+      val   = LAPACKSupport::State::eigenvalues;
+      status= H5Tenum_insert(state_enum_id, "eigenvalues", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::inverse_matrix;
-      status = H5Tenum_insert(state_enum_id, "inverse_matrix", (int*) &val);
+      val   = LAPACKSupport::State::inverse_matrix;
+      status= H5Tenum_insert(state_enum_id, "inverse_matrix", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::inverse_svd;
-      status = H5Tenum_insert(state_enum_id, "inverse_svd", (int*) &val);
+      val   = LAPACKSupport::State::inverse_svd;
+      status= H5Tenum_insert(state_enum_id, "inverse_svd", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::lu;
-      status = H5Tenum_insert(state_enum_id, "lu", (int*) &val);
+      val   = LAPACKSupport::State::lu;
+      status= H5Tenum_insert(state_enum_id, "lu", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::matrix;
-      status = H5Tenum_insert(state_enum_id, "matrix", (int*) &val);
+      val   = LAPACKSupport::State::matrix;
+      status= H5Tenum_insert(state_enum_id, "matrix", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::svd;
-      status = H5Tenum_insert(state_enum_id, "svd", (int*) &val);
+      val   = LAPACKSupport::State::svd;
+      status= H5Tenum_insert(state_enum_id, "svd", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::unusable;
-      status = H5Tenum_insert(state_enum_id, "unusable", (int*) &val);
+      val   = LAPACKSupport::State::unusable;
+      status= H5Tenum_insert(state_enum_id, "unusable", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
     }
 
@@ -2046,25 +2044,24 @@ namespace internal
     create_HDF5_property_enum_id(hid_t& property_enum_id)
     {
       // create HDF5 enum type for LAPACKSupport::Property
-      property_enum_id = H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::Property));
-      LAPACKSupport::Property prop = LAPACKSupport::Property::diagonal;
-      herr_t                  status
-        = H5Tenum_insert(property_enum_id, "diagonal", (int*) &prop);
+      property_enum_id= H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::Property));
+      LAPACKSupport::Property prop= LAPACKSupport::Property::diagonal;
+      herr_t status= H5Tenum_insert(property_enum_id, "diagonal", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::general;
-      status = H5Tenum_insert(property_enum_id, "general", (int*) &prop);
+      prop  = LAPACKSupport::Property::general;
+      status= H5Tenum_insert(property_enum_id, "general", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::hessenberg;
-      status = H5Tenum_insert(property_enum_id, "hessenberg", (int*) &prop);
+      prop  = LAPACKSupport::Property::hessenberg;
+      status= H5Tenum_insert(property_enum_id, "hessenberg", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop = LAPACKSupport::Property::lower_triangular;
+      prop= LAPACKSupport::Property::lower_triangular;
       status
         = H5Tenum_insert(property_enum_id, "lower_triangular", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::symmetric;
-      status = H5Tenum_insert(property_enum_id, "symmetric", (int*) &prop);
+      prop  = LAPACKSupport::Property::symmetric;
+      status= H5Tenum_insert(property_enum_id, "symmetric", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop = LAPACKSupport::Property::upper_triangular;
+      prop= LAPACKSupport::Property::upper_triangular;
       status
         = H5Tenum_insert(property_enum_id, "upper_triangular", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
@@ -2085,14 +2082,14 @@ ScaLAPACKMatrix<NumberType>::save(
   AssertThrow(false, ExcMessage("HDF5 support is disabled."));
 #  else
 
-  std::pair<unsigned int, unsigned int> chunks_size_ = chunk_size;
+  std::pair<unsigned int, unsigned int> chunks_size_= chunk_size;
 
   if(chunks_size_.first == numbers::invalid_unsigned_int
      || chunks_size_.second == numbers::invalid_unsigned_int)
     {
       // default: store the matrix in chunks of columns
-      chunks_size_.first  = n_rows;
-      chunks_size_.second = 1;
+      chunks_size_.first = n_rows;
+      chunks_size_.second= 1;
     }
   Assert((chunks_size_.first <= (unsigned int) n_rows)
            && (chunks_size_.first > 0),
@@ -2132,10 +2129,10 @@ ScaLAPACKMatrix<NumberType>::save_serial(
    * Create a 1x1 column grid which will be used to initialize
    * an effectively serial ScaLAPACK matrix to gather the contents from the current object
    */
-  const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
+  const auto column_grid= std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, 1);
 
-  const int                   MB = n_rows, NB = n_columns;
+  const int                   MB= n_rows, NB= n_columns;
   ScaLAPACKMatrix<NumberType> tmp(n_rows, n_columns, column_grid, MB, NB);
   copy_to(tmp);
 
@@ -2152,31 +2149,31 @@ ScaLAPACKMatrix<NumberType>::save_serial(
       // modify dataset creation properties, i.e. enable chunking
       hsize_t chunk_dims[2];
       //revert order of rows and columns as ScaLAPACK uses column-major ordering
-      chunk_dims[0]       = chunk_size.second;
-      chunk_dims[1]       = chunk_size.first;
-      hid_t data_property = H5Pcreate(H5P_DATASET_CREATE);
-      status              = H5Pset_chunk(data_property, 2, chunk_dims);
+      chunk_dims[0]      = chunk_size.second;
+      chunk_dims[1]      = chunk_size.first;
+      hid_t data_property= H5Pcreate(H5P_DATASET_CREATE);
+      status             = H5Pset_chunk(data_property, 2, chunk_dims);
       AssertThrow(status >= 0, ExcIO());
 
       // create the data space for the dataset
       hsize_t dims[2];
       //change order of rows and columns as ScaLAPACKMatrix uses column major ordering
-      dims[0]            = n_columns;
-      dims[1]            = n_rows;
-      hid_t dataspace_id = H5Screate_simple(2, dims, nullptr);
+      dims[0]           = n_columns;
+      dims[1]           = n_rows;
+      hid_t dataspace_id= H5Screate_simple(2, dims, nullptr);
 
       // create the dataset within the file using chunk creation properties
-      hid_t type_id    = hdf5_type_id(&tmp.values[0]);
-      hid_t dataset_id = H5Dcreate2(file_id,
-                                    "/matrix",
-                                    type_id,
-                                    dataspace_id,
-                                    H5P_DEFAULT,
-                                    data_property,
-                                    H5P_DEFAULT);
+      hid_t type_id   = hdf5_type_id(&tmp.values[0]);
+      hid_t dataset_id= H5Dcreate2(file_id,
+                                   "/matrix",
+                                   type_id,
+                                   dataspace_id,
+                                   H5P_DEFAULT,
+                                   data_property,
+                                   H5P_DEFAULT);
 
       // write the dataset
-      status = H5Dwrite(
+      status= H5Dwrite(
         dataset_id, type_id, H5S_ALL, H5S_ALL, H5P_DEFAULT, &tmp.values[0]);
       AssertThrow(status >= 0, ExcIO());
 
@@ -2187,75 +2184,75 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 
       // create the data space for the state enum
       hsize_t dims_state[1];
-      dims_state[0]              = 1;
-      hid_t state_enum_dataspace = H5Screate_simple(1, dims_state, nullptr);
+      dims_state[0]             = 1;
+      hid_t state_enum_dataspace= H5Screate_simple(1, dims_state, nullptr);
       // create the dataset for the state enum
-      hid_t state_enum_dataset = H5Dcreate2(file_id,
-                                            "/state",
-                                            state_enum_id,
-                                            state_enum_dataspace,
-                                            H5P_DEFAULT,
-                                            H5P_DEFAULT,
-                                            H5P_DEFAULT);
+      hid_t state_enum_dataset= H5Dcreate2(file_id,
+                                           "/state",
+                                           state_enum_id,
+                                           state_enum_dataspace,
+                                           H5P_DEFAULT,
+                                           H5P_DEFAULT,
+                                           H5P_DEFAULT);
       // write the dataset for the state enum
-      status = H5Dwrite(state_enum_dataset,
-                        state_enum_id,
-                        H5S_ALL,
-                        H5S_ALL,
-                        H5P_DEFAULT,
-                        &state);
+      status= H5Dwrite(state_enum_dataset,
+                       state_enum_id,
+                       H5S_ALL,
+                       H5S_ALL,
+                       H5P_DEFAULT,
+                       &state);
       AssertThrow(status >= 0, ExcIO());
 
       // create the data space for the property enum
       hsize_t dims_property[1];
-      dims_property[0] = 1;
+      dims_property[0]= 1;
       hid_t property_enum_dataspace
         = H5Screate_simple(1, dims_property, nullptr);
       // create the dataset for the property enum
-      hid_t property_enum_dataset = H5Dcreate2(file_id,
-                                               "/property",
-                                               property_enum_id,
-                                               property_enum_dataspace,
-                                               H5P_DEFAULT,
-                                               H5P_DEFAULT,
-                                               H5P_DEFAULT);
+      hid_t property_enum_dataset= H5Dcreate2(file_id,
+                                              "/property",
+                                              property_enum_id,
+                                              property_enum_dataspace,
+                                              H5P_DEFAULT,
+                                              H5P_DEFAULT,
+                                              H5P_DEFAULT);
       // write the dataset for the property enum
-      status = H5Dwrite(property_enum_dataset,
-                        property_enum_id,
-                        H5S_ALL,
-                        H5S_ALL,
-                        H5P_DEFAULT,
-                        &property);
+      status= H5Dwrite(property_enum_dataset,
+                       property_enum_id,
+                       H5S_ALL,
+                       H5S_ALL,
+                       H5P_DEFAULT,
+                       &property);
       AssertThrow(status >= 0, ExcIO());
 
       // end access to the datasets and release resources used by them
-      status = H5Dclose(dataset_id);
+      status= H5Dclose(dataset_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Dclose(state_enum_dataset);
+      status= H5Dclose(state_enum_dataset);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Dclose(property_enum_dataset);
+      status= H5Dclose(property_enum_dataset);
       AssertThrow(status >= 0, ExcIO());
 
       // terminate access to the data spaces
-      status = H5Sclose(dataspace_id);
+      status= H5Sclose(dataspace_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(state_enum_dataspace);
+      status= H5Sclose(state_enum_dataspace);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(property_enum_dataspace);
+      status= H5Sclose(property_enum_dataspace);
       AssertThrow(status >= 0, ExcIO());
 
       // release enum data types
-      status = H5Tclose(state_enum_id);
+      status= H5Tclose(state_enum_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Tclose(property_enum_id);
+      status= H5Tclose(property_enum_id);
       AssertThrow(status >= 0, ExcIO());
 
       // release the creation property
-      status = H5Pclose(data_property);
+      status= H5Pclose(data_property);
       AssertThrow(status >= 0, ExcIO());
 
       // close the file.
-      status = H5Fclose(file_id);
+      status= H5Fclose(file_id);
       AssertThrow(status >= 0, ExcIO());
     }
 #  endif
@@ -2275,81 +2272,81 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator));
-  MPI_Info info = MPI_INFO_NULL;
+  MPI_Info info= MPI_INFO_NULL;
   /*
    * The content of the distributed matrix is copied to a matrix using a 1xn_processes process grid.
    * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
    *
    * Create a 1xn_processes column grid
   */
-  const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
+  const auto column_grid= std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, n_mpi_processes);
 
-  const int MB = n_rows, NB = std::ceil(n_columns / n_mpi_processes);
+  const int MB= n_rows, NB= std::ceil(n_columns / n_mpi_processes);
   ScaLAPACKMatrix<NumberType> tmp(n_rows, n_columns, column_grid, MB, NB);
   copy_to(tmp);
 
   // get pointer to data held by the process
-  NumberType* data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
+  NumberType* data= (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
 
   herr_t status;
   // dataset dimensions
   hsize_t dims[2];
 
   // set up file access property list with parallel I/O access
-  hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
-  status         = H5Pset_fapl_mpio(plist_id, tmp.grid->mpi_communicator, info);
+  hid_t plist_id= H5Pcreate(H5P_FILE_ACCESS);
+  status        = H5Pset_fapl_mpio(plist_id, tmp.grid->mpi_communicator, info);
   AssertThrow(status >= 0, ExcIO());
 
   // create a new file collectively and release property list identifier
-  hid_t file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
-  status        = H5Pclose(plist_id);
+  hid_t file_id= H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
+  status       = H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
 
   // As ScaLAPACK, and therefore the class ScaLAPACKMatrix, uses column-major ordering
   // but HDF5 row-major ordering, we have to reverse entries related
   // to columns and rows in the following.
   // create the dataspace for the dataset
-  dims[0] = tmp.n_columns;
-  dims[1] = tmp.n_rows;
+  dims[0]= tmp.n_columns;
+  dims[1]= tmp.n_rows;
 
-  hid_t filespace = H5Screate_simple(2, dims, nullptr);
+  hid_t filespace= H5Screate_simple(2, dims, nullptr);
 
   // create the chunked dataset with default properties and close filespace
   hsize_t chunk_dims[2];
   //revert order of rows and columns as ScaLAPACK uses column-major ordering
-  chunk_dims[0] = chunk_size.second;
-  chunk_dims[1] = chunk_size.first;
-  plist_id      = H5Pcreate(H5P_DATASET_CREATE);
+  chunk_dims[0]= chunk_size.second;
+  chunk_dims[1]= chunk_size.first;
+  plist_id     = H5Pcreate(H5P_DATASET_CREATE);
   H5Pset_chunk(plist_id, 2, chunk_dims);
-  hid_t type_id = hdf5_type_id(data);
-  hid_t dset_id = H5Dcreate2(
+  hid_t type_id= hdf5_type_id(data);
+  hid_t dset_id= H5Dcreate2(
     file_id, "/matrix", type_id, filespace, H5P_DEFAULT, plist_id, H5P_DEFAULT);
 
-  status = H5Sclose(filespace);
+  status= H5Sclose(filespace);
   AssertThrow(status >= 0, ExcIO());
 
-  status = H5Pclose(plist_id);
+  status= H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
 
   // gather the number of local rows and columns from all processes
   std::vector<int> proc_n_local_rows(n_mpi_processes),
     proc_n_local_columns(n_mpi_processes);
-  int ierr = MPI_Allgather(&tmp.n_local_rows,
-                           1,
-                           MPI_INT,
-                           proc_n_local_rows.data(),
-                           1,
-                           MPI_INT,
-                           tmp.grid->mpi_communicator);
+  int ierr= MPI_Allgather(&tmp.n_local_rows,
+                          1,
+                          MPI_INT,
+                          proc_n_local_rows.data(),
+                          1,
+                          MPI_INT,
+                          tmp.grid->mpi_communicator);
   AssertThrowMPI(ierr);
-  ierr = MPI_Allgather(&tmp.n_local_columns,
-                       1,
-                       MPI_INT,
-                       proc_n_local_columns.data(),
-                       1,
-                       MPI_INT,
-                       tmp.grid->mpi_communicator);
+  ierr= MPI_Allgather(&tmp.n_local_columns,
+                      1,
+                      MPI_INT,
+                      proc_n_local_columns.data(),
+                      1,
+                      MPI_INT,
+                      tmp.grid->mpi_communicator);
   AssertThrowMPI(ierr);
 
   const unsigned int my_rank(
@@ -2358,53 +2355,53 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
   // hyperslab selection parameters
   // each process defines dataset in memory and writes it to the hyperslab in the file
   hsize_t count[2];
-  count[0]       = tmp.n_local_columns;
-  count[1]       = tmp.n_rows;
-  hid_t memspace = H5Screate_simple(2, count, nullptr);
+  count[0]      = tmp.n_local_columns;
+  count[1]      = tmp.n_rows;
+  hid_t memspace= H5Screate_simple(2, count, nullptr);
 
-  hsize_t offset[2] = {0};
-  for(unsigned int i = 0; i < my_rank; ++i)
-    offset[0] += proc_n_local_columns[i];
+  hsize_t offset[2]= {0};
+  for(unsigned int i= 0; i < my_rank; ++i)
+    offset[0]+= proc_n_local_columns[i];
 
   // select hyperslab in the file.
-  filespace = H5Dget_space(dset_id);
-  status    = H5Sselect_hyperslab(
+  filespace= H5Dget_space(dset_id);
+  status   = H5Sselect_hyperslab(
     filespace, H5S_SELECT_SET, offset, nullptr, count, nullptr);
   AssertThrow(status >= 0, ExcIO());
 
   // create property list for independent dataset write
-  plist_id = H5Pcreate(H5P_DATASET_XFER);
-  status   = H5Pset_dxpl_mpio(plist_id, H5FD_MPIO_INDEPENDENT);
+  plist_id= H5Pcreate(H5P_DATASET_XFER);
+  status  = H5Pset_dxpl_mpio(plist_id, H5FD_MPIO_INDEPENDENT);
   AssertThrow(status >= 0, ExcIO());
 
   // process with no data will not participate in writing to the file
   if(tmp.values.size() > 0)
     {
-      status = H5Dwrite(dset_id, type_id, memspace, filespace, plist_id, data);
+      status= H5Dwrite(dset_id, type_id, memspace, filespace, plist_id, data);
       AssertThrow(status >= 0, ExcIO());
     }
   // close/release sources
-  status = H5Dclose(dset_id);
+  status= H5Dclose(dset_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Sclose(filespace);
+  status= H5Sclose(filespace);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Sclose(memspace);
+  status= H5Sclose(memspace);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Pclose(plist_id);
+  status= H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Fclose(file_id);
+  status= H5Fclose(file_id);
   AssertThrow(status >= 0, ExcIO());
 
   // before writing the state and property to file wait for
   // all processes to finish writing the matrix content to the file
-  ierr = MPI_Barrier(tmp.grid->mpi_communicator);
+  ierr= MPI_Barrier(tmp.grid->mpi_communicator);
   AssertThrowMPI(ierr);
 
   // only root process will write state and property to the file
   if(tmp.grid->this_mpi_process == 0)
     {
       // open file using default properties
-      hid_t file_id_reopen = H5Fopen(filename, H5F_ACC_RDWR, H5P_DEFAULT);
+      hid_t file_id_reopen= H5Fopen(filename, H5F_ACC_RDWR, H5P_DEFAULT);
 
       // create HDF5 enum type for LAPACKSupport::State and LAPACKSupport::Property
       hid_t state_enum_id, property_enum_id;
@@ -2413,60 +2410,60 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
       // create the data space for the state enum
       hsize_t dims_state[1];
-      dims_state[0]              = 1;
-      hid_t state_enum_dataspace = H5Screate_simple(1, dims_state, nullptr);
+      dims_state[0]             = 1;
+      hid_t state_enum_dataspace= H5Screate_simple(1, dims_state, nullptr);
       // create the dataset for the state enum
-      hid_t state_enum_dataset = H5Dcreate2(file_id_reopen,
-                                            "/state",
-                                            state_enum_id,
-                                            state_enum_dataspace,
-                                            H5P_DEFAULT,
-                                            H5P_DEFAULT,
-                                            H5P_DEFAULT);
+      hid_t state_enum_dataset= H5Dcreate2(file_id_reopen,
+                                           "/state",
+                                           state_enum_id,
+                                           state_enum_dataspace,
+                                           H5P_DEFAULT,
+                                           H5P_DEFAULT,
+                                           H5P_DEFAULT);
       // write the dataset for the state enum
-      status = H5Dwrite(state_enum_dataset,
-                        state_enum_id,
-                        H5S_ALL,
-                        H5S_ALL,
-                        H5P_DEFAULT,
-                        &state);
+      status= H5Dwrite(state_enum_dataset,
+                       state_enum_id,
+                       H5S_ALL,
+                       H5S_ALL,
+                       H5P_DEFAULT,
+                       &state);
       AssertThrow(status >= 0, ExcIO());
 
       // create the data space for the property enum
       hsize_t dims_property[1];
-      dims_property[0] = 1;
+      dims_property[0]= 1;
       hid_t property_enum_dataspace
         = H5Screate_simple(1, dims_property, nullptr);
       // create the dataset for the property enum
-      hid_t property_enum_dataset = H5Dcreate2(file_id_reopen,
-                                               "/property",
-                                               property_enum_id,
-                                               property_enum_dataspace,
-                                               H5P_DEFAULT,
-                                               H5P_DEFAULT,
-                                               H5P_DEFAULT);
+      hid_t property_enum_dataset= H5Dcreate2(file_id_reopen,
+                                              "/property",
+                                              property_enum_id,
+                                              property_enum_dataspace,
+                                              H5P_DEFAULT,
+                                              H5P_DEFAULT,
+                                              H5P_DEFAULT);
       // write the dataset for the property enum
-      status = H5Dwrite(property_enum_dataset,
-                        property_enum_id,
-                        H5S_ALL,
-                        H5S_ALL,
-                        H5P_DEFAULT,
-                        &property);
+      status= H5Dwrite(property_enum_dataset,
+                       property_enum_id,
+                       H5S_ALL,
+                       H5S_ALL,
+                       H5P_DEFAULT,
+                       &property);
       AssertThrow(status >= 0, ExcIO());
 
-      status = H5Dclose(state_enum_dataset);
+      status= H5Dclose(state_enum_dataset);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Dclose(property_enum_dataset);
+      status= H5Dclose(property_enum_dataset);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(state_enum_dataspace);
+      status= H5Sclose(state_enum_dataspace);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(property_enum_dataspace);
+      status= H5Sclose(property_enum_dataspace);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Tclose(state_enum_id);
+      status= H5Tclose(state_enum_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Tclose(property_enum_id);
+      status= H5Tclose(property_enum_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Fclose(file_id_reopen);
+      status= H5Fclose(file_id_reopen);
       AssertThrow(status >= 0, ExcIO());
     }
 
@@ -2506,14 +2503,14 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
    * Therefore, one process has all the data and can write it to a file
    */
   //create a 1xP column grid with P being the number of MPI processes
-  const auto one_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
+  const auto one_grid= std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, 1);
 
-  const int                   MB = n_rows, NB = n_columns;
+  const int                   MB= n_rows, NB= n_columns;
   ScaLAPACKMatrix<NumberType> tmp(n_rows, n_columns, one_grid, MB, NB);
 
-  int state_int    = -1;
-  int property_int = -1;
+  int state_int   = -1;
+  int property_int= -1;
 
   // the 1x1 grid has only one process and this one reads
   // the content of the matrix from the HDF5 file
@@ -2522,26 +2519,26 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
       herr_t status;
 
       // open the file in read-only mode
-      hid_t file_id = H5Fopen(filename, H5F_ACC_RDONLY, H5P_DEFAULT);
+      hid_t file_id= H5Fopen(filename, H5F_ACC_RDONLY, H5P_DEFAULT);
 
       // open the dataset in the file
-      hid_t dataset_id = H5Dopen2(file_id, "/matrix", H5P_DEFAULT);
+      hid_t dataset_id= H5Dopen2(file_id, "/matrix", H5P_DEFAULT);
 
       // check the datatype of the data in the file
       // datatype of source and destination must have the same class
       // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
-      hid_t       datatype   = H5Dget_type(dataset_id);
-      H5T_class_t t_class_in = H5Tget_class(datatype);
-      H5T_class_t t_class    = H5Tget_class(hdf5_type_id(&tmp.values[0]));
+      hid_t       datatype  = H5Dget_type(dataset_id);
+      H5T_class_t t_class_in= H5Tget_class(datatype);
+      H5T_class_t t_class   = H5Tget_class(hdf5_type_id(&tmp.values[0]));
       AssertThrow(
         t_class_in == t_class,
         ExcMessage(
           "The data type of the matrix to be read does not match the archive"));
 
       // get dataspace handle
-      hid_t dataspace_id = H5Dget_space(dataset_id);
+      hid_t dataspace_id= H5Dget_space(dataset_id);
       // get number of dimensions
-      const int ndims = H5Sget_simple_extent_ndims(dataspace_id);
+      const int ndims= H5Sget_simple_extent_ndims(dataspace_id);
       AssertThrow(ndims == 2, ExcIO());
       // get every dimension
       hsize_t dims[2];
@@ -2556,12 +2553,12 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
           "The number of rows of the matrix does not match the content of the archive"));
 
       // read data
-      status = H5Dread(dataset_id,
-                       hdf5_type_id(&tmp.values[0]),
-                       H5S_ALL,
-                       H5S_ALL,
-                       H5P_DEFAULT,
-                       &tmp.values[0]);
+      status= H5Dread(dataset_id,
+                      hdf5_type_id(&tmp.values[0]),
+                      H5S_ALL,
+                      H5S_ALL,
+                      H5P_DEFAULT,
+                      &tmp.values[0]);
       AssertThrow(status >= 0, ExcIO());
 
       // create HDF5 enum type for LAPACKSupport::State and LAPACKSupport::Property
@@ -2570,23 +2567,23 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
       internal::create_HDF5_property_enum_id(property_enum_id);
 
       // open the datasets for the state and property enum in the file
-      hid_t       dataset_state_id = H5Dopen2(file_id, "/state", H5P_DEFAULT);
-      hid_t       datatype_state   = H5Dget_type(dataset_state_id);
-      H5T_class_t t_class_state    = H5Tget_class(datatype_state);
+      hid_t       dataset_state_id= H5Dopen2(file_id, "/state", H5P_DEFAULT);
+      hid_t       datatype_state  = H5Dget_type(dataset_state_id);
+      H5T_class_t t_class_state   = H5Tget_class(datatype_state);
       AssertThrow(t_class_state == H5T_ENUM, ExcIO());
 
-      hid_t dataset_property_id = H5Dopen2(file_id, "/property", H5P_DEFAULT);
-      hid_t datatype_property   = H5Dget_type(dataset_property_id);
-      H5T_class_t t_class_property = H5Tget_class(datatype_property);
+      hid_t dataset_property_id   = H5Dopen2(file_id, "/property", H5P_DEFAULT);
+      hid_t datatype_property     = H5Dget_type(dataset_property_id);
+      H5T_class_t t_class_property= H5Tget_class(datatype_property);
       AssertThrow(t_class_property == H5T_ENUM, ExcIO());
 
       // get dataspace handles
-      hid_t dataspace_state    = H5Dget_space(dataset_state_id);
-      hid_t dataspace_property = H5Dget_space(dataset_property_id);
+      hid_t dataspace_state   = H5Dget_space(dataset_state_id);
+      hid_t dataspace_property= H5Dget_space(dataset_property_id);
       // get number of dimensions
-      const int ndims_state = H5Sget_simple_extent_ndims(dataspace_state);
+      const int ndims_state= H5Sget_simple_extent_ndims(dataspace_state);
       AssertThrow(ndims_state == 1, ExcIO());
-      const int ndims_property = H5Sget_simple_extent_ndims(dataspace_property);
+      const int ndims_property= H5Sget_simple_extent_ndims(dataspace_property);
       AssertThrow(ndims_property == 1, ExcIO());
       // get every dimension
       hsize_t dims_state[1];
@@ -2597,56 +2594,56 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
       AssertThrow((int) dims_property[0] == 1, ExcIO());
 
       // read data
-      status = H5Dread(dataset_state_id,
-                       state_enum_id,
-                       H5S_ALL,
-                       H5S_ALL,
-                       H5P_DEFAULT,
-                       &tmp.state);
+      status= H5Dread(dataset_state_id,
+                      state_enum_id,
+                      H5S_ALL,
+                      H5S_ALL,
+                      H5P_DEFAULT,
+                      &tmp.state);
       AssertThrow(status >= 0, ExcIO());
       // To send the state from the root process to the other processes
       // the state enum is casted to an integer, that will be broadcasted and
       // subsequently casted back to the enum type
-      state_int = static_cast<int>(tmp.state);
+      state_int= static_cast<int>(tmp.state);
 
-      status = H5Dread(dataset_property_id,
-                       property_enum_id,
-                       H5S_ALL,
-                       H5S_ALL,
-                       H5P_DEFAULT,
-                       &tmp.property);
+      status= H5Dread(dataset_property_id,
+                      property_enum_id,
+                      H5S_ALL,
+                      H5S_ALL,
+                      H5P_DEFAULT,
+                      &tmp.property);
       AssertThrow(status >= 0, ExcIO());
       // To send the property from the root process to the other processes
       // the state enum is casted to an integer, that will be broadcasted and
       // subsequently casted back to the enum type
-      property_int = static_cast<int>(tmp.property);
+      property_int= static_cast<int>(tmp.property);
 
       // terminate access to the data spaces
-      status = H5Sclose(dataspace_id);
+      status= H5Sclose(dataspace_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(dataspace_state);
+      status= H5Sclose(dataspace_state);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Sclose(dataspace_property);
+      status= H5Sclose(dataspace_property);
       AssertThrow(status >= 0, ExcIO());
 
       // release data type handles
-      status = H5Tclose(datatype);
+      status= H5Tclose(datatype);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Tclose(state_enum_id);
+      status= H5Tclose(state_enum_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Tclose(property_enum_id);
+      status= H5Tclose(property_enum_id);
       AssertThrow(status >= 0, ExcIO());
 
       // end access to the data sets and release resources used by them
-      status = H5Dclose(dataset_state_id);
+      status= H5Dclose(dataset_state_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Dclose(dataset_id);
+      status= H5Dclose(dataset_id);
       AssertThrow(status >= 0, ExcIO());
-      status = H5Dclose(dataset_property_id);
+      status= H5Dclose(dataset_property_id);
       AssertThrow(status >= 0, ExcIO());
 
       // close the file.
-      status = H5Fclose(file_id);
+      status= H5Fclose(file_id);
       AssertThrow(status >= 0, ExcIO());
     }
   // so far only the root process has the correct state integer --> broadcasting
@@ -2654,8 +2651,8 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
   // so far only the root process has the correct property integer --> broadcasting
   tmp.grid->send_to_inactive(&property_int, 1);
 
-  tmp.state    = static_cast<LAPACKSupport::State>(state_int);
-  tmp.property = static_cast<LAPACKSupport::Property>(property_int);
+  tmp.state   = static_cast<LAPACKSupport::State>(state_int);
+  tmp.property= static_cast<LAPACKSupport::Property>(property_int);
 
   tmp.copy_to(*this);
 
@@ -2676,43 +2673,43 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator));
-  MPI_Info info = MPI_INFO_NULL;
+  MPI_Info info= MPI_INFO_NULL;
   /*
    * The content of the distributed matrix is copied to a matrix using a 1xn_processes process grid.
    * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
    */
   //create a 1xP column grid with P being the number of MPI processes
-  const auto column_grid = std::make_shared<Utilities::MPI::ProcessGrid>(
+  const auto column_grid= std::make_shared<Utilities::MPI::ProcessGrid>(
     this->grid->mpi_communicator, 1, n_mpi_processes);
 
-  const int MB = n_rows, NB = std::ceil(n_columns / n_mpi_processes);
+  const int MB= n_rows, NB= std::ceil(n_columns / n_mpi_processes);
   ScaLAPACKMatrix<NumberType> tmp(n_rows, n_columns, column_grid, MB, NB);
 
   // get pointer to data held by the process
-  NumberType* data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
+  NumberType* data= (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
 
   herr_t status;
 
   // set up file access property list with parallel I/O access
-  hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
-  status         = H5Pset_fapl_mpio(plist_id, tmp.grid->mpi_communicator, info);
+  hid_t plist_id= H5Pcreate(H5P_FILE_ACCESS);
+  status        = H5Pset_fapl_mpio(plist_id, tmp.grid->mpi_communicator, info);
   AssertThrow(status >= 0, ExcIO());
 
   // open file collectively in read-only mode and release property list identifier
-  hid_t file_id = H5Fopen(filename, H5F_ACC_RDONLY, plist_id);
-  status        = H5Pclose(plist_id);
+  hid_t file_id= H5Fopen(filename, H5F_ACC_RDONLY, plist_id);
+  status       = H5Pclose(plist_id);
   AssertThrow(status >= 0, ExcIO());
 
   // open the dataset in the file collectively
-  hid_t dataset_id = H5Dopen2(file_id, "/matrix", H5P_DEFAULT);
+  hid_t dataset_id= H5Dopen2(file_id, "/matrix", H5P_DEFAULT);
 
   // check the datatype of the dataset in the file
   // if the classes of type of the dataset and the matrix do not match abort
   // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
-  hid_t       datatype     = hdf5_type_id(data);
-  hid_t       datatype_inp = H5Dget_type(dataset_id);
-  H5T_class_t t_class_inp  = H5Tget_class(datatype_inp);
-  H5T_class_t t_class      = H5Tget_class(datatype);
+  hid_t       datatype    = hdf5_type_id(data);
+  hid_t       datatype_inp= H5Dget_type(dataset_id);
+  H5T_class_t t_class_inp = H5Tget_class(datatype_inp);
+  H5T_class_t t_class     = H5Tget_class(datatype);
   AssertThrow(
     t_class_inp == t_class,
     ExcMessage(
@@ -2720,13 +2717,13 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 
   // get the dimensions of the matrix stored in the file
   // get dataspace handle
-  hid_t dataspace_id = H5Dget_space(dataset_id);
+  hid_t dataspace_id= H5Dget_space(dataset_id);
   // get number of dimensions
-  const int ndims = H5Sget_simple_extent_ndims(dataspace_id);
+  const int ndims= H5Sget_simple_extent_ndims(dataspace_id);
   AssertThrow(ndims == 2, ExcIO());
   // get every dimension
   hsize_t dims[2];
-  status = H5Sget_simple_extent_dims(dataspace_id, dims, nullptr);
+  status= H5Sget_simple_extent_dims(dataspace_id, dims, nullptr);
   AssertThrow(status >= 0, ExcIO());
   AssertThrow(
     (int) dims[0] == n_columns,
@@ -2740,21 +2737,21 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   // gather the number of local rows and columns from all processes
   std::vector<int> proc_n_local_rows(n_mpi_processes),
     proc_n_local_columns(n_mpi_processes);
-  int ierr = MPI_Allgather(&tmp.n_local_rows,
-                           1,
-                           MPI_INT,
-                           proc_n_local_rows.data(),
-                           1,
-                           MPI_INT,
-                           tmp.grid->mpi_communicator);
+  int ierr= MPI_Allgather(&tmp.n_local_rows,
+                          1,
+                          MPI_INT,
+                          proc_n_local_rows.data(),
+                          1,
+                          MPI_INT,
+                          tmp.grid->mpi_communicator);
   AssertThrowMPI(ierr);
-  ierr = MPI_Allgather(&tmp.n_local_columns,
-                       1,
-                       MPI_INT,
-                       proc_n_local_columns.data(),
-                       1,
-                       MPI_INT,
-                       tmp.grid->mpi_communicator);
+  ierr= MPI_Allgather(&tmp.n_local_columns,
+                      1,
+                      MPI_INT,
+                      proc_n_local_columns.data(),
+                      1,
+                      MPI_INT,
+                      tmp.grid->mpi_communicator);
   AssertThrowMPI(ierr);
 
   const unsigned int my_rank(
@@ -2763,20 +2760,20 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   // hyperslab selection parameters
   // each process defines dataset in memory and writes it to the hyperslab in the file
   hsize_t count[2];
-  count[0] = tmp.n_local_columns;
-  count[1] = tmp.n_local_rows;
+  count[0]= tmp.n_local_columns;
+  count[1]= tmp.n_local_rows;
 
-  hsize_t offset[2] = {0};
-  for(unsigned int i = 0; i < my_rank; ++i)
-    offset[0] += proc_n_local_columns[i];
+  hsize_t offset[2]= {0};
+  for(unsigned int i= 0; i < my_rank; ++i)
+    offset[0]+= proc_n_local_columns[i];
 
   // select hyperslab in the file
-  status = H5Sselect_hyperslab(
+  status= H5Sselect_hyperslab(
     dataspace_id, H5S_SELECT_SET, offset, nullptr, count, nullptr);
   AssertThrow(status >= 0, ExcIO());
 
   // create a memory dataspace independently
-  hid_t memspace = H5Screate_simple(2, count, nullptr);
+  hid_t memspace= H5Screate_simple(2, count, nullptr);
 
   // read data independently
   status
@@ -2789,23 +2786,23 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   internal::create_HDF5_property_enum_id(property_enum_id);
 
   // open the datasets for the state and property enum in the file
-  hid_t       dataset_state_id = H5Dopen2(file_id, "/state", H5P_DEFAULT);
-  hid_t       datatype_state   = H5Dget_type(dataset_state_id);
-  H5T_class_t t_class_state    = H5Tget_class(datatype_state);
+  hid_t       dataset_state_id= H5Dopen2(file_id, "/state", H5P_DEFAULT);
+  hid_t       datatype_state  = H5Dget_type(dataset_state_id);
+  H5T_class_t t_class_state   = H5Tget_class(datatype_state);
   AssertThrow(t_class_state == H5T_ENUM, ExcIO());
 
-  hid_t       dataset_property_id = H5Dopen2(file_id, "/property", H5P_DEFAULT);
-  hid_t       datatype_property   = H5Dget_type(dataset_property_id);
-  H5T_class_t t_class_property    = H5Tget_class(datatype_property);
+  hid_t       dataset_property_id= H5Dopen2(file_id, "/property", H5P_DEFAULT);
+  hid_t       datatype_property  = H5Dget_type(dataset_property_id);
+  H5T_class_t t_class_property   = H5Tget_class(datatype_property);
   AssertThrow(t_class_property == H5T_ENUM, ExcIO());
 
   // get dataspace handles
-  hid_t dataspace_state    = H5Dget_space(dataset_state_id);
-  hid_t dataspace_property = H5Dget_space(dataset_property_id);
+  hid_t dataspace_state   = H5Dget_space(dataset_state_id);
+  hid_t dataspace_property= H5Dget_space(dataset_property_id);
   // get number of dimensions
-  const int ndims_state = H5Sget_simple_extent_ndims(dataspace_state);
+  const int ndims_state= H5Sget_simple_extent_ndims(dataspace_state);
   AssertThrow(ndims_state == 1, ExcIO());
-  const int ndims_property = H5Sget_simple_extent_ndims(dataspace_property);
+  const int ndims_property= H5Sget_simple_extent_ndims(dataspace_property);
   AssertThrow(ndims_property == 1, ExcIO());
   // get every dimension
   hsize_t dims_state[1];
@@ -2816,40 +2813,40 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   AssertThrow((int) dims_property[0] == 1, ExcIO());
 
   // read data
-  status = H5Dread(
+  status= H5Dread(
     dataset_state_id, state_enum_id, H5S_ALL, H5S_ALL, H5P_DEFAULT, &tmp.state);
   AssertThrow(status >= 0, ExcIO());
 
-  status = H5Dread(dataset_property_id,
-                   property_enum_id,
-                   H5S_ALL,
-                   H5S_ALL,
-                   H5P_DEFAULT,
-                   &tmp.property);
+  status= H5Dread(dataset_property_id,
+                  property_enum_id,
+                  H5S_ALL,
+                  H5S_ALL,
+                  H5P_DEFAULT,
+                  &tmp.property);
   AssertThrow(status >= 0, ExcIO());
 
   // close/release sources
-  status = H5Sclose(memspace);
+  status= H5Sclose(memspace);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Dclose(dataset_id);
+  status= H5Dclose(dataset_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Dclose(dataset_state_id);
+  status= H5Dclose(dataset_state_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Dclose(dataset_property_id);
+  status= H5Dclose(dataset_property_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Sclose(dataspace_id);
+  status= H5Sclose(dataspace_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Sclose(dataspace_state);
+  status= H5Sclose(dataspace_state);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Sclose(dataspace_property);
+  status= H5Sclose(dataspace_property);
   AssertThrow(status >= 0, ExcIO());
   //status = H5Tclose(datatype);
   //AssertThrow(status >= 0, ExcIO());
-  status = H5Tclose(state_enum_id);
+  status= H5Tclose(state_enum_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Tclose(property_enum_id);
+  status= H5Tclose(property_enum_id);
   AssertThrow(status >= 0, ExcIO());
-  status = H5Fclose(file_id);
+  status= H5Fclose(file_id);
   AssertThrow(status >= 0, ExcIO());
 
   // copying the distributed matrices
@@ -2871,12 +2868,12 @@ namespace internal
       Assert(matrix.n() == factors.size(),
              ExcDimensionMismatch(matrix.n(), factors.size()));
 
-      for(unsigned int i = 0; i < matrix.local_n(); ++i)
+      for(unsigned int i= 0; i < matrix.local_n(); ++i)
         {
-          const NumberType s = factors[matrix.global_column(i)];
+          const NumberType s= factors[matrix.global_column(i)];
 
-          for(unsigned int j = 0; j < matrix.local_m(); ++j)
-            matrix.local_el(j, i) *= s;
+          for(unsigned int j= 0; j < matrix.local_m(); ++j)
+            matrix.local_el(j, i)*= s;
         }
     }
 
@@ -2888,12 +2885,12 @@ namespace internal
       Assert(matrix.m() == factors.size(),
              ExcDimensionMismatch(matrix.m(), factors.size()));
 
-      for(unsigned int i = 0; i < matrix.local_m(); ++i)
+      for(unsigned int i= 0; i < matrix.local_m(); ++i)
         {
-          const NumberType s = factors[matrix.global_row(i)];
+          const NumberType s= factors[matrix.global_row(i)];
 
-          for(unsigned int j = 0; j < matrix.local_n(); ++j)
-            matrix.local_el(i, j) *= s;
+          for(unsigned int j= 0; j < matrix.local_n(); ++j)
+            matrix.local_el(i, j)*= s;
         }
     }
 

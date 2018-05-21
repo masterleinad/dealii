@@ -44,13 +44,12 @@ test(const unsigned int degree)
 
   QGauss<dim>   q(degree + 1);
   FEValues<dim> fe_values(fe, q, update_values);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     {
       fe_values.reinit(cell);
-      for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+      for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
         AssertThrow(fe_values.shape_value(0, q) == 1, ExcInternalError());
     }
 
@@ -65,13 +64,13 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int degree = 0; degree <= 4; ++degree)
+  for(unsigned int degree= 0; degree <= 4; ++degree)
     test<1>(degree);
 
-  for(unsigned int degree = 0; degree <= 4; ++degree)
+  for(unsigned int degree= 0; degree <= 4; ++degree)
     test<2>(degree);
 
-  for(unsigned int degree = 0; degree <= 4; ++degree)
+  for(unsigned int degree= 0; degree <= 4; ++degree)
     test<3>(degree);
 
   return 0;

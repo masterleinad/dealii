@@ -33,9 +33,9 @@ test()
 
   is2.add_range(4, 9);
 
-  IndexSet is3 = is1 & is2;
+  IndexSet is3= is1 & is2;
 
-  for(unsigned int i = 0; i < is3.size(); ++i)
+  for(unsigned int i= 0; i < is3.size(); ++i)
     {
       deallog << i << ' ' << (is3.is_element(i) ? "true" : "false")
               << std::endl;

@@ -24,9 +24,9 @@ template <int dim>
 void
 write_mat_id_to_file(const Triangulation<dim>& tria)
 {
-  int                                               count = 0;
-  typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
-                                                    endc  = tria.end();
+  int                                               count= 0;
+  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
+                                                    endc = tria.end();
   for(; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << static_cast<int>(cell->material_id())
@@ -48,14 +48,14 @@ test()
   typedef typename Triangulation<dim>::active_cell_iterator cell_iterator;
 
   // Mark a small block at the corner of the hypercube
-  cell_iterator cell = tria.begin_active(), endc = tria.end();
+  cell_iterator cell= tria.begin_active(), endc= tria.end();
   for(; cell != endc; ++cell)
     {
-      bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
+      bool mark= true;
+      for(unsigned int d= 0; d < dim; ++d)
         if(cell->center()[d] > 0.5)
           {
-            mark = false;
+            mark= false;
             break;
           }
 

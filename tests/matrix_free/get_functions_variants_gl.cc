@@ -51,8 +51,8 @@ public:
   void
   test_functions(const VectorType& src) const
   {
-    for(unsigned int i = 0; i < 5; ++i)
-      errors[i] = 0;
+    for(unsigned int i= 0; i < 5; ++i)
+      errors[i]= 0;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number>::operator(),
                    this,
                    const_cast<VectorType&>(src),
@@ -87,7 +87,7 @@ operator()(const MatrixFree<dim, Number>& data,
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval3(data);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval4(data);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval5(data);
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.read_dof_values(src);
@@ -117,23 +117,23 @@ operator()(const MatrixFree<dim, Number>& data,
       // when expanding the full
       // FEEvaluations. Those are tested in other
       // functions and seen as reference here
-      for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
-        for(unsigned int j = 0; j < VectorizedArray<Number>::n_array_elements;
+      for(unsigned int q= 0; q < fe_eval.n_q_points; ++q)
+        for(unsigned int j= 0; j < VectorizedArray<Number>::n_array_elements;
             ++j)
           {
             errors[0]
               += std::fabs(fe_eval.get_value(q)[j] - fe_eval2.get_value(q)[j]);
             errors[2]
               += std::fabs(fe_eval.get_value(q)[j] - fe_eval4.get_value(q)[j]);
-            for(unsigned int d = 0; d < dim; ++d)
+            for(unsigned int d= 0; d < dim; ++d)
               {
-                errors[1] += std::fabs(fe_eval.get_gradient(q)[d][j]
-                                       - fe_eval3.get_gradient(q)[d][j]);
-                errors[3] += std::fabs(fe_eval.get_gradient(q)[d][j]
-                                       - fe_eval4.get_gradient(q)[d][j]);
+                errors[1]+= std::fabs(fe_eval.get_gradient(q)[d][j]
+                                      - fe_eval3.get_gradient(q)[d][j]);
+                errors[3]+= std::fabs(fe_eval.get_gradient(q)[d][j]
+                                      - fe_eval4.get_gradient(q)[d][j]);
               }
-            errors[4] += std::fabs(fe_eval.get_laplacian(q)[j]
-                                   - fe_eval5.get_laplacian(q)[j]);
+            errors[4]+= std::fabs(fe_eval.get_laplacian(q)[j]
+                                  - fe_eval5.get_laplacian(q)[j]);
           }
     }
 }
@@ -156,10 +156,10 @@ test()
   Vector<double> solution_dist(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
-      const double entry = random_value<double>();
-      solution_dist(i)   = entry;
+      const double entry= random_value<double>();
+      solution_dist(i)  = entry;
     }
 
   ConstraintMatrix constraints;
@@ -167,8 +167,8 @@ test()
   {
     const QGaussLobatto<1>                   quad(fe_degree + 1);
     typename MatrixFree<dim>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
-    data.mapping_update_flags  = update_gradients | update_hessians;
+    data.tasks_parallel_scheme= MatrixFree<dim>::AdditionalData::none;
+    data.mapping_update_flags = update_gradients | update_hessians;
     mf_data.reinit(dof, constraints, quad, data);
   }
 

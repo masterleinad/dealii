@@ -23,8 +23,8 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set only certain elements of the vector
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
-    v(k) = std::complex<double>(k, .5 * k);
+  for(unsigned int k= 0; k < v.size(); k+= 1 + k)
+    v(k)= std::complex<double>(k, .5 * k);
 
   v.compress(VectorOperation::insert);
 

@@ -69,7 +69,7 @@ class Function;
  * @ingroup functions
  * @author Wolfgang Bangerth, Ralf Hartmann, 2001
  */
-template <int dim, typename Number = double>
+template <int dim, typename Number= double>
 struct FunctionMap
 {
   /**

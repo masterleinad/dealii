@@ -38,7 +38,7 @@ main()
 
     SmartPointer<Subscriptor> smart(&subscriptor_1);
 
-    subscriptor_2 = subscriptor_1;
+    subscriptor_2= subscriptor_1;
   }
 
   try
@@ -48,7 +48,7 @@ main()
 
       SmartPointer<Subscriptor> smart(&subscriptor_2);
 
-      subscriptor_2 = subscriptor_1;
+      subscriptor_2= subscriptor_1;
     }
   catch(ExceptionBase& e)
     {
@@ -62,7 +62,7 @@ main()
 
       SmartPointer<Subscriptor> smart(&subscriptor_1);
 
-      subscriptor_2 = std::move(subscriptor_1);
+      subscriptor_2= std::move(subscriptor_1);
     }
   catch(ExceptionBase& e)
     {
@@ -76,7 +76,7 @@ main()
 
       SmartPointer<Subscriptor> smart(&subscriptor_2);
 
-      subscriptor_2 = std::move(subscriptor_1);
+      subscriptor_2= std::move(subscriptor_1);
     }
   catch(ExceptionBase& e)
     {

@@ -25,11 +25,11 @@ void
 test(TrilinosWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  double norm= 0;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
     {
-      v(i) = i;
-      norm = std::max(norm, fabs(i));
+      v(i)= i;
+      norm= std::max(norm, fabs(i));
     }
   v.compress(VectorOperation::insert);
 

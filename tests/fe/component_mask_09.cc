@@ -24,18 +24,18 @@ void
 test()
 {
   std::vector<bool> v1(12);
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    v1[i] = (i % 3 == 0);
+  for(unsigned int i= 0; i < v1.size(); ++i)
+    v1[i]= (i % 3 == 0);
   std::vector<bool> v2(12);
-  for(unsigned int i = 0; i < v2.size(); ++i)
-    v2[2] = (i % 4 == 0);
+  for(unsigned int i= 0; i < v2.size(); ++i)
+    v2[2]= (i % 4 == 0);
 
   ComponentMask m1(v1);
   ComponentMask m2(v2);
-  ComponentMask m = m1 | m2;
+  ComponentMask m= m1 | m2;
 
   // verify equality
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for(unsigned int i= 0; i < v1.size(); ++i)
     AssertThrow(m[i] == (v1[i] || v2[i]), ExcInternalError());
 
   deallog << "OK" << std::endl;

@@ -28,8 +28,8 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -57,9 +57,9 @@ test()
   partitioning.push_back(block2);
 
   typename LA::MPI::BlockVector v(partitioning, MPI_COMM_WORLD);
-  v = 0.1;
+  v= 0.1;
 
-  v(myid) = myid;
+  v(myid)= myid;
   v.compress(VectorOperation::insert);
 
   deallog << "size: " << v.size() << std::endl;

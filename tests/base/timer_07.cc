@@ -27,7 +27,7 @@ main(int argc, char** argv)
 
   // capture cerr for testing purposes
   std::stringstream captured_cerr;
-  std::streambuf*   old_cerr = std::cerr.rdbuf(captured_cerr.rdbuf());
+  std::streambuf*   old_cerr= std::cerr.rdbuf(captured_cerr.rdbuf());
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
   // Test printing from TimerOutput
@@ -74,8 +74,8 @@ main(int argc, char** argv)
     {}
 
   // convert numbers to xs to avoid printing time data
-  auto        is_digit = [](const char c) -> bool { return std::isdigit(c); };
-  std::string output   = captured_cerr.str();
+  auto        is_digit= [](const char c) -> bool { return std::isdigit(c); };
+  std::string output  = captured_cerr.str();
   std::string::iterator next_number
     = std::find_if(output.begin(), output.end(), is_digit);
   while(next_number != output.end())
@@ -92,7 +92,7 @@ main(int argc, char** argv)
       Assert(end_pipe - start_pipe > 1, ExcInternalError());
 
       std::fill(start_pipe + 1, end_pipe - 1, 'x');
-      next_number = std::find_if(next_number, output.end(), is_digit);
+      next_number= std::find_if(next_number, output.end(), is_digit);
     }
 
   deallog << output << std::endl;

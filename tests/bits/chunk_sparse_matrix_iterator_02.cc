@@ -24,19 +24,19 @@ test(const unsigned int chunk_size)
 {
   deallog << "Chunk size: " << chunk_size << std::endl;
   ChunkSparsityPattern sp(5, 5, 3, chunk_size);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if(((i + 2 * j + 1) % 3 == 0) || (i == j))
         sp.add(i, j);
   sp.compress();
 
   ChunkSparseMatrix<double> m(sp);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int i= 0; i < 5; ++i)
+    for(unsigned int j= 0; j < 5; ++j)
       if(((i + 2 * j + 1) % 3 == 0) || (i == j))
         m.set(i, j, i * j);
 
-  ChunkSparseMatrix<double>::const_iterator i = m.begin();
+  ChunkSparseMatrix<double>::const_iterator i= m.begin();
   for(; i != m.end(); ++i)
     {
       deallog << i->row() << ' ' << i->column() << ' ' << i->value()
@@ -61,8 +61,8 @@ main()
 
   try
     {
-      const unsigned int chunk_sizes[] = {1, 2, 4, 5, 7};
-      for(unsigned int i = 0; i < sizeof(chunk_sizes) / sizeof(chunk_sizes[0]);
+      const unsigned int chunk_sizes[]= {1, 2, 4, 5, 7};
+      for(unsigned int i= 0; i < sizeof(chunk_sizes) / sizeof(chunk_sizes[0]);
           ++i)
         test(chunk_sizes[i]);
     }

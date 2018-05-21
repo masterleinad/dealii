@@ -74,15 +74,15 @@ test()
   // too far away from that cell, and
   // the inverse mapping does not
   // converge
-  for(unsigned int i = 0; i < 20; ++i)
-    for(unsigned int j = 0; j < 20; ++j)
+  for(unsigned int i= 0; i < 20; ++i)
+    for(unsigned int j= 0; j < 20; ++j)
       points.push_back(Point<dim>(-0.7 + i * 0.07, -0.7 + j * 0.07));
   points.push_back(Point<dim>(-0.27999999999999992, -0.62999999999999989));
 
   std::vector<double> m(points.size());
   fe_function.value_list(points, m);
 
-  for(unsigned int i = 0; i < m.size(); ++i)
+  for(unsigned int i= 0; i < m.size(); ++i)
     AssertThrow(std::fabs(m[i] - points[i].square())
                     < 1e-10 * std::fabs(m[i] + points[i].square())
                   || std::fabs(m[i] + points[i].square()) < 1e-30,

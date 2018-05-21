@@ -30,10 +30,10 @@ print_constant_modes(const FiniteElement<dim>& fe)
 {
   deallog << "Testing " << fe.get_name() << std::endl;
 
-  Table<2, bool> constant_modes = fe.get_constant_modes().first;
-  for(unsigned int r = 0; r < constant_modes.n_rows(); ++r)
+  Table<2, bool> constant_modes= fe.get_constant_modes().first;
+  for(unsigned int r= 0; r < constant_modes.n_rows(); ++r)
     {
-      for(unsigned int c = 0; c < constant_modes.n_cols(); ++c)
+      for(unsigned int c= 0; c < constant_modes.n_cols(); ++c)
         deallog << constant_modes(r, c) << " ";
       deallog << std::endl;
     }

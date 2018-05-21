@@ -36,18 +36,18 @@ void
 set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
                 bool                                       reverse)
 {
-  typename Triangulation<dim>::cell_iterator cell_1 = triangulation.begin();
-  typename Triangulation<dim>::cell_iterator cell_2 = cell_1++;
+  typename Triangulation<dim>::cell_iterator cell_1= triangulation.begin();
+  typename Triangulation<dim>::cell_iterator cell_2= cell_1++;
   typename Triangulation<dim>::face_iterator face_1;
   typename Triangulation<dim>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
     {
       if(cell_1->face(j)->center()(dim - 1) > 2.9)
-        face_1 = cell_1->face(j);
+        face_1= cell_1->face(j);
       if(cell_2->face(j)->center()(dim - 1) < -2.9)
-        face_2 = cell_2->face(j);
+        face_2= cell_2->face(j);
     }
   face_1->set_boundary_id(42);
   face_2->set_boundary_id(43);
@@ -72,7 +72,7 @@ set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
 void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
                    int                                      orientation)
 {
-  Point<2> vertices_1[] = {
+  Point<2> vertices_1[]= {
     Point<2>(-1., -3.),
     Point<2>(+1., -3.),
     Point<2>(-1., -1.),
@@ -87,21 +87,21 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
   std::vector<CellData<2>> cells(2, CellData<2>());
 
   /* cell 0 */
-  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell] = {0, 1, 2, 3};
+  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell]= {0, 1, 2, 3};
 
   /* cell 1 */
-  int cell_vertices_1[2][GeometryInfo<2>::vertices_per_cell] = {
+  int cell_vertices_1[2][GeometryInfo<2>::vertices_per_cell]= {
     {4, 5, 6, 7},
     {7, 6, 5, 4},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
-      cells[0].vertices[j] = cell_vertices_0[j];
-      cells[1].vertices[j] = cell_vertices_1[orientation][j];
+      cells[0].vertices[j]= cell_vertices_0[j];
+      cells[1].vertices[j]= cell_vertices_1[orientation][j];
     }
-  cells[0].material_id = 0;
-  cells[1].material_id = 0;
+  cells[0].material_id= 0;
+  cells[1].material_id= 0;
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
 }
@@ -110,22 +110,22 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
 void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
                    int                                      orientation)
 {
-  Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
-                           Point<3>(+1., -1., -3.),
-                           Point<3>(-1., +1., -3.),
-                           Point<3>(+1., +1., -3.),
-                           Point<3>(-1., -1., -1.),
-                           Point<3>(+1., -1., -1.),
-                           Point<3>(-1., +1., -1.),
-                           Point<3>(+1., +1., -1.),
-                           Point<3>(-1., -1., +1.),
-                           Point<3>(+1., -1., +1.),
-                           Point<3>(-1., +1., +1.),
-                           Point<3>(+1., +1., +1.),
-                           Point<3>(-1., -1., +3.),
-                           Point<3>(+1., -1., +3.),
-                           Point<3>(-1., +1., +3.),
-                           Point<3>(+1., +1., +3.)};
+  Point<3>              vertices_1[]= {Point<3>(-1., -1., -3.),
+                          Point<3>(+1., -1., -3.),
+                          Point<3>(-1., +1., -3.),
+                          Point<3>(+1., +1., -3.),
+                          Point<3>(-1., -1., -1.),
+                          Point<3>(+1., -1., -1.),
+                          Point<3>(-1., +1., -1.),
+                          Point<3>(+1., +1., -1.),
+                          Point<3>(-1., -1., +1.),
+                          Point<3>(+1., -1., +1.),
+                          Point<3>(-1., +1., +1.),
+                          Point<3>(+1., +1., +1.),
+                          Point<3>(-1., -1., +3.),
+                          Point<3>(+1., -1., +3.),
+                          Point<3>(-1., +1., +3.),
+                          Point<3>(+1., +1., +3.)};
   std::vector<Point<3>> vertices(&vertices_1[0], &vertices_1[16]);
 
   std::vector<CellData<3>> cells(2, CellData<3>());
@@ -135,7 +135,7 @@ void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
     = {0, 1, 2, 3, 4, 5, 6, 7};
 
   /* cell 1 */
-  int cell_vertices_1[8][GeometryInfo<3>::vertices_per_cell] = {
+  int cell_vertices_1[8][GeometryInfo<3>::vertices_per_cell]= {
     {8, 9, 10, 11, 12, 13, 14, 15},
     {9, 11, 8, 10, 13, 15, 12, 14},
     {11, 10, 9, 8, 15, 14, 13, 12},
@@ -146,13 +146,13 @@ void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
     {15, 13, 14, 12, 11, 9, 10, 8},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
     {
-      cells[0].vertices[j] = cell_vertices_0[j];
-      cells[1].vertices[j] = cell_vertices_1[orientation][j];
+      cells[0].vertices[j]= cell_vertices_0[j];
+      cells[1].vertices[j]= cell_vertices_1[orientation][j];
     }
-  cells[0].material_id = 0;
-  cells[1].material_id = 0;
+  cells[0].material_id= 0;
+  cells[1].material_id= 0;
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
 }
@@ -174,7 +174,7 @@ check(const unsigned int orientation, bool reverse)
 
   ConstraintMatrix constraints;
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -192,28 +192,28 @@ check(const unsigned int orientation, bool reverse)
   }
   constraints.close();
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   constraints.print(deallog.get_file_stream());
 
-  unsigned int n_local_constraints = 0;
+  unsigned int n_local_constraints= 0;
 
   std::map<types::global_dof_index, Point<dim>> support_points;
   DoFTools::map_dofs_to_support_points(
     MappingQGeneric<dim>(1), dof_handler, support_points);
-  IndexSet constraints_lines = constraints.get_local_lines();
+  IndexSet constraints_lines= constraints.get_local_lines();
 
-  for(unsigned int i = 0; i < constraints_lines.n_elements(); ++i)
+  for(unsigned int i= 0; i < constraints_lines.n_elements(); ++i)
     {
-      const unsigned int line = constraints_lines.nth_index_in_set(i);
+      const unsigned int line= constraints_lines.nth_index_in_set(i);
       if(constraints.is_constrained(line))
         {
           const std::vector<std::pair<types::global_dof_index, double>>* entries
             = constraints.get_constraint_entries(line);
           Assert(entries->size() == 1, ExcInternalError());
-          const Point<dim> point1     = support_points[line];
-          const Point<dim> point2     = support_points[(*entries)[0].first];
-          Tensor<1, dim>   difference = point1 - point2;
-          difference[dim - 1]         = 0.;
+          const Point<dim> point1    = support_points[line];
+          const Point<dim> point2    = support_points[(*entries)[0].first];
+          Tensor<1, dim>   difference= point1 - point2;
+          difference[dim - 1]        = 0.;
           AssertThrow(difference.norm() < 1.e-9, ExcInternalError());
           if(locally_owned_dofs.is_element(line))
             ++n_local_constraints;
@@ -232,7 +232,7 @@ check(const unsigned int orientation, bool reverse)
 
   //now refine and check if the neighboring faces are correctly found
   typename Triangulation<dim>::active_cell_iterator cell;
-  for(cell = triangulation.begin_active(); cell != triangulation.end(); ++cell)
+  for(cell= triangulation.begin_active(); cell != triangulation.end(); ++cell)
     if(cell->is_locally_owned() && cell->center()(dim - 1) > 0)
       cell->set_refine_flag();
 
@@ -245,7 +245,7 @@ check(const unsigned int orientation, bool reverse)
     = triangulation.get_periodic_face_map();
   typename std::map<CellFace,
                     std::pair<CellFace, std::bitset<3>>>::const_iterator it;
-  int sum_of_pairs_local = face_map.size();
+  int sum_of_pairs_local= face_map.size();
   int sum_of_pairs_global;
   MPI_Allreduce(&sum_of_pairs_local,
                 &sum_of_pairs_global,
@@ -254,15 +254,15 @@ check(const unsigned int orientation, bool reverse)
                 MPI_SUM,
                 triangulation.get_communicator());
   Assert(sum_of_pairs_global > 0, ExcInternalError());
-  for(it = face_map.begin(); it != face_map.end(); ++it)
+  for(it= face_map.begin(); it != face_map.end(); ++it)
     {
-      const typename Triangulation<dim>::cell_iterator cell_1 = it->first.first;
-      const unsigned int face_no_1 = it->first.second;
+      const typename Triangulation<dim>::cell_iterator cell_1= it->first.first;
+      const unsigned int face_no_1                           = it->first.second;
       const typename Triangulation<dim>::cell_iterator cell_2
         = it->second.first.first;
-      const unsigned int face_no_2     = it->second.first.second;
-      const Point<dim>   face_center_1 = cell_1->face(face_no_1)->center();
-      const Point<dim>   face_center_2 = cell_2->face(face_no_2)->center();
+      const unsigned int face_no_2    = it->second.first.second;
+      const Point<dim>   face_center_1= cell_1->face(face_no_1)->center();
+      const Point<dim>   face_center_2= cell_2->face(face_no_2)->center();
       Assert(std::min(std::abs(face_center_1(dim - 1) - 3.),
                       std::abs(face_center_1(dim - 1) + 3.))
                < 1.e-8,
@@ -272,14 +272,14 @@ check(const unsigned int orientation, bool reverse)
                < 1.e-8,
              ExcInternalError());
       if(cell_1->level() == cell_2->level())
-        for(unsigned int c = 0; c < dim - 1; ++c)
+        for(unsigned int c= 0; c < dim - 1; ++c)
           if(std::abs(face_center_1(c) - face_center_2(c)) > 1.e-8)
             {
               std::cout << "face_center_1: " << face_center_1 << std::endl;
               std::cout << "face_center_2: " << face_center_2 << std::endl;
               typename std::map<CellFace, std::pair<CellFace, std::bitset<3>>>::
                 const_iterator it;
-              for(it = triangulation.get_periodic_face_map().begin();
+              for(it= triangulation.get_periodic_face_map().begin();
                   it != triangulation.get_periodic_face_map().end();
                   ++it)
                 {
@@ -308,7 +308,7 @@ main(int argc, char* argv[])
 
       {
         deallog << "Test for 2D" << std::endl << std::endl;
-        for(int i = 0; i < 2; ++i)
+        for(int i= 0; i < 2; ++i)
           {
             deallog << "Triangulation: " << i << std::endl;
             check<2>(i, false);
@@ -316,7 +316,7 @@ main(int argc, char* argv[])
           }
 
         deallog << "Test for 3D" << std::endl << std::endl;
-        for(int i = 0; i < 8; ++i)
+        for(int i= 0; i < 8; ++i)
           {
             // Generate a triangulation and match:
             deallog << "Triangulation: " << i << std::endl;

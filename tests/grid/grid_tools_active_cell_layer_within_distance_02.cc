@@ -42,9 +42,9 @@ template <int dim>
 void
 write_mat_id_to_file(const Triangulation<dim>& tria)
 {
-  int                                               count = 0;
-  typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
-                                                    endc  = tria.end();
+  int                                               count= 0;
+  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
+                                                    endc = tria.end();
   for(; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << static_cast<int>(cell->material_id())
@@ -64,15 +64,15 @@ test()
   std::vector<std::vector<double>>
     step_sizes; // step sizes as input to the subdivided_hyper_rectangle
 
-  unsigned int n_steps = 25;
-  double       size    = 0.; // size of domain in i direction
-  for(unsigned int j = 1; j < n_steps; ++j)
+  unsigned int n_steps= 25;
+  double       size   = 0.; // size of domain in i direction
+  for(unsigned int j= 1; j < n_steps; ++j)
     {
       step_sizes_i.push_back((1. + double(j)) / double(n_steps));
-      size += (1. + double(j)) / double(n_steps);
+      size+= (1. + double(j)) / double(n_steps);
     }
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     step_sizes.push_back(step_sizes_i);
 
   const Point<dim> bottom_left;
@@ -88,12 +88,12 @@ test()
   typedef typename Triangulation<dim>::active_cell_iterator cell_iterator;
 
   // Mark a small block at the corner of the hypercube
-  cell_iterator cell = tria.begin_active(), endc = tria.end();
+  cell_iterator cell= tria.begin_active(), endc= tria.end();
   for(; cell != endc; ++cell)
     {
-      bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
-        mark &= cell->center()[d] > 5. && cell->center()[d] < 9.;
+      bool mark= true;
+      for(unsigned int d= 0; d < dim; ++d)
+        mark&= cell->center()[d] > 5. && cell->center()[d] < 9.;
 
       if(mark == true)
         cell->set_material_id(2);
@@ -113,7 +113,7 @@ test()
   }
 #endif
 
-  std::function<bool(const cell_iterator&)> predicate = pred_mat_id<dim>;
+  std::function<bool(const cell_iterator&)> predicate= pred_mat_id<dim>;
 
   // Compute a halo layer around material id 2 and set it to material id 3
   const std::vector<cell_iterator> cells_within_skin

@@ -41,9 +41,9 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
                    const Quadrature<dim>& quadrature_formula,
                    SparseMatrix<double>&  system_matrix)
 {
-  const FiniteElement<dim>& fe     = dof_handler.get_fe();
-  const unsigned int        degree = fe.degree;
-  system_matrix                    = 0;
+  const FiniteElement<dim>& fe    = dof_handler.get_fe();
+  const unsigned int        degree= fe.degree;
+  system_matrix                   = 0;
 
   ConstraintMatrix constraints;
   constraints.close();
@@ -51,8 +51,8 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
                           quadrature_formula,
                           update_values | update_quadrature_points
                             | update_JxW_values | update_gradients);
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   const FEValuesExtractors::Vector     velocities(0);
@@ -63,21 +63,21 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      local_matrix = 0;
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      local_matrix= 0;
+      for(unsigned int q= 0; q < n_q_points; ++q)
         {
-          for(unsigned int k = 0; k < dofs_per_cell; ++k)
+          for(unsigned int k= 0; k < dofs_per_cell; ++k)
             {
-              symgrad_phi_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-              div_phi_u[k]     = fe_values[velocities].divergence(k, q);
-              phi_p[k]         = fe_values[pressure].value(k, q);
+              symgrad_phi_u[k]= fe_values[velocities].symmetric_gradient(k, q);
+              div_phi_u[k]    = fe_values[velocities].divergence(k, q);
+              phi_p[k]        = fe_values[pressure].value(k, q);
             }
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               local_matrix(i, j)
                 += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
                     - div_phi_u[i] * phi_p[j] + phi_p[i] * div_phi_u[j])
@@ -115,7 +115,7 @@ check()
 
   BlockMask exclude_boundary_dofs(std::vector<bool>{true, false});
 
-  using Smoother = RelaxationBlockJacobi<SparseMatrix<double>>;
+  using Smoother= RelaxationBlockJacobi<SparseMatrix<double>>;
   {
     Smoother::AdditionalData smoother_data;
     Smoother                 smoother;
@@ -123,8 +123,8 @@ check()
     DoFTools::make_vertex_patches(
       smoother_data.block_list, dof, tr.n_levels() - 1, exclude_boundary_dofs);
     smoother_data.block_list.compress();
-    smoother_data.inversion = PreconditionBlockBase<double>::svd;
-    smoother_data.threshold = 1.e-8;
+    smoother_data.inversion= PreconditionBlockBase<double>::svd;
+    smoother_data.threshold= 1.e-8;
 
     smoother.initialize(matrix, smoother_data);
     smoother.log_statistics();
@@ -136,8 +136,8 @@ check()
     DoFTools::make_vertex_patches(
       smoother_data.block_list, dof, tr.n_levels() - 1, exclude_boundary_dofs);
     smoother_data.block_list.compress();
-    smoother_data.inversion   = PreconditionBlockBase<double>::svd;
-    smoother_data.kernel_size = 1;
+    smoother_data.inversion  = PreconditionBlockBase<double>::svd;
+    smoother_data.kernel_size= 1;
 
     smoother.initialize(matrix, smoother_data);
     smoother.log_statistics();

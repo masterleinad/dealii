@@ -94,12 +94,12 @@ namespace polytest
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for(unsigned int i= 0; i < points.size(); ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim>& p= points[i];
         // non-zero curl-curl:
-        values[i][0] = 0.0;
-        values[i][1] = p[0] * p[0];
+        values[i][0]= 0.0;
+        values[i][1]= p[0] * p[0];
       }
   }
 
@@ -113,12 +113,12 @@ namespace polytest
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for(unsigned int i= 0; i < points.size(); ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim>& p= points[i];
         // non-zero curl-curl:
-        values[i][0] = 0.0;
-        values[i][1] = -2.0 + p[0] * p[0];
+        values[i][0]= 0.0;
+        values[i][1]= -2.0 + p[0] * p[0];
       }
   }
 
@@ -200,10 +200,10 @@ namespace polytest
                                    | update_JxW_values);
 
     const QGauss<dim>  quadrature_formula(quad_order);
-    const unsigned int n_q_points = quadrature_formula.size();
+    const unsigned int n_q_points= quadrature_formula.size();
 
     const QGauss<dim - 1> face_quadrature_formula(quad_order);
-    const unsigned int    n_face_q_points = face_quadrature_formula.size();
+    const unsigned int    n_face_q_points= face_quadrature_formula.size();
 
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
@@ -218,7 +218,7 @@ namespace polytest
 
     const FEValuesExtractors::Vector vec(0);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -230,27 +230,27 @@ namespace polytest
       n_q_points, Vector<double>(fe.n_components()));
 
     typename DoFHandler<dim>::active_cell_iterator cell, endc;
-    endc = dof_handler.end();
-    cell = dof_handler.begin_active();
+    endc= dof_handler.end();
+    cell= dof_handler.begin_active();
     for(; cell != endc; ++cell)
       {
         fe_values_test.reinit(cell);
         fe_values.reinit(cell);
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         right_hand_side.rhs_value_list(fe_values.get_quadrature_points(),
                                        rhs_value_list);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
             Tensor<1, dim> rhs_value;
-            for(unsigned int d = 0; d < dim; ++d)
+            for(unsigned int d= 0; d < dim; ++d)
               {
-                rhs_value[d] = rhs_value_list[q](d);
+                rhs_value[d]= rhs_value_list[q](d);
               }
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
                   {
                     cell_matrix(i, j)
                       += (fe_values[vec].curl(i, q) * fe_values[vec].curl(j, q)
@@ -291,7 +291,7 @@ namespace polytest
                                       diff_per_cell,
                                       QGauss<dim>(quad_order),
                                       VectorTools::L2_norm);
-    const double L2_error = diff_per_cell.l2_norm();
+    const double L2_error= diff_per_cell.l2_norm();
 
     deallog << "p=" << p_order << " L2_error: " << L2_error << std::endl;
   }
@@ -320,7 +320,7 @@ main()
 
   initlog();
 
-  for(unsigned int p = 0; p < 3; ++p)
+  for(unsigned int p= 0; p < 3; ++p)
     {
       polytest::polytest<dim> poly(p);
       poly.run();

@@ -307,11 +307,11 @@ KellyErrorEstimator<1, spacedim>::estimate(
            .locally_owned_subdomain() :
          subdomain_id_);
 #else
-  const types::subdomain_id subdomain_id = subdomain_id_;
+  const types::subdomain_id subdomain_id= subdomain_id_;
 #endif
 
-  const unsigned int n_components       = dof_handler.get_fe(0).n_components();
-  const unsigned int n_solution_vectors = solutions.size();
+  const unsigned int n_components      = dof_handler.get_fe(0).n_components();
+  const unsigned int n_solution_vectors= solutions.size();
 
   // sanity checks
   Assert(neumann_bc.find(numbers::internal_face_boundary_id)
@@ -341,7 +341,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
   Assert(solutions.size() > 0, ExcNoSolutions());
   Assert(solutions.size() == errors.size(),
          ExcIncompatibleNumberOfElements(solutions.size(), errors.size()));
-  for(unsigned int n = 0; n < solutions.size(); ++n)
+  for(unsigned int n= 0; n < solutions.size(); ++n)
     Assert(solutions[n]->size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(solutions[n]->size(), dof_handler.n_dofs()));
 
@@ -359,7 +359,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
              i->first, i->second->n_components, n_components));
 
   // reserve one slot for each cell and set it to zero
-  for(unsigned int n = 0; n < n_solution_vectors; ++n)
+  for(unsigned int n= 0; n < n_solution_vectors; ++n)
     (*errors[n]).reinit(dof_handler.get_triangulation().n_active_cells());
 
   // fields to get the gradients on the present and the neighbor cell.
@@ -383,15 +383,15 @@ KellyErrorEstimator<1, spacedim>::estimate(
   // any more
   Vector<double> coefficient_values(n_components);
   if(coefficient == nullptr)
-    for(unsigned int c = 0; c < n_components; ++c)
-      coefficient_values(c) = 1;
+    for(unsigned int c= 0; c < n_components; ++c)
+      coefficient_values(c)= 1;
 
   const QTrapez<1>         quadrature;
   const hp::QCollection<1> q_collection(quadrature);
   const QGauss<0>          face_quadrature(1);
   const hp::QCollection<0> q_face_collection(face_quadrature);
 
-  const hp::FECollection<1, spacedim>& fe = dof_handler.get_fe_collection();
+  const hp::FECollection<1, spacedim>& fe= dof_handler.get_fe_collection();
 
   hp::MappingCollection<1, spacedim> mapping_collection;
   mapping_collection.push_back(mapping);
@@ -413,33 +413,33 @@ KellyErrorEstimator<1, spacedim>::estimate(
        && ((material_id == numbers::invalid_material_id)
            || (cell->material_id() == material_id)))
       {
-        for(unsigned int n = 0; n < n_solution_vectors; ++n)
-          (*errors[n])(cell->active_cell_index()) = 0;
+        for(unsigned int n= 0; n < n_solution_vectors; ++n)
+          (*errors[n])(cell->active_cell_index())= 0;
 
         fe_values.reinit(cell);
-        for(unsigned int s = 0; s < n_solution_vectors; ++s)
+        for(unsigned int s= 0; s < n_solution_vectors; ++s)
           fe_values.get_present_fe_values().get_function_gradients(
             *solutions[s], gradients_here[s]);
 
         // loop over the two points bounding this line. n==0 is left point,
         // n==1 is right point
-        for(unsigned int n = 0; n < 2; ++n)
+        for(unsigned int n= 0; n < 2; ++n)
           {
             // find left or right active neighbor
-            typename DoFHandlerType::cell_iterator neighbor = cell->neighbor(n);
+            typename DoFHandlerType::cell_iterator neighbor= cell->neighbor(n);
             if(neighbor.state() == IteratorState::valid)
               while(neighbor->has_children())
-                neighbor = neighbor->child(n == 0 ? 1 : 0);
+                neighbor= neighbor->child(n == 0 ? 1 : 0);
 
             fe_face_values.reinit(cell, n);
-            Tensor<1, spacedim> normal = fe_face_values.get_present_fe_values()
-                                           .get_all_normal_vectors()[0];
+            Tensor<1, spacedim> normal= fe_face_values.get_present_fe_values()
+                                          .get_all_normal_vectors()[0];
 
             if(neighbor.state() == IteratorState::valid)
               {
                 fe_values.reinit(neighbor);
 
-                for(unsigned int s = 0; s < n_solution_vectors; ++s)
+                for(unsigned int s= 0; s < n_solution_vectors; ++s)
                   fe_values.get_present_fe_values().get_function_gradients(
                     *solutions[s], gradients_neighbor[s]);
 
@@ -449,8 +449,8 @@ KellyErrorEstimator<1, spacedim>::estimate(
                       .get_all_normal_vectors()[0];
 
                 // extract the gradient in normal direction of all the components.
-                for(unsigned int s = 0; s < n_solution_vectors; ++s)
-                  for(unsigned int c = 0; c < n_components; ++c)
+                for(unsigned int s= 0; s < n_solution_vectors; ++s)
+                  for(unsigned int c= 0; c < n_components; ++c)
                     grad_dot_n_neighbor[s](c)
                       = -(gradients_neighbor[s][n == 0 ? 1 : 0][c]
                           * neighbor_normal);
@@ -464,8 +464,8 @@ KellyErrorEstimator<1, spacedim>::estimate(
                     const typename InputVector::value_type v
                       = neumann_bc.find(n)->second->value(cell->vertex(n));
 
-                    for(unsigned int s = 0; s < n_solution_vectors; ++s)
-                      grad_dot_n_neighbor[s](0) = v;
+                    for(unsigned int s= 0; s < n_solution_vectors; ++s)
+                      grad_dot_n_neighbor[s](0)= v;
                   }
                 else
                   {
@@ -473,14 +473,14 @@ KellyErrorEstimator<1, spacedim>::estimate(
                     neumann_bc.find(n)->second->vector_value(cell->vertex(n),
                                                              v);
 
-                    for(unsigned int s = 0; s < n_solution_vectors; ++s)
-                      grad_dot_n_neighbor[s] = v;
+                    for(unsigned int s= 0; s < n_solution_vectors; ++s)
+                      grad_dot_n_neighbor[s]= v;
                   }
               }
             else
               // fill with zeroes.
-              for(unsigned int s = 0; s < n_solution_vectors; ++s)
-                grad_dot_n_neighbor[s] = 0;
+              for(unsigned int s= 0; s < n_solution_vectors; ++s)
+                grad_dot_n_neighbor[s]= 0;
 
             // if there is a coefficient, then evaluate it at the present
             // position. if there is none, reuse the preset values.
@@ -488,17 +488,17 @@ KellyErrorEstimator<1, spacedim>::estimate(
               {
                 if(coefficient->n_components == 1)
                   {
-                    const double c_value = coefficient->value(cell->vertex(n));
-                    for(unsigned int c = 0; c < n_components; ++c)
-                      coefficient_values(c) = c_value;
+                    const double c_value= coefficient->value(cell->vertex(n));
+                    for(unsigned int c= 0; c < n_components; ++c)
+                      coefficient_values(c)= c_value;
                   }
                 else
                   coefficient->vector_value(cell->vertex(n),
                                             coefficient_values);
               }
 
-            for(unsigned int s = 0; s < n_solution_vectors; ++s)
-              for(unsigned int component = 0; component < n_components;
+            for(unsigned int s= 0; s < n_solution_vectors; ++s)
+              for(unsigned int component= 0; component < n_components;
                   ++component)
                 if(component_mask[component] == true)
                   {
@@ -518,7 +518,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
                   }
           }
 
-        for(unsigned int s = 0; s < n_solution_vectors; ++s)
+        for(unsigned int s= 0; s < n_solution_vectors; ++s)
           (*errors[s])(cell->active_cell_index())
             = std::sqrt((*errors[s])(cell->active_cell_index()));
       }

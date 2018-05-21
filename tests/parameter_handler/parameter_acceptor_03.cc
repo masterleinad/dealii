@@ -25,9 +25,9 @@ class Test : public ParameterAcceptor
 public:
   Test()
   {
-    std::string def = "0.";
-    for(int i = 1; i < dim; ++i)
-      def += ",0.";
+    std::string def= "0.";
+    for(int i= 1; i < dim; ++i)
+      def+= ",0.";
     add_parameter("A point", p);
   };
 
@@ -51,7 +51,7 @@ main()
   Test<2> b;
   Test<3> c;
 
-  auto& prm = ParameterAcceptor::prm;
+  auto& prm= ParameterAcceptor::prm;
   ParameterAcceptor::declare_all_parameters();
   prm.parse_input_from_string(""
                               "subsection Test<1>\n"

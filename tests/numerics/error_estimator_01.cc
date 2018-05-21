@@ -51,7 +51,7 @@ check()
   QGauss<dim - 1>         q_face(4);
 
   std::map<types::boundary_id, const Function<spacedim>*> neumann_bc;
-  neumann_bc[0] = &function;
+  neumann_bc[0]= &function;
 
   Vector<double> v(dof.n_dofs());
   VectorTools::interpolate(mapping, dof, function, v);
@@ -62,7 +62,7 @@ check()
     mapping, dof, q_face, neumann_bc, v, error);
 
   deallog << "Estimated error:" << std::endl;
-  for(unsigned int i = 0; i < error.size(); ++i)
+  for(unsigned int i= 0; i < error.size(); ++i)
     deallog << error(i) * 100 << std::endl;
 }
 

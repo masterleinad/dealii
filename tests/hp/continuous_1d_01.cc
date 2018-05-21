@@ -52,7 +52,7 @@ test()
       cell->get_dof_indices(local_dof_indices);
 
       deallog << cell << std::endl;
-      for(unsigned int i = 0; i < local_dof_indices.size(); ++i)
+      for(unsigned int i= 0; i < local_dof_indices.size(); ++i)
         deallog << local_dof_indices[i] << ' ';
       deallog << std::endl;
     }

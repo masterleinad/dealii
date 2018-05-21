@@ -633,14 +633,14 @@ class FESystem;
  * @author Wolfgang Bangerth, Guido Kanschat, Ralf Hartmann, 1998, 2000, 2001,
  * 2005, 2015
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FiniteElement : public Subscriptor, public FiniteElementData<dim>
 {
 public:
   /**
    * The dimension of the image space, corresponding to Triangulation.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * A base class for internal data that derived finite element classes may
@@ -674,7 +674,7 @@ public:
     /**
      * Copy construction is forbidden.
      */
-    InternalDataBase(const InternalDataBase&) = delete;
+    InternalDataBase(const InternalDataBase&)= delete;
 
   public:
     /**
@@ -686,7 +686,7 @@ public:
     /**
      * Destructor. Made virtual to allow polymorphism.
      */
-    virtual ~InternalDataBase() = default;
+    virtual ~InternalDataBase()= default;
 
     /**
      * A set of update flags specifying the kind of information that an
@@ -761,18 +761,18 @@ public:
   /**
    * Move constructor.
    */
-  FiniteElement(FiniteElement<dim, spacedim>&&) = default; // NOLINT
+  FiniteElement(FiniteElement<dim, spacedim>&&)= default; // NOLINT
 
   /**
    * Copy constructor.
    */
-  FiniteElement(const FiniteElement<dim, spacedim>&) = default;
+  FiniteElement(const FiniteElement<dim, spacedim>&)= default;
 
   /**
    * Virtual destructor. Makes sure that pointers to this class are deleted
    * properly.
    */
-  virtual ~FiniteElement() override = default;
+  virtual ~FiniteElement() override= default;
 
   /**
    * Creates information for creating a FESystem with this class as
@@ -797,7 +797,7 @@ public:
    * type. They do so through this function.
    */
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
-  clone() const = 0;
+  clone() const= 0;
 
   /**
    * Return a string that uniquely identifies a finite element. The general
@@ -810,7 +810,7 @@ public:
    * class.
    */
   virtual std::string
-  get_name() const = 0;
+  get_name() const= 0;
 
   /**
    * This operator returns a reference to the present object if the argument
@@ -1519,9 +1519,9 @@ public:
   virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
-                     const bool         face_orientation = true,
-                     const bool         face_flip        = false,
-                     const bool         face_rotation    = false) const;
+                     const bool         face_orientation= true,
+                     const bool         face_flip       = false,
+                     const bool         face_rotation   = false) const;
 
   /**
    * For lines with non-standard line_orientation in 3D, the dofs on lines
@@ -2380,8 +2380,8 @@ protected:
    */
   void
   reinit_restriction_and_prolongation_matrices(
-    const bool isotropic_restriction_only  = false,
-    const bool isotropic_prolongation_only = false);
+    const bool isotropic_restriction_only = false,
+    const bool isotropic_prolongation_only= false);
 
   /**
    * Vector of projection matrices. See get_restriction_matrix() above. The
@@ -2633,7 +2633,7 @@ protected:
    * @see UpdateFlags
    */
   virtual UpdateFlags
-  requires_update_flags(const UpdateFlags update_flags) const = 0;
+  requires_update_flags(const UpdateFlags update_flags) const= 0;
 
   /**
    * Create an internal data object and return a pointer to it of which the
@@ -2716,7 +2716,7 @@ protected:
            const Mapping<dim, spacedim>& mapping,
            const Quadrature<dim>&        quadrature,
            dealii::internal::FEValuesImplementation::
-             FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+             FiniteElementRelatedData<dim, spacedim>& output_data) const= 0;
 
   /**
    * Like get_data(), but return an object that will later be used for
@@ -2906,7 +2906,7 @@ protected:
       MappingRelatedData<dim, spacedim>& mapping_data,
     const InternalDataBase&              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim>& output_data) const= 0;
 
   /**
    * This function is the equivalent to FiniteElement::fill_fe_values(), but
@@ -2961,7 +2961,7 @@ protected:
       MappingRelatedData<dim, spacedim>& mapping_data,
     const InternalDataBase&              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim>& output_data) const= 0;
 
   /**
    * This function is the equivalent to FiniteElement::fill_fe_values(), but
@@ -3020,7 +3020,7 @@ protected:
       MappingRelatedData<dim, spacedim>& mapping_data,
     const InternalDataBase&              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim>& output_data) const= 0;
 
   friend class InternalDataBase;
   friend class FEValuesBase<dim, spacedim>;

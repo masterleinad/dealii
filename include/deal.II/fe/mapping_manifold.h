@@ -54,14 +54,14 @@ class MappingQ;
  *
  * @author Luca Heltai, Wolfgang Bangerth, Alberto Sartori 2016
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class MappingManifold : public Mapping<dim, spacedim>
 {
 public:
   /**
    * Constructor.
    */
-  MappingManifold() = default;
+  MappingManifold()= default;
 
   /**
    * Copy constructor.
@@ -167,7 +167,7 @@ public:
     /**
      * Constructor.
      */
-    InternalData() = default;
+    InternalData()= default;
 
     /**
      * Initialize the object's member variables related to cell data based on
@@ -392,9 +392,9 @@ MappingManifold<dim, spacedim>::InternalData::store_vertices(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
 {
   vertices.resize(GeometryInfo<dim>::vertices_per_cell);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-    vertices[i] = cell->vertex(i);
-  this->cell = cell;
+  for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    vertices[i]= cell->vertex(i);
+  this->cell= cell;
 }
 
 template <int dim, int spacedim>
@@ -404,9 +404,9 @@ MappingManifold<dim, spacedim>::InternalData::
 {
   cell_manifold_quadrature_weights.resize(
     quad.size(), std::vector<double>(GeometryInfo<dim>::vertices_per_cell));
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for(unsigned int q= 0; q < quad.size(); ++q)
     {
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         {
           cell_manifold_quadrature_weights[q][i]
             = GeometryInfo<dim>::d_linear_shape_function(quad.point(q), i);

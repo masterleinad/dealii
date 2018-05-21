@@ -24,16 +24,16 @@
 void
 test_cpu()
 {
-  double             a[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-  const unsigned int dim     = 3;
+  double             a[3][3]= {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+  const unsigned int dim    = 3;
   Tensor<2, dim>     t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      t[i][j] = a[i][j];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      t[i][j]= a[i][j];
 
   deallog.push("values");
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       deallog << t[i][j] << std::endl;
   deallog.pop();
 
@@ -44,30 +44,30 @@ test_cpu()
 
 __global__ void init_kernel(Tensor<2, 3>* t, const unsigned int N)
 {
-  const unsigned int i = threadIdx.y;
-  const unsigned int j = threadIdx.x;
+  const unsigned int i= threadIdx.y;
+  const unsigned int j= threadIdx.x;
   if((i < N) && (j < N))
-    (*t)[i][j] = j + i * N + 1.;
+    (*t)[i][j]= j + i * N + 1.;
 }
 
 __global__ void norm_kernel(Tensor<2, 3>* t, double* norm)
 {
   if(threadIdx.x == 0)
-    *norm = t->norm_square();
+    *norm= t->norm_square();
 }
 
 void
 test_gpu()
 {
-  const unsigned int dim = 3;
+  const unsigned int dim= 3;
   double*            norm_dev;
   double             norm_host;
   Tensor<2, dim>*    t_dev;
 
   // Allocate objects on the device
-  cudaError_t cuda_error = cudaMalloc(&t_dev, sizeof(Tensor<2, dim>));
+  cudaError_t cuda_error= cudaMalloc(&t_dev, sizeof(Tensor<2, dim>));
   AssertCuda(cuda_error);
-  cuda_error = cudaMalloc(&norm_dev, sizeof(double));
+  cuda_error= cudaMalloc(&norm_dev, sizeof(double));
   AssertCuda(cuda_error);
 
   // Launch the kernels.
@@ -81,9 +81,9 @@ test_gpu()
   AssertCuda(cuda_error);
 
   // Free memory
-  cuda_error = cudaFree(t_dev);
+  cuda_error= cudaFree(t_dev);
   AssertCuda(cuda_error);
-  cuda_error = cudaFree(norm_dev);
+  cuda_error= cudaFree(norm_dev);
   AssertCuda(cuda_error);
 
   // Output result

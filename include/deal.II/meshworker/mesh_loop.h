@@ -125,7 +125,7 @@ namespace MeshWorker
     const ScratchData& sample_scratch_data,
     const CopyData&    sample_copy_data,
 
-    const AssembleFlags flags = assemble_own_cells,
+    const AssembleFlags flags= assemble_own_cells,
 
     const typename identity<std::function<void(const CellIteratorType&,
                                                const unsigned int&,
@@ -154,8 +154,8 @@ namespace MeshWorker
                          ScratchData&,
                          CopyData&)>(),
 
-    const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-    const unsigned int chunk_size   = 8)
+    const unsigned int queue_length= 2 * MultithreadInfo::n_threads(),
+    const unsigned int chunk_size  = 8)
   {
     Assert(
       (!cell_worker) == !(flags & work_on_cells),
@@ -191,11 +191,11 @@ namespace MeshWorker
       ExcMessage(
         "If you specify a boundary_worker, assemble_boundary_faces needs to be set."));
 
-    auto cell_action = [&](const CellIteratorType& cell,
-                           ScratchData&            scratch,
-                           CopyData&               copy) {
+    auto cell_action= [&](const CellIteratorType& cell,
+                          ScratchData&            scratch,
+                          CopyData&               copy) {
       // First reset the CopyData class to the empty copy_data given by the user.
-      copy = sample_copy_data;
+      copy= sample_copy_data;
 
       const bool ignore_subdomain
         = (cell->get_triangulation().locally_owned_subdomain()
@@ -220,7 +220,7 @@ namespace MeshWorker
         cell_worker(cell, scratch, copy);
 
       if(flags & (work_on_faces | work_on_boundary))
-        for(unsigned int face_no = 0;
+        for(unsigned int face_no= 0;
             face_no < GeometryInfo<CellIteratorType::AccessorType::Container::
                                      dimension>::faces_per_cell;
             ++face_no)
@@ -244,10 +244,10 @@ namespace MeshWorker
                 types::subdomain_id neighbor_subdomain_id
                   = numbers::artificial_subdomain_id;
                 if(neighbor->is_level_cell())
-                  neighbor_subdomain_id = neighbor->level_subdomain_id();
+                  neighbor_subdomain_id= neighbor->level_subdomain_id();
                 //subdomain id is only valid for active cells
                 else if(neighbor->active())
-                  neighbor_subdomain_id = neighbor->subdomain_id();
+                  neighbor_subdomain_id= neighbor->subdomain_id();
 
                 const bool own_neighbor
                   = ignore_subdomain

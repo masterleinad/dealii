@@ -45,8 +45,7 @@ public:
   {}
 
   virtual double
-  value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+  value(const dealii::Point<dim>& point, const unsigned int component= 0) const;
 
   const std::vector<double>&
   get_coefficients() const
@@ -65,14 +64,14 @@ LegendreFunction<dim>::value(const dealii::Point<dim>& point,
 {
   Assert(dim == 1, dealii::ExcNotImplemented());
 
-  double f = 0.0;
+  double f= 0.0;
 
-  for(int l = 0; l < int(coefficients.size()); l++)
+  for(int l= 0; l < int(coefficients.size()); l++)
     {
-      const double m = 0.5;                // mid-point
-      const double h = 0.5;                // half-length
-      const double x = (point[0] - m) / h; // 1D only
-      f += sqrt(1.0 / h) * gsl_sf_legendre_Pl(l, x) * coefficients[l];
+      const double m= 0.5;                // mid-point
+      const double h= 0.5;                // half-length
+      const double x= (point[0] - m) / h; // 1D only
+      f+= sqrt(1.0 / h) * gsl_sf_legendre_Pl(l, x) * coefficients[l];
     }
 
   return f;
@@ -99,10 +98,10 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 
   VectorTools::interpolate(dof_handler, func, values);
 
-  const unsigned int      N = poly_degree + 1;
+  const unsigned int      N= poly_degree + 1;
   FESeries::Legendre<dim> legendre(N, fe_collection, quadrature_formula);
 
-  const std::vector<double>& coeff_in = func.get_coefficients();
+  const std::vector<double>& coeff_in= func.get_coefficients();
   Table<1, double>           coeff_out(N);
 
   Vector<double> local_dof_values;
@@ -111,8 +110,8 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
     = dof_handler.begin_active();
 
   {
-    const unsigned int cell_n_dofs          = cell->get_fe().dofs_per_cell;
-    const unsigned int cell_active_fe_index = cell->active_fe_index();
+    const unsigned int cell_n_dofs         = cell->get_fe().dofs_per_cell;
+    const unsigned int cell_active_fe_index= cell->active_fe_index();
 
     local_dof_values.reinit(cell_n_dofs);
     cell->get_dof_values(values, local_dof_values);
@@ -120,12 +119,12 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
     legendre.calculate(local_dof_values, cell_active_fe_index, coeff_out);
   }
 
-  for(unsigned int i = 0; i < coeff_in.size(); i++)
+  for(unsigned int i= 0; i < coeff_in.size(); i++)
     deallog << coeff_in[i] << " ";
 
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < N; i++)
+  for(unsigned int i= 0; i < N; i++)
     deallog << coeff_out[i] << " ";
 
   deallog << std::endl;
@@ -136,56 +135,56 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 int
 main()
 {
-  const int dim = 1;
+  const int dim= 1;
 
   initlog();
 
   {
     std::vector<double> coeff_in(2);
-    coeff_in[0] = 1.0;
-    coeff_in[1] = 2.0;
+    coeff_in[0]= 1.0;
+    coeff_in[1]= 2.0;
     LegendreFunction<dim> function(coeff_in);
     test(function, 1);
   }
 
   {
     std::vector<double> coeff_in(3);
-    coeff_in[0] = 1.0;
-    coeff_in[1] = 2.0;
-    coeff_in[2] = 3.0;
+    coeff_in[0]= 1.0;
+    coeff_in[1]= 2.0;
+    coeff_in[2]= 3.0;
     LegendreFunction<dim> function(coeff_in);
     test(function, 2);
   }
 
   {
     std::vector<double> coeff_in(4);
-    coeff_in[0] = 1.0;
-    coeff_in[1] = 2.0;
-    coeff_in[2] = 3.0;
-    coeff_in[3] = 4.0;
+    coeff_in[0]= 1.0;
+    coeff_in[1]= 2.0;
+    coeff_in[2]= 3.0;
+    coeff_in[3]= 4.0;
     LegendreFunction<dim> function(coeff_in);
     test(function, 3);
   }
 
   {
     std::vector<double> coeff_in(5);
-    coeff_in[0] = 1.0;
-    coeff_in[1] = 2.0;
-    coeff_in[2] = 3.0;
-    coeff_in[3] = 4.0;
-    coeff_in[4] = 5.0;
+    coeff_in[0]= 1.0;
+    coeff_in[1]= 2.0;
+    coeff_in[2]= 3.0;
+    coeff_in[3]= 4.0;
+    coeff_in[4]= 5.0;
     LegendreFunction<dim> function(coeff_in);
     test(function, 4);
   }
 
   {
     std::vector<double> coeff_in(6);
-    coeff_in[0] = 1.0;
-    coeff_in[1] = 2.0;
-    coeff_in[2] = 3.0;
-    coeff_in[3] = 4.0;
-    coeff_in[4] = 5.0;
-    coeff_in[5] = 6.0;
+    coeff_in[0]= 1.0;
+    coeff_in[1]= 2.0;
+    coeff_in[2]= 3.0;
+    coeff_in[3]= 4.0;
+    coeff_in[4]= 5.0;
+    coeff_in[5]= 6.0;
     LegendreFunction<dim> function(coeff_in);
     test(function, 5);
   }

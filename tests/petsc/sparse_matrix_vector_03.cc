@@ -25,14 +25,14 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   PETScWrappers::SparseMatrix m(v.size(), v.size(), v.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i;
+      v(i)= i;
+      w(i)= i;
     }
 
   m.compress(VectorOperation::insert);
@@ -43,13 +43,13 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   m.vmult_add(w, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       AssertThrow(v(i) == i, ExcInternalError());
 
-      double result = 0;
-      for(unsigned int j = 0; j < m.m(); ++j)
-        result += (i + 2 * j) * j;
+      double result= 0;
+      for(unsigned int j= 0; j < m.m(); ++j)
+        result+= (i + 2 * j) * j;
       AssertThrow(w(i) == i + result, ExcInternalError());
     }
 

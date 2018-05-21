@@ -38,9 +38,9 @@ void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
               MGLevelObject<dealii::Vector<number>>&   v)
 {
-  for(unsigned int level = v.min_level(); level <= v.max_leve(); ++level)
+  for(unsigned int level= v.min_level(); level <= v.max_leve(); ++level)
     {
-      unsigned int n = mg_dof.n_dofs(level);
+      unsigned int n= mg_dof.n_dofs(level);
       v[level].reinit(n);
     }
 }
@@ -53,22 +53,22 @@ make_matrix(const Transfer&     transfer,
 {
   Vector<double> src(matrix.n());
   Vector<double> dst(matrix.m());
-  for(unsigned int i = 0; i < src.size(); ++i)
+  for(unsigned int i= 0; i < src.size(); ++i)
     {
-      src    = 0;
-      src(i) = 1;
+      src   = 0;
+      src(i)= 1;
       transfer.prolongate(high_level, dst, src);
-      for(unsigned int j = 0; j < dst.size(); ++j)
-        matrix(j, i) = dst(j);
+      for(unsigned int j= 0; j < dst.size(); ++j)
+        matrix(j, i)= dst(j);
     }
 }
 
 void
 print_matrix(const FullMatrix<double>& m)
 {
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for(unsigned int i= 0; i < m.m(); ++i)
     {
-      for(unsigned int j = 0; j < m.n(); ++j)
+      for(unsigned int j= 0; j < m.n(); ++j)
         deallog << m(i, j) << ' ';
       deallog << std::endl;
     }
@@ -89,14 +89,14 @@ check(const FiniteElement<dim>& fe)
   mg_dof_handler.distribute_mg_dofs(fe);
 
   DoFRenumbering::component_wise(mg_dof_handler);
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level);
 
   MGTransferSelect<double> transfer;
 
   std::vector<unsigned int> mask(2);
-  mask[0] = 0;
-  mask[1] = 1;
+  mask[0]= 0;
+  mask[1]= 1;
   transfer.build_matrices(mg_dof_handler, mg_dof_handler, 0, 0, mask, mask);
 
   // use only the first half of all

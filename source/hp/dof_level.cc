@@ -37,13 +37,13 @@ namespace internal
       // in a first run through, count how many new slots we need in the
       // dof_indices array after compression. note that the 'cell'
       // counter is incremented inside the loop
-      unsigned int new_size = 0;
-      for(unsigned int cell = 0; cell < dof_offsets.size();)
+      unsigned int new_size= 0;
+      for(unsigned int cell= 0; cell < dof_offsets.size();)
         // see if this cell is active on the current level
         if(dof_offsets[cell] != (offset_type)(-1))
           {
             // find the next cell active on this level
-            unsigned int next_cell = cell + 1;
+            unsigned int next_cell= cell + 1;
             while((next_cell < dof_offsets.size())
                   && (dof_offsets[next_cell] == (offset_type)(-1)))
               ++next_cell;
@@ -61,22 +61,21 @@ namespace internal
             // how many slots we have to store for them
             if(next_offset > dof_offsets[cell])
               {
-                bool compressible = true;
-                for(unsigned int j = dof_offsets[cell] + 1; j < next_offset;
-                    ++j)
+                bool compressible= true;
+                for(unsigned int j= dof_offsets[cell] + 1; j < next_offset; ++j)
                   if(dof_indices[j] != dof_indices[j - 1] + 1)
                     {
-                      compressible = false;
+                      compressible= false;
                       break;
                     }
                 if(compressible == true)
-                  new_size += 1;
+                  new_size+= 1;
                 else
-                  new_size += (next_offset - dof_offsets[cell]);
+                  new_size+= (next_offset - dof_offsets[cell]);
               }
 
             // then move on to the next cell
-            cell = next_cell;
+            cell= next_cell;
           }
         else
           ++cell;
@@ -86,12 +85,12 @@ namespace internal
       new_dof_indices.reserve(new_size);
       std::vector<offset_type> new_dof_offsets(dof_offsets.size(),
                                                (offset_type)(-1));
-      for(unsigned int cell = 0; cell < dof_offsets.size();)
+      for(unsigned int cell= 0; cell < dof_offsets.size();)
         // see if this cell is active on the current level
         if(dof_offsets[cell] != (offset_type)(-1))
           {
             // find the next cell active on this level
-            unsigned int next_cell = cell + 1;
+            unsigned int next_cell= cell + 1;
             while((next_cell < dof_offsets.size())
                   && (dof_offsets[next_cell] == (offset_type)(-1)))
               ++next_cell;
@@ -105,18 +104,17 @@ namespace internal
                           .template n_dofs_per_object<dim>(),
                    ExcInternalError());
 
-            new_dof_offsets[cell] = new_dof_indices.size();
+            new_dof_offsets[cell]= new_dof_indices.size();
 
             // see if the range of dofs for this cell can be compressed and if so
             // how many slots we have to store for them
             if(next_offset > dof_offsets[cell])
               {
-                bool compressible = true;
-                for(unsigned int j = dof_offsets[cell] + 1; j < next_offset;
-                    ++j)
+                bool compressible= true;
+                for(unsigned int j= dof_offsets[cell] + 1; j < next_offset; ++j)
                   if(dof_indices[j] != dof_indices[j - 1] + 1)
                     {
-                      compressible = false;
+                      compressible= false;
                       break;
                     }
 
@@ -137,12 +135,12 @@ namespace internal
                       = get_toggled_compression_state(active_fe_indices[cell]);
                   }
                 else
-                  for(unsigned int i = dof_offsets[cell]; i < next_offset; ++i)
+                  for(unsigned int i= dof_offsets[cell]; i < next_offset; ++i)
                     new_dof_indices.push_back(dof_indices[i]);
               }
 
             // then move on to the next cell
-            cell = next_cell;
+            cell= next_cell;
           }
         else
           ++cell;
@@ -163,14 +161,14 @@ namespace internal
 
       // in a first run through, count how many new slots we need in the
       // dof_indices array after uncompression.
-      unsigned int new_size = 0;
-      for(unsigned int cell = 0; cell < dof_offsets.size(); ++cell)
+      unsigned int new_size= 0;
+      for(unsigned int cell= 0; cell < dof_offsets.size(); ++cell)
         if(dof_offsets[cell] != (offset_type)(-1))
           {
             // we know now that the slot for this cell is used. extract the
             // active_fe_index for it and see how many entries we need
-            new_size += fe_collection[active_fe_index(cell)]
-                          .template n_dofs_per_object<dim>();
+            new_size+= fe_collection[active_fe_index(cell)]
+                         .template n_dofs_per_object<dim>();
           }
 
       // now allocate the new array and copy into it whatever we need
@@ -178,12 +176,12 @@ namespace internal
       new_dof_indices.reserve(new_size);
       std::vector<offset_type> new_dof_offsets(dof_offsets.size(),
                                                (offset_type)(-1));
-      for(unsigned int cell = 0; cell < dof_offsets.size();)
+      for(unsigned int cell= 0; cell < dof_offsets.size();)
         // see if this cell is active on the current level
         if(dof_offsets[cell] != (offset_type)(-1))
           {
             // find the next cell active on this level
-            unsigned int next_cell = cell + 1;
+            unsigned int next_cell= cell + 1;
             while((next_cell < dof_offsets.size())
                   && (dof_offsets[next_cell] == (offset_type)(-1)))
               ++next_cell;
@@ -193,7 +191,7 @@ namespace internal
                                                   dof_indices.size());
 
             // set offset for this cell
-            new_dof_offsets[cell] = new_dof_indices.size();
+            new_dof_offsets[cell]= new_dof_indices.size();
 
             // see if we need to uncompress this set of dofs
             if(is_compressed_entry(active_fe_indices[cell]) == false)
@@ -203,7 +201,7 @@ namespace internal
                          == fe_collection[active_fe_indices[cell]]
                               .template n_dofs_per_object<dim>(),
                        ExcInternalError());
-                for(unsigned int i = dof_offsets[cell]; i < next_offset; ++i)
+                for(unsigned int i= dof_offsets[cell]; i < next_offset; ++i)
                   new_dof_indices.push_back(dof_indices[i]);
               }
             else
@@ -215,7 +213,7 @@ namespace internal
                   = fe_collection[get_toggled_compression_state(
                                     active_fe_indices[cell])]
                       .template n_dofs_per_object<dim>();
-                for(unsigned int i = 0; i < dofs_per_object; ++i)
+                for(unsigned int i= 0; i < dofs_per_object; ++i)
                   new_dof_indices.push_back(dof_indices[dof_offsets[cell]] + i);
 
                 // then mark the uncompression
@@ -224,7 +222,7 @@ namespace internal
               }
 
             // then move on to the next cell
-            cell = next_cell;
+            cell= next_cell;
           }
         else
           ++cell;
@@ -248,7 +246,7 @@ namespace internal
     void
     DoFLevel::normalize_active_fe_indices()
     {
-      for(unsigned int i = 0; i < active_fe_indices.size(); ++i)
+      for(unsigned int i= 0; i < active_fe_indices.size(); ++i)
         if(is_compressed_entry(active_fe_indices[i]))
           active_fe_indices[i]
             = get_toggled_compression_state(active_fe_indices[i]);

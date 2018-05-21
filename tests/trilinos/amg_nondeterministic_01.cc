@@ -508,16 +508,16 @@ check(Epetra_FECrsMatrix&     mat,
   {
     ML_Epetra::MultiLevelPreconditioner prec(mat, parameter_list);
     x1.PutScalar(0);
-    ierr = prec.ApplyInverse(b, x1);
+    ierr= prec.ApplyInverse(b, x1);
     assert(ierr == 0);
   }
   {
     ML_Epetra::MultiLevelPreconditioner prec(mat, parameter_list);
     x2.PutScalar(0);
-    ierr = prec.ApplyInverse(b, x2);
+    ierr= prec.ApplyInverse(b, x2);
     assert(ierr == 0);
   }
-  for(unsigned int j = 0; j < 5; ++j)
+  for(unsigned int j= 0; j < 5; ++j)
     {
       if(x1[0][j] != x2[0][j])
         deallog << "FAIL: j=" << j << ": " << x1[0][j] << " != " << x2[0][j]
@@ -528,25 +528,25 @@ check(Epetra_FECrsMatrix&     mat,
 void
 run()
 {
-  int dim = 130;
+  int dim= 130;
   int ierr;
 
   Epetra_MpiComm     Comm(MPI_COMM_WORLD);
   Epetra_Map         map(dim, 0, Comm);
   Epetra_FECrsMatrix mat(Copy, map, map, 30, false);
 
-  unsigned int n = sizeof(mati) / sizeof(*mati);
+  unsigned int n= sizeof(mati) / sizeof(*mati);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     {
-      ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*) &matj[i]);
+      ierr= mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*) &matj[i]);
       assert(ierr == 0);
     }
 
-  ierr = mat.GlobalAssemble(map, map, true);
+  ierr= mat.GlobalAssemble(map, map, true);
   assert(ierr == 0);
 
-  ierr = mat.OptimizeStorage();
+  ierr= mat.OptimizeStorage();
   assert(ierr == 0);
   Epetra_FEVector x1(map);
   Epetra_FEVector x2(map);

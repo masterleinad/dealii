@@ -25,24 +25,24 @@ main()
   initlog();
 
   Tensor<1, 3, int> rank1;
-  rank1[0] = 1;
-  rank1[1] = 2;
-  rank1[2] = 4;
+  rank1[0]= 1;
+  rank1[1]= 2;
+  rank1[2]= 4;
 
   Tensor<2, 3, int> rank2;
-  rank2[0] = 4 * rank1;
-  rank2[1] = 2 * rank1;
-  rank2[2] = 1 * rank1;
+  rank2[0]= 4 * rank1;
+  rank2[1]= 2 * rank1;
+  rank2[2]= 1 * rank1;
 
   Tensor<3, 3, int> rank3;
-  rank3[0] = 7 * rank2;
-  rank3[1] = 6 * rank2;
-  rank3[2] = 9 * rank2;
+  rank3[0]= 7 * rank2;
+  rank3[1]= 6 * rank2;
+  rank3[2]= 9 * rank2;
 
   Tensor<4, 3, int> rank4;
-  rank4[0] = 4 * rank3;
-  rank4[1] = 3 * rank3;
-  rank4[2] = 2 * rank3;
+  rank4[0]= 4 * rank3;
+  rank4[1]= 3 * rank3;
+  rank4[2]= 2 * rank3;
 
   // rank3 * rank1 over all possible indices:
   {

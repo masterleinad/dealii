@@ -29,10 +29,10 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 4;
+  const unsigned int n_rows= 4;
 
   IndexSet locally_owned(n_rows);
 
@@ -72,8 +72,8 @@ test()
   if((n_procs == 1) || (my_id == 1))
     A.add(2, 3, 0.3);
 
-  double l1a = (n_procs == 1) ? 0.3 : 0.4;
-  double l1b = n_procs * 1.2;
+  double l1a= (n_procs == 1) ? 0.3 : 0.4;
+  double l1b= n_procs * 1.2;
 
   A.compress(VectorOperation::add);
   deallog << "1: " << A.l1_norm() << " " << B.l1_norm() << " (should be " << l1a
@@ -94,7 +94,7 @@ test()
 
   deallog << "reassemble A..." << std::endl;
 
-  A = 0;
+  A= 0;
   A.add(0, 0, -1.2);
   A.compress(VectorOperation::add);
   deallog << "3: " << A.l1_norm() << " " << B.l1_norm() << " (should be " << l1b

@@ -51,7 +51,7 @@ main()
 
   // Extract the boundary of 3/4 of a sphere
   {
-    const int dim = 3;
+    const int dim= 3;
     deallog << "Testing hyper_cube in dim: " << dim << "..." << endl;
 
     const SphericalManifold<dim> boundary_description;
@@ -68,12 +68,12 @@ main()
         cell != volume_mesh.end();
         ++cell)
       {
-        bool done = false;
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        bool done= false;
+        for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
           if(cell->at_boundary(f))
             {
               cell->face(f)->set_boundary_id(1);
-              done = true;
+              done= true;
               break;
             }
         if(done)
@@ -104,7 +104,7 @@ main()
         = boundary_mesh.begin_active();
         cell != boundary_mesh.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
         if(cell->at_boundary(f))
           cell->face(f)->set_boundary_id(1);
     GridTools::copy_boundary_to_manifold_id(boundary_mesh);

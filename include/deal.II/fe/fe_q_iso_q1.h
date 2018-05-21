@@ -106,7 +106,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Martin Kronbichler, 2013
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_Q_iso_Q1
   : public FE_Q_Base<
       TensorProductPolynomials<dim, Polynomials::PiecewisePolynomial<double>>,

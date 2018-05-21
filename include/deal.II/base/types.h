@@ -165,8 +165,7 @@ namespace numbers
    * an invalid unsigned integer value, such as an invalid array index, an
    * invalid array size, and the like.
    */
-  static const unsigned int invalid_unsigned_int
-    = static_cast<unsigned int>(-1);
+  static const unsigned int invalid_unsigned_int= static_cast<unsigned int>(-1);
 
   /**
    * Representation of the largest number that can be put into a size_type.

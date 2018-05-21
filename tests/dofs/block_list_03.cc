@@ -25,7 +25,7 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.initialize(tr, fe);
   dof.distribute_mg_dofs(fe);
 
-  const unsigned int level = tr.n_levels() - 1;
+  const unsigned int level= tr.n_levels() - 1;
 
   {
     deallog.push("t");

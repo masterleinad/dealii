@@ -48,12 +48,12 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int c = 0; c < v.size(); ++c)
+    for(unsigned int c= 0; c < v.size(); ++c)
       {
-        v(c) = 0;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int i = 0; i <= q; ++i)
-            v(c) += (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c + adj;
+        v(c)= 0;
+        for(unsigned int d= 0; d < dim; ++d)
+          for(unsigned int i= 0; i <= q; ++i)
+            v(c)+= (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c + adj;
       }
   }
 
@@ -73,7 +73,7 @@ test()
   triangulation.execute_coarsening_and_refinement();
   triangulation.refine_global(1);
 
-  for(unsigned int p = 1; p < 6 - dim; ++p)
+  for(unsigned int p= 1; p < 6 - dim; ++p)
     {
       FE_Q<dim>       fe1(p);
       FE_Q<dim>       fe2(p + 1);
@@ -81,12 +81,12 @@ test()
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 
-      const double                 adj1 = 0.3;
+      const double                 adj1= 0.3;
       ComponentSelectFunction<dim> select_mask1(0, 3);
       ComponentMask                mask1(3, false);
       mask1.set(0, true);
 
-      const double                 adj2 = 1.7;
+      const double                 adj2= 1.7;
       ComponentSelectFunction<dim> select_mask2(std::make_pair(1, 3), 3);
       ComponentMask                mask2(3, false);
       mask2.set(1, true);
@@ -98,7 +98,7 @@ test()
 
       Vector<double> interpolant(dof_handler.n_dofs());
       Vector<float>  error(triangulation.n_active_cells());
-      for(unsigned int q = 0; q <= p + 2; ++q)
+      for(unsigned int q= 0; q <= p + 2; ++q)
         {
           // interpolate the function
           VectorTools::interpolate(

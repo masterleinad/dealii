@@ -53,8 +53,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   cm.close();
 
   Vector<double> in(dof1->n_dofs());
-  for(unsigned int i = 0; i < in.size(); ++i)
-    in(i) = i;
+  for(unsigned int i= 0; i < in.size(); ++i)
+    in(i)= i;
   Vector<double> out(dof2->n_dofs());
 
   FETools::extrapolate(*dof1, in, *dof2, cm, out);

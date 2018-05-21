@@ -28,8 +28,8 @@ test()
   IndexSet my_set;
   my_set.set_size(654);
   int this_mpi_process, n_mpi_processes;
-  n_mpi_processes  = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  this_mpi_process = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  n_mpi_processes = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  this_mpi_process= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(this_mpi_process == 0)
     {
       my_set.add_range(0, 86);

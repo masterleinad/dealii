@@ -40,13 +40,13 @@ main(int argc, char* argv[])
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  int err   = MPI_SUCCESS;
-  int value = myrank;
+  int err  = MPI_SUCCESS;
+  int value= myrank;
 
   if(myrank == 1)
-    err = MPI_Send(&value, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
+    err= MPI_Send(&value, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
   else if(myrank == 0)
-    err = MPI_Recv(&value, 1, MPI_INT, 1, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    err= MPI_Recv(&value, 1, MPI_INT, 1, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
   if(err != MPI_SUCCESS)
     {
@@ -60,8 +60,8 @@ main(int argc, char* argv[])
       return -1;
     }
 
-  value      = 1;
-  int output = 0;
+  value     = 1;
+  int output= 0;
 
   MPI_Allreduce(&value, &output, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
   if(output != nproc)

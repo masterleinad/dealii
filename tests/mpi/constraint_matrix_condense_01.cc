@@ -40,7 +40,7 @@ test()
   dof_handler.distribute_dofs(fe);
 
   IndexSet locally_owned_dofs;
-  locally_owned_dofs = dof_handler.locally_owned_dofs();
+  locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -55,14 +55,14 @@ test()
     DoFTools::extract_boundary_dofs(
       dof_handler, std::vector<bool>(1, true), boundary_dofs);
 
-    unsigned int first_nboundary_dof = 0;
+    unsigned int first_nboundary_dof= 0;
     while(boundary_dofs.is_element(first_nboundary_dof))
       first_nboundary_dof++;
 
     if(locally_relevant_dofs.is_element(first_nboundary_dof))
       {
         constraints.add_line(first_nboundary_dof);
-        for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+        for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
           if(boundary_dofs.is_element(i) == true)
             constraints.add_entry(first_nboundary_dof, i, -1);
       }
@@ -77,7 +77,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(myid == 0)
     {

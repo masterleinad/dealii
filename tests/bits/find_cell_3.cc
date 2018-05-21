@@ -33,7 +33,7 @@ void check(Triangulation<3>& tria)
     = GridTools::find_active_cell_around_point(tria, p);
 
   deallog << cell << std::endl;
-  for(unsigned int v = 0; v < GeometryInfo<3>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<3>::vertices_per_cell; ++v)
     deallog << "<" << cell->vertex(v) << "> ";
   deallog << std::endl;
 

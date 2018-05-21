@@ -58,8 +58,8 @@ test(std::string filename, unsigned int n)
   // that this is consistent with what we expect.
   Vector<double> real_one(dof_handler.n_dofs());
   Vector<double> interpolated_one(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < real_one.size(); ++i)
-    real_one(i) = 1.;
+  for(unsigned int i= 0; i < real_one.size(); ++i)
+    real_one(i)= 1.;
 
   Functions::ConstantFunction<spacedim> constant(1.);
   VectorTools::interpolate(dof_handler, constant, interpolated_one);
@@ -76,7 +76,7 @@ main()
 {
   deallog.attach(logfile);
 
-  for(unsigned int n = 1; n < 8; ++n)
+  for(unsigned int n= 1; n < 8; ++n)
     {
       deallog << "Test<1,2>, finite element q_" << n << std::endl;
       test<1, 2>(SOURCE_DIR "/grids/circle_2.inp", n);

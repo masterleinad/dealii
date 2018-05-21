@@ -67,7 +67,7 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup functions
  * @author Wolfgang Bangerth, Guido Kanschat, 1998, 1999
  */
-template <typename Number = double>
+template <typename Number= double>
 class FunctionTime
 {
 public:
@@ -75,12 +75,12 @@ public:
    * Constructor. May take an initial value for the time variable, which
    * defaults to zero.
    */
-  FunctionTime(const Number initial_time = Number(0.0));
+  FunctionTime(const Number initial_time= Number(0.0));
 
   /**
    * Virtual destructor.
    */
-  virtual ~FunctionTime() = default;
+  virtual ~FunctionTime()= default;
 
   /**
    * Return the value of the time variable.

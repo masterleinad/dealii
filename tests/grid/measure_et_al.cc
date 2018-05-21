@@ -42,11 +42,11 @@ create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
       case 1:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<2>& v0 = tria.begin_active()->vertex(0);
-          v0(0)        = 0.;
-          Point<2>& v2 = tria.begin_active()->vertex(3);
-          v2(0)        = 5.;
-          v2(1)        = 4.;
+          Point<2>& v0= tria.begin_active()->vertex(0);
+          v0(0)       = 0.;
+          Point<2>& v2= tria.begin_active()->vertex(3);
+          v2(0)       = 5.;
+          v2(1)       = 4.;
           //      exact_areas.push_back(7.);
           break;
         }
@@ -67,8 +67,8 @@ create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
       case 1:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<3>& v0 = tria.begin_active()->vertex(0);
-          v0(0)        = 0.;
+          Point<3>& v0= tria.begin_active()->vertex(0);
+          v0(0)       = 0.;
           break;
         }
       default:
@@ -81,7 +81,7 @@ void
 test()
 {
   Triangulation<dim> tria;
-  for(unsigned int case_no = 0; case_no < 2; ++case_no)
+  for(unsigned int case_no= 0; case_no < 2; ++case_no)
     {
       create_triangulation(case_no, tria);
       deallog << "dim" << dim << ":case" << case_no

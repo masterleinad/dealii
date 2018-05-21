@@ -24,27 +24,27 @@ void
 test()
 {
   {
-    const unsigned int      n_properties_per_particle = 3;
+    const unsigned int      n_properties_per_particle= 3;
     Particles::PropertyPool pool(n_properties_per_particle);
 
     Point<spacedim> position;
 
-    position(0) = 0.3;
+    position(0)= 0.3;
     if(spacedim > 1)
-      position(1) = 0.5;
+      position(1)= 0.5;
     if(spacedim > 2)
-      position(2) = 0.7;
+      position(2)= 0.7;
 
     Point<dim> reference_position;
-    reference_position(0) = 0.2;
+    reference_position(0)= 0.2;
     if(dim > 1)
-      reference_position(1) = 0.4;
+      reference_position(1)= 0.4;
     if(dim > 2)
-      reference_position(2) = 0.6;
+      reference_position(2)= 0.6;
 
     const types::particle_index index(7);
 
-    std::vector<double> properties = {0.15, 0.45, 0.75};
+    std::vector<double> properties= {0.15, 0.45, 0.75};
 
     Particles::Particle<dim, spacedim> particle(
       position, reference_position, index);
@@ -62,11 +62,11 @@ test()
             << std::endl;
 
     std::vector<char> data(particle.serialized_size_in_bytes());
-    void*             write_pointer = static_cast<void*>(&data.front());
+    void*             write_pointer= static_cast<void*>(&data.front());
 
     particle.write_data(write_pointer);
 
-    const void* read_pointer = static_cast<const void*>(&data.front());
+    const void* read_pointer= static_cast<const void*>(&data.front());
     const Particles::Particle<dim, spacedim> new_particle(read_pointer, &pool);
 
     deallog << "Copy particle location: " << new_particle.get_location()

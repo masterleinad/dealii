@@ -48,8 +48,8 @@ public:
    * given <tt>row</tt> and the <tt>index</tt> within it.
    */
   MatrixIterator(MatrixType*     matrix,
-                 const size_type row   = 0,
-                 const size_type index = 0);
+                 const size_type row  = 0,
+                 const size_type index= 0);
 
   /**
    * Copy from another matrix iterator. Mostly implemented to allow
@@ -151,7 +151,7 @@ template <class ACCESSOR>
 inline MatrixIterator<ACCESSOR>
 MatrixIterator<ACCESSOR>::operator++(int)
 {
-  const MatrixIterator iter = *this;
+  const MatrixIterator iter= *this;
   accessor.advance();
   return iter;
 }

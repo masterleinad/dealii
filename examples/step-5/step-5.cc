@@ -173,8 +173,8 @@ Step5<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -188,36 +188,36 @@ Step5<dim>::assemble_system()
   // coefficient value at each quadrature point.
   for(const auto& cell : dof_handler.active_cell_iterators())
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+      for(unsigned int q_index= 0; q_index < n_q_points; ++q_index)
         {
           const double current_coefficient
             = coefficient<dim>(fe_values.quadrature_point(q_index));
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j)
                   += (current_coefficient * fe_values.shape_grad(i, q_index)
                       * fe_values.shape_grad(j, q_index)
                       * fe_values.JxW(q_index));
 
-              cell_rhs(i) += (fe_values.shape_value(i, q_index) * 1.0
-                              * fe_values.JxW(q_index));
+              cell_rhs(i)+= (fe_values.shape_value(i, q_index) * 1.0
+                             * fe_values.JxW(q_index));
             }
         }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          system_rhs(local_dof_indices[i]) += cell_rhs(i);
+          system_rhs(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 
@@ -306,13 +306,13 @@ Step5<dim>::output_results(const unsigned int cycle) const
   // They are initialized with the default values, so we only have to change
   // those that we don't like. For example, we would like to scale the z-axis
   // differently (stretch each data point in z-direction by a factor of four):
-  eps_flags.z_scaling = 4;
+  eps_flags.z_scaling= 4;
   // Then we would also like to alter the viewpoint from which we look at the
   // solution surface. The default is at an angle of 60 degrees down from the
   // vertical axis, and 30 degrees rotated against it in mathematical positive
   // sense. We raise our viewpoint a bit and look more along the y-axis:
-  eps_flags.azimut_angle = 40;
-  eps_flags.turn_angle   = 10;
+  eps_flags.azimut_angle= 40;
+  eps_flags.turn_angle  = 10;
   // That shall suffice. There are more flags, for example whether to draw the
   // mesh lines, which data vectors to use for colorization of the interior of
   // the cells, and so on. You may want to take a look at the documentation of
@@ -440,7 +440,7 @@ Step5<dim>::run()
   triangulation.set_all_manifold_ids_on_boundary(0);
   triangulation.set_manifold(0, boundary);
 
-  for(unsigned int cycle = 0; cycle < 6; ++cycle)
+  for(unsigned int cycle= 0; cycle < 6; ++cycle)
     {
       std::cout << "Cycle " << cycle << ':' << std::endl;
 

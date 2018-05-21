@@ -43,28 +43,28 @@ flatten_triangulation(Triangulation<dim>& tria_in, Triangulation<dim>& tria_out)
   // we start by extracting the number of vertices and cell is
   // the original triangulation
 
-  unsigned int n_vertices     = tria_in.n_vertices();
-  unsigned int n_cells        = tria_in.n_cells();
-  unsigned int n_active_cells = tria_in.n_active_cells();
+  unsigned int n_vertices    = tria_in.n_vertices();
+  unsigned int n_cells       = tria_in.n_cells();
+  unsigned int n_active_cells= tria_in.n_active_cells();
 
   // also get all vertices
-  const std::vector<Point<dim>> vertices = tria_in.get_vertices();
+  const std::vector<Point<dim>> vertices= tria_in.get_vertices();
 
   // now we need to loop over all cells and extract the cell data.
   typename Triangulation<dim>::active_cell_iterator cell
     = tria_in.begin_active(),
-    endc = tria_in.end();
+    endc= tria_in.end();
 
   std::vector<CellData<dim>> cells(n_active_cells, CellData<dim>());
 
-  unsigned int cell_counter = 0;
+  unsigned int cell_counter= 0;
   for(; cell != endc; ++cell)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
         {
-          cells[cell_counter].vertices[j] = cell->vertex_index(j);
+          cells[cell_counter].vertices[j]= cell->vertex_index(j);
         }
-      cells[cell_counter].material_id = 0;
+      cells[cell_counter].material_id= 0;
       ++cell_counter;
     }
 
@@ -87,12 +87,11 @@ mesh_info(const Triangulation<dim>& tria, const std::string& filename)
 
   {
     std::map<unsigned int, unsigned int>              boundary_count;
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active(),
-      endc = tria.end();
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                      endc= tria.end();
     for(; cell != endc; ++cell)
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           {
             if(cell->face(face)->at_boundary())

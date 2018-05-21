@@ -33,7 +33,7 @@ template <class TRIA>
 void
 check(TRIA& tr)
 {
-  typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
+  typename TRIA::cell_iterator cell= tr.begin(), endc= tr.end();
 
   for(; cell != endc; ++cell)
     {

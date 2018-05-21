@@ -35,10 +35,10 @@ PolynomialsNedelec<dim>::create_polynomials(const unsigned int k)
 {
   std::vector<std::vector<Polynomials::Polynomial<double>>> pols(dim);
 
-  pols[0] = Polynomials::Legendre::generate_complete_basis(k);
+  pols[0]= Polynomials::Legendre::generate_complete_basis(k);
 
-  for(unsigned int i = 1; i < dim; ++i)
-    pols[i] = Polynomials::Lobatto::generate_complete_basis(k + 1);
+  for(unsigned int i= 1; i < dim; ++i)
+    pols[i]= Polynomials::Lobatto::generate_complete_basis(k + 1);
 
   return pols;
 }
@@ -77,7 +77,7 @@ PolynomialsNedelec<dim>::compute(
   // and second derivatives vectors of
   // <tt>polynomial_space</tt> at
   // <tt>unit_point</tt>
-  const unsigned int& n_basis = polynomial_space.n();
+  const unsigned int& n_basis= polynomial_space.n();
   std::vector<double> unit_point_values((values.size() == 0) ? 0 : n_basis);
   std::vector<Tensor<1, dim>> unit_point_grads((grads.size() == 0) ? 0 :
                                                                      n_basis);
@@ -100,16 +100,16 @@ PolynomialsNedelec<dim>::compute(
           // Assign the correct values to the
           // corresponding shape functions.
           if(values.size() > 0)
-            for(unsigned int i = 0; i < unit_point_values.size(); ++i)
-              values[i][0] = unit_point_values[i];
+            for(unsigned int i= 0; i < unit_point_values.size(); ++i)
+              values[i][0]= unit_point_values[i];
 
           if(grads.size() > 0)
-            for(unsigned int i = 0; i < unit_point_grads.size(); ++i)
-              grads[i][0][0] = unit_point_grads[i][0];
+            for(unsigned int i= 0; i < unit_point_grads.size(); ++i)
+              grads[i][0][0]= unit_point_grads[i][0];
 
           if(grad_grads.size() > 0)
-            for(unsigned int i = 0; i < unit_point_grad_grads.size(); ++i)
-              grad_grads[i][0][0][0] = unit_point_grad_grads[i][0][0];
+            for(unsigned int i= 0; i < unit_point_grad_grads.size(); ++i)
+              grad_grads[i][0][0][0]= unit_point_grad_grads[i][0][0];
 
           break;
         }
@@ -130,8 +130,8 @@ PolynomialsNedelec<dim>::compute(
           // shifted one step in positive direction
           Point<dim> p;
 
-          p(0) = unit_point(1);
-          p(1) = unit_point(0);
+          p(0)= unit_point(1);
+          p(1)= unit_point(0);
 
           std::vector<double> p_values((values.size() == 0) ? 0 : n_basis);
           std::vector<Tensor<1, dim>> p_grads((grads.size() == 0) ? 0 :
@@ -150,20 +150,20 @@ PolynomialsNedelec<dim>::compute(
           // corresponding shape functions.
           if(values.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
-                for(unsigned int j = 0; j < 2; ++j)
+              for(unsigned int i= 0; i <= my_degree; ++i)
+                for(unsigned int j= 0; j < 2; ++j)
                   {
-                    values[i + j * (my_degree + 1)][0] = 0.0;
+                    values[i + j * (my_degree + 1)][0]= 0.0;
                     values[i + j * (my_degree + 1)][1]
                       = p_values[i + j * (my_degree + 1)];
                     values[i + (j + 2) * (my_degree + 1)][0]
                       = unit_point_values[i + j * (my_degree + 1)];
-                    values[i + (j + 2) * (my_degree + 1)][1] = 0.0;
+                    values[i + (j + 2) * (my_degree + 1)][1]= 0.0;
                   }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
                       values[(i + GeometryInfo<dim>::lines_per_cell) * my_degree
                              + j + GeometryInfo<dim>::lines_per_cell][0]
@@ -186,15 +186,15 @@ PolynomialsNedelec<dim>::compute(
 
           if(grads.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
-                for(unsigned int j = 0; j < 2; ++j)
+              for(unsigned int i= 0; i <= my_degree; ++i)
+                for(unsigned int j= 0; j < 2; ++j)
                   {
-                    for(unsigned int k = 0; k < dim; ++k)
+                    for(unsigned int k= 0; k < dim; ++k)
                       {
-                        grads[i + j * (my_degree + 1)][0][k] = 0.0;
+                        grads[i + j * (my_degree + 1)][0][k]= 0.0;
                         grads[i + (j + 2) * (my_degree + 1)][0][k]
                           = unit_point_grads[i + j * (my_degree + 1)][k];
-                        grads[i + (j + 2) * (my_degree + 1)][1][k] = 0.0;
+                        grads[i + (j + 2) * (my_degree + 1)][1][k]= 0.0;
                       }
 
                     grads[i + j * (my_degree + 1)][1][0]
@@ -204,10 +204,10 @@ PolynomialsNedelec<dim>::compute(
                   }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
-                      for(unsigned int k = 0; k < dim; ++k)
+                      for(unsigned int k= 0; k < dim; ++k)
                         {
                           grads[(i + GeometryInfo<dim>::lines_per_cell)
                                   * my_degree
@@ -240,13 +240,13 @@ PolynomialsNedelec<dim>::compute(
 
           if(grad_grads.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
-                for(unsigned int j = 0; j < 2; ++j)
+              for(unsigned int i= 0; i <= my_degree; ++i)
+                for(unsigned int j= 0; j < 2; ++j)
                   {
-                    for(unsigned int k = 0; k < dim; ++k)
-                      for(unsigned int l = 0; l < dim; ++l)
+                    for(unsigned int k= 0; k < dim; ++k)
+                      for(unsigned int l= 0; l < dim; ++l)
                         {
-                          grad_grads[i + j * (my_degree + 1)][0][k][l] = 0.0;
+                          grad_grads[i + j * (my_degree + 1)][0][k][l]= 0.0;
                           grad_grads[i + (j + 2) * (my_degree + 1)][0][k][l]
                             = unit_point_grad_grads[i + j * (my_degree + 1)][k]
                                                    [l];
@@ -265,11 +265,11 @@ PolynomialsNedelec<dim>::compute(
                   }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
-                      for(unsigned int k = 0; k < dim; ++k)
-                        for(unsigned int l = 0; l < dim; ++l)
+                      for(unsigned int k= 0; k < dim; ++k)
+                        for(unsigned int l= 0; l < dim; ++l)
                           {
                             grad_grads[(i + GeometryInfo<dim>::lines_per_cell)
                                          * my_degree
@@ -342,18 +342,18 @@ PolynomialsNedelec<dim>::compute(
           std::vector<Tensor<2, dim>> p2_grad_grads(
             (grad_grads.size() == 0) ? 0 : n_basis);
 
-          p1(0) = unit_point(1);
-          p1(1) = unit_point(2);
-          p1(2) = unit_point(0);
+          p1(0)= unit_point(1);
+          p1(1)= unit_point(2);
+          p1(2)= unit_point(0);
           polynomial_space.compute(p1,
                                    p1_values,
                                    p1_grads,
                                    p1_grad_grads,
                                    empty_vector_of_3rd_order_tensors,
                                    empty_vector_of_4th_order_tensors);
-          p2(0) = unit_point(2);
-          p2(1) = unit_point(0);
-          p2(2) = unit_point(1);
+          p2(0)= unit_point(2);
+          p2(1)= unit_point(0);
+          p2(2)= unit_point(1);
           polynomial_space.compute(p2,
                                    p2_values,
                                    p2_grads,
@@ -365,13 +365,13 @@ PolynomialsNedelec<dim>::compute(
           // corresponding shape functions.
           if(values.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
+              for(unsigned int i= 0; i <= my_degree; ++i)
                 {
-                  for(unsigned int j = 0; j < 2; ++j)
+                  for(unsigned int j= 0; j < 2; ++j)
                     {
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < 2; ++l)
+                          for(unsigned int l= 0; l < 2; ++l)
                             {
                               values[i + (j + 4 * k) * (my_degree + 1)][2 * l]
                                 = 0.0;
@@ -403,12 +403,12 @@ PolynomialsNedelec<dim>::compute(
                 }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
-                      for(unsigned int k = 0; k < my_degree; ++k)
+                      for(unsigned int k= 0; k < my_degree; ++k)
                         {
-                          for(unsigned int l = 0; l < 2; ++l)
+                          for(unsigned int l= 0; l < 2; ++l)
                             {
                               values[((i
                                        + 2 * GeometryInfo<dim>::faces_per_cell)
@@ -476,11 +476,11 @@ PolynomialsNedelec<dim>::compute(
                                             * (my_degree + 1)];
                         }
 
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < 2; ++l)
+                          for(unsigned int l= 0; l < 2; ++l)
                             {
-                              for(unsigned int m = 0; m < 2; ++m)
+                              for(unsigned int m= 0; m < 2; ++m)
                                 {
                                   values[i
                                          + (j
@@ -561,14 +561,14 @@ PolynomialsNedelec<dim>::compute(
 
           if(grads.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
+              for(unsigned int i= 0; i <= my_degree; ++i)
                 {
-                  for(unsigned int j = 0; j < 2; ++j)
+                  for(unsigned int j= 0; j < 2; ++j)
                     {
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < 2; ++l)
-                            for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int l= 0; l < 2; ++l)
+                            for(unsigned int m= 0; m < dim; ++m)
                               {
                                 grads[i + (j + 4 * k) * (my_degree + 1)][2 * l]
                                      [m]
@@ -581,7 +581,7 @@ PolynomialsNedelec<dim>::compute(
                                   = 0.0;
                               }
 
-                          for(unsigned int l = 0; l < dim; ++l)
+                          for(unsigned int l= 0; l < dim; ++l)
                             grads[i + (j + 4 * k + 2) * (my_degree + 1)][0][l]
                               = unit_point_grads[i
                                                  + (j + k * (my_degree + 2))
@@ -627,14 +627,14 @@ PolynomialsNedelec<dim>::compute(
                 }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
-                      for(unsigned int k = 0; k < my_degree; ++k)
+                      for(unsigned int k= 0; k < my_degree; ++k)
                         {
-                          for(unsigned int l = 0; l < dim; ++l)
+                          for(unsigned int l= 0; l < dim; ++l)
                             {
-                              for(unsigned int m = 0; m < 2; ++m)
+                              for(unsigned int m= 0; m < 2; ++m)
                                 {
                                   grads
                                     [((i
@@ -751,12 +751,12 @@ PolynomialsNedelec<dim>::compute(
                                            * (my_degree + 1)][0];
                         }
 
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < 2; ++l)
-                            for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int l= 0; l < 2; ++l)
+                            for(unsigned int m= 0; m < dim; ++m)
                               {
-                                for(unsigned int n = 0; n < 2; ++n)
+                                for(unsigned int n= 0; n < 2; ++n)
                                   {
                                     grads
                                       [i
@@ -788,7 +788,7 @@ PolynomialsNedelec<dim>::compute(
                                   = 0.0;
                               }
 
-                          for(unsigned int l = 0; l < dim; ++l)
+                          for(unsigned int l= 0; l < dim; ++l)
                             {
                               grads[i
                                     + (j + (2 * k + 5) * my_degree
@@ -899,16 +899,16 @@ PolynomialsNedelec<dim>::compute(
 
           if(grad_grads.size() > 0)
             {
-              for(unsigned int i = 0; i <= my_degree; ++i)
+              for(unsigned int i= 0; i <= my_degree; ++i)
                 {
-                  for(unsigned int j = 0; j < 2; ++j)
+                  for(unsigned int j= 0; j < 2; ++j)
                     {
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < dim; ++l)
-                            for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int l= 0; l < dim; ++l)
+                            for(unsigned int m= 0; m < dim; ++m)
                               {
-                                for(unsigned int n = 0; n < 2; ++n)
+                                for(unsigned int n= 0; n < 2; ++n)
                                   {
                                     grad_grads[i
                                                + (j + 4 * k) * (my_degree + 1)]
@@ -1067,15 +1067,15 @@ PolynomialsNedelec<dim>::compute(
                 }
 
               if(my_degree > 0)
-                for(unsigned int i = 0; i <= my_degree; ++i)
-                  for(unsigned int j = 0; j < my_degree; ++j)
+                for(unsigned int i= 0; i <= my_degree; ++i)
+                  for(unsigned int j= 0; j < my_degree; ++j)
                     {
-                      for(unsigned int k = 0; k < my_degree; ++k)
+                      for(unsigned int k= 0; k < my_degree; ++k)
                         {
-                          for(unsigned int l = 0; l < dim; ++l)
-                            for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int l= 0; l < dim; ++l)
+                            for(unsigned int m= 0; m < dim; ++m)
                               {
-                                for(unsigned int n = 0; n < 2; ++n)
+                                for(unsigned int n= 0; n < 2; ++n)
                                   {
                                     grad_grads
                                       [((i
@@ -1375,14 +1375,14 @@ PolynomialsNedelec<dim>::compute(
                                                 * (my_degree + 1)][0][0];
                         }
 
-                      for(unsigned int k = 0; k < 2; ++k)
+                      for(unsigned int k= 0; k < 2; ++k)
                         {
-                          for(unsigned int l = 0; l < dim; ++l)
-                            for(unsigned int m = 0; m < dim; ++m)
+                          for(unsigned int l= 0; l < dim; ++l)
+                            for(unsigned int m= 0; m < dim; ++m)
                               {
-                                for(unsigned int n = 0; n < 2; ++n)
+                                for(unsigned int n= 0; n < 2; ++n)
                                   {
-                                    for(unsigned int o = 0; o < 2; ++o)
+                                    for(unsigned int o= 0; o < 2; ++o)
                                       {
                                         grad_grads[i
                                                    + (j

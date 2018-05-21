@@ -24,13 +24,13 @@ void
 test()
 {
   std::vector<bool> v(12);
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v[i] = (i % 3 == 0);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v[i]= (i % 3 == 0);
 
   ComponentMask m(v);
 
   // verify equality
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(m[i] == v[i], ExcInternalError());
 
   // this needs to throw an exception

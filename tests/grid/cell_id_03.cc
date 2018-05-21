@@ -33,7 +33,7 @@ template <class TRIA>
 void
 check(TRIA& tr)
 {
-  typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
+  typename TRIA::cell_iterator cell= tr.begin(), endc= tr.end();
 
   for(; cell != endc; ++cell)
     {
@@ -41,9 +41,9 @@ check(TRIA& tr)
 
       // Store the CellId and create a cell iterator pointing to the same cell
 
-      const CellId cid = cell->id();
+      const CellId cid= cell->id();
 
-      typename TRIA::cell_iterator cell2 = cid.to_cell(tr);
+      typename TRIA::cell_iterator cell2= cid.to_cell(tr);
 
       deallog << cell2->level() << " " << cell2->index() << std::endl;
     }

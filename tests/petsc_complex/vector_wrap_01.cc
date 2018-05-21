@@ -25,12 +25,12 @@ void
 test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int k = 0; k < v.size(); ++k)
-    v(k) = std::complex<double>(k, 0.5 * k);
+  for(unsigned int k= 0; k < v.size(); ++k)
+    v(k)= std::complex<double>(k, 0.5 * k);
 
   // copy elements by reference
-  for(unsigned int k = 0; k < v.size(); ++k)
-    w(k) = v(k);
+  for(unsigned int k= 0; k < v.size(); ++k)
+    w(k)= v(k);
 
   // check that they're equal
   AssertThrow(v == w, ExcInternalError());
@@ -47,7 +47,7 @@ main(int argc, char** argv)
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       Vec                              vpetsc;
-      int ierr = VecCreateSeq(PETSC_COMM_SELF, 100, &vpetsc);
+      int ierr= VecCreateSeq(PETSC_COMM_SELF, 100, &vpetsc);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
       {
         PETScWrappers::VectorBase  v(vpetsc);
@@ -56,9 +56,9 @@ main(int argc, char** argv)
       }
 
 #if DEAL_II_PETSC_VERSION_LT(3, 2, 0)
-      ierr = VecDestroy(vpetsc);
+      ierr= VecDestroy(vpetsc);
 #else
-      ierr = VecDestroy(&vpetsc);
+      ierr= VecDestroy(&vpetsc);
 #endif
 
       AssertThrow(ierr == 0, ExcPETScError(ierr));

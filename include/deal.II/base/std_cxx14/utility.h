@@ -35,8 +35,8 @@ namespace std_cxx14
   template <size_t... Ints>
   struct index_sequence
   {
-    using type       = index_sequence;
-    using value_type = size_t;
+    using type      = index_sequence;
+    using value_type= size_t;
     static constexpr std::size_t
     size() noexcept
     {
@@ -71,7 +71,7 @@ namespace std_cxx14
   {};
 
   template <class... T>
-  using index_sequence_for = make_index_sequence<sizeof...(T)>;
+  using index_sequence_for= make_index_sequence<sizeof...(T)>;
 #endif
 } // namespace std_cxx14
 DEAL_II_NAMESPACE_CLOSE

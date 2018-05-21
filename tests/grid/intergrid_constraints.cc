@@ -59,8 +59,7 @@ check()
   const FE_DGQ<dim>  fe_constant(0);
   const FE_Q<dim>    fe_quadratic(2);
   const FE_DGQ<dim>  fe_dq_linear(1);
-  const FE_DGQ<dim>* fe_dq_quadratic
-    = (dim != 3 ? new FE_DGQ<dim>(2) : nullptr);
+  const FE_DGQ<dim>* fe_dq_quadratic= (dim != 3 ? new FE_DGQ<dim>(2) : nullptr);
 
   // define composed finite
   // elements. to limit memory
@@ -79,7 +78,7 @@ check()
 
   // make several loops to refine the
   // two grids
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       deallog << "Refinement step " << i << std::endl;
 
@@ -146,9 +145,9 @@ check()
       // always more refined than
       // grid 1
       typename DoFHandler<dim>::cell_iterator cell, endc;
-      cell = dof_1.begin();
-      endc = dof_1.end();
-      for(unsigned int index = 0; cell != endc; ++cell)
+      cell= dof_1.begin();
+      endc= dof_1.end();
+      for(unsigned int index= 0; cell != endc; ++cell)
         if(cell->active())
           {
             ++index;
@@ -173,9 +172,9 @@ check()
       tria_2.execute_coarsening_and_refinement();
 
       // next refine grid 2 a little more
-      cell = dof_2.begin();
-      endc = dof_2.end();
-      for(unsigned int index = 0; cell != endc; ++cell)
+      cell= dof_2.begin();
+      endc= dof_2.end();
+      for(unsigned int index= 0; cell != endc; ++cell)
         if(cell->active())
           {
             ++index;

@@ -126,7 +126,7 @@ namespace TrilinosWrappers
     else
       parameter_list.set("ML output", 0);
 
-    const Epetra_Map& domain_map = matrix.OperatorDomainMap();
+    const Epetra_Map& domain_map= matrix.OperatorDomainMap();
 
     const size_type constant_modes_dimension
       = additional_data.constant_modes.size();
@@ -136,14 +136,14 @@ namespace TrilinosWrappers
 
     if(constant_modes_dimension > 0)
       {
-        const size_type n_rows = TrilinosWrappers::n_global_rows(matrix);
+        const size_type n_rows= TrilinosWrappers::n_global_rows(matrix);
         const bool      constant_modes_are_global
           = additional_data.constant_modes[0].size() == n_rows;
         const size_type n_relevant_rows
           = constant_modes_are_global ?
               n_rows :
               additional_data.constant_modes[0].size();
-        const size_type my_size = domain_map.NumMyElements();
+        const size_type my_size= domain_map.NumMyElements();
         if(constant_modes_are_global == false)
           Assert(n_relevant_rows == my_size,
                  ExcDimensionMismatch(n_relevant_rows, my_size));
@@ -159,8 +159,8 @@ namespace TrilinosWrappers
 
         // Reshape null space as a contiguous vector of doubles so that
         // Trilinos can read from it.
-        for(size_type d = 0; d < constant_modes_dimension; ++d)
-          for(size_type row = 0; row < my_size; ++row)
+        for(size_type d= 0; d < constant_modes_dimension; ++d)
+          for(size_type row= 0; row < my_size; ++row)
             {
               TrilinosWrappers::types::int_type global_row_id
                 = constant_modes_are_global ?
@@ -217,7 +217,7 @@ namespace TrilinosWrappers
     // Create the multigrid hierarchy using ML parameters.
     Teuchos::RCP<MueLu::HierarchyManager<double, int, int, node>>
       hierarchy_factory;
-    hierarchy_factory = Teuchos::rcp(
+    hierarchy_factory= Teuchos::rcp(
       new MueLu::MLParameterListInterpreter<double, int, int, node>(
         muelu_parameters));
     Teuchos::RCP<MueLu::Hierarchy<double, int, int, node>> hierarchy
@@ -227,7 +227,7 @@ namespace TrilinosWrappers
 
     // MueLu::EpetraOperator is just a wrapper around a "standard"
     // Epetra_Operator.
-    preconditioner = std::make_shared<MueLu::EpetraOperator>(hierarchy);
+    preconditioner= std::make_shared<MueLu::EpetraOperator>(hierarchy);
   }
 
   template <typename number>
@@ -239,17 +239,17 @@ namespace TrilinosWrappers
     const ::dealii::SparsityPattern*      use_this_sparsity)
   {
     preconditioner.reset();
-    const size_type n_rows = deal_ii_sparse_matrix.m();
+    const size_type n_rows= deal_ii_sparse_matrix.m();
 
     // Init Epetra Matrix using an
     // equidistributed map; avoid
     // storing the nonzero
     // elements.
-    vector_distributor = std::make_shared<Epetra_Map>(
+    vector_distributor= std::make_shared<Epetra_Map>(
       static_cast<TrilinosWrappers::types::int_type>(n_rows), 0, communicator);
 
     if(trilinos_matrix.get() == nullptr)
-      trilinos_matrix = std::make_shared<SparseMatrix>();
+      trilinos_matrix= std::make_shared<SparseMatrix>();
 
     trilinos_matrix->reinit(*vector_distributor,
                             *vector_distributor,
@@ -271,12 +271,12 @@ namespace TrilinosWrappers
   PreconditionAMGMueLu::size_type
   PreconditionAMGMueLu::memory_consumption() const
   {
-    unsigned int memory = sizeof(*this);
+    unsigned int memory= sizeof(*this);
 
     // todo: find a way to read out ML's data
     // sizes
     if(trilinos_matrix.get() != nullptr)
-      memory += trilinos_matrix->memory_consumption();
+      memory+= trilinos_matrix->memory_consumption();
     return memory;
   }
 

@@ -34,7 +34,7 @@ namespace Algorithms
    * An output operator writing a separate file in each step and writing the
    * vectors as finite element functions with respect to a given DoFHandler.
    */
-  template <typename VectorType, int dim, int spacedim = dim>
+  template <typename VectorType, int dim, int spacedim= dim>
   class DoFOutputOperator : public OutputOperator<VectorType>
   {
   public:
@@ -46,8 +46,8 @@ namespace Algorithms
      * last step command. Numbers with less digits are filled with
      * zeros from the left.
      */
-    DoFOutputOperator(const std::string& filename_base = std::string("output"),
-                      const unsigned int digits        = 3);
+    DoFOutputOperator(const std::string& filename_base= std::string("output"),
+                      const unsigned int digits       = 3);
 
     void
     parse_parameters(ParameterHandler& param);
@@ -73,7 +73,7 @@ namespace Algorithms
   DoFOutputOperator<VectorType, dim, spacedim>::initialize(
     const DoFHandler<dim, spacedim>& dof_handler)
   {
-    dof = &dof_handler;
+    dof= &dof_handler;
   }
 } // namespace Algorithms
 

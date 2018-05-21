@@ -31,19 +31,19 @@ main()
   {
     deallog << "rank=1" << std::endl;
 
-    const double entries[] = {1, 2, 3};
+    const double entries[]= {1, 2, 3};
 
     Table<1, double> t(3);
     t.fill(entries, true);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       deallog << t[i] << ' ';
     deallog << std::endl;
 
     // passing false as second argument shouldn't
     // make a difference for rank-1 tables
     t.fill(entries, false);
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       deallog << t[i] << ' ';
     deallog << std::endl;
   }
@@ -52,15 +52,15 @@ main()
   {
     deallog << "rank=2" << std::endl;
 
-    const double entries[] = {1, 2, 3, 4, 5, 6};
+    const double entries[]= {1, 2, 3, 4, 5, 6};
 
     // create a 2x3 table from this
     Table<2, double> t(2, 3);
     t.fill(entries, true);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }
@@ -68,9 +68,9 @@ main()
     // same data, same table, but filled in transpose ordering
     t.fill(entries, false);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }
@@ -80,18 +80,18 @@ main()
   {
     deallog << "rank=3" << std::endl;
 
-    const double entries[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    const double entries[]= {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
     // create a 2x3x2 table from this
     Table<3, double> t(2, 3, 2);
     t.fill(entries, true);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           {
             deallog << '(';
-            for(unsigned int k = 0; k < t.size()[2]; ++k)
+            for(unsigned int k= 0; k < t.size()[2]; ++k)
               deallog << t[i][j][k] << ' ';
             deallog << ')';
           }
@@ -101,12 +101,12 @@ main()
     // same data, same table, but filled in transpose ordering
     t.fill(entries, false);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for(unsigned int i= 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for(unsigned int j= 0; j < t.size()[1]; ++j)
           {
             deallog << '(';
-            for(unsigned int k = 0; k < t.size()[2]; ++k)
+            for(unsigned int k= 0; k < t.size()[2]; ++k)
               deallog << t[i][j][k] << ' ';
             deallog << ')';
           }

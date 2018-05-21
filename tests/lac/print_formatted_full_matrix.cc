@@ -25,9 +25,9 @@ main()
   initlog();
 
   FullMatrix<double> matrix(2, 2);
-  matrix(0, 0) = std::numeric_limits<double>::quiet_NaN();
-  matrix(0, 1) = std::numeric_limits<double>::infinity();
-  matrix(1, 1) = -std::numeric_limits<double>::infinity();
+  matrix(0, 0)= std::numeric_limits<double>::quiet_NaN();
+  matrix(0, 1)= std::numeric_limits<double>::infinity();
+  matrix(1, 1)= -std::numeric_limits<double>::infinity();
 
   deallog << "Using print" << std::endl;
   matrix.print(deallog.get_file_stream());

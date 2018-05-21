@@ -37,7 +37,7 @@ public:
   {
     static Threads::Mutex      mutex;
     Threads::Mutex::ScopedLock lock(mutex);
-    end_sweep_flags[time_step_number] = true;
+    end_sweep_flags[time_step_number]= true;
   }
 
   virtual void
@@ -55,11 +55,11 @@ test()
   TimeDependent      td(TimeDependent::TimeSteppingData(0, 0),
                    TimeDependent::TimeSteppingData(0, 0),
                    TimeDependent::TimeSteppingData(0, 0));
-  const unsigned int n_time_steps = 10000;
-  for(unsigned int i = 0; i < n_time_steps; ++i)
+  const unsigned int n_time_steps= 10000;
+  for(unsigned int i= 0; i < n_time_steps; ++i)
     td.add_timestep(new TimeStep(i));
 
-  end_sweep_flags = std::vector<bool>(n_time_steps, false);
+  end_sweep_flags= std::vector<bool>(n_time_steps, false);
   td.end_sweep();
 
   // make sure we have called TimeStep::end_sweep once for every time step object

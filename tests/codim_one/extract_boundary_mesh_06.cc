@@ -32,8 +32,8 @@ using namespace std;
 void
 test()
 {
-  const unsigned int spacedim = 2;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int spacedim= 2;
+  const unsigned int dim     = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
   map<Triangulation<dim, spacedim>::cell_iterator,

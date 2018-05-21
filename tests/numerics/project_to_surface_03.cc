@@ -39,12 +39,12 @@ test()
   // distort the cell a bit. all
   // faces but face 0 stay planar;
   // face 0 becomes a saddle
-  cell->vertex(0)[0] -= 0.25;
-  cell->vertex(6)[0] -= 0.25;
-  cell->vertex(2)[0] += 0.25;
-  cell->vertex(4)[0] += 0.25;
+  cell->vertex(0)[0]-= 0.25;
+  cell->vertex(6)[0]-= 0.25;
+  cell->vertex(2)[0]+= 0.25;
+  cell->vertex(4)[0]+= 0.25;
 
-  for(unsigned int point = 0; point < 9; ++point)
+  for(unsigned int point= 0; point < 9; ++point)
     {
       // choose the 8 vertices of the
       // original unit cell as well
@@ -55,7 +55,7 @@ test()
 
       deallog << "Trial point = " << trial_point << std::endl;
 
-      for(unsigned int e = 0; e < GeometryInfo<dim>::quads_per_cell; ++e)
+      for(unsigned int e= 0; e < GeometryInfo<dim>::quads_per_cell; ++e)
         {
           const typename Triangulation<dim>::quad_iterator quad
             = (dim > 2 ?
@@ -65,7 +65,7 @@ test()
 
           deallog << "    Quad " << e << ", projected point=";
 
-          const Point<dim> p = GridTools::project_to_object(quad, trial_point);
+          const Point<dim> p= GridTools::project_to_object(quad, trial_point);
           deallog << p;
           deallog << "  (quad is from ";
           deallog << quad->vertex(0);
@@ -81,7 +81,7 @@ test()
           // indeed closer to
           // trial_point than any of
           // the vertices of the quad
-          for(unsigned int v = 0; v < 4; ++v)
+          for(unsigned int v= 0; v < 4; ++v)
             AssertThrow(p.distance(trial_point)
                           <= quad->vertex(v).distance(trial_point),
                         ExcInternalError());

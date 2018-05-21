@@ -84,7 +84,7 @@ public:
    * reinit(BlockSparsityPattern). The number of blocks per row and column are
    * then determined by that function.
    */
-  BlockSparseMatrix() = default;
+  BlockSparseMatrix()= default;
 
   /**
    * Constructor. Takes the given matrix sparsity structure to represent the
@@ -183,7 +183,7 @@ public:
    * all the blocks.
    */
   size_type
-  n_actually_nonzero_elements(const double threshold = 0.0) const;
+  n_actually_nonzero_elements(const double threshold= 0.0) const;
 
   /**
    * Return a (constant) reference to the underlying sparsity pattern of this
@@ -296,7 +296,7 @@ public:
   void
   precondition_Jacobi(BlockVectorType&       dst,
                       const BlockVectorType& src,
-                      const number           omega = 1.) const;
+                      const number           omega= 1.) const;
 
   /**
    * Apply the Jacobi preconditioner to a simple vector.
@@ -307,7 +307,7 @@ public:
   void
   precondition_Jacobi(Vector<number2>&       dst,
                       const Vector<number2>& src,
-                      const number           omega = 1.) const;
+                      const number           omega= 1.) const;
   //@}
 
   /**
@@ -336,11 +336,11 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
-                  const char*        zero_string = " ",
-                  const double       denominator = 1.) const;
+                  const unsigned int precision  = 3,
+                  const bool         scientific = true,
+                  const unsigned int width      = 0,
+                  const char*        zero_string= " ",
+                  const double       denominator= 1.) const;
   //@}
   /**
    * @addtogroup Exceptions
@@ -372,9 +372,9 @@ BlockSparseMatrix<number>::operator=(const double d)
 {
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
-      this->block(r, c) = d;
+  for(size_type r= 0; r < this->n_block_rows(); ++r)
+    for(size_type c= 0; c < this->n_block_cols(); ++c)
+      this->block(r, c)= d;
 
   return *this;
 }
@@ -466,7 +466,7 @@ BlockSparseMatrix<number>::precondition_Jacobi(BlockVectorType&       dst,
 
   // do a diagonal preconditioning. uses only
   // the diagonal blocks of the matrix
-  for(size_type i = 0; i < this->n_block_rows(); ++i)
+  for(size_type i= 0; i < this->n_block_rows(); ++i)
     this->block(i, i).precondition_Jacobi(dst.block(i), src.block(i), omega);
 }
 

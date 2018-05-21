@@ -38,7 +38,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tria(
     MPI_COMM_WORLD,
@@ -47,10 +47,10 @@ test()
   GridGenerator::subdivided_hyper_cube(tria, 3);
 
   // set periodic boundary conditions in all directions
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if(cell->at_boundary(f))
         cell->face(f)->set_all_boundary_ids(f + 10);
 
@@ -62,7 +62,7 @@ test()
   tria.add_periodicity(periodic_faces);
 
   // adaptively refine into the lower left corner
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tria.begin_active();
@@ -74,7 +74,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
+  for(typename Triangulation<dim>::cell_iterator cell= tria.begin();
       cell != tria.end();
       ++cell)
     deallog << cell->id().to_string() << " " << cell->level_subdomain_id()
@@ -86,9 +86,9 @@ test()
         ("out" + Utilities::to_string(myid) + ".svg").c_str());
       GridOut           grid_out;
       GridOutFlags::Svg flags;
-      flags.label_level_subdomain_id = true;
-      flags.coloring                 = GridOutFlags::Svg::level_subdomain_id;
-      flags.convert_level_number_to_height = true;
+      flags.label_level_subdomain_id= true;
+      flags.coloring                = GridOutFlags::Svg::level_subdomain_id;
+      flags.convert_level_number_to_height= true;
       grid_out.set_flags(flags);
 
       grid_out.write_svg(tria, grid_output);

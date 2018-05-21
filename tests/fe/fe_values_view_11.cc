@@ -39,8 +39,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    fe_function(i) = i + 1;
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    fe_function(i)= i + 1;
 
   const QGauss<dim> quadrature(2);
   FEValues<dim>     fe_values(
@@ -53,7 +53,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   fe_values.get_function_values(fe_function, vector_values);
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for(unsigned int c= 0; c < fe.n_components(); ++c)
     // use a vector extractor if there
     // are sufficiently many components
     // left after the current component
@@ -65,8 +65,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           fe_function, selected_vector_values);
         deallog << "component=" << c << std::endl;
 
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
-          for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
+          for(unsigned int d= 0; d < dim; ++d)
             {
               deallog << selected_vector_values[q][d] << std::endl;
               Assert(std::fabs(selected_vector_values[q][d]

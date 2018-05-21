@@ -49,8 +49,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   cm2.close();
 
   Vector<double> in(dof1->n_dofs());
-  for(unsigned int i = 0; i < in.size(); ++i)
-    in(i) = i;
+  for(unsigned int i= 0; i < in.size(); ++i)
+    in(i)= i;
   Vector<double> out(dof1->n_dofs());
 
   FETools::interpolation_difference(*dof1, cm1, in, *dof2, cm2, out);

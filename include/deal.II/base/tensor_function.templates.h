@@ -47,8 +47,8 @@ TensorFunction<rank, dim, Number>::value_list(
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
-    values[i] = this->value(points[i]);
+  for(unsigned int i= 0; i < points.size(); ++i)
+    values[i]= this->value(points[i]);
 }
 
 template <int rank, int dim, typename Number>
@@ -68,8 +68,8 @@ TensorFunction<rank, dim, Number>::gradient_list(
   Assert(gradients.size() == points.size(),
          ExcDimensionMismatch(gradients.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
-    gradients[i] = gradient(points[i]);
+  for(unsigned int i= 0; i < points.size(); ++i)
+    gradients[i]= gradient(points[i]);
 }
 
 template <int rank, int dim, typename Number>
@@ -98,8 +98,8 @@ ConstantTensorFunction<rank, dim, Number>::value_list(
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < values.size(); ++i)
-    values[i] = _value;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    values[i]= _value;
 }
 
 template <int rank, int dim, typename Number>
@@ -124,8 +124,8 @@ ConstantTensorFunction<rank, dim, Number>::gradient_list(
 
   static const Tensor<rank + 1, dim, Number> zero;
 
-  for(unsigned int i = 0; i < gradients.size(); ++i)
-    gradients[i] = zero;
+  for(unsigned int i= 0; i < gradients.size(); ++i)
+    gradients[i]= zero;
 }
 
 template <int rank, int dim, typename Number>

@@ -243,7 +243,7 @@ namespace Step19
     // handle than the <code>argc</code>/<code>argv</code> mechanism. We omit
     // the name of the executable at the zeroth index:
     std::list<std::string> args;
-    for(int i = 1; i < argc; ++i)
+    for(int i= 1; i < argc; ++i)
       args.emplace_back(argv[i]);
 
     // Then process all these parameters. If the parameter is <code>-p</code>,
@@ -264,7 +264,7 @@ namespace Step19
                 exit(1);
               }
             args.pop_front();
-            const std::string parameter_file = args.front();
+            const std::string parameter_file= args.front();
             args.pop_front();
 
             // Now read the input file:
@@ -277,10 +277,10 @@ namespace Step19
             // from the parameter file here, because they may be overridden by
             // later command line parameters:
             if(output_file == "")
-              output_file = prm.get("Output file");
+              output_file= prm.get("Output file");
 
             if(output_format == "")
-              output_format = prm.get("Output format");
+              output_format= prm.get("Output format");
 
             // Finally, let us note that if we were interested in the values
             // of the parameters declared above in the dummy subsection, we
@@ -310,7 +310,7 @@ namespace Step19
                 exit(1);
               }
             args.pop_front();
-            output_format = args.front();
+            output_format= args.front();
             args.pop_front();
           }
         else if(args.front() == std::string("-o"))
@@ -323,7 +323,7 @@ namespace Step19
                 exit(1);
               }
             args.pop_front();
-            output_file = args.front();
+            output_file= args.front();
             args.pop_front();
           }
 
@@ -376,7 +376,7 @@ namespace Step19
 
     // For all the other input files, we read their data into an intermediate
     // object, and then merge that into the first object declared above:
-    for(unsigned int i = 1; i < input_file_names.size(); ++i)
+    for(unsigned int i= 1; i < input_file_names.size(); ++i)
       {
         std::ifstream input(input_file_names[i]);
         AssertThrow(input, ExcIO());

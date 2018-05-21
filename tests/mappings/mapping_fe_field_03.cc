@@ -40,7 +40,7 @@ test()
     Point<dim> center;
     GridGenerator::hyper_ball(tria, center, 12);
 
-    const types::manifold_id            sphere_id = 0;
+    const types::manifold_id            sphere_id= 0;
     static const SphericalManifold<dim> boundary_ball(center);
     tria.set_all_manifold_ids_on_boundary(sphere_id);
     tria.set_manifold(sphere_id, boundary_ball);

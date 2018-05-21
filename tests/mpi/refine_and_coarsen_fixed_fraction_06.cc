@@ -31,18 +31,18 @@
 
 namespace EquationData
 {
-  const double R0 = 6371000. - 2890000.;
-  const double R1 = 6371000. - 35000.;
+  const double R0= 6371000. - 2890000.;
+  const double R1= 6371000. - 35000.;
 } // namespace EquationData
 
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<2> tr(MPI_COMM_WORLD);
 
-  const unsigned int initial_refinement = 3;
+  const unsigned int initial_refinement= 3;
   GridGenerator::hyper_shell(
     tr, Point<2>(), EquationData::R0, EquationData::R1, 12, true);
   static SphericalManifold<2> boundary;
@@ -59,13 +59,12 @@ test()
     std::ifstream in(SOURCE_DIR
                      "/refine_and_coarsen_fixed_fraction_06/indicators");
     Assert(in, ExcMessage("File missing"));
-    for(unsigned int i = 0; i < indicators.size(); ++i)
+    for(unsigned int i= 0; i < indicators.size(); ++i)
       in >> indicators(i);
   }
 
-  double min_indicator
-    = *std::min_element(indicators.begin(), indicators.end()),
-    max_indicator = *std::max_element(indicators.begin(), indicators.end());
+  double min_indicator= *std::min_element(indicators.begin(), indicators.end()),
+         max_indicator= *std::max_element(indicators.begin(), indicators.end());
 
   // use one strategy to compute
   // thresholds and obtain those
@@ -73,23 +72,23 @@ test()
   parallel::distributed::GridRefinement ::refine_and_coarsen_fixed_fraction(
     tr, indicators, 0.6, 0.2);
   {
-    float coarsen_indicator = min_indicator - 1,
-          refine_indicator  = max_indicator + 1;
-    unsigned int cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+    float coarsen_indicator= min_indicator - 1,
+          refine_indicator = max_indicator + 1;
+    unsigned int cell_index= 0;
+    for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
         cell != tr.end();
         ++cell, ++cell_index)
       if(cell->refine_flag_set())
-        refine_indicator = std::min(refine_indicator, indicators(cell_index));
+        refine_indicator= std::min(refine_indicator, indicators(cell_index));
       else if(cell->coarsen_flag_set())
-        coarsen_indicator = std::max(coarsen_indicator, indicators(cell_index));
+        coarsen_indicator= std::max(coarsen_indicator, indicators(cell_index));
     if(myid == 0)
       {
         deallog << "thresholds = " << refine_indicator << ' '
                 << coarsen_indicator << std::endl;
       }
 
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+    for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
         cell != tr.end();
         ++cell)
       {
@@ -107,23 +106,23 @@ test()
   dealii::GridRefinement ::refine_and_coarsen_fixed_fraction(
     tr, indicators, 0.6, 0.2);
   {
-    float coarsen_indicator = min_indicator - 1,
-          refine_indicator  = max_indicator + 1;
-    unsigned int cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+    float coarsen_indicator= min_indicator - 1,
+          refine_indicator = max_indicator + 1;
+    unsigned int cell_index= 0;
+    for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
         cell != tr.end();
         ++cell, ++cell_index)
       if(cell->refine_flag_set())
-        refine_indicator = std::min(refine_indicator, indicators(cell_index));
+        refine_indicator= std::min(refine_indicator, indicators(cell_index));
       else if(cell->coarsen_flag_set())
-        coarsen_indicator = std::max(coarsen_indicator, indicators(cell_index));
+        coarsen_indicator= std::max(coarsen_indicator, indicators(cell_index));
     if(myid == 0)
       {
         deallog << "thresholds = " << refine_indicator << ' '
                 << coarsen_indicator << std::endl;
       }
 
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+    for(Triangulation<2>::active_cell_iterator cell= tr.begin_active();
         cell != tr.end();
         ++cell)
       {
@@ -138,7 +137,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

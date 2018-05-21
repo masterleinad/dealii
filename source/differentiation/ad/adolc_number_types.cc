@@ -49,7 +49,7 @@ namespace numbers
         static_assert(
           std::is_same<adouble, ad_type>::value,
           "The type of the AD number is not that which was expected.");
-        const ad_type result = comparator(value_1, value_2);
+        const ad_type result= comparator(value_1, value_2);
         return !(
           Differentiation::AD::ADNumberTraits<ad_type>::get_scalar_value(result)
           == 0.0);

@@ -39,19 +39,19 @@ check()
 {
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> subdivisions(dim, 1U);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
   Point<dim> p1, p2;
   switch(dim)
     {
       case 2:
-        p1[0] = p1[1] = 0.0;
-        p2[0]         = 2.0;
-        p2[1]         = 1.0;
+        p1[0]= p1[1]= 0.0;
+        p2[0]       = 2.0;
+        p2[1]       = 1.0;
         break;
       case 3:
-        p1[0] = p1[1] = p1[2] = 0.0;
-        p2[0]                 = 2.0;
-        p2[1] = p2[2] = 1.0;
+        p1[0]= p1[1]= p1[2]= 0.0;
+        p2[0]              = 2.0;
+        p2[1]= p2[2]= 1.0;
         break;
       default:
         Assert(false, ExcNotImplemented());
@@ -78,8 +78,8 @@ check()
 
     Table<2, DoFTools::Coupling> cell_coupling(1, 1);
     Table<2, DoFTools::Coupling> face_coupling(1, 1);
-    cell_coupling(0, 0) = DoFTools::always;
-    face_coupling(0, 0) = DoFTools::always;
+    cell_coupling(0, 0)= DoFTools::always;
+    face_coupling(0, 0)= DoFTools::always;
 
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, dsp, cell_coupling, face_coupling);
@@ -95,8 +95,8 @@ check()
 
     Table<2, DoFTools::Coupling> cell_coupling(1, 1);
     Table<2, DoFTools::Coupling> face_coupling(1, 1);
-    cell_coupling(0, 0) = DoFTools::always;
-    face_coupling(0, 0) = DoFTools::none;
+    cell_coupling(0, 0)= DoFTools::always;
+    face_coupling(0, 0)= DoFTools::none;
 
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, dsp, cell_coupling, face_coupling);
@@ -112,8 +112,8 @@ check()
 
     Table<2, DoFTools::Coupling> cell_coupling(1, 1);
     Table<2, DoFTools::Coupling> face_coupling(1, 1);
-    cell_coupling(0, 0) = DoFTools::none;
-    face_coupling(0, 0) = DoFTools::always;
+    cell_coupling(0, 0)= DoFTools::none;
+    face_coupling(0, 0)= DoFTools::always;
 
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, dsp, cell_coupling, face_coupling);
@@ -129,8 +129,8 @@ check()
 
     Table<2, DoFTools::Coupling> cell_coupling(1, 1);
     Table<2, DoFTools::Coupling> face_coupling(1, 1);
-    cell_coupling(0, 0) = DoFTools::none;
-    face_coupling(0, 0) = DoFTools::none;
+    cell_coupling(0, 0)= DoFTools::none;
+    face_coupling(0, 0)= DoFTools::none;
 
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, dsp, cell_coupling, face_coupling);

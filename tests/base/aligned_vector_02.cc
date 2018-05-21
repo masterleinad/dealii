@@ -24,10 +24,10 @@ typedef AlignedVector<VEC>          VECVEC;
 void
 print_vec(VECVEC& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       deallog << "[";
-      for(unsigned int j = 0; j < v[i].size(); ++j)
+      for(unsigned int j= 0; j < v[i].size(); ++j)
         deallog << v[i][j] << " ";
       deallog << "]";
     }
@@ -39,15 +39,15 @@ test()
 {
   typedef AlignedVector<unsigned int> VEC;
   VEC                                 a(4);
-  a[0] = 2;
-  a[1] = 1;
-  a[2] = 42;
+  a[0]= 2;
+  a[1]= 1;
+  a[2]= 42;
   VECVEC v(2);
   deallog << "Constructor: ";
   print_vec(v);
 
-  v[0] = a;
-  v[1] = a;
+  v[0]= a;
+  v[1]= a;
 
   deallog << "Assignment: ";
   print_vec(v);
@@ -58,7 +58,7 @@ test()
   deallog << "Data consistency after assignment: ";
   print_vec(v);
 
-  a[1] = 41;
+  a[1]= 41;
   a.push_back(100);
   v.push_back(a);
   deallog << "Insertion: ";

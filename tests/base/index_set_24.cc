@@ -32,7 +32,7 @@ main()
 
   // Test that move construction works correctly and that the moved object is
   // restored to the default state
-  IndexSet is2 = std::move(is1);
+  IndexSet is2= std::move(is1);
 
   deallog << is2.size() << ", " << is2.n_elements() << std::endl;
   deallog << is1.size() << ", " << is1.n_elements() << std::endl;
@@ -47,7 +47,7 @@ main()
 
   // Test that move assignment works correctly and that the moved object is
   // restored to the default state
-  is2 = std::move(is1);
+  is2= std::move(is1);
   deallog << is2.size() << ", " << is2.n_elements() << std::endl;
   deallog << is1.size() << ", " << is1.n_elements() << std::endl;
 }

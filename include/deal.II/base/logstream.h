@@ -142,7 +142,7 @@ public:
    * The optional argument @p print_job_id specifies whether
    */
   void
-  attach(std::ostream& o, const bool print_job_id = true);
+  attach(std::ostream& o, const bool print_job_id= true);
 
   /**
    * Disable output to the second stream. You may want to call <tt>close</tt>

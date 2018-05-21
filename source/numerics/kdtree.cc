@@ -27,7 +27,7 @@ KDTree<dim>::get_points_within_ball(const Point<dim>& center,
   Assert(radius > 0, ExcMessage("Radius is expected to be positive."));
 
   nanoflann::SearchParams params;
-  params.sorted = sorted;
+  params.sorted= sorted;
 
   std::vector<std::pair<unsigned int, double>> matches;
   kdtree->radiusSearch(&center[0], radius, matches, params);
@@ -51,8 +51,8 @@ KDTree<dim>::get_closest_points(const Point<dim>&  target,
 
   // convert it to the format we want to return
   std::vector<std::pair<unsigned int, double>> matches(n_points);
-  for(unsigned int i = 0; i < n_points; ++i)
-    matches[i] = std::make_pair(indices[i], distances[i]);
+  for(unsigned int i= 0; i < n_points; ++i)
+    matches[i]= std::make_pair(indices[i], distances[i]);
 
   return matches;
 }
@@ -62,8 +62,8 @@ void
 KDTree<dim>::set_points(const std::vector<Point<dim>>& pts)
 {
   Assert(pts.size() > 0, ExcMessage("Expecting a non zero set of points."));
-  adaptor = std_cxx14::make_unique<PointCloudAdaptor>(pts);
-  kdtree  = std_cxx14::make_unique<NanoFlannKDTree>(
+  adaptor= std_cxx14::make_unique<PointCloudAdaptor>(pts);
+  kdtree = std_cxx14::make_unique<NanoFlannKDTree>(
     dim, *adaptor, nanoflann::KDTreeSingleIndexAdaptorParams(max_leaf_size));
   kdtree->buildIndex();
 }

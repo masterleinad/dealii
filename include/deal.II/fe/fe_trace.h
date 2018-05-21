@@ -40,7 +40,7 @@ DEAL_II_NAMESPACE_OPEN
  * values extracted will equal to zero.
  */
 
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_TraceQ
   : public FE_PolyFace<TensorProductPolynomials<dim - 1>, dim, spacedim>
 {

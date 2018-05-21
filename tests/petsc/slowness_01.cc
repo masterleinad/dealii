@@ -29,14 +29,14 @@
 void
 test()
 {
-  const unsigned int N = 200;
+  const unsigned int N= 200;
 
   // first build the sparsity pattern
   SparsityPattern sparsity(N * N, N * N, 5);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for(unsigned int i= 0; i < N; i++)
+    for(unsigned int j= 0; j < N; j++)
       {
-        const unsigned int global = i * N + j;
+        const unsigned int global= i * N + j;
         sparsity.add(global, global);
         if(j > 0)
           {
@@ -63,10 +63,10 @@ test()
 
   // next build the sparse matrix itself
   SparseMatrix<double> matrix(sparsity);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for(unsigned int i= 0; i < N; i++)
+    for(unsigned int j= 0; j < N; j++)
       {
-        const unsigned int global = i * N + j;
+        const unsigned int global= i * N + j;
         matrix.add(global, global, 4);
         if(j > 0)
           {
@@ -94,8 +94,8 @@ test()
   // multiplication with subsequent formation
   // of the matrix norm
   Vector<double> v1(N * N), v2(N * N);
-  for(unsigned int i = 0; i < N * N; ++i)
-    v1(i) = i;
+  for(unsigned int i= 0; i < N * N; ++i)
+    v1(i)= i;
   matrix.vmult(v2, v1);
 
   deallog << v1 * v2 << std::endl;

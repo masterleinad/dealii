@@ -39,7 +39,7 @@ check(const FiniteElement<dim>& fe)
   tr.refine_global(6 - dim);
 
   // run a few different sizes...
-  for(unsigned int c = 0; c < 4; ++c)
+  for(unsigned int c= 0; c < 4; ++c)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
@@ -56,8 +56,8 @@ check(const FiniteElement<dim>& fe)
       mgdof.distribute_mg_dofs(fe);
 
       Tensor<1, dim> exponents_monomial;
-      for(unsigned int d = 0; d < dim; ++d)
-        exponents_monomial[d] = 1;
+      for(unsigned int d= 0; d < dim; ++d)
+        exponents_monomial[d]= 1;
       LinearAlgebra::distributed::Vector<double> vref;
       vref.reinit(mgdof.n_dofs());
       VectorTools::interpolate(
@@ -78,24 +78,24 @@ check(const FiniteElement<dim>& fe)
       MGLevelObject<LinearAlgebra::distributed::Vector<Number>> vectors(
         0, tr.n_global_levels() - 1);
       transfer_ref.copy_to_mg(mgdof, vectors, vref);
-      for(unsigned int level = vectors.max_level(); level > 0; --level)
+      for(unsigned int level= vectors.max_level(); level > 0; --level)
         {
           LinearAlgebra::distributed::Vector<Number> vec2(vectors[level - 1]);
           transfer_ref.restrict_and_add(
             level, vectors[level - 1], vectors[level]);
           transfer.restrict_and_add(level, vec2, vectors[level]);
-          vec2 -= vectors[level - 1];
+          vec2-= vectors[level - 1];
           deallog << "Error in restriction:  " << (double) vec2.linfty_norm()
                   << std::endl;
         }
 
-      for(unsigned int level = 1; level < vectors.max_level(); ++level)
+      for(unsigned int level= 1; level < vectors.max_level(); ++level)
         {
           LinearAlgebra::distributed::Vector<Number> vec2(vectors[level + 1]);
           transfer_ref.prolongate(
             level + 1, vectors[level + 1], vectors[level]);
           transfer.prolongate(level + 1, vec2, vectors[level]);
-          vec2 -= vectors[level + 1];
+          vec2-= vectors[level + 1];
           deallog << "Error in prolongation: " << (double) vec2.linfty_norm()
                   << std::endl;
         }

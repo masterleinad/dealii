@@ -32,7 +32,7 @@ check_support_points(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 
-  const std::vector<Point<dim>>& points = fe.get_generalized_support_points();
+  const std::vector<Point<dim>>& points= fe.get_generalized_support_points();
   std::vector<double>            weights(points.size());
 
   Triangulation<dim> tr;
@@ -43,28 +43,28 @@ check_support_points(const FiniteElement<dim>& fe)
   MappingCartesian<dim> mapping;
 
   Quadrature<dim> support_quadrature(points, weights);
-  UpdateFlags     flags = update_values | update_gradients;
+  UpdateFlags     flags= update_values | update_gradients;
   FEValues<dim>   vals(mapping, fe, support_quadrature, flags);
   vals.reinit(dof.begin_active());
 
-  for(unsigned int k = 0; k < points.size(); ++k)
+  for(unsigned int k= 0; k < points.size(); ++k)
     {
-      const Point<dim>& p = points[k];
+      const Point<dim>& p= points[k];
       deallog << p;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         {
           deallog << '\t';
-          for(unsigned int d = 0; d < dim; ++d)
+          for(unsigned int d= 0; d < dim; ++d)
             {
-              const double sf = fe.shape_value_component(i, p, d);
+              const double sf= fe.shape_value_component(i, p, d);
               deallog << ' ' << (int) rint(60 * sf);
 
               const double diff
                 = std::abs(sf - vals.shape_value_component(i, k, d));
               if(diff > 1.e-12)
                 deallog << "Error values" << std::endl;
-              Tensor<1, dim> grad = fe.shape_grad_component(i, p, d);
-              grad -= vals.shape_grad_component(i, k, d);
+              Tensor<1, dim> grad= fe.shape_grad_component(i, p, d);
+              grad-= vals.shape_grad_component(i, k, d);
               if(grad.norm() > 1.e-12)
                 deallog << "Error grads" << std::endl;
             }
@@ -93,32 +93,32 @@ check_face_support_points(const FiniteElement<dim>& fe)
 
   MappingCartesian<dim> mapping;
 
-  UpdateFlags       flags = update_values | update_gradients;
+  UpdateFlags       flags= update_values | update_gradients;
   FEFaceValues<dim> vals(mapping, fe, sub_quadrature, flags);
 
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       QProjector<dim>::project_to_face(sub_quadrature, face, points);
       vals.reinit(dof.begin_active(), face);
 
-      for(unsigned int k = 0; k < points.size(); ++k)
+      for(unsigned int k= 0; k < points.size(); ++k)
         {
-          const Point<dim>& p = points[k];
+          const Point<dim>& p= points[k];
           deallog << p;
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             {
               deallog << '\t';
-              for(unsigned int d = 0; d < dim; ++d)
+              for(unsigned int d= 0; d < dim; ++d)
                 {
-                  const double sf = fe.shape_value_component(i, p, d);
+                  const double sf= fe.shape_value_component(i, p, d);
                   deallog << ' ' << (int) rint(60 * sf);
 
                   const double diff
                     = std::abs(sf - vals.shape_value_component(i, k, d));
                   if(diff > 1.e-12)
                     deallog << "Error values" << std::endl;
-                  Tensor<1, dim> grad = fe.shape_grad_component(i, p, d);
-                  grad -= vals.shape_grad_component(i, k, d);
+                  Tensor<1, dim> grad= fe.shape_grad_component(i, p, d);
+                  grad-= vals.shape_grad_component(i, k, d);
                   if(grad.norm() > 1.e-12)
                     deallog << "Error grads" << std::endl;
                 }

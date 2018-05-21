@@ -35,19 +35,19 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
 
-  const unsigned int n_refinements[] = {0, 4, 3, 2};
-  for(unsigned int i = 0; i < n_refinements[dim]; ++i)
+  const unsigned int n_refinements[]= {0, 4, 3, 2};
+  for(unsigned int i= 0; i < n_refinements[dim]; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(triangulation.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
-        flags[Testing::rand() % flags.size()] = true;
+      for(unsigned int k= 0; k < flags.size() / 5 + 1; ++k)
+        flags[Testing::rand() % flags.size()]= true;
       // make sure there's at least one that
       // will be refined
-      flags[0] = true;
+      flags[0]= true;
 
       // refine triangulation
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -60,7 +60,7 @@ test()
       // (this should ensure that at least
       // some of them will actually be
       // coarsened)
-      index = 0;
+      index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
           cell != triangulation.end();
@@ -85,7 +85,7 @@ test()
         = DoFTools::get_dofs_on_patch<DoFHandler<dim>>(
           GridTools::get_patch_around_cell<DoFHandler<dim>>(cell));
       deallog << cell << ": ";
-      for(unsigned int i = 0; i < m.size(); ++i)
+      for(unsigned int i= 0; i < m.size(); ++i)
         deallog << i << "->" << m[i] << ' ';
       deallog << std::endl;
     }

@@ -60,9 +60,9 @@ namespace GridTools
     // triangulation from the
     // mesh and determine vertices
     // and used vertices
-    const Triangulation<dim, spacedim>& tria = mesh.get_triangulation();
+    const Triangulation<dim, spacedim>& tria= mesh.get_triangulation();
 
-    const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
+    const std::vector<Point<spacedim>>& vertices= tria.get_vertices();
 
     Assert(
       tria.get_vertices().size() == marked_vertices.size()
@@ -92,9 +92,9 @@ namespace GridTools
     // could be the potentially closest
     // vertex to the point, use it instead
     // of used vertices
-    const std::vector<bool>& used = (marked_vertices.size() == 0) ?
-                                      tria.get_used_vertices() :
-                                      marked_vertices;
+    const std::vector<bool>& used= (marked_vertices.size() == 0) ?
+                                     tria.get_used_vertices() :
+                                     marked_vertices;
 
     // At the beginning, the first
     // used vertex is the closest one
@@ -105,19 +105,19 @@ namespace GridTools
     // is actually used
     Assert(first != used.end(), ExcInternalError());
 
-    unsigned int best_vertex = std::distance(used.begin(), first);
-    double       best_dist   = (p - vertices[best_vertex]).norm_square();
+    unsigned int best_vertex= std::distance(used.begin(), first);
+    double       best_dist  = (p - vertices[best_vertex]).norm_square();
 
     // For all remaining vertices, test
     // whether they are any closer
-    for(unsigned int j = best_vertex + 1; j < vertices.size(); j++)
+    for(unsigned int j= best_vertex + 1; j < vertices.size(); j++)
       if(used[j])
         {
-          double dist = (p - vertices[j]).norm_square();
+          double dist= (p - vertices[j]).norm_square();
           if(dist < best_dist)
             {
-              best_vertex = j;
-              best_dist   = dist;
+              best_vertex= j;
+              best_dist  = dist;
             }
         }
 
@@ -139,9 +139,9 @@ namespace GridTools
     // triangulation from the
     // mesh and determine vertices
     // and used vertices
-    const Triangulation<dim, spacedim>& tria = mesh.get_triangulation();
+    const Triangulation<dim, spacedim>& tria= mesh.get_triangulation();
 
-    auto vertices = extract_used_vertices(tria, mapping);
+    auto vertices= extract_used_vertices(tria, mapping);
 
     Assert(
       tria.get_vertices().size() == marked_vertices.size()
@@ -167,7 +167,7 @@ namespace GridTools
 
     // Remove from the map unwanted elements.
     if(marked_vertices.size())
-      for(auto it = vertices.begin(); it != vertices.end();)
+      for(auto it= vertices.begin(); it != vertices.end();)
         {
           if(marked_vertices[it->first] == false)
             {
@@ -211,7 +211,7 @@ namespace GridTools
     typename dealii::internal::
       ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type cell
       = mesh.begin_active(),
-      endc = mesh.end();
+      endc= mesh.end();
 
     // go through all active cells and look if the vertex is part of that cell
     //
@@ -248,7 +248,7 @@ namespace GridTools
     // list, but std::set throws out those cells already entered
     for(; cell != endc; ++cell)
       {
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; v++)
+        for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; v++)
           if(cell->vertex_index(v) == vertex)
             {
               // OK, we found a cell that contains
@@ -261,7 +261,7 @@ namespace GridTools
               // (possibly) coarser neighbor. if this is the case,
               // then we need to also add this neighbor
               if(dim >= 2)
-                for(unsigned int vface = 0; vface < dim; vface++)
+                for(unsigned int vface= 0; vface < dim; vface++)
                   {
                     const unsigned int face
                       = GeometryInfo<dim>::vertex_to_face[v][vface];
@@ -290,7 +290,7 @@ namespace GridTools
         // in 3d also loop over the edges
         if(dim >= 3)
           {
-            for(unsigned int e = 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
+            for(unsigned int e= 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
               if(cell->line(e)->has_children())
                 // the only place where this vertex could have been
                 // hiding is on the mid-edge point of the edge we
@@ -364,13 +364,13 @@ namespace GridTools
 
       typename std::set<cell_iterator>::const_iterator cell
         = adjacent_cells.begin(),
-        endc = adjacent_cells.end();
+        endc= adjacent_cells.end();
       for(; cell != endc; ++cell)
         {
           std::vector<cell_iterator> active_neighbors;
           get_active_neighbors<MeshType<dim, spacedim>>(*cell,
                                                         active_neighbors);
-          for(unsigned int i = 0; i < active_neighbors.size(); ++i)
+          for(unsigned int i= 0; i < active_neighbors.size(); ++i)
             if(searched_cells.find(active_neighbors[i]) == searched_cells.end())
               adjacent_cells_new.insert(active_neighbors[i]);
         }
@@ -385,7 +385,7 @@ namespace GridTools
           // that the domain is disconnected. in that case,
           // choose the first previously untouched cell we
           // can find
-          cell_iterator it = mesh.begin_active();
+          cell_iterator it= mesh.begin_active();
           for(; it != mesh.end(); ++it)
             if(searched_cells.find(it) == searched_cells.end())
               {
@@ -433,8 +433,8 @@ namespace GridTools
     // maximum allowable distance from
     // the unit cell; we assume a
     // max. deviation of 1e-10
-    double                                      best_distance = 1e-10;
-    int                                         best_level    = -1;
+    double                                      best_distance= 1e-10;
+    int                                         best_level   = -1;
     std::pair<active_cell_iterator, Point<dim>> best_cell;
 
     // Find closest vertex and determine
@@ -460,13 +460,13 @@ namespace GridTools
     // we keep on looking.
     const unsigned int n_active_cells
       = mesh.get_triangulation().n_active_cells();
-    bool         found          = false;
-    unsigned int cells_searched = 0;
+    bool         found         = false;
+    unsigned int cells_searched= 0;
     while(!found && cells_searched < n_active_cells)
       {
         typename std::set<active_cell_iterator>::const_iterator cell
           = adjacent_cells.begin(),
-          endc = adjacent_cells.end();
+          endc= adjacent_cells.end();
         for(; cell != endc; ++cell)
           {
             try
@@ -487,10 +487,10 @@ namespace GridTools
                    || ((dist == best_distance)
                        && ((*cell)->level() > best_level)))
                   {
-                    found         = true;
-                    best_distance = dist;
-                    best_level    = (*cell)->level();
-                    best_cell     = std::make_pair(*cell, p_cell);
+                    found        = true;
+                    best_distance= dist;
+                    best_level   = (*cell)->level();
+                    best_cell    = std::make_pair(*cell, p_cell);
                   }
               }
             catch(
@@ -511,13 +511,13 @@ namespace GridTools
           }
 
         // update the number of cells searched
-        cells_searched += adjacent_cells.size();
+        cells_searched+= adjacent_cells.size();
 
         // if the user provided a custom mask for vertices,
         // terminate the search without trying to expand the search
         // to all cells of the triangulation, as done below.
         if(marked_vertices.size() > 0)
-          cells_searched = n_active_cells;
+          cells_searched= n_active_cells;
 
         // if we have not found the cell in
         // question and have not yet searched every
@@ -553,23 +553,23 @@ namespace GridTools
     // Find the cells for which the predicate is true
     // These are the cells around which we wish to construct
     // the halo layer
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(predicate(cell)) // True predicate --> Part of subdomain
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
-          locally_active_vertices_on_subdomain[cell->vertex_index(v)] = true;
+          locally_active_vertices_on_subdomain[cell->vertex_index(v)]= true;
 
     // Find the cells that do not conform to the predicate
     // but share a vertex with the selected subdomain
     // These comprise the halo layer
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(!predicate(cell)) // False predicate --> Potential halo cell
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
           if(locally_active_vertices_on_subdomain[cell->vertex_index(v)]
@@ -597,11 +597,11 @@ namespace GridTools
     // Find the cells for which the predicate is true
     // These are the cells around which we wish to construct
     // the halo layer
-    for(typename MeshType::cell_iterator cell = mesh.begin(level);
+    for(typename MeshType::cell_iterator cell= mesh.begin(level);
         cell != mesh.end(level);
         ++cell)
       if(predicate(cell)) // True predicate --> Part of subdomain
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
           locally_active_vertices_on_level_subdomain[cell->vertex_index(v)]
@@ -610,11 +610,11 @@ namespace GridTools
     // Find the cells that do not conform to the predicate
     // but share a vertex with the selected subdomain on that level
     // These comprise the halo layer
-    for(typename MeshType::cell_iterator cell = mesh.begin(level);
+    for(typename MeshType::cell_iterator cell= mesh.begin(level);
         cell != mesh.end(level);
         ++cell)
       if(!predicate(cell)) // False predicate --> Potential halo cell
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
           if(locally_active_vertices_on_level_subdomain[cell->vertex_index(v)]
@@ -669,7 +669,7 @@ namespace GridTools
   compute_ghost_cell_halo_layer(const MeshType& mesh)
   {
     std::function<bool(const typename MeshType::active_cell_iterator&)>
-      predicate = IteratorFilters::LocallyOwnedCell();
+      predicate= IteratorFilters::LocallyOwnedCell();
 
     const std::vector<typename MeshType::active_cell_iterator> active_halo_layer
       = compute_active_cell_halo_layer(mesh, predicate);
@@ -697,9 +697,9 @@ namespace GridTools
     std::vector<bool> vertices_outside_subdomain(
       mesh.get_triangulation().n_vertices(), false);
 
-    const unsigned int spacedim = MeshType::space_dimension;
+    const unsigned int spacedim= MeshType::space_dimension;
 
-    unsigned int n_non_predicate_cells = 0; // Number of non predicate cells
+    unsigned int n_non_predicate_cells= 0; // Number of non predicate cells
 
     // Find the layer of cells for which predicate is true and that
     // are on the boundary with other cells. These are
@@ -707,15 +707,15 @@ namespace GridTools
 
     // Find the cells for which the predicate is false
     // These are the cells which are around the predicate subdomain
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(!predicate(cell)) // Negation of predicate --> Not Part of subdomain
         {
-          for(unsigned int v = 0;
+          for(unsigned int v= 0;
               v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
               ++v)
-            vertices_outside_subdomain[cell->vertex_index(v)] = true;
+            vertices_outside_subdomain[cell->vertex_index(v)]= true;
           n_non_predicate_cells++;
         }
 
@@ -729,12 +729,12 @@ namespace GridTools
 
     // Find the cells that conform to the predicate
     // but share a vertex with the cell not in the predicate subdomain
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(predicate(
            cell)) // True predicate --> Potential boundary cell of the subdomain
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
           if(vertices_outside_subdomain[cell->vertex_index(v)] == true)
@@ -749,14 +749,13 @@ namespace GridTools
       = compute_bounding_box(mesh, predicate);
 
     // DOUBLE_EPSILON to compare really close double values
-    const double& DOUBLE_EPSILON
-      = 100. * std::numeric_limits<double>::epsilon();
+    const double& DOUBLE_EPSILON= 100. * std::numeric_limits<double>::epsilon();
 
     // Add layer_thickness to the bounding box
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for(unsigned int d= 0; d < spacedim; ++d)
       {
-        bounding_box.first[d] -= (layer_thickness + DOUBLE_EPSILON);  // minp
-        bounding_box.second[d] += (layer_thickness + DOUBLE_EPSILON); // maxp
+        bounding_box.first[d]-= (layer_thickness + DOUBLE_EPSILON);  // minp
+        bounding_box.second[d]+= (layer_thickness + DOUBLE_EPSILON); // maxp
       }
 
     std::vector<Point<spacedim>>
@@ -791,7 +790,7 @@ namespace GridTools
     // Those cells that are inside the extended bounding box but are not part of the
     // predicate subdomain are possible candidates to be within the distance to the
     // boundary cells of the predicate subdomain.
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       {
@@ -804,11 +803,11 @@ namespace GridTools
 
         const Point<spacedim>& cell_enclosing_ball_center
           = cell_enclosing_ball.first;
-        const double& cell_enclosing_ball_radius = cell_enclosing_ball.second;
+        const double& cell_enclosing_ball_radius= cell_enclosing_ball.second;
 
-        bool cell_inside = true; // reset for each cell
+        bool cell_inside= true; // reset for each cell
 
-        for(unsigned int d = 0; d < spacedim; ++d)
+        for(unsigned int d= 0; d < spacedim; ++d)
           cell_inside
             &= (cell_enclosing_ball_center[d] + cell_enclosing_ball_radius
                 > bounding_box.first[d])
@@ -818,8 +817,7 @@ namespace GridTools
 
         // Ignore all the cells that are outside the extended bounding box
         if(cell_inside)
-          for(unsigned int i = 0; i < subdomain_boundary_cells_radii.size();
-              ++i)
+          for(unsigned int i= 0; i < subdomain_boundary_cells_radii.size(); ++i)
             if(cell_enclosing_ball_center.distance_square(
                  subdomain_boundary_cells_centers[i])
                < Utilities::fixed_power<2>(cell_enclosing_ball_radius
@@ -876,41 +874,40 @@ namespace GridTools
     std::vector<bool> locally_active_vertices_on_subdomain(
       mesh.get_triangulation().n_vertices(), false);
 
-    const unsigned int spacedim = MeshType::space_dimension;
+    const unsigned int spacedim= MeshType::space_dimension;
 
     // Two extreme points can define the bounding box
     // around the active cells that conform to the given predicate.
     Point<MeshType::space_dimension> maxp, minp;
 
     // initialize minp and maxp with the first predicate cell center
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(predicate(cell))
         {
-          minp = cell->center();
-          maxp = cell->center();
+          minp= cell->center();
+          maxp= cell->center();
           break;
         }
 
     // Run through all the cells to check if it belongs to predicate domain,
     // if it belongs to the predicate domain, extend the bounding box.
-    for(typename MeshType::active_cell_iterator cell = mesh.begin_active();
+    for(typename MeshType::active_cell_iterator cell= mesh.begin_active();
         cell != mesh.end();
         ++cell)
       if(predicate(cell)) // True predicate --> Part of subdomain
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<MeshType::dimension>::vertices_per_cell;
             ++v)
           if(locally_active_vertices_on_subdomain[cell->vertex_index(v)]
              == false)
             {
-              locally_active_vertices_on_subdomain[cell->vertex_index(v)]
-                = true;
-              for(unsigned int d = 0; d < spacedim; ++d)
+              locally_active_vertices_on_subdomain[cell->vertex_index(v)]= true;
+              for(unsigned int d= 0; d < spacedim; ++d)
                 {
-                  minp[d] = std::min(minp[d], cell->vertex(v)[d]);
-                  maxp[d] = std::max(maxp[d], cell->vertex(v)[d]);
+                  minp[d]= std::min(minp[d], cell->vertex(v)[d]);
+                  maxp[d]= std::max(maxp[d], cell->vertex(v)[d]);
                 }
             }
 
@@ -948,14 +945,14 @@ namespace GridTools
     CellList cell_list;
 
     // first push the coarse level cells
-    typename MeshType::cell_iterator cell_1 = mesh_1.begin(0),
-                                     cell_2 = mesh_2.begin(0);
+    typename MeshType::cell_iterator cell_1= mesh_1.begin(0),
+                                     cell_2= mesh_2.begin(0);
     for(; cell_1 != mesh_1.end(0); ++cell_1, ++cell_2)
       cell_list.emplace_back(cell_1, cell_2);
 
     // then traverse list as described
     // above
-    typename CellList::iterator cell_pair = cell_list.begin();
+    typename CellList::iterator cell_pair= cell_list.begin();
     while(cell_pair != cell_list.end())
       {
         // if both cells in this pair
@@ -968,7 +965,7 @@ namespace GridTools
             Assert(cell_pair->first->refinement_case()
                      == cell_pair->second->refinement_case(),
                    ExcNotImplemented());
-            for(unsigned int c = 0; c < cell_pair->first->n_children(); ++c)
+            for(unsigned int c= 0; c < cell_pair->first->n_children(); ++c)
               cell_list.emplace_back(cell_pair->first->child(c),
                                      cell_pair->second->child(c));
 
@@ -979,7 +976,7 @@ namespace GridTools
             // iterator by one and then
             // delete the element we've
             // visited before
-            const typename CellList::iterator previous_cell_pair = cell_pair;
+            const typename CellList::iterator previous_cell_pair= cell_pair;
             ++cell_pair;
 
             cell_list.erase(previous_cell_pair);
@@ -994,8 +991,7 @@ namespace GridTools
     // validate that all pairs have at least one
     // active iterator or have different
     // refinement_cases
-    for(cell_pair = cell_list.begin(); cell_pair != cell_list.end();
-        ++cell_pair)
+    for(cell_pair= cell_list.begin(); cell_pair != cell_list.end(); ++cell_pair)
       Assert(cell_pair->first->active() || cell_pair->second->active()
                || (cell_pair->first->refinement_case()
                    != cell_pair->second->refinement_case()),
@@ -1019,9 +1015,9 @@ namespace GridTools
     // of the coarse mesh
     typename Triangulation<dim, spacedim>::cell_iterator cell_1
       = mesh_1.begin(0),
-      cell_2 = mesh_2.begin(0), endc = mesh_1.end(0);
+      cell_2= mesh_2.begin(0), endc= mesh_1.end(0);
     for(; cell_1 != endc; ++cell_1, ++cell_2)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         if(cell_1->vertex(v) != cell_2->vertex(v))
           return false;
 
@@ -1062,19 +1058,19 @@ namespace GridTools
     //we use find_active_cell_around_point using only one
     //mapping.
     if(mapping.size() == 1)
-      best_cell = find_active_cell_around_point(mapping[0], mesh, p);
+      best_cell= find_active_cell_around_point(mapping[0], mesh, p);
     else
       {
         // The best distance is set to the
         // maximum allowable distance from
         // the unit cell; we assume a
         // max. deviation of 1e-10
-        double best_distance = 1e-10;
-        int    best_level    = -1;
+        double best_distance= 1e-10;
+        int    best_level   = -1;
 
         // Find closest vertex and determine
         // all adjacent cells
-        unsigned int vertex = find_closest_vertex(mesh, p);
+        unsigned int vertex= find_closest_vertex(mesh, p);
 
         std::vector<cell_iterator> adjacent_cells_tmp
           = find_cells_adjacent_to_vertex(mesh, vertex);
@@ -1094,14 +1090,14 @@ namespace GridTools
         // the cell and have not searched
         // every cell in the triangulation,
         // we keep on looking.
-        const unsigned int n_cells        = mesh.get_triangulation().n_cells();
-        bool               found          = false;
-        unsigned int       cells_searched = 0;
+        const unsigned int n_cells       = mesh.get_triangulation().n_cells();
+        bool               found         = false;
+        unsigned int       cells_searched= 0;
         while(!found && cells_searched < n_cells)
           {
             typename std::set<cell_iterator>::const_iterator cell
               = adjacent_cells.begin(),
-              endc = adjacent_cells.end();
+              endc= adjacent_cells.end();
             for(; cell != endc; ++cell)
               {
                 try
@@ -1123,10 +1119,10 @@ namespace GridTools
                        || (dist == best_distance
                            && (*cell)->level() > best_level))
                       {
-                        found         = true;
-                        best_distance = dist;
-                        best_level    = (*cell)->level();
-                        best_cell     = std::make_pair(*cell, p_cell);
+                        found        = true;
+                        best_distance= dist;
+                        best_level   = (*cell)->level();
+                        best_cell    = std::make_pair(*cell, p_cell);
                       }
                   }
                 catch(
@@ -1147,7 +1143,7 @@ namespace GridTools
                   }
               }
             //update the number of cells searched
-            cells_searched += adjacent_cells.size();
+            cells_searched+= adjacent_cells.size();
             // if we have not found the cell in
             // question and have not yet searched every
             // cell, we expand our search to
@@ -1180,7 +1176,7 @@ namespace GridTools
 
     std::vector<typename MeshType::active_cell_iterator> patch;
     patch.push_back(cell);
-    for(unsigned int face_number = 0;
+    for(unsigned int face_number= 0;
         face_number < GeometryInfo<MeshType::dimension>::faces_per_cell;
         ++face_number)
       if(cell->face(face_number)->at_boundary() == false)
@@ -1193,7 +1189,7 @@ namespace GridTools
             // consequently, the children is active
             if(MeshType::dimension > 1)
             {
-              for(unsigned int subface = 0;
+              for(unsigned int subface= 0;
                   subface < cell->face(face_number)->n_children();
                   ++subface)
                 patch.push_back(
@@ -1206,7 +1202,7 @@ namespace GridTools
               typename MeshType::cell_iterator neighbor
                 = cell->neighbor(face_number);
               while(neighbor->has_children())
-                neighbor = neighbor->child(1 - face_number);
+                neighbor= neighbor->child(1 - face_number);
 
               Assert(neighbor->neighbor(1 - face_number) == cell,
                      ExcInternalError());
@@ -1226,15 +1222,15 @@ namespace GridTools
              "Vector containing patch cells should not be an empty vector!"));
     // In order to extract the set of cells with the coarsest common level from the give vector of cells:
     // First it finds the number associated with the minimum level of refinmenet, namely "min_level"
-    int min_level = patch[0]->level();
+    int min_level= patch[0]->level();
 
-    for(unsigned int i = 0; i < patch.size(); ++i)
-      min_level = std::min(min_level, patch[i]->level());
+    for(unsigned int i= 0; i < patch.size(); ++i)
+      min_level= std::min(min_level, patch[i]->level());
     std::set<typename Container::cell_iterator> uniform_cells;
     typename std::vector<
       typename Container::active_cell_iterator>::const_iterator patch_cell;
     // it loops through all cells of the input vector
-    for(patch_cell = patch.begin(); patch_cell != patch.end(); ++patch_cell)
+    for(patch_cell= patch.begin(); patch_cell != patch.end(); ++patch_cell)
       {
         // If the refinement level of each cell i the loop be equal to the min_level, so that
         // that cell inserted into the set of uniform_cells, as the set of cells with the coarsest common refinement level
@@ -1245,10 +1241,10 @@ namespace GridTools
           // with the refinement level equal to the min_level and inserts that parent cell into the
           // the set of uniform_cells, as the set of cells with the coarsest common refinement level.
           {
-            typename Container::cell_iterator parent = *patch_cell;
+            typename Container::cell_iterator parent= *patch_cell;
 
             while(parent->level() > min_level)
-              parent = parent->parent();
+              parent= parent->parent();
             uniform_cells.insert(parent);
           }
       }
@@ -1274,48 +1270,48 @@ namespace GridTools
     // First it creates triangulation from the vector of "uniform_cells"
     local_triangulation.clear();
     std::vector<Point<Container::space_dimension>> vertices;
-    const unsigned int n_uniform_cells = uniform_cells.size();
+    const unsigned int n_uniform_cells= uniform_cells.size();
     std::vector<CellData<Container::dimension>> cells(n_uniform_cells);
-    unsigned int                                k = 0; // for enumerating cells
-    unsigned int i = 0; // for enumerating vertices
+    unsigned int                                k= 0; // for enumerating cells
+    unsigned int i= 0; // for enumerating vertices
     typename std::vector<typename Container::cell_iterator>::const_iterator
       uniform_cell;
-    for(uniform_cell = uniform_cells.begin();
+    for(uniform_cell= uniform_cells.begin();
         uniform_cell != uniform_cells.end();
         ++uniform_cell)
       {
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < GeometryInfo<Container::dimension>::vertices_per_cell;
             ++v)
           {
             Point<Container::space_dimension> position
               = (*uniform_cell)->vertex(v);
-            bool repeat_vertex = false;
+            bool repeat_vertex= false;
 
-            for(unsigned int m = 0; m < i; ++m)
+            for(unsigned int m= 0; m < i; ++m)
               {
                 if(position == vertices[m])
                   {
-                    repeat_vertex        = true;
-                    cells[k].vertices[v] = m;
+                    repeat_vertex       = true;
+                    cells[k].vertices[v]= m;
                     break;
                   }
               }
             if(repeat_vertex == false)
               {
                 vertices.push_back(position);
-                cells[k].vertices[v] = i;
-                i                    = i + 1;
+                cells[k].vertices[v]= i;
+                i                   = i + 1;
               }
 
           } //for vertices_per_cell
-        k = k + 1;
+        k= k + 1;
       }
     local_triangulation.create_triangulation(vertices, cells, SubCellData());
     Assert(local_triangulation.n_active_cells() == uniform_cells.size(),
            ExcInternalError());
     local_triangulation.clear_user_flags();
-    unsigned int index = 0;
+    unsigned int index= 0;
     // Create a map between cells of class DoFHandler into class Triangulation
     std::map<typename Triangulation<Container::dimension,
                                     Container::space_dimension>::cell_iterator,
@@ -1341,7 +1337,7 @@ namespace GridTools
     // to the same level of refinement as the patch cells are really on
     do
       {
-        refinement_necessary = false;
+        refinement_necessary= false;
         for(typename Triangulation<
               Container::dimension,
               Container::space_dimension>::active_cell_iterator active_tria_cell
@@ -1352,10 +1348,10 @@ namespace GridTools
             if(patch_to_global_tria_map_tmp[active_tria_cell]->has_children())
               {
                 active_tria_cell->set_refine_flag();
-                refinement_necessary = true;
+                refinement_necessary= true;
               }
             else
-              for(unsigned int i = 0; i < patch.size(); ++i)
+              for(unsigned int i= 0; i < patch.size(); ++i)
                 {
                   // Even though vertices may not be exactly the same, the
                   // appropriate cells will match since == for TriAccessors
@@ -1364,11 +1360,11 @@ namespace GridTools
                     {
                       // adjust the cell vertices of the local_triangulation to
                       // match cell vertices of the global triangulation
-                      for(unsigned int v = 0;
+                      for(unsigned int v= 0;
                           v < GeometryInfo<
                                 Container::dimension>::vertices_per_cell;
                           ++v)
-                        active_tria_cell->vertex(v) = patch[i]->vertex(v);
+                        active_tria_cell->vertex(v)= patch[i]->vertex(v);
 
                       Assert(active_tria_cell->center().distance(
                                patch_to_global_tria_map_tmp[active_tria_cell]
@@ -1402,7 +1398,7 @@ namespace GridTools
                         // children may be added into the map, instead
 
                         // these children may not yet be in the map
-                        for(unsigned int c = 0; c < cell->n_children(); ++c)
+                        for(unsigned int c= 0; c < cell->n_children(); ++c)
                           {
                             if(patch_to_global_tria_map_tmp.find(cell->child(c))
                                == patch_to_global_tria_map_tmp.end())
@@ -1466,11 +1462,11 @@ namespace GridTools
                              Container::space_dimension>::cell_iterator,
       typename Container::cell_iterator>::iterator map_tmp_it
       = patch_to_global_tria_map_tmp.begin(),
-      map_tmp_end = patch_to_global_tria_map_tmp.end();
+      map_tmp_end= patch_to_global_tria_map_tmp.end();
     // Now we just need to take the temporary map of pairs of type cell_iterator "patch_to_global_tria_map_tmp"
     // making pair of active_cell_iterators so that filling out the final map "patch_to_global_tria_map"
     for(; map_tmp_it != map_tmp_end; ++map_tmp_it)
-      patch_to_global_tria_map[map_tmp_it->first] = map_tmp_it->second;
+      patch_to_global_tria_map[map_tmp_it->first]= map_tmp_it->second;
   }
 
   template <class DoFHandlerType>
@@ -1516,7 +1512,7 @@ namespace GridTools
 
         typename DoFHandlerType::active_cell_iterator cell
           = dof_handler.begin_active(),
-          endc = dof_handler.end();
+          endc= dof_handler.end();
         for(; cell != endc; ++cell)
           {
             // We only want lines that are locally_relevant
@@ -1525,12 +1521,11 @@ namespace GridTools
             // few and we don't have to use them.
             if(cell->is_artificial() == false)
               {
-                for(unsigned int l = 0;
+                for(unsigned int l= 0;
                     l < GeometryInfo<DoFHandlerType::dimension>::lines_per_cell;
                     ++l)
                   if(cell->line(l)->has_children())
-                    for(unsigned int c = 0; c < cell->line(l)->n_children();
-                        ++c)
+                    for(unsigned int c= 0; c < cell->line(l)->n_children(); ++c)
                       {
                         lines_to_parent_lines_map[cell->line(l)->child(c)]
                           = cell->line(l);
@@ -1550,7 +1545,7 @@ namespace GridTools
     // constraints.
     typename DoFHandlerType::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         // Need to loop through all cells that could
@@ -1558,13 +1553,13 @@ namespace GridTools
         // cells including ghost cells
         if(cell->is_artificial() == false)
           {
-            const unsigned int n_dofs_per_cell = cell->get_fe().dofs_per_cell;
+            const unsigned int n_dofs_per_cell= cell->get_fe().dofs_per_cell;
             local_dof_indices.resize(n_dofs_per_cell);
 
             // Take care of adding cell pointer to each
             // dofs that exists on cell.
             cell->get_dof_indices(local_dof_indices);
-            for(unsigned int i = 0; i < n_dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < n_dofs_per_cell; ++i)
               dof_to_set_of_cells_map[local_dof_indices[i]].insert(cell);
 
             // In the case of the adjacent cell (over
@@ -1575,14 +1570,13 @@ namespace GridTools
             // face (or line).
 
             // Take care of dofs on neighbor faces
-            for(unsigned int f = 0;
+            for(unsigned int f= 0;
                 f < GeometryInfo<DoFHandlerType::dimension>::faces_per_cell;
                 ++f)
               {
                 if(cell->face(f)->has_children())
                   {
-                    for(unsigned int c = 0; c < cell->face(f)->n_children();
-                        ++c)
+                    for(unsigned int c= 0; c < cell->face(f)->n_children(); ++c)
                       {
                         //  Add cell to dofs of all subfaces
                         //
@@ -1605,7 +1599,7 @@ namespace GridTools
 
                         cell->face(f)->child(c)->get_dof_indices(
                           local_face_dof_indices);
-                        for(unsigned int i = 0; i < n_dofs_per_face; ++i)
+                        for(unsigned int i= 0; i < n_dofs_per_face; ++i)
                           dof_to_set_of_cells_map[local_face_dof_indices[i]]
                             .insert(cell);
                       }
@@ -1631,8 +1625,8 @@ namespace GridTools
                     std::pair<unsigned int, unsigned int>
                       neighbor_face_no_subface_no
                       = cell->neighbor_of_coarser_neighbor(f);
-                    unsigned int face_no = neighbor_face_no_subface_no.first;
-                    unsigned int subface = neighbor_face_no_subface_no.second;
+                    unsigned int face_no= neighbor_face_no_subface_no.first;
+                    unsigned int subface= neighbor_face_no_subface_no.second;
 
                     const unsigned int n_dofs_per_face
                       = cell->get_fe().dofs_per_face;
@@ -1640,13 +1634,13 @@ namespace GridTools
 
                     cell->neighbor(f)->face(face_no)->get_dof_indices(
                       local_face_dof_indices);
-                    for(unsigned int i = 0; i < n_dofs_per_face; ++i)
+                    for(unsigned int i= 0; i < n_dofs_per_face; ++i)
                       dof_to_set_of_cells_map[local_face_dof_indices[i]].insert(
                         cell);
 
                     // Add cell to all dofs of children of
                     // parent face
-                    for(unsigned int c = 0;
+                    for(unsigned int c= 0;
                         c < cell->neighbor(f)->face(face_no)->n_children();
                         ++c)
                       {
@@ -1668,7 +1662,7 @@ namespace GridTools
                               ->face(face_no)
                               ->child(c)
                               ->get_dof_indices(local_face_dof_indices);
-                            for(unsigned int i = 0; i < n_dofs_per_face; ++i)
+                            for(unsigned int i= 0; i < n_dofs_per_face; ++i)
                               dof_to_set_of_cells_map[local_face_dof_indices[i]]
                                 .insert(cell);
                           }
@@ -1685,13 +1679,13 @@ namespace GridTools
             // and dofs on all children of parent line.
             if(DoFHandlerType::dimension == 3)
               {
-                for(unsigned int l = 0;
+                for(unsigned int l= 0;
                     l < GeometryInfo<DoFHandlerType::dimension>::lines_per_cell;
                     ++l)
                   {
                     if(cell->line(l)->has_children())
                       {
-                        for(unsigned int c = 0; c < cell->line(l)->n_children();
+                        for(unsigned int c= 0; c < cell->line(l)->n_children();
                             ++c)
                           {
                             Assert(cell->line(l)->child(c)->has_children()
@@ -1707,7 +1701,7 @@ namespace GridTools
 
                             cell->line(l)->child(c)->get_dof_indices(
                               local_line_dof_indices);
-                            for(unsigned int i = 0; i < n_dofs_per_line; ++i)
+                            for(unsigned int i= 0; i < n_dofs_per_line; ++i)
                               dof_to_set_of_cells_map[local_line_dof_indices[i]]
                                 .insert(cell);
                           }
@@ -1730,11 +1724,11 @@ namespace GridTools
                         local_line_dof_indices.resize(n_dofs_per_line);
 
                         parent_line->get_dof_indices(local_line_dof_indices);
-                        for(unsigned int i = 0; i < n_dofs_per_line; ++i)
+                        for(unsigned int i= 0; i < n_dofs_per_line; ++i)
                           dof_to_set_of_cells_map[local_line_dof_indices[i]]
                             .insert(cell);
 
-                        for(unsigned int c = 0; c < parent_line->n_children();
+                        for(unsigned int c= 0; c < parent_line->n_children();
                             ++c)
                           {
                             Assert(parent_line->child(c)->has_children()
@@ -1748,7 +1742,7 @@ namespace GridTools
 
                             parent_line->child(c)->get_dof_indices(
                               local_line_dof_indices);
-                            for(unsigned int i = 0; i < n_dofs_per_line; ++i)
+                            for(unsigned int i= 0; i < n_dofs_per_line; ++i)
                               dof_to_set_of_cells_map[local_line_dof_indices[i]]
                                 .insert(cell);
                           }
@@ -1779,7 +1773,7 @@ namespace GridTools
       types::global_dof_index,
       std::set<typename DoFHandlerType::active_cell_iterator>>::iterator it
       = dof_to_set_of_cells_map.begin(),
-      it_end = dof_to_set_of_cells_map.end();
+      it_end= dof_to_set_of_cells_map.end();
     for(; it != it_end; ++it)
       dof_to_cell_patches[it->first].assign(it->second.begin(),
                                             it->second.end());
@@ -1802,7 +1796,7 @@ namespace GridTools
                               offset,
     const FullMatrix<double>& matrix)
   {
-    static const int space_dim = CellIterator::AccessorType::space_dimension;
+    static const int space_dim= CellIterator::AccessorType::space_dimension;
     (void) space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
@@ -1810,21 +1804,21 @@ namespace GridTools
     Assert(pairs1.size() == pairs2.size(),
            ExcMessage("Unmatched faces on periodic boundaries"));
 
-    unsigned int n_matches = 0;
+    unsigned int n_matches= 0;
 
     // Match with a complexity of O(n^2). This could be improved...
     std::bitset<3> orientation;
     typedef
       typename std::set<std::pair<CellIterator, unsigned int>>::const_iterator
         PairIterator;
-    for(PairIterator it1 = pairs1.begin(); it1 != pairs1.end(); ++it1)
+    for(PairIterator it1= pairs1.begin(); it1 != pairs1.end(); ++it1)
       {
-        for(PairIterator it2 = pairs2.begin(); it2 != pairs2.end(); ++it2)
+        for(PairIterator it2= pairs2.begin(); it2 != pairs2.end(); ++it2)
           {
-            const CellIterator cell1     = it1->first;
-            const CellIterator cell2     = it2->first;
-            const unsigned int face_idx1 = it1->second;
-            const unsigned int face_idx2 = it2->second;
+            const CellIterator cell1    = it1->first;
+            const CellIterator cell2    = it2->first;
+            const unsigned int face_idx1= it1->second;
+            const unsigned int face_idx2= it2->second;
             if(GridTools::orthogonal_equality(orientation,
                                               cell1->face(face_idx1),
                                               cell2->face(face_idx2),
@@ -1835,7 +1829,7 @@ namespace GridTools
                 // We have a match, so insert the matching pairs and
                 // remove the matched cell in pairs2 to speed up the
                 // matching:
-                const PeriodicFacePair<CellIterator> matched_face = {
+                const PeriodicFacePair<CellIterator> matched_face= {
                   {cell1, cell2}, {face_idx1, face_idx2}, orientation, matrix};
                 matched_pairs.push_back(matched_face);
                 pairs2.erase(it2);
@@ -1861,8 +1855,8 @@ namespace GridTools
     const Tensor<1, MeshType::space_dimension>& offset,
     const FullMatrix<double>&                   matrix)
   {
-    static const int dim       = MeshType::dimension;
-    static const int space_dim = MeshType::space_dimension;
+    static const int dim      = MeshType::dimension;
+    static const int space_dim= MeshType::space_dimension;
     (void) dim;
     (void) space_dim;
     Assert(0 <= direction && direction < space_dim,
@@ -1876,7 +1870,7 @@ namespace GridTools
     std::set<std::pair<typename MeshType::cell_iterator, unsigned int>> pairs1;
     std::set<std::pair<typename MeshType::cell_iterator, unsigned int>> pairs2;
 
-    for(typename MeshType::cell_iterator cell = mesh.begin(0);
+    for(typename MeshType::cell_iterator cell= mesh.begin(0);
         cell != mesh.end(0);
         ++cell)
       {
@@ -1888,14 +1882,14 @@ namespace GridTools
         if(face_1->at_boundary() && face_1->boundary_id() == b_id)
           {
             const std::pair<typename MeshType::cell_iterator, unsigned int>
-              pair1 = std::make_pair(cell, 2 * direction);
+              pair1= std::make_pair(cell, 2 * direction);
             pairs1.insert(pair1);
           }
 
         if(face_2->at_boundary() && face_2->boundary_id() == b_id)
           {
             const std::pair<typename MeshType::cell_iterator, unsigned int>
-              pair2 = std::make_pair(cell, 2 * direction + 1);
+              pair2= std::make_pair(cell, 2 * direction + 1);
             pairs2.insert(pair2);
           }
       }
@@ -1909,7 +1903,7 @@ namespace GridTools
                       "id's and that the coarsest level mesh is colorized?"));
 
 #ifdef DEBUG
-    const unsigned int size_old = matched_pairs.size();
+    const unsigned int size_old= matched_pairs.size();
 #endif
 
     // and call match_periodic_face_pairs that does the actual matching:
@@ -1918,8 +1912,8 @@ namespace GridTools
 
 #ifdef DEBUG
     //check for standard orientation
-    const unsigned int size_new = matched_pairs.size();
-    for(unsigned int i = size_old; i < size_new; ++i)
+    const unsigned int size_new= matched_pairs.size();
+    for(unsigned int i= size_old; i < size_new; ++i)
       {
         Assert(
           matched_pairs[i].orientation == 1,
@@ -1942,8 +1936,8 @@ namespace GridTools
     const Tensor<1, MeshType::space_dimension>& offset,
     const FullMatrix<double>&                   matrix)
   {
-    static const int dim       = MeshType::dimension;
-    static const int space_dim = MeshType::space_dimension;
+    static const int dim      = MeshType::dimension;
+    static const int space_dim= MeshType::space_dimension;
     (void) dim;
     (void) space_dim;
     Assert(0 <= direction && direction < space_dim,
@@ -1955,24 +1949,24 @@ namespace GridTools
     std::set<std::pair<typename MeshType::cell_iterator, unsigned int>> pairs1;
     std::set<std::pair<typename MeshType::cell_iterator, unsigned int>> pairs2;
 
-    for(typename MeshType::cell_iterator cell = mesh.begin(0);
+    for(typename MeshType::cell_iterator cell= mesh.begin(0);
         cell != mesh.end(0);
         ++cell)
       {
-        for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+        for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
           {
-            const typename MeshType::face_iterator face = cell->face(i);
+            const typename MeshType::face_iterator face= cell->face(i);
             if(face->at_boundary() && face->boundary_id() == b_id1)
               {
                 const std::pair<typename MeshType::cell_iterator, unsigned int>
-                  pair1 = std::make_pair(cell, i);
+                  pair1= std::make_pair(cell, i);
                 pairs1.insert(pair1);
               }
 
             if(face->at_boundary() && face->boundary_id() == b_id2)
               {
                 const std::pair<typename MeshType::cell_iterator, unsigned int>
-                  pair2 = std::make_pair(cell, i);
+                  pair2= std::make_pair(cell, i);
                 pairs2.insert(pair2);
               }
           }
@@ -2016,15 +2010,15 @@ namespace GridTools
     Point<spacedim> distance;
 
     if(matrix.m() == spacedim)
-      for(int i = 0; i < spacedim; ++i)
-        for(int j = 0; j < spacedim; ++j)
-          distance(i) += matrix(i, j) * point1(j);
+      for(int i= 0; i < spacedim; ++i)
+        for(int j= 0; j < spacedim; ++j)
+          distance(i)+= matrix(i, j) * point1(j);
     else
-      distance = point1;
+      distance= point1;
 
-    distance += offset - point2;
+    distance+= offset - point2;
 
-    for(int i = 0; i < spacedim; ++i)
+    for(int i= 0; i < spacedim; ++i)
       {
         // Only compare coordinate-components != direction:
         if(i == direction)
@@ -2077,10 +2071,10 @@ namespace GridTools
       // property somewhat sloppy as "face_flip"
       // (always: face_orientation = true, face_rotation = false)
 
-      static const MATCH_T m_tff = {{0, 1}};
+      static const MATCH_T m_tff= {{0, 1}};
       if(matching == m_tff)
         return 1; // [true ,false,false]
-      static const MATCH_T m_ttf = {{1, 0}};
+      static const MATCH_T m_ttf= {{1, 0}};
       if(matching == m_ttf)
         return 3; // [true ,true ,false]
       Assert(false, ExcInternalError());
@@ -2103,28 +2097,28 @@ namespace GridTools
       // as well as the actual implementation in source/grid/tria.cc
       // for more details...
 
-      static const MATCH_T m_tff = {{0, 1, 2, 3}};
+      static const MATCH_T m_tff= {{0, 1, 2, 3}};
       if(matching == m_tff)
         return 1; // [true ,false,false]
-      static const MATCH_T m_tft = {{1, 3, 0, 2}};
+      static const MATCH_T m_tft= {{1, 3, 0, 2}};
       if(matching == m_tft)
         return 5; // [true ,false,true ]
-      static const MATCH_T m_ttf = {{3, 2, 1, 0}};
+      static const MATCH_T m_ttf= {{3, 2, 1, 0}};
       if(matching == m_ttf)
         return 3; // [true ,true ,false]
-      static const MATCH_T m_ttt = {{2, 0, 3, 1}};
+      static const MATCH_T m_ttt= {{2, 0, 3, 1}};
       if(matching == m_ttt)
         return 7; // [true ,true ,true ]
-      static const MATCH_T m_fff = {{0, 2, 1, 3}};
+      static const MATCH_T m_fff= {{0, 2, 1, 3}};
       if(matching == m_fff)
         return 0; // [false,false,false]
-      static const MATCH_T m_fft = {{2, 3, 0, 1}};
+      static const MATCH_T m_fft= {{2, 3, 0, 1}};
       if(matching == m_fft)
         return 4; // [false,false,true ]
-      static const MATCH_T m_ftf = {{3, 1, 2, 0}};
+      static const MATCH_T m_ftf= {{3, 1, 2, 0}};
       if(matching == m_ftf)
         return 2; // [false,true ,false]
-      static const MATCH_T m_ftt = {{1, 0, 3, 2}};
+      static const MATCH_T m_ftt= {{1, 0, 3, 2}};
       if(matching == m_ftt)
         return 6; // [false,true ,true ]
       Assert(false, ExcInternalError());
@@ -2146,19 +2140,19 @@ namespace GridTools
     Assert(matrix.m() == matrix.n(),
            ExcMessage("The supplied matrix must be a square matrix"));
 
-    static const int dim = FaceIterator::AccessorType::dimension;
+    static const int dim= FaceIterator::AccessorType::dimension;
 
     // Do a full matching of the face vertices:
 
     std::array<unsigned int, GeometryInfo<dim>::vertices_per_face> matching;
 
     std::set<unsigned int> face2_vertices;
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
       face2_vertices.insert(i);
 
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
       {
-        for(std::set<unsigned int>::iterator it = face2_vertices.begin();
+        for(std::set<unsigned int>::iterator it= face2_vertices.begin();
             it != face2_vertices.end();
             ++it)
           {
@@ -2168,7 +2162,7 @@ namespace GridTools
                                    offset,
                                    matrix))
               {
-                matching[i] = *it;
+                matching[i]= *it;
                 face2_vertices.erase(it);
                 break; // jump out of the innermost loop
               }
@@ -2177,7 +2171,7 @@ namespace GridTools
 
     // And finally, a lookup to determine the ordering bitmask:
     if(face2_vertices.empty())
-      orientation = OrientationLookupTable<dim>::lookup(matching);
+      orientation= OrientationLookupTable<dim>::lookup(matching);
 
     return face2_vertices.empty();
   }

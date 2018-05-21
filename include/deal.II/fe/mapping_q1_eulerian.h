@@ -86,7 +86,7 @@ class Vector;
  *
  * @author Michael Stadler, 2001
  */
-template <int dim, typename VectorType = Vector<double>, int spacedim = dim>
+template <int dim, typename VectorType= Vector<double>, int spacedim= dim>
 class MappingQ1Eulerian : public MappingQGeneric<dim, spacedim>
 {
 public:

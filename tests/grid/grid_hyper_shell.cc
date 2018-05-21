@@ -51,15 +51,15 @@ check(double r1, double r2, unsigned int n)
         = tria.begin_active();
         c != tria.end();
         ++c)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(c->face(f)->at_boundary())
-          for(unsigned int e = 0; e < GeometryInfo<dim>::lines_per_face; ++e)
+          for(unsigned int e= 0; e < GeometryInfo<dim>::lines_per_face; ++e)
             c->face(f)->line(e)->set_manifold_id(0);
 
   static const SphericalManifold<dim> boundary(center);
   tria.set_manifold(0, boundary);
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       try
         {
@@ -79,7 +79,7 @@ check(double r1, double r2, unsigned int n)
 
   GridOut          grid_out;
   GridOutFlags::DX flags;
-  flags.write_faces = true;
+  flags.write_faces= true;
   grid_out.set_flags(flags);
   grid_out.write_dx(tria, logfile);
 }

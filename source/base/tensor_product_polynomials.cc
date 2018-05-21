@@ -45,7 +45,7 @@ namespace internal
                          const unsigned int,
                          unsigned int (&indices)[1])
     {
-      indices[0] = n;
+      indices[0]= n;
     }
 
     inline void
@@ -54,8 +54,8 @@ namespace internal
                          const unsigned int,
                          unsigned int (&indices)[2])
     {
-      indices[0] = n % n_pols_0;
-      indices[1] = n / n_pols_0;
+      indices[0]= n % n_pols_0;
+      indices[1]= n / n_pols_0;
     }
 
     inline void
@@ -64,9 +64,9 @@ namespace internal
                          const unsigned int n_pols_1,
                          unsigned int (&indices)[3])
     {
-      indices[0] = n % n_pols_0;
-      indices[1] = (n / n_pols_0) % n_pols_1;
-      indices[2] = n / (n_pols_0 * n_pols_1);
+      indices[0]= n % n_pols_0;
+      indices[1]= (n / n_pols_0) % n_pols_1;
+      indices[2]= n / (n_pols_0 * n_pols_1);
     }
   } // namespace
 } // namespace internal
@@ -89,11 +89,11 @@ TensorProductPolynomials<dim, PolynomialType>::output_indices(
   std::ostream& out) const
 {
   unsigned int ix[dim];
-  for(unsigned int i = 0; i < n_tensor_pols; ++i)
+  for(unsigned int i= 0; i < n_tensor_pols; ++i)
     {
       compute_index(i, ix);
       out << i << "\t";
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         out << ix[d] << " ";
       out << std::endl;
     }
@@ -107,9 +107,9 @@ TensorProductPolynomials<dim, PolynomialType>::set_numbering(
   Assert(renumber.size() == index_map.size(),
          ExcDimensionMismatch(renumber.size(), index_map.size()));
 
-  index_map = renumber;
-  for(unsigned int i = 0; i < index_map.size(); ++i)
-    index_map_inverse[index_map[i]] = i;
+  index_map= renumber;
+  for(unsigned int i= 0; i < index_map.size(); ++i)
+    index_map_inverse[index_map[i]]= i;
 }
 
 template <>
@@ -133,9 +133,9 @@ TensorProductPolynomials<dim, PolynomialType>::compute_value(
   unsigned int indices[dim];
   compute_index(i, indices);
 
-  double value = 1.;
-  for(unsigned int d = 0; d < dim; ++d)
-    value *= polynomials[indices[d]].value(p(d));
+  double value= 1.;
+  for(unsigned int d= 0; d < dim; ++d)
+    value*= polynomials[indices[d]].value(p(d));
 
   return value;
 }
@@ -156,20 +156,20 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad(
   double v[dim][2];
   {
     std::vector<double> tmp(2);
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       {
         polynomials[indices[d]].value(p(d), tmp);
-        v[d][0] = tmp[0];
-        v[d][1] = tmp[1];
+        v[d][0]= tmp[0];
+        v[d][1]= tmp[1];
       }
   }
 
   Tensor<1, dim> grad;
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
-      grad[d] = 1.;
-      for(unsigned int x = 0; x < dim; ++x)
-        grad[d] *= v[x][d == x];
+      grad[d]= 1.;
+      for(unsigned int x= 0; x < dim; ++x)
+        grad[d]*= v[x][d == x];
     }
 
   return grad;
@@ -187,31 +187,31 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad_grad(
   double v[dim][3];
   {
     std::vector<double> tmp(3);
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       {
         polynomials[indices[d]].value(p(d), tmp);
-        v[d][0] = tmp[0];
-        v[d][1] = tmp[1];
-        v[d][2] = tmp[2];
+        v[d][0]= tmp[0];
+        v[d][1]= tmp[1];
+        v[d][2]= tmp[2];
       }
   }
 
   Tensor<2, dim> grad_grad;
-  for(unsigned int d1 = 0; d1 < dim; ++d1)
-    for(unsigned int d2 = 0; d2 < dim; ++d2)
+  for(unsigned int d1= 0; d1 < dim; ++d1)
+    for(unsigned int d2= 0; d2 < dim; ++d2)
       {
-        grad_grad[d1][d2] = 1.;
-        for(unsigned int x = 0; x < dim; ++x)
+        grad_grad[d1][d2]= 1.;
+        for(unsigned int x= 0; x < dim; ++x)
           {
-            unsigned int derivative = 0;
+            unsigned int derivative= 0;
             if(d1 == x || d2 == x)
               {
                 if(d1 == d2)
-                  derivative = 2;
+                  derivative= 2;
                 else
-                  derivative = 1;
+                  derivative= 1;
               }
-            grad_grad[d1][d2] *= v[x][derivative];
+            grad_grad[d1][d2]*= v[x][derivative];
           }
       }
 
@@ -244,104 +244,103 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
 
   const bool update_values
     = (values.size() == n_tensor_pols),
-    update_grads           = (grads.size() == n_tensor_pols),
-    update_grad_grads      = (grad_grads.size() == n_tensor_pols),
-    update_3rd_derivatives = (third_derivatives.size() == n_tensor_pols),
-    update_4th_derivatives = (fourth_derivatives.size() == n_tensor_pols);
+    update_grads          = (grads.size() == n_tensor_pols),
+    update_grad_grads     = (grad_grads.size() == n_tensor_pols),
+    update_3rd_derivatives= (third_derivatives.size() == n_tensor_pols),
+    update_4th_derivatives= (fourth_derivatives.size() == n_tensor_pols);
 
   // check how many values/derivatives we have to compute
-  unsigned int n_values_and_derivatives = 0;
+  unsigned int n_values_and_derivatives= 0;
   if(update_values)
-    n_values_and_derivatives = 1;
+    n_values_and_derivatives= 1;
   if(update_grads)
-    n_values_and_derivatives = 2;
+    n_values_and_derivatives= 2;
   if(update_grad_grads)
-    n_values_and_derivatives = 3;
+    n_values_and_derivatives= 3;
   if(update_3rd_derivatives)
-    n_values_and_derivatives = 4;
+    n_values_and_derivatives= 4;
   if(update_4th_derivatives)
-    n_values_and_derivatives = 5;
+    n_values_and_derivatives= 5;
 
   // Compute the values (and derivatives, if necessary) of all 1D polynomials
   // at this evaluation point. We need to compute dim*n_polynomials
   // evaluations, involving an evaluation of each polynomial for each
   // coordinate direction. Once we have those values, we perform the
   // multiplications for the tensor product in the arbitrary dimension.
-  const unsigned int n_polynomials = polynomials.size();
+  const unsigned int n_polynomials= polynomials.size();
   boost::container::small_vector<std::array<std::array<double, 5>, dim>, 20>
     values_1d(n_polynomials);
   if(n_values_and_derivatives == 1)
-    for(unsigned int i = 0; i < n_polynomials; ++i)
-      for(unsigned int d = 0; d < dim; ++d)
-        values_1d[i][d][0] = polynomials[i].value(p(d));
+    for(unsigned int i= 0; i < n_polynomials; ++i)
+      for(unsigned int d= 0; d < dim; ++d)
+        values_1d[i][d][0]= polynomials[i].value(p(d));
   else
-    for(unsigned int i = 0; i < n_polynomials; ++i)
-      for(unsigned d = 0; d < dim; ++d)
+    for(unsigned int i= 0; i < n_polynomials; ++i)
+      for(unsigned d= 0; d < dim; ++d)
         polynomials[i].value(
           p(d), n_values_and_derivatives, &values_1d[i][d][0]);
 
   unsigned int indices[3];
-  unsigned int ind = 0;
-  for(indices[2] = 0; indices[2] < (dim > 2 ? n_polynomials : 1); ++indices[2])
-    for(indices[1] = 0; indices[1] < (dim > 1 ? n_polynomials : 1);
-        ++indices[1])
+  unsigned int ind= 0;
+  for(indices[2]= 0; indices[2] < (dim > 2 ? n_polynomials : 1); ++indices[2])
+    for(indices[1]= 0; indices[1] < (dim > 1 ? n_polynomials : 1); ++indices[1])
       if(n_values_and_derivatives == 1)
-        for(indices[0] = 0; indices[0] < n_polynomials; ++indices[0], ++ind)
+        for(indices[0]= 0; indices[0] < n_polynomials; ++indices[0], ++ind)
           {
-            double value = values_1d[indices[0]][0][0];
-            for(unsigned int d = 1; d < dim; ++d)
-              value *= values_1d[indices[d]][d][0];
-            values[index_map_inverse[ind]] = value;
+            double value= values_1d[indices[0]][0][0];
+            for(unsigned int d= 1; d < dim; ++d)
+              value*= values_1d[indices[d]][d][0];
+            values[index_map_inverse[ind]]= value;
           }
       else
-        for(indices[0] = 0; indices[0] < n_polynomials; ++indices[0], ++ind)
+        for(indices[0]= 0; indices[0] < n_polynomials; ++indices[0], ++ind)
           {
-            unsigned int i = index_map_inverse[ind];
+            unsigned int i= index_map_inverse[ind];
 
             if(update_values)
               {
-                double value = values_1d[indices[0]][0][0];
-                for(unsigned int x = 1; x < dim; ++x)
-                  value *= values_1d[indices[x]][x][0];
-                values[i] = value;
+                double value= values_1d[indices[0]][0][0];
+                for(unsigned int x= 1; x < dim; ++x)
+                  value*= values_1d[indices[x]][x][0];
+                values[i]= value;
               }
 
             if(update_grads)
-              for(unsigned int d = 0; d < dim; ++d)
+              for(unsigned int d= 0; d < dim; ++d)
                 {
-                  double grad = 1.;
-                  for(unsigned int x = 0; x < dim; ++x)
-                    grad *= values_1d[indices[x]][x][(d == x) ? 1 : 0];
-                  grads[i][d] = grad;
+                  double grad= 1.;
+                  for(unsigned int x= 0; x < dim; ++x)
+                    grad*= values_1d[indices[x]][x][(d == x) ? 1 : 0];
+                  grads[i][d]= grad;
                 }
 
             if(update_grad_grads)
-              for(unsigned int d1 = 0; d1 < dim; ++d1)
-                for(unsigned int d2 = 0; d2 < dim; ++d2)
+              for(unsigned int d1= 0; d1 < dim; ++d1)
+                for(unsigned int d2= 0; d2 < dim; ++d2)
                   {
-                    double der2 = 1.;
-                    for(unsigned int x = 0; x < dim; ++x)
+                    double der2= 1.;
+                    for(unsigned int x= 0; x < dim; ++x)
                       {
-                        unsigned int derivative = 0;
+                        unsigned int derivative= 0;
                         if(d1 == x)
                           ++derivative;
                         if(d2 == x)
                           ++derivative;
 
-                        der2 *= values_1d[indices[x]][x][derivative];
+                        der2*= values_1d[indices[x]][x][derivative];
                       }
-                    grad_grads[i][d1][d2] = der2;
+                    grad_grads[i][d1][d2]= der2;
                   }
 
             if(update_3rd_derivatives)
-              for(unsigned int d1 = 0; d1 < dim; ++d1)
-                for(unsigned int d2 = 0; d2 < dim; ++d2)
-                  for(unsigned int d3 = 0; d3 < dim; ++d3)
+              for(unsigned int d1= 0; d1 < dim; ++d1)
+                for(unsigned int d2= 0; d2 < dim; ++d2)
+                  for(unsigned int d3= 0; d3 < dim; ++d3)
                     {
-                      double der3 = 1.;
-                      for(unsigned int x = 0; x < dim; ++x)
+                      double der3= 1.;
+                      for(unsigned int x= 0; x < dim; ++x)
                         {
-                          unsigned int derivative = 0;
+                          unsigned int derivative= 0;
                           if(d1 == x)
                             ++derivative;
                           if(d2 == x)
@@ -349,21 +348,21 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
                           if(d3 == x)
                             ++derivative;
 
-                          der3 *= values_1d[indices[x]][x][derivative];
+                          der3*= values_1d[indices[x]][x][derivative];
                         }
-                      third_derivatives[i][d1][d2][d3] = der3;
+                      third_derivatives[i][d1][d2][d3]= der3;
                     }
 
             if(update_4th_derivatives)
-              for(unsigned int d1 = 0; d1 < dim; ++d1)
-                for(unsigned int d2 = 0; d2 < dim; ++d2)
-                  for(unsigned int d3 = 0; d3 < dim; ++d3)
-                    for(unsigned int d4 = 0; d4 < dim; ++d4)
+              for(unsigned int d1= 0; d1 < dim; ++d1)
+                for(unsigned int d2= 0; d2 < dim; ++d2)
+                  for(unsigned int d3= 0; d3 < dim; ++d3)
+                    for(unsigned int d4= 0; d4 < dim; ++d4)
                       {
-                        double der4 = 1.;
-                        for(unsigned int x = 0; x < dim; ++x)
+                        double der4= 1.;
+                        for(unsigned int x= 0; x < dim; ++x)
                           {
-                            unsigned int derivative = 0;
+                            unsigned int derivative= 0;
                             if(d1 == x)
                               ++derivative;
                             if(d2 == x)
@@ -373,9 +372,9 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
                             if(d4 == x)
                               ++derivative;
 
-                            der4 *= values_1d[indices[x]][x][derivative];
+                            der4*= values_1d[indices[x]][x][derivative];
                           }
-                        fourth_derivatives[i][d1][d2][d3][d4] = der4;
+                        fourth_derivatives[i][d1][d2][d3][d4]= der4;
                       }
           }
 }
@@ -388,7 +387,7 @@ AnisotropicPolynomials<dim>::AnisotropicPolynomials(
   : polynomials(pols), n_tensor_pols(get_n_tensor_pols(pols))
 {
   Assert(pols.size() == dim, ExcDimensionMismatch(pols.size(), dim));
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     Assert(pols[d].size() > 0,
            ExcMessage("The number of polynomials must be larger than zero "
                       "for all coordinate directions."));
@@ -400,9 +399,9 @@ AnisotropicPolynomials<dim>::compute_index(const unsigned int i,
                                            unsigned int (&indices)[dim]) const
 {
 #ifdef DEBUG
-  unsigned int n_poly = 1;
-  for(unsigned int d = 0; d < dim; ++d)
-    n_poly *= polynomials[d].size();
+  unsigned int n_poly= 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    n_poly*= polynomials[d].size();
   Assert(i < n_poly, ExcInternalError());
 #endif
 
@@ -422,9 +421,9 @@ AnisotropicPolynomials<dim>::compute_value(const unsigned int i,
   unsigned int indices[dim];
   compute_index(i, indices);
 
-  double value = 1.;
-  for(unsigned int d = 0; d < dim; ++d)
-    value *= polynomials[d][indices[d]].value(p(d));
+  double value= 1.;
+  for(unsigned int d= 0; d < dim; ++d)
+    value*= polynomials[d][indices[d]].value(p(d));
 
   return value;
 }
@@ -442,15 +441,15 @@ AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
   // the given point in each
   // co-ordinate direction
   std::vector<std::vector<double>> v(dim, std::vector<double>(2));
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     polynomials[d][indices[d]].value(p(d), v[d]);
 
   Tensor<1, dim> grad;
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
-      grad[d] = 1.;
-      for(unsigned int x = 0; x < dim; ++x)
-        grad[d] *= v[x][d == x];
+      grad[d]= 1.;
+      for(unsigned int x= 0; x < dim; ++x)
+        grad[d]*= v[x][d == x];
     }
 
   return grad;
@@ -465,25 +464,25 @@ AnisotropicPolynomials<dim>::compute_grad_grad(const unsigned int i,
   compute_index(i, indices);
 
   std::vector<std::vector<double>> v(dim, std::vector<double>(3));
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     polynomials[d][indices[d]].value(p(d), v[d]);
 
   Tensor<2, dim> grad_grad;
-  for(unsigned int d1 = 0; d1 < dim; ++d1)
-    for(unsigned int d2 = 0; d2 < dim; ++d2)
+  for(unsigned int d1= 0; d1 < dim; ++d1)
+    for(unsigned int d2= 0; d2 < dim; ++d2)
       {
-        grad_grad[d1][d2] = 1.;
-        for(unsigned int x = 0; x < dim; ++x)
+        grad_grad[d1][d2]= 1.;
+        for(unsigned int x= 0; x < dim; ++x)
           {
-            unsigned int derivative = 0;
+            unsigned int derivative= 0;
             if(d1 == x || d2 == x)
               {
                 if(d1 == d2)
-                  derivative = 2;
+                  derivative= 2;
                 else
-                  derivative = 1;
+                  derivative= 1;
               }
-            grad_grad[d1][d2] *= v[x][derivative];
+            grad_grad[d1][d2]*= v[x][derivative];
           }
       }
 
@@ -515,42 +514,42 @@ AnisotropicPolynomials<dim>::compute(
 
   const bool update_values
     = (values.size() == n_tensor_pols),
-    update_grads           = (grads.size() == n_tensor_pols),
-    update_grad_grads      = (grad_grads.size() == n_tensor_pols),
-    update_3rd_derivatives = (third_derivatives.size() == n_tensor_pols),
-    update_4th_derivatives = (fourth_derivatives.size() == n_tensor_pols);
+    update_grads          = (grads.size() == n_tensor_pols),
+    update_grad_grads     = (grad_grads.size() == n_tensor_pols),
+    update_3rd_derivatives= (third_derivatives.size() == n_tensor_pols),
+    update_4th_derivatives= (fourth_derivatives.size() == n_tensor_pols);
 
   // check how many
   // values/derivatives we have to
   // compute
-  unsigned int n_values_and_derivatives = 0;
+  unsigned int n_values_and_derivatives= 0;
   if(update_values)
-    n_values_and_derivatives = 1;
+    n_values_and_derivatives= 1;
   if(update_grads)
-    n_values_and_derivatives = 2;
+    n_values_and_derivatives= 2;
   if(update_grad_grads)
-    n_values_and_derivatives = 3;
+    n_values_and_derivatives= 3;
   if(update_3rd_derivatives)
-    n_values_and_derivatives = 4;
+    n_values_and_derivatives= 4;
   if(update_4th_derivatives)
-    n_values_and_derivatives = 5;
+    n_values_and_derivatives= 5;
 
   // compute the values (and
   // derivatives, if necessary) of
   // all polynomials at this
   // evaluation point
   std::vector<std::vector<std::vector<double>>> v(dim);
-  for(unsigned int d = 0; d < dim; ++d)
+  for(unsigned int d= 0; d < dim; ++d)
     {
       v[d].resize(polynomials[d].size());
-      for(unsigned int i = 0; i < polynomials[d].size(); ++i)
+      for(unsigned int i= 0; i < polynomials[d].size(); ++i)
         {
           v[d][i].resize(n_values_and_derivatives, 0.);
           polynomials[d][i].value(p(d), v[d][i]);
         };
     }
 
-  for(unsigned int i = 0; i < n_tensor_pols; ++i)
+  for(unsigned int i= 0; i < n_tensor_pols; ++i)
     {
       // first get the
       // one-dimensional indices of
@@ -561,45 +560,45 @@ AnisotropicPolynomials<dim>::compute(
 
       if(update_values)
         {
-          values[i] = 1;
-          for(unsigned int x = 0; x < dim; ++x)
-            values[i] *= v[x][indices[x]][0];
+          values[i]= 1;
+          for(unsigned int x= 0; x < dim; ++x)
+            values[i]*= v[x][indices[x]][0];
         }
 
       if(update_grads)
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           {
-            grads[i][d] = 1.;
-            for(unsigned int x = 0; x < dim; ++x)
-              grads[i][d] *= v[x][indices[x]][d == x ? 1 : 0];
+            grads[i][d]= 1.;
+            for(unsigned int x= 0; x < dim; ++x)
+              grads[i][d]*= v[x][indices[x]][d == x ? 1 : 0];
           }
 
       if(update_grad_grads)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
+        for(unsigned int d1= 0; d1 < dim; ++d1)
+          for(unsigned int d2= 0; d2 < dim; ++d2)
             {
-              grad_grads[i][d1][d2] = 1.;
-              for(unsigned int x = 0; x < dim; ++x)
+              grad_grads[i][d1][d2]= 1.;
+              for(unsigned int x= 0; x < dim; ++x)
                 {
-                  unsigned int derivative = 0;
+                  unsigned int derivative= 0;
                   if(d1 == x)
                     ++derivative;
                   if(d2 == x)
                     ++derivative;
 
-                  grad_grads[i][d1][d2] *= v[x][indices[x]][derivative];
+                  grad_grads[i][d1][d2]*= v[x][indices[x]][derivative];
                 }
             }
 
       if(update_3rd_derivatives)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
-            for(unsigned int d3 = 0; d3 < dim; ++d3)
+        for(unsigned int d1= 0; d1 < dim; ++d1)
+          for(unsigned int d2= 0; d2 < dim; ++d2)
+            for(unsigned int d3= 0; d3 < dim; ++d3)
               {
-                third_derivatives[i][d1][d2][d3] = 1.;
-                for(unsigned int x = 0; x < dim; ++x)
+                third_derivatives[i][d1][d2][d3]= 1.;
+                for(unsigned int x= 0; x < dim; ++x)
                   {
-                    unsigned int derivative = 0;
+                    unsigned int derivative= 0;
                     if(d1 == x)
                       ++derivative;
                     if(d2 == x)
@@ -613,15 +612,15 @@ AnisotropicPolynomials<dim>::compute(
               }
 
       if(update_4th_derivatives)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
-            for(unsigned int d3 = 0; d3 < dim; ++d3)
-              for(unsigned int d4 = 0; d4 < dim; ++d4)
+        for(unsigned int d1= 0; d1 < dim; ++d1)
+          for(unsigned int d2= 0; d2 < dim; ++d2)
+            for(unsigned int d3= 0; d3 < dim; ++d3)
+              for(unsigned int d4= 0; d4 < dim; ++d4)
                 {
-                  fourth_derivatives[i][d1][d2][d3][d4] = 1.;
-                  for(unsigned int x = 0; x < dim; ++x)
+                  fourth_derivatives[i][d1][d2][d3][d4]= 1.;
+                  for(unsigned int x= 0; x < dim; ++x)
                     {
-                      unsigned int derivative = 0;
+                      unsigned int derivative= 0;
                       if(d1 == x)
                         ++derivative;
                       if(d2 == x)
@@ -650,9 +649,9 @@ unsigned int
 AnisotropicPolynomials<dim>::get_n_tensor_pols(
   const std::vector<std::vector<Polynomials::Polynomial<double>>>& pols)
 {
-  unsigned int y = 1;
-  for(unsigned int d = 0; d < dim; ++d)
-    y *= pols[d].size();
+  unsigned int y= 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    y*= pols[d].size();
   return y;
 }
 

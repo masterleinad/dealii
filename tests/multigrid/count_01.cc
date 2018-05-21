@@ -35,10 +35,10 @@ using namespace std;
 void
 log_vector(const std::vector<std::vector<types::global_dof_index>>& count)
 {
-  for(unsigned int l = 0; l < count.size(); ++l)
+  for(unsigned int l= 0; l < count.size(); ++l)
     {
       deallog << "Level " << l;
-      for(unsigned int c = 0; c < count[l].size(); ++c)
+      for(unsigned int c= 0; c < count[l].size(); ++c)
         deallog << '\t' << count[l][c];
       deallog << std::endl;
     }
@@ -68,10 +68,10 @@ check_fe(FiniteElement<dim>& fe)
   log_vector(count);
 
   std::vector<unsigned int> target(fe.n_components());
-  for(unsigned int i = 0; i < target.size(); ++i)
-    target[i] = i / 3;
+  for(unsigned int i= 0; i < target.size(); ++i)
+    target[i]= i / 3;
   deallog << std::endl << "Target";
-  for(unsigned int i = 0; i < target.size(); ++i)
+  for(unsigned int i= 0; i < target.size(); ++i)
     deallog << '\t' << target[i];
   deallog << std::endl;
 

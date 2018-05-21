@@ -3722,13 +3722,13 @@ lamch(const char* /*chmach*/, number& /*precision*/)
 inline void
 lamch(const char* chmach, double& precision)
 {
-  precision = dlamch_(chmach);
+  precision= dlamch_(chmach);
 }
 
 inline void
 lamch(const char* chmach, float& precision)
 {
-  precision = slamch_(chmach);
+  precision= slamch_(chmach);
 }
 #endif
 

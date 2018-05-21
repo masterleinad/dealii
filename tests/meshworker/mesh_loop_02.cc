@@ -44,12 +44,12 @@ test()
   ScratchData scratch;
   CopyData    copy;
 
-  auto cell = tria.begin_active();
-  auto endc = tria.end();
+  auto cell= tria.begin_active();
+  auto endc= tria.end();
 
   typedef decltype(cell) Iterator;
 
-  auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
+  auto cell_worker= [](const Iterator& cell, ScratchData& s, CopyData& c) {
     deallog << "Cell worker on : " << cell << std::endl;
   };
 
@@ -59,21 +59,21 @@ test()
                 << std::endl;
       };
 
-  auto face_worker = [](const Iterator&     cell,
-                        const unsigned int& f,
-                        const unsigned int& sf,
-                        const Iterator&     ncell,
-                        const unsigned int& nf,
-                        const unsigned int& nsf,
-                        ScratchData&        s,
-                        CopyData&           c) {
+  auto face_worker= [](const Iterator&     cell,
+                       const unsigned int& f,
+                       const unsigned int& sf,
+                       const Iterator&     ncell,
+                       const unsigned int& nf,
+                       const unsigned int& nsf,
+                       ScratchData&        s,
+                       CopyData&           c) {
     deallog << "Face worker on : " << cell << ", Neighbor cell : " << ncell
             << ", Face : " << f << ", Neighbor Face : " << nf
             << ", Subface: " << sf << ", Neighbor Subface: " << nsf
             << std::endl;
   };
 
-  auto copier = [](const CopyData&) { deallog << "copier" << std::endl; };
+  auto copier= [](const CopyData&) { deallog << "copier" << std::endl; };
 
   std::function<void(const decltype(cell)&, ScratchData&, CopyData&)>
     empty_cell_worker;

@@ -33,7 +33,7 @@ namespace MeshWorker
   void
   VectorDataBase<dim, spacedim, Number>::initialize(const AnyData& d)
   {
-    this->data = d;
+    this->data= d;
     VectorSelector::initialize(d);
   }
 
@@ -81,7 +81,7 @@ namespace MeshWorker
   void
   VectorData<VectorType, dim, spacedim>::initialize(const AnyData& d)
   {
-    this->data = d;
+    this->data= d;
     VectorSelector::initialize(d);
   }
 
@@ -90,7 +90,7 @@ namespace MeshWorker
   VectorData<VectorType, dim, spacedim>::initialize(const VectorType*  v,
                                                     const std::string& name)
   {
-    SmartPointer<const VectorType, VectorData<VectorType, dim, spacedim>> p = v;
+    SmartPointer<const VectorType, VectorData<VectorType, dim, spacedim>> p= v;
     this->data.add(p, name);
     VectorSelector::initialize(this->data);
   }
@@ -117,16 +117,16 @@ namespace MeshWorker
     AssertDimension(gradients.size(), this->n_gradients());
     AssertDimension(hessians.size(), this->n_hessians());
 
-    const AnyData& data = this->data;
-    for(unsigned int i = 0; i < this->n_values(); ++i)
+    const AnyData& data= this->data;
+    for(unsigned int i= 0; i < this->n_values(); ++i)
       {
-        const VectorType* src = data.read_ptr<VectorType>(this->value_index(i));
+        const VectorType* src= data.read_ptr<VectorType>(this->value_index(i));
         VectorSlice<std::vector<std::vector<typename VectorType::value_type>>>
           dst(values[i], component, n_comp);
         fe.get_function_values(*src, make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_gradients(); ++i)
+    for(unsigned int i= 0; i < this->n_gradients(); ++i)
       {
         const VectorType* src
           = data.read_ptr<VectorType>(this->gradient_index(i));
@@ -137,7 +137,7 @@ namespace MeshWorker
           *src, make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_hessians(); ++i)
+    for(unsigned int i= 0; i < this->n_hessians(); ++i)
       {
         const VectorType* src
           = data.read_ptr<VectorType>(this->hessian_index(i));
@@ -153,8 +153,8 @@ namespace MeshWorker
   std::size_t
   VectorData<VectorType, dim, spacedim>::memory_consumption() const
   {
-    std::size_t mem = VectorSelector::memory_consumption();
-    mem += sizeof(this->data);
+    std::size_t mem= VectorSelector::memory_consumption();
+    mem+= sizeof(this->data);
     return mem;
   }
 
@@ -169,7 +169,7 @@ namespace MeshWorker
   void
   MGVectorData<VectorType, dim, spacedim>::initialize(const AnyData& d)
   {
-    this->data = d;
+    this->data= d;
     VectorSelector::initialize(d);
   }
 
@@ -181,7 +181,7 @@ namespace MeshWorker
   {
     SmartPointer<const MGLevelObject<VectorType>,
                  MGVectorData<VectorType, dim, spacedim>>
-      p = v;
+      p= v;
     this->data.add(p, name);
     VectorSelector::initialize(this->data);
   }
@@ -209,8 +209,8 @@ namespace MeshWorker
     AssertDimension(gradients.size(), this->n_gradients());
     AssertDimension(hessians.size(), this->n_hessians());
 
-    const AnyData& data = this->data;
-    for(unsigned int i = 0; i < this->n_values(); ++i)
+    const AnyData& data= this->data;
+    for(unsigned int i= 0; i < this->n_values(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
@@ -220,7 +220,7 @@ namespace MeshWorker
           (*src)[level], make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_gradients(); ++i)
+    for(unsigned int i= 0; i < this->n_gradients(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
@@ -231,7 +231,7 @@ namespace MeshWorker
           (*src)[level], make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_hessians(); ++i)
+    for(unsigned int i= 0; i < this->n_hessians(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));

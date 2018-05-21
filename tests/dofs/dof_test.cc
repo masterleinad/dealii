@@ -41,14 +41,14 @@ public:
   get_new_point_on_line(
     const typename Triangulation<dim>::line_iterator& line) const
   {
-    Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
+    Point<dim> middle= FlatManifold<dim>::get_new_point_on_line(line);
 
-    for(int i = 0; i < dim; ++i)
-      middle(i) -= .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)-= .5;
     middle
       *= std::sqrt(static_cast<double>(dim)) / (std::sqrt(middle.square()) * 2);
-    for(int i = 0; i < dim; ++i)
-      middle(i) += .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)+= .5;
 
     return middle;
   }
@@ -57,14 +57,14 @@ public:
   get_new_point_on_quad(
     const typename Triangulation<dim>::quad_iterator& quad) const
   {
-    Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
+    Point<dim> middle= FlatManifold<dim>::get_new_point_on_quad(quad);
 
-    for(int i = 0; i < dim; ++i)
-      middle(i) -= .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)-= .5;
     middle
       *= std::sqrt(static_cast<double>(dim)) / (std::sqrt(middle.square()) * 2);
-    for(int i = 0; i < dim; ++i)
-      middle(i) += .5;
+    for(int i= 0; i < dim; ++i)
+      middle(i)+= .5;
 
     return middle;
   }
@@ -88,7 +88,7 @@ Point<dim>
 CurvedLine<dim>::get_new_point_on_line(
   const typename Triangulation<dim>::line_iterator& line) const
 {
-  Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
+  Point<dim> middle= FlatManifold<dim>::get_new_point_on_line(line);
 
   // if the line is at the top of bottom
   // face: do a special treatment on
@@ -113,18 +113,18 @@ CurvedLine<dim>::get_new_point_on_line(
        && (line->boundary_id() == 1))
       return middle;
 
-  double x = middle(0), y = middle(1);
+  double x= middle(0), y= middle(1);
 
   if(y < x)
     if(y < 1 - x)
-      middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
+      middle(1)= 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
-      middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
+      middle(0)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
   else if(y < 1 - x)
-    middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
+    middle(0)= 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
-    middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
+    middle(1)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
 
   return middle;
 }
@@ -134,7 +134,7 @@ Point<dim>
 CurvedLine<dim>::get_new_point_on_quad(
   const typename Triangulation<dim>::quad_iterator& quad) const
 {
-  Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
+  Point<dim> middle= FlatManifold<dim>::get_new_point_on_quad(quad);
 
   // if the face is at the top of bottom
   // face: do not move the midpoint in
@@ -145,18 +145,18 @@ CurvedLine<dim>::get_new_point_on_quad(
   if((middle(2) == 0) || (middle(2) == 1))
     return middle;
 
-  double x = middle(0), y = middle(1);
+  double x= middle(0), y= middle(1);
 
   if(y < x)
     if(y < 1 - x)
-      middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
+      middle(1)= 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
-      middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
+      middle(0)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
   else if(y < 1 - x)
-    middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
+    middle(0)= 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
-    middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
+    middle(1)= 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
 
   return middle;
 }
@@ -202,10 +202,10 @@ TestCases<dim>::create_new()
   if(tria != nullptr)
     delete tria;
 
-  tria = new Triangulation<dim>();
+  tria= new Triangulation<dim>();
   GridGenerator::hyper_cube(*tria);
 
-  dof = new DoFHandler<dim>(*tria);
+  dof= new DoFHandler<dim>(*tria);
 }
 
 template <int dim>
@@ -230,12 +230,12 @@ TestCases<dim>::run(const unsigned int test_case)
           tria->execute_coarsening_and_refinement();
 
           typename Triangulation<dim>::active_cell_iterator cell;
-          for(int i = 0; i < (dim == 2 ? 3 : 2); ++i)
+          for(int i= 0; i < (dim == 2 ? 3 : 2); ++i)
             {
               // refine the presently
               // second last cell 17
               // times
-              cell = tria->last_active();
+              cell= tria->last_active();
               --cell;
               cell->set_refine_flag();
               tria->execute_coarsening_and_refinement();
@@ -263,10 +263,10 @@ TestCases<dim>::run(const unsigned int test_case)
           tria->execute_coarsening_and_refinement();
 
           typename Triangulation<dim>::active_cell_iterator cell, endc;
-          for(int i = 0; i < 4 - dim; ++i)
+          for(int i= 0; i < 4 - dim; ++i)
             {
-              cell = tria->begin_active();
-              endc = tria->end();
+              cell= tria->begin_active();
+              endc= tria->end();
 
               // refine all
               // boundary cells
@@ -291,7 +291,7 @@ TestCases<dim>::run(const unsigned int test_case)
   SparsityPattern sparsity(dof->n_dofs(), dof->max_couplings_between_dofs());
 
   DoFTools::make_sparsity_pattern(*dof, sparsity);
-  int unconstrained_bandwidth = sparsity.bandwidth();
+  int unconstrained_bandwidth= sparsity.bandwidth();
 
   deallog << "    Writing sparsity pattern..." << std::endl;
   sparsity.print_gnuplot(logfile);
@@ -331,14 +331,14 @@ main()
 {
   deallog.attach(logfile);
 
-  for(unsigned int test_case = 1; test_case <= 2; ++test_case)
+  for(unsigned int test_case= 1; test_case <= 2; ++test_case)
     {
       TestCases<2> tests;
       tests.create_new();
       tests.run(test_case);
     };
 
-  for(unsigned int test_case = 1; test_case <= 2; ++test_case)
+  for(unsigned int test_case= 1; test_case <= 2; ++test_case)
     {
       TestCases<3> tests;
       tests.create_new();

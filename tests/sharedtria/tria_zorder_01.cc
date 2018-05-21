@@ -40,7 +40,7 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
 
   typename Triangulation<dim>::active_cell_iterator cell1
     = shared_tria.begin_active(),
-    endc1 = shared_tria.end();
+    endc1= shared_tria.end();
   for(; cell1 != endc1; ++cell1)
     {
       if(cell1->is_locally_owned())
@@ -49,14 +49,14 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
 
   typename Triangulation<dim>::active_cell_iterator cell2
     = p4est_tria.begin_active(),
-    endc2 = p4est_tria.end();
+    endc2= p4est_tria.end();
   for(; cell2 != endc2; ++cell2)
     {
       if(cell2->is_locally_owned())
         p4est_map.insert(std::make_pair(cell2->id(), cell2->subdomain_id()));
     }
 
-  for(std::map<CellId, unsigned int>::iterator it = p4est_map.begin();
+  for(std::map<CellId, unsigned int>::iterator it= p4est_map.begin();
       it != p4est_map.end();
       ++it)
     {
@@ -80,7 +80,7 @@ test()
   parallel::distributed::Triangulation<dim> p4est_tria(
     MPI_COMM_WORLD, Triangulation<dim>::limit_level_difference_at_vertices);
 
-  unsigned int refinements = 2;
+  unsigned int refinements= 2;
   GridGenerator::subdivided_hyper_cube(shared_tria, 2, -1, 1);
   shared_tria.refine_global(refinements);
   for(typename Triangulation<dim>::active_cell_iterator cell

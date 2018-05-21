@@ -61,7 +61,7 @@ namespace PETScWrappers
        * It is safe to elide additions of zeros to individual elements of this
        * matrix.
        */
-      static const bool zero_addition_can_be_elided = true;
+      static const bool zero_addition_can_be_elided= true;
     };
 
     /**
@@ -86,7 +86,7 @@ namespace PETScWrappers
     SparseMatrix(const size_type m,
                  const size_type n,
                  const size_type n_nonzero_per_row,
-                 const bool      is_symmetric = false);
+                 const bool      is_symmetric= false);
 
     /**
      * Initialize a rectangular matrix with @p m rows and @p n columns.  The
@@ -107,7 +107,7 @@ namespace PETScWrappers
     SparseMatrix(const size_type               m,
                  const size_type               n,
                  const std::vector<size_type>& row_lengths,
-                 const bool                    is_symmetric = false);
+                 const bool                    is_symmetric= false);
 
     /**
      * Initialize a sparse matrix using the given sparsity pattern.
@@ -128,7 +128,7 @@ namespace PETScWrappers
      */
     template <typename SparsityPatternType>
     explicit SparseMatrix(const SparsityPatternType& sparsity_pattern,
-                          const bool preset_nonzero_locations = true);
+                          const bool preset_nonzero_locations= true);
 
     /**
      * This operator assigns a scalar to a matrix. Since this does usually not
@@ -151,7 +151,7 @@ namespace PETScWrappers
     reinit(const size_type m,
            const size_type n,
            const size_type n_nonzero_per_row,
-           const bool      is_symmetric = false);
+           const bool      is_symmetric= false);
 
     /**
      * Throw away the present matrix and generate one that has the same
@@ -162,7 +162,7 @@ namespace PETScWrappers
     reinit(const size_type               m,
            const size_type               n,
            const std::vector<size_type>& row_lengths,
-           const bool                    is_symmetric = false);
+           const bool                    is_symmetric= false);
 
     /**
      * Initialize a sparse matrix using the given sparsity pattern.
@@ -192,7 +192,7 @@ namespace PETScWrappers
     template <typename SparsityPatternType>
     void
     reinit(const SparsityPatternType& sparsity_pattern,
-           const bool                 preset_nonzero_locations = true);
+           const bool                 preset_nonzero_locations= true);
 
     /**
      * Return a reference to the MPI communicator object in use with this
@@ -223,7 +223,7 @@ namespace PETScWrappers
     void
     mmult(SparseMatrix&       C,
           const SparseMatrix& B,
-          const MPI::Vector&  V = MPI::Vector()) const;
+          const MPI::Vector&  V= MPI::Vector()) const;
 
     /**
      * Perform the matrix-matrix multiplication with the transpose of
@@ -235,13 +235,13 @@ namespace PETScWrappers
     void
     Tmmult(SparseMatrix&       C,
            const SparseMatrix& B,
-           const MPI::Vector&  V = MPI::Vector()) const;
+           const MPI::Vector&  V= MPI::Vector()) const;
 
   private:
     /**
      * Purposefully not implemented
      */
-    SparseMatrix(const SparseMatrix&) = delete;
+    SparseMatrix(const SparseMatrix&)= delete;
     /**
      * Purposefully not implemented
      */
@@ -258,7 +258,7 @@ namespace PETScWrappers
     do_reinit(const size_type m,
               const size_type n,
               const size_type n_nonzero_per_row,
-              const bool      is_symmetric = false);
+              const bool      is_symmetric= false);
 
     /**
      * Same as previous function.
@@ -267,7 +267,7 @@ namespace PETScWrappers
     do_reinit(const size_type               m,
               const size_type               n,
               const std::vector<size_type>& row_lengths,
-              const bool                    is_symmetric = false);
+              const bool                    is_symmetric= false);
 
     /**
      * Same as previous function.

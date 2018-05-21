@@ -29,7 +29,7 @@ namespace internal
     // value becomes too large, on the other hand, the work load cannot be
     // split into enough chunks and the problem becomes badly balanced. the
     // tests are documented at https://github.com/dealii/dealii/issues/2496
-    unsigned int minimum_parallel_grain_size = 4096;
+    unsigned int minimum_parallel_grain_size= 4096;
   } // namespace VectorImplementation
 
   namespace SparseMatrixImplementation
@@ -42,7 +42,7 @@ namespace internal
     // could possibly be reduced even further but that doesn't appear worth it
     // any more for anything but very small matrices that we don't care that
     // much about anyway.
-    unsigned int minimum_parallel_grain_size = 256;
+    unsigned int minimum_parallel_grain_size= 256;
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
@@ -71,7 +71,7 @@ namespace parallel
       if(in_use)
         return std::make_shared<tbb::affinity_partitioner>();
 
-      in_use = true;
+      in_use= true;
       return my_partitioner;
     }
 
@@ -82,11 +82,11 @@ namespace parallel
       if(p.get() == my_partitioner.get())
         {
           dealii::Threads::Mutex::ScopedLock lock(mutex);
-          in_use = false;
+          in_use= false;
         }
     }
 #else
-    TBBPartitioner::TBBPartitioner() = default;
+    TBBPartitioner::TBBPartitioner()= default;
 #endif
   } // namespace internal
 } // namespace parallel

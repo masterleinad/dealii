@@ -35,8 +35,8 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // next with only every second
   // component
-  for(unsigned int i = 1; i < component_select.size(); i += 2)
-    component_select[i] = false;
+  for(unsigned int i= 1; i < component_select.size(); i+= 2)
+    component_select[i]= false;
   {
     DoFTools::extract_boundary_dofs(
       dof_handler, component_select, boundary_dofs);

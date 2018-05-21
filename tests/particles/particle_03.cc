@@ -24,20 +24,20 @@ void
 test()
 {
   {
-    const unsigned int      n_properties_per_particle = 3;
+    const unsigned int      n_properties_per_particle= 3;
     Particles::PropertyPool pool(n_properties_per_particle);
 
     Point<2> position;
-    position(0) = 0.3;
-    position(1) = 0.5;
+    position(0)= 0.3;
+    position(1)= 0.5;
 
     Point<2> reference_position;
-    reference_position(0) = 0.2;
-    reference_position(1) = 0.4;
+    reference_position(0)= 0.2;
+    reference_position(1)= 0.4;
 
     const types::particle_index index(7);
 
-    std::vector<double> properties = {0.15, 0.45, 0.75};
+    std::vector<double> properties= {0.15, 0.45, 0.75};
 
     Particles::Particle<2> particle(position, reference_position, index);
     particle.set_property_pool(pool);

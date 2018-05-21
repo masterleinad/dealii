@@ -62,11 +62,11 @@ check(const Triangulation<dim>& tria, const unsigned int order)
       // and make sure that the
       // result of the integration is
       // close to zero
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_face_values.reinit(cell, f);
-          for(unsigned int q = 0; q < q_face.size(); ++q)
-            n1 += fe_face_values.normal_vector(q) * fe_face_values.JxW(q);
+          for(unsigned int q= 0; q < q_face.size(); ++q)
+            n1+= fe_face_values.normal_vector(q) * fe_face_values.JxW(q);
         }
       Assert(n1 * n1 < 1e-24, ExcInternalError());
       deallog << cell << " face integration is ok: " << std::sqrt(n1 * n1)
@@ -74,14 +74,14 @@ check(const Triangulation<dim>& tria, const unsigned int order)
 
       // now same for subface
       // integration
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        for(unsigned int sf = 0; sf < GeometryInfo<dim>::max_children_per_face;
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        for(unsigned int sf= 0; sf < GeometryInfo<dim>::max_children_per_face;
             ++sf)
           {
             fe_subface_values.reinit(cell, f, sf);
-            for(unsigned int q = 0; q < q_face.size(); ++q)
-              n2 += fe_subface_values.normal_vector(q)
-                    * fe_subface_values.JxW(q);
+            for(unsigned int q= 0; q < q_face.size(); ++q)
+              n2+= fe_subface_values.normal_vector(q)
+                   * fe_subface_values.JxW(q);
           }
       Assert(n2 * n2 < 1e-24, ExcInternalError());
       deallog << cell << " subface integration is ok: " << std::sqrt(n2 * n2)

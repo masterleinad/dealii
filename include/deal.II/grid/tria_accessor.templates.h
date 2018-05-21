@@ -72,9 +72,9 @@ inline void
 TriaAccessorBase<structdim, dim, spacedim>::copy_from(
   const TriaAccessorBase<structdim, dim, spacedim>& a)
 {
-  present_level = a.present_level;
-  present_index = a.present_index;
-  tria          = a.tria;
+  present_level= a.present_level;
+  present_index= a.present_index;
+  tria         = a.tria;
 
   if(structdim != dim)
     {
@@ -89,9 +89,9 @@ inline TriaAccessorBase<structdim, dim, spacedim>&
 TriaAccessorBase<structdim, dim, spacedim>::
 operator=(const TriaAccessorBase<structdim, dim, spacedim>& a)
 {
-  present_level = a.present_level;
-  present_index = a.present_index;
-  tria          = a.tria;
+  present_level= a.present_level;
+  present_index= a.present_index;
+  tria         = a.tria;
 
   if(structdim != dim)
     {
@@ -188,7 +188,7 @@ TriaAccessorBase<structdim, dim, spacedim>::operator++()
       // dim!=1 and the object therefore
       // has no level)
       if(this->present_index >= static_cast<int>(objects().cells.size()))
-        this->present_index = -1;
+        this->present_index= -1;
     }
   else
     {
@@ -199,12 +199,12 @@ TriaAccessorBase<structdim, dim, spacedim>::operator++()
           // no -> go one level up until we find
           // one with more than zero cells
           ++this->present_level;
-          this->present_index = 0;
+          this->present_index= 0;
           // highest level reached?
           if(this->present_level >= static_cast<int>(this->tria->levels.size()))
             {
               // return with past the end pointer
-              this->present_level = this->present_index = -1;
+              this->present_level= this->present_index= -1;
               return;
             }
         }
@@ -221,7 +221,7 @@ TriaAccessorBase<structdim, dim, spacedim>::operator--()
   if(structdim != dim)
     {
       if(this->present_index < 0)
-        this->present_index = -1;
+        this->present_index= -1;
     }
   else
     {
@@ -233,7 +233,7 @@ TriaAccessorBase<structdim, dim, spacedim>::operator--()
           if(this->present_level == -1)
             {
               // return with past the end pointer
-              this->present_level = this->present_index = -1;
+              this->present_level= this->present_index= -1;
               return;
             }
           // else
@@ -572,8 +572,8 @@ namespace internal
         // respect non-standard faces by calling the
         // reordering function from GeometryInfo
 
-        const unsigned int quad_index     = lookup_table[i][0];
-        const unsigned int std_line_index = lookup_table[i][1];
+        const unsigned int quad_index    = lookup_table[i][0];
+        const unsigned int std_line_index= lookup_table[i][1];
 
         const unsigned int line_index
           = GeometryInfo<dim>::standard_to_real_face_line(
@@ -776,8 +776,8 @@ namespace internal
              {0, 1},
              {1, 1}};
 
-        const unsigned int quad_index     = lookup_table[line][0];
-        const unsigned int std_line_index = lookup_table[line][1];
+        const unsigned int quad_index    = lookup_table[line][0];
+        const unsigned int std_line_index= lookup_table[line][1];
 
         const unsigned int line_index
           = GeometryInfo<dim>::standard_to_real_face_line(
@@ -809,7 +809,7 @@ namespace internal
         // forth index: face_rotation: 0: standard,
         // 1: face rotated by 90 degrees
 
-        static const bool bool_table[2][2][2][2] = {
+        static const bool bool_table[2][2][2][2]= {
           {{{true,
              false}, // lines 0/1, face_orientation=false, face_flip=false, face_rotation=false and true
             {false,
@@ -998,7 +998,7 @@ namespace internal
         // second index: vertex index to be switched
         // (or not)
 
-        static const unsigned int switch_table[2][2] = {{1, 0}, {0, 1}};
+        static const unsigned int switch_table[2][2]= {{1, 0}, {0, 1}};
 
         return accessor.line(corner % 2)
           ->vertex_index(
@@ -1018,7 +1018,7 @@ namespace internal
 
         // bottom face (4) for first four vertices,
         // top face (5) for the rest
-        const unsigned int face_index = 4 + corner / 4;
+        const unsigned int face_index= 4 + corner / 4;
 
         return accessor.quad(face_index)
           ->vertex_index(GeometryInfo<dim>::standard_to_real_face_vertex(
@@ -1218,7 +1218,7 @@ TriaAccessor<structdim, dim, spacedim>::set_used_flag() const
   Assert(
     this->state() == IteratorState::valid,
     TriaAccessorExceptions::ExcDereferenceInvalidObject<TriaAccessor>(*this));
-  this->objects().used[this->present_index] = true;
+  this->objects().used[this->present_index]= true;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1228,7 +1228,7 @@ TriaAccessor<structdim, dim, spacedim>::clear_used_flag() const
   Assert(
     this->state() == IteratorState::valid,
     TriaAccessorExceptions::ExcDereferenceInvalidObject<TriaAccessor>(*this));
-  this->objects().used[this->present_index] = false;
+  this->objects().used[this->present_index]= false;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1428,7 +1428,7 @@ TriaAccessor<structdim, dim, spacedim>::set_refinement_case(
          ExcIndexRange(
            this->present_index, 0, this->objects().refinement_cases.size()));
 
-  this->objects().refinement_cases[this->present_index] = refinement_case;
+  this->objects().refinement_cases[this->present_index]= refinement_case;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1475,7 +1475,7 @@ TriaAccessor<structdim, dim, spacedim>::set_children(const unsigned int i,
             == -1),
     TriaAccessorExceptions::ExcCantSetChildren(index));
 
-  this->objects().children[n_sets_of_two * this->present_index + i / 2] = index;
+  this->objects().children[n_sets_of_two * this->present_index + i / 2]= index;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1488,7 +1488,7 @@ TriaAccessor<structdim, dim, spacedim>::clear_children() const
   const unsigned int n_sets_of_two
     = GeometryInfo<structdim>::max_children_per_cell / 2;
 
-  for(unsigned int i = 0; i < n_sets_of_two; ++i)
+  for(unsigned int i= 0; i < n_sets_of_two; ++i)
     set_children(2 * i, -1);
 }
 
@@ -1505,7 +1505,7 @@ inline void
 TriaAccessor<structdim, dim, spacedim>::set_user_flag() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_flags[this->present_index] = true;
+  this->objects().user_flags[this->present_index]= true;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1513,7 +1513,7 @@ inline void
 TriaAccessor<structdim, dim, spacedim>::clear_user_flag() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_flags[this->present_index] = false;
+  this->objects().user_flags[this->present_index]= false;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1523,7 +1523,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_set_user_flag() const
   set_user_flag();
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_user_flag();
 }
 
@@ -1534,7 +1534,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_clear_user_flag() const
   clear_user_flag();
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_clear_user_flag();
 }
 
@@ -1551,7 +1551,7 @@ void
 TriaAccessor<structdim, dim, spacedim>::set_user_pointer(void* p) const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_pointer(this->present_index) = p;
+  this->objects().user_pointer(this->present_index)= p;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1559,7 +1559,7 @@ void
 TriaAccessor<structdim, dim, spacedim>::clear_user_pointer() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_pointer(this->present_index) = nullptr;
+  this->objects().user_pointer(this->present_index)= nullptr;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1578,7 +1578,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_set_user_pointer(
   set_user_pointer(p);
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_user_pointer(p);
 }
 
@@ -1589,7 +1589,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_clear_user_pointer() const
   clear_user_pointer();
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_clear_user_pointer();
 }
 
@@ -1598,7 +1598,7 @@ void
 TriaAccessor<structdim, dim, spacedim>::set_user_index(unsigned int p) const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_index(this->present_index) = p;
+  this->objects().user_index(this->present_index)= p;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1606,7 +1606,7 @@ void
 TriaAccessor<structdim, dim, spacedim>::clear_user_index() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  this->objects().user_index(this->present_index) = 0;
+  this->objects().user_index(this->present_index)= 0;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1625,7 +1625,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_set_user_index(
   set_user_index(p);
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_user_index(p);
 }
 
@@ -1636,7 +1636,7 @@ TriaAccessor<structdim, dim, spacedim>::recursively_clear_user_index() const
   clear_user_index();
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->recursively_clear_user_index();
 }
 
@@ -1647,9 +1647,9 @@ TriaAccessor<structdim, dim, spacedim>::max_refinement_depth() const
   if(!this->has_children())
     return 0;
 
-  unsigned int max_depth = 1;
-  for(unsigned int c = 0; c < n_children(); ++c)
-    max_depth = std::max(max_depth, child(c)->max_refinement_depth() + 1);
+  unsigned int max_depth= 1;
+  for(unsigned int c= 0; c < n_children(); ++c)
+    max_depth= std::max(max_depth, child(c)->max_refinement_depth() + 1);
   return max_depth;
 }
 
@@ -1661,9 +1661,9 @@ TriaAccessor<structdim, dim, spacedim>::number_of_children() const
     return 1;
   else
     {
-      unsigned int sum = 0;
-      for(unsigned int c = 0; c < n_children(); ++c)
-        sum += this->child(c)->number_of_children();
+      unsigned int sum= 0;
+      for(unsigned int c= 0; c < n_children(); ++c)
+        sum+= this->child(c)->number_of_children();
       return sum;
     }
 }
@@ -1729,7 +1729,7 @@ TriaAccessor<structdim, dim, spacedim>::set_all_boundary_ids(
       case 2:
         // for boundary quads also set
         // boundary_id of bounding lines
-        for(unsigned int i = 0; i < 4; ++i)
+        for(unsigned int i= 0; i < 4; ++i)
           this->line(i)->set_boundary_id(boundary_ind);
         break;
 
@@ -1771,7 +1771,7 @@ TriaAccessor<structdim, dim, spacedim>::set_manifold_id(
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
 
-  this->objects().manifold_id[this->present_index] = manifold_ind;
+  this->objects().manifold_id[this->present_index]= manifold_ind;
 }
 
 template <int structdim, int dim, int spacedim>
@@ -1782,7 +1782,7 @@ TriaAccessor<structdim, dim, spacedim>::set_all_manifold_ids(
   set_manifold_id(manifold_ind);
 
   if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+    for(unsigned int c= 0; c < this->n_children(); ++c)
       this->child(c)->set_all_manifold_ids(manifold_ind);
 
   switch(structdim)
@@ -1799,7 +1799,7 @@ TriaAccessor<structdim, dim, spacedim>::set_all_manifold_ids(
 
       case 2:
         // for quads also set manifold_id of bounding lines
-        for(unsigned int i = 0; i < 4; ++i)
+        for(unsigned int i= 0; i < 4; ++i)
           this->line(i)->set_manifold_id(manifold_ind);
         break;
       default:
@@ -1856,7 +1856,7 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
 
   // Get an initial guess by looking at the largest diagonal
   Point<spacedim> center;
-  double          radius = 0;
+  double          radius= 0;
 
   switch(structdim)
     {
@@ -1866,17 +1866,17 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
           const Point<spacedim> p21(this->vertex(2) - this->vertex(1));
           if(p30.norm() > p21.norm())
             {
-              center                     = this->vertex(0) + 0.5 * p30;
-              radius                     = p30.norm() / 2.;
-              is_initial_guess_vertex[3] = true;
-              is_initial_guess_vertex[0] = true;
+              center                    = this->vertex(0) + 0.5 * p30;
+              radius                    = p30.norm() / 2.;
+              is_initial_guess_vertex[3]= true;
+              is_initial_guess_vertex[0]= true;
             }
           else
             {
-              center                     = this->vertex(1) + 0.5 * p21;
-              radius                     = p21.norm() / 2.;
-              is_initial_guess_vertex[2] = true;
-              is_initial_guess_vertex[1] = true;
+              center                    = this->vertex(1) + 0.5 * p21;
+              radius                    = p21.norm() / 2.;
+              is_initial_guess_vertex[2]= true;
+              is_initial_guess_vertex[1]= true;
             }
           break;
         }
@@ -1892,29 +1892,29 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
             = std::max_element(diagonals.begin(), diagonals.end());
           if(it == diagonals.begin())
             {
-              center                     = this->vertex(0) + 0.5 * p70;
-              is_initial_guess_vertex[7] = true;
-              is_initial_guess_vertex[0] = true;
+              center                    = this->vertex(0) + 0.5 * p70;
+              is_initial_guess_vertex[7]= true;
+              is_initial_guess_vertex[0]= true;
             }
           else if(it == diagonals.begin() + 1)
             {
-              center                     = this->vertex(1) + 0.5 * p61;
-              is_initial_guess_vertex[6] = true;
-              is_initial_guess_vertex[1] = true;
+              center                    = this->vertex(1) + 0.5 * p61;
+              is_initial_guess_vertex[6]= true;
+              is_initial_guess_vertex[1]= true;
             }
           else if(it == diagonals.begin() + 2)
             {
-              center                     = this->vertex(5) + 0.5 * p25;
-              is_initial_guess_vertex[2] = true;
-              is_initial_guess_vertex[5] = true;
+              center                    = this->vertex(5) + 0.5 * p25;
+              is_initial_guess_vertex[2]= true;
+              is_initial_guess_vertex[5]= true;
             }
           else
             {
-              center                     = this->vertex(4) + 0.5 * p34;
-              is_initial_guess_vertex[3] = true;
-              is_initial_guess_vertex[4] = true;
+              center                    = this->vertex(4) + 0.5 * p34;
+              is_initial_guess_vertex[3]= true;
+              is_initial_guess_vertex[4]= true;
             }
-          radius = *it * 0.5;
+          radius= *it * 0.5;
           break;
         }
       default:
@@ -1925,17 +1925,17 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
   // For each vertex that is found to be geometrically outside the ball
   // enlarge the ball  so that the new ball contains both the previous ball
   // and the given vertex.
-  for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     if(!is_initial_guess_vertex[v])
       {
-        const double distance = center.distance(this->vertex(v));
+        const double distance= center.distance(this->vertex(v));
         if(distance > radius)
           {
             // we found a vertex which is outside of the ball
             // extend it (move center and change radius)
             const Point<spacedim> pCV(center - this->vertex(v));
-            radius = (distance + radius) * 0.5;
-            center = this->vertex(v) + pCV * (radius / distance);
+            radius= (distance + radius) * 0.5;
+            center= this->vertex(v) + pCV * (radius / distance);
 
             // Now the new ball constructed in this block
             // encloses the vertex (v) that was found to be geometrically
@@ -1943,15 +1943,15 @@ TriaAccessor<structdim, dim, spacedim>::enclosing_ball() const
           }
       }
 #ifdef DEBUG
-  bool all_vertices_within_ball = true;
+  bool all_vertices_within_ball= true;
 
   // Set all_vertices_within_ball false if any of the vertices of the object
   // are geometrically outside the ball
-  for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     if(center.distance(this->vertex(v))
        > radius + 100. * std::numeric_limits<double>::epsilon())
       {
-        all_vertices_within_ball = false;
+        all_vertices_within_ball= false;
         break;
       }
   // If all the vertices are not within the ball throw error
@@ -1971,16 +1971,15 @@ TriaAccessor<structdim, dim, spacedim>::minimum_vertex_distance() const
       case 2:
       case 3:
         {
-          double min = std::numeric_limits<double>::max();
-          for(unsigned int i = 0;
-              i < GeometryInfo<structdim>::vertices_per_cell;
+          double min= std::numeric_limits<double>::max();
+          for(unsigned int i= 0; i < GeometryInfo<structdim>::vertices_per_cell;
               ++i)
-            for(unsigned int j = i + 1;
+            for(unsigned int j= i + 1;
                 j < GeometryInfo<structdim>::vertices_per_cell;
                 ++j)
-              min = std::min(min,
-                             (this->vertex(i) - this->vertex(j))
-                               * (this->vertex(i) - this->vertex(j)));
+              min= std::min(min,
+                            (this->vertex(i) - this->vertex(j))
+                              * (this->vertex(i) - this->vertex(j)));
           return std::sqrt(min);
         }
       default:
@@ -2009,16 +2008,16 @@ TriaAccessor<structdim, dim, spacedim>::is_translation_of(
   // one or two digits), so we choose 1e-12
   // times the distance between the zeroth
   // vertices here.
-  bool                      is_translation = true;
-  const Tensor<1, spacedim> dist           = o->vertex(0) - this->vertex(0);
-  const double              tol_square     = 1e-24 * dist.norm_square();
-  for(unsigned int i = 1; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
+  bool                      is_translation= true;
+  const Tensor<1, spacedim> dist          = o->vertex(0) - this->vertex(0);
+  const double              tol_square    = 1e-24 * dist.norm_square();
+  for(unsigned int i= 1; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
     {
       const Tensor<1, spacedim> dist_new
         = (o->vertex(i) - this->vertex(i)) - dist;
       if(dist_new.norm_square() > tol_square)
         {
-          is_translation = false;
+          is_translation= false;
           break;
         }
     }
@@ -2065,8 +2064,8 @@ template <int dim, int spacedim>
 inline void
 TriaAccessor<0, dim, spacedim>::copy_from(const TriaAccessor& t)
 {
-  tria                = t.tria;
-  global_vertex_index = t.global_vertex_index;
+  tria               = t.tria;
+  global_vertex_index= t.global_vertex_index;
 }
 
 template <int dim, int spacedim>
@@ -2099,7 +2098,7 @@ TriaAccessor<0, dim, spacedim>::operator++()
 {
   ++global_vertex_index;
   if(global_vertex_index >= tria->n_vertices())
-    global_vertex_index = numbers::invalid_unsigned_int;
+    global_vertex_index= numbers::invalid_unsigned_int;
 }
 
 template <int dim, int spacedim>
@@ -2111,7 +2110,7 @@ TriaAccessor<0, dim, spacedim>::operator--()
       if(global_vertex_index != 0)
         --global_vertex_index;
       else
-        global_vertex_index = numbers::invalid_unsigned_int;
+        global_vertex_index= numbers::invalid_unsigned_int;
     }
 }
 
@@ -2364,9 +2363,9 @@ template <int spacedim>
 inline void
 TriaAccessor<0, 1, spacedim>::copy_from(const TriaAccessor& t)
 {
-  tria                = t.tria;
-  vertex_kind         = t.vertex_kind;
-  global_vertex_index = t.global_vertex_index;
+  tria               = t.tria;
+  vertex_kind        = t.vertex_kind;
+  global_vertex_index= t.global_vertex_index;
 }
 
 template <int spacedim>
@@ -2631,14 +2630,14 @@ TriaAccessor<0, 1, spacedim>::set_boundary_id(const types::boundary_id b)
            != tria->vertex_to_boundary_id_map_1d->end(),
          ExcInternalError());
 
-  (*tria->vertex_to_boundary_id_map_1d)[this->vertex_index()] = b;
+  (*tria->vertex_to_boundary_id_map_1d)[this->vertex_index()]= b;
 }
 
 template <int spacedim>
 inline void
 TriaAccessor<0, 1, spacedim>::set_manifold_id(const types::manifold_id b)
 {
-  (*tria->vertex_to_manifold_id_map_1d)[this->vertex_index()] = b;
+  (*tria->vertex_to_manifold_id_map_1d)[this->vertex_index()]= b;
 }
 
 template <int spacedim>
@@ -2824,7 +2823,7 @@ CellAccessor<dim, spacedim>::flag_for_face_refinement(
   // of the minimum required one for the given
   // face refinement and the already existing
   // flagged refinement case
-  RefinementCase<dim> old_ref_case = refine_flag_set();
+  RefinementCase<dim> old_ref_case= refine_flag_set();
   RefinementCase<dim> new_ref_case
     = (old_ref_case
        | GeometryInfo<dim>::min_cell_refinement_case_for_face_refinement(
@@ -3158,7 +3157,7 @@ template <int dim, int spacedim>
 inline unsigned int
 CellAccessor<dim, spacedim>::neighbor_face_no(const unsigned int neighbor) const
 {
-  const unsigned int n2 = neighbor_of_neighbor_internal(neighbor);
+  const unsigned int n2= neighbor_of_neighbor_internal(neighbor);
   if(n2 != numbers::invalid_unsigned_int)
     // return this value as the
     // neighbor is not coarser

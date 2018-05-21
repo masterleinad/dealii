@@ -28,7 +28,7 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim " << dim << ", spacedim " << spacedim << std::endl;
 

@@ -31,29 +31,29 @@ main()
   Vector<float>  y(5);
   Vector<float>  z(1);
 
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     {
-      u(i) = 1 << i;
-      x(i) = 1 << i;
-      v(i) = 6 - i;
-      y(i) = 6 - i;
+      u(i)= 1 << i;
+      x(i)= 1 << i;
+      v(i)= 6 - i;
+      y(i)= 6 - i;
     }
 
   PointerMatrixVector<double> Mu(&u);
   Mu.vmult(w, v);
   deallog << "vmult  " << w(0) << std::endl << "Tvmult";
-  w(0) = 2.;
+  w(0)= 2.;
   Mu.Tvmult(v, w);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     deallog << ' ' << v(i);
   deallog << std::endl;
 
   PointerMatrixVector<float> Mx(&x);
   Mx.vmult(z, y);
   deallog << "vmult  " << z(0) << std::endl << "Tvmult";
-  z(0) = 2.;
+  z(0)= 2.;
   Mx.Tvmult(y, z);
-  for(unsigned int i = 0; i < y.size(); ++i)
+  for(unsigned int i= 0; i < y.size(); ++i)
     deallog << ' ' << y(i);
   deallog << std::endl;
 }

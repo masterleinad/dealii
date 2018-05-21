@@ -49,7 +49,7 @@ test()
       ++cell)
     {
       Point<dim> diff(0.25, 0.25, 0.25);
-      diff -= cell->center();
+      diff-= cell->center();
       if(diff.norm() > 0.25 && !(cell->is_ghost() || cell->is_artificial()))
         cell->set_refine_flag();
     }
@@ -65,8 +65,8 @@ test()
 
   // print out constraints for each
   // processor.
-  const unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   IndexSet locally_active(dof.n_dofs());
   DoFTools::extract_locally_active_dofs(dof, locally_active);
@@ -84,7 +84,7 @@ test()
 
   if(myid == 0)
     {
-      for(unsigned int i = 0; i < numproc; ++i)
+      for(unsigned int i= 0; i < numproc; ++i)
         {
           cat_file((std::string("dat.") + Utilities::int_to_string(i)).c_str());
         }
@@ -96,7 +96,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

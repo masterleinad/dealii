@@ -39,7 +39,7 @@ test()
 
   GridOut           grid_out;
   GridOutFlags::Msh flags;
-  flags.write_lines = flags.write_faces = true;
+  flags.write_lines= flags.write_faces= true;
   grid_out.set_flags(flags);
   grid_out.write_msh(tria, logfile);
 }

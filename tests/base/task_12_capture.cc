@@ -41,14 +41,14 @@ main()
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
-  int arg1 = 1;
-  int arg2 = 2;
+  int arg1= 1;
+  int arg2= 2;
 
   Threads::TaskGroup<double> tg;
-  tg += Threads::new_task([arg1]() // capture arg1 by value
-                          { return test(arg1); });
-  tg += Threads::new_task([&arg2]() // capture arg2 by reference
-                          { return test(arg2); });
+  tg+= Threads::new_task([arg1]() // capture arg1 by value
+                         { return test(arg1); });
+  tg+= Threads::new_task([&arg2]() // capture arg2 by reference
+                         { return test(arg2); });
 
   tg.join_all();
 

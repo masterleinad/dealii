@@ -48,17 +48,17 @@ check()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
   hp::FECollection<dim> fe_collection;
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for(unsigned int degree= 1; degree < 4; ++degree)
     fe_collection.push_back(FE_Q<dim>(degree));
   hp::DoFHandler<dim>                                dof_handler(triangulation);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
-  for(unsigned int degree = 1; cell != dof_handler.end(); ++cell, ++degree)
+  for(unsigned int degree= 1; cell != dof_handler.end(); ++cell, ++degree)
     cell->set_active_fe_index(degree % 3);
   dof_handler.distribute_dofs(fe_collection);
 
   // Create an adapted mesh
-  for(cell = dof_handler.begin_active(); cell < dof_handler.end(); ++cell)
+  for(cell= dof_handler.begin_active(); cell < dof_handler.end(); ++cell)
     if((cell->center()[0] == 0.625) && (cell->center()[1] == 0.625))
       cell->set_refine_flag();
 
@@ -75,11 +75,11 @@ check()
         &get_conflict_indices_cfem<dim>)));
 
   // Output the coloring
-  for(unsigned int color = 0; color < coloring.size(); ++color)
+  for(unsigned int color= 0; color < coloring.size(); ++color)
     {
       deallog << "Color: " << color << std::endl;
-      for(unsigned int i = 0; i < coloring[color].size(); ++i)
-        for(unsigned int j = 0; j < dim; ++j)
+      for(unsigned int i= 0; i < coloring[color].size(); ++i)
+        for(unsigned int j= 0; j < dim; ++j)
           deallog << coloring[color][i]->center()[j] << " ";
       deallog << std::endl;
     }

@@ -160,7 +160,7 @@ namespace internal
 #  ifdef DEBUG
       // safety check
       if(use_active_cells)
-        for(unsigned int i = 0; i < cell_levels.size(); ++i)
+        for(unsigned int i= 0; i < cell_levels.size(); ++i)
           {
             typename dealii::Triangulation<dim>::cell_iterator dcell(
               &triangulation, cell_levels[i].first, cell_levels[i].second);
@@ -185,14 +185,13 @@ namespace internal
         {
           const types::subdomain_id my_domain
             = triangulation.locally_owned_subdomain();
-          for(unsigned int i = 0; i < cell_levels.size(); ++i)
+          for(unsigned int i= 0; i < cell_levels.size(); ++i)
             {
               if(i > 0 && cell_levels[i] == cell_levels[i - 1])
                 continue;
               typename dealii::Triangulation<dim>::cell_iterator dcell(
                 &triangulation, cell_levels[i].first, cell_levels[i].second);
-              for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell;
-                  ++f)
+              for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
                 {
                   if(dcell->at_boundary(f) && !dcell->has_periodic_neighbor(f))
                     continue;
@@ -203,9 +202,9 @@ namespace internal
                   // who owns the element on the fine side. but we need to count
                   // the number of inner faces in order to balance the remaining
                   // faces properly
-                  const CellId id_mine = dcell->id();
+                  const CellId id_mine= dcell->id();
                   if(use_active_cells && neighbor->has_children())
-                    for(unsigned int c = 0; c < dcell->face(f)->n_children();
+                    for(unsigned int c= 0; c < dcell->face(f)->n_children();
                         ++c)
                       {
                         typename dealii::Triangulation<dim>::cell_iterator
@@ -243,7 +242,7 @@ namespace internal
                           // subdomain id first. this applies to both processors
                           // involved, so both processors will generate the same
                           // list that we will later order
-                          const CellId id_neigh = neighbor->id();
+                          const CellId id_neigh= neighbor->id();
                           if(my_domain < neigh_domain)
                             inner_faces_at_proc_boundary[neigh_domain]
                               .shared_faces.emplace_back(id_mine, id_neigh);
@@ -276,15 +275,15 @@ namespace internal
               // because the pattern of ghosting is symmetric. We test this by
               // looking at the length of the lists of faces
 #  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
-              MPI_Comm comm = MPI_COMM_SELF;
+              MPI_Comm comm= MPI_COMM_SELF;
               if(const parallel::Triangulation<dim>* ptria
                  = dynamic_cast<const parallel::Triangulation<dim>*>(
                    &triangulation))
-                comm = ptria->get_communicator();
+                comm= ptria->get_communicator();
 
               MPI_Status   status;
-              unsigned int mysize    = it->second.shared_faces.size();
-              unsigned int othersize = numbers::invalid_unsigned_int;
+              unsigned int mysize   = it->second.shared_faces.size();
+              unsigned int othersize= numbers::invalid_unsigned_int;
               MPI_Sendrecv(&mysize,
                            1,
                            MPI_UNSIGNED,
@@ -298,7 +297,7 @@ namespace internal
                            comm,
                            &status);
               AssertDimension(mysize, othersize);
-              mysize = it->second.n_hanging_faces_smaller_subdomain;
+              mysize= it->second.n_hanging_faces_smaller_subdomain;
               MPI_Sendrecv(&mysize,
                            1,
                            MPI_UNSIGNED,
@@ -312,7 +311,7 @@ namespace internal
                            comm,
                            &status);
               AssertDimension(mysize, othersize);
-              mysize = it->second.n_hanging_faces_larger_subdomain;
+              mysize= it->second.n_hanging_faces_larger_subdomain;
               MPI_Sendrecv(&mysize,
                            1,
                            MPI_UNSIGNED,
@@ -345,7 +344,7 @@ namespace internal
               // sort differently for the other way around.
               std::vector<std::tuple<CellId, CellId, unsigned int>> other_range(
                 it->second.shared_faces.size());
-              for(unsigned int i = 0; i < other_range.size(); ++i)
+              for(unsigned int i= 0; i < other_range.size(); ++i)
                 other_range[i]
                   = std::make_tuple(it->second.shared_faces[i].second,
                                     it->second.shared_faces[i].first,
@@ -358,14 +357,14 @@ namespace internal
               // those faces, a value -1 means that the process with the lower
               // rank gets it, whereas a value 0 means that the decision can
               // be made in an arbitrary way.
-              unsigned int      n_faces_lower_proc = 0, n_faces_higher_proc = 0;
+              unsigned int      n_faces_lower_proc= 0, n_faces_higher_proc= 0;
               std::vector<char> assignment(other_range.size(), 0);
               if(it->second.shared_faces.size() > 0)
                 {
                   // identify faces that go to the processor with the higher
                   // rank
-                  unsigned int count = 0;
-                  for(unsigned int i = 1; i < it->second.shared_faces.size();
+                  unsigned int count= 0;
+                  for(unsigned int i= 1; i < it->second.shared_faces.size();
                       ++i)
                     if(it->second.shared_faces[i].first
                        == it->second.shared_faces[i - 1 - count].first)
@@ -375,19 +374,19 @@ namespace internal
                         AssertThrow(count < 2 * dim, ExcInternalError());
                         if(count > 0)
                           {
-                            for(unsigned int k = 0; k <= count; ++k)
-                              assignment[i - 1 - k] = 1;
-                            n_faces_higher_proc += count + 1;
+                            for(unsigned int k= 0; k <= count; ++k)
+                              assignment[i - 1 - k]= 1;
+                            n_faces_higher_proc+= count + 1;
                           }
-                        count = 0;
+                        count= 0;
                       }
 
                   // identify faces that definitely go to the processor with
                   // the lower rank - this must use the sorting of CellId
                   // variables from the processor with the higher rank, i.e.,
                   // other_range rather than `shared_faces`.
-                  count = 0;
-                  for(unsigned int i = 1; i < other_range.size(); ++i)
+                  count= 0;
+                  for(unsigned int i= 1; i < other_range.size(); ++i)
                     if(std::get<0>(other_range[i])
                        == std::get<0>(other_range[i - 1 - count]))
                       ++count;
@@ -396,7 +395,7 @@ namespace internal
                         AssertThrow(count < 2 * dim, ExcInternalError());
                         if(count > 0)
                           {
-                            for(unsigned int k = 0; k <= count; ++k)
+                            for(unsigned int k= 0; k <= count; ++k)
                               {
                                 Assert(it->second
                                            .shared_faces[std::get<2>(
@@ -420,7 +419,7 @@ namespace internal
                                   }
                               }
                           }
-                        count = 0;
+                        count= 0;
                       }
                 }
 
@@ -429,23 +428,21 @@ namespace internal
               // with larger rank the second half. Adjust for the hanging
               // faces that always get assigned to one side, and the faces we
               // have already assigned due to the criterion above
-              n_faces_lower_proc
-                += it->second.n_hanging_faces_smaller_subdomain;
-              n_faces_higher_proc
-                += it->second.n_hanging_faces_larger_subdomain;
+              n_faces_lower_proc+= it->second.n_hanging_faces_smaller_subdomain;
+              n_faces_higher_proc+= it->second.n_hanging_faces_larger_subdomain;
               const unsigned int n_total_faces_at_proc_boundary
                 = (it->second.shared_faces.size()
                    + it->second.n_hanging_faces_smaller_subdomain
                    + it->second.n_hanging_faces_larger_subdomain);
-              unsigned int split_index = n_total_faces_at_proc_boundary / 2;
+              unsigned int split_index= n_total_faces_at_proc_boundary / 2;
               if(split_index < n_faces_lower_proc)
-                split_index = 0;
+                split_index= 0;
               else if(split_index
                       < n_total_faces_at_proc_boundary - n_faces_higher_proc)
-                split_index -= n_faces_lower_proc;
+                split_index-= n_faces_lower_proc;
               else
-                split_index = n_total_faces_at_proc_boundary
-                              - n_faces_higher_proc - n_faces_lower_proc;
+                split_index= n_total_faces_at_proc_boundary
+                             - n_faces_higher_proc - n_faces_lower_proc;
 
                 // make sure the splitting is consistent between both sides
 #  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
@@ -493,7 +490,7 @@ namespace internal
               // collect the faces on both sides
               std::vector<std::pair<CellId, CellId>> owned_faces_lower,
                 owned_faces_higher;
-              for(unsigned int i = 0; i < assignment.size(); ++i)
+              for(unsigned int i= 0; i < assignment.size(); ++i)
                 if(assignment[i] < 0)
                   owned_faces_lower.push_back(it->second.shared_faces[i]);
                 else if(assignment[i] > 0)
@@ -503,7 +500,7 @@ namespace internal
                                  - owned_faces_lower.size()
                                  - owned_faces_higher.size());
 
-              unsigned int i = 0, c = 0;
+              unsigned int i= 0, c= 0;
               for(; i < assignment.size() && c < split_index; ++i)
                 if(assignment[i] == 0)
                   {
@@ -528,7 +525,7 @@ namespace internal
               std::sort(check_faces.begin(), check_faces.end());
               AssertDimension(check_faces.size(),
                               it->second.shared_faces.size());
-              for(unsigned int i = 0; i < check_faces.size(); ++i)
+              for(unsigned int i= 0; i < check_faces.size(); ++i)
                 Assert(check_faces[i] == it->second.shared_faces[i],
                        ExcInternalError());
 #  endif
@@ -547,13 +544,13 @@ namespace internal
       // fill in the additional cells that we need access to via ghosting to
       // cell_levels
       std::set<std::pair<unsigned int, unsigned int>> ghost_cells;
-      for(unsigned int i = 0; i < cell_levels.size(); ++i)
+      for(unsigned int i= 0; i < cell_levels.size(); ++i)
         {
           typename dealii::Triangulation<dim>::cell_iterator dcell(
             &triangulation, cell_levels[i].first, cell_levels[i].second);
           if(use_active_cells)
             Assert(dcell->active(), ExcNotImplemented());
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             {
               if(dcell->at_boundary(f) && !dcell->has_periodic_neighbor(f))
                 face_is_owned[dcell->face(f)->index()]
@@ -581,16 +578,16 @@ namespace internal
                      && additional_data.hold_all_faces_to_owned_cells == false)
                     continue;
 
-                  bool                      add_to_ghost = false;
+                  bool                      add_to_ghost= false;
                   const types::subdomain_id id1
                     = use_active_cells ? dcell->subdomain_id() :
                                          dcell->level_subdomain_id(),
-                    id2 = use_active_cells ?
-                            (neighbor->has_children() ?
-                               dcell->neighbor_child_on_subface(f, 0)
-                                 ->subdomain_id() :
-                               neighbor->subdomain_id()) :
-                            neighbor->level_subdomain_id();
+                    id2= use_active_cells ?
+                           (neighbor->has_children() ?
+                              dcell->neighbor_child_on_subface(f, 0)
+                                ->subdomain_id() :
+                              neighbor->subdomain_id()) :
+                           neighbor->level_subdomain_id();
 
                   // Check whether the current face should be processed
                   // locally (instead of being processed from the other
@@ -627,8 +624,8 @@ namespace internal
                         add_to_ghost
                           = (dcell->subdomain_id() != neighbor->subdomain_id());
                       else
-                        add_to_ghost = (dcell->level_subdomain_id()
-                                        != neighbor->level_subdomain_id());
+                        add_to_ghost= (dcell->level_subdomain_id()
+                                       != neighbor->level_subdomain_id());
                     }
                   else if(additional_data.hold_all_faces_to_owned_cells
                           == false)
@@ -644,7 +641,7 @@ namespace internal
                       if(use_active_cells)
                         {
                           if(neighbor->has_children())
-                            for(unsigned int s = 0;
+                            for(unsigned int s= 0;
                                 s < dcell->face(f)->n_children();
                                 ++s)
                               if(dcell->at_boundary(f))
@@ -654,29 +651,29 @@ namespace internal
                                                                             s)
                                        ->subdomain_id()
                                      != dcell->subdomain_id())
-                                    add_to_ghost = true;
+                                    add_to_ghost= true;
                                 }
                               else
                                 {
                                   if(dcell->neighbor_child_on_subface(f, s)
                                        ->subdomain_id()
                                      != dcell->subdomain_id())
-                                    add_to_ghost = true;
+                                    add_to_ghost= true;
                                 }
                           else
-                            add_to_ghost = (dcell->subdomain_id()
-                                            != neighbor->subdomain_id());
+                            add_to_ghost= (dcell->subdomain_id()
+                                           != neighbor->subdomain_id());
                         }
                       else
-                        add_to_ghost = (dcell->level_subdomain_id()
-                                        != neighbor->level_subdomain_id());
+                        add_to_ghost= (dcell->level_subdomain_id()
+                                       != neighbor->level_subdomain_id());
                     }
 
                   if(add_to_ghost)
                     {
                       ghost_cells.insert(std::pair<unsigned int, unsigned int>(
                         neighbor->level(), neighbor->index()));
-                      at_processor_boundary[i] = true;
+                      at_processor_boundary[i]= true;
                     }
                 }
             }
@@ -697,10 +694,10 @@ namespace internal
                                     cells_close_to_boundary.end());
       std::vector<unsigned int> final_cells;
       final_cells.reserve(cells_close_to_boundary.size());
-      for(unsigned int i = 0; i < cells_close_to_boundary.size(); ++i)
+      for(unsigned int i= 0; i < cells_close_to_boundary.size(); ++i)
         if(at_processor_boundary[cells_close_to_boundary[i]] == false)
           final_cells.push_back(cells_close_to_boundary[i]);
-      cells_close_to_boundary = std::move(final_cells);
+      cells_close_to_boundary= std::move(final_cells);
     }
 
     template <int dim>
@@ -714,7 +711,7 @@ namespace internal
       // cell_level_index field
       std::map<std::pair<unsigned int, unsigned int>, unsigned int>
         map_to_vectorized;
-      for(unsigned int cell = 0; cell < cell_levels.size(); ++cell)
+      for(unsigned int cell= 0; cell < cell_levels.size(); ++cell)
         if(cell == 0 || cell_levels[cell] != cell_levels[cell - 1])
           {
             typename dealii::Triangulation<dim>::cell_iterator dcell(
@@ -723,22 +720,22 @@ namespace internal
               cell_levels[cell].second);
             std::pair<unsigned int, unsigned int> level_index(dcell->level(),
                                                               dcell->index());
-            map_to_vectorized[level_index] = cell;
+            map_to_vectorized[level_index]= cell;
           }
 
       // step 2: fill the information about inner faces and boundary faces
-      const unsigned int vectorization_length = task_info.vectorization_length;
+      const unsigned int vectorization_length= task_info.vectorization_length;
       task_info.face_partition_data.resize(
         task_info.cell_partition_data.size() - 1, 0);
       task_info.boundary_partition_data.resize(
         task_info.cell_partition_data.size() - 1, 0);
       std::vector<unsigned char> face_visited(face_is_owned.size(), 0);
-      for(unsigned int partition = 0;
+      for(unsigned int partition= 0;
           partition < task_info.cell_partition_data.size() - 2;
           ++partition)
         {
-          unsigned int boundary_counter = 0;
-          unsigned int inner_counter    = 0;
+          unsigned int boundary_counter= 0;
+          unsigned int inner_counter   = 0;
           for(unsigned int cell
               = task_info.cell_partition_data[partition] * vectorization_length;
               cell < task_info.cell_partition_data[partition + 1]
@@ -750,7 +747,7 @@ namespace internal
                   &triangulation,
                   cell_levels[cell].first,
                   cell_levels[cell].second);
-                for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell;
+                for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell;
                     ++f)
                   {
                     // boundary face
@@ -760,13 +757,13 @@ namespace internal
                         Assert(dcell->at_boundary(f), ExcInternalError());
                         ++boundary_counter;
                         FaceToCellTopology<1> info;
-                        info.cells_interior[0] = cell;
-                        info.cells_exterior[0] = numbers::invalid_unsigned_int;
-                        info.interior_face_no  = f;
-                        info.exterior_face_no  = dcell->face(f)->boundary_id();
+                        info.cells_interior[0]= cell;
+                        info.cells_exterior[0]= numbers::invalid_unsigned_int;
+                        info.interior_face_no = f;
+                        info.exterior_face_no = dcell->face(f)->boundary_id();
                         info.subface_index
                           = GeometryInfo<dim>::max_children_per_cell;
-                        info.face_orientation = 0;
+                        info.face_orientation= 0;
                         boundary_faces.push_back(info);
 
                         face_visited[dcell->face(f)->index()]++;
@@ -779,7 +776,7 @@ namespace internal
                           = dcell->neighbor_or_periodic_neighbor(f);
                         if(use_active_cells && neighbor->has_children())
                           {
-                            for(unsigned int c = 0;
+                            for(unsigned int c= 0;
                                 c < dcell->face(f)->n_children();
                                 ++c)
                               {
@@ -882,7 +879,7 @@ namespace internal
                               }
                             else
                               {
-                                face_visited[dcell->face(f)->index()] = 1;
+                                face_visited[dcell->face(f)->index()]= 1;
                                 if(dcell->has_periodic_neighbor(f))
                                   face_visited
                                     [neighbor
@@ -911,10 +908,10 @@ namespace internal
             = task_info.boundary_partition_data[partition] + boundary_counter;
         }
       task_info.ghost_face_partition_data.resize(2);
-      task_info.ghost_face_partition_data[0] = 0;
-      task_info.ghost_face_partition_data[1] = inner_ghost_faces.size();
+      task_info.ghost_face_partition_data[0]= 0;
+      task_info.ghost_face_partition_data[1]= inner_ghost_faces.size();
       task_info.refinement_edge_face_partition_data.resize(2);
-      task_info.refinement_edge_face_partition_data[0] = 0;
+      task_info.refinement_edge_face_partition_data[0]= 0;
       task_info.refinement_edge_face_partition_data[1]
         = refinement_edge_faces.size();
     }
@@ -929,15 +926,15 @@ namespace internal
       const unsigned int number_cell_exterior)
     {
       FaceToCellTopology<1> info;
-      info.cells_interior[0] = number_cell_interior;
-      info.cells_exterior[0] = number_cell_exterior;
-      info.interior_face_no  = face_no;
+      info.cells_interior[0]= number_cell_interior;
+      info.cells_exterior[0]= number_cell_exterior;
+      info.interior_face_no = face_no;
       if(cell->has_periodic_neighbor(face_no))
-        info.exterior_face_no = cell->periodic_neighbor_face_no(face_no);
+        info.exterior_face_no= cell->periodic_neighbor_face_no(face_no);
       else
-        info.exterior_face_no = cell->neighbor_face_no(face_no);
+        info.exterior_face_no= cell->neighbor_face_no(face_no);
 
-      info.subface_index = GeometryInfo<dim>::max_children_per_cell;
+      info.subface_index= GeometryInfo<dim>::max_children_per_cell;
       Assert(neighbor->level() <= cell->level(), ExcInternalError());
       if(cell->level() > neighbor->level())
         {
@@ -950,7 +947,7 @@ namespace internal
               = cell->neighbor_of_coarser_neighbor(face_no).second;
         }
 
-      info.face_orientation = 0;
+      info.face_orientation= 0;
       const unsigned int left_face_orientation
         = !cell->face_orientation(face_no) + 2 * cell->face_flip(face_no)
           + 4 * cell->face_rotation(face_no);
@@ -960,13 +957,13 @@ namespace internal
           + 4 * neighbor->face_rotation(info.exterior_face_no);
       if(left_face_orientation != 0)
         {
-          info.face_orientation = 8 + left_face_orientation;
+          info.face_orientation= 8 + left_face_orientation;
           Assert(
             right_face_orientation == 0,
             ExcMessage("Face seems to be wrongly oriented from both sides"));
         }
       else
-        info.face_orientation = right_face_orientation;
+        info.face_orientation= right_face_orientation;
       return info;
     }
 
@@ -1004,12 +1001,12 @@ namespace internal
       operator()(const FaceToCellTopology<length>& face1,
                  const FaceToCellTopology<length>& face2) const
       {
-        for(unsigned int i = 0; i < length; ++i)
+        for(unsigned int i= 0; i < length; ++i)
           if(face1.cells_interior[i] < face2.cells_interior[i])
             return true;
           else if(face1.cells_interior[i] > face2.cells_interior[i])
             return false;
-        for(unsigned int i = 0; i < length; ++i)
+        for(unsigned int i= 0; i < length; ++i)
           if(face1.cells_exterior[i] < face2.cells_exterior[i])
             return true;
           else if(face1.cells_exterior[i] > face2.cells_exterior[i])
@@ -1044,28 +1041,27 @@ namespace internal
       FaceToCellTopology<vectorization_width> macro_face;
       std::vector<std::vector<unsigned int>>  faces_type;
 
-      unsigned int face_start = face_partition_data[0],
-                   face_end   = face_partition_data[0];
+      unsigned int face_start= face_partition_data[0],
+                   face_end  = face_partition_data[0];
 
-      face_partition_data[0] = faces_out.size();
-      for(unsigned int partition = 0;
-          partition < face_partition_data.size() - 1;
+      face_partition_data[0]= faces_out.size();
+      for(unsigned int partition= 0; partition < face_partition_data.size() - 1;
           ++partition)
         {
           std::vector<std::vector<unsigned int>> new_faces_type;
 
           // start with the end point for the last partition
-          face_start = face_end;
-          face_end   = face_partition_data[partition + 1];
+          face_start= face_end;
+          face_end  = face_partition_data[partition + 1];
 
           // set the partitioner to the new vectorized lengths
-          face_partition_data[partition + 1] = face_partition_data[partition];
+          face_partition_data[partition + 1]= face_partition_data[partition];
 
           // loop over the faces in the current partition and reorder according to
           // the face type
-          for(unsigned int face = face_start; face < face_end; ++face)
+          for(unsigned int face= face_start; face < face_end; ++face)
             {
-              for(unsigned int type = 0; type < faces_type.size(); ++type)
+              for(unsigned int type= 0; type < faces_type.size(); ++type)
                 {
                   // Compare current face with first face of type type
                   if(compare_faces_for_vectorization(
@@ -1084,7 +1080,7 @@ namespace internal
           std::set<FaceToCellTopology<vectorization_width>,
                    FaceComparator<vectorization_width>>
             new_faces;
-          for(unsigned int type = 0; type < faces_type.size(); ++type)
+          for(unsigned int type= 0; type < faces_type.size(); ++type)
             {
               macro_face.interior_face_no
                 = faces_in[faces_type[type][0]].interior_face_no;
@@ -1094,32 +1090,32 @@ namespace internal
                 = faces_in[faces_type[type][0]].subface_index;
               macro_face.face_orientation
                 = faces_in[faces_type[type][0]].face_orientation;
-              unsigned int               no_faces = faces_type[type].size();
+              unsigned int               no_faces= faces_type[type].size();
               std::vector<unsigned char> touched(no_faces, 0);
 
               // do two passes through the data. The first is to identify similar
               // faces within the same index range as the cells which will allow
               // for vectorized read operations, the second picks up all the rest
-              unsigned int n_vectorized = 0;
-              for(unsigned int f = 0; f < no_faces; ++f)
+              unsigned int n_vectorized= 0;
+              for(unsigned int f= 0; f < no_faces; ++f)
                 if(faces_in[faces_type[type][f]].cells_interior[0]
                      % vectorization_width
                    == 0)
                   {
-                    bool is_contiguous = true;
+                    bool is_contiguous= true;
                     if(f + vectorization_width > no_faces)
-                      is_contiguous = false;
+                      is_contiguous= false;
                     else
-                      for(unsigned int v = 1; v < vectorization_width; ++v)
+                      for(unsigned int v= 1; v < vectorization_width; ++v)
                         if(faces_in[faces_type[type][f + v]].cells_interior[0]
                            != faces_in[faces_type[type][f]].cells_interior[0]
                                 + v)
-                          is_contiguous = false;
+                          is_contiguous= false;
                     if(is_contiguous)
                       {
                         AssertIndexRange(
                           f, faces_type[type].size() - vectorization_width + 1);
-                        for(unsigned int v = 0; v < vectorization_width; ++v)
+                        for(unsigned int v= 0; v < vectorization_width; ++v)
                           {
                             macro_face.cells_interior[v]
                               = faces_in[faces_type[type][f + v]]
@@ -1127,20 +1123,20 @@ namespace internal
                             macro_face.cells_exterior[v]
                               = faces_in[faces_type[type][f + v]]
                                   .cells_exterior[0];
-                            touched[f + v] = 1;
+                            touched[f + v]= 1;
                           }
                         new_faces.insert(macro_face);
-                        f += vectorization_width - 1;
-                        n_vectorized += vectorization_width;
+                        f+= vectorization_width - 1;
+                        n_vectorized+= vectorization_width;
                       }
                   }
 
               std::vector<unsigned int> untouched;
               untouched.reserve(no_faces - n_vectorized);
-              for(unsigned int f = 0; f < no_faces; ++f)
+              for(unsigned int f= 0; f < no_faces; ++f)
                 if(touched[f] == 0)
                   untouched.push_back(f);
-              unsigned int v = 0;
+              unsigned int v= 0;
               for(auto f : untouched)
                 {
                   macro_face.cells_interior[v]
@@ -1151,7 +1147,7 @@ namespace internal
                   if(v == vectorization_width)
                     {
                       new_faces.insert(macro_face);
-                      v = 0;
+                      v= 0;
                     }
                 }
               if(v > 0 && v < vectorization_width)
@@ -1174,7 +1170,7 @@ namespace internal
                     {
                       // postpone to the next partition
                       std::vector<unsigned int> untreated(v);
-                      for(unsigned int f = 0; f < v; ++f)
+                      for(unsigned int f= 0; f < v; ++f)
                         untreated[f]
                           = faces_type[type][*(untouched.end() - 1 - f)];
                       new_faces_type.push_back(untreated);
@@ -1183,37 +1179,37 @@ namespace internal
             }
 
           // insert sorted list to vector of faces
-          for(auto it = new_faces.begin(); it != new_faces.end(); ++it)
+          for(auto it= new_faces.begin(); it != new_faces.end(); ++it)
             faces_out.push_back(*it);
-          face_partition_data[partition + 1] += new_faces.size();
+          face_partition_data[partition + 1]+= new_faces.size();
 
           // set the faces that were left over to faces_type for the next round
-          faces_type = std::move(new_faces_type);
+          faces_type= std::move(new_faces_type);
         }
 
 #  ifdef DEBUG
       // final safety checks
-      for(unsigned int i = 0; i < faces_type.size(); ++i)
+      for(unsigned int i= 0; i < faces_type.size(); ++i)
         AssertDimension(faces_type[i].size(), 0U);
 
       AssertDimension(faces_out.size(), face_partition_data.back());
-      unsigned int nfaces = 0;
-      for(unsigned int i = face_partition_data[0];
+      unsigned int nfaces= 0;
+      for(unsigned int i= face_partition_data[0];
           i < face_partition_data.back();
           ++i)
-        for(unsigned int v = 0; v < vectorization_width; ++v)
-          nfaces += (faces_out[i].cells_interior[v]
-                     != numbers::invalid_unsigned_int);
+        for(unsigned int v= 0; v < vectorization_width; ++v)
+          nfaces+= (faces_out[i].cells_interior[v]
+                    != numbers::invalid_unsigned_int);
       AssertDimension(nfaces, faces_in.size());
 
       std::vector<std::pair<unsigned int, unsigned int>> in_faces, out_faces;
-      for(unsigned int i = 0; i < faces_in.size(); ++i)
+      for(unsigned int i= 0; i < faces_in.size(); ++i)
         in_faces.emplace_back(faces_in[i].cells_interior[0],
                               faces_in[i].cells_exterior[0]);
-      for(unsigned int i = face_partition_data[0];
+      for(unsigned int i= face_partition_data[0];
           i < face_partition_data.back();
           ++i)
-        for(unsigned int v = 0;
+        for(unsigned int v= 0;
             v < vectorization_width
             && faces_out[i].cells_interior[v] != numbers::invalid_unsigned_int;
             ++v)
@@ -1222,7 +1218,7 @@ namespace internal
       std::sort(in_faces.begin(), in_faces.end());
       std::sort(out_faces.begin(), out_faces.end());
       AssertDimension(in_faces.size(), out_faces.size());
-      for(unsigned int i = 0; i < in_faces.size(); ++i)
+      for(unsigned int i= 0; i < in_faces.size(); ++i)
         {
           AssertDimension(in_faces[i].first, out_faces[i].first);
           AssertDimension(in_faces[i].second, out_faces[i].second);

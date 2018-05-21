@@ -22,7 +22,7 @@ template <typename number>
 void
 checkApply_Constraints(FullMatrix<number>& A,
                        Vector<number>&     V,
-                       bool                matrix_is_symmetric = false)
+                       bool                matrix_is_symmetric= false)
 {
   deallog << "apply_constraints" << std::endl;
 
@@ -32,7 +32,7 @@ checkApply_Constraints(FullMatrix<number>& A,
 
   F.apply_constraints(V, matrix_is_symmetric);
 
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for(unsigned int i= 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 }
@@ -45,7 +45,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const double Adata[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  const double Adata[]= {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
   FullMatrix<double> A(3, 3);
 
@@ -54,9 +54,9 @@ main()
   Vector<double> V1(3);
   Vector<double> V2(3);
 
-  V1(0) = V2(0) = 1;
-  V1(1) = V2(1) = 2;
-  V1(2) = V2(2) = 3;
+  V1(0)= V2(0)= 1;
+  V1(1)= V2(1)= 2;
+  V1(2)= V2(2)= 3;
 
   checkApply_Constraints<double>(A, V1, false);
   checkApply_Constraints<double>(A, V2, true);

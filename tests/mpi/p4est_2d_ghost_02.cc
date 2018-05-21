@@ -29,7 +29,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -40,7 +40,7 @@ test()
 
       GridGenerator::hyper_cube(tr);
 
-      for(int i = 0; i < 5; ++i)
+      for(int i= 0; i < 5; ++i)
         {
           if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
             deallog << "refine loop:" << i << std::endl;
@@ -52,7 +52,7 @@ test()
               std::vector<types::subdomain_id> cell_subd(tr.n_active_cells());
 
               GridTools::get_subdomain_association(tr, cell_subd);
-              for(unsigned int i = 0; i < tr.n_active_cells(); ++i)
+              for(unsigned int i= 0; i < tr.n_active_cells(); ++i)
                 deallog << cell_subd[i] << " ";
               deallog << std::endl;
             }
@@ -62,7 +62,7 @@ test()
           //correct level
           typename Triangulation<dim, dim>::active_cell_iterator cell;
 
-          for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+          for(cell= tr.begin_active(); cell != tr.end(); ++cell)
             {
               if(cell->subdomain_id() != (unsigned int) myid)
                 {
@@ -71,8 +71,7 @@ test()
                   continue;
                 }
 
-              for(unsigned int n = 0; n < GeometryInfo<dim>::faces_per_cell;
-                  ++n)
+              for(unsigned int n= 0; n < GeometryInfo<dim>::faces_per_cell; ++n)
                 {
                   if(cell->at_boundary(n))
                     continue;
@@ -87,7 +86,7 @@ test()
                 }
             }
 
-          const unsigned int checksum = tr.get_checksum();
+          const unsigned int checksum= tr.get_checksum();
           if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
             deallog << "Checksum: " << checksum << std::endl;
 
@@ -108,7 +107,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

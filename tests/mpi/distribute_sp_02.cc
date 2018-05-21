@@ -28,16 +28,16 @@ test_mpi()
 {
   Assert(Utilities::MPI::job_supports_mpi(), ExcInternalError());
 
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
-  unsigned int          num_local = 10;
-  unsigned int          n         = numprocs * num_local;
+  unsigned int          num_local= 10;
+  unsigned int          n        = numprocs * num_local;
   std::vector<IndexSet> locally_owned_dofs_per_cpu(numprocs, IndexSet(n));
-  for(unsigned int i = 0; i < numprocs; ++i)
+  for(unsigned int i= 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu[i].add_range((i) *num_local,
                                             (i + 1) * num_local);
 
@@ -53,7 +53,7 @@ test_mpi()
 
   BlockDynamicSparsityPattern csp(partitioning);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     csp.add(i, myid);
 
   if(myid == 0)
@@ -71,10 +71,10 @@ test_mpi()
       }*/
 
   // checking...
-  for(unsigned int r = 0; r < num_local; ++r)
+  for(unsigned int r= 0; r < num_local; ++r)
     {
-      unsigned int indx = r + myid * num_local;
-      unsigned int len  = csp.row_length(indx);
+      unsigned int indx= r + myid * num_local;
+      unsigned int len = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 
@@ -101,11 +101,11 @@ test_mpi()
   partitioning.push_back(bla);
 
   csp.reinit(partitioning);
-  for(unsigned int i = 0; i < n; ++i)
+  for(unsigned int i= 0; i < n; ++i)
     csp.add(i, myid);
 
   std::vector<IndexSet> locally_owned_dofs_per_cpu2(numprocs, IndexSet(n));
-  for(unsigned int i = 0; i < numprocs; ++i)
+  for(unsigned int i= 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu2[i].add_range((i) *num_local,
                                              (i + 1) * num_local);
 
@@ -120,10 +120,10 @@ test_mpi()
     }
 
   // checking...
-  for(unsigned int r = 0; r < num_local; ++r)
+  for(unsigned int r= 0; r < num_local; ++r)
     {
-      unsigned int indx = r + myid * num_local;
-      unsigned int len  = csp.row_length(indx);
+      unsigned int indx= r + myid * num_local;
+      unsigned int len = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 

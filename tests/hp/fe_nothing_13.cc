@@ -51,7 +51,7 @@ test()
 {
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> sub(dim, 1);
-  sub[dim - 1] = 2;
+  sub[dim - 1]= 2;
 
   Point<2> p1;
   Point<2> p2(1.0, 2.0);
@@ -68,7 +68,7 @@ test()
   dof_handler.begin_active()->set_active_fe_index(1);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(0),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     if(cell->index() % 2 == 0)
       cell->set_active_fe_index(1);
@@ -88,7 +88,7 @@ test()
   {
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; cell++)
       {
@@ -97,7 +97,7 @@ test()
           cell->get_fe().dofs_per_cell);
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < cell->get_fe().dofs_per_cell; ++i)
           deallog << local_dof_indices[i]
                   << (constraints.is_constrained(local_dof_indices[i]) ? "*" :
                                                                          "")

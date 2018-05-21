@@ -30,18 +30,18 @@ namespace dealii
   template <typename Number2>
   Number Vector<Number>::operator*(const Vector<Number2>& v) const
   {
-    Number sum = 0;
-    for(unsigned int i = 0; i < size(); ++i)
-      sum += values[i] * v.values[i];
+    Number sum= 0;
+    for(unsigned int i= 0; i < size(); ++i)
+      sum+= values[i] * v.values[i];
     return sum;
   }
   template <typename Number>
   typename Vector<Number>::real_type
   Vector<Number>::l2_norm() const
   {
-    real_type sum = 0;
-    for(unsigned int i = 0; i < size(); ++i)
-      sum += values[i] * values[i];
+    real_type sum= 0;
+    for(unsigned int i= 0; i < size(); ++i)
+      sum+= values[i] * values[i];
     return std::sqrt(sum);
   }
 } // namespace dealii
@@ -50,27 +50,27 @@ template <typename number>
 void
 test()
 {
-  const unsigned int n = 200;
+  const unsigned int n= 200;
   Vector<number>     rhs(n), sol(n);
-  rhs = 1.;
+  rhs= 1.;
 
   // only add diagonal entries
   SparsityPattern sp(n, n);
   sp.compress();
   SparseMatrix<number> matrix(sp);
 
-  for(unsigned int i = 0; i < n; ++i)
-    matrix.diag_element(i) = (i + 1);
+  for(unsigned int i= 0; i < n; ++i)
+    matrix.diag_element(i)= (i + 1);
 
   // compared to the 02 test, need to use a looser tolerance because linear
   // summation does not allow for 1e2*eps (at least with the current detection
   // of re-orthogonalization)
   SolverControl control(1000, 1e3 * std::numeric_limits<number>::epsilon());
   typename SolverGMRES<Vector<number>>::AdditionalData data;
-  data.max_n_tmp_vectors = 202;
+  data.max_n_tmp_vectors= 202;
 
   SolverGMRES<Vector<number>> solver(control, data);
-  auto print_re_orthogonalization = [](int accumulated_iterations) {
+  auto print_re_orthogonalization= [](int accumulated_iterations) {
     deallog.get_file_stream() << "Re-orthogonalization enabled at step "
                               << accumulated_iterations << std::endl;
   };

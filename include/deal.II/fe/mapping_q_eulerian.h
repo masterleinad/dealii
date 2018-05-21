@@ -84,7 +84,7 @@ class Vector;
  *
  * @author Joshua White, 2008
  */
-template <int dim, typename VectorType = Vector<double>, int spacedim = dim>
+template <int dim, typename VectorType= Vector<double>, int spacedim= dim>
 class MappingQEulerian : public MappingQ<dim, spacedim>
 {
 public:
@@ -107,7 +107,7 @@ public:
   MappingQEulerian(const unsigned int               degree,
                    const DoFHandler<dim, spacedim>& euler_dof_handler,
                    const VectorType&                euler_vector,
-                   const unsigned int level = numbers::invalid_unsigned_int);
+                   const unsigned int level= numbers::invalid_unsigned_int);
 
   /**
    * Return the mapped vertices of the cell. For the current class, this

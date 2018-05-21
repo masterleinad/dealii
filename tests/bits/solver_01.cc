@@ -3236,28 +3236,28 @@ const Entry entries[]
      {577, 287, 9.67e-05},  {577, 288, 3.87e-04},  {577, 515, -1.03e-02},
      {577, 543, -1.03e-02}, {577, 544, -1.03e-02}, {577, 547, 3.65e-02},
      {577, 576, 3.65e-02}};
-const unsigned int n_entries = sizeof(entries) / sizeof(entries[0]);
+const unsigned int n_entries= sizeof(entries) / sizeof(entries[0]);
 
 void
 test()
 {
-  const unsigned int N = 578;
+  const unsigned int N= 578;
 
   SparsityPattern sp(N, N, 30);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for(unsigned int i= 0; i < n_entries; ++i)
     sp.add(entries[i].row, entries[i].col);
   sp.compress();
 
   SparseMatrix<double> sm(sp);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for(unsigned int i= 0; i < n_entries; ++i)
     sm.set(entries[i].row, entries[i].col, entries[i].val);
 
   // solve for a unit right hand side vector
   // with BiCGStab
   Vector<double> rhs(N);
-  rhs(0) = 1;
+  rhs(0)= 1;
   {
-    const double tolerance = 1e-8;
+    const double tolerance= 1e-8;
 
     typedef SolverBicgstab<> Solver;
     SolverControl            solver_control(N, tolerance);

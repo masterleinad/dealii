@@ -28,12 +28,12 @@ using namespace OpenCASCADE;
 int
 main()
 {
-  TopoDS_Shape sh = read_IGES(SOURCE_DIR "/iges_files/wigley.iges");
+  TopoDS_Shape sh= read_IGES(SOURCE_DIR "/iges_files/wigley.iges");
   write_IGES(sh, "tmp.iges");
   std::ifstream in("tmp.iges");
   std::ofstream out("output");
   std::string   line;
-  unsigned int  counter = 5;
+  unsigned int  counter= 5;
   while(counter--)
     std::getline(in, line);
   while(std::getline(in, line))

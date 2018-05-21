@@ -43,12 +43,12 @@ test_applies(std::string                              description,
              const PackagedOperation<Vector<double>>& expr)
 {
   // test apply
-  Vector<double> tmp = expr;
+  Vector<double> tmp= expr;
   deallog << description << ": " << tmp << std::endl;
 
   // test apply_add
   for(auto& i : tmp)
-    i = 100.;
+    i= 100.;
   expr.apply_add(tmp);
   deallog << "100. * 1_n + " << description << ": " << tmp << std::endl;
 }
@@ -59,7 +59,7 @@ main()
   initlog();
   deallog << std::setprecision(10);
 
-  static const int dim = 2;
+  static const int dim= 2;
 
   // Create mass marix M, and an iterative inverse MInv:
 
@@ -84,33 +84,33 @@ main()
   QGauss<dim> quadrature(4);
   MatrixCreator::create_mass_matrix(mapping_q1, dof_handler, quadrature, m);
 
-  auto M = linear_operator(m);
+  auto M= linear_operator(m);
 
   SolverControl solver_control(1000, 1e-12);
   SolverCG<>    solver(solver_control);
 
-  auto MInv = inverse_operator(M, solver, PreconditionIdentity());
+  auto MInv= inverse_operator(M, solver, PreconditionIdentity());
 
   // Tests:
 
   Vector<double> u;
   M.reinit_domain_vector(u, true);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for(unsigned int i= 0; i < u.size(); ++i)
     {
-      u[i] = (double) (i + 1);
+      u[i]= (double) (i + 1);
     }
 
   deallog << "u: " << u << std::endl;
 
   deallog.depth_file(0);
-  Vector<double> b = MInv * u;
+  Vector<double> b= MInv * u;
   deallog.depth_file(3);
   deallog << "b: " << b << std::endl;
 
   test_applies("M * b", M * b);
   test_applies("b * M", b * M);
 
-  auto expr = b;
+  auto expr= b;
   test_applies("M * b", M * expr);
   test_applies("b * M", expr * M);
 }

@@ -99,8 +99,8 @@ check_fe(FiniteElement<dim>& fe)
     {
       DataOut<dim>  data_out;
       Vector<float> subdomain(tr.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
-        subdomain(i) = tr.locally_owned_subdomain();
+      for(unsigned int i= 0; i < subdomain.size(); ++i)
+        subdomain(i)= tr.locally_owned_subdomain();
       data_out.attach_triangulation(tr);
       data_out.add_data_vector(subdomain, "subdomain");
       data_out.build_patches(0);
@@ -132,30 +132,29 @@ check_fe(FiniteElement<dim>& fe)
   //transfer.print_indices(deallog.get_file_stream());
 
   MGLevelObject<vector_t> u(0, tr.n_global_levels() - 1);
-  for(unsigned int level = u.min_level(); level <= u.max_level(); ++level)
+  for(unsigned int level= u.min_level(); level <= u.max_level(); ++level)
     {
       u[level].reinit(dofh.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
-      for(unsigned int i = 0;
-          i < dofh.locally_owned_mg_dofs(level).n_elements();
+      for(unsigned int i= 0; i < dofh.locally_owned_mg_dofs(level).n_elements();
           ++i)
         {
           unsigned int index
             = dofh.locally_owned_mg_dofs(level).nth_index_in_set(i);
-          u[level][index] = 1.0; //1000+level*100+index;
+          u[level][index]= 1.0; //1000+level*100+index;
         }
       u[level].compress(VectorOperation::insert);
     }
 
   vector_t v;
   v.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  v = 0.;
+  v= 0.;
   transfer.copy_from_mg(dofh, v, u);
   hanging_node_constraints.distribute(v);
 
   {
-    for(unsigned int i = 0; i < dofh.locally_owned_dofs().n_elements(); ++i)
+    for(unsigned int i= 0; i < dofh.locally_owned_dofs().n_elements(); ++i)
       {
-        unsigned int index = dofh.locally_owned_dofs().nth_index_in_set(i);
+        unsigned int index= dofh.locally_owned_dofs().nth_index_in_set(i);
         if(std::abs(v[index] - 1.0) > 1e-5)
           deallog << "ERROR: index=" << index << " is equal to " << v[index]
                   << std::endl;

@@ -60,7 +60,7 @@ namespace GridTools
    *
    * @author Luca Heltai, 2017.
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class Cache : public Subscriptor
   {
   public:
@@ -93,7 +93,7 @@ namespace GridTools
      * @param flags What to mark for update
      */
     void
-    mark_for_update(const CacheUpdateFlags& flags = update_all);
+    mark_for_update(const CacheUpdateFlags& flags= update_all);
 
     /**
      * Return the cached vertex_to_cell_map as computed by GridTools::vertex_to_cell_map().

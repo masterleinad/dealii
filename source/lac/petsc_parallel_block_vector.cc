@@ -33,7 +33,7 @@ namespace PETScWrappers
       if(this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for(unsigned int i= 0; i < this->n_blocks(); ++i)
         components[i].reinit(MPI_COMM_SELF, 0, 0);
 
       collect_sizes();

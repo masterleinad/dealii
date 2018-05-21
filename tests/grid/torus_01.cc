@@ -30,8 +30,8 @@ template <>
 void
 test<3, 3>()
 {
-  const int                    dim      = 3;
-  const int                    spacedim = 3;
+  const int                    dim     = 3;
+  const int                    spacedim= 3;
   Triangulation<dim, spacedim> triangulation;
 
   GridGenerator::torus(triangulation, 1.0, 0.4);
@@ -41,7 +41,7 @@ test<3, 3>()
   triangulation.execute_coarsening_and_refinement();
 
   const TorusManifold<3> desc_torus(1.0, 0.4);
-  unsigned int           c = 0;
+  unsigned int           c= 0;
   for(Triangulation<dim, spacedim>::active_vertex_iterator v
       = triangulation.begin_active_vertex();
       v != triangulation.end_vertex();
@@ -49,10 +49,10 @@ test<3, 3>()
     {
       if(c % 3 != 0)
         continue;
-      Point<3> p = v->vertex(0);
+      Point<3> p= v->vertex(0);
       Point<3> x(numbers::PI / 2.5, numbers::PI / 3.5, 1.0);
-      x              = desc_torus.push_forward(x);
-      Tensor<1, 3> t = desc_torus.get_tangent_vector(p, x);
+      x             = desc_torus.push_forward(x);
+      Tensor<1, 3> t= desc_torus.get_tangent_vector(p, x);
 
       deallog.get_file_stream()
         << "set arrow from " << p[0] << ", " << p[1] << ", " << p[2] << " rto "

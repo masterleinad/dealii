@@ -63,7 +63,7 @@ test()
               << std::endl;
       fe_values.reinit(cell);
 
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for(unsigned int q= 0; q < quadrature.size(); ++q)
         deallog << "  cell_normal[" << q << "] = " << fe_values.normal_vector(q)
                 << std::endl;
     }

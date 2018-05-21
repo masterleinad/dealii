@@ -69,7 +69,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -99,8 +99,8 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(return_value.size(), this->n_components));
 
   // Just fill the vector with the appropriate components
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -120,7 +120,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -131,10 +131,10 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
-         phi_p = atan2(p(0) - center(0), p(1) - center(1));
+  center(0)   = 0.5;
+  center(1)   = 0.5;
+  double rad  = p.distance(center),
+         phi_p= atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
     return rad * (sin(phi + phi_p) - sin(phi_p));
@@ -149,8 +149,8 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -170,7 +170,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -180,7 +180,7 @@ template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double x = p(0), y = p(1);
+  double x= p(0), y= p(1);
 
   if(component == 0)
     return scale * x;
@@ -195,8 +195,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 ///-----------------------------------------------------------------------
@@ -217,7 +217,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -227,7 +227,7 @@ template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double y = p(1);
+  double y= p(1);
 
   if(component == 0)
     return scale * y;
@@ -242,8 +242,8 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 // Wrapper class for polynomials.
@@ -258,12 +258,12 @@ public:
   TestPoly(unsigned int deg) : Function<dim>(2)
   {
     std::vector<double> coeff(deg, 0.0);
-    for(unsigned int p = 0; p < 4; ++p)
+    for(unsigned int p= 0; p < 4; ++p)
       {
-        for(unsigned int i = 0; i < deg; ++i)
+        for(unsigned int i= 0; i < deg; ++i)
           {
-            double c = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
-            coeff[i] = c;
+            double c= ((double) Testing::rand()) / ((double) RAND_MAX + 1);
+            coeff[i]= c;
           }
         polys.push_back(Polynomials::Polynomial<double>(coeff));
       }
@@ -273,7 +273,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 
   void
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
@@ -283,7 +283,7 @@ template <int dim>
 double
 TestPoly<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
-  double x = p(0), y = p(1);
+  double x= p(0), y= p(1);
 
   // Ugly hack, but should do the job ...
   if(component == 0)
@@ -299,8 +299,8 @@ TestPoly<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
-    return_value(iCount) = value(p, iCount);
+  for(unsigned int iCount= 0; iCount < this->n_components; iCount++)
+    return_value(iCount)= value(p, iCount);
 }
 
 /*
@@ -316,7 +316,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
   // If the error is in the range of machine precision, this polynomial
   // degree can obviously be represented by projected field.
 
-  for(unsigned int deg = 1; deg < 4; ++deg)
+  for(unsigned int deg= 1; deg < 4; ++deg)
     {
       TestPoly<2> pol(deg);
 
@@ -338,14 +338,14 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
                                         | update_gradients | update_JxW_values
                                         | update_contravariant_transformation));
 
-      const unsigned int n_q_points   = quad.size();
-      const unsigned int n_components = dof_handler->get_fe().n_components();
+      const unsigned int n_q_points  = quad.size();
+      const unsigned int n_components= dof_handler->get_fe().n_components();
 
       // Cell iterators
-      DoFHandler<2>::active_cell_iterator cell = dof_handler->begin_active(),
-                                          endc = dof_handler->end();
+      DoFHandler<2>::active_cell_iterator cell= dof_handler->begin_active(),
+                                          endc= dof_handler->end();
 
-      double err_u = 0, err_v = 0;
+      double err_u= 0, err_v= 0;
 
       for(; cell != endc; ++cell)
         {
@@ -356,17 +356,17 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
                                                  Vector<double>(n_components));
           fe_values.get_function_values(solution, this_value);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
             {
-              double   u = this_value[q_point](0), v = this_value[q_point](1);
-              Point<2> p = fe_values.quadrature_point(q_point);
+              double   u= this_value[q_point](0), v= this_value[q_point](1);
+              Point<2> p= fe_values.quadrature_point(q_point);
 
-              double u_ex = pol.value(p, 0), v_ex = pol.value(p, 1);
+              double u_ex= pol.value(p, 0), v_ex= pol.value(p, 1);
 
-              double JxW = fe_values.JxW(q_point);
+              double JxW= fe_values.JxW(q_point);
 
-              err_u += (u - u_ex) * (u - u_ex) * JxW;
-              err_v += (v - v_ex) * (v - v_ex) * JxW;
+              err_u+= (u - u_ex) * (u - u_ex) * JxW;
+              err_v+= (v - v_ex) * (v - v_ex) * JxW;
             }
         }
 
@@ -375,7 +375,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
     }
 
   // Test the core functionality
-  DataOut<2>* data_out = new DataOut<2>;
+  DataOut<2>* data_out= new DataOut<2>;
   data_out->attach_dof_handler(*dof_handler);
   data_out->add_data_vector(solution, "solution");
   data_out->build_patches(mapping, 4);
@@ -406,7 +406,7 @@ main()
 
   // Create a DoFHandler for the RT space
   FE_RaviartThomas<2> fe(1);
-  dof_handler = new DoFHandler<2>(tria_test);
+  dof_handler= new DoFHandler<2>(tria_test);
   dof_handler->distribute_dofs(fe);
 
   QGauss<2> quad_temp(6);
@@ -418,7 +418,7 @@ main()
   // Create an deformation object for
   // the Eulerian mapping
   FESystem<2> fe_def(FE_Q<2>(1), 2);
-  dof_handler_def = new DoFHandler<2>(tria_test);
+  dof_handler_def= new DoFHandler<2>(tria_test);
   dof_handler_def->distribute_dofs(fe_def);
 
   // Alloc some DoFs
@@ -436,7 +436,7 @@ main()
     MappingQ1Eulerian<2> mapping_euler(*dof_handler_def, deformation);
 
     // Try rotating the elements
-    for(double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
+    for(double rotat= 0; rotat < 2 * numbers::PI; rotat+= 0.25 * numbers::PI)
       {
         // Rotate element
         VectorTools::project(*dof_handler_def,
@@ -449,7 +449,7 @@ main()
       }
 
     // Try resizing the elements
-    for(double scale = -0.75; scale < 4.0; scale += 0.25)
+    for(double scale= -0.75; scale < 4.0; scale+= 0.25)
       {
         VectorTools::project(*dof_handler_def,
                              hn_constraints_def,
@@ -461,7 +461,7 @@ main()
       }
 
     // Try paralellogramming the elements
-    for(double scale = -1.0; scale < 1.0; scale += 0.25)
+    for(double scale= -1.0; scale < 1.0; scale+= 0.25)
       {
         VectorTools::project(*dof_handler_def,
                              hn_constraints_def,
@@ -473,10 +473,10 @@ main()
       }
 
     // Try arbitrary deformation ...
-    for(unsigned int i = 0; i < deformation.size(); ++i)
+    for(unsigned int i= 0; i < deformation.size(); ++i)
       {
-        double c       = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
-        deformation(i) = 0.35 * (c - 0.5);
+        double c      = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
+        deformation(i)= 0.35 * (c - 0.5);
       }
 
     deallog << "Arbitrary\n" << std::endl;

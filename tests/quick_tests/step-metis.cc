@@ -28,7 +28,7 @@
 
 using namespace dealii;
 
-static const unsigned int dim = 2;
+static const unsigned int dim= 2;
 
 int
 main(int argc, char** argv)
@@ -48,7 +48,7 @@ main(int argc, char** argv)
         GridGenerator::hyper_cube(triangulation, -1, 1);
         triangulation.refine_global(2);
         dof_handler.distribute_dofs(fe);
-        IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+        IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
         deallog << locally_owned_dofs.n_elements() << std::endl;
         dof_handler.clear();
         deallog << "OK" << std::endl;

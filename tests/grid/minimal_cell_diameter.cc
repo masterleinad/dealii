@@ -31,7 +31,7 @@ test1()
       Triangulation<dim> tria;
       GridGenerator::hyper_cube(tria);
 
-      for(unsigned int i = 0; i < 2; ++i)
+      for(unsigned int i= 0; i < 2; ++i)
         {
           tria.refine_global(2);
           deallog << dim << "d, "
@@ -47,7 +47,7 @@ test1()
       GridGenerator::hyper_ball(tria, Point<dim>(), 1);
       tria.reset_manifold(0);
 
-      for(unsigned int i = 0; i < 2; ++i)
+      for(unsigned int i= 0; i < 2; ++i)
         {
           tria.refine_global(2);
           deallog << dim << "d, "

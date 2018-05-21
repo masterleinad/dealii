@@ -42,8 +42,8 @@ public:
   double
   value(const Point<dim>& p, const unsigned int comp) const
   {
-    const double x = p[0];
-    const double y = p[1];
+    const double x= p[0];
+    const double y= p[1];
     // some function we know we can project with FE_Q<dim>(2)
     if(comp == 0)
       return 0.5 * x * x + 2.1 * y * y + 2;
@@ -76,20 +76,20 @@ struct MyData : public MyDataBase
   pack_values(std::vector<double>& scalars) const
   {
     Assert(scalars.size() == 2, ExcInternalError());
-    scalars[0] = value1;
-    scalars[1] = value2;
+    scalars[0]= value1;
+    scalars[1]= value2;
   }
 
   virtual void
   unpack_values(const std::vector<double>& scalars)
   {
     Assert(scalars.size() == 2, ExcInternalError());
-    value1 = scalars[0];
-    value2 = scalars[1];
+    value1= scalars[0];
+    value2= scalars[1];
   }
 };
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 DeclException3(ExcWrongValue,
                double,
                double,
@@ -112,7 +112,7 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
   FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+  for(cell= tr.begin_active(); cell != tr.end(); ++cell)
     if(cell->is_locally_owned())
       {
         typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
@@ -122,12 +122,12 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
           = fe_values.get_quadrature_points();
         const std::vector<std::shared_ptr<const MyData>> qpd
           = manager.template get_data<MyData>(cell);
-        for(unsigned int q = 0; q < q_points.size(); q++)
+        for(unsigned int q= 0; q < q_points.size(); q++)
           {
-            const double f_1 = func.value(q_points[q], 0);
-            const double f_2 = func.value(q_points[q], 1);
-            const double d_1 = qpd[q]->value1;
-            const double d_2 = qpd[q]->value2;
+            const double f_1= func.value(q_points[q], 0);
+            const double f_2= func.value(q_points[q], 1);
+            const double d_1= qpd[q]->value1;
+            const double d_2= qpd[q]->value2;
             AssertThrow(std::fabs(f_1 - d_1) < eps,
                         ExcWrongValue(f_1, d_1, f_1 - d_1));
             AssertThrow(std::fabs(f_2 - d_2) < eps,
@@ -141,8 +141,8 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   const MyFunction<dim> my_func;
 
@@ -163,7 +163,7 @@ test()
     FE_Q<dim>       dummy_fe(1);
     FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
-    for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+    for(cell= tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())
         {
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
@@ -174,10 +174,10 @@ test()
           data_storage.template initialize<MyData>(cell, rhs.size());
           std::vector<std::shared_ptr<MyData>> qpd
             = data_storage.template get_data<MyData>(cell);
-          for(unsigned int q = 0; q < rhs.size(); q++)
+          for(unsigned int q= 0; q < rhs.size(); q++)
             {
-              qpd[q]->value1 = my_func.value(q_points[q], 0);
-              qpd[q]->value2 = my_func.value(q_points[q], 1);
+              qpd[q]->value1= my_func.value(q_points[q], 0);
+              qpd[q]->value2= my_func.value(q_points[q], 1);
             }
         }
     dof_handler.clear();
@@ -186,7 +186,7 @@ test()
   check_qph(tr, data_storage, rhs, my_func);
 
   // mark some for refinement
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+  for(cell= tr.begin_active(); cell != tr.end(); ++cell)
     if(cell->center()[0] < 0.5)
       cell->set_refine_flag();
 
@@ -195,7 +195,7 @@ test()
   tr.execute_coarsening_and_refinement();
 
   // create qhp data
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+  for(cell= tr.begin_active(); cell != tr.end(); ++cell)
     if(cell->is_locally_owned())
       {
         data_storage.template initialize<MyData>(cell, rhs.size());

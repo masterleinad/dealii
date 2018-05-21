@@ -75,14 +75,14 @@ check()
         &get_conflict_indices_cfem<dim>)));
 
   // verify that within each color, there is no conflict
-  for(unsigned int color = 0; color < coloring.size(); ++color)
-    for(unsigned int i = 0; i < coloring[color].size(); ++i)
+  for(unsigned int color= 0; color < coloring.size(); ++color)
+    for(unsigned int i= 0; i < coloring[color].size(); ++i)
       {
         std::vector<types::global_dof_index> conflicts_i
           = get_conflict_indices_cfem<dim>(coloring[color][i]);
         std::sort(conflicts_i.begin(), conflicts_i.end());
 
-        for(unsigned int j = i + 1; j < coloring[color].size(); ++j)
+        for(unsigned int j= i + 1; j < coloring[color].size(); ++j)
           {
             std::vector<types::global_dof_index> conflicts_j
               = get_conflict_indices_cfem<dim>(coloring[color][j]);

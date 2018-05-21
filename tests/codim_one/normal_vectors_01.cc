@@ -57,13 +57,13 @@ test()
     {
       deallog << "Face centered at " << cell->center() << std::endl;
 
-      for(unsigned int f = 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
         {
           deallog << "  Edge centered at " << cell->face(f)->center()
                   << std::endl;
 
           fe_face_values.reinit(cell, f);
-          for(unsigned int q = 0; q < fe_face_values.n_quadrature_points; ++q)
+          for(unsigned int q= 0; q < fe_face_values.n_quadrature_points; ++q)
             deallog << "    normal_vector=" << fe_face_values.normal_vector(q)
                     << std::endl;
         }

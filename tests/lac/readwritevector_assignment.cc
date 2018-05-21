@@ -22,8 +22,8 @@
 void
 test()
 {
-  unsigned int double_size = 2;
-  unsigned int float_size  = 10;
+  unsigned int double_size= 2;
+  unsigned int float_size = 10;
   IndexSet     is(50);
   is.add_range(0, 2);
   is.add_index(46);
@@ -33,24 +33,24 @@ test()
   deallog << "double_size " << double_vector.n_elements() << std::endl;
   deallog << "float_size " << float_vector.n_elements() << std::endl;
 
-  double_vector = 0.;
-  for(unsigned int i = 0; i < double_vector.n_elements(); ++i)
-    double_vector.local_element(i) += i;
-  for(unsigned int i = 0; i < float_vector.n_elements(); ++i)
-    float_vector[i] = i;
+  double_vector= 0.;
+  for(unsigned int i= 0; i < double_vector.n_elements(); ++i)
+    double_vector.local_element(i)+= i;
+  for(unsigned int i= 0; i < float_vector.n_elements(); ++i)
+    float_vector[i]= i;
 
   double_vector.print(deallog.get_file_stream());
   float_vector.print(deallog.get_file_stream());
 
-  float_vector = double_vector;
+  float_vector= double_vector;
   float_vector.print(deallog.get_file_stream());
 
   LinearAlgebra::ReadWriteVector<double> double_vector2(double_vector);
   double_vector2.print(deallog.get_file_stream());
 
-  for(unsigned int i = 0; i < double_vector.n_elements(); ++i)
-    double_vector2.local_element(i) += i;
-  double_vector = double_vector2;
+  for(unsigned int i= 0; i < double_vector.n_elements(); ++i)
+    double_vector2.local_element(i)+= i;
+  double_vector= double_vector2;
   double_vector.print(deallog.get_file_stream());
 }
 

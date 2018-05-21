@@ -37,9 +37,9 @@ main()
 {
   initlog();
 
-  const int dim = 2;
+  const int dim= 2;
 
-  const unsigned int n_subdomains = 2;
+  const unsigned int n_subdomains= 2;
 
   hp::FECollection<dim> fe_collection;
   fe_collection.push_back(FE_Q<dim>(1));

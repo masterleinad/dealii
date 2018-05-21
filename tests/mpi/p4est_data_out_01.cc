@@ -41,7 +41,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
@@ -59,14 +59,14 @@ test()
 
   TrilinosWrappers::MPI::Vector x;
   x.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  x = 2.0;
+  x= 2.0;
 
   data_out.add_data_vector(x, "x");
   data_out.build_patches();
 
   if(myid == 0)
     {
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < dofh.n_locally_owned_dofs_per_processor().size();
           ++i)
         deallog << dofh.n_locally_owned_dofs_per_processor()[i] << std::endl;
@@ -79,7 +79,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

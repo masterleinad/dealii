@@ -24,21 +24,21 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
-  double norm = 0;
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
+  double norm= 0;
+  for(unsigned int k= 0; k < v.size(); k+= 1 + k)
     {
-      PetscScalar el = PetscScalar(k, 2. * k);
-      v(k)           = el;
+      PetscScalar el= PetscScalar(k, 2. * k);
+      v(k)          = el;
 
       // norm += el*PetscConj (el);
-      norm += std::fabs(
+      norm+= std::fabs(
         1. * k * 1. * k /*+ 1.*k*2*ki - 1.*k*2*ki*/ + 2 * k * 2. * k /*i*/);
     }
 
   v.compress(VectorOperation::insert);
 
   // then check the l2-norm
-  PetscReal l2_norm = v.l2_norm();
+  PetscReal l2_norm= v.l2_norm();
   AssertThrow(l2_norm == std::sqrt(norm), ExcInternalError());
 
   deallog << "OK" << std::endl;

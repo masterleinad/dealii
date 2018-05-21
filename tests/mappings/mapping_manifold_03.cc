@@ -67,21 +67,21 @@ test()
   AssertThrow(jac_from_mapping_q.size() == jac_from_mapping_manifold.size(),
               ExcInternalError());
 
-  for(unsigned int q = 0; q < jac_from_mapping_q.size(); ++q)
+  for(unsigned int q= 0; q < jac_from_mapping_q.size(); ++q)
     {
-      double dist = 0;
-      for(unsigned int d = 0; d < spacedim; ++d)
-        dist += (jac_from_mapping_manifold[q][d] - jac_from_mapping_q[q][d])
-                  .norm();
+      double dist= 0;
+      for(unsigned int d= 0; d < spacedim; ++d)
+        dist+= (jac_from_mapping_manifold[q][d] - jac_from_mapping_q[q][d])
+                 .norm();
       if(dist > 1e-10)
         {
           deallog << "Jacobian from mapping manifold at point " << q
                   << std::endl;
-          for(unsigned int d = 0; d < spacedim; ++d)
+          for(unsigned int d= 0; d < spacedim; ++d)
             deallog << jac_from_mapping_manifold[q][d] << std::endl;
 
           deallog << "Jacobian from mapping q at point " << q << std::endl;
-          for(unsigned int d = 0; d < spacedim; ++d)
+          for(unsigned int d= 0; d < spacedim; ++d)
             deallog << jac_from_mapping_q[q][d] << std::endl;
         }
     }

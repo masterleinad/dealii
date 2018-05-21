@@ -134,7 +134,7 @@ namespace TrilinosWrappers
     else
       parameter_list.set("ML output", 0);
 
-    const Epetra_Map& domain_map = matrix.OperatorDomainMap();
+    const Epetra_Map& domain_map= matrix.OperatorDomainMap();
 
     const size_type constant_modes_dimension
       = additional_data.constant_modes.size();
@@ -144,7 +144,7 @@ namespace TrilinosWrappers
 
     if(constant_modes_dimension > 0)
       {
-        const size_type global_size = TrilinosWrappers::n_global_rows(matrix);
+        const size_type global_size= TrilinosWrappers::n_global_rows(matrix);
         (void)
           global_length; // work around compiler warning about unused function in release mode
         Assert(global_size
@@ -155,19 +155,19 @@ namespace TrilinosWrappers
                  TrilinosWrappers::global_length(distributed_constant_modes)));
         const bool constant_modes_are_global
           = additional_data.constant_modes[0].size() == global_size;
-        const size_type my_size = domain_map.NumMyElements();
+        const size_type my_size= domain_map.NumMyElements();
 
         // Reshape null space as a contiguous vector of doubles so that
         // Trilinos can read from it.
         const size_type expected_mode_size
           = constant_modes_are_global ? global_size : my_size;
-        for(size_type d = 0; d < constant_modes_dimension; ++d)
+        for(size_type d= 0; d < constant_modes_dimension; ++d)
           {
             Assert(
               additional_data.constant_modes[d].size() == expected_mode_size,
               ExcDimensionMismatch(additional_data.constant_modes[d].size(),
                                    expected_mode_size));
-            for(size_type row = 0; row < my_size; ++row)
+            for(size_type row= 0; row < my_size; ++row)
               {
                 const TrilinosWrappers::types::int_type mode_index
                   = constant_modes_are_global ?
@@ -216,7 +216,7 @@ namespace TrilinosWrappers
                               const Teuchos::ParameterList& ml_parameters)
   {
     preconditioner.reset();
-    preconditioner = std::make_shared<ML_Epetra::MultiLevelPreconditioner>(
+    preconditioner= std::make_shared<ML_Epetra::MultiLevelPreconditioner>(
       matrix, ml_parameters);
   }
 
@@ -229,17 +229,17 @@ namespace TrilinosWrappers
     const ::dealii::SparsityPattern*      use_this_sparsity)
   {
     preconditioner.reset();
-    const size_type n_rows = deal_ii_sparse_matrix.m();
+    const size_type n_rows= deal_ii_sparse_matrix.m();
 
     // Init Epetra Matrix using an
     // equidistributed map; avoid
     // storing the nonzero
     // elements.
-    vector_distributor = std::make_shared<Epetra_Map>(
+    vector_distributor= std::make_shared<Epetra_Map>(
       static_cast<TrilinosWrappers::types::int_type>(n_rows), 0, communicator);
 
     if(trilinos_matrix.get() == nullptr)
-      trilinos_matrix = std::make_shared<SparseMatrix>();
+      trilinos_matrix= std::make_shared<SparseMatrix>();
 
     trilinos_matrix->reinit(*vector_distributor,
                             *vector_distributor,
@@ -270,12 +270,12 @@ namespace TrilinosWrappers
   PreconditionAMG::size_type
   PreconditionAMG::memory_consumption() const
   {
-    unsigned int memory = sizeof(*this);
+    unsigned int memory= sizeof(*this);
 
     // todo: find a way to read out ML's data
     // sizes
     if(trilinos_matrix.get() != nullptr)
-      memory += trilinos_matrix->memory_consumption();
+      memory+= trilinos_matrix->memory_consumption();
     return memory;
   }
 

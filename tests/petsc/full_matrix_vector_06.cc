@@ -25,27 +25,27 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   PETScWrappers::FullMatrix m(v.size(), v.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= i;
 
   m.compress(VectorOperation::insert);
   v.compress(VectorOperation::insert);
 
   // <w,Mv>
-  const PetscScalar s = m.matrix_norm_square(v);
+  const PetscScalar s= m.matrix_norm_square(v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(v(i) == i, ExcInternalError());
 
-  PetscScalar result = 0;
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
-      result += (i + 2 * j) * j * i;
+  PetscScalar result= 0;
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
+      result+= (i + 2 * j) * j * i;
 
   AssertThrow(s == result, ExcInternalError());
 

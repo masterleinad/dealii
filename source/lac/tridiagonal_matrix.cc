@@ -34,11 +34,11 @@ template <typename number>
 void
 TridiagonalMatrix<number>::reinit(size_type size, bool symmetric)
 {
-  is_symmetric = symmetric;
+  is_symmetric= symmetric;
   diagonal.resize(size);
   right.resize(size);
   left.resize(symmetric ? 0 : size);
-  state = matrix;
+  state= matrix;
 }
 
 template <typename number>
@@ -50,18 +50,18 @@ TridiagonalMatrix<number>::all_zero() const
   typename std::vector<number>::const_iterator i;
   typename std::vector<number>::const_iterator e;
 
-  e = diagonal.end();
-  for(i = diagonal.begin(); i != e; ++i)
+  e= diagonal.end();
+  for(i= diagonal.begin(); i != e; ++i)
     if(*i != 0.)
       return false;
 
-  e = left.end();
-  for(i = left.begin(); i != e; ++i)
+  e= left.end();
+  for(i= left.begin(); i != e; ++i)
     if(*i != 0.)
       return false;
 
-  e = right.end();
-  for(i = right.begin(); i != e; ++i)
+  e= right.end();
+  for(i= right.begin(); i != e; ++i)
     if(*i != 0.)
       return false;
   return true;
@@ -83,40 +83,40 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
 
   // The actual loop skips the first
   // and last row
-  const size_type e = n() - 1;
+  const size_type e= n() - 1;
   // Let iterators point to the first
   // entry of each diagonal
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
+  typename std::vector<number>::const_iterator d= diagonal.begin();
+  typename std::vector<number>::const_iterator r= right.begin();
   // The left diagonal starts one
   // later or is equal to the right
   // one for symmetric storage
-  typename std::vector<number>::const_iterator l = left.begin();
+  typename std::vector<number>::const_iterator l= left.begin();
   if(is_symmetric)
-    l = r;
+    l= r;
   else
     ++l;
 
   if(adding)
     {
       // Treat first row separately
-      w(0) += (*d) * v(0) + (*r) * v(1);
+      w(0)+= (*d) * v(0) + (*r) * v(1);
       ++d;
       ++r;
       // All rows with three entries
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
-        w(i) += (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
+      for(size_type i= 1; i < e; ++i, ++d, ++r, ++l)
+        w(i)+= (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
       // Last row is special again
-      w(e) += (*l) * v(e - 1) + (*d) * v(e);
+      w(e)+= (*l) * v(e - 1) + (*d) * v(e);
     }
   else
     {
-      w(0) = (*d) * v(0) + (*r) * v(1);
+      w(0)= (*d) * v(0) + (*r) * v(1);
       ++d;
       ++r;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
-        w(i) = (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
-      w(e) = (*l) * v(e - 1) + (*d) * v(e);
+      for(size_type i= 1; i < e; ++i, ++d, ++r, ++l)
+        w(i)= (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
+      w(e)= (*l) * v(e - 1) + (*d) * v(e);
     }
 }
 
@@ -142,32 +142,32 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
   if(n() == 0)
     return;
 
-  const size_type                              e = n() - 1;
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
-  typename std::vector<number>::const_iterator l = left.begin();
+  const size_type                              e= n() - 1;
+  typename std::vector<number>::const_iterator d= diagonal.begin();
+  typename std::vector<number>::const_iterator r= right.begin();
+  typename std::vector<number>::const_iterator l= left.begin();
   if(is_symmetric)
-    l = r;
+    l= r;
   else
     ++l;
 
   if(adding)
     {
-      w(0) += (*d) * v(0) + (*l) * v(1);
+      w(0)+= (*d) * v(0) + (*l) * v(1);
       ++d;
       ++l;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
-        w(i) += (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
-      w(e) += (*d) * v(e) + (*r) * v(e - 1);
+      for(size_type i= 1; i < e; ++i, ++d, ++r, ++l)
+        w(i)+= (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
+      w(e)+= (*d) * v(e) + (*r) * v(e - 1);
     }
   else
     {
-      w(0) = (*d) * v(0) + (*l) * v(1);
+      w(0)= (*d) * v(0) + (*l) * v(1);
       ++d;
       ++l;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
-        w(i) = (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
-      w(e) = (*d) * v(e) + (*r) * v(e - 1);
+      for(size_type i= 1; i < e; ++i, ++d, ++r, ++l)
+        w(i)= (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
+      w(e)= (*d) * v(e) + (*r) * v(e - 1);
     }
 }
 
@@ -186,21 +186,21 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
 {
   Assert(state == matrix, ExcState(state));
 
-  const size_type                              e = n() - 1;
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
-  typename std::vector<number>::const_iterator l = left.begin();
+  const size_type                              e= n() - 1;
+  typename std::vector<number>::const_iterator d= diagonal.begin();
+  typename std::vector<number>::const_iterator r= right.begin();
+  typename std::vector<number>::const_iterator l= left.begin();
   if(is_symmetric)
-    l = r;
+    l= r;
   else
     ++l;
 
-  number result = w(0) * ((*d) * v(0) + (*r) * v(1));
+  number result= w(0) * ((*d) * v(0) + (*r) * v(1));
   ++d;
   ++r;
-  for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
-    result += w(i) * ((*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1));
-  result += w(e) * ((*l) * v(e - 1) + (*d) * v(e));
+  for(size_type i= 1; i < e; ++i, ++d, ++r, ++l)
+    result+= w(i) * ((*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1));
+  result+= w(e) * ((*l) * v(e - 1) + (*d) * v(e));
   return result;
 }
 
@@ -219,12 +219,12 @@ TridiagonalMatrix<number>::compute_eigenvalues()
   Assert(state == matrix, ExcState(state));
   Assert(is_symmetric, ExcNotImplemented());
 
-  const types::blas_int nn = n();
+  const types::blas_int nn= n();
   types::blas_int       info;
   stev(&N, &nn, diagonal.data(), right.data(), nullptr, &one, nullptr, &info);
   Assert(info == 0, ExcInternalError());
 
-  state = LAPACKSupport::eigenvalues;
+  state= LAPACKSupport::eigenvalues;
 #else
   Assert(false, ExcNeedsLAPACK());
 #endif

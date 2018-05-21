@@ -40,16 +40,16 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-2 Tensors
   {
     Tensor<2, dim> tmp1;
-    unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
+    unsigned int   c= 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      for(unsigned int j= 0; j < dim; ++j)
         {
-          tmp1[i][j] = c++;
+          tmp1[i][j]= c++;
         }
 
-    const Tensor<2, dim> tmp2 = contract<1, 0>(
+    const Tensor<2, dim> tmp2= contract<1, 0>(
       F, contract<1, 1>(tmp1, F)); // Note: Order of arguments is important
-    const Tensor<2, dim> tmp3 = F * tmp1 * transpose(F);
+    const Tensor<2, dim> tmp3= F * tmp1 * transpose(F);
 
     Assert((tmp2 - tmp3).norm() < 1e-9,
            ExcMessage("Contraction using contract() function is incorrect."));
@@ -58,17 +58,17 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-3 Tensors
   {
     Tensor<3, dim> tmp1;
-    unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
-        for(unsigned int k = 0; k < dim; ++k)
+    unsigned int   c= 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      for(unsigned int j= 0; j < dim; ++j)
+        for(unsigned int k= 0; k < dim; ++k)
           {
-            tmp1[i][j][k] = c++;
+            tmp1[i][j][k]= c++;
           }
 
-    const Tensor<3, dim> tmp2 = contract<1, 0>(
+    const Tensor<3, dim> tmp2= contract<1, 0>(
       F, contract<2, 1>(tmp1, F)); // Note: Order of arguments is important
-    const Tensor<3, dim> tmp3 = F * tmp1 * transpose(F);
+    const Tensor<3, dim> tmp3= F * tmp1 * transpose(F);
 
     Assert((tmp2 - tmp3).norm() < 1e-9,
            ExcMessage("Contraction using contract() function is incorrect."));
@@ -77,18 +77,18 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-4 Tensors
   {
     Tensor<4, dim> tmp1;
-    unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+    unsigned int   c= 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      for(unsigned int j= 0; j < dim; ++j)
+        for(unsigned int k= 0; k < dim; ++k)
+          for(unsigned int l= 0; l < dim; ++l)
             {
-              tmp1[i][j][k][l] = c++;
+              tmp1[i][j][k][l]= c++;
             }
 
-    const Tensor<4, dim> tmp2 = contract<1, 0>(
+    const Tensor<4, dim> tmp2= contract<1, 0>(
       F, contract<3, 1>(tmp1, F)); // Note: Order of arguments is important
-    const Tensor<4, dim> tmp3 = F * tmp1 * transpose(F);
+    const Tensor<4, dim> tmp3= F * tmp1 * transpose(F);
 
     Assert((tmp2 - tmp3).norm() < 1e-9,
            ExcMessage("Contraction using contract() function is incorrect."));
@@ -103,13 +103,13 @@ test()
   test_tensor<dim>(unit_symmetric_tensor<dim>());
 
   // Test with non-trivial tensor
-  Tensor<2, dim> F = unit_symmetric_tensor<dim>();
-  double         c = 0.1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  Tensor<2, dim> F= unit_symmetric_tensor<dim>();
+  double         c= 0.1;
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       {
-        F[i][j] += c;
-        c += 0.05;
+        F[i][j]+= c;
+        c+= 0.05;
       }
   test_tensor<dim>(F);
 }

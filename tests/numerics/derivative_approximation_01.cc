@@ -61,11 +61,11 @@ check()
   DerivativeApproximation::approximate_second_derivative(dof, v, second);
 
   deallog << "Approximated gradient:" << std::endl;
-  for(unsigned int i = 0; i < gradient.size(); ++i)
+  for(unsigned int i= 0; i < gradient.size(); ++i)
     deallog << gradient(i) * 100 << std::endl;
 
   deallog << "Approximated second derivative:" << std::endl;
-  for(unsigned int i = 0; i < gradient.size(); ++i)
+  for(unsigned int i= 0; i < gradient.size(); ++i)
     deallog << second(i) * 100 << std::endl;
 }
 

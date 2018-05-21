@@ -68,7 +68,7 @@ public:
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(
       data, 0, 0, dim);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         velocity.read_dof_values(src);
@@ -77,17 +77,17 @@ public:
         pressure.read_dof_values(src);
         pressure.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for(unsigned int q= 0; q < velocity.n_q_points; ++q)
           {
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
-            vector_t pres = pressure.get_value(q);
-            vector_t div  = -trace(sym_grad_u);
+            vector_t pres= pressure.get_value(q);
+            vector_t div = -trace(sym_grad_u);
             pressure.submit_value(div, q);
 
             // subtract p * I
-            for(unsigned int d = 0; d < dim; ++d)
-              sym_grad_u[d][d] -= pres;
+            for(unsigned int d= 0; d < dim; ++d)
+              sym_grad_u[d][d]-= pres;
 
             velocity.submit_symmetric_gradient(sym_grad_u, q);
           }
@@ -102,7 +102,7 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(
       &MatrixFreeTest<dim, degree_p, VectorType>::local_apply, this, dst, src);
   };
@@ -179,8 +179,8 @@ test(const FESystem<dim>& fe)
                             update_values | update_JxW_values
                               | update_gradients);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -195,24 +195,24 @@ test(const FESystem<dim>& fe)
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
-        local_matrix = 0;
+        local_matrix= 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                phi_grads_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k]   = fe_values[velocities].divergence(k, q);
-                phi_p[k]       = fe_values[pressure].value(k, q);
+                phi_grads_u[k]= fe_values[velocities].symmetric_gradient(k, q);
+                div_phi_u[k]  = fe_values[velocities].divergence(k, q);
+                phi_p[k]      = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for(unsigned int j= 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (phi_grads_u[i] * phi_grads_u[j]
@@ -221,9 +221,9 @@ test(const FESystem<dim>& fe)
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
-            local_matrix(i, j) = local_matrix(j, i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= i + 1; j < dofs_per_cell; ++j)
+            local_matrix(i, j)= local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
         constraints.distribute_local_to_global(
@@ -236,12 +236,11 @@ test(const FESystem<dim>& fe)
   mf_solution.reinit(solution);
 
   // fill system_rhs with random numbers
-  for(unsigned int j = 0; j < system_rhs.size(); ++j)
+  for(unsigned int j= 0; j < system_rhs.size(); ++j)
     if(constraints.is_constrained(j) == false)
       {
-        const double val
-          = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
-        system_rhs(j) = val;
+        const double val= -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
+        system_rhs(j)   = val;
       }
 
   // setup matrix-free structure
@@ -262,9 +261,9 @@ test(const FESystem<dim>& fe)
   mf.vmult(mf_solution, system_rhs);
 
   // Verification
-  mf_solution -= solution;
-  const double error    = mf_solution.linfty_norm();
-  const double relative = solution.linfty_norm();
+  mf_solution-= solution;
+  const double error   = mf_solution.linfty_norm();
+  const double relative= solution.linfty_norm();
   deallog << "Verification " << fe.get_name() << ": " << error / relative
           << std::endl
           << std::endl;

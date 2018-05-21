@@ -293,7 +293,7 @@ namespace Polynomials
      * Constructor, taking the degree of the monomial and an optional
      * coefficient as arguments.
      */
-    Monomial(const unsigned int n, const double coefficient = 1.);
+    Monomial(const unsigned int n, const double coefficient= 1.);
 
     /**
      * Return a vector of Monomial objects of degree zero through
@@ -431,7 +431,7 @@ namespace Polynomials
      * Constructor for polynomial of degree <tt>p</tt>. There is an exception
      * for <tt>p==0</tt>, see the general documentation.
      */
-    Lobatto(const unsigned int p = 0);
+    Lobatto(const unsigned int p= 0);
 
     /**
      * Return the polynomials with index <tt>0</tt> up to <tt>degree</tt>.
@@ -772,20 +772,20 @@ namespace Polynomials
         Assert(coefficients.size() > 0, ExcEmptyObject());
 
         // Horner scheme
-        const unsigned int m     = coefficients.size();
-        number             value = coefficients.back();
-        for(int k = m - 2; k >= 0; --k)
-          value = value * x + coefficients[k];
+        const unsigned int m    = coefficients.size();
+        number             value= coefficients.back();
+        for(int k= m - 2; k >= 0; --k)
+          value= value * x + coefficients[k];
         return value;
       }
     else
       {
         // direct evaluation of Lagrange polynomial
-        const unsigned int m     = lagrange_support_points.size();
-        number             value = 1.;
-        for(unsigned int j = 0; j < m; ++j)
-          value *= x - lagrange_support_points[j];
-        value *= lagrange_weight;
+        const unsigned int m    = lagrange_support_points.size();
+        number             value= 1.;
+        for(unsigned int j= 0; j < m; ++j)
+          value*= x - lagrange_support_points[j];
+        value*= lagrange_weight;
         return value;
       }
   }
@@ -817,27 +817,27 @@ namespace Polynomials
 
     // The recursion formula is defined for the interval [-1, 1], so rescale
     // to that interval here
-    const Number xeval = Number(-1) + 2. * x;
+    const Number xeval= Number(-1) + 2. * x;
 
     // initial values P_0(x), P_1(x):
-    p0 = 1.0;
+    p0= 1.0;
     if(degree == 0)
       return p0;
-    p1 = ((alpha + beta + 2) * xeval + (alpha - beta)) / 2;
+    p1= ((alpha + beta + 2) * xeval + (alpha - beta)) / 2;
     if(degree == 1)
       return p1;
 
-    for(unsigned int i = 1; i < degree; ++i)
+    for(unsigned int i= 1; i < degree; ++i)
       {
-        const Number v  = 2 * i + (alpha + beta);
-        const Number a1 = 2 * (i + 1) * (i + (alpha + beta + 1)) * v;
-        const Number a2 = (v + 1) * (alpha * alpha - beta * beta);
-        const Number a3 = v * (v + 1) * (v + 2);
-        const Number a4 = 2 * (i + alpha) * (i + beta) * (v + 2);
+        const Number v = 2 * i + (alpha + beta);
+        const Number a1= 2 * (i + 1) * (i + (alpha + beta + 1)) * v;
+        const Number a2= (v + 1) * (alpha * alpha - beta * beta);
+        const Number a3= v * (v + 1) * (v + 2);
+        const Number a4= 2 * (i + alpha) * (i + beta) * (v + 2);
 
-        const Number pn = ((a2 + a3 * xeval) * p1 - a4 * p0) / a1;
-        p0              = p1;
-        p1              = pn;
+        const Number pn= ((a2 + a3 * xeval) * p1 - a4 * p0) / a1;
+        p0             = p1;
+        p1             = pn;
       }
     return p1;
   }
@@ -870,24 +870,24 @@ namespace Polynomials
     // 2005)
 
     // If symmetric, we only need to compute the half of points
-    const unsigned int n_points = (alpha == beta ? degree / 2 : degree);
-    for(unsigned int k = 0; k < n_points; ++k)
+    const unsigned int n_points= (alpha == beta ? degree / 2 : degree);
+    for(unsigned int k= 0; k < n_points; ++k)
       {
         // we take the zeros of the Chebyshev polynomial (alpha=beta=-0.5) as
         // initial values, corrected by the initial value
-        Number r = 0.5
-                   - 0.5
-                       * std::cos(static_cast<Number>(2 * k + 1) / (2 * degree)
-                                  * numbers::PI);
+        Number r= 0.5
+                  - 0.5
+                      * std::cos(static_cast<Number>(2 * k + 1) / (2 * degree)
+                                 * numbers::PI);
         if(k > 0)
-          r = (r + x[k - 1]) / 2;
+          r= (r + x[k - 1]) / 2;
 
-        unsigned int converged = numbers::invalid_unsigned_int;
-        for(unsigned int it = 1; it < 1000; ++it)
+        unsigned int converged= numbers::invalid_unsigned_int;
+        for(unsigned int it= 1; it < 1000; ++it)
           {
-            Number s = 0.;
-            for(unsigned int i = 0; i < k; ++i)
-              s += 1. / (r - x[i]);
+            Number s= 0.;
+            for(unsigned int i= 0; i < k; ++i)
+              s+= 1. / (r - x[i]);
 
             // derivative of P_n^{alpha,beta}, rescaled to [0, 1]
             const Number J_x
@@ -895,12 +895,12 @@ namespace Polynomials
                 * jacobi_polynomial_value(degree - 1, alpha + 1, beta + 1, r);
 
             // value of P_n^{alpha,beta}
-            const Number f = jacobi_polynomial_value(degree, alpha, beta, r);
-            const Number delta = f / (f * s - J_x);
-            r += delta;
+            const Number f    = jacobi_polynomial_value(degree, alpha, beta, r);
+            const Number delta= f / (f * s - J_x);
+            r+= delta;
             if(converged == numbers::invalid_unsigned_int
                && std::abs(delta) < tolerance)
-              converged = it;
+              converged= it;
 
             // do one more iteration to ensure accuracy also for tighter
             // types than double (e.g. long double)
@@ -912,12 +912,12 @@ namespace Polynomials
                ExcMessage("Newton iteration for zero of Jacobi polynomial "
                           "did not converge."));
 
-        x[k] = r;
+        x[k]= r;
       }
 
     // in case we assumed symmetry, fill up the missing values
-    for(unsigned int k = n_points; k < degree; ++k)
-      x[k] = 1.0 - x[degree - k - 1];
+    for(unsigned int k= n_points; k < degree; ++k)
+      x[k]= 1.0 - x[degree - k - 1];
 
     return x;
   }

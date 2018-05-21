@@ -65,8 +65,8 @@ DEAL_II_NAMESPACE_OPEN
  */
 
 template <class PolynomialType,
-          int dim      = PolynomialType::dimension,
-          int spacedim = dim>
+          int dim     = PolynomialType::dimension,
+          int spacedim= dim>
 class FE_Poly : public FiniteElement<dim, spacedim>
 {
 public:
@@ -238,10 +238,10 @@ protected:
   {
     // generate a new data object and
     // initialize some fields
-    auto data         = std_cxx14::make_unique<InternalData>();
-    data->update_each = requires_update_flags(update_flags);
+    auto data        = std_cxx14::make_unique<InternalData>();
+    data->update_each= requires_update_flags(update_flags);
 
-    const unsigned int n_q_points = quadrature.size();
+    const unsigned int n_q_points= quadrature.size();
 
     // initialize some scratch arrays. we need them for the underlying
     // polynomial to put the values and derivatives of shape functions
@@ -293,7 +293,7 @@ protected:
     if(update_flags
        & (update_values | update_gradients | update_hessians
           | update_3rd_derivatives))
-      for(unsigned int i = 0; i < n_q_points; ++i)
+      for(unsigned int i= 0; i < n_q_points; ++i)
         {
           poly_space.compute(quadrature.point(i),
                              values,
@@ -313,27 +313,27 @@ protected:
             if(output_data.shape_values.n_rows() > 0)
               {
                 if(output_data.shape_values.n_cols() == n_q_points)
-                  for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-                    output_data.shape_values[k][i] = values[k];
+                  for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+                    output_data.shape_values[k][i]= values[k];
                 else
-                  for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-                    data->shape_values[k][i] = values[k];
+                  for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+                    data->shape_values[k][i]= values[k];
               }
 
           // for everything else, derivatives need to be transformed,
           // so we write them into our scratch space and only later
           // copy stuff into where FEValues wants it
           if(update_flags & update_gradients)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-              data->shape_gradients[k][i] = grads[k];
+            for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+              data->shape_gradients[k][i]= grads[k];
 
           if(update_flags & update_hessians)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-              data->shape_hessians[k][i] = grad_grads[k];
+            for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+              data->shape_hessians[k][i]= grad_grads[k];
 
           if(update_flags & update_3rd_derivatives)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-              data->shape_3rd_derivatives[k][i] = third_derivatives[k];
+            for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+              data->shape_3rd_derivatives[k][i]= third_derivatives[k];
         }
     return std::move(data);
   }

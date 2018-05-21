@@ -124,20 +124,20 @@ public:
    * calling the set_formula() function.
    */
   AutoDerivativeFunction(const double       h,
-                         const unsigned int n_components = 1,
-                         const double       initial_time = 0.0);
+                         const unsigned int n_components= 1,
+                         const double       initial_time= 0.0);
 
   /**
    * Virtual destructor; absolutely necessary in this case.
    */
-  virtual ~AutoDerivativeFunction() override = default;
+  virtual ~AutoDerivativeFunction() override= default;
 
   /**
    * Choose the difference formula. See the enum #DifferenceFormula for
    * available choices.
    */
   void
-  set_formula(const DifferenceFormula formula = Euler);
+  set_formula(const DifferenceFormula formula= Euler);
 
   /**
    * Takes the difference step size <tt>h</tt>. It's within the user's
@@ -158,8 +158,7 @@ public:
    * #DifferenceFormula.
    */
   virtual Tensor<1, dim>
-  gradient(const Point<dim>&  p,
-           const unsigned int component = 0) const override;
+  gradient(const Point<dim>& p, const unsigned int component= 0) const override;
 
   /**
    * Return the gradient of all components of the function at the given point.
@@ -183,7 +182,7 @@ public:
   virtual void
   gradient_list(const std::vector<Point<dim>>& points,
                 std::vector<Tensor<1, dim>>&   gradients,
-                const unsigned int             component = 0) const override;
+                const unsigned int             component= 0) const override;
 
   /**
    * Set <tt>gradients</tt> to the gradients of the function at the

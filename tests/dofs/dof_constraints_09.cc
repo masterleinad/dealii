@@ -65,12 +65,12 @@ test()
   // then set up a sparsity pattern and a
   // matrix on top of it
   std::vector<unsigned int> block_sizes(2);
-  block_sizes[0] = dof_handler.n_dofs() / 3;
-  block_sizes[1] = dof_handler.n_dofs() - block_sizes[0];
+  block_sizes[0]= dof_handler.n_dofs() / 3;
+  block_sizes[1]= dof_handler.n_dofs() - block_sizes[0];
 
   BlockSparsityPattern sparsity(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int i= 0; i < 2; ++i)
+    for(unsigned int j= 0; j < 2; ++j)
       sparsity.block(i, j).reinit(block_sizes[i],
                                   block_sizes[j],
                                   dof_handler.max_couplings_between_dofs());
@@ -90,15 +90,15 @@ test()
       ++cell)
     {
       cell->get_dof_indices(local_dofs);
-      local_matrix = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      local_matrix= 0;
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           local_matrix(i, j)
             = (i + 1.) * (j + 1.) * (local_dofs[i] + 1.) * (local_dofs[j] + 1.);
 
       // copy local to global
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
     }
 
@@ -106,8 +106,7 @@ test()
   constraints.condense(A);
 
   // and output what we have
-  for(BlockSparseMatrix<double>::const_iterator i = A.begin(); i != A.end();
-      ++i)
+  for(BlockSparseMatrix<double>::const_iterator i= A.begin(); i != A.end(); ++i)
     deallog << i->block_row() << ' ' << i->block_column() << ' ' << i->row()
             << ' ' << i->column() << ' ' << i->value() << std::endl;
 }

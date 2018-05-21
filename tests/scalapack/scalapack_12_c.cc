@@ -43,8 +43,8 @@ test()
   std::cout << std::setprecision(10);
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));
 
-  const unsigned int proc_rows    = std::floor(std::sqrt(n_mpi_processes));
-  const unsigned int proc_columns = std::floor(n_mpi_processes / proc_rows);
+  const unsigned int proc_rows   = std::floor(std::sqrt(n_mpi_processes));
+  const unsigned int proc_columns= std::floor(n_mpi_processes / proc_rows);
   //create 2d process grid
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid
     = std::make_shared<Utilities::MPI::ProcessGrid>(
@@ -53,7 +53,7 @@ test()
         << grid->get_process_grid_columns() << std::endl
         << std::endl;
 
-  const std::vector<unsigned int> sizes = {{300, 400, 500}};
+  const std::vector<unsigned int> sizes= {{300, 400, 500}};
 
   FullMatrix<NumberType> full_A(sizes[0], sizes[2]);
   FullMatrix<NumberType> full_B(sizes[1], sizes[2]);
@@ -63,9 +63,9 @@ test()
   create_random(full_C);
 
   // conditions for block sizes: mb_A=mb_C, mb_B=nb_C, nb_A=nb_B
-  const unsigned int mb_A = 32, nb_A = 64, mb_B = 16;
-  const unsigned int nb_B = nb_A, mb_C = mb_A;
-  const unsigned int nb_C = mb_B;
+  const unsigned int mb_A= 32, nb_A= 64, mb_B= 16;
+  const unsigned int nb_B= nb_A, mb_C= mb_A;
+  const unsigned int nb_C= mb_B;
 
   ScaLAPACKMatrix<NumberType> scalapack_A(
     full_A.m(), full_A.n(), grid, mb_A, nb_A);
@@ -73,14 +73,14 @@ test()
     full_B.m(), full_B.n(), grid, mb_B, nb_B);
   ScaLAPACKMatrix<NumberType> scalapack_C(
     full_C.m(), full_C.n(), grid, mb_C, nb_C);
-  scalapack_A = full_A;
-  scalapack_B = full_B;
-  scalapack_C = full_C;
+  scalapack_A= full_A;
+  scalapack_B= full_B;
+  scalapack_C= full_C;
 
-  const NumberType b = 1.4, c = 0.1;
+  const NumberType b= 1.4, c= 0.1;
 
-  full_A *= b;
-  full_C *= c;
+  full_A*= b;
+  full_C*= c;
   full_A.mTmult(full_C, full_B, true);
 
   scalapack_A.mult(b, scalapack_B, c, scalapack_C, false, true);

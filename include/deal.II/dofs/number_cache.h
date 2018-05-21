@@ -42,13 +42,13 @@ namespace internal
        * Copy constructor. Simply copy all members of the referenced
        * object to the current object.
        */
-      NumberCache(const NumberCache&) = default;
+      NumberCache(const NumberCache&)= default;
 
       /**
        * Move constructor. Simply move all members of the referenced
        * object to the current object.
        */
-      NumberCache(NumberCache&&) = default;
+      NumberCache(NumberCache&&)= default;
 
       /**
        * Create a NumberCache object that corresponds to a sequential

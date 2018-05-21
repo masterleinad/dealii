@@ -39,33 +39,33 @@ create_disconnected_mesh(Triangulation<dim>& tria)
 
   // cell 1
   {
-    Point<dim> p1 = Point<dim>();
+    Point<dim> p1= Point<dim>();
     Point<dim> p2;
-    for(unsigned int i = 0; i < dim; ++i)
-      p2[i] = 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      p2[i]= 1;
 
     switch(dim)
       {
         case 2:
-          vertices[0] = vertices[1] = p1;
-          vertices[2] = vertices[3] = p2;
+          vertices[0]= vertices[1]= p1;
+          vertices[2]= vertices[3]= p2;
 
-          vertices[1](0) = p2(0);
-          vertices[2](0) = p1(0);
+          vertices[1](0)= p2(0);
+          vertices[2](0)= p1(0);
           break;
         case 3:
-          vertices[0] = vertices[1] = vertices[2] = vertices[3] = p1;
-          vertices[4] = vertices[5] = vertices[6] = vertices[7] = p2;
+          vertices[0]= vertices[1]= vertices[2]= vertices[3]= p1;
+          vertices[4]= vertices[5]= vertices[6]= vertices[7]= p2;
 
-          vertices[1](0) = p2(0);
-          vertices[2](1) = p2(1);
-          vertices[3](0) = p2(0);
-          vertices[3](1) = p2(1);
+          vertices[1](0)= p2(0);
+          vertices[2](1)= p2(1);
+          vertices[3](0)= p2(0);
+          vertices[3](1)= p2(1);
 
-          vertices[4](0) = p1(0);
-          vertices[4](1) = p1(1);
-          vertices[5](1) = p1(1);
-          vertices[6](0) = p1(0);
+          vertices[4](0)= p1(0);
+          vertices[4](1)= p1(1);
+          vertices[5](1)= p1(1);
+          vertices[6](0)= p1(0);
 
           break;
         default:
@@ -73,51 +73,51 @@ create_disconnected_mesh(Triangulation<dim>& tria)
       }
 
     // Prepare cell data
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-      cells[0].vertices[i] = i;
-    cells[0].material_id = 0;
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      cells[0].vertices[i]= i;
+    cells[0].material_id= 0;
   }
 
   // cell 2. shifted 2 units in x-direction
   {
-    Point<dim> p1 = Point<dim>();
+    Point<dim> p1= Point<dim>();
     Point<dim> p2;
-    for(unsigned int i = 0; i < dim; ++i)
-      p2[i] = 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      p2[i]= 1;
 
-    p1[0] += 2;
-    p2[0] += 2;
+    p1[0]+= 2;
+    p2[0]+= 2;
 
     switch(dim)
       {
         case 2:
           vertices[GeometryInfo<dim>::vertices_per_cell + 0]
-            = vertices[GeometryInfo<dim>::vertices_per_cell + 1] = p1;
+            = vertices[GeometryInfo<dim>::vertices_per_cell + 1]= p1;
           vertices[GeometryInfo<dim>::vertices_per_cell + 2]
-            = vertices[GeometryInfo<dim>::vertices_per_cell + 3] = p2;
+            = vertices[GeometryInfo<dim>::vertices_per_cell + 3]= p2;
 
-          vertices[GeometryInfo<dim>::vertices_per_cell + 1](0) = p2(0);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 2](0) = p1(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 1](0)= p2(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 2](0)= p1(0);
           break;
         case 3:
           vertices[GeometryInfo<dim>::vertices_per_cell + 0]
             = vertices[GeometryInfo<dim>::vertices_per_cell + 1]
             = vertices[GeometryInfo<dim>::vertices_per_cell + 2]
-            = vertices[GeometryInfo<dim>::vertices_per_cell + 3] = p1;
+            = vertices[GeometryInfo<dim>::vertices_per_cell + 3]= p1;
           vertices[GeometryInfo<dim>::vertices_per_cell + 4]
             = vertices[GeometryInfo<dim>::vertices_per_cell + 5]
             = vertices[GeometryInfo<dim>::vertices_per_cell + 6]
-            = vertices[GeometryInfo<dim>::vertices_per_cell + 7] = p2;
+            = vertices[GeometryInfo<dim>::vertices_per_cell + 7]= p2;
 
-          vertices[GeometryInfo<dim>::vertices_per_cell + 1](0) = p2(0);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 2](1) = p2(1);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 3](0) = p2(0);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 3](1) = p2(1);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 1](0)= p2(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 2](1)= p2(1);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 3](0)= p2(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 3](1)= p2(1);
 
-          vertices[GeometryInfo<dim>::vertices_per_cell + 4](0) = p1(0);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 4](1) = p1(1);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 5](1) = p1(1);
-          vertices[GeometryInfo<dim>::vertices_per_cell + 6](0) = p1(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 4](0)= p1(0);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 4](1)= p1(1);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 5](1)= p1(1);
+          vertices[GeometryInfo<dim>::vertices_per_cell + 6](0)= p1(0);
 
           break;
         default:
@@ -125,9 +125,9 @@ create_disconnected_mesh(Triangulation<dim>& tria)
       }
 
     // Prepare cell data
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-      cells[1].vertices[i] = GeometryInfo<dim>::vertices_per_cell + i;
-    cells[1].material_id = 0;
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      cells[1].vertices[i]= GeometryInfo<dim>::vertices_per_cell + i;
+    cells[1].material_id= 0;
   }
 
   tria.create_triangulation(vertices, cells, SubCellData());

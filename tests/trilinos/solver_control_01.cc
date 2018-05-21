@@ -38,8 +38,8 @@ main(int argc, char** argv)
     argc, argv, testing_max_num_threads());
 
   {
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -55,7 +55,7 @@ main(int argc, char** argv)
     f.reinit(complete_index_set(dim), MPI_COMM_WORLD);
     TrilinosWrappers::MPI::Vector u;
     u.reinit(complete_index_set(dim), MPI_COMM_WORLD);
-    f = 1.;
+    f= 1.;
     A.compress(VectorOperation::insert);
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);
@@ -73,7 +73,7 @@ main(int argc, char** argv)
     }
     deallog.pop();
 
-    u = 0.;
+    u= 0.;
     deallog.push("Iterations");
     {
       // Expects failure

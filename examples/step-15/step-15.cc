@@ -149,7 +149,7 @@ namespace Step15
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -238,16 +238,16 @@ namespace Step15
   {
     const QGauss<dim> quadrature_formula(3);
 
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_gradients | update_quadrature_points
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -258,11 +258,11 @@ namespace Step15
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         fe_values.reinit(cell);
 
@@ -285,7 +285,7 @@ namespace Step15
         // system itself then looks similar to what we always do with the
         // exception of the nonlinear terms, as does copying the results from
         // the local objects into the global ones:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             const double coeff
               = 1.0
@@ -293,9 +293,9 @@ namespace Step15
                             + old_solution_gradients[q_point]
                                 * old_solution_gradients[q_point]);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
                   {
                     cell_matrix(i, j)
                       += (((fe_values.shape_grad(i, q_point) * coeff
@@ -308,20 +308,20 @@ namespace Step15
                           * fe_values.JxW(q_point));
                   }
 
-                cell_rhs(i) -= (fe_values.shape_grad(i, q_point) * coeff
-                                * old_solution_gradients[q_point]
-                                * fe_values.JxW(q_point));
+                cell_rhs(i)-= (fe_values.shape_grad(i, q_point) * coeff
+                               * old_solution_gradients[q_point]
+                               * fe_values.JxW(q_point));
               }
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-            system_rhs(local_dof_indices[i]) += cell_rhs(i);
+            system_rhs(local_dof_indices[i])+= cell_rhs(i);
           }
       }
 
@@ -358,7 +358,7 @@ namespace Step15
 
     hanging_node_constraints.distribute(newton_update);
 
-    const double alpha = determine_step_length();
+    const double alpha= determine_step_length();
     present_solution.add(alpha, newton_update);
   }
 
@@ -426,7 +426,7 @@ namespace Step15
     // have to explicitly make sure that it now has:
     Vector<double> tmp(dof_handler.n_dofs());
     solution_transfer.interpolate(present_solution, tmp);
-    present_solution = tmp;
+    present_solution= tmp;
 
     set_boundary_values();
 
@@ -471,7 +471,7 @@ namespace Step15
         = boundary_values.begin();
         p != boundary_values.end();
         ++p)
-      present_solution(p->first) = p->second;
+      present_solution(p->first)= p->second;
   }
 
   // @sect4{MinimalSurfaceProblem::compute_residual}
@@ -498,7 +498,7 @@ namespace Step15
     Vector<double> residual(dof_handler.n_dofs());
 
     Vector<double> evaluation_point(dof_handler.n_dofs());
-    evaluation_point = present_solution;
+    evaluation_point= present_solution;
     evaluation_point.add(alpha, newton_update);
 
     const QGauss<dim> quadrature_formula(3);
@@ -507,8 +507,8 @@ namespace Step15
                             update_gradients | update_quadrature_points
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     Vector<double>              cell_residual(dofs_per_cell);
     std::vector<Tensor<1, dim>> gradients(n_q_points);
@@ -517,10 +517,10 @@ namespace Step15
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_residual = 0;
+        cell_residual= 0;
         fe_values.reinit(cell);
 
         // The actual computation is much as in
@@ -530,20 +530,20 @@ namespace Step15
         // the residual:
         fe_values.get_function_gradients(evaluation_point, gradients);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
           {
             const double coeff
               = 1 / std::sqrt(1 + gradients[q_point] * gradients[q_point]);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               cell_residual(i)
                 -= (fe_values.shape_grad(i, q_point) * coeff
                     * gradients[q_point] * fe_values.JxW(q_point));
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          residual(local_dof_indices[i]) += cell_residual(i);
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          residual(local_dof_indices[i])+= cell_residual(i);
       }
 
     // At the end of this function we also have to deal with the hanging node
@@ -566,9 +566,9 @@ namespace Step15
     std::vector<bool> boundary_dofs(dof_handler.n_dofs());
     DoFTools::extract_boundary_dofs(
       dof_handler, ComponentMask(), boundary_dofs);
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
       if(boundary_dofs[i] == true)
-        residual(i) = 0;
+        residual(i)= 0;
 
     // At the end of the function, we return the norm of the residual:
     return residual.l2_norm();
@@ -604,8 +604,8 @@ namespace Step15
   void
   MinimalSurfaceProblem<dim>::run()
   {
-    unsigned int refinement = 0;
-    bool         first_step = true;
+    unsigned int refinement= 0;
+    bool         first_step= true;
 
     // As described in the introduction, the domain is the unit disk around
     // the origin, created in the same way as shown in step-6. The mesh is
@@ -623,7 +623,7 @@ namespace Step15
     // after setting up the basic data structures and ensuring that the first
     // Newton iterate already has the correct boundary values. In all
     // following mesh refinement loops, the mesh will be refined adaptively.
-    double previous_res = 0;
+    double previous_res= 0;
     while(first_step || (previous_res > 1e-3))
       {
         if(first_step == true)
@@ -634,7 +634,7 @@ namespace Step15
             setup_system(true);
             set_boundary_values();
 
-            first_step = false;
+            first_step= false;
           }
         else
           {
@@ -656,11 +656,11 @@ namespace Step15
         // residual at the end of this Newton step:
         std::cout << "  Initial residual: " << compute_residual(0) << std::endl;
 
-        for(unsigned int inner_iteration = 0; inner_iteration < 5;
+        for(unsigned int inner_iteration= 0; inner_iteration < 5;
             ++inner_iteration)
           {
             assemble_system();
-            previous_res = system_rhs.l2_norm();
+            previous_res= system_rhs.l2_norm();
 
             solve();
 

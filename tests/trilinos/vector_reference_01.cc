@@ -28,9 +28,9 @@ test()
 {
   TrilinosWrappers::MPI::Vector v;
   v.reinit(complete_index_set(3), MPI_COMM_WORLD);
-  v(0) = 0;
-  v(1) = 1;
-  v(2) = 2;
+  v(0)= 0;
+  v(1)= 1;
+  v(2)= 2;
 
   TrilinosWrappers::internal::VectorReference a(v(0));
   TrilinosWrappers::internal::VectorReference b(v(1));
@@ -44,8 +44,8 @@ test()
   // 1. We first assign c to point to where a points (c points to entry 0)
   // 2. We next assign c to point to where b points (c points to entry 1)
   // 3. Lastly, we assign b to point to where a points (b points to entry 0)
-  (c = a) = b;
-  b       = a;
+  (c= a)= b;
+  b     = a;
 
   deallog << static_cast<TrilinosScalar>(a)
           << std::endl; // should point to v(0)

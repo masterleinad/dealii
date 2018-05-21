@@ -48,7 +48,7 @@ namespace Particles
    *
    * @ingroup Particle
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class ParticleHandler : public Subscriptor
   {
   public:
@@ -78,7 +78,7 @@ namespace Particles
     ParticleHandler(
       const parallel::distributed::Triangulation<dim, spacedim>& tria,
       const Mapping<dim, spacedim>&                              mapping,
-      const unsigned int n_properties = 0);
+      const unsigned int n_properties= 0);
 
     /**
      * Destructor.
@@ -93,7 +93,7 @@ namespace Particles
     void
     initialize(const parallel::distributed::Triangulation<dim, spacedim>& tria,
                const Mapping<dim, spacedim>& mapping,
-               const unsigned int            n_properties = 0);
+               const unsigned int            n_properties= 0);
 
     /**
      * Clear all particle related data.

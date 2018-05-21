@@ -46,9 +46,9 @@ void check(Triangulation<2>& tria)
         = GridTools::find_closest_vertex(tria, Point<2>(1., 1.));
 
       // mark the vertex closest to (1.,1.)
-      marked_vertices[closest_vertex] = true;
+      marked_vertices[closest_vertex]= true;
 
-      auto vertices = tria.get_vertices();
+      auto vertices= tria.get_vertices();
       deallog << vertices[closest_vertex] << " is the closest vertex"
               << std::endl;
 

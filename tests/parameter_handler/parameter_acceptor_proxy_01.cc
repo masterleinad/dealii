@@ -23,7 +23,7 @@ int
 main()
 {
   initlog();
-  auto& prm = ParameterAcceptor::prm;
+  auto& prm= ParameterAcceptor::prm;
 
   ParameterAcceptorProxy<Functions::ParsedFunction<1>> f1("Function 1D");
   ParameterAcceptorProxy<Functions::ParsedFunction<2>> f2("Function 2D");

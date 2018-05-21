@@ -52,7 +52,7 @@ main()
   vertices.push_back(Point<3>(1, 0, 0));
   vertices.push_back(Point<3>(1, 1, 0));
   vertices.push_back(Point<3>(0, 1, 0));
-  TopoDS_Shape shape = interpolation_curve(vertices, Point<3>(), true);
+  TopoDS_Shape shape= interpolation_curve(vertices, Point<3>(), true);
 
   // Create a boundary projector.
   NormalProjectionBoundary<2, 3> boundary_line(shape);

@@ -157,26 +157,26 @@ namespace Step8
     // these areas. Note that upon construction of the <code>Point</code>
     // objects, all components are set to zero.
     Point<dim> point_1, point_2;
-    point_1(0) = 0.5;
-    point_2(0) = -0.5;
+    point_1(0)= 0.5;
+    point_2(0)= -0.5;
 
-    for(unsigned int point_n = 0; point_n < points.size(); ++point_n)
+    for(unsigned int point_n= 0; point_n < points.size(); ++point_n)
       {
         // If <code>points[point_n]</code> is in a circle (sphere) of radius
         // 0.2 around one of these points, then set the force in x-direction
         // to one, otherwise to zero:
         if(((points[point_n] - point_1).norm_square() < 0.2 * 0.2)
            || ((points[point_n] - point_2).norm_square() < 0.2 * 0.2))
-          values[point_n][0] = 1.0;
+          values[point_n][0]= 1.0;
         else
-          values[point_n][0] = 0.0;
+          values[point_n][0]= 0.0;
 
         // Likewise, if <code>points[point_n]</code> is in the vicinity of the
         // origin, then set the y-force to one, otherwise to zero:
         if(points[point_n].norm_square() < 0.2 * 0.2)
-          values[point_n][1] = 1.0;
+          values[point_n][1]= 1.0;
         else
-          values[point_n][1] = 0.0;
+          values[point_n][1]= 0.0;
       }
   }
 
@@ -276,8 +276,8 @@ namespace Step8
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
 
-    const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -306,11 +306,11 @@ namespace Step8
     // Now we can begin with the loop over all cells:
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
-        cell_rhs    = 0;
+        cell_matrix= 0;
+        cell_rhs   = 0;
 
         fe_values.reinit(cell);
 
@@ -342,19 +342,19 @@ namespace Step8
         //
         // With this knowledge, we can assemble the local matrix
         // contributions:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 const unsigned int component_j
                   = fe.system_to_component_index(j).first;
 
-                for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                   {
-                    cell_matrix(i, j) +=
+                    cell_matrix(i, j)+=
                       // The first term is (lambda d_i u_i, d_j v_j) + (mu d_i
                       // u_j, d_j v_i).  Note that
                       // <code>shape_grad(i,q_point)</code> returns the
@@ -395,15 +395,15 @@ namespace Step8
 
         // Assembling the right hand side is also just as discussed in the
         // introduction:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-              cell_rhs(i) += fe_values.shape_value(i, q_point)
-                             * rhs_values[q_point][component_i]
-                             * fe_values.JxW(q_point);
+            for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+              cell_rhs(i)+= fe_values.shape_value(i, q_point)
+                            * rhs_values[q_point][component_i]
+                            * fe_values.JxW(q_point);
           }
 
         // The transfer from local degrees of freedom into the global matrix
@@ -413,13 +413,13 @@ namespace Step8
         // the matrix and right hand side, once we are done with assembling
         // the entire linear system:
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-            system_rhs(local_dof_indices[i]) += cell_rhs(i);
+            system_rhs(local_dof_indices[i])+= cell_rhs(i);
           }
       }
 
@@ -604,7 +604,7 @@ namespace Step8
   void
   ElasticProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 8; ++cycle)
+    for(unsigned int cycle= 0; cycle < 8; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 

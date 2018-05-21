@@ -61,22 +61,22 @@ test()
   // different cells.
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     cell->set_active_fe_index(Testing::rand() % fe.size());
 
   dof_handler.distribute_dofs(fe);
 
-  cell = dof_handler.begin_active();
+  cell= dof_handler.begin_active();
   for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         deallog << "cell=" << cell << ", face=" << f
                 << ", fe_index=" << cell->active_fe_index() << ", dofs=";
         std::vector<types::global_dof_index> dofs(
           fe[cell->active_fe_index()].dofs_per_face);
         cell->face(f)->get_dof_indices(dofs, cell->active_fe_index());
-        for(unsigned int i = 0; i < dofs.size(); ++i)
+        for(unsigned int i= 0; i < dofs.size(); ++i)
           deallog << dofs[i] << ' ';
         deallog << std::endl;
       }
@@ -101,7 +101,7 @@ main()
   // number generator. set it to the
   // same value it has in
   // hp_hanging_nodes_02
-  for(unsigned int i = 0; i < 64; ++i)
+  for(unsigned int i= 0; i < 64; ++i)
     Testing::rand();
   test<3>();
 

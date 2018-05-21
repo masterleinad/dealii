@@ -25,9 +25,9 @@ test(PETScWrappers::SparseMatrix& m)
 {
   // first set a few entries. count how many
   // entries we have
-  unsigned int counter = 0;
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  unsigned int counter= 0;
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       if((i + 2 * j + 1) % 3 == 0)
         {
           m.set(i, j, i * j * .5 + .5);

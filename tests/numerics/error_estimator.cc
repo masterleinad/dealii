@@ -45,8 +45,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
-    values(1) = value(p, 1);
+    values(0)= value(p, 0);
+    values(1)= value(p, 1);
   }
 };
 
@@ -83,10 +83,10 @@ check()
   dof.distribute_dofs(element);
 
   MappingQ<dim>        mapping(3);
-  Quadrature<dim - 1>& q_face = get_q_face(function);
+  Quadrature<dim - 1>& q_face= get_q_face(function);
 
   std::map<types::boundary_id, const Function<dim>*> neumann_bc;
-  neumann_bc[0] = &function;
+  neumann_bc[0]= &function;
 
   Vector<double> v(dof.n_dofs());
   VectorTools::interpolate(mapping, dof, function, v);
@@ -97,7 +97,7 @@ check()
     mapping, dof, q_face, neumann_bc, v, error);
 
   deallog << "Estimated error:" << std::endl;
-  for(unsigned int i = 0; i < error.size(); ++i)
+  for(unsigned int i= 0; i < error.size(); ++i)
     deallog << error(i) * 100 << std::endl;
 }
 

@@ -27,7 +27,7 @@
 void
 test_real_to_unit_cell()
 {
-  const unsigned int dim = 2;
+  const unsigned int dim= 2;
 
   Triangulation<dim> triangulation;
 
@@ -37,11 +37,11 @@ test_real_to_unit_cell()
     Point<dim>(-0.29999999999999999, -0.050000000000000003),
     Point<dim>(-0.049999999999999989, -0.050000000000000003)};
   std::vector<CellData<dim>> cells(1);
-  cells[0].vertices[0] = 0;
-  cells[0].vertices[1] = 1;
-  cells[0].vertices[2] = 2;
-  cells[0].vertices[3] = 3;
-  cells[0].material_id = 0;
+  cells[0].vertices[0]= 0;
+  cells[0].vertices[1]= 1;
+  cells[0].vertices[2]= 2;
+  cells[0].vertices[3]= 3;
+  cells[0].material_id= 0;
   triangulation.create_triangulation(points, cells, SubCellData());
 
   Point<dim>           point(-0.29999999999999999, -0.29999999999999999);

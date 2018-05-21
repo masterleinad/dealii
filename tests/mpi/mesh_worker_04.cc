@@ -152,7 +152,7 @@ test()
                    parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy*/);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
@@ -167,11 +167,11 @@ test()
 
   MeshWorker::LoopControl lctrl;
 
-  lctrl.own_cells   = false;
-  lctrl.ghost_cells = false;
+  lctrl.own_cells  = false;
+  lctrl.ghost_cells= false;
 
-  lctrl.own_faces      = MeshWorker::LoopControl::never;
-  lctrl.faces_to_ghost = MeshWorker::LoopControl::never;
+  lctrl.own_faces     = MeshWorker::LoopControl::never;
+  lctrl.faces_to_ghost= MeshWorker::LoopControl::never;
   test_loop(dofs, lctrl);
 }
 

@@ -39,11 +39,11 @@ test()
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -62,8 +62,8 @@ test()
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
-    for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
-      partitions(index) = cell->subdomain_id();
+    for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
+      partitions(index)= cell->subdomain_id();
   }
 
   DataOut<dim> data_out;

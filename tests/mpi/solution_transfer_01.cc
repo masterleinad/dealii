@@ -58,7 +58,7 @@ test()
 
   dh.distribute_dofs(fe);
 
-  IndexSet locally_owned_dofs = dh.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dh.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
@@ -77,7 +77,7 @@ test()
   tria.execute_coarsening_and_refinement();
 
   dh.distribute_dofs(fe);
-  locally_owned_dofs = dh.locally_owned_dofs();
+  locally_owned_dofs= dh.locally_owned_dofs();
   DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
 
   PETScWrappers::MPI::Vector tmp(locally_owned_dofs, MPI_COMM_WORLD);
@@ -85,7 +85,7 @@ test()
   soltrans.interpolate(tmp);
 
   solution.reinit(locally_owned_dofs, locally_relevant_dofs, MPI_COMM_WORLD);
-  solution = tmp;
+  solution= tmp;
 
   // make sure no processor is
   // hanging
@@ -100,7 +100,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

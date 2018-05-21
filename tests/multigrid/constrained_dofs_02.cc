@@ -41,7 +41,7 @@ template <int dim>
 void
 setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
 {
-  unsigned int n_subdiv = 1;
+  unsigned int n_subdiv= 1;
   GridGenerator::subdivided_hyper_cube(triangulation, n_subdiv, 0, 1);
   triangulation.refine_global(2);
   {
@@ -77,7 +77,7 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
                                   const unsigned int    level,
                                   IndexSet&             dof_set)
 {
-  dof_set = IndexSet(dof_handler.n_dofs(level));
+  dof_set= IndexSet(dof_handler.n_dofs(level));
 
   // add all DoFs from our cells to the IndexSet
 
@@ -90,17 +90,17 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
   std::vector<types::global_dof_index> dof_indices;
   std::vector<types::global_dof_index> active_dofs;
 
-  typename DoFHandlerType::cell_iterator cell = dof_handler.begin(level),
-                                         endc = dof_handler.end(level);
+  typename DoFHandlerType::cell_iterator cell= dof_handler.begin(level),
+                                         endc= dof_handler.end(level);
   for(; cell != endc; ++cell)
     {
-      const types::subdomain_id id = cell->level_subdomain_id();
+      const types::subdomain_id id= cell->level_subdomain_id();
       if(id != dof_handler.get_triangulation().locally_owned_subdomain())
         continue;
 
       dof_indices.resize(cell->get_fe().dofs_per_cell);
       cell->get_mg_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < dof_indices.size(); ++i)
+      for(unsigned int i= 0; i < dof_indices.size(); ++i)
         if(!dof_set.is_element(dof_indices[i]))
           active_dofs.push_back(dof_indices[i]);
     }
@@ -149,7 +149,7 @@ check_fe(FiniteElement<dim>& fe)
     //std::map<std::string,std::vector<types::global_dof_index> > dofmap;
     std::map<std::string, std::vector<types::global_dof_index>> mgdofmap;
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
+    for(typename DoFHandler<dim>::level_cell_iterator cell= dofhref.begin();
         cell != dofhref.end();
         ++cell)
       {
@@ -162,7 +162,7 @@ check_fe(FiniteElement<dim>& fe)
         cell->get_mg_dof_indices(d);
       }
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
+    for(typename DoFHandler<dim>::level_cell_iterator cell= dofh.begin();
         cell != dofh.end();
         ++cell)
       {
@@ -177,7 +177,7 @@ check_fe(FiniteElement<dim>& fe)
 
     typename FunctionMap<dim>::type dirichlet_boundary;
     Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-    dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+    dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
 
@@ -185,19 +185,19 @@ check_fe(FiniteElement<dim>& fe)
 
   typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
-  dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
+  dirichlet_boundary[0]= &homogeneous_dirichlet_bc;
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
-  const unsigned int n_levels = tr.n_global_levels();
-  for(unsigned int level = 0; level < n_levels; ++level)
+  const unsigned int n_levels= tr.n_global_levels();
+  for(unsigned int level= 0; level < n_levels; ++level)
     {
       deallog << "Level " << level << ":" << std::endl;
 
-      IndexSet rei = mg_constrained_dofs.get_refinement_edge_indices(level);
+      IndexSet rei= mg_constrained_dofs.get_refinement_edge_indices(level);
       deallog << "get_refinement_edge_indices:" << std::endl;
       rei.print(deallog);
 
-      IndexSet bi = mg_constrained_dofs.get_boundary_indices(level);
+      IndexSet bi= mg_constrained_dofs.get_boundary_indices(level);
       deallog << "get_boundary_indices:" << std::endl;
       bi.print(deallog);
 

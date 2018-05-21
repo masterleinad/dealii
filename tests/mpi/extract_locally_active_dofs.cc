@@ -60,7 +60,7 @@ test()
       deallog << locally_active.size() << ' ' << locally_active.n_elements()
               << std::endl;
 
-      for(unsigned int i = 0; i < locally_active.size(); ++i)
+      for(unsigned int i= 0; i < locally_active.size(); ++i)
         if(locally_active.is_element(i))
           deallog << i << ' ';
       deallog << "OK" << std::endl;
@@ -72,7 +72,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

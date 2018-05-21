@@ -34,7 +34,7 @@ pack_function(
         status,
   void* data)
 {
-  static int some_number = cell->index();
+  static int some_number= cell->index();
   deallog << "packing cell " << cell->id() << " with data=" << some_number
           << " status=";
   if(status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
@@ -55,8 +55,8 @@ pack_function(
       Assert(!cell->has_children(), ExcInternalError());
     }
 
-  int* intdata = reinterpret_cast<int*>(data);
-  *intdata     = some_number;
+  int* intdata= reinterpret_cast<int*>(data);
+  *intdata    = some_number;
 
   ++some_number;
 }
@@ -70,7 +70,7 @@ unpack_function(
               status,
   const void* data)
 {
-  const int* intdata = reinterpret_cast<const int*>(data);
+  const int* intdata= reinterpret_cast<const int*>(data);
 
   deallog << "unpacking cell " << cell->id() << " with data=" << (*intdata)
           << " status=";
@@ -97,7 +97,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -128,7 +128,7 @@ test()
 
       deallog << "* repartition:" << std::endl;
 
-      offset = tr.register_data_attach(sizeof(int), pack_function<dim>);
+      offset= tr.register_data_attach(sizeof(int), pack_function<dim>);
 
       tr.repartition();
 
@@ -139,7 +139,7 @@ test()
 
       tr.notify_ready_to_unpack(offset, unpack_function<dim>);
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       if(myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }

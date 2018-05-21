@@ -28,7 +28,7 @@ test()
   // non-quadratic blocks so as to make them
   // not specially store the diagonal
   BlockSparsityPattern bsp(1, 2);
-  for(unsigned int j = 0; j < 2; ++j)
+  for(unsigned int j= 0; j < 2; ++j)
     bsp.block(0, j).reinit(3, 2, 1);
   bsp.collect_sizes();
 
@@ -43,7 +43,7 @@ test()
   // get the start iterator. it should point
   // to the first element of the first row,
   // which happens to be in block 0,1
-  BlockSparseMatrix<double>::const_iterator it = m.begin();
+  BlockSparseMatrix<double>::const_iterator it= m.begin();
 
   deallog << it->row() << ' ' << it->column() << ' ' << it->block_row() << ' '
           << it->block_column() << std::endl;

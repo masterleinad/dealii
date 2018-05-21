@@ -26,9 +26,9 @@ int
 main()
 {
   initlog();
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream& out= deallog.get_file_stream();
 
-  const int dim = 2, spacedim = 2;
+  const int dim= 2, spacedim= 2;
 
   Point<spacedim> center;
 
@@ -41,15 +41,15 @@ main()
   Point<spacedim> cp[2];
 
   // Radius
-  cp[0][0] = 1.0;
-  cp[1][0] = 1.0;
+  cp[0][0]= 1.0;
+  cp[1][0]= 1.0;
 
   // Force roundoff errors on one side only
-  double eps = 1e-10;
+  double eps= 1e-10;
 
   // Last point
-  cp[0][1] = -numbers::PI / 4;
-  cp[1][1] = numbers::PI / 4 - eps;
+  cp[0][1]= -numbers::PI / 4;
+  cp[1][1]= numbers::PI / 4 - eps;
 
   // Spacedim points
   std::vector<Point<spacedim>> sp(2);
@@ -57,27 +57,27 @@ main()
   // Weights
   std::vector<double> w(2);
 
-  sp[0] = manifold.push_forward(cp[0]);
-  sp[1] = manifold.push_forward(cp[1]);
+  sp[0]= manifold.push_forward(cp[0]);
+  sp[1]= manifold.push_forward(cp[1]);
 
-  unsigned int n_intermediates = 32;
+  unsigned int n_intermediates= 32;
 
   out << "set terminal aqua " << 0 << std::endl
       << "set size ratio -1" << std::endl
       << "plot '-' with vectors " << std::endl;
 
-  for(unsigned int v = 0; v < sp.size(); ++v)
+  for(unsigned int v= 0; v < sp.size(); ++v)
     out << center << " " << sp[v] << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for(unsigned int i= 0; i < n_intermediates + 1; ++i)
     {
-      w[0] = 1.0 - (double) i / ((double) n_intermediates);
-      w[1] = 1.0 - w[0];
+      w[0]= 1.0 - (double) i / ((double) n_intermediates);
+      w[1]= 1.0 - w[0];
 
       Point<spacedim> ip
         = manifold.get_new_point(make_array_view(sp), make_array_view(w));
-      Tensor<1, spacedim> t1 = manifold.get_tangent_vector(ip, sp[0]);
-      Tensor<1, spacedim> t2 = manifold.get_tangent_vector(ip, sp[1]);
+      Tensor<1, spacedim> t1= manifold.get_tangent_vector(ip, sp[0]);
+      Tensor<1, spacedim> t2= manifold.get_tangent_vector(ip, sp[1]);
 
       out << ip << " " << t2 << std::endl;
     }
@@ -88,15 +88,15 @@ main()
       << "set size ratio -1" << std::endl
       << "plot '-' w lp " << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for(unsigned int i= 0; i < n_intermediates + 1; ++i)
     {
-      w[0] = 1.0 - (double) i / ((double) n_intermediates);
-      w[1] = 1.0 - w[0];
+      w[0]= 1.0 - (double) i / ((double) n_intermediates);
+      w[1]= 1.0 - w[0];
 
-      Point<spacedim> ip = manifold.pull_back(
+      Point<spacedim> ip= manifold.pull_back(
         manifold.get_new_point(make_array_view(sp), make_array_view(w)));
 
-      ip[0] = w[1];
+      ip[0]= w[1];
 
       out << ip << std::endl;
     }

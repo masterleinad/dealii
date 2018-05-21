@@ -91,7 +91,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Ralf Hartmann, 1999
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverSelector : public Subscriptor
 {
 public:
@@ -103,7 +103,7 @@ public:
   /**
    * Constructor, filling in default values
    */
-  SolverSelector() = default;
+  SolverSelector()= default;
 
   /**
    * Destructor
@@ -250,7 +250,7 @@ template <typename VectorType>
 void
 SolverSelector<VectorType>::select(const std::string& name)
 {
-  solver_name = name;
+  solver_name= name;
 }
 
 template <typename VectorType>
@@ -299,7 +299,7 @@ template <typename VectorType>
 void
 SolverSelector<VectorType>::set_control(SolverControl& ctrl)
 {
-  control = &ctrl;
+  control= &ctrl;
 }
 
 template <typename VectorType>
@@ -314,7 +314,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverGMRES<VectorType>::AdditionalData& data)
 {
-  gmres_data = data;
+  gmres_data= data;
 }
 
 template <typename VectorType>
@@ -322,7 +322,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverFGMRES<VectorType>::AdditionalData& data)
 {
-  fgmres_data = data;
+  fgmres_data= data;
 }
 
 template <typename VectorType>
@@ -330,7 +330,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverRichardson<VectorType>::AdditionalData& data)
 {
-  richardson_data = data;
+  richardson_data= data;
 }
 
 template <typename VectorType>
@@ -338,7 +338,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverCG<VectorType>::AdditionalData& data)
 {
-  cg_data = data;
+  cg_data= data;
 }
 
 template <typename VectorType>
@@ -346,7 +346,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverMinRes<VectorType>::AdditionalData& data)
 {
-  minres_data = data;
+  minres_data= data;
 }
 
 template <typename VectorType>
@@ -354,7 +354,7 @@ void
 SolverSelector<VectorType>::set_data(
   const typename SolverBicgstab<VectorType>::AdditionalData& data)
 {
-  bicgstab_data = data;
+  bicgstab_data= data;
 }
 
 DEAL_II_NAMESPACE_CLOSE

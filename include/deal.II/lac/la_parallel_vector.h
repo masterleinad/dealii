@@ -254,7 +254,7 @@ namespace LinearAlgebra
        * parallel distribution.
        */
       void
-      reinit(const size_type size, const bool omit_zeroing_entries = false);
+      reinit(const size_type size, const bool omit_zeroing_entries= false);
 
       /**
        * Uses the parallel layout of the input vector @p in_vector and
@@ -269,7 +269,7 @@ namespace LinearAlgebra
       template <typename Number2>
       void
       reinit(const Vector<Number2>& in_vector,
-             const bool             omit_zeroing_entries = false);
+             const bool             omit_zeroing_entries= false);
 
       /**
        * Initialize the vector. The local range is specified by @p
@@ -457,7 +457,7 @@ namespace LinearAlgebra
        * messages with the same ID that will corrupt this operation.
        */
       void
-      compress_start(const unsigned int communication_channel = 0,
+      compress_start(const unsigned int                communication_channel= 0,
                      ::dealii::VectorOperation::values operation
                      = VectorOperation::add);
 
@@ -563,7 +563,7 @@ namespace LinearAlgebra
        */
       virtual void
       reinit(const VectorSpaceVector<Number>& V,
-             const bool omit_zeroing_entries = false) override;
+             const bool omit_zeroing_entries= false) override;
 
       /**
        * Multiply the entire vector by a fixed factor.
@@ -739,9 +739,9 @@ namespace LinearAlgebra
        */
       virtual void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.
@@ -1484,8 +1484,8 @@ namespace LinearAlgebra
     Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
                                          std::vector<OtherNumber>& values) const
     {
-      for(size_type i = 0; i < indices.size(); ++i)
-        values[i] = operator()(indices[i]);
+      for(size_type i= 0; i < indices.size(); ++i)
+        values[i]= operator()(indices[i]);
     }
 
     template <typename Number>
@@ -1497,7 +1497,7 @@ namespace LinearAlgebra
     {
       while(indices_begin != indices_end)
         {
-          *values_begin = operator()(*indices_begin);
+          *values_begin= operator()(*indices_begin);
           indices_begin++;
           values_begin++;
         }
@@ -1510,13 +1510,13 @@ namespace LinearAlgebra
                         const ::dealii::Vector<OtherNumber>& values)
     {
       AssertDimension(indices.size(), values.size());
-      for(size_type i = 0; i < indices.size(); ++i)
+      for(size_type i= 0; i < indices.size(); ++i)
         {
           Assert(
             numbers::is_finite(values[i]),
             ExcMessage(
               "The given value is not finite but either infinite or Not A Number (NaN)"));
-          this->operator()(indices[i]) += values(i);
+          this->operator()(indices[i])+= values(i);
         }
     }
 
@@ -1527,13 +1527,13 @@ namespace LinearAlgebra
                         const size_type*   indices,
                         const OtherNumber* values)
     {
-      for(size_type i = 0; i < n_elements; ++i, ++indices, ++values)
+      for(size_type i= 0; i < n_elements; ++i, ++indices, ++values)
         {
           Assert(
             numbers::is_finite(*values),
             ExcMessage(
               "The given value is not finite but either infinite or Not A Number (NaN)"));
-          this->operator()(*indices) += *values;
+          this->operator()(*indices)+= *values;
         }
     }
 
@@ -1605,7 +1605,7 @@ namespace internal
       {
         matrix.initialize_dof_vector(v);
         if(!omit_zeroing_entries)
-          v = Number();
+          v= Number();
       }
 
       template <typename Matrix>
@@ -1616,7 +1616,7 @@ namespace internal
       {
         matrix.initialize_dof_vector(v);
         if(!omit_zeroing_entries)
-          v = Number();
+          v= Number();
       }
     };
 

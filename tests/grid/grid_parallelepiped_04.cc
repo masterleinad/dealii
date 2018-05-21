@@ -41,7 +41,7 @@ void
 check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
 {
   deallog << "* checking dim=" << dim << " subd=";
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     deallog << subd[i] << " ";
   deallog << std::endl;
 
@@ -53,18 +53,18 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
   switch(dim)
     {
       case 1:
-        corners[0] = Point<dim>(0.5);
+        corners[0]= Point<dim>(0.5);
         break;
 
       case 2:
-        corners[0] = Point<dim>(0.0, 0.5);
-        corners[1] = Point<dim>(0.5, 0.0);
+        corners[0]= Point<dim>(0.0, 0.5);
+        corners[1]= Point<dim>(0.5, 0.0);
         break;
 
       case 3:
-        corners[0] = Point<dim>(0.0, 0.3, 0.5);
-        corners[1] = Point<dim>(0.4, 0.0, 0.5);
-        corners[2] = Point<dim>(0.4, 0.3, 0.0);
+        corners[0]= Point<dim>(0.0, 0.3, 0.5);
+        corners[1]= Point<dim>(0.4, 0.0, 0.5);
+        corners[2]= Point<dim>(0.4, 0.3, 0.0);
         break;
 
       default:
@@ -80,10 +80,10 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
     std::map<unsigned int, unsigned int>              boundary_count;
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
-      endc = triangulation.end();
+      endc= triangulation.end();
     for(; cell != endc; ++cell)
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           {
             if(cell->face(face)->at_boundary())
@@ -118,7 +118,7 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
       d_o.attach_dof_handler(dh);
       Vector<double>   vec(dh.n_dofs());
       ConstraintMatrix constraints;
-      for(unsigned int c = 0; c < 6; ++c)
+      for(unsigned int c= 0; c < 6; ++c)
         VectorTools::interpolate_boundary_values(
           dh, c, Functions::ConstantFunction<dim>(c), constraints);
       constraints.close();
@@ -126,9 +126,9 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
 
       d_o.add_data_vector(vec, "v");
       d_o.build_patches(2);
-      char       fname[] = "0.vtk";
-      static int counter = 0;
-      fname[0] += counter;
+      char       fname[]= "0.vtk";
+      static int counter= 0;
+      fname[0]+= counter;
       ++counter;
 
       std::ofstream ss(fname);
@@ -145,14 +145,14 @@ main()
 
   //check_parallelepiped<1> (false, true);
   //check_parallelepiped<2> (false, true);
-  for(unsigned int subd = 1; subd <= 3; ++subd)
+  for(unsigned int subd= 1; subd <= 3; ++subd)
     {
-      unsigned int subdivisions[3] = {subd, subd, subd};
+      unsigned int subdivisions[3]= {subd, subd, subd};
       check_parallelepiped<3>(true, subd == 2, subdivisions);
     }
-  for(unsigned int subd = 1; subd <= 3; ++subd)
+  for(unsigned int subd= 1; subd <= 3; ++subd)
     {
-      unsigned int subdivisions[3] = {1, 2, subd};
+      unsigned int subdivisions[3]= {1, 2, subd};
       check_parallelepiped<3>(true, false, subdivisions);
     }
 }

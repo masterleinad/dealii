@@ -75,7 +75,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Joshua White, Wolfgang Bangerth
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_Nothing : public FiniteElement<dim, spacedim>
 {
 public:
@@ -90,7 +90,7 @@ public:
    * that is zero everywhere, this means that the Q1 field will be forced to
    * become zero at this interface.
    */
-  FE_Nothing(const unsigned int n_components = 1, const bool dominate = false);
+  FE_Nothing(const unsigned int n_components= 1, const bool dominate= false);
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;

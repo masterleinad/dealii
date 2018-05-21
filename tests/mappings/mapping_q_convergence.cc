@@ -65,24 +65,24 @@ regression_slope(const std::vector<double>& x, const std::vector<double>& y)
          dealii::ExcMessage(
            "at least two points are required for linear regression fit"));
 
-  double sum_1 = 0.0, sum_x = 0.0, sum_x2 = 0.0, sum_y = 0.0, sum_xy = 0.0;
+  double sum_1= 0.0, sum_x= 0.0, sum_x2= 0.0, sum_y= 0.0, sum_xy= 0.0;
 
-  for(unsigned int i = 0; i < x.size(); i++)
+  for(unsigned int i= 0; i < x.size(); i++)
     {
-      sum_1 += 1.0;
-      sum_x += x[i];
-      sum_x2 += x[i] * x[i];
-      sum_y += y[i];
-      sum_xy += x[i] * y[i];
+      sum_1+= 1.0;
+      sum_x+= x[i];
+      sum_x2+= x[i] * x[i];
+      sum_y+= y[i];
+      sum_xy+= x[i] * y[i];
     }
 
-  K(0, 0) = sum_1;
-  K(0, 1) = sum_x;
-  K(1, 0) = sum_x;
-  K(1, 1) = sum_x2;
+  K(0, 0)= sum_1;
+  K(0, 1)= sum_x;
+  K(1, 0)= sum_x;
+  K(1, 1)= sum_x2;
 
-  B(0) = sum_y;
-  B(1) = sum_xy;
+  B(0)= sum_y;
+  B(1)= sum_xy;
 
   invK.invert(K);
   invK.vmult(X, B, false);
@@ -93,7 +93,7 @@ regression_slope(const std::vector<double>& x, const std::vector<double>& y)
 double
 zvalue(const double x, const double y)
 {
-  double xh = x * 5., yh = y * 5.;
+  double xh= x * 5., yh= y * 5.;
   return (xh * exp(-xh * xh - yh * yh)) / 10.;
 }
 
@@ -113,19 +113,19 @@ template <int dim>
 Point<dim>
 Geometry<dim>::pull_back(const Point<dim>& space_point) const
 {
-  const double d = space_point[dim - 1];
-  const double z = zvalue(space_point[0], dim == 3 ? space_point[1] : 0);
+  const double d= space_point[dim - 1];
+  const double z= zvalue(space_point[0], dim == 3 ? space_point[1] : 0);
 
-  double d_hat = 0.;
+  double d_hat= 0.;
   if((d - z) <= 0)
-    d_hat = (d - z) / (1. + z);
+    d_hat= (d - z) / (1. + z);
   else
-    d_hat = (d - z) / (1. - z);
+    d_hat= (d - z) / (1. - z);
 
   Point<dim> p;
-  for(unsigned i = 0; i < dim - 1; ++i)
-    p[i] = space_point[i];
-  p[dim - 1] = d_hat;
+  for(unsigned i= 0; i < dim - 1; ++i)
+    p[i]= space_point[i];
+  p[dim - 1]= d_hat;
 
   return p;
 }
@@ -134,19 +134,19 @@ template <int dim>
 Point<dim>
 Geometry<dim>::push_forward(const Point<dim>& chart_point) const
 {
-  const double d_hat = chart_point[dim - 1];
-  const double z     = zvalue(chart_point[0], dim == 3 ? chart_point[1] : 0);
+  const double d_hat= chart_point[dim - 1];
+  const double z    = zvalue(chart_point[0], dim == 3 ? chart_point[1] : 0);
 
-  double d = 0.;
+  double d= 0.;
   if(d_hat <= 0)
-    d = d_hat + (d_hat + 1.) * z;
+    d= d_hat + (d_hat + 1.) * z;
   else
-    d = d_hat - (d_hat - 1.) * z;
+    d= d_hat - (d_hat - 1.) * z;
 
   Point<dim> p;
-  for(unsigned i = 0; i < dim - 1; ++i)
-    p[i] = chart_point[i];
-  p[dim - 1] = d;
+  for(unsigned i= 0; i < dim - 1; ++i)
+    p[i]= chart_point[i];
+  p[dim - 1]= d;
 
   return p;
 }
@@ -180,8 +180,7 @@ create_tria(Triangulation<dim>& triangulation, const Geometry<dim>& geometry)
                        triangulation);
 
   triangulation.set_manifold(0, geometry);
-  for(Triangulation<3>::active_cell_iterator cell
-      = triangulation.begin_active();
+  for(Triangulation<3>::active_cell_iterator cell= triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     cell->set_all_manifold_ids(0);
@@ -197,7 +196,7 @@ test(const FiniteElement<dim>& fe)
   constraints.close();
 
   deallog << "FE degree: " << fe.degree << std::endl;
-  for(unsigned mapping_p = 2; mapping_p < fe.degree + 3; ++mapping_p)
+  for(unsigned mapping_p= 2; mapping_p < fe.degree + 3; ++mapping_p)
     {
       deallog << "mapping order: " << mapping_p << std::endl;
       Triangulation<dim> triangulation;
@@ -208,7 +207,7 @@ test(const FiniteElement<dim>& fe)
       std::vector<double> log_l2_errors;
 
       MappingQ<dim> mapping(mapping_p, true);
-      for(unsigned int refinement_n = 1; refinement_n < 4; ++refinement_n)
+      for(unsigned int refinement_n= 1; refinement_n < 4; ++refinement_n)
         {
           triangulation.refine_global(1);
           dof_handler.clear();
@@ -262,9 +261,9 @@ main()
   deallog << std::setprecision(5);
   deallog.depth_console(0);
 
-  const static unsigned dim = 3;
+  const static unsigned dim= 3;
 
-  for(unsigned p = 1; p < 4; ++p)
+  for(unsigned p= 1; p < 4; ++p)
     {
       test<dim>(FE_Q<dim>(QGaussLobatto<1>(p + 1)));
     }

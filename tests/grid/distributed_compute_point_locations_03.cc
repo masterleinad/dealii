@@ -36,9 +36,9 @@ template <int dim>
 void
 test_distributed_cpt(unsigned int ref_cube)
 {
-  MPI_Comm     mpi_communicator = MPI_COMM_WORLD;
-  unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
-  unsigned int my_rank = Utilities::MPI::this_mpi_process(mpi_communicator);
+  MPI_Comm     mpi_communicator= MPI_COMM_WORLD;
+  unsigned int n_procs= Utilities::MPI::n_mpi_processes(mpi_communicator);
+  unsigned int my_rank= Utilities::MPI::this_mpi_process(mpi_communicator);
 
   deallog << "Testing for dim = " << dim << " on " << n_procs << " processes"
           << std::endl;
@@ -73,29 +73,29 @@ test_distributed_cpt(unsigned int ref_cube)
 
   // Obtaining the global mesh description through an all to all communication
   std::vector<std::vector<BoundingBox<dim>>> global_bboxes;
-  global_bboxes = Utilities::MPI::all_gather(mpi_communicator, local_bbox);
+  global_bboxes= Utilities::MPI::all_gather(mpi_communicator, local_bbox);
 
   // Initializing the cache
   GridTools::Cache<dim, dim> cache_d(cube_d);
   auto                       output_tuple
     = distributed_compute_point_locations(cache_d, test_points, global_bboxes);
-  const auto& maps   = std::get<2>(output_tuple);
-  const auto& points = std::get<3>(output_tuple);
-  const auto& ranks  = std::get<4>(output_tuple);
+  const auto& maps  = std::get<2>(output_tuple);
+  const auto& points= std::get<3>(output_tuple);
+  const auto& ranks = std::get<4>(output_tuple);
 
   // Testing the results: if the map in maps is correct test_points[maps[i][j]] == points[i][j]
-  bool test_passed = true;
+  bool test_passed= true;
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for(unsigned int i= 0; i < points.size(); ++i)
     {
-      for(unsigned int j = 0; j < maps[i].size(); ++j)
+      for(unsigned int j= 0; j < maps[i].size(); ++j)
         if((test_points[maps[i][j]] - points[i][j]).norm() > 1e-10)
           {
             deallog << " Error in cell " << i << " with position " << j
                     << std::endl;
             deallog << " Received map was: " << maps[i][j] << std::endl;
             deallog << " From rank: " << ranks[i][j] << std::endl;
-            test_passed = false;
+            test_passed= false;
           }
     }
 

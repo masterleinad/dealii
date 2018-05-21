@@ -224,7 +224,7 @@ namespace IteratorFilters
      * evaluated to true and state if the iterator must be locally owned.
      */
     MaterialIdEqualTo(const types::material_id material_id,
-                      const bool               only_locally_owned = false);
+                      const bool               only_locally_owned= false);
 
     /**
      * Constructor. Store a collection of material ids which iterators shall
@@ -232,7 +232,7 @@ namespace IteratorFilters
      * owned.
      */
     MaterialIdEqualTo(const std::set<types::material_id>& material_ids,
-                      const bool only_locally_owned = false);
+                      const bool only_locally_owned= false);
 
     /**
      * Evaluation operator. Returns true if the material id of the object
@@ -271,7 +271,7 @@ namespace IteratorFilters
      * evaluated to true and state if the iterator must be locally owned.
      */
     ActiveFEIndexEqualTo(const unsigned int active_fe_index,
-                         const bool         only_locally_owned = false);
+                         const bool         only_locally_owned= false);
 
     /**
      * Constructor. Store a collection of active FE indices which iterators
@@ -279,7 +279,7 @@ namespace IteratorFilters
      * locally owned.
      */
     ActiveFEIndexEqualTo(const std::set<unsigned int>& active_fe_indices,
-                         const bool only_locally_owned = false);
+                         const bool only_locally_owned= false);
 
     /**
      * Evaluation operator. Returns true if the active FE index of the object
@@ -701,21 +701,21 @@ private:
      * Mark the destructor virtual to allow destruction through pointers to
      * the base class.
      */
-    virtual ~PredicateBase() = default;
+    virtual ~PredicateBase()= default;
 
     /**
      * Abstract function which in derived classes denotes the evaluation of
      * the predicate on the given iterator.
      */
     virtual bool
-    operator()(const BaseIterator& bi) const = 0;
+    operator()(const BaseIterator& bi) const= 0;
 
     /**
      * Generate a copy of this object, i.e. of the actual type of this
      * pointer.
      */
     virtual std::unique_ptr<PredicateBase>
-    clone() const = 0;
+    clone() const= 0;
   };
 
   /**
@@ -893,7 +893,7 @@ filter_iterators(IteratorRange<BaseIterator> i,
                  const Targs... args)
 {
   // Recursively create filtered iterators, one predicate at a time
-  auto fi = filter_iterators(i, p);
+  auto fi= filter_iterators(i, p);
   return filter_iterators(fi, args...);
 }
 
@@ -1037,7 +1037,7 @@ template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>
 FilteredIterator<BaseIterator>::operator++(int)
 {
-  const FilteredIterator old_state = *this;
+  const FilteredIterator old_state= *this;
 
   if(this->state() == IteratorState::valid)
     do
@@ -1061,7 +1061,7 @@ template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>
 FilteredIterator<BaseIterator>::operator--(int)
 {
-  const FilteredIterator old_state = *this;
+  const FilteredIterator old_state= *this;
 
   if(this->state() == IteratorState::valid)
     do

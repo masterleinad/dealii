@@ -28,11 +28,11 @@ void
 test(std::ostream& out)
 {
   Point<dim> p1;
-  p1[0] = 2.;
+  p1[0]= 2.;
 
   SphericalManifold<dim> boundary_description(p1);
   GridOut                go;
-  GridOut::OutputFormat  format = GridOut::gnuplot;
+  GridOut::OutputFormat  format= GridOut::gnuplot;
 
   {
     deallog << "quarter_hyper_ball" << std::endl;

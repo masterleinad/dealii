@@ -61,14 +61,14 @@ public:
   /**
    * Constructor generating an empty matrix of dimension <tt>n</tt>.
    */
-  TridiagonalMatrix(size_type n = 0, bool symmetric = false);
+  TridiagonalMatrix(size_type n= 0, bool symmetric= false);
 
   /**
    * Reinitialize the matrix to a new size and reset all entries to zero. The
    * symmetry properties may be set as well.
    */
   void
-  reinit(size_type n, bool symmetric = false);
+  reinit(size_type n, bool symmetric= false);
 
   //@}
 
@@ -137,7 +137,7 @@ public:
   void
   vmult(Vector<number>&       w,
         const Vector<number>& v,
-        const bool            adding = false) const;
+        const bool            adding= false) const;
 
   /**
    * Adding Matrix-vector-multiplication. Same as vmult() with parameter
@@ -160,7 +160,7 @@ public:
   void
   Tvmult(Vector<number>&       w,
          const Vector<number>& v,
-         const bool            adding = false) const;
+         const bool            adding= false) const;
 
   /**
    * Adding transpose matrix-vector-multiplication. Same as Tvmult() with
@@ -219,8 +219,8 @@ public:
   template <class OutputStream>
   void
   print(OutputStream&      s,
-        const unsigned int width     = 5,
-        const unsigned int precision = 2) const;
+        const unsigned int width    = 5,
+        const unsigned int precision= 2) const;
   //@}
 
 private:
@@ -338,7 +338,7 @@ TridiagonalMatrix<number>::print(OutputStream&      s,
                                  const unsigned int width,
                                  const unsigned int) const
 {
-  for(size_type i = 0; i < n(); ++i)
+  for(size_type i= 0; i < n(); ++i)
     {
       if(i > 0)
         s << std::setw(width) << (*this)(i, i - 1);

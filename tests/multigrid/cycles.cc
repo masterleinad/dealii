@@ -64,7 +64,7 @@ test_cycles(unsigned int minlevel, unsigned int maxlevel)
 {
   MGAll                             all;
   MGLevelObject<FullMatrix<double>> level_matrices(0, maxlevel);
-  for(unsigned int i = 0; i <= maxlevel; ++i)
+  for(unsigned int i= 0; i <= maxlevel; ++i)
     level_matrices[i].reinit(N, N);
   mg::Matrix<VectorType> mgmatrix(level_matrices);
 
@@ -77,7 +77,7 @@ test_cycles(unsigned int minlevel, unsigned int maxlevel)
                             maxlevel,
                             Multigrid<VectorType>::v_cycle);
   mg1.set_debug(3);
-  for(unsigned int i = minlevel; i <= maxlevel; ++i)
+  for(unsigned int i= minlevel; i <= maxlevel; ++i)
     mg1.defect[i].reinit(N);
   mg1.cycle();
   deallog << std::endl;

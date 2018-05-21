@@ -35,8 +35,8 @@ main(int argc, char* argv[])
 
   // Need to get the linear operator to do some nonsense work to verify
   // that it can indeed be used as expected
-  const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  const unsigned int size= 32;
+  unsigned int       dim = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix testproblem(size, size);
@@ -53,12 +53,12 @@ main(int argc, char* argv[])
     Vector<double> f(dim);
     Vector<double> u(dim);
 
-    const auto lo_A = linear_operator<Vector<double>>(A);
+    const auto lo_A= linear_operator<Vector<double>>(A);
     const auto lo_id
       = identity_operator<Vector<double>>(lo_A.reinit_range_vector);
-    const auto lo_A_plus_id = lo_A + lo_id;
+    const auto lo_A_plus_id= lo_A + lo_id;
 
-    u = lo_A_plus_id * f;
+    u= lo_A_plus_id * f;
   }
 
   {
@@ -78,15 +78,15 @@ main(int argc, char* argv[])
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);
 
-    const auto lo_A    = linear_operator<TrilinosWrappers::MPI::Vector>(A);
-    const auto lo_id_1 = identity_operator<TrilinosWrappers::MPI::Vector>(
+    const auto lo_A   = linear_operator<TrilinosWrappers::MPI::Vector>(A);
+    const auto lo_id_1= identity_operator<TrilinosWrappers::MPI::Vector>(
       lo_A.reinit_range_vector);
-    const auto lo_id_2 = identity_operator<TrilinosWrappers::MPI::Vector>(lo_A);
-    const auto lo_A_plus_id_1 = lo_A + lo_id_1; // Not a good idea. See below.
-    const auto lo_A_plus_id_2 = lo_A + lo_id_2;
+    const auto lo_id_2= identity_operator<TrilinosWrappers::MPI::Vector>(lo_A);
+    const auto lo_A_plus_id_1= lo_A + lo_id_1; // Not a good idea. See below.
+    const auto lo_A_plus_id_2= lo_A + lo_id_2;
 
     // u = lo_A_plus_id_1 * f; // This is not allowed -- different payloads
-    u = lo_A_plus_id_2 * f;
+    u= lo_A_plus_id_2 * f;
   }
 
   deallog << "OK" << std::endl;

@@ -35,8 +35,8 @@ main(int argc, char** argv)
   {
     SolverControl control(100, 1.e-3);
 
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -49,10 +49,10 @@ main(int argc, char** argv)
     indices.add_range(0, dim);
     PETScWrappers::MPI::Vector f(indices, MPI_COMM_WORLD);
     PETScWrappers::MPI::Vector u(indices, MPI_COMM_WORLD);
-    u = 0.;
-    f = 1.;
+    u= 0.;
+    f= 1.;
     A.compress(VectorOperation::insert);
-    PETScWrappers::MPI::Vector t = u;
+    PETScWrappers::MPI::Vector t= u;
 
     PETScWrappers::SolverPreOnly solver(control);
 
@@ -68,7 +68,7 @@ main(int argc, char** argv)
       solver.solve(A, t, u, preconditioner), control.last_step(), 1, 1);
     deallog << t.l2_norm() << std::endl;
 
-    u = 0;
+    u= 0;
     preconditioner.vmult(u, f);
     deallog << u.l2_norm() << std::endl;
     preconditioner.vmult(t, u);

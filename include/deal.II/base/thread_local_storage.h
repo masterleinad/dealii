@@ -70,7 +70,7 @@ namespace Threads
      * Default constructor. Initialize each thread local object using its
      * default constructor.
      */
-    ThreadLocalStorage() = default;
+    ThreadLocalStorage()= default;
 
     /**
      * A kind of copy constructor. Initialize each thread local object by
@@ -207,7 +207,7 @@ namespace Threads
 #  ifdef DEAL_II_WITH_THREADS
     return data.local(exists);
 #  else
-    exists = true;
+    exists= true;
     return data;
 #  endif
   }
@@ -222,7 +222,7 @@ namespace Threads
   inline ThreadLocalStorage<T>&
   ThreadLocalStorage<T>::operator=(const T& t)
   {
-    get() = t;
+    get()= t;
     return *this;
   }
 
@@ -245,7 +245,7 @@ namespace Threads
 #  ifdef DEAL_II_WITH_THREADS
     data.clear();
 #  else
-    data = T{};
+    data= T{};
 #  endif
   }
 } // namespace Threads

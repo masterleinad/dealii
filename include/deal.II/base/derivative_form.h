@@ -52,7 +52,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Sebastian Pauletti, 2011, Luca Heltai, 2015
  */
-template <int order, int dim, int spacedim, typename Number = double>
+template <int order, int dim, int spacedim, typename Number= double>
 class DerivativeForm
 {
 public:
@@ -179,8 +179,8 @@ inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm(
   Assert((dim == spacedim),
          ExcMessage("Only allowed for forms with dim==spacedim."));
   if(dim == spacedim)
-    for(unsigned int j = 0; j < dim; ++j)
-      (*this)[j] = T[j];
+    for(unsigned int j= 0; j < dim; ++j)
+      (*this)[j]= T[j];
 }
 
 template <int order, int dim, int spacedim, typename Number>
@@ -191,8 +191,8 @@ operator=(const Tensor<order + 1, dim, Number>& ta)
   Assert((dim == spacedim), ExcMessage("Only allowed when dim==spacedim."));
 
   if(dim == spacedim)
-    for(unsigned int j = 0; j < dim; ++j)
-      (*this)[j] = ta[j];
+    for(unsigned int j= 0; j < dim; ++j)
+      (*this)[j]= ta[j];
   return *this;
 }
 
@@ -204,7 +204,7 @@ operator=(const Tensor<1, dim, Number>& T)
   Assert((1 == spacedim) && (order == 1),
          ExcMessage("Only allowed for spacedim==1 and order==1."));
 
-  (*this)[0] = T;
+  (*this)[0]= T;
 
   return *this;
 }
@@ -247,8 +247,8 @@ operator Tensor<order + 1, dim, Number>() const
   Tensor<order + 1, dim, Number> t;
 
   if(dim == spacedim)
-    for(unsigned int j = 0; j < dim; ++j)
-      t[j] = (*this)[j];
+    for(unsigned int j= 0; j < dim; ++j)
+      t[j]= (*this)[j];
 
   return t;
 }
@@ -260,9 +260,9 @@ DerivativeForm<order, dim, spacedim, Number>::transpose() const
   Assert(order == 1, ExcMessage("Only for rectangular DerivativeForm."));
   DerivativeForm<1, spacedim, dim, Number> tt;
 
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      tt[j][i] = (*this)[i][j];
+  for(unsigned int i= 0; i < spacedim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      tt[j][i]= (*this)[i][j];
 
   return tt;
 }
@@ -274,9 +274,9 @@ DerivativeForm<order, dim, spacedim, Number>::times_T_t(
 {
   Assert(order == 1, ExcMessage("Only for order == 1."));
   DerivativeForm<1, dim, spacedim, Number> dest;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      dest[i][j] = (*this)[i] * T[j];
+  for(unsigned int i= 0; i < spacedim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      dest[i][j]= (*this)[i] * T[j];
 
   return dest;
 }
@@ -285,9 +285,9 @@ template <int order, int dim, int spacedim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 DerivativeForm<order, dim, spacedim, Number>::norm() const
 {
-  typename numbers::NumberTraits<Number>::real_type sum_of_squares = 0;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    sum_of_squares += tensor[i].norm_square();
+  typename numbers::NumberTraits<Number>::real_type sum_of_squares= 0;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    sum_of_squares+= tensor[i].norm_square();
   return std::sqrt(sum_of_squares);
 }
 
@@ -305,11 +305,11 @@ DerivativeForm<order, dim, spacedim, Number>::determinant() const
   else
     {
       Assert(spacedim > dim, ExcMessage("Only for spacedim>dim."));
-      const DerivativeForm<1, spacedim, dim, Number> DF_t = this->transpose();
+      const DerivativeForm<1, spacedim, dim, Number> DF_t= this->transpose();
       Tensor<2, dim, Number>                         G; //First fundamental form
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = 0; j < dim; ++j)
-          G[i][j] = DF_t[i] * DF_t[j];
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= 0; j < dim; ++j)
+          G[i][j]= DF_t[i] * DF_t[j];
 
       return (sqrt(dealii::determinant(G)));
     }
@@ -327,11 +327,11 @@ DerivativeForm<order, dim, spacedim, Number>::covariant_form() const
     }
   else
     {
-      const DerivativeForm<1, spacedim, dim> DF_t = this->transpose();
+      const DerivativeForm<1, spacedim, dim> DF_t= this->transpose();
       Tensor<2, dim, Number>                 G; //First fundamental form
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = 0; j < dim; ++j)
-          G[i][j] = DF_t[i] * DF_t[j];
+      for(unsigned int i= 0; i < dim; ++i)
+        for(unsigned int j= 0; j < dim; ++j)
+          G[i][j]= DF_t[i] * DF_t[j];
 
       return (this->times_T_t(invert(G)));
     }
@@ -360,8 +360,8 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number>& DF,
                      const Tensor<1, dim, Number>&                   T)
 {
   Tensor<1, spacedim, Number> dest;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    dest[i] = DF[i] * T;
+  for(unsigned int i= 0; i < spacedim; ++i)
+    dest[i]= DF[i] * T;
   return dest;
 }
 
@@ -378,8 +378,8 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number>& DF,
                      const Tensor<2, dim, Number>&                   T)
 {
   DerivativeForm<1, spacedim, dim> dest;
-  for(unsigned int i = 0; i < dim; ++i)
-    dest[i] = apply_transformation(DF, T[i]);
+  for(unsigned int i= 0; i < dim; ++i)
+    dest[i]= apply_transformation(DF, T[i]);
 
   return dest;
 }
@@ -397,8 +397,8 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number>& DF1,
 {
   Tensor<2, spacedim, Number> dest;
 
-  for(unsigned int i = 0; i < spacedim; ++i)
-    dest[i] = apply_transformation(DF1, DF2[i]);
+  for(unsigned int i= 0; i < spacedim; ++i)
+    dest[i]= apply_transformation(DF1, DF2[i]);
 
   return dest;
 }
@@ -415,7 +415,7 @@ inline DerivativeForm<1, spacedim, dim, Number>
 transpose(const DerivativeForm<1, dim, spacedim, Number>& DF)
 {
   DerivativeForm<1, spacedim, dim, Number> tt;
-  tt = DF.transpose();
+  tt= DF.transpose();
   return tt;
 }
 

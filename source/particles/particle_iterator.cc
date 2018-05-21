@@ -57,7 +57,7 @@ namespace Particles
   ParticleIterator<dim, spacedim>&
   ParticleIterator<dim, spacedim>::operator=(const ParticleIterator& other)
   {
-    accessor = other.accessor;
+    accessor= other.accessor;
     return *this;
   }
 

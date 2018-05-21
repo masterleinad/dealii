@@ -51,7 +51,7 @@
 
 #include <iostream>
 
-namespace LA = dealii::LinearAlgebraTrilinos;
+namespace LA= dealii::LinearAlgebraTrilinos;
 
 using namespace dealii;
 
@@ -140,8 +140,8 @@ Test_Solver_Output::~Test_Solver_Output()
 void
 Test_Solver_Output::run()
 {
-  const unsigned int n_cycles = 2;
-  for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+  const unsigned int n_cycles= 2;
+  for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
     {
       pcout << "   Cycle: " << cycle << std::endl;
       if(cycle == 0)
@@ -193,7 +193,7 @@ Test_Solver_Output::setup_system()
   TimerOutput::Scope t(timer, "setup");
 
   dof_handler.distribute_dofs(fe);
-  locally_owned_dofs = dof_handler.locally_owned_dofs();
+  locally_owned_dofs= dof_handler.locally_owned_dofs();
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
   locally_relevant_solution.reinit(
@@ -232,8 +232,8 @@ Test_Solver_Output::assemble_system()
                         update_values | update_gradients
                           | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -244,12 +244,12 @@ Test_Solver_Output::assemble_system()
     {
       if(cell->is_locally_owned())
         {
-          cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_matrix= 0;
+          cell_rhs   = 0;
 
           fe_values.reinit(cell);
 
-          for(unsigned int qp = 0; qp < n_q_points; ++qp)
+          for(unsigned int qp= 0; qp < n_q_points; ++qp)
             {
               const double rhs_value
                 = (fe_values.quadrature_point(qp)[1]
@@ -259,16 +259,16 @@ Test_Solver_Output::assemble_system()
                                           * fe_values.quadrature_point(qp)[0]) ?
                      1 :
                      -1);
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
                     {
                       cell_matrix(i, j)
                         += (fe_values.shape_grad(i, qp)
                             * fe_values.shape_grad(j, qp) * fe_values.JxW(qp));
                     }
-                  cell_rhs(i) += (rhs_value * fe_values.shape_value(i, qp)
-                                  * fe_values.JxW(qp));
+                  cell_rhs(i)+= (rhs_value * fe_values.shape_value(i, qp)
+                                 * fe_values.JxW(qp));
                 }
             }
           cell->get_dof_indices(local_dof_indices);
@@ -306,7 +306,7 @@ Test_Solver_Output::solve_base()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -331,7 +331,7 @@ Test_Solver_Output::solve_cg()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -356,7 +356,7 @@ Test_Solver_Output::solve_cgs()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -381,7 +381,7 @@ Test_Solver_Output::solve_gmres()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -406,7 +406,7 @@ Test_Solver_Output::solve_bicgstab()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -431,7 +431,7 @@ Test_Solver_Output::solve_tfqmr()
         << std::endl;
 
   constraints.distribute(completely_distributed_solution);
-  locally_relevant_solution = completely_distributed_solution;
+  locally_relevant_solution= completely_distributed_solution;
 }
 
 void
@@ -443,8 +443,8 @@ Test_Solver_Output::output(unsigned int cycle)
   data_out.add_data_vector(locally_relevant_solution, "u");
 
   Vector<float> subdomain(triangulation.n_active_cells());
-  for(unsigned int i = 0; i < subdomain.size(); ++i)
-    subdomain(i) = triangulation.locally_owned_subdomain();
+  for(unsigned int i= 0; i < subdomain.size(); ++i)
+    subdomain(i)= triangulation.locally_owned_subdomain();
   data_out.add_data_vector(subdomain, "subdomain");
   data_out.build_patches();
 
@@ -457,8 +457,7 @@ Test_Solver_Output::output(unsigned int cycle)
   if(Utilities::MPI::this_mpi_process(mpi_comm) == 0)
     {
       std::vector<std::string> filenames;
-      for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(mpi_comm);
-          ++i)
+      for(unsigned int i= 0; i < Utilities::MPI::n_mpi_processes(mpi_comm); ++i)
         filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
                             + "." + Utilities::int_to_string(i, 4) + ".vtu");
       std::ofstream master_output(
@@ -502,7 +501,7 @@ main(int argc, char* argv[])
   inputfile.open("stdout");
   Assert(inputfile.good() && inputfile.is_open(), ExcIO());
   std::string       line;
-  const std::string key = "*****";
+  const std::string key= "*****";
   while(std::getline(inputfile, line))
     {
       if(line.find(key) != std::string::npos)

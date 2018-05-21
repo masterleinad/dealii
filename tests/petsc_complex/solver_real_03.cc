@@ -37,8 +37,8 @@ check_solve(SOLVER&             solver,
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -64,8 +64,8 @@ main(int argc, char** argv)
   {
     SolverControl control(100, 1.e-3);
 
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -76,7 +76,7 @@ main(int argc, char** argv)
 
     PETScWrappers::MPI::Vector f(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector u(MPI_COMM_WORLD, dim, dim);
-    f = 1.;
+    f= 1.;
     A.compress(VectorOperation::insert);
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);

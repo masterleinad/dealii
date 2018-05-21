@@ -108,19 +108,19 @@ RightHandSide<dim>::vector_value(const Point<dim>& p,
   Assert(dim >= 2, ExcNotImplemented());
 
   Point<dim> point_1, point_2;
-  point_1(0) = 0.5;
-  point_2(0) = -0.5;
+  point_1(0)= 0.5;
+  point_2(0)= -0.5;
 
   if(((p - point_1).norm_square() < 0.2 * 0.2)
      || ((p - point_2).norm_square() < 0.2 * 0.2))
-    values(0) = 1;
+    values(0)= 1;
   else
-    values(0) = 0;
+    values(0)= 0;
 
   if(p.norm_square() < 0.2 * 0.2)
-    values(1) = 1;
+    values(1)= 1;
   else
-    values(1) = 0;
+    values(1)= 0;
 }
 
 template <int dim>
@@ -132,9 +132,9 @@ RightHandSide<dim>::vector_value_list(
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
 
-  const unsigned int n_points = points.size();
+  const unsigned int n_points= points.size();
 
-  for(unsigned int p = 0; p < n_points; ++p)
+  for(unsigned int p= 0; p < n_points; ++p)
     RightHandSide<dim>::vector_value(points[p], value_list[p]);
 }
 
@@ -185,8 +185,8 @@ ElasticProblem<dim>::assemble_system()
                                   | update_quadrature_points
                                   | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe[0].dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula[0].size();
+  const unsigned int dofs_per_cell= fe[0].dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula[0].size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -203,14 +203,14 @@ ElasticProblem<dim>::assemble_system()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
-      cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_matrix= 0;
+      cell_rhs   = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim>& fe_values= x_fe_values.get_present_fe_values();
 
       lambda.value_list(fe_values.get_quadrature_points(), lambda_values);
       mu.value_list(fe_values.get_quadrature_points(), mu_values);
@@ -218,17 +218,17 @@ ElasticProblem<dim>::assemble_system()
       right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                         rhs_values);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
           const unsigned int component_i
             = fe[0].system_to_component_index(i).first;
 
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             {
               const unsigned int component_j
                 = fe[0].system_to_component_index(j).first;
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
                 {
                   cell_matrix(i, j)
                     += ((fe_values.shape_grad(i, q_point)[component_i]
@@ -247,25 +247,25 @@ ElasticProblem<dim>::assemble_system()
             }
         }
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
           const unsigned int component_i
             = fe[0].system_to_component_index(i).first;
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            cell_rhs(i) += fe_values.shape_value(i, q_point)
-                           * rhs_values[q_point](component_i)
-                           * fe_values.JxW(q_point);
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            cell_rhs(i)+= fe_values.shape_value(i, q_point)
+                          * rhs_values[q_point](component_i)
+                          * fe_values.JxW(q_point);
         }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-          system_rhs(local_dof_indices[i]) += cell_rhs(i);
+          system_rhs(local_dof_indices[i])+= cell_rhs(i);
         }
     }
 
@@ -317,11 +317,11 @@ template <int dim>
 void
 ElasticProblem<dim>::output_results(const unsigned int cycle) const
 {
-  std::string filename = "solution-";
-  filename += ('0' + cycle);
+  std::string filename= "solution-";
+  filename+= ('0' + cycle);
   Assert(cycle < 10, ExcInternalError());
 
-  filename += ".gmv";
+  filename+= ".gmv";
 
   DataOut<dim, hp::DoFHandler<dim>> data_out;
   data_out.attach_dof_handler(dof_handler);
@@ -354,7 +354,7 @@ template <int dim>
 void
 ElasticProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 8; ++cycle)
+  for(unsigned int cycle= 0; cycle < 8; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 

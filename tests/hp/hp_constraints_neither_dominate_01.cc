@@ -66,25 +66,25 @@
 #include <iostream>
 
 //#define DEBUG_OUTPUT_VTK
-unsigned int counter = 0;
+unsigned int counter= 0;
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 using namespace dealii;
 
 template <int dim>
 void
-test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
+test2cells(const unsigned int p1= 2, const unsigned int p2= 1)
 {
   Assert(dim > 1, ExcInternalError());
   Triangulation<dim> triangulation;
   {
     Point<dim> p1, p2;
-    for(unsigned int d = 0; d < dim; d++)
-      p1[d] = -1;
-    p2[0] = 1.0;
+    for(unsigned int d= 0; d < dim; d++)
+      p1[d]= -1;
+    p2[0]= 1.0;
     std::vector<unsigned int> repetitoins(dim, 1);
-    repetitoins[0] = 2;
+    repetitoins[0]= 2;
     GridGenerator::subdivided_hyper_rectangle(
       triangulation, repetitoins, p1, p2);
   }
@@ -123,11 +123,11 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   counter++;
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for(unsigned int s= 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
       shape_function.reinit(dof_handler.n_dofs());
-      shape_function[s] = 1.0;
+      shape_function[s]= 1.0;
 
       // if the dof is constrained, first output unconstrained vector
       if(constraints.is_constrained(s))
@@ -152,28 +152,28 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   Vector<float> fe_index(triangulation.n_active_cells());
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
-  for(unsigned int index = 0; cell != endc; ++cell, ++index)
+    endc= dof_handler.end();
+  for(unsigned int index= 0; cell != endc; ++cell, ++index)
     {
-      fe_index[index] = cell->active_fe_index();
+      fe_index[index]= cell->active_fe_index();
     }
   data_out.add_data_vector(fe_index, "fe_index");
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for(unsigned int i= 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(0);
-  std::string filename = "shape_functions_"
-                         + dealii::Utilities::int_to_string(counter, 1) + "_"
-                         + dealii::Utilities::int_to_string(dim) + "D.vtu";
+  std::string filename= "shape_functions_"
+                        + dealii::Utilities::int_to_string(counter, 1) + "_"
+                        + dealii::Utilities::int_to_string(dim) + "D.vtu";
   std::ofstream output(filename.c_str());
   data_out.write_vtu(output);
 #endif
 
   // fill some vector
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int dof = 0; dof < dof_handler.n_dofs(); dof++)
-    solution[dof] = 21.0 * (dof % 2) + 0.5 + dof % 3;
+  for(unsigned int dof= 0; dof < dof_handler.n_dofs(); dof++)
+    solution[dof]= 21.0 * (dof % 2) + 0.5 + dof % 3;
 
   constraints.distribute(solution);
 
@@ -188,9 +188,9 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
       cell != dof_handler.end();
       ++cell)
     {
-      const unsigned int fe_index = cell->active_fe_index();
+      const unsigned int fe_index= cell->active_fe_index();
       local_face_dof_indices.resize(fe_collection[fe_index].dofs_per_face);
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(!cell->at_boundary(f)) // that's enough for our simple mesh
           {
             deallog << "cell=" << cell << " face=" << f << std::endl;
@@ -198,7 +198,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
             const FEFaceValues<dim>& fe_face_values
               = fe_face_values_hp.get_present_fe_values();
 
-            const unsigned int n_q_points = fe_face_values.n_quadrature_points;
+            const unsigned int n_q_points= fe_face_values.n_quadrature_points;
             values.resize(n_q_points, Vector<double>(2));
 
             fe_face_values.get_function_values(solution, values);
@@ -206,7 +206,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
             const std::vector<dealii::Point<dim>>& q_points
               = fe_face_values.get_quadrature_points();
 
-            for(unsigned int q = 0; q < n_q_points; q++)
+            for(unsigned int q= 0; q < n_q_points; q++)
               deallog << "u[" << q_points[q] << "]={" << values[q][0] << ","
                       << values[q][1] << "}" << std::endl;
           }

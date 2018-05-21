@@ -39,11 +39,11 @@ public:
   F(){};
 
   virtual double
-  value(const Point<dim>& p, const unsigned int = 0) const
+  value(const Point<dim>& p, const unsigned int= 0) const
   {
-    double s = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      s *= p[i];
+    double s= 1;
+    for(unsigned int i= 0; i < dim; ++i)
+      s*= p[i];
     return s;
   }
 };
@@ -74,10 +74,10 @@ test()
 
   VectorTools::project(dh, cm, QGauss<dim>(3), approximated_function, v);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dh.begin_active();
       cell != dh.end();
       ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       {
         deallog << cell->vertex(i) << ' ' << v(cell->vertex_dof_index(i, 0))
                 << std::endl;

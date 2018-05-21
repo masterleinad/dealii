@@ -21,9 +21,9 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/vector.h>
 
-const double entries_A[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-const double entries_B[9] = {2, 1, 1, 1, 2, 3, 2, 1, 2};
-const double entries_Z[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+const double entries_A[9]= {1, 2, 3, 4, 5, 6, 7, 8, 9};
+const double entries_B[9]= {2, 1, 1, 1, 2, 3, 2, 1, 2};
+const double entries_Z[9]= {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // Create a positive definite random matrix
 

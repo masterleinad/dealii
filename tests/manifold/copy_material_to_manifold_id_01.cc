@@ -32,12 +32,12 @@ print_info(Triangulation<dim, spacedim>& tria)
 {
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for(cell= tria.begin_active(); cell != tria.end(); ++cell)
     {
       deallog << "cell: " << cell << ", material_id: " << cell->material_id()
               << ", manifold_id: " << cell->manifold_id() << std::endl;
 
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         deallog << "face: " << cell->face(f)
                 << ", boundary_id: " << cell->face(f)->boundary_id()
                 << ", manifold_id: " << cell->face(f)->manifold_id()

@@ -27,16 +27,16 @@ test(PETScWrappers::SparseMatrix& m)
   deallog << "Check matrix access" << std::endl;
 
   // fill up a matrix with some numbers
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       if(k > l)
         m.set(k, l, PetscScalar(k + l, -1. * (k + l)));
 
   m.compress(VectorOperation::insert);
 
   // check the matrix is correctly filled
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for(unsigned int k= 0; k < m.m(); ++k)
+    for(unsigned int l= 0; l < m.n(); ++l)
       AssertThrow(m(k, l).real() == -1. * (m(k, l).imag()), ExcInternalError());
 
   deallog << "OK" << std::endl;

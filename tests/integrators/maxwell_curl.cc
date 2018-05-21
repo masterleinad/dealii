@@ -50,8 +50,8 @@ template <int dim>
 void
 TestMaxwellCurl(Triangulation<dim>& tr)
 {
-  int element_order    = 1;
-  int quadrature_order = 3;
+  int element_order   = 1;
+  int quadrature_order= 3;
 
   DoFHandler<dim>   dof_handler(tr);
   FESystem<dim>     fe(FE_Q<dim>(element_order), dim);
@@ -67,17 +67,17 @@ TestMaxwellCurl(Triangulation<dim>& tr)
 
   dof_handler.distribute_dofs(fe);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
 
   FullMatrix<double> curl_curl_check(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> curl_check(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> nitsche_curl_check(dofs_per_cell, dofs_per_cell);
 
-  curl_curl_check    = 0;
-  curl_check         = 0;
-  nitsche_curl_check = 0;
+  curl_curl_check   = 0;
+  curl_check        = 0;
+  nitsche_curl_check= 0;
 
-  typename ::DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
+  typename ::DoFHandler<dim>::cell_iterator cell= dof_handler.begin(0);
 
   fe_values.reinit(cell);
 
@@ -89,7 +89,7 @@ TestMaxwellCurl(Triangulation<dim>& tr)
   deallog << "curl_matrix" << std::endl;
   curl_check.print(deallog, 10);
 
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       fe_face_values.reinit(cell, face);
       nitsche_curl_matrix<dim>(

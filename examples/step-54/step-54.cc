@@ -66,9 +66,9 @@ namespace Step54
   public:
     enum ProjectionType
     {
-      NormalProjection       = 0,
-      DirectionalProjection  = 1,
-      NormalToMeshProjection = 2
+      NormalProjection      = 0,
+      DirectionalProjection = 1,
+      NormalToMeshProjection= 2
     };
 
     TriangulationOnCAD(const std::string&   initial_mesh_filename,
@@ -174,7 +174,7 @@ namespace Step54
   void
   TriangulationOnCAD::read_domain()
   {
-    TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
+    TopoDS_Shape bow_surface= OpenCASCADE::read_IGES(cad_file_name, 1e-3);
 
     // Each CAD geometrical object is defined along with a tolerance,
     // which indicates possible inaccuracy of its placement. For
@@ -187,7 +187,7 @@ namespace Step54
 
     // The following method extracts the tolerance of the given shape and
     // makes it a bit bigger to stay our of trouble:
-    const double tolerance = OpenCASCADE::get_shape_tolerance(bow_surface) * 5;
+    const double tolerance= OpenCASCADE::get_shape_tolerance(bow_surface) * 5;
 
     // We now want to extract a set of composite sub-shapes from the
     // generic shape. In particular, each face of the CAD file
@@ -230,10 +230,10 @@ namespace Step54
     // @ref GlossManifoldIndicator "this glossary entry").
     // We also get an iterator to its four faces, and assign each of them
     // the manifold_id 2:
-    Triangulation<2, 3>::active_cell_iterator cell = tria.begin_active();
+    Triangulation<2, 3>::active_cell_iterator cell= tria.begin_active();
     cell->set_manifold_id(1);
 
-    for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+    for(unsigned int f= 0; f < GeometryInfo<2>::faces_per_cell; ++f)
       cell->face(f)->set_manifold_id(2);
 
     // Once both the CAD geometry and the initial mesh have been
@@ -367,8 +367,8 @@ namespace Step54
   {
     read_domain();
 
-    const unsigned int n_cycles = 5;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    const unsigned int n_cycles= 5;
+    for(unsigned int cycle= 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
         output_results(cycle + 1);
@@ -389,15 +389,15 @@ main()
       using namespace dealii;
       using namespace Step54;
 
-      const std::string in_mesh_filename = "input/initial_mesh_3d.vtk";
-      const std::string cad_file_name    = "input/DTMB-5415_bulbous_bow.iges";
+      const std::string in_mesh_filename= "input/initial_mesh_3d.vtk";
+      const std::string cad_file_name   = "input/DTMB-5415_bulbous_bow.iges";
 
       cout << "----------------------------------------------------------"
            << endl;
       cout << "Testing projection in direction normal to CAD surface" << endl;
       cout << "----------------------------------------------------------"
            << endl;
-      std::string        out_mesh_filename = ("3d_mesh_normal_projection");
+      std::string        out_mesh_filename= ("3d_mesh_normal_projection");
       TriangulationOnCAD tria_on_cad_norm(in_mesh_filename,
                                           cad_file_name,
                                           out_mesh_filename,
@@ -413,7 +413,7 @@ main()
       cout << "Testing projection in y-axis direction" << endl;
       cout << "----------------------------------------------------------"
            << endl;
-      out_mesh_filename = ("3d_mesh_directional_projection");
+      out_mesh_filename= ("3d_mesh_directional_projection");
       TriangulationOnCAD tria_on_cad_dir(
         in_mesh_filename,
         cad_file_name,
@@ -430,7 +430,7 @@ main()
       cout << "Testing projection in direction normal to mesh elements" << endl;
       cout << "----------------------------------------------------------"
            << endl;
-      out_mesh_filename = ("3d_mesh_normal_to_mesh_projection");
+      out_mesh_filename= ("3d_mesh_normal_to_mesh_projection");
       TriangulationOnCAD tria_on_cad_norm_to_mesh(
         in_mesh_filename,
         cad_file_name,

@@ -56,8 +56,8 @@ namespace Step48
   // programs), whereas the degree of the finite element is more crucial, as
   // it is passed as a template argument to the implementation of the
   // Sine-Gordon operator. Therefore, it needs to be a compile-time constant.
-  const unsigned int dimension = 2;
-  const unsigned int fe_degree = 4;
+  const unsigned int dimension= 2;
+  const unsigned int fe_degree= 4;
 
   // @sect3{SineGordonOperation}
 
@@ -117,29 +117,28 @@ namespace Step48
     const double                   time_step)
     : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
-    VectorizedArray<double> one = make_vectorized_array(1.);
+    VectorizedArray<double> one= make_vectorized_array(1.);
 
     data.initialize_dof_vector(inv_mass_matrix);
 
     FEEvaluation<dim, fe_degree> fe_eval(data);
-    const unsigned int           n_q_points = fe_eval.n_q_points;
+    const unsigned int           n_q_points= fe_eval.n_q_points;
 
-    for(unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
+    for(unsigned int cell= 0; cell < data.n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
 
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+    for(unsigned int k= 0; k < inv_mass_matrix.local_size(); ++k)
       if(inv_mass_matrix.local_element(k) > 1e-15)
-        inv_mass_matrix.local_element(k)
-          = 1. / inv_mass_matrix.local_element(k);
+        inv_mass_matrix.local_element(k)= 1. / inv_mass_matrix.local_element(k);
       else
-        inv_mass_matrix.local_element(k) = 0;
+        inv_mass_matrix.local_element(k)= 0;
   }
 
   // @sect4{SineGordonOperation::local_apply}
@@ -184,7 +183,7 @@ namespace Step48
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for(unsigned int cell= cell_range.first; cell < cell_range.second; ++cell)
       {
         current.reinit(cell);
         old.reinit(cell);
@@ -195,10 +194,10 @@ namespace Step48
         current.evaluate(true, true, false);
         old.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < current.n_q_points; ++q)
+        for(unsigned int q= 0; q < current.n_q_points; ++q)
           {
-            const VectorizedArray<double> current_value = current.get_value(q);
-            const VectorizedArray<double> old_value     = old.get_value(q);
+            const VectorizedArray<double> current_value= current.get_value(q);
+            const VectorizedArray<double> old_value    = old.get_value(q);
 
             current.submit_value(2. * current_value - old_value
                                    - delta_t_sqr * std::sin(current_value),
@@ -227,7 +226,7 @@ namespace Step48
     LinearAlgebra::distributed::Vector<double>&                     dst,
     const std::vector<LinearAlgebra::distributed::Vector<double>*>& src) const
   {
-    dst = 0;
+    dst= 0;
     data.cell_loop(
       &SineGordonOperation<dim, fe_degree>::local_apply, this, dst, src);
     dst.scale(inv_mass_matrix);
@@ -242,11 +241,11 @@ namespace Step48
   class ExactSolution : public Function<dim>
   {
   public:
-    ExactSolution(const unsigned int n_components = 1, const double time = 0.)
+    ExactSolution(const unsigned int n_components= 1, const double time= 0.)
       : Function<dim>(n_components, time)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -254,16 +253,16 @@ namespace Step48
   ExactSolution<dim>::value(const Point<dim>& p,
                             const unsigned int /* component */) const
   {
-    double t = this->get_time();
+    double t= this->get_time();
 
-    const double m  = 0.5;
-    const double c1 = 0.;
-    const double c2 = 0.;
+    const double m = 0.5;
+    const double c1= 0.;
+    const double c2= 0.;
     const double factor
       = (m / std::sqrt(1. - m * m) * std::sin(std::sqrt(1. - m * m) * t + c2));
-    double result = 1.;
-    for(unsigned int d = 0; d < dim; ++d)
-      result *= -4. * std::atan(factor / std::cosh(m * p[d] + c1));
+    double result= 1.;
+    for(unsigned int d= 0; d < dim; ++d)
+      result*= -4. * std::atan(factor / std::cosh(m * p[d] + c1));
     return result;
   }
 
@@ -360,15 +359,15 @@ namespace Step48
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active(),
-        end_cell = triangulation.end();
+        end_cell= triangulation.end();
       for(; cell != end_cell; ++cell)
         if(cell->is_locally_owned())
           if(cell->center().norm() < 11)
             cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
 
-      cell     = triangulation.begin_active();
-      end_cell = triangulation.end();
+      cell    = triangulation.begin_active();
+      end_cell= triangulation.end();
       for(; cell != end_cell; ++cell)
         if(cell->is_locally_owned())
           if(cell->center().norm() < 6)
@@ -458,7 +457,7 @@ namespace Step48
                                       norm_per_cell,
                                       QGauss<dim>(fe_degree + 1),
                                       VectorTools::L2_norm);
-    const double solution_norm = VectorTools::compute_global_error(
+    const double solution_norm= VectorTools::compute_global_error(
       triangulation, norm_per_cell, VectorTools::L2_norm);
 
     pcout << "   Time:" << std::setw(8) << std::setprecision(3) << time
@@ -484,7 +483,7 @@ namespace Step48
     if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
+        for(unsigned int i= 0;
             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
             ++i)
           filenames.push_back("solution-"
@@ -520,8 +519,8 @@ namespace Step48
       = triangulation.last()->diameter() / std::sqrt(dim);
     const double global_min_cell_diameter
       = -Utilities::MPI::max(-local_min_cell_diameter, MPI_COMM_WORLD);
-    time_step = cfl_number * global_min_cell_diameter;
-    time_step = (final_time - time) / (int((final_time - time) / time_step));
+    time_step= cfl_number * global_min_cell_diameter;
+    time_step= (final_time - time) / (int((final_time - time) / time_step));
     pcout << "   Time step size: " << time_step
           << ", finest cell: " << global_min_cell_diameter << std::endl
           << std::endl;
@@ -568,29 +567,29 @@ namespace Step48
     // from <code>solution</code> in the next step. Afterward,
     // <code>solution</code> holds <code>old_old_solution</code>, but that
     // will be overwritten during this step.
-    unsigned int timestep_number = 1;
+    unsigned int timestep_number= 1;
 
     Timer  timer;
-    double wtime       = 0;
-    double output_time = 0;
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    double wtime      = 0;
+    double output_time= 0;
+    for(time+= time_step; time <= final_time;
+        time+= time_step, ++timestep_number)
       {
         timer.restart();
         old_old_solution.swap(old_solution);
         old_solution.swap(solution);
         sine_gordon_op.apply(solution, previous_solutions);
-        wtime += timer.wall_time();
+        wtime+= timer.wall_time();
 
         timer.restart();
         if(timestep_number % output_timestep_skip == 0)
           output_results(timestep_number / output_timestep_skip);
 
-        output_time += timer.wall_time();
+        output_time+= timer.wall_time();
       }
     timer.restart();
     output_results(timestep_number / output_timestep_skip + 1);
-    output_time += timer.wall_time();
+    output_time+= timer.wall_time();
 
     pcout << std::endl
           << "   Performed " << timestep_number << " time steps." << std::endl;

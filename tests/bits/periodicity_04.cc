@@ -42,7 +42,7 @@ test()
   // create a 2x1 (or 2x1x1) mesh and refine the leftmost cell twice
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> repetitions(dim, 1);
-  repetitions[0] = 2;
+  repetitions[0]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation,
     repetitions,
@@ -59,7 +59,7 @@ test()
   DoFRenumbering::component_wise(dof_handler);
 
   std::vector<bool> mask(2, true);
-  mask[1] = false;
+  mask[1]= false;
   ConstraintMatrix cm;
   DoFTools::make_periodicity_constraints(
     dof_handler.begin(0)->face(0), (++dof_handler.begin(0))->face(1), cm, mask);

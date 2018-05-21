@@ -48,16 +48,16 @@ test()
   tria.refine_global(1);
 
   // refine some of the cells.
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  for(unsigned int counter = 0; cell != endc; ++cell, ++counter)
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
+  for(unsigned int counter= 0; cell != endc; ++cell, ++counter)
     if(counter % 5 == 0)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  cell = tria.begin_active();
-  endc = tria.end();
-  for(unsigned int counter = 0; cell != endc; ++cell, ++counter)
+  cell= tria.begin_active();
+  endc= tria.end();
+  for(unsigned int counter= 0; cell != endc; ++cell, ++counter)
     if(counter % 8 == 0)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
@@ -102,7 +102,7 @@ test()
   // the two constraint matrices should look the
   // same, so go through them and check
   deallog << "Check that both constraint matrices are identical... ";
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       AssertThrow(correct_constraints.is_constrained(i)
                     == library_constraints.is_constrained(i),
@@ -116,7 +116,7 @@ test()
           constraint_format library
             = *library_constraints.get_constraint_entries(i);
           AssertThrow(correct.size() == library.size(), ExcInternalError());
-          for(unsigned int q = 0; q < correct.size(); ++q)
+          for(unsigned int q= 0; q < correct.size(); ++q)
             {
               AssertThrow(correct[q].first == library[q].first,
                           ExcInternalError());

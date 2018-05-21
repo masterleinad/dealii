@@ -45,7 +45,7 @@ check()
   }
 
   // now do the same again for all levels of the triangulation
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     {
       tr.clear_user_flags();
       for(auto cell : tr.active_cell_iterators_on_level(l))

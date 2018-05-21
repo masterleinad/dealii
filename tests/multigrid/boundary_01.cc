@@ -38,11 +38,10 @@ using namespace std;
 void
 log_vector(const std::vector<std::set<types::global_dof_index>>& count)
 {
-  for(unsigned int l = 0; l < count.size(); ++l)
+  for(unsigned int l= 0; l < count.size(); ++l)
     {
       deallog << "Level " << l << ':';
-      for(std::set<types::global_dof_index>::const_iterator c
-          = count[l].begin();
+      for(std::set<types::global_dof_index>::const_iterator c= count[l].begin();
           c != count[l].end();
           ++c)
         deallog << ' ' << *c;

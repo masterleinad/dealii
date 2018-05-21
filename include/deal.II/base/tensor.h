@@ -38,7 +38,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, typename Number>
 class Point;
-template <int rank_, int dim, typename Number = double>
+template <int rank_, int dim, typename Number= double>
 class Tensor;
 template <typename Number>
 class Vector;
@@ -99,17 +99,17 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = 0;
+  static const unsigned int rank= 0;
 
   /**
    * Number of independent components of a tensor of rank 0.
    */
-  static const unsigned int n_independent_components = 1;
+  static const unsigned int n_independent_components= 1;
 
   /**
    * Declare a type that has holds real-valued numbers with the same precision
@@ -400,12 +400,12 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = rank_;
+  static const unsigned int rank= rank_;
 
   /**
    * Number of independent components of a tensor of current rank. This is dim
@@ -715,7 +715,7 @@ namespace internal
     value(const T& t)
     {
       Tensor<rank, dim, T> tmp;
-      tmp = t;
+      tmp= t;
       return tmp;
     }
   };
@@ -733,7 +733,7 @@ namespace internal
     value(const T& t)
     {
       Tensor<rank, dim, VectorizedArray<T>> tmp;
-      tmp = internal::NumberType<VectorizedArray<T>>::value(t);
+      tmp= internal::NumberType<VectorizedArray<T>>::value(t);
       return tmp;
     }
 
@@ -741,7 +741,7 @@ namespace internal
     value(const VectorizedArray<T>& t)
     {
       Tensor<rank, dim, VectorizedArray<T>> tmp;
-      tmp = t;
+      tmp= t;
       return tmp;
     }
   };
@@ -761,14 +761,14 @@ template <int dim, typename Number>
 template <typename OtherNumber>
 inline Tensor<0, dim, Number>::Tensor(const OtherNumber& initializer)
 {
-  value = internal::NumberType<Number>::value(initializer);
+  value= internal::NumberType<Number>::value(initializer);
 }
 
 template <int dim, typename Number>
 template <typename OtherNumber>
 inline Tensor<0, dim, Number>::Tensor(const Tensor<0, dim, OtherNumber>& p)
 {
-  value = p.value;
+  value= p.value;
 }
 
 template <int dim, typename Number>
@@ -827,7 +827,7 @@ template <typename OtherNumber>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator=(const Tensor<0, dim, OtherNumber>& p)
 {
-  value = internal::NumberType<Number>::value(p);
+  value= internal::NumberType<Number>::value(p);
   return *this;
 }
 
@@ -836,7 +836,7 @@ template <int dim, typename Number>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator=(const Tensor<0, dim, Number>& p)
 {
-  value = p.value;
+  value= p.value;
   return *this;
 }
 #endif
@@ -846,7 +846,7 @@ template <typename OtherNumber>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator=(const OtherNumber& d)
 {
-  value = internal::NumberType<Number>::value(d);
+  value= internal::NumberType<Number>::value(d);
   return *this;
 }
 
@@ -879,7 +879,7 @@ template <typename OtherNumber>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator+=(const Tensor<0, dim, OtherNumber>& p)
 {
-  value += p.value;
+  value+= p.value;
   return *this;
 }
 
@@ -888,7 +888,7 @@ template <typename OtherNumber>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator-=(const Tensor<0, dim, OtherNumber>& p)
 {
-  value -= p.value;
+  value-= p.value;
   return *this;
 }
 
@@ -897,7 +897,7 @@ template <typename OtherNumber>
 inline DEAL_II_CUDA_HOST_DEV Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator*=(const OtherNumber& s)
 {
-  value *= s;
+  value*= s;
   return *this;
 }
 
@@ -906,7 +906,7 @@ template <typename OtherNumber>
 inline Tensor<0, dim, Number>&
 Tensor<0, dim, Number>::operator/=(const OtherNumber& s)
 {
-  value /= s;
+  value/= s;
   return *this;
 }
 
@@ -946,7 +946,7 @@ Tensor<0, dim, Number>::unroll_recursion(Vector<OtherNumber>& result,
 {
   Assert(dim != 0,
          ExcMessage("Cannot unroll an object of type Tensor<0,0,Number>"));
-  result[index] = value;
+  result[index]= value;
   ++index;
 }
 
@@ -956,7 +956,7 @@ Tensor<0, dim, Number>::clear()
 {
   // Some auto-differentiable numbers need explicit
   // zero initialization.
-  value = internal::NumberType<Number>::value(0.0);
+  value= internal::NumberType<Number>::value(0.0);
 }
 
 template <int dim, typename Number>
@@ -981,8 +981,8 @@ template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(const array_type& initializer)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] = Tensor<rank_ - 1, dim, Number>(initializer[i]);
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]= Tensor<rank_ - 1, dim, Number>(initializer[i]);
 }
 
 template <int rank_, int dim, typename Number>
@@ -991,8 +991,8 @@ inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(
   const Tensor<rank_, dim, OtherNumber>& initializer)
 {
-  for(unsigned int i = 0; i != dim; ++i)
-    values[i] = Tensor<rank_ - 1, dim, Number>(initializer[i]);
+  for(unsigned int i= 0; i != dim; ++i)
+    values[i]= Tensor<rank_ - 1, dim, Number>(initializer[i]);
 }
 
 template <int rank_, int dim, typename Number>
@@ -1001,8 +1001,8 @@ inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(
   const Tensor<1, dim, Tensor<rank_ - 1, dim, OtherNumber>>& initializer)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] = initializer[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]= initializer[i];
 }
 
 template <int rank_, int dim, typename Number>
@@ -1135,8 +1135,8 @@ Tensor<rank_, dim, Number>::operator=(const Number& d)
          ExcMessage("Only assignment with zero is allowed"));
   (void) d;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] = internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]= internal::NumberType<Number>::value(0.0);
   return *this;
 }
 
@@ -1146,7 +1146,7 @@ inline bool
 Tensor<rank_, dim, Number>::
 operator==(const Tensor<rank_, dim, OtherNumber>& p) const
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     if(values[i] != p.values[i])
       return false;
   return true;
@@ -1179,8 +1179,8 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator+=(const Tensor<rank_, dim, OtherNumber>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] += p.values[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]+= p.values[i];
   return *this;
 }
 
@@ -1189,8 +1189,8 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator-=(const Tensor<rank_, dim, OtherNumber>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] -= p.values[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]-= p.values[i];
   return *this;
 }
 
@@ -1199,8 +1199,8 @@ template <typename OtherNumber>
 inline DEAL_II_CUDA_HOST_DEV Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator*=(const OtherNumber& s)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] *= s;
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]*= s;
   return *this;
 }
 
@@ -1209,8 +1209,8 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator/=(const OtherNumber& s)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] /= s;
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]/= s;
   return *this;
 }
 
@@ -1220,8 +1220,8 @@ Tensor<rank_, dim, Number>::operator-() const
 {
   Tensor<rank_, dim, Number> tmp;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp.values[i] = -values[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp.values[i]= -values[i];
 
   return tmp;
 }
@@ -1237,10 +1237,10 @@ template <int rank_, int dim, typename Number>
 inline DEAL_II_CUDA_HOST_DEV typename numbers::NumberTraits<Number>::real_type
 Tensor<rank_, dim, Number>::norm_square() const
 {
-  typename numbers::NumberTraits<Number>::real_type s = internal::NumberType<
+  typename numbers::NumberTraits<Number>::real_type s= internal::NumberType<
     typename numbers::NumberTraits<Number>::real_type>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
-    s += values[i].norm_square();
+  for(unsigned int i= 0; i < dim; ++i)
+    s+= values[i].norm_square();
 
   return s;
 }
@@ -1253,7 +1253,7 @@ Tensor<rank_, dim, Number>::unroll(Vector<OtherNumber>& result) const
   AssertDimension(result.size(),
                   (Utilities::fixed_power<rank_, unsigned int>(dim)));
 
-  unsigned int index = 0;
+  unsigned int index= 0;
   unroll_recursion(result, index);
 }
 
@@ -1263,7 +1263,7 @@ inline void
 Tensor<rank_, dim, Number>::unroll_recursion(Vector<OtherNumber>& result,
                                              unsigned int&        index) const
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     values[i].unroll_recursion(result, index);
 }
 
@@ -1272,9 +1272,9 @@ inline unsigned int
 Tensor<rank_, dim, Number>::component_to_unrolled_index(
   const TableIndices<rank_>& indices)
 {
-  unsigned int index = 0;
-  for(int r = 0; r < rank_; ++r)
-    index = index * dim + indices[r];
+  unsigned int index= 0;
+  for(int r= 0; r < rank_; ++r)
+    index= index * dim + indices[r];
 
   return index;
 }
@@ -1288,11 +1288,11 @@ Tensor<rank_, dim, Number>::unrolled_to_component_indices(const unsigned int i)
 
   TableIndices<rank_> indices;
 
-  unsigned int remainder = i;
-  for(int r = rank_ - 1; r >= 0; --r)
+  unsigned int remainder= i;
+  for(int r= rank_ - 1; r >= 0; --r)
     {
-      indices[r] = (remainder % dim);
-      remainder /= dim;
+      indices[r]= (remainder % dim);
+      remainder/= dim;
     }
   Assert(remainder == 0, ExcInternalError());
 
@@ -1303,8 +1303,8 @@ template <int rank_, int dim, typename Number>
 inline void
 Tensor<rank_, dim, Number>::clear()
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    values[i] = internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
+    values[i]= internal::NumberType<Number>::value(0.0);
 }
 
 template <int rank_, int dim, typename Number>
@@ -1340,7 +1340,7 @@ template <int rank_, int dim, typename Number>
 inline std::ostream&
 operator<<(std::ostream& out, const Tensor<rank_, dim, Number>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
       out << p[i];
       if(i != dim - 1)
@@ -1482,8 +1482,8 @@ inline DEAL_II_ALWAYS_INLINE
 {
   // recurse over the base objects
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tt;
-  for(unsigned int d = 0; d < dim; ++d)
-    tt[d] = t[d] * factor;
+  for(unsigned int d= 0; d < dim; ++d)
+    tt[d]= t[d] * factor;
   return tt;
 }
 
@@ -1526,8 +1526,8 @@ operator/(const Tensor<rank, dim, Number>& t, const OtherNumber& factor)
 {
   // recurse over the base objects
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tt;
-  for(unsigned int d = 0; d < dim; ++d)
-    tt[d] = t[d] / factor;
+  for(unsigned int d= 0; d < dim; ++d)
+    tt[d]= t[d] / factor;
   return tt;
 }
 
@@ -1546,8 +1546,8 @@ inline DEAL_II_ALWAYS_INLINE
 {
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tmp(p);
 
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp[i] += q[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp[i]+= q[i];
 
   return tmp;
 }
@@ -1567,8 +1567,8 @@ inline DEAL_II_ALWAYS_INLINE
 {
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tmp(p);
 
-  for(unsigned int i = 0; i < dim; ++i)
-    tmp[i] -= q[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    tmp[i]-= q[i];
 
   return tmp;
 }
@@ -1621,7 +1621,7 @@ inline DEAL_II_ALWAYS_INLINE
 
   TensorAccessors::internal::
     ReorderedIndexView<0, rank_2, const Tensor<rank_2, dim, OtherNumber>>
-      reordered = TensorAccessors::reordered_index_view<0, rank_2>(src2);
+      reordered= TensorAccessors::reordered_index_view<0, rank_2>(src2);
   TensorAccessors::contract<1, rank_1, rank_2, dim>(result, src1, reordered);
 
   return result;
@@ -1682,11 +1682,11 @@ inline DEAL_II_ALWAYS_INLINE
 
   // Reorder index_1 to the end of src1:
   ReorderedIndexView<index_1, rank_1, const Tensor<rank_1, dim, Number>>
-    reord_01 = reordered_index_view<index_1, rank_1>(src1);
+    reord_01= reordered_index_view<index_1, rank_1>(src1);
 
   // Reorder index_2 to the end of src2:
   ReorderedIndexView<index_2, rank_2, const Tensor<rank_2, dim, OtherNumber>>
-    reord_02 = reordered_index_view<index_2, rank_2>(src2);
+    reord_02= reordered_index_view<index_2, rank_2>(src2);
 
   typename Tensor<rank_1 + rank_2 - 2,
                   dim,
@@ -1769,7 +1769,7 @@ inline
 
   // Reorder index_2 to the end of src2:
   ReorderedIndexView<index_2, rank_2, const Tensor<rank_2, dim, OtherNumber>>
-    reord_2 = TensorAccessors::reordered_index_view<index_2, rank_2>(src2);
+    reord_2= TensorAccessors::reordered_index_view<index_2, rank_2>(src2);
 
   // Now, reorder index_3 to the end of src1. We have to make sure to
   // preserve the orginial ordering: index_1 has been removed. If
@@ -1918,8 +1918,8 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
 
   Tensor<1, dim, Number> result;
 
-  result[0] = src[1];
-  result[1] = -src[0];
+  result[0]= src[1];
+  result[1]= -src[0];
 
   return result;
 }
@@ -1943,9 +1943,9 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
 
   Tensor<1, dim, Number> result;
 
-  result[0] = src1[1] * src2[2] - src1[2] * src2[1];
-  result[1] = src1[2] * src2[0] - src1[0] * src2[2];
-  result[2] = src1[0] * src2[1] - src1[1] * src2[0];
+  result[0]= src1[1] * src2[2] - src1[2] * src2[1];
+  result[1]= src1[2] * src2[0] - src1[0] * src2[2];
+  result[2]= src1[0] * src2[1] - src1[1] * src2[0];
 
   return result;
 }
@@ -1968,18 +1968,18 @@ determinant(const Tensor<2, dim, Number>& t)
 {
   // Compute the determinant using the Laplace expansion of the
   // determinant. We expand along the last row.
-  Number det = internal::NumberType<Number>::value(0.0);
+  Number det= internal::NumberType<Number>::value(0.0);
 
-  for(unsigned int k = 0; k < dim; ++k)
+  for(unsigned int k= 0; k < dim; ++k)
     {
       Tensor<2, dim - 1, Number> minor;
-      for(unsigned int i = 0; i < dim - 1; ++i)
-        for(unsigned int j = 0; j < dim - 1; ++j)
-          minor[i][j] = t[i][j < k ? j : j + 1];
+      for(unsigned int i= 0; i < dim - 1; ++i)
+        for(unsigned int j= 0; j < dim - 1; ++j)
+          minor[i][j]= t[i][j < k ? j : j + 1];
 
-      const Number cofactor = ((k % 2 == 0) ? -1. : 1.) * determinant(minor);
+      const Number cofactor= ((k % 2 == 0) ? -1. : 1.) * determinant(minor);
 
-      det += t[dim - 1][k] * cofactor;
+      det+= t[dim - 1][k] * cofactor;
     }
 
   return ((dim % 2 == 0) ? 1. : -1.) * det;
@@ -2008,9 +2008,9 @@ template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE Number
                              trace(const Tensor<2, dim, Number>& d)
 {
-  Number t = d[0][0];
-  for(unsigned int i = 1; i < dim; ++i)
-    t += d[i][i];
+  Number t= d[0][0];
+  for(unsigned int i= 1; i < dim; ++i)
+    t+= d[i][i];
   return t;
 }
 
@@ -2045,7 +2045,7 @@ invert(const Tensor<2, 1, Number>& t)
 {
   Number return_tensor[1][1];
 
-  return_tensor[0][0] = internal::NumberType<Number>::value(1.0 / t[0][0]);
+  return_tensor[0][0]= internal::NumberType<Number>::value(1.0 / t[0][0]);
 
   return Tensor<2, 1, Number>(return_tensor);
 }
@@ -2058,13 +2058,13 @@ invert(const Tensor<2, 2, Number>& t)
 
   // this is Maple output,
   // thus a bit unstructured
-  const Number inv_det_t = internal::NumberType<Number>::value(
+  const Number inv_det_t= internal::NumberType<Number>::value(
     1.0 / (t[0][0] * t[1][1] - t[1][0] * t[0][1]));
-  return_tensor[0][0] = t[1][1];
-  return_tensor[0][1] = -t[0][1];
-  return_tensor[1][0] = -t[1][0];
-  return_tensor[1][1] = t[0][0];
-  return_tensor *= inv_det_t;
+  return_tensor[0][0]= t[1][1];
+  return_tensor[0][1]= -t[0][1];
+  return_tensor[1][0]= -t[1][0];
+  return_tensor[1][1]= t[0][0];
+  return_tensor*= inv_det_t;
 
   return return_tensor;
 }
@@ -2075,38 +2075,33 @@ invert(const Tensor<2, 3, Number>& t)
 {
   Tensor<2, 3, Number> return_tensor;
 
-  const Number t4  = internal::NumberType<Number>::value(t[0][0] * t[1][1]),
-               t6  = internal::NumberType<Number>::value(t[0][0] * t[1][2]),
-               t8  = internal::NumberType<Number>::value(t[0][1] * t[1][0]),
-               t00 = internal::NumberType<Number>::value(t[0][2] * t[1][0]),
-               t01 = internal::NumberType<Number>::value(t[0][1] * t[2][0]),
-               t04 = internal::NumberType<Number>::value(t[0][2] * t[2][0]),
-               inv_det_t = internal::NumberType<Number>::value(
+  const Number t4 = internal::NumberType<Number>::value(t[0][0] * t[1][1]),
+               t6 = internal::NumberType<Number>::value(t[0][0] * t[1][2]),
+               t8 = internal::NumberType<Number>::value(t[0][1] * t[1][0]),
+               t00= internal::NumberType<Number>::value(t[0][2] * t[1][0]),
+               t01= internal::NumberType<Number>::value(t[0][1] * t[2][0]),
+               t04= internal::NumberType<Number>::value(t[0][2] * t[2][0]),
+               inv_det_t= internal::NumberType<Number>::value(
                  1.0
                  / (t4 * t[2][2] - t6 * t[2][1] - t8 * t[2][2] + t00 * t[2][1]
                     + t01 * t[1][2] - t04 * t[1][1]));
-  return_tensor[0][0]
-    = internal::NumberType<Number>::value(t[1][1] * t[2][2])
-      - internal::NumberType<Number>::value(t[1][2] * t[2][1]);
-  return_tensor[0][1]
-    = internal::NumberType<Number>::value(t[0][2] * t[2][1])
-      - internal::NumberType<Number>::value(t[0][1] * t[2][2]);
-  return_tensor[0][2]
-    = internal::NumberType<Number>::value(t[0][1] * t[1][2])
-      - internal::NumberType<Number>::value(t[0][2] * t[1][1]);
-  return_tensor[1][0]
-    = internal::NumberType<Number>::value(t[1][2] * t[2][0])
-      - internal::NumberType<Number>::value(t[1][0] * t[2][2]);
+  return_tensor[0][0]= internal::NumberType<Number>::value(t[1][1] * t[2][2])
+                       - internal::NumberType<Number>::value(t[1][2] * t[2][1]);
+  return_tensor[0][1]= internal::NumberType<Number>::value(t[0][2] * t[2][1])
+                       - internal::NumberType<Number>::value(t[0][1] * t[2][2]);
+  return_tensor[0][2]= internal::NumberType<Number>::value(t[0][1] * t[1][2])
+                       - internal::NumberType<Number>::value(t[0][2] * t[1][1]);
+  return_tensor[1][0]= internal::NumberType<Number>::value(t[1][2] * t[2][0])
+                       - internal::NumberType<Number>::value(t[1][0] * t[2][2]);
   return_tensor[1][1]
     = internal::NumberType<Number>::value(t[0][0] * t[2][2]) - t04;
-  return_tensor[1][2] = t00 - t6;
-  return_tensor[2][0]
-    = internal::NumberType<Number>::value(t[1][0] * t[2][1])
-      - internal::NumberType<Number>::value(t[1][1] * t[2][0]);
+  return_tensor[1][2]= t00 - t6;
+  return_tensor[2][0]= internal::NumberType<Number>::value(t[1][0] * t[2][1])
+                       - internal::NumberType<Number>::value(t[1][1] * t[2][0]);
   return_tensor[2][1]
     = t01 - internal::NumberType<Number>::value(t[0][0] * t[2][1]);
-  return_tensor[2][2] = internal::NumberType<Number>::value(t4 - t8);
-  return_tensor *= inv_det_t;
+  return_tensor[2][2]= internal::NumberType<Number>::value(t4 - t8);
+  return_tensor*= inv_det_t;
 
   return return_tensor;
 }
@@ -2124,13 +2119,13 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, Number>
                              transpose(const Tensor<2, dim, Number>& t)
 {
   Tensor<2, dim, Number> tt;
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      tt[i][i] = t[i][i];
-      for(unsigned int j = i + 1; j < dim; ++j)
+      tt[i][i]= t[i][i];
+      for(unsigned int j= i + 1; j < dim; ++j)
         {
-          tt[i][j] = t[j][i];
-          tt[j][i] = t[i][j];
+          tt[i][j]= t[j][i];
+          tt[j][i]= t[i][j];
         };
     }
   return tt;
@@ -2188,15 +2183,15 @@ template <int dim, typename Number>
 inline Number
 l1_norm(const Tensor<2, dim, Number>& t)
 {
-  Number max = internal::NumberType<Number>::value(0.0);
-  for(unsigned int j = 0; j < dim; ++j)
+  Number max= internal::NumberType<Number>::value(0.0);
+  for(unsigned int j= 0; j < dim; ++j)
     {
-      Number sum = internal::NumberType<Number>::value(0.0);
-      for(unsigned int i = 0; i < dim; ++i)
-        sum += std::fabs(t[i][j]);
+      Number sum= internal::NumberType<Number>::value(0.0);
+      for(unsigned int i= 0; i < dim; ++i)
+        sum+= std::fabs(t[i][j]);
 
       if(sum > max)
-        max = sum;
+        max= sum;
     }
 
   return max;
@@ -2213,15 +2208,15 @@ template <int dim, typename Number>
 inline Number
 linfty_norm(const Tensor<2, dim, Number>& t)
 {
-  Number max = internal::NumberType<Number>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  Number max= internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      Number sum = internal::NumberType<Number>::value(0.0);
-      for(unsigned int j = 0; j < dim; ++j)
-        sum += std::fabs(t[i][j]);
+      Number sum= internal::NumberType<Number>::value(0.0);
+      for(unsigned int j= 0; j < dim; ++j)
+        sum+= std::fabs(t[i][j]);
 
       if(sum > max)
-        max = sum;
+        max= sum;
     }
 
   return max;
@@ -2239,12 +2234,12 @@ template <int dim>
 inline adouble
 l1_norm(const Tensor<2, dim, adouble>& t)
 {
-  adouble max = internal::NumberType<adouble>::value(0.0);
-  for(unsigned int j = 0; j < dim; ++j)
+  adouble max= internal::NumberType<adouble>::value(0.0);
+  for(unsigned int j= 0; j < dim; ++j)
     {
-      adouble sum = internal::NumberType<adouble>::value(0.0);
-      for(unsigned int i = 0; i < dim; ++i)
-        sum += std::fabs(t[i][j]);
+      adouble sum= internal::NumberType<adouble>::value(0.0);
+      for(unsigned int i= 0; i < dim; ++i)
+        sum+= std::fabs(t[i][j]);
 
       condassign(max, (sum > max), sum, max);
     }
@@ -2256,12 +2251,12 @@ template <int dim>
 inline adouble
 linfty_norm(const Tensor<2, dim, adouble>& t)
 {
-  adouble max = internal::NumberType<adouble>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  adouble max= internal::NumberType<adouble>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      adouble sum = internal::NumberType<adouble>::value(0.0);
-      for(unsigned int j = 0; j < dim; ++j)
-        sum += std::fabs(t[i][j]);
+      adouble sum= internal::NumberType<adouble>::value(0.0);
+      for(unsigned int j= 0; j < dim; ++j)
+        sum+= std::fabs(t[i][j]);
 
       condassign(max, (sum > max), sum, max);
     }

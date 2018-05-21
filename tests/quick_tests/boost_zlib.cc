@@ -30,22 +30,22 @@ test(const unsigned int& size)
 {
   std::vector<Point<dim>> points(size);
 
-  unsigned int i = 0;
+  unsigned int i= 0;
   for(auto& p : points)
-    for(unsigned int d = 0; d < dim; ++d)
-      p[d] = 11 * d + size * 10 + 3 * i++;
+    for(unsigned int d= 0; d < dim; ++d)
+      p[d]= 11 * d + size * 10 + 3 * i++;
 
-  auto buffer = Utilities::pack(points);
+  auto buffer= Utilities::pack(points);
 
-  auto unpacked = Utilities::unpack<std::vector<Point<dim>>>(buffer);
+  auto unpacked= Utilities::unpack<std::vector<Point<dim>>>(buffer);
 
-  i       = 0;
-  bool ok = true;
+  i      = 0;
+  bool ok= true;
   for(const auto& p : points)
     if(p.distance(unpacked[i++]) > 1e-12)
       {
         std::cout << "NOT OK: " << p << " != " << unpacked[i - 1] << std::endl;
-        ok = false;
+        ok= false;
       }
 
   AssertThrow(ok, ExcInternalError());

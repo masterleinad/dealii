@@ -39,8 +39,8 @@ check(const char* p)
     {
       const std::vector<std::string> parts
         = Utilities::split_string_list(entry, ':');
-      const std::string key   = parts[0];
-      const std::string value = parts[1];
+      const std::string key  = parts[0];
+      const std::string value= parts[1];
       deallog << " found key = '" << key << "' value = '" << value << "'"
               << std::endl;
     }

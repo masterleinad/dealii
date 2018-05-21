@@ -24,33 +24,33 @@ template <typename number>
 void
 check_norms()
 {
-  const number acc  = 1e1 * std::numeric_limits<number>::epsilon();
-  unsigned int skip = 73;
-  for(unsigned int size = 1; size < 200000; size += skip)
+  const number acc = 1e1 * std::numeric_limits<number>::epsilon();
+  unsigned int skip= 73;
+  for(unsigned int size= 1; size < 200000; size+= skip)
     {
       // test correctness
       if(size > 10000)
-        skip += 17;
+        skip+= 17;
       Vector<number> vec(size);
-      for(unsigned int i = 0; i < size; ++i)
-        vec(i) = i + 1;
+      for(unsigned int i= 0; i < size; ++i)
+        vec(i)= i + 1;
 
-      const number l1_norm = vec.l1_norm();
+      const number l1_norm= vec.l1_norm();
       AssertThrow(std::abs(l1_norm - 0.5 * size * (size + 1))
                     < acc * 0.5 * size * (size + 1),
                   ExcInternalError());
 
       // test accuracy of summation
-      const long double value = 3.14159265358979323846;
-      vec                     = (number) value;
-      const number l1_norma   = vec.l1_norm();
+      const long double value= 3.14159265358979323846;
+      vec                    = (number) value;
+      const number l1_norma  = vec.l1_norm();
       AssertThrow(std::abs(l1_norma - value * size) < acc * size * value,
                   ExcInternalError());
-      const number l2_norma = vec.l2_norm();
+      const number l2_norma= vec.l2_norm();
       AssertThrow(std::abs(l2_norma - value * std::sqrt((number) size))
                     < acc * std::sqrt(size) * value,
                   ExcInternalError());
-      const number lp_norma = vec.lp_norm(3.);
+      const number lp_norma= vec.lp_norm(3.);
       AssertThrow(std::abs(lp_norma
                            - value
                                * std::pow(static_cast<number>(size),
@@ -67,38 +67,38 @@ template <typename number>
 void
 check_complex_norms()
 {
-  const number acc  = 1e2 * std::numeric_limits<number>::epsilon();
-  unsigned int skip = 73;
-  for(unsigned int size = 1; size < 100000; size += skip)
+  const number acc = 1e2 * std::numeric_limits<number>::epsilon();
+  unsigned int skip= 73;
+  for(unsigned int size= 1; size < 100000; size+= skip)
     {
       // test correctness
       if(size > 10000)
-        skip += 17;
+        skip+= 17;
       Vector<std::complex<number>> vec(size);
-      long double                  sum = 0.;
-      for(unsigned int i = 0; i < size; ++i)
+      long double                  sum= 0.;
+      for(unsigned int i= 0; i < size; ++i)
         {
-          vec(i) = std::complex<number>(i + 1, i + 2);
-          sum += std::sqrt((long double) (i + 1) * (i + 1)
-                           + (long double) (i + 2) * (i + 2));
+          vec(i)= std::complex<number>(i + 1, i + 2);
+          sum+= std::sqrt((long double) (i + 1) * (i + 1)
+                          + (long double) (i + 2) * (i + 2));
         }
 
-      const number l1_norm = vec.l1_norm();
+      const number l1_norm= vec.l1_norm();
       AssertThrow(std::abs(l1_norm - sum) < acc * sum, ExcInternalError());
 
       // test accuracy of summation
       const std::complex<long double> value(3.14159265358979323846, 0.1);
-      vec                   = std::complex<number>(value);
-      const number l1_norma = vec.l1_norm();
+      vec                  = std::complex<number>(value);
+      const number l1_norma= vec.l1_norm();
       AssertThrow(std::abs(l1_norma - std::abs(value) * size)
                     < acc * size * std::abs(value),
                   ExcInternalError());
-      const number l2_norma = vec.l2_norm();
+      const number l2_norma= vec.l2_norm();
       AssertThrow(
         std::abs(l2_norma - std::abs(value) * std::sqrt((number) size))
           < acc * std::sqrt((number) size) * std::abs(value),
         ExcInternalError());
-      const number lp_norma = vec.lp_norm(3.);
+      const number lp_norma= vec.lp_norm(3.);
       AssertThrow(std::abs(lp_norma
                            - std::abs(value)
                                * std::pow(static_cast<number>(size),

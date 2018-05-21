@@ -181,23 +181,23 @@ test()
   */
   deallog << "*** 2. FACES ***" << std::endl;
 
-  lctrl.own_cells   = false;
-  lctrl.ghost_cells = false;
+  lctrl.own_cells  = false;
+  lctrl.ghost_cells= false;
 
-  lctrl.own_faces      = MeshWorker::LoopControl::one;
-  lctrl.faces_to_ghost = MeshWorker::LoopControl::never;
+  lctrl.own_faces     = MeshWorker::LoopControl::one;
+  lctrl.faces_to_ghost= MeshWorker::LoopControl::never;
   test_loop(dofs, lctrl);
 
-  lctrl.own_faces      = MeshWorker::LoopControl::both;
-  lctrl.faces_to_ghost = MeshWorker::LoopControl::never;
+  lctrl.own_faces     = MeshWorker::LoopControl::both;
+  lctrl.faces_to_ghost= MeshWorker::LoopControl::never;
   test_loop(dofs, lctrl);
 
-  lctrl.own_faces      = MeshWorker::LoopControl::never;
-  lctrl.faces_to_ghost = MeshWorker::LoopControl::one;
+  lctrl.own_faces     = MeshWorker::LoopControl::never;
+  lctrl.faces_to_ghost= MeshWorker::LoopControl::one;
   test_loop(dofs, lctrl);
 
-  lctrl.own_faces      = MeshWorker::LoopControl::never;
-  lctrl.faces_to_ghost = MeshWorker::LoopControl::both;
+  lctrl.own_faces     = MeshWorker::LoopControl::never;
+  lctrl.faces_to_ghost= MeshWorker::LoopControl::both;
   test_loop(dofs, lctrl);
 
   //

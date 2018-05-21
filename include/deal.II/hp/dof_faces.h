@@ -392,15 +392,15 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index  starting_offset= dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
           if(*pointer == fe_index)
             return *(pointer + 1 + local_index);
           else
-            pointer += static_cast<types::global_dof_index>(
+            pointer+= static_cast<types::global_dof_index>(
               dof_handler.get_fe(*pointer)
                 .template n_dofs_per_object<structdim>()
               + 1);
@@ -450,20 +450,20 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const types::global_dof_index starting_offset = dof_offsets[obj_index];
-      types::global_dof_index*      pointer         = &dofs[starting_offset];
+      const types::global_dof_index starting_offset= dof_offsets[obj_index];
+      types::global_dof_index*      pointer        = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
           if(*pointer == fe_index)
             {
-              *(pointer + 1 + local_index) = global_index;
+              *(pointer + 1 + local_index)= global_index;
               return;
             }
           else
-            pointer += dof_handler.get_fe(*pointer)
-                         .template n_dofs_per_object<structdim>()
-                       + 1;
+            pointer+= dof_handler.get_fe(*pointer)
+                        .template n_dofs_per_object<structdim>()
+                      + 1;
         }
     }
 
@@ -491,9 +491,9 @@ namespace internal
       // one with the correct fe_index, and then poke into that
       // part. trigger an exception if we can't find a set for this
       // particular fe_index
-      const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const unsigned int             starting_offset= dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
+      unsigned int                   counter        = 0;
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)
@@ -502,9 +502,9 @@ namespace internal
           else
             {
               ++counter;
-              pointer += dof_handler.get_fe(*pointer)
-                           .template n_dofs_per_object<structdim>()
-                         + 1;
+              pointer+= dof_handler.get_fe(*pointer)
+                          .template n_dofs_per_object<structdim>()
+                        + 1;
             }
         }
     }
@@ -540,14 +540,14 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const unsigned int             starting_offset= dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
+      unsigned int                   counter        = 0;
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
 
-          const unsigned int fe_index = *pointer;
+          const unsigned int fe_index= *pointer;
 
           Assert(fe_index < dof_handler.get_fe_collection().size(),
                  ExcInternalError());
@@ -556,9 +556,9 @@ namespace internal
             return fe_index;
 
           ++counter;
-          pointer += dof_handler.get_fe(fe_index)
-                       .template n_dofs_per_object<structdim>()
-                     + 1;
+          pointer+= dof_handler.get_fe(fe_index)
+                      .template n_dofs_per_object<structdim>()
+                    + 1;
         }
     }
 
@@ -598,8 +598,8 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index  starting_offset= dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)
@@ -608,7 +608,7 @@ namespace internal
           else if(*pointer == fe_index)
             return true;
           else
-            pointer += static_cast<types::global_dof_index>(
+            pointer+= static_cast<types::global_dof_index>(
               dof_handler.get_fe(*pointer)
                 .template n_dofs_per_object<structdim>()
               + 1);

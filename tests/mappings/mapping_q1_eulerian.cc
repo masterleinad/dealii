@@ -38,7 +38,7 @@ show_values(FiniteElement<dim>& fe, const char* name)
   // shift one point of the cell
   // somehow
   if(dim > 1)
-    tr.begin_active()->vertex(dim == 2 ? 3 : 5)(dim - 1) += 1. / std::sqrt(2.);
+    tr.begin_active()->vertex(dim == 2 ? 3 : 5)(dim - 1)+= 1. / std::sqrt(2.);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 
@@ -58,15 +58,15 @@ show_values(FiniteElement<dim>& fe, const char* name)
                           quadrature_formula,
                           UpdateFlags(update_values | update_JxW_values
                                       | update_gradients | update_hessians));
-  typename DoFHandler<dim>::cell_iterator c = dof.begin();
+  typename DoFHandler<dim>::cell_iterator c= dof.begin();
   fe_values.reinit(c);
 
-  for(unsigned int k = 0; k < quadrature_formula.size(); ++k)
+  for(unsigned int k= 0; k < quadrature_formula.size(); ++k)
     {
       deallog << quadrature_formula.point(k) << std::endl;
       deallog << "JxW: " << fe_values.JxW(k) << std::endl;
 
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         {
           deallog << "Values: " << fe_values.shape_value(i, k);
           deallog << ",  Grad: " << fe_values.shape_grad(i, k);

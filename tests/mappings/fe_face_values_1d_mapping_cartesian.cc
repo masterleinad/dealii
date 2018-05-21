@@ -54,7 +54,7 @@ plot_faces(Mapping<dim>&                            mapping,
     UpdateFlags(update_quadrature_points | update_JxW_values | update_values
                 | update_gradients | update_hessians | update_normal_vectors));
 
-  for(unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
+  for(unsigned int face_nr= 0; face_nr < GeometryInfo<dim>::faces_per_cell;
       ++face_nr)
     {
       deallog << "Face=" << face_nr << std::endl;
@@ -67,7 +67,7 @@ plot_faces(Mapping<dim>&                            mapping,
 
       // now print some data on the shape
       // functions
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
         deallog << "shape_function " << i << ":" << std::endl
                 << "  phi=" << fe_values.shape_value(i, 0) << std::endl
                 << "  grad phi=" << fe_values.shape_grad(i, 0) << std::endl
@@ -95,9 +95,9 @@ plot_subfaces(Mapping<dim>&                            mapping,
     q,
     UpdateFlags(update_quadrature_points | update_JxW_values | update_values
                 | update_gradients | update_hessians | update_normal_vectors));
-  for(unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
+  for(unsigned int face_nr= 0; face_nr < GeometryInfo<dim>::faces_per_cell;
       ++face_nr)
-    for(unsigned int sub_nr = 0;
+    for(unsigned int sub_nr= 0;
         sub_nr < GeometryInfo<dim>::max_children_per_face;
         ++sub_nr)
       {
@@ -112,7 +112,7 @@ plot_subfaces(Mapping<dim>&                            mapping,
 
         // now print some data on the shape
         // functions
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
           deallog << "shape_function " << i << ":" << std::endl
                   << "  phi=" << fe_values.shape_value(i, 0) << std::endl
                   << "  grad phi=" << fe_values.shape_grad(i, 0) << std::endl
@@ -133,7 +133,7 @@ mapping_test()
   std::vector<std::string>   mapping_strings;
 
   MappingCartesian<dim> mapping;
-  std::string           mapping_name = "MappingCartesian";
+  std::string           mapping_name= "MappingCartesian";
 
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
@@ -142,7 +142,7 @@ mapping_test()
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe_q4);
 
-  typename DoFHandler<dim>::cell_iterator cell = dof.begin_active();
+  typename DoFHandler<dim>::cell_iterator cell= dof.begin_active();
   {
     std::ostringstream ost;
     ost << "MappingFace" << dim << "d-" << mapping_name;

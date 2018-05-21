@@ -46,7 +46,7 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
                    const std::string&         text)
 {
   deallog << text;
-  for(unsigned int j = 0; j < eigenvalues.size(); ++j)
+  for(unsigned int j= 0; j < eigenvalues.size(); ++j)
     {
       deallog << ' ' << eigenvalues.at(j);
     }
@@ -58,9 +58,9 @@ void
 output_hessenberg_matrix(const FullMatrix<NUMBER>& H, const std::string& text)
 {
   deallog << text << std::endl;
-  for(unsigned int i = 0; i < H.m(); ++i)
+  for(unsigned int i= 0; i < H.m(); ++i)
     {
-      for(unsigned int j = 0; j < H.n(); ++j)
+      for(unsigned int j= 0; j < H.n(); ++j)
         deallog << H(i, j) << " ";
       deallog << std::endl;
     }
@@ -74,7 +74,7 @@ output_arnoldi_vectors_norms(
   const std::string& text)
 {
   deallog << text << std::endl;
-  for(unsigned int i = 0; i < tmp_vector.size(); ++i)
+  for(unsigned int i= 0; i < tmp_vector.size(); ++i)
     deallog << tmp_vector[i].l2_norm() << std::endl;
 }
 
@@ -89,8 +89,8 @@ check_solve(SolverType&         solver,
             VectorType&         f,
             const PRECONDITION& P)
 {
-  u = 0.;
-  f = 1.;
+  u= 0.;
+  f= 1.;
   try
     {
       solver.solve(A, u, f, P);
@@ -110,8 +110,8 @@ main()
 
   SolverControl solver_control(100, 1.e-3);
 
-  unsigned int size = 30;
-  unsigned int dim  = (size - 1) * (size - 1);
+  unsigned int size= 30;
+  unsigned int dim = (size - 1) * (size - 1);
 
   // Make matrix
   FDMatrix        testproblem(size, size);
@@ -123,7 +123,7 @@ main()
 
   Vector<double> f(dim);
   Vector<double> u(dim);
-  f = 1.;
+  f= 1.;
 
   try
     {
@@ -147,7 +147,7 @@ main()
                                                    "Final Eigenvalues: "));
       solver_cg.solve(A, u, f, PreconditionIdentity());
 
-      u = 0;
+      u= 0;
       SolverGMRES<> solver_gmres(solver_control);
       //Attach all possible slots.
       solver_gmres.connect_condition_number_slot(

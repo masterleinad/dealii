@@ -129,11 +129,11 @@ FE_DGQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(this->dofs_per_cell, nodal_values.size());
 
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
     {
       AssertDimension(support_point_values[i].size(), 1);
 
-      nodal_values[i] = support_point_values[i](0);
+      nodal_values[i]= support_point_values[i](0);
     }
 }
 
@@ -153,9 +153,9 @@ std::vector<unsigned int>
 FE_DGQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 0U);
-  dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
-    dpo[dim] *= deg + 1;
+  dpo[dim]= deg + 1;
+  for(unsigned int i= 1; i < dim; ++i)
+    dpo[dim]*= deg + 1;
   return dpo;
 }
 
@@ -164,19 +164,19 @@ void
 FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                                       const char direction) const
 {
-  const unsigned int n = this->degree + 1;
-  unsigned int       s = n;
-  for(unsigned int i = 1; i < dim; ++i)
-    s *= n;
+  const unsigned int n= this->degree + 1;
+  unsigned int       s= n;
+  for(unsigned int i= 1; i < dim; ++i)
+    s*= n;
   numbers.resize(s);
 
-  unsigned int l = 0;
+  unsigned int l= 0;
 
   if(dim == 1)
     {
       // Mirror around midpoint
-      for(unsigned int i = n; i > 0;)
-        numbers[l++] = --i;
+      for(unsigned int i= n; i > 0;)
+        numbers[l++]= --i;
     }
   else
     {
@@ -185,47 +185,47 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
           // Rotate xy-plane
           // counter-clockwise
           case 'z':
-            for(unsigned int iz = 0; iz < ((dim > 2) ? n : 1); ++iz)
-              for(unsigned int j = 0; j < n; ++j)
-                for(unsigned int i = 0; i < n; ++i)
+            for(unsigned int iz= 0; iz < ((dim > 2) ? n : 1); ++iz)
+              for(unsigned int j= 0; j < n; ++j)
+                for(unsigned int i= 0; i < n; ++i)
                   {
-                    unsigned int k = n * i - j + n - 1 + n * n * iz;
-                    numbers[l++]   = k;
+                    unsigned int k= n * i - j + n - 1 + n * n * iz;
+                    numbers[l++]  = k;
                   }
             break;
           // Rotate xy-plane
           // clockwise
           case 'Z':
-            for(unsigned int iz = 0; iz < ((dim > 2) ? n : 1); ++iz)
-              for(unsigned int iy = 0; iy < n; ++iy)
-                for(unsigned int ix = 0; ix < n; ++ix)
+            for(unsigned int iz= 0; iz < ((dim > 2) ? n : 1); ++iz)
+              for(unsigned int iy= 0; iy < n; ++iy)
+                for(unsigned int ix= 0; ix < n; ++ix)
                   {
-                    unsigned int k = n * ix - iy + n - 1 + n * n * iz;
-                    numbers[k]     = l++;
+                    unsigned int k= n * ix - iy + n - 1 + n * n * iz;
+                    numbers[k]    = l++;
                   }
             break;
           // Rotate yz-plane
           // counter-clockwise
           case 'x':
             Assert(dim > 2, ExcDimensionMismatch(dim, 3));
-            for(unsigned int iz = 0; iz < n; ++iz)
-              for(unsigned int iy = 0; iy < n; ++iy)
-                for(unsigned int ix = 0; ix < n; ++ix)
+            for(unsigned int iz= 0; iz < n; ++iz)
+              for(unsigned int iy= 0; iy < n; ++iy)
+                for(unsigned int ix= 0; ix < n; ++ix)
                   {
-                    unsigned int k = n * (n * iy - iz + n - 1) + ix;
-                    numbers[l++]   = k;
+                    unsigned int k= n * (n * iy - iz + n - 1) + ix;
+                    numbers[l++]  = k;
                   }
             break;
           // Rotate yz-plane
           // clockwise
           case 'X':
             Assert(dim > 2, ExcDimensionMismatch(dim, 3));
-            for(unsigned int iz = 0; iz < n; ++iz)
-              for(unsigned int iy = 0; iy < n; ++iy)
-                for(unsigned int ix = 0; ix < n; ++ix)
+            for(unsigned int iz= 0; iz < n; ++iz)
+              for(unsigned int iy= 0; iy < n; ++iy)
+                for(unsigned int ix= 0; ix < n; ++ix)
                   {
-                    unsigned int k = n * (n * iy - iz + n - 1) + ix;
-                    numbers[k]     = l++;
+                    unsigned int k= n * (n * iy - iz + n - 1) + ix;
+                    numbers[k]    = l++;
                   }
             break;
           default:
@@ -268,17 +268,17 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
   FullMatrix<double> source_interpolation(this->dofs_per_cell,
                                           source_fe.dofs_per_cell);
   FullMatrix<double> tmp(this->dofs_per_cell, source_fe.dofs_per_cell);
-  for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
+  for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
     {
       // generate a point on this
       // cell and evaluate the
       // shape functions there
-      const Point<dim> p = this->unit_support_points[j];
-      for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-        cell_interpolation(j, i) = this->poly_space.compute_value(i, p);
+      const Point<dim> p= this->unit_support_points[j];
+      for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+        cell_interpolation(j, i)= this->poly_space.compute_value(i, p);
 
-      for(unsigned int i = 0; i < source_fe.dofs_per_cell; ++i)
-        source_interpolation(j, i) = source_fe.poly_space.compute_value(i, p);
+      for(unsigned int i= 0; i < source_fe.dofs_per_cell; ++i)
+        source_interpolation(j, i)= source_fe.poly_space.compute_value(i, p);
     }
 
   // then compute the
@@ -289,21 +289,21 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
   cell_interpolation.mmult(interpolation_matrix, source_interpolation);
 
   // cut off very small values
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-    for(unsigned int j = 0; j < source_fe.dofs_per_cell; ++j)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+    for(unsigned int j= 0; j < source_fe.dofs_per_cell; ++j)
       if(std::fabs(interpolation_matrix(i, j)) < 1e-15)
-        interpolation_matrix(i, j) = 0.;
+        interpolation_matrix(i, j)= 0.;
 
   // make sure that the row sum of
   // each of the matrices is 1 at
   // this point. this must be so
   // since the shape functions sum up
   // to 1
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
     {
-      double sum = 0.;
-      for(unsigned int j = 0; j < source_fe.dofs_per_cell; ++j)
-        sum += interpolation_matrix(i, j);
+      double sum= 0.;
+      for(unsigned int j= 0; j < source_fe.dofs_per_cell; ++j)
+        sum+= interpolation_matrix(i, j);
 
       Assert(std::fabs(sum - 1) < 5e-14 * std::max(this->degree, 1U) * dim,
              ExcInternalError());
@@ -571,7 +571,7 @@ FE_DGQ<dim, spacedim>::has_support_on_face(const unsigned int shape_index,
   Assert(face_index < GeometryInfo<dim>::faces_per_cell,
          ExcIndexRange(face_index, 0, GeometryInfo<dim>::faces_per_cell));
 
-  unsigned int n = this->degree + 1;
+  unsigned int n= this->degree + 1;
 
   // For DGQ elements that do not define support points, we cannot define
   // whether they have support at the boundary easily, so return true in any
@@ -582,17 +582,17 @@ FE_DGQ<dim, spacedim>::has_support_on_face(const unsigned int shape_index,
   // for DGQ(0) elements or arbitrary node DGQ with support points not located
   // at the element boundary, the single shape functions is constant and
   // therefore lives on the boundary
-  bool support_points_on_boundary = true;
-  for(unsigned int d = 0; d < dim; ++d)
+  bool support_points_on_boundary= true;
+  for(unsigned int d= 0; d < dim; ++d)
     if(std::abs(this->unit_support_points[0][d]) > 1e-13)
-      support_points_on_boundary = false;
-  for(unsigned int d = 0; d < dim; ++d)
+      support_points_on_boundary= false;
+  for(unsigned int d= 0; d < dim; ++d)
     if(std::abs(this->unit_support_points.back()[d] - 1.) > 1e-13)
-      support_points_on_boundary = false;
+      support_points_on_boundary= false;
   if(support_points_on_boundary == false)
     return true;
 
-  unsigned int n2 = n * n;
+  unsigned int n2= n * n;
 
   switch(dim)
     {
@@ -623,7 +623,7 @@ FE_DGQ<dim, spacedim>::has_support_on_face(const unsigned int shape_index,
 
       case 3:
         {
-          const unsigned int in2 = shape_index % n2;
+          const unsigned int in2= shape_index % n2;
 
           // x=0
           if(face_index == 0 && (shape_index % n) == 0)
@@ -680,7 +680,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::FE_DGQArbitraryNodes(
 {
   Assert(points.size() > 0,
          (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
-  this->unit_support_points = Quadrature<dim>(points).get_points();
+  this->unit_support_points= Quadrature<dim>(points).get_points();
 }
 
 template <int dim, int spacedim>
@@ -690,23 +690,23 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
   // note that the FETools::get_fe_by_name function does not work for
   // FE_DGQArbitraryNodes since there is no initialization by a degree value.
   std::ostringstream  namebuf;
-  bool                equidistant = true;
+  bool                equidistant= true;
   std::vector<double> points(this->degree + 1);
 
   std::vector<unsigned int> lexicographic
     = this->poly_space.get_numbering_inverse();
-  for(unsigned int j = 0; j <= this->degree; j++)
-    points[j] = this->unit_support_points[lexicographic[j]][0];
+  for(unsigned int j= 0; j <= this->degree; j++)
+    points[j]= this->unit_support_points[lexicographic[j]][0];
 
   // Check whether the support points are equidistant.
-  for(unsigned int j = 0; j <= this->degree; j++)
+  for(unsigned int j= 0; j <= this->degree; j++)
     if(std::abs(points[j] - (double) j / this->degree) > 1e-15)
       {
-        equidistant = false;
+        equidistant= false;
         break;
       }
   if(this->degree == 0 && std::abs(points[0] - 0.5) < 1e-15)
-    equidistant = true;
+    equidistant= true;
 
   if(equidistant == true)
     {
@@ -722,11 +722,11 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGaussLobatto.
   const QGaussLobatto<1> points_gl(this->degree + 1);
-  bool                   gauss_lobatto = true;
-  for(unsigned int j = 0; j <= this->degree; j++)
+  bool                   gauss_lobatto= true;
+  for(unsigned int j= 0; j <= this->degree; j++)
     if(points[j] != points_gl.point(j)(0))
       {
-        gauss_lobatto = false;
+        gauss_lobatto= false;
         break;
       }
 
@@ -739,11 +739,11 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGauss.
   const QGauss<1> points_g(this->degree + 1);
-  bool            gauss = true;
-  for(unsigned int j = 0; j <= this->degree; j++)
+  bool            gauss= true;
+  for(unsigned int j= 0; j <= this->degree; j++)
     if(points[j] != points_g.point(j)(0))
       {
-        gauss = false;
+        gauss= false;
         break;
       }
 
@@ -756,11 +756,11 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGauss.
   const QGaussLog<1> points_glog(this->degree + 1);
-  bool               gauss_log = true;
-  for(unsigned int j = 0; j <= this->degree; j++)
+  bool               gauss_log= true;
+  for(unsigned int j= 0; j <= this->degree; j++)
     if(points[j] != points_glog.point(j)(0))
       {
-        gauss_log = false;
+        gauss_log= false;
         break;
       }
 
@@ -789,11 +789,11 @@ FE_DGQArbitraryNodes<dim, spacedim>::
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(this->dofs_per_cell, nodal_values.size());
 
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
     {
       AssertDimension(support_point_values[i].size(), 1);
 
-      nodal_values[i] = support_point_values[i](0);
+      nodal_values[i]= support_point_values[i](0);
     }
 }
 
@@ -805,8 +805,8 @@ FE_DGQArbitraryNodes<dim, spacedim>::clone() const
   std::vector<Point<1>>     qpoints(this->degree + 1);
   std::vector<unsigned int> lexicographic
     = this->poly_space.get_numbering_inverse();
-  for(unsigned int i = 0; i <= this->degree; ++i)
-    qpoints[i] = Point<1>(this->unit_support_points[lexicographic[i]][0]);
+  for(unsigned int i= 0; i <= this->degree; ++i)
+    qpoints[i]= Point<1>(this->unit_support_points[lexicographic[i]][0]);
   Quadrature<1> pquadrature(qpoints);
 
   return std_cxx14::make_unique<FE_DGQArbitraryNodes<dim, spacedim>>(
@@ -828,7 +828,7 @@ FE_DGQLegendre<dim, spacedim>::get_constant_modes() const
   // Legendre represents a constant function by one in the first basis
   // function and zero in all others
   Table<2, bool> constant_modes(1, this->dofs_per_cell);
-  constant_modes(0, 0) = true;
+  constant_modes(0, 0)= true;
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
 }

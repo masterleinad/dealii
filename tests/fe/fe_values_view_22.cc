@@ -92,16 +92,16 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
-    block_component[ii] = 0;
+  for(unsigned int ii= 0; ii < n_stress_components; ii++)
+    block_component[ii]= 0;
 
   DoFRenumbering::component_wise(dof_handler);
 
   std::vector<types::global_dof_index> dofs_per_block(2);
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, block_component);
 
-  const unsigned int n_stress_dof = dofs_per_block[0];
-  const unsigned int n_gamma_dof  = dofs_per_block[1];
+  const unsigned int n_stress_dof= dofs_per_block[0];
+  const unsigned int n_gamma_dof = dofs_per_block[1];
 
   deallog << "Number of active cells: " << triangulation.n_active_cells()
           << std::endl
@@ -141,7 +141,7 @@ MixedElastoPlasticity<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
   deallog << "dofs_per_cell: " << fe.dofs_per_cell << std::endl;
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -154,30 +154,30 @@ MixedElastoPlasticity<dim>::assemble_system()
           << std::endl;
 
   // constant stress and constant gamma distribution across cell
-  const double stress_value = 125.0;
-  const double gamma_value  = 1.0;
+  const double stress_value= 125.0;
+  const double gamma_value = 1.0;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
   {
     fe_values.reinit(cell);
     cell->get_dof_indices(local_dof_indices);
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
       {
         // 0 = stress (symmetric 2nd order tensor), 1 = Gamma (scalar) interpolation fields
-        const unsigned int i_group = fe.system_to_base_index(i).first.first;
+        const unsigned int i_group= fe.system_to_base_index(i).first.first;
         // the index of the non-zero shape function
-        const unsigned int i_index = fe.system_to_base_index(i).first.second;
+        const unsigned int i_index= fe.system_to_base_index(i).first.second;
         // the support point (node) id
-        const unsigned int i_node = fe.system_to_base_index(i).second;
+        const unsigned int i_node= fe.system_to_base_index(i).second;
 
         deallog << "\t" << i << "\t" << i_group << "\t" << i_index << "\t"
                 << i_node;
 
         if(i_group == 0) // if i corresponds to tensor stress
-          solution(local_dof_indices[i]) = stress_value;
+          solution(local_dof_indices[i])= stress_value;
         else // i corresponds to scalar gamma
-          solution(local_dof_indices[i]) = gamma_value;
+          solution(local_dof_indices[i])= gamma_value;
 
         deallog << "\t" << solution(local_dof_indices[i]) << std::endl;
       }
@@ -195,15 +195,15 @@ MixedElastoPlasticity<dim>::assemble_system()
     // expect the nodal stress value at the quadrature point
     // constant stress field, therefore expect zero divergence
     // constant gamma field, therefore nodal value should equal value at quadrature point
-    for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+    for(unsigned int q= 0; q < quadrature_formula.size(); ++q)
       {
         deallog << local_values[q] << std::endl
                 << local_divergences[q] << std::endl
                 << local_scalar_values[q] << std::endl;
 
-        for(unsigned int m = 0; m < dim; m++)
+        for(unsigned int m= 0; m < dim; m++)
           {
-            for(unsigned int n = 0; n < dim; n++)
+            for(unsigned int n= 0; n < dim; n++)
               AssertThrow((local_values[q])[m][n] == stress_value,
                           ExcInternalError());
 

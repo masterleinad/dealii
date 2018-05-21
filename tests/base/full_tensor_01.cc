@@ -26,10 +26,10 @@ main()
   deallog.attach(logfile);
 
   Tensor<2, 2> t;
-  t[0][0] = 1;
-  t[1][1] = 2;
-  t[0][1] = 4;
-  t[1][0] = 4;
+  t[0][0]= 1;
+  t[1][1]= 2;
+  t[0][1]= 4;
+  t[1][0]= 4;
   // make sure transposition doesn't change
   // anything
   AssertThrow(t == transpose(t), ExcInternalError());

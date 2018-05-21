@@ -47,7 +47,7 @@ test()
   // for the test to be run multiple times.
   GridTools::distort_random(0.1, triangulation, false);
 
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
@@ -66,7 +66,7 @@ test()
         patch_cells, local_triangulation, patch_to_global_tria_map);
 
       deallog << "patch_cells " << cell << ": ";
-      for(unsigned int i = 0; i < patch_cells.size(); ++i)
+      for(unsigned int i= 0; i < patch_cells.size(); ++i)
         deallog << patch_cells[i] << ' ';
       deallog << std::endl;
 
@@ -79,7 +79,7 @@ test()
           deallog << "   " << tria_cell << " user flag check:  "
                   << (tria_cell->user_flag_set() ? " (+) " : " (-) ")
                   << std::endl;
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
             {
               deallog << "  vertices for cell  " << tria_cell << " : "
                       << tria_cell->vertex(v) << std::endl;

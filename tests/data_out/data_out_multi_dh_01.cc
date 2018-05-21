@@ -42,10 +42,10 @@ test()
   dof2.distribute_dofs(fe2);
 
   Vector<double> v1(dof1.n_dofs()), v2(dof2.n_dofs());
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    v1(i) = i;
-  for(unsigned int i = 0; i < v2.size(); ++i)
-    v2(i) = i;
+  for(unsigned int i= 0; i < v1.size(); ++i)
+    v1(i)= i;
+  for(unsigned int i= 0; i < v2.size(); ++i)
+    v2(i)= i;
 
   DataOut<dim> data_out;
   data_out.add_data_vector(dof1, v1, "linear");

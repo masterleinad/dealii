@@ -39,17 +39,17 @@ test()
     true,
     parallel::shared::Triangulation<dim>::partition_custom_signal);
   shared_tria.signals.post_refinement.connect([&shared_tria]() {
-    const unsigned int nproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+    const unsigned int nproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
     typename Triangulation<dim>::active_cell_iterator cell
       = shared_tria.begin_active();
-    for(unsigned int i = 0; i < shared_tria.n_active_cells(); ++i)
+    for(unsigned int i= 0; i < shared_tria.n_active_cells(); ++i)
       {
-        unsigned int j = 0;
+        unsigned int j= 0;
         if(i < 4)
-          j = 1;
+          j= 1;
         else if(i < 8)
-          j = 2;
+          j= 2;
 
         cell->set_subdomain_id(j % nproc);
         ++cell;
@@ -66,7 +66,7 @@ test()
   deallog << "(CellId,subdomain_id) for each active cell:" << std::endl;
   typename Triangulation<dim>::active_cell_iterator cell
     = shared_tria.begin_active(),
-    endc = shared_tria.end();
+    endc= shared_tria.end();
   for(; cell != endc; ++cell)
     if(cell->subdomain_id() != numbers::artificial_subdomain_id)
       deallog << "(" << cell->id().to_string() << "," << cell->subdomain_id()

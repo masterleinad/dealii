@@ -57,7 +57,7 @@ namespace internal
         /**
          * Destructor.
          */
-        virtual ~PolicyBase() = default;
+        virtual ~PolicyBase()= default;
 
         /**
          * Distribute degrees of freedom on the DoFHandler object associated
@@ -68,7 +68,7 @@ namespace internal
          * argument.
          */
         virtual NumberCache
-        distribute_dofs() const = 0;
+        distribute_dofs() const= 0;
 
         /**
          * Distribute the multigrid dofs on each level of the DoFHandler
@@ -76,7 +76,7 @@ namespace internal
          * caches for all of the levels.
          */
         virtual std::vector<NumberCache>
-        distribute_mg_dofs() const = 0;
+        distribute_mg_dofs() const= 0;
 
         /**
          * Renumber degrees of freedom as specified by the first argument.
@@ -85,7 +85,7 @@ namespace internal
          */
         virtual NumberCache
         renumber_dofs(
-          const std::vector<types::global_dof_index>& new_numbers) const = 0;
+          const std::vector<types::global_dof_index>& new_numbers) const= 0;
 
         /**
          * Renumber multilevel degrees of freedom on one level of a multigrid
@@ -98,7 +98,7 @@ namespace internal
         virtual NumberCache
         renumber_mg_dofs(
           const unsigned int                          level,
-          const std::vector<types::global_dof_index>& new_numbers) const = 0;
+          const std::vector<types::global_dof_index>& new_numbers) const= 0;
       };
 
       /**

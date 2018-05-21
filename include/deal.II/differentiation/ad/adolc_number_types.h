@@ -32,7 +32,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_adolc_number : std::false_type
     {};
 
@@ -43,7 +43,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_adolc_taped_number : std::false_type
     {};
 
@@ -54,7 +54,7 @@ namespace Differentiation
      *
      * @author Jean-Paul Pelteret, 2017
      */
-    template <typename NumberType, typename = void>
+    template <typename NumberType, typename= void>
     struct is_adolc_tapeless_number : std::false_type
     {};
   } // namespace AD
@@ -112,7 +112,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool         is_taped = true;
+        static const bool         is_taped= true;
         typedef adouble           real_type;
         typedef double            derivative_type;
         static const unsigned int n_supported_derivative_levels
@@ -130,10 +130,10 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool         is_taped = false;
+        static const bool         is_taped= false;
         typedef adtl::adouble     real_type;
         typedef double            derivative_type;
-        static const unsigned int n_supported_derivative_levels = 1;
+        static const unsigned int n_supported_derivative_levels= 1;
       };
 
       template <typename ADNumberType>
@@ -154,7 +154,7 @@ namespace Differentiation
                              const unsigned int,
                              ADNumberType& out)
         {
-          out <<= in;
+          out<<= in;
         }
 
         /*
@@ -167,10 +167,10 @@ namespace Differentiation
         dependent_variable(ADNumberType& out, ADNumberType func)
         {
           // Store the value only (strip it of all sensitivities)
-          out = ADNumberTraits<ADNumberType>::get_scalar_value(func);
+          out= ADNumberTraits<ADNumberType>::get_scalar_value(func);
           // Mark as a dependent variable
           scalar_type tmp;
-          func >>= tmp;
+          func>>= tmp;
         }
       };
 
@@ -194,7 +194,7 @@ namespace Differentiation
         {
           // It is important that the tapeless variables have their values set
           // before defining their directional derivative index
-          out = in;
+          out= in;
 
           // Violating this condition when will result in an Adol-C internal
           // error. We could rather always throw here in order to provide a
@@ -214,8 +214,8 @@ namespace Differentiation
         dependent_variable(ADNumberType& out, const ADNumberType& func)
         {
           // Simply transfer value with sensitivities
-          out = 0.0;
-          out = func;
+          out= 0.0;
+          out= func;
         }
       };
 

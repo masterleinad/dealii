@@ -39,16 +39,16 @@ void
 test()
 {
   Assert(dim == 3, ExcNotImplemented());
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
 
   // create hypershell mesh and refine some
   // cells. use some large numbers which make
   // round-off influence more pronounced
-  const double R0 = 6371000. - 2890000.; /* m          */
-  const double R1 = 6371000. - 35000.;   /* m          */
+  const double R0= 6371000. - 2890000.; /* m          */
+  const double R1= 6371000. - 35000.;   /* m          */
   GridGenerator::hyper_shell(triangulation, Point<dim>(), R0, R1, 96, true);
   triangulation.reset_manifold(0);
   triangulation.refine_global(2);
@@ -61,12 +61,12 @@ test()
       if(cell->center()[2] > 0.75 * R1)
         {
           cell->set_refine_flag();
-          for(unsigned int c = 0; c < 8; ++c)
+          for(unsigned int c= 0; c < 8; ++c)
             cell->parent()->child(c)->set_refine_flag();
         }
 
   {
-    unsigned int n_flagged_cells = 0;
+    unsigned int n_flagged_cells= 0;
     for(typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
         cell != triangulation.end();
@@ -75,7 +75,7 @@ test()
         if(cell->refine_flag_set())
           ++n_flagged_cells;
 
-    unsigned int global_f_c = 0;
+    unsigned int global_f_c= 0;
     MPI_Allreduce(
       &n_flagged_cells, &global_f_c, 1, MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD);
     if(myid == 0)
@@ -105,7 +105,7 @@ test()
   DoFTools::make_hanging_node_constraints(dofh, constraints);
   std::set<types::boundary_id> no_normal_flux_boundaries;
   no_normal_flux_boundaries.insert(1);
-  const unsigned int degree = 1;
+  const unsigned int degree= 1;
   VectorTools::compute_no_normal_flux_constraints(
     dofh, 0, no_normal_flux_boundaries, constraints, MappingQ<dim>(degree));
   constraints.close();
@@ -114,7 +114,7 @@ test()
   // processors might write info in different
   // orders, copy all numbers to root processor
   std::vector<unsigned int> n_constraints_glob(numprocs);
-  unsigned int              n_constraints = constraints.n_constraints();
+  unsigned int              n_constraints= constraints.n_constraints();
   MPI_Gather(&n_constraints,
              1,
              MPI_UNSIGNED,
@@ -124,7 +124,7 @@ test()
              0,
              MPI_COMM_WORLD);
   if(myid == 0)
-    for(unsigned int i = 0; i < numprocs; ++i)
+    for(unsigned int i= 0; i < numprocs; ++i)
       deallog << "#constraints on " << i << ": " << n_constraints_glob[i]
               << std::endl;
 
@@ -133,13 +133,13 @@ test()
   TrilinosWrappers::MPI::Vector vector;
   vector.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
   {
-    const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int                   dofs_per_cell= fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     Vector<double>                       local_vector(dofs_per_cell);
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      local_vector(i) = 1.;
-    typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active(),
-                                                   endc = dofh.end();
+    for(unsigned int i= 0; i < dofs_per_cell; ++i)
+      local_vector(i)= 1.;
+    typename DoFHandler<dim>::active_cell_iterator cell= dofh.begin_active(),
+                                                   endc= dofh.end();
     for(; cell != endc; ++cell)
       if(cell->subdomain_id() == triangulation.locally_owned_subdomain())
         {
@@ -153,8 +153,8 @@ test()
   // now check that no entries were generated
   // for constrained entries on the locally
   // owned range.
-  const std::pair<unsigned int, unsigned int> range = vector.local_range();
-  for(unsigned int i = range.first; i < range.second; ++i)
+  const std::pair<unsigned int, unsigned int> range= vector.local_range();
+  for(unsigned int i= range.first; i < range.second; ++i)
     if(constraints.is_constrained(i))
       AssertThrow(vector(i) == 0, ExcInternalError());
 
@@ -168,7 +168,7 @@ main(int argc, char* argv[])
   {
     Utilities::MPI::MPI_InitFinalize mpi_initialization(
       argc, argv, testing_max_num_threads());
-    unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+    unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
     deallog.push(Utilities::int_to_string(myid));
 

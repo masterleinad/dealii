@@ -18,15 +18,15 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
-static unsigned int counter = 0;
+static unsigned int counter= 0;
 
 template <typename Number>
 void
 fill(Vector<Number>& v)
 {
-  v = 0;
-  for(unsigned int i = 0; i < v.size(); i++)
-    v(i) = counter + i * 2;
+  v= 0;
+  for(unsigned int i= 0; i < v.size(); i++)
+    v(i)= counter + i * 2;
 
   ++counter;
 }
@@ -36,25 +36,25 @@ void
 test(const std::vector<unsigned int>& size_sequence)
 {
   Vector<Number> v, v_old;
-  for(unsigned int j = 0; j < size_sequence.size(); ++j)
+  for(unsigned int j= 0; j < size_sequence.size(); ++j)
     {
-      const unsigned int s = size_sequence[j];
+      const unsigned int s= size_sequence[j];
       if(v.size() == 0)
         {
           v.reinit(s);
         }
       else
         {
-          const unsigned int check_s = (s > v.size() ? v.size() : s);
+          const unsigned int check_s= (s > v.size() ? v.size() : s);
           v.grow_or_shrink(s);
-          for(unsigned int i = 0; i < check_s; ++i)
+          for(unsigned int i= 0; i < check_s; ++i)
             AssertThrow(v(i) == v_old(i),
                         ExcMessage("s=" + std::to_string(s)
                                    + " i=" + std::to_string(i) + " "
                                    + std::to_string(v(i))
                                    + "!=" + std::to_string(v_old(i))));
 
-          for(unsigned int i = check_s; i < s; ++i)
+          for(unsigned int i= check_s; i < s; ++i)
             AssertThrow(v(i) == 0.,
                         ExcMessage("s=" + std::to_string(s)
                                    + " i=" + std::to_string(i) + " "
@@ -63,7 +63,7 @@ test(const std::vector<unsigned int>& size_sequence)
 
       fill(v);
       v_old.reinit(s);
-      v_old = v;
+      v_old= v;
     }
 
   deallog << "OK" << std::endl;

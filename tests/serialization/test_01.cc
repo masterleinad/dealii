@@ -19,21 +19,21 @@
 
 #include <typeinfo>
 
-int object_number = 1;
+int object_number= 1;
 
 class C
 {
 public:
   C()
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "Default constructor. Object number " << object_number
             << std::endl;
   }
 
   C(const C&)
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
   }
 

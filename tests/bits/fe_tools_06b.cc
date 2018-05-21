@@ -21,7 +21,7 @@
 // check
 //   FETools::back_interpolate(6) with parallel vector
 
-std::string output_file_name = "output";
+std::string output_file_name= "output";
 
 template <int dim>
 void
@@ -52,8 +52,8 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   cm2.close();
 
   LinearAlgebra::distributed::Vector<double> in(dof1->n_dofs());
-  for(unsigned int i = 0; i < in.size(); ++i)
-    in(i) = i;
+  for(unsigned int i= 0; i < in.size(); ++i)
+    in(i)= i;
   LinearAlgebra::distributed::Vector<double> out(dof1->n_dofs());
 
   FETools::back_interpolate(*dof1, cm1, in, *dof2, cm2, out);

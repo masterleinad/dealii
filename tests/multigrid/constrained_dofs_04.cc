@@ -30,7 +30,7 @@ main(int argc, char* argv[])
   initlog();
   deal_II_exceptions::disable_abort_on_exception();
 
-  constexpr int      dim = 2;
+  constexpr int      dim= 2;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   DoFHandler<dim> dh(tria);

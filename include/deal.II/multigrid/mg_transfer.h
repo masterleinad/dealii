@@ -576,7 +576,7 @@ public:
    * Constructor without constraint matrices. Use this constructor only with
    * discontinuous finite elements or with no local refinement.
    */
-  MGTransferPrebuilt() = default;
+  MGTransferPrebuilt()= default;
 
   /**
    * Constructor with constraints. Equivalent to the default constructor
@@ -597,7 +597,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferPrebuilt() override = default;
+  virtual ~MGTransferPrebuilt() override= default;
 
   /**
    * Initialize the constraints to be used in build_matrices().

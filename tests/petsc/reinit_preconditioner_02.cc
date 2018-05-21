@@ -30,7 +30,7 @@ test()
 {
   DynamicSparsityPattern csp(5, 5);
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     csp.add(i, i);
 
   csp.add(0, 1);
@@ -39,7 +39,7 @@ test()
   PETScWrappers::SparseMatrix mat;
   mat.reinit(csp);
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for(unsigned int i= 0; i < 5; ++i)
     mat.set(i, i, 1.0 + i * 2.0);
   mat.set(0, 1, 0.1);
   mat.set(1, 0, 0.1);
@@ -52,8 +52,8 @@ test()
     PETScWrappers::MPI::Vector src, dst;
     src.reinit(indices, MPI_COMM_WORLD);
     dst.reinit(indices, MPI_COMM_WORLD);
-    src(0) = 1.0;
-    src(1) = 2.0;
+    src(0)= 1.0;
+    src(1)= 2.0;
     src.compress(VectorOperation::insert);
 
     PRE pre;

@@ -185,7 +185,7 @@ namespace Utilities
        */
       void
       set_ghost_indices(const IndexSet& ghost_indices,
-                        const IndexSet& larger_ghost_index_set = IndexSet());
+                        const IndexSet& larger_ghost_index_set= IndexSet());
 
       /**
        * Return the global size.

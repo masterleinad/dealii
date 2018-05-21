@@ -50,7 +50,7 @@ namespace hp
    *
    * @author Oliver Kayser-Herold, 2005
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class MappingCollection : public Subscriptor
   {
   public:
@@ -58,7 +58,7 @@ namespace hp
      * Default constructor. Leads to an empty collection that can later be
      * filled using push_back().
      */
-    MappingCollection() = default;
+    MappingCollection()= default;
 
     /**
      * Conversion constructor. This constructor creates a MappingCollection
@@ -135,7 +135,7 @@ namespace hp
    * collection can then be used in all of those places where such a
    * collection is needed.
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   struct StaticMappingQ1
   {
   public:

@@ -51,8 +51,8 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<std::complex<double>>& values) const
   {
-    for(unsigned int d = 0; d < this->n_components; ++d)
-      values(d) = value(p, d);
+    for(unsigned int d= 0; d < this->n_components; ++d)
+      values(d)= value(p, d);
   }
 };
 
@@ -123,15 +123,15 @@ check()
       std::complex<double>(1, 0)));
 
   // check all of them
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for(unsigned int i= 0; i < fe_list.size(); ++i)
     {
-      const FiniteElement<dim>& fe = *fe_list[i];
+      const FiniteElement<dim>& fe= *fe_list[i];
 
       DoFHandler<dim> dof(tr);
       dof.distribute_dofs(fe);
 
       typename FunctionMap<dim, std::complex<double>>::type function_map;
-      function_map[0] = function_list[i];
+      function_map[0]= function_list[i];
 
       // interpolate boundary values
       deallog << "Interpolated boundary values" << std::endl;
@@ -154,7 +154,7 @@ check()
     }
 
   // delete objects now no more needed
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for(unsigned int i= 0; i < fe_list.size(); ++i)
     {
       delete fe_list[i];
       delete function_list[i];

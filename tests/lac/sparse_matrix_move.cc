@@ -20,14 +20,14 @@
 void
 graph_laplacian(const SparsityPattern& sparsity, SparseMatrix<double>& matrix)
 {
-  matrix = 0.0;
+  matrix= 0.0;
 
-  for(SparsityPattern::const_iterator it = sparsity.begin();
+  for(SparsityPattern::const_iterator it= sparsity.begin();
       it != sparsity.end();
       ++it)
     {
-      const auto i = (*it).row();
-      const auto j = (*it).column();
+      const auto i= (*it).row();
+      const auto j= (*it).column();
       matrix.add(i, j, -1);
       matrix.add(i, i, 1);
     }
@@ -57,10 +57,10 @@ main()
   initlog();
   deallog << std::setprecision(3);
 
-  const unsigned int size = 5;
+  const unsigned int size= 5;
 
   FDMatrix     testproblem(size, size);
-  unsigned int dim = (size - 1) * (size - 1);
+  unsigned int dim= (size - 1) * (size - 1);
 
   SparsityPattern sparsity(dim, dim, size);
   testproblem.five_point_structure(sparsity);
@@ -70,11 +70,11 @@ main()
 
   {
     // Return a sparse matrix, possibly using RVO or move constructor
-    SparseMatrix<double> A = graph_laplacian(sparsity);
+    SparseMatrix<double> A= graph_laplacian(sparsity);
     deallog << A.n_nonzero_elements() << std::endl;
 
-    x = 1.0;
-    y = 1.0;
+    x= 1.0;
+    y= 1.0;
     A.vmult(y, x);
 
     deallog << y.l2_norm() << std::endl;
@@ -82,16 +82,16 @@ main()
 
   {
     // Return a sparse matrix using the move constructor
-    SparseMatrix<double> A = graph_laplacian_move_return(sparsity);
+    SparseMatrix<double> A= graph_laplacian_move_return(sparsity);
     deallog << A.n_nonzero_elements() << std::endl;
-    y = 1.0;
+    y= 1.0;
     A.vmult(y, x);
 
     deallog << y.l2_norm() << std::endl;
 
     // Explicitly move a sparse matrix
     SparseMatrix<double> B;
-    B = std::move(A);
+    B= std::move(A);
     deallog << B.m() << std::endl;
     deallog << A.empty() << std::endl;
   }

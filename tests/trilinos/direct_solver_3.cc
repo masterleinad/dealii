@@ -90,7 +90,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -101,7 +101,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component= 0) const;
 };
 
 template <int dim>
@@ -142,7 +142,7 @@ Step4<dim>::setup_system()
     dof_handler, 0, BoundaryValues<dim>(), constraints);
   constraints.close();
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -177,8 +177,8 @@ Step4<dim>::assemble_system()
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
 
-  const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int dofs_per_cell= fe.dofs_per_cell;
+  const unsigned int n_q_points   = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -188,30 +188,30 @@ Step4<dim>::assemble_system()
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       if(cell->is_locally_owned())
         {
           fe_values.reinit(cell);
-          cell_matrix  = 0;
-          cell_rhs     = 0;
-          cell_rhs_two = 0;
+          cell_matrix = 0;
+          cell_rhs    = 0;
+          cell_rhs_two= 0;
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
-                                        * fe_values.shape_grad(j, q_point)
-                                        * fe_values.JxW(q_point));
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                  cell_matrix(i, j)+= (fe_values.shape_grad(i, q_point)
+                                       * fe_values.shape_grad(j, q_point)
+                                       * fe_values.JxW(q_point));
 
-                cell_rhs(i) += (fe_values.shape_value(i, q_point) * 1.0
-                                * fe_values.JxW(q_point));
+                cell_rhs(i)+= (fe_values.shape_value(i, q_point) * 1.0
+                               * fe_values.JxW(q_point));
 
-                cell_rhs_two(i) += (fe_values.shape_value(i, q_point) * 2.0
-                                    * fe_values.JxW(q_point));
+                cell_rhs_two(i)+= (fe_values.shape_value(i, q_point) * 2.0
+                                   * fe_values.JxW(q_point));
               }
 
           cell->get_dof_indices(local_dof_indices);
@@ -235,11 +235,11 @@ Step4<dim>::solve()
 {
   SolverControl solver_control(100, 1e-12);
   // factorize matrix for direct solver
-  solution = 0;
+  solution= 0;
 
   deallog.push("DirectKLU");
   TrilinosWrappers::SolverDirect::AdditionalData data;
-  data.solver_type = "Amesos_Klu";
+  data.solver_type= "Amesos_Klu";
   TrilinosWrappers::SolverDirect direct_solver(solver_control, data);
   direct_solver.initialize(system_matrix);
 
@@ -264,7 +264,7 @@ Step4<dim>::solve()
           << std::endl;
 
   // do solve 2 without refactorizing
-  solution = 0;
+  solution= 0;
   direct_solver.solve(solution, system_rhs_two);
   deallog << "Vector norm: " << solution.l2_norm();
 

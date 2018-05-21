@@ -134,7 +134,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat
  * @date 2005
  */
-template <class PolynomialType, int dim, int spacedim = dim>
+template <class PolynomialType, int dim, int spacedim= dim>
 class FE_PolyTensor : public FiniteElement<dim, spacedim>
 {
 public:
@@ -218,10 +218,10 @@ protected:
   {
     // generate a new data object and
     // initialize some fields
-    auto data         = std_cxx14::make_unique<InternalData>();
-    data->update_each = requires_update_flags(update_flags);
+    auto data        = std_cxx14::make_unique<InternalData>();
+    data->update_each= requires_update_flags(update_flags);
 
-    const unsigned int n_q_points = quadrature.size();
+    const unsigned int n_q_points= quadrature.size();
 
     // some scratch arrays
     std::vector<Tensor<1, dim>> values(0);
@@ -274,7 +274,7 @@ protected:
     // N_i(v_j)=\delta_ij for all basis
     // functions v_j
     if(update_flags & (update_values | update_gradients))
-      for(unsigned int k = 0; k < n_q_points; ++k)
+      for(unsigned int k= 0; k < n_q_points; ++k)
         {
           poly_space.compute(quadrature.point(k),
                              values,
@@ -286,46 +286,46 @@ protected:
           if(update_flags & update_values)
             {
               if(inverse_node_matrix.n_cols() == 0)
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-                  data->shape_values[i][k] = values[i];
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+                  data->shape_values[i][k]= values[i];
               else
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
                   {
                     Tensor<1, dim> add_values;
-                    for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-                      add_values += inverse_node_matrix(j, i) * values[j];
-                    data->shape_values[i][k] = add_values;
+                    for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
+                      add_values+= inverse_node_matrix(j, i) * values[j];
+                    data->shape_values[i][k]= add_values;
                   }
             }
 
           if(update_flags & update_gradients)
             {
               if(inverse_node_matrix.n_cols() == 0)
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-                  data->shape_grads[i][k] = grads[i];
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+                  data->shape_grads[i][k]= grads[i];
               else
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
                   {
                     Tensor<2, dim> add_grads;
-                    for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-                      add_grads += inverse_node_matrix(j, i) * grads[j];
-                    data->shape_grads[i][k] = add_grads;
+                    for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
+                      add_grads+= inverse_node_matrix(j, i) * grads[j];
+                    data->shape_grads[i][k]= add_grads;
                   }
             }
 
           if(update_flags & update_hessians)
             {
               if(inverse_node_matrix.n_cols() == 0)
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-                  data->shape_grad_grads[i][k] = grad_grads[i];
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
+                  data->shape_grad_grads[i][k]= grad_grads[i];
               else
-                for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+                for(unsigned int i= 0; i < this->dofs_per_cell; ++i)
                   {
                     Tensor<3, dim> add_grad_grads;
-                    for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
+                    for(unsigned int j= 0; j < this->dofs_per_cell; ++j)
                       add_grad_grads
                         += inverse_node_matrix(j, i) * grad_grads[j];
-                    data->shape_grad_grads[i][k] = add_grad_grads;
+                    data->shape_grad_grads[i][k]= add_grad_grads;
                   }
             }
         }

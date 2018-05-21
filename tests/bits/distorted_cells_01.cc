@@ -34,14 +34,14 @@ void
 check(const unsigned int testcase)
 {
   std::vector<Point<dim>> vertices;
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     vertices.push_back(GeometryInfo<dim>::unit_cell_vertex(v));
 
   switch(testcase)
     {
       case 1:
         deallog << "Pinched cell in " << dim << "d" << std::endl;
-        vertices[0] = vertices[1];
+        vertices[0]= vertices[1];
         break;
       case 2:
         deallog << "Twisted cell in " << dim << "d" << std::endl;
@@ -54,21 +54,21 @@ check(const unsigned int testcase)
   std::vector<CellData<dim>> cells;
   {
     CellData<dim> cell;
-    for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
-      cell.vertices[j] = j;
+    for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      cell.vertices[j]= j;
     cells.push_back(cell);
   }
 
   Triangulation<dim> coarse_grid(Triangulation<dim>::none, true);
 
-  bool flag = false;
+  bool flag= false;
   try
     {
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
     }
   catch(typename Triangulation<dim>::DistortedCellList& dcv)
     {
-      flag = true;
+      flag= true;
 
       deallog << dcv.distorted_cells.size() << " distorted cells" << std::endl;
       Assert(dcv.distorted_cells.front() == coarse_grid.begin(0),
@@ -83,7 +83,7 @@ main()
 {
   initlog();
 
-  for(unsigned int testcase = 1; testcase <= 2; ++testcase)
+  for(unsigned int testcase= 1; testcase <= 2; ++testcase)
     {
       check<1>(testcase);
       check<2>(testcase);

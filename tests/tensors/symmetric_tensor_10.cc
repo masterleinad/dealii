@@ -25,24 +25,24 @@ test()
   deallog << "dim=" << dim << std::endl;
 
   SymmetricTensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      t[i][j] = (1. + (i + 1) * (j * 2));
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      t[i][j]= (1. + (i + 1) * (j * 2));
 
-  SymmetricTensor<2, dim> x = deviator(t);
+  SymmetricTensor<2, dim> x= deviator(t);
 
   deallog << "x=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << x[i][j] << std::endl;
 
   // the difference between t and x is a
   // diagonal tensor with constant elements
   // proportional to the trace of t
-  t -= x;
+  t-= x;
   deallog << "t-x=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << t[i][j] << std::endl;
 }
 

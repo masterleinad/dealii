@@ -114,8 +114,8 @@ namespace Step29
   {
     Assert(values.size() == 2, ExcDimensionMismatch(values.size(), 2));
 
-    values(0) = 1;
-    values(1) = 0;
+    values(0)= 1;
+    values(1)= 0;
   }
 
   template <int dim>
@@ -127,7 +127,7 @@ namespace Step29
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
 
-    for(unsigned int p = 0; p < points.size(); ++p)
+    for(unsigned int p= 0; p < points.size(); ++p)
       DirichletBoundaryValues<dim>::vector_value(points[p], value_list[p]);
   }
 
@@ -346,14 +346,14 @@ namespace Step29
     // The computation itself is straightforward: We iterate over each entry
     // in the output vector and compute $|u|$ from the corresponding values of
     // $v$ and $w$:
-    for(unsigned int i = 0; i < computed_quantities.size(); i++)
+    for(unsigned int i= 0; i < computed_quantities.size(); i++)
       {
         Assert(computed_quantities[i].size() == 1,
                ExcDimensionMismatch(computed_quantities[i].size(), 1));
         Assert(inputs.solution_values[i].size() == 2,
                ExcDimensionMismatch(inputs.solution_values[i].size(), 2));
 
-        computed_quantities[i](0) = std::sqrt(
+        computed_quantities[i](0)= std::sqrt(
           inputs.solution_values[i](0) * inputs.solution_values[i](0)
           + inputs.solution_values[i](1) * inputs.solution_values[i](1));
       }
@@ -434,7 +434,7 @@ namespace Step29
     // object:
     prm.enter_subsection("Mesh & geometry parameters");
 
-    const double       focal_distance = prm.get_double("Focal distance");
+    const double       focal_distance= prm.get_double("Focal distance");
     const unsigned int n_refinements = prm.get_integer("Number of refinements");
 
     prm.leave_subsection();
@@ -448,9 +448,9 @@ namespace Step29
     // opt for including them:
     const Point<dim> transducer
       = (dim == 2) ? Point<dim>(0.5, 0.0) : Point<dim>(0.5, 0.5, 0.0);
-    const Point<dim> focal_point = (dim == 2) ?
-                                     Point<dim>(0.5, focal_distance) :
-                                     Point<dim>(0.5, 0.5, focal_distance);
+    const Point<dim> focal_point= (dim == 2) ?
+                                    Point<dim>(0.5, focal_distance) :
+                                    Point<dim>(0.5, 0.5, focal_distance);
 
     // As initial coarse grid we take a simple unit square with 5 subdivisions
     // in each direction. The number of subdivisions is chosen so that the
@@ -464,11 +464,11 @@ namespace Step29
     // boundary indicator.
     GridGenerator::subdivided_hyper_cube(triangulation, 5, 0, 1);
 
-    typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
-                                               endc = triangulation.end();
+    typename Triangulation<dim>::cell_iterator cell= triangulation.begin(),
+                                               endc= triangulation.end();
 
     for(; cell != endc; ++cell)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         if(cell->face(face)->at_boundary()
            && ((cell->face(face)->center() - transducer).norm_square() < 0.01))
@@ -543,7 +543,7 @@ namespace Step29
 
     prm.enter_subsection("Physical constants");
 
-    const double omega = prm.get_double("omega"), c = prm.get_double("c");
+    const double omega= prm.get_double("omega"), c= prm.get_double("c");
 
     prm.leave_subsection();
 
@@ -554,9 +554,9 @@ namespace Step29
     QGauss<dim>     quadrature_formula(2);
     QGauss<dim - 1> face_quadrature_formula(2);
 
-    const unsigned int n_q_points      = quadrature_formula.size(),
-                       n_face_q_points = face_quadrature_formula.size(),
-                       dofs_per_cell   = fe.dofs_per_cell;
+    const unsigned int n_q_points     = quadrature_formula.size(),
+                       n_face_q_points= face_quadrature_formula.size(),
+                       dofs_per_cell  = fe.dofs_per_cell;
 
     // The FEValues objects will evaluate the shape functions for us.  For the
     // part of the bilinear form that involves integration on $\Omega$, we'll
@@ -580,19 +580,19 @@ namespace Step29
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
 
     for(; cell != endc; ++cell)
       {
         // On each cell, we first need to reset the local contribution matrix
         // and request the FEValues object to compute the shape functions for
         // the current cell:
-        cell_matrix = 0;
+        cell_matrix= 0;
         fe_values.reinit(cell);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int j= 0; j < dofs_per_cell; ++j)
               {
                 // At this point, it is important to keep in mind that we are
                 // dealing with a finite element system with two
@@ -640,7 +640,7 @@ namespace Step29
                     // their contributions, where values and gradients of the
                     // shape functions are supplied by our FEValues object.
 
-                    for(unsigned int q_point = 0; q_point < n_q_points;
+                    for(unsigned int q_point= 0; q_point < n_q_points;
                         ++q_point)
                       cell_matrix(i, j)
                         += (((fe_values.shape_value(i, q_point)
@@ -668,7 +668,7 @@ namespace Step29
         // is at the boundary, and second has the correct boundary indicator
         // associated with $\Gamma_2$, the part of the boundary where we have
         // absorbing boundary conditions:
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+        for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
             ++face)
           if(cell->face(face)->at_boundary()
              && (cell->face(face)->boundary_id() == 0))
@@ -682,8 +682,8 @@ namespace Step29
               // Next, we loop through all DoFs of the current cell to find
               // pairs that belong to different components and both have
               // support on the current face:
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
                   if((fe.system_to_component_index(i).first
                       != fe.system_to_component_index(j).first)
                      && fe.has_support_on_face(i, face)
@@ -709,7 +709,7 @@ namespace Step29
                     // already checked that DoF $i$ and $j$ belong to
                     // different components, it suffices here to test for one
                     // of them to which component it belongs.
-                    for(unsigned int q_point = 0; q_point < n_face_q_points;
+                    for(unsigned int q_point= 0; q_point < n_face_q_points;
                         ++q_point)
                       cell_matrix(i, j)
                         += ((fe.system_to_component_index(i).first == 0) ? -1 :
@@ -726,8 +726,8 @@ namespace Step29
         cell->get_dof_indices(local_dof_indices);
 
         // ...and then add the entries to the system matrix one by one:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       }
@@ -816,7 +816,7 @@ namespace Step29
     // corresponding properties of the DataOut object accordingly.
     prm.enter_subsection("Output parameters");
 
-    const std::string output_file = prm.get("Output file");
+    const std::string output_file= prm.get("Output file");
     data_out.parse_parameters(prm);
 
     prm.leave_subsection();
@@ -825,7 +825,7 @@ namespace Step29
     // ParameterHandler and the suffix which is provided by the DataOut class
     // (the default suffix is set to the right type that matches the one set
     // in the .prm file through parse_parameters()):
-    const std::string filename = output_file + data_out.default_suffix();
+    const std::string filename= output_file + data_out.default_suffix();
 
     std::ofstream output(filename);
 

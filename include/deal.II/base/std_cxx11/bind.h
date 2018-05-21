@@ -36,13 +36,13 @@ namespace std_cxx11
   using std::ref;
   using std::reference_wrapper;
 
-  namespace placeholders = std::placeholders;
+  namespace placeholders= std::placeholders;
 } // namespace std_cxx11
 DEAL_II_NAMESPACE_CLOSE
 
 // then allow using the old namespace name instead of the new one
 DEAL_II_NAMESPACE_OPEN
-namespace std_cxx1x = std_cxx11;
+namespace std_cxx1x= std_cxx11;
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

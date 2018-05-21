@@ -37,17 +37,17 @@ test()
 
   const QGauss<dim> quadrature(5);
 
-  std::vector<Point<dim>> q_points = quadrature.get_points();
+  std::vector<Point<dim>> q_points= quadrature.get_points();
 
   MappingManifold<dim, spacedim> map_manifold;
   MappingQGeneric<dim, spacedim> map_q1(1);
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = triangulation.begin_active(),
-    endc = triangulation.end();
+    endc= triangulation.end();
   for(; cell != endc; ++cell)
     {
-      for(unsigned int i = 0; i < q_points.size(); ++i)
+      for(unsigned int i= 0; i < q_points.size(); ++i)
         {
           const Point<spacedim> pq
             = map_manifold.transform_unit_to_real_cell(cell, q_points[i]);

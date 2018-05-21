@@ -206,13 +206,13 @@ public:
    * A static variable that allows users of this class to discover the value
    * of the second template argument.
    */
-  static const unsigned int dimension = DoFHandlerType::dimension;
+  static const unsigned int dimension= DoFHandlerType::dimension;
 
   /**
    * A static variable that allows users of this class to discover the value
    * of the third template argument.
    */
-  static const unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static const unsigned int space_dimension= DoFHandlerType::space_dimension;
 
   /**
    * Declare a typedef to the base class to make accessing some of the
@@ -754,13 +754,13 @@ public:
    * A static variable that allows users of this class to discover the value
    * of the second template argument.
    */
-  static const unsigned int dimension = 1;
+  static const unsigned int dimension= 1;
 
   /**
    * A static variable that allows users of this class to discover the value
    * of the third template argument.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Declare a typedef to the base class to make accessing some of the
@@ -813,9 +813,9 @@ public:
    * anything useful here and so may not actually be called.
    */
   DoFAccessor(const Triangulation<1, spacedim>*,
-              const int                                      = 0,
-              const int                                      = 0,
-              const DoFHandlerType<1, spacedim>* dof_handler = 0);
+              const int                                     = 0,
+              const int                                     = 0,
+              const DoFHandlerType<1, spacedim>* dof_handler= 0);
 
   /**
    * Conversion constructor. This constructor exists to make certain
@@ -1010,7 +1010,7 @@ public:
    */
   types::global_dof_index
   dof_index(const unsigned int i,
-            const unsigned int fe_index = AccessorData::default_fe_index) const;
+            const unsigned int fe_index= AccessorData::default_fe_index) const;
 
   /**
    * @}
@@ -1228,7 +1228,7 @@ protected:
  * @ingroup Accessors
  * @author Wolfgang Bangerth, 2017
  */
-template <int structdim, int dim, int spacedim = dim>
+template <int structdim, int dim, int spacedim= dim>
 class DoFInvalidAccessor : public InvalidAccessor<structdim, dim, spacedim>
 {
 public:
@@ -1245,10 +1245,10 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent     = 0,
-                     const int                           level      = -1,
-                     const int                           index      = -1,
-                     const AccessorData*                 local_data = 0);
+  DoFInvalidAccessor(const Triangulation<dim, spacedim>* parent    = 0,
+                     const int                           level     = -1,
+                     const int                           index     = -1,
+                     const AccessorData*                 local_data= 0);
 
   /**
    * Copy constructor.  This class is used for iterators that do not make
@@ -1301,12 +1301,12 @@ public:
   /**
    * Extract dimension from DoFHandlerType.
    */
-  static const unsigned int dim = DoFHandlerType::dimension;
+  static const unsigned int dim= DoFHandlerType::dimension;
 
   /**
    * Extract space dimension from DoFHandlerType.
    */
-  static const unsigned int spacedim = DoFHandlerType::space_dimension;
+  static const unsigned int spacedim= DoFHandlerType::space_dimension;
 
   /**
    * Data type passed by the iterator class.

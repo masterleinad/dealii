@@ -44,11 +44,11 @@ test()
 
   // refine the mesh in a random way
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for(unsigned int i= 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != triangulation.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -92,20 +92,20 @@ test()
       ++cell)
     {
       cell->get_dof_indices(local_dofs);
-      local_matrix = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      local_matrix= 0;
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           local_matrix(i, j)
             = (i + 1.) * (j + 1.) * (local_dofs[i] + 1.) * (local_dofs[j] + 1.);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        local_vector(i) = (i + 1.) * (local_dofs[i] + 1.);
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        local_vector(i)= (i + 1.) * (local_dofs[i] + 1.);
 
       // copy local to global by ourselves
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
           A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        b1(local_dofs[i]) += local_vector(i);
+      for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+        b1(local_dofs[i])+= local_vector(i);
 
       // or let other functions do that after
       // removing boundary values
@@ -127,7 +127,7 @@ test()
   Assert(A.frobenius_norm() < 1e-12 * B.frobenius_norm(), ExcInternalError());
 
   // similar for b1 and b2
-  b1 -= b2;
+  b1-= b2;
   deallog << "|b1|=" << b1.l2_norm() << std::endl;
   deallog << "|b2|=" << b2.l2_norm() << std::endl;
   Assert(b1.l2_norm() < 1e-12 * b2.l2_norm(), ExcInternalError());

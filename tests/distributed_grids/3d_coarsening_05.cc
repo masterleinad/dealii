@@ -55,11 +55,11 @@ test(std::ostream& /*out*/)
 
       // refine one fifth of all cells each
       // time (but at least one)
-      for(unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
-        flags[Testing::rand() % flags.size()] = true;
+      for(unsigned int i= 0; i < tr.n_active_cells() / 5 + 1; ++i)
+        flags[Testing::rand() % flags.size()]= true;
 
       // refine tr and tr2
-      unsigned int index = 0;
+      unsigned int index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();
@@ -75,7 +75,7 @@ test(std::ostream& /*out*/)
       // (this should ensure that at least
       // some of them will actually be
       // coarsened)
-      index = 0;
+      index= 0;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active();
           cell != tr.end();

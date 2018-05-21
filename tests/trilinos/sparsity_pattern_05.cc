@@ -41,8 +41,8 @@ main(int argc, char** argv)
   // Check copy_from(TrilinosWrappers::SparsityPattern):
   TrilinosWrappers::SparsityPattern B;
   B.copy_from(A);
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       {
         if((i == 2) && (j == 1))
           {

@@ -27,7 +27,7 @@ test(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
     {
       switch(fe.get_associated_geometry_primitive(i))
         {

@@ -29,10 +29,10 @@ main()
 
   // Define some constants that will be used by the function parser
   std::map<std::string, double> constants;
-  constants["pi"] = numbers::PI;
+  constants["pi"]= numbers::PI;
 
   // Define the variables that will be used inside the expressions
-  std::string variables = "x,y";
+  std::string variables= "x,y";
 
   // Define the expressions of the vector_valued function.
   std::vector<std::string> expressions;
@@ -43,9 +43,9 @@ main()
 
   // Concatenate the declared expressions, to test the second way of
   // initializing
-  std::string concatenated = "cos(pi*y)";
+  std::string concatenated= "cos(pi*y)";
   // Now test each possibility
-  for(unsigned int i = 1; i <= expressions.size(); ++i)
+  for(unsigned int i= 1; i <= expressions.size(); ++i)
     {
       try
         {
@@ -81,6 +81,6 @@ main()
                   << " as variables." << std::endl;
         }
 
-      concatenated += "; " + expressions[i - 1];
+      concatenated+= "; " + expressions[i - 1];
     }
 }

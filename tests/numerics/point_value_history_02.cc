@@ -98,7 +98,7 @@ Postprocess<dim>::evaluate_vector_field(
          ExcDimensionMismatch(computed_quantities.size(),
                               inputs.solution_values.size()));
 
-  for(unsigned int i = 0; i < computed_quantities.size(); i++)
+  for(unsigned int i= 0; i < computed_quantities.size(); i++)
     {
       Assert(computed_quantities[i].size() == 4,
              ExcDimensionMismatch(computed_quantities[i].size(), 3));
@@ -112,7 +112,7 @@ Postprocess<dim>::evaluate_vector_field(
       computed_quantities[i](2)
         = inputs.solution_gradients[i][0].norm()
           + inputs.solution_hessians[i][1].norm(); // norm of y hessian
-      computed_quantities[i](3) = inputs.solution_values[i].l2_norm();
+      computed_quantities[i](3)= inputs.solution_values[i].l2_norm();
     }
 }
 
@@ -158,7 +158,7 @@ TestPointValueHistory<dim>::run()
 
   // renumber for components so that same dof indices are used for BlockVectors and normal Vectors
   std::vector<unsigned int> block_component(dim + 1, 0);
-  block_component[dim] = 1; // component dim = pressure component!
+  block_component[dim]= 1; // component dim = pressure component!
   DoFRenumbering::component_wise(dof_handler, block_component);
 
   // Vector
@@ -209,15 +209,15 @@ TestPointValueHistory<dim>::run()
     std::vector<Point<dim>> dof_locations(finite_element.dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell, endc;
-    cell = dof_handler.begin_active();
-    endc = dof_handler.end();
+    cell= dof_handler.begin_active();
+    endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell); // need to get local_dof_indices
         cell->get_dof_indices(local_dof_indices);
-        dof_locations = fe_values.get_quadrature_points();
+        dof_locations= fe_values.get_quadrature_points();
 
-        for(unsigned int dof = 0; dof != finite_element.dofs_per_cell; dof++)
+        for(unsigned int dof= 0; dof != finite_element.dofs_per_cell; dof++)
           {
             unsigned int dof_component
               = finite_element.system_to_component_index(dof).first;
@@ -229,7 +229,7 @@ TestPointValueHistory<dim>::run()
               poles(local_dof_indices[dof])
                 = -0.1; // dim+1th component is not handled well by the code above
 
-            solution(local_dof_indices[dof]) = 1; // start all solutions at 1
+            solution(local_dof_indices[dof])= 1; // start all solutions at 1
           }
 
       }                      // loop over all cells
@@ -239,12 +239,12 @@ TestPointValueHistory<dim>::run()
   }
 
   // Setup monitor node to print variation over time
-  unsigned int           n_inputs = 1;
+  unsigned int           n_inputs= 1;
   PointValueHistory<dim> node_monitor(dof_handler, n_inputs);
   PointValueHistory<dim> no_dof_handler(n_inputs);
 
   // check that the assignment operator is valid
-  test_copy = node_monitor;
+  test_copy= node_monitor;
   test_copy.add_point(Point<2>(1, 0.2));
   test_copy.add_field_name("Solution");
   std::vector<std::vector<Point<dim>>> selected_locations;
@@ -271,16 +271,16 @@ TestPointValueHistory<dim>::run()
     node_monitor.add_field_name(
       "Post Processed Vector"); // not sensitive to spaces
     std::vector<bool> component_mask(3, false);
-    component_mask[2] = true;
+    component_mask[2]= true;
     node_monitor.add_field_name("Pressure", component_mask);
-    component_mask    = std::vector<bool>(3, false);
-    component_mask[1] = true;
+    component_mask   = std::vector<bool>(3, false);
+    component_mask[1]= true;
     node_monitor.add_field_name("Req_sol", component_mask);
-    component_mask    = std::vector<bool>(4, true);
-    component_mask[3] = false;
+    component_mask   = std::vector<bool>(4, true);
+    component_mask[3]= false;
     node_monitor.add_field_name("Vector_out", component_mask);
-    component_mask    = std::vector<bool>(4, false);
-    component_mask[3] = true;
+    component_mask   = std::vector<bool>(4, false);
+    component_mask[3]= true;
     node_monitor.add_field_name("Scalar_out", component_mask);
 
     std::vector<std::string> indep_names;
@@ -292,10 +292,10 @@ TestPointValueHistory<dim>::run()
     std::vector<Point<2>> point_vector(5, Point<2>());
     point_vector[0]
       = Point<2>(0, 0); // some of these points will hit a node, others won't
-    point_vector[1] = Point<2>(0.25, 0);
-    point_vector[2] = Point<2>(0.25, 0.45);
-    point_vector[3] = Point<2>(0.45, 0.45);
-    point_vector[4] = Point<2>(0.8, 0.8);
+    point_vector[1]= Point<2>(0.25, 0);
+    point_vector[2]= Point<2>(0.25, 0.45);
+    point_vector[3]= Point<2>(0.45, 0.45);
+    point_vector[4]= Point<2>(0.8, 0.8);
 
     node_monitor.add_points(point_vector);
     node_monitor.add_point(Point<2>(1, 0.2)); // add a single point
@@ -307,17 +307,17 @@ TestPointValueHistory<dim>::run()
 
     std::vector<std::vector<Point<dim>>> selected_locations;
     node_monitor.get_support_locations(selected_locations);
-    Vector<double> node_locations = node_monitor.mark_support_locations();
+    Vector<double> node_locations= node_monitor.mark_support_locations();
     QGauss<dim>    postprocess_quadrature(2);
     node_monitor.get_postprocessor_locations(postprocess_quadrature,
                                              postprocessor_locations);
   }
 
-  double       delta_t = 0.000001;
-  double       t_max   = 0.00001;
-  unsigned int step    = 0;
+  double       delta_t= 0.000001;
+  double       t_max  = 0.00001;
+  unsigned int step   = 0;
 
-  for(double time = 0; time < t_max; time = time + delta_t)
+  for(double time= 0; time < t_max; time= time + delta_t)
     {
       node_monitor.start_new_dataset(time);
       no_dof_handler.start_new_dataset(time);
@@ -343,7 +343,7 @@ TestPointValueHistory<dim>::run()
       step++;
 
       solution.scale(poles); // decaying exponentials of varying time constants
-      post_processed = solution;
+      post_processed= solution;
       post_processed.add(2.0); // simple post processing, giving it a dc offset
     }
   triangulation.refine_global(1); // should mark the triangulation as changed
@@ -357,18 +357,18 @@ TestPointValueHistory<dim>::run()
 
   // copy all the data into deallog and
   // delete those files
-  const std::string filenames[] = {"node_00.gpl",
-                                   "node_01.gpl",
-                                   "node_02.gpl",
-                                   "node_03.gpl",
-                                   "node_04.gpl",
-                                   "node_05.gpl",
-                                   "node_indep.gpl",
-                                   "Test_Copy_00.gpl",
-                                   "Test_Copy_indep.gpl",
-                                   "no_dof_indep.gpl"};
+  const std::string filenames[]= {"node_00.gpl",
+                                  "node_01.gpl",
+                                  "node_02.gpl",
+                                  "node_03.gpl",
+                                  "node_04.gpl",
+                                  "node_05.gpl",
+                                  "node_indep.gpl",
+                                  "Test_Copy_00.gpl",
+                                  "Test_Copy_indep.gpl",
+                                  "no_dof_indep.gpl"};
 
-  for(unsigned int i = 0; i < sizeof(filenames) / sizeof(filenames[0]); ++i)
+  for(unsigned int i= 0; i < sizeof(filenames) / sizeof(filenames[0]); ++i)
     {
       deallog << "Copying output file " << filenames[i] << std::endl;
 

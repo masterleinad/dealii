@@ -26,11 +26,11 @@ main()
   // create a pattern and match a string
   const auto& pattern
     = Patterns::Tuple(Patterns::Double(), Patterns::Anything());
-  const std::string desc = pattern.description();
+  const std::string desc= pattern.description();
 
   deallog << desc << std::endl;
 
-  std::string test = "3.14: Ciao";
+  std::string test= "3.14: Ciao";
 
   if(pattern.match(test))
     deallog << "OK" << std::endl;

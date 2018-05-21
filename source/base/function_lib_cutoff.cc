@@ -36,14 +36,14 @@ namespace Functions
   void
   CutOffFunctionBase<dim>::new_center(const Point<dim>& p)
   {
-    center = p;
+    center= p;
   }
 
   template <int dim>
   void
   CutOffFunctionBase<dim>::new_radius(const double r)
   {
-    radius = r;
+    radius= r;
   }
 
   //////////////////////////////////////////////////////////////////////
@@ -81,8 +81,8 @@ namespace Functions
 
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
-      for(unsigned int k = 0; k < values.size(); ++k)
-        values[k] = (this->center.distance(points[k]) < this->radius) ? 1. : 0.;
+      for(unsigned int k= 0; k < values.size(); ++k)
+        values[k]= (this->center.distance(points[k]) < this->radius) ? 1. : 0.;
     else
       std::fill(values.begin(), values.end(), 0.);
   }
@@ -96,16 +96,16 @@ namespace Functions
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int k = 0; k < values.size(); ++k)
+    for(unsigned int k= 0; k < values.size(); ++k)
       {
         const double val
           = (this->center.distance(points[k]) < this->radius) ? 1. : 0.;
         if(this->selected == CutOffFunctionBase<dim>::no_component)
-          values[k] = val;
+          values[k]= val;
         else
           {
-            values[k]                 = 0;
-            values[k](this->selected) = val;
+            values[k]                = 0;
+            values[k](this->selected)= val;
           }
       }
   }
@@ -126,7 +126,7 @@ namespace Functions
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
       {
-        const double d = this->center.distance(p);
+        const double d= this->center.distance(p);
         return ((d < this->radius) ? (this->radius - d) : 0.);
       }
     return 0.;
@@ -143,10 +143,10 @@ namespace Functions
 
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
-      for(unsigned int i = 0; i < values.size(); ++i)
+      for(unsigned int i= 0; i < values.size(); ++i)
         {
-          const double d = this->center.distance(points[i]);
-          values[i]      = ((d < this->radius) ? (this->radius - d) : 0.);
+          const double d= this->center.distance(points[i]);
+          values[i]     = ((d < this->radius) ? (this->radius - d) : 0.);
         }
     else
       std::fill(values.begin(), values.end(), 0.);
@@ -161,16 +161,16 @@ namespace Functions
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int k = 0; k < values.size(); ++k)
+    for(unsigned int k= 0; k < values.size(); ++k)
       {
-        const double d   = this->center.distance(points[k]);
-        const double val = (d < this->radius) ? (this->radius - d) : 0.;
+        const double d  = this->center.distance(points[k]);
+        const double val= (d < this->radius) ? (this->radius - d) : 0.;
         if(this->selected == CutOffFunctionBase<dim>::no_component)
-          values[k] = val;
+          values[k]= val;
         else
           {
-            values[k]                 = 0;
-            values[k](this->selected) = val;
+            values[k]                = 0;
+            values[k](this->selected)= val;
           }
       }
   }
@@ -192,11 +192,11 @@ namespace Functions
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
       {
-        const double d = this->center.distance(p);
-        const double r = this->radius;
+        const double d= this->center.distance(p);
+        const double r= this->radius;
         if(d >= r)
           return 0.;
-        const double e = -r * r / (r * r - d * d);
+        const double e= -r * r / (r * r - d * d);
         return ((e < -50) ? 0. : numbers::E * exp(e));
       }
     return 0.;
@@ -211,21 +211,21 @@ namespace Functions
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    const double r = this->radius;
+    const double r= this->radius;
 
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
-      for(unsigned int i = 0; i < values.size(); ++i)
+      for(unsigned int i= 0; i < values.size(); ++i)
         {
-          const double d = this->center.distance(points[i]);
+          const double d= this->center.distance(points[i]);
           if(d >= r)
             {
-              values[i] = 0.;
+              values[i]= 0.;
             }
           else
             {
-              const double e = -r * r / (r * r - d * d);
-              values[i]      = (e < -50) ? 0. : numbers::E * exp(e);
+              const double e= -r * r / (r * r - d * d);
+              values[i]     = (e < -50) ? 0. : numbers::E * exp(e);
             }
         }
     else
@@ -241,24 +241,24 @@ namespace Functions
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int k = 0; k < values.size(); ++k)
+    for(unsigned int k= 0; k < values.size(); ++k)
       {
-        const double d   = this->center.distance(points[k]);
-        const double r   = this->radius;
-        double       val = 0.;
+        const double d  = this->center.distance(points[k]);
+        const double r  = this->radius;
+        double       val= 0.;
         if(d < this->radius)
           {
-            const double e = -r * r / (r * r - d * d);
+            const double e= -r * r / (r * r - d * d);
             if(e > -50)
-              val = numbers::E * exp(e);
+              val= numbers::E * exp(e);
           }
 
         if(this->selected == CutOffFunctionBase<dim>::no_component)
-          values[k] = val;
+          values[k]= val;
         else
           {
-            values[k]                 = 0;
-            values[k](this->selected) = val;
+            values[k]                = 0;
+            values[k](this->selected)= val;
           }
       }
   }
@@ -268,11 +268,11 @@ namespace Functions
   CutOffFunctionCinfty<dim>::gradient(const Point<dim>& p,
                                       const unsigned int) const
   {
-    const double d = this->center.distance(p);
-    const double r = this->radius;
+    const double d= this->center.distance(p);
+    const double r= this->radius;
     if(d >= r)
       return Tensor<1, dim>();
-    const double e = -d * d / (r - d) / (r + d);
+    const double e= -d * d / (r - d) / (r + d);
     return ((e < -50) ?
               Point<dim>() :
               (p - this->center) / d

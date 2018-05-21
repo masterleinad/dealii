@@ -30,7 +30,7 @@ template <typename VectorType>
 void
 do_test(MPI_Comm communicator)
 {
-  const int                                 dim = 2;
+  const int                                 dim= 2;
   parallel::distributed::Triangulation<dim> tria(communicator);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
@@ -41,11 +41,11 @@ do_test(MPI_Comm communicator)
   VectorType v1;
   v1.reinit(dof.locally_owned_dofs(), communicator);
   if(dof.locally_owned_dofs().n_elements() > 0)
-    v1.local_element(0) = 1;
+    v1.local_element(0)= 1;
 
   GrowingVectorMemory<VectorType>            memory;
   typename VectorMemory<VectorType>::Pointer v3(memory);
-  *v3 = v1;
+  *v3= v1;
 
   deallog << v1.l2_norm() << " " << v3->l2_norm() << std::endl;
 }

@@ -43,8 +43,8 @@ FE_DGPNonparametric<dim, spacedim>::FE_DGPNonparametric(
         std::vector<bool>(1, true))),
     polynomial_space(Polynomials::Legendre::generate_complete_basis(degree))
 {
-  const unsigned int n_dofs = this->dofs_per_cell;
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
+  const unsigned int n_dofs= this->dofs_per_cell;
+  for(unsigned int ref_case= RefinementCase<dim>::cut_x;
       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
       ++ref_case)
     {
@@ -56,13 +56,13 @@ FE_DGPNonparametric<dim, spacedim>::FE_DGPNonparametric(
 
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
-      for(unsigned int i = 0; i < nc; ++i)
+      for(unsigned int i= 0; i < nc; ++i)
         {
           this->prolongation[ref_case - 1][i].reinit(n_dofs, n_dofs);
           // Fill prolongation matrices with
           // embedding operators
-          for(unsigned int j = 0; j < n_dofs; ++j)
-            this->prolongation[ref_case - 1][i](j, j) = 1.;
+          for(unsigned int j= 0; j < n_dofs; ++j)
+            this->prolongation[ref_case - 1][i](j, j)= 1.;
         }
     }
 
@@ -219,11 +219,11 @@ std::vector<unsigned int>
 FE_DGPNonparametric<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, static_cast<unsigned int>(0));
-  dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  dpo[dim]= deg + 1;
+  for(unsigned int i= 1; i < dim; ++i)
     {
-      dpo[dim] *= deg + 1 + i;
-      dpo[dim] /= i + 1;
+      dpo[dim]*= deg + 1 + i;
+      dpo[dim]/= i + 1;
     }
   return dpo;
 }
@@ -233,10 +233,10 @@ UpdateFlags
 FE_DGPNonparametric<dim, spacedim>::requires_update_flags(
   const UpdateFlags flags) const
 {
-  UpdateFlags out = flags;
+  UpdateFlags out= flags;
 
   if(flags & (update_values | update_gradients | update_hessians))
-    out |= update_quadrature_points;
+    out|= update_quadrature_points;
 
   return out;
 }
@@ -255,9 +255,9 @@ FE_DGPNonparametric<dim, spacedim>::get_data(
     FiniteElementRelatedData<dim, spacedim>& /*output_data*/) const
 {
   // generate a new data object
-  auto data = std_cxx14::make_unique<
+  auto data= std_cxx14::make_unique<
     typename FiniteElement<dim, spacedim>::InternalDataBase>();
-  data->update_each = requires_update_flags(update_flags);
+  data->update_each= requires_update_flags(update_flags);
 
   // other than that, there is nothing we can add here as discussed
   // in the general documentation of this class
@@ -288,7 +288,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
   Assert(fe_internal.update_each & update_quadrature_points,
          ExcInternalError());
 
-  const unsigned int n_q_points = mapping_data.quadrature_points.size();
+  const unsigned int n_q_points= mapping_data.quadrature_points.size();
 
   std::vector<double> values(
     (fe_internal.update_each & update_values) ? this->dofs_per_cell : 0);
@@ -300,7 +300,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
   if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+    for(unsigned int i= 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -310,16 +310,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
                                  empty_vector_of_4th_order_tensors);
 
         if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_values[k][i] = values[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_values[k][i]= values[k];
 
         if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_gradients[k][i] = grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_gradients[k][i]= grads[k];
 
         if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_hessians[k][i] = grad_grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_hessians[k][i]= grad_grads[k];
       }
 }
 
@@ -342,7 +342,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
   Assert(fe_internal.update_each & update_quadrature_points,
          ExcInternalError());
 
-  const unsigned int n_q_points = mapping_data.quadrature_points.size();
+  const unsigned int n_q_points= mapping_data.quadrature_points.size();
 
   std::vector<double> values(
     (fe_internal.update_each & update_values) ? this->dofs_per_cell : 0);
@@ -354,7 +354,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
   if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+    for(unsigned int i= 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -364,16 +364,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
                                  empty_vector_of_4th_order_tensors);
 
         if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_values[k][i] = values[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_values[k][i]= values[k];
 
         if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_gradients[k][i] = grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_gradients[k][i]= grads[k];
 
         if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_hessians[k][i] = grad_grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_hessians[k][i]= grad_grads[k];
       }
 }
 
@@ -397,7 +397,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
   Assert(fe_internal.update_each & update_quadrature_points,
          ExcInternalError());
 
-  const unsigned int n_q_points = mapping_data.quadrature_points.size();
+  const unsigned int n_q_points= mapping_data.quadrature_points.size();
 
   std::vector<double> values(
     (fe_internal.update_each & update_values) ? this->dofs_per_cell : 0);
@@ -409,7 +409,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
   if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+    for(unsigned int i= 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -419,16 +419,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
                                  empty_vector_of_4th_order_tensors);
 
         if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_values[k][i] = values[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_values[k][i]= values[k];
 
         if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_gradients[k][i] = grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_gradients[k][i]= grads[k];
 
         if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
-            output_data.shape_hessians[k][i] = grad_grads[k];
+          for(unsigned int k= 0; k < this->dofs_per_cell; ++k)
+            output_data.shape_hessians[k][i]= grad_grads[k];
       }
 }
 

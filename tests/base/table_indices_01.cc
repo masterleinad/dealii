@@ -28,8 +28,8 @@ main()
 
   const TableIndices<2> t1(84, 42);
   TableIndices<2>       t2;
-  t2[0] = 84;
-  t2[1] = 42;
+  t2[0]= 84;
+  t2[1]= 42;
 
   AssertThrow(t1 == t2, ExcInternalError());
   AssertThrow(t1[0] == t2[0], ExcInternalError());

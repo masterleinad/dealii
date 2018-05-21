@@ -26,10 +26,10 @@ template <typename number>
 void
 MeanValueFilter::filter(Vector<number>& v) const
 {
-  number mean = v.mean_value();
+  number mean= v.mean_value();
 
-  for(size_type i = 0; i < v.size(); ++i)
-    v(i) -= mean;
+  for(size_type i= 0; i < v.size(); ++i)
+    v(i)-= mean;
 }
 
 template <typename number>
@@ -39,10 +39,10 @@ MeanValueFilter::vmult(Vector<number>& dst, const Vector<number>& src) const
   Assert(dst.size() == src.size(),
          ExcDimensionMismatch(dst.size(), src.size()));
 
-  number mean = src.mean_value();
+  number mean= src.mean_value();
 
-  for(size_type i = 0; i < dst.size(); ++i)
-    dst(i) = src(i) - mean;
+  for(size_type i= 0; i < dst.size(); ++i)
+    dst(i)= src(i) - mean;
 }
 
 template <typename number>
@@ -52,10 +52,10 @@ MeanValueFilter::vmult_add(Vector<number>& dst, const Vector<number>& src) const
   Assert(dst.size() == src.size(),
          ExcDimensionMismatch(dst.size(), src.size()));
 
-  number mean = src.mean_value();
+  number mean= src.mean_value();
 
-  for(size_type i = 0; i < dst.size(); ++i)
-    dst(i) += src(i) - mean;
+  for(size_type i= 0; i < dst.size(); ++i)
+    dst(i)+= src(i) - mean;
 }
 
 template <typename number>
@@ -64,7 +64,7 @@ MeanValueFilter::filter(BlockVector<number>& v) const
 {
   Assert(component != numbers::invalid_unsigned_int, ExcNotInitialized());
 
-  for(unsigned int i = 0; i < v.n_blocks(); ++i)
+  for(unsigned int i= 0; i < v.n_blocks(); ++i)
     if(i == component)
       vmult(v.block(i), v.block(i));
 }
@@ -79,11 +79,11 @@ MeanValueFilter::vmult(BlockVector<number>&       dst,
   Assert(dst.n_blocks() == src.n_blocks(),
          ExcDimensionMismatch(dst.n_blocks(), src.n_blocks()));
 
-  for(unsigned int i = 0; i < dst.n_blocks(); ++i)
+  for(unsigned int i= 0; i < dst.n_blocks(); ++i)
     if(i == component)
       vmult(dst.block(i), src.block(i));
     else
-      dst.block(i) = src.block(i);
+      dst.block(i)= src.block(i);
 }
 
 template <typename number>
@@ -96,11 +96,11 @@ MeanValueFilter::vmult_add(BlockVector<number>&       dst,
   Assert(dst.n_blocks() == src.n_blocks(),
          ExcDimensionMismatch(dst.n_blocks(), src.n_blocks()));
 
-  for(unsigned int i = 0; i < dst.n_blocks(); ++i)
+  for(unsigned int i= 0; i < dst.n_blocks(); ++i)
     if(i == component)
       vmult_add(dst.block(i), src.block(i));
     else
-      dst.block(i) += src.block(i);
+      dst.block(i)+= src.block(i);
 }
 
 DEAL_II_NAMESPACE_CLOSE

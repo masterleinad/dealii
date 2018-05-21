@@ -22,13 +22,13 @@
 void
 test()
 {
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   {
     Vector<int> sums(2);
-    sums[0] = 1;
-    sums[1] = 2;
+    sums[0]= 1;
+    sums[1]= 2;
     Utilities::MPI::sum(sums, MPI_COMM_WORLD, sums);
     Assert(sums[0] == numprocs, ExcInternalError());
     Assert(sums[1] == 2 * numprocs, ExcInternalError());
@@ -39,8 +39,8 @@ test()
 
   {
     Vector<double> sums(2);
-    sums[0] = 1.5;
-    sums[1] = 2.5;
+    sums[0]= 1.5;
+    sums[1]= 2.5;
     Utilities::MPI::sum(sums, MPI_COMM_WORLD, sums);
     Assert(sums[0] == 1.5 * numprocs, ExcInternalError());
     Assert(sums[1] == 2.5 * numprocs, ExcInternalError());

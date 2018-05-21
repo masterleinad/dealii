@@ -25,40 +25,40 @@ test_mpi()
 {
   Assert(Utilities::MPI::job_supports_mpi(), ExcInternalError());
 
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   // select a few destinations
   std::vector<unsigned int> destinations;
-  for(unsigned int i = 0; i < 3 + myid / 3; ++i)
+  for(unsigned int i= 0; i < 3 + myid / 3; ++i)
     if((myid + 17 * i) % numprocs != myid)
       destinations.push_back((myid + 17 * i) % numprocs);
 
   if(myid == 0)
     {
       deallog << "Processor 0 wants to send to ";
-      for(unsigned int i = 0; i < destinations.size(); ++i)
+      for(unsigned int i= 0; i < destinations.size(); ++i)
         deallog << destinations[i] << ' ';
       deallog << std::endl;
 
-      for(unsigned int p = 1; p < numprocs; ++p)
+      for(unsigned int p= 1; p < numprocs; ++p)
         {
           MPI_Status   status;
-          unsigned int size = 0;
+          unsigned int size= 0;
           MPI_Recv(&size, 1, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 
           std::vector<unsigned int> dest(size);
           MPI_Recv(&dest[0], size, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 
           deallog << "Processor " << p << " wants to send to ";
-          for(unsigned int i = 0; i < size; ++i)
+          for(unsigned int i= 0; i < size; ++i)
             deallog << dest[i] << ' ';
           deallog << std::endl;
         }
     }
   else
     {
-      unsigned int size = destinations.size();
+      unsigned int size= destinations.size();
       MPI_Send(&size, 1, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
       MPI_Send(&destinations[0], size, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
     }
@@ -73,28 +73,28 @@ test_mpi()
   if(myid == 0)
     {
       deallog << "Processor 0 will receive from ";
-      for(unsigned int i = 0; i < origins.size(); ++i)
+      for(unsigned int i= 0; i < origins.size(); ++i)
         deallog << origins[i] << ' ';
       deallog << std::endl;
 
-      for(unsigned int p = 1; p < numprocs; ++p)
+      for(unsigned int p= 1; p < numprocs; ++p)
         {
           MPI_Status   status;
-          unsigned int size = 0;
+          unsigned int size= 0;
           MPI_Recv(&size, 1, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 
           std::vector<unsigned int> orig(size);
           MPI_Recv(&orig[0], size, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 
           deallog << "Processor " << p << " will receive from ";
-          for(unsigned int i = 0; i < size; ++i)
+          for(unsigned int i= 0; i < size; ++i)
             deallog << orig[i] << ' ';
           deallog << std::endl;
         }
     }
   else
     {
-      unsigned int size = origins.size();
+      unsigned int size= origins.size();
       MPI_Send(&size, 1, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
       MPI_Send(&origins[0], size, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
     }

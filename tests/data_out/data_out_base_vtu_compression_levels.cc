@@ -28,18 +28,18 @@ template <int dim, int spacedim>
 void
 check(DataOutBase::VtkFlags flags, std::ostream& out)
 {
-  const unsigned int np = 4;
+  const unsigned int np= 4;
 
   std::vector<DataOutBase::Patch<dim, spacedim>> patches(np);
 
   create_patches(patches);
 
   std::vector<std::string> names(5);
-  names[0] = "x1";
-  names[1] = "x2";
-  names[2] = "x3";
-  names[3] = "x4";
-  names[4] = "i";
+  names[0]= "x1";
+  names[1]= "x2";
+  names[2]= "x3";
+  names[3]= "x4";
+  names[4]= "i";
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_vtu(patches, names, vectors, flags, out);
 }
@@ -48,23 +48,22 @@ template <int dim, int spacedim>
 void
 check_all(std::ostream& log)
 {
-  for(unsigned int i = 0; i < 4; ++i)
+  for(unsigned int i= 0; i < 4; ++i)
     {
       DataOutBase::VtkFlags flags;
       switch(i)
         {
           case(0):
-            flags.compression_level = DataOutBase::VtkFlags::no_compression;
+            flags.compression_level= DataOutBase::VtkFlags::no_compression;
             break;
           case(1):
-            flags.compression_level = DataOutBase::VtkFlags::best_speed;
+            flags.compression_level= DataOutBase::VtkFlags::best_speed;
             break;
           case(2):
-            flags.compression_level = DataOutBase::VtkFlags::best_compression;
+            flags.compression_level= DataOutBase::VtkFlags::best_compression;
             break;
           case(3):
-            flags.compression_level
-              = DataOutBase::VtkFlags::default_compression;
+            flags.compression_level= DataOutBase::VtkFlags::default_compression;
             break;
           default:
             Assert(false, ExcInternalError());

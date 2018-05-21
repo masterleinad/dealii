@@ -44,16 +44,16 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    v[0] = p[0];
-    v[1] = 0;
+    v[0]= p[0];
+    v[1]= 0;
   }
 
   virtual void
   vector_gradient(const Point<dim>& p, std::vector<Tensor<1, dim>>& v) const
   {
-    v[0]    = 0;
-    v[1]    = 0;
-    v[0][0] = 1;
+    v[0]   = 0;
+    v[1]   = 0;
+    v[0][0]= 1;
   }
 };
 

@@ -171,7 +171,7 @@ namespace Step46
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -204,8 +204,8 @@ namespace Step46
   StokesBoundaryValues<dim>::vector_value(const Point<dim>& p,
                                           Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = StokesBoundaryValues<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= StokesBoundaryValues<dim>::value(p, c);
   }
 
   template <int dim>
@@ -216,7 +216,7 @@ namespace Step46
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -235,8 +235,8 @@ namespace Step46
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
-      values(c) = RightHandSide<dim>::value(p, c);
+    for(unsigned int c= 0; c < this->n_components; ++c)
+      values(c)= RightHandSide<dim>::value(p, c);
   }
 
   // @sect3{The <code>FluidStructureProblem</code> implementation}
@@ -318,7 +318,7 @@ namespace Step46
         = triangulation.begin_active();
         cell != triangulation.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->at_boundary()
            && (cell->face(f)->center()[dim - 1] == 1))
           cell->face(f)->set_all_boundary_ids(1);
@@ -413,22 +413,22 @@ namespace Step46
           cell != dof_handler.end();
           ++cell)
         if(cell_is_in_fluid_domain(cell))
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             if(!cell->at_boundary(f))
               {
-                bool face_is_on_interface = false;
+                bool face_is_on_interface= false;
 
                 if((cell->neighbor(f)->has_children() == false)
                    && (cell_is_in_solid_domain(cell->neighbor(f))))
-                  face_is_on_interface = true;
+                  face_is_on_interface= true;
                 else if(cell->neighbor(f)->has_children() == true)
                   {
-                    for(unsigned int sf = 0; sf < cell->face(f)->n_children();
+                    for(unsigned int sf= 0; sf < cell->face(f)->n_children();
                         ++sf)
                       if(cell_is_in_solid_domain(
                            cell->neighbor_child_on_subface(f, sf)))
                         {
-                          face_is_on_interface = true;
+                          face_is_on_interface= true;
                           break;
                         }
                   }
@@ -436,7 +436,7 @@ namespace Step46
                 if(face_is_on_interface)
                   {
                     cell->face(f)->get_dof_indices(local_face_dof_indices, 0);
-                    for(unsigned int i = 0; i < local_face_dof_indices.size();
+                    for(unsigned int i= 0; i < local_face_dof_indices.size();
                         ++i)
                       if(stokes_fe.face_system_to_component_index(i).first
                          < dim)
@@ -466,15 +466,15 @@ namespace Step46
       Table<2, DoFTools::Coupling> face_coupling(fe_collection.n_components(),
                                                  fe_collection.n_components());
 
-      for(unsigned int c = 0; c < fe_collection.n_components(); ++c)
-        for(unsigned int d = 0; d < fe_collection.n_components(); ++d)
+      for(unsigned int c= 0; c < fe_collection.n_components(); ++c)
+        for(unsigned int d= 0; d < fe_collection.n_components(); ++d)
           {
             if(((c < dim + 1) && (d < dim + 1) && !((c == dim) && (d == dim)))
                || ((c >= dim + 1) && (d >= dim + 1)))
-              cell_coupling[c][d] = DoFTools::always;
+              cell_coupling[c][d]= DoFTools::always;
 
             if((c >= dim + 1) && (d < dim + 1))
-              face_coupling[c][d] = DoFTools::always;
+              face_coupling[c][d]= DoFTools::always;
           }
 
       DoFTools::make_flux_sparsity_pattern(
@@ -502,8 +502,8 @@ namespace Step46
   void
   FluidStructureProblem<dim>::assemble_system()
   {
-    system_matrix = 0;
-    system_rhs    = 0;
+    system_matrix= 0;
+    system_rhs   = 0;
 
     const QGauss<dim> stokes_quadrature(stokes_degree + 2);
     const QGauss<dim> elasticity_quadrature(elasticity_degree + 2);
@@ -535,8 +535,8 @@ namespace Step46
 
     // ...to objects that are needed to describe the local contributions to
     // the global linear system...
-    const unsigned int stokes_dofs_per_cell     = stokes_fe.dofs_per_cell;
-    const unsigned int elasticity_dofs_per_cell = elasticity_fe.dofs_per_cell;
+    const unsigned int stokes_dofs_per_cell    = stokes_fe.dofs_per_cell;
+    const unsigned int elasticity_dofs_per_cell= elasticity_fe.dofs_per_cell;
 
     FullMatrix<double> local_matrix;
     FullMatrix<double> local_interface_matrix(elasticity_dofs_per_cell,
@@ -571,12 +571,12 @@ namespace Step46
     // cell:
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc = dof_handler.end();
+      endc= dof_handler.end();
     for(; cell != endc; ++cell)
       {
         hp_fe_values.reinit(cell);
 
-        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim>& fe_values= hp_fe_values.get_present_fe_values();
 
         local_matrix.reinit(cell->get_fe().dofs_per_cell,
                             cell->get_fe().dofs_per_cell);
@@ -598,22 +598,21 @@ namespace Step46
         // documentation module for the elasticity equations:
         if(cell_is_in_fluid_domain(cell))
           {
-            const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+            const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
             Assert(dofs_per_cell == stokes_dofs_per_cell, ExcInternalError());
 
-            for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+            for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
               {
-                for(unsigned int k = 0; k < dofs_per_cell; ++k)
+                for(unsigned int k= 0; k < dofs_per_cell; ++k)
                   {
                     stokes_symgrad_phi_u[k]
                       = fe_values[velocities].symmetric_gradient(k, q);
-                    stokes_div_phi_u[k]
-                      = fe_values[velocities].divergence(k, q);
-                    stokes_phi_p[k] = fe_values[pressure].value(k, q);
+                    stokes_div_phi_u[k]= fe_values[velocities].divergence(k, q);
+                    stokes_phi_p[k]    = fe_values[pressure].value(k, q);
                   }
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
                     local_matrix(i, j)
                       += (2 * viscosity * stokes_symgrad_phi_u[i]
                             * stokes_symgrad_phi_u[j]
@@ -624,13 +623,13 @@ namespace Step46
           }
         else
           {
-            const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+            const unsigned int dofs_per_cell= cell->get_fe().dofs_per_cell;
             Assert(dofs_per_cell == elasticity_dofs_per_cell,
                    ExcInternalError());
 
-            for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+            for(unsigned int q= 0; q < fe_values.n_quadrature_points; ++q)
               {
-                for(unsigned int k = 0; k < dofs_per_cell; ++k)
+                for(unsigned int k= 0; k < dofs_per_cell; ++k)
                   {
                     elasticity_grad_phi[k]
                       = fe_values[displacements].gradient(k, q);
@@ -638,8 +637,8 @@ namespace Step46
                       = fe_values[displacements].divergence(k, q);
                   }
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                  for(unsigned int j= 0; j < dofs_per_cell; ++j)
                     {
                       local_matrix(i, j)
                         += (lambda * elasticity_div_phi[i]
@@ -682,7 +681,7 @@ namespace Step46
         // boundary and the potential neighbor behind it is part of the fluid
         // domain. Let's start with these conditions:
         if(cell_is_in_solid_domain(cell))
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             if(cell->at_boundary(f) == false)
               {
                 // At this point we know that the current cell is a candidate
@@ -742,7 +741,7 @@ namespace Step46
                 else if((cell->neighbor(f)->level() == cell->level())
                         && (cell->neighbor(f)->has_children() == true))
                   {
-                    for(unsigned int subface = 0;
+                    for(unsigned int subface= 0;
                         subface < cell->face(f)->n_children();
                         ++subface)
                       if(cell_is_in_fluid_domain(
@@ -832,23 +831,21 @@ namespace Step46
     const FEValuesExtractors::Scalar pressure(dim);
     const FEValuesExtractors::Vector displacements(dim + 1);
 
-    local_interface_matrix = 0;
-    for(unsigned int q = 0; q < n_face_quadrature_points; ++q)
+    local_interface_matrix= 0;
+    for(unsigned int q= 0; q < n_face_quadrature_points; ++q)
       {
         const Tensor<1, dim> normal_vector
           = stokes_fe_face_values.normal_vector(q);
 
-        for(unsigned int k = 0; k < stokes_fe_face_values.dofs_per_cell; ++k)
+        for(unsigned int k= 0; k < stokes_fe_face_values.dofs_per_cell; ++k)
           stokes_symgrad_phi_u[k]
             = stokes_fe_face_values[velocities].symmetric_gradient(k, q);
-        for(unsigned int k = 0; k < elasticity_fe_face_values.dofs_per_cell;
-            ++k)
+        for(unsigned int k= 0; k < elasticity_fe_face_values.dofs_per_cell; ++k)
           elasticity_phi[k]
             = elasticity_fe_face_values[displacements].value(k, q);
 
-        for(unsigned int i = 0; i < elasticity_fe_face_values.dofs_per_cell;
-            ++i)
-          for(unsigned int j = 0; j < stokes_fe_face_values.dofs_per_cell; ++j)
+        for(unsigned int i= 0; i < elasticity_fe_face_values.dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < stokes_fe_face_values.dofs_per_cell; ++j)
             local_interface_matrix(i, j)
               += -((2 * viscosity * (stokes_symgrad_phi_u[j] * normal_vector)
                     + stokes_phi_p[j] * normal_vector)
@@ -887,7 +884,7 @@ namespace Step46
   {
     std::vector<std::string> solution_names(dim, "velocity");
     solution_names.emplace_back("pressure");
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       solution_names.emplace_back("displacement");
 
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -895,7 +892,7 @@ namespace Step46
         dim, DataComponentInterpretation::component_is_part_of_vector);
     data_component_interpretation.push_back(
       DataComponentInterpretation::component_is_scalar);
-    for(unsigned int d = 0; d < dim; ++d)
+    for(unsigned int d= 0; d < dim; ++d)
       data_component_interpretation.push_back(
         DataComponentInterpretation::component_is_part_of_vector);
 
@@ -968,8 +965,8 @@ namespace Step46
 
     Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
-    estimated_error_per_cell += stokes_estimated_error_per_cell;
-    estimated_error_per_cell += elasticity_estimated_error_per_cell;
+    estimated_error_per_cell+= stokes_estimated_error_per_cell;
+    estimated_error_per_cell+= elasticity_estimated_error_per_cell;
 
     // The second to last part of the function, before actually refining the
     // mesh, involves a heuristic that we have already mentioned in the
@@ -992,7 +989,7 @@ namespace Step46
         = dof_handler.begin_active();
         cell != dof_handler.end();
         ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell_is_in_solid_domain(cell))
           {
             if((cell->at_boundary(f) == false)
@@ -1005,7 +1002,7 @@ namespace Step46
                             cell->neighbor_child_on_subface(f, 0))))
                    || (cell->neighbor_is_coarser(f)
                        && cell_is_in_fluid_domain(cell->neighbor(f)))))
-              estimated_error_per_cell(cell->active_cell_index()) = 0;
+              estimated_error_per_cell(cell->active_cell_index())= 0;
           }
         else
           {
@@ -1019,7 +1016,7 @@ namespace Step46
                             cell->neighbor_child_on_subface(f, 0))))
                    || (cell->neighbor_is_coarser(f)
                        && cell_is_in_solid_domain(cell->neighbor(f)))))
-              estimated_error_per_cell(cell->active_cell_index()) = 0;
+              estimated_error_per_cell(cell->active_cell_index())= 0;
           }
 
     GridRefinement::refine_and_coarsen_fixed_number(
@@ -1039,7 +1036,7 @@ namespace Step46
   {
     make_grid();
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 10 - 2 * dim;
+    for(unsigned int refinement_cycle= 0; refinement_cycle < 10 - 2 * dim;
         ++refinement_cycle)
       {
         std::cout << "Refinement cycle " << refinement_cycle << std::endl;

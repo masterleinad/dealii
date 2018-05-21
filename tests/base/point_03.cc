@@ -26,27 +26,27 @@ check()
   VectorizedArray<number>             distance_vec;
   Point<dim, VectorizedArray<number>> p1_vec, p2_vec;
 
-  for(unsigned int v = 0; v < VectorizedArray<number>::n_array_elements; ++v)
+  for(unsigned int v= 0; v < VectorizedArray<number>::n_array_elements; ++v)
     {
       Point<dim, number> p1, p2;
-      for(unsigned int i = 0; i < dim; ++i)
+      for(unsigned int i= 0; i < dim; ++i)
         {
-          p1[i] = 10.0 + 0.12345 * i + 0.987 * v;
-          p1[i] = 0.5 + 0.6789 * i - 0.543 * v;
+          p1[i]= 10.0 + 0.12345 * i + 0.987 * v;
+          p1[i]= 0.5 + 0.6789 * i - 0.543 * v;
 
-          p1_vec[i][v] = p1[i];
-          p2_vec[i][v] = p2[i];
+          p1_vec[i][v]= p1[i];
+          p2_vec[i][v]= p2[i];
         }
 
-      distance_vec[v] = p1.distance_square(p2);
+      distance_vec[v]= p1.distance_square(p2);
     }
 
-  const VectorizedArray<number> distance_vec2 = p1_vec.distance_square(p2_vec);
-  distance_vec -= distance_vec2;
-  number diff = 0.;
+  const VectorizedArray<number> distance_vec2= p1_vec.distance_square(p2_vec);
+  distance_vec-= distance_vec2;
+  number diff= 0.;
 
-  for(unsigned int v = 0; v < VectorizedArray<number>::n_array_elements; ++v)
-    diff += std::abs(distance_vec[v]);
+  for(unsigned int v= 0; v < VectorizedArray<number>::n_array_elements; ++v)
+    diff+= std::abs(distance_vec[v]);
 
   AssertThrow(diff < 100 * std::numeric_limits<number>::epsilon(),
               ExcMessage("diff is " + std::to_string(diff)));

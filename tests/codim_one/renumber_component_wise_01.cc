@@ -57,7 +57,7 @@ test(std::string filename)
       cell->get_dof_indices(x);
 
       deallog << cell << std::endl;
-      for(unsigned int i = 0; i < x.size(); ++i)
+      for(unsigned int i= 0; i < x.size(); ++i)
         deallog << "  " << x[i] << std::endl;
     }
 }

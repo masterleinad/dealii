@@ -329,7 +329,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferBlockSelect() override = default;
+  virtual ~MGTransferBlockSelect() override= default;
 
   /**
    * Actually build the prolongation matrices for grouped blocks.
@@ -485,7 +485,7 @@ template <typename number>
 inline void
 MGTransferBlockSelect<number>::select(const unsigned int block)
 {
-  selected_block = block;
+  selected_block= block;
 }
 
 DEAL_II_NAMESPACE_CLOSE

@@ -66,16 +66,16 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   if(!cells)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int  block_row= info.matrix(k).row;
+      const unsigned int  block_col= info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              M1(i, j) = 10.;
+              M1(i, j)= 10.;
             }
     }
 }
@@ -86,16 +86,16 @@ Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   if(!faces)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int  block_row= info.matrix(k).row;
+      const unsigned int  block_col= info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              M1(i, j) = 1.;
+              M1(i, j)= 1.;
             }
     }
 }
@@ -109,19 +109,19 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
 {
   if(!faces)
     return;
-  for(unsigned int k = 0; k < info1.n_matrices(); ++k)
+  for(unsigned int k= 0; k < info1.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info1.matrix(k).row;
-      const unsigned int  block_col = info1.matrix(k).column;
-      FullMatrix<double>& M1        = info1.matrix(k).matrix;
+      const unsigned int  block_row= info1.matrix(k).row;
+      const unsigned int  block_col= info1.matrix(k).column;
+      FullMatrix<double>& M1       = info1.matrix(k).matrix;
       if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+        for(unsigned int i= 0; i < M1.m(); ++i)
+          for(unsigned int j= 0; j < M1.n(); ++j)
             {
-              info1.matrix(k, false).matrix(i, j) = 1.;
-              info2.matrix(k, false).matrix(i, j) = 1.;
-              info1.matrix(k, true).matrix(i, j)  = -1.;
-              info2.matrix(k, true).matrix(i, j)  = -1.;
+              info1.matrix(k, false).matrix(i, j)= 1.;
+              info2.matrix(k, false).matrix(i, j)= 1.;
+              info1.matrix(k, true).matrix(i, j) = -1.;
+              info2.matrix(k, true).matrix(i, j) = -1.;
             }
     }
 }
@@ -132,14 +132,14 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
 {
   TrilinosWrappers::SparseMatrix matrix;
 
-  const FiniteElement<dim>& fe = dofs.get_fe();
+  const FiniteElement<dim>& fe= dofs.get_fe();
   DynamicSparsityPattern    csp(dofs.n_dofs(), dofs.n_dofs());
   DoFTools::make_flux_sparsity_pattern(dofs, csp);
   matrix.reinit(dofs.locally_owned_dofs(), csp, MPI_COMM_WORLD, true);
 
   Local<dim> local;
-  local.cells = true;
-  local.faces = faces;
+  local.cells= true;
+  local.faces= faces;
 
   MappingQGeneric<dim> mapping(1);
 
@@ -159,8 +159,8 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
     IteratorFilters::LocallyOwnedCell(), dofs.end());
 
   MeshWorker::LoopControl lctrl;
-  lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.cells_first= true;
+  lctrl.own_faces  = MeshWorker::LoopControl::one;
   MeshWorker::loop<dim,
                    dim,
                    MeshWorker::DoFInfo<dim>,
@@ -195,18 +195,18 @@ test(const FiniteElement<dim>& fe)
                    parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy*/);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for(unsigned int l= 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
-  unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
+  unsigned int cn= 0;
+  for(typename Triangulation<dim>::cell_iterator cell= tr.begin();
       cell != tr.end();
       ++cell, ++cn)
     cell->set_user_index(cn);
@@ -214,7 +214,7 @@ test(const FiniteElement<dim>& fe)
   DoFHandler<dim> dofs(tr);
   dofs.distribute_dofs(fe);
 
-  unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   if(numprocs == 1) // renumber DoFs
     {
       std::map<std::string, std::vector<types::global_dof_index>> dofmap;
@@ -225,9 +225,9 @@ test(const FiniteElement<dim>& fe)
           f >> id;
           if(f.eof())
             break;
-          std::vector<types::global_dof_index>& d = dofmap[id.to_string()];
+          std::vector<types::global_dof_index>& d= dofmap[id.to_string()];
           d.reserve(fe.dofs_per_cell);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
             {
               unsigned int temp;
               f >> temp;
@@ -252,10 +252,10 @@ test(const FiniteElement<dim>& fe)
 
   if(0)
     {
-      unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-      unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+      unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+      unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-      for(unsigned int i = 0; i < numprocs; ++i)
+      for(unsigned int i= 0; i < numprocs; ++i)
         {
           MPI_Barrier(MPI_COMM_WORLD);
           if(myid == i)
@@ -275,7 +275,7 @@ test(const FiniteElement<dim>& fe)
 
                   f << cell->id() << ' ';
                   cell->get_dof_indices(local_dof_indices);
-                  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+                  for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
                     f << local_dof_indices[i] << ' ';
                   f << std::endl;
                 }
@@ -307,6 +307,6 @@ main(int argc, char** argv)
   //  fe2.push_back(&q1);
   //fe2.push_back(&sys1);
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for(unsigned int i= 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

@@ -87,11 +87,11 @@ namespace parallel
           & settings;
       if(partition_settings == partition_auto)
 #  ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
-        partition_settings = partition_zoltan;
+        partition_settings= partition_zoltan;
 #  elif defined DEAL_II_WITH_METIS
-        partition_settings = partition_metis;
+        partition_settings= partition_metis;
 #  else
-        partition_settings = partition_zorder;
+        partition_settings= partition_zorder;
 #  endif
 
       if(partition_settings == partition_zoltan)
@@ -150,7 +150,7 @@ namespace parallel
                                                spacedim>::active_cell_iterator
         cell
         = this->begin_active(),
-        endc = this->end();
+        endc= this->end();
 
       if(allow_artificial_cells)
         {
@@ -159,7 +159,7 @@ namespace parallel
           std::function<bool(
             const typename parallel::shared::Triangulation<dim, spacedim>::
               active_cell_iterator&)>
-            predicate = IteratorFilters::SubdomainEqualTo(this->my_subdomain);
+            predicate= IteratorFilters::SubdomainEqualTo(this->my_subdomain);
 
           const std::vector<typename parallel::shared::Triangulation<
             dim,
@@ -172,10 +172,10 @@ namespace parallel
             active_halo_layer(active_halo_layer_vector.begin(),
                               active_halo_layer_vector.end());
 
-          for(unsigned int index = 0; cell != endc; cell++, index++)
+          for(unsigned int index= 0; cell != endc; cell++, index++)
             {
               // store original/true subdomain ids:
-              true_subdomain_ids_of_cells[index] = cell->subdomain_id();
+              true_subdomain_ids_of_cells[index]= cell->subdomain_id();
 
               if(cell->is_locally_owned() == false
                  && active_halo_layer.find(cell) == active_halo_layer.end())
@@ -190,8 +190,8 @@ namespace parallel
               std::function<bool(
                 const typename parallel::shared::Triangulation<dim, spacedim>::
                   cell_iterator&)>
-                predicate = IteratorFilters::LocallyOwnedLevelCell();
-              for(unsigned int lvl = 0; lvl < this->n_levels(); ++lvl)
+                predicate= IteratorFilters::LocallyOwnedLevelCell();
+              for(unsigned int lvl= 0; lvl < this->n_levels(); ++lvl)
                 {
                   true_level_subdomain_ids_of_cells[lvl].resize(
                     this->n_cells(lvl));
@@ -210,8 +210,8 @@ namespace parallel
                   typename parallel::shared::Triangulation<dim, spacedim>::
                     cell_iterator cell
                     = this->begin(lvl),
-                    endc = this->end(lvl);
-                  for(unsigned int index = 0; cell != endc; cell++, index++)
+                    endc= this->end(lvl);
+                  for(unsigned int index= 0; cell != endc; cell++, index++)
                     {
                       // Store true level subdomain IDs before setting artificial
                       true_level_subdomain_ids_of_cells[lvl][index]
@@ -230,14 +230,14 @@ namespace parallel
                       // we must have knowledge of our parent in the hierarchy
                       if(cell->has_children())
                         {
-                          bool keep_cell = false;
-                          for(unsigned int c = 0;
+                          bool keep_cell= false;
+                          for(unsigned int c= 0;
                               c < GeometryInfo<dim>::max_children_per_cell;
                               ++c)
                             if(cell->child(c)->level_subdomain_id()
                                == this->my_subdomain)
                               {
-                                keep_cell = true;
+                                keep_cell= true;
                                 break;
                               }
                           if(keep_cell)
@@ -260,22 +260,22 @@ namespace parallel
       else
         {
           // just store true subdomain ids
-          for(unsigned int index = 0; cell != endc; cell++, index++)
-            true_subdomain_ids_of_cells[index] = cell->subdomain_id();
+          for(unsigned int index= 0; cell != endc; cell++, index++)
+            true_subdomain_ids_of_cells[index]= cell->subdomain_id();
         }
 
 #  ifdef DEBUG
       {
         // Assert that each cell is owned by a processor
-        unsigned int n_my_cells = 0;
+        unsigned int n_my_cells= 0;
         typename parallel::shared::Triangulation<dim,
                                                  spacedim>::active_cell_iterator
           cell
           = this->begin_active(),
-          endc = this->end();
+          endc= this->end();
         for(; cell != endc; ++cell)
           if(cell->is_locally_owned())
-            n_my_cells += 1;
+            n_my_cells+= 1;
 
         const unsigned int total_cells
           = Utilities::MPI::sum(n_my_cells, this->get_communicator());
@@ -287,14 +287,14 @@ namespace parallel
       // cell is owned by a processor
       if(settings & construct_multigrid_hierarchy)
         {
-          unsigned int n_my_cells = 0;
+          unsigned int n_my_cells= 0;
           typename parallel::shared::Triangulation<dim, spacedim>::cell_iterator
             cell
             = this->begin(),
-            endc = this->end();
+            endc= this->end();
           for(; cell != endc; ++cell)
             if(cell->is_locally_owned_on_level())
-              n_my_cells += 1;
+              n_my_cells+= 1;
 
           const unsigned int total_cells
             = Utilities::MPI::sum(n_my_cells, this->get_communicator());

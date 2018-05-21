@@ -37,8 +37,8 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   typename Triangulation<dim>::active_cell_iterator cell, endc;
-  cell = tria.begin_active();
-  endc = tria.end();
+  cell= tria.begin_active();
+  endc= tria.end();
   for(; cell != endc; ++cell)
     if(cell->center().norm() < 0.5)
       cell->set_refine_flag();
@@ -48,12 +48,12 @@ test()
   tria.execute_coarsening_and_refinement();
   if(fe_degree == 1)
     tria.refine_global(1);
-  cell = tria.begin_active();
-  for(unsigned int i = 0; i < 9 - 3 * dim; ++i)
+  cell= tria.begin_active();
+  for(unsigned int i= 0; i < 9 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
-      unsigned int counter = 0;
+      cell                = tria.begin_active();
+      endc                = tria.end();
+      unsigned int counter= 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
           cell->set_refine_flag();
@@ -79,21 +79,20 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      const double entry = Testing::rand() / (double) RAND_MAX;
-      in(i)              = entry;
+      const double entry= Testing::rand() / (double) RAND_MAX;
+      in(i)             = entry;
     }
 
   MatrixFree<dim, double>                          mf_data;
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
+  data.tasks_block_size     = 3;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
 
@@ -106,7 +105,7 @@ test()
   mf2.vmult(out_dist, in);
   mf2.vmult(out_dist, in);
 
-  out_dist -= out;
-  const double diff_norm = out_dist.linfty_norm() / out.linfty_norm();
+  out_dist-= out;
+  const double diff_norm= out_dist.linfty_norm() / out.linfty_norm();
   deallog << "Norm of difference:          " << diff_norm << std::endl;
 }

@@ -36,22 +36,22 @@
 void
 test()
 {
-  const unsigned int N = 200;
+  const unsigned int N= 200;
 
   // first find a random permutation of the
   // indices
   std::vector<unsigned int> permutation(N);
   {
     std::vector<unsigned int> unused_indices(N);
-    for(unsigned int i = 0; i < N; i++)
-      unused_indices[i] = i;
+    for(unsigned int i= 0; i < N; i++)
+      unused_indices[i]= i;
 
-    for(unsigned int i = 0; i < N; i++)
+    for(unsigned int i= 0; i < N; i++)
       {
         // pick a random element among the
         // unused indices
-        const unsigned int k = Testing::rand() % (N - i);
-        permutation[i]       = unused_indices[k];
+        const unsigned int k= Testing::rand() % (N - i);
+        permutation[i]      = unused_indices[k];
 
         // then swap this used element to the
         // end where we won't consider it any
@@ -61,15 +61,15 @@ test()
   }
 
   // build the sparse matrix
-  IndexSet                       indices = complete_index_set(N * N);
+  IndexSet                       indices= complete_index_set(N * N);
   TrilinosWrappers::SparseMatrix matrix(indices, MPI_COMM_WORLD, 5);
-  for(unsigned int i_ = 0; i_ < N; i_++)
-    for(unsigned int j_ = 0; j_ < N; j_++)
+  for(unsigned int i_= 0; i_ < N; i_++)
+    for(unsigned int j_= 0; j_ < N; j_++)
       {
-        const unsigned int i = permutation[i_];
-        const unsigned int j = permutation[j_];
+        const unsigned int i= permutation[i_];
+        const unsigned int j= permutation[j_];
 
-        const unsigned int global = i * N + j;
+        const unsigned int global= i * N + j;
         matrix.set(global, global, Testing::rand());
         if(j > 0)
           {
@@ -99,8 +99,8 @@ test()
   // of the matrix norm
   TrilinosWrappers::MPI::Vector v1(indices, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v2(indices, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < N * N; ++i)
-    v1(i) = i;
+  for(unsigned int i= 0; i < N * N; ++i)
+    v1(i)= i;
   matrix.vmult(v2, v1);
 
   deallog << v1 * v2 << std::endl;

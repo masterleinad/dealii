@@ -26,7 +26,7 @@ namespace PETScWrappers
 {
   MatrixFree::MatrixFree() : communicator(PETSC_COMM_SELF)
   {
-    const int m = 0;
+    const int m= 0;
     do_reinit(m, m, m, m);
   }
 
@@ -95,10 +95,10 @@ namespace PETScWrappers
                      const unsigned int local_rows,
                      const unsigned int local_columns)
   {
-    this->communicator = communicator;
+    this->communicator= communicator;
 
     // destroy the matrix and generate a new one
-    const PetscErrorCode ierr = destroy_matrix(matrix);
+    const PetscErrorCode ierr= destroy_matrix(matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     do_reinit(m, n, local_rows, local_columns);
@@ -117,8 +117,8 @@ namespace PETScWrappers
                                 local_columns_per_process.size()));
     Assert(this_process < local_rows_per_process.size(), ExcInternalError());
 
-    this->communicator        = communicator;
-    const PetscErrorCode ierr = destroy_matrix(matrix);
+    this->communicator       = communicator;
+    const PetscErrorCode ierr= destroy_matrix(matrix);
     AssertThrow(ierr != 0, ExcPETScError(ierr));
 
     do_reinit(m,
@@ -154,10 +154,10 @@ namespace PETScWrappers
   void
   MatrixFree::clear()
   {
-    const PetscErrorCode ierr = destroy_matrix(matrix);
+    const PetscErrorCode ierr= destroy_matrix(matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    const int m = 0;
+    const int m= 0;
     do_reinit(m, m, m, m);
   }
 
@@ -180,7 +180,7 @@ namespace PETScWrappers
     // to the matrix-vector multiplication
     // of this MatrixFree object,
     void*                this_object;
-    const PetscErrorCode ierr = MatShellGetContext(A, &this_object);
+    const PetscErrorCode ierr= MatShellGetContext(A, &this_object);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // call vmult of this object:
@@ -201,18 +201,18 @@ namespace PETScWrappers
     // create a PETSc MatShell matrix-type
     // object of dimension m x n and local size
     // local_rows x local_columns
-    PetscErrorCode ierr = MatCreateShell(
+    PetscErrorCode ierr= MatCreateShell(
       communicator, local_rows, local_columns, m, n, (void*) this, &matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
     // register the MatrixFree::matrix_free_mult function
     // as the matrix multiplication used by this matrix
-    ierr = MatShellSetOperation(
+    ierr= MatShellSetOperation(
       matrix,
       MATOP_MULT,
       (void (*)(void)) & dealii::PETScWrappers::MatrixFree::matrix_free_mult);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    ierr = MatSetFromOptions(matrix);
+    ierr= MatSetFromOptions(matrix);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 } // namespace PETScWrappers

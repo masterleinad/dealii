@@ -24,8 +24,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   std::vector<IndexSet> local_active(2);
 
@@ -44,8 +44,8 @@ test()
     local_active[1], complete_index_set(2 * numproc), MPI_COMM_WORLD);
   v.collect_sizes();
 
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = 1.0 + i;
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= 1.0 + i;
   v.compress(VectorOperation::insert);
 
   IndexSet local_active_together(3 * numproc);

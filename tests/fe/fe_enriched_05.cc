@@ -43,10 +43,10 @@
 
 #include <iostream>
 
-const double eps = 1e-10;
+const double eps= 1e-10;
 
 // argument for build_patches()
-const unsigned int patches = 10;
+const unsigned int patches= 10;
 
 using namespace dealii;
 
@@ -61,18 +61,18 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component= 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component= 0) const
   {
-    Tensor<1, dim> res = point;
+    Tensor<1, dim> res= point;
     Assert(point.norm() > 0,
            dealii::ExcMessage("gradient is not defined at zero"));
-    res *= -value(point) / point.norm();
+    res*= -value(point) / point.norm();
     return res;
   }
 };
@@ -108,7 +108,7 @@ test4()
 #ifdef DATA_OUT_FE_ENRICHED
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for(unsigned int s= 0; s < dof_handler.n_dofs(); s++)
     if(!constraints.is_constrained(s))
       {
         names.push_back(std::string("N_")
@@ -116,7 +116,7 @@ test4()
 
         Vector<double> shape_function;
         shape_function.reinit(dof_handler.n_dofs());
-        shape_function[s] = 1.0;
+        shape_function[s]= 1.0;
 
         // make continuous:
         constraints.distribute(shape_function);
@@ -126,7 +126,7 @@ test4()
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for(unsigned int i= 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(patches);

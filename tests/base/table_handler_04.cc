@@ -30,7 +30,7 @@ main()
   TableHandler table;
   table.set_auto_fill_mode(true);
 
-  std::string keys[3] = {"key1", "key2", "key3"};
+  std::string keys[3]= {"key1", "key2", "key3"};
 
   table.add_value(keys[0], 0);
   table.add_value(keys[0], 1);

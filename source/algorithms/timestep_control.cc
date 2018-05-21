@@ -38,7 +38,7 @@ TimestepControl::TimestepControl(double start,
     print_step(print_step),
     next_print_val(print_step > 0. ? start_val + print_step : start_val - 1.)
 {
-  now_val = start_val;
+  now_val= start_val;
   strcpy(format, "T.%06.3f");
 
   // avoid compiler warning
@@ -66,36 +66,36 @@ TimestepControl::parse_parameters(ParameterHandler& param)
   max_step(param.get_double("Max step"));
   final(param.get_double("Final"));
   tolerance(param.get_double("Tolerance"));
-  print_step              = param.get_double("Print step");
-  const std::string strat = param.get("Strategy");
+  print_step             = param.get_double("Print step");
+  const std::string strat= param.get("Strategy");
   if(strat == std::string("uniform"))
-    strategy_val = uniform;
+    strategy_val= uniform;
   else if(strat == std::string("doubling"))
-    strategy_val = doubling;
+    strategy_val= doubling;
 }
 
 bool
 TimestepControl::advance()
 {
-  bool   changed = false;
-  double s       = step_val;
+  bool   changed= false;
+  double s      = step_val;
 
   // Do time step control, but not in
   // first step.
   if(now_val != start())
     {
       if(strategy_val == doubling && 2 * s <= tolerance_val)
-        s *= 2;
+        s*= 2;
       if(s > max_step_val)
-        s = max_step_val;
+        s= max_step_val;
     }
 
   // Try incrementing time by s
-  double h = now_val + s;
-  changed  = s != step_val;
+  double h= now_val + s;
+  changed = s != step_val;
 
-  step_val         = s;
-  current_step_val = s;
+  step_val        = s;
+  current_step_val= s;
   // If we just missed the final
   // time, increase the step size a
   // bit. This way, we avoid a very
@@ -103,15 +103,15 @@ TimestepControl::advance()
   // shot over the final time, adjust
   // it so we hit the final time
   // exactly.
-  double s1 = .01 * s;
+  double s1= .01 * s;
   if(h > final_val - s1)
     {
-      current_step_val = final_val - now_val;
-      h                = final_val;
-      changed          = true;
+      current_step_val= final_val - now_val;
+      h               = final_val;
+      changed         = true;
     }
 
-  now_val = h;
+  now_val= h;
   return changed;
 }
 
@@ -123,13 +123,13 @@ TimestepControl::print()
   if(print_step < 0.)
     return true;
 
-  bool result = (now_val >= next_print_val);
+  bool result= (now_val >= next_print_val);
 
   if(result)
     {
-      next_print_val += print_step;
+      next_print_val+= print_step;
       if(next_print_val > final_val)
-        next_print_val = final_val;
+        next_print_val= final_val;
     }
   return result;
 }

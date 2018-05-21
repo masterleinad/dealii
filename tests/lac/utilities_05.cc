@@ -27,22 +27,22 @@ test(const NumberType a, const NumberType b)
   FullMatrix<NumberType> rotation(2);
   Vector<NumberType>     x(2), y(2), res(2);
 
-  x[0] = a;
-  x[1] = b;
-  y[1] = NumberType();
+  x[0]= a;
+  x[1]= b;
+  y[1]= NumberType();
 
   const std::array<NumberType, 3> csr
     = Utilities::LinearAlgebra::hyperbolic_rotation(a, b);
 
-  rotation(0, 0) = csr[0];  //  c
-  rotation(1, 1) = csr[0];  //  c
-  rotation(0, 1) = -csr[1]; // -s
-  rotation(1, 0) = -csr[1]; // -s
-  y[0]           = csr[2];  //  r
+  rotation(0, 0)= csr[0];  //  c
+  rotation(1, 1)= csr[0];  //  c
+  rotation(0, 1)= -csr[1]; // -s
+  rotation(1, 0)= -csr[1]; // -s
+  y[0]          = csr[2];  //  r
 
   rotation.residual(res, x, y);
 
-  const NumberType norm = res.l2_norm();
+  const NumberType norm= res.l2_norm();
   deallog << norm << std::endl;
 
   if(norm > 1e-12 || csr[2] < 0.)

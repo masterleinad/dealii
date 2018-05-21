@@ -97,7 +97,7 @@ namespace Particles
    * @author Rene Gassmoeller, 2017
    *
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class Particle
   {
   public:
@@ -147,7 +147,7 @@ namespace Particles
      * contains serialized data of the same length and type that is allocated
      * by @p property_pool.
      */
-    Particle(const void*& begin_data, PropertyPool* const = nullptr);
+    Particle(const void*& begin_data, PropertyPool* const= nullptr);
 
     /**
      * Move constructor for Particle, creates a particle from an existing
@@ -332,13 +332,13 @@ namespace Particles
   void
   Particle<dim, spacedim>::load(Archive& ar, const unsigned int)
   {
-    unsigned int n_properties = 0;
+    unsigned int n_properties= 0;
 
     ar& location& reference_location& id& n_properties;
 
     if(n_properties > 0)
       {
-        properties = new double[n_properties];
+        properties= new double[n_properties];
         ar& boost::serialization::make_array(properties, n_properties);
       }
   }
@@ -348,10 +348,10 @@ namespace Particles
   void
   Particle<dim, spacedim>::save(Archive& ar, const unsigned int) const
   {
-    unsigned int n_properties = 0;
+    unsigned int n_properties= 0;
     if((property_pool != nullptr)
        && (properties != PropertyPool::invalid_handle))
-      n_properties = get_properties().size();
+      n_properties= get_properties().size();
 
     ar& location& reference_location& id& n_properties;
 

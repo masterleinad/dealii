@@ -34,8 +34,8 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
   std::map<CellId, unsigned int> shared_map;
   std::map<CellId, unsigned int> p4est_map;
 
-  typename Triangulation<dim>::cell_iterator cell1 = shared_tria.begin(),
-                                             endc1 = shared_tria.end();
+  typename Triangulation<dim>::cell_iterator cell1= shared_tria.begin(),
+                                             endc1= shared_tria.end();
   for(; cell1 != endc1; ++cell1)
     {
       if(cell1->is_locally_owned_on_level())
@@ -43,8 +43,8 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
           std::make_pair(cell1->id(), cell1->level_subdomain_id()));
     }
 
-  typename Triangulation<dim>::cell_iterator cell2 = p4est_tria.begin(),
-                                             endc2 = p4est_tria.end();
+  typename Triangulation<dim>::cell_iterator cell2= p4est_tria.begin(),
+                                             endc2= p4est_tria.end();
   for(; cell2 != endc2; ++cell2)
     {
       if(cell2->is_locally_owned_on_level())
@@ -52,7 +52,7 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
           std::make_pair(cell2->id(), cell2->level_subdomain_id()));
     }
 
-  for(std::map<CellId, unsigned int>::iterator it = p4est_map.begin();
+  for(std::map<CellId, unsigned int>::iterator it= p4est_map.begin();
       it != p4est_map.end();
       ++it)
     {
@@ -64,27 +64,27 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
   std::set<CellId> shared_known_cells;
   std::set<CellId> p4est_known_cells;
 
-  cell1 = shared_tria.begin(), endc1 = shared_tria.end();
+  cell1= shared_tria.begin(), endc1= shared_tria.end();
   for(; cell1 != endc1; ++cell1)
     {
       if(cell1->level_subdomain_id() != numbers::artificial_subdomain_id)
         shared_known_cells.insert(cell1->id());
     }
-  cell2 = p4est_tria.begin(), endc2 = p4est_tria.end();
+  cell2= p4est_tria.begin(), endc2= p4est_tria.end();
   for(; cell2 != endc2; ++cell2)
     {
       if(cell2->level_subdomain_id() != numbers::artificial_subdomain_id)
         p4est_known_cells.insert(cell2->id());
     }
 
-  cell1 = shared_tria.begin(), endc1 = shared_tria.end();
+  cell1= shared_tria.begin(), endc1= shared_tria.end();
   for(; cell1 != endc1; ++cell1)
     {
       if(cell1->level_subdomain_id() != numbers::artificial_subdomain_id)
         Assert(p4est_known_cells.find(cell1->id()) != p4est_known_cells.end(),
                ExcMessage("Cell not known by processor."))
     }
-  cell2 = p4est_tria.begin(), endc2 = p4est_tria.end();
+  cell2= p4est_tria.begin(), endc2= p4est_tria.end();
   for(; cell2 != endc2; ++cell2)
     {
       if(cell2->level_subdomain_id() != numbers::artificial_subdomain_id)
@@ -111,7 +111,7 @@ test()
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
 
-  unsigned int refinements = 2;
+  unsigned int refinements= 2;
   GridGenerator::subdivided_hyper_cube(shared_tria, 2, -1, 1);
   shared_tria.refine_global(refinements);
   for(typename Triangulation<dim>::active_cell_iterator cell

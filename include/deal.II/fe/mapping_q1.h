@@ -50,7 +50,7 @@ DEAL_II_NAMESPACE_OPEN
  * @author Guido Kanschat, 2000, 2001; Ralf Hartmann, 2000, 2001, 2005,
  * Wolfgang Bangerth, 2015
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class MappingQ1 : public MappingQGeneric<dim, spacedim>
 {
 public:
@@ -79,7 +79,7 @@ public:
  * mapping object. This object can then be used in all of those places where
  * such an object is needed.
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 struct StaticMappingQ1
 {
   /**

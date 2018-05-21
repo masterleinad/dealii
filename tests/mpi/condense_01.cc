@@ -33,7 +33,7 @@ template <int dim>
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation, -0.5, 0.5);
 
@@ -72,9 +72,9 @@ test()
   PETScWrappers::MPI::Vector vec(locally_owned_dofs, MPI_COMM_WORLD);
   PETScWrappers::MPI::Vector vec_ghosted(
     locally_owned_dofs, locally_relevant_dofs, MPI_COMM_WORLD);
-  vec         = 1;
-  vec_ghosted = vec;
-  vec         = -1;
+  vec        = 1;
+  vec_ghosted= vec;
+  vec        = -1;
 
   constraints.condense(vec_ghosted, vec);
 

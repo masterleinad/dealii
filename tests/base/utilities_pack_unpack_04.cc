@@ -29,11 +29,11 @@ template <typename T, int N>
 void
 check(const T (&object)[N])
 {
-  const std::vector<char> buffer = Utilities::pack(object);
+  const std::vector<char> buffer= Utilities::pack(object);
   T                       unpacked[N];
   Utilities::unpack(buffer, unpacked);
 
-  const bool equal_sizes = (buffer.size() == sizeof(T) * N);
+  const bool equal_sizes= (buffer.size() == sizeof(T) * N);
   deallog << "Buffer size check: " << (equal_sizes ? "OK" : "Failed")
           << std::endl;
   if(equal_sizes)
@@ -43,11 +43,11 @@ check(const T (&object)[N])
                   "Failed")
             << std::endl;
 
-  bool equal = true;
-  for(unsigned int i = 0; i < N; ++i)
+  bool equal= true;
+  for(unsigned int i= 0; i < N; ++i)
     if(unpacked[i] != object[i])
       {
-        equal = false;
+        equal= false;
         break;
       }
   deallog << "direct cmp: " << (equal ? "OK" : "Failed") << std::endl;
@@ -57,15 +57,15 @@ void
 test()
 {
   // try a small array that is packed by just using memcpy
-  double x[3] = {1, 2, 3};
+  double x[3]= {1, 2, 3};
   check(x);
 
   // now try a much larger array that will actually be serialized
   // using BOOST
-  const unsigned int N = 10000;
+  const unsigned int N= 10000;
   double             y[N];
-  for(unsigned int i = 0; i < N; ++i)
-    y[i] = i;
+  for(unsigned int i= 0; i < N; ++i)
+    y[i]= i;
   check(y);
 
   deallog << "OK!" << std::endl;

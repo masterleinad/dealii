@@ -50,7 +50,7 @@ test_view(const Vector<double>&             solution,
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View&                           fe_values_view= fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -104,7 +104,7 @@ test_view(const Vector<double>&             solution,
                                                 qp_third_deriv_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for(unsigned int q= 0; q < n_q_points; ++q)
     {
       if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
@@ -136,7 +136,7 @@ test_view(const Vector<double>&             solution,
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View&                           fe_values_view= fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -219,7 +219,7 @@ test_view(const Vector<double>&             solution,
                                                 qp_third_deriv_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for(unsigned int q= 0; q < n_q_points; ++q)
     {
       if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
@@ -265,7 +265,7 @@ test_view(const Vector<double>&                         solution,
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View&                           fe_values_view= fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -289,7 +289,7 @@ test_view(const Vector<double>&                         solution,
   fe_values_view.get_function_divergences(solution, qp_divs_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for(unsigned int q= 0; q < n_q_points; ++q)
     {
       if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
@@ -311,7 +311,7 @@ test_view(const Vector<double>&                solution,
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View&                           fe_values_view= fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -344,7 +344,7 @@ test_view(const Vector<double>&                solution,
   fe_values_view.get_function_gradients(solution, qp_grads_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for(unsigned int q= 0; q < n_q_points; ++q)
     {
       if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
@@ -375,9 +375,9 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   solution.reinit(dof_handler.n_dofs());
 
   // Populate with non-trivial values
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for(unsigned int i= 0; i < dof_handler.n_dofs(); ++i)
     {
-      solution(i) = i + 1;
+      solution(i)= i + 1;
     }
 
   FEValues<dim>                        fe_values(fe,
@@ -399,8 +399,8 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
     // Convert the DoF values so that they are potentially of
     // a different number type
     std::vector<NumberType> local_dof_values_other(fe.dofs_per_cell);
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-      local_dof_values_other[i] = local_dof_values[i];
+    for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
+      local_dof_values_other[i]= local_dof_values[i];
 
     test_view(solution,
               fe_values,
@@ -412,11 +412,11 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   deallog << "OK" << std::endl;
 }
 
-template <typename NumberType, int dim = 2>
+template <typename NumberType, int dim= 2>
 void
 test()
 {
-  const unsigned int degree = 3; // Need third derivatives
+  const unsigned int degree= 3; // Need third derivatives
 
   deallog.push("Scalar");
   {

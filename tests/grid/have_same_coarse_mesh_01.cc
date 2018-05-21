@@ -44,8 +44,8 @@ test()
 
   tria[2].refine_global(3);
 
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for(unsigned int i= 0; i < 3; ++i)
+    for(unsigned int j= 0; j < 3; ++j)
       {
         Assert(GridTools::have_same_coarse_mesh(tria[i], tria[j]) == (i == j),
                ExcInternalError());

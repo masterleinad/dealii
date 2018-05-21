@@ -32,7 +32,7 @@ template <int dim, typename Number>
 void
 check(const unsigned int fe_degree)
 {
-  const unsigned int nb = 2;
+  const unsigned int nb= 2;
 
   FE_Q<dim> fe_1(fe_degree + 1);
   FE_Q<dim> fe_2(fe_degree);
@@ -41,21 +41,21 @@ check(const unsigned int fe_degree)
   deallog << "FE: " << fe_2.get_name() << std::endl;
 
   // run a few different sizes...
-  unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+  unsigned int sizes[]= {1, 2, 3};
+  for(unsigned int cycle= 0; cycle < sizeof(sizes) / sizeof(unsigned int);
       ++cycle)
     {
-      unsigned int n_refinements = 0;
-      unsigned int n_subdiv      = sizes[cycle];
+      unsigned int n_refinements= 0;
+      unsigned int n_subdiv     = sizes[cycle];
       if(n_subdiv > 1)
         while(n_subdiv % 2 == 0)
           {
-            n_refinements += 1;
-            n_subdiv /= 2;
+            n_refinements+= 1;
+            n_subdiv/= 2;
           }
-      n_refinements += 3 - dim;
+      n_refinements+= 3 - dim;
       if(fe_degree < 3)
-        n_refinements += 1;
+        n_refinements+= 1;
 
       parallel::distributed::Triangulation<dim> tr(
         MPI_COMM_WORLD,
@@ -105,14 +105,14 @@ check(const unsigned int fe_degree)
       std::vector<MGConstrainedDoFs>  mg_constrained_dofs_vector(2);
       ZeroFunction<dim>               zero_function;
       typename FunctionMap<dim>::type dirichlet_boundary;
-      dirichlet_boundary[0] = &zero_function;
-      for(unsigned int i = 0; i < mgdof_ptr.size(); ++i)
+      dirichlet_boundary[0]= &zero_function;
+      for(unsigned int i= 0; i < mgdof_ptr.size(); ++i)
         mg_constrained_dofs_vector[i].initialize(*mgdof_ptr[i],
                                                  dirichlet_boundary);
 
       // build reference
       std::vector<MGTransferMatrixFree<dim, Number>> transfer_ref;
-      for(unsigned int b = 0; b < nb; ++b)
+      for(unsigned int b= 0; b < nb; ++b)
         {
           transfer_ref.emplace_back(mg_constrained_dofs_vector[b]);
           transfer_ref[b].build(*mgdof_ptr[b]);
@@ -124,13 +124,13 @@ check(const unsigned int fe_degree)
       transfer.build(mgdof_ptr);
 
       // check prolongation for all levels using random vector
-      for(unsigned int level = 1;
+      for(unsigned int level= 1;
           level < mgdof_ptr[0]->get_triangulation().n_global_levels();
           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
@@ -139,26 +139,26 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
-                v1.block(b).local_element(i) = random_value<double>();
+              for(unsigned int i= 0; i < v1.block(b).local_size(); ++i)
+                v1.block(b).local_element(i)= random_value<double>();
 
               transfer_ref[b].prolongate(level, v2.block(b), v1.block(b));
             }
 
           transfer.prolongate(level, v3, v1);
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff prolongate   l" << level << ": " << v3.l2_norm()
                   << std::endl;
         }
 
       // check restriction for all levels using random vector
-      for(unsigned int level = 1;
+      for(unsigned int level= 1;
           level < mgdof_ptr[0]->get_triangulation().n_global_levels();
           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
@@ -167,23 +167,23 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
-                v1.block(b).local_element(i) = random_value<double>();
+              for(unsigned int i= 0; i < v1.block(b).local_size(); ++i)
+                v1.block(b).local_element(i)= random_value<double>();
 
               transfer_ref[b].restrict_and_add(level, v2.block(b), v1.block(b));
             }
 
           transfer.restrict_and_add(level, v3, v1);
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff restrict     l" << level << ": " << v3.l2_norm()
                   << std::endl;
 
-          v2 = 1.;
-          v3 = 1.;
+          v2= 1.;
+          v3= 1.;
           transfer.restrict_and_add(level, v2, v1);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             transfer_ref[b].restrict_and_add(level, v3.block(b), v1.block(b));
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff restrict add l" << level << ": " << v3.l2_norm()
                   << std::endl;
         }

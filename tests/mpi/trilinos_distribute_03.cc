@@ -25,7 +25,7 @@
 void
 test()
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -37,9 +37,9 @@ test()
 
   TrilinosWrappers::MPI::Vector vec(idx, MPI_COMM_WORLD);
 
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
+  for(unsigned int i= vec.local_range().first; i < vec.local_range().second;
       ++i)
-    vec(i) = i;
+    vec(i)= i;
   vec.compress(VectorOperation::insert);
 
   ConstraintMatrix cm;
@@ -56,7 +56,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

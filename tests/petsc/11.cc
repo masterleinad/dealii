@@ -23,8 +23,8 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   // set only certain elements of the vector
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
-    v(i) = i;
+  for(unsigned int i= 0; i < v.size(); i+= 1 + i)
+    v(i)= i;
 
   v.compress(VectorOperation::insert);
 

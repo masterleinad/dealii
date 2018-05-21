@@ -35,8 +35,8 @@ main()
 {
   initlog();
 
-  const unsigned int spacedim = 3;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int spacedim= 3;
+  const unsigned int dim     = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
 
@@ -64,7 +64,7 @@ main()
       deallog << "Cell = " << cell << std::endl;
       deallog << "  direction_flag = " << cell->direction_flag() << std::endl;
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+      for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
         {
           deallog << "  face = " << face
@@ -72,7 +72,7 @@ main()
                   << std::endl;
 
           if(cell->face(face)->has_children())
-            for(unsigned int c = 0; c < cell->face(face)->n_children(); ++c)
+            for(unsigned int c= 0; c < cell->face(face)->n_children(); ++c)
               {
                 deallog << "    subface = " << c << std::endl;
                 deallog << "              "

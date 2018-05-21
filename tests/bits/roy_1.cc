@@ -29,8 +29,8 @@ template <int dim>
 void
 check(const FiniteElement<dim>& fe)
 {
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; face++)
-    for(unsigned int i = 0; i < fe.dofs_per_cell; i++)
+  for(unsigned int face= 0; face < GeometryInfo<dim>::faces_per_cell; face++)
+    for(unsigned int i= 0; i < fe.dofs_per_cell; i++)
       if(fe.has_support_on_face(i, face))
         deallog << "Basis function " << i << " has support on face " << face
                 << std::endl;

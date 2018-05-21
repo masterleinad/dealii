@@ -79,9 +79,9 @@ test(VectorTools::NormType norm, double value)
                                     QGauss<dim>(5),
                                     norm);
 
-  const double error = cellwise_errors.l2_norm();
+  const double error= cellwise_errors.l2_norm();
 
-  const double difference = std::abs(error - value);
+  const double difference= std::abs(error - value);
   deallog << "computed: " << error << " expected: " << value
           << " difference: " << difference << std::endl;
   Assert(difference < 1e-10, ExcMessage("Error in integrate_difference"));

@@ -59,7 +59,7 @@ public:
   /**
    * Default constructor. The result is an empty object with zero dimensions.
    */
-  BlockSparseMatrixEZ() = default;
+  BlockSparseMatrixEZ()= default;
 
   /**
    * Constructor setting up an object with given number of block rows and
@@ -229,7 +229,7 @@ public:
    */
   template <class StreamType>
   void
-  print_statistics(StreamType& s, bool full = false);
+  print_statistics(StreamType& s, bool full= false);
 
 private:
   /**
@@ -313,7 +313,7 @@ BlockSparseMatrixEZ<Number>::set(const size_type i,
 
   const std::pair<size_type, size_type> row_index
     = row_indices.global_to_local(i),
-    col_index = column_indices.global_to_local(j);
+    col_index= column_indices.global_to_local(j);
   block(row_index.first, col_index.first)
     .set(row_index.second, col_index.second, value);
 }
@@ -328,7 +328,7 @@ BlockSparseMatrixEZ<Number>::add(const size_type i,
 
   const std::pair<unsigned int, size_type> row_index
     = row_indices.global_to_local(i),
-    col_index = column_indices.global_to_local(j);
+    col_index= column_indices.global_to_local(j);
   block(row_index.first, col_index.first)
     .add(row_index.second, col_index.second, value);
 }
@@ -344,10 +344,10 @@ BlockSparseMatrixEZ<Number>::vmult(BlockVector<somenumber>&       dst,
   Assert(src.n_blocks() == n_block_cols(),
          ExcDimensionMismatch(src.n_blocks(), n_block_cols()));
 
-  dst = 0.;
+  dst= 0.;
 
-  for(unsigned int row = 0; row < n_block_rows(); ++row)
-    for(unsigned int col = 0; col < n_block_cols(); ++col)
+  for(unsigned int row= 0; row < n_block_rows(); ++row)
+    for(unsigned int col= 0; col < n_block_cols(); ++col)
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
 
@@ -362,8 +362,8 @@ BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber>&       dst,
   Assert(src.n_blocks() == n_block_cols(),
          ExcDimensionMismatch(src.n_blocks(), n_block_cols()));
 
-  for(unsigned int row = 0; row < n_block_rows(); ++row)
-    for(unsigned int col = 0; col < n_block_cols(); ++col)
+  for(unsigned int row= 0; row < n_block_rows(); ++row)
+    for(unsigned int col= 0; col < n_block_cols(); ++col)
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
 
@@ -378,10 +378,10 @@ BlockSparseMatrixEZ<Number>::Tvmult(BlockVector<somenumber>&       dst,
   Assert(src.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(src.n_blocks(), n_block_rows()));
 
-  dst = 0.;
+  dst= 0.;
 
-  for(unsigned int row = 0; row < n_block_rows(); ++row)
-    for(unsigned int col = 0; col < n_block_cols(); ++col)
+  for(unsigned int row= 0; row < n_block_rows(); ++row)
+    for(unsigned int col= 0; col < n_block_cols(); ++col)
       block(row, col).Tvmult_add(dst.block(col), src.block(row));
 }
 
@@ -397,8 +397,8 @@ BlockSparseMatrixEZ<Number>::Tvmult_add(
   Assert(src.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(src.n_blocks(), n_block_rows()));
 
-  for(unsigned int row = 0; row < n_block_rows(); ++row)
-    for(unsigned int col = 0; col < n_block_cols(); ++col)
+  for(unsigned int row= 0; row < n_block_rows(); ++row)
+    for(unsigned int col= 0; col < n_block_cols(); ++col)
       block(row, col).Tvmult_add(dst.block(col), src.block(row));
 }
 
@@ -407,9 +407,9 @@ template <class StreamType>
 inline void
 BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
 {
-  size_type              used_total      = 0;
-  size_type              allocated_total = 0;
-  size_type              reserved_total  = 0;
+  size_type              used_total     = 0;
+  size_type              allocated_total= 0;
+  size_type              reserved_total = 0;
   std::vector<size_type> used_by_line_total;
 
   size_type              used;
@@ -417,8 +417,8 @@ BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
   size_type              reserved;
   std::vector<size_type> used_by_line;
 
-  for(size_type i = 0; i < n_block_rows(); ++i)
-    for(size_type j = 0; j < n_block_cols(); ++j)
+  for(size_type i= 0; i < n_block_rows(); ++i)
+    for(size_type j= 0; j < n_block_cols(); ++j)
       {
         used_by_line.clear();
         out << "block:\t" << i << '\t' << j << std::endl;
@@ -429,19 +429,19 @@ BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
             << "allocated:" << allocated << std::endl
             << "reserved:" << reserved << std::endl;
 
-        used_total += used;
-        allocated_total += allocated;
-        reserved_total += reserved;
+        used_total+= used;
+        allocated_total+= allocated;
+        reserved_total+= reserved;
 
         if(full)
           {
             used_by_line_total.resize(used_by_line.size());
-            for(size_type i = 0; i < used_by_line.size(); ++i)
+            for(size_type i= 0; i < used_by_line.size(); ++i)
               if(used_by_line[i] != 0)
                 {
                   out << "row-entries\t" << i << "\trows\t" << used_by_line[i]
                       << std::endl;
-                  used_by_line_total[i] += used_by_line[i];
+                  used_by_line_total[i]+= used_by_line[i];
                 }
           }
       }
@@ -449,7 +449,7 @@ BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
       << "used:" << used_total << std::endl
       << "allocated:" << allocated_total << std::endl
       << "reserved:" << reserved_total << std::endl;
-  for(size_type i = 0; i < used_by_line_total.size(); ++i)
+  for(size_type i= 0; i < used_by_line_total.size(); ++i)
     if(used_by_line_total[i] != 0)
       {
         out << "row-entries\t" << i << "\trows\t" << used_by_line_total[i]

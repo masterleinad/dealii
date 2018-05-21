@@ -94,14 +94,14 @@ namespace Utilities
   std::string
   to_string(const number value, const unsigned int digits)
   {
-    std::string lc_string = boost::lexical_cast<std::string>(value);
+    std::string lc_string= boost::lexical_cast<std::string>(value);
 
     if(digits == numbers::invalid_unsigned_int)
       return lc_string;
     else if(lc_string.size() < digits)
       {
         // We have to add the padding zeroes in front of the number
-        const unsigned int padding_position = (lc_string[0] == '-') ? 1 : 0;
+        const unsigned int padding_position= (lc_string[0] == '-') ? 1 : 0;
 
         const std::string padding(digits - lc_string.size(), '0');
         lc_string.insert(padding_position, padding);
@@ -117,13 +117,13 @@ namespace Utilities
     if(from.empty())
       return input;
 
-    std::string            out = input;
-    std::string::size_type pos = out.find(from);
+    std::string            out= input;
+    std::string::size_type pos= out.find(from);
 
     while(pos != std::string::npos)
       {
         out.replace(pos, from.size(), to);
-        pos = out.find(from, pos + to.size());
+        pos= out.find(from, pos + to.size());
       }
     return out;
   }
@@ -131,8 +131,8 @@ namespace Utilities
   std::string
   trim(const std::string& input)
   {
-    std::string::size_type left  = 0;
-    std::string::size_type right = input.size() > 0 ? input.size() - 1 : 0;
+    std::string::size_type left = 0;
+    std::string::size_type right= input.size() > 0 ? input.size() - 1 : 0;
 
     for(; left < input.size(); ++left)
       {
@@ -185,7 +185,7 @@ namespace Utilities
   string_to_int(const std::string& s_)
   {
     // trim whitespace on either side of the text if necessary
-    std::string s = s_;
+    std::string s= s_;
     while((s.size() > 0) && (s[0] == ' '))
       s.erase(s.begin());
     while((s.size() > 0) && (s[s.size() - 1] == ' '))
@@ -198,8 +198,8 @@ namespace Utilities
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
     char* p;
-    errno       = 0;
-    const int i = std::strtol(s.c_str(), &p, 10);
+    errno      = 0;
+    const int i= std::strtol(s.c_str(), &p, 10);
     AssertThrow(
       !((errno != 0) || (s.size() == 0) || ((s.size() > 0) && (*p != '\0'))),
       ExcMessage("Can't convert <" + s + "> to an integer."));
@@ -211,8 +211,8 @@ namespace Utilities
   string_to_int(const std::vector<std::string>& s)
   {
     std::vector<int> tmp(s.size());
-    for(unsigned int i = 0; i < s.size(); ++i)
-      tmp[i] = string_to_int(s[i]);
+    for(unsigned int i= 0; i < s.size(); ++i)
+      tmp[i]= string_to_int(s[i]);
     return tmp;
   }
 
@@ -220,7 +220,7 @@ namespace Utilities
   string_to_double(const std::string& s_)
   {
     // trim whitespace on either side of the text if necessary
-    std::string s = s_;
+    std::string s= s_;
     while((s.size() > 0) && (s[0] == ' '))
       s.erase(s.begin());
     while((s.size() > 0) && (s[s.size() - 1] == ' '))
@@ -233,8 +233,8 @@ namespace Utilities
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
     char* p;
-    errno          = 0;
-    const double d = std::strtod(s.c_str(), &p);
+    errno         = 0;
+    const double d= std::strtod(s.c_str(), &p);
     AssertThrow(
       !((errno != 0) || (s.size() == 0) || ((s.size() > 0) && (*p != '\0'))),
       ExcMessage("Can't convert <" + s + "> to a double."));
@@ -246,8 +246,8 @@ namespace Utilities
   string_to_double(const std::vector<std::string>& s)
   {
     std::vector<double> tmp(s.size());
-    for(unsigned int i = 0; i < s.size(); ++i)
-      tmp[i] = string_to_double(s[i]);
+    for(unsigned int i= 0; i < s.size(); ++i)
+      tmp[i]= string_to_double(s[i]);
     return tmp;
   }
 
@@ -256,7 +256,7 @@ namespace Utilities
   {
     // keep the currently remaining part of the input string in 'tmp' and
     // keep chopping elements of the list off the front
-    std::string tmp = s;
+    std::string tmp= s;
 
     // as discussed in the documentation, eat whitespace from the end
     // of the string
@@ -273,7 +273,7 @@ namespace Utilities
     while(tmp.length() != 0)
       {
         std::string name;
-        name = tmp;
+        name= tmp;
 
         if(name.find(delimiter) != std::string::npos)
           {
@@ -281,7 +281,7 @@ namespace Utilities
             tmp.erase(0, tmp.find(delimiter) + delimiter.size());
           }
         else
-          tmp = "";
+          tmp= "";
 
         // strip spaces from this element's front and end
         while((name.length() != 0) && (name[0] == ' '))
@@ -298,8 +298,8 @@ namespace Utilities
   std::vector<std::string>
   split_string_list(const std::string& s, const char delimiter)
   {
-    std::string d = ",";
-    d[0]          = delimiter;
+    std::string d= ",";
+    d[0]         = delimiter;
     return split_string_list(s, d);
   }
 
@@ -308,7 +308,7 @@ namespace Utilities
                         const unsigned int width,
                         const char         delimiter)
   {
-    std::string              text = original_text;
+    std::string              text= original_text;
     std::vector<std::string> lines;
 
     // remove trailing spaces
@@ -323,7 +323,7 @@ namespace Utilities
         while((text.length() != 0) && (text[0] == delimiter))
           text.erase(0, 1);
 
-        std::size_t pos_newline = text.find_first_of('\n', 0);
+        std::size_t pos_newline= text.find_first_of('\n', 0);
         if(pos_newline != std::string::npos && pos_newline <= width)
           {
             std::string line(text, 0, pos_newline);
@@ -345,14 +345,14 @@ namespace Utilities
                   && (text[text.length() - 1] == delimiter))
               text.erase(text.length() - 1, 1);
             lines.push_back(text);
-            text = "";
+            text= "";
           }
         else
           {
             // starting at position width, find the
             // location of the previous space, so
             // that we can break around there
-            int location = std::min<int>(width, text.length() - 1);
+            int location= std::min<int>(width, text.length() - 1);
             for(; location > 0; --location)
               if(text[location] == delimiter)
                 break;
@@ -360,7 +360,7 @@ namespace Utilities
             // if there are no spaces, then try if
             // there are spaces coming up
             if(location == 0)
-              for(location = std::min<int>(width, text.length() - 1);
+              for(location= std::min<int>(width, text.length() - 1);
                   location < static_cast<int>(text.length());
                   ++location)
                 if(text[location] == delimiter)
@@ -387,7 +387,7 @@ namespace Utilities
     if(pattern.size() > name.size())
       return false;
 
-    for(unsigned int i = 0; i < pattern.size(); ++i)
+    for(unsigned int i= 0; i < pattern.size(); ++i)
       if(pattern[i] != name[i])
         return false;
 
@@ -454,11 +454,11 @@ namespace Utilities
   std::vector<unsigned int>
   reverse_permutation(const std::vector<unsigned int>& permutation)
   {
-    const unsigned int n = permutation.size();
+    const unsigned int n= permutation.size();
 
     std::vector<unsigned int> out(n);
-    for(unsigned int i = 0; i < n; ++i)
-      out[i] = n - 1 - permutation[i];
+    for(unsigned int i= 0; i < n; ++i)
+      out[i]= n - 1 - permutation[i];
 
     return out;
   }
@@ -466,19 +466,19 @@ namespace Utilities
   std::vector<unsigned int>
   invert_permutation(const std::vector<unsigned int>& permutation)
   {
-    const unsigned int n = permutation.size();
+    const unsigned int n= permutation.size();
 
     std::vector<unsigned int> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
-        out[permutation[i]] = i;
+        out[permutation[i]]= i;
       }
 
     // check that we have actually reached
     // all indices
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -488,11 +488,11 @@ namespace Utilities
   std::vector<unsigned long long int>
   reverse_permutation(const std::vector<unsigned long long int>& permutation)
   {
-    const unsigned long long int n = permutation.size();
+    const unsigned long long int n= permutation.size();
 
     std::vector<unsigned long long int> out(n);
-    for(unsigned long long int i = 0; i < n; ++i)
-      out[i] = n - 1 - permutation[i];
+    for(unsigned long long int i= 0; i < n; ++i)
+      out[i]= n - 1 - permutation[i];
 
     return out;
   }
@@ -500,19 +500,19 @@ namespace Utilities
   std::vector<unsigned long long int>
   invert_permutation(const std::vector<unsigned long long int>& permutation)
   {
-    const unsigned long long int n = permutation.size();
+    const unsigned long long int n= permutation.size();
 
     std::vector<unsigned long long int> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned long long int i = 0; i < n; ++i)
+    for(unsigned long long int i= 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
-        out[permutation[i]] = i;
+        out[permutation[i]]= i;
       }
 
     // check that we have actually reached
     // all indices
-    for(unsigned long long int i = 0; i < n; ++i)
+    for(unsigned long long int i= 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -523,11 +523,11 @@ namespace Utilities
   std::vector<Integer>
   reverse_permutation(const std::vector<Integer>& permutation)
   {
-    const unsigned int n = permutation.size();
+    const unsigned int n= permutation.size();
 
     std::vector<Integer> out(n);
-    for(unsigned int i = 0; i < n; ++i)
-      out[i] = n - 1 - permutation[i];
+    for(unsigned int i= 0; i < n; ++i)
+      out[i]= n - 1 - permutation[i];
 
     return out;
   }
@@ -536,19 +536,19 @@ namespace Utilities
   std::vector<Integer>
   invert_permutation(const std::vector<Integer>& permutation)
   {
-    const unsigned int n = permutation.size();
+    const unsigned int n= permutation.size();
 
     std::vector<Integer> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
-        out[permutation[i]] = i;
+        out[permutation[i]]= i;
       }
 
     // check that we have actually reached
     // all indices
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -607,7 +607,7 @@ namespace Utilities
     void
     get_memory_stats(MemoryStats& stats)
     {
-      stats.VmPeak = stats.VmSize = stats.VmHWM = stats.VmRSS = 0;
+      stats.VmPeak= stats.VmSize= stats.VmHWM= stats.VmRSS= 0;
 
       // parsing /proc/self/stat would be a
       // lot easier, but it does not contain
@@ -640,7 +640,7 @@ namespace Utilities
     get_hostname()
     {
 #if defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETHOSTNAME)
-      const unsigned int N = 1024;
+      const unsigned int N= 1024;
       char               hostname[N];
       gethostname(&(hostname[0]), N - 1);
 #else
@@ -652,8 +652,8 @@ namespace Utilities
     std::string
     get_time()
     {
-      std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::time_t time1= std::time(nullptr);
+      std::tm*    time = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_hour << ":" << (time->tm_min < 10 ? "0" : "")
@@ -666,8 +666,8 @@ namespace Utilities
     std::string
     get_date()
     {
-      std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::time_t time1= std::time(nullptr);
+      std::tm*    time = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_year + 1900 << "/" << time->tm_mon + 1 << "/"
@@ -680,14 +680,14 @@ namespace Utilities
     posix_memalign(void** memptr, size_t alignment, size_t size)
     {
 #ifndef DEAL_II_MSVC
-      const int ierr = ::posix_memalign(memptr, alignment, size);
+      const int ierr= ::posix_memalign(memptr, alignment, size);
 
       AssertThrow(ierr == 0, ExcOutOfMemory());
       AssertThrow(*memptr != nullptr, ExcOutOfMemory());
 #else
       // Windows does not appear to have posix_memalign. just use the
       // regular malloc in that case
-      *memptr = malloc(size);
+      *memptr= malloc(size);
       (void) alignment;
       AssertThrow(*memptr != 0, ExcOutOfMemory());
 #endif
@@ -763,12 +763,12 @@ namespace Utilities
       // save the communicator, reset the map, and delete the communicator if
       // this whole thing was created as an MPI communicator
 #  ifdef DEAL_II_WITH_MPI
-      Epetra_MpiComm* mpi_comm = dynamic_cast<Epetra_MpiComm*>(&communicator);
+      Epetra_MpiComm* mpi_comm= dynamic_cast<Epetra_MpiComm*>(&communicator);
       if(mpi_comm != nullptr)
         {
-          MPI_Comm comm  = mpi_comm->GetMpiComm();
-          *mpi_comm      = Epetra_MpiComm(MPI_COMM_SELF);
-          const int ierr = MPI_Comm_free(&comm);
+          MPI_Comm comm = mpi_comm->GetMpiComm();
+          *mpi_comm     = Epetra_MpiComm(MPI_COMM_SELF);
+          const int ierr= MPI_Comm_free(&comm);
           AssertThrowMPI(ierr);
         }
 #  endif

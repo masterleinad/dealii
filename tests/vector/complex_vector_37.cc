@@ -22,15 +22,15 @@
 void
 test(Vector<std::complex<double>>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
-    v(i) = std::complex<double>(i + 1., i + 2.);
+  for(unsigned int i= 0; i < v.size(); ++i)
+    v(i)= std::complex<double>(i + 1., i + 2.);
 
   v.compress();
 
   v.add(1.);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     AssertThrow(v(i) == std::complex<double>(i + 2., i + 2.),
                 ExcInternalError());
 

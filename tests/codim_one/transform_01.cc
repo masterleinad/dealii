@@ -29,13 +29,13 @@ template <int dim>
 Point<dim>
 warp(const Point<dim>& p)
 {
-  Point<dim> q = p;
-  q[dim - 1] *= 10;
+  Point<dim> q= p;
+  q[dim - 1]*= 10;
 
   if(dim >= 2)
-    q[0] += 2 * std::sin(q[dim - 1]);
+    q[0]+= 2 * std::sin(q[dim - 1]);
   if(dim >= 3)
-    q[1] += 2 * std::cos(q[dim - 1]);
+    q[1]+= 2 * std::cos(q[dim - 1]);
 
   return q;
 }

@@ -41,15 +41,14 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr, -1.0, 1.0);
   tr.refine_global(3);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     if(!cell->is_ghost() && !cell->is_artificial())
@@ -80,29 +79,29 @@ test()
                             quadrature_formula,
                             update_quadrature_points | update_JxW_values
                               | update_values);
-    const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int                   dofs_per_cell= fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     Vector<double>                       local_vector(dofs_per_cell);
-    const unsigned int                   n_q_points = quadrature_formula.size();
+    const unsigned int                   n_q_points= quadrature_formula.size();
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active(),
-                                                   endc = dofh.end();
+    typename DoFHandler<dim>::active_cell_iterator cell= dofh.begin_active(),
+                                                   endc= dofh.end();
     for(; cell != endc; ++cell)
       if(cell->subdomain_id() == tr.locally_owned_subdomain())
         {
           fe_values.reinit(cell);
           cell->get_dof_indices(local_dof_indices);
-          local_vector = 0;
+          local_vector= 0;
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for(unsigned int q= 0; q < n_q_points; ++q)
             {
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
                 {
-                  local_vector(i)
-                    += fe_values.shape_value(i, q) * 1.0 * local_dof_indices[i]
-                       * (fe_values.quadrature_point(q)[0]
-                          + fe_values.quadrature_point(q).square())
-                       * fe_values.JxW(q);
+                  local_vector(i)+= fe_values.shape_value(i, q) * 1.0
+                                    * local_dof_indices[i]
+                                    * (fe_values.quadrature_point(q)[0]
+                                       + fe_values.quadrature_point(q).square())
+                                    * fe_values.JxW(q);
                 }
             }
           cm.distribute_local_to_global(
@@ -110,7 +109,7 @@ test()
         }
     vector.compress(VectorOperation::add);
   }
-  double norm = vector.l2_norm();
+  double norm= vector.l2_norm();
   if(myid == 0)
     deallog << "Norm: " << norm << std::endl;
 }
@@ -120,7 +119,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   deallog.push(Utilities::int_to_string(myid));
 

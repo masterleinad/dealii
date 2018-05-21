@@ -25,8 +25,8 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -38,8 +38,8 @@ test()
   // Create sparsity patterns
   TrilinosWrappers::SparsityPattern sp(local_owned, MPI_COMM_WORLD);
 
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
+  for(unsigned int i= myid * 3; i < myid * 3 + 3; ++i)
+    for(unsigned int j= 0; j < local_owned.size(); ++j)
       if((i + j) % 2 == 1)
         {
           sp.add(i, j);
@@ -49,8 +49,8 @@ test()
 
   // create matrices by adding some elements into the respective positions
   TrilinosWrappers::SparseMatrix m1(sp), m2(sp);
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
+  for(unsigned int i= myid * 3; i < myid * 3 + 3; ++i)
+    for(unsigned int j= 0; j < local_owned.size(); ++j)
       if((i + j) % 2 == 1)
         {
           m1.add(i, j, i + j);
@@ -64,8 +64,8 @@ test()
 
   // Check for correctness of entries (all floating point comparisons should
   // be exact)
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
+  for(unsigned int i= myid * 3; i < myid * 3 + 3; ++i)
+    for(unsigned int j= 0; j < local_owned.size(); ++j)
       if((i + j) % 2 == 1 && j % 2 == 0)
         {
           Assert(m1.el(i, j) == (double) i + j + 2 * i + 4 * j + 2,

@@ -37,11 +37,11 @@ test()
     dealii::Triangulation<dim>::none,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   std::vector<unsigned int> refinements(dim, 1);
-  refinements[0] = 2;
+  refinements[0]= 2;
   Point<dim> p2;
-  p2[0] = 2;
-  for(unsigned int d = 1; d < dim; ++d)
-    p2[d] = 1;
+  p2[0]= 2;
+  for(unsigned int d= 1; d < dim; ++d)
+    p2[d]= 1;
   GridGenerator::subdivided_hyper_rectangle(
     tria, refinements, Point<dim>(), p2);
 
@@ -75,22 +75,21 @@ test()
 
   const QGauss<1>                          quad(1);
   typename MatrixFree<dim>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme           = MatrixFree<dim>::AdditionalData::none;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
 
-  for(unsigned int level = 0; level < tria.n_global_levels(); ++level)
+  for(unsigned int level= 0; level < tria.n_global_levels(); ++level)
     {
       MatrixFree<dim> mf_data;
-      data.level_mg_handler = level;
+      data.level_mg_handler= level;
       mf_data.reinit(dof, constraints, quad, data);
       std::vector<unsigned int> n_inner_faces(2 * dim),
         n_inner_other_faces(2 * dim), n_boundary_faces(2 * dim);
-      for(unsigned int f = 0; f < mf_data.n_inner_face_batches(); ++f)
+      for(unsigned int f= 0; f < mf_data.n_inner_face_batches(); ++f)
         {
-          for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements;
+          for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements;
               ++v)
             if(mf_data.get_face_info(f).cells_interior[v]
                != numbers::invalid_unsigned_int)
@@ -100,12 +99,12 @@ test()
                                       .exterior_face_no]++;
               }
         }
-      for(unsigned int f = mf_data.n_inner_face_batches();
+      for(unsigned int f= mf_data.n_inner_face_batches();
           f
           < mf_data.n_inner_face_batches() + mf_data.n_boundary_face_batches();
           ++f)
         {
-          for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements;
+          for(unsigned int v= 0; v < VectorizedArray<double>::n_array_elements;
               ++v)
             if(mf_data.get_face_info(f).cells_interior[v]
                != numbers::invalid_unsigned_int)
@@ -116,13 +115,13 @@ test()
 
       deallog << "Level: " << level << std::endl;
       deallog << "Interior faces: ";
-      for(unsigned int f = 0; f < n_inner_faces.size(); ++f)
+      for(unsigned int f= 0; f < n_inner_faces.size(); ++f)
         deallog << n_inner_faces[f] << " ";
       deallog << std::endl << "Exterior faces: ";
-      for(unsigned int f = 0; f < n_inner_other_faces.size(); ++f)
+      for(unsigned int f= 0; f < n_inner_other_faces.size(); ++f)
         deallog << n_inner_other_faces[f] << " ";
       deallog << std::endl << "Boundary faces: ";
-      for(unsigned int f = 0; f < n_boundary_faces.size(); ++f)
+      for(unsigned int f= 0; f < n_boundary_faces.size(); ++f)
         deallog << n_boundary_faces[f] << " ";
       deallog << std::endl;
     }

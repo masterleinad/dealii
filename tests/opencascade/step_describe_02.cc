@@ -31,7 +31,7 @@ main()
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
-  TopoDS_Shape sh = read_STEP(SOURCE_DIR "/step_files/goteborg.step");
+  TopoDS_Shape sh= read_STEP(SOURCE_DIR "/step_files/goteborg.step");
   std::vector<TopoDS_Compound>  compounds;
   std::vector<TopoDS_CompSolid> compsolids;
   std::vector<TopoDS_Solid>     solids;

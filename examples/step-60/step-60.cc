@@ -203,7 +203,7 @@ namespace Step60
   // all ingredients to build up our classes, and we design them so that if parsing
   // fails, or is not executed, the run is aborted.
 
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class DistributedLagrangeProblem
   {
   public:
@@ -228,7 +228,7 @@ namespace Step60
 
       // Initial refinement for the embedding grid, corresponding to the domain
       // $\Omega$.
-      unsigned int initial_refinement = 4;
+      unsigned int initial_refinement= 4;
 
       // The interaction between the embedded grid $\Omega$ and the embedding
       // grid $\Gamma$ is handled through the computation of $C$, which
@@ -239,11 +239,11 @@ namespace Step60
       // than zero, then we mark each cell of the space grid that contains
       // a vertex of the embedded grid and its neighbors, execute the
       // refinement, and repeat this process `delta_refinement` times.
-      unsigned int delta_refinement = 3;
+      unsigned int delta_refinement= 3;
 
       // Starting refinement of the embedded grid, corresponding to the domain
       // $\Gamma$.
-      unsigned int initial_embedded_refinement = 8;
+      unsigned int initial_embedded_refinement= 8;
 
       // The list of boundary ids where we impose homogeneous Dirichlet boundary
       // conditions. On the remaining boundary ids (if any), we impose
@@ -253,27 +253,27 @@ namespace Step60
       std::list<types::boundary_id> homogeneous_dirichlet_ids{0, 1, 2, 3};
 
       // FiniteElement degree of the embedding space: $V_h(\Omega)$
-      unsigned int embedding_space_finite_element_degree = 1;
+      unsigned int embedding_space_finite_element_degree= 1;
 
       // FiniteElement degree of the embedded space: $Q_h(\Gamma)$
-      unsigned int embedded_space_finite_element_degree = 1;
+      unsigned int embedded_space_finite_element_degree= 1;
 
       // FiniteElement degree of the space used to describe the deformation
       // of the embedded domain
-      unsigned int embedded_configuration_finite_element_degree = 1;
+      unsigned int embedded_configuration_finite_element_degree= 1;
 
       // Order of the quadrature formula used to integrate the coupling
-      unsigned int coupling_quadrature_order = 3;
+      unsigned int coupling_quadrature_order= 3;
 
       // If set to true, then the embedded configuration function is
       // interpreted as a displacement function
-      bool use_displacement = false;
+      bool use_displacement= false;
 
       // Level of verbosity to use in the output
-      unsigned int verbosity_level = 10;
+      unsigned int verbosity_level= 10;
 
       // A flag to keep track if we were initialized or not
-      bool initialized = false;
+      bool initialized= false;
     };
 
     DistributedLagrangeProblem(const Parameters& parameters);
@@ -568,7 +568,7 @@ namespace Step60
 
     // Once the parameter file has been parsed, then the parameters are good to
     // go. Set the internal variable `initialized` to true.
-    parse_parameters_call_back.connect([&]() -> void { initialized = true; });
+    parse_parameters_call_back.connect([&]() -> void { initialized= true; });
   }
 
   // The constructor is pretty standard, with the exception of the
@@ -625,7 +625,7 @@ namespace Step60
 
     // Initializing $\Omega$: constructing the Triangulation and wrapping it
     // into a `std::unique_ptr` object
-    space_grid = std_cxx14::make_unique<Triangulation<spacedim>>();
+    space_grid= std_cxx14::make_unique<Triangulation<spacedim>>();
 
     // Next, we actually create the triangulation using
     // GridGenerator::hyper_cube(). The last argument is set to true: this
@@ -645,11 +645,11 @@ namespace Step60
     // The same is done with the embedded grid. Since the embedded grid is
     // deformed, we first need to setup the deformation mapping. We do so in the
     // following few lines:
-    embedded_grid = std_cxx14::make_unique<Triangulation<dim, spacedim>>();
+    embedded_grid= std_cxx14::make_unique<Triangulation<dim, spacedim>>();
     GridGenerator::hyper_cube(*embedded_grid);
     embedded_grid->refine_global(parameters.initial_embedded_refinement);
 
-    embedded_configuration_fe = std_cxx14::make_unique<FESystem<dim, spacedim>>(
+    embedded_configuration_fe= std_cxx14::make_unique<FESystem<dim, spacedim>>(
       FE_Q<dim, spacedim>(
         parameters.embedded_configuration_finite_element_degree),
       spacedim);
@@ -693,7 +693,7 @@ namespace Step60
     // absolute `deformation` field.
 
     if(parameters.use_displacement == true)
-      embedded_mapping = std_cxx14::make_unique<
+      embedded_mapping= std_cxx14::make_unique<
         MappingQEulerian<dim, Vector<double>, spacedim>>(
         parameters.embedded_configuration_finite_element_degree,
         *embedded_configuration_dh,
@@ -815,20 +815,20 @@ namespace Step60
     // as the amount of local refinement they want around the embedded grid, we
     // make sure that the resulting meshes satisfy our requirements, and if this
     // is not the case, we bail out with an exception.
-    for(unsigned int i = 0; i < parameters.delta_refinement; ++i)
+    for(unsigned int i= 0; i < parameters.delta_refinement; ++i)
       {
-        const auto point_locations = GridTools::compute_point_locations(
+        const auto point_locations= GridTools::compute_point_locations(
           *space_grid_tools_cache, support_points);
-        const auto& cells = std::get<0>(point_locations);
+        const auto& cells= std::get<0>(point_locations);
         for(auto cell : cells)
           {
             cell->set_refine_flag();
-            for(unsigned int face_no = 0;
+            for(unsigned int face_no= 0;
                 face_no < GeometryInfo<spacedim>::faces_per_cell;
                 ++face_no)
               if(!cell->at_boundary(face_no))
                 {
-                  auto neighbor = cell->neighbor(face_no);
+                  auto neighbor= cell->neighbor(face_no);
                   neighbor->set_refine_flag();
                 }
           }
@@ -864,8 +864,8 @@ namespace Step60
   void
   DistributedLagrangeProblem<dim, spacedim>::setup_embedding_dofs()
   {
-    space_dh = std_cxx14::make_unique<DoFHandler<spacedim>>(*space_grid);
-    space_fe = std_cxx14::make_unique<FE_Q<spacedim>>(
+    space_dh= std_cxx14::make_unique<DoFHandler<spacedim>>(*space_grid);
+    space_fe= std_cxx14::make_unique<FE_Q<spacedim>>(
       parameters.embedding_space_finite_element_degree);
     space_dh->distribute_dofs(*space_fe);
 
@@ -894,7 +894,7 @@ namespace Step60
   {
     embedded_dh
       = std_cxx14::make_unique<DoFHandler<dim, spacedim>>(*embedded_grid);
-    embedded_fe = std_cxx14::make_unique<FE_Q<dim, spacedim>>(
+    embedded_fe= std_cxx14::make_unique<FE_Q<dim, spacedim>>(
       parameters.embedded_space_finite_element_degree);
     embedded_dh->distribute_dofs(*embedded_fe);
 
@@ -1003,20 +1003,20 @@ namespace Step60
     K_inv_umfpack.initialize(stiffness_matrix);
 
     // Initializing the operators, as described in the introduction
-    auto K  = linear_operator(stiffness_matrix);
-    auto Ct = linear_operator(coupling_matrix);
-    auto C  = transpose_operator(Ct);
+    auto K = linear_operator(stiffness_matrix);
+    auto Ct= linear_operator(coupling_matrix);
+    auto C = transpose_operator(Ct);
 
-    auto K_inv = linear_operator(K, K_inv_umfpack);
+    auto K_inv= linear_operator(K, K_inv_umfpack);
 
     // Using the Schur complement method
-    auto                     S = C * K_inv * Ct;
+    auto                     S= C * K_inv * Ct;
     SolverCG<Vector<double>> solver_cg(schur_solver_control);
-    auto S_inv = inverse_operator(S, solver_cg, PreconditionIdentity());
+    auto S_inv= inverse_operator(S, solver_cg, PreconditionIdentity());
 
-    lambda = S_inv * embedded_rhs;
+    lambda= S_inv * embedded_rhs;
 
-    solution = K_inv * Ct * lambda;
+    solution= K_inv * Ct * lambda;
 
     constraints.distribute(solution);
   }
@@ -1084,7 +1084,7 @@ main(int argc, char** argv)
       using namespace dealii;
       using namespace Step60;
 
-      const unsigned int dim = 1, spacedim = 2;
+      const unsigned int dim= 1, spacedim= 2;
 
       // Differently to what happens in other tutorial programs, here we use
       // ParameterAcceptor style of initialization, i.e., all objects are first
@@ -1105,9 +1105,9 @@ main(int argc, char** argv)
 
       std::string parameter_file;
       if(argc > 1)
-        parameter_file = argv[1];
+        parameter_file= argv[1];
       else
-        parameter_file = "parameters.prm";
+        parameter_file= "parameters.prm";
 
       ParameterAcceptor::initialize(parameter_file, "used_parameters.prm");
       problem.run();

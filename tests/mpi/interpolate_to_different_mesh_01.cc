@@ -57,7 +57,7 @@ output(DoFHandler<dim>&  dh,
        unsigned int      loop,
        const std::string filename_)
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   DataOut<dim> data_out;
   data_out.add_data_vector(dh, v, "1");
@@ -71,7 +71,7 @@ output(DoFHandler<dim>&  dh,
   if(myid)
     {
       std::vector<std::string> filenames;
-      for(unsigned int i = 0;
+      for(unsigned int i= 0;
           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
           ++i)
         filenames.push_back(filename_ + Utilities::int_to_string(loop, 2) + "."
@@ -87,7 +87,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(
     MPI_COMM_WORLD,
@@ -110,22 +110,22 @@ test()
 
   SomeFunction<dim> func;
 
-  for(unsigned int loop = 0; loop < 5; ++loop)
+  for(unsigned int loop= 0; loop < 5; ++loop)
     {
       // randomly refine:
       std::vector<bool> r_flags(tr.n_active_cells() * dim, false);
       std::vector<bool> c_flags(tr.n_active_cells(), false);
 
-      for(unsigned int i = 0; i < c_flags.size(); ++i)
+      for(unsigned int i= 0; i < c_flags.size(); ++i)
         {
-          int roll = Testing::rand() % 4;
+          int roll= Testing::rand() % 4;
           if(roll >= 2)
             {
-              for(unsigned int j = 0; j < dim; ++j)
-                r_flags[i * dim + j] = true;
+              for(unsigned int j= 0; j < dim; ++j)
+                r_flags[i * dim + j]= true;
             }
           else if(roll == 1)
-            c_flags[i] = true;
+            c_flags[i]= true;
         }
 
       tr.load_coarsen_flags(c_flags);
@@ -145,11 +145,11 @@ test()
 
       // interpolate func on old mesh:
       VectorTools::interpolate(dh2, func, vec2);
-      lr_vec2 = vec2;
+      lr_vec2= vec2;
 
       // interpolate from vec2 to vec1
       VectorTools::interpolate_to_different_mesh(dh2, lr_vec2, dh, vec1);
-      lr_vec1 = vec1;
+      lr_vec1= vec1;
 
       {
         Vector<double> local_errors(tr.n_active_cells());
@@ -159,8 +159,8 @@ test()
                                           local_errors,
                                           QGauss<dim>(3),
                                           VectorTools::L2_norm);
-        double       total_local_error  = local_errors.l2_norm();
-        const double total_global_error = std::sqrt(Utilities::MPI::sum(
+        double       total_local_error = local_errors.l2_norm();
+        const double total_global_error= std::sqrt(Utilities::MPI::sum(
           total_local_error * total_local_error, MPI_COMM_WORLD));
         if(myid == 0)
           deallog << "err: " << total_global_error << std::endl;
@@ -179,8 +179,8 @@ test()
       tr2.repartition();
 
       // checks:
-      const unsigned int checksum  = tr.get_checksum();
-      const unsigned int checksum2 = tr2.get_checksum();
+      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum2= tr2.get_checksum();
       if(myid == 0)
         deallog << "Checksum: " << checksum << " " << checksum2 << std::endl;
     }

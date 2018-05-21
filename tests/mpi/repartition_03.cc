@@ -29,8 +29,7 @@ template <int dim>
 void
 print_cells(parallel::distributed::Triangulation<dim>& tr)
 {
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
+  for(typename Triangulation<dim>::active_cell_iterator cell= tr.begin_active();
       cell != tr.end();
       ++cell)
     if(cell->is_locally_owned())
@@ -41,7 +40,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   if(true)
     {
@@ -76,7 +75,7 @@ test()
 
       print_cells(tr);
 
-      const unsigned int checksum = tr.get_checksum();
+      const unsigned int checksum= tr.get_checksum();
       if(myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }

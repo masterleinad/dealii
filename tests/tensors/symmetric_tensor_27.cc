@@ -27,14 +27,14 @@ test()
   // initialize symmetric and non-symmetric tensors. in the former case, we
   // only need to initialize one half
   SymmetricTensor<2, dim> s;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      s[i][j] = (1. + (i + 1) * (j * 2));
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= i; j < dim; ++j)
+      s[i][j]= (1. + (i + 1) * (j * 2));
 
   Tensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      t[i][j] = (1. + (i + 1) * (j * 2));
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      t[i][j]= (1. + (i + 1) * (j * 2));
 
   deallog << scalar_product(s, s) << std::endl;
   AssertThrow(scalar_product(s, s) == s * s, ExcInternalError());

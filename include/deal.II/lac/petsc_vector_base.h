@@ -698,7 +698,7 @@ namespace PETScWrappers
      * http://www.mcs.anl.gov/petsc/petsc-current/docs/manualpages/Vec/VecView.html
      */
     void
-    write_ascii(const PetscViewerFormat format = PETSC_VIEWER_DEFAULT);
+    write_ascii(const PetscViewerFormat format= PETSC_VIEWER_DEFAULT);
 
     /**
      * Print to a stream. @p precision denotes the desired precision with
@@ -709,9 +709,9 @@ namespace PETScWrappers
      */
     void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const;
+          const unsigned int precision = 3,
+          const bool         scientific= true,
+          const bool         across    = true) const;
 
     /**
      * Swap the contents of this vector and the other vector @p v. One could
@@ -843,7 +843,7 @@ namespace PETScWrappers
       // documentation, this is not the copy
       // operator. so simply pass on to the
       // "correct" assignment operator
-      *this = static_cast<PetscScalar>(r);
+      *this= static_cast<PetscScalar>(r);
 
       return *this;
     }
@@ -855,7 +855,7 @@ namespace PETScWrappers
       // documentation, this is not the copy
       // operator. so simply pass on to the
       // "correct" assignment operator
-      *this = static_cast<PetscScalar>(r);
+      *this= static_cast<PetscScalar>(r);
 
       return *this;
     }
@@ -869,13 +869,13 @@ namespace PETScWrappers
 
       Assert(!vector.has_ghost_elements(), ExcGhostsPresent());
 
-      const PetscInt petsc_i = index;
+      const PetscInt petsc_i= index;
 
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &value, INSERT_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      vector.last_action = VectorOperation::insert;
+      vector.last_action= VectorOperation::insert;
 
       return *this;
     }
@@ -889,7 +889,7 @@ namespace PETScWrappers
 
       Assert(!vector.has_ghost_elements(), ExcGhostsPresent());
 
-      vector.last_action = VectorOperation::add;
+      vector.last_action= VectorOperation::add;
 
       // we have to do above actions in any
       // case to be consistent with the MPI
@@ -902,7 +902,7 @@ namespace PETScWrappers
         return *this;
 
       // use the PETSc function to add something
-      const PetscInt       petsc_i = index;
+      const PetscInt       petsc_i= index;
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &value, ADD_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -919,7 +919,7 @@ namespace PETScWrappers
 
       Assert(!vector.has_ghost_elements(), ExcGhostsPresent());
 
-      vector.last_action = VectorOperation::add;
+      vector.last_action= VectorOperation::add;
 
       // we have to do above actions in any
       // case to be consistent with the MPI
@@ -933,8 +933,8 @@ namespace PETScWrappers
 
       // use the PETSc function to
       // add something
-      const PetscInt       petsc_i     = index;
-      const PetscScalar    subtractand = -value;
+      const PetscInt       petsc_i    = index;
+      const PetscScalar    subtractand= -value;
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &subtractand, ADD_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -951,7 +951,7 @@ namespace PETScWrappers
 
       Assert(!vector.has_ghost_elements(), ExcGhostsPresent());
 
-      vector.last_action = VectorOperation::insert;
+      vector.last_action= VectorOperation::insert;
 
       // we have to do above actions in any
       // case to be consistent with the MPI
@@ -963,8 +963,8 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
-      const PetscScalar new_value = static_cast<PetscScalar>(*this) * value;
+      const PetscInt    petsc_i  = index;
+      const PetscScalar new_value= static_cast<PetscScalar>(*this) * value;
 
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &new_value, INSERT_VALUES);
@@ -982,7 +982,7 @@ namespace PETScWrappers
 
       Assert(!vector.has_ghost_elements(), ExcGhostsPresent());
 
-      vector.last_action = VectorOperation::insert;
+      vector.last_action= VectorOperation::insert;
 
       // we have to do above actions in any
       // case to be consistent with the MPI
@@ -994,8 +994,8 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
-      const PetscScalar new_value = static_cast<PetscScalar>(*this) / value;
+      const PetscInt    petsc_i  = index;
+      const PetscScalar new_value= static_cast<PetscScalar>(*this) / value;
 
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &new_value, INSERT_VALUES);
@@ -1044,7 +1044,7 @@ namespace PETScWrappers
     IndexSet is(size());
 
     // PETSc only allows for contiguous local ranges, so this is simple
-    const std::pair<size_type, size_type> x = local_range();
+    const std::pair<size_type, size_type> x= local_range();
     is.add_range(x.first, x.second);
     return is;
   }
@@ -1103,7 +1103,7 @@ namespace PETScWrappers
                                    const ForwardIterator indices_end,
                                    OutputIterator        values_begin) const
   {
-    const PetscInt n_idx = static_cast<PetscInt>(indices_end - indices_begin);
+    const PetscInt n_idx= static_cast<PetscInt>(indices_end - indices_begin);
     if(n_idx == 0)
       return;
 
@@ -1129,29 +1129,29 @@ namespace PETScWrappers
         // position we can get from
         // an index set
         PetscInt       begin, end;
-        PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
+        PetscErrorCode ierr= VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        Vec locally_stored_elements = nullptr;
-        ierr = VecGhostGetLocalForm(vector, &locally_stored_elements);
+        Vec locally_stored_elements= nullptr;
+        ierr= VecGhostGetLocalForm(vector, &locally_stored_elements);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         PetscInt lsize;
-        ierr = VecGetSize(locally_stored_elements, &lsize);
+        ierr= VecGetSize(locally_stored_elements, &lsize);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         PetscScalar* ptr;
-        ierr = VecGetArray(locally_stored_elements, &ptr);
+        ierr= VecGetArray(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        for(PetscInt i = 0; i < n_idx; ++i)
+        for(PetscInt i= 0; i < n_idx; ++i)
           {
-            const unsigned int index = *(indices_begin + i);
+            const unsigned int index= *(indices_begin + i);
             if(index >= static_cast<unsigned int>(begin)
                && index < static_cast<unsigned int>(end))
               {
                 //local entry
-                *(values_begin + i) = *(ptr + index - begin);
+                *(values_begin + i)= *(ptr + index - begin);
               }
             else
               {
@@ -1161,14 +1161,14 @@ namespace PETScWrappers
 
                 Assert(ghostidx + end - begin < (unsigned int) lsize,
                        ExcInternalError());
-                *(values_begin + i) = *(ptr + ghostidx + end - begin);
+                *(values_begin + i)= *(ptr + ghostidx + end - begin);
               }
           }
 
-        ierr = VecRestoreArray(locally_stored_elements, &ptr);
+        ierr= VecRestoreArray(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        ierr = VecGhostRestoreLocalForm(vector, &locally_stored_elements);
+        ierr= VecGhostRestoreLocalForm(vector, &locally_stored_elements);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
     // if the vector is local or the
@@ -1177,25 +1177,25 @@ namespace PETScWrappers
     else
       {
         PetscInt       begin, end;
-        PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
+        PetscErrorCode ierr= VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         PetscScalar* ptr;
-        ierr = VecGetArray(vector, &ptr);
+        ierr= VecGetArray(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        for(PetscInt i = 0; i < n_idx; ++i)
+        for(PetscInt i= 0; i < n_idx; ++i)
           {
-            const unsigned int index = *(indices_begin + i);
+            const unsigned int index= *(indices_begin + i);
 
             Assert(index >= static_cast<unsigned int>(begin)
                      && index < static_cast<unsigned int>(end),
                    ExcInternalError());
 
-            *(values_begin + i) = *(ptr + index - begin);
+            *(values_begin + i)= *(ptr + index - begin);
           }
 
-        ierr = VecRestoreArray(vector, &ptr);
+        ierr= VecRestoreArray(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
   }

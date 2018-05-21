@@ -32,25 +32,25 @@ check()
 
     // Wolfram Alpha: determinant {{3,0,2,-1},{1,2,0,-2},{4,0,6,-3},{5,0,2,0}}
     // det(A) = 20
-    A(0, 0) = 3;
-    A(0, 1) = 0;
-    A(0, 2) = 2;
-    A(0, 3) = -1;
-    A(1, 0) = 1;
-    A(1, 1) = 2;
-    A(1, 2) = 0;
-    A(1, 3) = -2;
-    A(2, 0) = 4;
-    A(2, 1) = 0;
-    A(2, 2) = 6;
-    A(2, 3) = -3;
-    A(3, 0) = 5;
-    A(3, 1) = 0;
-    A(3, 2) = 2;
-    A(3, 3) = 0;
+    A(0, 0)= 3;
+    A(0, 1)= 0;
+    A(0, 2)= 2;
+    A(0, 3)= -1;
+    A(1, 0)= 1;
+    A(1, 1)= 2;
+    A(1, 2)= 0;
+    A(1, 3)= -2;
+    A(2, 0)= 4;
+    A(2, 1)= 0;
+    A(2, 2)= 6;
+    A(2, 3)= -3;
+    A(3, 0)= 5;
+    A(3, 1)= 0;
+    A(3, 2)= 2;
+    A(3, 3)= 0;
 
-    const number soln_det_A = 20.0;
-    const number rel_tol    = 1e-6;
+    const number soln_det_A= 20.0;
+    const number rel_tol   = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -69,34 +69,34 @@ check()
     FullMatrix<number> A(5, 5);
 
     // det(A) = 2480
-    A(0, 0) = 0;
-    A(0, 1) = 6;
-    A(0, 2) = -2;
-    A(0, 3) = -1;
-    A(0, 4) = 5;
-    A(1, 0) = 0;
-    A(1, 1) = 0;
-    A(1, 2) = 0;
-    A(1, 3) = -9;
-    A(1, 4) = -7;
-    A(2, 0) = 0;
-    A(2, 1) = 15;
-    A(2, 2) = 35;
-    A(2, 3) = 0;
-    A(2, 4) = 0;
-    A(3, 0) = 0;
-    A(3, 1) = -1;
-    A(3, 2) = -11;
-    A(3, 3) = -2;
-    A(3, 4) = 1;
-    A(4, 0) = -2;
-    A(4, 1) = -2;
-    A(4, 2) = 3;
-    A(4, 3) = 0;
-    A(4, 4) = 2;
+    A(0, 0)= 0;
+    A(0, 1)= 6;
+    A(0, 2)= -2;
+    A(0, 3)= -1;
+    A(0, 4)= 5;
+    A(1, 0)= 0;
+    A(1, 1)= 0;
+    A(1, 2)= 0;
+    A(1, 3)= -9;
+    A(1, 4)= -7;
+    A(2, 0)= 0;
+    A(2, 1)= 15;
+    A(2, 2)= 35;
+    A(2, 3)= 0;
+    A(2, 4)= 0;
+    A(3, 0)= 0;
+    A(3, 1)= -1;
+    A(3, 2)= -11;
+    A(3, 3)= -2;
+    A(3, 4)= 1;
+    A(4, 0)= -2;
+    A(4, 1)= -2;
+    A(4, 2)= 3;
+    A(4, 3)= 0;
+    A(4, 4)= 2;
 
-    const number soln_det_A = 2480.0;
-    const number rel_tol    = 1e-6;
+    const number soln_det_A= 2480.0;
+    const number rel_tol   = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -112,7 +112,7 @@ check()
   {
     // A matrix generation through Wolfram Alpha:
     // RandomReal[{0,1},{n_rows,n_cols}]
-    std::vector<number> entries = {
+    std::vector<number> entries= {
       0.275566,  0.384198, 0.0601487, 0.631826, 0.657166, 0.567488, 0.815103,
       0.522585,  0.721087, 0.869243,  0.256089, 0.276967, 0.346444, 0.850311,
       0.0443296, 0.417804, 0.673882,  0.854942, 0.686326, 0.23442,  0.157204,
@@ -125,8 +125,8 @@ check()
       0.0442052};
     FullMatrix<number> A(8, 8, entries.data());
 
-    const number soln_det_A = 0.0626735;
-    const number rel_tol    = 1e-6;
+    const number soln_det_A= 0.0626735;
+    const number rel_tol   = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -173,8 +173,8 @@ check()
 
     FullMatrix<number> A(13, 13, entries.data());
 
-    const number soln_det_A = -0.0136107;
-    const number rel_tol    = 1e-5;
+    const number soln_det_A= -0.0136107;
+    const number rel_tol   = 1e-5;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else

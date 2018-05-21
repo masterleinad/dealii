@@ -273,7 +273,7 @@ namespace MeshWorker
      * refers to entries coupling inside the cell.
      */
     MatrixBlock<FullMatrix<number>>&
-    matrix(unsigned int i, bool external = false);
+    matrix(unsigned int i, bool external= false);
 
     /**
      * Read matrix at index @p i. For results on internal faces, a true value
@@ -281,7 +281,7 @@ namespace MeshWorker
      * entries coupling inside the cell.
      */
     const MatrixBlock<FullMatrix<number>>&
-    matrix(unsigned int i, bool external = false) const;
+    matrix(unsigned int i, bool external= false) const;
 
     /**
      * Access to the vector #quadrature_data of data in quadrature points,
@@ -436,17 +436,17 @@ namespace MeshWorker
     M1.resize(matrices.size());
     if(both)
       M2.resize(matrices.size());
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+    for(unsigned int i= 0; i < matrices.size(); ++i)
       {
-        const unsigned int row = matrices.block(i).row;
-        const unsigned int col = matrices.block(i).column;
+        const unsigned int row= matrices.block(i).row;
+        const unsigned int col= matrices.block(i).column;
 
-        M1[i].row    = row;
-        M1[i].column = col;
+        M1[i].row   = row;
+        M1[i].column= col;
         if(both)
           {
-            M2[i].row    = row;
-            M2[i].column = col;
+            M2[i].row   = row;
+            M2[i].column= col;
           }
       }
   }
@@ -461,18 +461,18 @@ namespace MeshWorker
     M1.resize(matrices.size());
     if(both)
       M2.resize(matrices.size());
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+    for(unsigned int i= 0; i < matrices.size(); ++i)
       {
-        const MGLevelObject<MatrixBlock<MatrixType>>& o = matrices.block(i);
-        const unsigned int row                          = o[o.min_level()].row;
-        const unsigned int col = o[o.min_level()].column;
+        const MGLevelObject<MatrixBlock<MatrixType>>& o  = matrices.block(i);
+        const unsigned int                            row= o[o.min_level()].row;
+        const unsigned int col= o[o.min_level()].column;
 
-        M1[i].row    = row;
-        M1[i].column = col;
+        M1[i].row   = row;
+        M1[i].column= col;
         if(both)
           {
-            M2[i].row    = row;
-            M2[i].column = col;
+            M2[i].row   = row;
+            M2[i].column= col;
           }
       }
   }
@@ -485,14 +485,14 @@ namespace MeshWorker
     M1.resize(n);
     if(both)
       M2.resize(n);
-    for(unsigned int i = 0; i < n; ++i)
+    for(unsigned int i= 0; i < n; ++i)
       {
-        M1[i].row    = 0;
-        M1[i].column = 0;
+        M1[i].row   = 0;
+        M1[i].column= 0;
         if(both)
           {
-            M2[i].row    = 0;
-            M2[i].column = 0;
+            M2[i].row   = 0;
+            M2[i].column= 0;
           }
       }
   }
@@ -625,15 +625,15 @@ namespace MeshWorker
   {
     os << "J: " << J.size() << std::endl;
     os << "R: " << R.size() << std::endl;
-    for(unsigned int i = 0; i < R.size(); ++i)
+    for(unsigned int i= 0; i < R.size(); ++i)
       {
         os << "  " << R[i].n_blocks() << " -";
-        for(unsigned int j = 0; j < R[i].n_blocks(); ++j)
+        for(unsigned int j= 0; j < R[i].n_blocks(); ++j)
           os << ' ' << R[i].block(j).size();
         os << std::endl;
       }
     os << "M: " << M1.size() << " face " << M2.size() << std::endl;
-    for(unsigned int i = 0; i < M1.size(); ++i)
+    for(unsigned int i= 0; i < M1.size(); ++i)
       {
         os << "  " << M1[i].row << "," << M1[i].column << " "
            << M1[i].matrix.m() << 'x' << M1[i].matrix.n();

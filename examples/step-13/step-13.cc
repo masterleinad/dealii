@@ -125,7 +125,7 @@ namespace Step13
 
       virtual void
       operator()(const DoFHandler<dim>& dof_handler,
-                 const Vector<double>&  solution) const = 0;
+                 const Vector<double>&  solution) const= 0;
 
     protected:
       unsigned int refinement_cycle;
@@ -141,7 +141,7 @@ namespace Step13
     void
     EvaluationBase<dim>::set_refinement_cycle(const unsigned int step)
     {
-      refinement_cycle = step;
+      refinement_cycle= step;
     }
 
     // @sect4{%Point evaluation}
@@ -214,7 +214,7 @@ namespace Step13
       // necessary in a function as small as this one, since we can easily see
       // all possible paths of execution here, but it proved to be helpful for
       // more complex cases, and so we employ this strategy here as well.
-      double point_value = 1e20;
+      double point_value= 1e20;
 
       // Then loop over all cells and all their vertices, and check whether a
       // vertex matches the evaluation point. If this is the case, then
@@ -222,10 +222,10 @@ namespace Step13
       // interest, and exit the loop.
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
-        endc                      = dof_handler.end();
-      bool evaluation_point_found = false;
+        endc                     = dof_handler.end();
+      bool evaluation_point_found= false;
       for(; (cell != endc) && !evaluation_point_found; ++cell)
-        for(unsigned int vertex = 0;
+        for(unsigned int vertex= 0;
             vertex < GeometryInfo<dim>::vertices_per_cell;
             ++vertex)
           if(cell->vertex(vertex) == evaluation_point)
@@ -234,7 +234,7 @@ namespace Step13
               // vector, pick that component that belongs to the vertex of
               // interest, and, in case the solution is vector-valued, take
               // the first component of it:
-              point_value = solution(cell->vertex_dof_index(vertex, 0));
+              point_value= solution(cell->vertex_dof_index(vertex, 0));
               // Note that by this we have made an assumption that is not
               // valid always and should be documented in the class
               // declaration if this were code for a real application rather
@@ -265,7 +265,7 @@ namespace Step13
               // Since we found the right point, we now set the respective
               // flag and exit the innermost loop. The outer loop will the
               // also be terminated due to the set flag.
-              evaluation_point_found = true;
+              evaluation_point_found= true;
               break;
             };
 
@@ -503,12 +503,12 @@ namespace Step13
         = 0;
       virtual void
       postprocess(
-        const Evaluation::EvaluationBase<dim>& postprocessor) const = 0;
+        const Evaluation::EvaluationBase<dim>& postprocessor) const= 0;
       virtual void
       refine_grid()
         = 0;
       virtual unsigned int
-      n_dofs() const = 0;
+      n_dofs() const= 0;
 
     protected:
       const SmartPointer<Triangulation<dim>> triangulation;
@@ -599,7 +599,7 @@ namespace Step13
       // which this action differs strongly in what is necessary, so we defer
       // this to derived classes:
       virtual void
-      assemble_rhs(Vector<double>& rhs) const = 0;
+      assemble_rhs(Vector<double>& rhs) const= 0;
 
       // Next, in the private section, we have a small class which represents
       // an entire linear system, i.e. a matrix, a right hand side, and a
@@ -747,7 +747,7 @@ namespace Step13
     void
     Solver<dim>::assemble_linear_system(LinearSystem& linear_system)
     {
-      Threads::Task<> rhs_task = Threads::new_task(
+      Threads::Task<> rhs_task= Threads::new_task(
         &Solver<dim>::assemble_rhs, *this, linear_system.rhs);
 
       WorkStream::run(dof_handler.begin_active(),
@@ -919,8 +919,8 @@ namespace Step13
       AssemblyScratchData&                                  scratch_data,
       AssemblyCopyData&                                     copy_data) const
     {
-      const unsigned int dofs_per_cell = fe->dofs_per_cell;
-      const unsigned int n_q_points    = quadrature->size();
+      const unsigned int dofs_per_cell= fe->dofs_per_cell;
+      const unsigned int n_q_points   = quadrature->size();
 
       copy_data.cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
 
@@ -928,9 +928,9 @@ namespace Step13
 
       scratch_data.fe_values.reinit(cell);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+        for(unsigned int i= 0; i < dofs_per_cell; ++i)
+          for(unsigned int j= 0; j < dofs_per_cell; ++j)
             copy_data.cell_matrix(i, j)
               += (scratch_data.fe_values.shape_grad(i, q_point)
                   * scratch_data.fe_values.shape_grad(j, q_point)
@@ -944,8 +944,8 @@ namespace Step13
     Solver<dim>::copy_local_to_global(const AssemblyCopyData& copy_data,
                                       LinearSystem& linear_system) const
     {
-      for(unsigned int i = 0; i < copy_data.local_dof_indices.size(); ++i)
-        for(unsigned int j = 0; j < copy_data.local_dof_indices.size(); ++j)
+      for(unsigned int i= 0; i < copy_data.local_dof_indices.size(); ++i)
+        for(unsigned int j= 0; j < copy_data.local_dof_indices.size(); ++j)
           linear_system.matrix.add(copy_data.local_dof_indices[i],
                                    copy_data.local_dof_indices[j],
                                    copy_data.cell_matrix(i, j));
@@ -1086,8 +1086,8 @@ namespace Step13
                               update_values | update_quadrature_points
                                 | update_JxW_values);
 
-      const unsigned int dofs_per_cell = this->fe->dofs_per_cell;
-      const unsigned int n_q_points    = this->quadrature->size();
+      const unsigned int dofs_per_cell= this->fe->dofs_per_cell;
+      const unsigned int n_q_points   = this->quadrature->size();
 
       Vector<double>                       cell_rhs(dofs_per_cell);
       std::vector<double>                  rhs_values(n_q_points);
@@ -1095,22 +1095,22 @@ namespace Step13
 
       typename DoFHandler<dim>::active_cell_iterator cell
         = this->dof_handler.begin_active(),
-        endc = this->dof_handler.end();
+        endc= this->dof_handler.end();
       for(; cell != endc; ++cell)
         {
-          cell_rhs = 0;
+          cell_rhs= 0;
           fe_values.reinit(cell);
           rhs_function->value_list(fe_values.get_quadrature_points(),
                                    rhs_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              cell_rhs(i) += (fe_values.shape_value(i, q_point)
-                              * rhs_values[q_point] * fe_values.JxW(q_point));
+          for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              cell_rhs(i)+= (fe_values.shape_value(i, q_point)
+                             * rhs_values[q_point] * fe_values.JxW(q_point));
 
           cell->get_dof_indices(local_dof_indices);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            rhs(local_dof_indices[i]) += cell_rhs(i);
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
+            rhs(local_dof_indices[i])+= cell_rhs(i);
         };
     }
 
@@ -1262,10 +1262,10 @@ namespace Step13
   Solution<dim>::value(const Point<dim>& p,
                        const unsigned int /*component*/) const
   {
-    double q = p(0);
-    for(unsigned int i = 1; i < dim; ++i)
-      q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-    const double exponential = std::exp(q);
+    double q= p(0);
+    for(unsigned int i= 1; i < dim; ++i)
+      q+= std::sin(10 * p(i) + 5 * p(0) * p(0));
+    const double exponential= std::exp(q);
     return exponential;
   }
 
@@ -1285,21 +1285,21 @@ namespace Step13
   RightHandSide<dim>::value(const Point<dim>& p,
                             const unsigned int /*component*/) const
   {
-    double q = p(0);
-    for(unsigned int i = 1; i < dim; ++i)
-      q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-    const double u  = std::exp(q);
-    double       t1 = 1, t2 = 0, t3 = 0;
-    for(unsigned int i = 1; i < dim; ++i)
+    double q= p(0);
+    for(unsigned int i= 1; i < dim; ++i)
+      q+= std::sin(10 * p(i) + 5 * p(0) * p(0));
+    const double u = std::exp(q);
+    double       t1= 1, t2= 0, t3= 0;
+    for(unsigned int i= 1; i < dim; ++i)
       {
-        t1 += std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
-        t2 += 10 * std::cos(10 * p(i) + 5 * p(0) * p(0))
-              - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0)) * p(0) * p(0);
-        t3 += 100 * std::cos(10 * p(i) + 5 * p(0) * p(0))
-                * std::cos(10 * p(i) + 5 * p(0) * p(0))
-              - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0));
+        t1+= std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
+        t2+= 10 * std::cos(10 * p(i) + 5 * p(0) * p(0))
+             - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0)) * p(0) * p(0);
+        t3+= 100 * std::cos(10 * p(i) + 5 * p(0) * p(0))
+               * std::cos(10 * p(i) + 5 * p(0) * p(0))
+             - 100 * std::sin(10 * p(i) + 5 * p(0) * p(0));
       };
-    t1 = t1 * t1;
+    t1= t1 * t1;
 
     return -u * (t1 + t2 + t3);
   }
@@ -1328,7 +1328,7 @@ namespace Step13
     // Then start a loop which only terminates once the number of degrees of
     // freedom is larger than 20,000 (you may of course change this limit, if
     // you need more -- or less -- accuracy from your program).
-    for(unsigned int step = 0; true; ++step)
+    for(unsigned int step= 0; true; ++step)
       {
         // Then give the <code>alive</code> indication for this
         // iteration. Note that the <code>std::flush</code> is needed to have
@@ -1396,12 +1396,12 @@ namespace Step13
 
     // Create a solver object of the kind indicated by the argument to this
     // function. If the name is not recognized, throw an exception!
-    LaplaceSolver::Base<dim>* solver = nullptr;
+    LaplaceSolver::Base<dim>* solver= nullptr;
     if(solver_name == "global")
-      solver = new LaplaceSolver::RefinementGlobal<dim>(
+      solver= new LaplaceSolver::RefinementGlobal<dim>(
         triangulation, fe, quadrature, rhs_function, boundary_values);
     else if(solver_name == "kelly")
-      solver = new LaplaceSolver::RefinementKelly<dim>(
+      solver= new LaplaceSolver::RefinementKelly<dim>(
         triangulation, fe, quadrature, rhs_function, boundary_values);
     else
       AssertThrow(false, ExcNotImplemented());

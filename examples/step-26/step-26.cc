@@ -130,7 +130,7 @@ namespace Step26
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
 
   private:
     const double period;
@@ -145,7 +145,7 @@ namespace Step26
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     Assert(dim == 2, ExcNotImplemented());
 
-    const double time = this->get_time();
+    const double time= this->get_time();
     const double point_within_period
       = (time / period - std::floor(time / period));
 
@@ -172,7 +172,7 @@ namespace Step26
   {
   public:
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component= 0) const override;
   };
 
   template <int dim>
@@ -374,7 +374,7 @@ namespace Step26
     SolutionTransfer<dim> solution_trans(dof_handler);
 
     Vector<double> previous_solution;
-    previous_solution = solution;
+    previous_solution= solution;
     triangulation.prepare_coarsening_and_refinement();
     solution_trans.prepare_for_coarsening_and_refinement(previous_solution);
 
@@ -426,15 +426,15 @@ namespace Step26
   void
   HeatEquation<dim>::run()
   {
-    const unsigned int initial_global_refinement       = 2;
-    const unsigned int n_adaptive_pre_refinement_steps = 4;
+    const unsigned int initial_global_refinement      = 2;
+    const unsigned int n_adaptive_pre_refinement_steps= 4;
 
     GridGenerator::hyper_L(triangulation);
     triangulation.refine_global(initial_global_refinement);
 
     setup_system();
 
-    unsigned int pre_refinement_step = 0;
+    unsigned int pre_refinement_step= 0;
 
     Vector<double> tmp;
     Vector<double> forcing_terms;
@@ -446,7 +446,7 @@ namespace Step26
 
     VectorTools::interpolate(
       dof_handler, Functions::ZeroFunction<dim>(), old_solution);
-    solution = old_solution;
+    solution= old_solution;
 
     output_results();
 
@@ -458,7 +458,7 @@ namespace Step26
     // help of a temporary vector:
     while(time <= 0.5)
       {
-        time += time_step;
+        time+= time_step;
         ++timestep_number;
 
         std::cout << "Time step " << timestep_number << " at t=" << time
@@ -480,8 +480,8 @@ namespace Step26
         rhs_function.set_time(time);
         VectorTools::create_right_hand_side(
           dof_handler, QGauss<dim>(fe.degree + 1), rhs_function, tmp);
-        forcing_terms = tmp;
-        forcing_terms *= time_step * theta;
+        forcing_terms= tmp;
+        forcing_terms*= time_step * theta;
 
         rhs_function.set_time(time - time_step);
         VectorTools::create_right_hand_side(
@@ -495,7 +495,7 @@ namespace Step26
         // The final piece of these operations is to eliminate
         // hanging node constrained degrees of freedom from the
         // linear system:
-        system_rhs += forcing_terms;
+        system_rhs+= forcing_terms;
 
         system_matrix.copy_from(mass_matrix);
         system_matrix.add(theta * time_step, laplace_matrix);
@@ -559,7 +559,7 @@ namespace Step26
             forcing_terms.reinit(solution.size());
           }
 
-        old_solution = solution;
+        old_solution= solution;
       }
   }
 } // namespace Step26

@@ -36,21 +36,21 @@ check(const unsigned int fe_degree)
   deallog << "FE: " << fe.get_name() << std::endl;
 
   // run a few different sizes...
-  unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+  unsigned int sizes[]= {1, 2, 3};
+  for(unsigned int cycle= 0; cycle < sizeof(sizes) / sizeof(unsigned int);
       ++cycle)
     {
-      unsigned int n_refinements = 0;
-      unsigned int n_subdiv      = sizes[cycle];
+      unsigned int n_refinements= 0;
+      unsigned int n_subdiv     = sizes[cycle];
       if(n_subdiv > 1)
         while(n_subdiv % 2 == 0)
           {
-            n_refinements += 1;
-            n_subdiv /= 2;
+            n_refinements+= 1;
+            n_subdiv/= 2;
           }
-      n_refinements += 3 - dim;
+      n_refinements+= 3 - dim;
       if(fe_degree < 3)
-        n_refinements += 1;
+        n_refinements+= 1;
 
       parallel::distributed::Triangulation<dim> tr(
         MPI_COMM_WORLD,
@@ -94,7 +94,7 @@ check(const unsigned int fe_degree)
       MGConstrainedDoFs               mg_constrained_dofs;
       ZeroFunction<dim>               zero_function;
       typename FunctionMap<dim>::type dirichlet_boundary;
-      dirichlet_boundary[0] = &zero_function;
+      dirichlet_boundary[0]= &zero_function;
       mg_constrained_dofs.initialize(mgdof, dirichlet_boundary);
 
       // build reference
@@ -105,15 +105,15 @@ check(const unsigned int fe_degree)
       MGTransferBlockMatrixFree<dim, Number> transfer(mg_constrained_dofs);
       transfer.build(mgdof);
 
-      const unsigned int nb = 3;
+      const unsigned int nb= 3;
       // check prolongation for all levels using random vector
-      for(unsigned int level = 1;
+      for(unsigned int level= 1;
           level < mgdof.get_triangulation().n_global_levels();
           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof.locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
@@ -122,26 +122,26 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof.locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
-                v1.block(b).local_element(i) = random_value<double>();
+              for(unsigned int i= 0; i < v1.block(b).local_size(); ++i)
+                v1.block(b).local_element(i)= random_value<double>();
 
               transfer_ref.prolongate(level, v2.block(b), v1.block(b));
             }
 
           transfer.prolongate(level, v3, v1);
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff prolongate   l" << level << ": " << v3.l2_norm()
                   << std::endl;
         }
 
       // check restriction for all levels using random vector
-      for(unsigned int level = 1;
+      for(unsigned int level= 1;
           level < mgdof.get_triangulation().n_global_levels();
           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof.locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
@@ -150,23 +150,23 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof.locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
-                v1.block(b).local_element(i) = random_value<double>();
+              for(unsigned int i= 0; i < v1.block(b).local_size(); ++i)
+                v1.block(b).local_element(i)= random_value<double>();
 
               transfer_ref.restrict_and_add(level, v2.block(b), v1.block(b));
             }
 
           transfer.restrict_and_add(level, v3, v1);
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff restrict     l" << level << ": " << v3.l2_norm()
                   << std::endl;
 
-          v2 = 1.;
-          v3 = 1.;
+          v2= 1.;
+          v3= 1.;
           transfer.restrict_and_add(level, v2, v1);
-          for(unsigned int b = 0; b < nb; ++b)
+          for(unsigned int b= 0; b < nb; ++b)
             transfer_ref.restrict_and_add(level, v3.block(b), v1.block(b));
-          v3 -= v2;
+          v3-= v2;
           deallog << "Diff restrict add l" << level << ": " << v3.l2_norm()
                   << std::endl;
         }

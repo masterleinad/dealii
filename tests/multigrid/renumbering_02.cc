@@ -44,8 +44,8 @@ check()
     Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active();
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell;
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active();
+  for(unsigned int i= 0; i < GeometryInfo<dim>::max_children_per_cell;
       ++i, ++cell)
     cell->set_coarsen_flag();
   tria.execute_coarsening_and_refinement();
@@ -54,8 +54,8 @@ check()
   mg_dof_handler.distribute_dofs(fe);
   mg_dof_handler.distribute_mg_dofs(fe);
   Point<dim> a;
-  a(0) = 1;
-  for(unsigned int level = 0; level < tria.n_levels(); ++level)
+  a(0)= 1;
+  for(unsigned int level= 0; level < tria.n_levels(); ++level)
     DoFRenumbering::downstream(mg_dof_handler, level, a);
 }
 

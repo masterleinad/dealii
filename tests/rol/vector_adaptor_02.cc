@@ -30,9 +30,9 @@
 
 using namespace dealii;
 
-using VectorType = typename dealii::Vector<double>;
+using VectorType= typename dealii::Vector<double>;
 
-template <class Real = double, typename Xprim = Rol::VectorAdaptor<VectorType>>
+template <class Real= double, typename Xprim= Rol::VectorAdaptor<VectorType>>
 class QuadraticObjective : public ROL::Objective<Real>
 {
 private:
@@ -60,11 +60,11 @@ public:
   void
   gradient(ROL::Vector<Real>& g, const ROL::Vector<Real>& x, Real& tol)
   {
-    Teuchos::RCP<const VectorType> xp = this->get_rcp_to_VectorType(x);
-    Teuchos::RCP<VectorType>       gp = this->get_rcp_to_VectorType(g);
+    Teuchos::RCP<const VectorType> xp= this->get_rcp_to_VectorType(x);
+    Teuchos::RCP<VectorType>       gp= this->get_rcp_to_VectorType(g);
 
-    (*gp)[0] = 2. * (*xp)[0];
-    (*gp)[1] = 2. * (*xp)[1];
+    (*gp)[0]= 2. * (*xp)[0];
+    (*gp)[1]= 2. * (*xp)[1];
   }
 };
 
@@ -75,13 +75,13 @@ test(const double x, const double y)
 
   QuadraticObjective<RealT> quad_objective;
 
-  Teuchos::RCP<std::ostream> outStream = Teuchos::rcp(&std::cout, false);
-  Teuchos::RCP<VectorType>   x_rcp     = Teuchos::rcp(new VectorType);
+  Teuchos::RCP<std::ostream> outStream= Teuchos::rcp(&std::cout, false);
+  Teuchos::RCP<VectorType>   x_rcp    = Teuchos::rcp(new VectorType);
 
   x_rcp->reinit(2);
 
-  (*x_rcp)[0] = x;
-  (*x_rcp)[1] = y;
+  (*x_rcp)[0]= x;
+  (*x_rcp)[1]= y;
 
   Rol::VectorAdaptor<VectorType> x_rol(x_rcp);
 
@@ -94,7 +94,7 @@ test(const double x, const double y)
   // Run Algorithm
   algo.run(x_rol, quad_objective, true, *outStream);
 
-  Teuchos::RCP<const VectorType> xg = x_rol.getVector();
+  Teuchos::RCP<const VectorType> xg= x_rol.getVector();
   std::cout << "The solution to minimization problem is: ";
   std::cout << (*xg)[0] << " " << (*xg)[1] << std::endl;
 }

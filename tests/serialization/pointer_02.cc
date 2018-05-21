@@ -24,22 +24,22 @@
 
 #include <typeinfo>
 
-int object_number     = 1;
-int objects_destroyed = 0;
+int object_number    = 1;
+int objects_destroyed= 0;
 
 class C
 {
 public:
   C()
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "Default constructor. Object number " << object_number
             << std::endl;
   }
 
   C(const C&)
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
   }
 
@@ -72,9 +72,9 @@ test()
 {
   C* backup;
   {
-    C* p1  = new C();
-    C* p2  = new C(); // this is the pointer that will be overwritten
-    backup = p2;      // but save a pointer to the original object
+    C* p1 = new C();
+    C* p2 = new C(); // this is the pointer that will be overwritten
+    backup= p2;      // but save a pointer to the original object
 
     verify(p1, p2);
 

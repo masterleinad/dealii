@@ -63,9 +63,9 @@ MultithreadInfo::get_n_cpus()
   int    n_cpus;
   size_t len;
 
-  mib[0] = CTL_HW;
-  mib[1] = HW_NCPU;
-  len    = sizeof(n_cpus);
+  mib[0]= CTL_HW;
+  mib[1]= HW_NCPU;
+  len   = sizeof(n_cpus);
   sysctl(mib, 2, &n_cpus, &len, NULL, 0);
 
   return n_cpus;
@@ -112,17 +112,17 @@ void
 MultithreadInfo::set_thread_limit(const unsigned int max_threads)
 {
   // set the maximal number of threads to the given value as specified
-  n_max_threads = max_threads;
+  n_max_threads= max_threads;
 
   // then also see if something was given in the environment
   {
-    const char* penv = getenv("DEAL_II_NUM_THREADS");
+    const char* penv= getenv("DEAL_II_NUM_THREADS");
     if(penv != nullptr)
       {
-        unsigned int max_threads_env = numbers::invalid_unsigned_int;
+        unsigned int max_threads_env= numbers::invalid_unsigned_int;
         try
           {
-            max_threads_env = Utilities::string_to_int(std::string(penv));
+            max_threads_env= Utilities::string_to_int(std::string(penv));
           }
         catch(...)
           {
@@ -143,15 +143,15 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
                      "variable, it needs to be a positive number."));
 
         if(n_max_threads != numbers::invalid_unsigned_int)
-          n_max_threads = std::min(n_max_threads, max_threads_env);
+          n_max_threads= std::min(n_max_threads, max_threads_env);
         else
-          n_max_threads = max_threads_env;
+          n_max_threads= max_threads_env;
       }
   }
   // Without restrictions from the user query TBB for the recommended number
   // of threads:
   if(n_max_threads == numbers::invalid_unsigned_int)
-    n_max_threads = tbb::task_scheduler_init::default_num_threads();
+    n_max_threads= tbb::task_scheduler_init::default_num_threads();
 
   // Initialize the scheduler and destroy the old one before doing so
   static tbb::task_scheduler_init dummy(tbb::task_scheduler_init::deferred);
@@ -210,16 +210,16 @@ MultithreadInfo::memory_consumption()
 void
 MultithreadInfo::initialize_multithreading()
 {
-  static bool done = false;
+  static bool done= false;
   if(done)
     return;
 
   MultithreadInfo::set_thread_limit(numbers::invalid_unsigned_int);
-  done = true;
+  done= true;
 }
 
-const unsigned int MultithreadInfo::n_cpus  = MultithreadInfo::get_n_cpus();
-unsigned int MultithreadInfo::n_max_threads = numbers::invalid_unsigned_int;
+const unsigned int MultithreadInfo::n_cpus = MultithreadInfo::get_n_cpus();
+unsigned int MultithreadInfo::n_max_threads= numbers::invalid_unsigned_int;
 
 namespace
 {

@@ -60,10 +60,10 @@ void
 ImposedDisplacement<2>::vector_value(const Point<2>& p,
                                      Vector<double>& value) const
 {
-  double radius = 1 + (sqrt(5) - 1) * p(0);
-  double angle  = 0.5 * numbers::PI * (1 - p(1));
-  value(0)      = radius * sin(angle) - p(0);
-  value(1)      = radius * cos(angle) - p(1);
+  double radius= 1 + (sqrt(5) - 1) * p(0);
+  double angle = 0.5 * numbers::PI * (1 - p(1));
+  value(0)     = radius * sin(angle) - p(0);
+  value(1)     = radius * cos(angle) - p(1);
 }
 
 // .... MAPPING TEST CLASS
@@ -125,19 +125,19 @@ MappingTest<dim>::compute_area()
 
   FEValues<dim> fe_values(mapping, fe, quadrature_formula, update_JxW_values);
 
-  const unsigned int n_q_points = quadrature_formula.size();
+  const unsigned int n_q_points= quadrature_formula.size();
 
-  long double area = 0.;
+  long double area= 0.;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      for(unsigned int q = 0; q < n_q_points; ++q)
-        area += fe_values.JxW(q);
+      for(unsigned int q= 0; q < n_q_points; ++q)
+        area+= fe_values.JxW(q);
     }
 
   return area;
@@ -153,7 +153,7 @@ MappingTest<dim>::run_test()
 
   ConvergenceTable table;
 
-  for(unsigned int ref_level = 0; ref_level < (degree < 4 ? 5 : 3);
+  for(unsigned int ref_level= 0; ref_level < (degree < 4 ? 5 : 3);
       ++ref_level, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(fe);
@@ -167,8 +167,8 @@ MappingTest<dim>::run_test()
       table.add_value("cells", triangulation.n_active_cells());
       table.add_value("dofs", dof_handler.n_dofs());
 
-      long double area  = compute_area();
-      long double error = std::fabs(numbers::PI - area) / numbers::PI;
+      long double area = compute_area();
+      long double error= std::fabs(numbers::PI - area) / numbers::PI;
 
       table.add_value("area", static_cast<double>(area));
       table.add_value("error", static_cast<double>(error));
@@ -190,25 +190,25 @@ void
 MappingTest<dim>::explicitly_move_mesh()
 {
   std::vector<bool> moved(triangulation.n_vertices(), false);
-  unsigned int      vpc = GeometryInfo<dim>::vertices_per_cell;
+  unsigned int      vpc= GeometryInfo<dim>::vertices_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
 
   for(; cell != endc; cell++)
     {
-      for(unsigned int v = 0; v < vpc; v++)
+      for(unsigned int v= 0; v < vpc; v++)
         {
           if(moved[cell->vertex_index(v)] == false)
             {
-              moved[cell->vertex_index(v)] = true;
+              moved[cell->vertex_index(v)]= true;
               Point<dim> vertex_disp;
-              for(unsigned int d = 0; d < dim; d++)
+              for(unsigned int d= 0; d < dim; d++)
                 {
-                  vertex_disp[d] = displacements(cell->vertex_dof_index(v, d));
+                  vertex_disp[d]= displacements(cell->vertex_dof_index(v, d));
                 }
-              cell->vertex(v) += vertex_disp;
+              cell->vertex(v)+= vertex_disp;
             }
         }
     }
@@ -244,7 +244,7 @@ main()
 
   // convergence studies
 
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for(unsigned int degree= 1; degree <= 4; ++degree)
     {
       deallog << ".... Q" << degree << " Mapping ...." << std::endl;
       MappingTest<2> test_one(degree);

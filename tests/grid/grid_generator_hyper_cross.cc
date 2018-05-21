@@ -24,14 +24,14 @@
 void
 dim_2(std::ostream& os)
 {
-  const unsigned int d = 2;
+  const unsigned int d= 2;
   Triangulation<d>   tr;
 
   std::vector<unsigned int> sizes(2 * d);
-  sizes[0] = 3;
-  sizes[1] = 0;
-  sizes[2] = 2;
-  sizes[3] = 1;
+  sizes[0]= 3;
+  sizes[1]= 0;
+  sizes[2]= 2;
+  sizes[3]= 1;
   GridGenerator::hyper_cross(tr, sizes, true);
 
   GridOut gout;
@@ -41,16 +41,16 @@ dim_2(std::ostream& os)
 void
 dim_3(std::ostream& os)
 {
-  const unsigned int d = 3;
+  const unsigned int d= 3;
   Triangulation<d>   tr;
 
   std::vector<unsigned int> sizes(2 * d);
-  sizes[0] = 5;
-  sizes[1] = 1;
-  sizes[2] = 4;
-  sizes[3] = 2;
-  sizes[4] = 3;
-  sizes[5] = 0;
+  sizes[0]= 5;
+  sizes[1]= 1;
+  sizes[2]= 4;
+  sizes[3]= 2;
+  sizes[4]= 3;
+  sizes[5]= 0;
   GridGenerator::hyper_cross(tr, sizes, true);
 
   GridOut gout;
@@ -61,7 +61,7 @@ int
 main()
 {
   initlog(true);
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream& logfile= deallog.get_file_stream();
   dim_2(logfile);
   dim_3(logfile);
 }

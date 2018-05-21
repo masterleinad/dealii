@@ -23,10 +23,10 @@ void
 test()
 {
   DerivativeForm<1, dim, spacedim, std::complex<double>> dF;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for(unsigned int i= 0; i < spacedim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
       {
-        dF[i][j] = std::complex<double>(i + 2 * j + 1, i + 2 * j + 1);
+        dF[i][j]= std::complex<double>(i + 2 * j + 1, i + 2 * j + 1);
       }
 
   // output the determinants of these objects

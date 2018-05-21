@@ -167,7 +167,7 @@ public:
   /**
    * Generate a formula with <tt>n</tt> quadrature points
    */
-  QGaussLog(const unsigned int n, const bool revert = false);
+  QGaussLog(const unsigned int n, const bool revert= false);
 
 private:
   /**
@@ -231,15 +231,15 @@ public:
    * formula or it is factored out, to be included in the integrand.
    */
   QGaussLogR(const unsigned int n,
-             const Point<dim>   x0                         = Point<dim>(),
-             const double       alpha                      = 1,
-             const bool         factor_out_singular_weight = false);
+             const Point<dim>   x0                        = Point<dim>(),
+             const double       alpha                     = 1,
+             const bool         factor_out_singular_weight= false);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
    * since it does not know about the additional member `fraction` of this class.
    */
-  QGaussLogR(QGaussLogR<dim>&&) noexcept = default;
+  QGaussLogR(QGaussLogR<dim>&&) noexcept= default;
 
 protected:
   /**
@@ -310,7 +310,7 @@ public:
    */
   QGaussOneOverR(const unsigned int n,
                  const Point<dim>   singularity,
-                 const bool         factor_out_singular_weight = false);
+                 const bool         factor_out_singular_weight= false);
   /**
    * The constructor takes three arguments: the order of the Gauss formula,
    * the index of the vertex where the singularity is located, and whether we
@@ -347,7 +347,7 @@ public:
    */
   QGaussOneOverR(const unsigned int n,
                  const unsigned int vertex_index,
-                 const bool         factor_out_singular_weight = false);
+                 const bool         factor_out_singular_weight= false);
 
 private:
   /**
@@ -520,13 +520,13 @@ public:
   };
   /// Generate a formula with <tt>n</tt> quadrature points
   QGaussRadauChebyshev(const unsigned int n,
-                       EndPoint           ep = QGaussRadauChebyshev::left);
+                       EndPoint           ep= QGaussRadauChebyshev::left);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
    * since it does not know about the additional member `ep` of this class.
    */
-  QGaussRadauChebyshev(QGaussRadauChebyshev<dim>&&) noexcept = default;
+  QGaussRadauChebyshev(QGaussRadauChebyshev<dim>&&) noexcept= default;
 
 private:
   const EndPoint ep;
@@ -720,7 +720,7 @@ public:
    */
   QDuffy(const Quadrature<1>& radial_quadrature,
          const Quadrature<1>& angular_quadrature,
-         const double         beta = 1.0);
+         const double         beta= 1.0);
 
   /**
    * Call the above constructor with QGauss<1>(n) quadrature formulas for

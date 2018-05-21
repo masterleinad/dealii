@@ -59,9 +59,9 @@ namespace Algorithms
   {
     param.enter_subsection("Newton");
     control.parse_parameters(param);
-    assemble_threshold    = param.get_double("Assemble threshold");
-    n_stepsize_iterations = param.get_integer("Stepsize iterations");
-    debug_vectors         = param.get_bool("Debug vectors");
+    assemble_threshold   = param.get_double("Assemble threshold");
+    n_stepsize_iterations= param.get_integer("Stepsize iterations");
+    debug_vectors        = param.get_bool("Debug vectors");
     param.leave_subsection();
   }
 
@@ -69,7 +69,7 @@ namespace Algorithms
   void
   Newton<VectorType>::initialize(OutputOperator<VectorType>& output)
   {
-    data_out = &output;
+    data_out= &output;
   }
 
   template <typename VectorType>
@@ -84,8 +84,8 @@ namespace Algorithms
   double
   Newton<VectorType>::threshold(const double thr)
   {
-    const double t     = assemble_threshold;
-    assemble_threshold = thr;
+    const double t    = assemble_threshold;
+    assemble_threshold= thr;
     return t;
   }
 
@@ -96,7 +96,7 @@ namespace Algorithms
     Assert(out.size() == 1, ExcNotImplemented());
     LogStream::Prefix prefix("Newton");
 
-    VectorType& u = *out.entry<VectorType*>(0);
+    VectorType& u= *out.entry<VectorType*>(0);
 
     if(debug > 2)
       deallog << "u: " << u.l2_norm() << std::endl;
@@ -118,20 +118,20 @@ namespace Algorithms
     AnyData out2;
     out2.add<VectorType*>(Du.get(), "Update");
 
-    unsigned int step = 0;
+    unsigned int step= 0;
     // fill res with (f(u), v)
     (*residual)(out1, src1);
-    double resnorm      = res->l2_norm();
-    double old_residual = 0.;
+    double resnorm     = res->l2_norm();
+    double old_residual= 0.;
 
     if(debug_vectors)
       {
         AnyData     tmp;
-        VectorType* p = &u;
+        VectorType* p= &u;
         tmp.add<const VectorType*>(p, "solution");
-        p = Du.get();
+        p= Du.get();
         tmp.add<const VectorType*>(p, "update");
-        p = res.get();
+        p= res.get();
         tmp.add<const VectorType*>(p, "residual");
         *data_out << step;
         *data_out << tmp;
@@ -157,23 +157,23 @@ namespace Algorithms
         if(debug_vectors)
           {
             AnyData     tmp;
-            VectorType* p = &u;
+            VectorType* p= &u;
             tmp.add<const VectorType*>(p, "solution");
-            p = Du.get();
+            p= Du.get();
             tmp.add<const VectorType*>(p, "update");
-            p = res.get();
+            p= res.get();
             tmp.add<const VectorType*>(p, "residual");
             *data_out << step;
             *data_out << tmp;
           }
 
         u.add(-1., *Du);
-        old_residual = resnorm;
+        old_residual= resnorm;
         (*residual)(out1, src1);
-        resnorm = res->l2_norm();
+        resnorm= res->l2_norm();
 
         // Step size control
-        unsigned int step_size = 0;
+        unsigned int step_size= 0;
         while(resnorm >= old_residual)
           {
             ++step_size;
@@ -187,7 +187,7 @@ namespace Algorithms
                       << " since residual was " << resnorm << std::endl;
             u.add(1. / (1 << step_size), *Du);
             (*residual)(out1, src1);
-            resnorm = res->l2_norm();
+            resnorm= res->l2_norm();
           }
       }
 

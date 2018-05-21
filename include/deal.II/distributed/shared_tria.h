@@ -93,7 +93,7 @@ namespace parallel
      * @ingroup distributed
      *
      */
-    template <int dim, int spacedim = dim>
+    template <int dim, int spacedim= dim>
     class Triangulation : public dealii::parallel::Triangulation<dim, spacedim>
     {
     public:
@@ -127,12 +127,12 @@ namespace parallel
          * partition_metis strategy. If neither of these were found,
          * then use the partition_zorder partitioning strategy.
          */
-        partition_auto = 0x0,
+        partition_auto= 0x0,
 
         /**
          * Use METIS partitioner to partition active cells.
          */
-        partition_metis = 0x1,
+        partition_metis= 0x1,
 
         /**
          * Partition active cells with the same scheme used in the
@@ -151,12 +151,12 @@ namespace parallel
          * @see
          * @ref GlossZOrder "Z order glossary entry".
          */
-        partition_zorder = 0x2,
+        partition_zorder= 0x2,
 
         /**
          * Use Zoltan to partition active cells.
          */
-        partition_zoltan = 0x3,
+        partition_zoltan= 0x3,
 
         /**
          * Partition cells using a custom, user defined function. This is
@@ -207,7 +207,7 @@ namespace parallel
          * @note If you plan to use a custom partition with geometric multigrid,
          * you must manually partition the level cells in addition to the active cells.
          */
-        partition_custom_signal = 0x4,
+        partition_custom_signal= 0x4,
 
         /**
          * This flag needs to be set to use the geometric multigrid
@@ -216,7 +216,7 @@ namespace parallel
          * Note: This flag should always be set alongside a flag for an
          * active cell partitioning method.
          */
-        construct_multigrid_hierarchy = 0x8,
+        construct_multigrid_hierarchy= 0x8,
       };
 
       /**
@@ -232,13 +232,13 @@ namespace parallel
         MPI_Comm mpi_communicator,
         const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
         = (dealii::Triangulation<dim, spacedim>::none),
-        const bool     allow_artificial_cells = false,
-        const Settings settings               = partition_auto);
+        const bool     allow_artificial_cells= false,
+        const Settings settings              = partition_auto);
 
       /**
        * Destructor.
        */
-      virtual ~Triangulation() override = default;
+      virtual ~Triangulation() override= default;
 
       /**
        * Coarsen and refine the mesh according to refinement and coarsening
@@ -394,7 +394,7 @@ namespace parallel
      * can actually be created as this would be pointless given that
      * MPI is not available.
      */
-    template <int dim, int spacedim = dim>
+    template <int dim, int spacedim= dim>
     class Triangulation : public dealii::parallel::Triangulation<dim, spacedim>
     {
     public:
@@ -402,7 +402,7 @@ namespace parallel
        * Constructor. Deleted to make sure that objects of this type cannot be
        * constructed (see also the class documentation).
        */
-      Triangulation() = delete;
+      Triangulation()= delete;
 
       /**
        * A dummy function to return empty vector.

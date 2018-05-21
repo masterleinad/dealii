@@ -26,7 +26,7 @@
 #include <iomanip>
 
 using namespace dealii;
-namespace AD = Differentiation::AD;
+namespace AD= Differentiation::AD;
 
 int
 main()

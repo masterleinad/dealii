@@ -117,10 +117,10 @@ namespace Step31
   // thermal expansion coefficient $\beta$):
   namespace EquationData
   {
-    const double eta     = 1;
-    const double kappa   = 1e-6;
-    const double beta    = 10;
-    const double density = 1;
+    const double eta    = 1;
+    const double kappa  = 1e-6;
+    const double beta   = 10;
+    const double density= 1;
 
     template <int dim>
     class TemperatureInitialValues : public Function<dim>
@@ -131,7 +131,7 @@ namespace Step31
 
       virtual double
       value(const Point<dim>&  p,
-            const unsigned int component = 0) const override;
+            const unsigned int component= 0) const override;
 
       virtual void
       vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -150,8 +150,8 @@ namespace Step31
     TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
                                                 Vector<double>&   values) const
     {
-      for(unsigned int c = 0; c < this->n_components; ++c)
-        values(c) = TemperatureInitialValues<dim>::value(p, c);
+      for(unsigned int c= 0; c < this->n_components; ++c)
+        values(c)= TemperatureInitialValues<dim>::value(p, c);
     }
 
     template <int dim>
@@ -163,7 +163,7 @@ namespace Step31
 
       virtual double
       value(const Point<dim>&  p,
-            const unsigned int component = 0) const override;
+            const unsigned int component= 0) const override;
 
       virtual void
       vector_value(const Point<dim>& p, Vector<double>& value) const override;
@@ -184,7 +184,7 @@ namespace Step31
         = {(dim == 2 ? Point<dim>(.3, .1) : Point<dim>(.3, .5, .1)),
            (dim == 2 ? Point<dim>(.45, .1) : Point<dim>(.45, .5, .1)),
            (dim == 2 ? Point<dim>(.75, .1) : Point<dim>(.75, .5, .1))};
-      static const double source_radius = (dim == 2 ? 1. / 32 : 1. / 8);
+      static const double source_radius= (dim == 2 ? 1. / 32 : 1. / 8);
 
       return ((source_centers[0].distance(p) < source_radius)
                   || (source_centers[1].distance(p) < source_radius)
@@ -198,8 +198,8 @@ namespace Step31
     TemperatureRightHandSide<dim>::vector_value(const Point<dim>& p,
                                                 Vector<double>&   values) const
     {
-      for(unsigned int c = 0; c < this->n_components; ++c)
-        values(c) = TemperatureRightHandSide<dim>::value(p, c);
+      for(unsigned int c= 0; c < this->n_components; ++c)
+        values(c)= TemperatureRightHandSide<dim>::value(p, c);
     }
   } // namespace EquationData
 
@@ -286,7 +286,7 @@ namespace Step31
       SolverControl        solver_control(src.size(), 1e-7 * src.l2_norm());
       SolverCG<VectorType> cg(solver_control);
 
-      dst = 0;
+      dst= 0;
 
       try
         {
@@ -420,7 +420,7 @@ namespace Step31
     {
       a_preconditioner.vmult(dst.block(0), src.block(0));
       stokes_matrix->block(1, 0).residual(tmp, dst.block(0), src.block(1));
-      tmp *= -1;
+      tmp*= -1;
       m_inverse->vmult(dst.block(1), tmp);
     }
   } // namespace LinearSolvers
@@ -621,25 +621,25 @@ namespace Step31
   BoussinesqFlowProblem<dim>::get_maximal_velocity() const
   {
     const QIterated<dim> quadrature_formula(QTrapez<1>(), stokes_degree + 1);
-    const unsigned int   n_q_points = quadrature_formula.size();
+    const unsigned int   n_q_points= quadrature_formula.size();
 
     FEValues<dim> fe_values(stokes_fe, quadrature_formula, update_values);
     std::vector<Tensor<1, dim>> velocity_values(n_q_points);
-    double                      max_velocity = 0;
+    double                      max_velocity= 0;
 
     const FEValuesExtractors::Vector velocities(0);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = stokes_dof_handler.begin_active(),
-      endc = stokes_dof_handler.end();
+      endc= stokes_dof_handler.end();
     for(; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         fe_values[velocities].get_function_values(stokes_solution,
                                                   velocity_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          max_velocity = std::max(max_velocity, velocity_values[q].norm());
+        for(unsigned int q= 0; q < n_q_points; ++q)
+          max_velocity= std::max(max_velocity, velocity_values[q].norm());
       }
 
     return max_velocity;
@@ -675,7 +675,7 @@ namespace Step31
   BoussinesqFlowProblem<dim>::get_extrapolated_temperature_range() const
   {
     const QIterated<dim> quadrature_formula(QTrapez<1>(), temperature_degree);
-    const unsigned int   n_q_points = quadrature_formula.size();
+    const unsigned int   n_q_points= quadrature_formula.size();
 
     FEValues<dim> fe_values(temperature_fe, quadrature_formula, update_values);
     std::vector<double> old_temperature_values(n_q_points);
@@ -683,12 +683,12 @@ namespace Step31
 
     if(timestep_number != 0)
       {
-        double min_temperature = std::numeric_limits<double>::max(),
-               max_temperature = -std::numeric_limits<double>::max();
+        double min_temperature= std::numeric_limits<double>::max(),
+               max_temperature= -std::numeric_limits<double>::max();
 
         typename DoFHandler<dim>::active_cell_iterator cell
           = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
+          endc= temperature_dof_handler.end();
         for(; cell != endc; ++cell)
           {
             fe_values.reinit(cell);
@@ -697,14 +697,14 @@ namespace Step31
             fe_values.get_function_values(old_old_temperature_solution,
                                           old_old_temperature_values);
 
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
                 const double temperature
                   = (1. + time_step / old_time_step) * old_temperature_values[q]
                     - time_step / old_time_step * old_old_temperature_values[q];
 
-                min_temperature = std::min(min_temperature, temperature);
-                max_temperature = std::max(max_temperature, temperature);
+                min_temperature= std::min(min_temperature, temperature);
+                max_temperature= std::max(max_temperature, temperature);
               }
           }
 
@@ -712,24 +712,24 @@ namespace Step31
       }
     else
       {
-        double min_temperature = std::numeric_limits<double>::max(),
-               max_temperature = -std::numeric_limits<double>::max();
+        double min_temperature= std::numeric_limits<double>::max(),
+               max_temperature= -std::numeric_limits<double>::max();
 
         typename DoFHandler<dim>::active_cell_iterator cell
           = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
+          endc= temperature_dof_handler.end();
         for(; cell != endc; ++cell)
           {
             fe_values.reinit(cell);
             fe_values.get_function_values(old_temperature_solution,
                                           old_temperature_values);
 
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for(unsigned int q= 0; q < n_q_points; ++q)
               {
-                const double temperature = old_temperature_values[q];
+                const double temperature= old_temperature_values[q];
 
-                min_temperature = std::min(min_temperature, temperature);
-                max_temperature = std::max(max_temperature, temperature);
+                min_temperature= std::min(min_temperature, temperature);
+                max_temperature= std::max(max_temperature, temperature);
               }
           }
 
@@ -776,18 +776,18 @@ namespace Step31
     const double                       global_T_variation,
     const double                       cell_diameter) const
   {
-    const double beta  = 0.017 * dim;
-    const double alpha = 1;
+    const double beta = 0.017 * dim;
+    const double alpha= 1;
 
     if(global_u_infty == 0)
       return 5e-3 * cell_diameter;
 
-    const unsigned int n_q_points = old_temperature.size();
+    const unsigned int n_q_points= old_temperature.size();
 
-    double max_residual = 0;
-    double max_velocity = 0;
+    double max_residual= 0;
+    double max_velocity= 0;
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for(unsigned int q= 0; q < n_q_points; ++q)
       {
         const Tensor<1, dim> u
           = (old_velocity_values[q] + old_old_velocity_values[q]) / 2;
@@ -797,23 +797,23 @@ namespace Step31
         const double u_grad_T
           = u * (old_temperature_grads[q] + old_old_temperature_grads[q]) / 2;
 
-        const double kappa_Delta_T = EquationData::kappa
-                                     * (old_temperature_laplacians[q]
-                                        + old_old_temperature_laplacians[q])
-                                     / 2;
+        const double kappa_Delta_T= EquationData::kappa
+                                    * (old_temperature_laplacians[q]
+                                       + old_old_temperature_laplacians[q])
+                                    / 2;
 
-        const double residual = std::abs(
+        const double residual= std::abs(
           (dT_dt + u_grad_T - kappa_Delta_T - gamma_values[q])
           * std::pow((old_temperature[q] + old_old_temperature[q]) / 2,
                      alpha - 1.));
 
-        max_residual = std::max(residual, max_residual);
-        max_velocity = std::max(std::sqrt(u * u), max_velocity);
+        max_residual= std::max(residual, max_residual);
+        max_velocity= std::max(std::sqrt(u * u), max_velocity);
       }
 
-    const double c_R            = std::pow(2., (4. - 2 * alpha) / dim);
-    const double global_scaling = c_R * global_u_infty * global_T_variation
-                                  * std::pow(global_Omega_diameter, alpha - 2.);
+    const double c_R           = std::pow(2., (4. - 2 * alpha) / dim);
+    const double global_scaling= c_R * global_u_infty * global_T_variation
+                                 * std::pow(global_Omega_diameter, alpha - 2.);
 
     return (beta * max_velocity
             * std::min(cell_diameter,
@@ -857,7 +857,7 @@ namespace Step31
   BoussinesqFlowProblem<dim>::setup_dofs()
   {
     std::vector<unsigned int> stokes_sub_blocks(dim + 1, 0);
-    stokes_sub_blocks[dim] = 1;
+    stokes_sub_blocks[dim]= 1;
 
     {
       stokes_dof_handler.distribute_dofs(stokes_fe);
@@ -885,9 +885,9 @@ namespace Step31
     DoFTools::count_dofs_per_block(
       stokes_dof_handler, stokes_dofs_per_block, stokes_sub_blocks);
 
-    const unsigned int n_u = stokes_dofs_per_block[0],
-                       n_p = stokes_dofs_per_block[1],
-                       n_T = temperature_dof_handler.n_dofs();
+    const unsigned int n_u= stokes_dofs_per_block[0],
+                       n_p= stokes_dofs_per_block[1],
+                       n_T= temperature_dof_handler.n_dofs();
 
     std::cout << "Number of active cells: " << triangulation.n_active_cells()
               << " (on " << triangulation.n_levels() << " levels)" << std::endl
@@ -932,8 +932,8 @@ namespace Step31
     // need to keep the sparsity pattern around after the initialization of
     // the matrix.
     stokes_partitioning.resize(2);
-    stokes_partitioning[0] = complete_index_set(n_u);
-    stokes_partitioning[1] = complete_index_set(n_p);
+    stokes_partitioning[0]= complete_index_set(n_u);
+    stokes_partitioning[1]= complete_index_set(n_p);
     {
       stokes_matrix.clear();
 
@@ -948,12 +948,12 @@ namespace Step31
 
       Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
 
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(!((c == dim) && (d == dim)))
-            coupling[c][d] = DoFTools::always;
+            coupling[c][d]= DoFTools::always;
           else
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
 
       DoFTools::make_sparsity_pattern(
         stokes_dof_handler, coupling, dsp, stokes_constraints, false);
@@ -976,12 +976,12 @@ namespace Step31
       dsp.collect_sizes();
 
       Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
-      for(unsigned int c = 0; c < dim + 1; ++c)
-        for(unsigned int d = 0; d < dim + 1; ++d)
+      for(unsigned int c= 0; c < dim + 1; ++c)
+        for(unsigned int d= 0; d < dim + 1; ++d)
           if(c == d)
-            coupling[c][d] = DoFTools::always;
+            coupling[c][d]= DoFTools::always;
           else
-            coupling[c][d] = DoFTools::none;
+            coupling[c][d]= DoFTools::none;
 
       DoFTools::make_sparsity_pattern(
         stokes_dof_handler, coupling, dsp, stokes_constraints, false);
@@ -1019,7 +1019,7 @@ namespace Step31
     // and $\mathbf u^{n-2}$, as well as for the temperatures $T^{n}$,
     // $T^{n-1}$ and $T^{n-2}$ (required for time stepping) and all the system
     // right hand sides to their correct sizes and block structure:
-    IndexSet temperature_partitioning = complete_index_set(n_T);
+    IndexSet temperature_partitioning= complete_index_set(n_T);
     stokes_solution.reinit(stokes_partitioning, MPI_COMM_WORLD);
     old_stokes_solution.reinit(stokes_partitioning, MPI_COMM_WORLD);
     stokes_rhs.reinit(stokes_partitioning, MPI_COMM_WORLD);
@@ -1050,7 +1050,7 @@ namespace Step31
   void
   BoussinesqFlowProblem<dim>::assemble_stokes_preconditioner()
   {
-    stokes_preconditioner_matrix = 0;
+    stokes_preconditioner_matrix= 0;
 
     const QGauss<dim> quadrature_formula(stokes_degree + 2);
     FEValues<dim>     stokes_fe_values(stokes_fe,
@@ -1058,8 +1058,8 @@ namespace Step31
                                    update_JxW_values | update_values
                                      | update_gradients);
 
-    const unsigned int dofs_per_cell = stokes_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= stokes_fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -1072,11 +1072,11 @@ namespace Step31
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = stokes_dof_handler.begin_active(),
-      endc = stokes_dof_handler.end();
+      endc= stokes_dof_handler.end();
     for(; cell != endc; ++cell)
       {
         stokes_fe_values.reinit(cell);
-        local_matrix = 0;
+        local_matrix= 0;
 
         // The creation of the local matrix is rather simple. There are only a
         // Laplace term (on the velocity) and a mass matrix weighted by
@@ -1089,16 +1089,16 @@ namespace Step31
         // to do that afterwards, and we don't also write into entries of the
         // matrix that will actually be set to zero again later when
         // eliminating constraints.
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                grad_phi_u[k] = stokes_fe_values[velocities].gradient(k, q);
-                phi_p[k]      = stokes_fe_values[pressure].value(k, q);
+                grad_phi_u[k]= stokes_fe_values[velocities].gradient(k, q);
+                phi_p[k]     = stokes_fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 local_matrix(i, j)
                   += (EquationData::eta
                         * scalar_product(grad_phi_u[i], grad_phi_u[j])
@@ -1148,7 +1148,7 @@ namespace Step31
 
     assemble_stokes_preconditioner();
 
-    Amg_preconditioner = std::make_shared<TrilinosWrappers::PreconditionAMG>();
+    Amg_preconditioner= std::make_shared<TrilinosWrappers::PreconditionAMG>();
 
     std::vector<std::vector<bool>> constant_modes;
     FEValuesExtractors::Vector     velocity_components(0);
@@ -1157,7 +1157,7 @@ namespace Step31
       stokes_fe.component_mask(velocity_components),
       constant_modes);
     TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
-    amg_data.constant_modes = constant_modes;
+    amg_data.constant_modes= constant_modes;
 
     // Next, we set some more options of the AMG preconditioner. In
     // particular, we need to tell the AMG setup that we use quadratic basis
@@ -1188,19 +1188,19 @@ namespace Step31
     // pointer, which makes it easier to recreate the preconditioner next time
     // around since we do not have to care about destroying the previously
     // used object.
-    amg_data.elliptic              = true;
-    amg_data.higher_order_elements = true;
-    amg_data.smoother_sweeps       = 2;
-    amg_data.aggregation_threshold = 0.02;
+    amg_data.elliptic             = true;
+    amg_data.higher_order_elements= true;
+    amg_data.smoother_sweeps      = 2;
+    amg_data.aggregation_threshold= 0.02;
     Amg_preconditioner->initialize(stokes_preconditioner_matrix.block(0, 0),
                                    amg_data);
 
-    Mp_preconditioner = std::make_shared<TrilinosWrappers::PreconditionIC>();
+    Mp_preconditioner= std::make_shared<TrilinosWrappers::PreconditionIC>();
     Mp_preconditioner->initialize(stokes_preconditioner_matrix.block(1, 1));
 
     std::cout << std::endl;
 
-    rebuild_stokes_preconditioner = false;
+    rebuild_stokes_preconditioner= false;
   }
 
   // @sect4{BoussinesqFlowProblem::assemble_stokes_system}
@@ -1249,9 +1249,9 @@ namespace Step31
     std::cout << "   Assembling..." << std::flush;
 
     if(rebuild_stokes_matrix == true)
-      stokes_matrix = 0;
+      stokes_matrix= 0;
 
-    stokes_rhs = 0;
+    stokes_rhs= 0;
 
     const QGauss<dim> quadrature_formula(stokes_degree + 2);
     FEValues<dim>     stokes_fe_values(
@@ -1263,8 +1263,8 @@ namespace Step31
     FEValues<dim> temperature_fe_values(
       temperature_fe, quadrature_formula, update_values);
 
-    const unsigned int dofs_per_cell = stokes_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= stokes_fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     local_rhs(dofs_per_cell);
@@ -1307,7 +1307,7 @@ namespace Step31
     // over the quadrature points on the cell.
     typename DoFHandler<dim>::active_cell_iterator cell
       = stokes_dof_handler.begin_active(),
-      endc = stokes_dof_handler.end();
+      endc= stokes_dof_handler.end();
     typename DoFHandler<dim>::active_cell_iterator temperature_cell
       = temperature_dof_handler.begin_active();
 
@@ -1316,15 +1316,15 @@ namespace Step31
         stokes_fe_values.reinit(cell);
         temperature_fe_values.reinit(temperature_cell);
 
-        local_matrix = 0;
-        local_rhs    = 0;
+        local_matrix= 0;
+        local_rhs   = 0;
 
         temperature_fe_values.get_function_values(old_temperature_solution,
                                                   old_temperature_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            const double old_temperature = old_temperature_values[q];
+            const double old_temperature= old_temperature_values[q];
 
             // Next we extract the values and gradients of basis functions
             // relevant to the terms in the inner products. As shown in
@@ -1338,22 +1338,21 @@ namespace Step31
             // is always generated, whereas the matrix contributions are only
             // updated when it is requested by the
             // <code>rebuild_matrices</code> flag.
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                phi_u[k] = stokes_fe_values[velocities].value(k, q);
+                phi_u[k]= stokes_fe_values[velocities].value(k, q);
                 if(rebuild_stokes_matrix)
                   {
                     grads_phi_u[k]
                       = stokes_fe_values[velocities].symmetric_gradient(k, q);
-                    div_phi_u[k]
-                      = stokes_fe_values[velocities].divergence(k, q);
-                    phi_p[k] = stokes_fe_values[pressure].value(k, q);
+                    div_phi_u[k]= stokes_fe_values[velocities].divergence(k, q);
+                    phi_p[k]    = stokes_fe_values[pressure].value(k, q);
                   }
               }
 
             if(rebuild_stokes_matrix)
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for(unsigned int i= 0; i < dofs_per_cell; ++i)
+                for(unsigned int j= 0; j < dofs_per_cell; ++j)
                   local_matrix(i, j)
                     += (EquationData::eta * 2
                           * (grads_phi_u[i] * grads_phi_u[j])
@@ -1362,10 +1361,10 @@ namespace Step31
 
             const Point<dim> gravity
               = -((dim == 2) ? (Point<dim>(0, 1)) : (Point<dim>(0, 0, 1)));
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              local_rhs(i) += (-EquationData::density * EquationData::beta
-                               * gravity * phi_u[i] * old_temperature)
-                              * stokes_fe_values.JxW(q);
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              local_rhs(i)+= (-EquationData::density * EquationData::beta
+                              * gravity * phi_u[i] * old_temperature)
+                             * stokes_fe_values.JxW(q);
           }
 
         // The last step in the loop over all cells is to enter the local
@@ -1387,7 +1386,7 @@ namespace Step31
             local_rhs, local_dof_indices, stokes_rhs);
       }
 
-    rebuild_stokes_matrix = false;
+    rebuild_stokes_matrix= false;
 
     std::cout << std::endl;
   }
@@ -1419,8 +1418,8 @@ namespace Step31
     if(rebuild_temperature_matrices == false)
       return;
 
-    temperature_mass_matrix      = 0;
-    temperature_stiffness_matrix = 0;
+    temperature_mass_matrix     = 0;
+    temperature_stiffness_matrix= 0;
 
     QGauss<dim>   quadrature_formula(temperature_degree + 2);
     FEValues<dim> temperature_fe_values(temperature_fe,
@@ -1428,8 +1427,8 @@ namespace Step31
                                         update_values | update_gradients
                                           | update_JxW_values);
 
-    const unsigned int dofs_per_cell = temperature_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= temperature_fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> local_mass_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> local_stiffness_matrix(dofs_per_cell, dofs_per_cell);
@@ -1449,24 +1448,24 @@ namespace Step31
     // condense the constraints into the matrix.
     typename DoFHandler<dim>::active_cell_iterator cell
       = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
+      endc= temperature_dof_handler.end();
     for(; cell != endc; ++cell)
       {
-        local_mass_matrix      = 0;
-        local_stiffness_matrix = 0;
+        local_mass_matrix     = 0;
+        local_stiffness_matrix= 0;
 
         temperature_fe_values.reinit(cell);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                grad_phi_T[k] = temperature_fe_values.shape_grad(k, q);
-                phi_T[k]      = temperature_fe_values.shape_value(k, q);
+                grad_phi_T[k]= temperature_fe_values.shape_grad(k, q);
+                phi_T[k]     = temperature_fe_values.shape_value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
                 {
                   local_mass_matrix(i, j)
                     += (phi_T[i] * phi_T[j] * temperature_fe_values.JxW(q));
@@ -1486,7 +1485,7 @@ namespace Step31
           temperature_stiffness_matrix);
       }
 
-    rebuild_temperature_matrices = false;
+    rebuild_temperature_matrices= false;
   }
 
   // @sect4{BoussinesqFlowProblem::assemble_temperature_system}
@@ -1510,7 +1509,7 @@ namespace Step31
   BoussinesqFlowProblem<dim>::assemble_temperature_system(
     const double maximal_velocity)
   {
-    const bool use_bdf2_scheme = (timestep_number != 0);
+    const bool use_bdf2_scheme= (timestep_number != 0);
 
     if(use_bdf2_scheme == true)
       {
@@ -1525,7 +1524,7 @@ namespace Step31
         temperature_matrix.add(time_step, temperature_stiffness_matrix);
       }
 
-    temperature_rhs = 0;
+    temperature_rhs= 0;
 
     const QGauss<dim> quadrature_formula(temperature_degree + 2);
     FEValues<dim>     temperature_fe_values(
@@ -1536,8 +1535,8 @@ namespace Step31
     FEValues<dim> stokes_fe_values(
       stokes_fe, quadrature_formula, update_values);
 
-    const unsigned int dofs_per_cell = temperature_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= temperature_fe.dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     Vector<double> local_rhs(dofs_per_cell);
 
@@ -1587,13 +1586,13 @@ namespace Step31
     // <code>stokes_fe_values[velocities].get_function_values</code>.
     typename DoFHandler<dim>::active_cell_iterator cell
       = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
+      endc= temperature_dof_handler.end();
     typename DoFHandler<dim>::active_cell_iterator stokes_cell
       = stokes_dof_handler.begin_active();
 
     for(; cell != endc; ++cell, ++stokes_cell)
       {
-        local_rhs = 0;
+        local_rhs= 0;
 
         temperature_fe_values.reinit(cell);
         stokes_fe_values.reinit(stokes_cell);
@@ -1646,12 +1645,12 @@ namespace Step31
                               global_T_range.second - global_T_range.first,
                               cell->diameter());
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for(unsigned int q= 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for(unsigned int k= 0; k < dofs_per_cell; ++k)
               {
-                grad_phi_T[k] = temperature_fe_values.shape_grad(k, q);
-                phi_T[k]      = temperature_fe_values.shape_value(k, q);
+                grad_phi_T[k]= temperature_fe_values.shape_grad(k, q);
+                phi_T[k]     = temperature_fe_values.shape_value(k, q);
               }
 
             const double T_term_for_rhs
@@ -1674,7 +1673,7 @@ namespace Step31
                     - old_old_velocity_values[q] * time_step / old_time_step) :
                    old_velocity_values[q]);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < dofs_per_cell; ++i)
               local_rhs(i)
                 += (T_term_for_rhs * phi_T[i]
                     - time_step * extrapolated_u * ext_grad_T * phi_T[i]
@@ -1742,9 +1741,9 @@ namespace Step31
         solver_control,
         SolverGMRES<TrilinosWrappers::MPI::BlockVector>::AdditionalData(100));
 
-      for(unsigned int i = 0; i < stokes_solution.size(); ++i)
+      for(unsigned int i= 0; i < stokes_solution.size(); ++i)
         if(stokes_constraints.is_constrained(i))
-          stokes_solution(i) = 0;
+          stokes_solution(i)= 0;
 
       gmres.solve(stokes_matrix, stokes_solution, stokes_rhs, preconditioner);
 
@@ -1774,21 +1773,21 @@ namespace Step31
     // encounter during any of the following time steps) and if so rather than
     // dividing by zero we just divide by a small value, resulting in a large
     // but finite time step.
-    old_time_step                 = time_step;
-    const double maximal_velocity = get_maximal_velocity();
+    old_time_step                = time_step;
+    const double maximal_velocity= get_maximal_velocity();
 
     if(maximal_velocity >= 0.01)
-      time_step = 1. / (1.7 * dim * std::sqrt(1. * dim)) / temperature_degree
-                  * GridTools::minimal_cell_diameter(triangulation)
-                  / maximal_velocity;
+      time_step= 1. / (1.7 * dim * std::sqrt(1. * dim)) / temperature_degree
+                 * GridTools::minimal_cell_diameter(triangulation)
+                 / maximal_velocity;
     else
-      time_step = 1. / (1.7 * dim * std::sqrt(1. * dim)) / temperature_degree
-                  * GridTools::minimal_cell_diameter(triangulation) / .01;
+      time_step= 1. / (1.7 * dim * std::sqrt(1. * dim)) / temperature_degree
+                 * GridTools::minimal_cell_diameter(triangulation) / .01;
 
     std::cout << "   "
               << "Time step: " << time_step << std::endl;
 
-    temperature_solution = old_temperature_solution;
+    temperature_solution= old_temperature_solution;
 
     // Next we set up the temperature system and the right hand side using the
     // function <code>assemble_temperature_system()</code>.  Knowing the
@@ -1831,9 +1830,9 @@ namespace Step31
       // output. This will come in handy when determining the correct constant
       // in the choice of time step as discuss in the results section of this
       // program.
-      double min_temperature = temperature_solution(0),
-             max_temperature = temperature_solution(0);
-      for(unsigned int i = 0; i < temperature_solution.size(); ++i)
+      double min_temperature= temperature_solution(0),
+             max_temperature= temperature_solution(0);
+      for(unsigned int i= 0; i < temperature_solution.size(); ++i)
         {
           min_temperature
             = std::min<double>(min_temperature, temperature_solution(i));
@@ -1879,7 +1878,7 @@ namespace Step31
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
       stokes_component_interpretation(
         dim + 1, DataComponentInterpretation::component_is_scalar);
-    for(unsigned int i = 0; i < dim; ++i)
+    for(unsigned int i= 0; i < dim; ++i)
       stokes_component_interpretation[i]
         = DataComponentInterpretation::component_is_part_of_vector;
 
@@ -1970,9 +1969,9 @@ namespace Step31
     // handlers. With this at place, we can prepare the triangulation and the
     // data vectors for refinement (in this order).
     std::vector<TrilinosWrappers::MPI::Vector> x_temperature(2);
-    x_temperature[0]                            = temperature_solution;
-    x_temperature[1]                            = old_temperature_solution;
-    TrilinosWrappers::MPI::BlockVector x_stokes = stokes_solution;
+    x_temperature[0]                           = temperature_solution;
+    x_temperature[1]                           = old_temperature_solution;
+    TrilinosWrappers::MPI::BlockVector x_stokes= stokes_solution;
 
     SolutionTransfer<dim, TrilinosWrappers::MPI::Vector> temperature_trans(
       temperature_dof_handler);
@@ -2002,8 +2001,8 @@ namespace Step31
     tmp[1].reinit(temperature_solution);
     temperature_trans.interpolate(x_temperature, tmp);
 
-    temperature_solution     = tmp[0];
-    old_temperature_solution = tmp[1];
+    temperature_solution    = tmp[0];
+    old_temperature_solution= tmp[1];
 
     // After the solution has been transferred we then enforce the constraints
     // on the transferred solution.
@@ -2018,9 +2017,9 @@ namespace Step31
 
     stokes_constraints.distribute(stokes_solution);
 
-    rebuild_stokes_matrix         = true;
-    rebuild_temperature_matrices  = true;
-    rebuild_stokes_preconditioner = true;
+    rebuild_stokes_matrix        = true;
+    rebuild_temperature_matrices = true;
+    rebuild_stokes_preconditioner= true;
   }
 
   // @sect4{BoussinesqFlowProblem::run}
@@ -2045,17 +2044,17 @@ namespace Step31
   void
   BoussinesqFlowProblem<dim>::run()
   {
-    const unsigned int initial_refinement     = (dim == 2 ? 4 : 2);
-    const unsigned int n_pre_refinement_steps = (dim == 2 ? 4 : 3);
+    const unsigned int initial_refinement    = (dim == 2 ? 4 : 2);
+    const unsigned int n_pre_refinement_steps= (dim == 2 ? 4 : 3);
 
     GridGenerator::hyper_cube(triangulation);
-    global_Omega_diameter = GridTools::diameter(triangulation);
+    global_Omega_diameter= GridTools::diameter(triangulation);
 
     triangulation.refine_global(initial_refinement);
 
     setup_dofs();
 
-    unsigned int pre_refinement_step = 0;
+    unsigned int pre_refinement_step= 0;
 
   start_time_iteration:
 
@@ -2065,10 +2064,10 @@ namespace Step31
                          EquationData::TemperatureInitialValues<dim>(),
                          old_temperature_solution);
 
-    timestep_number = 0;
-    time_step = old_time_step = 0;
+    timestep_number= 0;
+    time_step= old_time_step= 0;
 
-    double time = 0;
+    double time= 0;
 
     do
       {
@@ -2105,12 +2104,12 @@ namespace Step31
         else if((timestep_number > 0) && (timestep_number % 5 == 0))
           refine_mesh(initial_refinement + n_pre_refinement_steps);
 
-        time += time_step;
+        time+= time_step;
         ++timestep_number;
 
-        old_stokes_solution          = stokes_solution;
-        old_old_temperature_solution = old_temperature_solution;
-        old_temperature_solution     = temperature_solution;
+        old_stokes_solution         = stokes_solution;
+        old_old_temperature_solution= old_temperature_solution;
+        old_temperature_solution    = temperature_solution;
       }
     // Do all the above until we arrive at time 100.
     while(time <= 100);

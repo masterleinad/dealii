@@ -59,15 +59,14 @@ test(const unsigned int size, const unsigned int block_size)
   create_spd(full_A);
   inv_A.invert(full_A);
 
-  const NumberType l1     = full_A.l1_norm();
-  const NumberType inv_l1 = inv_A.l1_norm();
+  const NumberType l1    = full_A.l1_norm();
+  const NumberType inv_l1= inv_A.l1_norm();
 
   // Scalapack:
-  scalapack_A                   = full_A;
-  const NumberType scalapack_l1 = scalapack_A.l1_norm();
+  scalapack_A                  = full_A;
+  const NumberType scalapack_l1= scalapack_A.l1_norm();
   scalapack_A.compute_cholesky_factorization();
-  const NumberType rcond
-    = scalapack_A.reciprocal_condition_number(scalapack_l1);
+  const NumberType rcond= scalapack_A.reciprocal_condition_number(scalapack_l1);
 
   pcout << 1. / (l1 * inv_l1) << " " << rcond << std::endl;
 }
@@ -78,8 +77,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
-  const std::vector<unsigned int> blocks = {{32, 64}};
+  const std::vector<unsigned int> sizes = {{32, 64, 120, 320, 640}};
+  const std::vector<unsigned int> blocks= {{32, 64}};
 
   for(const auto& s : sizes)
     for(const auto& b : blocks)

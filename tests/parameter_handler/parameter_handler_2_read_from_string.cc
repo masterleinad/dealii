@@ -35,14 +35,14 @@ main()
     {
       std::string s;
       std::getline(in, s);
-      input += s;
-      input += '\n';
+      input+= s;
+      input+= '\n';
     }
   prm.parse_input_from_string(input.c_str());
 
   std::string list;
   prm.enter_subsection("Testing");
-  list = prm.get("Function");
+  list= prm.get("Function");
   prm.leave_subsection();
 
   deallog << list << std::endl;

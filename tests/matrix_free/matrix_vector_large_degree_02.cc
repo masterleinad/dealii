@@ -45,9 +45,9 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  cell                                                   = tria.begin_active();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
+  cell                                                  = tria.begin_active();
   for(; cell != endc; ++cell)
     if(cell->is_locally_owned())
       if(cell->center().norm() < 0.2)
@@ -62,7 +62,7 @@ test()
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
-  IndexSet owned_set = dof.locally_owned_dofs();
+  IndexSet owned_set= dof.locally_owned_dofs();
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof, relevant_set);
 
@@ -81,18 +81,18 @@ test()
   {
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
+    data.tasks_parallel_scheme= MatrixFree<dim, number>::AdditionalData::none;
     mf_data.reinit(dof, constraints, quad, data);
   }
 
   MatrixFreeTest<dim, fe_degree, number, Vector<number>> mf(mf_data);
   Vector<number> in(dof.n_dofs()), out(dof.n_dofs()), ref(dof.n_dofs());
 
-  for(unsigned int i = 0; i < in.size(); ++i)
+  for(unsigned int i= 0; i < in.size(); ++i)
     {
       if(constraints.is_constrained(i))
         continue;
-      in(i) = random_value<double>();
+      in(i)= random_value<double>();
     }
 
   mf.vmult(out, in);
@@ -116,28 +116,28 @@ test()
                             update_values | update_gradients
                               | update_JxW_values);
 
-    const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+    const unsigned int n_q_points   = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                   endc = dof.end();
+    typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active(),
+                                                   endc= dof.end();
     for(; cell != endc; ++cell)
       {
-        cell_matrix = 0;
+        cell_matrix= 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
-                                         * fe_values.shape_grad(j, q_point)
-                                       + 10. * fe_values.shape_value(i, q_point)
-                                           * fe_values.shape_value(j, q_point))
-                                      * fe_values.JxW(q_point));
+              for(unsigned int j= 0; j < dofs_per_cell; ++j)
+                cell_matrix(i, j)+= ((fe_values.shape_grad(i, q_point)
+                                        * fe_values.shape_grad(j, q_point)
+                                      + 10. * fe_values.shape_value(i, q_point)
+                                          * fe_values.shape_value(j, q_point))
+                                     * fe_values.JxW(q_point));
             }
 
         cell->get_dof_indices(local_dof_indices);
@@ -147,8 +147,8 @@ test()
   }
 
   sparse_matrix.vmult(ref, in);
-  out -= ref;
-  const double diff_norm = out.linfty_norm();
+  out-= ref;
+  const double diff_norm= out.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }

@@ -32,16 +32,16 @@
 void
 print_patches(const SparsityPattern& bl)
 {
-  for(unsigned int i = 0; i < bl.n_rows(); ++i)
+  for(unsigned int i= 0; i < bl.n_rows(); ++i)
     {
       deallog << "Block " << std::setw(3) << i;
       std::vector<unsigned int> entries;
-      for(SparsityPattern::iterator b = bl.begin(i); b != bl.end(i); ++b)
+      for(SparsityPattern::iterator b= bl.begin(i); b != bl.end(i); ++b)
         entries.push_back(b->column());
 
       std::sort(entries.begin(), entries.end());
 
-      for(unsigned int i = 0; i < entries.size(); ++i)
+      for(unsigned int i= 0; i < entries.size(); ++i)
         deallog << ' ' << std::setw(4) << entries[i];
       deallog << std::endl;
     }
@@ -57,7 +57,7 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.initialize(tr, fe);
   dof.distribute_mg_dofs(fe);
 
-  const unsigned int level = tr.n_levels() - 1;
+  const unsigned int level= tr.n_levels() - 1;
 
   {
     deallog.push("(tt)ffff");
@@ -66,12 +66,12 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     BlockMask                 exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
     std::cout << exclude_boundary_dofs.size() << std::endl;
-    vm = DoFTools::make_vertex_patches(
+    vm= DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
     bl.compress();
     print_patches(bl);
     deallog.push("vertex mapping");
-    for(unsigned int i = 0; i < vm.size(); ++i)
+    for(unsigned int i= 0; i < vm.size(); ++i)
       deallog << " " << vm[i];
     deallog << std::endl;
     deallog.pop();
@@ -82,15 +82,15 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     deallog.push("(tf)ffff");
     SparsityPattern   bl;
     std::vector<bool> temp_vector(2, true);
-    temp_vector[1] = false;
+    temp_vector[1]= false;
     BlockMask                 exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
-    vm = DoFTools::make_vertex_patches(
+    vm= DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
     bl.compress();
     print_patches(bl);
     deallog.push("vertex mapping");
-    for(unsigned int i = 0; i < vm.size(); ++i)
+    for(unsigned int i= 0; i < vm.size(); ++i)
       deallog << " " << vm[i];
     deallog << std::endl;
     deallog.pop();
@@ -101,15 +101,15 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     deallog.push("(ft)ffff");
     SparsityPattern   bl;
     std::vector<bool> temp_vector(2, false);
-    temp_vector[1] = true;
+    temp_vector[1]= true;
     BlockMask                 exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
-    vm = DoFTools::make_vertex_patches(
+    vm= DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
     bl.compress();
     print_patches(bl);
     deallog.push("vertex mapping");
-    for(unsigned int i = 0; i < vm.size(); ++i)
+    for(unsigned int i= 0; i < vm.size(); ++i)
       deallog << " " << vm[i];
     deallog << std::endl;
     deallog.pop();
@@ -122,12 +122,12 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     std::vector<bool>         temp_vector(2, false);
     BlockMask                 exclude_boundary_dofs(temp_vector);
     std::vector<unsigned int> vm;
-    vm = DoFTools::make_vertex_patches(
+    vm= DoFTools::make_vertex_patches(
       bl, dof, level, exclude_boundary_dofs, false, false, false, false);
     bl.compress();
     print_patches(bl);
     deallog.push("vertex mapping");
-    for(unsigned int i = 0; i < vm.size(); ++i)
+    for(unsigned int i= 0; i < vm.size(); ++i)
       deallog << " " << vm[i];
     deallog << std::endl;
     deallog.pop();

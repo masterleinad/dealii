@@ -351,7 +351,7 @@ public:
    */
   template <typename MatrixType>
   FilteredMatrix(const MatrixType& matrix,
-                 const bool        expect_constrained_source = false);
+                 const bool        expect_constrained_source= false);
 
   /**
    * Copy operator. Take over matrix and constraints from the other object.
@@ -370,7 +370,7 @@ public:
    */
   template <typename MatrixType>
   void
-  initialize(const MatrixType& m, const bool expect_constrained_source = false);
+  initialize(const MatrixType& m, const bool expect_constrained_source= false);
 
   /**
    * Delete all constraints and the matrix pointer.
@@ -684,7 +684,7 @@ FilteredMatrix<VectorType>::initialize(const MatrixType& m, bool ecs)
 {
   matrix.reset(new_pointer_matrix_base(m, VectorType()));
 
-  expect_constrained_source = ecs;
+  expect_constrained_source= ecs;
 }
 
 template <typename VectorType>
@@ -713,9 +713,9 @@ template <typename VectorType>
 inline FilteredMatrix<VectorType>&
 FilteredMatrix<VectorType>::operator=(const FilteredMatrix& fm)
 {
-  matrix                    = fm.matrix;
-  expect_constrained_source = fm.expect_constrained_source;
-  constraints               = fm.constraints;
+  matrix                   = fm.matrix;
+  expect_constrained_source= fm.expect_constrained_source;
+  constraints              = fm.constraints;
   return *this;
 }
 
@@ -735,7 +735,7 @@ FilteredMatrix<VectorType>::add_constraints(
   const ConstraintList& new_constraints)
 {
   // add new constraints to end
-  const size_type old_size = constraints.size();
+  const size_type old_size= constraints.size();
   constraints.reserve(old_size + new_constraints.size());
   constraints.insert(
     constraints.end(), new_constraints.begin(), new_constraints.end());
@@ -780,12 +780,12 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
   tmp_vector->reinit(v);
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  const_index_value_iterator       i= constraints.begin();
+  const const_index_value_iterator e= constraints.end();
   for(; i != e; ++i)
     {
       AssertIsFinite(i->second);
-      (*tmp_vector)(i->first) = -i->second;
+      (*tmp_vector)(i->first)= -i->second;
     }
 
   // This vmult is without bc, to get
@@ -794,10 +794,10 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
   matrix->vmult_add(v, *tmp_vector);
   // finally set constrained
   // entries themselves
-  for(i = constraints.begin(); i != e; ++i)
+  for(i= constraints.begin(); i != e; ++i)
     {
       AssertIsFinite(i->second);
-      v(i->first) = i->second;
+      v(i->first)= i->second;
     }
 }
 
@@ -807,10 +807,10 @@ FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
 {
   // iterate over all constraints and
   // zero out value
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  const_index_value_iterator       i= constraints.begin();
+  const const_index_value_iterator e= constraints.end();
   for(; i != e; ++i)
-    v(i->first) = 0;
+    v(i->first)= 0;
 }
 
 template <typename VectorType>
@@ -820,12 +820,12 @@ FilteredMatrix<VectorType>::post_filter(const VectorType& in,
 {
   // iterate over all constraints and
   // set value correctly
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  const_index_value_iterator       i= constraints.begin();
+  const const_index_value_iterator e= constraints.end();
   for(; i != e; ++i)
     {
       AssertIsFinite(in(i->first));
-      out(i->first) = in(i->first);
+      out(i->first)= in(i->first);
     }
 }
 
@@ -840,7 +840,7 @@ FilteredMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
       // first copy over src vector and
       // pre-filter
       tmp_vector->reinit(src, true);
-      *tmp_vector = src;
+      *tmp_vector= src;
       pre_filter(*tmp_vector);
       // then let matrix do its work
       matrix->vmult(dst, *tmp_vector);
@@ -865,7 +865,7 @@ FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
       // first copy over src vector and
       // pre-filter
       tmp_vector->reinit(src, true);
-      *tmp_vector = src;
+      *tmp_vector= src;
       pre_filter(*tmp_vector);
       // then let matrix do its work
       matrix->Tvmult(dst, *tmp_vector);
@@ -891,7 +891,7 @@ FilteredMatrix<VectorType>::vmult_add(VectorType&       dst,
       // first copy over src vector and
       // pre-filter
       tmp_vector->reinit(src, true);
-      *tmp_vector = src;
+      *tmp_vector= src;
       pre_filter(*tmp_vector);
       // then let matrix do its work
       matrix->vmult_add(dst, *tmp_vector);
@@ -917,7 +917,7 @@ FilteredMatrix<VectorType>::Tvmult_add(VectorType&       dst,
       // first copy over src vector and
       // pre-filter
       tmp_vector->reinit(src, true);
-      *tmp_vector = src;
+      *tmp_vector= src;
       pre_filter(*tmp_vector);
       // then let matrix do its work
       matrix->Tvmult_add(dst, *tmp_vector);

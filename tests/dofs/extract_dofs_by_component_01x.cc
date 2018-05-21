@@ -52,12 +52,12 @@ check()
   // use a mask that only has the
   // first component set
   std::vector<bool> component_mask(element.n_components(), false);
-  component_mask[0] = true;
+  component_mask[0]= true;
 
   std::vector<bool> dofs(dof.n_dofs());
   DoFTools::extract_dofs(dof, ComponentMask(component_mask), dofs);
 
-  for(unsigned int d = 0; d < dof.n_dofs(); ++d)
+  for(unsigned int d= 0; d < dof.n_dofs(); ++d)
     deallog << dofs[d];
   deallog << std::endl;
 }

@@ -52,20 +52,20 @@ transfer(std::ostream& out)
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());
 
-  for(unsigned int i = 0; i < solution.size(); ++i)
-    solution(i) = i;
+  for(unsigned int i= 0; i < solution.size(); ++i)
+    solution(i)= i;
 
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> soltrans(
     dof_handler);
 
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active(),
+                                                    endc= tria.end();
   ++cell;
   ++cell;
   for(; cell != endc; ++cell)
     cell->set_refine_flag();
 
-  Vector<double> old_solution = solution;
+  Vector<double> old_solution= solution;
   tria.prepare_coarsening_and_refinement();
   soltrans.prepare_for_pure_refinement();
   tria.execute_coarsening_and_refinement();

@@ -34,7 +34,7 @@ struct X
          ScratchData&,
          CopyData& ad)
   {
-    ad.computed = *i * 2;
+    ad.computed= *i * 2;
   }
 
   void
@@ -48,7 +48,7 @@ void
 test()
 {
   std::vector<unsigned int> v;
-  for(unsigned int i = 0; i < 20; ++i)
+  for(unsigned int i= 0; i < 20; ++i)
     v.push_back(i);
 
   X x;

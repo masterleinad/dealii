@@ -88,7 +88,7 @@ namespace LinearAlgebra
        * Sending 20 kB at a throughput of 5 GB/s takes 4 microseconds,
        * so we should arrive at the bandwidth dominated regime then which is good enough.
        */
-      static constexpr unsigned int communication_block_size = 20;
+      static constexpr unsigned int communication_block_size= 20;
 
     public:
       /**
@@ -129,8 +129,8 @@ namespace LinearAlgebra
        * Confer the other constructor further down if you intend to use blocks
        * of different sizes.
        */
-      explicit BlockVector(const size_type num_blocks = 0,
-                           const size_type block_size = 0);
+      explicit BlockVector(const size_type num_blocks= 0,
+                           const size_type block_size= 0);
 
       /**
        * Copy-Constructor. Dimension set to that of V, all components are
@@ -241,8 +241,8 @@ namespace LinearAlgebra
        */
       void
       reinit(const size_type num_blocks,
-             const size_type block_size           = 0,
-             const bool      omit_zeroing_entries = false);
+             const size_type block_size          = 0,
+             const bool      omit_zeroing_entries= false);
 
       /**
        * Reinitialize the BlockVector such that it contains
@@ -265,7 +265,7 @@ namespace LinearAlgebra
        */
       void
       reinit(const std::vector<size_type>& N,
-             const bool                    omit_zeroing_entries = false);
+             const bool                    omit_zeroing_entries= false);
 
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
@@ -284,7 +284,7 @@ namespace LinearAlgebra
       template <typename Number2>
       void
       reinit(const BlockVector<Number2>& V,
-             const bool                  omit_zeroing_entries = false);
+             const bool                  omit_zeroing_entries= false);
 
       /**
        * This function copies the data that has accumulated in the data buffer
@@ -435,7 +435,7 @@ namespace LinearAlgebra
        */
       virtual void
       reinit(const VectorSpaceVector<Number>& V,
-             const bool omit_zeroing_entries = false) override;
+             const bool omit_zeroing_entries= false) override;
 
       /**
        * Multiply the entire vector by a fixed factor.
@@ -501,7 +501,7 @@ namespace LinearAlgebra
       void
       multivector_inner_product(FullMatrixType&            matrix,
                                 const BlockVector<Number>& V,
-                                const bool symmetric = false) const;
+                                const bool symmetric= false) const;
 
       /**
        * Calculate the scalar product between each block of this vector and @p V
@@ -522,7 +522,7 @@ namespace LinearAlgebra
       Number
       multivector_inner_product_with_metric(const FullMatrixType&      matrix,
                                             const BlockVector<Number>& V,
-                                            const bool symmetric = false) const;
+                                            const bool symmetric= false) const;
 
       /**
        * Set each block of this vector as follows:
@@ -537,8 +537,8 @@ namespace LinearAlgebra
       void
       mmult(BlockVector<Number>&  V,
             const FullMatrixType& matrix,
-            const Number          s = Number(0.),
-            const Number          b = Number(1.)) const;
+            const Number          s= Number(0.),
+            const Number          b= Number(1.)) const;
 
       /**
        * Add @p a to all components. Note that @p a is a scalar not a vector.
@@ -669,9 +669,9 @@ namespace LinearAlgebra
        */
       virtual void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.

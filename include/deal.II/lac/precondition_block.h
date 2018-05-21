@@ -76,7 +76,7 @@ DEAL_II_NAMESPACE_OPEN
  * @date 1999, 2000, 2010
  */
 template <typename MatrixType,
-          typename inverse_type = typename MatrixType::value_type>
+          typename inverse_type= typename MatrixType::value_type>
 class PreconditionBlock : public virtual Subscriptor,
                           protected PreconditionBlockBase<inverse_type>
 {
@@ -108,9 +108,9 @@ public:
      * default parameter.
      */
     AdditionalData(const size_type block_size,
-                   const double    relaxation      = 1.,
-                   const bool      invert_diagonal = true,
-                   const bool      same_diagonal   = false);
+                   const double    relaxation     = 1.,
+                   const bool      invert_diagonal= true,
+                   const bool      same_diagonal  = false);
 
     /**
      * Relaxation parameter.
@@ -147,12 +147,12 @@ public:
   /**
    * Constructor.
    */
-  PreconditionBlock(bool store_diagonals = false);
+  PreconditionBlock(bool store_diagonals= false);
 
   /**
    * Destructor.
    */
-  ~PreconditionBlock() override = default;
+  ~PreconditionBlock() override= default;
 
   /**
    * Initialize matrix and block size.  We store the matrix and the block size
@@ -370,7 +370,7 @@ protected:
  * @author Ralf Hartmann, Guido Kanschat, 1999, 2000, 2003
  */
 template <typename MatrixType,
-          typename inverse_type = typename MatrixType::value_type>
+          typename inverse_type= typename MatrixType::value_type>
 class PreconditionBlockJacobi
   : public virtual Subscriptor,
     private PreconditionBlock<MatrixType, inverse_type>
@@ -646,7 +646,7 @@ private:
  * @author Ralf Hartmann, Guido Kanschat, 1999, 2000, 2001, 2002, 2003
  */
 template <typename MatrixType,
-          typename inverse_type = typename MatrixType::value_type>
+          typename inverse_type= typename MatrixType::value_type>
 class PreconditionBlockSOR
   : public virtual Subscriptor,
     protected PreconditionBlock<MatrixType, inverse_type>
@@ -810,7 +810,7 @@ protected:
  * @author Ralf Hartmann, Guido Kanschat, 1999, 2000
  */
 template <typename MatrixType,
-          typename inverse_type = typename MatrixType::value_type>
+          typename inverse_type= typename MatrixType::value_type>
 class PreconditionBlockSSOR
   : public virtual Subscriptor,
     private PreconditionBlockSOR<MatrixType, inverse_type>
@@ -904,13 +904,13 @@ template <typename MatrixType, typename inverse_type>
 inline inverse_type
 PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
 {
-  const size_type    bs = blocksize;
-  const unsigned int nb = i / bs;
+  const size_type    bs= blocksize;
+  const unsigned int nb= i / bs;
 
-  const FullMatrix<inverse_type>& B = this->inverse(nb);
+  const FullMatrix<inverse_type>& B= this->inverse(nb);
 
-  const size_type ib = i % bs;
-  const size_type jb = j % bs;
+  const size_type ib= i % bs;
+  const size_type jb= j % bs;
 
   if(jb + nb * bs != j)
     {
@@ -931,18 +931,18 @@ inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
     b_iterator(&matrix->inverse(0), 0, 0),
     b_end(&matrix->inverse(0), 0, 0)
 {
-  bs      = matrix->block_size();
-  a_block = row / bs;
+  bs     = matrix->block_size();
+  a_block= row / bs;
 
   // This is the end accessor, which
   // does not have a valid block.
   if(a_block == matrix->size())
     return;
 
-  const size_type r = row % bs;
+  const size_type r= row % bs;
 
-  b_iterator = matrix->inverse(a_block).begin(r);
-  b_end      = matrix->inverse(a_block).end();
+  b_iterator= matrix->inverse(a_block).begin(r);
+  b_end     = matrix->inverse(a_block).end();
 
   Assert(a_block < matrix->size(), ExcIndexRange(a_block, 0, matrix->size()));
 }
@@ -1002,7 +1002,7 @@ inline
         {
           accessor.b_iterator
             = accessor.matrix->inverse(accessor.a_block).begin();
-          accessor.b_end = accessor.matrix->inverse(accessor.a_block).end();
+          accessor.b_end= accessor.matrix->inverse(accessor.a_block).end();
         }
     }
   return *this;

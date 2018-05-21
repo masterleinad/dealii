@@ -36,8 +36,8 @@ main()
   dof.distribute_dofs(fe);
 
   Vector<double> sol(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
-    sol(i) = i;
+  for(unsigned int i= 0; i < dof.n_dofs(); ++i)
+    sol(i)= i;
 
   // test output using DataOutStack
   DataOutStack<2> data_out_stack;

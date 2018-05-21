@@ -265,7 +265,7 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @author Guido Kanschat, 2002
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FE_DGPNonparametric : public FiniteElement<dim, spacedim>
 {
 public:

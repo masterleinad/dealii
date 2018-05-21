@@ -29,11 +29,11 @@
 void
 test()
 {
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  const unsigned int my_id   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  const unsigned int my_id  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  const unsigned int n_rows = 3;
-  const unsigned int n_cols = 4;
+  const unsigned int n_rows= 3;
+  const unsigned int n_cols= 4;
 
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
@@ -93,22 +93,22 @@ test()
     col_partitioning, col_partitioning, MPI_COMM_WORLD),
     dy(row_partitioning, row_partitioning, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < row_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = row_partitioning.nth_index_in_set(i);
-      dy(global_index)                = random_value<double>();
-      y(global_index)                 = dy(global_index);
+      const unsigned int global_index= row_partitioning.nth_index_in_set(i);
+      dy(global_index)               = random_value<double>();
+      y(global_index)                = dy(global_index);
     }
-  dx = 1.;
+  dx= 1.;
 
   A.Tvmult(x, y);
   A.Tvmult(dx, dy);
 
   // compare whether we got the same result
   // (should be no roundoff difference)
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for(unsigned int i= 0; i < col_partitioning.n_elements(); ++i)
     {
-      const unsigned int global_index = col_partitioning.nth_index_in_set(i);
+      const unsigned int global_index= col_partitioning.nth_index_in_set(i);
       Assert(dx(global_index) == x(global_index), ExcInternalError());
     }
   if(my_id == 0)
@@ -121,8 +121,8 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_procs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int       myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

@@ -38,8 +38,8 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   {
-    const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    const unsigned int size= 31;
+    unsigned int       dim = (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl << std::endl;
 
@@ -52,15 +52,15 @@ main(int argc, char** argv)
     PETScWrappers::MPI::Vector v0(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector y(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector x(MPI_COMM_WORLD, dim, dim);
-    for(unsigned int j = 0; j < v0.size(); ++j)
-      v0[j] = random_value<double>();
+    for(unsigned int j= 0; j < v0.size(); ++j)
+      v0[j]= random_value<double>();
 
     v0.compress(VectorOperation::insert);
     GrowingVectorMemory<PETScWrappers::MPI::Vector> vector_memory;
 
-    for(unsigned int k = 4; k < 10; ++k)
+    for(unsigned int k= 4; k < 10; ++k)
       {
-        const double est = Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
+        const double est= Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
           A, v0, k, vector_memory);
         Assert(est > 3.98974, ExcInternalError());
         deallog << k << std::endl << "Lanczos " << est << std::endl;
@@ -77,9 +77,9 @@ main(int argc, char** argv)
           SolverCG<PETScWrappers::MPI::Vector> solver(control);
           solver.connect_eigenvalues_slot(
             [&estimated_eigenvalues](const std::vector<double>& ev) -> void {
-              estimated_eigenvalues = ev;
+              estimated_eigenvalues= ev;
             });
-          y = v0;
+          y= v0;
           PreconditionIdentity preconditioner;
           try
             {

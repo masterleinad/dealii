@@ -48,9 +48,9 @@ void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
               MGLevelObject<dealii::Vector<number>>&   v)
 {
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for(unsigned int level= v.min_level(); level <= v.max_level(); ++level)
     {
-      unsigned int n = mg_dof.n_dofs(level);
+      unsigned int n= mg_dof.n_dofs(level);
       v[level].reinit(n);
     }
 }
@@ -59,24 +59,23 @@ template <int dim>
 void
 refine_mesh(Triangulation<dim>& triangulation)
 {
-  bool cell_refined = false;
+  bool cell_refined= false;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
       ++cell)
     {
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
+      for(unsigned int vertex= 0; vertex < GeometryInfo<dim>::vertices_per_cell;
           ++vertex)
         {
-          const Point<dim> p = cell->vertex(vertex);
+          const Point<dim> p= cell->vertex(vertex);
           const Point<dim> origin
             = (dim == 2 ? Point<dim>(0, 0) : Point<dim>(0, 0, 0));
-          const double dist = p.distance(origin);
+          const double dist= p.distance(origin);
           if(dist < 0.25 / numbers::PI)
             {
               cell->set_refine_flag();
-              cell_refined = true;
+              cell_refined= true;
               break;
             }
         }
@@ -94,16 +93,16 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
-  unsigned int       counter       = 0;
-  const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
+  unsigned int       counter      = 0;
+  const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+  for(typename DoFHandler<dim>::active_cell_iterator cell= dof.begin_active();
       cell != dof.end();
       ++cell)
     {
       cell->get_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        u(dof_indices[i]) = ++counter;
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        u(dof_indices[i])= ++counter;
     }
 }
 
@@ -111,31 +110,31 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
-  const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-  const unsigned int dofs_per_face = dof.get_fe().dofs_per_face;
+  const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
+  const unsigned int dofs_per_face= dof.get_fe().dofs_per_face;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
   std::vector<types::global_dof_index> face_indices(dofs_per_face);
 
-  for(unsigned int l = 0; l < dof.get_triangulation().n_levels(); ++l)
+  for(unsigned int l= 0; l < dof.get_triangulation().n_levels(); ++l)
     {
-      for(typename DoFHandler<dim>::cell_iterator cell = dof.begin_mg(l);
+      for(typename DoFHandler<dim>::cell_iterator cell= dof.begin_mg(l);
           cell != dof.end_mg(l);
           ++cell)
         {
           cell->get_mg_dof_indices(dof_indices);
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             {
               cell->face(f)->get_mg_dof_indices(cell->level(), face_indices);
               if(cell->face(f)->at_boundary())
                 {
-                  for(unsigned int i = 0; i < dofs_per_face; ++i)
-                    u[cell->level()](face_indices[i]) = 1;
+                  for(unsigned int i= 0; i < dofs_per_face; ++i)
+                    u[cell->level()](face_indices[i])= 1;
                 }
               else
                 {
-                  for(unsigned int i = 0; i < dofs_per_face; ++i)
+                  for(unsigned int i= 0; i < dofs_per_face; ++i)
                     if(u[cell->level()](face_indices[i]) != 1)
-                      u[cell->level()](face_indices[i]) = 0;
+                      u[cell->level()](face_indices[i])= 0;
                 }
             }
         }
@@ -146,18 +145,18 @@ template <int dim>
 void
 print(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
-  const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
+  const unsigned int dofs_per_cell= dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
-  for(unsigned int l = 0; l < dof.get_triangulation().n_levels(); ++l)
+  for(unsigned int l= 0; l < dof.get_triangulation().n_levels(); ++l)
     {
       deallog << std::endl;
       deallog << "Level " << l << std::endl;
-      for(typename DoFHandler<dim>::cell_iterator cell = dof.begin_mg(l);
+      for(typename DoFHandler<dim>::cell_iterator cell= dof.begin_mg(l);
           cell != dof.end_mg(l);
           ++cell)
         {
           cell->get_mg_dof_indices(dof_indices);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for(unsigned int i= 0; i < dofs_per_cell; ++i)
             deallog << ' ' << (int) u[l](dof_indices[i]);
         }
     }
@@ -172,19 +171,19 @@ print_diff(const DoFHandler<dim>& dof_1,
 {
   Vector<double> diff;
   diff.reinit(u);
-  const unsigned int dofs_per_cell = dof_1.get_fe().dofs_per_cell;
+  const unsigned int dofs_per_cell= dof_1.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices_1(dofs_per_cell);
   std::vector<types::global_dof_index> dof_indices_2(dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell_1
       = dof_1.begin_active(),
-      cell_2 = dof_2.begin_active();
+      cell_2= dof_2.begin_active();
       cell_1 != dof_1.end();
       ++cell_1, ++cell_2)
     {
       cell_1->get_dof_indices(dof_indices_1);
       cell_2->get_dof_indices(dof_indices_2);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        diff(dof_indices_1[i]) = u(dof_indices_1[i]) - v(dof_indices_2[i]);
+      for(unsigned int i= 0; i < dofs_per_cell; ++i)
+        diff(dof_indices_1[i])= u(dof_indices_1[i]) - v(dof_indices_2[i]);
     }
   deallog << std::endl;
   deallog << "diff " << diff.l2_norm() << std::endl;
@@ -217,11 +216,11 @@ check_simple(const FiniteElement<dim>& fe)
   mgdof_renumbered.distribute_mg_dofs(fe);
 
   std::vector<unsigned int> block_component(4, 0);
-  block_component[2] = 1;
-  block_component[3] = 1;
+  block_component[2]= 1;
+  block_component[3]= 1;
 
   DoFRenumbering::component_wise(mgdof_renumbered, block_component);
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for(unsigned int level= 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mgdof_renumbered, level, block_component);
 
   MGConstrainedDoFs mg_constrained_dofs;
@@ -251,13 +250,13 @@ check_simple(const FiniteElement<dim>& fe)
 
   // Forget everything so far and fill v with a cell based
   // numbering. Prolongate from coarse grid up and transfer to u.
-  u = 0;
+  u= 0;
   initialize(mgdof, v);
-  for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
+  for(unsigned int l= 0; l < tr.n_levels() - 1; ++l)
     transfer.prolongate(l + 1, v[l + 1], v[l]);
 
   transfer.copy_from_mg(mgdof, u, v);
-  Vector<double> diff = u;
+  Vector<double> diff= u;
 
   // Do the same for the renumbered mesh
   initialize(mgdof_renumbered, u);
@@ -268,9 +267,9 @@ check_simple(const FiniteElement<dim>& fe)
 
   // Prolongate up from coarse mesh and make sure the result does not
   // depend on numbering
-  u = 0;
+  u= 0;
   initialize(mgdof_renumbered, v);
-  for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
+  for(unsigned int l= 0; l < tr.n_levels() - 1; ++l)
     transfer_renumbered.prolongate(l + 1, v[l + 1], v[l]);
 
   transfer_renumbered.copy_from_mg(mgdof_renumbered, u, v);

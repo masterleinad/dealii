@@ -25,8 +25,8 @@ void
 test()
 {
   PETScWrappers::SparseMatrix m(10, 10, 10);
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for(unsigned int i= 0; i < m.m(); ++i)
+    for(unsigned int j= 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
   m.compress(VectorOperation::insert);
@@ -34,8 +34,8 @@ test()
   {
     PETScWrappers::SparseMatrix m2;
 
-    Mat mm  = m;
-    Mat m2m = m2;
+    Mat mm = m;
+    Mat m2m= m2;
 
     //deallog << mm << " " << m2m << std::endl;
 
@@ -43,8 +43,8 @@ test()
     {
       //forbidden: PETScWrappers::SparseMatrix m3=m2;
 
-      Mat mm  = m;
-      Mat m2m = m2;
+      Mat mm = m;
+      Mat m2m= m2;
       //deallog << mm << " " << m2m << std::endl;
     }
   }

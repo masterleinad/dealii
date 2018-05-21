@@ -40,8 +40,8 @@ main()
   deallog.attach(logfile);
 
   Threads::ThreadGroup<double> tg;
-  tg += Threads::new_thread(std::bind(test, 1));
-  tg += Threads::new_thread([]() { return test(2); });
+  tg+= Threads::new_thread(std::bind(test, 1));
+  tg+= Threads::new_thread([]() { return test(2); });
 
   tg.join_all();
 

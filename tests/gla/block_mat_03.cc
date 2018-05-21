@@ -46,8 +46,8 @@ template <class LA, int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -63,7 +63,7 @@ test()
 
   std::vector<types::global_dof_index> dofs_per_block(fe.n_blocks());
   std::vector<unsigned int>            sub_blocks(fe.n_blocks(), 0);
-  sub_blocks[1] = 1;
+  sub_blocks[1]= 1;
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, sub_blocks);
 
   deallog << "size: " << dofs_per_block[0] << " " << dofs_per_block[1]
@@ -79,7 +79,7 @@ test()
   locally_relevant_partitioning.push_back(locally_relevant_dofs.get_view(
     dofs_per_block[0], dofs_per_block[0] + dofs_per_block[1]));
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   locally_owned_partitioning.push_back(
     locally_owned_dofs.get_view(0, dofs_per_block[0]));
   locally_owned_partitioning.push_back(locally_owned_dofs.get_view(
@@ -111,22 +111,22 @@ test()
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   FullMatrix<number> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  for(DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
     if(cell->is_locally_owned())
       {
         fe_values.reinit(cell);
-        local_matrix = number();
+        local_matrix= number();
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+        for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
             ++q_point)
           {
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-                  local_matrix(i, j) += fe_values.shape_value(i, q_point)
-                                        * fe_values.shape_value(j, q_point);
+                for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+                  local_matrix(i, j)+= fe_values.shape_value(i, q_point)
+                                       * fe_values.shape_value(j, q_point);
               }
           }
 
@@ -148,8 +148,8 @@ void
 test_alt()
 {
   typedef LA_Trilinos LA;
-  unsigned int        myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int        numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int        myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int        numproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -165,7 +165,7 @@ test_alt()
 
   std::vector<types::global_dof_index> dofs_per_block(fe.n_blocks());
   std::vector<unsigned int>            sub_blocks(fe.n_blocks(), 0);
-  sub_blocks[1] = 1;
+  sub_blocks[1]= 1;
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, sub_blocks);
 
   deallog << "size: " << dofs_per_block[0] << " " << dofs_per_block[1]
@@ -181,7 +181,7 @@ test_alt()
   locally_relevant_partitioning.push_back(locally_relevant_dofs.get_view(
     dofs_per_block[0], dofs_per_block[0] + dofs_per_block[1]));
 
-  IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet locally_owned_dofs= dof_handler.locally_owned_dofs();
   locally_owned_partitioning.push_back(
     locally_owned_dofs.get_view(0, dofs_per_block[0]));
   locally_owned_partitioning.push_back(locally_owned_dofs.get_view(
@@ -213,22 +213,22 @@ test_alt()
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   FullMatrix<double> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+  for(DoFHandler<3>::active_cell_iterator cell= dof_handler.begin_active();
       cell != dof_handler.end();
       ++cell)
     if(cell->is_locally_owned())
       {
         fe_values.reinit(cell);
-        local_matrix = 0.0;
+        local_matrix= 0.0;
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+        for(unsigned int q_point= 0; q_point < fe_values.n_quadrature_points;
             ++q_point)
           {
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for(unsigned int i= 0; i < fe.dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-                  local_matrix(i, j) += fe_values.shape_value(i, q_point)
-                                        * fe_values.shape_value(j, q_point);
+                for(unsigned int j= 0; j < fe.dofs_per_cell; ++j)
+                  local_matrix(i, j)+= fe_values.shape_value(i, q_point)
+                                       * fe_values.shape_value(j, q_point);
               }
           }
 

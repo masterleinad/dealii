@@ -29,23 +29,23 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   std::vector<Point<spacedim>> vertices(GeometryInfo<dim>::vertices_per_cell);
   std::vector<CellData<dim>>   cells(1);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-    cells[0].vertices[i] = i;
-  cells[0].material_id = 0;
+  for(unsigned int i= 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    cells[0].vertices[i]= i;
+  cells[0].material_id= 0;
 
-  vertices[0] = Point<dim>(0, 0, 0);
-  vertices[1] = Point<dim>(1, 0, 0);
-  vertices[2] = Point<dim>(0.5, 0.4, 0);
-  vertices[3] = Point<dim>(1.5, 0.4, 0);
+  vertices[0]= Point<dim>(0, 0, 0);
+  vertices[1]= Point<dim>(1, 0, 0);
+  vertices[2]= Point<dim>(0.5, 0.4, 0);
+  vertices[3]= Point<dim>(1.5, 0.4, 0);
 
-  vertices[4] = Point<dim>(0, 0, 1);
-  vertices[5] = Point<dim>(1, 0, 1);
-  vertices[6] = Point<dim>(0.5, 0.4, 1);
-  vertices[7] = Point<dim>(1.5, 0.4, 1);
+  vertices[4]= Point<dim>(0, 0, 1);
+  vertices[5]= Point<dim>(1, 0, 1);
+  vertices[6]= Point<dim>(0.5, 0.4, 1);
+  vertices[7]= Point<dim>(1.5, 0.4, 1);
 
   Triangulation<dim, spacedim> tria;
   tria.create_triangulation(vertices, cells, SubCellData());

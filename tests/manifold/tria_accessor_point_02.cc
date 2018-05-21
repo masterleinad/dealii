@@ -28,7 +28,7 @@
 // Helper function
 template <int dim, int spacedim>
 void
-test(unsigned int ref = 1)
+test(unsigned int ref= 1)
 {
   deallog << "Testing dim " << dim << ", spacedim " << spacedim << std::endl;
 
@@ -53,7 +53,7 @@ test(unsigned int ref = 1)
       cell != tria.end();
       ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for(unsigned int f= 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if(cell->face(f)->at_boundary())
           deallog << "Center: " << cell->face(f)->center(true, true)
                   << ", Norm: " << cell->face(f)->center(true, true).norm()

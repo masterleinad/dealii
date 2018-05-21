@@ -47,8 +47,8 @@ main()
   Standard_Real radius(1.);
 
   GC_MakeCircle make_circle(axis, radius);
-  Handle(Geom_Circle) circle = make_circle.Value();
-  TopoDS_Edge edge           = BRepBuilderAPI_MakeEdge(circle);
+  Handle(Geom_Circle) circle= make_circle.Value();
+  TopoDS_Edge edge          = BRepBuilderAPI_MakeEdge(circle);
 
   // Now get a few points and project
   // them on the circle
@@ -67,15 +67,15 @@ main()
 
   double       u, v;
   TopoDS_Shape sh;
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for(unsigned int i= 0; i < points.size(); ++i)
     {
       std::tuple<Point<3>, TopoDS_Shape, double, double> ref
         = project_point_and_pull_back(edge, points[i]);
 
-      Point<3> pp = std::get<0>(ref);
-      sh          = std::get<1>(ref);
-      u           = std::get<2>(ref);
-      v           = std::get<3>(ref);
+      Point<3> pp= std::get<0>(ref);
+      sh         = std::get<1>(ref);
+      u          = std::get<2>(ref);
+      v          = std::get<3>(ref);
 
       deallog << "Origin: " << points[i] << ", on unit circle: " << pp
               << ", with local coordinates (u, v): (" << u << ", " << v << ")"

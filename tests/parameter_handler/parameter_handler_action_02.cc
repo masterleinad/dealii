@@ -29,12 +29,12 @@ check(const char* p)
     "test_1", "-1,0", Patterns::List(Patterns::Integer(-1, 1), 2, 3));
   prm.add_action("test_1", [&](const std::string& s) {
     deallog << "In action 1:" << s << std::endl;
-    parameter_set_by_action = s;
+    parameter_set_by_action= s;
     return true;
   });
   prm.add_action("test_1", [&](const std::string& s) {
     deallog << "In action 2:" << s << std::endl;
-    parameter_set_by_action = s + " some modification";
+    parameter_set_by_action= s + " some modification";
     return true;
   });
 

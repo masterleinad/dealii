@@ -32,9 +32,9 @@ test()
   GridGenerator::hyper_cube(tria);
 
   {
-    auto m = cache.get_vertex_to_cell_map();
+    auto m= cache.get_vertex_to_cell_map();
 
-    unsigned int i = 0;
+    unsigned int i= 0;
     for(auto& v : m)
       {
         for(auto& c : v)
@@ -46,9 +46,9 @@ test()
 
   tria.refine_global(1);
   {
-    auto m = cache.get_vertex_to_cell_map();
+    auto m= cache.get_vertex_to_cell_map();
 
-    unsigned int i = 0;
+    unsigned int i= 0;
     for(auto& v : m)
       {
         for(auto& c : v)

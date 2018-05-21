@@ -114,26 +114,26 @@ namespace Utilities
           {
 #  ifdef DEBUG
             {
-              const unsigned int rank     = this_mpi_process(mpi_communicator);
-              unsigned int       size     = values.size();
-              unsigned int       size_min = 0;
-              unsigned int       size_max = 0;
-              int                ierr2    = 0;
-              ierr2                       = MPI_Reduce(&size,
-                                 &size_min,
-                                 1,
-                                 MPI_UNSIGNED,
-                                 MPI_MIN,
-                                 0,
-                                 mpi_communicator);
+              const unsigned int rank    = this_mpi_process(mpi_communicator);
+              unsigned int       size    = values.size();
+              unsigned int       size_min= 0;
+              unsigned int       size_max= 0;
+              int                ierr2   = 0;
+              ierr2                      = MPI_Reduce(&size,
+                                &size_min,
+                                1,
+                                MPI_UNSIGNED,
+                                MPI_MIN,
+                                0,
+                                mpi_communicator);
               AssertThrowMPI(ierr2);
-              ierr2 = MPI_Reduce(&size,
-                                 &size_max,
-                                 1,
-                                 MPI_UNSIGNED,
-                                 MPI_MAX,
-                                 0,
-                                 mpi_communicator);
+              ierr2= MPI_Reduce(&size,
+                                &size_max,
+                                1,
+                                MPI_UNSIGNED,
+                                MPI_MAX,
+                                0,
+                                mpi_communicator);
               AssertThrowMPI(ierr2);
               if(rank == 0)
                 Assert(size_min == size_max,
@@ -141,7 +141,7 @@ namespace Utilities
                          "values has different size across MPI processes."));
             }
 #  endif
-            const int ierr = MPI_Allreduce(
+            const int ierr= MPI_Allreduce(
               values != output ?
                 // TODO This const_cast is only needed for older
                 // (e.g., openMPI 1.6, released in 2012)
@@ -178,7 +178,7 @@ namespace Utilities
 #ifdef DEAL_II_WITH_MPI
         if(job_supports_mpi())
           {
-            const int ierr = MPI_Allreduce(
+            const int ierr= MPI_Allreduce(
               values != output ?
                 // TODO This const_cast is only needed for older
                 // (e.g., openMPI 1.6, released in 2012)
@@ -224,7 +224,7 @@ namespace Utilities
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
                     "Input and output arguments must have the same type!");
-      const auto array_view_values = make_array_view(values);
+      const auto array_view_values= make_array_view(values);
       using const_type
         = ArrayView<const typename decltype(array_view_values)::value_type>;
       sum(static_cast<const_type>(array_view_values),
@@ -261,16 +261,16 @@ namespace Utilities
       Number
         entries[SymmetricTensor<rank, dim, Number>::n_independent_components];
 
-      for(unsigned int i = 0; i < n_entries; ++i)
-        entries[i] = local[local.unrolled_to_component_indices(i)];
+      for(unsigned int i= 0; i < n_entries; ++i)
+        entries[i]= local[local.unrolled_to_component_indices(i)];
 
       Number global_entries
         [SymmetricTensor<rank, dim, Number>::n_independent_components];
       sum(entries, mpi_communicator, global_entries);
 
       SymmetricTensor<rank, dim, Number> global;
-      for(unsigned int i = 0; i < n_entries; ++i)
-        global[global.unrolled_to_component_indices(i)] = global_entries[i];
+      for(unsigned int i= 0; i < n_entries; ++i)
+        global[global.unrolled_to_component_indices(i)]= global_entries[i];
 
       return global;
     }
@@ -294,7 +294,7 @@ namespace Utilities
 #else
       (void) mpi_communicator;
       if(!PointerComparison::equal(&local, &global))
-        global = local;
+        global= local;
 #endif
     }
 
@@ -317,7 +317,7 @@ namespace Utilities
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
                     "Input and output arguments must have the same type!");
-      const auto array_view_values = make_array_view(values);
+      const auto array_view_values= make_array_view(values);
       using const_type
         = ArrayView<const typename decltype(array_view_values)::value_type>;
       max(static_cast<const_type>(array_view_values),
@@ -353,7 +353,7 @@ namespace Utilities
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
                     "Input and output arguments must have the same type!");
-      const auto array_view_values = make_array_view(values);
+      const auto array_view_values= make_array_view(values);
       using const_type
         = ArrayView<const typename decltype(array_view_values)::value_type>;
       min(static_cast<const_type>(array_view_values),

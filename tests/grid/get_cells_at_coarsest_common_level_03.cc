@@ -37,7 +37,7 @@ test()
   triangulation.execute_coarsening_and_refinement();
 
   // now extract patches and print every fifth of them
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
@@ -51,7 +51,7 @@ test()
           patch_cells);
 
       deallog << "coarse_ cells " << cell << ": ";
-      for(unsigned int i = 0; i < coarse_cells.size(); ++i)
+      for(unsigned int i= 0; i < coarse_cells.size(); ++i)
         deallog << coarse_cells[i] << ' ';
       deallog << std::endl;
     }

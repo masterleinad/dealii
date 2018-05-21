@@ -38,7 +38,7 @@
 
 // This is needed for C++ output:
 
-const double pi = std::acos(-1.);
+const double pi= std::acos(-1.);
 
 class TestFunction : public Function<2>
 {
@@ -63,15 +63,15 @@ void make_grid(Triangulation<2>& triangulation)
 {
   GridGenerator::hyper_cube(triangulation);
 
-  const Point<2> p0 = triangulation.begin_active()->vertex(0);
+  const Point<2> p0= triangulation.begin_active()->vertex(0);
 
   triangulation.refine_global(1);
 
-  for(unsigned int step = 0; step < 1; ++step)
+  for(unsigned int step= 0; step < 1; ++step)
     {
       Triangulation<2>::active_cell_iterator cell, endc;
-      cell = triangulation.begin_active();
-      endc = triangulation.end();
+      cell= triangulation.begin_active();
+      endc= triangulation.end();
 
       for(; cell != endc; ++cell)
         if(cell->vertex(0) == p0)
@@ -153,23 +153,23 @@ test(const Triangulation<dim>& tria,
   //    file1.close();
   data_out.clear();
 
-  std::string file2_name = fe_string1 + "_";
+  std::string file2_name= fe_string1 + "_";
   switch(testcase)
     {
       case 1:
         data_out.attach_dof_handler(dof_handler2);
         data_out.add_data_vector(function2, fe_string2);
-        file2_name += fe_string2 + "_interpolation.gnuplot";
+        file2_name+= fe_string2 + "_interpolation.gnuplot";
         break;
       case 2:
         data_out.attach_dof_handler(dof_handler1);
         data_out.add_data_vector(function1_back, fe_string1);
-        file2_name += fe_string2 + "_back_interpolation.gnuplot";
+        file2_name+= fe_string2 + "_back_interpolation.gnuplot";
         break;
       case 3:
         data_out.attach_dof_handler(dof_handler1);
         data_out.add_data_vector(function1_back, fe_string1);
-        file2_name += fe_string2 + "_interpolation_diff.gnuplot";
+        file2_name+= fe_string2 + "_interpolation_diff.gnuplot";
         break;
       default:
         Assert(false, ExcNotImplemented());

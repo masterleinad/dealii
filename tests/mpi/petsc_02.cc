@@ -29,8 +29,8 @@
 void
 test()
 {
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numprocs= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
@@ -41,7 +41,7 @@ test()
 
   PETScWrappers::MPI::SparseMatrix     mat;
   std::vector<types::global_dof_index> local_rows(numprocs, 0);
-  local_rows[0] = 2;
+  local_rows[0]= 2;
 
   mat.reinit(MPI_COMM_WORLD, csp, local_rows, local_rows, myid);
 

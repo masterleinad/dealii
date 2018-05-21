@@ -24,7 +24,7 @@ main()
 {
   initlog();
 
-  const unsigned int size = 100;
+  const unsigned int size= 100;
 
   IndexSet locally_owned(size);
   locally_owned.add_range(0, size);

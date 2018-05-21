@@ -42,14 +42,14 @@ test(const int testcase)
   switch(testcase)
     {
       case 0:
-        shift[0] = 2;
+        shift[0]= 2;
         break;
       case 1:
-        shift[0] = 1;
+        shift[0]= 1;
         break;
       case 2:
-        for(unsigned int d = 0; d < dim; ++d)
-          shift[d] = 1;
+        for(unsigned int d= 0; d < dim; ++d)
+          shift[d]= 1;
         break;
       default:
         Assert(false, ExcNotImplemented());
@@ -80,7 +80,7 @@ main()
   logfile << std::setprecision(2);
   deallog.attach(logfile);
 
-  for(unsigned int t = 0; t < 3; ++t)
+  for(unsigned int t= 0; t < 3; ++t)
     {
       test<2>(t);
       test<3>(t);

@@ -44,15 +44,15 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values[0] = value(p, 0);
+    values[0]= value(p, 0);
   }
 
   virtual Tensor<1, dim>
   gradient(const Point<dim>& p, const unsigned int component) const
   {
     Tensor<1, dim> return_value;
-    for(unsigned int i = 0; i < dim; ++i)
-      return_value[i] = 2 * (component + 1) * p(component);
+    for(unsigned int i= 0; i < dim; ++i)
+      return_value[i]= 2 * (component + 1) * p(component);
     return return_value;
   }
 
@@ -60,7 +60,7 @@ public:
   vector_gradient(const Point<dim>&            p,
                   std::vector<Tensor<1, dim>>& gradients) const
   {
-    gradients[0] = gradient(p, 0);
+    gradients[0]= gradient(p, 0);
   }
 };
 
@@ -80,7 +80,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    values(0) = value(p, 0);
+    values(0)= value(p, 0);
   }
 
   virtual double
@@ -93,7 +93,7 @@ public:
   vector_gradient(const Point<dim>&            p,
                   std::vector<Tensor<1, dim>>& gradients) const
   {
-    gradients(0) = gradient(p, 0);
+    gradients(0)= gradient(p, 0);
   }
 };
 
@@ -107,12 +107,12 @@ make_mesh(Triangulation<dim>& tria)
   // generate as many cells with
   // hanging nodes as possible
   tria.refine_global(4 - dim);
-  const double steps[4] = {/*d=0*/ 0, 7, 3, 3};
-  for(unsigned int i = 0; i < steps[dim]; ++i)
+  const double steps[4]= {/*d=0*/ 0, 7, 3, 3};
+  for(unsigned int i= 0; i < steps[dim]; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active();
-      for(unsigned int index = 0; cell != tria.end(); ++cell, ++index)
+      for(unsigned int index= 0; cell != tria.end(); ++cell, ++index)
         if(index % (3 * dim) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
@@ -135,7 +135,7 @@ check()
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       cell->set_active_fe_index(Testing::rand() % fe.size());
@@ -147,7 +147,7 @@ check()
   // that is exactly representable on the
   // chosen finite element space, and one
   // that isn't
-  for(unsigned int i = 0; i < 2; ++i)
+  for(unsigned int i= 0; i < 2; ++i)
     {
       static const MySquareFunction<dim>          function_1;
       static const Functions::CosineFunction<dim> function_2;
@@ -168,14 +168,14 @@ check()
       // also verify that the actual value is
       // roughly correct
       Point<dim> p[3];
-      for(unsigned int d = 0; d < dim; ++d)
+      for(unsigned int d= 0; d < dim; ++d)
         {
-          p[0][d] = 0;
-          p[1][d] = 0.5;
-          p[2][d] = 1. / 3.;
+          p[0][d]= 0;
+          p[1][d]= 0.5;
+          p[2][d]= 1. / 3.;
         }
       std::vector<Tensor<1, dim>> gradient(1);
-      for(unsigned int i = 0; i < 3; ++i)
+      for(unsigned int i= 0; i < 3; ++i)
         {
           VectorTools::point_gradient(dof_handler, v, p[i], gradient);
           deallog << -gradient[0] << std::endl;

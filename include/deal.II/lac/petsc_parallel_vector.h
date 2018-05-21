@@ -313,7 +313,7 @@ namespace PETScWrappers
       reinit(const MPI_Comm& communicator,
              const size_type N,
              const size_type local_size,
-             const bool      omit_zeroing_entries = false);
+             const bool      omit_zeroing_entries= false);
 
       /**
        * Change the dimension to that of the vector @p v, and also take over
@@ -325,7 +325,7 @@ namespace PETScWrappers
        * omit_zeroing_entries)</tt>.
        */
       void
-      reinit(const Vector& v, const bool omit_zeroing_entries = false);
+      reinit(const Vector& v, const bool omit_zeroing_entries= false);
 
       /**
        * Reinit as a vector with ghost elements. See the constructor with
@@ -369,9 +369,9 @@ namespace PETScWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+            const unsigned int precision = 3,
+            const bool         scientific= true,
+            const bool         across    = true) const;
 
       /**
        * @copydoc PETScWrappers::VectorBase::all_zero()
@@ -435,7 +435,7 @@ namespace PETScWrappers
     {
       Vector::create_vector(v.size(), local_size);
 
-      *this = v;
+      *this= v;
     }
 
     inline Vector&
@@ -478,8 +478,8 @@ namespace PETScWrappers
       // function in Petsc that would take a pointer to an array of
       // PetscScalar values and simply copy n elements verbatim into the
       // vector...
-      for(size_type i = 0; i < v.size(); ++i)
-        (*this)(i) = v(i);
+      for(size_type i= 0; i < v.size(); ++i)
+        (*this)(i)= v(i);
 
       compress(::dealii::VectorOperation::insert);
 

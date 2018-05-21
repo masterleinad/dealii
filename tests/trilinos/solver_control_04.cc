@@ -38,8 +38,8 @@ main(int argc, char** argv)
     argc, argv, testing_max_num_threads());
 
   {
-    const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    const unsigned int size= 32;
+    unsigned int       dim = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
@@ -57,7 +57,7 @@ main(int argc, char** argv)
     u1.reinit(complete_index_set(dim), MPI_COMM_WORLD);
     TrilinosWrappers::MPI::Vector u2;
     u2.reinit(complete_index_set(dim), MPI_COMM_WORLD);
-    f = 1.;
+    f= 1.;
     A.compress(VectorOperation::insert);
     f.compress(VectorOperation::insert);
     u1.compress(VectorOperation::insert);
@@ -69,18 +69,18 @@ main(int argc, char** argv)
     SolverControl              solver_control(2000, 1.e-3);
     TrilinosWrappers::SolverCG solver(solver_control);
 
-    const auto lo_A     = linear_operator<TrilinosWrappers::MPI::Vector>(A);
-    const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
+    const auto lo_A    = linear_operator<TrilinosWrappers::MPI::Vector>(A);
+    const auto lo_A_inv= inverse_operator(lo_A, solver, preconditioner);
 
     deallog.push("First use");
     {
-      u1 = lo_A_inv * f;
+      u1= lo_A_inv * f;
       deallog << "OK" << std::endl;
     }
     deallog.pop();
     deallog.push("Second use");
     {
-      u2 = lo_A_inv * f;
+      u2= lo_A_inv * f;
       deallog << "OK" << std::endl;
     }
     deallog.pop();

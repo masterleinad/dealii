@@ -70,7 +70,7 @@ MatrixIntegrator<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const unsigned int deg = info.fe_values(0).get_fe().degree;
+  const unsigned int deg= info.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::nitsche_matrix(
     dinfo.matrix(0, false).matrix,
     info.fe_values(0),
@@ -85,7 +85,7 @@ MatrixIntegrator<dim>::face(
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
-  const unsigned int deg = info1.fe_values(0).get_fe().degree;
+  const unsigned int deg= info1.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::ip_matrix(
     dinfo1.matrix(0, false).matrix,
     dinfo1.matrix(0, true).matrix,
@@ -149,7 +149,7 @@ Step4<dim>::setup_system()
 
   MappingQGeneric<dim>                mapping(1);
   MeshWorker::IntegrationInfoBox<dim> info_box;
-  UpdateFlags update_flags = update_values | update_gradients;
+  UpdateFlags update_flags= update_values | update_gradients;
   info_box.add_update_flags_all(update_flags);
   info_box.initialize(fe, mapping);
 
@@ -166,8 +166,8 @@ Step4<dim>::setup_system()
 
   system_matrix.compress(VectorOperation::add);
 
-  for(unsigned int i = 0; i < system_rhs.size(); ++i)
-    system_rhs(i) = 0.01 * i - 0.000001 * i * i;
+  for(unsigned int i= 0; i < system_rhs.size(); ++i)
+    system_rhs(i)= 0.01 * i - 0.000001 * i * i;
 }
 
 template <int dim>
@@ -179,9 +179,9 @@ Step4<dim>::solve()
   TrilinosWrappers::PreconditionAMGMueLu::AdditionalData data;
   DoFTools::extract_constant_modes(
     dof_handler, std::vector<bool>(1, true), data.constant_modes);
-  data.smoother_sweeps = 2;
+  data.smoother_sweeps= 2;
   {
-    solution = 0;
+    solution= 0;
     SolverControl solver_control(1000, 1e-10);
     SolverCG<>    solver(solver_control);
     preconditioner.initialize(system_matrix, data);
@@ -199,7 +199,7 @@ template <int dim>
 void
 Step4<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 2; ++cycle)
+  for(unsigned int cycle= 0; cycle < 2; ++cycle)
     {
       if(cycle == 0)
         make_grid();

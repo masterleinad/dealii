@@ -27,7 +27,7 @@ test()
 {
   IndexSet     parallel_partitioner_1(10);
   IndexSet     parallel_partitioner_2(10);
-  unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int rank= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     {
       parallel_partitioner_1.add_range(0, 5);
@@ -59,18 +59,18 @@ test()
   LinearAlgebra::ReadWriteVector<double> read_write_3(read_write_index_set);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         {
-          read_write_1[i] = i;
-          read_write_2[i] = 5. + i;
+          read_write_1[i]= i;
+          read_write_2[i]= 5. + i;
         }
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         {
-          read_write_1[i] = i;
-          read_write_2[i] = 5. + i;
+          read_write_1[i]= i;
+          read_write_2[i]= 5. + i;
         }
     }
 
@@ -82,13 +82,13 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(1. + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in add(scalar)."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(1. + read_write_1[i] == read_write_3[i],
                     ExcMessage("Problem in add(scalar)."));
     }
@@ -97,14 +97,14 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(1. + read_write_1[i] + 2. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in add(scalar,Vector)."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(1. + read_write_1[i] + 2. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in add(scalar,Vector)."));
@@ -115,14 +115,14 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(4. + 4. * read_write_1[i] + 10. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in add(scalar,Vector,scalar,Vector)."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(4. + 4. * read_write_1[i] + 10. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in add(scalar,Vector,scalar,Vector)."));
@@ -133,14 +133,14 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(3. * read_write_1[i] + 2. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in sadd(scalar,scalar,Vector)."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(3. * read_write_1[i] + 2. * read_write_2[i]
                       == read_write_3[i],
                     ExcMessage("Problem in sadd(scalar,scalar,Vector)."));
@@ -151,13 +151,13 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(read_write_1[i] * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in scale."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(read_write_1[i] * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in scale."));
     }
@@ -166,27 +166,27 @@ test()
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
     {
-      for(unsigned int i = 0; i < 5; ++i)
+      for(unsigned int i= 0; i < 5; ++i)
         AssertThrow(2. * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in scale."));
     }
   else
     {
-      for(unsigned int i = 5; i < 10; ++i)
+      for(unsigned int i= 5; i < 10; ++i)
         AssertThrow(2. * read_write_2[i] == read_write_3[i],
                     ExcMessage("Problem in equ."));
     }
 
   AssertThrow(b.l1_norm() == 95., ExcMessage("Problem in l1_norm."));
 
-  const double eps = 1e-6;
+  const double eps= 1e-6;
   AssertThrow(std::fabs(b.l2_norm() - 31.3847096) < eps,
               ExcMessage("Problem in l2_norm"));
 
   AssertThrow(b.linfty_norm() == 14., ExcMessage("Problem in linfty_norm."));
 
   a.import(read_write_1, VectorOperation::insert);
-  const double val = a.add_and_dot(2., a, b);
+  const double val= a.add_and_dot(2., a, b);
   AssertThrow(val == 1530., ExcMessage("Problem in add_and_dot"));
 }
 

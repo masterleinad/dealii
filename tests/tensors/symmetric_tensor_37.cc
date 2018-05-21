@@ -33,8 +33,8 @@ test_symm_tensor_contract_3(const T1<rank1, dim, number>&     l,
                             const Tensor<rank2, dim, number>& m,
                             const T3<rank3, dim, number>&     r)
 {
-  const double res1 = contract3(l, m, r);
-  const double res2 = contract3(
+  const double res1= contract3(l, m, r);
+  const double res2= contract3(
     static_cast<Tensor<rank1, dim>>(l), m, static_cast<Tensor<rank3, dim>>(r));
   Assert(std::abs(res1 - res2) < 1e-12,
          ExcMessage("Result from symmetric tensor contract3 is incorrect."));
@@ -47,25 +47,25 @@ main()
   deallog << std::setprecision(5);
   deallog.attach(logfile);
 
-  const int               dim = 3;
+  const int               dim= 3;
   Tensor<1, dim>          v1;
   Tensor<2, dim>          t1;
   SymmetricTensor<2, dim> s1, s2;
   Tensor<3, dim>          T1;
   Tensor<4, dim>          H1;
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for(unsigned int i= 0; i < dim; ++i)
     {
-      v1[i] = 1 + i;
-      for(unsigned int j = 0; j < dim; ++j)
+      v1[i]= 1 + i;
+      for(unsigned int j= 0; j < dim; ++j)
         {
-          t1[i][j] = 1 + j + i * dim;
-          s1[i][j] = 1 + j + i * dim;
-          s2[i][j] = 2 + (j + i) * dim;
-          for(unsigned int k = 0; k < dim; ++k)
+          t1[i][j]= 1 + j + i * dim;
+          s1[i][j]= 1 + j + i * dim;
+          s2[i][j]= 2 + (j + i) * dim;
+          for(unsigned int k= 0; k < dim; ++k)
             {
-              T1[i][j][k] = 1 + k + j * dim + i * dim * dim;
-              for(unsigned int l = 0; l < dim; ++l)
+              T1[i][j][k]= 1 + k + j * dim + i * dim * dim;
+              for(unsigned int l= 0; l < dim; ++l)
                 H1[i][j][k][l]
                   = 1 + l + k * dim + j * dim * dim + i * dim * dim * dim;
             }

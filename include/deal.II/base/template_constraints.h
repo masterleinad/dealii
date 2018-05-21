@@ -55,7 +55,7 @@ namespace internal
 template <class Base, class... Derived>
 struct is_base_of_all
 {
-  static constexpr bool value = internal::TemplateConstraints::all_true<
+  static constexpr bool value= internal::TemplateConstraints::all_true<
     std::is_base_of<Base, Derived>::value...>::value;
 };
 
@@ -68,7 +68,7 @@ struct is_base_of_all
 template <class Type, class... Types>
 struct all_same_as
 {
-  static constexpr bool value = internal::TemplateConstraints::all_true<
+  static constexpr bool value= internal::TemplateConstraints::all_true<
     std::is_same<Type, Types>::value...>::value;
 };
 

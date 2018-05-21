@@ -24,7 +24,7 @@
 // Q5/Q4. Higher order finite elements in 3d will probably only
 // exacerbate the problem, but the code there appears to be robust.
 
-char logname[] = "output";
+char logname[]= "output";
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -57,7 +57,7 @@ test()
   // *---*---*
   Triangulation<dim>        triangulation;
   std::vector<unsigned int> subdivisions(dim, 1);
-  subdivisions[0] = 2;
+  subdivisions[0]= 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation,
     subdivisions,
@@ -75,8 +75,8 @@ test()
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
-  for(unsigned int i = 0; i < fe.size(); ++i)
-    for(unsigned int j = 0; j < fe.size(); ++j)
+  for(unsigned int i= 0; i < fe.size(); ++i)
+    for(unsigned int j= 0; j < fe.size(); ++j)
       {
         deallog << "Testing " << fe[i].get_name() << " vs. " << fe[j].get_name()
                 << std::endl;

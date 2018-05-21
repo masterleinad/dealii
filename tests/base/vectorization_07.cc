@@ -21,7 +21,7 @@
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname);
 
   if(!std::is_pod<VectorizedArray<double>>::value)

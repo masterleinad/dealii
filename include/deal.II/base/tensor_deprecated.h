@@ -223,9 +223,9 @@ inline Number
 double_contract(const Tensor<2, dim, Number>& src1,
                 const Tensor<2, dim, Number>& src2)
 {
-  Number res = internal::NumberType<Number>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
-    res += src1[i] * src2[i];
+  Number res= internal::NumberType<Number>::value(0.0);
+  for(unsigned int i= 0; i < dim; ++i)
+    res+= src1[i] * src2[i];
 
   return res;
 }
@@ -236,11 +236,11 @@ inline void double_contract(Tensor<2, dim, Number>&       dest,
                             const Tensor<2, dim, Number>& src2)
 {
   dest.clear();
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
-          dest[i][j] += src1[i][j][k][l] * src2[k][l];
+  for(unsigned int i= 0; i < dim; ++i)
+    for(unsigned int j= 0; j < dim; ++j)
+      for(unsigned int k= 0; k < dim; ++k)
+        for(unsigned int l= 0; l < dim; ++l)
+          dest[i][j]+= src1[i][j][k][l] * src2[k][l];
 }
 
 template <int dim, typename Number>
@@ -258,16 +258,16 @@ inline void contract(Tensor<2, dim, Number>&       dest,
         switch(index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    dest[i][j] += src1[k][i] * src2[k][j];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    dest[i][j]+= src1[k][i] * src2[k][j];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    dest[i][j] += src1[k][i] * src2[j][k];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    dest[i][j]+= src1[k][i] * src2[j][k];
               break;
 
             default:
@@ -278,16 +278,16 @@ inline void contract(Tensor<2, dim, Number>&       dest,
         switch(index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    dest[i][j] += src1[i][k] * src2[k][j];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    dest[i][j]+= src1[i][k] * src2[k][j];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    dest[i][j] += src1[i][k] * src2[j][k];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    dest[i][j]+= src1[i][k] * src2[j][k];
               break;
 
             default:
@@ -311,24 +311,24 @@ inline void contract(Tensor<2, dim, Number>&       dest,
   switch(index1)
     {
       case 1:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
-              dest[i][j] += src1[k][i][j] * src2[k];
+        for(unsigned int i= 0; i < dim; ++i)
+          for(unsigned int j= 0; j < dim; ++j)
+            for(unsigned int k= 0; k < dim; ++k)
+              dest[i][j]+= src1[k][i][j] * src2[k];
         break;
 
       case 2:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
-              dest[i][j] += src1[i][k][j] * src2[k];
+        for(unsigned int i= 0; i < dim; ++i)
+          for(unsigned int j= 0; j < dim; ++j)
+            for(unsigned int k= 0; k < dim; ++k)
+              dest[i][j]+= src1[i][k][j] * src2[k];
         break;
 
       case 3:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
-              dest[i][j] += src1[i][j][k] * src2[k];
+        for(unsigned int i= 0; i < dim; ++i)
+          for(unsigned int j= 0; j < dim; ++j)
+            for(unsigned int k= 0; k < dim; ++k)
+              dest[i][j]+= src1[i][j][k] * src2[k];
         break;
 
       default:
@@ -351,18 +351,18 @@ inline void contract(Tensor<3, dim, Number>&       dest,
         switch(index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[l][i][j] * src2[l][k];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[l][i][j] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[l][i][j] * src2[k][l];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[l][i][j] * src2[k][l];
               break;
             default:
               Assert(false, (ExcInvalidTensorContractionIndex(index2)));
@@ -373,18 +373,18 @@ inline void contract(Tensor<3, dim, Number>&       dest,
         switch(index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[i][l][j] * src2[l][k];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[i][l][j] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[i][l][j] * src2[k][l];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[i][l][j] * src2[k][l];
               break;
             default:
               Assert(false, (ExcInvalidTensorContractionIndex(index2)));
@@ -395,18 +395,18 @@ inline void contract(Tensor<3, dim, Number>&       dest,
         switch(index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[i][j][l] * src2[l][k];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[i][j][l] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
-                      dest[i][j][k] += src1[i][j][l] * src2[k][l];
+              for(unsigned int i= 0; i < dim; ++i)
+                for(unsigned int j= 0; j < dim; ++j)
+                  for(unsigned int k= 0; k < dim; ++k)
+                    for(unsigned int l= 0; l < dim; ++l)
+                      dest[i][j][k]+= src1[i][j][l] * src2[k][l];
               break;
             default:
               Assert(false, (ExcInvalidTensorContractionIndex(index2)));
@@ -425,7 +425,7 @@ inline void contract(Tensor<rank_1 + rank_2 - 2, dim, Number>& dest,
 {
   TensorAccessors::internal::
     ReorderedIndexView<0, rank_2, const Tensor<rank_2, dim, Number>>
-      reordered = TensorAccessors::reordered_index_view<0, rank_2>(src2);
+      reordered= TensorAccessors::reordered_index_view<0, rank_2>(src2);
   TensorAccessors::contract<1, rank_1, rank_2, dim>(dest, src1, reordered);
 }
 
@@ -434,10 +434,10 @@ inline typename ProductType<Number, OtherNumber>::type
 contract(const Tensor<1, dim, Number>&      src1,
          const Tensor<1, dim, OtherNumber>& src2)
 {
-  typename ProductType<Number, OtherNumber>::type res =
+  typename ProductType<Number, OtherNumber>::type res=
     typename ProductType<Number, OtherNumber>::type();
-  for(unsigned int i = 0; i < dim; ++i)
-    res += src1[i] * src2[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    res+= src1[i] * src2[i];
 
   return res;
 }
@@ -446,7 +446,7 @@ template <int dim, typename Number>
 inline void cross_product(Tensor<1, dim, Number>&       dst,
                           const Tensor<1, dim, Number>& src)
 {
-  dst = cross_product_2d(src);
+  dst= cross_product_2d(src);
 }
 
 template <int dim, typename Number>
@@ -454,7 +454,7 @@ inline void cross_product(Tensor<1, dim, Number>&       dst,
                           const Tensor<1, dim, Number>& src1,
                           const Tensor<1, dim, Number>& src2)
 {
-  dst = cross_product_3d(src1, src2);
+  dst= cross_product_3d(src1, src2);
 }
 
 template <int rank_1, int rank_2, int dim, typename Number>
@@ -471,8 +471,8 @@ inline void outer_product(Tensor<1, dim, Number>&       dst,
                           const Number                  src1,
                           const Tensor<1, dim, Number>& src2)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    dst[i] = src1 * src2[i];
+  for(unsigned int i= 0; i < dim; ++i)
+    dst[i]= src1 * src2[i];
 }
 
 template <int dim, typename Number>
@@ -480,8 +480,8 @@ inline void outer_product(Tensor<1, dim, Number>&      dst,
                           const Tensor<1, dim, Number> src1,
                           const Number                 src2)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    dst[i] = src1[i] * src2;
+  for(unsigned int i= 0; i < dim; ++i)
+    dst[i]= src1[i] * src2;
 }
 
 template <int rank, typename Number>

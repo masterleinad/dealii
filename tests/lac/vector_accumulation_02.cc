@@ -27,30 +27,30 @@ template <typename number>
 void
 check_norms()
 {
-  for(unsigned int test = 0; test < 5; ++test)
+  for(unsigned int test= 0; test < 5; ++test)
     {
-      const unsigned int size = Testing::rand() % 20000;
+      const unsigned int size= Testing::rand() % 20000;
       Vector<number> larger1(size + 8), larger2(size + 8), in1(size), in2(size);
-      for(unsigned int i = 0; i < size; ++i)
+      for(unsigned int i= 0; i < size; ++i)
         {
-          in1(i) = random_value<number>();
-          in2(i) = random_value<number>();
+          in1(i)= random_value<number>();
+          in2(i)= random_value<number>();
         }
 
-      const number inner_product = in1 * in2;
+      const number inner_product= in1 * in2;
       deallog << "Vector difference: ";
-      for(unsigned int shift1 = 0; shift1 < 8; ++shift1)
-        for(unsigned int shift2 = 0; shift2 < 8; ++shift2)
+      for(unsigned int shift1= 0; shift1 < 8; ++shift1)
+        for(unsigned int shift2= 0; shift2 < 8; ++shift2)
           {
             VectorView<number> v1(size, larger1.begin() + shift1);
             VectorView<number> v2(size, larger2.begin() + shift2);
-            for(unsigned int i = 0; i < size; ++i)
+            for(unsigned int i= 0; i < size; ++i)
               {
-                v1(i) = in1(i);
-                v2(i) = in2(i);
+                v1(i)= in1(i);
+                v2(i)= in2(i);
               }
 
-            const number result = v1 * v2;
+            const number result= v1 * v2;
             deallog << static_cast<double>(std::abs(result - inner_product))
                     << " ";
           }

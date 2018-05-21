@@ -32,15 +32,15 @@ main()
   std::vector<std::string>      function(1);
   std::map<std::string, double> constants;
 
-  constants["PI"] = 3.141592654;
-  constants["cm"] = 10;
-  constants["m"]  = 1000;
+  constants["PI"]= 3.141592654;
+  constants["cm"]= 10;
+  constants["m"] = 1000;
 
   Point<2> point(2.0, 3.0);
 
   //initialized with units
   FunctionParser<2> fp;
-  function[0] = "x * cm + y * m + PI";
+  function[0]= "x * cm + y * m + PI";
   fp.initialize(
     FunctionParser<2>::default_variable_names(), function, constants);
 
@@ -69,7 +69,7 @@ main()
   //units to check backwards
   //compatibility
   FunctionParser<2> fp2;
-  function[0] = "x + y + PI";
+  function[0]= "x + y + PI";
   fp2.initialize(
     FunctionParser<2>::default_variable_names(), function, constants);
   deallog << "Function "

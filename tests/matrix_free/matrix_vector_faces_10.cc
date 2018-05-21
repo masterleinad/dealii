@@ -37,17 +37,16 @@ test()
   // rather than linears and quadratics according to
   // matrix_vector_faces_common.h
 
-  const unsigned int                        fe_degree = fe_degree_ + 2;
+  const unsigned int                        fe_degree= fe_degree_ + 2;
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   create_mesh(tria);
 
   if(dim == 2)
     tria.refine_global(1);
   {
-    typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active();
-    typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
-    unsigned int                                      counter = 0;
+    typename Triangulation<dim>::active_cell_iterator cell= tria.begin_active();
+    typename Triangulation<dim>::active_cell_iterator endc= tria.end();
+    unsigned int                                      counter= 0;
     for(; cell != endc; ++cell, ++counter)
       if(cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
@@ -73,10 +72,9 @@ test()
   MatrixFree<dim, double>                          mf_data;
   const QGauss<1>                                  quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
-  data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
-  data.tasks_block_size      = 3;
-  data.mapping_update_flags_inner_faces
-    = (update_gradients | update_JxW_values);
+  data.tasks_parallel_scheme= MatrixFree<dim, double>::AdditionalData::none;
+  data.tasks_block_size     = 3;
+  data.mapping_update_flags_inner_faces= (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces
     = (update_gradients | update_JxW_values);
 
@@ -88,10 +86,10 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for(unsigned int i= 0; i < in.local_size(); ++i)
     {
-      const double entry  = Testing::rand() / (double) RAND_MAX;
-      in.local_element(i) = entry;
+      const double entry = Testing::rand() / (double) RAND_MAX;
+      in.local_element(i)= entry;
     }
 
   MatrixFreeTest<dim,
@@ -111,8 +109,8 @@ test()
   mf2.vmult(out_dist, in);
   mf2.vmult(out_dist, in);
 
-  out_dist -= out;
+  out_dist-= out;
 
-  const double diff_norm = out_dist.linfty_norm() / out.linfty_norm();
+  const double diff_norm= out_dist.linfty_norm() / out.linfty_norm();
   deallog << "Norm of difference:          " << diff_norm << std::endl;
 }

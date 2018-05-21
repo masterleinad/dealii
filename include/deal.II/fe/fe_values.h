@@ -48,7 +48,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FEValuesBase;
 
 namespace internal
@@ -57,7 +57,7 @@ namespace internal
    * A class whose specialization is used to define what type the curl of a
    * vector valued function corresponds to.
    */
-  template <int dim, class NumberType = double>
+  template <int dim, class NumberType= double>
   struct CurlType;
 
   /**
@@ -131,7 +131,7 @@ namespace FEValuesViews
    *
    * @ingroup feaccess vector_valued
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class Scalar
   {
   public:
@@ -565,7 +565,7 @@ namespace FEValuesViews
    *
    * @ingroup feaccess vector_valued
    */
-  template <int dim, int spacedim = dim>
+  template <int dim, int spacedim= dim>
   class Vector
   {
   public:
@@ -1218,7 +1218,7 @@ namespace FEValuesViews
     std::vector<ShapeFunctionData> shape_function_data;
   };
 
-  template <int rank, int dim, int spacedim = dim>
+  template <int rank, int dim, int spacedim= dim>
   class SymmetricTensor;
 
   /**
@@ -1510,7 +1510,7 @@ namespace FEValuesViews
     std::vector<ShapeFunctionData> shape_function_data;
   };
 
-  template <int rank, int dim, int spacedim = dim>
+  template <int rank, int dim, int spacedim= dim>
   class Tensor;
 
   /**
@@ -1997,12 +1997,12 @@ public:
   /**
    * Dimension in which this object operates.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Dimension of the space in which this object operates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Number of quadrature points.
@@ -2484,7 +2484,7 @@ public:
     VectorSlice<std::vector<
       std::vector<Tensor<1, spacedim, typename InputVector::value_type>>>>
          gradients,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
 
   //@}
   /// @name Access to second derivatives (Hessian matrices and Laplacians) of global finite element fields
@@ -2560,7 +2560,7 @@ public:
     std::vector<
       std::vector<Tensor<2, spacedim, typename InputVector::value_type>>>&
          hessians,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
 
   /**
    * Access to the second derivatives of a function with more flexibility. See
@@ -2588,7 +2588,7 @@ public:
     VectorSlice<std::vector<
       std::vector<Tensor<2, spacedim, typename InputVector::value_type>>>>
          hessians,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
 
   /**
    * Compute the (scalar) Laplacian (i.e. the trace of the tensor of second
@@ -2701,7 +2701,7 @@ public:
     const InputVector&                                             fe_function,
     const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     std::vector<std::vector<typename InputVector::value_type>>&    laplacians,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
 
   //@}
   /// @name Access to third derivatives of global finite element fields
@@ -2779,7 +2779,7 @@ public:
     std::vector<
       std::vector<Tensor<3, spacedim, typename InputVector::value_type>>>&
          third_derivatives,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
 
   /**
    * Access to the third derivatives of a function with more flexibility. See
@@ -2807,7 +2807,7 @@ public:
     VectorSlice<std::vector<
       std::vector<Tensor<3, spacedim, typename InputVector::value_type>>>>
          third_derivatives,
-    bool quadrature_points_fastest = false) const;
+    bool quadrature_points_fastest= false) const;
   //@}
 
   /// @name Geometry of the cell
@@ -3401,7 +3401,7 @@ private:
  * @ingroup feaccess
  * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2001
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FEValues : public FEValuesBase<dim, spacedim>
 {
 public:
@@ -3409,7 +3409,7 @@ public:
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim</code>.
    */
-  static const unsigned int integral_dimension = dim;
+  static const unsigned int integral_dimension= dim;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element
@@ -3519,7 +3519,7 @@ private:
  * @ingroup feaccess
  * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FEFaceValuesBase : public FEValuesBase<dim, spacedim>
 {
 public:
@@ -3527,7 +3527,7 @@ public:
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static const unsigned int integral_dimension= dim - 1;
 
   /**
    * Constructor. Call the constructor of the base class and set up the arrays
@@ -3614,7 +3614,7 @@ protected:
  * @ingroup feaccess
  * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FEFaceValues : public FEFaceValuesBase<dim, spacedim>
 {
 public:
@@ -3622,15 +3622,15 @@ public:
    * Dimension in which this object operates.
    */
 
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static const unsigned int integral_dimension= dim - 1;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element
@@ -3728,25 +3728,25 @@ private:
  * @ingroup feaccess
  * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
-template <int dim, int spacedim = dim>
+template <int dim, int spacedim= dim>
 class FESubfaceValues : public FEFaceValuesBase<dim, spacedim>
 {
 public:
   /**
    * Dimension in which this object operates.
    */
-  static const unsigned int dimension = dim;
+  static const unsigned int dimension= dim;
 
   /**
    * Dimension of the space in which this object operates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static const unsigned int space_dimension= spacedim;
 
   /**
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static const unsigned int integral_dimension= dim - 1;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element
@@ -3950,8 +3950,7 @@ namespace FEValuesViews
              "update_values")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return value_type();
     else if(snc != -1)
@@ -3965,10 +3964,10 @@ namespace FEValuesViews
     else
       {
         value_type return_value;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
-            return_value[d] = fe_values->finite_element_output.shape_values(
+            return_value[d]= fe_values->finite_element_output.shape_values(
               shape_function_data[shape_function].row_index[d], q_point);
 
         return return_value;
@@ -3987,8 +3986,7 @@ namespace FEValuesViews
              "update_gradients")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return gradient_type();
     else if(snc != -1)
@@ -4002,7 +4000,7 @@ namespace FEValuesViews
     else
       {
         gradient_type return_value;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value[d]
@@ -4026,8 +4024,7 @@ namespace FEValuesViews
              "update_gradients")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return divergence_type();
     else if(snc != -1)
@@ -4036,8 +4033,8 @@ namespace FEValuesViews
                                          .single_nonzero_component_index];
     else
       {
-        divergence_type return_value = 0;
-        for(unsigned int d = 0; d < dim; ++d)
+        divergence_type return_value= 0;
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value
@@ -4062,8 +4059,7 @@ namespace FEValuesViews
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_gradients")));
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       return curl_type();
@@ -4089,12 +4085,12 @@ namespace FEValuesViews
                   if(shape_function_data[shape_function]
                        .single_nonzero_component_index
                      == 0)
-                    return_value[0] = -1.0
-                                      * fe_values->finite_element_output
-                                          .shape_gradients[snc][q_point][1];
+                    return_value[0]= -1.0
+                                     * fe_values->finite_element_output
+                                         .shape_gradients[snc][q_point][1];
                   else
-                    return_value[0] = fe_values->finite_element_output
-                                        .shape_gradients[snc][q_point][0];
+                    return_value[0]= fe_values->finite_element_output
+                                       .shape_gradients[snc][q_point][0];
 
                   return return_value;
                 }
@@ -4103,7 +4099,7 @@ namespace FEValuesViews
                 {
                   curl_type return_value;
 
-                  return_value[0] = 0.0;
+                  return_value[0]= 0.0;
 
                   if(shape_function_data[shape_function]
                        .is_nonzero_shape_function_component[0])
@@ -4134,9 +4130,9 @@ namespace FEValuesViews
                     {
                       case 0:
                         {
-                          return_value[0] = 0;
-                          return_value[1] = fe_values->finite_element_output
-                                              .shape_gradients[snc][q_point][2];
+                          return_value[0]= 0;
+                          return_value[1]= fe_values->finite_element_output
+                                             .shape_gradients[snc][q_point][2];
                           return_value[2]
                             = -1.0
                               * fe_values->finite_element_output
@@ -4150,21 +4146,21 @@ namespace FEValuesViews
                             = -1.0
                               * fe_values->finite_element_output
                                   .shape_gradients[snc][q_point][2];
-                          return_value[1] = 0;
-                          return_value[2] = fe_values->finite_element_output
-                                              .shape_gradients[snc][q_point][0];
+                          return_value[1]= 0;
+                          return_value[2]= fe_values->finite_element_output
+                                             .shape_gradients[snc][q_point][0];
                           return return_value;
                         }
 
                       default:
                         {
-                          return_value[0] = fe_values->finite_element_output
-                                              .shape_gradients[snc][q_point][1];
+                          return_value[0]= fe_values->finite_element_output
+                                             .shape_gradients[snc][q_point][1];
                           return_value[1]
                             = -1.0
                               * fe_values->finite_element_output
                                   .shape_gradients[snc][q_point][0];
-                          return_value[2] = 0;
+                          return_value[2]= 0;
                           return return_value;
                         }
                     }
@@ -4174,8 +4170,8 @@ namespace FEValuesViews
                 {
                   curl_type return_value;
 
-                  for(unsigned int i = 0; i < dim; ++i)
-                    return_value[i] = 0.0;
+                  for(unsigned int i= 0; i < dim; ++i)
+                    return_value[i]= 0.0;
 
                   if(shape_function_data[shape_function]
                        .is_nonzero_shape_function_component[0])
@@ -4238,8 +4234,7 @@ namespace FEValuesViews
              "update_hessians")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return hessian_type();
     else if(snc != -1)
@@ -4253,7 +4248,7 @@ namespace FEValuesViews
     else
       {
         hessian_type return_value;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value[d]
@@ -4277,8 +4272,7 @@ namespace FEValuesViews
              "update_3rd_derivatives")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return third_derivative_type();
     else if(snc != -1)
@@ -4293,7 +4287,7 @@ namespace FEValuesViews
     else
       {
         third_derivative_type return_value;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value[d]
@@ -4316,7 +4310,7 @@ namespace FEValuesViews
       Assert(n < 1, ExcIndexRange(n, 0, 1));
       (void) n;
 
-      const double array[1] = {t[0]};
+      const double array[1]= {t[0]};
       return dealii::SymmetricTensor<2, 1>(array);
     }
 
@@ -4327,12 +4321,12 @@ namespace FEValuesViews
         {
           case 0:
             {
-              const double array[3] = {t[0], 0, t[1] / 2};
+              const double array[3]= {t[0], 0, t[1] / 2};
               return dealii::SymmetricTensor<2, 2>(array);
             }
           case 1:
             {
-              const double array[3] = {0, t[1], t[0] / 2};
+              const double array[3]= {0, t[1], t[0] / 2};
               return dealii::SymmetricTensor<2, 2>(array);
             }
           default:
@@ -4350,17 +4344,17 @@ namespace FEValuesViews
         {
           case 0:
             {
-              const double array[6] = {t[0], 0, 0, t[1] / 2, t[2] / 2, 0};
+              const double array[6]= {t[0], 0, 0, t[1] / 2, t[2] / 2, 0};
               return dealii::SymmetricTensor<2, 3>(array);
             }
           case 1:
             {
-              const double array[6] = {0, t[1], 0, t[0] / 2, 0, t[2] / 2};
+              const double array[6]= {0, t[1], 0, t[0] / 2, 0, t[2] / 2};
               return dealii::SymmetricTensor<2, 3>(array);
             }
           case 2:
             {
-              const double array[6] = {0, 0, t[2], 0, t[0] / 2, t[1] / 2};
+              const double array[6]= {0, 0, t[2], 0, t[0] / 2, t[1] / 2};
               return dealii::SymmetricTensor<2, 3>(array);
             }
           default:
@@ -4384,8 +4378,7 @@ namespace FEValuesViews
              "update_gradients")));
 
     // same as for the scalar case except that we have one more index
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
     if(snc == -2)
       return symmetric_gradient_type();
     else if(snc != -1)
@@ -4395,7 +4388,7 @@ namespace FEValuesViews
     else
       {
         gradient_type return_value;
-        for(unsigned int d = 0; d < dim; ++d)
+        for(unsigned int d= 0; d < dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value[d]
@@ -4419,8 +4412,7 @@ namespace FEValuesViews
 
     // similar to the vector case where we have more then one index and we need
     // to convert between unrolled and component indexing for tensors
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       {
@@ -4439,7 +4431,7 @@ namespace FEValuesViews
     else
       {
         value_type return_value;
-        for(unsigned int d = 0; d < value_type::n_independent_components; ++d)
+        for(unsigned int d= 0; d < value_type::n_independent_components; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             return_value[value_type::unrolled_to_component_indices(d)]
@@ -4461,8 +4453,7 @@ namespace FEValuesViews
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_gradients")));
 
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       {
@@ -4512,10 +4503,10 @@ namespace FEValuesViews
           = fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         divergence_type return_value;
-        return_value[ii] = phi_grad[jj];
+        return_value[ii]= phi_grad[jj];
 
         if(ii != jj)
-          return_value[jj] = phi_grad[ii];
+          return_value[jj]= phi_grad[ii];
 
         return return_value;
       }
@@ -4540,8 +4531,7 @@ namespace FEValuesViews
 
     // similar to the vector case where we have more then one index and we need
     // to convert between unrolled and component indexing for tensors
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       {
@@ -4562,7 +4552,7 @@ namespace FEValuesViews
     else
       {
         value_type return_value;
-        for(unsigned int d = 0; d < dim * dim; ++d)
+        for(unsigned int d= 0; d < dim * dim; ++d)
           if(shape_function_data[shape_function]
                .is_nonzero_shape_function_component[d])
             {
@@ -4587,8 +4577,7 @@ namespace FEValuesViews
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_gradients")));
 
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       {
@@ -4611,15 +4600,15 @@ namespace FEValuesViews
           = shape_function_data[shape_function].single_nonzero_component_index;
         const TableIndices<2> indices
           = dealii::Tensor<2, spacedim>::unrolled_to_component_indices(comp);
-        const unsigned int ii = indices[0];
-        const unsigned int jj = indices[1];
+        const unsigned int ii= indices[0];
+        const unsigned int jj= indices[1];
 
         const dealii::Tensor<1, spacedim>& phi_grad
           = fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         divergence_type return_value;
         // note that we contract \nabla from the right
-        return_value[ii] = phi_grad[jj];
+        return_value[ii]= phi_grad[jj];
 
         return return_value;
       }
@@ -4642,8 +4631,7 @@ namespace FEValuesViews
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_gradients")));
 
-    const int snc
-      = shape_function_data[shape_function].single_nonzero_component;
+    const int snc= shape_function_data[shape_function].single_nonzero_component;
 
     if(snc == -2)
       {
@@ -4666,14 +4654,14 @@ namespace FEValuesViews
           = shape_function_data[shape_function].single_nonzero_component_index;
         const TableIndices<2> indices
           = dealii::Tensor<2, spacedim>::unrolled_to_component_indices(comp);
-        const unsigned int ii = indices[0];
-        const unsigned int jj = indices[1];
+        const unsigned int ii= indices[0];
+        const unsigned int jj= indices[1];
 
         const dealii::Tensor<1, spacedim>& phi_grad
           = fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         gradient_type return_value;
-        return_value[ii][jj] = phi_grad;
+        return_value[ii][jj]= phi_grad;
 
         return return_value;
       }

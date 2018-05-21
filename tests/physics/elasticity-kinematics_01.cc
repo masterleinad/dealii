@@ -59,15 +59,15 @@ test_kinematic_tensors()
       cell != dof_handler.end();
       ++cell)
     {
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for(unsigned int v= 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         if(std::abs(cell->vertex(v)[0] - 1.0) < 1e-9)
-          soln_t[cell->vertex_dof_index(v, 0)] = 1.0;
+          soln_t[cell->vertex_dof_index(v, 0)]= 1.0;
     }
 
-  const double   delta_t    = 2.0;
-  Vector<double> dot_soln_t = soln_t;
-  dot_soln_t -= soln_t1;
-  dot_soln_t *= (1.0 / delta_t);
+  const double   delta_t   = 2.0;
+  Vector<double> dot_soln_t= soln_t;
+  dot_soln_t-= soln_t1;
+  dot_soln_t*= (1.0 / delta_t);
 
   FEValuesExtractors::Vector  u_fe(0);
   std::vector<Tensor<2, dim>> qp_Grad_u_t;
@@ -87,7 +87,7 @@ test_kinematic_tensors()
       fe_values.reinit(cell);
       fe_values_mapped.reinit(cell);
 
-      const unsigned int n_q_points = fe_values.get_quadrature().size();
+      const unsigned int n_q_points= fe_values.get_quadrature().size();
       qp_Grad_u_t.resize(n_q_points);
       qp_Grad_u_t1.resize(n_q_points);
       qp_dot_Grad_u_t.resize(n_q_points);
@@ -100,21 +100,21 @@ test_kinematic_tensors()
       fe_values_mapped[u_fe].get_function_gradients(dot_soln_t,
                                                     qp_dot_grad_u_t);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for(unsigned int q_point= 0; q_point < n_q_points; ++q_point)
         {
-          static const double tol = 1e-12;
+          static const double tol= 1e-12;
 
           // Material gradients
-          const Tensor<2, dim>& Grad_u    = qp_Grad_u_t[q_point];
-          const Tensor<2, dim>& Grad_u_t1 = qp_Grad_u_t1[q_point];
+          const Tensor<2, dim>& Grad_u   = qp_Grad_u_t[q_point];
+          const Tensor<2, dim>& Grad_u_t1= qp_Grad_u_t1[q_point];
 
           // --- Rate independent ---
 
           // Deformation gradient tensor
-          const Tensor<2, dim> F_t1 = Kinematics::F(Grad_u_t1);
+          const Tensor<2, dim> F_t1= Kinematics::F(Grad_u_t1);
           Assert((F_t1 - unit_symmetric_tensor<dim>()).norm() < tol,
                  ExcMessage("Incorrect computation of F_t1"));
-          const Tensor<2, dim> F = Kinematics::F(Grad_u);
+          const Tensor<2, dim> F= Kinematics::F(Grad_u);
           Assert((F
                   - (static_cast<Tensor<2, dim>>(unit_symmetric_tensor<dim>())
                      + Grad_u))
@@ -173,14 +173,14 @@ test_kinematic_tensors()
           // --- Rate dependent ---
 
           // Material rates
-          const Tensor<2, dim>& F_dot = qp_dot_Grad_u_t[q_point];
+          const Tensor<2, dim>& F_dot= qp_dot_Grad_u_t[q_point];
 
           // Material rate of deformation gradient tensor
           Assert((F_dot - (1.0 / delta_t) * (Grad_u - Grad_u_t1)).norm() < tol,
                  ExcMessage("Incorrect computation of F_dot"));
 
           // Spatial gradients
-          const Tensor<2, dim>& dot_grad_u = qp_dot_grad_u_t[q_point];
+          const Tensor<2, dim>& dot_grad_u= qp_dot_grad_u_t[q_point];
 
           // Spatial velocity gradient
           Assert(

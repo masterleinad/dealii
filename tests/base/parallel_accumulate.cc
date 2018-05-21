@@ -22,9 +22,9 @@
 int
 sum(const int begin, const int end)
 {
-  int s = 0;
-  for(int i = begin; i < end; ++i)
-    s += i;
+  int s= 0;
+  for(int i= begin; i < end; ++i)
+    s+= i;
   return s;
 }
 
@@ -33,8 +33,8 @@ main()
 {
   initlog();
 
-  const int N = 10000;
-  const int s = parallel::accumulate_from_subranges<int>(&sum, 0, N, 10);
+  const int N= 10000;
+  const int s= parallel::accumulate_from_subranges<int>(&sum, 0, N, 10);
 
   Assert(s == N * (N - 1) / 2, ExcInternalError());
 

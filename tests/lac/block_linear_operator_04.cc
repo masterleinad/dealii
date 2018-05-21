@@ -26,7 +26,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for(unsigned int i= 0; i < var.n_blocks(); ++i)       \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -40,8 +40,8 @@ main()
   // BlockSparseMatrix:
   {
     BlockDynamicSparsityPattern dsp(3, 3);
-    for(unsigned int i = 0; i < 3; ++i)
-      for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int i= 0; i < 3; ++i)
+      for(unsigned int j= 0; j < 3; ++j)
         dsp.block(i, j).reinit(1, 1);
     dsp.collect_sizes();
 
@@ -50,26 +50,26 @@ main()
     sparsity_pattern.compress();
 
     BlockSparseMatrix<double> a(sparsity_pattern);
-    for(unsigned int i = 0; i < 3; ++i)
+    for(unsigned int i= 0; i < 3; ++i)
       {
         a.block(i, i).set(0, 0, i + i + 1);
-        for(unsigned int j = 0; j < i; ++j)
+        for(unsigned int j= 0; j < i; ++j)
           a.block(i, j).set(0, 0, 10);
       }
 
     BlockSparseMatrix<double> d(sparsity_pattern);
-    for(unsigned int i = 0; i < 3; ++i)
+    for(unsigned int i= 0; i < 3; ++i)
       d.block(i, i).set(0, 0, 1.0 / (i + i + 1));
 
-    auto op_a = linear_operator<BlockVector<double>>(a);
+    auto op_a= linear_operator<BlockVector<double>>(a);
 
-    auto op_b1 = block_operator(a);
-    auto op_b2 = block_diagonal_operator(d);
+    auto op_b1= block_operator(a);
+    auto op_b2= block_diagonal_operator(d);
 
     auto inverse_op_a
       = block_forward_substitution<BlockVector<double>>(op_b1, op_b2);
 
-    auto identity = inverse_op_a * op_a;
+    auto identity= inverse_op_a * op_a;
 
     BlockVector<double> u;
     BlockVector<double> v;
@@ -77,15 +77,15 @@ main()
     deallog << " -- Matrix -- " << std::endl;
     op_a.reinit_domain_vector(u, false);
     op_a.reinit_range_vector(v, false);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
+            u.block(i)[0]= 0;
             ;
-            v.block(i)[0] = 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
 
         op_a.vmult(v, u);
 
@@ -95,14 +95,14 @@ main()
     deallog << " -- Inverse -- " << std::endl;
     inverse_op_a.reinit_domain_vector(u, false);
     inverse_op_a.reinit_range_vector(v, true);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
-            v.block(i)[0] = 0;
+            u.block(i)[0]= 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
         ;
 
         inverse_op_a.vmult(v, u);
@@ -113,15 +113,15 @@ main()
     deallog << " -- Identity -- " << std::endl;
     identity.reinit_domain_vector(u, false);
     identity.reinit_range_vector(v, false);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
+            u.block(i)[0]= 0;
             ;
-            v.block(i)[0] = 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
         ;
 
         identity.vmult(v, u);
@@ -132,8 +132,8 @@ main()
 
   {
     BlockDynamicSparsityPattern dsp(3, 3);
-    for(unsigned int i = 0; i < 3; ++i)
-      for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int i= 0; i < 3; ++i)
+      for(unsigned int j= 0; j < 3; ++j)
         dsp.block(i, j).reinit(1, 1);
     dsp.collect_sizes();
 
@@ -142,26 +142,26 @@ main()
     sparsity_pattern.compress();
 
     BlockSparseMatrix<double> a(sparsity_pattern);
-    for(unsigned int i = 0; i < 3; ++i)
+    for(unsigned int i= 0; i < 3; ++i)
       {
         a.block(i, i).set(0, 0, i + i + 1);
-        for(unsigned int j = i + 1; j < 3; ++j)
+        for(unsigned int j= i + 1; j < 3; ++j)
           a.block(i, j).set(0, 0, 10);
       }
 
     BlockSparseMatrix<double> d(sparsity_pattern);
-    for(unsigned int i = 0; i < 3; ++i)
+    for(unsigned int i= 0; i < 3; ++i)
       d.block(i, i).set(0, 0, 1.0 / (i + i + 1));
 
-    auto op_a = linear_operator<BlockVector<double>>(a);
+    auto op_a= linear_operator<BlockVector<double>>(a);
 
-    auto op_b1 = block_operator(a);
-    auto op_b2 = block_diagonal_operator(d);
+    auto op_b1= block_operator(a);
+    auto op_b2= block_diagonal_operator(d);
 
     auto inverse_op_a
       = block_back_substitution<BlockVector<double>>(op_b1, op_b2);
 
-    auto identity = inverse_op_a * op_a;
+    auto identity= inverse_op_a * op_a;
 
     BlockVector<double> u;
     BlockVector<double> v;
@@ -169,15 +169,15 @@ main()
     deallog << " -- Matrix -- " << std::endl;
     op_a.reinit_domain_vector(u, false);
     op_a.reinit_range_vector(v, false);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
+            u.block(i)[0]= 0;
             ;
-            v.block(i)[0] = 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
 
         op_a.vmult(v, u);
 
@@ -187,14 +187,14 @@ main()
     deallog << " -- Inverse -- " << std::endl;
     inverse_op_a.reinit_domain_vector(u, false);
     inverse_op_a.reinit_range_vector(v, true);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
-            v.block(i)[0] = 0;
+            u.block(i)[0]= 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
         ;
 
         inverse_op_a.vmult(v, u);
@@ -205,15 +205,15 @@ main()
     deallog << " -- Identity -- " << std::endl;
     identity.reinit_domain_vector(u, false);
     identity.reinit_range_vector(v, false);
-    for(unsigned int j = 0; j < 3; ++j)
+    for(unsigned int j= 0; j < 3; ++j)
       {
-        for(unsigned int i = 0; i < 3; ++i)
+        for(unsigned int i= 0; i < 3; ++i)
           {
-            u.block(i)[0] = 0;
+            u.block(i)[0]= 0;
             ;
-            v.block(i)[0] = 0;
+            v.block(i)[0]= 0;
           }
-        u.block(j)[0] = 1;
+        u.block(j)[0]= 1;
         ;
 
         identity.vmult(v, u);

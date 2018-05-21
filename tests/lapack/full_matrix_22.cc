@@ -36,19 +36,19 @@ test(const unsigned int size)
   LAPACKFullMatrix<NumberType> M(size);
   M.set_property(LAPACKSupport::upper_triangular);
 
-  M                    = 0.;
-  unsigned int counter = 1;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  M                   = 0.;
+  unsigned int counter= 1;
+  for(unsigned int i= 0; i < size; ++i)
+    for(unsigned int j= 0; j < size; ++j)
       {
         if(j >= i)
-          M(i, j) = counter;
+          M(i, j)= counter;
 
         counter++;
       }
 
   // M.print_formatted(deallog.get_file_stream(), 3, false, 8);
-  const double rcond = M.reciprocal_condition_number();
+  const double rcond= M.reciprocal_condition_number();
 
   deallog << rcond << std::endl;
 }
@@ -56,12 +56,12 @@ test(const unsigned int size)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1, 3, 11}};
+  const std::vector<unsigned int> sizes= {{1, 3, 11}};
   for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;

@@ -93,7 +93,7 @@ namespace TimeStepping
     /**
      * Virtual destructor.
      */
-    virtual ~TimeStepping() = default;
+    virtual ~TimeStepping()= default;
 
     /**
      * Purely virtual function. This function is used to advance from time @p
@@ -126,7 +126,7 @@ namespace TimeStepping
      * Purely virtual function that return Status.
      */
     virtual const Status&
-    get_status() const = 0;
+    get_status() const= 0;
   };
 
   /**
@@ -142,7 +142,7 @@ namespace TimeStepping
     /**
      * Virtual destructor.
      */
-    virtual ~RungeKutta() override = default;
+    virtual ~RungeKutta() override= default;
 
     /**
      * Purely virtual method used to initialize the Runge-Kutta method.
@@ -231,7 +231,7 @@ namespace TimeStepping
      * you will want to call <code>initialize(runge_kutta_method)</code>
      * before it can be used.
      */
-    ExplicitRungeKutta() = default;
+    ExplicitRungeKutta()= default;
 
     /**
      * Constructor. This function calls initialize(runge_kutta_method).
@@ -329,7 +329,7 @@ namespace TimeStepping
      * set_newton_solver_parameters(unsigned int,double) need to be called
      * before the object can be used.
      */
-    ImplicitRungeKutta() = default;
+    ImplicitRungeKutta()= default;
 
     /**
      * Constructor. This function calls initialize(runge_kutta_method) and
@@ -337,8 +337,8 @@ namespace TimeStepping
      * Newton solver.
      */
     ImplicitRungeKutta(const runge_kutta_method method,
-                       const unsigned int       max_it    = 100,
-                       const double             tolerance = 1e-6);
+                       const unsigned int       max_it   = 100,
+                       const double             tolerance= 1e-6);
 
     /**
      * Initialize the implicit Runge-Kutta method.
@@ -474,19 +474,19 @@ namespace TimeStepping
      * set_time_adaptation_parameters(double, double, double, double, double,
      * double) need to be called before the object can be used.
      */
-    EmbeddedExplicitRungeKutta() = default;
+    EmbeddedExplicitRungeKutta()= default;
 
     /**
      * Constructor. This function calls initialize(runge_kutta_method) and
      * initialize the parameters needed for time adaptation.
      */
     EmbeddedExplicitRungeKutta(const runge_kutta_method method,
-                               const double             coarsen_param = 1.2,
-                               const double             refine_param  = 0.8,
-                               const double             min_delta     = 1e-14,
-                               const double             max_delta     = 1e100,
-                               const double             refine_tol    = 1e-8,
-                               const double             coarsen_tol   = 1e-12);
+                               const double             coarsen_param= 1.2,
+                               const double             refine_param = 0.8,
+                               const double             min_delta    = 1e-14,
+                               const double             max_delta    = 1e100,
+                               const double             refine_tol   = 1e-8,
+                               const double             coarsen_tol  = 1e-12);
 
     /**
      * Destructor.

@@ -72,7 +72,7 @@ MixedFECollection<dim>::run()
   // looping over all cells and assigning the FE_DG object to the interior cells -- doesn't work.
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc = dof_handler.end();
+    endc= dof_handler.end();
   for(; cell != endc; ++cell)
     {
       //          if (cell == dof_handler.begin_active()) // this works

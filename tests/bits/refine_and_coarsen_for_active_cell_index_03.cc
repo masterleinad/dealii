@@ -28,7 +28,7 @@ template <int dim>
 void
 check(const Triangulation<dim>& tria)
 {
-  unsigned int index = 0;
+  unsigned int index= 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
       cell != tria.end();
@@ -45,7 +45,7 @@ void do_refine(Triangulation<1>& tria)
 
 void do_refine(Triangulation<2>& tria)
 {
-  const int dim = 2;
+  const int dim= 2;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
@@ -58,7 +58,7 @@ void do_refine(Triangulation<2>& tria)
 
 void do_refine(Triangulation<3>& tria)
 {
-  const int dim = 3;
+  const int dim= 3;
 
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();

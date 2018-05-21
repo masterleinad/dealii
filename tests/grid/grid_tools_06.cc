@@ -38,7 +38,7 @@ using namespace dealii;
 /* The 2D case */
 void generate_grid(Triangulation<2>& triangulation, int orientation)
 {
-  Point<2> vertices_1[] = {
+  Point<2> vertices_1[]= {
     Point<2>(-1., -3.),
     Point<2>(+1., -3.),
     Point<2>(-1., -1.),
@@ -53,36 +53,36 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
   std::vector<CellData<2>> cells(2, CellData<2>());
 
   /* cell 0 */
-  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell] = {0, 1, 2, 3};
+  int cell_vertices_0[GeometryInfo<2>::vertices_per_cell]= {0, 1, 2, 3};
 
   /* cell 1 */
-  int cell_vertices_1[2][GeometryInfo<2>::vertices_per_cell] = {
+  int cell_vertices_1[2][GeometryInfo<2>::vertices_per_cell]= {
     {4, 5, 6, 7},
     {7, 6, 5, 4},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
-      cells[0].vertices[j] = cell_vertices_0[j];
-      cells[1].vertices[j] = cell_vertices_1[orientation][j];
+      cells[0].vertices[j]= cell_vertices_0[j];
+      cells[1].vertices[j]= cell_vertices_1[orientation][j];
     }
-  cells[0].material_id = 0;
-  cells[1].material_id = 0;
+  cells[0].material_id= 0;
+  cells[1].material_id= 0;
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
 
-  Triangulation<2>::cell_iterator cell_1 = triangulation.begin();
-  Triangulation<2>::cell_iterator cell_2 = cell_1++;
+  Triangulation<2>::cell_iterator cell_1= triangulation.begin();
+  Triangulation<2>::cell_iterator cell_2= cell_1++;
   Triangulation<2>::face_iterator face_1;
   Triangulation<2>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<2>::faces_per_cell; ++j)
     {
       if(cell_1->face(j)->center()(1) > 2.9)
-        face_1 = cell_1->face(j);
+        face_1= cell_1->face(j);
       if(cell_2->face(j)->center()(1) < -2.9)
-        face_2 = cell_2->face(j);
+        face_2= cell_2->face(j);
     }
   face_1->set_boundary_id(42);
   face_2->set_boundary_id(43);
@@ -93,22 +93,22 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
 /* The 3D case */
 void generate_grid(Triangulation<3>& triangulation, int orientation)
 {
-  Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
-                           Point<3>(+1., -1., -3.),
-                           Point<3>(-1., +1., -3.),
-                           Point<3>(+1., +1., -3.),
-                           Point<3>(-1., -1., -1.),
-                           Point<3>(+1., -1., -1.),
-                           Point<3>(-1., +1., -1.),
-                           Point<3>(+1., +1., -1.),
-                           Point<3>(-1., -1., +1.),
-                           Point<3>(+1., -1., +1.),
-                           Point<3>(-1., +1., +1.),
-                           Point<3>(+1., +1., +1.),
-                           Point<3>(-1., -1., +3.),
-                           Point<3>(+1., -1., +3.),
-                           Point<3>(-1., +1., +3.),
-                           Point<3>(+1., +1., +3.)};
+  Point<3>              vertices_1[]= {Point<3>(-1., -1., -3.),
+                          Point<3>(+1., -1., -3.),
+                          Point<3>(-1., +1., -3.),
+                          Point<3>(+1., +1., -3.),
+                          Point<3>(-1., -1., -1.),
+                          Point<3>(+1., -1., -1.),
+                          Point<3>(-1., +1., -1.),
+                          Point<3>(+1., +1., -1.),
+                          Point<3>(-1., -1., +1.),
+                          Point<3>(+1., -1., +1.),
+                          Point<3>(-1., +1., +1.),
+                          Point<3>(+1., +1., +1.),
+                          Point<3>(-1., -1., +3.),
+                          Point<3>(+1., -1., +3.),
+                          Point<3>(-1., +1., +3.),
+                          Point<3>(+1., +1., +3.)};
   std::vector<Point<3>> vertices(&vertices_1[0], &vertices_1[16]);
 
   std::vector<CellData<3>> cells(2, CellData<3>());
@@ -118,7 +118,7 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
     = {0, 1, 2, 3, 4, 5, 6, 7};
 
   /* cell 1 */
-  int cell_vertices_1[8][GeometryInfo<3>::vertices_per_cell] = {
+  int cell_vertices_1[8][GeometryInfo<3>::vertices_per_cell]= {
     {8, 9, 10, 11, 12, 13, 14, 15},
     {9, 11, 8, 10, 13, 15, 12, 14},
     {11, 10, 9, 8, 15, 14, 13, 12},
@@ -129,28 +129,28 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
     {15, 13, 14, 12, 11, 9, 10, 8},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
     {
-      cells[0].vertices[j] = cell_vertices_0[j];
-      cells[1].vertices[j] = cell_vertices_1[orientation][j];
+      cells[0].vertices[j]= cell_vertices_0[j];
+      cells[1].vertices[j]= cell_vertices_1[orientation][j];
     }
-  cells[0].material_id = 0;
-  cells[1].material_id = 0;
+  cells[0].material_id= 0;
+  cells[1].material_id= 0;
 
   triangulation.create_triangulation(vertices, cells, SubCellData());
 
-  Triangulation<3>::cell_iterator cell_1 = triangulation.begin();
-  Triangulation<3>::cell_iterator cell_2 = cell_1++;
+  Triangulation<3>::cell_iterator cell_1= triangulation.begin();
+  Triangulation<3>::cell_iterator cell_2= cell_1++;
   Triangulation<3>::face_iterator face_1;
   Triangulation<3>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<3>::faces_per_cell; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<3>::faces_per_cell; ++j)
     {
       if(cell_1->face(j)->center()(2) > 2.9)
-        face_1 = cell_1->face(j);
+        face_1= cell_1->face(j);
       if(cell_2->face(j)->center()(2) < -2.9)
-        face_2 = cell_2->face(j);
+        face_2= cell_2->face(j);
     }
   face_1->set_boundary_id(42);
   face_2->set_boundary_id(43);
@@ -167,15 +167,15 @@ print_match(const FaceIterator&   face_1,
             const FaceIterator&   face_2,
             const std::bitset<3>& orientation)
 {
-  static const int dim = FaceIterator::AccessorType::dimension;
+  static const int dim= FaceIterator::AccessorType::dimension;
 
   deallog << "face 1";
-  for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_face; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_face; ++j)
     deallog << " :: " << face_1->vertex(j);
   deallog << std::endl;
 
   deallog << "face 2";
-  for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_face; ++j)
+  for(unsigned int j= 0; j < GeometryInfo<dim>::vertices_per_face; ++j)
     deallog << " :: " << face_2->vertex(j);
   deallog << std::endl;
 
@@ -193,7 +193,7 @@ main()
 
   deallog << "Test for 2D: Hypercube" << std::endl << std::endl;
 
-  for(int i = 0; i < 2; ++i)
+  for(int i= 0; i < 2; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<2> triangulation;
@@ -208,7 +208,7 @@ main()
 
       deallog << "Triangulation: " << i << std::endl;
 
-      for(FaceVector::iterator it = test.begin(); it != test.end(); ++it)
+      for(FaceVector::iterator it= test.begin(); it != test.end(); ++it)
         print_match(it->cell[0]->face(it->face_idx[0]),
                     it->cell[1]->face(it->face_idx[1]),
                     it->orientation);
@@ -216,7 +216,7 @@ main()
 
   deallog << "Test for 3D: Hypercube" << std::endl << std::endl;
 
-  for(int i = 0; i < 8; ++i)
+  for(int i= 0; i < 8; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
@@ -231,7 +231,7 @@ main()
 
       deallog << "Triangulation: " << i << std::endl;
 
-      for(FaceVector::iterator it = test.begin(); it != test.end(); ++it)
+      for(FaceVector::iterator it= test.begin(); it != test.end(); ++it)
         print_match(it->cell[0]->face(it->face_idx[0]),
                     it->cell[1]->face(it->face_idx[1]),
                     it->orientation);

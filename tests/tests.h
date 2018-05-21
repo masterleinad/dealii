@@ -73,31 +73,31 @@ void
 filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
 {
   std::string       line;
-  bool              found   = false;
-  const std::string opening = "<" + key;
-  const std::string closing = "</" + key;
+  bool              found  = false;
+  const std::string opening= "<" + key;
+  const std::string closing= "</" + key;
   while(std::getline(in, line))
     {
       if(line.find(opening) != std::string::npos
          && line.find("binary") != std::string::npos)
         {
-          found = true;
+          found= true;
           // remove everything after ">" but keep things after "</"
-          const auto pos = line.find(closing);
+          const auto pos= line.find(closing);
           if(pos != std::string::npos)
             {
-              line  = line.substr(0, line.find(">", 0) + 1) + line.substr(pos);
-              found = false;
+              line = line.substr(0, line.find(">", 0) + 1) + line.substr(pos);
+              found= false;
             }
           else
-            line = line.substr(0, line.find(">", 0) + 1);
+            line= line.substr(0, line.find(">", 0) + 1);
           out << line << std::endl;
         }
       else if(line.find(closing) != std::string::npos)
         {
-          found = false;
+          found= false;
           // remove everything before "<"
-          line = line.substr(line.find("<", 0));
+          line= line.substr(line.find("<", 0));
           out << line << std::endl;
         }
       else if(!found)
@@ -160,8 +160,8 @@ namespace Testing
   Number
   nonoverflow_add(Number a, Number b)
   {
-    constexpr Number max = std::numeric_limits<Number>::max();
-    constexpr Number min = std::numeric_limits<Number>::min();
+    constexpr Number max= std::numeric_limits<Number>::max();
+    constexpr Number min= std::numeric_limits<Number>::min();
     if(b > 0 && a > max - b)
       return (min + a) + (b - max) - 1;
     if(b < 0 && a < min - b)
@@ -170,51 +170,51 @@ namespace Testing
   }
 
   int
-  rand(const bool reseed = false, const int seed = 1)
+  rand(const bool reseed= false, const int seed= 1)
   {
     static int  r[32];
     static int  k;
-    static bool inited = false;
+    static bool inited= false;
 
     if(!inited || reseed)
       {
         //srand treats a seed 0 as 1 for some reason
-        r[0]          = (seed == 0) ? 1 : seed;
-        long int word = r[0];
+        r[0]         = (seed == 0) ? 1 : seed;
+        long int word= r[0];
 
-        for(int i = 1; i < 31; i++)
+        for(int i= 1; i < 31; i++)
           {
             // This does:
             //   r[i] = (16807 * r[i-1]) % 2147483647;
             // but avoids overflowing 31 bits.
-            const long int hi = word / 127773;
-            const long int lo = word % 127773;
-            word              = 16807 * lo - 2836 * hi;
+            const long int hi= word / 127773;
+            const long int lo= word % 127773;
+            word             = 16807 * lo - 2836 * hi;
             if(word < 0)
-              word += 2147483647;
-            r[i] = word;
+              word+= 2147483647;
+            r[i]= word;
           }
-        k = 31;
-        for(int i = 31; i < 34; i++)
+        k= 31;
+        for(int i= 31; i < 34; i++)
           {
-            r[k % 32] = r[(k + 32 - 31) % 32];
-            k         = (k + 1) % 32;
+            r[k % 32]= r[(k + 32 - 31) % 32];
+            k        = (k + 1) % 32;
           }
 
-        for(int i = 34; i < 344; i++)
+        for(int i= 34; i < 344; i++)
           {
             r[k % 32]
               = nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
-            k = (k + 1) % 32;
+            k= (k + 1) % 32;
           }
-        inited = true;
+        inited= true;
         if(reseed == true)
           return 0; // do not generate new no
       }
 
-    r[k % 32] = nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
-    int ret   = r[k % 32];
-    k         = (k + 1) % 32;
+    r[k % 32]= nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
+    int ret  = r[k % 32];
+    k        = (k + 1) % 32;
     return (unsigned int) ret >> 1;
   }
 
@@ -227,9 +227,9 @@ namespace Testing
 } // namespace Testing
 
 // Get a uniformly distributed random value between min and max
-template <typename T = double>
+template <typename T= double>
 T
-random_value(const T& min = static_cast<T>(0), const T& max = static_cast<T>(1))
+random_value(const T& min= static_cast<T>(0), const T& max= static_cast<T>(1))
 {
   return min
          + (max - min)
@@ -240,12 +240,12 @@ random_value(const T& min = static_cast<T>(0), const T& max = static_cast<T>(1))
 // between min and max
 template <int dim>
 inline Point<dim>
-random_point(const double& min = 0.0, const double& max = 1.0)
+random_point(const double& min= 0.0, const double& max= 1.0)
 {
   Assert(max >= min, ExcMessage("Make sure max>=min"));
   Point<dim> p;
-  for(unsigned int i = 0; i < dim; ++i)
-    p[i] = random_value(min, max);
+  for(unsigned int i= 0; i < dim; ++i)
+    p[i]= random_value(min, max);
   return p;
 }
 
@@ -279,7 +279,7 @@ cat_file(const char* filename)
 void
 sort_file_contents(const std::string& filename)
 {
-  int error = std::system(
+  int error= std::system(
     (std::string("LC_ALL=C sort ") + filename + " -o " + filename).c_str());
   AssertThrow(error == 0, ExcInternalError());
 }
@@ -294,15 +294,15 @@ checksum(const IT& begin, const IT& end)
   AssertThrow(sizeof(unsigned int) == 4, ExcInternalError());
   AssertThrow(sizeof(*begin) == 1, ExcInternalError());
 
-  unsigned int a = 1;
-  unsigned int b = 0;
+  unsigned int a= 1;
+  unsigned int b= 0;
 
-  IT it = begin;
+  IT it= begin;
 
   while(it != end)
     {
-      a = (a + (unsigned char) *it) % 65521;
-      b = (a + b) % 65521;
+      a= (a + (unsigned char) *it) % 65521;
+      b= (a + b) % 65521;
       ++it;
     }
 
@@ -319,12 +319,12 @@ checksum(const IT& begin, const IT& end)
 std::string
 unify_pretty_function(const std::string& text)
 {
-  std::string t = text;
-  t             = Utilities::replace_in_string(t, " &", " & ");
-  t             = Utilities::replace_in_string(t, " & ,", "&,");
-  t             = Utilities::replace_in_string(t, " & )", "&)");
-  t             = Utilities::replace_in_string(t, " & ", "& ");
-  t             = Utilities::replace_in_string(t, "virtual ", "");
+  std::string t= text;
+  t            = Utilities::replace_in_string(t, " &", " & ");
+  t            = Utilities::replace_in_string(t, " & ,", "&,");
+  t            = Utilities::replace_in_string(t, " & )", "&)");
+  t            = Utilities::replace_in_string(t, " & ", "& ");
+  t            = Utilities::replace_in_string(t, "virtual ", "");
   return t;
 }
 
@@ -340,7 +340,7 @@ unify_pretty_function(const std::string& text)
 #define check_solver_within_range(                                   \
   SolverType_COMMAND, CONTROL_COMMAND, MIN_ALLOWED, MAX_ALLOWED)     \
   {                                                                  \
-    const unsigned int previous_depth = deallog.depth_file(0);       \
+    const unsigned int previous_depth= deallog.depth_file(0);        \
     try                                                              \
       {                                                              \
         SolverType_COMMAND;                                          \
@@ -348,7 +348,7 @@ unify_pretty_function(const std::string& text)
     catch(SolverControl::NoConvergence & exc)                        \
       {}                                                             \
     deallog.depth_file(previous_depth);                              \
-    const unsigned int steps = CONTROL_COMMAND;                      \
+    const unsigned int steps= CONTROL_COMMAND;                       \
     if(steps >= MIN_ALLOWED && steps <= MAX_ALLOWED)                 \
       {                                                              \
         deallog << "Solver stopped within " << MIN_ALLOWED << " - "  \
@@ -418,13 +418,13 @@ namespace
              == stageLog->classLog->numClasses,
            dealii::ExcInternalError());
 
-    bool errors = false;
-    for(int i = 0; i < stageLog->stageInfo->classLog->numClasses; ++i)
+    bool errors= false;
+    for(int i= 0; i < stageLog->stageInfo->classLog->numClasses; ++i)
       {
         if(stageLog->stageInfo->classLog->classInfo[i].destructions
            != stageLog->stageInfo->classLog->classInfo[i].creations)
           {
-            errors = true;
+            errors= true;
             std::cerr
               << "ERROR: PETSc objects leaking of type '"
               << stageLog->classLog->classInfo[i].name << "'"
@@ -455,22 +455,22 @@ std::string   deallogname;
 std::ofstream deallogfile;
 
 void
-initlog(bool console = false)
+initlog(bool console= false)
 {
-  deallogname = "output";
+  deallogname= "output";
   deallogfile.open(deallogname.c_str());
   deallog.attach(deallogfile);
   deallog.depth_console(console ? 10 : 0);
 }
 
 inline void
-mpi_initlog(const bool console = false)
+mpi_initlog(const bool console= false)
 {
 #ifdef DEAL_II_WITH_MPI
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(myid == 0)
     {
-      deallogname = "output";
+      deallogname= "output";
       deallogfile.open(deallogname.c_str());
       deallog.attach(deallogfile);
       deallog.depth_console(console ? 10 : 0);
@@ -490,10 +490,10 @@ mpi_initlog(const bool console = false)
  */
 struct MPILogInitAll
 {
-  MPILogInitAll(const bool console = false)
+  MPILogInitAll(const bool console= false)
   {
 #ifdef DEAL_II_WITH_MPI
-    const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+    const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
     if(myid == 0)
       {
         if(!deallog.has_file())
@@ -504,7 +504,7 @@ struct MPILogInitAll
       }
     else
       {
-        deallogname = "output" + Utilities::int_to_string(myid);
+        deallogname= "output" + Utilities::int_to_string(myid);
         deallogfile.open(deallogname.c_str());
         deallog.attach(deallogfile);
       }
@@ -522,8 +522,8 @@ struct MPILogInitAll
   ~MPILogInitAll()
   {
 #ifdef DEAL_II_WITH_MPI
-    const unsigned int myid  = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-    const unsigned int nproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+    const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+    const unsigned int nproc= Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
     // pop the prefix for the MPI rank of the current process
     deallog.pop();
@@ -543,9 +543,9 @@ struct MPILogInitAll
 
     if(myid == 0)
       {
-        for(unsigned int i = 1; i < nproc; ++i)
+        for(unsigned int i= 1; i < nproc; ++i)
           {
-            std::string filename = "output" + Utilities::int_to_string(i);
+            std::string filename= "output" + Utilities::int_to_string(i);
             cat_file(filename.c_str());
           }
       }
@@ -585,8 +585,8 @@ new_tbb_assertion_handler(const char* file,
   std::cerr << "Detailed description: " << comment << std::endl;
 
   // Reenable abort and stacktraces:
-  deal_II_exceptions::abort_on_exception = true;
-  deal_II_exceptions::show_stacktrace    = true;
+  deal_II_exceptions::abort_on_exception= true;
+  deal_II_exceptions::show_stacktrace   = true;
 
   // And abort with a deal.II exception:
   Assert(false, ExcMessage("TBB Exception, see above"));
@@ -653,8 +653,8 @@ struct SetGrainSizes
 {
   SetGrainSizes()
   {
-    internal::VectorImplementation::minimum_parallel_grain_size       = 2;
-    internal::SparseMatrixImplementation::minimum_parallel_grain_size = 2;
+    internal::VectorImplementation::minimum_parallel_grain_size      = 2;
+    internal::SparseMatrixImplementation::minimum_parallel_grain_size= 2;
   }
 } set_grain_sizes;
 
@@ -669,7 +669,7 @@ DEAL_II_NAMESPACE_CLOSE
 LogStream&
 operator<<(LogStream& out, const std::vector<unsigned int>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
@@ -677,7 +677,7 @@ operator<<(LogStream& out, const std::vector<unsigned int>& v)
 LogStream&
 operator<<(LogStream& out, const std::vector<long long unsigned int>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
@@ -685,7 +685,7 @@ operator<<(LogStream& out, const std::vector<long long unsigned int>& v)
 LogStream&
 operator<<(LogStream& out, const std::vector<double>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }

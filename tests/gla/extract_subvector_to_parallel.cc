@@ -27,9 +27,9 @@ template <typename VectorType>
 void
 set(VectorType& vector)
 {
-  for(unsigned int i = 0; i < vector.size(); ++i)
+  for(unsigned int i= 0; i < vector.size(); ++i)
     if(vector.locally_owned_elements().is_element(i))
-      vector(i) = i;
+      vector(i)= i;
   vector.compress(VectorOperation::insert);
 }
 
@@ -37,25 +37,25 @@ template <typename VectorType>
 void
 test(VectorType& vector)
 {
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   // select every other element
   std::vector<typename VectorType::size_type> indices;
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for(unsigned int j= 0; j < vector.size() / 2; ++j)
     indices.push_back(2 * j);
 
   // do the extraction with the function that takes indices, then
   // assert correctness
   std::vector<typename VectorType::value_type> values1(indices.size());
   vector.extract_subvector_to(indices, values1);
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for(unsigned int j= 0; j < vector.size() / 2; ++j)
     AssertThrow(get_real_assert_zero_imag(values1[j]) == 2 * j,
                 ExcInternalError());
 
   // do the same with the version of the function that takes iterators
   std::vector<typename VectorType::value_type> values2(indices.size());
   vector.extract_subvector_to(indices.begin(), indices.end(), values2.begin());
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for(unsigned int j= 0; j < vector.size() / 2; ++j)
     AssertThrow(get_real_assert_zero_imag(values2[j]) == 2 * j,
                 ExcInternalError());
 
@@ -69,7 +69,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
-  const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int myid= Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   {
     IndexSet local(10);
     if(myid == 0)
@@ -86,7 +86,7 @@ main(int argc, char** argv)
       set(w);
       LinearAlgebra::distributed::Vector<double> v(
         local, dense_local, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }
@@ -96,7 +96,7 @@ main(int argc, char** argv)
       PETScWrappers::MPI::Vector w(local, MPI_COMM_WORLD);
       set(w);
       PETScWrappers::MPI::Vector v(local, dense_local, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }
@@ -106,7 +106,7 @@ main(int argc, char** argv)
       TrilinosWrappers::MPI::Vector w(local, MPI_COMM_WORLD);
       set(w);
       TrilinosWrappers::MPI::Vector v(local, dense_local, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }
@@ -148,7 +148,7 @@ main(int argc, char** argv)
       set(w);
       LinearAlgebra::distributed::BlockVector<double> v(
         partitioning, dense_partitioning, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }
@@ -159,7 +159,7 @@ main(int argc, char** argv)
       set(w);
       PETScWrappers::MPI::BlockVector v(
         partitioning, dense_partitioning, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }
@@ -170,7 +170,7 @@ main(int argc, char** argv)
       set(w);
       TrilinosWrappers::MPI::BlockVector v(
         partitioning, dense_partitioning, MPI_COMM_WORLD);
-      v = w; // get copy of vector including ghost elements
+      v= w; // get copy of vector including ghost elements
       test(v);
       deallog.pop();
     }

@@ -42,10 +42,10 @@ test()
 
   deallog << "Coarse mesh:" << std::endl;
   dof_handler.begin_active()->face(0)->get_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     deallog << "Left vertex=" << dof_indices[i] << std::endl;
   dof_handler.begin_active()->face(1)->get_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
     deallog << "Right vertex=" << dof_indices[i] << std::endl;
 
   tria.refine_global(2);
@@ -58,10 +58,10 @@ test()
     {
       deallog << "Cell: " << cell << std::endl;
       cell->face(0)->get_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
         deallog << "Left vertex=" << dof_indices[i] << std::endl;
       cell->face(1)->get_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for(unsigned int i= 0; i < fe.dofs_per_face; ++i)
         deallog << "Right vertex=" << dof_indices[i] << std::endl;
     }
 }

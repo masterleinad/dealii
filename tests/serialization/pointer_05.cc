@@ -23,21 +23,21 @@
 #include <boost/serialization/utility.hpp>
 #include <typeinfo>
 
-int object_number = 1;
+int object_number= 1;
 
 class C
 {
 public:
   C()
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "Default constructor. Object number " << object_number
             << std::endl;
   }
 
   C(const C&)
   {
-    object_number = ::object_number++;
+    object_number= ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
   }
 
@@ -89,13 +89,13 @@ void
 test()
 {
   {
-    C*              c = new C();
+    C*              c= new C();
     std::pair<P, P> pair_1, pair_2;
-    pair_1.first.c  = c;
-    pair_1.second.c = c;
+    pair_1.first.c = c;
+    pair_1.second.c= c;
 
-    pair_2.first.c  = nullptr;
-    pair_2.second.c = nullptr;
+    pair_2.first.c = nullptr;
+    pair_2.second.c= nullptr;
 
     verify(pair_1, pair_2);
 

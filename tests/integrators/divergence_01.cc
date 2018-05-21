@@ -35,8 +35,8 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   AssertDimension(fev.get_fe().n_components(), dim);
   AssertDimension(fes.get_fe().n_components(), 1);
 
-  const unsigned int nv = fev.dofs_per_cell;
-  const unsigned int ns = fes.dofs_per_cell;
+  const unsigned int nv= fev.dofs_per_cell;
+  const unsigned int ns= fes.dofs_per_cell;
 
   FullMatrix<double> Md(ns, nv);
   cell_matrix(Md, fev, fes);
@@ -52,15 +52,15 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(nv);
-  for(unsigned int i = 0; i < nv; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < nv; ++i)
+    indices[i]= i;
 
   deallog << "Divergence-Residuals";
-  for(unsigned int i = 0; i < nv; ++i)
+  for(unsigned int i= 0; i < nv; ++i)
     {
-      u    = 0.;
-      u(i) = 1.;
-      w    = 0.;
+      u   = 0.;
+      u(i)= 1.;
+      w   = 0.;
       fev.get_function_gradients(
         u,
         indices,
@@ -75,15 +75,15 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
 
   v.reinit(nv);
   indices.resize(ns);
-  for(unsigned int i = 0; i < ns; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < ns; ++i)
+    indices[i]= i;
 
   deallog << "Gradient-Residuals";
-  for(unsigned int i = 0; i < ns; ++i)
+  for(unsigned int i= 0; i < ns; ++i)
     {
-      w    = 0.;
-      w(i) = 1.;
-      u    = 0.;
+      w   = 0.;
+      w(i)= 1.;
+      u   = 0.;
       fes.get_function_gradients(w, indices, ugrad[0]);
       gradient_residual(u, fev, ugrad[0]);
       Mg.vmult(v, w);
@@ -100,8 +100,8 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   AssertDimension(fev.get_fe().n_components(), dim);
   AssertDimension(fes.get_fe().n_components(), 1);
 
-  const unsigned int nv = fev.dofs_per_cell;
-  const unsigned int ns = fes.dofs_per_cell;
+  const unsigned int nv= fev.dofs_per_cell;
+  const unsigned int ns= fes.dofs_per_cell;
 
   FullMatrix<double> M(ns, nv);
   u_dot_n_matrix(M, fev, fes);
@@ -112,15 +112,15 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     dim, std::vector<double>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(nv);
-  for(unsigned int i = 0; i < nv; ++i)
-    indices[i] = i;
+  for(unsigned int i= 0; i < nv; ++i)
+    indices[i]= i;
 
   deallog << "Residuals u dot n";
-  for(unsigned int i = 0; i < nv; ++i)
+  for(unsigned int i= 0; i < nv; ++i)
     {
-      u    = 0.;
-      u(i) = 1.;
-      w    = 0.;
+      u   = 0.;
+      u(i)= 1.;
+      w   = 0.;
       fev.get_function_values(
         u, indices, VectorSlice<std::vector<std::vector<double>>>(uval), true);
       u_dot_n_residual(w, fev, fes, make_slice(uval));
@@ -143,10 +143,10 @@ test_face(const FEValuesBase<dim>& fev1,
   AssertDimension(fev2.get_fe().n_components(), dim);
   AssertDimension(fes2.get_fe().n_components(), 1);
 
-  const unsigned int nv1 = fev1.dofs_per_cell;
-  const unsigned int nv2 = fev1.dofs_per_cell;
-  const unsigned int ns1 = fes1.dofs_per_cell;
-  const unsigned int ns2 = fes1.dofs_per_cell;
+  const unsigned int nv1= fev1.dofs_per_cell;
+  const unsigned int nv2= fev1.dofs_per_cell;
+  const unsigned int ns1= fes1.dofs_per_cell;
+  const unsigned int ns2= fes1.dofs_per_cell;
 
   FullMatrix<double> M11(ns1, nv1);
   FullMatrix<double> M12(ns1, nv2);
@@ -176,7 +176,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
   FEValues<dim> fes(
     fs, quadrature, update_values | update_gradients | update_JxW_values);
 
-  typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
+  typename Triangulation<dim>::cell_iterator cell1= tr.begin(1);
   fev.reinit(cell1);
   fes.reinit(cell1);
   test_cell(fev, fes);
@@ -190,7 +190,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
                          face_quadrature,
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "boundary_matrix " << i << std::endl;
       fev1.reinit(cell1, i);
@@ -202,10 +202,10 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
     fv, face_quadrature, update_values | update_gradients | update_JxW_values);
   FEFaceValues<dim> fes2(
     fs, face_quadrature, update_values | update_gradients | update_JxW_values);
-  typename Triangulation<dim>::cell_iterator cell2 = cell1->neighbor(1);
+  typename Triangulation<dim>::cell_iterator cell2= cell1->neighbor(1);
 
   deallog << "face_matrix " << 0 << std::endl;
-  cell1 = tr.begin(1);
+  cell1= tr.begin(1);
   fev1.reinit(cell1, 1);
   fev2.reinit(cell2, 0);
   fes1.reinit(cell1, 1);
@@ -230,7 +230,7 @@ test(Triangulation<dim>& tr)
 int
 main()
 {
-  const std::string logname = "output";
+  const std::string logname= "output";
   std::ofstream     logfile(logname.c_str());
   deallog.attach(logfile);
 

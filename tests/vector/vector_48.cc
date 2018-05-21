@@ -22,11 +22,11 @@
 void
 test(Vector<double>& v, Vector<double>& w, Vector<double>& x)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
-      v(i) = i;
-      w(i) = i + 1.;
-      x(i) = i + 2.;
+      v(i)= i;
+      w(i)= i + 1.;
+      x(i)= i + 2.;
     }
 
   v.compress();
@@ -36,7 +36,7 @@ test(Vector<double>& v, Vector<double>& w, Vector<double>& x)
   v.ratio(w, x);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for(unsigned int i= 0; i < v.size(); ++i)
     {
       Assert(w(i) == i + 1., ExcInternalError());
       Assert(x(i) == i + 2., ExcInternalError());

@@ -59,8 +59,8 @@ check_fe(FiniteElement<dim>& fe, ComponentMask& component_mask)
   mg_constrained_dofs.make_zero_boundary_constraints(
     dofh, boundary_indicators, component_mask);
 
-  const unsigned int n_levels = tr.n_global_levels();
-  for(unsigned int level = 0; level < n_levels; ++level)
+  const unsigned int n_levels= tr.n_global_levels();
+  for(unsigned int level= 0; level < n_levels; ++level)
     {
       deallog << "Level " << level << ":" << std::endl;
       IndexSet boundary_indices

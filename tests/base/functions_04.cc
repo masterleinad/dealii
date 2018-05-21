@@ -41,44 +41,44 @@ check_function(const Functions::FlowFunction<dim>& f,
   // patch stretching over the cube
   // [-1,1]^dim
   std::vector<DataOutBase::Patch<dim, dim>> patches(1);
-  unsigned int                              vertex_number = 0;
-  for(unsigned int iz = 0; iz < ((dim > 2) ? 2 : 1); ++iz)
-    for(unsigned int iy = 0; iy < ((dim > 1) ? 2 : 1); ++iy)
-      for(unsigned int ix = 0; ix < 2; ++ix)
+  unsigned int                              vertex_number= 0;
+  for(unsigned int iz= 0; iz < ((dim > 2) ? 2 : 1); ++iz)
+    for(unsigned int iy= 0; iy < ((dim > 1) ? 2 : 1); ++iy)
+      for(unsigned int ix= 0; ix < 2; ++ix)
         {
           if(dim > 0)
-            patches[0].vertices[vertex_number](0) = -1. + 2. * ix;
+            patches[0].vertices[vertex_number](0)= -1. + 2. * ix;
           if(dim > 1)
-            patches[0].vertices[vertex_number](1) = -1. + 2. * iy;
+            patches[0].vertices[vertex_number](1)= -1. + 2. * iy;
           if(dim > 2)
-            patches[0].vertices[vertex_number](2) = -1. + 2. * iz;
+            patches[0].vertices[vertex_number](2)= -1. + 2. * iz;
           ++vertex_number;
         }
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
-    patches[0].neighbors[i] = numbers::invalid_unsigned_int;
-  patches[0].patch_index          = 0;
-  patches[0].n_subdivisions       = sub;
-  patches[0].points_are_available = false;
+  for(unsigned int i= 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+    patches[0].neighbors[i]= numbers::invalid_unsigned_int;
+  patches[0].patch_index         = 0;
+  patches[0].n_subdivisions      = sub;
+  patches[0].points_are_available= false;
 
-  vertex_number = 1;
-  for(unsigned int d = 0; d < dim; ++d)
-    vertex_number *= (sub + 1);
+  vertex_number= 1;
+  for(unsigned int d= 0; d < dim; ++d)
+    vertex_number*= (sub + 1);
   patches[0].data.reinit(f.n_components, vertex_number);
 
   // Build the vector of quadrature points;
   std::vector<Point<dim>> points(vertex_number);
-  const double            h = 2. / sub;
-  vertex_number             = 0;
-  for(unsigned int iz = 0; iz <= ((dim > 2) ? sub : 0); ++iz)
-    for(unsigned int iy = 0; iy <= ((dim > 1) ? sub : 0); ++iy)
-      for(unsigned int ix = 0; ix <= sub; ++ix)
+  const double            h= 2. / sub;
+  vertex_number            = 0;
+  for(unsigned int iz= 0; iz <= ((dim > 2) ? sub : 0); ++iz)
+    for(unsigned int iy= 0; iy <= ((dim > 1) ? sub : 0); ++iy)
+      for(unsigned int ix= 0; ix <= sub; ++ix)
         {
           if(dim > 0)
-            points[vertex_number](0) = -1. + ix * h;
+            points[vertex_number](0)= -1. + ix * h;
           if(dim > 1)
-            points[vertex_number](1) = -1. + iy * h;
+            points[vertex_number](1)= -1. + iy * h;
           if(dim > 2)
-            points[vertex_number](2) = -1. + iz * h;
+            points[vertex_number](2)= -1. + iz * h;
           ++vertex_number;
         }
 
@@ -88,17 +88,17 @@ check_function(const Functions::FlowFunction<dim>& f,
                                            std::vector<double>(points.size()));
   f.vector_value_list(points, values);
   f.vector_values(points, values2);
-  for(unsigned int i = 0; i < values.size(); ++i)
-    for(unsigned int j = 0; j < values[i].size(); ++j)
+  for(unsigned int i= 0; i < values.size(); ++i)
+    for(unsigned int j= 0; j < values[i].size(); ++j)
       {
         // generate data, but
         // truncate too small values
         // to avoid output that
         // depends on round-off
         if(std::fabs(values[i](j)) > 1e-10)
-          patches[0].data(j, i) = values[i](j);
+          patches[0].data(j, i)= values[i](j);
         else
-          patches[0].data(j, i) = 0;
+          patches[0].data(j, i)= 0;
         if(values[i](j) != values2[j][i])
           deallog << "Error values (" << i << ',' << j << ") : " << values[i](j)
                   << " != " << values2[j][i] << std::endl;
@@ -118,12 +118,12 @@ check_function(const Functions::FlowFunction<dim>& f,
   dtest2.vector_gradient_list(points, gradients2);
 
   // Compare gradients and difference quotients
-  for(unsigned int k = 0; k < gradients.size(); ++k)
-    for(unsigned int i = 0; i < gradients[k].size(); ++i)
+  for(unsigned int k= 0; k < gradients.size(); ++k)
+    for(unsigned int i= 0; i < gradients[k].size(); ++i)
       {
         // Compute difference
-        Tensor<1, dim> d1 = gradients1[i][k] - gradients[k][i];
-        Tensor<1, dim> d2 = gradients2[i][k] - gradients[k][i];
+        Tensor<1, dim> d1= gradients1[i][k] - gradients[k][i];
+        Tensor<1, dim> d2= gradients2[i][k] - gradients[k][i];
 
         // If the difference is
         // already small, we are fine
@@ -143,7 +143,7 @@ check_function(const Functions::FlowFunction<dim>& f,
                         << k
                         //      << " norms " << d1.norm() << " " << d2.norm()
                         << std::endl;
-                for(unsigned int d = 0; d < dim; ++d)
+                for(unsigned int d= 0; d < dim; ++d)
                   deallog << " " << gradients[k][i][d] << " "
                           << gradients1[i][k][d] << std::endl;
               }
@@ -154,11 +154,11 @@ check_function(const Functions::FlowFunction<dim>& f,
   // Check if divergence is zero
   deallog << "Divergence ";
 
-  for(unsigned int k = 0; k < points.size(); ++k)
+  for(unsigned int k= 0; k < points.size(); ++k)
     {
-      double div = 0.;
-      for(unsigned int d = 0; d < dim; ++d)
-        div += gradients[d][k][d];
+      double div= 0.;
+      for(unsigned int d= 0; d < dim; ++d)
+        div+= gradients[d][k][d];
       if(std::fabs(div) > 1.e-13)
         deallog << "Divergence " << k << " " << div << std::endl;
     }
@@ -166,11 +166,11 @@ check_function(const Functions::FlowFunction<dim>& f,
 
   f.vector_laplacian_list(points, values);
   f.vector_laplacians(points, values2);
-  double sum = 0.;
-  for(unsigned int i = 0; i < values.size(); ++i)
-    for(unsigned int j = 0; j < values[i].size(); ++j)
+  double sum= 0.;
+  for(unsigned int i= 0; i < values.size(); ++i)
+    for(unsigned int j= 0; j < values[i].size(); ++j)
       {
-        sum += values[i](j) * values[i](j);
+        sum+= values[i](j) * values[i](j);
         if(values[i](j) != values2[j][i])
           deallog << "Error values (" << i << ',' << j << ") : " << values[i](j)
                   << " != " << values2[j][i] << std::endl;
@@ -178,9 +178,9 @@ check_function(const Functions::FlowFunction<dim>& f,
   deallog << "Laplacians " << std::sqrt(sum) / points.size() << std::endl;
 
   std::vector<std::string> names(f.n_components);
-  for(unsigned int i = 0; i < names.size(); ++i)
+  for(unsigned int i= 0; i < names.size(); ++i)
     {
-      names[i] = std::string("comp");
+      names[i]= std::string("comp");
     }
 
   DataOutBase::DXFlags                                             dxflags;
@@ -195,7 +195,7 @@ check_function(const Functions::FlowFunction<dim>& f,
 int
 main()
 {
-  std::string   logname = "output";
+  std::string   logname= "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

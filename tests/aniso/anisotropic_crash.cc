@@ -44,8 +44,8 @@ main()
 
   // now do some sort of random, anisotropic
   // refinement
-  Triangulation<2>::active_cell_iterator cell = tri.begin_active(),
-                                         end  = tri.end();
+  Triangulation<2>::active_cell_iterator cell= tri.begin_active(),
+                                         end = tri.end();
   for(; cell != end; ++cell)
     {
       switch(Testing::rand() % 4)
@@ -76,7 +76,7 @@ main()
 
   /// For each vertex find the patch of cells
   /// that surrounds it
-  for(unsigned v = 0; v < tri.n_vertices(); ++v)
+  for(unsigned v= 0; v < tri.n_vertices(); ++v)
     if(tri.get_used_vertices()[v] == true)
       {
         deallog << "Vertex=" << v << std::endl;
@@ -84,7 +84,7 @@ main()
         const std::vector<Triangulation<2>::active_cell_iterator> tmp
           = GridTools::find_cells_adjacent_to_vertex(tri, v);
 
-        for(unsigned int i = 0; i < tmp.size(); ++i)
+        for(unsigned int i= 0; i < tmp.size(); ++i)
           deallog << "   " << tmp[i] << std::endl;
       }
 }

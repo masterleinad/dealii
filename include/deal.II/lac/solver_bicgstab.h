@@ -116,7 +116,7 @@ namespace internal
  * to observe the progress of the iteration.
  *
  */
-template <typename VectorType = Vector<double>>
+template <typename VectorType= Vector<double>>
 class SolverBicgstab : public Solver<VectorType>,
                        protected internal::SolverBicgstabData
 {
@@ -139,8 +139,8 @@ public:
      * The default is to perform an exact residual computation and breakdown
      * parameter 1e-10.
      */
-    explicit AdditionalData(const bool   exact_residual = true,
-                            const double breakdown      = 1.e-10)
+    explicit AdditionalData(const bool   exact_residual= true,
+                            const double breakdown     = 1.e-10)
       : exact_residual(exact_residual), breakdown(breakdown)
     {}
     /**
@@ -158,14 +158,14 @@ public:
    */
   SolverBicgstab(SolverControl&            cn,
                  VectorMemory<VectorType>& mem,
-                 const AdditionalData&     data = AdditionalData());
+                 const AdditionalData&     data= AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
   SolverBicgstab(SolverControl&        cn,
-                 const AdditionalData& data = AdditionalData());
+                 const AdditionalData& data= AdditionalData());
 
   /**
    * Virtual destructor.
@@ -328,7 +328,7 @@ SolverBicgstab<VectorType>::criterion(const MatrixType& A,
 {
   A.vmult(*Vt, x);
   Vt->add(-1., b);
-  res = Vt->l2_norm();
+  res= Vt->l2_norm();
 
   return res;
 }
@@ -340,7 +340,7 @@ SolverBicgstab<VectorType>::start(const MatrixType& A)
 {
   A.vmult(*Vr, *Vx);
   Vr->sadd(-1., 1., *Vb);
-  res = Vr->l2_norm();
+  res= Vr->l2_norm();
 
   return this->iteration_status(step, res, *Vx);
 }
@@ -360,31 +360,31 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
                                     const PreconditionerType& preconditioner)
 {
   //TODO:[GK] Implement "use the length of the computed orthogonal residual" in the BiCGStab method.
-  SolverControl::State state = SolverControl::iterate;
-  alpha = omega = rho = 1.;
+  SolverControl::State state= SolverControl::iterate;
+  alpha= omega= rho= 1.;
 
-  VectorType& r    = *Vr;
-  VectorType& rbar = *Vrbar;
-  VectorType& p    = *Vp;
-  VectorType& y    = *Vy;
-  VectorType& z    = *Vz;
-  VectorType& t    = *Vt;
-  VectorType& v    = *Vv;
+  VectorType& r   = *Vr;
+  VectorType& rbar= *Vrbar;
+  VectorType& p   = *Vp;
+  VectorType& y   = *Vy;
+  VectorType& z   = *Vz;
+  VectorType& t   = *Vt;
+  VectorType& v   = *Vv;
 
-  rbar         = r;
-  bool startup = true;
+  rbar        = r;
+  bool startup= true;
 
   do
     {
       ++step;
 
-      rhobar = r * rbar;
-      beta   = rhobar * alpha / (rho * omega);
-      rho    = rhobar;
+      rhobar= r * rbar;
+      beta  = rhobar * alpha / (rho * omega);
+      rho   = rhobar;
       if(startup == true)
         {
-          p       = r;
-          startup = false;
+          p      = r;
+          startup= false;
         }
       else
         {
@@ -394,16 +394,16 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
 
       preconditioner.vmult(y, p);
       A.vmult(v, y);
-      rhobar = rbar * v;
+      rhobar= rbar * v;
 
-      alpha = rho / rhobar;
+      alpha= rho / rhobar;
 
       //TODO:[?] Find better breakdown criterion
 
       if(std::fabs(alpha) > 1.e10)
         return IterationResult(true, state, step, res);
 
-      res = std::sqrt(r.add_and_dot(-alpha, v, r));
+      res= std::sqrt(r.add_and_dot(-alpha, v, r));
 
       // check for early success, see the lac/bicgstab_early testcase as to
       // why this is necessary
@@ -420,19 +420,19 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
 
       preconditioner.vmult(z, r);
       A.vmult(t, z);
-      rhobar = t * r;
-      omega  = rhobar / (t * t);
+      rhobar= t * r;
+      omega = rhobar / (t * t);
       Vx->add(alpha, y, omega, z);
 
       if(additional_data.exact_residual)
         {
           r.add(-omega, t);
-          res = criterion(A, *Vx, *Vb);
+          res= criterion(A, *Vx, *Vb);
         }
       else
-        res = std::sqrt(r.add_and_dot(-omega, t, r));
+        res= std::sqrt(r.add_and_dot(-omega, t, r));
 
-      state = this->iteration_status(step, res, *Vx);
+      state= this->iteration_status(step, res, *Vx);
       print_vectors(step, *Vx, r, y);
     }
   while(state == SolverControl::iterate);
@@ -448,13 +448,13 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
                                   const PreconditionerType& preconditioner)
 {
   LogStream::Prefix prefix("Bicgstab");
-  Vr    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vrbar = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vp    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vy    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vz    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vt    = typename VectorMemory<VectorType>::Pointer(this->memory);
-  Vv    = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vr   = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vrbar= typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vp   = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vy   = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vz   = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vt   = typename VectorMemory<VectorType>::Pointer(this->memory);
+  Vv   = typename VectorMemory<VectorType>::Pointer(this->memory);
 
   Vr->reinit(x, true);
   Vrbar->reinit(x, true);
@@ -464,10 +464,10 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
   Vt->reinit(x, true);
   Vv->reinit(x, true);
 
-  Vx = &x;
-  Vb = &b;
+  Vx= &x;
+  Vb= &b;
 
-  step = 0;
+  step= 0;
 
   IterationResult state(false, SolverControl::failure, 0, 0);
 
@@ -478,10 +478,10 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
         deallog << "Restart step " << step << std::endl;
       if(start(A) == SolverControl::success)
         {
-          state.state = SolverControl::success;
+          state.state= SolverControl::success;
           break;
         }
-      state = iterate(A, preconditioner);
+      state= iterate(A, preconditioner);
       ++step;
     }
   while(state.breakdown == true);
