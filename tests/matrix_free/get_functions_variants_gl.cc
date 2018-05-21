@@ -168,7 +168,7 @@ test()
     const QGaussLobatto<1>                   quad(fe_degree + 1);
     typename MatrixFree<dim>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
-    data.mapping_update_flags  = update_gradients | update_hessians;
+    data.mapping_update_flags = update_gradients | update_hessians;
     mf_data.reinit(dof, constraints, quad, data);
   }
 

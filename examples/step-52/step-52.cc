@@ -206,7 +206,7 @@ namespace Step52
                           update_values | update_gradients | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
@@ -259,8 +259,8 @@ namespace Step52
   {
     const double intensity = 10.;
     const double frequency = numbers::PI / 10.;
-    const double b         = 5.;
-    const double x         = point(0);
+    const double b = 5.;
+    const double x = point(0);
 
     return intensity
            * (frequency * std::cos(frequency * time) * (b * x - x * x)
@@ -297,7 +297,7 @@ namespace Step52
                             | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     Vector<double> cell_source(dofs_per_cell);
 
@@ -555,14 +555,14 @@ namespace Step52
   {
     double time_step
       = (final_time - initial_time) / static_cast<double>(n_time_steps);
-    double       time          = initial_time;
+    double       time = initial_time;
     const double coarsen_param = 1.2;
-    const double refine_param  = 0.8;
-    const double min_delta     = 1e-8;
-    const double max_delta     = 10 * time_step;
-    const double refine_tol    = 1e-1;
-    const double coarsen_tol   = 1e-5;
-    solution                   = 0.;
+    const double refine_param = 0.8;
+    const double min_delta = 1e-8;
+    const double max_delta = 10 * time_step;
+    const double refine_tol = 1e-1;
+    const double coarsen_tol = 1e-5;
+    solution = 0.;
 
     TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>
       embedded_explicit_runge_kutta(method,
@@ -639,10 +639,10 @@ namespace Step52
     // introduction, since the exact solution is zero at the final time, the
     // error equals the numerical solution and can be computed by just taking
     // the $l_2$ norm of the solution vector.)
-    unsigned int       n_steps      = 0;
+    unsigned int       n_steps = 0;
     const unsigned int n_time_steps = 200;
     const double       initial_time = 0.;
-    const double       final_time   = 10.;
+    const double       final_time = 10.;
 
     std::cout << "Explicit methods:" << std::endl;
     explicit_method(

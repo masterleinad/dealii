@@ -108,9 +108,9 @@ public:
      * default parameter.
      */
     AdditionalData(const size_type block_size,
-                   const double    relaxation      = 1.,
+                   const double    relaxation = 1.,
                    const bool      invert_diagonal = true,
-                   const bool      same_diagonal   = false);
+                   const bool      same_diagonal = false);
 
     /**
      * Relaxation parameter.

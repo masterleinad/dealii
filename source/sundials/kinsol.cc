@@ -202,7 +202,7 @@ namespace SUNDIALS
                ExcInternalError(
                  "Trying to use a serial code with a parallel vector."));
         solution = N_VNew_Serial(system_size);
-        u_scale  = N_VNew_Serial(system_size);
+        u_scale = N_VNew_Serial(system_size);
         N_VConst_Serial(1.e0, u_scale);
         f_scale = N_VNew_Serial(system_size);
         N_VConst_Serial(1.e0, f_scale);
@@ -256,7 +256,7 @@ namespace SUNDIALS
     AssertKINSOL(status);
 
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-    SUNMatrix       J  = nullptr;
+    SUNMatrix       J = nullptr;
     SUNLinearSolver LS = nullptr;
 #  endif
 
@@ -275,8 +275,8 @@ namespace SUNDIALS
     else
       {
 #  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-        J      = SUNDenseMatrix(system_size, system_size);
-        LS     = SUNDenseLinearSolver(u_scale, J);
+        J = SUNDenseMatrix(system_size, system_size);
+        LS = SUNDenseLinearSolver(u_scale, J);
         status = KINDlsSetLinearSolver(kinsol_mem, LS, J);
 #  else
         status = KINDense(kinsol_mem, system_size);

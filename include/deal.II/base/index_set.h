@@ -441,7 +441,7 @@ public:
    */
   Epetra_Map
   make_trilinos_map(const MPI_Comm& communicator = MPI_COMM_WORLD,
-                    const bool      overlapping  = false) const;
+                    const bool      overlapping = false) const;
 #endif
 
   /**
@@ -1363,7 +1363,7 @@ inline IndexSet::IndexSet(IndexSet&& is) noexcept
     largest_range(is.largest_range)
 {
   is.ranges.clear();
-  is.is_compressed    = true;
+  is.is_compressed = true;
   is.index_space_size = 0;
   is.largest_range    = numbers::invalid_unsigned_int;
 
@@ -1373,13 +1373,13 @@ inline IndexSet::IndexSet(IndexSet&& is) noexcept
 inline IndexSet&
 IndexSet::operator=(IndexSet&& is) noexcept
 {
-  ranges           = std::move(is.ranges);
-  is_compressed    = is.is_compressed;
+  ranges = std::move(is.ranges);
+  is_compressed = is.is_compressed;
   index_space_size = is.index_space_size;
   largest_range    = is.largest_range;
 
   is.ranges.clear();
-  is.is_compressed    = true;
+  is.is_compressed = true;
   is.index_space_size = 0;
   is.largest_range    = numbers::invalid_unsigned_int;
 
@@ -1418,12 +1418,12 @@ IndexSet::at(const size_type global_index) const
   if(global_index < main_range->begin)
     {
       range_begin = ranges.begin();
-      range_end   = main_range;
+      range_end = main_range;
     }
   else
     {
       range_begin = main_range;
-      range_end   = ranges.end();
+      range_end = ranges.end();
     }
 
   // This will give us the first range p=[a,b[ with b>=global_index using
@@ -1533,8 +1533,8 @@ IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
   for(ForwardIterator p = begin; p != end;)
     {
       const size_type begin_index = *p;
-      size_type       end_index   = begin_index + 1;
-      ForwardIterator q           = p;
+      size_type       end_index = begin_index + 1;
+      ForwardIterator q = p;
       ++q;
       while((q != end) && (*q == end_index))
         {
@@ -1618,7 +1618,7 @@ IndexSet::n_elements() const
   if(!ranges.empty())
     {
       Range& r = ranges.back();
-      v        = r.nth_index_in_set + r.end - r.begin;
+      v = r.nth_index_in_set + r.end - r.begin;
     }
 
 #ifdef DEBUG
@@ -1677,12 +1677,12 @@ IndexSet::nth_index_in_set(const unsigned int n) const
   if(n < main_range->nth_index_in_set)
     {
       range_begin = ranges.begin();
-      range_end   = main_range;
+      range_end = main_range;
     }
   else
     {
       range_begin = main_range + 1;
-      range_end   = ranges.end();
+      range_end = ranges.end();
     }
 
   const std::vector<Range>::const_iterator p = Utilities::lower_bound(
@@ -1717,12 +1717,12 @@ IndexSet::index_within_set(const size_type n) const
   if(n < main_range->begin)
     {
       range_begin = ranges.begin();
-      range_end   = main_range;
+      range_end = main_range;
     }
   else
     {
       range_begin = main_range + 1;
-      range_end   = ranges.end();
+      range_end = ranges.end();
     }
 
   std::vector<Range>::const_iterator p

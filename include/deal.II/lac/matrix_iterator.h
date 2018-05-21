@@ -48,7 +48,7 @@ public:
    * given <tt>row</tt> and the <tt>index</tt> within it.
    */
   MatrixIterator(MatrixType*     matrix,
-                 const size_type row   = 0,
+                 const size_type row = 0,
                  const size_type index = 0);
 
   /**

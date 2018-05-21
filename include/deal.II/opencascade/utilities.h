@@ -199,7 +199,7 @@ namespace OpenCASCADE
   TopoDS_Edge
   interpolation_curve(std::vector<Point<dim>>& curve_points,
                       const Tensor<1, dim>&    direction = Tensor<1, dim>(),
-                      const bool               closed    = false,
+                      const bool               closed = false,
                       const double             tolerance = 1e-7);
 
   /**

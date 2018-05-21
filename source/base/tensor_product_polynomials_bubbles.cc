@@ -26,9 +26,9 @@ double
 TensorProductPolynomialsBubbles<dim>::compute_value(const unsigned int i,
                                                     const Point<dim>&  p) const
 {
-  const unsigned int q_degree      = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
-  const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
+  const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   (void) n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
@@ -62,9 +62,9 @@ Tensor<1, dim>
 TensorProductPolynomialsBubbles<dim>::compute_grad(const unsigned int i,
                                                    const Point<dim>&  p) const
 {
-  const unsigned int q_degree      = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
-  const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
+  const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   (void) n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
@@ -108,9 +108,9 @@ TensorProductPolynomialsBubbles<dim>::compute_grad_grad(
   const unsigned int i,
   const Point<dim>&  p) const
 {
-  const unsigned int q_degree      = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
-  const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
+  const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   (void) n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 
@@ -215,7 +215,7 @@ TensorProductPolynomialsBubbles<dim>::compute(
   std::vector<Tensor<3, dim>>& third_derivatives,
   std::vector<Tensor<4, dim>>& fourth_derivatives) const
 {
-  const unsigned int q_degree      = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
   (void) max_q_indices;
   const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);

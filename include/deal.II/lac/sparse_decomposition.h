@@ -146,10 +146,10 @@ public:
     /**
      * Constructor. For the parameters' description, see below.
      */
-    AdditionalData(const double           strengthen_diagonal   = 0,
-                   const unsigned int     extra_off_diagonals   = 0,
+    AdditionalData(const double           strengthen_diagonal = 0,
+                   const unsigned int     extra_off_diagonals = 0,
                    const bool             use_previous_sparsity = false,
-                   const SparsityPattern* use_this_sparsity     = nullptr);
+                   const SparsityPattern* use_this_sparsity = nullptr);
 
     /**
      * <code>strengthen_diag</code> times the sum of absolute row entries is

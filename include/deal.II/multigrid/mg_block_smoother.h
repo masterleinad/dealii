@@ -54,20 +54,20 @@ public:
    */
   DEAL_II_DEPRECATED
   MGSmootherBlock(VectorMemory<BlockVector<number>>& mem,
-                  const unsigned int                 steps     = 1,
-                  const bool                         variable  = false,
+                  const unsigned int                 steps = 1,
+                  const bool                         variable = false,
                   const bool                         symmetric = false,
                   const bool                         transpose = false,
-                  const bool                         reverse   = false);
+                  const bool                         reverse = false);
 
   /**
    * Constructor.
    */
-  MGSmootherBlock(const unsigned int steps     = 1,
-                  const bool         variable  = false,
+  MGSmootherBlock(const unsigned int steps = 1,
+                  const bool         variable = false,
                   const bool         symmetric = false,
                   const bool         transpose = false,
-                  const bool         reverse   = false);
+                  const bool         reverse = false);
 
   /**
    * Initialize for matrices. The parameter <tt>matrices</tt> can be any
@@ -177,7 +177,7 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::clear()
   for(; i <= max_level; ++i)
     {
       smoothers[i] = LinearOperator<BlockVector<number>>();
-      matrices[i]  = LinearOperator<BlockVector<number>>();
+      matrices[i] = LinearOperator<BlockVector<number>>();
     }
 }
 

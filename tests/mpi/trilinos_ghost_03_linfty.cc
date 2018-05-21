@@ -26,7 +26,7 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
@@ -44,7 +44,7 @@ test()
   TrilinosWrappers::MPI::Vector v_tmp(local_relevant, MPI_COMM_WORLD);
 
   // set local values
-  v(myid * 2)     = myid * 2;
+  v(myid * 2) = myid * 2;
   v(myid * 2 + 1) = myid * 2 + 1;
 
   v.compress(VectorOperation::insert);

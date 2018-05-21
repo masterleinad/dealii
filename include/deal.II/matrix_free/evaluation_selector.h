@@ -103,10 +103,10 @@ namespace
   template <int dim,
             int n_components,
             typename Number,
-            int DEPTH         = 0,
-            int degree        = 0,
+            int DEPTH = 0,
+            int degree = 0,
             int n_q_points_1d = 0,
-            class Enable      = void>
+            class Enable = void>
   struct Factory : Default<dim, n_components, Number>
   {};
 
@@ -159,7 +159,7 @@ namespace
              const bool evaluate_gradients,
              const bool evaluate_hessians)
     {
-      const unsigned int     runtime_degree   = shape_info.fe_degree;
+      const unsigned int     runtime_degree = shape_info.fe_degree;
       constexpr unsigned int start_n_q_points = degree + 1;
       if(runtime_degree == degree)
         Factory<dim, n_components, Number, 1, degree, start_n_q_points>::
@@ -195,7 +195,7 @@ namespace
       const bool integrate_values,
       const bool integrate_gradients)
     {
-      const int              runtime_degree   = shape_info.fe_degree;
+      const int              runtime_degree = shape_info.fe_degree;
       constexpr unsigned int start_n_q_points = degree + 1;
       if(runtime_degree == degree)
         Factory<dim, n_components, Number, 1, degree, start_n_q_points>::

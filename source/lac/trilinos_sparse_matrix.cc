@@ -1065,8 +1065,8 @@ namespace TrilinosWrappers
       {
         // point to the first data entry in the two
         // matrices and copy the content
-        const TrilinosScalar* in_values   = input_matrix[0];
-        TrilinosScalar*       values      = (*matrix)[0];
+        const TrilinosScalar* in_values = input_matrix[0];
+        TrilinosScalar*       values = (*matrix)[0];
         const size_type       my_nonzeros = input_matrix.NumMyNonzeros();
         std::memcpy(values, in_values, my_nonzeros * sizeof(TrilinosScalar));
       }
@@ -1446,7 +1446,7 @@ namespace TrilinosWrappers
       {
         col_index_ptr = (TrilinosWrappers::types::int_type*) col_indices;
         col_value_ptr = const_cast<TrilinosScalar*>(values);
-        n_columns     = n_cols;
+        n_columns = n_cols;
       }
     else
       {
@@ -1633,7 +1633,7 @@ namespace TrilinosWrappers
       {
         col_index_ptr = (TrilinosWrappers::types::int_type*) col_indices;
         col_value_ptr = const_cast<TrilinosScalar*>(values);
-        n_columns     = n_cols;
+        n_columns = n_cols;
 #  ifdef DEBUG
         for(size_type j = 0; j < n_cols; ++j)
           AssertIsFinite(values[j]);
@@ -1838,7 +1838,7 @@ namespace TrilinosWrappers
                   continue;
                 const TrilinosWrappers::types::int_type rhs_global_col
                   = global_column_index(*rhs.matrix, rhs_index_ptr[i]);
-                int  local_col   = matrix->ColMap().LID(rhs_global_col);
+                int  local_col = matrix->ColMap().LID(rhs_global_col);
                 int* local_index = Utilities::lower_bound(
                   index_ptr, index_ptr + n_entries, local_col);
                 Assert(
@@ -2237,7 +2237,7 @@ namespace TrilinosWrappers
       ML_CommInfoOP*                    getrow_comm;
       int                               max_per_proc;
       TrilinosWrappers::types::int_type N_input_vector = B_->invec_leng;
-      getrow_comm                                      = B_->getrow->pre_comm;
+      getrow_comm = B_->getrow->pre_comm;
       if(getrow_comm != nullptr)
         for(TrilinosWrappers::types::int_type i = 0;
             i < getrow_comm->N_neighbors;

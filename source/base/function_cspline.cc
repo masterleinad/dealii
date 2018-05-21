@@ -41,9 +41,9 @@ namespace Functions
                   ExcCSplineOrder(
                     i, interpolation_points[i], interpolation_points[i + 1]));
 
-    acc                  = gsl_interp_accel_alloc();
+    acc = gsl_interp_accel_alloc();
     const unsigned int n = interpolation_points.size();
-    cspline              = gsl_spline_alloc(gsl_interp_cspline, n);
+    cspline = gsl_spline_alloc(gsl_interp_cspline, n);
     // gsl_spline_init returns something but it seems nobody knows what
     gsl_spline_init(
       cspline, interpolation_points.data(), interpolation_values.data(), n);
@@ -54,7 +54,7 @@ namespace Functions
   {
     gsl_interp_accel_free(acc);
     gsl_spline_free(cspline);
-    acc     = nullptr;
+    acc = nullptr;
     cspline = nullptr;
   }
 

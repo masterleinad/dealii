@@ -1135,16 +1135,16 @@ namespace TimeStepBase_Tria_Flags
      * Constructor. The default values are chosen such that almost no
      * restriction on the mesh refinement is imposed.
      */
-    RefinementFlags(const unsigned int max_refinement_level        = 0,
+    RefinementFlags(const unsigned int max_refinement_level = 0,
                     const unsigned int first_sweep_with_correction = 0,
-                    const unsigned int min_cells_for_correction    = 0,
-                    const double       cell_number_corridor_top    = (1 << dim),
+                    const unsigned int min_cells_for_correction = 0,
+                    const double       cell_number_corridor_top = (1 << dim),
                     const double       cell_number_corridor_bottom = 1,
                     const CorrectionRelaxations& correction_relaxations
                     = CorrectionRelaxations(),
-                    const unsigned int cell_number_correction_steps  = 0,
+                    const unsigned int cell_number_correction_steps = 0,
                     const bool         mirror_flags_to_previous_grid = false,
-                    const bool         adapt_grids                   = false);
+                    const bool         adapt_grids = false);
 
     /**
      * Maximum level of a cell in the triangulation of a time level. If it is

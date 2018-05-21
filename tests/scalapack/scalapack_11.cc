@@ -63,7 +63,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         << grid->get_process_grid_columns() << std::endl
         << std::endl;
 
-  scalapack_matrix                               = full;
+  scalapack_matrix = full;
   unsigned int                          sub_size = 100;
   std::pair<unsigned int, unsigned int> offset_A = std::make_pair(49, 99);
   std::pair<unsigned int, unsigned int> offset_B = std::make_pair(4, 7);

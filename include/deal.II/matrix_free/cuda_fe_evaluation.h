@@ -71,14 +71,14 @@ namespace CUDAWrappers
             int fe_degree,
             int n_q_points_1d = fe_degree + 1,
             int n_components_ = 1,
-            typename Number   = double>
+            typename Number = double>
   class FEEvaluation
   {
   public:
     typedef Number                                 value_type;
     typedef Tensor<1, dim, Number>                 gradient_type;
     typedef typename MatrixFree<dim, Number>::Data data_type;
-    static constexpr unsigned int                  dimension    = dim;
+    static constexpr unsigned int                  dimension = dim;
     static constexpr unsigned int                  n_components = n_components_;
     static constexpr unsigned int                  n_q_points
       = Utilities::pow(n_q_points_1d, dim);
@@ -201,8 +201,8 @@ namespace CUDAWrappers
       values(shdata->values)
   {
     local_to_global = data->local_to_global + padding_length * cell_id;
-    inv_jac         = data->inv_jacobian + padding_length * cell_id;
-    JxW             = data->JxW + padding_length * cell_id;
+    inv_jac = data->inv_jacobian + padding_length * cell_id;
+    JxW = data->JxW + padding_length * cell_id;
 
     for(unsigned int i = 0; i < dim; ++i)
       gradients[i] = shdata->gradients[i];

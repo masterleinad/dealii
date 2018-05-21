@@ -408,11 +408,11 @@ namespace Step44
                          const double          p_tilde_in,
                          const double          J_tilde_in)
     {
-      det_F                      = determinant(F);
+      det_F = determinant(F);
       const Tensor<2, dim> F_iso = Physics::Elasticity::Kinematics::F_iso(F);
-      b_bar                      = Physics::Elasticity::Kinematics::b(F_iso);
-      p_tilde                    = p_tilde_in;
-      J_tilde                    = J_tilde_in;
+      b_bar = Physics::Elasticity::Kinematics::b(F_iso);
+      p_tilde = p_tilde_in;
+      J_tilde = J_tilde_in;
       Assert(det_F > 0, ExcInternalError());
     }
     SymmetricTensor<2, dim>
@@ -672,11 +672,11 @@ namespace Step44
     const FEValuesExtractors::Vector u_fe;
     const FEValuesExtractors::Scalar p_fe;
     const FEValuesExtractors::Scalar J_fe;
-    static const unsigned int        n_blocks          = 3;
-    static const unsigned int        n_components      = dim + 2;
+    static const unsigned int        n_blocks = 3;
+    static const unsigned int        n_components = dim + 2;
     static const unsigned int        first_u_component = 0;
-    static const unsigned int        p_component       = dim;
-    static const unsigned int        J_component       = dim + 1;
+    static const unsigned int        p_component = dim;
+    static const unsigned int        J_component = dim + 1;
     enum
     {
       u_dof = 0,
@@ -929,7 +929,7 @@ namespace Step44
     void
     reset()
     {
-      const unsigned int n_q_points      = Nx.size();
+      const unsigned int n_q_points = Nx.size();
       const unsigned int n_dofs_per_cell = Nx[0].size();
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
@@ -1466,9 +1466,9 @@ namespace Step44
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
         const Tensor<2, dim>          tau = lqph[q_point]->get_tau();
-        const SymmetricTensor<4, dim> Jc  = lqph[q_point]->get_Jc();
-        const double d2Psi_vol_dJ2        = lqph[q_point]->get_d2Psi_vol_dJ2();
-        const double det_F                = lqph[q_point]->get_det_F();
+        const SymmetricTensor<4, dim> Jc = lqph[q_point]->get_Jc();
+        const double d2Psi_vol_dJ2 = lqph[q_point]->get_d2Psi_vol_dJ2();
+        const double det_F = lqph[q_point]->get_det_F();
         const std::vector<double>&                  N = scratch.Nx[q_point];
         const std::vector<SymmetricTensor<2, dim>>& symm_grad_Nx
           = scratch.symm_grad_Nx[q_point];
@@ -1586,8 +1586,8 @@ namespace Step44
       }
     for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        const SymmetricTensor<2, dim> tau     = lqph[q_point]->get_tau();
-        const double                  det_F   = lqph[q_point]->get_det_F();
+        const SymmetricTensor<2, dim> tau = lqph[q_point]->get_tau();
+        const double                  det_F = lqph[q_point]->get_det_F();
         const double                  J_tilde = lqph[q_point]->get_J_tilde();
         const double                  p_tilde = lqph[q_point]->get_p_tilde();
         const double dPsi_vol_dJ = lqph[q_point]->get_dPsi_vol_dJ();
@@ -1620,8 +1620,8 @@ namespace Step44
               static const double p0
                 = -4.0 / (parameters.scale * parameters.scale);
               const double         time_ramp = (time.current() / time.end());
-              const double         pressure  = p0 * parameters.p_p0 * time_ramp;
-              const Tensor<1, dim> traction  = pressure * N;
+              const double         pressure = p0 * parameters.p_p0 * time_ramp;
+              const Tensor<1, dim> traction = pressure * N;
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
                   const unsigned int i_group
@@ -1846,7 +1846,7 @@ namespace Step44
   std::pair<unsigned int, double>
   Solid<dim>::solve_linear_system(BlockVector<double>& newton_update)
   {
-    unsigned int lin_it  = 0;
+    unsigned int lin_it = 0;
     double       lin_res = 0.0;
     if(parameters.use_static_condensation == true)
       {
@@ -1893,7 +1893,7 @@ namespace Step44
               A_direct.initialize(tangent_matrix.block(u_dof, u_dof));
               A_direct.vmult(newton_update.block(u_dof),
                              system_rhs.block(u_dof));
-              lin_it  = 1;
+              lin_it = 1;
               lin_res = 0.0;
             }
           else
@@ -1960,10 +1960,10 @@ namespace Step44
             solver_K_Jp_inv.set_control(solver_control_K_Jp_inv);
             const auto K_Jp_inv = inverse_operator(
               K_Jp, solver_K_Jp_inv, preconditioner_K_Jp_inv);
-            const auto K_pJ_inv     = transpose_operator(K_Jp_inv);
-            const auto K_pp_bar     = K_Jp_inv * K_JJ * K_pJ_inv;
+            const auto K_pJ_inv = transpose_operator(K_Jp_inv);
+            const auto K_pp_bar = K_Jp_inv * K_JJ * K_pJ_inv;
             const auto K_uu_bar_bar = K_up * K_pp_bar * K_pu;
-            const auto K_uu_con     = K_uu + K_uu_bar_bar;
+            const auto K_uu_con = K_uu + K_uu_bar_bar;
             PreconditionSelector<SparseMatrix<double>, Vector<double>>
               preconditioner_K_con_inv(parameters.preconditioner_type,
                                        parameters.preconditioner_relaxation);
@@ -1984,9 +1984,9 @@ namespace Step44
             timer.leave_subsection();
             timer.enter_subsection("Linear solver postprocessing");
             pcout << " PP " << std::flush;
-            d_J     = K_pJ_inv * (f_p - K_pu * d_u);
-            d_p     = K_Jp_inv * (f_J - K_JJ * d_J);
-            lin_it  = solver_control_K_con_inv.last_step();
+            d_J = K_pJ_inv * (f_p - K_pu * d_u);
+            d_p = K_Jp_inv * (f_J - K_JJ * d_J);
+            lin_it = solver_control_K_con_inv.last_step();
             lin_res = solver_control_K_con_inv.last_value();
           }
         else if(parameters.type_lin == "Direct")

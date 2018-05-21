@@ -1665,7 +1665,7 @@ GridIn<2>::read_netcdf(const std::string& filename)
   (void) filename;
   AssertThrow(false, ExcNeedsNetCDF());
 #else
-  const unsigned int dim      = 2;
+  const unsigned int dim = 2;
   const unsigned int spacedim = 2;
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   // this function assumes the TAU
@@ -1915,7 +1915,7 @@ GridIn<3>::read_netcdf(const std::string& filename)
   (void) filename;
   AssertThrow(false, ExcNeedsNetCDF());
 #else
-  const unsigned int dim      = 3;
+  const unsigned int dim = 3;
   const unsigned int spacedim = 3;
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   // this function assumes the TAU
@@ -2099,9 +2099,9 @@ GridIn<dim, spacedim>::parse_tecplot_header(
   Assert(tecplot2deal.size() == dim, ExcInternalError());
   Assert(IJK.size() == dim, ExcInternalError());
   // initialize the output variables
-  n_vars     = 0;
+  n_vars = 0;
   n_vertices = 0;
-  n_cells    = 0;
+  n_cells = 0;
   switch(dim)
     {
       case 3:
@@ -2114,7 +2114,7 @@ GridIn<dim, spacedim>::parse_tecplot_header(
         IJK[0] = 0;
     }
   structured = true;
-  blocked    = false;
+  blocked = false;
 
   // convert the string to upper case
   std::transform(header.begin(), header.end(), header.begin(), ::toupper);
@@ -2220,22 +2220,22 @@ GridIn<dim, spacedim>::parse_tecplot_header(
       else if(Utilities::match_at_string_start(entries[i], "F=POINT"))
         {
           structured = true;
-          blocked    = false;
+          blocked = false;
         }
       else if(Utilities::match_at_string_start(entries[i], "F=BLOCK"))
         {
           structured = true;
-          blocked    = true;
+          blocked = true;
         }
       else if(Utilities::match_at_string_start(entries[i], "F=FEPOINT"))
         {
           structured = false;
-          blocked    = false;
+          blocked = false;
         }
       else if(Utilities::match_at_string_start(entries[i], "F=FEBLOCK"))
         {
           structured = false;
-          blocked    = true;
+          blocked = true;
         }
       else if(Utilities::match_at_string_start(entries[i], "ET=QUADRILATERAL")
               && dim == 2)
@@ -2281,7 +2281,7 @@ GridIn<dim, spacedim>::parse_tecplot_header(
   if(structured)
     {
       n_vertices = 1;
-      n_cells    = 1;
+      n_cells = 1;
       for(unsigned int d = 0; d < dim; ++d)
         {
           AssertThrow(
@@ -2315,7 +2315,7 @@ template <>
 void
 GridIn<2>::read_tecplot(std::istream& in)
 {
-  const unsigned int dim      = 2;
+  const unsigned int dim = 2;
   const unsigned int spacedim = 2;
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -2625,11 +2625,11 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
         }
       // Vertices
       const unsigned int n_vertices = mesh->mNumVertices;
-      const aiVector3D*  mVertices  = mesh->mVertices;
+      const aiVector3D*  mVertices = mesh->mVertices;
 
       // Faces
       const unsigned int n_faces = mesh->mNumFaces;
-      const aiFace*      mFaces  = mesh->mFaces;
+      const aiFace*      mFaces = mesh->mFaces;
 
       vertices.resize(v_offset + n_vertices);
       cells.resize(c_offset + n_faces);
@@ -2921,12 +2921,12 @@ GridIn<dim, spacedim>::read(const std::string& filename, Format format)
   if(format == Default)
     {
       const std::string::size_type slashpos = name.find_last_of('/');
-      const std::string::size_type dotpos   = name.find_last_of('.');
+      const std::string::size_type dotpos = name.find_last_of('.');
       if(dotpos < name.length()
          && (dotpos > slashpos || slashpos == std::string::npos))
         {
           std::string ext = name.substr(dotpos + 1);
-          format          = parse_format(ext);
+          format = parse_format(ext);
         }
     }
   if(format == netcdf)
@@ -3194,7 +3194,7 @@ namespace
             // Scan for material id
             {
               const std::string before_material = "ELSET=EB";
-              const std::size_t idx             = line.find(before_material);
+              const std::size_t idx = line.find(before_material);
               if(idx != std::string::npos)
                 {
                   from_string(material,
@@ -3315,7 +3315,7 @@ namespace
             std::string elset_name;
             {
               const std::string elset_key = "*ELSET, ELSET=";
-              const std::size_t idx       = line.find(elset_key);
+              const std::size_t idx = line.find(elset_key);
               if(idx != std::string::npos)
                 {
                   const std::string comma       = ",";
@@ -3412,7 +3412,7 @@ namespace
             const std::size_t last_equal
               = line.find("MATERIAL=") + material_key.size();
             const std::size_t material_id_start = line.find('-', last_equal);
-            int               material_id       = 0;
+            int               material_id = 0;
             from_string(
               material_id, line.substr(material_id_start + 1), std::dec);
 

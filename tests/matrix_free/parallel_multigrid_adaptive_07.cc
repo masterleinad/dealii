@@ -408,7 +408,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(6 - dim);
   constexpr int      max_degree = std_cxx14::max(fe_degree_1, fe_degree_2);
-  const unsigned int n_runs     = max_degree == 1 ? 6 - dim : 5 - dim;
+  const unsigned int n_runs = max_degree == 1 ? 6 - dim : 5 - dim;
   for(unsigned int i = 0; i < n_runs; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell

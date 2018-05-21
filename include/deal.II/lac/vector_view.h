@@ -235,7 +235,7 @@ public:
 template <typename Number>
 inline VectorView<Number>::VectorView(const size_type new_size, Number* ptr)
 {
-  this->vec_size     = new_size;
+  this->vec_size = new_size;
   this->max_vec_size = new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();
@@ -246,7 +246,7 @@ template <typename Number>
 inline VectorView<Number>::VectorView(const size_type new_size,
                                       const Number*   ptr)
 {
-  this->vec_size     = new_size;
+  this->vec_size = new_size;
   this->max_vec_size = new_size;
   this->values.reset(const_cast<Number*>(ptr));
 }
@@ -277,7 +277,7 @@ template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type new_size, Number* ptr)
 {
-  this->vec_size     = new_size;
+  this->vec_size = new_size;
   this->max_vec_size = new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();
@@ -288,7 +288,7 @@ template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type new_size, const Number* ptr)
 {
-  this->vec_size     = new_size;
+  this->vec_size = new_size;
   this->max_vec_size = new_size;
   // release the pointer, but do not delete the object pointed to
   this->values.release();

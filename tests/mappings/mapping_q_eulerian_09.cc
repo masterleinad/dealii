@@ -59,14 +59,14 @@ public:
 };
 
 template <int dim,
-          int fe_degree       = 2,
-          int n_q_points      = fe_degree + 1,
+          int fe_degree = 2,
+          int n_q_points = fe_degree + 1,
           typename NumberType = double>
 void
 test()
 {
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int myid = Utilities::MPI::this_mpi_process(mpi_communicator);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   parallel::distributed::Triangulation<dim> triangulation(

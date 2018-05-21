@@ -59,7 +59,7 @@ do_test(const DoFHandler<dim>& dof)
     FEEvaluation<dim, degree_p, degree_p + 2> phi_p(dof.get_fe(), phi_u, dim);
 
     const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> test_matrix(dofs_per_cell, dofs_per_cell);
@@ -84,8 +84,8 @@ do_test(const DoFHandler<dim>& dof)
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 phi_grads_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-                div_phi_u[k]   = fe_values[velocities].divergence(k, q);
-                phi_pres[k]    = fe_values[pressure].value(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                phi_pres[k] = fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)

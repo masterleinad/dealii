@@ -108,13 +108,13 @@ namespace Step32
   // after the value indicates its physical units):
   namespace EquationData
   {
-    const double eta                   = 1e21;    /* Pa s       */
-    const double kappa                 = 1e-6;    /* m^2 / s    */
-    const double reference_density     = 3300;    /* kg / m^3   */
-    const double reference_temperature = 293;     /* K          */
-    const double expansion_coefficient = 2e-5;    /* 1/K        */
-    const double specific_heat         = 1250;    /* J / K / kg */
-    const double radiogenic_heating    = 7.4e-12; /* W / kg     */
+    const double eta = 1e21;                   /* Pa s       */
+    const double kappa = 1e-6;                 /* m^2 / s    */
+    const double reference_density = 3300;     /* kg / m^3   */
+    const double reference_temperature = 293;  /* K          */
+    const double expansion_coefficient = 2e-5; /* 1/K        */
+    const double specific_heat = 1250;         /* J / K / kg */
+    const double radiogenic_heating = 7.4e-12; /* W / kg     */
 
     const double R0 = 6371000. - 2890000.; /* m          */
     const double R1 = 6371000. - 35000.;   /* m          */
@@ -1118,7 +1118,7 @@ namespace Step32
   BoussinesqFlowProblem<dim>::Parameters::parse_parameters(
     ParameterHandler& prm)
   {
-    end_time                  = prm.get_double("End time");
+    end_time = prm.get_double("End time");
     initial_global_refinement = prm.get_integer("Initial global refinement");
     initial_adaptive_refinement
       = prm.get_integer("Initial adaptive refinement");
@@ -1133,8 +1133,8 @@ namespace Step32
     prm.enter_subsection("Stabilization parameters");
     {
       stabilization_alpha = prm.get_double("alpha");
-      stabilization_c_R   = prm.get_double("c_R");
-      stabilization_beta  = prm.get_double("beta");
+      stabilization_c_R = prm.get_double("c_R");
+      stabilization_beta = prm.get_double("beta");
     }
     prm.leave_subsection();
 
@@ -1420,7 +1420,7 @@ namespace Step32
     // the minimal entropies equals forming the negative of the maximum over
     // the negative of the minimal entropies; this maximum can then be
     // combined with forming the maximum over the maximal entropies.
-    const double local_sums[2]   = {entropy_integrated, area},
+    const double local_sums[2] = {entropy_integrated, area},
                  local_maxima[2] = {-min_entropy, max_entropy};
     double global_sums[2], global_maxima[2];
 
@@ -1666,7 +1666,7 @@ namespace Step32
     FEValues<dim> fe_values(mapping, temperature_fe, quadrature, update_flags);
 
     const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                       n_q_points    = fe_values.n_quadrature_points;
+                       n_q_points = fe_values.n_quadrature_points;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     Vector<double>                       cell_vector(dofs_per_cell);
@@ -2105,9 +2105,9 @@ namespace Step32
     old_temperature_solution.reinit(temperature_solution);
     old_old_temperature_solution.reinit(temperature_solution);
 
-    rebuild_stokes_matrix              = true;
-    rebuild_stokes_preconditioner      = true;
-    rebuild_temperature_matrices       = true;
+    rebuild_stokes_matrix = true;
+    rebuild_stokes_preconditioner = true;
+    rebuild_temperature_matrices = true;
     rebuild_temperature_preconditioner = true;
   }
 
@@ -2543,7 +2543,7 @@ namespace Step32
 
     TimerOutput::Scope timer_section(computing_timer,
                                      "   Assemble temperature matrices");
-    temperature_mass_matrix      = 0;
+    temperature_mass_matrix = 0;
     temperature_stiffness_matrix = 0;
 
     const QGauss<dim> quadrature_formula(parameters.temperature_degree + 2);
@@ -2917,7 +2917,7 @@ namespace Step32
 
       PrimitiveVectorMemory<TrilinosWrappers::MPI::BlockVector> mem;
 
-      unsigned int  n_iterations     = 0;
+      unsigned int  n_iterations = 0;
       const double  solver_tolerance = 1e-8 * stokes_rhs.l2_norm();
       SolverControl solver_control(30, solver_tolerance);
 
@@ -3005,7 +3005,7 @@ namespace Step32
       old_time_step = time_step;
 
       const double scaling = (dim == 3 ? 0.25 : 1.0);
-      time_step            = (scaling / (2.1 * dim * std::sqrt(1. * dim))
+      time_step = (scaling / (2.1 * dim * std::sqrt(1. * dim))
                    / (parameters.temperature_degree * get_cfl_number()));
 
       const double maximal_velocity = get_maximal_velocity();
@@ -3190,7 +3190,7 @@ namespace Step32
           = (inputs.solution_values[q](dim) - minimal_pressure);
         computed_quantities[q](dim) = pressure;
 
-        const double temperature        = inputs.solution_values[q](dim + 1);
+        const double temperature = inputs.solution_values[q](dim + 1);
         computed_quantities[q](dim + 1) = temperature;
 
         Tensor<2, dim> grad_u;
@@ -3274,8 +3274,8 @@ namespace Step32
 
       typename DoFHandler<dim>::active_cell_iterator joint_cell
         = joint_dof_handler.begin_active(),
-        joint_endc       = joint_dof_handler.end(),
-        stokes_cell      = stokes_dof_handler.begin_active(),
+        joint_endc = joint_dof_handler.end(),
+        stokes_cell = stokes_dof_handler.begin_active(),
         temperature_cell = temperature_dof_handler.begin_active();
       for(; joint_cell != joint_endc;
           ++joint_cell, ++stokes_cell, ++temperature_cell)
@@ -3472,7 +3472,7 @@ namespace Step32
         temperature_constraints.distribute(distributed_temp1);
         temperature_constraints.distribute(distributed_temp2);
 
-        temperature_solution     = distributed_temp1;
+        temperature_solution = distributed_temp1;
         old_temperature_solution = distributed_temp2;
       }
 
@@ -3491,7 +3491,7 @@ namespace Step32
         stokes_constraints.distribute(distributed_stokes);
         stokes_constraints.distribute(old_distributed_stokes);
 
-        stokes_solution     = distributed_stokes;
+        stokes_solution = distributed_stokes;
         old_stokes_solution = old_distributed_stokes;
       }
     }
@@ -3579,10 +3579,10 @@ namespace Step32
           break;
 
         TrilinosWrappers::MPI::BlockVector old_old_stokes_solution;
-        old_old_stokes_solution      = old_stokes_solution;
-        old_stokes_solution          = stokes_solution;
+        old_old_stokes_solution = old_stokes_solution;
+        old_stokes_solution = stokes_solution;
         old_old_temperature_solution = old_temperature_solution;
-        old_temperature_solution     = temperature_solution;
+        old_temperature_solution = temperature_solution;
         if(old_time_step > 0)
           {
             //Trilinos sadd does not like ghost vectors even as input. Copy

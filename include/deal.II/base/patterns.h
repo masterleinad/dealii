@@ -454,7 +454,7 @@ namespace Patterns
     List(const PatternBase& base_pattern,
          const unsigned int min_elements = 0,
          const unsigned int max_elements = max_int_value,
-         const std::string& separator    = ",");
+         const std::string& separator = ",");
 
     /**
      * Return the internally stored separator.
@@ -585,9 +585,9 @@ namespace Patterns
      */
     Map(const PatternBase& key_pattern,
         const PatternBase& value_pattern,
-        const unsigned int min_elements        = 0,
-        const unsigned int max_elements        = max_int_value,
-        const std::string& separator           = ",",
+        const unsigned int min_elements = 0,
+        const unsigned int max_elements = max_int_value,
+        const std::string& separator = ",",
         const std::string& key_value_separator = ":");
 
     /**
@@ -1702,7 +1702,7 @@ namespace Patterns
       struct RankInfo<std::tuple<Types...>>
       {
         static constexpr int list_rank = max_list_rank<Types...>();
-        static constexpr int map_rank  = max_map_rank<Types...>() + 1;
+        static constexpr int map_rank = max_map_rank<Types...>() + 1;
       };
     } // namespace internal
 

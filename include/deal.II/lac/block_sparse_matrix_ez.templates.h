@@ -111,7 +111,7 @@ template <typename number>
 void
 BlockSparseMatrixEZ<number>::collect_sizes()
 {
-  const unsigned int     rows    = n_block_rows();
+  const unsigned int     rows = n_block_rows();
   const unsigned int     columns = n_block_cols();
   std::vector<size_type> row_sizes(rows);
   std::vector<size_type> col_sizes(columns);

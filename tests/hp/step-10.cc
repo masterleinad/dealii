@@ -176,7 +176,7 @@ compute_pi_by_perimeter()
 
           typename hp::DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
-            endc                = dof_handler.end();
+            endc = dof_handler.end();
           long double perimeter = 0;
           for(; cell != endc; ++cell)
             for(unsigned int face_no = 0;

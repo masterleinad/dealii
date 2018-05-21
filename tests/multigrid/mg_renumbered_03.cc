@@ -99,7 +99,7 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
-  unsigned int       counter       = 0;
+  unsigned int       counter = 0;
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index>    dof_indices(dofs_per_cell);
   typename DoFHandler<dim>::cell_iterator cell = dof.begin(0);
@@ -130,9 +130,9 @@ diff(Vector<double>&        diff,
           const unsigned int i0 = mg_dof_indices[ni];
           const unsigned int i1 = mg_dof_indices[ni + 1];
           const unsigned int i2 = mg_dof_indices[ni + 2];
-          diff(i0)              = 2 * v(i0) - v(i1);
-          diff(i1)              = 3 * v(i1) - 2 * v(i2);
-          diff(i2)              = v(i2) - 3 * v(i0);
+          diff(i0) = 2 * v(i0) - v(i1);
+          diff(i1) = 3 * v(i1) - 2 * v(i2);
+          diff(i2) = v(i2) - 3 * v(i0);
         }
     }
 }

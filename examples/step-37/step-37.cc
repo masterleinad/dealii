@@ -71,7 +71,7 @@ namespace Step37
   // kernel at run time. Here, we simply choose second order $Q_2$ elements
   // and choose dimension 3 as standard.
   const unsigned int degree_finite_element = 2;
-  const unsigned int dimension             = 3;
+  const unsigned int dimension = 3;
 
   // @sect3{Equation data}
 

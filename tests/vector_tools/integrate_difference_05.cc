@@ -113,7 +113,7 @@ test(VectorTools::NormType norm, double value)
                                     norm,
                                     &mask_2);
 
-  error                     = cellwise_errors.l2_norm();
+  error = cellwise_errors.l2_norm();
   const double difference_2 = std::abs(error - 2.0 * value);
   deallog << "computed: " << error << " expected: " << 2.0 * value
           << " difference: " << difference_2 << std::endl;

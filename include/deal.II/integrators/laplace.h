@@ -172,7 +172,7 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = fe.JxW(k) * factor;
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               for(unsigned int d = 0; d < n_comp; ++d)
@@ -215,7 +215,7 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = fe.JxW(k) * factor;
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
@@ -284,14 +284,14 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
               const double dnv = fe.shape_grad(i, k) * n;
               const double dnu = Dinput[k] * n;
-              const double v   = fe.shape_value(i, k);
-              const double u   = input[k];
-              const double g   = data[k];
+              const double v = fe.shape_value(i, k);
+              const double u = input[k];
+              const double g = data[k];
 
               result(i)
                 += dx * (2. * penalty * (u - g) * v - dnv * (u - g) - dnu * v);
@@ -336,15 +336,15 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int d = 0; d < n_comp; ++d)
               {
                 const double dnv = fe.shape_grad_component(i, k, d) * n;
                 const double dnu = Dinput[d][k] * n;
-                const double v   = fe.shape_value_component(i, k, d);
-                const double u   = input[d][k];
-                const double g   = data[d][k];
+                const double v = fe.shape_value_component(i, k, d);
+                const double u = input[d][k];
+                const double g = data[d][k];
 
                 result(i)
                   += dx
@@ -396,25 +396,25 @@ namespace LocalIntegrators
 
       const double nui = factor1;
       const double nue = (factor2 < 0) ? factor1 : factor2;
-      const double nu  = .5 * (nui + nue);
+      const double nu = .5 * (nui + nue);
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int d = 0; d < fe1.get_fe().n_components(); ++d)
             {
               for(unsigned int i = 0; i < n_dofs; ++i)
                 {
                   for(unsigned int j = 0; j < n_dofs; ++j)
                     {
-                      const double vi   = fe1.shape_value_component(i, k, d);
+                      const double vi = fe1.shape_value_component(i, k, d);
                       const double dnvi = n * fe1.shape_grad_component(i, k, d);
-                      const double ve   = fe2.shape_value_component(i, k, d);
+                      const double ve = fe2.shape_value_component(i, k, d);
                       const double dnve = n * fe2.shape_grad_component(i, k, d);
-                      const double ui   = fe1.shape_value_component(j, k, d);
+                      const double ui = fe1.shape_value_component(j, k, d);
                       const double dnui = n * fe1.shape_grad_component(j, k, d);
-                      const double ue   = fe2.shape_value_component(j, k, d);
+                      const double ue = fe2.shape_value_component(j, k, d);
                       const double dnue = n * fe2.shape_grad_component(j, k, d);
                       M11(i, j)
                         += dx
@@ -478,12 +478,12 @@ namespace LocalIntegrators
 
       const double nui = factor1;
       const double nue = (factor2 < 0) ? factor1 : factor2;
-      const double nu  = .5 * (nui + nue);
+      const double nu = .5 * (nui + nue);
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
               // We compute the tangential component by subtracting
@@ -599,22 +599,22 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
 
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
-              const double          vi   = fe1.shape_value(i, k);
-              const Tensor<1, dim>& Dvi  = fe1.shape_grad(i, k);
+              const double          vi = fe1.shape_value(i, k);
+              const Tensor<1, dim>& Dvi = fe1.shape_grad(i, k);
               const double          dnvi = Dvi * n;
-              const double          ve   = fe2.shape_value(i, k);
-              const Tensor<1, dim>& Dve  = fe2.shape_grad(i, k);
+              const double          ve = fe2.shape_value(i, k);
+              const Tensor<1, dim>& Dve = fe2.shape_grad(i, k);
               const double          dnve = Dve * n;
 
-              const double          ui   = input1[k];
-              const Tensor<1, dim>& Dui  = Dinput1[k];
+              const double          ui = input1[k];
+              const Tensor<1, dim>& Dui = Dinput1[k];
               const double          dnui = Dui * n;
-              const double          ue   = input2[k];
-              const Tensor<1, dim>& Due  = Dinput2[k];
+              const double          ue = input2[k];
+              const Tensor<1, dim>& Due = Dinput2[k];
               const double          dnue = Due * n;
 
               result1(i) += dx
@@ -676,23 +676,23 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
 
           for(unsigned int i = 0; i < n1; ++i)
             for(unsigned int d = 0; d < n_comp; ++d)
               {
-                const double          vi   = fe1.shape_value_component(i, k, d);
-                const Tensor<1, dim>& Dvi  = fe1.shape_grad_component(i, k, d);
+                const double          vi = fe1.shape_value_component(i, k, d);
+                const Tensor<1, dim>& Dvi = fe1.shape_grad_component(i, k, d);
                 const double          dnvi = Dvi * n;
-                const double          ve   = fe2.shape_value_component(i, k, d);
-                const Tensor<1, dim>& Dve  = fe2.shape_grad_component(i, k, d);
+                const double          ve = fe2.shape_value_component(i, k, d);
+                const Tensor<1, dim>& Dve = fe2.shape_grad_component(i, k, d);
                 const double          dnve = Dve * n;
 
-                const double          ui   = input1[d][k];
-                const Tensor<1, dim>& Dui  = Dinput1[d][k];
+                const double          ui = input1[d][k];
+                const Tensor<1, dim>& Dui = Dinput1[d][k];
                 const double          dnui = Dui * n;
-                const double          ue   = input2[d][k];
-                const Tensor<1, dim>& Due  = Dinput2[d][k];
+                const double          ue = input2[d][k];
+                const Tensor<1, dim>& Due = Dinput2[d][k];
                 const double          dnue = Due * n;
 
                 result1(i) += dx

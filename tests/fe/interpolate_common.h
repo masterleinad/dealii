@@ -72,7 +72,7 @@ vector_difference(const FiniteElement<dim>& fe,
         for(unsigned int i = 0; i < dofs.size(); ++i)
           diff
             -= dofs[i] * fe.shape_value_component(i, quadrature.point(k), comp);
-        diff   = std::abs(diff);
+        diff = std::abs(diff);
         result = std::max(result, diff);
       }
   return result;
@@ -107,7 +107,7 @@ public:
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p      = points[i];
+        const Point<dim>& p = points[i];
         double            result = 1.;
         for(unsigned int d = 0; d < dim; ++d)
           for(unsigned int k = 0; k < degree; ++k)

@@ -52,7 +52,7 @@ print_matrix(Triangulation<dim>&       tr,
   transfer.build_matrices(dof);
 
   unsigned int   n_coarse = dof.n_dofs(level - 1);
-  unsigned int   n_fine   = dof.n_dofs(level);
+  unsigned int   n_fine = dof.n_dofs(level);
   Vector<double> in(n_fine);
   Vector<double> out(n_coarse);
 

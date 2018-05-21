@@ -34,7 +34,7 @@ main()
         v.reinit(3, omit_zeroing_entries);
       };
 
-  auto       id     = identity_operator(reinit_vector);
+  auto       id = identity_operator(reinit_vector);
   const auto filter = mean_value_filter(id);
 
   const auto block_filter = block_diagonal_operator<3>(filter);

@@ -39,10 +39,10 @@ merge_check()
   // the test is the same as
   // constraints_merge_02, but we add very large
   // indices here
-  const unsigned int index_0  = local_lines.nth_index_in_set(0);
-  const unsigned int index_1  = local_lines.nth_index_in_set(1);
-  const unsigned int index_3  = local_lines.nth_index_in_set(3);
-  const unsigned int index_4  = local_lines.nth_index_in_set(4);
+  const unsigned int index_0 = local_lines.nth_index_in_set(0);
+  const unsigned int index_1 = local_lines.nth_index_in_set(1);
+  const unsigned int index_3 = local_lines.nth_index_in_set(3);
+  const unsigned int index_4 = local_lines.nth_index_in_set(4);
   const unsigned int index_10 = local_lines.nth_index_in_set(10);
   const unsigned int index_11 = local_lines.nth_index_in_set(11);
   const unsigned int index_12 = local_lines.nth_index_in_set(12);

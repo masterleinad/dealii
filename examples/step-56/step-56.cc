@@ -602,7 +602,7 @@ namespace Step56
   {
     TimerOutput::Scope assemble(computing_timer, "Assemble");
     system_matrix = 0;
-    system_rhs    = 0;
+    system_rhs = 0;
 
     // If true, we will assemble the pressure mass matrix in the (1,1) block:
     const bool assemble_pressure_mass_matrix
@@ -653,7 +653,7 @@ namespace Step56
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
                 div_phi_u[k] = fe_values[velocities].divergence(k, q);
-                phi_p[k]     = fe_values[pressure].value(k, q);
+                phi_p[k] = fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -719,7 +719,7 @@ namespace Step56
                               | update_JxW_values | update_gradients);
 
     const unsigned int dofs_per_cell = velocity_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 

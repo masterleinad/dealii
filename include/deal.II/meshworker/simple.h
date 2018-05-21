@@ -622,11 +622,11 @@ namespace MeshWorker
             for(unsigned int i = 0; i < n; ++i)
               for(unsigned int j = 0; j < n; ++j, ++k)
                 {
-                  info.matrix(k, false).row    = i;
+                  info.matrix(k, false).row = i;
                   info.matrix(k, false).column = j;
                   if(face)
                     {
-                      info.matrix(k, true).row    = i;
+                      info.matrix(k, true).row = i;
                       info.matrix(k, true).column = j;
                     }
                 }
@@ -794,11 +794,11 @@ namespace MeshWorker
           for(unsigned int i = 0; i < n; ++i)
             for(unsigned int j = 0; j < n; ++j, ++k)
               {
-                info.matrix(k, false).row    = i;
+                info.matrix(k, false).row = i;
                 info.matrix(k, false).column = j;
                 if(face)
                   {
-                    info.matrix(k, true).row    = i;
+                    info.matrix(k, true).row = i;
                     info.matrix(k, true).column = j;
                   }
               }
@@ -1033,7 +1033,7 @@ namespace MeshWorker
       else
         for(unsigned int k = 0; k < info.n_matrices(); ++k)
           {
-            const unsigned int row    = info.matrix(k, false).row;
+            const unsigned int row = info.matrix(k, false).row;
             const unsigned int column = info.matrix(k, false).column;
 
             assemble((*matrix)[level],
@@ -1123,7 +1123,7 @@ namespace MeshWorker
       else
         for(unsigned int k = 0; k < info1.n_matrices(); ++k)
           {
-            const unsigned int row    = info1.matrix(k, false).row;
+            const unsigned int row = info1.matrix(k, false).row;
             const unsigned int column = info1.matrix(k, false).column;
 
             if(level1 == level2)
@@ -1226,7 +1226,7 @@ namespace MeshWorker
       AssertDimension(M.n(), indices.size());
 
       AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType* v         = residuals.entry<VectorType*>(index);
+      VectorType* v = residuals.entry<VectorType*>(index);
 
       if(ResidualSimple<VectorType>::constraints == nullptr)
         {
@@ -1264,7 +1264,7 @@ namespace MeshWorker
       AssertDimension(M.n(), i2.size());
 
       AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType* v         = residuals.entry<VectorType*>(index);
+      VectorType* v = residuals.entry<VectorType*>(index);
 
       if(ResidualSimple<VectorType>::constraints == nullptr)
         {

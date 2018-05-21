@@ -350,7 +350,7 @@ namespace TimeStepping
           old_y.sadd(1., delta_t * this->a[i][j], f_stages[j]);
 
         // Solve the nonlinear system using Newton's method
-        const double new_t       = t + this->c[i] * delta_t;
+        const double new_t = t + this->c[i] * delta_t;
         const double new_delta_t = this->a[i][i] * delta_t;
         newton_solve(
           std::bind(&ImplicitRungeKutta<VectorType>::compute_residual,
@@ -377,9 +377,9 @@ namespace TimeStepping
   {
     VectorType residual(y);
     get_residual(y, residual);
-    unsigned int i                     = 0;
+    unsigned int i = 0;
     const double initial_residual_norm = residual.l2_norm();
-    double       norm_residual         = initial_residual_norm;
+    double       norm_residual = initial_residual_norm;
     while(i < max_it)
       {
         y.sadd(1.0, -1.0, id_minus_tau_J_inverse(residual));
@@ -389,7 +389,7 @@ namespace TimeStepping
           break;
         ++i;
       }
-    status.n_iterations  = i + 1;
+    status.n_iterations = i + 1;
     status.norm_residual = norm_residual;
   }
 
@@ -466,7 +466,7 @@ namespace TimeStepping
         case(BOGACKI_SHAMPINE):
           {
             last_same_as_first = true;
-            this->n_stages     = 4;
+            this->n_stages = 4;
             this->c.reserve(this->n_stages);
             this->b1.reserve(this->n_stages);
             this->b2.reserve(this->n_stages);
@@ -502,7 +502,7 @@ namespace TimeStepping
         case(DOPRI):
           {
             last_same_as_first = true;
-            this->n_stages     = 7;
+            this->n_stages = 7;
             this->c.reserve(this->n_stages);
             this->b1.reserve(this->n_stages);
             this->b2.reserve(this->n_stages);
@@ -714,8 +714,8 @@ namespace TimeStepping
     double                                                            delta_t,
     VectorType&                                                       y)
   {
-    bool                    done       = false;
-    unsigned int            count      = 0;
+    bool                    done = false;
+    unsigned int            count = 0;
     double                  error_norm = 0.;
     VectorType              old_y(y);
     VectorType              error(y);
@@ -745,7 +745,7 @@ namespace TimeStepping
             // step allowed.
             if(new_delta_t > max_delta_t)
               {
-                status.exit_delta_t  = MAX_DELTA_T;
+                status.exit_delta_t = MAX_DELTA_T;
                 status.delta_t_guess = max_delta_t;
               }
             else

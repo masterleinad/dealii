@@ -2048,9 +2048,9 @@ inline TableBase<N, T>&
 TableBase<N, T>::operator=(TableBase<N, T>&& m) noexcept
 {
   static_cast<Subscriptor&>(*this) = std::move(m);
-  values                           = std::move(m.values);
-  table_size                       = m.table_size;
-  m.table_size                     = TableIndices<N>();
+  values = std::move(m.values);
+  table_size = m.table_size;
+  m.table_size = TableIndices<N>();
 
   return *this;
 }

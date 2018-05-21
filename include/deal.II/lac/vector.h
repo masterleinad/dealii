@@ -824,9 +824,9 @@ public:
    */
   void
   print(std::ostream&      out,
-        const unsigned int precision  = 3,
+        const unsigned int precision = 3,
         const bool         scientific = true,
-        const bool         across     = true) const;
+        const bool         across = true) const;
 
   /**
    * Print to a LogStream. <tt>width</tt> is used as argument to the std::setw
@@ -839,7 +839,7 @@ public:
   DEAL_II_DEPRECATED
   void
   print(LogStream&         out,
-        const unsigned int width  = 6,
+        const unsigned int width = 6,
         const bool         across = true) const;
 
   /**

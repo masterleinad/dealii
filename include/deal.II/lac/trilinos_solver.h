@@ -436,7 +436,7 @@ namespace TrilinosWrappers
        * i.e. do a restart every 30 iterations.
        */
       explicit AdditionalData(const bool         output_solver_details = false,
-                              const unsigned int restart_parameter     = 30);
+                              const unsigned int restart_parameter = 30);
     };
 
     /**

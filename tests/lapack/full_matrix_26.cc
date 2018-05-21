@@ -25,7 +25,7 @@ test(const unsigned int size)
 {
   AssertThrow(size > 2, ExcInternalError());
   const unsigned int smaller = size - 2;
-  const unsigned int larger  = size + 3;
+  const unsigned int larger = size + 3;
 
   // initialise a first matrix with the standard constructor and fill
   // it with some numbers

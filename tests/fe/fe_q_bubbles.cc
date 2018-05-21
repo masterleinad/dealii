@@ -186,7 +186,7 @@ void
 Step3<dim>::assemble_system(unsigned int i)
 {
   system_matrix = 0.;
-  system_rhs    = 0.;
+  system_rhs = 0.;
   QGauss<dim>   quadrature_formula(m_degree + 1);
   FEValues<dim> fe_values(*fe,
                           quadrature_formula,
@@ -194,7 +194,7 @@ Step3<dim>::assemble_system(unsigned int i)
                             | update_quadrature_points);
 
   const unsigned int dofs_per_cell = fe->dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);

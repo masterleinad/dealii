@@ -61,9 +61,9 @@ ImposedDisplacement<2>::vector_value(const Point<2>& p,
                                      Vector<double>& value) const
 {
   double radius = 1 + (sqrt(5) - 1) * p(0);
-  double angle  = 0.5 * numbers::PI * (1 - p(1));
-  value(0)      = radius * sin(angle) - p(0);
-  value(1)      = radius * cos(angle) - p(1);
+  double angle = 0.5 * numbers::PI * (1 - p(1));
+  value(0) = radius * sin(angle) - p(0);
+  value(1) = radius * cos(angle) - p(1);
 }
 
 // .... MAPPING TEST CLASS
@@ -167,7 +167,7 @@ MappingTest<dim>::run_test()
       table.add_value("cells", triangulation.n_active_cells());
       table.add_value("dofs", dof_handler.n_dofs());
 
-      long double area  = compute_area();
+      long double area = compute_area();
       long double error = std::fabs(numbers::PI - area) / numbers::PI;
 
       table.add_value("area", static_cast<double>(area));

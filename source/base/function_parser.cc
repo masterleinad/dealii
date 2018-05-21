@@ -324,7 +324,7 @@ FunctionParser<dim>::init_muparser() const
               f < sizeof(function_names) / sizeof(function_names[0]);
               ++f)
             {
-              const std::string  function_name        = function_names[f];
+              const std::string  function_name = function_names[f];
               const unsigned int function_name_length = function_name.size();
 
               std::string::size_type pos = 0;

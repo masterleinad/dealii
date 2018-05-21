@@ -445,7 +445,7 @@ FE_Enriched<dim, spacedim>::initialize(
   // this FE sits on the boundary or not. Thus for moment just copy support
   // points from fe system:
   {
-    this->unit_support_points      = fe_system->unit_support_points;
+    this->unit_support_points = fe_system->unit_support_points;
     this->unit_face_support_points = fe_system->unit_face_support_points;
   }
 

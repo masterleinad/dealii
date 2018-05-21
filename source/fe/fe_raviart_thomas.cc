@@ -385,7 +385,7 @@ FE_RaviartThomas<dim>::get_dpo_vector(const unsigned int deg)
 
   std::vector<unsigned int> dpo(dim + 1);
   dpo[dim - 1] = dofs_per_face;
-  dpo[dim]     = interior_dofs;
+  dpo[dim] = interior_dofs;
 
   return dpo;
 }

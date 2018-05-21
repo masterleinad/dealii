@@ -128,7 +128,7 @@ namespace Step18
     // Note: Here the negative angle suggests that we're computing the rotation
     // of the coordinate system around a fixed point
     const double   angle = -std::atan(tan_angle);
-    const Point<3> axis  = curl / tan_angle;
+    const Point<3> axis = curl / tan_angle;
     return Physics::Transformations::Rotations::rotation_matrix_3d(axis, angle);
   }
   template <int dim>
@@ -209,10 +209,10 @@ namespace Step18
                                Vector<double>& values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
-    const double g   = 9.81;
+    const double g = 9.81;
     const double rho = 7700;
-    values           = 0;
-    values(dim - 1)  = -rho * g;
+    values = 0;
+    values(dim - 1) = -rho * g;
   }
   template <int dim>
   void
@@ -258,7 +258,7 @@ namespace Step18
                                                Vector<double>& values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
-    values    = 0;
+    values = 0;
     values(2) = -present_timestep * velocity;
   }
   template <int dim>
@@ -303,8 +303,8 @@ namespace Step18
   {
     present_time     = 0;
     present_timestep = 1;
-    end_time         = 5;
-    timestep_no      = 0;
+    end_time = 5;
+    timestep_no = 0;
     do_initial_timestep();
     while(present_time < end_time)
       do_timestep();
@@ -381,7 +381,7 @@ namespace Step18
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -395,7 +395,7 @@ namespace Step18
       if(cell->is_locally_owned())
         {
           cell_matrix = 0;
-          cell_rhs    = 0;
+          cell_rhs = 0;
           fe_values.reinit(cell);
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)

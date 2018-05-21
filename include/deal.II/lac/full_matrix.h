@@ -321,8 +321,8 @@ public:
             const unsigned int    src_r_j = dim - 1,
             const unsigned int    src_c_i = 0,
             const unsigned int    src_c_j = dim - 1,
-            const size_type       dst_r   = 0,
-            const size_type       dst_c   = 0);
+            const size_type       dst_r = 0,
+            const size_type       dst_c = 0);
 
   /**
    * Insert a submatrix (also rectangular) into a tensor, putting its upper
@@ -337,8 +337,8 @@ public:
                const size_type    src_r_j = dim - 1,
                const size_type    src_c_i = 0,
                const size_type    src_c_j = dim - 1,
-               const unsigned int dst_r   = 0,
-               const unsigned int dst_c   = 0) const;
+               const unsigned int dst_r = 0,
+               const unsigned int dst_c = 0) const;
 
   /**
    * Copy a subset of the rows and columns of another matrix into the current
@@ -563,7 +563,7 @@ public:
   template <class StreamType>
   void
   print(StreamType&        s,
-        const unsigned int width     = 5,
+        const unsigned int width = 5,
         const unsigned int precision = 2) const;
 
   /**
@@ -590,12 +590,12 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
+                  const unsigned int precision = 3,
+                  const bool         scientific = true,
+                  const unsigned int width = 0,
                   const char*        zero_string = " ",
                   const double       denominator = 1.,
-                  const double       threshold   = 0.) const;
+                  const double       threshold = 0.) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -760,7 +760,7 @@ public:
       const size_type   n_cols,
       const index_type* col_indices,
       const number2*    values,
-      const bool        elide_zero_values      = true,
+      const bool        elide_zero_values = true,
       const bool        col_indices_are_sorted = false);
 
   /**
@@ -1036,7 +1036,7 @@ public:
                  const FullMatrix<number>& D,
                  const bool                transpose_B = false,
                  const bool                transpose_D = false,
-                 const number              scaling     = number(1.));
+                 const number              scaling = number(1.));
 
   /**
    * Matrix-vector-multiplication.
@@ -1516,7 +1516,7 @@ FullMatrix<number>::print(StreamType&        s,
 
   // save the state of out stream
   const std::streamsize old_precision = s.precision(p);
-  const std::streamsize old_width     = s.width(w);
+  const std::streamsize old_width = s.width(w);
 
   for(size_type i = 0; i < this->m(); ++i)
     {

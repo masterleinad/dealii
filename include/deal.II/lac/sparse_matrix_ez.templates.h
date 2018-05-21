@@ -77,7 +77,7 @@ SparseMatrixEZ<number>::operator=(const double d)
   (void) d;
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-  typename std::vector<Entry>::iterator       e   = data.begin();
+  typename std::vector<Entry>::iterator       e = data.begin();
   const typename std::vector<Entry>::iterator end = data.end();
 
   while(e != end)
@@ -156,7 +156,7 @@ template <typename number>
 number
 SparseMatrixEZ<number>::l2_norm() const
 {
-  number         sum   = 0.;
+  number         sum = 0.;
   const_iterator start = begin();
   const_iterator final = end();
 
@@ -240,7 +240,7 @@ SparseMatrixEZ<number>::precondition_Jacobi(Vector<somenumber>&       dst,
 
   somenumber*                                         dst_ptr = dst.begin();
   const somenumber*                                   src_ptr = src.begin();
-  typename std::vector<RowInfo>::const_iterator       ri  = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator       ri = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator end = row_info.end();
 
   for(; ri != end; ++dst_ptr, ++src_ptr, ++ri)
@@ -263,13 +263,13 @@ SparseMatrixEZ<number>::precondition_SOR(Vector<somenumber>&       dst,
 
   somenumber*                                         dst_ptr = dst.begin();
   const somenumber*                                   src_ptr = src.begin();
-  typename std::vector<RowInfo>::const_iterator       ri  = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator       ri = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator end = row_info.end();
 
   for(; ri != end; ++dst_ptr, ++src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = *src_ptr;
+      number          s = *src_ptr;
       const size_type end_row = ri->start + ri->diagonal;
       for(size_type i = ri->start; i < end_row; ++i)
         s -= data[i].value * dst(data[i].column);
@@ -298,7 +298,7 @@ SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>&       dst,
   for(; ri != end; --dst_ptr, --src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = *src_ptr;
+      number          s = *src_ptr;
       const size_type end_row = ri->start + ri->length;
       for(size_type i = ri->start + ri->diagonal + 1; i < end_row; ++i)
         s -= data[i].value * dst(data[i].column);
@@ -328,7 +328,7 @@ SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>&       dst,
   for(ri = row_info.begin(); ri != end; ++dst_ptr, ++src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = 0;
+      number          s = 0;
       const size_type end_row = ri->start + ri->diagonal;
       for(size_type i = ri->start; i < end_row; ++i)
         s += data[i].value * dst(data[i].column);
@@ -349,7 +349,7 @@ SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>&       dst,
   for(rri = row_info.rbegin(); rri != rend; --dst_ptr, ++rri)
     {
       const size_type end_row = rri->start + rri->length;
-      number          s       = 0;
+      number          s = 0;
       for(size_type i = rri->start + rri->diagonal + 1; i < end_row; ++i)
         s += data[i].value * dst(data[i].column);
 
@@ -377,7 +377,7 @@ template <typename number>
 typename SparseMatrixEZ<number>::size_type
 SparseMatrixEZ<number>::n_nonzero_elements() const
 {
-  typename std::vector<RowInfo>::const_iterator       row    = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator       row = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator endrow = row_info.end();
 
   // Add up entries actually used
@@ -395,7 +395,7 @@ SparseMatrixEZ<number>::compute_statistics(size_type&              used,
                                            std::vector<size_type>& used_by_line,
                                            const bool              full) const
 {
-  typename std::vector<RowInfo>::const_iterator       row    = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator       row = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator endrow = row_info.end();
 
   // Add up entries actually used
@@ -412,7 +412,7 @@ SparseMatrixEZ<number>::compute_statistics(size_type&              used,
   // position of last entry used
   --row;
   allocated = row->start + row->length;
-  reserved  = data.capacity();
+  reserved = data.capacity();
 
   if(full)
     {
@@ -455,7 +455,7 @@ SparseMatrixEZ<number>::print_formatted(std::ostream&      out,
 
   unsigned int width = width_;
 
-  std::ios::fmtflags old_flags     = out.flags();
+  std::ios::fmtflags old_flags = out.flags();
   unsigned int       old_precision = out.precision(precision);
 
   if(scientific)

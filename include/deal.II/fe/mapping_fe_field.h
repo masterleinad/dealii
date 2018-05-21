@@ -70,8 +70,8 @@ DEAL_II_NAMESPACE_OPEN
  * @author Luca Heltai, Marco Tezzele 2013, 2015
  */
 template <int dim,
-          int spacedim            = dim,
-          typename VectorType     = Vector<double>,
+          int spacedim = dim,
+          typename VectorType = Vector<double>,
           typename DoFHandlerType = DoFHandler<dim, spacedim>>
 class MappingFEField : public Mapping<dim, spacedim>
 {

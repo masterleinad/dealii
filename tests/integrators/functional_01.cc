@@ -95,7 +95,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
 
   MeshWorker::LoopControl lctrl;
   lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.own_faces = MeshWorker::LoopControl::one;
 
   MeshWorker::loop<dim, dim, MeshWorker::DoFInfo<dim>, EmptyInfoBox>(
     dofs.begin_active(),

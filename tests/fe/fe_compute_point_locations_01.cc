@@ -76,8 +76,8 @@ test_compute_pt_loc(unsigned int n_points)
   // are the same as maps[i]
   for(unsigned int i = 0; i < cells.size(); ++i)
     {
-      auto& cell      = cells[i];
-      auto& quad      = qpoints[i];
+      auto& cell = cells[i];
+      auto& quad = qpoints[i];
       auto& local_map = maps[i];
 
       // Given the qpoints of the current cell, compute the real points

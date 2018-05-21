@@ -198,7 +198,7 @@ namespace Utilities
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
     char* p;
-    errno       = 0;
+    errno = 0;
     const int i = std::strtol(s.c_str(), &p, 10);
     AssertThrow(
       !((errno != 0) || (s.size() == 0) || ((s.size() > 0) && (*p != '\0'))),
@@ -233,7 +233,7 @@ namespace Utilities
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
     char* p;
-    errno          = 0;
+    errno = 0;
     const double d = std::strtod(s.c_str(), &p);
     AssertThrow(
       !((errno != 0) || (s.size() == 0) || ((s.size() > 0) && (*p != '\0'))),
@@ -299,7 +299,7 @@ namespace Utilities
   split_string_list(const std::string& s, const char delimiter)
   {
     std::string d = ",";
-    d[0]          = delimiter;
+    d[0] = delimiter;
     return split_string_list(s, d);
   }
 
@@ -653,7 +653,7 @@ namespace Utilities
     get_time()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::tm*    time = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_hour << ":" << (time->tm_min < 10 ? "0" : "")
@@ -667,7 +667,7 @@ namespace Utilities
     get_date()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm*    time  = std::localtime(&time1);
+      std::tm*    time = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_year + 1900 << "/" << time->tm_mon + 1 << "/"
@@ -766,8 +766,8 @@ namespace Utilities
       Epetra_MpiComm* mpi_comm = dynamic_cast<Epetra_MpiComm*>(&communicator);
       if(mpi_comm != nullptr)
         {
-          MPI_Comm comm  = mpi_comm->GetMpiComm();
-          *mpi_comm      = Epetra_MpiComm(MPI_COMM_SELF);
+          MPI_Comm comm = mpi_comm->GetMpiComm();
+          *mpi_comm = Epetra_MpiComm(MPI_COMM_SELF);
           const int ierr = MPI_Comm_free(&comm);
           AssertThrowMPI(ierr);
         }

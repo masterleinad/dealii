@@ -238,7 +238,7 @@ namespace CUDAWrappers
                            float*                     x)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
-      int  singularity     = 0;
+      int  singularity = 0;
 
       cusolverStatus_t cusolver_error_code
         = cusolverSpScsrlsvchol(cusolver_sp_handle,
@@ -264,7 +264,7 @@ namespace CUDAWrappers
                            double*                     x)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
-      int  singularity     = 0;
+      int  singularity = 0;
 
       cusolverStatus_t cusolver_error_code
         = cusolverSpDcsrlsvchol(cusolver_sp_handle,
@@ -361,7 +361,7 @@ namespace CUDAWrappers
     {
       // cuSOLVER does not support LU factorization of sparse matrix on the device,
       // so we need to move everything to the host first and then back to the host.
-      const unsigned int  nnz    = matrix.n_nonzero_elements();
+      const unsigned int  nnz = matrix.n_nonzero_elements();
       const unsigned int  n_rows = matrix.m();
       std::vector<Number> val_host(nnz);
       std::vector<int>    column_index_host(nnz);

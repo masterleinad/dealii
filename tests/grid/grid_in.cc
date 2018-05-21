@@ -79,7 +79,7 @@ test2()
               << std::endl;
     }
 
-  int hash  = 0;
+  int hash = 0;
   int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator c = tria.begin_active();
       c != tria.end();

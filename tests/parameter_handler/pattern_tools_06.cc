@@ -48,7 +48,7 @@ main()
   std::multimap<int, double>           t2;
   std::unordered_multimap<int, double> t3;
 
-  auto p  = std::make_pair(5, 1.0);
+  auto p = std::make_pair(5, 1.0);
   auto p2 = std::make_pair(5, 2.0);
   auto p3 = std::make_pair(1, 3.0);
 

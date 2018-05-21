@@ -869,7 +869,7 @@ namespace Step43
       saturation_fe, quadrature_formula, update_values);
 
     const unsigned int dofs_per_cell = darcy_fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     std::vector<Tensor<2, dim>> k_inverse_values(n_q_points);
 
@@ -908,12 +908,12 @@ namespace Step43
             const double old_s = old_saturation_values[q];
 
             const double inverse_mobility = mobility_inverse(old_s, viscosity);
-            const double mobility         = 1.0 / inverse_mobility;
+            const double mobility = 1.0 / inverse_mobility;
             const Tensor<2, dim> permeability = invert(k_inverse_values[q]);
 
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
-                phi_u[k]      = darcy_fe_values[velocities].value(k, q);
+                phi_u[k] = darcy_fe_values[velocities].value(k, q);
                 grad_phi_p[k] = darcy_fe_values[pressure].gradient(k, q);
               }
 
@@ -992,7 +992,7 @@ namespace Step43
   TwoPhaseFlowProblem<dim>::assemble_darcy_system()
   {
     darcy_matrix = 0;
-    darcy_rhs    = 0;
+    darcy_rhs = 0;
 
     QGauss<dim>     quadrature_formula(darcy_degree + 2);
     QGauss<dim - 1> face_quadrature_formula(darcy_degree + 2);
@@ -1014,7 +1014,7 @@ namespace Step43
 
     const unsigned int dofs_per_cell = darcy_fe.dofs_per_cell;
 
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
@@ -1109,9 +1109,9 @@ namespace Step43
           {
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
-                phi_u[k]     = darcy_fe_values[velocities].value(k, q);
+                phi_u[k] = darcy_fe_values[velocities].value(k, q);
                 div_phi_u[k] = darcy_fe_values[velocities].divergence(k, q);
-                phi_p[k]     = darcy_fe_values[pressure].value(k, q);
+                phi_p[k] = darcy_fe_values[pressure].value(k, q);
               }
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
               {
@@ -1220,7 +1220,7 @@ namespace Step43
       {
         saturation_fe_values.reinit(cell);
         local_matrix = 0;
-        local_rhs    = 0;
+        local_rhs = 0;
 
         for(unsigned int q = 0; q < n_q_points; ++q)
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -1349,7 +1349,7 @@ namespace Step43
     const std::vector<types::global_dof_index>& local_dof_indices)
   {
     const unsigned int dofs_per_cell = saturation_fe_values.dofs_per_cell;
-    const unsigned int n_q_points    = saturation_fe_values.n_quadrature_points;
+    const unsigned int n_q_points = saturation_fe_values.n_quadrature_points;
 
     std::vector<double>         old_saturation_solution_values(n_q_points);
     std::vector<double>         old_old_saturation_solution_values(n_q_points);
@@ -1529,7 +1529,7 @@ namespace Step43
 
         {
           second_last_computed_darcy_solution = last_computed_darcy_solution;
-          last_computed_darcy_solution        = darcy_solution;
+          last_computed_darcy_solution = darcy_solution;
 
           saturation_matching_last_computed_darcy_solution
             = saturation_solution;
@@ -1582,7 +1582,7 @@ namespace Step43
     // <code>time_step</code>.
     if(solve_for_pressure_and_velocity == true)
       {
-        old_macro_time_step     = current_macro_time_step;
+        old_macro_time_step = current_macro_time_step;
         current_macro_time_step = time_step;
       }
     else
@@ -1726,7 +1726,7 @@ namespace Step43
       tmp_darcy[1].reinit(darcy_solution);
       darcy_soltrans.interpolate(x_darcy, tmp_darcy);
 
-      last_computed_darcy_solution        = tmp_darcy[0];
+      last_computed_darcy_solution = tmp_darcy[0];
       second_last_computed_darcy_solution = tmp_darcy[1];
 
       darcy_constraints.distribute(last_computed_darcy_solution);
@@ -1763,8 +1763,8 @@ namespace Step43
 
       typename DoFHandler<dim>::active_cell_iterator joint_cell
         = joint_dof_handler.begin_active(),
-        joint_endc      = joint_dof_handler.end(),
-        darcy_cell      = darcy_dof_handler.begin_active(),
+        joint_endc = joint_dof_handler.end(),
+        darcy_cell = darcy_dof_handler.begin_active(),
         saturation_cell = saturation_dof_handler.begin_active();
 
       for(; joint_cell != joint_endc;
@@ -2125,7 +2125,7 @@ namespace Step43
                      max_velocity_times_dF_dS);
       }
 
-    const double c_R            = 1.0;
+    const double c_R = 1.0;
     const double global_scaling = c_R * porosity
                                   * (global_max_u_F_prime) *global_S_variation
                                   / std::pow(global_Omega_diameter, alpha - 2.);
@@ -2151,7 +2151,7 @@ namespace Step43
   void
   TwoPhaseFlowProblem<dim>::run()
   {
-    const unsigned int initial_refinement     = (dim == 2 ? 5 : 2);
+    const unsigned int initial_refinement = (dim == 2 ? 5 : 2);
     const unsigned int n_pre_refinement_steps = (dim == 2 ? 3 : 2);
 
     GridGenerator::hyper_cube(triangulation, 0, 1);

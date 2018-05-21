@@ -228,7 +228,7 @@ namespace VectorTools
           unsigned current_offset = offset;
           for(unsigned int i = 0; i < system->n_base_elements(); ++i)
             {
-              const auto& base_fe      = system->base_element(i);
+              const auto& base_fe = system->base_element(i);
               const auto  multiplicity = system->element_multiplicity(i);
               for(unsigned int m = 0; m < multiplicity; ++m)
                 {
@@ -401,7 +401,7 @@ namespace VectorTools
 
           // Prepare temporary storage
           auto& function_values = fe_function_values[fe_index];
-          auto& dof_values      = fe_dof_values[fe_index];
+          auto& dof_values = fe_dof_values[fe_index];
 
           const auto n_components = fe[fe_index].n_components();
           function_values.resize(generalized_support_points.size(),
@@ -1336,7 +1336,7 @@ namespace VectorTools
                                     project_to_boundary_first);
 
       const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      IndexSet::ElementIterator it = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           work_result(*it), *it, vec_result);
@@ -1460,7 +1460,7 @@ namespace VectorTools
           mapping, dof.get_fe(), quadrature, update_values | update_JxW_values);
 
         const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
-        const unsigned int n_q_points    = quadrature.size();
+        const unsigned int n_q_points = quadrature.size();
         Vector<Number>     cell_rhs(dofs_per_cell);
         std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
         typename DoFHandler<dim, spacedim>::active_cell_iterator cell
@@ -1504,7 +1504,7 @@ namespace VectorTools
       constraints.distribute(vec);
 
       const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      IndexSet::ElementIterator it = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(*it), *it, vec_result);
@@ -1562,7 +1562,7 @@ namespace VectorTools
       {
         FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(
           *matrix_free, fe_component);
-        const unsigned int n_cells    = matrix_free->n_macro_cells();
+        const unsigned int n_cells = matrix_free->n_macro_cells();
         const unsigned int n_q_points = fe_eval.n_q_points;
 
         for(unsigned int cell = 0; cell < n_cells; ++cell)
@@ -1595,7 +1595,7 @@ namespace VectorTools
       constraints.distribute(vec);
 
       const IndexSet&           locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet::ElementIterator it                 = locally_owned_dofs.begin();
+      IndexSet::ElementIterator it = locally_owned_dofs.begin();
       for(; it != locally_owned_dofs.end(); ++it)
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(*it), *it, vec_result);
@@ -1845,8 +1845,8 @@ namespace VectorTools
     FEValues<dim, spacedim> fe_values(mapping, fe, quadrature, update_flags);
 
     const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                       n_q_points    = fe_values.n_quadrature_points,
-                       n_components  = fe.n_components();
+                       n_q_points = fe_values.n_quadrature_points,
+                       n_components = fe.n_components();
 
     std::vector<types::global_dof_index> dofs(dofs_per_cell);
     Vector<Number>                       cell_vector(dofs_per_cell);
@@ -1999,7 +1999,7 @@ namespace VectorTools
                 = x_fe_values.get_present_fe_values();
 
               const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                 n_q_points    = fe_values.n_quadrature_points;
+                                 n_q_points = fe_values.n_quadrature_points;
               rhs_values.resize(n_q_points);
               dofs.resize(dofs_per_cell);
               cell_vector.reinit(dofs_per_cell);
@@ -2034,7 +2034,7 @@ namespace VectorTools
                 = x_fe_values.get_present_fe_values();
 
               const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                                 n_q_points    = fe_values.n_quadrature_points;
+                                 n_q_points = fe_values.n_quadrature_points;
               rhs_values.resize(n_q_points, Vector<Number>(n_components));
               dofs.resize(dofs_per_cell);
               cell_vector.reinit(dofs_per_cell);
@@ -2328,8 +2328,8 @@ namespace VectorTools
     FEFaceValues<dim> fe_values(mapping, fe, quadrature, update_flags);
 
     const unsigned int dofs_per_cell = fe_values.dofs_per_cell,
-                       n_q_points    = fe_values.n_quadrature_points,
-                       n_components  = fe.n_components();
+                       n_q_points = fe_values.n_quadrature_points,
+                       n_components = fe.n_components();
 
     std::vector<types::global_dof_index> dofs(dofs_per_cell);
     Vector<double>                       cell_vector(dofs_per_cell);
@@ -4035,7 +4035,7 @@ namespace VectorTools
     {
       const double tol = 0.5 * cell->face(face)->line(line)->diameter()
                          / cell->get_fe().degree;
-      const unsigned int dim      = 3;
+      const unsigned int dim = 3;
       const unsigned int spacedim = 3;
 
       hp_fe_values.reinit(
@@ -4532,7 +4532,7 @@ namespace VectorTools
                          && (i < (degree + GeometryInfo<dim>::lines_per_face)
                                    * fe.degree)))
                     {
-                      dof_values[i]     = solution(index);
+                      dof_values[i] = solution(index);
                       dofs_processed[i] = true;
                       ++index;
                     }
@@ -4670,7 +4670,7 @@ namespace VectorTools
                              * fe.degree
                            <= i)))
                   {
-                    dof_values[i]     = solution(index);
+                    dof_values[i] = solution(index);
                     dofs_processed[i] = true;
                     ++index;
                   }
@@ -4769,7 +4769,7 @@ namespace VectorTools
 
                       for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
+                          dof_values[dof] = 0.0;
                           dofs_processed[dof] = false;
                         }
 
@@ -4868,7 +4868,7 @@ namespace VectorTools
 
                       for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
+                          dof_values[dof] = 0.0;
                           dofs_processed[dof] = false;
                         }
 
@@ -5004,7 +5004,7 @@ namespace VectorTools
 
                       for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
+                          dof_values[dof] = 0.0;
                           dofs_processed[dof] = false;
                         }
 
@@ -5091,7 +5091,7 @@ namespace VectorTools
                         }
 
                       const unsigned int superdegree = cell->get_fe().degree;
-                      const unsigned int degree      = superdegree - 1;
+                      const unsigned int degree = superdegree - 1;
                       const unsigned int dofs_per_face
                         = cell->get_fe().dofs_per_face;
 
@@ -5100,7 +5100,7 @@ namespace VectorTools
 
                       for(unsigned int dof = 0; dof < dofs_per_face; ++dof)
                         {
-                          dof_values[dof]     = 0.0;
+                          dof_values[dof] = 0.0;
                           dofs_processed[dof] = false;
                         }
 
@@ -5176,7 +5176,7 @@ namespace VectorTools
       // the DoFs corresponding to the group of components making up the vector
       // with first component first_vector_component (length dim).
       const unsigned int        dim = 3;
-      const FiniteElement<dim>& fe  = cell->get_fe();
+      const FiniteElement<dim>& fe = cell->get_fe();
 
       // reinit for this cell, face and line.
       hp_fe_values.reinit(
@@ -5955,7 +5955,7 @@ namespace VectorTools
                               for(unsigned int dof = 0; dof < dofs_per_face;
                                   ++dof)
                                 {
-                                  dof_values[dof]     = 0.0;
+                                  dof_values[dof] = 0.0;
                                   dofs_processed[dof] = false;
                                 }
 
@@ -6084,7 +6084,7 @@ namespace VectorTools
                               for(unsigned int dof = 0; dof < dofs_per_face;
                                   ++dof)
                                 {
-                                  dof_values[dof]     = 0.0;
+                                  dof_values[dof] = 0.0;
                                   dofs_processed[dof] = false;
                                 }
 
@@ -6376,7 +6376,7 @@ namespace VectorTools
       for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
         if(projected_dofs[face_dof_indices[i]] < fe.degree)
           {
-            dof_values[face_dof_indices[i]]     = dof_values_local(i);
+            dof_values[face_dof_indices[i]] = dof_values_local(i);
             projected_dofs[face_dof_indices[i]] = fe.degree;
           }
     }
@@ -8739,7 +8739,7 @@ namespace VectorTools
           Assert(p_select.size() == n,
                  ExcDimensionMismatch(p_select.size(), n));
 
-          typename VectorType::value_type s       = 0.;
+          typename VectorType::value_type s = 0.;
           unsigned int                    counter = 0;
           for(unsigned int i = 0; i < n; ++i)
             if(p_select[i])

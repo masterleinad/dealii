@@ -38,7 +38,7 @@ main()
 
   extract_geometrical_shapes(sh, faces, edges, vertices);
 
-  std::tuple<unsigned int, unsigned int, unsigned int> n  = count_elements(sh);
+  std::tuple<unsigned int, unsigned int, unsigned int> n = count_elements(sh);
   unsigned int                                         nf = std::get<0>(n);
   unsigned int                                         ne = std::get<1>(n);
   unsigned int                                         nv = std::get<2>(n);

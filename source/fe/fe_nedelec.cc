@@ -2503,8 +2503,8 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
       // of faces, so two dofs are identical,
       // if their face shape functions have
       // the same polynomial degree.
-      const unsigned int p     = fe_nedelec_other->degree;
-      const unsigned int q     = this->degree;
+      const unsigned int p = fe_nedelec_other->degree;
+      const unsigned int q = this->degree;
       const unsigned int p_min = std::min(p, q);
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 

@@ -165,7 +165,7 @@ namespace TrilinosWrappers
     void
     reinit(const std::vector<IndexSet>&    input_maps,
            const BlockSparsityPatternType& block_sparsity_pattern,
-           const MPI_Comm&                 communicator  = MPI_COMM_WORLD,
+           const MPI_Comm&                 communicator = MPI_COMM_WORLD,
            const bool                      exchange_data = false);
 
     /**

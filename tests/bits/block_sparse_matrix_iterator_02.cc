@@ -71,7 +71,7 @@ test()
   BlockSparseMatrix<double> A(sparsity);
 
   const BlockSparseMatrix<double>::const_iterator begin = A.begin(),
-                                                  end   = A.end();
+                                                  end = A.end();
 
   deallog << begin->row() << ' ' << begin->column() << ' ' << begin->block_row()
           << ' ' << begin->block_column() << std::endl;

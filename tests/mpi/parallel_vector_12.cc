@@ -30,7 +30,7 @@ DeclException2(ExcNonEqual,
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
@@ -41,7 +41,7 @@ test()
   // less than 20
   const unsigned int local_size0  = 3;
   const unsigned int global_size0 = std::min(20U, local_size0 * numproc);
-  const unsigned int my_start0    = std::min(local_size0 * myid, global_size0);
+  const unsigned int my_start0 = std::min(local_size0 * myid, global_size0);
   const unsigned int my_end0 = std::min(local_size0 * (myid + 1), global_size0);
   const unsigned int actual_local_size0 = my_end0 - my_start0;
 
@@ -61,8 +61,8 @@ test()
   // vector1: local size 4
   const unsigned int local_size1  = 4;
   const unsigned int global_size1 = local_size1 * numproc;
-  const int          my_start1    = local_size1 * myid;
-  const int          my_end1      = local_size1 * (myid + 1);
+  const int          my_start1 = local_size1 * myid;
+  const int          my_end1 = local_size1 * (myid + 1);
 
   IndexSet local_owned1(global_size1);
   local_owned1.add_range(static_cast<unsigned int>(my_start1),

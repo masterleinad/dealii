@@ -44,10 +44,10 @@ partition(const SparsityPattern& sparsity_pattern,
   // simple, since METIS wants exactly our
   // compressed row storage format. we only
   // have to set up a few auxiliary arrays
-  idx_t n    = static_cast<signed int>(sparsity_pattern.n_rows()),
+  idx_t n = static_cast<signed int>(sparsity_pattern.n_rows()),
         ncon = 1, // number of balancing constraints (should be >0)
-    nparts   = static_cast<int>(n_partitions), // number of subdomains to create
-    dummy; // the numbers of edges cut by the
+    nparts = static_cast<int>(n_partitions), // number of subdomains to create
+    dummy;                                   // the numbers of edges cut by the
   // resulting partition
 
   // use default options for METIS

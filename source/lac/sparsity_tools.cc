@@ -70,7 +70,7 @@ namespace SparsityTools
       // simple, since METIS wants exactly our
       // compressed row storage format. we only
       // have to set up a few auxiliary arrays
-      idx_t n    = static_cast<signed int>(sparsity_pattern.n_rows()),
+      idx_t n = static_cast<signed int>(sparsity_pattern.n_rows()),
             ncon = 1, // number of balancing constraints (should be >0)
         nparts
         = static_cast<int>(n_partitions), // number of subdomains to create
@@ -194,7 +194,7 @@ namespace SparsityTools
                     int* ierr)
     {
       SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
-      *ierr                  = ZOLTAN_OK;
+      *ierr = ZOLTAN_OK;
 
       Assert(globalID != nullptr, ExcInternalError());
       Assert(localID != nullptr, ExcInternalError());
@@ -205,7 +205,7 @@ namespace SparsityTools
       for(unsigned int i = 0; i < n_dofs; i++)
         {
           globalID[i] = i;
-          localID[i]  = i; //Same as global ids.
+          localID[i] = i; //Same as global ids.
         }
     }
 
@@ -249,9 +249,9 @@ namespace SparsityTools
                   int* ierr)
     {
       SparsityPattern* graph = reinterpret_cast<SparsityPattern*>(data);
-      *ierr                  = ZOLTAN_OK;
+      *ierr = ZOLTAN_OK;
 
-      ZOLTAN_ID_PTR nextNborGID  = nborGID;
+      ZOLTAN_ID_PTR nextNborGID = nborGID;
       int*          nextNborProc = nborProc;
 
       //Loop through rows corresponding to indices in globalID implicitly
@@ -269,7 +269,7 @@ namespace SparsityTools
                 Assert(nextNborGID != nullptr, ExcInternalError());
                 Assert(nextNborProc != nullptr, ExcInternalError());
 
-                *nextNborGID++  = col->column();
+                *nextNborGID++ = col->column();
                 *nextNborProc++ = 0; //All the vertices on processor 0
               }
         }
@@ -336,19 +336,19 @@ namespace SparsityTools
       zz->Set_Edge_List_Multi_Fn(get_edge_list, &graph);
 
       //Variables needed by partition function
-      int           changes           = 0;
-      int           num_gid_entries   = 1;
-      int           num_lid_entries   = 1;
-      int           num_import        = 0;
+      int           changes = 0;
+      int           num_gid_entries = 1;
+      int           num_lid_entries = 1;
+      int           num_import = 0;
       ZOLTAN_ID_PTR import_global_ids = nullptr;
-      ZOLTAN_ID_PTR import_local_ids  = nullptr;
-      int*          import_procs      = nullptr;
-      int*          import_to_part    = nullptr;
-      int           num_export        = 0;
+      ZOLTAN_ID_PTR import_local_ids = nullptr;
+      int*          import_procs = nullptr;
+      int*          import_to_part = nullptr;
+      int           num_export = 0;
       ZOLTAN_ID_PTR export_global_ids = nullptr;
-      ZOLTAN_ID_PTR export_local_ids  = nullptr;
-      int*          export_procs      = nullptr;
-      int*          export_to_part    = nullptr;
+      ZOLTAN_ID_PTR export_local_ids = nullptr;
+      int*          export_procs = nullptr;
+      int*          export_to_part = nullptr;
 
       //call partitioner
       const int rc = zz->LB_Partition(changes,
@@ -520,7 +520,7 @@ namespace SparsityTools
             if(sparsity.row_length(row) < min_coordination)
               {
                 min_coordination = sparsity.row_length(row);
-                starting_point   = row;
+                starting_point = row;
               }
           }
 

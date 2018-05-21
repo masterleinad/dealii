@@ -979,7 +979,7 @@ ParameterHandler::recursively_print_parameters(
           //
           // likewise find the longest actual value string to make sure we
           // can align the default and documentation strings
-          std::size_t longest_name  = 0;
+          std::size_t longest_name = 0;
           std::size_t longest_value = 0;
           for(boost::property_tree::ptree::const_iterator p
               = current_section.begin();
@@ -1266,7 +1266,7 @@ ParameterHandler::recursively_print_parameters(
   // newlines between the last entry and the first subsection
   {
     unsigned int n_parameters = 0;
-    unsigned int n_sections   = 0;
+    unsigned int n_sections = 0;
     for(boost::property_tree::ptree::const_iterator p = current_section.begin();
         p != current_section.end();
         ++p)
@@ -1329,7 +1329,7 @@ ParameterHandler::recursively_print_parameters(
           }
 
         // then the contents of the subsection
-        const std::string        subsection     = demangle(p->first);
+        const std::string        subsection = demangle(p->first);
         std::vector<std::string> directory_path = target_subsection_path;
         directory_path.emplace_back(subsection);
 
@@ -1717,7 +1717,7 @@ ParameterHandler::print_parameters_section(
   if(style != XML)
     {
       unsigned int n_parameters = 0;
-      unsigned int n_sections   = 0;
+      unsigned int n_sections = 0;
       for(boost::property_tree::ptree::const_iterator p
           = current_section.begin();
           p != current_section.end();

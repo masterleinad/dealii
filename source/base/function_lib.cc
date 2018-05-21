@@ -54,7 +54,7 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
-        values[i]           = p.square();
+        values[i] = p.square();
       }
   }
 
@@ -131,7 +131,7 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
-        values[i]           = p(0) * p(1);
+        values[i] = p(0) * p(1);
       }
   }
 
@@ -149,7 +149,7 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
-        values[i](0)        = p(0) * p(1);
+        values[i](0) = p(0) * p(1);
       }
   }
 
@@ -831,8 +831,8 @@ namespace Functions
                                     const unsigned int d) const
   {
     AssertIndexRange(d, dim);
-    const unsigned int d1  = (d + 1) % dim;
-    const unsigned int d2  = (d + 2) % dim;
+    const unsigned int d1 = (d + 1) % dim;
+    const unsigned int d2 = (d + 2) % dim;
     const double       pi2 = numbers::PI_2 * numbers::PI_2;
 
     Tensor<1, dim> result;
@@ -871,15 +871,15 @@ namespace Functions
                                          const unsigned int           d) const
   {
     AssertIndexRange(d, dim);
-    const unsigned int d1  = (d + 1) % dim;
-    const unsigned int d2  = (d + 2) % dim;
+    const unsigned int d1 = (d + 1) % dim;
+    const unsigned int d2 = (d + 2) % dim;
     const double       pi2 = numbers::PI_2 * numbers::PI_2;
 
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p      = points[i];
+        const Point<dim>& p = points[i];
         Tensor<1, dim>&   result = gradients[i];
 
         switch(dim)
@@ -1139,7 +1139,7 @@ namespace Functions
       return 0.;
 
     double phi = std::atan2(y, -x) + numbers::PI;
-    double r2  = x * x + y * y;
+    double r2 = x * x + y * y;
 
     return std::pow(r2, 1. / 3.) * std::sin(2. / 3. * phi);
   }
@@ -1162,7 +1162,7 @@ namespace Functions
         else
           {
             double phi = std::atan2(y, -x) + numbers::PI;
-            double r2  = x * x + y * y;
+            double r2 = x * x + y * y;
 
             values[i] = std::pow(r2, 1. / 3.) * std::sin(2. / 3. * phi);
           }
@@ -1189,7 +1189,7 @@ namespace Functions
         else
           {
             double phi = std::atan2(y, -x) + numbers::PI;
-            double r2  = x * x + y * y;
+            double r2 = x * x + y * y;
 
             values[i](0) = std::pow(r2, 1. / 3.) * std::sin(2. / 3. * phi);
           }
@@ -1217,8 +1217,8 @@ namespace Functions
   Tensor<1, 2>
   LSingularityFunction::gradient(const Point<2>& p, const unsigned int) const
   {
-    double x   = p(0);
-    double y   = p(1);
+    double x = p(0);
+    double y = p(1);
     double phi = std::atan2(y, -x) + numbers::PI;
     double r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1242,9 +1242,9 @@ namespace Functions
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2>& p   = points[i];
-        double          x   = p(0);
-        double          y   = p(1);
+        const Point<2>& p = points[i];
+        double          x = p(0);
+        double          y = p(1);
         double          phi = std::atan2(y, -x) + numbers::PI;
         double          r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1269,9 +1269,9 @@ namespace Functions
       {
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
-        const Point<2>& p   = points[i];
-        double          x   = p(0);
-        double          y   = p(1);
+        const Point<2>& p = points[i];
+        double          x = p(0);
+        double          y = p(1);
         double          phi = std::atan2(y, -x) + numbers::PI;
         double          r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1294,8 +1294,8 @@ namespace Functions
   {
     AssertIndexRange(d, 2);
 
-    const double x   = p(0);
-    const double y   = p(1);
+    const double x = p(0);
+    const double y = p(1);
     const double phi = std::atan2(y, -x) + numbers::PI;
     const double r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1316,9 +1316,9 @@ namespace Functions
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2>& p   = points[i];
-        const double    x   = p(0);
-        const double    y   = p(1);
+        const Point<2>& p = points[i];
+        const double    x = p(0);
+        const double    y = p(1);
         const double    phi = std::atan2(y, -x) + numbers::PI;
         const double    r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1341,9 +1341,9 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       {
         AssertDimension(values[i].size(), 2);
-        const Point<2>& p   = points[i];
-        const double    x   = p(0);
-        const double    y   = p(1);
+        const Point<2>& p = points[i];
+        const double    x = p(0);
+        const double    y = p(1);
         const double    phi = std::atan2(y, -x) + numbers::PI;
         const double    r43 = std::pow(x * x + y * y, 2. / 3.);
 
@@ -1410,7 +1410,7 @@ namespace Functions
     double y = p(1);
 
     double phi = std::atan2(x, y) + numbers::PI;
-    double r2  = x * x + y * y;
+    double r2 = x * x + y * y;
 
     return std::pow(r2, .25) * std::sin(.5 * phi);
   }
@@ -1431,7 +1431,7 @@ namespace Functions
         double y = points[i](1);
 
         double phi = std::atan2(x, y) + numbers::PI;
-        double r2  = x * x + y * y;
+        double r2 = x * x + y * y;
 
         values[i] = std::pow(r2, .25) * std::sin(.5 * phi);
       }
@@ -1455,7 +1455,7 @@ namespace Functions
         double y = points[i](1);
 
         double phi = std::atan2(x, y) + numbers::PI;
-        double r2  = x * x + y * y;
+        double r2 = x * x + y * y;
 
         values[i](0) = std::pow(r2, .25) * std::sin(.5 * phi);
       }
@@ -1488,8 +1488,8 @@ namespace Functions
   SlitSingularityFunction<dim>::gradient(const Point<dim>& p,
                                          const unsigned int) const
   {
-    double x   = p(0);
-    double y   = p(1);
+    double x = p(0);
+    double y = p(1);
     double phi = std::atan2(x, y) + numbers::PI;
     double r64 = std::pow(x * x + y * y, 3. / 4.);
 
@@ -1515,9 +1515,9 @@ namespace Functions
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p   = points[i];
-        double            x   = p(0);
-        double            y   = p(1);
+        const Point<dim>& p = points[i];
+        double            x = p(0);
+        double            y = p(1);
         double            phi = std::atan2(x, y) + numbers::PI;
         double            r64 = std::pow(x * x + y * y, 3. / 4.);
 
@@ -1546,9 +1546,9 @@ namespace Functions
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
 
-        const Point<dim>& p   = points[i];
-        double            x   = p(0);
-        double            y   = p(1);
+        const Point<dim>& p = points[i];
+        double            x = p(0);
+        double            y = p(1);
         double            phi = std::atan2(x, y) + numbers::PI;
         double            r64 = std::pow(x * x + y * y, 3. / 4.);
 
@@ -1573,7 +1573,7 @@ namespace Functions
     double y = p(1);
 
     double phi = std::atan2(x, y) + numbers::PI;
-    double r2  = x * x + y * y;
+    double r2 = x * x + y * y;
 
     return std::pow(r2, .125) * std::sin(.25 * phi);
   }
@@ -1592,7 +1592,7 @@ namespace Functions
         double y = points[i](1);
 
         double phi = std::atan2(x, y) + numbers::PI;
-        double r2  = x * x + y * y;
+        double r2 = x * x + y * y;
 
         values[i] = std::pow(r2, .125) * std::sin(.25 * phi);
       }
@@ -1615,7 +1615,7 @@ namespace Functions
         double y = points[i](1);
 
         double phi = std::atan2(x, y) + numbers::PI;
-        double r2  = x * x + y * y;
+        double r2 = x * x + y * y;
 
         values[i](0) = std::pow(r2, .125) * std::sin(.25 * phi);
       }
@@ -1645,8 +1645,8 @@ namespace Functions
   SlitHyperSingularityFunction::gradient(const Point<2>& p,
                                          const unsigned int) const
   {
-    double x   = p(0);
-    double y   = p(1);
+    double x = p(0);
+    double y = p(1);
     double phi = std::atan2(x, y) + numbers::PI;
     double r78 = std::pow(x * x + y * y, 7. / 8.);
 
@@ -1671,9 +1671,9 @@ namespace Functions
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2>& p   = points[i];
-        double          x   = p(0);
-        double          y   = p(1);
+        const Point<2>& p = points[i];
+        double          x = p(0);
+        double          y = p(1);
         double          phi = std::atan2(x, y) + numbers::PI;
         double          r78 = std::pow(x * x + y * y, 7. / 8.);
 
@@ -1699,9 +1699,9 @@ namespace Functions
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
 
-        const Point<2>& p   = points[i];
-        double          x   = p(0);
-        double          y   = p(1);
+        const Point<2>& p = points[i];
+        double          x = p(0);
+        double          y = p(1);
         double          phi = std::atan2(x, y) + numbers::PI;
         double          r78 = std::pow(x * x + y * y, 7. / 8.);
 
@@ -1755,7 +1755,7 @@ namespace Functions
 
     for(unsigned int i = 0; i < p.size(); ++i)
       {
-        double x  = steepness * (-cosine * p[i](0) + sine * p[i](1));
+        double x = steepness * (-cosine * p[i](0) + sine * p[i](1));
         values[i] = -std::atan(x);
       }
   }
@@ -1782,8 +1782,8 @@ namespace Functions
 
     for(unsigned int i = 0; i < p.size(); ++i)
       {
-        double x  = steepness * (-cosine * p[i](0) + sine * p[i](1));
-        double r  = 1 + x * x;
+        double x = steepness * (-cosine * p[i](0) + sine * p[i](1));
+        double r = 1 + x * x;
         values[i] = f * x / (r * r);
       }
   }
@@ -1811,8 +1811,8 @@ namespace Functions
 
     for(unsigned int i = 0; i < p.size(); ++i)
       {
-        double x        = steepness * (cosine * p[i](0) + sine * p[i](1));
-        double r        = -steepness * (1 + x * x);
+        double x = steepness * (cosine * p[i](0) + sine * p[i](1));
+        double r = -steepness * (1 + x * x);
         gradients[i][0] = cosine * r;
         gradients[i][1] = sine * r;
       }
@@ -1928,7 +1928,7 @@ namespace Functions
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    const unsigned int n   = weights.size();
+    const unsigned int n = weights.size();
     double             sum = 0;
     for(unsigned int s = 0; s < n; ++s)
       sum += weights[s] * std::sin(fourier_coefficients[s] * p);
@@ -1960,7 +1960,7 @@ namespace Functions
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    const unsigned int n   = weights.size();
+    const unsigned int n = weights.size();
     double             sum = 0;
     for(unsigned int s = 0; s < n; ++s)
       sum -= (fourier_coefficients[s] * fourier_coefficients[s])
@@ -1992,7 +1992,7 @@ namespace Functions
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    const unsigned int n   = weights.size();
+    const unsigned int n = weights.size();
     double             sum = 0;
     for(unsigned int s = 0; s < n; ++s)
       sum += weights[s] * std::cos(fourier_coefficients[s] * p);
@@ -2024,7 +2024,7 @@ namespace Functions
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    const unsigned int n   = weights.size();
+    const unsigned int n = weights.size();
     double             sum = 0;
     for(unsigned int s = 0; s < n; ++s)
       sum -= (fourier_coefficients[s] * fourier_coefficients[s])
@@ -2159,7 +2159,7 @@ namespace Functions
     for(unsigned int k = 0; k < points.size(); ++k)
       {
         const double r = points[k].distance(center);
-        values[k]      = jn(order, r * wave_number);
+        values[k] = jn(order, r * wave_number);
       }
 #endif
   }
@@ -2174,7 +2174,7 @@ namespace Functions
     Assert(false, ExcMessage("The Bessel function jn was not found by CMake."));
     return Tensor<1, dim>();
 #else
-    const double r  = p.distance(center);
+    const double r = p.distance(center);
     const double co = (r == 0.) ? 0. : (p(0) - center(0)) / r;
     const double si = (r == 0.) ? 0. : (p(1) - center(1)) / r;
 
@@ -2203,8 +2203,8 @@ namespace Functions
 #else
     for(unsigned int k = 0; k < points.size(); ++k)
       {
-        const Point<dim>& p  = points[k];
-        const double      r  = p.distance(center);
+        const Point<dim>& p = points[k];
+        const double      r = p.distance(center);
         const double      co = (r == 0.) ? 0. : (p(0) - center(0)) / r;
         const double      si = (r == 0.) ? 0. : (p(1) - center(1)) / r;
 
@@ -2214,8 +2214,8 @@ namespace Functions
                               * (jn(order - 1, wave_number * r)
                                  - jn(order + 1, wave_number * r)));
         Tensor<1, dim>& result = gradients[k];
-        result[0]              = wave_number * co * dJn;
-        result[1]              = wave_number * si * dJn;
+        result[0] = wave_number * co * dJn;
+        result[1] = wave_number * si * dJn;
       }
 #endif
   }
@@ -2292,9 +2292,9 @@ namespace Functions
     {
       Tensor<1, 2> grad;
       double       u00 = data_values[ix[0]][ix[1]],
-             u01       = data_values[ix[0] + 1][ix[1]],
-             u10       = data_values[ix[0]][ix[1] + 1],
-             u11       = data_values[ix[0] + 1][ix[1] + 1];
+             u01 = data_values[ix[0] + 1][ix[1]],
+             u10 = data_values[ix[0]][ix[1] + 1],
+             u11 = data_values[ix[0] + 1][ix[1] + 1];
 
       grad[0]
         = ((1 - p_unit[1]) * (u01 - u00) + p_unit[1] * (u11 - u10)) / dx[0];
@@ -2311,13 +2311,13 @@ namespace Functions
     {
       Tensor<1, 3> grad;
       double       u000 = data_values[ix[0]][ix[1]][ix[2]],
-             u001       = data_values[ix[0] + 1][ix[1]][ix[2]],
-             u010       = data_values[ix[0]][ix[1] + 1][ix[2]],
-             u100       = data_values[ix[0]][ix[1]][ix[2] + 1],
-             u011       = data_values[ix[0] + 1][ix[1] + 1][ix[2]],
-             u101       = data_values[ix[0] + 1][ix[1]][ix[2] + 1],
-             u110       = data_values[ix[0]][ix[1] + 1][ix[2] + 1],
-             u111       = data_values[ix[0] + 1][ix[1] + 1][ix[2] + 1];
+             u001 = data_values[ix[0] + 1][ix[1]][ix[2]],
+             u010 = data_values[ix[0]][ix[1] + 1][ix[2]],
+             u100 = data_values[ix[0]][ix[1]][ix[2] + 1],
+             u011 = data_values[ix[0] + 1][ix[1] + 1][ix[2]],
+             u101 = data_values[ix[0] + 1][ix[1]][ix[2] + 1],
+             u110 = data_values[ix[0]][ix[1] + 1][ix[2] + 1],
+             u111 = data_values[ix[0] + 1][ix[1] + 1][ix[2] + 1];
 
       grad[0]
         = ((1 - p_unit[2])

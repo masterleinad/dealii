@@ -90,7 +90,7 @@ FE_Q_DG0<dim, spacedim>::get_name() const
   // kept in synch
 
   std::ostringstream             namebuf;
-  bool                           type     = true;
+  bool                           type = true;
   const unsigned int             n_points = this->degree + 1;
   std::vector<double>            points(n_points);
   const unsigned int             dofs_per_cell = this->dofs_per_cell;

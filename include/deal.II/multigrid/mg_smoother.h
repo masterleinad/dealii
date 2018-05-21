@@ -48,8 +48,8 @@ public:
   /**
    * Constructor.
    */
-  MGSmoother(const unsigned int steps     = 1,
-             const bool         variable  = false,
+  MGSmoother(const unsigned int steps = 1,
+             const bool         variable = false,
              const bool         symmetric = false,
              const bool         transpose = false);
 
@@ -187,8 +187,8 @@ namespace mg
     /**
      * Constructor. Sets smoothing parameters.
      */
-    SmootherRelaxation(const unsigned int steps     = 1,
-                       const bool         variable  = false,
+    SmootherRelaxation(const unsigned int steps = 1,
+                       const bool         variable = false,
                        const bool         symmetric = false,
                        const bool         transpose = false);
 
@@ -298,8 +298,8 @@ public:
   /**
    * Constructor. Sets smoothing parameters.
    */
-  MGSmootherRelaxation(const unsigned int steps     = 1,
-                       const bool         variable  = false,
+  MGSmootherRelaxation(const unsigned int steps = 1,
+                       const bool         variable = false,
                        const bool         symmetric = false,
                        const bool         transpose = false);
 
@@ -447,8 +447,8 @@ public:
   /**
    * Constructor. Sets smoothing parameters.
    */
-  MGSmootherPrecondition(const unsigned int steps     = 1,
-                         const bool         variable  = false,
+  MGSmootherPrecondition(const unsigned int steps = 1,
+                         const bool         variable = false,
                          const bool         symmetric = false,
                          const bool         transpose = false);
 

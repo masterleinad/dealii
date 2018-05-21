@@ -49,7 +49,7 @@ test()
 
   for(IndexSet::size_type i = 0; i < index_set.size(); ++i)
     {
-      const IndexSet::size_type i_out  = index_set.index_within_set(i);
+      const IndexSet::size_type i_out = index_set.index_within_set(i);
       const bool                within = (i_out != numbers::invalid_dof_index);
       AssertThrow(within == index_set.is_element(i), ExcInternalError());
 

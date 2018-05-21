@@ -299,20 +299,20 @@ namespace SUNDIALS
        * @param maximum_non_linear_iterations_ic Initial condition Newton max iterations
        */
       AdditionalData( // Initial parameters
-        const double& initial_time      = 0.0,
-        const double& final_time        = 1.0,
+        const double& initial_time = 0.0,
+        const double& final_time = 1.0,
         const double& initial_step_size = 1e-2,
-        const double& output_period     = 1e-1,
+        const double& output_period = 1e-1,
         // Running parameters
-        const double&       minimum_step_size             = 1e-6,
-        const unsigned int& maximum_order                 = 5,
+        const double&       minimum_step_size = 1e-6,
+        const unsigned int& maximum_order = 5,
         const unsigned int& maximum_non_linear_iterations = 10,
         // Error parameters
-        const double& absolute_tolerance                = 1e-6,
-        const double& relative_tolerance                = 1e-5,
+        const double& absolute_tolerance = 1e-6,
+        const double& relative_tolerance = 1e-5,
         const bool&   ignore_algebraic_terms_for_errors = true,
         // Initial conditions parameters
-        const InitialConditionCorrection& ic_type    = use_y_diff,
+        const InitialConditionCorrection& ic_type = use_y_diff,
         const InitialConditionCorrection& reset_type = use_y_diff,
         const unsigned int&               maximum_non_linear_iterations_ic = 5)
         : initial_time(initial_time),
@@ -570,7 +570,7 @@ namespace SUNDIALS
      * @param data IDA configuration data
      * @param mpi_comm MPI communicator
      */
-    IDA(const AdditionalData& data     = AdditionalData(),
+    IDA(const AdditionalData& data = AdditionalData(),
         const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**

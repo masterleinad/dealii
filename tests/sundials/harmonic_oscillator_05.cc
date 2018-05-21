@@ -100,7 +100,7 @@ main(int argc, char** argv)
                                   const VectorType&,
                                   const VectorType& src,
                                   VectorType&       dst) -> int {
-    J       = 0;
+    J = 0;
     J(0, 0) = 1;
     J(1, 1) = 1;
     J(2, 2) = 1 + gamma / eps;

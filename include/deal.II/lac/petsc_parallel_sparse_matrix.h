@@ -178,7 +178,7 @@ namespace PETScWrappers
                    const size_type local_rows,
                    const size_type local_columns,
                    const size_type n_nonzero_per_row,
-                   const bool      is_symmetric              = false,
+                   const bool      is_symmetric = false,
                    const size_type n_offdiag_nonzero_per_row = 0);
 
       /**
@@ -280,7 +280,7 @@ namespace PETScWrappers
              const size_type local_rows,
              const size_type local_columns,
              const size_type n_nonzero_per_row,
-             const bool      is_symmetric              = false,
+             const bool      is_symmetric = false,
              const size_type n_offdiag_nonzero_per_row = 0);
 
       /**
@@ -462,7 +462,7 @@ namespace PETScWrappers
                 const size_type local_rows,
                 const size_type local_columns,
                 const size_type n_nonzero_per_row,
-                const bool      is_symmetric              = false,
+                const bool      is_symmetric = false,
                 const size_type n_offdiag_nonzero_per_row = 0);
 
       /**

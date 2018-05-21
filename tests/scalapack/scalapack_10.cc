@@ -81,7 +81,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes       = {{100, 200, 300}};
+  const std::vector<unsigned int> sizes = {{100, 200, 300}};
   const std::vector<unsigned int> block_sizes = {{1, 16, 32}};
 
   for(const auto& s : sizes)

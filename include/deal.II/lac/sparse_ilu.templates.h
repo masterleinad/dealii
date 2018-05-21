@@ -51,12 +51,12 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
   // translating in essence the algorithm given at the end of section 10.3.2,
   // using the names of variables used there
   const SparsityPattern&   sparsity = this->get_sparsity_pattern();
-  const std::size_t* const ia       = sparsity.rowstart.get();
-  const size_type* const   ja       = sparsity.colnums.get();
+  const std::size_t* const ia = sparsity.rowstart.get();
+  const size_type* const   ja = sparsity.colnums.get();
 
   number* luval = this->SparseMatrix<number>::val.get();
 
-  const size_type N    = this->m();
+  const size_type N = this->m();
   size_type       jrow = 0;
 
   std::vector<size_type> iw(N, numbers::invalid_size_type);
@@ -194,7 +194,7 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
         = this->prebuilt_lower_bound[row];
 
       somenumber    dst_row = dst(row);
-      const number* luval   = this->SparseMatrix<number>::val.get()
+      const number* luval = this->SparseMatrix<number>::val.get()
                             + (first_after_diagonal - column_numbers);
       for(const size_type* col = first_after_diagonal; col != rowend;
           ++col, ++luval)
@@ -251,7 +251,7 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
         = this->prebuilt_lower_bound[row];
 
       const somenumber dst_row = dst(row);
-      const number*    luval   = this->SparseMatrix<number>::val.get()
+      const number*    luval = this->SparseMatrix<number>::val.get()
                             + (first_after_diagonal - column_numbers);
       for(const size_type* col = first_after_diagonal; col != rowend;
           ++col, ++luval)

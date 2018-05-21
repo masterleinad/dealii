@@ -59,8 +59,8 @@ sub_test()
   // run test for several different meshes
   for(unsigned int i = 0; i < 8 - 2 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
+      cell = tria.begin_active();
+      endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (9 - i) == 0)
@@ -116,7 +116,7 @@ sub_test()
           if(constraints.is_constrained(i))
             continue;
           const double entry = Testing::rand() / (double) RAND_MAX;
-          in_dist(i)         = entry;
+          in_dist(i) = entry;
         }
 
       mf_ref.vmult(out_dist, in_dist);

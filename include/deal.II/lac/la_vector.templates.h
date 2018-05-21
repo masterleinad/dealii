@@ -414,8 +414,8 @@ namespace LinearAlgebra
     else
       {
         real_type       scale = 0.;
-        real_type       sum   = 1.;
-        const size_type size  = this->size();
+        real_type       sum = 1.;
+        const size_type size = this->size();
         for(size_type i = 0; i < size; ++i)
           {
             if(this->values[i] != Number())
@@ -424,7 +424,7 @@ namespace LinearAlgebra
                   = numbers::NumberTraits<Number>::abs(this->values[i]);
                 if(scale < abs_x)
                   {
-                    sum   = 1. + sum * (scale / abs_x) * (scale / abs_x);
+                    sum = 1. + sum * (scale / abs_x) * (scale / abs_x);
                     scale = abs_x;
                   }
                 else

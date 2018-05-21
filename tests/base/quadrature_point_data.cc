@@ -116,7 +116,7 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
           = manager.get_data(cell);
         for(unsigned int q = 0; q < q_points.size(); q++)
           {
-            const double value  = func.value(q_points[q]);
+            const double value = func.value(q_points[q]);
             const double value2 = qpd[q]->value;
             AssertThrow(std::fabs(value - value2) < eps,
                         ExcWrongValue(value, value2, value - value2));
@@ -129,7 +129,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   const MyFunction<dim> my_func;

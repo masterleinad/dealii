@@ -69,7 +69,7 @@ check_vmult_quadratic(std::vector<double>& residuals,
   for(unsigned int i = 0; i < n_blocks; ++i)
     for(unsigned int j = 0; j < block_size; ++j)
       {
-        perm[block_size * i + j]        = block_size * ((i + 1) % n_blocks) + j;
+        perm[block_size * i + j] = block_size * ((i + 1) % n_blocks) + j;
         iperm[perm[block_size * i + j]] = block_size * i + j;
       }
 

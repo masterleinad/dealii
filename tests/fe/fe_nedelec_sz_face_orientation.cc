@@ -163,16 +163,16 @@ void create_triangulation(Triangulation<3>& tria,
 
   std::vector<Point<3>> vertices(12);
 
-  vertices[0]  = Point<3>(-1.0, 0.0, 0.0);
-  vertices[1]  = Point<3>();
-  vertices[2]  = Point<3>(1.0, 0.0, 0.0);
-  vertices[3]  = Point<3>(-1.0, 0.0, 1.0);
-  vertices[4]  = Point<3>(0.0, 0.0, 1.0);
-  vertices[5]  = Point<3>(1.0, 0.0, 1.0);
-  vertices[6]  = Point<3>(-1.0, 1.0, 0.0);
-  vertices[7]  = Point<3>(0.0, 1.0, 0.0);
-  vertices[8]  = Point<3>(1.0, 1.0, 0.0);
-  vertices[9]  = Point<3>(-1.0, 1.0, 1.0);
+  vertices[0] = Point<3>(-1.0, 0.0, 0.0);
+  vertices[1] = Point<3>();
+  vertices[2] = Point<3>(1.0, 0.0, 0.0);
+  vertices[3] = Point<3>(-1.0, 0.0, 1.0);
+  vertices[4] = Point<3>(0.0, 0.0, 1.0);
+  vertices[5] = Point<3>(1.0, 0.0, 1.0);
+  vertices[6] = Point<3>(-1.0, 1.0, 0.0);
+  vertices[7] = Point<3>(0.0, 1.0, 0.0);
+  vertices[8] = Point<3>(1.0, 1.0, 0.0);
+  vertices[9] = Point<3>(-1.0, 1.0, 1.0);
   vertices[10] = Point<3>(0.0, 1.0, 1.0);
   vertices[11] = Point<3>(1.0, 1.0, 1.0);
   tria.create_triangulation(vertices, cells, SubCellData());

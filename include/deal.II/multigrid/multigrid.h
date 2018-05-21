@@ -171,7 +171,7 @@ public:
             const MGSmootherBase<VectorType>&   post_smooth,
             const unsigned int                  minlevel = 0,
             const unsigned int maxlevel = numbers::invalid_unsigned_int,
-            Cycle              cycle    = v_cycle);
+            Cycle              cycle = v_cycle);
 
   /**
    * Constructor. <tt>transfer</tt> is an object performing prolongation and
@@ -189,7 +189,7 @@ public:
             const MGSmootherBase<VectorType>&   post_smooth,
             const unsigned int                  minlevel = 0,
             const unsigned int maxlevel = numbers::invalid_unsigned_int,
-            Cycle              cycle    = v_cycle);
+            Cycle              cycle = v_cycle);
 
   /**
    * Reinit this class according to #minlevel and #maxlevel.

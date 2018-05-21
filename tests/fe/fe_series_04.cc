@@ -164,9 +164,9 @@ test_legendre_orthonormal(const unsigned int N)
         for(unsigned int q = 0; q < quadrature.size(); ++q)
           {
             const Point<dim>& x_q = quadrature.point(q);
-            const double      m   = 0.5;              // mid-point
-            const double      h   = 0.5;              // half-length
-            const double      x   = (x_q[0] - m) / h; // 1D only
+            const double      m = 0.5;              // mid-point
+            const double      h = 0.5;              // half-length
+            const double      x = (x_q[0] - m) / h; // 1D only
             Assert(std::fabs(x) < 1.0, dealii::ExcInternalError());
             const double L1 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k1, x);
             const double L2 = std::sqrt(1.0 / h) * gsl_sf_legendre_Pl(k2, x);

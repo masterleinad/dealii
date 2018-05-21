@@ -40,7 +40,7 @@ std::ofstream logfile("output");
 void
 test()
 {
-  const unsigned int dim      = 1;
+  const unsigned int dim = 1;
   const unsigned int spacedim = 2;
 
   Triangulation<dim, spacedim> tria;

@@ -43,8 +43,8 @@ void
 write_mat_id_to_file(const Triangulation<dim>& tria)
 {
   int                                               count = 0;
-  typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
-                                                    endc  = tria.end();
+  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
+                                                    endc = tria.end();
   for(; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << static_cast<int>(cell->material_id())
@@ -65,7 +65,7 @@ test()
     step_sizes; // step sizes as input to the subdivided_hyper_rectangle
 
   unsigned int n_steps = 25;
-  double       size    = 0.; // size of domain in i direction
+  double       size = 0.; // size of domain in i direction
   for(unsigned int j = 1; j < n_steps; ++j)
     {
       step_sizes_i.push_back((1. + double(j)) / double(n_steps));

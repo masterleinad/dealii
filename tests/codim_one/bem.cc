@@ -177,7 +177,7 @@ BEM<spacedim>::assemble_system()
                   | update_quadrature_points);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   // The following two matrices will be subtracted to obtain the system
   // matrix.

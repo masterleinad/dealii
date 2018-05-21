@@ -89,7 +89,7 @@ main()
 
   unsigned int nprocs   = dealii::MultithreadInfo::n_cores();
   unsigned int tbbprocs = dealii::MultithreadInfo::n_threads();
-  int          env      = get_num_thread_env();
+  int          env = get_num_thread_env();
   printf(
     "aff_ncpus=%d, mask=%08X, nprocs=%d, tbb_threads=%d, DEAL_II_NUM_THREADS=%d\n",
     bits_set,

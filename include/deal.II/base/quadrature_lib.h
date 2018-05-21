@@ -231,8 +231,8 @@ public:
    * formula or it is factored out, to be included in the integrand.
    */
   QGaussLogR(const unsigned int n,
-             const Point<dim>   x0                         = Point<dim>(),
-             const double       alpha                      = 1,
+             const Point<dim>   x0 = Point<dim>(),
+             const double       alpha = 1,
              const bool         factor_out_singular_weight = false);
 
   /**

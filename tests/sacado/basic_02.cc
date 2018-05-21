@@ -105,9 +105,9 @@ main()
   deallog << "f_fad: " << f_fad << std::endl;
 
   // Extract value and derivatives
-  const double f_ad         = f_fad.val().val(); // f
-  const double df_dx_ad     = f_fad.dx(0).val(); // df/dx
-  const double df_dy_ad     = f_fad.dx(1).val(); // df/dy
+  const double f_ad = f_fad.val().val();         // f
+  const double df_dx_ad = f_fad.dx(0).val();     // df/dx
+  const double df_dy_ad = f_fad.dx(1).val();     // df/dy
   const double d2f_dx_dx_ad = f_fad.dx(0).dx(0); // d^2f/dx^2
   const double d2f_dy_dx_ad = f_fad.dx(0).dx(1); // d^2f/dy_dx
   const double d2f_dx_dy_ad = f_fad.dx(1).dx(0); // d^2f/dx_dy

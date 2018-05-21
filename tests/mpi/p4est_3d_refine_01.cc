@@ -60,7 +60,7 @@ test()
               flags[x]             = true;
             }
 
-          unsigned int index  = 0;
+          unsigned int index = 0;
           unsigned int locals = 0;
 
           for(typename Triangulation<dim>::active_cell_iterator cell

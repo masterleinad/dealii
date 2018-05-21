@@ -694,7 +694,7 @@ public:
    * tolerance*periodicity.norm().
    */
   FlatManifold(const Tensor<1, spacedim>& periodicity = Tensor<1, spacedim>(),
-               const double               tolerance   = 1e-10);
+               const double               tolerance = 1e-10);
 
   /**
    * Return a copy of this manifold.
@@ -1202,9 +1202,9 @@ namespace Manifolds
         case 1:
           Assert(points_weights.first.size() == 2, ExcInternalError());
           Assert(points_weights.second.size() == 2, ExcInternalError());
-          points_weights.first[0]  = iterator->vertex(0);
+          points_weights.first[0] = iterator->vertex(0);
           points_weights.second[0] = .5;
-          points_weights.first[1]  = iterator->vertex(1);
+          points_weights.first[1] = iterator->vertex(1);
           points_weights.second[1] = .5;
           break;
         case 2:
@@ -1262,7 +1262,7 @@ namespace Manifolds
                     i < GeometryInfo<dim>::vertices_per_cell;
                     ++i, ++j)
                   {
-                    (*sp3)[j]                = hex->vertex(i);
+                    (*sp3)[j] = hex->vertex(i);
                     points_weights.second[j] = 1.0 / 8.0;
                   }
                 for(unsigned int i = 0; i < GeometryInfo<dim>::lines_per_cell;

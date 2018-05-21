@@ -53,8 +53,8 @@ test()
   tria.execute_coarsening_and_refinement();
   for(unsigned int i = 0; i < 5 - dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
+      cell = tria.begin_active();
+      endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(cell->center()[0] < 5.)

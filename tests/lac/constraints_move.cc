@@ -25,7 +25,7 @@ main()
   deallog.attach(logfile);
 
   ConstraintMatrix constraints;
-  unsigned int     IDs[]  = {1, 2, 3, 5, 8, 13, 21};
+  unsigned int     IDs[] = {1, 2, 3, 5, 8, 13, 21};
   double           vals[] = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
   for(unsigned int i = 0; i < sizeof(IDs) / sizeof(IDs[0]); ++i)
     {

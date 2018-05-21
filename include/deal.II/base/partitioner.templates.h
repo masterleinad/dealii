@@ -208,7 +208,7 @@ namespace Utilities
         return;
 
       const unsigned int n_import_targets = import_targets_data.size();
-      const unsigned int n_ghost_targets  = ghost_targets_data.size();
+      const unsigned int n_ghost_targets = ghost_targets_data.size();
 
       Assert(requests.size() == 0,
              ExcMessage("Another compress operation seems to still be running. "
@@ -372,7 +372,7 @@ namespace Utilities
         return;
 
       const unsigned int n_import_targets = import_targets_data.size();
-      const unsigned int n_ghost_targets  = ghost_targets_data.size();
+      const unsigned int n_ghost_targets = ghost_targets_data.size();
 
       if(vector_operation != dealii::VectorOperation::insert)
         AssertDimension(n_ghost_targets + n_import_targets, requests.size());

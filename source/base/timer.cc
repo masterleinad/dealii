@@ -389,7 +389,7 @@ TimerOutput::enter_subsection(const std::string& section_name)
           sections[section_name].timer = Timer(mpi_communicator, true);
         }
 
-      sections[section_name].total_cpu_time  = 0;
+      sections[section_name].total_cpu_time = 0;
       sections[section_name].total_wall_time = 0;
       sections[section_name].n_calls         = 0;
     }
@@ -494,8 +494,8 @@ TimerOutput::print_summary() const
   // below. store the old values so we
   // can restore it later on
   const std::istream::fmtflags old_flags = out_stream.get_stream().flags();
-  const std::streamsize old_precision    = out_stream.get_stream().precision();
-  const std::streamsize old_width        = out_stream.get_stream().width();
+  const std::streamsize old_precision = out_stream.get_stream().precision();
+  const std::streamsize old_width = out_stream.get_stream().width();
 
   // in case we want to write CPU times
   if(output_type != wall_times)

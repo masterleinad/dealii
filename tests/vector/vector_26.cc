@@ -30,7 +30,7 @@ test(Vector<double>& v)
   v.compress();
 
   const unsigned int sz = v.size();
-  v                     = 2;
+  v = 2;
   AssertThrow(v.size() == sz, ExcInternalError());
   AssertThrow(v.l2_norm() == std::sqrt(4. * sz), ExcInternalError());
 

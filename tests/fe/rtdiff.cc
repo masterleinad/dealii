@@ -113,7 +113,7 @@ compare_shapes(const FiniteElement<dim>& other,
         for(unsigned int d = 0; d < dim; ++d)
           {
             double         value = other_values[k][i][d];
-            Tensor<1, dim> grad  = other_grads[k][i][d];
+            Tensor<1, dim> grad = other_grads[k][i][d];
             for(unsigned int j = 0; j < other.dofs_per_cell; ++j)
               {
                 value -= M(j, i) * nodes_values[k][j][d];

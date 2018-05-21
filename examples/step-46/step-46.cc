@@ -503,7 +503,7 @@ namespace Step46
   FluidStructureProblem<dim>::assemble_system()
   {
     system_matrix = 0;
-    system_rhs    = 0;
+    system_rhs = 0;
 
     const QGauss<dim> stokes_quadrature(stokes_degree + 2);
     const QGauss<dim> elasticity_quadrature(elasticity_degree + 2);
@@ -535,7 +535,7 @@ namespace Step46
 
     // ...to objects that are needed to describe the local contributions to
     // the global linear system...
-    const unsigned int stokes_dofs_per_cell     = stokes_fe.dofs_per_cell;
+    const unsigned int stokes_dofs_per_cell = stokes_fe.dofs_per_cell;
     const unsigned int elasticity_dofs_per_cell = elasticity_fe.dofs_per_cell;
 
     FullMatrix<double> local_matrix;

@@ -218,7 +218,7 @@ MultithreadInfo::initialize_multithreading()
   done = true;
 }
 
-const unsigned int MultithreadInfo::n_cpus  = MultithreadInfo::get_n_cpus();
+const unsigned int MultithreadInfo::n_cpus = MultithreadInfo::get_n_cpus();
 unsigned int MultithreadInfo::n_max_threads = numbers::invalid_unsigned_int;
 
 namespace

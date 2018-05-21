@@ -94,7 +94,7 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
-  unsigned int       counter       = 0;
+  unsigned int       counter = 0;
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();

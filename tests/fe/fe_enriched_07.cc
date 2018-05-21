@@ -80,7 +80,7 @@ public:
 template <int dim>
 void
 test6(const bool         do_href,
-      const unsigned int p_feq  = 1,
+      const unsigned int p_feq = 1,
       const unsigned int p_feen = 2)
 {
   deallog << "hp: " << do_href << " " << p_feq << " " << p_feen << std::endl;

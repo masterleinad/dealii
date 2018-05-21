@@ -30,8 +30,8 @@ test()
   std::vector<double>                  double_values(size);
   for(unsigned int i = 0; i < size; ++i)
     {
-      indices[i]       = i;
-      float_values[i]  = 2. * i;
+      indices[i] = i;
+      float_values[i] = 2. * i;
       double_values[i] = 3. * i;
     }
 

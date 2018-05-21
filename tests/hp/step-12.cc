@@ -97,7 +97,7 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
 
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p    = points[i];
+      const Point<dim>& p = points[i];
       Point<dim>&       beta = values[i];
 
       beta(0) = -p(1);

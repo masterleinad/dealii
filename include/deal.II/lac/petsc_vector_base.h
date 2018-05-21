@@ -709,9 +709,9 @@ namespace PETScWrappers
      */
     void
     print(std::ostream&      out,
-          const unsigned int precision  = 3,
+          const unsigned int precision = 3,
           const bool         scientific = true,
-          const bool         across     = true) const;
+          const bool         across = true) const;
 
     /**
      * Swap the contents of this vector and the other vector @p v. One could
@@ -933,7 +933,7 @@ namespace PETScWrappers
 
       // use the PETSc function to
       // add something
-      const PetscInt       petsc_i     = index;
+      const PetscInt       petsc_i = index;
       const PetscScalar    subtractand = -value;
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &subtractand, ADD_VALUES);
@@ -963,7 +963,7 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
+      const PetscInt    petsc_i = index;
       const PetscScalar new_value = static_cast<PetscScalar>(*this) * value;
 
       const PetscErrorCode ierr
@@ -994,7 +994,7 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
+      const PetscInt    petsc_i = index;
       const PetscScalar new_value = static_cast<PetscScalar>(*this) / value;
 
       const PetscErrorCode ierr

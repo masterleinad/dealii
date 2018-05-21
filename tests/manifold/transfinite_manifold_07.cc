@@ -229,7 +229,7 @@ void concentric_disks(Triangulation<2>&          tria,
   tria.create_triangulation(
     vertices, cells, SubCellData()); // no boundary information
 
-  double       eps   = 1e-5 * x[0];
+  double       eps = 1e-5 * x[0];
   unsigned int label = 100;
 
   for(Triangulation<2>::active_cell_iterator cell = tria.begin_active();
@@ -244,8 +244,8 @@ void concentric_disks(Triangulation<2>&          tria,
             {
               const Point<2> p0 = cell->face(f)->vertex(0),
                              p1 = cell->face(f)->vertex(1);
-              const double d0   = p0.distance(gp.ball_centers[k]),
-                           d1   = p1.distance(gp.ball_centers[k]);
+              const double d0 = p0.distance(gp.ball_centers[k]),
+                           d1 = p1.distance(gp.ball_centers[k]);
 
               if((std::abs(d0 - gp.radius[k]) < eps)
                  && (std::abs(d1 - gp.radius[k]) < eps))

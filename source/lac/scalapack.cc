@@ -130,18 +130,18 @@ ScaLAPACKMatrix<NumberType>::reinit(
     ExcMessage(
       "Column block size can not be greater than the number of columns of the matrix"));
 
-  state             = LAPACKSupport::State::matrix;
-  property          = property_;
-  grid              = process_grid;
-  n_rows            = n_rows_;
-  n_columns         = n_columns_;
-  row_block_size    = row_block_size_;
+  state = LAPACKSupport::State::matrix;
+  property = property_;
+  grid = process_grid;
+  n_rows = n_rows_;
+  n_columns = n_columns_;
+  row_block_size = row_block_size_;
   column_block_size = column_block_size_;
 
   if(grid->mpi_process_is_active)
     {
       // Get local sizes:
-      n_local_rows    = numroc_(&n_rows,
+      n_local_rows = numroc_(&n_rows,
                              &row_block_size,
                              &(grid->this_process_row),
                              &first_process_row,
@@ -234,7 +234,7 @@ ScaLAPACKMatrix<NumberType>::operator=(const FullMatrix<NumberType>& matrix)
           for(int j = 0; j < n_local_columns; ++j)
             {
               const int glob_j = global_column(j);
-              local_el(i, j)   = matrix(glob_i, glob_j);
+              local_el(i, j) = matrix(glob_i, glob_j);
             }
         }
     }
@@ -293,7 +293,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType>& matrix) const
           const int glob_i = global_row(i);
           for(int j = 0; j < n_local_columns; ++j)
             {
-              const int glob_j       = global_column(j);
+              const int glob_j = global_column(j);
               matrix(glob_i, glob_j) = local_el(i, j);
             }
         }
@@ -356,7 +356,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
    * communicator to initialise the BLACS context
    */
   int union_blacs_context = Csys2blacs_handle(this->grid->mpi_communicator);
-  const char* order       = "Col";
+  const char* order = "Col";
   int         union_n_process_rows
     = Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator);
   int union_n_process_columns = 1;
@@ -387,7 +387,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
     = (my_row_B >= 0 && my_row_B < n_grid_rows_B)
       && (my_column_B >= 0 && my_column_B < n_grid_columns_B);
 
-  const int n_rows_submatrix    = submatrix_size.first;
+  const int n_rows_submatrix = submatrix_size.first;
   const int n_columns_submatrix = submatrix_size.second;
 
   // due to Fortran indexing one has to be added
@@ -504,7 +504,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
        * described by the BLACS contexts of matrix A and B
        */
       int union_blacs_context = Csys2blacs_handle(mpi_communicator_union);
-      const char* order       = "Col";
+      const char* order = "Col";
       int         union_n_process_rows
         = Utilities::MPI::n_mpi_processes(mpi_communicator_union);
       int union_n_process_columns = 1;
@@ -514,7 +514,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
                       union_n_process_columns);
 
       const NumberType* loc_vals_source = nullptr;
-      NumberType*       loc_vals_dest   = nullptr;
+      NumberType*       loc_vals_dest = nullptr;
 
       if(this->grid->mpi_process_is_active && (this->values.size() > 0))
         {
@@ -731,9 +731,9 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
       const NumberType* B_loc
         = (B.values.size() > 0) ? (&(B.values[0])) : nullptr;
       NumberType* C_loc = (C.values.size() > 0) ? (&(C.values[0])) : nullptr;
-      int         m     = C.n_rows;
-      int         n     = C.n_columns;
-      int         k     = transpose_A ? this->n_rows : this->n_columns;
+      int         m = C.n_rows;
+      int         n = C.n_columns;
+      int         k = transpose_A ? this->n_rows : this->n_columns;
 
       pgemm(&trans_a,
             &trans_b,
@@ -820,7 +820,7 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
 
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
+      int         info = 0;
       NumberType* A_loc = &this->values[0];
       //pdpotrf_(&uplo,&n_columns,A_loc,&submatrix_row,&submatrix_column,descriptor,&info);
       ppotrf(&uplo,
@@ -832,7 +832,7 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
              &info);
       AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("ppotrf", info));
     }
-  state    = LAPACKSupport::cholesky;
+  state = LAPACKSupport::cholesky;
   property = (uplo == 'L' ? LAPACKSupport::lower_triangular :
                             LAPACKSupport::upper_triangular);
 }
@@ -847,7 +847,7 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
 
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
+      int         info = 0;
       NumberType* A_loc = &this->values[0];
 
       const int iarow = indxg2p_(&submatrix_row,
@@ -855,7 +855,7 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
                                  &(grid->this_process_row),
                                  &first_process_row,
                                  &(grid->n_process_rows));
-      const int mp    = numroc_(&n_rows,
+      const int mp = numroc_(&n_rows,
                              &row_block_size,
                              &(grid->this_process_row),
                              &iarow,
@@ -898,7 +898,7 @@ ScaLAPACKMatrix<NumberType>::invert()
     }
   if(grid->mpi_process_is_active)
     {
-      int         info  = 0;
+      int         info = 0;
       NumberType* A_loc = &this->values[0];
 
       if(is_symmetric)
@@ -931,7 +931,7 @@ ScaLAPACKMatrix<NumberType>::invert()
                  &info);
 
           AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("pgetri", info));
-          lwork  = work[0];
+          lwork = work[0];
           liwork = iwork[0];
           work.resize(lwork);
           iwork.resize(liwork);
@@ -1044,7 +1044,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
       /*
        * for jobz==N only eigenvalues are computed, for jobz='V' also the eigenvectors of the matrix are computed
        */
-      char jobz  = compute_eigenvectors ? 'V' : 'N';
+      char jobz = compute_eigenvectors ? 'V' : 'N';
       char range = 'A';
       // default value is to compute all eigenvalues and optionally eigenvectors
       bool       all_eigenpairs = true;
@@ -1052,7 +1052,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
       int        il = 1, iu = 1;
       // number of eigenvectors to be returned;
       // upon successful exit the first m=nz columns contain the selected eigenvectors (only if jobz=='V')
-      int        nz     = 0;
+      int        nz = 0;
       NumberType abstol = NumberType();
 
       // orfac decides which eigenvectors should be reorthogonalized
@@ -1100,7 +1100,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
-      int         lwork  = -1;
+      int         lwork = -1;
       int         liwork = -1;
       NumberType* eigenvectors_loc
         = (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
@@ -1389,7 +1389,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
       /*
        * By setting lwork to -1 a workspace query for optimal length of work is performed.
        */
-      int         lwork  = -1;
+      int         lwork = -1;
       int         liwork = -1;
       NumberType* eigenvectors_loc
         = (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
@@ -1547,12 +1547,12 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
 
   if(grid->mpi_process_is_active)
     {
-      char        jobu   = left_singluar_vectors ? 'V' : 'N';
-      char        jobvt  = right_singluar_vectors ? 'V' : 'N';
-      NumberType* A_loc  = &this->values[0];
-      NumberType* U_loc  = left_singluar_vectors ? &(U->values[0]) : nullptr;
+      char        jobu = left_singluar_vectors ? 'V' : 'N';
+      char        jobvt = right_singluar_vectors ? 'V' : 'N';
+      NumberType* A_loc = &this->values[0];
+      NumberType* U_loc = left_singluar_vectors ? &(U->values[0]) : nullptr;
       NumberType* VT_loc = right_singluar_vectors ? &(VT->values[0]) : nullptr;
-      int         info   = 0;
+      int         info = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
@@ -1659,7 +1659,7 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
       char        trans = transpose ? 'T' : 'N';
       NumberType* A_loc = &this->values[0];
       NumberType* B_loc = &B.values[0];
-      int         info  = 0;
+      int         info = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is performed
        */
@@ -1806,7 +1806,7 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
       int liwork = n_local_rows;
       iwork.resize(liwork);
 
-      int               info  = 0;
+      int               info = 0;
       const NumberType* A_loc = &this->values[0];
 
       // by setting lwork to -1 a workspace query for optimal length of work is performed
@@ -1907,12 +1907,12 @@ ScaLAPACKMatrix<NumberType>::norm_general(const char type) const
                                  &(grid->this_process_column),
                                  &first_process_column,
                                  &(grid->n_process_columns));
-      const int mp0   = numroc_(&n_rows,
+      const int mp0 = numroc_(&n_rows,
                               &row_block_size,
                               &(grid->this_process_row),
                               &iarow,
                               &(grid->n_process_rows));
-      const int nq0   = numroc_(&n_columns,
+      const int nq0 = numroc_(&n_columns,
                               &column_block_size,
                               &(grid->this_process_column),
                               &iacol,
@@ -1929,7 +1929,7 @@ ScaLAPACKMatrix<NumberType>::norm_general(const char type) const
 
       work.resize(lwork);
       const NumberType* A_loc = this->values.begin();
-      res                     = plange(&type,
+      res = plange(&type,
                    &n_rows,
                    &n_columns,
                    A_loc,
@@ -1972,18 +1972,18 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
                                  &(grid->this_process_column),
                                  &first_process_column,
                                  &(grid->n_process_columns));
-      const int Np0   = numroc_(&n_columns /*+IROFFA*/,
+      const int Np0 = numroc_(&n_columns /*+IROFFA*/,
                               &row_block_size,
                               &(grid->this_process_row),
                               &IAROW,
                               &(grid->n_process_rows));
-      const int Nq0   = numroc_(&n_columns /*+ICOFFA*/,
+      const int Nq0 = numroc_(&n_columns /*+ICOFFA*/,
                               &column_block_size,
                               &(grid->this_process_column),
                               &IACOL,
                               &(grid->n_process_columns));
 
-      const int v1  = iceil_(&Np0, &row_block_size);
+      const int v1 = iceil_(&Np0, &row_block_size);
       const int ldw = (n_local_rows == n_local_columns) ?
                         0 :
                         row_block_size * iceil_(&v1, &v2);
@@ -1992,7 +1992,7 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
         = (type == 'M' || type == 'F' || type == 'E') ? 0 : 2 * Nq0 + Np0 + ldw;
       work.resize(lwork);
       const NumberType* A_loc = this->values.begin();
-      res                     = plansy(&type,
+      res = plansy(&type,
                    &uplo,
                    &n_columns,
                    A_loc,
@@ -2016,28 +2016,28 @@ namespace internal
       // create HDF5 enum type for LAPACKSupport::State
       LAPACKSupport::State val;
       state_enum_id = H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::State));
-      val           = LAPACKSupport::State::cholesky;
+      val = LAPACKSupport::State::cholesky;
       herr_t status = H5Tenum_insert(state_enum_id, "cholesky", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::eigenvalues;
+      val = LAPACKSupport::State::eigenvalues;
       status = H5Tenum_insert(state_enum_id, "eigenvalues", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::inverse_matrix;
+      val = LAPACKSupport::State::inverse_matrix;
       status = H5Tenum_insert(state_enum_id, "inverse_matrix", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::inverse_svd;
+      val = LAPACKSupport::State::inverse_svd;
       status = H5Tenum_insert(state_enum_id, "inverse_svd", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::lu;
+      val = LAPACKSupport::State::lu;
       status = H5Tenum_insert(state_enum_id, "lu", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::matrix;
+      val = LAPACKSupport::State::matrix;
       status = H5Tenum_insert(state_enum_id, "matrix", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::svd;
+      val = LAPACKSupport::State::svd;
       status = H5Tenum_insert(state_enum_id, "svd", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
-      val    = LAPACKSupport::State::unusable;
+      val = LAPACKSupport::State::unusable;
       status = H5Tenum_insert(state_enum_id, "unusable", (int*) &val);
       AssertThrow(status >= 0, ExcInternalError());
     }
@@ -2051,17 +2051,17 @@ namespace internal
       herr_t                  status
         = H5Tenum_insert(property_enum_id, "diagonal", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::general;
+      prop = LAPACKSupport::Property::general;
       status = H5Tenum_insert(property_enum_id, "general", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::hessenberg;
+      prop = LAPACKSupport::Property::hessenberg;
       status = H5Tenum_insert(property_enum_id, "hessenberg", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop = LAPACKSupport::Property::lower_triangular;
       status
         = H5Tenum_insert(property_enum_id, "lower_triangular", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
-      prop   = LAPACKSupport::Property::symmetric;
+      prop = LAPACKSupport::Property::symmetric;
       status = H5Tenum_insert(property_enum_id, "symmetric", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop = LAPACKSupport::Property::upper_triangular;
@@ -2152,10 +2152,10 @@ ScaLAPACKMatrix<NumberType>::save_serial(
       // modify dataset creation properties, i.e. enable chunking
       hsize_t chunk_dims[2];
       //revert order of rows and columns as ScaLAPACK uses column-major ordering
-      chunk_dims[0]       = chunk_size.second;
-      chunk_dims[1]       = chunk_size.first;
+      chunk_dims[0] = chunk_size.second;
+      chunk_dims[1] = chunk_size.first;
       hid_t data_property = H5Pcreate(H5P_DATASET_CREATE);
-      status              = H5Pset_chunk(data_property, 2, chunk_dims);
+      status = H5Pset_chunk(data_property, 2, chunk_dims);
       AssertThrow(status >= 0, ExcIO());
 
       // create the data space for the dataset
@@ -2166,7 +2166,7 @@ ScaLAPACKMatrix<NumberType>::save_serial(
       hid_t dataspace_id = H5Screate_simple(2, dims, nullptr);
 
       // create the dataset within the file using chunk creation properties
-      hid_t type_id    = hdf5_type_id(&tmp.values[0]);
+      hid_t type_id = hdf5_type_id(&tmp.values[0]);
       hid_t dataset_id = H5Dcreate2(file_id,
                                     "/matrix",
                                     type_id,
@@ -2187,7 +2187,7 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 
       // create the data space for the state enum
       hsize_t dims_state[1];
-      dims_state[0]              = 1;
+      dims_state[0] = 1;
       hid_t state_enum_dataspace = H5Screate_simple(1, dims_state, nullptr);
       // create the dataset for the state enum
       hid_t state_enum_dataset = H5Dcreate2(file_id,
@@ -2368,7 +2368,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
   // select hyperslab in the file.
   filespace = H5Dget_space(dset_id);
-  status    = H5Sselect_hyperslab(
+  status = H5Sselect_hyperslab(
     filespace, H5S_SELECT_SET, offset, nullptr, count, nullptr);
   AssertThrow(status >= 0, ExcIO());
 
@@ -2413,7 +2413,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
       // create the data space for the state enum
       hsize_t dims_state[1];
-      dims_state[0]              = 1;
+      dims_state[0] = 1;
       hid_t state_enum_dataspace = H5Screate_simple(1, dims_state, nullptr);
       // create the dataset for the state enum
       hid_t state_enum_dataset = H5Dcreate2(file_id_reopen,
@@ -2530,9 +2530,9 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
       // check the datatype of the data in the file
       // datatype of source and destination must have the same class
       // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
-      hid_t       datatype   = H5Dget_type(dataset_id);
+      hid_t       datatype = H5Dget_type(dataset_id);
       H5T_class_t t_class_in = H5Tget_class(datatype);
-      H5T_class_t t_class    = H5Tget_class(hdf5_type_id(&tmp.values[0]));
+      H5T_class_t t_class = H5Tget_class(hdf5_type_id(&tmp.values[0]));
       AssertThrow(
         t_class_in == t_class,
         ExcMessage(
@@ -2571,12 +2571,12 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
 
       // open the datasets for the state and property enum in the file
       hid_t       dataset_state_id = H5Dopen2(file_id, "/state", H5P_DEFAULT);
-      hid_t       datatype_state   = H5Dget_type(dataset_state_id);
-      H5T_class_t t_class_state    = H5Tget_class(datatype_state);
+      hid_t       datatype_state = H5Dget_type(dataset_state_id);
+      H5T_class_t t_class_state = H5Tget_class(datatype_state);
       AssertThrow(t_class_state == H5T_ENUM, ExcIO());
 
       hid_t dataset_property_id = H5Dopen2(file_id, "/property", H5P_DEFAULT);
-      hid_t datatype_property   = H5Dget_type(dataset_property_id);
+      hid_t datatype_property = H5Dget_type(dataset_property_id);
       H5T_class_t t_class_property = H5Tget_class(datatype_property);
       AssertThrow(t_class_property == H5T_ENUM, ExcIO());
 
@@ -2709,10 +2709,10 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
   // check the datatype of the dataset in the file
   // if the classes of type of the dataset and the matrix do not match abort
   // see HDF User's Guide: 6.10. Data Transfer: Datatype Conversion and Selection
-  hid_t       datatype     = hdf5_type_id(data);
+  hid_t       datatype = hdf5_type_id(data);
   hid_t       datatype_inp = H5Dget_type(dataset_id);
-  H5T_class_t t_class_inp  = H5Tget_class(datatype_inp);
-  H5T_class_t t_class      = H5Tget_class(datatype);
+  H5T_class_t t_class_inp = H5Tget_class(datatype_inp);
+  H5T_class_t t_class = H5Tget_class(datatype);
   AssertThrow(
     t_class_inp == t_class,
     ExcMessage(
@@ -2790,13 +2790,13 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 
   // open the datasets for the state and property enum in the file
   hid_t       dataset_state_id = H5Dopen2(file_id, "/state", H5P_DEFAULT);
-  hid_t       datatype_state   = H5Dget_type(dataset_state_id);
-  H5T_class_t t_class_state    = H5Tget_class(datatype_state);
+  hid_t       datatype_state = H5Dget_type(dataset_state_id);
+  H5T_class_t t_class_state = H5Tget_class(datatype_state);
   AssertThrow(t_class_state == H5T_ENUM, ExcIO());
 
   hid_t       dataset_property_id = H5Dopen2(file_id, "/property", H5P_DEFAULT);
-  hid_t       datatype_property   = H5Dget_type(dataset_property_id);
-  H5T_class_t t_class_property    = H5Tget_class(datatype_property);
+  hid_t       datatype_property = H5Dget_type(dataset_property_id);
+  H5T_class_t t_class_property = H5Tget_class(datatype_property);
   AssertThrow(t_class_property == H5T_ENUM, ExcIO());
 
   // get dataspace handles

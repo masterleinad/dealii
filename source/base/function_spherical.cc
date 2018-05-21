@@ -182,7 +182,7 @@ namespace Functions
   Spherical<3>::gradient(const Point<3>& p_, const unsigned int component) const
   {
     constexpr int                 dim = 3;
-    const Point<dim>              p   = p_ - coordinate_system_offset;
+    const Point<dim>              p = p_ - coordinate_system_offset;
     const std::array<double, dim> sp
       = GeometricUtilities::Coordinates::to_spherical(p);
     const std::array<double, dim> sg = sgradient(sp, component);
@@ -190,8 +190,8 @@ namespace Functions
     // somewhat backwards, but we need cos/sin's for unit vectors
     const double cos_theta = std::cos(sp[1]);
     const double sin_theta = std::sin(sp[1]);
-    const double cos_phi   = std::cos(sp[2]);
-    const double sin_phi   = std::sin(sp[2]);
+    const double cos_phi = std::cos(sp[2]);
+    const double sin_phi = std::sin(sp[2]);
 
     Tensor<1, dim> unit_r, unit_theta, unit_phi;
     set_unit_vectors(
@@ -234,7 +234,7 @@ namespace Functions
 
   {
     constexpr int                 dim = 3;
-    const Point<dim>              p   = p_ - coordinate_system_offset;
+    const Point<dim>              p = p_ - coordinate_system_offset;
     const std::array<double, dim> sp
       = GeometricUtilities::Coordinates::to_spherical(p);
     const std::array<double, dim> sg = sgradient(sp, component);
@@ -243,16 +243,16 @@ namespace Functions
     // somewhat backwards, but we need cos/sin's for unit vectors
     const double cos_theta = std::cos(sp[1]);
     const double sin_theta = std::sin(sp[1]);
-    const double cos_phi   = std::cos(sp[2]);
-    const double sin_phi   = std::sin(sp[2]);
-    const double r         = sp[0];
+    const double cos_phi = std::cos(sp[2]);
+    const double sin_phi = std::sin(sp[2]);
+    const double r = sp[0];
 
     Tensor<1, dim> unit_r, unit_theta, unit_phi;
     set_unit_vectors(
       cos_theta, sin_theta, cos_phi, sin_phi, unit_r, unit_theta, unit_phi);
 
     const double sin_phi2 = sin_phi * sin_phi;
-    const double r2       = r * r;
+    const double r2 = r * r;
     Assert(r != 0., ExcDivideByZero());
 
     const double c_utheta2
@@ -266,9 +266,9 @@ namespace Functions
       = ((sin_phi != 0.) ?
            (sh[5] * sin_phi - cos_phi * sg[1]) / (r2 * sin_phi2) :
            0.);
-    const double c_ur2     = sh[0];
+    const double c_ur2 = sh[0];
     const double c_ur_uphi = (r * sh[4] - sg[2]) / r2;
-    const double c_uphi2   = (sh[2] + r * sg[0]) / r2;
+    const double c_uphi2 = (sh[2] + r * sg[0]) / r2;
 
     // go through each tensor product
     SymmetricTensor<2, dim> res;

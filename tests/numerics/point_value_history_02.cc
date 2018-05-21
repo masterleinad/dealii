@@ -273,13 +273,13 @@ TestPointValueHistory<dim>::run()
     std::vector<bool> component_mask(3, false);
     component_mask[2] = true;
     node_monitor.add_field_name("Pressure", component_mask);
-    component_mask    = std::vector<bool>(3, false);
+    component_mask = std::vector<bool>(3, false);
     component_mask[1] = true;
     node_monitor.add_field_name("Req_sol", component_mask);
-    component_mask    = std::vector<bool>(4, true);
+    component_mask = std::vector<bool>(4, true);
     component_mask[3] = false;
     node_monitor.add_field_name("Vector_out", component_mask);
-    component_mask    = std::vector<bool>(4, false);
+    component_mask = std::vector<bool>(4, false);
     component_mask[3] = true;
     node_monitor.add_field_name("Scalar_out", component_mask);
 
@@ -314,8 +314,8 @@ TestPointValueHistory<dim>::run()
   }
 
   double       delta_t = 0.000001;
-  double       t_max   = 0.00001;
-  unsigned int step    = 0;
+  double       t_max = 0.00001;
+  unsigned int step = 0;
 
   for(double time = 0; time < t_max; time = time + delta_t)
     {

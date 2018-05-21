@@ -237,10 +237,10 @@ TestPointValueHistory<dim>::run()
     node_monitor.add_field_name("Pressure", 1);
     std::vector<bool> component_mask(1, true);
     node_monitor.add_field_name("Req_sol", component_mask);
-    component_mask    = std::vector<bool>(2, false);
+    component_mask = std::vector<bool>(2, false);
     component_mask[0] = true;
     node_monitor.add_field_name("X_gradient", component_mask);
-    component_mask    = std::vector<bool>(2, false);
+    component_mask = std::vector<bool>(2, false);
     component_mask[1] = true;
     node_monitor.add_field_name("X_hessian", component_mask);
     std::vector<std::string> indep_names;
@@ -274,8 +274,8 @@ TestPointValueHistory<dim>::run()
   }
 
   double       delta_t = 0.000001;
-  double       t_max   = 0.00001;
-  unsigned int step    = 0;
+  double       t_max = 0.00001;
+  unsigned int step = 0;
 
   for(double time = 0; time < t_max; time = time + delta_t)
     {

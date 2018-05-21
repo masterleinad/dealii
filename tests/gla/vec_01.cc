@@ -27,7 +27,7 @@ template <class LA>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
@@ -45,7 +45,7 @@ test()
   typename LA::MPI::Vector v(local_active, local_relevant, MPI_COMM_WORLD);
 
   // set local values
-  vb(myid * 2)     = myid * 2.0;
+  vb(myid * 2) = myid * 2.0;
   vb(myid * 2 + 1) = myid * 2.0 + 1.0;
 
   vb.compress(VectorOperation::insert);

@@ -56,7 +56,7 @@ test_rotation_matrix_3d(const Point<3>& axis, const double angle)
   // http://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
   // http://en.wikipedia.org/wiki/Rotation_matrix
   // NOTE: Angle in radians
-  const Tensor<1, 3> u        = axis / axis.norm(); // Ensure unit vector
+  const Tensor<1, 3> u = axis / axis.norm(); // Ensure unit vector
   const Tensor<2, 3> u_dyad_u = outer_product(u, u);
   const double       u_skew_array[3][3]
     = {{0.0, -u[2], u[1]}, {u[2], 0.0, -u[0]}, {-u[1], u[0], 0.0}};

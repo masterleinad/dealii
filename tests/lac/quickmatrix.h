@@ -38,9 +38,9 @@ template <typename number2>
 void
 QuickMatrix<number>::vmult(Vector<number2>& d, const Vector<number2>& s) const
 {
-  const unsigned int step  = nx - 1;
+  const unsigned int step = nx - 1;
   const unsigned int right = step - 1;
-  const unsigned int top   = ny - 1;
+  const unsigned int top = ny - 1;
 
   // Bottom row
 
@@ -63,7 +63,7 @@ QuickMatrix<number>::vmult(Vector<number2>& d, const Vector<number2>& s) const
       for(unsigned int x = 1; x < right; ++x)
         {
           const unsigned int xy = start + x;
-          d(xy)                 = s(xy)
+          d(xy) = s(xy)
                   - .25 * (s(xy - step) + s(xy - 1) + s(xy + 1) + s(xy + step));
         }
       d(start + right)

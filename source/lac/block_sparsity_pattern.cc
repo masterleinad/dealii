@@ -71,7 +71,7 @@ BlockSparsityPatternBase<SparsityPatternBase>::reinit(
     for(size_type j = 0; j < columns; ++j)
       {
         SparsityPatternBase* sp = sub_objects[i][j];
-        sub_objects[i][j]       = nullptr;
+        sub_objects[i][j] = nullptr;
         delete sp;
       };
   sub_objects.reinit(0, 0);
@@ -86,7 +86,7 @@ BlockSparsityPatternBase<SparsityPatternBase>::reinit(
     for(size_type j = 0; j < columns; ++j)
       {
         SparsityPatternBase* p = new SparsityPatternBase;
-        sub_objects[i][j]      = p;
+        sub_objects[i][j] = p;
       }
 }
 

@@ -238,7 +238,7 @@ check_block(const FiniteElement<dim>& fe)
   u = 0.;
   for(unsigned int i = 0; i < v[2].size(); ++i)
     {
-      v[2](i)  = i + 1;
+      v[2](i) = i + 1;
       wb[2](i) = i + 1;
     }
   for(unsigned int i = 0; i < ws[2].size(); ++i)

@@ -39,12 +39,12 @@ main()
   deal_II_exceptions::disable_abort_on_exception();
   initlog();
 
-  auto d1  = std::deque<int>(2);
-  auto d2  = std::deque<int>(4000);
+  auto d1 = std::deque<int>(2);
+  auto d2 = std::deque<int>(4000);
   int  c[] = {1, 2, 3};
-  auto a   = std::array<int, 3>{{1, 2, 3}};
-  auto s   = std::string{"Hello world!"};
-  auto v   = std::vector<int>{
+  auto a = std::array<int, 3>{{1, 2, 3}};
+  auto s = std::string{"Hello world!"};
+  auto v = std::vector<int>{
     1,
     2,
     3,

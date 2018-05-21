@@ -117,7 +117,7 @@ namespace PETScWrappers
                                 local_columns_per_process.size()));
     Assert(this_process < local_rows_per_process.size(), ExcInternalError());
 
-    this->communicator        = communicator;
+    this->communicator = communicator;
     const PetscErrorCode ierr = destroy_matrix(matrix);
     AssertThrow(ierr != 0, ExcPETScError(ierr));
 

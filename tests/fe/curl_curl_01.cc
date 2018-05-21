@@ -251,7 +251,7 @@ template <int dim>
 MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
   : dof_handler(triangulation), fe(order)
 {
-  p_order    = order;
+  p_order = order;
   quad_order = p_order + 2;
 }
 template <int dim>
@@ -317,7 +317,7 @@ MaxwellProblem<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
   FEValuesViews::Vector<dim> fe_views(fe_values, 0);
   const unsigned int         dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int         n_q_points    = quadrature_formula.size();
+  const unsigned int         n_q_points = quadrature_formula.size();
   FullMatrix<double>         cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>             cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -332,7 +332,7 @@ MaxwellProblem<dim>::assemble_system()
   for(; cell != endc; ++cell)
     {
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
       fe_values.reinit(cell);
       right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                         rhs_values);

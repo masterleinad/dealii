@@ -131,9 +131,9 @@ double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   Point<2> center;
-  center(0)    = 0.5;
-  center(1)    = 0.5;
-  double rad   = p.distance(center),
+  center(0) = 0.5;
+  center(1) = 0.5;
+  double rad = p.distance(center),
          phi_p = atan2(p(0) - center(0), p(1) - center(1));
 
   if(component == 0)
@@ -338,7 +338,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
                                         | update_gradients | update_JxW_values
                                         | update_contravariant_transformation));
 
-      const unsigned int n_q_points   = quad.size();
+      const unsigned int n_q_points = quad.size();
       const unsigned int n_components = dof_handler->get_fe().n_components();
 
       // Cell iterators
@@ -475,7 +475,7 @@ main()
     // Try arbitrary deformation ...
     for(unsigned int i = 0; i < deformation.size(); ++i)
       {
-        double c       = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
+        double c = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
         deformation(i) = 0.35 * (c - 0.5);
       }
 

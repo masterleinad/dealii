@@ -247,7 +247,7 @@ namespace parallel
       // important: preallocate to avoid (re)allocation:
       std::vector<MPI_Request> requests(
         this->number_cache.level_ghost_owners.size());
-      unsigned int dummy       = 0;
+      unsigned int dummy = 0;
       unsigned int req_counter = 0;
 
       for(std::set<types::subdomain_id>::iterator it

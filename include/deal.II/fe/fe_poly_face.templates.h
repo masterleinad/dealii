@@ -209,7 +209,7 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
 
   const unsigned int foffset = fe_data.shape_values.size() * face_no;
-  const unsigned int offset  = sub_no * quadrature.size();
+  const unsigned int offset = sub_no * quadrature.size();
 
   if(fe_data.update_each & update_values)
     {

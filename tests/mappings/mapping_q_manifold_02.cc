@@ -39,7 +39,7 @@ using namespace dealii;
 double
 f_x(double x_m)
 {
-  double x   = x_m * 1000.0;
+  double x = x_m * 1000.0;
   double y_m = 0.0;
 
   if(x <= 9.0)

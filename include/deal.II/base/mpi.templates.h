@@ -114,12 +114,12 @@ namespace Utilities
           {
 #  ifdef DEBUG
             {
-              const unsigned int rank     = this_mpi_process(mpi_communicator);
-              unsigned int       size     = values.size();
+              const unsigned int rank = this_mpi_process(mpi_communicator);
+              unsigned int       size = values.size();
               unsigned int       size_min = 0;
               unsigned int       size_max = 0;
-              int                ierr2    = 0;
-              ierr2                       = MPI_Reduce(&size,
+              int                ierr2 = 0;
+              ierr2 = MPI_Reduce(&size,
                                  &size_min,
                                  1,
                                  MPI_UNSIGNED,

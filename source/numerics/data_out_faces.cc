@@ -450,7 +450,7 @@ DataOutFaces<dim, DoFHandlerType>::next_face(const FaceDescriptor& old_face)
             ++f)
           if(!surface_only || active_cell->face(f)->at_boundary())
             {
-              face.first  = active_cell;
+              face.first = active_cell;
               face.second = f;
               return face;
             }
@@ -461,7 +461,7 @@ DataOutFaces<dim, DoFHandlerType>::next_face(const FaceDescriptor& old_face)
     }
 
   // we fell off the edge, so return with invalid pointer
-  face.first  = this->triangulation->end();
+  face.first = this->triangulation->end();
   face.second = 0;
   return face;
 }

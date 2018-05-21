@@ -48,7 +48,7 @@ check(const unsigned int fe_degree)
       ++cycle)
     {
       unsigned int n_refinements = 0;
-      unsigned int n_subdiv      = sizes[cycle];
+      unsigned int n_subdiv = sizes[cycle];
       if(n_subdiv > 1)
         while(n_subdiv % 2 == 0)
           {

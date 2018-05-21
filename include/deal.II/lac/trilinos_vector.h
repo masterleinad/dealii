@@ -563,7 +563,7 @@ namespace TrilinosWrappers
        */
       void
       reinit(const IndexSet& parallel_partitioning,
-             const MPI_Comm& communicator         = MPI_COMM_WORLD,
+             const MPI_Comm& communicator = MPI_COMM_WORLD,
              const bool      omit_zeroing_entries = false);
 
       /**
@@ -594,7 +594,7 @@ namespace TrilinosWrappers
       void
       reinit(const IndexSet& locally_owned_entries,
              const IndexSet& ghost_entries,
-             const MPI_Comm& communicator    = MPI_COMM_WORLD,
+             const MPI_Comm& communicator = MPI_COMM_WORLD,
              const bool      vector_writable = false);
 
       /**
@@ -1194,9 +1194,9 @@ namespace TrilinosWrappers
        */
       void
       print(std::ostream&      out,
-            const unsigned int precision  = 3,
+            const unsigned int precision = 3,
             const bool         scientific = true,
-            const bool         across     = true) const;
+            const bool         across = true) const;
 
       /**
        * Swap the contents of this vector and the other vector @p v. One could
@@ -1538,7 +1538,7 @@ namespace TrilinosWrappers
 
       for(size_type i = 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
+          const size_type                         row = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
@@ -1607,7 +1607,7 @@ namespace TrilinosWrappers
 
       for(size_type i = 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
+          const size_type                         row = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
@@ -1763,8 +1763,8 @@ namespace TrilinosWrappers
     {
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
-      TrilinosScalar  norm    = 0;
-      TrilinosScalar  sum     = 0;
+      TrilinosScalar  norm = 0;
+      TrilinosScalar  sum = 0;
       const size_type n_local = local_size();
 
       // loop over all the elements because

@@ -92,7 +92,7 @@ namespace NonMatching
             == nullptr),
            ExcNotImplemented());
 
-    const auto& space_fe    = space_dh.get_fe();
+    const auto& space_fe = space_dh.get_fe();
     const auto& immersed_fe = immersed_dh.get_fe();
 
     // Now we run on ech cell, get a quadrature formula
@@ -163,7 +163,7 @@ namespace NonMatching
           = fe_v.get_quadrature_points();
 
         // Get a list of outer cells, qpoints and maps.
-        const auto  cpm   = GridTools::compute_point_locations(cache, Xpoints);
+        const auto  cpm = GridTools::compute_point_locations(cache, Xpoints);
         const auto& cells = std::get<0>(cpm);
 
         for(unsigned int c = 0; c < cells.size(); ++c)
@@ -231,7 +231,7 @@ namespace NonMatching
             == nullptr),
            ExcNotImplemented());
 
-    const auto& space_fe    = space_dh.get_fe();
+    const auto& space_fe = space_dh.get_fe();
     const auto& immersed_fe = immersed_dh.get_fe();
 
     // Dof indices
@@ -289,10 +289,10 @@ namespace NonMatching
           = fe_v.get_quadrature_points();
 
         // Get a list of outer cells, qpoints and maps.
-        const auto  cpm   = GridTools::compute_point_locations(cache, Xpoints);
+        const auto  cpm = GridTools::compute_point_locations(cache, Xpoints);
         const auto& cells = std::get<0>(cpm);
         const auto& qpoints = std::get<1>(cpm);
-        const auto& maps    = std::get<2>(cpm);
+        const auto& maps = std::get<2>(cpm);
 
         for(unsigned int c = 0; c < cells.size(); ++c)
           {

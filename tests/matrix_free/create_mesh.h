@@ -80,8 +80,8 @@ void create_mesh(Triangulation<3>& tria, const double scale_grid = 1.)
   points[7] = Point<dim>(1., 1., 1);
 
   // 2. rectangular cell
-  points[8]  = Point<dim>(3., 0, 0);
-  points[9]  = Point<dim>(3., 1, 0);
+  points[8] = Point<dim>(3., 0, 0);
+  points[9] = Point<dim>(3., 1, 0);
   points[10] = Point<dim>(3., 0, 1);
   points[11] = Point<dim>(3., 1, 1);
 

@@ -53,7 +53,7 @@ test()
       for(unsigned int i = 0; i < 4; ++i)
         {
           std::swap(vertices[i](1), vertices[i](2));
-          vertices[i + 4]    = vertices[i];
+          vertices[i + 4] = vertices[i];
           vertices[i + 4](1) = 1;
         }
     }

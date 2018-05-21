@@ -232,7 +232,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number*    values,
-      const bool       elide_zero_values      = true,
+      const bool       elide_zero_values = true,
       const bool       col_indices_are_sorted = false);
 
   /**
@@ -896,7 +896,7 @@ MGMatrixBlockVector<MatrixType>::add(size_type          row,
                                      const std::string& name)
 {
   MGLevelObject<MatrixBlock<MatrixType>> p(0, 1);
-  p[0].row    = row;
+  p[0].row = row;
   p[0].column = column;
 
   matrices.add(p, name);
@@ -989,7 +989,7 @@ MGMatrixBlockVector<MatrixType>::reinit_matrix(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
       const size_type                         row = o[o.min_level()].row;
       const size_type                         col = o[o.min_level()].column;
 
@@ -1010,7 +1010,7 @@ MGMatrixBlockVector<MatrixType>::reinit_edge(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
       const size_type                         row = o[o.min_level()].row;
       const size_type                         col = o[o.min_level()].column;
 
@@ -1035,7 +1035,7 @@ MGMatrixBlockVector<MatrixType>::reinit_edge_flux(
 {
   for(size_type i = 0; i < this->size(); ++i)
     {
-      MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
+      MGLevelObject<MatrixBlock<MatrixType>>& o = block(i);
       const size_type                         row = o[o.min_level()].row;
       const size_type                         col = o[o.min_level()].column;
 

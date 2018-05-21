@@ -193,18 +193,18 @@ public:
      */
     AdditionalData(
       const TasksParallelScheme tasks_parallel_scheme = partition_partition,
-      const unsigned int        tasks_block_size      = 0,
+      const unsigned int        tasks_block_size = 0,
       const UpdateFlags         mapping_update_flags
       = update_gradients | update_JxW_values,
       const UpdateFlags  mapping_update_flags_boundary_faces = update_default,
-      const UpdateFlags  mapping_update_flags_inner_faces    = update_default,
+      const UpdateFlags  mapping_update_flags_inner_faces = update_default,
       const UpdateFlags  mapping_update_flags_faces_by_cells = update_default,
-      const unsigned int level_mg_handler    = numbers::invalid_unsigned_int,
+      const unsigned int level_mg_handler = numbers::invalid_unsigned_int,
       const bool         store_plain_indices = true,
-      const bool         initialize_indices  = true,
-      const bool         initialize_mapping  = true,
-      const bool         overlap_communication_computation    = true,
-      const bool         hold_all_faces_to_owned_cells        = false,
+      const bool         initialize_indices = true,
+      const bool         initialize_mapping = true,
+      const bool         overlap_communication_computation = true,
+      const bool         hold_all_faces_to_owned_cells = false,
       const bool         cell_vectorization_categories_strict = false)
       : tasks_parallel_scheme(tasks_parallel_scheme),
         tasks_block_size(tasks_block_size),
@@ -1358,14 +1358,14 @@ public:
    * Return the number of degrees of freedom per cell for a given hp index.
    */
   unsigned int
-  get_dofs_per_cell(const unsigned int dof_handler_index  = 0,
+  get_dofs_per_cell(const unsigned int dof_handler_index = 0,
                     const unsigned int hp_active_fe_index = 0) const;
 
   /**
    * Return the number of quadrature points per cell for a given hp index.
    */
   unsigned int
-  get_n_q_points(const unsigned int quad_index         = 0,
+  get_n_q_points(const unsigned int quad_index = 0,
                  const unsigned int hp_active_fe_index = 0) const;
 
   /**
@@ -1373,7 +1373,7 @@ public:
    * given hp index.
    */
   unsigned int
-  get_dofs_per_face(const unsigned int fe_component       = 0,
+  get_dofs_per_face(const unsigned int fe_component = 0,
                     const unsigned int hp_active_fe_index = 0) const;
 
   /**
@@ -1381,21 +1381,21 @@ public:
    * given hp index.
    */
   unsigned int
-  get_n_q_points_face(const unsigned int quad_index         = 0,
+  get_n_q_points_face(const unsigned int quad_index = 0,
                       const unsigned int hp_active_fe_index = 0) const;
 
   /**
    * Return the quadrature rule for given hp index.
    */
   const Quadrature<dim>&
-  get_quadrature(const unsigned int quad_index         = 0,
+  get_quadrature(const unsigned int quad_index = 0,
                  const unsigned int hp_active_fe_index = 0) const;
 
   /**
    * Return the quadrature rule for given hp index.
    */
   const Quadrature<dim - 1>&
-  get_face_quadrature(const unsigned int quad_index         = 0,
+  get_face_quadrature(const unsigned int quad_index = 0,
                       const unsigned int hp_active_fe_index = 0) const;
 
   /**
@@ -1507,10 +1507,10 @@ public:
    */
   const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>&
   get_shape_info(const unsigned int dof_handler_index_component = 0,
-                 const unsigned int quad_index                  = 0,
-                 const unsigned int fe_base_element             = 0,
-                 const unsigned int hp_active_fe_index          = 0,
-                 const unsigned int hp_active_quad_index        = 0) const;
+                 const unsigned int quad_index = 0,
+                 const unsigned int fe_base_element = 0,
+                 const unsigned int hp_active_fe_index = 0,
+                 const unsigned int hp_active_quad_index = 0) const;
 
   /**
    * Return the connectivity information of a face.

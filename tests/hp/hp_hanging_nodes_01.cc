@@ -94,7 +94,7 @@ test_constraints(hp::FECollection<dim>& fe_coll)
   hp::DoFHandler<dim>                                dof_handler(tria);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc               = dof_handler.end();
+    endc = dof_handler.end();
   unsigned int fe_indx = 0;
   for(; cell != endc; ++cell)
     {

@@ -70,7 +70,7 @@ public:
 double
 InitializationValues::value(const Point<1>& p, const unsigned int) const
 {
-  const double base   = std::pow(p(0), 1. / 3.);
+  const double base = std::pow(p(0), 1. / 3.);
   const double random = random_value<double>(-1., 1.);
   return std::max(base + .1 * random, 0.);
 }
@@ -180,7 +180,7 @@ MinimizationProblem<dim>::assemble_step()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -208,7 +208,7 @@ MinimizationProblem<dim>::assemble_step()
           const double u = local_solution_values[q_point],
                        x = fe_values.quadrature_point(q_point)(0);
           const double         x_minus_u3 = (x - std::pow(u, 3));
-          const Tensor<1, dim> u_prime    = local_solution_grads[q_point];
+          const Tensor<1, dim> u_prime = local_solution_grads[q_point];
 
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -375,9 +375,9 @@ MinimizationProblem<1>::refine_grid()
       double cell_residual_norm = 0;
       for(unsigned int q = 0; q < quadrature.size(); ++q)
         {
-          const double x             = fe_values.quadrature_point(q)[0];
-          const double u             = local_values[q];
-          const double u_prime       = local_gradients[q][0];
+          const double x = fe_values.quadrature_point(q)[0];
+          const double u = local_values[q];
+          const double u_prime = local_gradients[q][0];
           const double u_doubleprime = local_2nd_derivs[q][0][0];
           const double local_residual_value
             = ((x - u * u * u) * std::pow(u_prime, 4)
@@ -391,16 +391,16 @@ MinimizationProblem<1>::refine_grid()
       error_indicators(cell_index)
         = cell_residual_norm * cell->diameter() * cell->diameter();
 
-      const double x_left  = fe_values.quadrature_point(0)[0];
+      const double x_left = fe_values.quadrature_point(0)[0];
       const double x_right = fe_values.quadrature_point(1)[0];
 
       AssertThrow(x_left == cell->vertex(0)[0], ExcInternalError());
       AssertThrow(x_right == cell->vertex(1)[0], ExcInternalError());
 
-      const double u_left  = local_values[0];
+      const double u_left = local_values[0];
       const double u_right = local_values[1];
 
-      const double u_prime_left  = local_gradients[0][0];
+      const double u_prime_left = local_gradients[0][0];
       const double u_prime_right = local_gradients[1][0];
 
       if(cell->at_boundary(0) == false)

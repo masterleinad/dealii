@@ -80,7 +80,7 @@ protected:
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
             vector_t pres = pressure.get_value(q);
-            vector_t div  = -trace(sym_grad_u);
+            vector_t div = -trace(sym_grad_u);
             pressure.submit_value(div, q);
 
             // subtract p * I
@@ -237,15 +237,15 @@ test()
   for(unsigned int j = 0; j < system_rhs.block(0).size(); ++j)
     if(constraints_u.is_constrained(j) == false)
       {
-        const double val          = -1 + 2. * random_value<double>();
-        system_rhs.block(0)(j)    = val;
+        const double val = -1 + 2. * random_value<double>();
+        system_rhs.block(0)(j) = val;
         mf_system_rhs.block(0)(j) = val;
       }
   for(unsigned int j = 0; j < system_rhs.block(1).size(); ++j)
     if(constraints_p.is_constrained(j) == false)
       {
-        const double val          = -1 + 2. * random_value<double>();
-        system_rhs.block(1)(j)    = val;
+        const double val = -1 + 2. * random_value<double>();
+        system_rhs.block(1)(j) = val;
         mf_system_rhs.block(1)(j) = val;
       }
 

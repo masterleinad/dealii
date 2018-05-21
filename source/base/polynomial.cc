@@ -160,7 +160,7 @@ namespace Polynomials
               for(unsigned int i = 0; i < n_supp; ++i)
                 {
                   const number v = x - lagrange_support_points[i];
-                  values[1]      = values[1] * v + values[0];
+                  values[1] = values[1] * v + values[0];
                   values[0] *= v;
                 }
               values[0] *= lagrange_weight;
@@ -174,8 +174,8 @@ namespace Polynomials
               for(unsigned int i = 0; i < n_supp; ++i)
                 {
                   const number v = x - lagrange_support_points[i];
-                  values[2]      = values[2] * v + values[1];
-                  values[1]      = values[1] * v + values[0];
+                  values[2] = values[2] * v + values[1];
+                  values[1] = values[1] * v + values[0];
                   values[0] *= v;
                 }
               values[0] *= lagrange_weight;
@@ -280,7 +280,7 @@ namespace Polynomials
     // likewise
     if(in_lagrange_product_form == true)
       {
-        number inv_fact         = number(1.) / factor;
+        number inv_fact = number(1.) / factor;
         number accumulated_fact = 1.;
         for(unsigned int i = 0; i < lagrange_support_points.size(); ++i)
           {
@@ -699,7 +699,7 @@ namespace Polynomials
         case 1:
           {
             static const double x1[4] = {1.0, -1.0, 0.0, 1.0};
-            x                         = &x1[0];
+            x = &x1[0];
             break;
           }
         case 2:
@@ -727,7 +727,7 @@ namespace Polynomials
                                           1.0,
                                           -9.0 / 2.0,
                                           9.0 / 2.0};
-            x                          = &x3[0];
+            x = &x3[0];
             break;
           }
         default:
@@ -850,8 +850,8 @@ namespace Polynomials
             std::vector<double> legendre_coefficients_tmp1(p);
             std::vector<double> legendre_coefficients_tmp2(p - 1);
 
-            coefficients[0]               = -1.0 * std::sqrt(3.);
-            coefficients[1]               = 2.0 * std::sqrt(3.);
+            coefficients[0] = -1.0 * std::sqrt(3.);
+            coefficients[1] = 2.0 * std::sqrt(3.);
             legendre_coefficients_tmp1[0] = 1.0;
 
             for(unsigned int i = 2; i < p; ++i)
@@ -1176,9 +1176,9 @@ namespace Polynomials
       // out to be between zero and the first root of the Jacobi polynomial,
       // but the algorithm is agnostic about that, so simply choose two points
       // that are sufficiently far apart.
-      double             guess_left  = 0;
+      double             guess_left = 0;
       double             guess_right = 0.5;
-      const unsigned int degree      = jacobi_roots.size() + 3;
+      const unsigned int degree = jacobi_roots.size() + 3;
 
       // Compute two integrals of the product of l_0(x) * l_1(x)
       // l_0(x) = (x-y)*(x-jacobi_roots(0))*...*(x-jacobi_roos(degree-4))*(x-1)*(x-1)
@@ -1191,7 +1191,7 @@ namespace Polynomials
       double    integral_left = 0, integral_right = 0;
       for(unsigned int q = 0; q < gauss.size(); ++q)
         {
-          const double x               = gauss.point(q)[0];
+          const double x = gauss.point(q)[0];
           double       poly_val_common = x;
           for(unsigned int j = 0; j < degree - 3; ++j)
             poly_val_common *= Utilities::fixed_power<2>(x - jacobi_roots[j]);
@@ -1296,7 +1296,7 @@ namespace Polynomials
             this->lagrange_support_points[0] = 0.;
             this->lagrange_support_points[1] = 0.;
             this->lagrange_support_points[2] = 5. / 7.;
-            this->lagrange_weight            = 3.5;
+            this->lagrange_weight = 3.5;
           }
       }
     else

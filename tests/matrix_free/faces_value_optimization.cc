@@ -187,8 +187,8 @@ test()
   cell = tria.begin_active();
   for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
+      cell = tria.begin_active();
+      endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
@@ -209,7 +209,7 @@ test()
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-    data.tasks_block_size      = 3;
+    data.tasks_block_size = 3;
     data.mapping_update_flags_inner_faces
       = (update_gradients | update_JxW_values);
     data.mapping_update_flags_boundary_faces
@@ -227,7 +227,7 @@ test()
       if(constraints.is_constrained(i))
         continue;
       const double entry = Testing::rand() / (double) RAND_MAX;
-      in(i)              = entry;
+      in(i) = entry;
     }
 
   mf.check_error(in);

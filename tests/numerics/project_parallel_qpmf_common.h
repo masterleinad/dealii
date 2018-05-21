@@ -120,7 +120,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       constraints[i].close();
 
       dof_handlers_mf[i] = dof_handlers[i].get();
-      constraints_mf[i]  = &constraints[i];
+      constraints_mf[i] = &constraints[i];
     }
 
   QGauss<1> quadrature_formula_1d(n_q_points_1d);
@@ -145,7 +145,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       {
         FEEvaluation<dim, fe_degree, n_q_points_1d, 1, double> fe_eval(
           *data, fe_index);
-        const unsigned int n_cells    = data->n_macro_cells();
+        const unsigned int n_cells = data->n_macro_cells();
         const unsigned int n_q_points = fe_eval.n_q_points;
 
         qp_data.reinit(n_cells, n_q_points);
@@ -182,7 +182,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
                                   | update_JxW_values);
 
         const unsigned int  dofs_per_cell = fes[fe_index]->dofs_per_cell;
-        const unsigned int  n_q_points    = quadrature_formula_error.size();
+        const unsigned int  n_q_points = quadrature_formula_error.size();
         std::vector<double> values(n_q_points);
 
         typename DoFHandler<dim>::active_cell_iterator cell

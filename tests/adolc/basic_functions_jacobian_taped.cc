@@ -35,8 +35,8 @@ main(void)
 
   double*  xp = new double[n];
   double*  yp = new double[m];
-  adouble* x  = new adouble[n];
-  adouble* y  = new adouble[m];
+  adouble* x = new adouble[n];
+  adouble* y = new adouble[m];
 
   for(unsigned int i = 0; i < n; i++)
     xp[i] = (i + 1.0) / (2.0 + i);

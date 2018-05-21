@@ -64,7 +64,7 @@ test_kinematic_tensors()
           soln_t[cell->vertex_dof_index(v, 0)] = 1.0;
     }
 
-  const double   delta_t    = 2.0;
+  const double   delta_t = 2.0;
   Vector<double> dot_soln_t = soln_t;
   dot_soln_t -= soln_t1;
   dot_soln_t *= (1.0 / delta_t);
@@ -105,7 +105,7 @@ test_kinematic_tensors()
           static const double tol = 1e-12;
 
           // Material gradients
-          const Tensor<2, dim>& Grad_u    = qp_Grad_u_t[q_point];
+          const Tensor<2, dim>& Grad_u = qp_Grad_u_t[q_point];
           const Tensor<2, dim>& Grad_u_t1 = qp_Grad_u_t1[q_point];
 
           // --- Rate independent ---

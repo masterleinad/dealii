@@ -314,9 +314,9 @@ protected:
    * Constructor. Protected, thus only callable from friend classes.
    */
   TriaAccessorBase(const Triangulation<dim, spacedim>* parent = nullptr,
-                   const int                           level  = -1,
-                   const int                           index  = -1,
-                   const AccessorData*                        = nullptr);
+                   const int                           level = -1,
+                   const int                           index = -1,
+                   const AccessorData* = nullptr);
 
   /**
    * Copy constructor. Creates an object with exactly the same data.
@@ -555,9 +555,9 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  InvalidAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-                  const int                           level      = -1,
-                  const int                           index      = -1,
+  InvalidAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+                  const int                           level = -1,
+                  const int                           index = -1,
                   const AccessorData*                 local_data = nullptr);
 
   /**
@@ -670,9 +670,9 @@ public:
   /**
    * Constructor.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
+  TriaAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+               const int                           level = -1,
+               const int                           index = -1,
                const AccessorData*                 local_data = nullptr);
 
   /**
@@ -1491,7 +1491,7 @@ public:
    * cell.
    */
   Point<spacedim>
-  center(const bool respect_manifold             = false,
+  center(const bool respect_manifold = false,
          const bool interpolate_from_surrounding = false) const;
 
   /**
@@ -1738,10 +1738,10 @@ public:
    * compatibility with the other accessor classes. @p index can be used to
    * set the global index of the vertex we point to.
    */
-  TriaAccessor(const Triangulation<dim, spacedim>* tria  = nullptr,
+  TriaAccessor(const Triangulation<dim, spacedim>* tria = nullptr,
                const int                           level = 0,
                const int                           index = 0,
-               const AccessorData*                       = nullptr);
+               const AccessorData* = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
@@ -1902,7 +1902,7 @@ public:
    * <code>TriaAccessor<structdim,dim,spacedim></code>.
    */
   Point<spacedim>
-  center(const bool respect_manifold             = false,
+  center(const bool respect_manifold = false,
          const bool interpolate_from_surrounding = false) const;
 
   /**
@@ -2143,9 +2143,9 @@ public:
    * anything useful here and so may not actually be called.
    */
   TriaAccessor(const Triangulation<1, spacedim>* tria = nullptr,
-               const int                              = 0,
-               const int                              = 0,
-               const AccessorData*                    = nullptr);
+               const int = 0,
+               const int = 0,
+               const AccessorData* = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
@@ -2574,9 +2574,9 @@ public:
   /**
    * Constructor.
    */
-  CellAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
-               const int                           level      = -1,
-               const int                           index      = -1,
+  CellAccessor(const Triangulation<dim, spacedim>* parent = nullptr,
+               const int                           level = -1,
+               const int                           index = -1,
                const AccessorData*                 local_data = nullptr);
 
   /**

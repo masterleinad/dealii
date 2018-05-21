@@ -71,7 +71,7 @@ main()
   deallog.attach(logfile);
 
   unsigned int size = 37;
-  unsigned int dim  = (size - 1) * (size - 1);
+  unsigned int dim = (size - 1) * (size - 1);
 
   deallog << "Size " << size << " Unknowns " << dim << std::endl;
 

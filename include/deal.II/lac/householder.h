@@ -192,7 +192,7 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
       // Make column j the Householder
       // vector, store first entry in
       // diagonal
-      diagonal[j]   = beta * (storage(j, j) - s);
+      diagonal[j] = beta * (storage(j, j) - s);
       storage(j, j) = s;
 
       for(i = j + 1; i < m; ++i)

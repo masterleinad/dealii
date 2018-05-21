@@ -91,7 +91,7 @@ namespace Utilities
                         const MPI_Comm& communicator_in)
     {
       have_ghost_indices = false;
-      communicator       = communicator_in;
+      communicator = communicator_in;
       set_owned_indices(vector_space_vector_index_set);
       set_ghost_indices(read_write_vector_index_set);
     }
@@ -184,7 +184,7 @@ namespace Utilities
       // Allow non-zero start index for the vector. send this data to all
       // processors
       first_index[0] = local_range_data.first;
-      int ierr       = MPI_Bcast(
+      int ierr = MPI_Bcast(
         first_index.data(), 1, DEAL_II_DOF_INDEX_MPI_TYPE, 0, communicator);
       AssertThrowMPI(ierr);
 
@@ -433,7 +433,7 @@ namespace Utilities
           ghost_indices_subset_chunks_by_rank_data.resize(
             ghost_targets_data.size() + 1);
           ghost_indices_subset_chunks_by_rank_data[0] = 0;
-          unsigned int shift                          = 0;
+          unsigned int shift = 0;
           for(unsigned int p = 0; p < ghost_targets_data.size(); ++p)
             {
               unsigned int last_index = numbers::invalid_unsigned_int - 1;
@@ -466,7 +466,7 @@ namespace Utilities
       if(Utilities::MPI::job_supports_mpi())
         {
           int       communicators_same = 0;
-          const int ierr               = MPI_Comm_compare(
+          const int ierr = MPI_Comm_compare(
             part.communicator, communicator, &communicators_same);
           AssertThrowMPI(ierr);
           if(!(communicators_same == MPI_IDENT

@@ -46,7 +46,7 @@ refine_mesh(Triangulation<dim>& triangulation)
       cell != triangulation.end();
       ++cell)
     {
-      const Point<dim> p        = cell->center();
+      const Point<dim> p = cell->center();
       bool             positive = p(0) > 0;
       if(positive)
         {

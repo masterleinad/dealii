@@ -902,8 +902,8 @@ namespace Functions
      * If an argument <tt>select</tt> is given and not -1, the cut-off
      * function will be non-zero for this component only.
      */
-    CutOffFunctionBase(const double radius             = 1.,
-                       const Point<dim>                = Point<dim>(),
+    CutOffFunctionBase(const double radius = 1.,
+                       const Point<dim> = Point<dim>(),
                        const unsigned int n_components = 1,
                        const unsigned int select
                        = CutOffFunctionBase<dim>::no_component);
@@ -957,8 +957,8 @@ namespace Functions
      * If an argument <tt>select</tt> is given and not -1, the cut-off
      * function will be non-zero for this component only.
      */
-    CutOffFunctionLinfty(const double radius             = 1.,
-                         const Point<dim>                = Point<dim>(),
+    CutOffFunctionLinfty(const double radius = 1.,
+                         const Point<dim> = Point<dim>(),
                          const unsigned int n_components = 1,
                          const unsigned int select
                          = CutOffFunctionBase<dim>::no_component);
@@ -1004,8 +1004,8 @@ namespace Functions
      * If an argument <tt>select</tt> is given, the cut-off function will be
      * non-zero for this component only.
      */
-    CutOffFunctionW1(const double radius             = 1.,
-                     const Point<dim>                = Point<dim>(),
+    CutOffFunctionW1(const double radius = 1.,
+                     const Point<dim> = Point<dim>(),
                      const unsigned int n_components = 1,
                      const unsigned int select
                      = CutOffFunctionBase<dim>::no_component);
@@ -1052,8 +1052,8 @@ namespace Functions
      * If an argument <tt>select</tt> is given, the cut-off function will be
      * non-zero for this component only.
      */
-    CutOffFunctionCinfty(const double radius             = 1.,
-                         const Point<dim>                = Point<dim>(),
+    CutOffFunctionCinfty(const double radius = 1.,
+                         const Point<dim> = Point<dim>(),
                          const unsigned int n_components = 1,
                          const unsigned int select
                          = CutOffFunctionBase<dim>::no_component);

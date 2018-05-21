@@ -1100,11 +1100,11 @@ namespace internal
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator=(const Iterator& c)
     {
-      parent              = c.parent;
-      global_index        = c.global_index;
-      index_within_block  = c.index_within_block;
-      current_block       = c.current_block;
-      next_break_forward  = c.next_break_forward;
+      parent = c.parent;
+      global_index = c.global_index;
+      index_within_block = c.index_within_block;
+      current_block = c.current_block;
+      next_break_forward = c.next_break_forward;
       next_break_backward = c.next_break_backward;
 
       return *this;
@@ -1366,7 +1366,7 @@ namespace internal
         {
           const std::pair<size_type, size_type> indices
             = parent.block_indices.global_to_local(global_index);
-          current_block      = indices.first;
+          current_block = indices.first;
           index_within_block = indices.second;
 
           next_break_backward
@@ -1379,11 +1379,11 @@ namespace internal
         // past the end. only have one
         // value for this
         {
-          this->global_index  = parent.size();
-          current_block       = parent.n_blocks();
-          index_within_block  = 0;
+          this->global_index = parent.size();
+          current_block = parent.n_blocks();
+          index_within_block = 0;
           next_break_backward = global_index;
-          next_break_forward  = numbers::invalid_size_type;
+          next_break_forward = numbers::invalid_size_type;
         };
     }
 

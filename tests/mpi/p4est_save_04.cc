@@ -37,7 +37,7 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   MPI_Comm     com_all = MPI_COMM_WORLD;
   MPI_Comm     com_small;
 
@@ -83,7 +83,7 @@ test()
       for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); ++i)
         {
           unsigned int idx = locally_owned_dofs.nth_index_in_set(i);
-          x(idx)           = idx;
+          x(idx) = idx;
           deallog << '[' << idx << ']' << ' '
                   << get_real_assert_zero_imag(x(idx)) << std::endl;
         }

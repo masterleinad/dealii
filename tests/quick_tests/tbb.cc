@@ -31,7 +31,7 @@ add_one(unsigned int& var)
 void
 test1()
 {
-  unsigned int    tmp  = 1;
+  unsigned int    tmp = 1;
   Threads::Task<> task = Threads::new_task(&add_one, tmp);
   task.join();
   if(tmp != 2)

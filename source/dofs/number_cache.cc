@@ -51,7 +51,7 @@ namespace internal
         n_locally_owned_dofs_per_processor[p]
           = locally_owned_dofs_per_processor[p].n_elements();
       n_locally_owned_dofs = n_locally_owned_dofs_per_processor[my_rank];
-      locally_owned_dofs   = locally_owned_dofs_per_processor[my_rank];
+      locally_owned_dofs = locally_owned_dofs_per_processor[my_rank];
 
       n_global_dofs
         = std::accumulate(n_locally_owned_dofs_per_processor.begin(),

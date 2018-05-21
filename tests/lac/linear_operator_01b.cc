@@ -73,9 +73,9 @@ main()
 
     deallog << "Normal and inverse multiplication operations" << std::endl;
 
-    const Vector<double> x1  = lo_A * b;
-    const Vector<double> x2  = lo_A_t * b;
-    const Vector<double> x3  = lo_A_inv * b;
+    const Vector<double> x1 = lo_A * b;
+    const Vector<double> x2 = lo_A_t * b;
+    const Vector<double> x3 = lo_A_inv * b;
     const Vector<double> x4a = lo_A_inv_t * b;
     const Vector<double> x4b = lo_A_t_inv * b;
 
@@ -114,7 +114,7 @@ main()
       const auto S_t_2
         = lo_D_t - lo_B_t * lo_A_t_inv * lo_C_t; // using inverse of transpose
 
-      const Vector<double> x5  = S * b;
+      const Vector<double> x5 = S * b;
       const Vector<double> x6a = S_t_1 * b;
       const Vector<double> x6b = S_t_2 * b;
 

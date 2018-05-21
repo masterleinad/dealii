@@ -1064,7 +1064,7 @@ MappingCartesian<dim, spacedim>::transform_real_to_unit_cell(
   if(dim != spacedim)
     Assert(false, ExcNotImplemented());
   const Point<dim>& start = cell->vertex(0);
-  Point<dim>        real  = p;
+  Point<dim>        real = p;
   real -= start;
 
   switch(dim)

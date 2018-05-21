@@ -51,7 +51,7 @@ test()
       for(unsigned int j = 0; j < m.n(); ++j)
         if((i + 2 * j + 1) % 3 == 0)
           {
-            indices[n_added]  = j;
+            indices[n_added] = j;
             values[n_added++] = i * j * .5 + .5;
           }
       m.add(i, n_added, &indices[0], &values[0], false, true);

@@ -89,7 +89,7 @@ main(int argc, char** argv)
       5000, 1e-11 /*1000*PETSC_MACHINE_EPSILON*/, false, false);
 
     const unsigned int size = 46;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int       dim = (size - 1) * (size - 1);
 
     const unsigned n_eigenvalues = 4;
 

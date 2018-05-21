@@ -103,7 +103,7 @@ check()
 
   //--------------- Block sparsity pattern checks -----------------
 
-  const unsigned int n  = dof.n_dofs();
+  const unsigned int n = dof.n_dofs();
   const unsigned int n1 = n / 3;
   const unsigned int n2 = n - n1;
 

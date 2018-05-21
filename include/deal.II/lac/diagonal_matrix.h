@@ -143,7 +143,7 @@ public:
       const size_type  n_cols,
       const size_type* col_indices,
       const number2*   values,
-      const bool       elide_zero_values      = true,
+      const bool       elide_zero_values = true,
       const bool       col_indices_are_sorted = false);
 
   /**

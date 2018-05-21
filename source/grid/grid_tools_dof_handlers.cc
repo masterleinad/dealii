@@ -106,7 +106,7 @@ namespace GridTools
     Assert(first != used.end(), ExcInternalError());
 
     unsigned int best_vertex = std::distance(used.begin(), first);
-    double       best_dist   = (p - vertices[best_vertex]).norm_square();
+    double       best_dist = (p - vertices[best_vertex]).norm_square();
 
     // For all remaining vertices, test
     // whether they are any closer
@@ -117,7 +117,7 @@ namespace GridTools
           if(dist < best_dist)
             {
               best_vertex = j;
-              best_dist   = dist;
+              best_dist = dist;
             }
         }
 
@@ -434,7 +434,7 @@ namespace GridTools
     // the unit cell; we assume a
     // max. deviation of 1e-10
     double                                      best_distance = 1e-10;
-    int                                         best_level    = -1;
+    int                                         best_level = -1;
     std::pair<active_cell_iterator, Point<dim>> best_cell;
 
     // Find closest vertex and determine
@@ -460,7 +460,7 @@ namespace GridTools
     // we keep on looking.
     const unsigned int n_active_cells
       = mesh.get_triangulation().n_active_cells();
-    bool         found          = false;
+    bool         found = false;
     unsigned int cells_searched = 0;
     while(!found && cells_searched < n_active_cells)
       {
@@ -487,10 +487,10 @@ namespace GridTools
                    || ((dist == best_distance)
                        && ((*cell)->level() > best_level)))
                   {
-                    found         = true;
+                    found = true;
                     best_distance = dist;
-                    best_level    = (*cell)->level();
-                    best_cell     = std::make_pair(*cell, p_cell);
+                    best_level = (*cell)->level();
+                    best_cell = std::make_pair(*cell, p_cell);
                   }
               }
             catch(
@@ -1070,7 +1070,7 @@ namespace GridTools
         // the unit cell; we assume a
         // max. deviation of 1e-10
         double best_distance = 1e-10;
-        int    best_level    = -1;
+        int    best_level = -1;
 
         // Find closest vertex and determine
         // all adjacent cells
@@ -1094,8 +1094,8 @@ namespace GridTools
         // the cell and have not searched
         // every cell in the triangulation,
         // we keep on looking.
-        const unsigned int n_cells        = mesh.get_triangulation().n_cells();
-        bool               found          = false;
+        const unsigned int n_cells = mesh.get_triangulation().n_cells();
+        bool               found = false;
         unsigned int       cells_searched = 0;
         while(!found && cells_searched < n_cells)
           {
@@ -1123,10 +1123,10 @@ namespace GridTools
                        || (dist == best_distance
                            && (*cell)->level() > best_level))
                       {
-                        found         = true;
+                        found = true;
                         best_distance = dist;
-                        best_level    = (*cell)->level();
-                        best_cell     = std::make_pair(*cell, p_cell);
+                        best_level = (*cell)->level();
+                        best_cell = std::make_pair(*cell, p_cell);
                       }
                   }
                 catch(
@@ -1296,7 +1296,7 @@ namespace GridTools
               {
                 if(position == vertices[m])
                   {
-                    repeat_vertex        = true;
+                    repeat_vertex = true;
                     cells[k].vertices[v] = m;
                     break;
                   }
@@ -1305,7 +1305,7 @@ namespace GridTools
               {
                 vertices.push_back(position);
                 cells[k].vertices[v] = i;
-                i                    = i + 1;
+                i = i + 1;
               }
 
           } //for vertices_per_cell

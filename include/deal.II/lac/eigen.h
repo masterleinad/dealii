@@ -156,9 +156,9 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(double       relaxation     = 1.,
+    AdditionalData(double       relaxation = 1.,
                    unsigned int start_adaption = 6,
-                   bool         use_residual   = true)
+                   bool         use_residual = true)
       : relaxation(relaxation),
         start_adaption(start_adaption),
         use_residual(use_residual)
@@ -225,7 +225,7 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
   VectorType&                                r = *Vr;
   r.reinit(x);
 
-  double length     = x.l2_norm();
+  double length = x.l2_norm();
   double old_length = 0.;
   x *= 1. / length;
 
@@ -239,12 +239,12 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 
       // Compute absolute value of eigenvalue
       old_length = length;
-      length     = y.l2_norm();
+      length = y.l2_norm();
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
+      double    entry = 0.;
+      size_type i = 0;
       double    thresh = length / x.size();
       do
         {
@@ -304,9 +304,9 @@ EigenInverse<VectorType>::solve(double&           value,
   SolverControl::State conv = SolverControl::iterate;
 
   // Prepare matrix for solver
-  auto   A_op          = linear_operator(A);
+  auto   A_op = linear_operator(A);
   double current_shift = -value;
-  auto   A_s           = A_op + current_shift * identity_operator(A_op);
+  auto   A_s = A_op + current_shift * identity_operator(A_op);
 
   // Define solver
   ReductionControl        inner_control(5000, 1.e-16, 1.e-5, false, false);
@@ -324,13 +324,13 @@ EigenInverse<VectorType>::solve(double&           value,
   VectorType&                                r = *Vr;
   r.reinit(x);
 
-  double length    = x.l2_norm();
+  double length = x.l2_norm();
   double old_value = value;
 
   x *= 1. / length;
 
   // Main loop
-  double    res  = -std::numeric_limits<double>::max();
+  double    res = -std::numeric_limits<double>::max();
   size_type iter = 0;
   for(; conv == SolverControl::iterate; iter++)
     {
@@ -341,8 +341,8 @@ EigenInverse<VectorType>::solve(double&           value,
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
+      double    entry = 0.;
+      size_type i = 0;
       double    thresh = length / x.size();
       do
         {
@@ -382,7 +382,7 @@ EigenInverse<VectorType>::solve(double&           value,
         }
       else
         {
-          res  = std::fabs(1. / value - 1. / old_value);
+          res = std::fabs(1. / value - 1. / old_value);
           conv = this->iteration_status(iter, res, x);
         }
       old_value = value;

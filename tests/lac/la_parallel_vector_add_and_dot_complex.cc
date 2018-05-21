@@ -25,7 +25,7 @@ check()
 {
   for(unsigned int test = 0; test < 5; ++test)
     {
-      const unsigned int size         = 17 + test * 1101;
+      const unsigned int size = 17 + test * 1101;
       const IndexSet     complete_set = complete_index_set(size);
       LinearAlgebra::distributed::Vector<std::complex<number>> v1(
         complete_set, MPI_COMM_SELF),

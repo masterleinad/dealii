@@ -1302,7 +1302,7 @@ namespace LinearAlgebra
     {
       Assert(partitioner.get() != nullptr, ExcInternalError());
       AssertThrow(out, ExcIO());
-      std::ios::fmtflags old_flags     = out.flags();
+      std::ios::fmtflags old_flags = out.flags();
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);

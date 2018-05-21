@@ -155,7 +155,7 @@ namespace MeshWorker
                          CopyData&)>(),
 
     const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-    const unsigned int chunk_size   = 8)
+    const unsigned int chunk_size = 8)
   {
     Assert(
       (!cell_worker) == !(flags & work_on_cells),

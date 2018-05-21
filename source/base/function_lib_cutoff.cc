@@ -146,7 +146,7 @@ namespace Functions
       for(unsigned int i = 0; i < values.size(); ++i)
         {
           const double d = this->center.distance(points[i]);
-          values[i]      = ((d < this->radius) ? (this->radius - d) : 0.);
+          values[i] = ((d < this->radius) ? (this->radius - d) : 0.);
         }
     else
       std::fill(values.begin(), values.end(), 0.);
@@ -163,7 +163,7 @@ namespace Functions
 
     for(unsigned int k = 0; k < values.size(); ++k)
       {
-        const double d   = this->center.distance(points[k]);
+        const double d = this->center.distance(points[k]);
         const double val = (d < this->radius) ? (this->radius - d) : 0.;
         if(this->selected == CutOffFunctionBase<dim>::no_component)
           values[k] = val;
@@ -225,7 +225,7 @@ namespace Functions
           else
             {
               const double e = -r * r / (r * r - d * d);
-              values[i]      = (e < -50) ? 0. : numbers::E * exp(e);
+              values[i] = (e < -50) ? 0. : numbers::E * exp(e);
             }
         }
     else
@@ -243,8 +243,8 @@ namespace Functions
 
     for(unsigned int k = 0; k < values.size(); ++k)
       {
-        const double d   = this->center.distance(points[k]);
-        const double r   = this->radius;
+        const double d = this->center.distance(points[k]);
+        const double r = this->radius;
         double       val = 0.;
         if(d < this->radius)
           {

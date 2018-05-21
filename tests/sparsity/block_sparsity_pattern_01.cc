@@ -45,7 +45,7 @@ main()
     for(unsigned int i = 0; i < row_length[jb].size(); ++i)
       {
         const unsigned int d = col_blocks[jb] - 1;
-        row_length[jb][i]    = (i + 1) % d + 1;
+        row_length[jb][i] = (i + 1) % d + 1;
       }
 
   for(unsigned int j = 0; j < row_length.size(); ++j)

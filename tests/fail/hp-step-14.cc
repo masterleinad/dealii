@@ -115,7 +115,7 @@ namespace Evaluation
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc                      = dof_handler.end();
+      endc = dof_handler.end();
     bool evaluation_point_found = false;
     for(; (cell != endc) && !evaluation_point_found; ++cell)
       for(unsigned int vertex = 0;
@@ -177,7 +177,7 @@ namespace Evaluation
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc                             = dof_handler.end();
+      endc = dof_handler.end();
     unsigned int evaluation_point_hits = 0;
     for(; cell != endc; ++cell)
       for(unsigned int vertex = 0;
@@ -443,7 +443,7 @@ namespace LaplaceSolver
       *fe, *quadrature, update_gradients | update_JxW_values);
 
     const unsigned int dofs_per_cell = (*fe)[0].dofs_per_cell;
-    const unsigned int n_q_points    = (*quadrature)[0].size();
+    const unsigned int n_q_points = (*quadrature)[0].size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -610,7 +610,7 @@ namespace LaplaceSolver
                                   | update_JxW_values);
 
     const unsigned int dofs_per_cell = (*this->fe)[0].dofs_per_cell;
-    const unsigned int n_q_points    = (*this->quadrature)[0].size();
+    const unsigned int n_q_points = (*this->quadrature)[0].size();
 
     Vector<double>                       cell_rhs(dofs_per_cell);
     std::vector<double>                  rhs_values(n_q_points);
@@ -901,7 +901,7 @@ namespace Data
     double q = p(0);
     for(unsigned int i = 1; i < dim; ++i)
       q += std::sin(10 * p(i) + 5 * p(0) * p(0));
-    const double u  = std::exp(q);
+    const double u = std::exp(q);
     double       t1 = 1, t2 = 0, t3 = 0;
     for(unsigned int i = 1; i < dim; ++i)
       {
@@ -1451,7 +1451,7 @@ namespace LaplaceSolver
   WeightedResidual<dim>::output_solution() const
   {
     const PrimalSolver<dim>& primal_solver = *this;
-    const DualSolver<dim>&   dual_solver   = *this;
+    const DualSolver<dim>&   dual_solver = *this;
 
     ConstraintMatrix primal_hanging_node_constraints;
     DoFTools::make_hanging_node_constraints(primal_solver.dof_handler,
@@ -1483,7 +1483,7 @@ namespace LaplaceSolver
   WeightedResidual<dim>::estimate_error(Vector<float>& error_indicators) const
   {
     const PrimalSolver<dim>& primal_solver = *this;
-    const DualSolver<dim>&   dual_solver   = *this;
+    const DualSolver<dim>&   dual_solver = *this;
 
     ConstraintMatrix dual_hanging_node_constraints;
     DoFTools::make_hanging_node_constraints(dual_solver.dof_handler,
@@ -1561,7 +1561,7 @@ namespace LaplaceSolver
                                        FaceIntegrals& face_integrals) const
   {
     const PrimalSolver<dim>& primal_solver = *this;
-    const DualSolver<dim>&   dual_solver   = *this;
+    const DualSolver<dim>&   dual_solver = *this;
 
     CellData cell_data(
       *dual_solver.fe, *dual_solver.quadrature, *primal_solver.rhs_function);
@@ -1680,7 +1680,7 @@ namespace LaplaceSolver
     Assert(cell->neighbor(face_no).state() == IteratorState::valid,
            ExcInternalError());
     const unsigned int neighbor_neighbor = cell->neighbor_of_neighbor(face_no);
-    const active_cell_iterator neighbor  = cell->neighbor(face_no);
+    const active_cell_iterator neighbor = cell->neighbor(face_no);
     face_data.fe_face_values_neighbor.reinit(neighbor, neighbor_neighbor);
     face_data.fe_face_values_neighbor.get_present_fe_values()
       .get_function_gradients(primal_solution, face_data.neighbor_grads);
@@ -1948,7 +1948,7 @@ main()
         = Framework<dim>::ProblemDescription::dual_weighted_error_estimator;
 
       descriptor.primal_fe_degree = 1;
-      descriptor.dual_fe_degree   = 2;
+      descriptor.dual_fe_degree = 2;
 
       descriptor.data = new Data::SetUp<Data::Exercise_2_3<dim>, dim>();
 

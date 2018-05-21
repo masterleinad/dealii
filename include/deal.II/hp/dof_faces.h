@@ -393,7 +393,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -451,7 +451,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index starting_offset = dof_offsets[obj_index];
-      types::global_dof_index*      pointer         = &dofs[starting_offset];
+      types::global_dof_index*      pointer = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -492,8 +492,8 @@ namespace internal
       // part. trigger an exception if we can't find a set for this
       // particular fe_index
       const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const types::global_dof_index* pointer = &dofs[starting_offset];
+      unsigned int                   counter = 0;
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)
@@ -541,8 +541,8 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const types::global_dof_index* pointer = &dofs[starting_offset];
+      unsigned int                   counter = 0;
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -599,7 +599,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer = &dofs[starting_offset];
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)

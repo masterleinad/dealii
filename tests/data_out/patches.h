@@ -29,7 +29,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
     {
       DataOutBase::Patch<dim, spacedim>& patch = patches[p];
 
-      const unsigned int nsub  = p + 1;
+      const unsigned int nsub = p + 1;
       const unsigned int nsubp = nsub + 1;
 
       patch.n_subdivisions = nsub;

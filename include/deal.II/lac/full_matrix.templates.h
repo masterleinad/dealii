@@ -189,7 +189,7 @@ FullMatrix<number>::Tvmult(Vector<number2>&       dst,
 
   Assert(&src != &dst, ExcSourceEqualsDestination());
 
-  const number*   e       = &this->values[0];
+  const number*   e = &this->values[0];
   number2*        dst_ptr = &dst(0);
   const size_type size_m = m(), size_n = n();
 
@@ -223,7 +223,7 @@ FullMatrix<number>::residual(Vector<number2>&       dst,
 
   Assert(&src != &dst, ExcSourceEqualsDestination());
 
-  number          res    = 0.;
+  number          res = 0.;
   const size_type size_m = m(), size_n = n();
   for(size_type i = 0; i < size_m; ++i)
     {
@@ -501,9 +501,9 @@ FullMatrix<number>::mmult(FullMatrix<number2>&       dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B^T A^T)^T, which is AB.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.n());
-        const types::blas_int n       = static_cast<types::blas_int>(this->m());
-        const types::blas_int k       = static_cast<types::blas_int>(this->n());
+        const types::blas_int m = static_cast<types::blas_int>(src.n());
+        const types::blas_int n = static_cast<types::blas_int>(this->m());
+        const types::blas_int k = static_cast<types::blas_int>(this->n());
         const char*           notrans = "n";
 
         const number alpha = 1.;
@@ -580,10 +580,10 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B^T A)^T, which is A^T B.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.n());
-        const types::blas_int n       = static_cast<types::blas_int>(this->n());
-        const types::blas_int k       = static_cast<types::blas_int>(this->m());
-        const char*           trans   = "t";
+        const types::blas_int m = static_cast<types::blas_int>(src.n());
+        const types::blas_int n = static_cast<types::blas_int>(this->n());
+        const types::blas_int k = static_cast<types::blas_int>(this->m());
+        const char*           trans = "t";
         const char*           notrans = "n";
 
         const number alpha = 1.;
@@ -680,11 +680,11 @@ FullMatrix<number>::mTmult(FullMatrix<number2>&       dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B A^T)^T, which is AB^T.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.m());
-        const types::blas_int n       = static_cast<types::blas_int>(this->m());
-        const types::blas_int k       = static_cast<types::blas_int>(this->n());
+        const types::blas_int m = static_cast<types::blas_int>(src.m());
+        const types::blas_int n = static_cast<types::blas_int>(this->m());
+        const types::blas_int k = static_cast<types::blas_int>(this->n());
         const char*           notrans = "n";
-        const char*           trans   = "t";
+        const char*           trans = "t";
 
         const number alpha = 1.;
         const number beta  = (adding == true) ? 1. : 0.;
@@ -777,9 +777,9 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B A)^T, which is A^T B^T.
 
-        const types::blas_int m     = static_cast<types::blas_int>(src.m());
-        const types::blas_int n     = static_cast<types::blas_int>(this->n());
-        const types::blas_int k     = static_cast<types::blas_int>(this->m());
+        const types::blas_int m = static_cast<types::blas_int>(src.m());
+        const types::blas_int n = static_cast<types::blas_int>(this->n());
+        const types::blas_int k = static_cast<types::blas_int>(this->m());
         const char*           trans = "t";
 
         const number alpha = 1.;
@@ -888,15 +888,15 @@ FullMatrix<number>::matrix_norm_square(const Vector<number2>& v) const
   Assert(m() == v.size(), ExcDimensionMismatch(m(), v.size()));
   Assert(n() == v.size(), ExcDimensionMismatch(n(), v.size()));
 
-  number2         sum     = 0.;
-  const size_type n_rows  = m();
+  number2         sum = 0.;
+  const size_type n_rows = m();
   const number*   val_ptr = &this->values[0];
 
   for(size_type row = 0; row < n_rows; ++row)
     {
-      number2             s              = 0.;
+      number2             s = 0.;
       const number* const val_end_of_row = val_ptr + n_rows;
-      const number2*      v_ptr          = v.begin();
+      const number2*      v_ptr = v.begin();
       while(val_ptr != val_end_of_row)
         s += number2(*val_ptr++) * number2(*v_ptr++);
 
@@ -917,16 +917,16 @@ FullMatrix<number>::matrix_scalar_product(const Vector<number2>& u,
   Assert(m() == u.size(), ExcDimensionMismatch(m(), u.size()));
   Assert(n() == v.size(), ExcDimensionMismatch(n(), v.size()));
 
-  number2         sum     = 0.;
-  const size_type n_rows  = m();
-  const size_type n_cols  = n();
+  number2         sum = 0.;
+  const size_type n_rows = m();
+  const size_type n_cols = n();
   const number*   val_ptr = &this->values[0];
 
   for(size_type row = 0; row < n_rows; ++row)
     {
-      number2             s              = number2(0.);
+      number2             s = number2(0.);
       const number* const val_end_of_row = val_ptr + n_cols;
-      const number2*      v_ptr          = v.begin();
+      const number2*      v_ptr = v.begin();
       while(val_ptr != val_end_of_row)
         s += number2(*val_ptr++) * number2(*v_ptr++);
 
@@ -1353,15 +1353,15 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
             const number2 t63 = t43 * t20 - t43 * t22 - t46 * t33 + t46 * t35
                                 + t49 * t50 - t49 * t52 - t54 * t25 + t54 * t27
                                 + t57 * t38 - t57 * t40 - t60 * t50 + t60 * t52;
-            const number2 t65  = number2(1.) / (t42 + t63);
-            const number2 t71  = M(0, 2) * M(2, 1);
-            const number2 t73  = M(0, 3) * M(2, 1);
-            const number2 t75  = M(0, 2) * M(3, 1);
-            const number2 t77  = M(0, 3) * M(3, 1);
-            const number2 t81  = M(0, 1) * M(1, 2);
-            const number2 t83  = M(0, 1) * M(1, 3);
-            const number2 t85  = M(0, 2) * M(1, 1);
-            const number2 t87  = M(0, 3) * M(1, 1);
+            const number2 t65 = number2(1.) / (t42 + t63);
+            const number2 t71 = M(0, 2) * M(2, 1);
+            const number2 t73 = M(0, 3) * M(2, 1);
+            const number2 t75 = M(0, 2) * M(3, 1);
+            const number2 t77 = M(0, 3) * M(3, 1);
+            const number2 t81 = M(0, 1) * M(1, 2);
+            const number2 t83 = M(0, 1) * M(1, 3);
+            const number2 t85 = M(0, 2) * M(1, 1);
+            const number2 t87 = M(0, 3) * M(1, 1);
             const number2 t101 = M(1, 0) * M(2, 2);
             const number2 t103 = M(1, 0) * M(2, 3);
             const number2 t105 = M(2, 0) * M(1, 2);
@@ -1607,7 +1607,7 @@ FullMatrix<number>::copy_from(const Tensor<2, dim>& T,
       {
         const unsigned int src_r_index = static_cast<unsigned int>(i + src_r_i);
         const unsigned int src_c_index = static_cast<unsigned int>(j + src_c_i);
-        (*this)(i + dst_r, j + dst_c)  = number(T[src_r_index][src_c_index]);
+        (*this)(i + dst_r, j + dst_c) = number(T[src_r_index][src_c_index]);
       }
 }
 
@@ -1649,7 +1649,7 @@ FullMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
   Assert(dst.size() == n(), ExcDimensionMismatch(dst.size(), n()));
   Assert(src.size() == n(), ExcDimensionMismatch(src.size(), n()));
 
-  const size_t      n       = src.size();
+  const size_t      n = src.size();
   somenumber*       dst_ptr = dst.begin();
   const somenumber* src_ptr = src.begin();
 
@@ -1674,7 +1674,7 @@ FullMatrix<number>::print_formatted(std::ostream&      out,
 
   // set output format, but store old
   // state
-  std::ios::fmtflags old_flags     = out.flags();
+  std::ios::fmtflags old_flags = out.flags();
   std::streamsize    old_precision = out.precision(precision);
 
   if(scientific)
@@ -1809,13 +1809,13 @@ FullMatrix<number>::gauss_jordan()
       // right of the diagonal for
       // the largest element
       real_type max = std::abs((*this)(j, j));
-      size_type r   = j;
+      size_type r = j;
       for(size_type i = j + 1; i < N; ++i)
         {
           if(std::abs((*this)(i, j)) > max)
             {
               max = std::abs((*this)(i, j));
-              r   = i;
+              r = i;
             }
         }
       // check whether the pivot is
@@ -1833,7 +1833,7 @@ FullMatrix<number>::gauss_jordan()
 
       // transformation
       const number hr = number(1.) / (*this)(j, j);
-      (*this)(j, j)   = hr;
+      (*this)(j, j) = hr;
       for(size_type k = 0; k < N; ++k)
         {
           if(k == j)

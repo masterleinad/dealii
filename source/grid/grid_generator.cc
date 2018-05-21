@@ -264,7 +264,7 @@ namespace GridGenerator
         AssertThrow(false, ExcNotImplemented());
 
       double middle = (outer_radius - inner_radius) / 2e0 + inner_radius;
-      double eps    = 1e-3 * middle;
+      double eps = 1e-3 * middle;
       Triangulation<3>::cell_iterator cell = tria.begin();
 
       for(; cell != tria.end(); ++cell)
@@ -548,7 +548,7 @@ namespace GridGenerator
            ExcMessage("Outer radius must be greater than inner radius."));
 
     std::vector<Point<dim>> vertices(4 * n_cells);
-    double beta_step  = n_rotations * numbers::PI / 2.0 / n_cells;
+    double beta_step = n_rotations * numbers::PI / 2.0 / n_cells;
     double alpha_step = 2.0 * numbers::PI / n_cells;
 
     for(unsigned int i = 0; i < n_cells; ++i)
@@ -600,20 +600,20 @@ namespace GridGenerator
                       "radius r."));
     Assert(r > 0.0, ExcMessage("The inner radius r must be positive."));
 
-    const unsigned int           dim      = 2;
+    const unsigned int           dim = 2;
     const unsigned int           spacedim = 3;
     std::vector<Point<spacedim>> vertices(16);
 
-    vertices[0]  = Point<spacedim>(R - r, 0, 0);
-    vertices[1]  = Point<spacedim>(R, -r, 0);
-    vertices[2]  = Point<spacedim>(R + r, 0, 0);
-    vertices[3]  = Point<spacedim>(R, r, 0);
-    vertices[4]  = Point<spacedim>(0, 0, R - r);
-    vertices[5]  = Point<spacedim>(0, -r, R);
-    vertices[6]  = Point<spacedim>(0, 0, R + r);
-    vertices[7]  = Point<spacedim>(0, r, R);
-    vertices[8]  = Point<spacedim>(-(R - r), 0, 0);
-    vertices[9]  = Point<spacedim>(-R, -r, 0);
+    vertices[0] = Point<spacedim>(R - r, 0, 0);
+    vertices[1] = Point<spacedim>(R, -r, 0);
+    vertices[2] = Point<spacedim>(R + r, 0, 0);
+    vertices[3] = Point<spacedim>(R, r, 0);
+    vertices[4] = Point<spacedim>(0, 0, R - r);
+    vertices[5] = Point<spacedim>(0, -r, R);
+    vertices[6] = Point<spacedim>(0, 0, R + r);
+    vertices[7] = Point<spacedim>(0, r, R);
+    vertices[8] = Point<spacedim>(-(R - r), 0, 0);
+    vertices[9] = Point<spacedim>(-R, -r, 0);
     vertices[10] = Point<spacedim>(-(R + r), 0, 0);
     vertices[11] = Point<spacedim>(-R, r, 0);
     vertices[12] = Point<spacedim>(0, 0, -(R - r));
@@ -1566,7 +1566,7 @@ namespace GridGenerator
 
     std::vector<unsigned int> repetitions(2);
     unsigned int              n_cells = 1;
-    double                    delta   = std::numeric_limits<double>::max();
+    double                    delta = std::numeric_limits<double>::max();
     for(unsigned int i = 0; i < 2; i++)
       {
         repetitions[i] = spacing[i].size();
@@ -1626,7 +1626,7 @@ namespace GridGenerator
     // set boundary indicator
     if(colorize)
       {
-        double                          eps  = 0.01 * delta;
+        double                          eps = 0.01 * delta;
         Triangulation<2>::cell_iterator cell = tria.begin(), endc = tria.end();
         for(; cell != endc; ++cell)
           {
@@ -1661,7 +1661,7 @@ namespace GridGenerator
 
     std::vector<unsigned int> repetitions(dim);
     unsigned int              n_cells = 1;
-    double                    delta   = std::numeric_limits<double>::max();
+    double                    delta = std::numeric_limits<double>::max();
     for(unsigned int i = 0; i < dim; i++)
       {
         repetitions[i] = spacing[i].size();
@@ -1706,7 +1706,7 @@ namespace GridGenerator
             n_val_cells++;
 
     std::vector<CellData<dim>> cells(n_val_cells);
-    unsigned int               id  = 0;
+    unsigned int               id = 0;
     const unsigned int         n_x = (repetitions[0] + 1);
     const unsigned int n_xy = (repetitions[0] + 1) * (repetitions[1] + 1);
     for(unsigned int z = 0; z < repetitions[2]; ++z)
@@ -1735,7 +1735,7 @@ namespace GridGenerator
     // set boundary indicator
     if(colorize)
       {
-        double                            eps  = 0.01 * delta;
+        double                            eps = 0.01 * delta;
         Triangulation<dim>::cell_iterator cell = tria.begin(),
                                           endc = tria.end();
         for(; cell != endc; ++cell)
@@ -1783,7 +1783,7 @@ namespace GridGenerator
         Assert(holes[i] >= 1,
                ExcMessage("At least one hole needed in each direction"));
         repetitions[i] = 2 * holes[i] + 1;
-        delta[i][i]    = (p2[i] - p1[i]);
+        delta[i][i] = (p2[i] - p1[i]);
       }
 
     // then generate the necessary
@@ -2097,7 +2097,7 @@ namespace GridGenerator
                        const double      right,
                        const bool        colorize)
   {
-    const double   rl2          = (right + left) / 2;
+    const double   rl2 = (right + left) / 2;
     const Point<2> vertices[10] = {Point<2>(left, left),
                                    Point<2>(rl2, left),
                                    Point<2>(rl2, rl2),
@@ -2175,7 +2175,7 @@ namespace GridGenerator
                const double      b,
                const bool        colorize)
   {
-    const Point<2> vertices[8]    = {Point<2>(a, a),
+    const Point<2> vertices[8] = {Point<2>(a, a),
                                   Point<2>((a + b) / 2, a),
                                   Point<2>(b, a),
                                   Point<2>(a, (a + b) / 2),
@@ -2919,7 +2919,7 @@ namespace GridGenerator
       = 1. / (1 + std::sqrt(3.0)); // equilibrate cell sizes at transition
     // from the inner part to the radial
     // cells
-    const unsigned int n_vertices           = 16;
+    const unsigned int n_vertices = 16;
     const Point<3>     vertices[n_vertices] = {
       // first the vertices of the inner
       // cell
@@ -2997,8 +2997,8 @@ namespace GridGenerator
   {
     // Copy the base from hyper_ball<3>
     // and transform it to yz
-    const double d            = radius / std::sqrt(2.0);
-    const double a            = d / (1 + std::sqrt(2.0));
+    const double d = radius / std::sqrt(2.0);
+    const double a = d / (1 + std::sqrt(2.0));
     Point<3>     vertices[24] = {
       Point<3>(-d, -half_length, -d),
       Point<3>(d, -half_length, -d),
@@ -3367,7 +3367,7 @@ namespace GridGenerator
         for(unsigned int i = 0; i < 6; ++i)
           vertices.push_back(p + octahedron[i] * outer_radius);
 
-        const unsigned int n_cells            = 12;
+        const unsigned int n_cells = 12;
         const unsigned int rhombi[n_cells][4] = {{10, 4, 0, 8},
                                                  {4, 13, 8, 6},
                                                  {10, 5, 4, 13},
@@ -3387,7 +3387,7 @@ namespace GridGenerator
           {
             for(unsigned int j = 0; j < 4; ++j)
               {
-                cells[i].vertices[j]     = rhombi[i][j];
+                cells[i].vertices[j] = rhombi[i][j];
                 cells[i].vertices[j + 4] = rhombi[i][j] + 14;
               }
             cells[i].material_id = 0;
@@ -3907,7 +3907,7 @@ namespace GridGenerator
       {
         for(unsigned int i = 0; i < input.n_vertices(); ++i)
           {
-            const Point<2>& v                         = input.get_vertices()[i];
+            const Point<2>& v = input.get_vertices()[i];
             points[slice * input.n_vertices() + i](0) = v(0);
             points[slice * input.n_vertices() + i](1) = v(1);
             points[slice * input.n_vertices() + i](2)
@@ -3954,7 +3954,7 @@ namespace GridGenerator
           if(cell->at_boundary(f) && (cell->face(f)->boundary_id() != 0))
             {
               quad.boundary_id = cell->face(f)->boundary_id();
-              max_boundary_id  = std::max(max_boundary_id, quad.boundary_id);
+              max_boundary_id = std::max(max_boundary_id, quad.boundary_id);
               for(unsigned int slice = 0; slice < n_slices - 1; ++slice)
                 {
                   quad.vertices[0] = cell->face(f)->vertex_index(0)
@@ -4084,7 +4084,7 @@ namespace GridGenerator
             }
       }
     double eps = 1e-3 * outer_radius;
-    cell       = triangulation.begin_active();
+    cell = triangulation.begin_active();
     for(; cell != endc; ++cell)
       {
         for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
@@ -4188,7 +4188,7 @@ namespace GridGenerator
             }
       }
     double eps = 1e-3 * outer_radius;
-    cell       = triangulation.begin_active();
+    cell = triangulation.begin_active();
     for(; cell != endc; ++cell)
       {
         for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
@@ -4227,8 +4227,8 @@ namespace GridGenerator
               else
                 {
                   Point<dim> c = cell->face(f)->center();
-                  c(2)         = 0;
-                  double d     = c.norm();
+                  c(2) = 0;
+                  double d = c.norm();
                   if(d - inner_radius < 0)
                     {
                       cell->face(f)->set_all_boundary_ids(1);

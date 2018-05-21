@@ -79,7 +79,7 @@ namespace DoFTools
                  const Point<dim, Number>& rhs) const
       {
         double downstream_size = 0;
-        double weight          = 1.;
+        double weight = 1.;
         for(unsigned int d = 0; d < dim; ++d)
           {
             downstream_size += (rhs[d] - lhs[d]) * weight;
@@ -310,8 +310,8 @@ namespace DoFTools
                                 Vector<double>&       dof_data,
                                 const unsigned int    component)
   {
-    const unsigned int dim                   = DoFHandlerType::dimension;
-    const unsigned int spacedim              = DoFHandlerType::space_dimension;
+    const unsigned int dim = DoFHandlerType::dimension;
+    const unsigned int spacedim = DoFHandlerType::space_dimension;
     const Triangulation<dim, spacedim>& tria = dof_handler.get_triangulation();
     (void) tria;
 
@@ -1356,7 +1356,7 @@ namespace DoFTools
 
     // loop over subdomain_association and populate IndexSet when a
     // change in subdomain ID is found
-    dealii::types::global_dof_index i_min          = 0;
+    dealii::types::global_dof_index i_min = 0;
     dealii::types::global_dof_index this_subdomain = subdomain_association[0];
 
     for(dealii::types::global_dof_index index = 1;
@@ -1367,7 +1367,7 @@ namespace DoFTools
         if(subdomain_association[index] != this_subdomain)
           {
             index_sets[this_subdomain].add_range(i_min, index);
-            i_min          = index;
+            i_min = index;
             this_subdomain = subdomain_association[index];
           }
       }
@@ -2506,7 +2506,7 @@ namespace DoFTools
                       const bool            single_cell_patches,
                       const bool            invert_vertex_mapping)
   {
-    const unsigned int n_blocks     = dof_handler.get_fe().n_blocks();
+    const unsigned int n_blocks = dof_handler.get_fe().n_blocks();
     BlockMask exclude_boundary_dofs = BlockMask(n_blocks, interior_only);
     return make_vertex_patches(block_list,
                                dof_handler,

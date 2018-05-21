@@ -22,7 +22,7 @@
 void
 test(bool empty, bool large_gap)
 {
-  const int size     = 100000000;
+  const int size = 100000000;
   const int my_start = size / 3;
   IndexSet  owned(size);
   owned.add_range(my_start, my_start + 5);

@@ -52,10 +52,10 @@ const Table<2, bool> ConstraintMatrix::default_empty_table = Table<2, bool>();
 void
 ConstraintMatrix::copy_from(const ConstraintMatrix& other)
 {
-  lines       = other.lines;
+  lines = other.lines;
   lines_cache = other.lines_cache;
   local_lines = other.local_lines;
-  sorted      = other.sorted;
+  sorted = other.sorted;
 }
 
 bool
@@ -372,7 +372,7 @@ ConstraintMatrix::close()
 
                 // look up the chain of constraints for this entry
                 const size_type dof_index = line->entries[entry].first;
-                const double    weight    = line->entries[entry].second;
+                const double    weight = line->entries[entry].second;
 
                 Assert(dof_index != line->index,
                        ExcMessage("Cycle in constraints detected!"));

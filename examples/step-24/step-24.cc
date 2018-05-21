@@ -214,7 +214,7 @@ namespace Step24
     Assert(dim == 2, ExcNotImplemented());
 
     const double detector_step_angle = 2.25;
-    const double detector_radius     = 0.5;
+    const double detector_radius = 0.5;
 
     for(double detector_angle = 2 * numbers::PI; detector_angle >= 0;
         detector_angle -= detector_step_angle / 360 * 2 * numbers::PI)
@@ -338,7 +338,7 @@ namespace Step24
         fe, quadrature_formula, update_values | update_JxW_values);
 
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
-      const unsigned int n_q_points    = quadrature_formula.size();
+      const unsigned int n_q_points = quadrature_formula.size();
 
       FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 

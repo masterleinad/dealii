@@ -284,8 +284,8 @@ public:
        const size_type   dst_offset_j = 0,
        const size_type   src_offset_i = 0,
        const size_type   src_offset_j = 0,
-       const number      factor       = 1.,
-       const bool        transpose    = false);
+       const number      factor = 1.,
+       const bool        transpose = false);
 
   /**
    * Matrix-vector-multiplication.
@@ -675,7 +675,7 @@ public:
    */
   void
   compute_eigenvalues(const bool right_eigenvectors = false,
-                      const bool left_eigenvectors  = false);
+                      const bool left_eigenvectors = false);
 
   /**
    * Compute eigenvalues and eigenvectors of a real symmetric matrix. Only
@@ -837,12 +837,12 @@ public:
    */
   void
   print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
+                  const unsigned int precision = 3,
+                  const bool         scientific = true,
+                  const unsigned int width = 0,
                   const char*        zero_string = " ",
                   const double       denominator = 1.,
-                  const double       threshold   = 0.) const;
+                  const double       threshold = 0.) const;
 
 private:
   /**

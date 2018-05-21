@@ -772,7 +772,7 @@ namespace Polynomials
         Assert(coefficients.size() > 0, ExcEmptyObject());
 
         // Horner scheme
-        const unsigned int m     = coefficients.size();
+        const unsigned int m = coefficients.size();
         number             value = coefficients.back();
         for(int k = m - 2; k >= 0; --k)
           value = value * x + coefficients[k];
@@ -781,7 +781,7 @@ namespace Polynomials
     else
       {
         // direct evaluation of Lagrange polynomial
-        const unsigned int m     = lagrange_support_points.size();
+        const unsigned int m = lagrange_support_points.size();
         number             value = 1.;
         for(unsigned int j = 0; j < m; ++j)
           value *= x - lagrange_support_points[j];
@@ -829,15 +829,15 @@ namespace Polynomials
 
     for(unsigned int i = 1; i < degree; ++i)
       {
-        const Number v  = 2 * i + (alpha + beta);
+        const Number v = 2 * i + (alpha + beta);
         const Number a1 = 2 * (i + 1) * (i + (alpha + beta + 1)) * v;
         const Number a2 = (v + 1) * (alpha * alpha - beta * beta);
         const Number a3 = v * (v + 1) * (v + 2);
         const Number a4 = 2 * (i + alpha) * (i + beta) * (v + 2);
 
         const Number pn = ((a2 + a3 * xeval) * p1 - a4 * p0) / a1;
-        p0              = p1;
-        p1              = pn;
+        p0 = p1;
+        p1 = pn;
       }
     return p1;
   }

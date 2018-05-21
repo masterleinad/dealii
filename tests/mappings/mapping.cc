@@ -104,8 +104,8 @@ plot_faces(Mapping<dim>&                            mapping,
         {
           for(unsigned int nx = 0; nx < nq; ++nx)
             {
-              const Point<dim>     x  = fe_values.quadrature_point(k);
-              const Tensor<1, dim> n  = fe_values.normal_vector(k);
+              const Point<dim>     x = fe_values.quadrature_point(k);
+              const Tensor<1, dim> n = fe_values.normal_vector(k);
               const double         ds = fe_values.JxW(k);
 
               deallog << x << '\t' << n << '\t' << ds << std::endl;
@@ -238,7 +238,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       const double left  = 1.;
       const double right = 4.;
 
-      const Point<2>           vertices[4]         = {Point<2>(left, left),
+      const Point<2>           vertices[4] = {Point<2>(left, left),
                                     Point<2>(right, left),
                                     Point<2>(right, right),
                                     Point<2>(left, right)};
@@ -262,10 +262,10 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 1., 3.);
       Point<2>& v0 = tria->begin_active()->vertex(0);
-      v0(0)        = 0.;
+      v0(0) = 0.;
       Point<2>& v3 = tria->begin_active()->vertex(3);
-      v3(0)        = 5.;
-      v3(1)        = 4.;
+      v3(0) = 5.;
+      v3(1) = 4.;
       exact_areas.push_back(7.);
       show[1][0] = 1;
     }
@@ -282,15 +282,15 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       GridGenerator::hyper_cube(*tria, 1., 5.);
       Point<2>& v2 = tria->begin_active()->vertex(2);
       Point<2>& v3 = tria->begin_active()->vertex(3);
-      v2(0)        = 1.;
-      v2(1)        = 3.;
-      v3(0)        = 3.;
-      v3(1)        = 3.;
+      v2(0) = 1.;
+      v2(1) = 3.;
+      v3(0) = 3.;
+      v3(1) = 3.;
       tria->set_manifold(1, *boundary1);
       tria->set_manifold(2, *boundary2);
       tria->begin_active()->face(1)->set_manifold_id(1);
       tria->begin_active()->face(3)->set_manifold_id(2);
-      double pi    = std::acos(-1.);
+      double pi = std::acos(-1.);
       double alpha = 2 * std::atan(0.5);
       exact_areas.push_back(4 + pi - 2.5 * (alpha - std::sin(alpha)));
       for(unsigned int i = 0; i <= 3; ++i)
@@ -321,10 +321,10 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       GridGenerator::hyper_cube(*tria, 0., 1.);
       Point<2>& v2 = tria->begin_active()->vertex(2);
       Point<2>& v3 = tria->begin_active()->vertex(3);
-      v2(0)        = 2.;
-      v2(1)        = 1.;
-      v3(0)        = 0.5;
-      v3(1)        = 1.5;
+      v2(0) = 2.;
+      v2(1) = 1.;
+      v3(0) = 0.5;
+      v3(1) = 1.5;
       tria->set_manifold(1, *boundary1);
       tria->begin_active()->face(1)->set_manifold_id(1);
       exact_areas.push_back(0.);
@@ -358,9 +358,9 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 1., 3.);
       Point<3>& v = tria->begin()->vertex(7);
-      v(0)        = 5.;
-      v(1)        = 4.;
-      v(2)        = 4.5;
+      v(0) = 5.;
+      v(1) = 4.;
+      v(2) = 4.5;
       exact_areas.push_back(12.5);
     }
 
@@ -370,7 +370,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
       Point<3> m(2, 2, 2);
       Point<3> v(3, 3, 3);
       double   r = std::sqrt((m - v).norm_square()), h = r - 1.5,
-             pi              = std::acos(-1.);
+             pi = std::acos(-1.);
       Manifold<3>* boundary1 = new SphericalManifold<3>(m);
       boundary_ptr.push_back(boundary1);
 

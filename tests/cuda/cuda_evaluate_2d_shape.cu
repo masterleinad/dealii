@@ -103,7 +103,7 @@ test()
   for(unsigned int i = 0; i < M_2d; ++i)
     {
       y_host[i] = 1.;
-      y_ref[i]  = add ? y_host[i] : 0.;
+      y_ref[i] = add ? y_host[i] : 0.;
       for(unsigned int j = 0; j < N_2d; ++j)
         y_ref[i] += shape_2d(i, j) * x_host[j];
     }
@@ -154,7 +154,7 @@ test()
   for(unsigned int i = 0; i < N_2d; ++i)
     {
       x_host[i] = 2.;
-      x_ref[i]  = add ? x_host[i] : 0.;
+      x_ref[i] = add ? x_host[i] : 0.;
       for(unsigned int j = 0; j < M_2d; ++j)
         x_ref[i] += shape_2d(j, i) * y_host[j];
     }

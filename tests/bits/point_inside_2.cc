@@ -45,7 +45,7 @@ check()
 
   // Now get the cell
   const typename Triangulation<dim>::cell_iterator cell = triangulation.begin();
-  cell->vertex(0)(0)                                    = -1.;
+  cell->vertex(0)(0) = -1.;
 
   // and test it.
   double testcoord[14][3] = {{0.5, 0.5, 0.5},
@@ -65,7 +65,7 @@ check()
 
   const bool  expected2d[] = {1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1};
   const bool  expected3d[] = {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0};
-  const bool* expected     = dim == 2 ? expected2d : expected3d;
+  const bool* expected = dim == 2 ? expected2d : expected3d;
   for(int i = 0; i < 14; i++)
     {
       Point<dim> testpoint;

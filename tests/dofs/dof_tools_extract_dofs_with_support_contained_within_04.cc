@@ -146,8 +146,8 @@ test()
 
         // copy-paste of CM distribute_local_to_global and
         // add is_element() checks:
-        auto       local_vector_begin  = local_rhs.begin();
-        const auto local_vector_end    = local_rhs.end();
+        auto       local_vector_begin = local_rhs.begin();
+        const auto local_vector_end = local_rhs.end();
         auto       local_indices_begin = local_dof_indices.begin();
         const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
         for(; local_vector_begin != local_vector_end;
@@ -291,7 +291,7 @@ test()
   for(unsigned int i = 0; i < locally_owned_set.n_elements(); ++i)
     {
       const unsigned int ind = locally_owned_set.nth_index_in_set(i);
-      const double       v   = rhs[ind];
+      const double       v = rhs[ind];
       AssertThrow(
         std::abs(v) < 1e-12,
         ExcMessage("Element " + std::to_string(ind) + " has an error "

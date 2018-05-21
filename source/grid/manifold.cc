@@ -58,7 +58,7 @@ Manifold<dim, spacedim>::get_new_point(
   const ArrayView<const Point<spacedim>>& surrounding_points,
   const ArrayView<const double>&          weights) const
 {
-  const double       tol      = 1e-10;
+  const double       tol = 1e-10;
   const unsigned int n_points = surrounding_points.size();
 
   Assert(n_points > 0, ExcMessage("There should be at least one point."));
@@ -163,8 +163,8 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   // to zero). We start with an invalid value but the loops should always find
   // a value.
   double       abs_cos_angle = std::numeric_limits<double>::max();
-  unsigned int first_index   = numbers::invalid_unsigned_int,
-               second_index  = numbers::invalid_unsigned_int;
+  unsigned int first_index = numbers::invalid_unsigned_int,
+               second_index = numbers::invalid_unsigned_int;
   for(unsigned int i = 0; i < 3; ++i)
     if(distances[i] > 1e-8 * max_distance)
       for(unsigned int j = i + 1; j < 4; ++j)
@@ -185,8 +185,8 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
          ExcMessage("The search for possible directions did not succeed."));
 
   // Compute tangents and normal for selected vertices
-  Tensor<1, spacedim> t1     = get_tangent_vector(p, vertices[first_index]);
-  Tensor<1, spacedim> t2     = get_tangent_vector(p, vertices[second_index]);
+  Tensor<1, spacedim> t1 = get_tangent_vector(p, vertices[first_index]);
+  Tensor<1, spacedim> t2 = get_tangent_vector(p, vertices[second_index]);
   Tensor<1, spacedim> normal = cross_product_3d(t1, t2);
 
   Assert(
@@ -201,8 +201,8 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   // Now figure out if we need to flip the direction, we do this by comparing
   // to a reference normal that would be the correct result if all vertices
   // would lie in a plane
-  const Tensor<1, spacedim> rt1              = vertices[3] - vertices[0];
-  const Tensor<1, spacedim> rt2              = vertices[2] - vertices[1];
+  const Tensor<1, spacedim> rt1 = vertices[3] - vertices[0];
+  const Tensor<1, spacedim> rt2 = vertices[2] - vertices[1];
   const Tensor<1, spacedim> reference_normal = cross_product_3d(rt1, rt2);
 
   if(reference_normal * normal < 0.0)

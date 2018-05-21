@@ -91,7 +91,7 @@ main()
   for(; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      FE_Type[cnt_cells] = fe_index;
       ++cnt_cells;
     }
 
@@ -138,7 +138,7 @@ main()
   for(; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      FE_Type[cnt_cells] = fe_index;
       ++cnt_cells;
     }
 
@@ -189,7 +189,7 @@ main()
   for(; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
-      FE_Type[cnt_cells]    = fe_index;
+      FE_Type[cnt_cells] = fe_index;
       ++cnt_cells;
     }
 

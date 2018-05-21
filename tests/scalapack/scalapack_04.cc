@@ -96,11 +96,11 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
 
-  const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
+  const std::vector<unsigned int> sizes = {{32, 64, 120, 320, 640}};
   const std::vector<unsigned int> blocks = {{32, 64}};
 
   const double tol_double = 1e-10;
-  const float  tol_float  = 1e-5;
+  const float  tol_float = 1e-5;
 
   /*for (const auto &s : sizes)
     for (const auto &b : blocks)

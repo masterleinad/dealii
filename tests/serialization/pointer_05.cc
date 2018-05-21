@@ -91,7 +91,7 @@ test()
   {
     C*              c = new C();
     std::pair<P, P> pair_1, pair_2;
-    pair_1.first.c  = c;
+    pair_1.first.c = c;
     pair_1.second.c = c;
 
     pair_2.first.c  = nullptr;

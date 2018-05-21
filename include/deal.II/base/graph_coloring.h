@@ -254,7 +254,7 @@ namespace GraphColoring
       for(unsigned int i = 0; i < partition_size; ++i)
         {
           // Find the largest element.
-          degrees_it         = std::max_element(degrees.begin(), degrees.end());
+          degrees_it = std::max_element(degrees.begin(), degrees.end());
           sorted_vertices[i] = degrees_it - degrees.begin();
           // Put the largest element to -1 so it cannot be chosen again.
           *degrees_it = -1;

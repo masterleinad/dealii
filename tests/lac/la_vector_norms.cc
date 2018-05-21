@@ -24,7 +24,7 @@ template <typename number>
 void
 check_norms()
 {
-  const number acc  = 1e1 * std::numeric_limits<number>::epsilon();
+  const number acc = 1e1 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
   for(unsigned int size = 1; size < 200000; size += skip)
     {
@@ -58,7 +58,7 @@ template <typename number>
 void
 check_complex_norms()
 {
-  const number acc  = 1e2 * std::numeric_limits<number>::epsilon();
+  const number acc = 1e2 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
   for(unsigned int size = 1; size < 100000; size += skip)
     {

@@ -505,7 +505,7 @@ namespace Step42
       const int ix = std::min(std::max((int) (x / hx), 0), nx - 2);
       const int iy = std::min(std::max((int) (y / hy), 0), ny - 2);
 
-      const double xi  = std::min(std::max((x - ix * hx) / hx, 1.), 0.);
+      const double xi = std::min(std::max((x - ix * hx) / hx, 1.), 0.);
       const double eta = std::min(std::max((y - iy * hy) / hy, 1.), 0.);
 
       return ((1 - xi) * (1 - eta) * get_pixel_value(ix, iy)
@@ -1058,7 +1058,7 @@ namespace Step42
       assemble_mass_matrix_diagonal(mass_matrix);
 
       const unsigned int start = (newton_rhs.local_range().first),
-                         end   = (newton_rhs.local_range().second);
+                         end = (newton_rhs.local_range().second);
       for(unsigned int j = start; j < end; j++)
         diag_mass_matrix_vector(j) = mass_matrix.diag_element(j);
       diag_mass_matrix_vector.compress(VectorOperation::insert);
@@ -1370,8 +1370,8 @@ namespace Step42
                                      update_values | update_quadrature_points
                                        | update_JxW_values);
 
-    const unsigned int dofs_per_cell   = fe.dofs_per_cell;
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     const EquationData::BoundaryForce<dim> boundary_force;
@@ -1526,8 +1526,8 @@ namespace Step42
                                      update_values | update_quadrature_points
                                        | update_JxW_values);
 
-    const unsigned int dofs_per_cell   = fe.dofs_per_cell;
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     const EquationData::BoundaryForce<dim> boundary_force;
@@ -1540,14 +1540,14 @@ namespace Step42
 
     const FEValuesExtractors::Vector displacement(0);
 
-    newton_rhs             = 0;
+    newton_rhs = 0;
     newton_rhs_uncondensed = 0;
 
     fraction_of_plastic_q_points_per_cell = 0;
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
-      endc                   = dof_handler.end();
+      endc = dof_handler.end();
     unsigned int cell_number = 0;
     for(; cell != endc; ++cell, ++cell_number)
       if(cell->is_locally_owned())
@@ -1807,7 +1807,7 @@ namespace Step42
 
             residual                     = newton_rhs;
             const unsigned int start_res = (residual.local_range().first),
-                               end_res   = (residual.local_range().second);
+                               end_res = (residual.local_range().second);
             for(unsigned int n = start_res; n < end_res; ++n)
               if(all_constraints.is_inhomogeneously_constrained(n))
                 residual(n) = 0;
@@ -1836,7 +1836,7 @@ namespace Step42
                 residual = newton_rhs;
 
                 const unsigned int start_res = (residual.local_range().first),
-                                   end_res   = (residual.local_range().second);
+                                   end_res = (residual.local_range().second);
                 for(unsigned int n = start_res; n < end_res; ++n)
                   if(all_constraints.is_inhomogeneously_constrained(n))
                     residual(n) = 0;

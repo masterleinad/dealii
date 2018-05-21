@@ -54,7 +54,7 @@ void
 test(std::string solver_name, std::string preconditioner_name)
 {
   const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int number_of_eigenvalues = 5;
 
   MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
@@ -89,7 +89,7 @@ test(std::string solver_name, std::string preconditioner_name)
     for(; cell != endc; ++cell)
       {
         const dealii::Point<dim>& center = cell->center();
-        const double              x      = center[0];
+        const double              x = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
@@ -159,7 +159,7 @@ test(std::string solver_name, std::string preconditioner_name)
       | dealii::update_quadrature_points | dealii::update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   dealii::FullMatrix<double> cell_stiffness_matrix(dofs_per_cell,
                                                    dofs_per_cell);
@@ -175,7 +175,7 @@ test(std::string solver_name, std::string preconditioner_name)
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
-        cell_mass_matrix      = 0;
+        cell_mass_matrix = 0;
 
         for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           for(unsigned int i = 0; i < dofs_per_cell; ++i)

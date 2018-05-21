@@ -111,7 +111,7 @@ main()
           // Now swap the last two
           // and cyclically exchange
           // the first three
-          unsigned int swap   = bperm[n_blocks - 1];
+          unsigned int swap = bperm[n_blocks - 1];
           bperm[n_blocks - 1] = bperm[n_blocks - 2];
           bperm[n_blocks - 2] = swap;
 

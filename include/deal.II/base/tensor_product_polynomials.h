@@ -412,7 +412,7 @@ inline TensorProductPolynomials<dim, PolynomialType>::TensorProductPolynomials(
   // the user through the set_numbering() function
   for(unsigned int i = 0; i < n_tensor_pols; ++i)
     {
-      index_map[i]         = i;
+      index_map[i] = i;
       index_map_inverse[i] = i;
     }
 }

@@ -1429,7 +1429,7 @@ namespace internal
                                                           values_quad);
                   break;
                 case 1:
-                  values_quad[0]    = values_dofs[0];
+                  values_quad[0] = values_dofs[0];
                   gradients_quad[0] = values_dofs[1];
                   break;
                 default:

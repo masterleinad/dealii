@@ -156,7 +156,7 @@ inline TensorProductPolynomialsBubbles<dim>::TensorProductPolynomialsBubbles(
   const std::vector<Pol>& pols)
   : TensorProductPolynomials<dim>(pols)
 {
-  const unsigned int q_degree  = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   // append index for renumbering
   for(unsigned int i = 0; i < n_bubbles; ++i)
@@ -187,9 +187,9 @@ TensorProductPolynomialsBubbles<dim>::compute_derivative(
   const unsigned int i,
   const Point<dim>&  p) const
 {
-  const unsigned int q_degree      = this->polynomials.size() - 1;
+  const unsigned int q_degree = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
-  const unsigned int n_bubbles     = ((q_degree <= 1) ? 1 : dim);
+  const unsigned int n_bubbles = ((q_degree <= 1) ? 1 : dim);
   (void) n_bubbles;
   Assert(i < max_q_indices + n_bubbles, ExcInternalError());
 

@@ -353,7 +353,7 @@ namespace internal
         dealii::FEValues<dim, dim>& fe_val,
         LocalData<dim, Number>&     cell_data)
       {
-        const unsigned int n_q_points   = fe_val.n_quadrature_points;
+        const unsigned int n_q_points = fe_val.n_quadrature_points;
         const UpdateFlags  update_flags = fe_val.get_update_flags();
 
         cell_data.const_jac = Tensor<2, dim, VectorizedArray<Number>>();
@@ -606,7 +606,7 @@ namespace internal
                 // this is just the next point, for direction 1, it means adding
                 // n_q_points_1d, and so on.
                 step_size_cartesian[my_q][hpq] = 0;
-                unsigned int factor            = 1;
+                unsigned int factor = 1;
                 for(unsigned int d = 0; d < dim; ++d)
                   {
                     step_size_cartesian[my_q][hpq] += factor;

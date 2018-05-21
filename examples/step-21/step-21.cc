@@ -646,7 +646,7 @@ namespace Step21
   TwoPhaseFlowProblem<dim>::assemble_system()
   {
     system_matrix = 0;
-    system_rhs    = 0;
+    system_rhs = 0;
 
     QGauss<dim>     quadrature_formula(degree + 2);
     QGauss<dim - 1> face_quadrature_formula(degree + 2);
@@ -663,7 +663,7 @@ namespace Step21
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
@@ -728,8 +728,8 @@ namespace Step21
 
               const Tensor<1, dim> phi_i_u = fe_values[velocities].value(i, q);
               const double div_phi_i_u = fe_values[velocities].divergence(i, q);
-              const double phi_i_p     = fe_values[pressure].value(i, q);
-              const double phi_i_s     = fe_values[saturation].value(i, q);
+              const double phi_i_p = fe_values[pressure].value(i, q);
+              const double phi_i_s = fe_values[saturation].value(i, q);
 
               for(unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
@@ -816,8 +816,8 @@ namespace Step21
     FEFaceValues<dim> fe_face_values_neighbor(
       fe, face_quadrature_formula, update_values);
 
-    const unsigned int dofs_per_cell   = fe.dofs_per_cell;
-    const unsigned int n_q_points      = quadrature_formula.size();
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int n_q_points = quadrature_formula.size();
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     Vector<double> local_rhs(dofs_per_cell);

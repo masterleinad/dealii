@@ -52,7 +52,7 @@ do_test(const unsigned int size)
           init_mass(i, i) *= 4. / 3.;
           init_laplace(i, i) *= 5. / 4.;
         }
-      mass[dir]    = init_mass;
+      mass[dir] = init_mass;
       laplace[dir] = init_laplace;
     }
 

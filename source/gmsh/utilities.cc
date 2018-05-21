@@ -52,7 +52,7 @@ namespace Gmsh
                                            Triangulation<2, spacedim>& tria,
                                            const AdditionalParameters& prm)
   {
-    std::string base_name      = prm.output_base_name;
+    std::string base_name = prm.output_base_name;
     char        dir_template[] = "ctfbc-XXXXXX";
     if(base_name == "")
       {
@@ -63,10 +63,10 @@ namespace Gmsh
         base_name += "tmp";
       }
 
-    const std::string iges_file_name     = base_name + ".iges";
-    const std::string geo_file_name      = base_name + ".geo";
-    const std::string msh_file_name      = base_name + ".msh";
-    const std::string log_file_name      = base_name + ".log";
+    const std::string iges_file_name = base_name + ".iges";
+    const std::string geo_file_name = base_name + ".geo";
+    const std::string msh_file_name = base_name + ".msh";
+    const std::string log_file_name = base_name + ".log";
     const std::string warnings_file_name = base_name + "_warn.log";
 
     dealii::OpenCASCADE::write_IGES(boundary, iges_file_name);

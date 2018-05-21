@@ -1063,7 +1063,7 @@ namespace Step59
   LaplaceProblem<dim, fe_degree>::compute_rhs()
   {
     Timer time;
-    system_rhs                          = 0;
+    system_rhs = 0;
     const MatrixFree<dim, double>& data = *system_matrix.get_matrix_free();
     FEEvaluation<dim, fe_degree>   phi(data);
     RightHandSide<dim>             rhs_func;

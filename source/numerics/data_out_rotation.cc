@@ -479,7 +479,7 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   // there is enough memory for that
   std::vector<cell_iterator> all_cells;
   for(cell_iterator cell = first_cell(); cell != this->triangulation->end();
-      cell               = next_cell(cell))
+      cell = next_cell(cell))
     all_cells.push_back(cell);
 
   // then also take into account that

@@ -282,7 +282,7 @@ namespace Step41
     std::cout << "   Assembling system..." << std::endl;
 
     system_matrix = 0;
-    system_rhs    = 0;
+    system_rhs = 0;
 
     const QGauss<dim>        quadrature_formula(fe.degree + 1);
     const RightHandSide<dim> right_hand_side;
@@ -293,7 +293,7 @@ namespace Step41
                               | update_quadrature_points | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);
@@ -369,7 +369,7 @@ namespace Step41
       fe, quadrature_formula, update_values | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);

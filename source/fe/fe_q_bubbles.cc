@@ -48,7 +48,7 @@ namespace internal
         std::vector<std::vector<FullMatrix<double>>>& matrices,
         const bool                                    isotropic_only)
       {
-        const unsigned int dpc    = fe.dofs_per_cell;
+        const unsigned int dpc = fe.dofs_per_cell;
         const unsigned int degree = fe.degree;
 
         // Initialize quadrature formula on fine cells
@@ -256,7 +256,7 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
   // kept in synch
 
   std::ostringstream             namebuf;
-  bool                           type     = true;
+  bool                           type = true;
   const unsigned int             n_points = this->degree;
   std::vector<double>            points(n_points);
   const unsigned int             dofs_per_cell = this->dofs_per_cell;
@@ -397,7 +397,7 @@ std::vector<bool>
 FE_Q_Bubbles<dim, spacedim>::get_riaf_vector(const unsigned int q_deg)
 {
   unsigned int       n_cont_dofs = Utilities::fixed_power<dim>(q_deg + 1);
-  const unsigned int n_bubbles   = (q_deg <= 1 ? 1 : dim);
+  const unsigned int n_bubbles = (q_deg <= 1 ? 1 : dim);
   return std::vector<bool>(n_cont_dofs + n_bubbles, true);
 }
 

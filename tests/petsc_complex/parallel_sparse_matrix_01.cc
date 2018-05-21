@@ -107,7 +107,7 @@ test(const unsigned int poly_degree = 1)
                               | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<PetscScalar> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -158,7 +158,7 @@ test(const unsigned int poly_degree = 1)
           re = 3.0 * i;
           im = 0.0;
         }
-      const PetscScalar val                          = re + im * PETSC_i;
+      const PetscScalar val = re + im * PETSC_i;
       vector(locally_owned_dofs.nth_index_in_set(i)) = val;
     }
   vector.compress(VectorOperation::insert);

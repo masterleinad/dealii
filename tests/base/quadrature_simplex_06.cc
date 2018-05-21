@@ -54,7 +54,7 @@ main()
           for(unsigned int i = 0; i < 6; ++i)
             for(unsigned int j = 0; j < 6; ++j)
               {
-                double exact_integral  = exact_integral_one_over_r(index, i, j);
+                double exact_integral = exact_integral_one_over_r(index, i, j);
                 double approx_integral = 0;
 
                 for(unsigned int q = 0; q < quad.size(); ++q)

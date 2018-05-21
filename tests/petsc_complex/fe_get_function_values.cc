@@ -107,7 +107,7 @@ test()
   for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
     {
       const PetscScalar val = 1.0 + myid + (myid + i % 2) * 2.0 * PETSC_i;
-      vector(locally_owned_dofs.nth_index_in_set(i))    = val;
+      vector(locally_owned_dofs.nth_index_in_set(i)) = val;
       vector_Re(locally_owned_dofs.nth_index_in_set(i)) = PetscRealPart(val);
       vector_Im(locally_owned_dofs.nth_index_in_set(i))
         = PetscImaginaryPart(val);
@@ -129,7 +129,7 @@ test()
       fe, quadrature_formula, update_values | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     std::vector<PetscScalar> values(n_q_points);
     std::vector<double>      values_Re(n_q_points), values_Im(n_q_points);

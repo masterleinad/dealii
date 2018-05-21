@@ -34,7 +34,7 @@ test()
   {
     PETScWrappers::SparseMatrix m2;
 
-    Mat mm  = m;
+    Mat mm = m;
     Mat m2m = m2;
 
     //deallog << mm << " " << m2m << std::endl;
@@ -43,7 +43,7 @@ test()
     {
       //forbidden: PETScWrappers::SparseMatrix m3=m2;
 
-      Mat mm  = m;
+      Mat mm = m;
       Mat m2m = m2;
       //deallog << mm << " " << m2m << std::endl;
     }

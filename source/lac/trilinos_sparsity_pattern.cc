@@ -351,7 +351,7 @@ namespace TrilinosWrappers
         ExcMessage("This function only works if the row map is contiguous."));
 
       const size_type first_row = TrilinosWrappers::min_my_gid(row_map),
-                      last_row  = TrilinosWrappers::max_my_gid(row_map) + 1;
+                      last_row = TrilinosWrappers::max_my_gid(row_map) + 1;
       std::vector<int> n_entries_per_row(last_row - first_row);
 
       // Trilinos wants the row length as an int this is hopefully never going
@@ -670,7 +670,7 @@ namespace TrilinosWrappers
   SparsityPattern::copy_from(const SparsityPattern& sp)
   {
     column_space_map = std_cxx14::make_unique<Epetra_Map>(*sp.column_space_map);
-    graph            = std_cxx14::make_unique<Epetra_FECrsGraph>(*sp.graph);
+    graph = std_cxx14::make_unique<Epetra_FECrsGraph>(*sp.graph);
 
     if(sp.nonlocal_graph.get() != nullptr)
       nonlocal_graph
@@ -845,7 +845,7 @@ namespace TrilinosWrappers
   SparsityPattern::size_type
   SparsityPattern::bandwidth() const
   {
-    size_type                         local_b  = 0;
+    size_type                         local_b = 0;
     TrilinosWrappers::types::int_type global_b = 0;
     for(int i = 0; i < (int) local_size(); ++i)
       {
@@ -899,7 +899,7 @@ namespace TrilinosWrappers
   {
     size_type begin, end;
     begin = TrilinosWrappers::min_my_gid(graph->RowMap());
-    end   = TrilinosWrappers::max_my_gid(graph->RowMap()) + 1;
+    end = TrilinosWrappers::max_my_gid(graph->RowMap()) + 1;
 
     return std::make_pair(begin, end);
   }

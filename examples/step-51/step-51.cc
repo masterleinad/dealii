@@ -263,7 +263,7 @@ namespace Step51
   double
   RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    Tensor<1, dim> convection   = convection_velocity.value(p);
+    Tensor<1, dim> convection = convection_velocity.value(p);
     double         return_value = 0;
     for(unsigned int i = 0; i < this->n_source_centers; ++i)
       {
@@ -721,7 +721,7 @@ namespace Step51
     const FEValuesExtractors::Scalar scalar(dim);
 
     scratch.ll_matrix = 0;
-    scratch.l_rhs     = 0;
+    scratch.l_rhs = 0;
     if(!task_data.trace_reconstruct)
       {
         scratch.lf_matrix     = 0;

@@ -213,7 +213,7 @@ main(int argc, char* argv[])
   initlog();
 
   constexpr int      dim = 2;
-  const double       L   = numbers::PI;
+  const double       L = numbers::PI;
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, -L, L, true);
 

@@ -50,7 +50,7 @@ namespace PETScWrappers
       for(size_type r = 0; r < this->n_block_rows(); ++r)
         for(size_type c = 0; c < this->n_block_cols(); ++c)
           {
-            BlockType* p            = new BlockType();
+            BlockType* p = new BlockType();
             this->sub_objects[r][c] = p;
           }
     }

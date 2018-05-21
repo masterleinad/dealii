@@ -45,12 +45,12 @@ check_large_numbers()
   AssertThrow(std::abs(w.l2_norm() - correct3) < 1e-13 * correct3,
               ExcInternalError());
 
-  w                     = 0;
-  w(1)                  = 1e-302;
-  w(2)                  = 1e-303;
-  w(3)                  = 2e-303;
-  w(4)                  = 3e-303;
-  w(5)                  = -1e-303;
+  w = 0;
+  w(1) = 1e-302;
+  w(2) = 1e-303;
+  w(3) = 2e-303;
+  w(4) = 3e-303;
+  w(5) = -1e-303;
   const double correct4 = std::sqrt(100. + 1. + 4. + 9 + 1.) * 1e-303;
   AssertThrow(std::abs(w.l2_norm() - correct4) <= 1e-13 * correct4,
               ExcInternalError());

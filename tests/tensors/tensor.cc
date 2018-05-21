@@ -66,9 +66,9 @@ main()
       Tensor<1, 3> e1;
       Tensor<1, 3> e2;
       Tensor<1, 3> e3;
-      e1[0]               = 1.;
-      e2[1]               = 1.;
-      e3[2]               = 1.;
+      e1[0] = 1.;
+      e2[1] = 1.;
+      e3[2] = 1.;
       Tensor<1, 3> result = cross_product_3d(e1, e2);
       deallog << '\t' << result[0] << '\t' << result[1] << '\t' << result[2]
               << std::endl;

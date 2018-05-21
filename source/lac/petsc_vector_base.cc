@@ -171,7 +171,7 @@ namespace PETScWrappers
 
     ghosted = false;
     ghost_indices.clear();
-    last_action        = ::dealii::VectorOperation::unknown;
+    last_action = ::dealii::VectorOperation::unknown;
     obtained_ownership = true;
   }
 
@@ -188,7 +188,7 @@ namespace PETScWrappers
     if(has_ghost_elements())
       {
         Vec ghost = PETSC_NULL;
-        ierr      = VecGhostGetLocalForm(vector, &ghost);
+        ierr = VecGhostGetLocalForm(vector, &ghost);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         ierr = VecSet(ghost, s);
@@ -411,7 +411,7 @@ namespace PETScWrappers
       // use modern processors better by
       // allowing pipelined commands to be
       // executed in parallel
-      const PetscScalar* ptr  = start_ptr;
+      const PetscScalar* ptr = start_ptr;
       const PetscScalar* eptr = ptr + (size() / 4) * 4;
       while(ptr != eptr)
         {
@@ -473,7 +473,7 @@ namespace PETScWrappers
       // use modern processors better by
       // allowing pipelined commands to be
       // executed in parallel
-      const PetscScalar* ptr  = start_ptr;
+      const PetscScalar* ptr = start_ptr;
       const PetscScalar* eptr = ptr + (size() / 4) * 4;
       while(ptr != eptr)
         {
@@ -783,7 +783,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // save the state of out stream
-    const std::ios::fmtflags old_flags     = out.flags();
+    const std::ios::fmtflags old_flags = out.flags();
     const unsigned int       old_precision = out.precision(precision);
 
     out.precision(precision);

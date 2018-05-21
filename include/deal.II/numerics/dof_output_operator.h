@@ -47,7 +47,7 @@ namespace Algorithms
      * zeros from the left.
      */
     DoFOutputOperator(const std::string& filename_base = std::string("output"),
-                      const unsigned int digits        = 3);
+                      const unsigned int digits = 3);
 
     void
     parse_parameters(ParameterHandler& param);

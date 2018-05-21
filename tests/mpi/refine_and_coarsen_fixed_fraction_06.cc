@@ -74,7 +74,7 @@ test()
     tr, indicators, 0.6, 0.2);
   {
     float coarsen_indicator = min_indicator - 1,
-          refine_indicator  = max_indicator + 1;
+          refine_indicator = max_indicator + 1;
     unsigned int cell_index = 0;
     for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
         cell != tr.end();
@@ -108,7 +108,7 @@ test()
     tr, indicators, 0.6, 0.2);
   {
     float coarsen_indicator = min_indicator - 1,
-          refine_indicator  = max_indicator + 1;
+          refine_indicator = max_indicator + 1;
     unsigned int cell_index = 0;
     for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
         cell != tr.end();

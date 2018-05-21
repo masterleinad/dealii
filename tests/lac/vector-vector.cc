@@ -16,7 +16,7 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
-const unsigned int N           = 10;
+const unsigned int N = 10;
 unsigned int       check_point = 0;
 
 template <typename number>

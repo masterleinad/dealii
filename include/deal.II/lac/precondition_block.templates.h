@@ -55,7 +55,7 @@ PreconditionBlock<MatrixType, inverse_type>::clear()
 {
   PreconditionBlockBase<inverse_type>::clear();
   blocksize = 0;
-  A         = nullptr;
+  A = nullptr;
 }
 
 template <typename MatrixType, typename inverse_type>
@@ -71,8 +71,8 @@ PreconditionBlock<MatrixType, inverse_type>::initialize(
   A = &M;
   Assert(bsize > 0, ExcIndexRange(bsize, 1, M.m()));
   Assert(A->m() % bsize == 0, ExcWrongBlockSize(bsize, A->m()));
-  blocksize                  = bsize;
-  relaxation                 = parameters.relaxation;
+  blocksize = bsize;
+  relaxation = parameters.relaxation;
   const unsigned int nblocks = A->m() / bsize;
   this->reinit(
     nblocks, blocksize, parameters.same_diagonal, parameters.inversion);
@@ -116,7 +116,7 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
     {
       for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
         {
-          typename MatrixType::const_iterator       entry   = M.begin(row_cell);
+          typename MatrixType::const_iterator       entry = M.begin(row_cell);
           const typename MatrixType::const_iterator row_end = M.end(row_cell);
           while(entry != row_end)
             {
@@ -163,7 +163,7 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
 
               const size_type row = permutation[urow];
 
-              typename MatrixType::const_iterator       entry   = M.begin(row);
+              typename MatrixType::const_iterator       entry = M.begin(row);
               const typename MatrixType::const_iterator row_end = M.end(row);
 
               for(; entry != row_end; ++entry)
@@ -255,7 +255,7 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
         {
           //        deallog << ' ' << row;
           const typename MatrixType::const_iterator row_end = M.end(row);
-          typename MatrixType::const_iterator       entry   = M.begin(row);
+          typename MatrixType::const_iterator       entry = M.begin(row);
 
           b_cell_row = src(row);
           for(; entry != row_end; ++entry)
@@ -338,14 +338,14 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
       --rawcell;
       const unsigned int cell = cell_permuted ? permutation[rawcell] : rawcell;
       const size_type    block_start = cell * this->blocksize;
-      const size_type    block_end   = block_start + this->blocksize;
+      const size_type    block_end = block_start + this->blocksize;
       const size_type    permuted_block_start
         = permuted ? permutation[block_start] : block_start;
       for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
-          typename MatrixType::const_iterator       entry   = M.begin(row);
+          typename MatrixType::const_iterator       entry = M.begin(row);
 
           b_cell_row = src(row);
           for(; entry != row_end; ++entry)
@@ -415,7 +415,7 @@ PreconditionBlock<MatrixType, inverse_type>::invert_diagblocks()
     {
       for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
         {
-          typename MatrixType::const_iterator       entry   = M.begin(row_cell);
+          typename MatrixType::const_iterator       entry = M.begin(row_cell);
           const typename MatrixType::const_iterator row_end = M.end(row_cell);
           while(entry != row_end)
             {
@@ -451,7 +451,7 @@ PreconditionBlock<MatrixType, inverse_type>::invert_diagblocks()
           const size_type cell_start = cell * blocksize;
           for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
             {
-              const size_type                     row   = row_cell + cell_start;
+              const size_type                     row = row_cell + cell_start;
               typename MatrixType::const_iterator entry = M.begin(row);
               const typename MatrixType::const_iterator row_end = M.end(row);
 
@@ -687,7 +687,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
 {
   Assert(this->A != nullptr, ExcNotInitialized());
 
-  const MatrixType& M        = *this->A;
+  const MatrixType& M = *this->A;
   const bool        permuted = (this->permutation.size() != 0);
   if(permuted)
     {
@@ -719,7 +719,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
-          typename MatrixType::const_iterator       entry   = M.begin(row);
+          typename MatrixType::const_iterator       entry = M.begin(row);
 
           b_cell_row = src(row);
           for(; entry != row_end; ++entry)
@@ -775,7 +775,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
 {
   Assert(this->A != nullptr, ExcNotInitialized());
 
-  const MatrixType& M        = *this->A;
+  const MatrixType& M = *this->A;
   const bool        permuted = (this->permutation.size() != 0);
   if(permuted)
     {
@@ -809,7 +809,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
-          typename MatrixType::const_iterator       entry   = M.begin(row);
+          typename MatrixType::const_iterator       entry = M.begin(row);
 
           b_cell_row = src(row);
           for(; entry != row_end; ++entry)

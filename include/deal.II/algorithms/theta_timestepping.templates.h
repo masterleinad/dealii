@@ -63,7 +63,7 @@ namespace Algorithms
   {
     param.enter_subsection("ThetaTimestepping");
     control.parse_parameters(param);
-    vtheta   = param.get_double("Theta");
+    vtheta = param.get_double("Theta");
     adaptive = param.get_bool("Adaptive");
     param.leave_subsection();
   }
@@ -113,9 +113,9 @@ namespace Algorithms
     for(unsigned int count = 1; d_explicit.time < control.final(); ++count)
       {
         const bool step_change = control.advance();
-        d_implicit.time        = control.now();
-        d_explicit.step        = (1. - vtheta) * control.step();
-        d_implicit.step        = vtheta * control.step();
+        d_implicit.time = control.now();
+        d_explicit.step = (1. - vtheta) * control.step();
+        d_implicit.step = vtheta * control.step();
         deallog << "Time step:" << d_implicit.time << std::endl;
 
         op_explicit->notify(Events::new_time);

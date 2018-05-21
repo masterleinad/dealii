@@ -40,7 +40,7 @@ test(const unsigned int& size)
 
   auto unpacked = Utilities::unpack<std::vector<BoundingBox<spacedim>>>(buffer);
 
-  unsigned int i  = 0;
+  unsigned int i = 0;
   bool         ok = true;
   for(auto& b : b_boxes)
     {

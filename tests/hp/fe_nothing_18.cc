@@ -306,8 +306,8 @@ ElasticProblem<dim>::setup_system()
   //(1) set active FE indices based in material id...
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
-    endc                          = dof_handler.end();
-  unsigned int n_lagrange_cells   = 0;
+    endc = dof_handler.end();
+  unsigned int n_lagrange_cells = 0;
   unsigned int n_elasticity_cells = 0;
   for(; cell != endc; ++cell) //loop over all cells
     {

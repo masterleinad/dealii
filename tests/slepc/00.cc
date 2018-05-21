@@ -38,7 +38,7 @@ main(int argc, char** argv)
         // Do something simple with PETSc
         logfile << "Using PetscScalar:" << std::endl;
 
-        const PetscScalar pi  = numbers::PI;
+        const PetscScalar pi = numbers::PI;
         const PetscScalar two = 2.;
 
         logfile << "   pi:           " << pi << std::endl

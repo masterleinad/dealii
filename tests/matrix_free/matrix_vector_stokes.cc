@@ -78,8 +78,8 @@ public:
         for(unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             Tensor<2, dim, vector_t> grad_u = velocity.get_gradient(q);
-            vector_t                 pres   = pressure.get_value(q);
-            vector_t                 div    = -trace(grad_u);
+            vector_t                 pres = pressure.get_value(q);
+            vector_t                 div = -trace(grad_u);
             pressure.submit_value(div, q);
 
             // subtract p * I
@@ -201,7 +201,7 @@ test()
                               | update_gradients);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -227,8 +227,8 @@ test()
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 phi_grad_u[k] = fe_values[velocities].gradient(k, q);
-                div_phi_u[k]  = fe_values[velocities].divergence(k, q);
-                phi_p[k]      = fe_values[pressure].value(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                phi_p[k] = fe_values[pressure].value(k, q);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -256,7 +256,7 @@ test()
   for(unsigned int i = 0; i < dim + 1; ++i)
     for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
-        const double val       = -1. + 2. * random_value<double>();
+        const double val = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;
         vec1[i](j)             = val;
       }

@@ -939,7 +939,7 @@ namespace internal
           // for the given size; all results are stored in outer_results[0,n_chunks)
           // (ii) in the SIMD case n_chunks is also a next free index in outer_results[]
           // to which we can write after accumulate_regular() is executed.
-          size_type       n_chunks  = vec_size / 32;
+          size_type       n_chunks = vec_size / 32;
           const size_type remainder = vec_size % 32;
           Assert(remainder == 0
                    || n_chunks < vector_accumulation_recursion_threshold,

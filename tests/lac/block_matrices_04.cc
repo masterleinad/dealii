@@ -266,7 +266,7 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
     UpdateFlags(update_values | update_gradients | update_JxW_values));
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   ::Vector<double>   cell_rhs(dofs_per_cell);
@@ -280,7 +280,7 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
       fe_values.reinit(cell);
 
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
 
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)

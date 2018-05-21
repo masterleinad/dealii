@@ -234,7 +234,7 @@ namespace PETScWrappers
     {
       (void) n;
       Assert(local_size <= n, ExcIndexRange(local_size, 0, n));
-      ghosted       = true;
+      ghosted = true;
       ghost_indices = ghostnodes;
 
       std::vector<size_type> ghostindices;
@@ -329,7 +329,7 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // save the state of out stream
-      std::ios::fmtflags old_flags     = out.flags();
+      std::ios::fmtflags old_flags = out.flags();
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);

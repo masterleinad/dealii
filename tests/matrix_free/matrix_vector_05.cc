@@ -58,7 +58,7 @@ test()
   tria.execute_coarsening_and_refinement();
   for(int i = 0; i < 7 - 2 * fe_degree; ++i)
     {
-      cell                 = tria.begin_active();
+      cell = tria.begin_active();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)

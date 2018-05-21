@@ -115,7 +115,7 @@ LaplaceProblem::assemble_system()
                           update_values | update_gradients | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -131,7 +131,7 @@ LaplaceProblem::assemble_system()
       const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
 
       cell_matrix = 0;
-      cell_rhs    = 0;
+      cell_rhs = 0;
 
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)

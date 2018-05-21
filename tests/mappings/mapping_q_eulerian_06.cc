@@ -36,7 +36,7 @@ std::ofstream logfile("output");
 void
 test(unsigned int degree)
 {
-  const unsigned int           dim      = 1;
+  const unsigned int           dim = 1;
   const unsigned int           spacedim = 1;
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria, 0, 1);

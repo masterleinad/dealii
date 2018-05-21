@@ -109,10 +109,10 @@ namespace Step33
     // defining them in a generic way (rather than by implicit convention)
     // makes our code more flexible and makes it easier to later extend it,
     // for example by adding more components to the equations.
-    static const unsigned int n_components             = dim + 2;
+    static const unsigned int n_components = dim + 2;
     static const unsigned int first_momentum_component = 0;
-    static const unsigned int density_component        = dim;
-    static const unsigned int energy_component         = dim + 1;
+    static const unsigned int density_component = dim;
+    static const unsigned int energy_component = dim + 1;
 
     // When generating graphical output way down in this program, we need to
     // specify the names of the solution variables as well as how the various
@@ -793,11 +793,11 @@ namespace Step33
           solver = gmres;
 
         linear_residual = prm.get_double("residual");
-        max_iterations  = prm.get_integer("max iters");
-        ilut_fill       = prm.get_double("ilut fill");
-        ilut_atol       = prm.get_double("ilut absolute tolerance");
-        ilut_rtol       = prm.get_double("ilut relative tolerance");
-        ilut_drop       = prm.get_double("ilut drop tolerance");
+        max_iterations = prm.get_integer("max iters");
+        ilut_fill = prm.get_double("ilut fill");
+        ilut_atol = prm.get_double("ilut absolute tolerance");
+        ilut_rtol = prm.get_double("ilut relative tolerance");
+        ilut_drop = prm.get_double("ilut drop tolerance");
       }
       prm.leave_subsection();
     }
@@ -857,8 +857,8 @@ namespace Step33
     {
       prm.enter_subsection("refinement");
       {
-        do_refine    = prm.get_bool("refinement");
-        shock_val    = prm.get_double("shock value");
+        do_refine = prm.get_bool("refinement");
+        shock_val = prm.get_double("shock value");
         shock_levels = prm.get_double("shock levels");
       }
       prm.leave_subsection();
@@ -1636,7 +1636,7 @@ namespace Step33
     const std::vector<types::global_dof_index>& dof_indices)
   {
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
-    const unsigned int n_q_points    = fe_v.n_quadrature_points;
+    const unsigned int n_q_points = fe_v.n_quadrature_points;
 
     Table<2, Sacado::Fad::DFad<double>> W(n_q_points,
                                           EulerEquations<dim>::n_components);
@@ -1692,7 +1692,7 @@ namespace Step33
     for(unsigned int q = 0; q < n_q_points; ++q)
       for(unsigned int c = 0; c < EulerEquations<dim>::n_components; ++c)
         {
-          W[q][c]     = 0;
+          W[q][c] = 0;
           W_old[q][c] = 0;
           for(unsigned int d = 0; d < dim; ++d)
             {
@@ -2397,7 +2397,7 @@ namespace Step33
         // happen; however, it is generally a very useful tool when one wants
         // to find out where an error occurred.
         unsigned int nonlin_iter = 0;
-        current_solution         = predictor;
+        current_solution = predictor;
         while(true)
           {
             system_matrix = 0;

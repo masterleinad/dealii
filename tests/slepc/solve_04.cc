@@ -115,7 +115,7 @@ main(int argc, char** argv)
       500, 1e-12 /*1000*PETSC_MACHINE_EPSILON*/, false, false);
 
     const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    unsigned int       dim = (size - 1);
 
     const unsigned n_eigenvalues = 4;
 

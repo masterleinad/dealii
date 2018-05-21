@@ -64,11 +64,11 @@ DEAL_II_NAMESPACE_OPEN
  * @author Luca Heltai, Timo Heister, 2016
  */
 template <int dim,
-          int spacedim         = dim,
-          int chartdim         = dim,
+          int spacedim = dim,
+          int chartdim = dim,
           int intermediate_dim = dim,
-          int dim1             = dim,
-          int dim2             = dim>
+          int dim1 = dim,
+          int dim2 = dim>
 class CompositionManifold : public ChartManifold<dim, spacedim, chartdim>
 {
 public:

@@ -107,7 +107,7 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
   // Build the vector of quadrature points;
   std::vector<Point<dim>> points(vertex_number);
   const double            h = 2. / sub;
-  vertex_number             = 0;
+  vertex_number = 0;
   for(unsigned int iz = 0; iz <= ((dim > 2) ? sub : 0); ++iz)
     for(unsigned int iy = 0; iy <= ((dim > 1) ? sub : 0); ++iy)
       for(unsigned int ix = 0; ix <= sub; ++ix)

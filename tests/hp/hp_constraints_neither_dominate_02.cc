@@ -80,8 +80,8 @@ struct less_than_key
              const std::pair<Point<dim>, Vector<double>>& pair2)
   {
     const double      precision = 1e-3;
-    const Point<dim>& p1        = pair1.first;
-    const Point<dim>& p2        = pair2.first;
+    const Point<dim>& p1 = pair1.first;
+    const Point<dim>& p2 = pair2.first;
 
     for(unsigned int d = 0; d < dim; d++)
       {
@@ -290,7 +290,7 @@ test2cells(const FiniteElement<dim>& fe_0,
     pairs_point_value.begin(), pairs_point_value.end(), less_than_key<dim>());
   for(unsigned int p = 0; p < pairs_point_value.size(); p++)
     {
-      const Point<dim>&     pt  = pairs_point_value[p].first;
+      const Point<dim>&     pt = pairs_point_value[p].first;
       const Vector<double>& val = pairs_point_value[p].second;
 
       Assert(val.size() == n_comp, ExcInternalError());

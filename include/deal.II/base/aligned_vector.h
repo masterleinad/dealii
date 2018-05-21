@@ -820,7 +820,7 @@ AlignedVector<T>::reserve(const size_type size_alloc)
       // copy data in case there was some content before and release the old
       // memory with the function corresponding to the one used for allocating
       std::swap(_data, new_data);
-      _end_data      = _data + old_size;
+      _end_data = _data + old_size;
       _end_allocated = _data + new_size;
       if(_end_data != _data)
         {

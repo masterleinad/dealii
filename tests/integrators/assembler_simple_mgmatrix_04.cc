@@ -169,7 +169,7 @@ test(FiniteElement<dim>& fe)
 
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   std::vector<unsigned int> repititions(dim, 1);
-  repititions[0]      = 2;
+  repititions[0] = 2;
   const Point<dim> p1 = (dim == 1 ? Point<dim>(-1.) :
                                     (dim == 2 ? Point<dim>(-1., -1.) :
                                                 Point<dim>(-1., -1., -1.)));

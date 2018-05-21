@@ -34,7 +34,7 @@ main()
 
     BlockLinearOperator<> op_b(a);
     auto                  op_c = block_operator<BlockVector<double>>(a);
-    op_c                       = a;
+    op_c = a;
 
     auto op_d = block_operator(a);
     op_d      = a;

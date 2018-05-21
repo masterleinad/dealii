@@ -63,7 +63,7 @@ check()
   std::array<unsigned int, dim>              n_subintervals;
   for(unsigned int d = 0; d < dim; ++d)
     {
-      intervals[d]      = std::make_pair(d + 2., 2 * d + 5.);
+      intervals[d] = std::make_pair(d + 2., 2 * d + 5.);
       n_subintervals[d] = d + 1 + d * d;
     }
 

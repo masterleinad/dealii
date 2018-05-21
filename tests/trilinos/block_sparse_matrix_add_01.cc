@@ -76,10 +76,10 @@ test()
     for(unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
       for(unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
         {
-          full_matrix(block_row * 2, block_col * 2)         = 1;
+          full_matrix(block_row * 2, block_col * 2) = 1;
           full_matrix(block_row * 2 + 1, block_col * 2 + 1) = 1.;
-          full_matrix(block_row * 2, block_col * 2 + 1)     = -1;
-          full_matrix(block_row * 2 + 1, block_col * 2)     = -1.;
+          full_matrix(block_row * 2, block_col * 2 + 1) = -1;
+          full_matrix(block_row * 2 + 1, block_col * 2) = -1.;
         }
 
     std::vector<types::global_dof_index> local_row_indices(2

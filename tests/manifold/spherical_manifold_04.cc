@@ -69,7 +69,7 @@ test(const double R)
 
   DoFHandler<dim>::active_cell_iterator cell = dof_handler.begin_active(),
                                         endc = dof_handler.end();
-  const unsigned int n_q_points              = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   double volume = 0.;
   for(; cell != endc; ++cell)

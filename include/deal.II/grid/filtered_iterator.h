@@ -941,7 +941,7 @@ FilteredIterator<BaseIterator>::operator=(const FilteredIterator& fi)
   // BaseIterator but try to go through constructing a new Accessor from fi
   // which fails. Hence, we just use an explicit upcast and call the above-
   // mentioned method.
-  const BaseIterator& bi      = fi;
+  const BaseIterator& bi = fi;
   return              operator=(bi);
 }
 

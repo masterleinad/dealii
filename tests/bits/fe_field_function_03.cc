@@ -59,8 +59,8 @@ test()
           << ", approximation: " << fef.laplacian(p) << std::endl;
 
   //now we want to test the list version
-  Point<dim> p1              = Point<dim>::unit_vector(0);
-  p1                         = p1 * 0.5;
+  Point<dim> p1 = Point<dim>::unit_vector(0);
+  p1 = p1 * 0.5;
   Point<dim>              p2 = p1 * 0.5;
   std::vector<Point<dim>> vec;
   vec.push_back(p1);

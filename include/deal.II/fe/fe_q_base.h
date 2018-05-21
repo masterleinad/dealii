@@ -36,7 +36,7 @@ DEAL_II_NAMESPACE_OPEN
  * Martin Kronbichler, 2008, 2013
  */
 template <class PolynomialType,
-          int dim      = PolynomialType::dimension,
+          int dim = PolynomialType::dimension,
           int spacedim = dim>
 class FE_Q_Base : public FE_Poly<PolynomialType, dim, spacedim>
 {
@@ -198,7 +198,7 @@ public:
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
                      const bool         face_orientation = true,
-                     const bool         face_flip        = false,
+                     const bool         face_flip = false,
                      const bool         face_rotation = false) const override;
 
   /**

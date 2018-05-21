@@ -188,16 +188,16 @@ void
 MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number>& v)
 {
   clear();
-  dof_handlers              = v.dof_handlers;
-  dof_info                  = v.dof_info;
-  constraint_pool_data      = v.constraint_pool_data;
+  dof_handlers = v.dof_handlers;
+  dof_info = v.dof_info;
+  constraint_pool_data = v.constraint_pool_data;
   constraint_pool_row_index = v.constraint_pool_row_index;
-  mapping_info              = v.mapping_info;
-  shape_info                = v.shape_info;
-  cell_level_index          = v.cell_level_index;
-  task_info                 = v.task_info;
-  indices_are_initialized   = v.indices_are_initialized;
-  mapping_is_initialized    = v.mapping_is_initialized;
+  mapping_info = v.mapping_info;
+  shape_info = v.shape_info;
+  cell_level_index = v.cell_level_index;
+  task_info = v.task_info;
+  indices_are_initialized = v.indices_are_initialized;
+  mapping_is_initialized = v.mapping_is_initialized;
 }
 
 template <int dim, typename Number>
@@ -373,7 +373,7 @@ MatrixFree<dim, Number>::internal_reinit(
     unsigned int n_components = 0;
     for(unsigned int no = 0; no < dof_handler.size(); ++no)
       n_components += dof_handler[no]->get_fe()[0].n_base_elements();
-    const unsigned int n_quad             = quad.size();
+    const unsigned int n_quad = quad.size();
     unsigned int       n_fe_in_collection = 0;
     for(unsigned int i = 0; i < n_components; ++i)
       n_fe_in_collection = std::max(n_fe_in_collection,
@@ -589,8 +589,8 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
 {
   cell_level_index.clear();
   dof_handlers.active_dof_handler = DoFHandlers::usual;
-  dof_handlers.level              = additional_data.level_mg_handler;
-  dof_handlers.n_dof_handlers     = dof_handler.size();
+  dof_handlers.level = additional_data.level_mg_handler;
+  dof_handlers.n_dof_handlers = dof_handler.size();
   dof_handlers.dof_handler.resize(dof_handlers.n_dof_handlers);
   for(unsigned int no = 0; no < dof_handlers.n_dof_handlers; ++no)
     dof_handlers.dof_handler[no] = dof_handler[no];
@@ -613,7 +613,7 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
     {
       if(n_mpi_procs == 1)
         cell_level_index.reserve(tria.n_active_cells());
-      typename Triangulation<dim>::cell_iterator cell     = tria.begin(0),
+      typename Triangulation<dim>::cell_iterator cell = tria.begin(0),
                                                  end_cell = tria.end(0);
       // For serial Triangulations always take all cells
       const unsigned int subdomain_id
@@ -726,7 +726,7 @@ MatrixFree<dim, Number>::initialize_indices(
                           additional_data,
                           cell_level_index);
 
-  const unsigned int n_fe           = dof_handlers.n_dof_handlers;
+  const unsigned int n_fe = dof_handlers.n_dof_handlers;
   const unsigned int n_active_cells = cell_level_index.size();
 
   AssertDimension(n_active_cells, cell_level_index.size());
@@ -747,7 +747,7 @@ MatrixFree<dim, Number>::initialize_indices(
       if(dof_handlers.active_dof_handler == DoFHandlers::hp)
         {
           const hp::DoFHandler<dim>*   hpdof = dof_handlers.hp_dof_handler[no];
-          const hp::FECollection<dim>& fe    = hpdof->get_fe_collection();
+          const hp::FECollection<dim>& fe = hpdof->get_fe_collection();
           for(unsigned int f = 0; f < fe.size(); ++f)
             fes.push_back(&fe[f]);
 
@@ -779,7 +779,7 @@ MatrixFree<dim, Number>::initialize_indices(
           // cache number of finite elements and dofs_per_cell
           dof_info[no].dofs_per_cell.push_back(fe.dofs_per_cell);
           dof_info[no].dofs_per_face.push_back(fe.dofs_per_face);
-          dof_info[no].dimension       = dim;
+          dof_info[no].dimension = dim;
           dof_info[no].n_base_elements = fe.n_base_elements();
           dof_info[no].n_components.resize(dof_info[no].n_base_elements);
           dof_info[no].start_components.resize(dof_info[no].n_base_elements
@@ -831,7 +831,7 @@ MatrixFree<dim, Number>::initialize_indices(
       const unsigned int n_components_total
         = dof_info[no].start_components.back();
       dof_info[no].row_starts.resize(n_active_cells * n_components_total + 1);
-      dof_info[no].row_starts[0].first  = 0;
+      dof_info[no].row_starts[0].first = 0;
       dof_info[no].row_starts[0].second = 0;
       dof_info[no].dof_indices.reserve(
         (n_active_cells * dof_info[no].dofs_per_cell[0] * 3) / 2);
@@ -1497,7 +1497,7 @@ MatrixFree<dim, Number>::initialize_indices(
                           const unsigned int p
                             = face_info.faces[f].cells_exterior[v];
                           const unsigned int stride = 1;
-                          unsigned int       i      = 0;
+                          unsigned int       i = 0;
                           for(unsigned int e = 0;
                               e < dof_info[no].n_base_elements;
                               ++e)
@@ -1610,7 +1610,7 @@ MatrixFree<dim, Number>::initialize_indices(
                           const unsigned int p
                             = face_info.faces[f].cells_exterior[v];
                           const unsigned int stride = 1;
-                          unsigned int       i      = 0;
+                          unsigned int       i = 0;
                           for(unsigned int e = 0;
                               e < dof_info[no].n_base_elements;
                               ++e)
@@ -1693,7 +1693,7 @@ MatrixFree<dim, Number>::clear()
   dof_handlers.hp_dof_handler.clear();
   face_info.clear();
   indices_are_initialized = false;
-  mapping_is_initialized  = false;
+  mapping_is_initialized = false;
 }
 
 #ifdef DEAL_II_WITH_THREADS

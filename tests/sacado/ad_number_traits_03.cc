@@ -86,13 +86,13 @@ main()
   deallog.push("Native");
   {
     // Extract value and derivatives
-    const double r       = rfad.val().val(); // r
-    const double drda    = rfad.dx(0).val(); // dr/da
-    const double drdb    = rfad.dx(1).val(); // dr/db
-    const double d2rda2  = rfad.dx(0).dx(0); // d^2r/da^2
+    const double r = rfad.val().val();       // r
+    const double drda = rfad.dx(0).val();    // dr/da
+    const double drdb = rfad.dx(1).val();    // dr/db
+    const double d2rda2 = rfad.dx(0).dx(0);  // d^2r/da^2
     const double d2rdadb = rfad.dx(0).dx(1); // d^2r/dadb
     const double d2rdbda = rfad.dx(1).dx(0); // d^2r/dbda
-    const double d2rdb2  = rfad.dx(1).dx(1); // d^2/db^2
+    const double d2rdb2 = rfad.dx(1).dx(1);  // d^2/db^2
 
     print(r, drda, drdb, d2rda2, d2rdb2, d2rdadb, d2rdbda);
   }

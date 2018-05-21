@@ -90,8 +90,8 @@ main()
           B.diag_element(i) = 2.0 * (i + 1);
           C.diag_element(i) = 3.0 * (i + 1);
           D.diag_element(i) = 4.0 * (i + 1);
-          y(i)              = 6.0 * (i + 1);
-          g(i)              = 2.0 * (i + 1);
+          y(i) = 6.0 * (i + 1);
+          g(i) = 2.0 * (i + 1);
         }
 
       const auto lo_A = linear_operator(A);
@@ -105,7 +105,7 @@ main()
       preconditioner_A.initialize(A);
       const auto lo_A_inv = inverse_operator(lo_A, solver_A, preconditioner_A);
 
-      const auto lo_S   = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
+      const auto lo_S = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
       const auto lo_S_t = transpose_operator(lo_S);
 
       const Vector<double> g1 = lo_S * y;

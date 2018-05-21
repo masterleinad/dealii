@@ -52,7 +52,7 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
       CellData<3> cell;
       for(unsigned int j = 0; j < 4; ++j)
         {
-          cell.vertices[j]     = connectivity[i][j];
+          cell.vertices[j] = connectivity[i][j];
           cell.vertices[j + 4] = connectivity[i][j] + 6;
         }
       cells.push_back(cell);

@@ -443,7 +443,7 @@ namespace SLEPcWrappers
      */
     SolverArnoldi(SolverControl&        cn,
                   const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+                  const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -489,7 +489,7 @@ namespace SLEPcWrappers
      */
     SolverLanczos(SolverControl&        cn,
                   const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                  const AdditionalData& data             = AdditionalData());
+                  const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -523,7 +523,7 @@ namespace SLEPcWrappers
      */
     SolverPower(SolverControl&        cn,
                 const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                const AdditionalData& data             = AdditionalData());
+                const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -602,7 +602,7 @@ namespace SLEPcWrappers
      */
     SolverJacobiDavidson(SolverControl&  cn,
                          const MPI_Comm& mpi_communicator = PETSC_COMM_SELF,
-                         const AdditionalData& data       = AdditionalData());
+                         const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -636,7 +636,7 @@ namespace SLEPcWrappers
      */
     SolverLAPACK(SolverControl&        cn,
                  const MPI_Comm&       mpi_communicator = PETSC_COMM_SELF,
-                 const AdditionalData& data             = AdditionalData());
+                 const AdditionalData& data = AdditionalData());
 
   protected:
     /**

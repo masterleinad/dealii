@@ -306,7 +306,7 @@ LogStream::depth_console(const unsigned int n)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
   const unsigned int         h = std_depth;
-  std_depth                    = n;
+  std_depth = n;
   return h;
 }
 
@@ -315,7 +315,7 @@ LogStream::depth_file(const unsigned int n)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
   const unsigned int         h = file_depth;
-  file_depth                   = n;
+  file_depth = n;
   return h;
 }
 
@@ -324,7 +324,7 @@ LogStream::log_thread_id(const bool flag)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
   const bool                 h = print_thread_id;
-  print_thread_id              = flag;
+  print_thread_id = flag;
   return h;
 }
 
@@ -332,7 +332,7 @@ std::stack<std::string>&
 LogStream::get_prefixes() const
 {
 #ifdef DEAL_II_WITH_THREADS
-  bool                     exists         = false;
+  bool                     exists = false;
   std::stack<std::string>& local_prefixes = prefixes.get(exists);
 
   // If this is a new locally stored stack, copy the "blessed" prefixes
@@ -364,7 +364,7 @@ LogStream::get_prefixes() const
 void
 LogStream::print_line_head()
 {
-  const std::string& head   = get_prefix();
+  const std::string& head = get_prefix();
   const unsigned int thread = Threads::this_thread_id();
 
   if(get_prefixes().size() <= std_depth)

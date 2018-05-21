@@ -27,7 +27,7 @@ main()
   initlog();
 
   const unsigned int spacedim = 2;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int dim = spacedim - 1;
 
   for(unsigned int degree = 0; degree < 3; ++degree)
     {

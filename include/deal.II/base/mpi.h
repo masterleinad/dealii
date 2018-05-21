@@ -688,9 +688,9 @@ namespace Utilities
         unsigned int i = 0;
         for(const auto& rank_obj : objects_to_send)
           {
-            const auto& rank   = rank_obj.first;
+            const auto& rank = rank_obj.first;
             buffers_to_send[i] = Utilities::pack(rank_obj.second);
-            const int ierr     = MPI_Isend(buffers_to_send[i].data(),
+            const int ierr = MPI_Isend(buffers_to_send[i].data(),
                                        buffers_to_send[i].size(),
                                        MPI_CHAR,
                                        rank,
@@ -814,7 +814,7 @@ namespace Utilities
 
       Assert(root_process < n_procs, ExcIndexRange(root_process, 0, n_procs));
 
-      std::vector<char> buffer       = Utilities::pack(object_to_send);
+      std::vector<char> buffer = Utilities::pack(object_to_send);
       int               n_local_data = buffer.size();
 
       // Vector to store the size of loc_data_array for every process

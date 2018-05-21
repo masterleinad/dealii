@@ -708,7 +708,7 @@ namespace DoFRenumbering
     std::vector<std::vector<unsigned int>> component_list(fe_collection.size());
     for(unsigned int f = 0; f < fe_collection.size(); ++f)
       {
-        const FiniteElement<dim, spacedim>& fe            = fe_collection[f];
+        const FiniteElement<dim, spacedim>& fe = fe_collection[f];
         const unsigned int                  dofs_per_cell = fe.dofs_per_cell;
         component_list[f].resize(dofs_per_cell);
         for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -1424,7 +1424,7 @@ namespace DoFRenumbering
       = std::count(selected_dofs.begin(), selected_dofs.end(), false);
 
     types::global_dof_index next_unselected = 0;
-    types::global_dof_index next_selected   = n_selected_dofs;
+    types::global_dof_index next_selected = n_selected_dofs;
     for(types::global_dof_index i = 0; i < n_dofs; ++i)
       if(selected_dofs[i] == false)
         {
@@ -1464,7 +1464,7 @@ namespace DoFRenumbering
       = std::count(selected_dofs.begin(), selected_dofs.end(), false);
 
     unsigned int next_unselected = 0;
-    unsigned int next_selected   = n_selected_dofs;
+    unsigned int next_selected = n_selected_dofs;
     for(unsigned int i = 0; i < n_dofs; ++i)
       if(selected_dofs[i] == false)
         {
@@ -1823,7 +1823,7 @@ namespace DoFRenumbering
         const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
         std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
         typename DoFHandlerType::level_cell_iterator begin = dof.begin(level);
-        typename DoFHandlerType::level_cell_iterator end   = dof.end(level);
+        typename DoFHandlerType::level_cell_iterator end = dof.end(level);
         for(; begin != end; ++begin)
           {
             const typename Triangulation<

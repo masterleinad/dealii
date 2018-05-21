@@ -64,8 +64,8 @@ test_1d()
   FESeries::Fourier<dim> fourier(N, fe_collection, q_collection);
 
   Vector<double> local_dof_values(2);
-  local_dof_values[0]                     = 0;
-  local_dof_values[1]                     = 1.;
+  local_dof_values[0] = 0;
+  local_dof_values[1] = 1.;
   const unsigned int cell_active_fe_index = 0;
 
   Table<dim, std::complex<double>> fourier_coefficients;

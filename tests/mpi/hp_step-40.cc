@@ -185,7 +185,7 @@ namespace Step40
           const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
 
           const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
-          const unsigned int n_q_points    = fe_values.get_quadrature().size();
+          const unsigned int n_q_points = fe_values.get_quadrature().size();
 
           cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
           cell_rhs.reinit(dofs_per_cell);

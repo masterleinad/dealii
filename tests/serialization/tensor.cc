@@ -25,7 +25,7 @@
 void
 test()
 {
-  const unsigned int dim  = 3;
+  const unsigned int dim = 3;
   const unsigned int rank = 2;
 
   double            a1[3][3] = {{1., 2., 3.}, {4., 5., 6.}, {7., 8., 9.}};

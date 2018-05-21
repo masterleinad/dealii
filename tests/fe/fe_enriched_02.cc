@@ -103,7 +103,7 @@ test1()
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      const unsigned int                     n_q_points    = quadrature.size();
+      const unsigned int                     n_q_points = quadrature.size();
       const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();

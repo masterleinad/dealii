@@ -82,7 +82,7 @@ check(const unsigned int        level,
   SparseMatrix<double> A(A_pattern);
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-  const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
+  const typename DoFHandler<dim>::cell_iterator  end = dof.end();
 
   for(; cell != end; ++cell)
     {
@@ -96,13 +96,13 @@ check(const unsigned int        level,
 
           for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
-              const double v   = fe.shape_value(i, k);
+              const double v = fe.shape_value(i, k);
               double       rhs = dx * v * (function[k]);
 
               f(global_dofs[i]) += rhs;
               for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
-                  const double u  = fe.shape_value(j, k);
+                  const double u = fe.shape_value(j, k);
                   double       el = dx * (u * v /* + (Du*Dv) */);
                   A.add(global_dofs[i], global_dofs[j], el);
                 }
@@ -147,7 +147,7 @@ check(const unsigned int        level,
       for(unsigned int k = 0; k < quadrature.size(); ++k)
         {
           const double dx = fe.JxW(k);
-          double       e  = u_local[k];
+          double       e = u_local[k];
           if(errors)
             e -= function[k];
           l2 += dx * e * e;

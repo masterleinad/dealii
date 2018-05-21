@@ -1132,11 +1132,11 @@ namespace DoFTools
     const FaceIterator&                          face_1,
     const typename identity<FaceIterator>::type& face_2,
     dealii::ConstraintMatrix&                    constraint_matrix,
-    const ComponentMask&             component_mask   = ComponentMask(),
+    const ComponentMask&             component_mask = ComponentMask(),
     const bool                       face_orientation = true,
-    const bool                       face_flip        = false,
-    const bool                       face_rotation    = false,
-    const FullMatrix<double>&        matrix           = FullMatrix<double>(),
+    const bool                       face_flip = false,
+    const bool                       face_rotation = false,
+    const FullMatrix<double>&        matrix = FullMatrix<double>(),
     const std::vector<unsigned int>& first_vector_components
     = std::vector<unsigned int>());
 
@@ -1971,10 +1971,10 @@ namespace DoFTools
                       const DoFHandlerType& dof_handler,
                       const unsigned int    level,
                       const bool            interior_dofs_only,
-                      const bool            boundary_patches       = false,
+                      const bool            boundary_patches = false,
                       const bool            level_boundary_patches = false,
-                      const bool            single_cell_patches    = false,
-                      const bool            invert_vertex_mapping  = false);
+                      const bool            single_cell_patches = false,
+                      const bool            invert_vertex_mapping = false);
 
   /**
    * Same as above but allows boundary dofs on blocks to be excluded individually.
@@ -1995,10 +1995,10 @@ namespace DoFTools
                       const DoFHandlerType& dof_handler,
                       const unsigned int    level,
                       const BlockMask&      exclude_boundary_dofs = BlockMask(),
-                      const bool            boundary_patches      = false,
+                      const bool            boundary_patches = false,
                       const bool            level_boundary_patches = false,
-                      const bool            single_cell_patches    = false,
-                      const bool            invert_vertex_mapping  = false);
+                      const bool            single_cell_patches = false,
+                      const bool            invert_vertex_mapping = false);
 
   /**
    * Create an incidence matrix that for every cell on a given level of a

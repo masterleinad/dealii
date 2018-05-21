@@ -39,7 +39,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   {
     const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    unsigned int       dim = (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl << std::endl;
 

@@ -244,7 +244,7 @@ HelmholtzProblem<dim>::assemble_system()
   hp::QCollection<dim>     quadrature_formula(QGauss<dim>(3));
   hp::QCollection<dim - 1> face_quadrature_formula(QGauss<dim - 1>(3));
 
-  const unsigned int n_q_points      = quadrature_formula[0].size();
+  const unsigned int n_q_points = quadrature_formula[0].size();
   const unsigned int n_face_q_points = face_quadrature_formula[0].size();
 
   const unsigned int dofs_per_cell = (*fe)[0].dofs_per_cell;
@@ -428,7 +428,7 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
   const double Linfty_error = difference_per_cell.linfty_norm();
 
   const unsigned int n_active_cells = triangulation.n_active_cells();
-  const unsigned int n_dofs         = dof_handler.n_dofs();
+  const unsigned int n_dofs = dof_handler.n_dofs();
 
   deallog << "Cycle " << cycle << ':' << std::endl
           << "   Number of active cells:       " << n_active_cells << std::endl

@@ -93,9 +93,9 @@ public:
 };
 
 template <int dim,
-          int fe_degree            = 2,
-          int n_q_points           = fe_degree + 1,
-          typename NumberType      = double,
+          int fe_degree = 2,
+          int n_q_points = fe_degree + 1,
+          typename NumberType = double,
           typename LevelNumberType = NumberType>
 void
 test(const unsigned int n_ref = 0)
@@ -105,7 +105,7 @@ test(const unsigned int n_ref = 0)
 
   deallog << "dim=" << dim << std::endl;
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int myid = Utilities::MPI::this_mpi_process(mpi_communicator);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   deallog << "numproc=" << numproc << std::endl;
@@ -259,7 +259,7 @@ test(const unsigned int n_ref = 0)
         mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
         = MatrixFree<dim, LevelNumberType>::AdditionalData::partition_color;
-      mg_additional_data.level_mg_handler     = level;
+      mg_additional_data.level_mg_handler = level;
       mg_additional_data.mapping_update_flags = update_values | update_gradients
                                                 | update_JxW_values
                                                 | update_quadrature_points;

@@ -230,8 +230,8 @@ namespace Step35
       prm.enter_subsection("Physical data");
       {
         initial_time = prm.get_double("initial_time");
-        final_time   = prm.get_double("final_time");
-        Reynolds     = prm.get_double("Reynolds");
+        final_time = prm.get_double("final_time");
+        Reynolds = prm.get_double("Reynolds");
       }
       prm.leave_subsection();
 
@@ -244,18 +244,18 @@ namespace Step35
       prm.enter_subsection("Space discretization");
       {
         n_global_refines = prm.get_integer("n_of_refines");
-        pressure_degree  = prm.get_integer("pressure_fe_degree");
+        pressure_degree = prm.get_integer("pressure_fe_degree");
       }
       prm.leave_subsection();
 
       prm.enter_subsection("Data solve velocity");
       {
         vel_max_iterations = prm.get_integer("max_iterations");
-        vel_eps            = prm.get_double("eps");
-        vel_Krylov_size    = prm.get_integer("Krylov_size");
-        vel_off_diagonals  = prm.get_integer("off_diagonals");
-        vel_diag_strength  = prm.get_double("diag_strength");
-        vel_update_prec    = prm.get_integer("update_prec");
+        vel_eps = prm.get_double("eps");
+        vel_Krylov_size = prm.get_integer("Krylov_size");
+        vel_off_diagonals = prm.get_integer("off_diagonals");
+        vel_diag_strength = prm.get_double("diag_strength");
+        vel_update_prec = prm.get_integer("update_prec");
       }
       prm.leave_subsection();
 
@@ -346,7 +346,7 @@ namespace Step35
       if(this->comp == 0)
         {
           const double Um = 1.5;
-          const double H  = 4.1;
+          const double H = 4.1;
           return 4. * Um * p(1) * (H - p(1)) / (H * H);
         }
       else
@@ -774,7 +774,7 @@ namespace Step35
     VectorTools::interpolate(dof_handler_pressure, pres, pres_n_minus_1);
     pres.advance_time(dt);
     VectorTools::interpolate(dof_handler_pressure, pres, pres_n);
-    phi_n         = 0.;
+    phi_n = 0.;
     phi_n_minus_1 = 0.;
     for(unsigned int d = 0; d < dim; ++d)
       {
@@ -1282,8 +1282,8 @@ namespace Step35
     typename DoFHandler<dim>::active_cell_iterator joint_cell
       = joint_dof_handler.begin_active(),
       joint_endc = joint_dof_handler.end(),
-      vel_cell   = dof_handler_velocity.begin_active(),
-      pres_cell  = dof_handler_pressure.begin_active();
+      vel_cell = dof_handler_velocity.begin_active(),
+      pres_cell = dof_handler_pressure.begin_active();
     for(; joint_cell != joint_endc; ++joint_cell, ++vel_cell, ++pres_cell)
       {
         joint_cell->get_dof_indices(loc_joint_dof_indices);

@@ -276,7 +276,7 @@ PolynomialSpace<dim>::PolynomialSpace(const std::vector<Pol>& pols)
   // set_numbering function
   for(unsigned int i = 0; i < n_pols; ++i)
     {
-      index_map[i]         = i;
+      index_map[i] = i;
       index_map_inverse[i] = i;
     }
 }

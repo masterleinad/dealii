@@ -30,8 +30,8 @@ test(PETScWrappers::MatrixBase& m)
 
   // build a tri-diagonal pattern
   double             norm_sqr = 0;
-  unsigned int       nnz      = 0;
-  const unsigned int N        = m.m();
+  unsigned int       nnz = 0;
+  const unsigned int N = m.m();
   for(unsigned int i = 0; i < N; ++i)
     {
       if(i >= 5)

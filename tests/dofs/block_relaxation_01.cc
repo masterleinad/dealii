@@ -41,9 +41,9 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
                    const Quadrature<dim>& quadrature_formula,
                    SparseMatrix<double>&  system_matrix)
 {
-  const FiniteElement<dim>& fe     = dof_handler.get_fe();
+  const FiniteElement<dim>& fe = dof_handler.get_fe();
   const unsigned int        degree = fe.degree;
-  system_matrix                    = 0;
+  system_matrix = 0;
 
   ConstraintMatrix constraints;
   constraints.close();
@@ -52,7 +52,7 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
                           update_values | update_quadrature_points
                             | update_JxW_values | update_gradients);
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   const FEValuesExtractors::Vector     velocities(0);
@@ -73,8 +73,8 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
           for(unsigned int k = 0; k < dofs_per_cell; ++k)
             {
               symgrad_phi_u[k] = fe_values[velocities].symmetric_gradient(k, q);
-              div_phi_u[k]     = fe_values[velocities].divergence(k, q);
-              phi_p[k]         = fe_values[pressure].value(k, q);
+              div_phi_u[k] = fe_values[velocities].divergence(k, q);
+              phi_p[k] = fe_values[pressure].value(k, q);
             }
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)

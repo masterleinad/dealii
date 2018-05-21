@@ -63,7 +63,7 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::initialize(
 
   clear();
   //  Assert (M.m() == M.n(), ExcNotQuadratic());
-  A               = &M;
+  A = &M;
   additional_data = &parameters;
   this->inversion = parameters.inversion;
 

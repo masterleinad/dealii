@@ -190,7 +190,7 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                 for(unsigned int i = 0; i < n; ++i)
                   {
                     unsigned int k = n * i - j + n - 1 + n * n * iz;
-                    numbers[l++]   = k;
+                    numbers[l++] = k;
                   }
             break;
           // Rotate xy-plane
@@ -201,7 +201,7 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                 for(unsigned int ix = 0; ix < n; ++ix)
                   {
                     unsigned int k = n * ix - iy + n - 1 + n * n * iz;
-                    numbers[k]     = l++;
+                    numbers[k] = l++;
                   }
             break;
           // Rotate yz-plane
@@ -213,7 +213,7 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                 for(unsigned int ix = 0; ix < n; ++ix)
                   {
                     unsigned int k = n * (n * iy - iz + n - 1) + ix;
-                    numbers[l++]   = k;
+                    numbers[l++] = k;
                   }
             break;
           // Rotate yz-plane
@@ -225,7 +225,7 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                 for(unsigned int ix = 0; ix < n; ++ix)
                   {
                     unsigned int k = n * (n * iy - iz + n - 1) + ix;
-                    numbers[k]     = l++;
+                    numbers[k] = l++;
                   }
             break;
           default:

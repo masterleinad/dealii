@@ -287,7 +287,7 @@ DEAL_II_NAMESPACE_OPEN
  * 2006, Wolfgang Bangerth 2014
  */
 template <int dim,
-          typename VectorType     = Vector<double>,
+          typename VectorType = Vector<double>,
           typename DoFHandlerType = DoFHandler<dim>>
 class SolutionTransfer
 {

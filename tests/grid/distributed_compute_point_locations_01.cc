@@ -73,9 +73,9 @@ test_compute_pt_loc(unsigned int n_points)
   // Testing in serial against the serial version
   auto cell_qpoint_map = GridTools::compute_point_locations(cache, points);
 
-  auto&  serial_cells   = std::get<0>(cell_qpoint_map);
+  auto&  serial_cells = std::get<0>(cell_qpoint_map);
   auto&  serial_qpoints = std::get<1>(cell_qpoint_map);
-  size_t n_cells        = std::get<0>(output_tuple).size();
+  size_t n_cells = std::get<0>(output_tuple).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 
@@ -83,11 +83,11 @@ test_compute_pt_loc(unsigned int n_points)
   // the serial one
   for(unsigned int c = 0; c < n_cells; ++c)
     {
-      auto& cell            = std::get<0>(output_tuple)[c];
-      auto& quad            = std::get<1>(output_tuple)[c];
-      auto& local_map       = std::get<2>(output_tuple)[c];
+      auto& cell = std::get<0>(output_tuple)[c];
+      auto& quad = std::get<1>(output_tuple)[c];
+      auto& local_map = std::get<2>(output_tuple)[c];
       auto& original_points = std::get<3>(output_tuple)[c];
-      auto& ranks           = std::get<4>(output_tuple)[c];
+      auto& ranks = std::get<4>(output_tuple)[c];
 
       auto pos_cell = std::find(serial_cells.begin(), serial_cells.end(), cell);
       for(auto r : ranks)

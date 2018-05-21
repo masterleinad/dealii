@@ -1072,7 +1072,7 @@ namespace
       Assert(coarsen_list[i].p.which_tree >= coarsen_list[i - 1].p.which_tree,
              ExcInternalError());
 
-    current_refine_pointer  = refine_list.begin();
+    current_refine_pointer = refine_list.begin();
     current_coarsen_pointer = coarsen_list.begin();
   }
 
@@ -1946,8 +1946,8 @@ namespace parallel
       // clear all of the callback data, as explained in the documentation of
       // register_data_attach()
       cell_attached_data.cumulative_fixed_data_size = 0;
-      cell_attached_data.n_attached_datas           = 0;
-      cell_attached_data.n_attached_deserialize     = attached_count;
+      cell_attached_data.n_attached_datas = 0;
+      cell_attached_data.n_attached_deserialize = attached_count;
 
 #  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
       parallel_forest = dealii::internal::p4est::functions<dim>::load_ext(
@@ -2337,10 +2337,10 @@ namespace parallel
             it != tria.get_periodic_face_map().end();
             ++it)
           {
-            const cell_iterator& cell_1           = it->first.first;
-            const unsigned int   face_no_1        = it->first.second;
-            const cell_iterator& cell_2           = it->second.first.first;
-            const unsigned int   face_no_2        = it->second.first.second;
+            const cell_iterator& cell_1 = it->first.first;
+            const unsigned int   face_no_1 = it->first.second;
+            const cell_iterator& cell_2 = it->second.first.first;
+            const unsigned int   face_no_2 = it->second.first.second;
             const std::bitset<3> face_orientation = it->second.second;
 
             if(cell_1->level() == cell_2->level())
@@ -2494,7 +2494,7 @@ namespace parallel
                 if(cell->active())
                   continue;
 
-                const unsigned int n_children       = cell->n_children();
+                const unsigned int n_children = cell->n_children();
                 unsigned int       flagged_children = 0;
                 for(unsigned int child = 0; child < n_children; ++child)
                   if(cell->child(child)->active()
@@ -2679,7 +2679,7 @@ namespace parallel
           // recurse.
           typename dealii::internal::p4est::types<dim>::quadrant* quadr;
           types::subdomain_id                                  ghost_owner = 0;
-          typename dealii::internal::p4est::types<dim>::topidx ghost_tree  = 0;
+          typename dealii::internal::p4est::types<dim>::topidx ghost_tree = 0;
 
           for(unsigned int g_idx = 0; g_idx < parallel_ghost->ghosts.elem_count;
               ++g_idx)
@@ -3291,7 +3291,7 @@ namespace parallel
           receive.resize(len);
 
           char* ptr = receive.data();
-          ierr      = MPI_Recv(ptr,
+          ierr = MPI_Recv(ptr,
                           len,
                           MPI_BYTE,
                           status.MPI_SOURCE,
@@ -3522,10 +3522,10 @@ namespace parallel
             it != this->get_periodic_face_map().end();
             ++it)
           {
-            const cell_iterator&  cell_1           = it->first.first;
-            const unsigned int    face_no_1        = it->first.second;
-            const cell_iterator&  cell_2           = it->second.first.first;
-            const unsigned int    face_no_2        = it->second.first.second;
+            const cell_iterator&  cell_1 = it->first.first;
+            const unsigned int    face_no_1 = it->first.second;
+            const cell_iterator&  cell_2 = it->second.first.first;
+            const unsigned int    face_no_2 = it->second.first.second;
             const std::bitset<3>& face_orientation = it->second.second;
 
             if(cell_1->level() == level && cell_2->level() == level)
@@ -3579,8 +3579,8 @@ namespace parallel
         {
           const cell_iterator first_cell  = it->cell[0];
           const cell_iterator second_cell = it->cell[1];
-          const unsigned int  face_left   = it->face_idx[0];
-          const unsigned int  face_right  = it->face_idx[1];
+          const unsigned int  face_left = it->face_idx[0];
+          const unsigned int  face_right = it->face_idx[1];
 
           //respective cells of the matching faces in p4est
           const unsigned int tree_left
@@ -3603,7 +3603,7 @@ namespace parallel
           else
             {
               const unsigned int  face_idx_list[] = {face_left, face_right};
-              const cell_iterator cell_list[]     = {first_cell, second_cell};
+              const cell_iterator cell_list[] = {first_cell, second_cell};
               unsigned int        lower_idx, higher_idx;
               if(face_left <= face_right)
                 {

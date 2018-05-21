@@ -65,7 +65,7 @@ DEAL_II_NAMESPACE_OPEN
  */
 
 template <class PolynomialType,
-          int dim      = PolynomialType::dimension,
+          int dim = PolynomialType::dimension,
           int spacedim = dim>
 class FE_Poly : public FiniteElement<dim, spacedim>
 {

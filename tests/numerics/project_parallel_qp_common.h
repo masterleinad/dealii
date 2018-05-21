@@ -172,7 +172,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
                                   | update_JxW_values);
 
         const unsigned int  dofs_per_cell = fe.dofs_per_cell;
-        const unsigned int  n_q_points    = quadrature_formula_error.size();
+        const unsigned int  n_q_points = quadrature_formula_error.size();
         std::vector<double> values(n_q_points);
 
         typename DoFHandler<dim>::active_cell_iterator cell

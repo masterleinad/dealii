@@ -844,7 +844,7 @@ public:
   VectorFunctionFromTensorFunction(
     const TensorFunction<1, dim, RangeNumberType>& tensor_function,
     const unsigned int                             selected_component = 0,
-    const unsigned int                             n_components       = dim);
+    const unsigned int                             n_components = dim);
 
   /**
    * This destructor is defined as virtual so as to coincide with all other

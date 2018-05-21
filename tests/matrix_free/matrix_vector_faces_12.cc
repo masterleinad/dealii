@@ -30,7 +30,7 @@ std::ofstream logfile("output");
 double
 f_x(double x_m)
 {
-  double x   = x_m * 1000.0;
+  double x = x_m * 1000.0;
   double y_m = 0.0;
 
   if(x <= 9.0)
@@ -77,18 +77,18 @@ f_x(double x_m)
 double
 gamma_x(double x_m)
 {
-  double xmod  = x_m / 0.028;
+  double xmod = x_m / 0.028;
   double gamma = 1.;
   if(xmod > 6.3 && xmod <= 8.3)
     {
-      xmod  = 8.3 - xmod;
+      xmod = 8.3 - xmod;
       gamma = (-0.02 * std::cos(xmod * numbers::PI) + 1.02);
     }
   else if(
     xmod
     > 8.3) //move mesh closer to the wall to get a lower y+ value at the peak
     {
-      xmod  = 9. - xmod;
+      xmod = 9. - xmod;
       gamma = (-0.05 * std::cos(xmod * numbers::PI * 2. / 0.7) + 1.05);
     }
   return 1.0 * gamma;
@@ -139,8 +139,8 @@ public:
     // y component
     unsigned int iter    = 0;
     unsigned int maxiter = 100;
-    double       tol     = 1.0e-14;
-    double       eps     = 1.;
+    double       tol = 1.0e-14;
+    double       eps = 1.;
 
     // get a good estimate for Y (pullBack without stretching the cells)
     double Y = 0.0;
@@ -159,8 +159,8 @@ public:
             const double arg
               = gamma * (2.0 * (1.0 - (Y - y_FoR) / y_max) - 1.0);
             const double arg2 = gamma * (2.0 * ((Y - y_FoR) / y_max) - 1.0);
-            const double t_y  = std::tanh(arg) / tanh_gamma;
-            const double s_y  = std::tanh(arg2) / tanh_gamma;
+            const double t_y = std::tanh(arg) / tanh_gamma;
+            const double s_y = std::tanh(arg2) / tanh_gamma;
             const double ts_y = 1.0 / (std::cosh(arg) * std::cosh(arg)) * gamma
                                 * (-2.0 / y_max) / tanh_gamma;
             const double ss_y = 1.0 / (std::cosh(arg2) * std::cosh(arg2))
@@ -172,7 +172,7 @@ public:
                     / (y_max / 2.0 * ss_y + 0.5 * ts_y * f_x(x[0]));
 
             eps = std::abs(Yn - Y);
-            Y   = Yn;
+            Y = Yn;
             iter++;
           }
         AssertThrow(
@@ -189,8 +189,8 @@ public:
             const double arg
               = gamma * (2.0 * (1.0 - (Y - y_FoR) / y_max) - 1.0);
             const double arg2 = gamma * (2.0 * ((Y - y_FoR) / y_max) - 1.0);
-            const double t_y  = std::tanh(arg) / tanh_gamma;
-            const double s_y  = std::tanh(arg2) / tanh_gamma;
+            const double t_y = std::tanh(arg) / tanh_gamma;
+            const double s_y = std::tanh(arg2) / tanh_gamma;
             const double ts_y = 1.0 / (std::cosh(arg) * std::cosh(arg)) * gamma
                                 * (-2.0 / y_max) / tanh_gamma;
             const double ss_y = 1.0 / (std::cosh(arg2) * std::cosh(arg2))
@@ -202,7 +202,7 @@ public:
                     / (y_max / 2.0 * ss_y + 0.5 * ts_y * f_x(x_max - x[0]));
 
             eps = std::abs(Yn - Y);
-            Y   = Yn;
+            Y = Yn;
             iter++;
           }
         AssertThrow(

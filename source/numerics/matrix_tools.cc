@@ -529,7 +529,7 @@ namespace MatrixTools
     // we only compute this value lazily the
     // first time we need it.
     number             average_diagonal = 0;
-    const unsigned int n_local_dofs     = local_dof_indices.size();
+    const unsigned int n_local_dofs = local_dof_indices.size();
     for(unsigned int i = 0; i < n_local_dofs; ++i)
       {
         const typename std::map<types::global_dof_index, number>::const_iterator

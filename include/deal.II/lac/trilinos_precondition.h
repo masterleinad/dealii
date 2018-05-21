@@ -286,9 +286,9 @@ namespace TrilinosWrappers
        * Constructor. By default, set the damping parameter to one, and do not
        * modify the diagonal.
        */
-      AdditionalData(const double       omega        = 1,
+      AdditionalData(const double       omega = 1,
                      const double       min_diagonal = 0,
-                     const unsigned int n_sweeps     = 1);
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the relaxation parameter in the Jacobi preconditioner.
@@ -370,10 +370,10 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by an SSOR).
        */
-      AdditionalData(const double       omega        = 1,
+      AdditionalData(const double       omega = 1,
                      const double       min_diagonal = 0,
-                     const unsigned int overlap      = 0,
-                     const unsigned int n_sweeps     = 1);
+                     const unsigned int overlap = 0,
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the (over-) relaxation parameter in the SSOR
@@ -463,10 +463,10 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by an SOR.
        */
-      AdditionalData(const double       omega        = 1,
+      AdditionalData(const double       omega = 1,
                      const double       min_diagonal = 0,
-                     const unsigned int overlap      = 0,
-                     const unsigned int n_sweeps     = 1);
+                     const unsigned int overlap = 0,
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the (over-) relaxation parameter in the SOR
@@ -550,11 +550,11 @@ namespace TrilinosWrappers
        * subdivision of the rows, set the damping parameter to one, and do not
        * modify the diagonal.
        */
-      AdditionalData(const unsigned int block_size          = 1,
+      AdditionalData(const unsigned int block_size = 1,
                      const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int n_sweeps            = 1);
+                     const double       omega = 1,
+                     const double       min_diagonal = 0,
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the size of blocks.
@@ -652,12 +652,12 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by a block SOR).
        */
-      AdditionalData(const unsigned int block_size          = 1,
+      AdditionalData(const unsigned int block_size = 1,
                      const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int overlap             = 0,
-                     const unsigned int n_sweeps            = 1);
+                     const double       omega = 1,
+                     const double       min_diagonal = 0,
+                     const unsigned int overlap = 0,
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the size of blocks.
@@ -762,12 +762,12 @@ namespace TrilinosWrappers
        * run a BlockJacobi preconditioner, where each block is inverted
        * approximately by a block SOR).
        */
-      AdditionalData(const unsigned int block_size          = 1,
+      AdditionalData(const unsigned int block_size = 1,
                      const std::string& block_creation_type = "linear",
-                     const double       omega               = 1,
-                     const double       min_diagonal        = 0,
-                     const unsigned int overlap             = 0,
-                     const unsigned int n_sweeps            = 1);
+                     const double       omega = 1,
+                     const double       min_diagonal = 0,
+                     const unsigned int overlap = 0,
+                     const unsigned int n_sweeps = 1);
 
       /**
        * This specifies the size of blocks.
@@ -1007,7 +1007,7 @@ namespace TrilinosWrappers
       AdditionalData(const unsigned int ilu_fill = 0,
                      const double       ilu_atol = 0.,
                      const double       ilu_rtol = 1.,
-                     const unsigned int overlap  = 0);
+                     const unsigned int overlap = 0);
 
       /**
        * Additional fill-in, see class documentation above.
@@ -1112,7 +1112,7 @@ namespace TrilinosWrappers
                      const unsigned int ilut_fill = 0,
                      const double       ilut_atol = 0.,
                      const double       ilut_rtol = 1.,
-                     const unsigned int overlap   = 0);
+                     const unsigned int overlap = 0);
 
       /**
        * This specifies the relative size of elements which should be dropped
@@ -1228,11 +1228,11 @@ namespace TrilinosWrappers
       /**
        * Constructor.
        */
-      AdditionalData(const unsigned int degree           = 1,
-                     const double       max_eigenvalue   = 10.,
+      AdditionalData(const unsigned int degree = 1,
+                     const double       max_eigenvalue = 10.,
                      const double       eigenvalue_ratio = 30.,
-                     const double       min_eigenvalue   = 1.,
-                     const double       min_diagonal     = 1e-12,
+                     const double       min_eigenvalue = 1.,
+                     const double       min_diagonal = 1e-12,
                      const bool         nonzero_starting = false);
 
       /**
@@ -1344,18 +1344,18 @@ namespace TrilinosWrappers
        * Constructor. By default, we pretend to work on elliptic problems with
        * linear finite elements on a scalar equation.
        */
-      AdditionalData(const bool         elliptic              = true,
+      AdditionalData(const bool         elliptic = true,
                      const bool         higher_order_elements = false,
-                     const unsigned int n_cycles              = 1,
-                     const bool         w_cyle                = false,
+                     const unsigned int n_cycles = 1,
+                     const bool         w_cyle = false,
                      const double       aggregation_threshold = 1e-4,
                      const std::vector<std::vector<bool>>& constant_modes
                      = std::vector<std::vector<bool>>(0),
-                     const unsigned int smoother_sweeps  = 2,
+                     const unsigned int smoother_sweeps = 2,
                      const unsigned int smoother_overlap = 0,
-                     const bool         output_details   = false,
-                     const char*        smoother_type    = "Chebyshev",
-                     const char*        coarse_type      = "Amesos-KLU");
+                     const bool         output_details = false,
+                     const char*        smoother_type = "Chebyshev",
+                     const char*        coarse_type = "Amesos-KLU");
 
       /**
        * Determines whether the AMG preconditioner should be optimized for
@@ -1554,7 +1554,7 @@ namespace TrilinosWrappers
     void
     initialize(const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
                const AdditionalData& additional_data = AdditionalData(),
-               const double          drop_tolerance  = 1e-13,
+               const double          drop_tolerance = 1e-13,
                const ::dealii::SparsityPattern* use_this_sparsity = nullptr);
 
     /**
@@ -1625,17 +1625,17 @@ namespace TrilinosWrappers
        * Constructor. By default, we pretend to work on elliptic problems with
        * linear finite elements on a scalar equation.
        */
-      AdditionalData(const bool         elliptic              = true,
-                     const unsigned int n_cycles              = 1,
-                     const bool         w_cyle                = false,
+      AdditionalData(const bool         elliptic = true,
+                     const unsigned int n_cycles = 1,
+                     const bool         w_cyle = false,
                      const double       aggregation_threshold = 1e-4,
                      const std::vector<std::vector<bool>>& constant_modes
                      = std::vector<std::vector<bool>>(0),
-                     const unsigned int smoother_sweeps  = 2,
+                     const unsigned int smoother_sweeps = 2,
                      const unsigned int smoother_overlap = 0,
-                     const bool         output_details   = false,
-                     const char*        smoother_type    = "Chebyshev",
-                     const char*        coarse_type      = "Amesos-KLU");
+                     const bool         output_details = false,
+                     const char*        smoother_type = "Chebyshev",
+                     const char*        coarse_type = "Amesos-KLU");
 
       /**
        * Determines whether the AMG preconditioner should be optimized for
@@ -1808,7 +1808,7 @@ namespace TrilinosWrappers
     void
     initialize(const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
                const AdditionalData& additional_data = AdditionalData(),
-               const double          drop_tolerance  = 1e-13,
+               const double          drop_tolerance = 1e-13,
                const ::dealii::SparsityPattern* use_this_sparsity = nullptr);
 
     /**

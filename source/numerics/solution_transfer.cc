@@ -268,7 +268,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   // first count the number
   // of cells that will be coarsened
   // and that'll stay or be refined
-  unsigned int n_cells_to_coarsen        = 0;
+  unsigned int n_cells_to_coarsen = 0;
   unsigned int n_cells_to_stay_or_refine = 0;
   for(typename DoFHandlerType::active_cell_iterator act_cell
       = dof_handler->begin_active();

@@ -185,10 +185,10 @@ public:
      * left, the residual of the stopping criterion to the default residual,
      * and re-orthogonalization only if necessary.
      */
-    explicit AdditionalData(const unsigned int max_n_tmp_vectors     = 30,
+    explicit AdditionalData(const unsigned int max_n_tmp_vectors = 30,
                             const bool         right_preconditioning = false,
-                            const bool         use_default_residual  = true,
-                            const bool force_re_orthogonalization    = false);
+                            const bool         use_default_residual = true,
+                            const bool force_re_orthogonalization = false);
 
     /**
      * Maximum number of temporary vectors. This parameter controls the size
@@ -466,7 +466,7 @@ public:
     /**
      * Constructor. By default, set the maximum basis size to 30.
      */
-    explicit AdditionalData(const unsigned int max_basis_size   = 30,
+    explicit AdditionalData(const unsigned int max_basis_size = 30,
                             const bool /*use_default_residual*/ = true)
       : max_basis_size(max_basis_size)
     {}
@@ -616,15 +616,15 @@ SolverGMRES<VectorType>::givens_rotation(Vector<double>& h,
       const double s     = si(i);
       const double c     = ci(i);
       const double dummy = h(i);
-      h(i)               = c * dummy + s * h(i + 1);
-      h(i + 1)           = -s * dummy + c * h(i + 1);
+      h(i) = c * dummy + s * h(i + 1);
+      h(i + 1) = -s * dummy + c * h(i + 1);
     };
 
   const double r = 1. / std::sqrt(h(col) * h(col) + h(col + 1) * h(col + 1));
-  si(col)        = h(col + 1) * r;
-  ci(col)        = h(col) * r;
-  h(col)         = ci(col) * h(col) + si(col) * h(col + 1);
-  b(col + 1)     = -si(col) * b(col);
+  si(col) = h(col + 1) * r;
+  ci(col) = h(col) * r;
+  h(col) = ci(col) * h(col) + si(col) * h(col + 1);
+  b(col + 1) = -si(col) * b(col);
   b(col) *= ci(col);
 }
 
@@ -792,7 +792,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
   unsigned int dim = 0;
 
   SolverControl::State iteration_state = SolverControl::iterate;
-  double               last_res        = -std::numeric_limits<double>::max();
+  double               last_res = -std::numeric_limits<double>::max();
 
   // switch to determine whether we want a left or a right preconditioner. at
   // present, left is default, but both ways are implemented
@@ -814,7 +814,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
   std::unique_ptr<dealii::Vector<double>>    gamma_;
   if(!use_default_residual)
     {
-      r  = std::move(typename VectorMemory<VectorType>::Pointer(this->memory));
+      r = std::move(typename VectorMemory<VectorType>::Pointer(this->memory));
       x_ = std::move(typename VectorMemory<VectorType>::Pointer(this->memory));
       r->reinit(x);
       x_->reinit(x);
@@ -872,7 +872,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
             preconditioner.vmult(*r, v);
 
           double res = r->l2_norm();
-          last_res   = res;
+          last_res = res;
           iteration_state
             = this->iteration_status(accumulated_iterations, res, x);
 
@@ -909,7 +909,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
 
           dim = inner_iteration + 1;
 
-          const double s         = modified_gram_schmidt(tmp_vectors,
+          const double s = modified_gram_schmidt(tmp_vectors,
                                                  dim,
                                                  accumulated_iterations,
                                                  vv,
@@ -950,7 +950,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
               deallog << "default_res=" << rho << std::endl;
 
               dealii::Vector<double> h_(dim);
-              *x_     = x;
+              *x_ = x;
               *gamma_ = gamma;
               H1.reinit(dim + 1, dim);
 
@@ -977,7 +977,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
               if(left_precondition)
                 {
                   const double res = r->l2_norm();
-                  last_res         = res;
+                  last_res = res;
 
                   iteration_state
                     = this->iteration_status(accumulated_iterations, res, x);
@@ -986,7 +986,7 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
                 {
                   preconditioner.vmult(*x_, *r);
                   const double preconditioned_res = x_->l2_norm();
-                  last_res                        = preconditioned_res;
+                  last_res = preconditioned_res;
 
                   iteration_state = this->iteration_status(
                     accumulated_iterations, preconditioned_res, x);

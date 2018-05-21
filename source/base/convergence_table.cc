@@ -50,7 +50,7 @@ ConvergenceTable::evaluate_convergence_rates(
 
   for(unsigned int i = 0; i < n; ++i)
     {
-      values[i]     = entries[i].get_numeric_value();
+      values[i] = entries[i].get_numeric_value();
       ref_values[i] = ref_entries[i].get_numeric_value();
     }
 
@@ -216,7 +216,7 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
   Assert(columns.count(key), ExcColumnNotExistent(key));
 
   const std::map<std::string, Column>::iterator col_iter = columns.find(key);
-  col_iter->second.flag                                  = 1;
+  col_iter->second.flag = 1;
 }
 
 void

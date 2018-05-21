@@ -70,7 +70,7 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      FullMatrix<double>& M1 = info.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
@@ -90,7 +90,7 @@ Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      FullMatrix<double>& M1 = info.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
@@ -113,15 +113,15 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
     {
       const unsigned int  block_row = info1.matrix(k).row;
       const unsigned int  block_col = info1.matrix(k).column;
-      FullMatrix<double>& M1        = info1.matrix(k).matrix;
+      FullMatrix<double>& M1 = info1.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
             {
               info1.matrix(k, false).matrix(i, j) = 1.;
               info2.matrix(k, false).matrix(i, j) = 1.;
-              info1.matrix(k, true).matrix(i, j)  = -1.;
-              info2.matrix(k, true).matrix(i, j)  = -1.;
+              info1.matrix(k, true).matrix(i, j) = -1.;
+              info2.matrix(k, true).matrix(i, j) = -1.;
             }
     }
 }
@@ -160,7 +160,7 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
 
   MeshWorker::LoopControl lctrl;
   lctrl.cells_first = true;
-  lctrl.own_faces   = MeshWorker::LoopControl::one;
+  lctrl.own_faces = MeshWorker::LoopControl::one;
   MeshWorker::loop<dim,
                    dim,
                    MeshWorker::DoFInfo<dim>,
@@ -252,7 +252,7 @@ test(const FiniteElement<dim>& fe)
 
   if(0)
     {
-      unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+      unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
       unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
       for(unsigned int i = 0; i < numprocs; ++i)

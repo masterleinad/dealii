@@ -73,9 +73,9 @@ public:
 };
 
 template <int dim,
-          int fe_degree            = 2,
-          int n_q_points           = fe_degree + 1,
-          typename NumberType      = double,
+          int fe_degree = 2,
+          int n_q_points = fe_degree + 1,
+          typename NumberType = double,
           typename LevelNumberType = NumberType>
 void
 test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
@@ -84,7 +84,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 
   deallog << "dim=" << dim << std::endl;
   MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
-  unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int myid = Utilities::MPI::this_mpi_process(mpi_communicator);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
   deallog << "numproc=" << numproc << std::endl;

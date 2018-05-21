@@ -31,11 +31,11 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   for(unsigned int i = 0; i < v.size(); ++i)
     {
       const PetscScalar vi = std::complex<double>(i, (i % 2) * 2.0);
-      v(i)                 = vi;
+      v(i) = vi;
       if(i % 3 == 0)
         {
           const PetscScalar wi = std::complex<double>(5.0 - i, 2.5 * (i % 6));
-          w(i)                 = wi;
+          w(i) = wi;
           product += PetscConj(vi) * wi;
         }
     }

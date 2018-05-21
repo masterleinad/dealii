@@ -74,12 +74,12 @@ test_preconditioner_block(const MatrixType&      A,
   {
     // Using exemplar matrix
     const auto lo_A_inv_approx = linear_operator<VectorType>(A, preconditioner);
-    const VectorType x_approx  = lo_A_inv_approx * b;
+    const VectorType x_approx = lo_A_inv_approx * b;
   }
   {
     // Stand-alone
     const auto lo_A_inv_approx = linear_operator<VectorType>(preconditioner);
-    const VectorType x_approx  = lo_A_inv_approx * b;
+    const VectorType x_approx = lo_A_inv_approx * b;
   }
 }
 
@@ -114,14 +114,14 @@ test_preconditioner(const SparseMatrix<double>&                    A,
   {
     deallog.push("Exemplar matrix");
     const auto           lo_A_inv_approx = linear_operator(A, preconditioner);
-    const Vector<double> x_approx        = lo_A_inv_approx * b;
+    const Vector<double> x_approx = lo_A_inv_approx * b;
     deallog.pop();
   }
   // Stand-alone
   {
     deallog.push("Stand-alone");
     const auto           lo_A_inv_approx = linear_operator(preconditioner);
-    const Vector<double> x_approx        = lo_A_inv_approx * b;
+    const Vector<double> x_approx = lo_A_inv_approx * b;
     deallog.pop();
   }
 }
@@ -157,7 +157,7 @@ test_solver(const SparseMatrix<double>& A, const Vector<double>& b)
     PreconditionJacobi<SparseMatrix<double>> preconditioner;
     preconditioner.initialize(A);
 
-    const auto lo_A_inv    = inverse_operator(lo_A, solver, preconditioner);
+    const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
     const Vector<double> x = lo_A_inv * b;
     deallog.pop();
   }
@@ -180,7 +180,7 @@ public:
   initialize(const BlockMatrixBase<MatrixType>& matrix,
              const AdditionalData& additional_data = AdditionalData())
   {
-    this->row_block_indices    = matrix.get_row_indices();
+    this->row_block_indices = matrix.get_row_indices();
     this->column_block_indices = matrix.get_column_indices();
 
     this->sub_objects.reinit(matrix.n_block_rows(), matrix.n_block_cols());
@@ -281,7 +281,7 @@ main()
 
       // Approximate inverse
       const auto           lo_A_inv_approx = linear_operator(preconditioner);
-      const Vector<double> x_approx        = lo_A_inv_approx * b;
+      const Vector<double> x_approx = lo_A_inv_approx * b;
     }
     {
       deallog << "PreconditionSOR" << std::endl;
@@ -382,7 +382,7 @@ main()
       solver.initialize(A);
 
       const auto           lo_A_inv = linear_operator(solver);
-      const Vector<double> x        = lo_A_inv * b;
+      const Vector<double> x = lo_A_inv * b;
     }
 #endif
     deallog.pop();
@@ -393,7 +393,7 @@ main()
   // deal.II BlockSparseMatrix
   {
     const unsigned int   blks = 2;
-    const unsigned int   rc   = 10;
+    const unsigned int   rc = 10;
     BlockSparsityPattern sparsity_pattern;
     {
       BlockDynamicSparsityPattern csp(blks, blks);
@@ -411,7 +411,7 @@ main()
       for(unsigned int i = 0; i < rc; ++i)
         {
           A.block(bi, bi).diag_element(i) = 2.0;
-          b.block(bi)(i)                  = bi * rc + i;
+          b.block(bi)(i) = bi * rc + i;
         }
 
     // === PRECONDITIONERS ===

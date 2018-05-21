@@ -85,7 +85,7 @@ public:
    * Constructor initializing default values.
    */
   PreconditionBlockBase(bool      store_diagonals = false,
-                        Inversion method          = gauss_jordan);
+                        Inversion method = gauss_jordan);
 
   /**
    * The virtual destructor
@@ -606,7 +606,7 @@ PreconditionBlockBase<number>::log_statistics() const
       for(size_type b = 0; b < size(); ++b)
         {
           const LAPACKFullMatrix<number>& matrix = inverse_svd(b);
-          size_type                       k      = 1;
+          size_type                       k = 1;
           while(k <= matrix.n_cols()
                 && matrix.singular_value(matrix.n_cols() - k) == 0)
             ++k;

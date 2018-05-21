@@ -96,8 +96,8 @@ namespace NonMatching
     const DoFHandler<dim1, spacedim>& immersed_dh,
     const Quadrature<dim1>&           quad,
     Sparsity&                         sparsity,
-    const ConstraintMatrix&           constraints    = ConstraintMatrix(),
-    const ComponentMask&              space_comps    = ComponentMask(),
+    const ConstraintMatrix&           constraints = ConstraintMatrix(),
+    const ComponentMask&              space_comps = ComponentMask(),
     const ComponentMask&              immersed_comps = ComponentMask(),
     const Mapping<dim0, spacedim>&    space_mapping
     = StaticMappingQ1<dim0, spacedim>::mapping,
@@ -120,8 +120,8 @@ namespace NonMatching
     const DoFHandler<dim1, spacedim>&       immersed_dh,
     const Quadrature<dim1>&                 quad,
     Sparsity&                               sparsity,
-    const ConstraintMatrix&                 constraints    = ConstraintMatrix(),
-    const ComponentMask&                    space_comps    = ComponentMask(),
+    const ConstraintMatrix&                 constraints = ConstraintMatrix(),
+    const ComponentMask&                    space_comps = ComponentMask(),
     const ComponentMask&                    immersed_comps = ComponentMask(),
     const Mapping<dim1, spacedim>&          immersed_mapping
     = StaticMappingQ1<dim1, spacedim>::mapping);
@@ -178,8 +178,8 @@ namespace NonMatching
     const DoFHandler<dim1, spacedim>& immersed_dh,
     const Quadrature<dim1>&           quad,
     Matrix&                           matrix,
-    const ConstraintMatrix&           constraints    = ConstraintMatrix(),
-    const ComponentMask&              space_comps    = ComponentMask(),
+    const ConstraintMatrix&           constraints = ConstraintMatrix(),
+    const ComponentMask&              space_comps = ComponentMask(),
     const ComponentMask&              immersed_comps = ComponentMask(),
     const Mapping<dim0, spacedim>&    space_mapping
     = StaticMappingQ1<dim0, spacedim>::mapping,
@@ -202,8 +202,8 @@ namespace NonMatching
     const DoFHandler<dim1, spacedim>&       immersed_dh,
     const Quadrature<dim1>&                 quad,
     Matrix&                                 matrix,
-    const ConstraintMatrix&                 constraints    = ConstraintMatrix(),
-    const ComponentMask&                    space_comps    = ComponentMask(),
+    const ConstraintMatrix&                 constraints = ConstraintMatrix(),
+    const ComponentMask&                    space_comps = ComponentMask(),
     const ComponentMask&                    immersed_comps = ComponentMask(),
     const Mapping<dim1, spacedim>&          immersed_mapping
     = StaticMappingQ1<dim1, spacedim>::mapping);

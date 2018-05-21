@@ -822,7 +822,7 @@ public:
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
                      const bool         face_orientation = true,
-                     const bool         face_flip        = false,
+                     const bool         face_flip = false,
                      const bool         face_rotation = false) const override;
 
   /**

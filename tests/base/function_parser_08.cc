@@ -10,7 +10,7 @@ void
 test1()
 {
   // set up problem:
-  std::string                   variables  = "x,y";
+  std::string                   variables = "x,y";
   std::string                   expression = "erfc(x)+erfc(y)";
   std::map<std::string, double> constants;
 

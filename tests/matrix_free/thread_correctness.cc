@@ -57,8 +57,8 @@ sub_test()
   // run test for several different meshes
   for(unsigned int i = 0; i < 8 - 2 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
+      cell = tria.begin_active();
+      endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (9 - i) == 0)

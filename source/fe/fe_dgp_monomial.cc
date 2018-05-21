@@ -59,7 +59,7 @@ namespace internal
       // k    0  1  2  3  4  5  6   7
       // dofs 1  4 10 20 35 56 84 120
       const unsigned int start_index3d[6] = {0, 1, 5, 15 /*,35*/};
-      const double       points3d[35][3]  = {{0, 0, 0},
+      const double       points3d[35][3] = {{0, 0, 0},
                                       {0, 0, 0},
                                       {1, 0, 0},
                                       {0, 1, 0},

@@ -136,7 +136,7 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
@@ -195,7 +195,7 @@ namespace LocalIntegrators
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
 
           double umgn = 0.;
           double divu = 0.;
@@ -251,12 +251,12 @@ namespace LocalIntegrators
 
       const double fi = factor1;
       const double fe = (factor2 < 0) ? factor1 : factor2;
-      const double f  = .5 * (fi + fe);
+      const double f = .5 * (fi + fe);
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
@@ -341,10 +341,10 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx    = fe1.JxW(k);
-          const Tensor<1, dim> n     = fe1.normal_vector(k);
-          double               uni   = 0.;
-          double               une   = 0.;
+          const double         dx = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
+          double               uni = 0.;
+          double               une = 0.;
           double               divui = 0.;
           double               divue = 0.;
           for(unsigned int d = 0; d < dim; ++d)

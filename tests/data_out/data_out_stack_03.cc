@@ -39,7 +39,7 @@ run()
   // create a continuous field over
   // this DoFHandler
   Vector<double> v(dof_handler.n_dofs());
-  v               = 1.;
+  v = 1.;
   v(v.size() / 2) = 2.;
 
   // output this field using

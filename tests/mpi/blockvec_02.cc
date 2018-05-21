@@ -27,7 +27,7 @@
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   std::vector<IndexSet> local_active(2);
@@ -43,7 +43,7 @@ test()
 
   v_block(myid) = 100.0 + myid;
 
-  v_block.block(1)(myid * 2)     = myid * 2.0;
+  v_block.block(1)(myid * 2) = myid * 2.0;
   v_block.block(1)(myid * 2 + 1) = myid * 2.0 + 1.0;
 
   v_block.compress(VectorOperation::insert);

@@ -108,7 +108,7 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
+  const double PI = numbers::PI;
   double       val = 0.0;
   switch(component)
     {
@@ -248,8 +248,8 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  const static unsigned dim      = 2;
-  unsigned              order    = 1;
+  const static unsigned dim = 2;
+  unsigned              order = 1;
   unsigned              n_cycles = 4;
 
   deallog << "2d\nRectangular grid:\n";

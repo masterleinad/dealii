@@ -430,7 +430,7 @@ namespace internal
           const unsigned int dim = 1;
 
           const FiniteElement<dim, spacedim>& fe = cell->get_fe();
-          const unsigned int fe_index            = cell->active_fe_index();
+          const unsigned int fe_index = cell->active_fe_index();
 
           // number dofs on vertices. to do so, check whether dofs for
           // this vertex have been distributed and for the present fe
@@ -476,7 +476,7 @@ namespace internal
           const unsigned int dim = 2;
 
           const FiniteElement<dim, spacedim>& fe = cell->get_fe();
-          const unsigned int fe_index            = cell->active_fe_index();
+          const unsigned int fe_index = cell->active_fe_index();
 
           // number dofs on vertices. to do so, check whether dofs for
           // this vertex have been distributed and for the present fe
@@ -537,7 +537,7 @@ namespace internal
           const unsigned int dim = 3;
 
           const FiniteElement<dim, spacedim>& fe = cell->get_fe();
-          const unsigned int fe_index            = cell->active_fe_index();
+          const unsigned int fe_index = cell->active_fe_index();
 
           // number dofs on vertices. to do so, check whether dofs for
           // this vertex have been distributed and for the present fe
@@ -1541,7 +1541,7 @@ namespace internal
                                  DoFHandlerType&           dof_handler,
                                  const unsigned int        level)
         {
-          const unsigned int dim      = DoFHandlerType::dimension;
+          const unsigned int dim = DoFHandlerType::dimension;
           const unsigned int spacedim = DoFHandlerType::space_dimension;
 
           const dealii::Triangulation<dim, spacedim>& tria
@@ -2605,7 +2605,7 @@ namespace internal
       NumberCache
       ParallelShared<DoFHandlerType>::distribute_dofs() const
       {
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         const parallel::shared::Triangulation<dim, spacedim>* tr
@@ -2724,7 +2724,7 @@ namespace internal
           // that don't appear will lead to IndexSets that are simply
           // never touched and remain empty as initialized above.
           unsigned int start_index = 0;
-          unsigned int end_index   = 0;
+          unsigned int end_index = 0;
           while(start_index < n_dofs)
             {
               while((end_index) < n_dofs
@@ -2770,7 +2770,7 @@ namespace internal
       std::vector<NumberCache>
       ParallelShared<DoFHandlerType>::distribute_mg_dofs() const
       {
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         const parallel::shared::Triangulation<dim, spacedim>* tr
@@ -2902,7 +2902,7 @@ namespace internal
               // that don't appear will lead to IndexSets that are simply
               // never touched and remain empty as initialized above.
               unsigned int start_index = 0;
-              unsigned int end_index   = 0;
+              unsigned int end_index = 0;
               while(start_index < n_dofs_on_level)
                 {
                   while((end_index) < n_dofs_on_level
@@ -2957,7 +2957,7 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return NumberCache();
 #else
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         // Similar to distribute_dofs() we need to have a special treatment in
@@ -3018,7 +3018,7 @@ namespace internal
               types::global_dof_index shift = 0;
               // set rcounts based on new_numbers:
               int cur_count = new_numbers_copy.size();
-              int ierr      = MPI_Allgather(&cur_count,
+              int ierr = MPI_Allgather(&cur_count,
                                        1,
                                        MPI_INT,
                                        rcounts.data(),
@@ -3489,7 +3489,7 @@ namespace internal
               // and send it. keep data around till we can make sure
               // that the packet has been received
               sendbuffers[idx] = it->second.pack_data();
-              const int ierr   = MPI_Isend(sendbuffers[idx].data(),
+              const int ierr = MPI_Isend(sendbuffers[idx].data(),
                                          sendbuffers[idx].size(),
                                          MPI_BYTE,
                                          it->first,
@@ -3519,7 +3519,7 @@ namespace internal
               receive.resize(len);
 
               char* ptr = receive.data();
-              ierr      = MPI_Recv(ptr,
+              ierr = MPI_Recv(ptr,
                               len,
                               MPI_BYTE,
                               status.MPI_SOURCE,
@@ -3556,7 +3556,7 @@ namespace internal
 
               // send reply
               reply_buffers[idx] = cell_data_transfer_buffer.pack_data();
-              ierr               = MPI_Isend(&(reply_buffers[idx])[0],
+              ierr = MPI_Isend(&(reply_buffers[idx])[0],
                                reply_buffers[idx].size(),
                                MPI_BYTE,
                                status.MPI_SOURCE,
@@ -3582,7 +3582,7 @@ namespace internal
               receive.resize(len);
 
               char* ptr = receive.data();
-              ierr      = MPI_Recv(ptr,
+              ierr = MPI_Recv(ptr,
                               len,
                               MPI_BYTE,
                               status.MPI_SOURCE,
@@ -3890,7 +3890,7 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return NumberCache();
 #else
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         parallel::distributed::Triangulation<dim, spacedim>* triangulation
@@ -4143,7 +4143,7 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return std::vector<NumberCache>();
 #else
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         parallel::distributed::Triangulation<dim, spacedim>* triangulation
@@ -4429,7 +4429,7 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return NumberCache();
 #else
-        const unsigned int dim      = DoFHandlerType::dimension;
+        const unsigned int dim = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
         parallel::distributed::Triangulation<dim, spacedim>* triangulation

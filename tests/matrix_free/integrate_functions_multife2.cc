@@ -96,8 +96,8 @@ operator()(const MatrixFree<dim, Number>& data,
   FEEvaluation<dim, 0, 1, 1, Number>                     fe_eval0(data, 0, 0);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval1(data, 1, 1);
   FEEvaluation<dim, 0, fe_degree + 1, 1, Number>         fe_eval01(data, 0, 1);
-  const unsigned int n_q_points0    = fe_eval0.n_q_points;
-  const unsigned int n_q_points1    = fe_eval1.n_q_points;
+  const unsigned int n_q_points0 = fe_eval0.n_q_points;
+  const unsigned int n_q_points1 = fe_eval1.n_q_points;
   const unsigned int dofs_per_cell0 = fe_eval0.dofs_per_cell;
   const unsigned int dofs_per_cell1 = fe_eval1.dofs_per_cell;
   AlignedVector<VectorizedArray<Number>> values0(n_q_points0);
@@ -248,8 +248,8 @@ test()
   cell = tria.begin_active();
   for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
-      cell                 = tria.begin_active();
-      endc                 = tria.end();
+      cell = tria.begin_active();
+      endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)

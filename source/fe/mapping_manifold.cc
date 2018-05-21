@@ -495,7 +495,7 @@ MappingManifold<dim, spacedim>::fill_fe_values(
     QProjector<dim>::DataSetDescriptor::cell(), data);
 
   const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double>& weights      = quadrature.get_weights();
+  const std::vector<double>& weights = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0

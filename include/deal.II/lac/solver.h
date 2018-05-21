@@ -478,7 +478,7 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
 
   // combine the first with all of the following states
   SolverControl::State state = *begin;
-  Iterator             p     = begin;
+  Iterator             p = begin;
   ++p;
   for(; p != end; ++p)
     state = this->operator()(state, *p);

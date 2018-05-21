@@ -322,8 +322,8 @@ inline Point<dim, Number>::Point(const Number x, const Number y)
   // so as to avoid compiler warnings about uninitialized elements or writing
   // beyond the end of the 'values' array
   constexpr unsigned int y_index = (dim < 2) ? 0 : 1;
-  this->values[0]                = x;
-  this->values[y_index]          = y;
+  this->values[0] = x;
+  this->values[y_index] = y;
 }
 
 template <int dim, typename Number>
@@ -341,9 +341,9 @@ inline Point<dim, Number>::Point(const Number x, const Number y, const Number z)
   // beyond the end of the 'values' array
   constexpr unsigned int y_index = (dim < 2) ? 0 : 1;
   constexpr unsigned int z_index = (dim < 3) ? 0 : 2;
-  this->values[0]                = x;
-  this->values[y_index]          = y;
-  this->values[z_index]          = z;
+  this->values[0] = x;
+  this->values[y_index] = y;
+  this->values[z_index] = z;
 }
 
 template <int dim, typename Number>

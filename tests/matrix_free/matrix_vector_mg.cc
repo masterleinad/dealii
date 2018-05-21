@@ -117,7 +117,7 @@ test()
     FEValues<dim> fe_values(
       mapping, fe, quad, update_values | update_gradients | update_JxW_values);
     const unsigned int n_quadrature_points = quad.size();
-    const unsigned int dofs_per_cell       = fe.dofs_per_cell;
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 

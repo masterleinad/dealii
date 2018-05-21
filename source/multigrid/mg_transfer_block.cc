@@ -195,8 +195,8 @@ void
 MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
                                     const DoFHandler<dim, spacedim>& mg_dof)
 {
-  const FiniteElement<dim>& fe            = mg_dof.get_fe();
-  const unsigned int        n_blocks      = fe.n_blocks();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
+  const unsigned int        n_blocks = fe.n_blocks();
   const unsigned int        dofs_per_cell = fe.dofs_per_cell;
   const unsigned int        n_levels = mg_dof.get_triangulation().n_levels();
 
@@ -229,7 +229,7 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
       for(unsigned int i = 0; i < mg_block_start[l].size(); ++i)
         {
           const types::global_dof_index t = mg_block_start[l][i];
-          mg_block_start[l][i]            = k;
+          mg_block_start[l][i] = k;
           k += t;
         }
     }
@@ -242,7 +242,7 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
   for(unsigned int i = 0; i < block_start.size(); ++i)
     {
       const types::global_dof_index t = block_start[i];
-      block_start[i]                  = k;
+      block_start[i] = k;
       k += t;
     }
   // Build index vectors for
@@ -463,7 +463,7 @@ MGTransferBlockSelect<number>::build_matrices(
   const DoFHandler<dim, spacedim>& mg_dof,
   unsigned int                     select)
 {
-  const FiniteElement<dim>& fe       = mg_dof.get_fe();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
   unsigned int              n_blocks = mg_dof.get_fe().n_blocks();
 
   selected_block = select;
@@ -549,7 +549,7 @@ MGTransferBlock<number>::build_matrices(const DoFHandler<dim, spacedim>& dof,
                                         const DoFHandler<dim, spacedim>& mg_dof,
                                         const std::vector<bool>&         sel)
 {
-  const FiniteElement<dim>& fe       = mg_dof.get_fe();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
   unsigned int              n_blocks = mg_dof.get_fe().n_blocks();
 
   if(sel.size() != 0)

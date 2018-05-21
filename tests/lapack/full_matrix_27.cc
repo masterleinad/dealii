@@ -37,8 +37,8 @@ test(const unsigned int size)
       for(unsigned int j = i; j < size; ++j)
         {
           const NumberType val = random_value<NumberType>();
-          A(i, j)              = val;
-          A(j, i)              = val;
+          A(i, j) = val;
+          A(j, i) = val;
         }
     }
 

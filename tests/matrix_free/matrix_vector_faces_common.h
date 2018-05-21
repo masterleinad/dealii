@@ -54,10 +54,10 @@ test();
 
 template <int dim,
           int fe_degree,
-          int n_q_points_1d   = fe_degree + 1,
-          typename number     = double,
+          int n_q_points_1d = fe_degree + 1,
+          typename number = double,
           typename VectorType = Vector<number>,
-          int n_components    = 1>
+          int n_components = 1>
 class MatrixFreeTest
 {
 public:
@@ -201,10 +201,10 @@ private:
 // vector-access/evaluate routines that typically give better performance
 template <int dim,
           int fe_degree,
-          int n_q_points_1d   = fe_degree + 1,
-          typename number     = double,
+          int n_q_points_1d = fe_degree + 1,
+          typename number = double,
           typename VectorType = Vector<number>,
-          int n_components    = 1>
+          int n_components = 1>
 class MatrixFreeVariant
 {
 public:
@@ -388,10 +388,10 @@ multiply_by_advection(const Tensor<1, dim, Number>& advection,
 // An implementation of matrix-free advection operator
 template <int dim,
           int fe_degree,
-          int n_q_points_1d   = fe_degree + 1,
-          typename number     = double,
+          int n_q_points_1d = fe_degree + 1,
+          typename number = double,
           typename VectorType = Vector<number>,
-          int n_components    = 1>
+          int n_components = 1>
 class MatrixFreeAdvection
 {
 public:
@@ -484,7 +484,7 @@ private:
         for(unsigned int q = 0; q < phi_m.n_q_points; ++q)
           {
             value_type u_minus = phi_m.get_value(q),
-                       u_plus  = phi_p.get_value(q);
+                       u_plus = phi_p.get_value(q);
             const VectorizedArray<number> normal_times_advection
               = advection * phi_m.get_normal_vector(q);
             const value_type flux_times_normal
@@ -651,7 +651,7 @@ do_test(const DoFHandler<dim>&  dof,
       if(constraints.is_constrained(i))
         continue;
       const double entry = Testing::rand() / (double) RAND_MAX;
-      in(i)              = entry;
+      in(i) = entry;
     }
 
   // assemble sparse matrix with MeshWorker
@@ -687,7 +687,7 @@ do_test(const DoFHandler<dim>&  dof,
                                            dof.get_fe().degree + 1);
   typename MatrixFree<dim, number>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
-  data.tasks_block_size      = 3;
+  data.tasks_block_size = 3;
   data.mapping_update_flags_inner_faces
     = (update_gradients | update_JxW_values);
   data.mapping_update_flags_boundary_faces

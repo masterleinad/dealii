@@ -60,7 +60,7 @@ test()
     std::array<double, 10> v;
     std::fill(v.begin(), v.end(), 42.0);
     const std::array<double, 10>& v2 = v;
-    const auto                    a  = make_array_view(v2.begin(), v2.end());
+    const auto                    a = make_array_view(v2.begin(), v2.end());
     static_assert(is_const_reference<decltype(*a.begin())>(),
                   "type should be const");
     static_assert(is_const_reference<decltype(*a.end())>(),

@@ -1644,7 +1644,7 @@ namespace internal
         = accessor.get_fe(fe_index).dofs_per_vertex,
         dofs_per_line = accessor.get_fe(fe_index).dofs_per_line,
         dofs_per_quad = accessor.get_fe(fe_index).dofs_per_quad,
-        dofs_per_hex  = accessor.get_fe(fe_index).dofs_per_hex;
+        dofs_per_hex = accessor.get_fe(fe_index).dofs_per_hex;
       std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
       for(unsigned int vertex = 0; vertex < 8; ++vertex)
         for(unsigned int d = 0; d < dofs_per_vertex; ++d)
@@ -2440,8 +2440,8 @@ namespace internal
           return;
 
         const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+                           dofs_per_line = accessor.get_fe().dofs_per_line,
+                           dofs_per_cell = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2484,9 +2484,9 @@ namespace internal
           return;
 
         const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+                           dofs_per_line = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad = accessor.get_fe().dofs_per_quad,
+                           dofs_per_cell = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2532,10 +2532,10 @@ namespace internal
           return;
 
         const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_hex    = accessor.get_fe().dofs_per_hex,
-                           dofs_per_cell   = accessor.get_fe().dofs_per_cell;
+                           dofs_per_line = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad = accessor.get_fe().dofs_per_quad,
+                           dofs_per_hex = accessor.get_fe().dofs_per_hex,
+                           dofs_per_cell = accessor.get_fe().dofs_per_cell;
 
         // make sure the cache is at least
         // as big as we need it when
@@ -2659,9 +2659,9 @@ namespace internal
         Assert(accessor.has_children() == false, ExcInternalError());
 
         const unsigned int dofs_per_vertex = accessor.get_fe().dofs_per_vertex,
-                           dofs_per_line   = accessor.get_fe().dofs_per_line,
-                           dofs_per_quad   = accessor.get_fe().dofs_per_quad,
-                           dofs_per_hex    = accessor.get_fe().dofs_per_hex;
+                           dofs_per_line = accessor.get_fe().dofs_per_line,
+                           dofs_per_quad = accessor.get_fe().dofs_per_quad,
+                           dofs_per_hex = accessor.get_fe().dofs_per_hex;
 
         Assert(local_dof_indices.size() == accessor.get_fe().dofs_per_cell,
                ExcInternalError());

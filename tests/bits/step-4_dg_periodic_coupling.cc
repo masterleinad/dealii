@@ -137,8 +137,8 @@ Step4<dim>::make_grid()
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
                      periodic_faces;
-  const unsigned int b_id1     = 2;
-  const unsigned int b_id2     = 3;
+  const unsigned int b_id1 = 2;
+  const unsigned int b_id2 = 3;
   const unsigned int direction = 1;
 
   dealii::GridTools::collect_periodic_faces(triangulation,
@@ -257,7 +257,7 @@ Step4<2>::check_periodicity(const unsigned int cycle) const
       VectorTools::point_value(dof_handler, solution, point2, value2);
 
       const double rel_error = std::abs((value2[0] - value1[0]) / value1[0]);
-      const double rel_tol   = 1. / std::pow(2., cycle);
+      const double rel_tol = 1. / std::pow(2., cycle);
 
       if(rel_error < rel_tol)
         deallog << point1 << "\t pass" << std::endl;

@@ -52,7 +52,7 @@ void
 MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FEValuesBase<dim>& fe           = info.fe_values();
+  const FEValuesBase<dim>& fe = info.fe_values();
   FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
 
   for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
@@ -67,7 +67,7 @@ void
 MatrixIntegrator<dim>::bdry(MeshWorker::DoFInfo<dim>&         dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FEValuesBase<dim>& fe           = info.fe_values();
+  const FEValuesBase<dim>& fe = info.fe_values();
   FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
 
   const unsigned int deg = fe.get_fe().tensor_degree();
@@ -93,8 +93,8 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
                             MeshWorker::IntegrationInfo<dim>& info1,
                             MeshWorker::IntegrationInfo<dim>& info2)
 {
-  const FEValuesBase<dim>& fe1         = info1.fe_values();
-  const FEValuesBase<dim>& fe2         = info2.fe_values();
+  const FEValuesBase<dim>& fe1 = info1.fe_values();
+  const FEValuesBase<dim>& fe2 = info2.fe_values();
   FullMatrix<double>&      matrix_v1u1 = dinfo1.matrix(0, false).matrix;
   FullMatrix<double>&      matrix_v1u2 = dinfo1.matrix(0, true).matrix;
   FullMatrix<double>&      matrix_v2u1 = dinfo2.matrix(0, true).matrix;
@@ -222,7 +222,7 @@ test_simple(DoFHandler<dim>& mgdofs)
   Vector<double>       v;
 
   const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const FiniteElement<dim>& fe = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell

@@ -38,9 +38,9 @@
 void
 test()
 {
-  unsigned int np   = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int np = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  const int    dim  = 2;
+  const int    dim = 2;
   // Setup system
   dealii::parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD);

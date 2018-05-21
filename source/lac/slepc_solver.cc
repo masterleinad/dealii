@@ -114,7 +114,7 @@ namespace SLEPcWrappers
     Assert(this_initial_vector.l2_norm() > 0.0,
            ExcMessage("Initial vector should be nonzero."));
 
-    Vec                  vec  = this_initial_vector;
+    Vec                  vec = this_initial_vector;
     const PetscErrorCode ierr = EPSSetInitialSpace(eps, 1, &vec);
 
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
@@ -179,7 +179,7 @@ namespace SLEPcWrappers
     ierr = EPSGetConverged(eps, reinterpret_cast<PetscInt*>(n_converged));
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
 
-    PetscInt  n_iterations  = 0;
+    PetscInt  n_iterations = 0;
     PetscReal residual_norm = 0;
 
     // @todo Investigate elaborating on some of this to act on the

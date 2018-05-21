@@ -375,7 +375,7 @@ void
 LaplaceProblem<dim>::assemble_test()
 {
   test_matrix = 0;
-  test_rhs    = 0;
+  test_rhs = 0;
 
   WorkStream::run(graph,
                   std::bind(&LaplaceProblem<dim>::local_assemble,

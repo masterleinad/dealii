@@ -153,7 +153,7 @@ Step4<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -232,7 +232,7 @@ Step4<dim>::solve()
     preconditioner.initialize(system_matrix);
     const auto lo_A     = linear_operator<VectorType>(system_matrix);
     const auto lo_A_inv = inverse_operator(lo_A, solver, preconditioner);
-    output              = lo_A_inv * system_rhs;
+    output = lo_A_inv * system_rhs;
     output -= solution;
     deallog << "Norm of error in LinearOperator solve: " << output.l2_norm()
             << std::endl;

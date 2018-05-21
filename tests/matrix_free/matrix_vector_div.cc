@@ -109,7 +109,7 @@ test()
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
-        endc               = tria.end();
+        endc = tria.end();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)
@@ -182,7 +182,7 @@ test()
                               | update_gradients);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
 
@@ -205,7 +205,7 @@ test()
             for(unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 const Tensor<2, dim> phi_grad = fe_values[sc].gradient(k, q);
-                phi_div[k]                    = trace(phi_grad);
+                phi_div[k] = trace(phi_grad);
               }
 
             for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -232,7 +232,7 @@ test()
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
-        const double val       = -1. + 2. * random_value<double>();
+        const double val = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;
       }
   constraints.condense(system_rhs);

@@ -29,7 +29,7 @@ void
 test()
 {
   const unsigned int spacedim = 2;
-  const unsigned int dim      = spacedim - 1;
+  const unsigned int dim = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
   Triangulation<spacedim>      volume_mesh;

@@ -42,7 +42,7 @@ test(const unsigned int& size)
   auto pair_unpacked   = std::get<0>(tuple_unpacked);
   auto points_unpacked = std::get<1>(tuple_unpacked);
 
-  unsigned int i  = 0;
+  unsigned int i = 0;
   bool         ok = (pair_unpacked == a_pair);
 
   for(const auto& p : points)

@@ -188,7 +188,7 @@ namespace Functions
     const std::vector<Point<dim>>&    points,
     std::vector<std::vector<double>>& values) const
   {
-    unsigned int n       = points.size();
+    unsigned int n = points.size();
     double       stretch = 1. / radius;
 
     Assert(values.size() == dim + 1,
@@ -224,7 +224,7 @@ namespace Functions
     const std::vector<Point<dim>>&            points,
     std::vector<std::vector<Tensor<1, dim>>>& values) const
   {
-    unsigned int n       = points.size();
+    unsigned int n = points.size();
     double       stretch = 1. / radius;
 
     Assert(values.size() == dim + 1,
@@ -297,9 +297,9 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p  = points[k];
-        const double      x  = numbers::PI / 2. * p(0);
-        const double      y  = numbers::PI / 2. * p(1);
+        const Point<dim>& p = points[k];
+        const double      x = numbers::PI / 2. * p(0);
+        const double      y = numbers::PI / 2. * p(1);
         const double      cx = cos(x);
         const double      cy = cos(y);
         const double      sx = sin(x);
@@ -313,7 +313,7 @@ namespace Functions
           }
         else if(dim == 3)
           {
-            const double z  = numbers::PI / 2. * p(2);
+            const double z = numbers::PI / 2. * p(2);
             const double cz = cos(z);
             const double sz = sin(z);
 
@@ -344,9 +344,9 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p   = points[k];
-        const double      x   = numbers::PI / 2. * p(0);
-        const double      y   = numbers::PI / 2. * p(1);
+        const Point<dim>& p = points[k];
+        const double      x = numbers::PI / 2. * p(0);
+        const double      y = numbers::PI / 2. * p(1);
         const double      c2x = cos(2 * x);
         const double      c2y = cos(2 * y);
         const double      s2x = sin(2 * x);
@@ -365,7 +365,7 @@ namespace Functions
           }
         else if(dim == 3)
           {
-            const double z   = numbers::PI / 2. * p(2);
+            const double z = numbers::PI / 2. * p(2);
             const double c2z = cos(2 * z);
             const double s2z = sin(2 * z);
             const double cz2 = .5 + .5 * c2z; // cos^2 z
@@ -422,9 +422,9 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p   = points[k];
-        const double      x   = numbers::PI / 2. * p(0);
-        const double      y   = numbers::PI / 2. * p(1);
+        const Point<dim>& p = points[k];
+        const double      x = numbers::PI / 2. * p(0);
+        const double      y = numbers::PI / 2. * p(1);
         const double      c2x = cos(2 * x);
         const double      c2y = cos(2 * y);
         const double      s2x = sin(2 * x);
@@ -441,7 +441,7 @@ namespace Functions
           }
         else if(dim == 3)
           {
-            const double z   = numbers::PI * p(2);
+            const double z = numbers::PI * p(2);
             const double c2z = cos(2 * z);
             const double s2z = sin(2 * z);
 
@@ -527,8 +527,8 @@ namespace Functions
         if((x < 0) || (y < 0))
           {
             const double phi = std::atan2(y, -x) + numbers::PI;
-            const double r2  = x * x + y * y;
-            const double rl  = pow(r2, lambda / 2.);
+            const double r2 = x * x + y * y;
+            const double rl = pow(r2, lambda / 2.);
             const double rl1 = pow(r2, lambda / 2. - .5);
             values[0][k]
               = rl * (lp * sin(phi) * Psi(phi) + cos(phi) * Psi_1(phi));
@@ -564,13 +564,13 @@ namespace Functions
 
         if((x < 0) || (y < 0))
           {
-            const double phi  = std::atan2(y, -x) + numbers::PI;
-            const double r2   = x * x + y * y;
-            const double r    = sqrt(r2);
-            const double rl   = pow(r2, lambda / 2.);
-            const double rl1  = pow(r2, lambda / 2. - .5);
-            const double rl2  = pow(r2, lambda / 2. - 1.);
-            const double psi  = Psi(phi);
+            const double phi = std::atan2(y, -x) + numbers::PI;
+            const double r2 = x * x + y * y;
+            const double r = sqrt(r2);
+            const double rl = pow(r2, lambda / 2.);
+            const double rl1 = pow(r2, lambda / 2. - .5);
+            const double rl2 = pow(r2, lambda / 2. - 1.);
+            const double psi = Psi(phi);
             const double psi1 = Psi_1(phi);
             const double psi2 = Psi_2(phi);
             const double cosp = cos(phi);
@@ -590,12 +590,12 @@ namespace Functions
             const double pdr
               = -(lambda - 1.) * rl2 * (lp * lp * psi1 + Psi_3(phi)) / lm;
             const double pdp = -rl1 * (lp * lp * psi2 + Psi_4(phi)) / lm;
-            values[0][k][0]  = cosp * udr - sinp / r * udp;
-            values[0][k][1]  = -sinp * udr - cosp / r * udp;
-            values[1][k][0]  = cosp * vdr - sinp / r * vdp;
-            values[1][k][1]  = -sinp * vdr - cosp / r * vdp;
-            values[2][k][0]  = cosp * pdr - sinp / r * pdp;
-            values[2][k][1]  = -sinp * pdr - cosp / r * pdp;
+            values[0][k][0] = cosp * udr - sinp / r * udp;
+            values[0][k][1] = -sinp * udr - cosp / r * udp;
+            values[1][k][0] = cosp * vdr - sinp / r * vdp;
+            values[1][k][1] = -sinp * vdr - cosp / r * vdp;
+            values[2][k][0] = cosp * pdr - sinp / r * pdp;
+            values[2][k][1] = -sinp * pdr - cosp / r * pdp;
           }
         else
           {
@@ -626,9 +626,9 @@ namespace Functions
   Kovasznay::Kovasznay(double Re, bool stokes) : Reynolds(Re), stokes(stokes)
   {
     long double r2 = Reynolds / 2.;
-    long double b  = 4 * numbers::PI * numbers::PI;
-    long double l  = -b / (r2 + std::sqrt(r2 * r2 + b));
-    lbda           = l;
+    long double b = 4 * numbers::PI * numbers::PI;
+    long double l = -b / (r2 + std::sqrt(r2 * r2 + b));
+    lbda = l;
     // mean pressure for a domain
     // spreading from -.5 to 1.5 in
     // x-direction
@@ -647,9 +647,9 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<2>& p   = points[k];
-        const double    x   = p(0);
-        const double    y   = 2. * numbers::PI * p(1);
+        const Point<2>& p = points[k];
+        const double    x = p(0);
+        const double    y = 2. * numbers::PI * p(1);
         const double    elx = std::exp(lbda * x);
 
         values[0][k] = 1. - elx * cos(y);
@@ -675,8 +675,8 @@ namespace Functions
         const double y = points[i](1);
 
         const double elx = std::exp(lbda * x);
-        const double cy  = cos(2 * numbers::PI * y);
-        const double sy  = sin(2 * numbers::PI * y);
+        const double cy = cos(2 * numbers::PI * y);
+        const double sy = sin(2 * numbers::PI * y);
 
         // u
         gradients[0][i][0] = -lbda * elx * cy;
@@ -703,16 +703,16 @@ namespace Functions
         const double zp = 2. * numbers::PI;
         for(unsigned int k = 0; k < n; ++k)
           {
-            const Point<2>& p   = points[k];
-            const double    x   = p(0);
-            const double    y   = zp * p(1);
+            const Point<2>& p = points[k];
+            const double    x = p(0);
+            const double    y = zp * p(1);
             const double    elx = std::exp(lbda * x);
-            const double    u   = 1. - elx * cos(y);
-            const double    ux  = -lbda * elx * cos(y);
-            const double    uy  = elx * zp * sin(y);
-            const double    v   = lbda / zp * elx * sin(y);
-            const double    vx  = lbda * lbda / zp * elx * sin(y);
-            const double    vy  = zp * lbda / zp * elx * cos(y);
+            const double    u = 1. - elx * cos(y);
+            const double    ux = -lbda * elx * cos(y);
+            const double    uy = elx * zp * sin(y);
+            const double    v = lbda / zp * elx * sin(y);
+            const double    vx = lbda * lbda / zp * elx * sin(y);
+            const double    vy = zp * lbda / zp * elx * cos(y);
 
             values[0][k] = u * ux + v * uy;
             values[1][k] = u * vx + v * vy;

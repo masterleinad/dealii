@@ -450,7 +450,7 @@ namespace PETScWrappers
       else
         {
           PetscInt i = 0;
-          ierr       = MatMPIAIJSetPreallocationCSR(matrix, &i, &i, nullptr);
+          ierr = MatMPIAIJSetPreallocationCSR(matrix, &i, &i, nullptr);
           AssertThrow(ierr == 0, ExcPETScError(ierr));
         }
       compress(dealii::VectorOperation::insert);

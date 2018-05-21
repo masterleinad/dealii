@@ -61,16 +61,16 @@ QGauss<1>::QGauss(const unsigned int n) : Quadrature<1>(n)
 
   for(unsigned int i = 0; i < (points.size() + 1) / 2; ++i)
     {
-      this->quadrature_points[i][0]         = points[i];
+      this->quadrature_points[i][0] = points[i];
       this->quadrature_points[n - i - 1][0] = 1. - points[i];
 
       // derivative of Jacobi polynomial
       const long double pp
         = 0.5 * (n + 1)
           * Polynomials::jacobi_polynomial_value(n - 1, 1, 1, points[i]);
-      const long double x      = -1. + 2. * points[i];
-      const double      w      = 1. / ((1. - x * x) * pp * pp);
-      this->weights[i]         = w;
+      const long double x = -1. + 2. * points[i];
+      const double      w = 1. / ((1. - x * x) * pp * pp);
+      this->weights[i] = w;
       this->weights[n - i - 1] = w;
     }
 }
@@ -140,7 +140,7 @@ QGaussLobatto<1>::QGaussLobatto(const unsigned int n) : Quadrature<1>(n)
   for(unsigned int i = 0; i < points.size(); ++i)
     {
       this->quadrature_points[i][0] = points[i];
-      this->weights[i]              = 0.5 * w[i];
+      this->weights[i] = 0.5 * w[i];
     }
 }
 
@@ -155,7 +155,7 @@ template <>
 QTrapez<1>::QTrapez() : Quadrature<1>(2)
 {
   static const double xpts[] = {0.0, 1.0};
-  static const double wts[]  = {0.5, 0.5};
+  static const double wts[] = {0.5, 0.5};
 
   for(unsigned int i = 0; i < this->size(); ++i)
     {
@@ -168,7 +168,7 @@ template <>
 QSimpson<1>::QSimpson() : Quadrature<1>(3)
 {
   static const double xpts[] = {0.0, 0.5, 1.0};
-  static const double wts[]  = {1. / 6., 2. / 3., 1. / 6.};
+  static const double wts[] = {1. / 6., 2. / 3., 1. / 6.};
 
   for(unsigned int i = 0; i < this->size(); ++i)
     {
@@ -323,30 +323,30 @@ QGaussLog<1>::get_quadrature_points(const unsigned int n)
         break;
 
       case 11:
-        q_points[0]  = 0.007643941174637681;
-        q_points[1]  = 0.04554182825657903;
-        q_points[2]  = 0.1145222974551244;
-        q_points[3]  = 0.2103785812270227;
-        q_points[4]  = 0.3266955532217897;
-        q_points[5]  = 0.4554532469286375;
-        q_points[6]  = 0.5876483563573721;
-        q_points[7]  = 0.7139638500230458;
-        q_points[8]  = 0.825453217777127;
-        q_points[9]  = 0.914193921640008;
+        q_points[0] = 0.007643941174637681;
+        q_points[1] = 0.04554182825657903;
+        q_points[2] = 0.1145222974551244;
+        q_points[3] = 0.2103785812270227;
+        q_points[4] = 0.3266955532217897;
+        q_points[5] = 0.4554532469286375;
+        q_points[6] = 0.5876483563573721;
+        q_points[7] = 0.7139638500230458;
+        q_points[8] = 0.825453217777127;
+        q_points[9] = 0.914193921640008;
         q_points[10] = 0.973860256264123;
         break;
 
       case 12:
-        q_points[0]  = 0.006548722279080035;
-        q_points[1]  = 0.03894680956045022;
-        q_points[2]  = 0.0981502631060046;
-        q_points[3]  = 0.1811385815906331;
-        q_points[4]  = 0.2832200676673157;
-        q_points[5]  = 0.398434435164983;
-        q_points[6]  = 0.5199526267791299;
-        q_points[7]  = 0.6405109167754819;
-        q_points[8]  = 0.7528650118926111;
-        q_points[9]  = 0.850240024421055;
+        q_points[0] = 0.006548722279080035;
+        q_points[1] = 0.03894680956045022;
+        q_points[2] = 0.0981502631060046;
+        q_points[3] = 0.1811385815906331;
+        q_points[4] = 0.2832200676673157;
+        q_points[5] = 0.398434435164983;
+        q_points[6] = 0.5199526267791299;
+        q_points[7] = 0.6405109167754819;
+        q_points[8] = 0.7528650118926111;
+        q_points[9] = 0.850240024421055;
         q_points[10] = 0.926749682988251;
         q_points[11] = 0.977756129778486;
         break;
@@ -452,30 +452,30 @@ QGaussLog<1>::get_quadrature_weights(const unsigned int n)
         break;
 
       case 11:
-        quadrature_weights[0]  = -0.1056522560990997;
-        quadrature_weights[1]  = -0.1665716806006314;
-        quadrature_weights[2]  = -0.1805632182877528;
-        quadrature_weights[3]  = -0.1672787367737502;
-        quadrature_weights[4]  = -0.1386970574017174;
-        quadrature_weights[5]  = -0.1038334333650771;
-        quadrature_weights[6]  = -0.06953669788988512;
-        quadrature_weights[7]  = -0.04054160079499477;
-        quadrature_weights[8]  = -0.01943540249522013;
-        quadrature_weights[9]  = -0.006737429326043388;
+        quadrature_weights[0] = -0.1056522560990997;
+        quadrature_weights[1] = -0.1665716806006314;
+        quadrature_weights[2] = -0.1805632182877528;
+        quadrature_weights[3] = -0.1672787367737502;
+        quadrature_weights[4] = -0.1386970574017174;
+        quadrature_weights[5] = -0.1038334333650771;
+        quadrature_weights[6] = -0.06953669788988512;
+        quadrature_weights[7] = -0.04054160079499477;
+        quadrature_weights[8] = -0.01943540249522013;
+        quadrature_weights[9] = -0.006737429326043388;
         quadrature_weights[10] = -0.001152486965101561;
         break;
 
       case 12:
-        quadrature_weights[0]  = -0.09319269144393;
-        quadrature_weights[1]  = -0.1497518275763289;
-        quadrature_weights[2]  = -0.166557454364573;
-        quadrature_weights[3]  = -0.1596335594369941;
-        quadrature_weights[4]  = -0.1384248318647479;
-        quadrature_weights[5]  = -0.1100165706360573;
-        quadrature_weights[6]  = -0.07996182177673273;
-        quadrature_weights[7]  = -0.0524069547809709;
-        quadrature_weights[8]  = -0.03007108900074863;
-        quadrature_weights[9]  = -0.01424924540252916;
+        quadrature_weights[0] = -0.09319269144393;
+        quadrature_weights[1] = -0.1497518275763289;
+        quadrature_weights[2] = -0.166557454364573;
+        quadrature_weights[3] = -0.1596335594369941;
+        quadrature_weights[4] = -0.1384248318647479;
+        quadrature_weights[5] = -0.1100165706360573;
+        quadrature_weights[6] = -0.07996182177673273;
+        quadrature_weights[7] = -0.0524069547809709;
+        quadrature_weights[8] = -0.03007108900074863;
+        quadrature_weights[9] = -0.01424924540252916;
         quadrature_weights[10] = -0.004899924710875609;
         quadrature_weights[11] = -0.000834029009809656;
         break;
@@ -528,7 +528,7 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
       // The first i quadrature points are the same as quad1, and
       // are by default singular.
       this->quadrature_points[i] = quad1.point(i) * fraction;
-      this->weights[i]           = quad1.weight(i) * fraction;
+      this->weights[i] = quad1.weight(i) * fraction;
 
       // We need to scale with -log|fraction*alpha|
       if((alpha != 1) || (fraction != 1))
@@ -572,8 +572,8 @@ template <>
 unsigned int
 QGaussOneOverR<2>::quad_size(const Point<2> singularity, const unsigned int n)
 {
-  double eps       = 1e-8;
-  bool   on_edge   = false;
+  double eps = 1e-8;
+  bool   on_edge = false;
   bool   on_vertex = false;
   for(unsigned int i = 0; i < 2; ++i)
     if((std::abs(singularity[i]) < eps) || (std::abs(singularity[i] - 1) < eps))
@@ -616,14 +616,14 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 
   // Lexicographical ordering.
 
-  double       eps  = 1e-8;
+  double       eps = 1e-8;
   unsigned int q_id = 0; // Current quad point index.
   Tensor<1, 2> dist;
 
   for(unsigned int box = 0; box < 4; ++box)
     {
-      dist        = (singularity - GeometryInfo<2>::unit_cell_vertex(box));
-      dist        = Point<2>(std::abs(dist[0]), std::abs(dist[1]));
+      dist = (singularity - GeometryInfo<2>::unit_cell_vertex(box));
+      dist = Point<2>(std::abs(dist[0]), std::abs(dist[1]));
       double area = dist[0] * dist[1];
       if(area > eps)
         for(unsigned int q = 0; q < quads[box].size(); ++q, ++q_id)
@@ -674,21 +674,21 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
   //
   // And we get rid of R to take into account the singularity,
   // unless specified differently in the constructor.
-  std::vector<Point<2>>& ps  = this->quadrature_points;
-  std::vector<double>&   ws  = this->weights;
+  std::vector<Point<2>>& ps = this->quadrature_points;
+  std::vector<double>&   ws = this->weights;
   double                 pi4 = numbers::PI / 4;
 
   for(unsigned int q = 0; q < gauss.size(); ++q)
     {
       const Point<2>& gp = gauss.point(q);
-      ps[q][0]           = gp[0];
-      ps[q][1]           = gp[0] * std::tan(pi4 * gp[1]);
-      ws[q]              = gauss.weight(q) * pi4 / std::cos(pi4 * gp[1]);
+      ps[q][0] = gp[0];
+      ps[q][1] = gp[0] * std::tan(pi4 * gp[1]);
+      ws[q] = gauss.weight(q) * pi4 / std::cos(pi4 * gp[1]);
       if(factor_out_singularity)
         ws[q] *= (ps[q] - GeometryInfo<2>::unit_cell_vertex(0)).norm();
       // The other half of the quadrilateral is symmetric with
       // respect to xy plane.
-      ws[gauss.size() + q]    = ws[q];
+      ws[gauss.size() + q] = ws[q];
       ps[gauss.size() + q][0] = ps[q][1];
       ps[gauss.size() + q][1] = ps[q][0];
     }
@@ -748,7 +748,7 @@ QSorted<dim>::QSorted(const Quadrature<dim>& quad) : Quadrature<dim>(quad)
   // and we might need to modify the variable accordingly.
   for(unsigned int i = 0; i < quad.size(); ++i)
     {
-      this->weights[i]           = quad.weight(permutation[i]);
+      this->weights[i] = quad.weight(permutation[i]);
       this->quadrature_points[i] = quad.point(permutation[i]);
       if(permutation[i] != i)
         this->is_tensor_product_flag = false;
@@ -834,13 +834,13 @@ QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
   std::vector<Point<1>> quadrature_points_dummy(quadrature_points.size());
   std::vector<double>   weights_dummy(weights.size());
   unsigned int          cont = 0;
-  const double          tol  = 1e-10;
+  const double          tol = 1e-10;
   for(unsigned int d = 0; d < quadrature_points.size(); ++d)
     {
       if(std::abs(quadrature_points[d][0] - singularity[0]) > tol)
         {
           quadrature_points_dummy[d - cont] = quadrature_points[d];
-          weights_dummy[d - cont]           = weights[d];
+          weights_dummy[d - cont] = weights[d];
         }
       else
         {
@@ -891,7 +891,7 @@ QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
                  / (1 + 3 * gamma_bar * gamma_bar);
 
       quadrature_points[q][0] = (eta + 1) / 2.0;
-      weights[q]              = J * weights[q];
+      weights[q] = J * weights[q];
     }
 }
 
@@ -950,7 +950,7 @@ QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n) : Quadrature<1>(n)
   for(unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
-      this->weights[i]           = w[i];
+      this->weights[i] = w[i];
     }
 }
 
@@ -1045,7 +1045,7 @@ QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
   for(unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
-      this->weights[i]           = w[i];
+      this->weights[i] = w[i];
     }
 }
 
@@ -1113,7 +1113,7 @@ QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
   for(unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
-      this->weights[i]           = w[i];
+      this->weights[i] = w[i];
     }
 }
 
@@ -1163,7 +1163,7 @@ QSimplex<dim>::compute_affine_transformation(
   for(unsigned int i = 0; i < this->size(); ++i)
     {
       qp[i] = Point<dim>(vertices[0] + B * this->point(i));
-      w[i]  = J * this->weight(i);
+      w[i] = J * this->weight(i);
     }
 
   return Quadrature<dim>(qp, w);
@@ -1184,16 +1184,16 @@ QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
       const auto xhat = q[0];
       const auto yhat = q[1];
 
-      const double t  = numbers::PI_2 * yhat;
+      const double t = numbers::PI_2 * yhat;
       const double pi = numbers::PI;
       const double st = std::sin(t);
       const double ct = std::cos(t);
-      const double r  = xhat / (st + ct);
+      const double r = xhat / (st + ct);
 
       const double J = pi * xhat / (2 * (std::sin(pi * yhat) + 1));
 
       this->quadrature_points[i] = Point<2>(r * ct, r * st);
-      this->weights[i]           = w * J;
+      this->weights[i] = w * J;
     }
 }
 
@@ -1223,7 +1223,7 @@ QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
       const double J = beta * std::pow(xhat, 2. * beta - 1.);
 
       this->quadrature_points[i] = Point<2>(x, y);
-      this->weights[i]           = w * J;
+      this->weights[i] = w * J;
     }
 }
 

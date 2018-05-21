@@ -157,7 +157,7 @@ namespace with_hp
         cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
         cell_matrix = 0;
         cell_rhs.reinit(dofs_per_cell);
-        cell_rhs   = 0;
+        cell_rhs = 0;
         n_q_points = fe_values.get_present_fe_values().n_quadrature_points;
 
         for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -291,7 +291,7 @@ namespace without_hp
                               | update_JxW_values);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    const unsigned int n_q_points    = quadrature_formula.size();
+    const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     Vector<double>     cell_rhs(dofs_per_cell);

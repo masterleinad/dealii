@@ -109,8 +109,8 @@ main()
           C = 0;
           C.diagadd(1.);
           C(i, i) = C(i + 1, i + 1) = std::cos(i + 1.);
-          C(i + 1, i)               = std::sin(i + 1.);
-          C(i, i + 1)               = -std::sin(i + 1.);
+          C(i + 1, i) = std::sin(i + 1.);
+          C(i, i + 1) = -std::sin(i + 1.);
 
           C.print_formatted(logfile, 3, false);
           deallog << "l1-norm: " << C.l1_norm() << std::endl;

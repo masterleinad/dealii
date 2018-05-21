@@ -100,7 +100,7 @@ namespace LocalIntegrators
 
       for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double       dx     = factor * fe.JxW(k);
+          const double       dx = factor * fe.JxW(k);
           const unsigned int vindex = k * v_increment;
 
           for(unsigned j = 0; j < n_dofs; ++j)
@@ -309,8 +309,8 @@ namespace LocalIntegrators
       const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
-      const unsigned int n_dofs       = fe.dofs_per_cell;
-      const unsigned int t_dofs       = fetest.dofs_per_cell;
+      const unsigned int n_dofs = fe.dofs_per_cell;
+      const unsigned int t_dofs = fetest.dofs_per_cell;
       unsigned int       n_components = fe.get_fe().n_components();
       AssertDimension(M.m(), n_dofs);
       AssertDimension(M.n(), n_dofs);
@@ -534,10 +534,10 @@ namespace LocalIntegrators
           for(unsigned int d = 1; d < dim; ++d)
             nbeta += fe1.normal_vector(k)[d] * velocity[d][k * v_increment];
           const double        dx_nbeta = factor * std::abs(nbeta) * fe1.JxW(k);
-          FullMatrix<double>& M1       = nbeta > 0. ? M11 : M22;
-          FullMatrix<double>& M2       = nbeta > 0. ? M21 : M12;
-          const FEValuesBase<dim>& fe  = nbeta > 0. ? fe1 : fe2;
-          const FEValuesBase<dim>& fetest  = nbeta > 0. ? fetest1 : fetest2;
+          FullMatrix<double>& M1 = nbeta > 0. ? M11 : M22;
+          FullMatrix<double>& M2 = nbeta > 0. ? M21 : M12;
+          const FEValuesBase<dim>& fe = nbeta > 0. ? fe1 : fe2;
+          const FEValuesBase<dim>& fetest = nbeta > 0. ? fetest1 : fetest2;
           const FEValuesBase<dim>& fetestn = nbeta > 0. ? fetest2 : fetest1;
           for(unsigned i = 0; i < n1; ++i)
             for(unsigned j = 0; j < n1; ++j)

@@ -197,8 +197,8 @@ SystemIntegrator<dim>::cell(
   const FEValuesBase<dim>& fe = info.fe_values();
 
   FullMatrix<double>&  local_matrix = dinfo.matrix(0).matrix;
-  const unsigned int   n_points     = fe.n_quadrature_points;
-  const unsigned int   n_dofs       = fe.dofs_per_cell;
+  const unsigned int   n_points = fe.n_quadrature_points;
+  const unsigned int   n_dofs = fe.dofs_per_cell;
   const Advection<dim> advection;
 
   for(unsigned int k = 0; k < n_points; ++k)
@@ -232,10 +232,10 @@ SystemIntegrator<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const FEValuesBase<dim>&      fe       = info.fe_values();
+  const FEValuesBase<dim>&      fe = info.fe_values();
   const unsigned int            n_points = fe.n_quadrature_points;
-  const unsigned int            n_dofs   = fe.dofs_per_cell;
-  Vector<double>&               b        = dinfo.vector(0).block(0);
+  const unsigned int            n_dofs = fe.dofs_per_cell;
+  Vector<double>&               b = dinfo.vector(0).block(0);
   const FluxBoundaryValues<dim> flux_bd;
 
   for(unsigned int k = 0; k < n_points; ++k)
@@ -254,14 +254,14 @@ SystemIntegrator<dim>::face(
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
-  FullMatrix<double>&      A11      = dinfo1.matrix(0, false).matrix;
-  FullMatrix<double>&      A12      = dinfo1.matrix(0, true).matrix;
-  FullMatrix<double>&      A21      = dinfo2.matrix(0, true).matrix;
-  FullMatrix<double>&      A22      = dinfo2.matrix(0, false).matrix;
-  const FEValuesBase<dim>& fe1      = info1.fe_values(0);
-  const FEValuesBase<dim>& fe2      = info2.fe_values(0);
+  FullMatrix<double>&      A11 = dinfo1.matrix(0, false).matrix;
+  FullMatrix<double>&      A12 = dinfo1.matrix(0, true).matrix;
+  FullMatrix<double>&      A21 = dinfo2.matrix(0, true).matrix;
+  FullMatrix<double>&      A22 = dinfo2.matrix(0, false).matrix;
+  const FEValuesBase<dim>& fe1 = info1.fe_values(0);
+  const FEValuesBase<dim>& fe2 = info2.fe_values(0);
   const unsigned int       n_points = fe1.n_quadrature_points;
-  const unsigned int       n_dofs   = fe1.dofs_per_cell;
+  const unsigned int       n_dofs = fe1.dofs_per_cell;
   double                   h_e;
   if(dim == 3)
     h_e = std::sqrt(dinfo1.face->measure());
@@ -271,7 +271,7 @@ SystemIntegrator<dim>::face(
   for(unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
-      const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
+      const Point<dim>& n = (Point<dim>) fe1.normal_vector(k);
       for(unsigned int i = 0; i < n_dofs; ++i)
         {
           // average
@@ -319,11 +319,11 @@ MatrixIntegrator<dim>::cell(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const FEValuesBase<dim>& fe           = info.fe_values();
+  const FEValuesBase<dim>& fe = info.fe_values();
   FullMatrix<double>&      local_matrix = dinfo.matrix(0).matrix;
 
   const unsigned int   n_points = fe.n_quadrature_points;
-  const unsigned int   n_dofs   = fe.dofs_per_cell;
+  const unsigned int   n_dofs = fe.dofs_per_cell;
   const Advection<dim> advection;
 
   for(unsigned int k = 0; k < n_points; ++k)
@@ -355,14 +355,14 @@ MatrixIntegrator<dim>::face(
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
-  FullMatrix<double>&      A11      = dinfo1.matrix(0, false).matrix;
-  FullMatrix<double>&      A12      = dinfo1.matrix(0, true).matrix;
-  FullMatrix<double>&      A21      = dinfo2.matrix(0, true).matrix;
-  FullMatrix<double>&      A22      = dinfo2.matrix(0, false).matrix;
-  const FEValuesBase<dim>& fe1      = info1.fe_values(0);
-  const FEValuesBase<dim>& fe2      = info2.fe_values(0);
+  FullMatrix<double>&      A11 = dinfo1.matrix(0, false).matrix;
+  FullMatrix<double>&      A12 = dinfo1.matrix(0, true).matrix;
+  FullMatrix<double>&      A21 = dinfo2.matrix(0, true).matrix;
+  FullMatrix<double>&      A22 = dinfo2.matrix(0, false).matrix;
+  const FEValuesBase<dim>& fe1 = info1.fe_values(0);
+  const FEValuesBase<dim>& fe2 = info2.fe_values(0);
   const unsigned int       n_points = fe1.n_quadrature_points;
-  const unsigned int       n_dofs   = fe1.dofs_per_cell;
+  const unsigned int       n_dofs = fe1.dofs_per_cell;
   double                   h_e;
   if(dim == 3)
     h_e = std::sqrt(dinfo1.face->measure());
@@ -372,7 +372,7 @@ MatrixIntegrator<dim>::face(
   for(unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
-      const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
+      const Point<dim>& n = (Point<dim>) fe1.normal_vector(k);
       for(unsigned int i = 0; i < n_dofs; ++i)
         {
           // average
@@ -419,10 +419,10 @@ void
 RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&                  dinfo,
                          typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const FEValuesBase<dim>& fe       = info.fe_values();
+  const FEValuesBase<dim>& fe = info.fe_values();
   const unsigned int       n_points = fe.n_quadrature_points;
-  const unsigned int       n_dofs   = fe.dofs_per_cell;
-  Vector<double>&          b        = dinfo.vector(0).block(0);
+  const unsigned int       n_dofs = fe.dofs_per_cell;
+  Vector<double>&          b = dinfo.vector(0).block(0);
   const RightHandSide<dim> right_hand_side;
 
   for(unsigned int k = 0; k < n_points; ++k)
@@ -439,10 +439,10 @@ RHSIntegrator<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
-  const FEValuesBase<dim>&      fe       = info.fe_values();
+  const FEValuesBase<dim>&      fe = info.fe_values();
   const unsigned int            n_points = fe.n_quadrature_points;
-  const unsigned int            n_dofs   = fe.dofs_per_cell;
-  Vector<double>&               b        = dinfo.vector(0).block(0);
+  const unsigned int            n_dofs = fe.dofs_per_cell;
+  Vector<double>&               b = dinfo.vector(0).block(0);
   const FluxBoundaryValues<dim> flux_bd;
 
   for(unsigned int k = 0; k < n_points; ++k)
@@ -541,7 +541,7 @@ MeshWorkerConstraintMatrixTest<dim>::setup_system()
 
   std::string str("FE_DGQ");
   std::string fe_name = fe.get_name();
-  std::size_t found   = fe_name.find(str);
+  std::size_t found = fe_name.find(str);
   if(found != std::string::npos)
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, c_sparsity, constraints, false);

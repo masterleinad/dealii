@@ -51,7 +51,7 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
+  const double PI = numbers::PI;
   double       val = 0.0;
   switch(component)
     {
@@ -71,7 +71,7 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
-  const double PI  = numbers::PI;
+  const double PI = numbers::PI;
   double       val = 0.0;
   switch(component)
     {

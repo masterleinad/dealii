@@ -248,14 +248,14 @@ namespace internal
             }
 
           // evaluate basis functions on the 1D faces, i.e., in zero and one
-          Point<dim> q_point             = unit_point;
-          q_point[0]                     = 0;
+          Point<dim> q_point = unit_point;
+          q_point[0] = 0;
           this->shape_data_on_face[0][i] = fe->shape_value(my_i, q_point);
           this->shape_data_on_face[0][i + n_dofs_1d]
             = fe->shape_grad(my_i, q_point)[0];
           this->shape_data_on_face[0][i + 2 * n_dofs_1d]
             = fe->shape_grad_grad(my_i, q_point)[0][0];
-          q_point[0]                     = 1;
+          q_point[0] = 1;
           this->shape_data_on_face[1][i] = fe->shape_value(my_i, q_point);
           this->shape_data_on_face[1][i + n_dofs_1d]
             = fe->shape_grad(my_i, q_point)[0];
@@ -366,7 +366,7 @@ namespace internal
                       const unsigned int ind
                         = offset + j * dofs_per_component_on_face + i;
                       AssertIndexRange(ind, dofs_per_component_on_cell);
-                      const unsigned int l           = i * (fe_degree + 1) + j;
+                      const unsigned int l = i * (fe_degree + 1) + j;
                       face_to_cell_index_nodal(f, l) = ind;
                     }
             }
@@ -406,7 +406,7 @@ namespace internal
                         = offset + j * dofs_per_component_on_face + i;
                       AssertIndexRange(ind, dofs_per_component_on_cell);
                       const unsigned int l = i * (fe_degree + 1) + j;
-                      face_to_cell_index_hermite(f, 2 * l)     = ind;
+                      face_to_cell_index_hermite(f, 2 * l) = ind;
                       face_to_cell_index_hermite(f, 2 * l + 1) = ind + shift;
                     }
             }

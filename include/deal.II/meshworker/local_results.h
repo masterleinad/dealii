@@ -464,7 +464,7 @@ namespace MeshWorker
     for(unsigned int i = 0; i < matrices.size(); ++i)
       {
         const MGLevelObject<MatrixBlock<MatrixType>>& o = matrices.block(i);
-        const unsigned int row                          = o[o.min_level()].row;
+        const unsigned int row = o[o.min_level()].row;
         const unsigned int col = o[o.min_level()].column;
 
         M1[i].row    = row;

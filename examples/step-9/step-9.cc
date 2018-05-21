@@ -1187,7 +1187,7 @@ namespace Step9
         // two cells. Note that as opposed to the introduction, we denote
         // by <code>y</code> the normalized difference vector, as this is
         // the quantity used everywhere in the computations.
-        Tensor<1, dim> y        = neighbor_center - this_center;
+        Tensor<1, dim> y = neighbor_center - this_center;
         const double   distance = y.norm();
         y /= distance;
 

@@ -562,7 +562,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload>&  first_op,
     {
       LinearOperator<Range, Domain, Payload> return_op;
       return_op.reinit_domain_vector = second_op.reinit_domain_vector;
-      return_op.reinit_range_vector  = first_op.reinit_range_vector;
+      return_op.reinit_range_vector = first_op.reinit_range_vector;
       return null_operator(return_op);
     }
   else
@@ -572,7 +572,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload>&  first_op,
         * static_cast<const Payload&>(second_op));
 
       return_op.reinit_domain_vector = second_op.reinit_domain_vector;
-      return_op.reinit_range_vector  = first_op.reinit_range_vector;
+      return_op.reinit_range_vector = first_op.reinit_range_vector;
 
       // ensure to have valid computation objects by catching first_op and
       // second_op by value
@@ -666,7 +666,7 @@ transpose_operator(const LinearOperator<Range, Domain, Payload>& op)
 template <typename Payload,
           typename Solver,
           typename Preconditioner,
-          typename Range  = typename Solver::vector_type,
+          typename Range = typename Solver::vector_type,
           typename Domain = Range>
 LinearOperator<Domain, Range, Payload>
 inverse_operator(const LinearOperator<Range, Domain, Payload>& op,

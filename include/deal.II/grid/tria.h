@@ -1638,7 +1638,7 @@ public:
    * If set, these two functions may throw an exception if they encounter
    * distorted cells.
    */
-  Triangulation(const MeshSmoothing smooth_grid               = none,
+  Triangulation(const MeshSmoothing smooth_grid = none,
                 const bool          check_for_distorted_cells = false);
 
   /**

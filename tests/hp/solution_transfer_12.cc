@@ -151,8 +151,8 @@ transfer(std::ostream& out)
   q_soltrans.clear();
 
   counter = 0;
-  cell    = tria.begin_active();
-  endc    = tria.end();
+  cell = tria.begin_active();
+  endc = tria.end();
   for(; cell != endc; ++cell, ++counter)
     {
       if(counter > 120)

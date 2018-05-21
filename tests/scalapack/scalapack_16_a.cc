@@ -68,7 +68,7 @@ test(const unsigned int size_1,
                                               block_size,
                                               block_size,
                                               LAPACKSupport::Property::general);
-  pseudoinverse_A         = full_A;
+  pseudoinverse_A = full_A;
   const unsigned int rank = pseudoinverse_A.pseudoinverse(ratio);
 
   // The pseudoinverse_A has to fulfill: A * A+ * A = A
@@ -119,7 +119,7 @@ main(int argc, char** argv)
 
   const std::vector<unsigned int> sizes_1 = {{200, 400}};
   const std::vector<unsigned int> sizes_2 = {{250, 350}};
-  const std::vector<unsigned int> blocks  = {{16, 32}};
+  const std::vector<unsigned int> blocks = {{16, 32}};
 
   const double tol = 1e-10;
 

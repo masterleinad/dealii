@@ -75,7 +75,7 @@ main(int argc, char** argv)
 
   // convert numbers to xs to avoid printing time data
   auto        is_digit = [](const char c) -> bool { return std::isdigit(c); };
-  std::string output   = captured_cerr.str();
+  std::string output = captured_cerr.str();
   std::string::iterator next_number
     = std::find_if(output.begin(), output.end(), is_digit);
   while(next_number != output.end())

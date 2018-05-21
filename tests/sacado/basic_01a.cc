@@ -78,9 +78,9 @@ main()
   deallog << "f_rad: " << f_rad.val() << std::endl;
 
   // Extract value and derivatives
-  const double f_ad     = f_rad.val(); // f
-  const double df_dx_ad = x_ad.adj();  // df/dx
-  const double df_dy_ad = y_ad.adj();  // df/dy
+  const double f_ad = f_rad.val();    // f
+  const double df_dx_ad = x_ad.adj(); // df/dx
+  const double df_dy_ad = y_ad.adj(); // df/dy
 
   const double tol = 1.0e-14;
   Assert(std::fabs(f - f_ad) < tol, ExcMessage("Computation incorrect: Value"));

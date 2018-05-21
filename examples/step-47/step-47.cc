@@ -747,7 +747,7 @@ namespace Step47
           }
         else if(sign_ls[0] == sign_ls[2] && sign_ls[1] == sign_ls[3])
           {
-            Pos  = 1;
+            Pos = 1;
             A(0) = level_set_values[0]
                    / ((level_set_values[0] - level_set_values[1]));
             A(1) = 0.;
@@ -861,7 +861,7 @@ namespace Step47
           {
             case 2:
               {
-                double xi  = q_points[i](0);
+                double xi = q_points[i](0);
                 double eta = q_points[i](1);
 
                 // Define shape functions on reference element we consider a

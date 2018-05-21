@@ -174,7 +174,7 @@ Step5<dim>::assemble_system()
                             | update_quadrature_points | update_JxW_values);
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int n_q_points    = quadrature_formula.size();
+  const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
   Vector<double>     cell_rhs(dofs_per_cell);
@@ -312,7 +312,7 @@ Step5<dim>::output_results(const unsigned int cycle) const
   // vertical axis, and 30 degrees rotated against it in mathematical positive
   // sense. We raise our viewpoint a bit and look more along the y-axis:
   eps_flags.azimut_angle = 40;
-  eps_flags.turn_angle   = 10;
+  eps_flags.turn_angle = 10;
   // That shall suffice. There are more flags, for example whether to draw the
   // mesh lines, which data vectors to use for colorization of the interior of
   // the cells, and so on. You may want to take a look at the documentation of

@@ -50,7 +50,7 @@ check()
     A(3, 3) = 0;
 
     const number soln_det_A = 20.0;
-    const number rel_tol    = 1e-6;
+    const number rel_tol = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -96,7 +96,7 @@ check()
     A(4, 4) = 2;
 
     const number soln_det_A = 2480.0;
-    const number rel_tol    = 1e-6;
+    const number rel_tol = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -126,7 +126,7 @@ check()
     FullMatrix<number> A(8, 8, entries.data());
 
     const number soln_det_A = 0.0626735;
-    const number rel_tol    = 1e-6;
+    const number rel_tol = 1e-6;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else
@@ -174,7 +174,7 @@ check()
     FullMatrix<number> A(13, 13, entries.data());
 
     const number soln_det_A = -0.0136107;
-    const number rel_tol    = 1e-5;
+    const number rel_tol = 1e-5;
     if(std::abs(A.determinant() - soln_det_A) < std::abs(rel_tol * soln_det_A))
       deallog << "OK" << std::endl;
     else

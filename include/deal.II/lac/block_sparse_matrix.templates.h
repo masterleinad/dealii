@@ -87,7 +87,7 @@ BlockSparseMatrix<number>::reinit(const BlockSparsityPattern& sparsity)
   // pattern and resize
   sparsity_pattern = &sparsity;
 
-  this->row_block_indices    = sparsity.row_indices;
+  this->row_block_indices = sparsity.row_indices;
   this->column_block_indices = sparsity.column_indices;
 
   this->sub_objects.reinit(sparsity.n_block_rows(), sparsity.n_block_cols());

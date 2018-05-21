@@ -29,7 +29,7 @@ template <>
 void
 test<2, 2>()
 {
-  const int                            dim      = 2;
+  const int                            dim = 2;
   const int                            spacedim = 2;
   Triangulation<dim, spacedim>         tria;
   Point<spacedim>                      origin;

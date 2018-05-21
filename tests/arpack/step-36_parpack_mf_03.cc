@@ -60,7 +60,7 @@ void
 test()
 {
   const unsigned int global_mesh_refinement_steps = 5;
-  const unsigned int number_of_eigenvalues        = 5;
+  const unsigned int number_of_eigenvalues = 5;
 
   MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes

@@ -48,7 +48,7 @@ namespace internal
     else
       {
         const Tensor<1, 3> dirUnit = dir / theta;
-        const Tensor<1, 3> tmp     = cos(theta) * u + sin(theta) * dirUnit;
+        const Tensor<1, 3> tmp = cos(theta) * u + sin(theta) * dirUnit;
         return tmp / tmp.norm();
       }
   }
@@ -159,9 +159,9 @@ PolarManifold<dim, spacedim>::push_forward(
         case 3:
           {
             const double phi = spherical_point[2];
-            p[0]             = rho * sin(theta) * cos(phi);
-            p[1]             = rho * sin(theta) * sin(phi);
-            p[2]             = rho * cos(theta);
+            p[0] = rho * sin(theta) * cos(phi);
+            p[1] = rho * sin(theta) * sin(phi);
+            p[2] = rho * cos(theta);
             break;
           }
         default:
@@ -175,7 +175,7 @@ Point<spacedim>
 PolarManifold<dim, spacedim>::pull_back(
   const Point<spacedim>& space_point) const
 {
-  const Tensor<1, spacedim> R   = space_point - center;
+  const Tensor<1, spacedim> R = space_point - center;
   const double              rho = R.norm();
 
   Point<spacedim> p;
@@ -194,7 +194,7 @@ PolarManifold<dim, spacedim>::pull_back(
       case 3:
         {
           const double z = R[2];
-          p[2]           = atan2(R[1], R[0]); // phi
+          p[2] = atan2(R[1], R[0]); // phi
           if(p[2] < 0)
             p[2] += 2 * numbers::PI;                        // phi is periodic
           p[1] = atan2(sqrt(R[0] * R[0] + R[1] * R[1]), z); // theta
@@ -233,9 +233,9 @@ PolarManifold<dim, spacedim>::push_forward_gradient(
         case 3:
           {
             const double phi = spherical_point[2];
-            DX[0][0]         = sin(theta) * cos(phi);
-            DX[0][1]         = rho * cos(theta) * cos(phi);
-            DX[0][2]         = -rho * sin(theta) * sin(phi);
+            DX[0][0] = sin(theta) * cos(phi);
+            DX[0][1] = rho * cos(theta) * cos(phi);
+            DX[0][2] = -rho * sin(theta) * sin(phi);
 
             DX[1][0] = sin(theta) * sin(phi);
             DX[1][1] = rho * cos(theta) * sin(phi);
@@ -318,7 +318,7 @@ SphericalManifold<dim, spacedim>::get_intermediate_point(
 
   // Normal to v1 in the plane described by v1,v2,and the origin.
   // Since p1 and p2 do not coincide n is not zero and well defined.
-  Tensor<1, spacedim> n      = v2 - (v2 * e1) * e1;
+  Tensor<1, spacedim> n = v2 - (v2 * e1) * e1;
   const double        n_norm = n.norm();
   Assert(n_norm > 0,
          ExcInternalError("n should be different from the null vector. "
@@ -369,7 +369,7 @@ SphericalManifold<dim, spacedim>::get_tangent_vector(
 
   // Normal to v1 in the plane described by v1,v2,and the origin.
   // Since p1 and p2 do not coincide n is not zero and well defined.
-  Tensor<1, spacedim> n      = v2 - (v2 * e1) * e1;
+  Tensor<1, spacedim> n = v2 - (v2 * e1) * e1;
   const double        n_norm = n.norm();
   Assert(n_norm > 0,
          ExcInternalError("n should be different from the null vector. "
@@ -512,7 +512,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
 {
   AssertDimension(weights.size(),
                   new_points.size() * surrounding_points.size());
-  const unsigned int weight_rows    = new_points.size();
+  const unsigned int weight_rows = new_points.size();
   const unsigned int weight_columns = surrounding_points.size();
 
   if(surrounding_points.size() == 2)
@@ -640,7 +640,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
       if(found_duplicate == false)
         {
           merged_directions[n_unique_directions] = directions[i];
-          merged_distances[n_unique_directions]  = distances[i];
+          merged_distances[n_unique_directions] = distances[i];
           for(unsigned int row = 0; row < weight_rows; ++row)
             merged_weights[row * weight_columns + n_unique_directions]
               = weights[row * weight_columns + i];
@@ -715,7 +715,7 @@ SphericalManifold<dim, spacedim>::guess_new_point(
   const ArrayView<const double>&              weights) const
 {
   const double        tolerance = 1e-10;
-  double              rho       = 0.;
+  double              rho = 0.;
   Tensor<1, spacedim> candidate;
 
   // Perform a simple average ...
@@ -766,10 +766,10 @@ namespace
     AssertDimension(directions.size(), distances.size());
     AssertDimension(directions.size(), weights.size());
 
-    Point<3>           candidate       = candidate_point;
+    Point<3>           candidate = candidate_point;
     const unsigned int n_merged_points = directions.size();
-    const double       tolerance       = 1e-10;
-    const int          max_iterations  = 10;
+    const double       tolerance = 1e-10;
+    const int          max_iterations = 10;
 
     {
       // If the candidate happens to coincide with a normalized
@@ -814,13 +814,13 @@ namespace
           // from candidate to the vertices vector.
           // Then compute its contribution to the Hessian.
           gradient = 0.;
-          Hessian  = 0.;
+          Hessian = 0.;
           for(unsigned int i = 0; i < n_merged_points; ++i)
             if(std::abs(weights[i]) > 1.e-15)
               {
                 vPerp = internal::projected_direction(directions[i], candidate);
                 const double sinthetaSq = vPerp.norm_square();
-                const double sintheta   = std::sqrt(sinthetaSq);
+                const double sintheta = std::sqrt(sinthetaSq);
                 if(sintheta < tolerance)
                   {
                     Hessian[0][0] += weights[i];
@@ -828,8 +828,8 @@ namespace
                   }
                 else
                   {
-                    const double costheta     = (directions[i]) * candidate;
-                    const double theta        = atan2(sintheta, costheta);
+                    const double costheta = (directions[i]) * candidate;
+                    const double theta = atan2(sintheta, costheta);
                     const double sincthetaInv = theta / sintheta;
 
                     const double cosphi = vPerp * Clocalx;
@@ -839,11 +839,11 @@ namespace
                     gradlocal[1] = sinphi;
                     gradient += (weights[i] * sincthetaInv) * gradlocal;
 
-                    const double wt       = weights[i] / sinthetaSq;
+                    const double wt = weights[i] / sinthetaSq;
                     const double sinphiSq = sinphi * sinphi;
                     const double cosphiSq = cosphi * cosphi;
-                    const double tt       = sincthetaInv * costheta;
-                    const double offdiag  = cosphi * sinphi * wt * (1.0 - tt);
+                    const double tt = sincthetaInv * costheta;
+                    const double offdiag = cosphi * sinphi * wt * (1.0 - tt);
                     Hessian[0][0] += wt * (cosphiSq + tt * sinphiSq);
                     Hessian[0][1] += offdiag;
                     Hessian[1][0] += offdiag;
@@ -996,9 +996,9 @@ CylindricalManifold<dim, spacedim>::pull_back(
 
   // First find the projection of the given point to the axis.
   const Tensor<1, spacedim> normalized_point = space_point - point_on_axis;
-  const double              lambda           = normalized_point * direction;
+  const double              lambda = normalized_point * direction;
   const Point<spacedim>     projection = point_on_axis + direction * lambda;
-  const Tensor<1, spacedim> p_diff     = space_point - projection;
+  const Tensor<1, spacedim> p_diff = space_point - projection;
 
   // Then compute the angle between the projection direction and
   // another vector orthogonal to the direction vector.
@@ -1023,8 +1023,8 @@ CylindricalManifold<dim, spacedim>::push_forward(
   // http://inside.mines.edu/fs_home/gmurray/ArbitraryAxisRotation/
   // simplified assuming normal_direction and direction are orthogonal
   // and unit vectors.
-  const double sine_r           = std::sin(chart_point(1)) * chart_point(0);
-  const double cosine_r         = std::cos(chart_point(1)) * chart_point(0);
+  const double sine_r = std::sin(chart_point(1)) * chart_point(0);
+  const double cosine_r = std::cos(chart_point(1)) * chart_point(0);
   const Tensor<1, spacedim> dxn = cross_product_3d(direction, normal_direction);
   const Tensor<1, spacedim> intermediate
     = normal_direction * cosine_r + dxn * sine_r;
@@ -1048,7 +1048,7 @@ CylindricalManifold<dim, spacedim>::push_forward_gradient(
   // http://inside.mines.edu/fs_home/gmurray/ArbitraryAxisRotation/
   // simplified assuming normal_direction and direction are orthogonal
   // and unit vectors.
-  const double              sine   = std::sin(chart_point(1));
+  const double              sine = std::sin(chart_point(1));
   const double              cosine = std::cos(chart_point(1));
   const Tensor<1, spacedim> dxn = cross_product_3d(direction, normal_direction);
   const Tensor<1, spacedim> intermediate
@@ -1126,11 +1126,11 @@ FunctionManifold<dim, spacedim, chartdim>::~FunctionManifold()
   if(owns_pointers == true)
     {
       const Function<chartdim>* pf = push_forward_function;
-      push_forward_function        = nullptr;
+      push_forward_function = nullptr;
       delete pf;
 
       const Function<spacedim>* pb = pull_back_function;
-      pull_back_function           = nullptr;
+      pull_back_function = nullptr;
       delete pb;
     }
 }
@@ -1230,10 +1230,10 @@ template <int dim>
 Point<3>
 TorusManifold<dim>::pull_back(const Point<3>& p) const
 {
-  double x     = p(0);
-  double z     = p(1);
-  double y     = p(2);
-  double phi   = atan2(y, x);
+  double x = p(0);
+  double z = p(1);
+  double y = p(2);
+  double phi = atan2(y, x);
   double theta = atan2(z, std::sqrt(x * x + y * y) - R);
   double w
     = std::sqrt(pow(y - sin(phi) * R, 2.0) + pow(x - cos(phi) * R, 2.0) + z * z)
@@ -1336,7 +1336,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::initialize(
   // in case the triangulatoin is cleared, remove the pointers by a signal
   clear_signal = triangulation.signals.clear.connect([&]() -> void {
     this->triangulation = nullptr;
-    this->level_coarse  = -1;
+    this->level_coarse = -1;
   });
   level_coarse = triangulation.last()->level();
   coarse_cell_is_flat.resize(triangulation.n_cells(level_coarse), false);
@@ -1381,9 +1381,9 @@ namespace
                                     const Point<2>&     chart_point,
                                     const bool          cell_is_flat)
   {
-    const unsigned int       dim             = AccessorType::dimension;
-    const unsigned int       spacedim        = AccessorType::space_dimension;
-    const types::manifold_id my_manifold_id  = cell.manifold_id();
+    const unsigned int       dim = AccessorType::dimension;
+    const unsigned int       spacedim = AccessorType::space_dimension;
+    const types::manifold_id my_manifold_id = cell.manifold_id();
     const Triangulation<dim, spacedim>& tria = cell.get_triangulation();
 
     // formula see wikipedia
@@ -1496,9 +1496,9 @@ namespace
                                     const Point<3>&     chart_point,
                                     const bool          cell_is_flat)
   {
-    const unsigned int       dim             = AccessorType::dimension;
-    const unsigned int       spacedim        = AccessorType::space_dimension;
-    const types::manifold_id my_manifold_id  = cell.manifold_id();
+    const unsigned int       dim = AccessorType::dimension;
+    const unsigned int       spacedim = AccessorType::space_dimension;
+    const types::manifold_id my_manifold_id = cell.manifold_id();
     const Triangulation<dim, spacedim>& tria = cell.get_triangulation();
 
     // Same approach as in 2D, but adding the faces, subtracting the edges, and
@@ -1518,7 +1518,7 @@ namespace
     double linear_shapes[10];
     for(unsigned int d = 0; d < 3; ++d)
       {
-        linear_shapes[2 * d]     = 1. - chart_point[d];
+        linear_shapes[2 * d] = 1. - chart_point[d];
         linear_shapes[2 * d + 1] = chart_point[d];
       }
 
@@ -1705,7 +1705,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::push_forward_gradient(
   for(unsigned int d = 0; d < dim; ++d)
     {
       Point<dim>   modified = chart_point;
-      const double step     = chart_point[d] > 0.5 ? -1e-8 : 1e-8;
+      const double step = chart_point[d] > 0.5 ? -1e-8 : 1e-8;
 
       // avoid checking outside of the unit interval
       modified[d] += step;
@@ -1802,7 +1802,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
       while(alpha > 1e-7)
         {
           Point<dim> guess = chart_point + alpha * update;
-          residual         = point
+          residual = point
                      - compute_transfinite_interpolation(
                          *cell, guess, coarse_cell_is_flat[cell->index()]);
           const double residual_norm_new = residual.norm_square();

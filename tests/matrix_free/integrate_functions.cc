@@ -85,7 +85,7 @@ operator()(const MatrixFree<dim, Number>& data,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-  const unsigned int                     n_q_points    = fe_eval.n_q_points;
+  const unsigned int                     n_q_points = fe_eval.n_q_points;
   const unsigned int                     dofs_per_cell = fe_eval.dofs_per_cell;
   AlignedVector<VectorizedArray<Number>> values(n_q_points);
   AlignedVector<VectorizedArray<Number>> gradients(dim * n_q_points);
@@ -170,7 +170,7 @@ test()
   cell = tria.begin_active();
   for(unsigned int i = 0; i < 7 - 2 * dim; ++i)
     {
-      cell                 = tria.begin_active();
+      cell = tria.begin_active();
       unsigned int counter = 0;
       for(; cell != endc; ++cell, ++counter)
         if(counter % (7 - i) == 0)

@@ -24,7 +24,7 @@ template <typename number>
 void
 check_norms()
 {
-  const number acc  = 1e1 * std::numeric_limits<number>::epsilon();
+  const number acc = 1e1 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
   for(unsigned int size = 1; size < 200000; size += skip)
     {
@@ -42,8 +42,8 @@ check_norms()
 
       // test accuracy of summation
       const long double value = 3.14159265358979323846;
-      vec                     = (number) value;
-      const number l1_norma   = vec.l1_norm();
+      vec = (number) value;
+      const number l1_norma = vec.l1_norm();
       AssertThrow(std::abs(l1_norma - value * size) < acc * size * value,
                   ExcInternalError());
       const number l2_norma = vec.l2_norm();
@@ -67,7 +67,7 @@ template <typename number>
 void
 check_complex_norms()
 {
-  const number acc  = 1e2 * std::numeric_limits<number>::epsilon();
+  const number acc = 1e2 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
   for(unsigned int size = 1; size < 100000; size += skip)
     {
@@ -88,7 +88,7 @@ check_complex_norms()
 
       // test accuracy of summation
       const std::complex<long double> value(3.14159265358979323846, 0.1);
-      vec                   = std::complex<number>(value);
+      vec = std::complex<number>(value);
       const number l1_norma = vec.l1_norm();
       AssertThrow(std::abs(l1_norma - std::abs(value) * size)
                     < acc * size * std::abs(value),

@@ -219,7 +219,7 @@ public:
   template <class OutputStream>
   void
   print(OutputStream&      s,
-        const unsigned int width     = 5,
+        const unsigned int width = 5,
         const unsigned int precision = 2) const;
   //@}
 

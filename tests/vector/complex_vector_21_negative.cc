@@ -30,7 +30,7 @@ test(Vector<std::complex<double>>& v)
   std::vector<bool> pattern(v.size(), false);
   for(unsigned int i = 0; i < v.size(); i += 1 + i)
     {
-      v(i)       = 1. * i * std::complex<double>(i + 1., i + 2.);
+      v(i) = 1. * i * std::complex<double>(i + 1., i + 2.);
       pattern[i] = true;
     }
   v.compress();

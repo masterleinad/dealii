@@ -85,7 +85,7 @@ public:
   hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p;
-    const double   r   = dir.norm();
+    const double   r = dir.norm();
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
@@ -133,7 +133,7 @@ check_consistency(const Point<dim>&     p,
   // product rule:
   const double         v_s = v_s0 + v_s1 * v_f;
   const Tensor<1, dim> g_s = g_s0 + g_s1 * v_f + v_s1 * g_f;
-  Tensor<2, dim>       op  = outer_product(g_s1, g_f);
+  Tensor<2, dim>       op = outer_product(g_s1, g_f);
 
   const SymmetricTensor<2, dim> sp
     = symmetrize(op) * 2.0; // symmetrize does [s+s^T]/2
@@ -174,8 +174,8 @@ test(const FiniteElement<dim>&  fe1,
     std::vector<unsigned int> repetitions(dim);
     for(unsigned int d = 0; d < dim; d++)
       {
-        p1[d]          = -1.0;
-        p2[d]          = 2.0;
+        p1[d] = -1.0;
+        p2[d] = 2.0;
         repetitions[d] = 3;
       }
     GridGenerator::subdivided_hyper_rectangle(
@@ -215,8 +215,8 @@ test(const FiniteElement<dim>&  fe1,
   typename DoFHandler<dim>::active_cell_iterator cell_enriched
     = dof_handler_enriched.begin_active(),
     endc_enriched = dof_handler_enriched.end(),
-    cell_system   = dof_handler_system.begin_active(),
-    endc_system   = dof_handler_system.end();
+    cell_system = dof_handler_system.begin_active(),
+    endc_system = dof_handler_system.end();
   for(; cell_enriched != endc_enriched; ++cell_enriched, ++cell_system)
     {
       fe_values_enriched.reinit(cell_enriched);

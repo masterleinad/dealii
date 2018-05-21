@@ -258,7 +258,7 @@ namespace internal
                   (DoFLevel::offset_type)(-1));
 
               types::global_dof_index next_free_dof = 0;
-              types::global_dof_index cache_size    = 0;
+              types::global_dof_index cache_size = 0;
               typename HpDoFHandler<dim, spacedim>::active_cell_iterator cell
                 = dof_handler.begin_active(level),
                 endc = dof_handler.end_active(level);
@@ -1708,7 +1708,7 @@ namespace hp
     levels.clear();
     faces.reset();
 
-    vertex_dofs        = std::move(std::vector<types::global_dof_index>());
+    vertex_dofs = std::move(std::vector<types::global_dof_index>());
     vertex_dof_offsets = std::move(std::vector<unsigned int>());
   }
 } // namespace hp

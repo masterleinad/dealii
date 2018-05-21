@@ -48,8 +48,8 @@ eigenvalues(const SymmetricTensor<2, 2, Number>& T)
     }
   else
     {
-      const Number tr_T    = trace(T);
-      const Number det_T   = determinant(T);
+      const Number tr_T = trace(T);
+      const Number det_T = determinant(T);
       const Number descrim = tr_T * tr_T - 4.0 * det_T;
       Assert(
         descrim > internal::NumberType<Number>::value(0.0),
@@ -92,7 +92,7 @@ eigenvalues(const SymmetricTensor<2, 3, Number>& T)
       // \lambda = 2*cos(1/3 * acos(det(B)/2) +2/3*pi*k ) ; k = 0,1,2
       // when substituting  \lambda = 2.cos(theta) and using trig identities.
       const Number tr_T = trace(T);
-      const Number q    = tr_T / 3.0;
+      const Number q = tr_T / 3.0;
       const Number tmp1 = (T[0][0] - q) * (T[0][0] - q)
                           + (T[1][1] - q) * (T[1][1] - q)
                           + (T[2][2] - q) * (T[2][2] - q) + 2.0 * upp_tri_sq;
@@ -177,7 +177,7 @@ namespace internal
       if(omega > 0.0)
         {
           omega_inv = 1.0 / omega;
-          K         = 0.0;
+          K = 0.0;
           for(int i = 1; i < dim; i++)
             {
               f = 0.0;
@@ -294,7 +294,7 @@ namespace internal
               // standard QL algorithm, followed by Givens
               // rotations to recover the tridiagonal form
               s = c = 1.0;
-              p     = 0.0;
+              p = 0.0;
               for(int i = m - 1; i >= l; i--)
                 {
                   f = s * e[i];
@@ -303,31 +303,31 @@ namespace internal
                   // Branch to recover from underflow
                   if(std::abs(f) > std::abs(g))
                     {
-                      c        = g / f;
-                      r        = std::sqrt(c * c + 1.0);
+                      c = g / f;
+                      r = std::sqrt(c * c + 1.0);
                       e[i + 1] = f * r;
                       c *= (s = 1.0 / r);
                     }
                   else
                     {
-                      s        = f / g;
-                      r        = std::sqrt(s * s + 1.0);
+                      s = f / g;
+                      r = std::sqrt(s * s + 1.0);
                       e[i + 1] = g * r;
                       s *= (c = 1.0 / r);
                     }
 
-                  g        = w[i + 1] - p;
-                  r        = (w[i] - g) * s + 2.0 * c * b;
-                  p        = s * r;
+                  g = w[i + 1] - p;
+                  r = (w[i] - g) * s + 2.0 * c * b;
+                  p = s * r;
                   w[i + 1] = g + p;
-                  g        = c * r - b;
+                  g = c * r - b;
 
                   // Form the eigenvectors
                   for(int k = 0; k < dim; k++)
                     {
-                      t           = Q[k][i + 1];
+                      t = Q[k][i + 1];
                       Q[k][i + 1] = s * Q[k][i] + c * t;
-                      Q[k][i]     = c * Q[k][i] - s * t;
+                      Q[k][i] = c * Q[k][i] - s * t;
                     }
                 }
               w[l] -= p;
@@ -470,19 +470,19 @@ namespace internal
                     // ... by executing the various rotations in sequence
                     for(int r = 0; r < p; r++)
                       {
-                        t       = A[r][p];
+                        t = A[r][p];
                         A[r][p] = c * t - s * A[r][q];
                         A[r][q] = s * t + c * A[r][q];
                       }
                     for(int r = p + 1; r < q; r++)
                       {
-                        t       = A[p][r];
+                        t = A[p][r];
                         A[p][r] = c * t - s * A[r][q];
                         A[r][q] = s * t + c * A[r][q];
                       }
                     for(int r = q + 1; r < dim; r++)
                       {
-                        t       = A[p][r];
+                        t = A[p][r];
                         A[p][r] = c * t - s * A[q][r];
                         A[q][r] = s * t + c * A[q][r];
                       }
@@ -490,7 +490,7 @@ namespace internal
                     // Update the eigenvectors
                     for(int r = 0; r < dim; r++)
                       {
-                        t       = Q[r][p];
+                        t = Q[r][p];
                         Q[r][p] = c * t - s * Q[r][q];
                         Q[r][q] = s * t + c * Q[r][q];
                       }
@@ -637,7 +637,7 @@ namespace internal
       Q[0][0] = Q[0][1] + A[0][2] * w[0];
       Q[1][0] = Q[1][1] + A[1][2] * w[0];
       Q[2][0] = (A[0][0] - w[0]) * (A[1][1] - w[0]) - Q[2][1];
-      norm    = Q[0][0] * Q[0][0] + Q[1][0] * Q[1][0] + Q[2][0] * Q[2][0];
+      norm = Q[0][0] * Q[0][0] + Q[1][0] * Q[1][0] + Q[2][0] * Q[2][0];
 
       // If vectors are nearly linearly dependent, or if there might have
       // been large cancellations in the calculation of A[i][i] - w[0], fall
@@ -661,7 +661,7 @@ namespace internal
       Q[0][1] = Q[0][1] + A[0][2] * w[1];
       Q[1][1] = Q[1][1] + A[1][2] * w[1];
       Q[2][1] = (A[0][0] - w[1]) * (A[1][1] - w[1]) - Q[2][1];
-      norm    = Q[0][1] * Q[0][1] + Q[1][1] * Q[1][1] + Q[2][1] * Q[2][1];
+      norm = Q[0][1] * Q[0][1] + Q[1][1] * Q[1][1] + Q[2][1] * Q[2][1];
       if(norm <= error)
         {
           return ql_implicit_shifts(A);

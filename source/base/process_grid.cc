@@ -66,7 +66,7 @@ namespace
     // Np = Pc * Pc / ratio
     // for quadratic matrices the ratio equals 1
     const double ratio = double(n) / m;
-    int          Pc    = std::floor(std::sqrt(ratio * Np));
+    int          Pc = std::floor(std::sqrt(ratio * Np));
 
     // one could rounds up Pc to the number which has zero remainder from the division of Np
     // while ( Np % Pc != 0 )
@@ -122,7 +122,7 @@ namespace Utilities
       const bool column_major = false;
 
       // Initialize Cblas context from the provided communicator
-      blacs_context     = Csys2blacs_handle(mpi_communicator);
+      blacs_context = Csys2blacs_handle(mpi_communicator);
       const char* order = (column_major ? "Col" : "Row");
       // Note that blacs_context can be modified below. Thus Cblacs2sys_handle
       // may not return the same MPI communicator.
@@ -169,7 +169,7 @@ namespace Utilities
       // Construct the group containing all ranks we need:
       MPI_Group inactive_with_root_group;
       const int n = inactive_with_root_ranks.size();
-      ierr        = MPI_Group_incl(all_group,
+      ierr = MPI_Group_incl(all_group,
                             n,
                             inactive_with_root_ranks.data(),
                             &inactive_with_root_group);

@@ -23,7 +23,7 @@ void
 test()
 {
   unsigned int double_size = 2;
-  unsigned int float_size  = 10;
+  unsigned int float_size = 10;
   IndexSet     is(50);
   is.add_range(0, 2);
   is.add_index(46);
