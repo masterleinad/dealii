@@ -316,7 +316,7 @@ namespace parallel
       f(range.begin(), range.end());
     }
 #endif
-  } // namespace internal
+  }
 
   /**
    * This function applies the given function argument @p f to all elements in
@@ -563,7 +563,7 @@ namespace parallel
       const std::function<ResultType(ResultType, ResultType)> reductor;
     };
 #endif
-  } // namespace internal
+  }
 
   /**
    * This function works a lot like the apply_to_subranges(), but it allows to
@@ -718,8 +718,8 @@ namespace parallel
       dealii::Threads::Mutex mutex;
 #endif
     };
-  } // namespace internal
-} // namespace parallel
+  }
+}
 
 namespace internal
 {
@@ -740,7 +740,7 @@ namespace internal
      * parallel operations.
      */
     extern unsigned int minimum_parallel_grain_size;
-  } // namespace VectorImplementation
+  }
 
   namespace SparseMatrixImplementation
   {

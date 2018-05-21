@@ -66,7 +66,7 @@ namespace internal
   {
     struct Implementation;
   }
-} // namespace internal
+}
 
 /**
  * Given a triangulation and a description of a finite element, this
@@ -1426,7 +1426,7 @@ namespace internal
   std::string
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
                      PolicyBase<dim, spacedim>& policy);
-} // namespace internal
+}
 
 template <int dim, int spacedim>
 template <class Archive>

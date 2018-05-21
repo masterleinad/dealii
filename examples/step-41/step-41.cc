@@ -637,7 +637,7 @@ namespace Step41
         std::cout << std::endl;
       }
   }
-} // namespace Step41
+}
 
 // @sect3{The <code>main</code> function}
 

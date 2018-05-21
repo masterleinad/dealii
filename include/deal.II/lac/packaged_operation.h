@@ -492,7 +492,7 @@ namespace
 
     typedef decltype(test<T>(nullptr, nullptr, nullptr)) type;
   };
-} // namespace
+}
 
 /**
  * @relatesalso PackagedOperation

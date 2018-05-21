@@ -1243,7 +1243,7 @@ namespace Step9
       = (std::pow(cell->diameter(), 1 + 1.0 * dim / 2)
          * std::sqrt(gradient.norm_square()));
   }
-} // namespace Step9
+}
 
 // @sect3{Main function}
 

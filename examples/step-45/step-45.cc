@@ -735,7 +735,7 @@ namespace Step45
         pcout << std::endl;
       }
   }
-} // namespace Step45
+}
 
 int
 main(int argc, char* argv[])

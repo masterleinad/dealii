@@ -27,7 +27,7 @@ namespace std_cxx11
   using std::tuple;
   using std::tuple_element;
   using std::tuple_size;
-} // namespace std_cxx11
+}
 DEAL_II_NAMESPACE_CLOSE
 
 // then allow using the old namespace name instead of the new one

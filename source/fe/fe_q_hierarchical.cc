@@ -47,9 +47,9 @@ namespace internal
           }
         return out;
       }
-    } // namespace
-  }   // namespace FE_Q_Hierarchical
-} // namespace internal
+    }
+  }
+}
 
 template <int dim>
 FE_Q_Hierarchical<dim>::FE_Q_Hierarchical(const unsigned int degree)

@@ -600,7 +600,7 @@ namespace Step23
         old_solution_v = solution_v;
       }
   }
-} // namespace Step23
+}
 
 // @sect3{The <code>main</code> function}
 

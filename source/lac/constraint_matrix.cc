@@ -1565,6 +1565,6 @@ namespace internals
   SCRATCH_INITIALIZER(double, std::complex<double>, dz);
   SCRATCH_INITIALIZER(float, std::complex<float>, fc);
 #undef SCRATCH_INITIALIZER
-} // namespace internals
+}
 
 DEAL_II_NAMESPACE_CLOSE

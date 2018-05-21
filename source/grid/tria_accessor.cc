@@ -1394,7 +1394,7 @@ namespace
         return get_new_point_on_object(obj);
       }
   }
-} // namespace
+}
 
 /*------------------------ Static variables: TriaAccessorBase ---------------------------*/
 
@@ -1665,7 +1665,7 @@ namespace
        0.000000,
        0.000000,
        -0.250000};
-} // namespace
+}
 
 template <int structdim, int dim, int spacedim>
 Point<structdim>

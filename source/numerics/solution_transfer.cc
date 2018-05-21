@@ -236,7 +236,7 @@ namespace internal
           restriction_is_additive[f][i] = fe[f].restriction_is_additive(i);
       }
   }
-} // namespace internal
+}
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void

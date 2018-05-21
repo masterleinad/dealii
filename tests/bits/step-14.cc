@@ -237,7 +237,7 @@ namespace Evaluation
     GridOut().write_eps(dof_handler.get_triangulation(),
                         deallog.get_file_stream());
   }
-} // namespace Evaluation
+}
 
 namespace LaplaceSolver
 {
@@ -777,8 +777,7 @@ namespace LaplaceSolver
       *this->triangulation, estimated_error, 0.3, 0.03);
     this->triangulation->execute_coarsening_and_refinement();
   }
-
-} // namespace LaplaceSolver
+}
 
 namespace Data
 {
@@ -987,7 +986,7 @@ namespace Data
 
     coarse_grid.refine_global(1);
   }
-} // namespace Data
+}
 
 namespace DualFunctional
 {
@@ -1118,8 +1117,7 @@ namespace DualFunctional
 
     rhs /= total_volume;
   }
-
-} // namespace DualFunctional
+}
 
 namespace LaplaceSolver
 {
@@ -1746,8 +1744,7 @@ namespace LaplaceSolver
       };
     face_integrals[face] = sum;
   }
-
-} // namespace LaplaceSolver
+}
 
 template <int dim>
 struct Framework

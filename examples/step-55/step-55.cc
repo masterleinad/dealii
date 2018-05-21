@@ -174,8 +174,7 @@ namespace Step55
       preconditioner_A.vmult(dst.block(0), src.block(0));
       preconditioner_S.vmult(dst.block(1), src.block(1));
     }
-
-  } // namespace LinearSolvers
+  }
 
   // @sect3{Problem setup}
 
@@ -826,7 +825,7 @@ namespace Step55
         pcout << std::endl;
       }
   }
-} // namespace Step55
+}
 
 int
 main(int argc, char* argv[])

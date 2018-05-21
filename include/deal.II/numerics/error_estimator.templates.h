@@ -1035,8 +1035,8 @@ namespace internal
                                           strategy);
         }
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 // the following function is still independent of dimension, but it
 // calls dimension dependent functions

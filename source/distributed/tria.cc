@@ -1301,7 +1301,7 @@ namespace
     // get the weight, increment the pointer, and return the weight
     return *this_object->current_pointer++;
   }
-} // namespace
+}
 
 namespace parallel
 {
@@ -1735,8 +1735,8 @@ namespace parallel
                                                     vertices,
                                                     vertex_indices);
         }
-      } // namespace
-    }   // namespace CommunicateLocallyMovedVertices
+      }
+    }
 
     template <int dim, int spacedim>
     void
@@ -2515,7 +2515,7 @@ namespace parallel
         return ((flags_before[0] != flags_after[0])
                 || (flags_before[1] != flags_after[1]));
       }
-    } // namespace
+    }
 
     template <int dim, int spacedim>
     bool
@@ -4026,9 +4026,8 @@ namespace parallel
     {
       Assert(false, ExcNotImplemented());
     }
-
-  } // namespace distributed
-} // namespace parallel
+  }
+}
 
 #endif // DEAL_II_WITH_P4EST
 

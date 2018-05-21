@@ -54,7 +54,7 @@ namespace std_cxx14
     struct merge_and_renumber<index_sequence<I1...>, index_sequence<I2...>>
       : index_sequence<I1..., (sizeof...(I1) + I2)...>
     {};
-  } // namespace internal
+  }
   // --------------------------------------------------------------
 
   template <size_t N>

@@ -800,8 +800,7 @@ namespace SLEPcWrappers
       = EPSSetInitialSpace(eps, vecs.size(), vecs.data());
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
   }
-
-} // namespace SLEPcWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

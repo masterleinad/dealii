@@ -141,8 +141,7 @@ namespace SUNDIALS
 
       return err;
     }
-
-  } // namespace
+  }
 
   template <typename VectorType>
   IDA<VectorType>::IDA(const AdditionalData& data, const MPI_Comm mpi_comm)
@@ -494,8 +493,7 @@ namespace SUNDIALS
 #    endif   // DEAL_II_WITH_PETSC
 
 #  endif //DEAL_II_WITH_MPI
-
-} // namespace SUNDIALS
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

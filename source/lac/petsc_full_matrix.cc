@@ -62,7 +62,7 @@ namespace PETScWrappers
     static const MPI_Comm communicator = MPI_COMM_SELF;
     return communicator;
   }
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

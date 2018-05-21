@@ -36,6 +36,6 @@ namespace numbers
   template struct NumberTraits<std::complex<double>>;
   template struct NumberTraits<std::complex<float>>;
   template struct NumberTraits<std::complex<long double>>;
-} // namespace numbers
+}
 
 DEAL_II_NAMESPACE_CLOSE

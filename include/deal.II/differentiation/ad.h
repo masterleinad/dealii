@@ -49,7 +49,7 @@ namespace Differentiation
    */
   namespace AD
   {}
-} // namespace Differentiation
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

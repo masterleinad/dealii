@@ -3439,8 +3439,7 @@ namespace Step44
                          + std::to_string(time.get_timestep()) + ".vtk");
     data_out.write_vtk(output);
   }
-
-} // namespace Step44
+}
 
 // @sect3{Main function}
 // Lastly we provide the main driver function which appears

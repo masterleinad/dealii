@@ -415,8 +415,7 @@ namespace OpenCASCADE
      */
     double tolerance;
   };
-
-} // namespace OpenCASCADE
+}
 
 /*@}*/
 

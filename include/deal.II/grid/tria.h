@@ -474,8 +474,8 @@ namespace internal
       void
       serialize(Archive& ar, const unsigned int version);
     };
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 /*------------------------------------------------------------------------*/
 
@@ -3783,9 +3783,8 @@ namespace internal
       ar& n_hexes& n_hexes_level;
       ar& n_active_hexes& n_active_hexes_level;
     }
-
-  } // namespace TriangulationImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 inline bool

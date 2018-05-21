@@ -121,8 +121,8 @@ namespace internal
 
       return w;
     }
-  } // namespace QGaussLobatto
-} // namespace internal
+  }
+}
 
 template <>
 QGaussLobatto<1>::QGaussLobatto(const unsigned int n) : Quadrature<1>(n)
@@ -937,8 +937,8 @@ namespace internal
 
       return weights;
     }
-  } // namespace QGaussChebyshev
-} // namespace internal
+  }
+}
 
 template <>
 QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n) : Quadrature<1>(n)
@@ -1029,8 +1029,8 @@ namespace internal
 
       return weights;
     }
-  } // namespace QGaussRadauChebyshev
-} // namespace internal
+  }
+}
 
 template <>
 QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
@@ -1095,8 +1095,8 @@ namespace internal
 
       return weights;
     }
-  } // namespace QGaussLobattoChebyshev
-} // namespace internal
+  }
+}
 
 template <>
 QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)

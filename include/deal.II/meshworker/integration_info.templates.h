@@ -262,7 +262,7 @@ namespace MeshWorker
 
     return mem;
   }
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

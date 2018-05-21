@@ -47,7 +47,7 @@ namespace OpenCASCADE
   }
 // Explicit instantiations
 #  include "boundary_lib.inst"
-} // namespace OpenCASCADE
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

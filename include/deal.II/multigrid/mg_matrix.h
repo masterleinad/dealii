@@ -104,8 +104,7 @@ namespace mg
   private:
     MGLevelObject<LinearOperator<VectorType>> matrices;
   };
-
-} // namespace mg
+}
 
 /**
  * Multilevel matrix selecting from block matrices. This class implements the
@@ -289,7 +288,7 @@ namespace mg
   {
     return sizeof(*this) + matrices->memory_consumption();
   }
-} // namespace mg
+}
 
 /*----------------------------------------------------------------------*/
 

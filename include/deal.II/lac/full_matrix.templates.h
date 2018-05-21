@@ -1172,9 +1172,8 @@ namespace internal
       }
 #endif
     };
-
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <typename number>
 number

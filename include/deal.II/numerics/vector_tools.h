@@ -3102,7 +3102,7 @@ namespace VectorTools
                    "The given point is inside a cell of a "
                    "parallel::distributed::Triangulation that is not "
                    "locally owned by this processor.");
-} // namespace VectorTools
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

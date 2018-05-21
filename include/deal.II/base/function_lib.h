@@ -1397,8 +1397,7 @@ namespace Functions
      */
     const std::vector<double> coefficients;
   };
-
-} // namespace Functions
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

@@ -176,8 +176,7 @@ namespace Evaluation
 
     //    data_out.write (deallog.get_file_stream(), output_format);
   }
-
-} // namespace Evaluation
+}
 
 namespace LaplaceSolver
 {
@@ -569,8 +568,7 @@ namespace LaplaceSolver
       *this->triangulation, estimated_error_per_cell, 0.3, 0.03);
     this->triangulation->execute_coarsening_and_refinement();
   }
-
-} // namespace LaplaceSolver
+}
 
 template <int dim>
 class Solution : public Function<dim>

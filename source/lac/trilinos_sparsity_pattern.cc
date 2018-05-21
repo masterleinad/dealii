@@ -66,7 +66,7 @@ namespace TrilinosWrappers
                       ExcInternalError());
         }
     }
-  } // namespace SparsityPatternIterators
+  }
 
   // The constructor is actually the
   // only point where we have to check
@@ -433,7 +433,7 @@ namespace TrilinosWrappers
       ierr = graph->OptimizeStorage();
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     }
-  } // namespace
+  }
 
   void
   SparsityPattern::reinit(const Epetra_Map& input_map,
@@ -1108,8 +1108,7 @@ namespace TrilinosWrappers
                           const dealii::DynamicSparsityPattern&,
                           const MPI_Comm&,
                           bool);
-
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

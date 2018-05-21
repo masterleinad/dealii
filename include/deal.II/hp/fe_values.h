@@ -175,10 +175,8 @@ namespace internal
        */
       const UpdateFlags update_flags;
     };
-
-  } // namespace hp
-
-} // namespace internal
+  }
+}
 
 namespace hp
 {
@@ -585,8 +583,7 @@ namespace hp
            const unsigned int mapping_index = numbers::invalid_unsigned_int,
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
   };
-
-} // namespace hp
+}
 
 // -------------- inline and template functions --------------
 
@@ -629,9 +626,8 @@ namespace internal
     {
       return update_flags;
     }
-  } // namespace hp
-
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

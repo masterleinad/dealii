@@ -48,8 +48,8 @@ namespace internal
 
       std::vector<Point<spacedim>> patch_evaluation_points;
     };
-  } // namespace DataOutFacesImplementation
-} // namespace internal
+  }
+}
 
 /**
  * This class generates output from faces of a triangulation. It might be used

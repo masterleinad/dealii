@@ -420,8 +420,8 @@ namespace MatrixTools
                 matrix.block(block_m, block_n).clear_rows(constrained_rows);
           }
       }
-    } // namespace TrilinosWrappers
-  }   // namespace internal
+    }
+  }
 
   void
   apply_boundary_values(

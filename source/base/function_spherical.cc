@@ -146,7 +146,7 @@ namespace Functions
           for(unsigned int j = i; j < dim; j++)
             out[i][j] += val * in[i] * in[j];
     }
-  } // namespace
+  }
 
   template <int dim>
   Spherical<dim>::Spherical(const Point<dim>&  p,
@@ -326,7 +326,6 @@ namespace Functions
   template class Spherical<1>;
   template class Spherical<2>;
   template class Spherical<3>;
-
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE

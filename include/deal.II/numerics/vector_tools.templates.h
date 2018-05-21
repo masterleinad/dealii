@@ -509,7 +509,7 @@ namespace VectorTools
       vec.compress(VectorOperation::insert);
     }
 
-  } // namespace
+  } /* internal namespace */
 
   template <int dim,
             int spacedim,
@@ -706,7 +706,7 @@ namespace VectorTools
                 boundary_values[face_dof_indices[i]] = 0.;
             }
     }
-  } // namespace internal
+  }
 
   template <int dim,
             int spacedim,
@@ -770,7 +770,7 @@ namespace VectorTools
 
       return true;
     }
-  } // namespace internal
+  }
 
   template <int dim,
             int spacedim,
@@ -1601,7 +1601,7 @@ namespace VectorTools
           vec(*it), *it, vec_result);
       vec_result.compress(VectorOperation::insert);
     }
-  } // namespace
+  }
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -2934,7 +2934,7 @@ namespace VectorTools
                 }
         }
     } // end of interpolate_boundary_values
-  }   // namespace
+  }   // end of namespace internal
 
   template <int dim,
             int spacedim,
@@ -4015,7 +4015,7 @@ namespace VectorTools
             Assert(false, ExcNotImplemented());
         }
     }
-  } // namespace internal
+  }
 
   namespace internals
   {
@@ -4682,7 +4682,7 @@ namespace VectorTools
             Assert(false, ExcNotImplemented());
         }
     }
-  } // namespace internals
+  }
 
   template <int dim>
   void
@@ -6153,8 +6153,7 @@ namespace VectorTools
             Assert(false, ExcNotImplemented());
         }
     }
-
-  } // namespace internals
+  }
 
   template <int dim>
   void
@@ -6398,7 +6397,7 @@ namespace VectorTools
     {
       Assert(false, ExcNotImplemented());
     }
-  } // namespace internals
+  }
 
   template <int dim>
   void
@@ -7370,7 +7369,7 @@ namespace VectorTools
         return false;
       }
     };
-  } // namespace
+  }
 
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
@@ -7704,7 +7703,7 @@ namespace VectorTools
             "Mean value norm is not implemented for complex-valued vectors"));
         return mean_value.real();
       }
-    } // namespace
+    }
 
     // avoid compiling inner function for many vector types when we always
     // really do the same thing by putting the main work into this helper
@@ -8772,7 +8771,7 @@ namespace VectorTools
       // In case of an empty boolean mask operate on the whole vector:
       v.add(-v.mean_value());
     }
-  } // namespace
+  }
 
   template <typename VectorType>
   void
@@ -8798,7 +8797,7 @@ namespace VectorTools
     {
       n = std::complex<Type>(r, i);
     }
-  } // namespace
+  }
 
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type

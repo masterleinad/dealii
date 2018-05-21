@@ -352,8 +352,7 @@ namespace TrilinosWrappers
                             const dealii::BlockDynamicSparsityPattern&,
                             const MPI_Comm&,
                             const bool);
-
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

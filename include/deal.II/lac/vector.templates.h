@@ -124,7 +124,7 @@ namespace internal
     ierr = VecDestroy(&sequential_vector);
     AssertNothrow(ierr == 0, ExcPETScError(ierr));
   }
-} // namespace internal
+}
 
 template <typename Number>
 Vector<Number>::Vector(const PETScWrappers::VectorBase& v)

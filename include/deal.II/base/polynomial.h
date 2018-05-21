@@ -735,7 +735,7 @@ namespace Polynomials
   jacobi_polynomial_roots(const unsigned int degree,
                           const int          alpha,
                           const int          beta);
-} // namespace Polynomials
+}
 
 /** @} */
 
@@ -921,8 +921,7 @@ namespace Polynomials
 
     return x;
   }
-
-} // namespace Polynomials
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

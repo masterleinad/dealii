@@ -1265,7 +1265,7 @@ namespace TimeStepBase_Tria_Flags
                    << " for the cell refinement thresholds does not fulfill "
                       "its natural requirements.");
   };
-} // namespace TimeStepBase_Tria_Flags
+}
 
 /**
  * Specialization of TimeStepBase which addresses some aspects of grid

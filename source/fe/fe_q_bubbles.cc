@@ -170,9 +170,9 @@ namespace internal
                   }
           }
       }
-    } // namespace
-  }   // namespace FE_Q_Bubbles
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)

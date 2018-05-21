@@ -25,7 +25,7 @@ namespace std_cxx11
   using std::adopt_lock;
   using std::condition_variable;
   using std::unique_lock;
-} // namespace std_cxx11
+}
 DEAL_II_NAMESPACE_CLOSE
 
 // then allow using the old namespace name instead of the new one

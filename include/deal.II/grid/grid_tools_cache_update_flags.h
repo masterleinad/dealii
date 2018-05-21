@@ -160,8 +160,7 @@ namespace GridTools
     f1 = f1 & f2;
     return f1;
   }
-
-} // namespace GridTools
+}
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

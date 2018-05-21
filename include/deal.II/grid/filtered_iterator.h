@@ -319,7 +319,7 @@ namespace IteratorFilters
     bool
     operator()(const Iterator& i) const;
   };
-} // namespace IteratorFilters
+}
 
 /**
  * This class provides a certain view on a range of triangulation or
@@ -805,8 +805,8 @@ namespace internal
                                        std::tuple<Targs...>>::type>
         type;
     };
-  } // namespace FilteredIteratorImplementation
-} // namespace internal
+  }
+}
 
 /**
  * Filter the  given range of iterators using a Predicate. This allows to
@@ -1222,7 +1222,7 @@ namespace IteratorFilters
   {
     return (i->at_boundary());
   }
-} // namespace IteratorFilters
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

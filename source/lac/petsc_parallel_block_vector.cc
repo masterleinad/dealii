@@ -38,9 +38,8 @@ namespace PETScWrappers
 
       collect_sizes();
     }
-  } // namespace MPI
-
-} // namespace PETScWrappers
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

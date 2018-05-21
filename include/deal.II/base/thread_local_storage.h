@@ -248,7 +248,7 @@ namespace Threads
     data = T{};
 #  endif
   }
-} // namespace Threads
+} // end of implementation of namespace Threads
 
 /**
  * @}

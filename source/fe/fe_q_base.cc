@@ -88,9 +88,9 @@ namespace internal
               indices[d + 1]++;
             }
       }
-    } // namespace
-  }   // namespace FE_Q_Base
-} // namespace internal
+    }
+  }
+}
 
 /**
  * A class with the same purpose as the similarly named class of the

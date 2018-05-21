@@ -749,7 +749,7 @@ namespace Step27
           = -fit.first - 1. * dim / 2;
       }
   }
-} // namespace Step27
+}
 
 // @sect3{The main function}
 

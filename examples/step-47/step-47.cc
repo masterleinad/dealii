@@ -1116,7 +1116,7 @@ namespace Step47
         output_results(cycle);
       }
   }
-} // namespace Step47
+}
 
 int
 main()

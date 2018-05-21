@@ -84,7 +84,7 @@ namespace internal
       return tmp;
     }
   };
-} // namespace internal
+}
 
 // Enable the EnableIfScalar type trait for VectorizedArray<Number> such
 // that it can be used as a Number type in Tensor<rank,dim,Number>, etc.
@@ -3360,7 +3360,6 @@ namespace std
   {
     return x.get_min(y);
   }
-
-} // namespace std
+}
 
 #endif

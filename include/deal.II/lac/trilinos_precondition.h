@@ -2054,8 +2054,7 @@ namespace TrilinosWrappers
   }
 
 #    endif
-
-} // namespace TrilinosWrappers
+}
 
 /*@}*/
 

@@ -928,7 +928,7 @@ namespace PETScWrappers
      */
     AdditionalData additional_data;
   };
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -276,9 +276,8 @@ namespace parallel
       void
       register_data_attach(const std::size_t size);
     };
-
-  } // namespace distributed
-} // namespace parallel
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

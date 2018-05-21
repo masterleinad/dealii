@@ -201,7 +201,7 @@ namespace
         v[level].reinit(ndofs[level][selected_block]);
       }
   }
-} // namespace
+}
 
 template <typename number>
 template <int dim, class InVector, int spacedim>

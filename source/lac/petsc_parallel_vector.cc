@@ -379,10 +379,8 @@ namespace PETScWrappers
 
       AssertThrow(out, ExcIO());
     }
-
-  } // namespace MPI
-
-} // namespace PETScWrappers
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

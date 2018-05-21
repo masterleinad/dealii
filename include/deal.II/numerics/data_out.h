@@ -50,8 +50,8 @@ namespace internal
 
       const std::vector<std::vector<unsigned int>>* cell_to_patch_index_map;
     };
-  } // namespace DataOutImplementation
-} // namespace internal
+  }
+}
 
 /**
  * This class is the main class to provide output of data described by finite

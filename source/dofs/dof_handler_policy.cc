@@ -258,7 +258,7 @@ namespace internal
               return numbers::invalid_unsigned_int;
             }
         }
-      } // namespace
+      }
 
       struct Implementation
       {
@@ -2599,7 +2599,7 @@ namespace internal
 
           return level_subdomain_association;
         }
-      } // namespace
+      }
 
       template <class DoFHandlerType>
       NumberCache
@@ -3871,8 +3871,7 @@ namespace internal
             }
 #  endif
         }
-
-      } // namespace
+      }
 
 #endif // DEAL_II_WITH_P4EST
 
@@ -4750,9 +4749,9 @@ namespace internal
         return NumberCache(
           index_sets, Utilities::MPI::this_mpi_process(tr->get_communicator()));
       }
-    } // namespace Policy
-  }   // namespace DoFHandlerImplementation
-} // namespace internal
+    }
+  }
+}
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler_policy.inst"

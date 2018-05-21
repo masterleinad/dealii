@@ -336,8 +336,7 @@ namespace GridGenerator
               Assert(false, ExcInternalError());
           }
     }
-
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   void
@@ -4538,8 +4537,7 @@ namespace GridGenerator
 
     return surface_to_volume_mapping;
   }
-
-} // namespace GridGenerator
+}
 
 // explicit instantiations
 #include "grid_generator.inst"

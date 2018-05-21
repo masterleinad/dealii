@@ -71,7 +71,7 @@ namespace types
 #    define PARTICLE_INDEX_MPI_TYPE MPI_UNSIGNED
 #  endif
 #endif
-} // namespace types
+}
 
 /**
  * A namespace that contains all classes that are related to the particle

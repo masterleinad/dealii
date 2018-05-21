@@ -309,7 +309,7 @@ namespace DerivativeApproximation
                    "in the documentation of the DerivativeApproximation "
                    "class) is not equal to dim. The matrix Y then is "
                    "rank deficient and can not be inverted.");
-} // namespace DerivativeApproximation
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

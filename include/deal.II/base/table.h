@@ -1712,7 +1712,7 @@ namespace TransposeTableIterators
     Iterator(const container_pointer_type container,
              const std::ptrdiff_t         linear_index);
   };
-} // namespace TransposeTableIterators
+}
 
 /**
  * A class representing a transpose two-dimensional table, i.e. a matrix of
@@ -2016,8 +2016,8 @@ namespace internal
     {
       return data + table.size()[N - 1];
     }
-  } // namespace TableBaseAccessors
-} // namespace internal
+  }
+}
 
 template <int N, typename T>
 inline TableBase<N, T>&
@@ -2193,8 +2193,8 @@ namespace internal
     {
       Assert(false, ExcNotImplemented());
     }
-  } // namespace TableImplementation
-} // namespace internal
+  }
+}
 
 template <int N, typename T>
 template <typename InputIterator>
@@ -2578,7 +2578,7 @@ namespace TransposeTableIterators
     : LinearIndexIterator<Iterator<T, Constness>, Accessor<T, Constness>>(
         Accessor<T, Constness>(table, linear_index))
   {}
-} // namespace TransposeTableIterators
+}
 
 //---------------------------------------------------------------------------
 template <typename T>

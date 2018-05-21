@@ -100,7 +100,7 @@ namespace Step38
                 << Iterator->second << std::endl;
       }
   }
-} // namespace Step38
+}
 
 int
 main()

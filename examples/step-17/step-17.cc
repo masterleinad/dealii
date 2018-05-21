@@ -1012,7 +1012,7 @@ namespace Step17
         output_results(cycle);
       }
   }
-} // namespace Step17
+}
 
 // @sect3{The <code>main</code> function}
 

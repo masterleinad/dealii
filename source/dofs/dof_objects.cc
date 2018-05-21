@@ -61,8 +61,8 @@ namespace internal
            + local_index]
         = global_index;
     }
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+  }
+}
 
 // explicit instantiations
 namespace internal

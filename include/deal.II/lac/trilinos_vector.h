@@ -202,7 +202,7 @@ namespace TrilinosWrappers
       return map.GID64(i);
     }
 #  endif
-  } // namespace
+  }
 
   /**
    * Namespace for Trilinos vector classes that work in parallel over MPI.

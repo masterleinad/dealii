@@ -103,8 +103,7 @@ namespace Differentiation
        */
       template <typename SacadoNumber, typename = void>
       struct SacadoNumberInfo;
-
-    } // namespace internal
+    }
 
   } // namespace AD
 } // namespace Differentiation
@@ -848,9 +847,8 @@ namespace Differentiation
                               || is_sacado_rad_number<NumberType>::value>::type>
       : std::true_type
     {};
-
-  } // namespace AD
-} // namespace Differentiation
+  }
+}
 
 #  endif // DOXYGEN
 

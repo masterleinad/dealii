@@ -480,8 +480,7 @@ namespace Threads
    */
   typedef DummyBarrier Barrier;
 #  endif
-
-} // namespace Threads
+}
 
 namespace Threads
 {
@@ -624,13 +623,13 @@ namespace Threads
      */
     void
     deregister_thread();
-  } // namespace internal
+  }
 
   /**
    * @endcond
    */
 
-} // namespace Threads
+} // end declarations of namespace Threads
 
 /* ----------- implementation of functions in namespace Threads ---------- */
 #  ifndef DOXYGEN
@@ -774,7 +773,7 @@ namespace Threads
       get()
       {}
     };
-  } // namespace internal
+  }
 
   namespace internal
   {
@@ -791,7 +790,7 @@ namespace Threads
     {
       function();
     }
-  } // namespace internal
+  }
 
   namespace internal
   {
@@ -978,7 +977,7 @@ namespace Threads
     };
 
 #  endif
-  } // namespace internal
+  }
 
   /**
    * An object that represents a spawned thread. This object can be freely
@@ -1152,7 +1151,7 @@ namespace Threads
         return std::ref(t);
       }
     };
-  } // namespace internal
+  }
 
   // ----------- thread starters for functions not taking any parameters
 
@@ -1621,8 +1620,7 @@ namespace Threads
     };
 
 #  endif
-
-  } // namespace internal
+  }
 
   /**
    * Describes one task object based on the Threading Building Blocks' Task.
@@ -1978,7 +1976,7 @@ namespace Threads
     std::list<Task<RT>> tasks;
   };
 
-} // namespace Threads
+} // end of implementation of namespace Threads
 
 /**
  * @}

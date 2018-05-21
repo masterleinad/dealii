@@ -149,8 +149,7 @@ namespace internal
   {
     typedef std::complex<adouble> type;
   };
-
-} // namespace internal
+}
 
 template <>
 struct EnableIfScalar<adouble>
@@ -248,8 +247,7 @@ namespace internal
   {
     typedef std::complex<adtl::adouble> type;
   };
-
-} // namespace internal
+}
 
 template <>
 struct EnableIfScalar<adtl::adouble>

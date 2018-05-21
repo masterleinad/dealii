@@ -95,8 +95,8 @@ namespace internal
       // now there definitely is one!
       return *fe_values_table(present_fe_values_index);
     }
-  } // namespace hp
-} // namespace internal
+  }
+}
 
 namespace hp
 {
@@ -448,7 +448,7 @@ namespace hp
     this->select_fe_values(real_fe_index, real_mapping_index, real_q_index)
       .reinit(cell, face_no, subface_no);
   }
-} // namespace hp
+}
 
 // explicit instantiations
 #include "fe_values.inst"

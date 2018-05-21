@@ -276,8 +276,7 @@ namespace SLEPcWrappers
      */
     const AdditionalData additional_data;
   };
-
-} // namespace SLEPcWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -107,9 +107,9 @@ namespace parallel
         const dealii::Vector<Number>&                        criteria,
         const double top_fraction_of_error,
         const double bottom_fraction_of_error);
-    } // namespace GridRefinement
-  }   // namespace distributed
-} // namespace parallel
+    }
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -108,8 +108,7 @@ namespace internal
                            typename Sacado::Fad::Expr<U>::value_type>::type
         type;
   };
-
-} // namespace internal
+}
 
 template <typename T>
 struct EnableIfScalar<Sacado::Fad::DFad<T>>
@@ -226,8 +225,7 @@ namespace internal
   {
     typedef Sacado::Rad::ADvar<typename ProductType<T, U>::type> type;
   };
-
-} // namespace internal
+}
 
 template <typename T>
 struct EnableIfScalar<Sacado::Rad::ADvar<T>>

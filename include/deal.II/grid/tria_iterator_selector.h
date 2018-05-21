@@ -197,10 +197,8 @@ namespace internal
       typedef TriaActiveIterator<dealii::CellAccessor<3, spacedim>>
         active_hex_iterator;
     };
-
-  } // namespace TriangulationImplementation
-
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

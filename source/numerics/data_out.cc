@@ -54,8 +54,8 @@ namespace internal
                                         false),
         cell_to_patch_index_map(&cell_to_patch_index_map)
     {}
-  } // namespace DataOutImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, typename DoFHandlerType>
 void

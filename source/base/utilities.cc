@@ -698,7 +698,7 @@ namespace Utilities
     {
       return Utilities::MPI::job_supports_mpi();
     }
-  } // namespace System
+  }
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -834,7 +834,6 @@ namespace Utilities
   to_string<double>(double, unsigned int);
   template std::string
   to_string<long double>(long double, unsigned int);
-
-} // namespace Utilities
+}
 
 DEAL_II_NAMESPACE_CLOSE

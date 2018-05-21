@@ -662,7 +662,7 @@ namespace GridTools
         }
       return false;
     }
-  } // namespace
+  }
 
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
@@ -2195,8 +2195,7 @@ namespace GridTools
     std::bitset<3> dummy;
     return orthogonal_equality(dummy, face1, face2, direction, offset, matrix);
   }
-
-} // namespace GridTools
+}
 
 #include "grid_tools_dof_handlers.inst"
 

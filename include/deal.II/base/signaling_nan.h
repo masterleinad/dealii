@@ -182,8 +182,8 @@ namespace numbers
           return form;
         }
       };
-    } // namespace SignalingNaN
-  }   // namespace internal
+    }
+  }
 
   /**
    * Provide an object of type @p T filled with a signaling NaN that will
@@ -218,7 +218,7 @@ namespace numbers
     // template functions such as the current one
     return internal::SignalingNaN::NaNInitializer<T>::invalid_element();
   }
-} // namespace numbers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

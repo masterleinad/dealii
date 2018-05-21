@@ -203,7 +203,7 @@ namespace MatrixCreator
         dealii::Vector<number>  cell_rhs;
         const ConstraintMatrix* constraints;
       };
-    } // namespace AssemblerData
+    }
 
     template <int dim, int spacedim, typename CellIterator, typename number>
     void
@@ -659,9 +659,9 @@ namespace MatrixCreator
           cell_matrix(data.cell_matrix),
           cell_vector(data.cell_vector)
       {}
-    } // namespace AssemblerBoundary
-  }   // namespace internal
-} // namespace MatrixCreator
+    }
+  }
+}
 
 namespace MatrixCreator
 {
@@ -1314,8 +1314,7 @@ namespace MatrixCreator
     {
       Assert(false, ExcNotImplemented());
     }
-
-  } // namespace internal
+  }
 
   template <int dim, int spacedim, typename number>
   void
@@ -1762,7 +1761,7 @@ namespace MatrixCreator
             }
         }
     }
-  } // namespace
+  }
 
   template <int dim, int spacedim, typename number>
   void

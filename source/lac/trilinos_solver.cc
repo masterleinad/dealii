@@ -374,9 +374,8 @@ namespace TrilinosWrappers
           AztecOO_StatusTestResNorm::TwoNorm);
         status_test_collection->AddStatusTest(*status_test_rel_tol);
       }
-
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <typename Preconditioner>
   void
@@ -845,7 +844,7 @@ namespace TrilinosWrappers
 
     do_solve();
   }
-} // namespace TrilinosWrappers
+}
 
 // explicit instantiations
 // TODO: put these instantiations into generic file
@@ -856,7 +855,7 @@ namespace TrilinosWrappers
 
   template void
   SolverBase::do_solve(const Epetra_Operator& preconditioner);
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

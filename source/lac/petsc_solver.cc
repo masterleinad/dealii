@@ -820,8 +820,7 @@ namespace PETScWrappers
   {
     symmetric_mode = flag;
   }
-
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

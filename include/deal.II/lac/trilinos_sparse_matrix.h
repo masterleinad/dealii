@@ -442,8 +442,7 @@ namespace TrilinosWrappers
       template <bool Other>
       friend class Iterator;
     };
-
-  } // namespace SparseMatrixIterators
+  }
 
   /**
    * This class implements a wrapper to use the Trilinos distributed sparse
@@ -2610,7 +2609,7 @@ namespace TrilinosWrappers
       TrilinosPayload operator*(const TrilinosPayload& first_op,
                                 const TrilinosPayload& second_op);
 
-    } // namespace LinearOperatorImplementation
+    } /* namespace LinearOperator */
   }   /* namespace internal */
 
   // -------------------------- inline and template functions ----------------------
@@ -2824,8 +2823,7 @@ namespace TrilinosWrappers
     {
       return (other < *this);
     }
-
-  } // namespace SparseMatrixIterators
+  }
 
   inline SparseMatrix::const_iterator
   SparseMatrix::begin() const
@@ -3197,7 +3195,7 @@ namespace TrilinosWrappers
 
         return return_op;
       }
-    } // namespace LinearOperatorImplementation
+    } // namespace LinearOperator
   }   // namespace internal
 
 #    endif // DOXYGEN

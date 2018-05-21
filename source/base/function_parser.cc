@@ -222,8 +222,7 @@ namespace internal
                           static_cast<unsigned long>(std::time(nullptr)));
     return uniform_distribution(rng);
   }
-
-} // namespace internal
+}
 
 template <int dim>
 void

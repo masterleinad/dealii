@@ -571,8 +571,8 @@ namespace internal
       return x.real() < y.real()
              || (x.real() == y.real() && x.imag() < y.imag());
     }
-  } // namespace SolverGMRESImplementation
-} // namespace internal
+  }
+}
 
 template <class VectorType>
 inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(

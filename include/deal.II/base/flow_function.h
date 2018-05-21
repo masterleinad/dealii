@@ -329,8 +329,7 @@ namespace Functions
     double       p_average;
     const bool   stokes;
   };
-
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

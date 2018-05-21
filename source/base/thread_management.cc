@@ -112,7 +112,7 @@ namespace Threads
       }
       std::abort();
     }
-  } // namespace internal
+  }
 
   unsigned int
   n_existing_threads()
@@ -243,6 +243,6 @@ namespace Threads
       };
     return return_values;
   }
-} // namespace Threads
+} // end namespace Thread
 
 DEAL_II_NAMESPACE_CLOSE

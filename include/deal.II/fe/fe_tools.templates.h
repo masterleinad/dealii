@@ -998,7 +998,7 @@ namespace FETools
       Assert(total_index == face_system_to_base_table.size(),
              ExcInternalError());
     }
-  } // namespace Compositing
+  }
 
   // Not implemented in the general case.
   template <class FE>
@@ -1278,7 +1278,7 @@ namespace
     std::array<std::map<std::string, std::unique_ptr<const Subscriptor>>, 4>,
     4>
     fe_name_map = fill_default_map();
-} // namespace
+}
 
 namespace
 {
@@ -1344,7 +1344,7 @@ namespace
     // match
     return 0;
   }
-} // namespace
+}
 
 namespace FETools
 {
@@ -1894,7 +1894,7 @@ namespace FETools
                == GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case)),
              ExcInternalError());
     }
-  } // namespace
+  }
 
   template <int dim, typename number, int spacedim>
   void
@@ -2568,8 +2568,8 @@ namespace FETools
         return get_fe_by_name_ext<dim, spacedim>(name,
                                                  fe_name_map[dim][spacedim]);
       }
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <int dim>
   FiniteElement<dim>*

@@ -63,8 +63,7 @@ namespace deal_II_exceptions
   {
     abort_on_exception = false;
   }
-
-} // namespace deal_II_exceptions
+}
 
 ExceptionBase::ExceptionBase()
   : file(""),

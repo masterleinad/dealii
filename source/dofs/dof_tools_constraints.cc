@@ -524,8 +524,7 @@ namespace DoFTools
                 }
             }
       }
-
-    } // namespace
+    }
 
     void
     make_hp_hanging_node_constraints(const dealii::DoFHandler<1>&,
@@ -1753,7 +1752,7 @@ namespace DoFTools
               }
         }
     }
-  } // namespace internal
+  }
 
   template <typename DoFHandlerType>
   void
@@ -3137,9 +3136,8 @@ namespace DoFTools
 
         return n_parameters_on_fine_grid;
       }
-
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <int dim, int spacedim>
   void

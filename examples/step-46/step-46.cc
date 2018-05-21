@@ -1061,7 +1061,7 @@ namespace Step46
         std::cout << std::endl;
       }
   }
-} // namespace Step46
+}
 
 // @sect4{The <code>main()</code> function}
 

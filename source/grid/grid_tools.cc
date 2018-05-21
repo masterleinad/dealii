@@ -662,7 +662,7 @@ namespace GridTools
     private:
       const double factor;
     };
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   void
@@ -726,7 +726,7 @@ namespace GridTools
       SF.apply_constraints(f, true);
       solver.solve(SF, u, f, PF);
     }
-  } // namespace
+  }
 
   // Implementation for 1D only
   template <>
@@ -1874,8 +1874,8 @@ namespace GridTools
         BoundingBox<spacedim> bbox(std::make_pair(minp, maxp));
         return std::make_tuple(bbox, has_predicate);
       }
-    } // namespace BoundingBoxPredicate
-  }   // namespace internal
+    }
+  }
 
   template <class MeshType>
   std::vector<BoundingBox<MeshType::space_dimension>>
@@ -3007,7 +3007,7 @@ namespace GridTools
             return -1e10;
         }
     }
-  } // namespace
+  }
 
   template <int dim, int spacedim>
   double

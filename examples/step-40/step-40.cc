@@ -678,7 +678,7 @@ namespace Step40
         pcout << std::endl;
       }
   }
-} // namespace Step40
+}
 
 // @sect4{main()}
 

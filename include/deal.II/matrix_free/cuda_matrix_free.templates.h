@@ -427,7 +427,7 @@ namespace CUDAWrappers
       if(cell < gpu_data.n_cells)
         func(cell, &gpu_data, &shared_data, src, dst);
     }
-  } // namespace internal
+  }
 
   template <int dim, typename Number>
   MatrixFree<dim, Number>::MatrixFree()

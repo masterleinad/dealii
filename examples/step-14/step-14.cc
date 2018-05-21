@@ -331,7 +331,7 @@ namespace Step14
                         + std::to_string(this->refinement_cycle) + ".eps");
       GridOut().write_eps(dof_handler.get_triangulation(), out);
     }
-  } // namespace Evaluation
+  }
 
   // @sect3{The Laplace solver classes}
 
@@ -966,8 +966,7 @@ namespace Step14
         *this->triangulation, estimated_error_per_cell, 0.3, 0.03);
       this->triangulation->execute_coarsening_and_refinement();
     }
-
-  } // namespace LaplaceSolver
+  }
 
   // @sect3{Equation data}
   //
@@ -1599,8 +1598,7 @@ namespace Step14
       // the measure of the volume over which we have integrated:
       rhs /= total_volume;
     }
-
-  } // namespace DualFunctional
+  }
 
   // @sect3{Extending the LaplaceSolver namespace}
   namespace LaplaceSolver
@@ -2577,8 +2575,7 @@ namespace Step14
       // Finally store the value with the parent face.
       face_integrals[face] = sum;
     }
-
-  } // namespace LaplaceSolver
+  }
 
   // @sect3{A simulation framework}
 
@@ -2802,8 +2799,7 @@ namespace Step14
     // Clean up the screen after the loop has run:
     std::cout << std::endl;
   }
-
-} // namespace Step14
+}
 
 // @sect3{The main function}
 

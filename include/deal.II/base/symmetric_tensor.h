@@ -468,8 +468,8 @@ namespace internal
         Accessor<rank, dim, constness, 2, Number>;
 #endif
     };
-  } // namespace SymmetricTensorAccessors
-} // namespace internal
+  }
+}
 
 /**
  * Provide a class that stores symmetric tensors of rank 2,4,... efficiently,
@@ -975,8 +975,8 @@ namespace internal
     {
       return tensor(merge(previous_indices, i, rank_ - 1));
     }
-  } // namespace SymmetricTensorAccessors
-} // namespace internal
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor()
@@ -1384,9 +1384,8 @@ namespace internal
         return tmp;
       }
     };
-
-  } // namespace SymmetricTensorImplementation
-} // namespace internal
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>::
@@ -1984,8 +1983,8 @@ namespace internal
                                  numbers::invalid_unsigned_int,
                                  numbers::invalid_unsigned_int);
     }
-  } // namespace SymmetricTensorImplementation
-} // namespace internal
+  }
+}
 
 template <int rank_, int dim, typename Number>
 internal::SymmetricTensorAccessors::
@@ -2074,9 +2073,8 @@ namespace internal
       return internal::SymmetricTensorAccessors::StorageType<4, dim, Number>::
         base_tensor_type::unrolled_to_component_indices(index);
     }
-
-  } // namespace SymmetricTensorImplementation
-} // namespace internal
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline const Number&
@@ -2269,9 +2267,9 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return numbers::invalid_unsigned_int;
       }
-    } // namespace
-  }   // namespace SymmetricTensorImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline unsigned int
@@ -2371,10 +2369,9 @@ namespace internal
         Assert(false, ExcNotImplemented());
         return TableIndices<rank_>();
       }
-
-    } // namespace
-  }   // namespace SymmetricTensorImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <int rank_, int dim, typename Number>
 inline TableIndices<rank_>
@@ -2921,8 +2918,7 @@ namespace internal
           return lhs.first > rhs.first;
         }
       };
-
-    } // namespace
+    }
 
   } // namespace SymmetricTensorImplementation
 

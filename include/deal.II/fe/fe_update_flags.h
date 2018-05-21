@@ -615,8 +615,8 @@ namespace internal
        */
       std::vector<unsigned int> shape_function_to_row_table;
     };
-  } // namespace FEValuesImplementation
-} // namespace internal
+  }
+}
 
 /*@}*/
 

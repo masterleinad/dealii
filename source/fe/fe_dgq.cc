@@ -40,9 +40,9 @@ namespace internal
         else
           return std::vector<Point<1>>(1, Point<1>(0.5));
       }
-    } // namespace
-  }   // namespace FE_DGQ
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)

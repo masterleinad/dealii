@@ -135,8 +135,7 @@ namespace Functions
 
   // explicit instantiations
   template class CSpline<1>;
-
-} // namespace Functions
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -32,7 +32,7 @@ namespace std_cxx11
   using std::is_standard_layout;
   using std::is_trivial;
   using std::true_type;
-} // namespace std_cxx11
+}
 DEAL_II_NAMESPACE_CLOSE
 
 // then allow using the old namespace name instead of the new one

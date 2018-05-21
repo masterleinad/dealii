@@ -1377,7 +1377,7 @@ namespace LinearAlgebra
 
   } // end of namespace distributed
 
-} // namespace LinearAlgebra
+} // end of namespace parallel
 
 DEAL_II_NAMESPACE_CLOSE
 

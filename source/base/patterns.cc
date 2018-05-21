@@ -95,8 +95,7 @@ namespace Patterns
         }
       return "";
     }
-
-  } // namespace internal
+  }
 
   namespace
   {
@@ -123,7 +122,7 @@ namespace Patterns
         }
       return true;
     }
-  } // namespace
+  }
 
   std::unique_ptr<PatternBase>
   pattern_factory(const std::string& description)

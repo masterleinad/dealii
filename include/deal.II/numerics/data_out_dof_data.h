@@ -141,8 +141,8 @@ namespace Exceptions
                    << "components. However, the vector component at "
                    << "position " << arg1 << " with name <" << arg2
                    << "> does not satisfy these conditions.");
-  } // namespace DataOutImplementation
-} // namespace Exceptions
+  }
+}
 
 namespace internal
 {
@@ -420,8 +420,8 @@ namespace internal
       std::vector<std::shared_ptr<dealii::hp::FEFaceValues<dim, spacedim>>>
         x_fe_face_values;
     };
-  } // namespace DataOutImplementation
-} // namespace internal
+  }
+}
 
 //TODO: Most of the documentation of DataOut_DoFData applies to DataOut.
 

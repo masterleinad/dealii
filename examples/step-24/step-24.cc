@@ -521,7 +521,7 @@ namespace Step24
         old_solution_v = solution_v;
       }
   }
-} // namespace Step24
+}
 
 // @sect3{The <code>main</code> function}
 

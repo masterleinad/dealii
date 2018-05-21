@@ -267,7 +267,7 @@ namespace Utilities
               inout_rhs->max_index = in_lhs->max_index;
           }
       }
-    } // namespace
+    }
 
     MinMaxAvg
     min_max_avg(const double my_value, const MPI_Comm& mpi_communicator)

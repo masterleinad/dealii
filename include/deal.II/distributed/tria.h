@@ -1169,8 +1169,8 @@ namespace parallel
       virtual std::vector<bool>
       mark_locally_active_vertices_on_level(const unsigned int level) const;
     };
-  } // namespace distributed
-} // namespace parallel
+  }
+}
 
 #else // DEAL_II_WITH_P4EST
 
@@ -1199,8 +1199,8 @@ namespace parallel
        */
       Triangulation() = delete;
     };
-  } // namespace distributed
-} // namespace parallel
+  }
+}
 
 #endif
 

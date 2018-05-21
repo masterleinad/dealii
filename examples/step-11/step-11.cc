@@ -418,7 +418,7 @@ namespace Step11
     output_table.write_text(std::cout);
     std::cout << std::endl;
   }
-} // namespace Step11
+}
 
 // Finally the main function. It's structure is the same as that used in
 // several of the previous examples, so probably needs no more explanation.

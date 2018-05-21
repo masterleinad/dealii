@@ -601,7 +601,7 @@ namespace Step48
     pcout << "   Spent " << output_time << "s on output and " << wtime
           << "s on computations." << std::endl;
   }
-} // namespace Step48
+}
 
 // @sect3{The <code>main</code> function}
 

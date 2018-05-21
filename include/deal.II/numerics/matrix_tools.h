@@ -60,7 +60,7 @@ namespace hp
   class MappingCollection;
   template <int, int>
   class DoFHandler;
-} // namespace hp
+}
 
 #ifdef DEAL_II_WITH_PETSC
 namespace PETScWrappers
@@ -623,7 +623,7 @@ namespace MatrixCreator
                    "element in use, or only a single vector component. In "
                    "the latter case, the same value will be taken for "
                    "each vector component of the finite element.");
-} // namespace MatrixCreator
+}
 
 /**
  * Provide a collection of functions operating on matrices. These include the
@@ -999,7 +999,7 @@ namespace MatrixTools
                    "blocks in either row or column direction does not use "
                    "the same blocks sizes as the solution vector or "
                    "right hand side vectors, respectively.");
-} // namespace MatrixTools
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

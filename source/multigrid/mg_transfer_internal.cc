@@ -892,9 +892,8 @@ namespace internal
                 }
         }
     }
-
-  } // namespace MGTransfer
-} // namespace internal
+  }
+}
 
 // Explicit instantiations
 

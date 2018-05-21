@@ -40,7 +40,7 @@ namespace LinearAlgebra
   TEMPL_COPY_CONSTRUCTOR(std::complex<float>, std::complex<double>);
 
 #  undef TEMPL_COPY_CONSTRUCTOR
-} // namespace LinearAlgebra
+}
 
 #endif // ! DEAL_II_MSVC
 

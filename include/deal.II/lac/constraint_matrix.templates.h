@@ -628,9 +628,9 @@ namespace internal
       {
         set_zero_serial(cm, vec);
       }
-    } // namespace
-  }   // namespace ConstraintMatrixImplementation
-} // namespace internal
+    }
+  }
+}
 
 template <class VectorType>
 void
@@ -874,8 +874,8 @@ namespace internal
 
       output.collect_sizes();
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <class VectorType>
 void
@@ -1763,7 +1763,7 @@ namespace internals
           matrix_values->value() += value;
         }
     }
-  } // namespace dealiiSparseMatrix
+  }
 
   // similar as before, now with shortcut for deal.II sparse matrices. this
   // lets us avoid using extra arrays, and does all the operations just in

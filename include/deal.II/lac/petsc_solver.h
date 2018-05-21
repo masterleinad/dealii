@@ -38,7 +38,7 @@ namespace SLEPcWrappers
 {
   // forward declarations
   class TransformationBase;
-} // namespace SLEPcWrappers
+}
 #    endif
 
 namespace PETScWrappers

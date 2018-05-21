@@ -41,9 +41,9 @@ namespace internal
           }
         return std::vector<Point<1>>();
       }
-    } // namespace
-  }   // namespace FE_Q
-} // namespace internal
+    }
+  }
+}
 
 template <int dim, int spacedim>
 FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)

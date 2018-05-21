@@ -47,8 +47,8 @@ namespace internal
       support_point_locations = new_locations;
       solution_indices        = new_sol_indices;
     }
-  } // namespace PointValueHistoryImplementation
-} // namespace internal
+  }
+}
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(

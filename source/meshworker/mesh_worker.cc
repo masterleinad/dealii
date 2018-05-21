@@ -106,6 +106,6 @@ namespace MeshWorker
   template class LocalIntegrator<2, 3, double>;
   template class LocalIntegrator<3, 3, float>;
   template class LocalIntegrator<3, 3, double>;
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE

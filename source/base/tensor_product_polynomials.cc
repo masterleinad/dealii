@@ -68,8 +68,8 @@ namespace internal
       indices[1] = (n / n_pols_0) % n_pols_1;
       indices[2] = n / (n_pols_0 * n_pols_1);
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <int dim, typename PolynomialType>
 inline void

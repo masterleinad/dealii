@@ -4287,8 +4287,8 @@ namespace internal
 
       return determinant(jacobian);
     }
-  } // namespace GeometryInfoHelper
-} // namespace internal
+  }
+}
 
 template <int dim>
 template <int spacedim>

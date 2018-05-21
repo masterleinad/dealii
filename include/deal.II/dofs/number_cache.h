@@ -173,9 +173,8 @@ namespace internal
       ar&                n_locally_owned_dofs_per_processor;
       ar&                locally_owned_dofs_per_processor;
     }
-
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

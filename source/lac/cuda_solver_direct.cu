@@ -389,7 +389,7 @@ namespace CUDAWrappers
       // Move the solution back to the device
       Utilities::CUDA::copy_to_dev(x_host, x_dev);
     }
-  } // namespace internal
+  }
 
   template <typename Number>
   SolverDirect<Number>::AdditionalData::AdditionalData(

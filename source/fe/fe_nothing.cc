@@ -26,8 +26,8 @@ namespace internal
     {
       const char* zero_dof_message = "This element has no shape functions.";
     }
-  } // namespace FE_Nothing
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 FE_Nothing<dim, spacedim>::FE_Nothing(const unsigned int n_components,

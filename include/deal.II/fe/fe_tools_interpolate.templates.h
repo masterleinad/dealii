@@ -456,8 +456,8 @@ namespace FETools
         u2.update_ghost_values();
         interpolate(dof2, u2, dof1, constraints1, u1_interpolated);
       }
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
@@ -610,8 +610,8 @@ namespace FETools
         u1_difference.sadd(-1, u1_completely_distributed);
       }
 #endif
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void

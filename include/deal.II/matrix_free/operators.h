@@ -1739,7 +1739,7 @@ namespace MatrixFreeOperators
 
       return true;
     }
-  } // namespace
+  }
 
   template <int dim,
             int fe_degree,

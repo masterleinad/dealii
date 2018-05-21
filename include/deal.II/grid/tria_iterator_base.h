@@ -40,7 +40,7 @@ namespace IteratorState
     /// Iterator is invalid, probably due to an error
     invalid
   };
-} // namespace IteratorState
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

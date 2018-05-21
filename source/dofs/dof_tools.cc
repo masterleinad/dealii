@@ -301,7 +301,7 @@ namespace DoFTools
                   = local_block_association[fe_index][i];
           }
     }
-  } // namespace internal
+  }
 
   template <typename DoFHandlerType, typename Number>
   void
@@ -996,8 +996,8 @@ namespace DoFTools
         selected_dofs.subtract_set(unconstrained_dofs);
         return selected_dofs;
       }
-    } // namespace
-  }   // namespace internal
+    }
+  }
 
   template <int dim, int spacedim>
   void
@@ -1773,7 +1773,7 @@ namespace DoFTools
                          dofs_per_component,
                          component);
     }
-  } // namespace internal
+  }
 
   namespace internal
   {

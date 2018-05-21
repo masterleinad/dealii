@@ -3625,7 +3625,7 @@ namespace
         output << std::endl;
       }
   }
-} // namespace
+}
 
 //explicit instantiations
 #include "grid_in.inst"

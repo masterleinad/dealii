@@ -2804,7 +2804,7 @@ namespace
     v[4] = "level_subdomain";
     return v;
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void
@@ -3827,8 +3827,8 @@ namespace internal
 
       AssertThrow(out, ExcIO());
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 void
@@ -4358,8 +4358,8 @@ namespace internal
 
       AssertThrow(out, ExcIO());
     }
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 void

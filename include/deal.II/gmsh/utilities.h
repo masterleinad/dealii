@@ -94,7 +94,7 @@ namespace Gmsh
                                            const AdditionalParameters& prm
                                            = AdditionalParameters());
 #  endif
-} // namespace Gmsh
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

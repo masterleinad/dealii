@@ -293,7 +293,7 @@ namespace LinearAlgebra
     {
       AssertThrow(false, ExcMessage("Tried to copy complex -> real"));
     }
-  } // namespace internal
+  }
 
   template <typename Number>
   void

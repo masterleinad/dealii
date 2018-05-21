@@ -133,9 +133,9 @@ namespace internal
           if(!(cell->line_orientation(l)))
             face_sign[l] = -1.0;
       }
-    } // namespace
-  }   // namespace FE_PolyTensor
-} // namespace internal
+    }
+  }
+}
 
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(

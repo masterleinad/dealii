@@ -1231,9 +1231,8 @@ namespace internal
     }
 
 #endif // ifndef DOXYGEN
-
-  } // namespace MatrixFreeFunctions
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

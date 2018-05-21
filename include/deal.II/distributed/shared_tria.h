@@ -433,7 +433,7 @@ namespace parallel
        */
       std::vector<types::subdomain_id> true_level_subdomain_ids_of_cells;
     };
-  } // namespace shared
+  }
 
 #endif
 } // namespace parallel

@@ -316,7 +316,7 @@ namespace
             data += loop_length;
           }
   }
-} // namespace
+}
 
 template <int dim, typename Number>
 template <int degree>

@@ -704,8 +704,7 @@ namespace TrilinosWrappers
      */
     const AdditionalData additional_data;
   };
-
-} // namespace TrilinosWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

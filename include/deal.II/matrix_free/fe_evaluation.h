@@ -2824,8 +2824,8 @@ namespace internal
     {
       static constexpr unsigned int value = degree + 1;
     };
-  } // namespace MatrixFreeFunctions
-} // namespace internal
+  }
+}
 
 /*----------------------- Inline functions ----------------------------------*/
 
@@ -3755,7 +3755,7 @@ namespace internal
       return vec[component];
     }
   };
-} // namespace internal
+}
 
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType, typename VectorOperation>
@@ -4615,7 +4615,7 @@ namespace internal
                      + jac[d][2] * hessians_quad[2][q_point]);
       }
   }
-} // namespace internal
+}
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, Tensor<2, dim, VectorizedArray<Number>>>

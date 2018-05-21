@@ -120,8 +120,8 @@ namespace internal
         return false;
       }
     };
-  } // namespace
-} // namespace internal
+  }
+}
 
 namespace FEValuesViews
 {
@@ -2494,8 +2494,7 @@ namespace FEValuesViews
       shape_function_data,
       gradients);
   }
-
-} // namespace FEValuesViews
+}
 
 namespace internal
 {
@@ -2576,8 +2575,8 @@ namespace internal
                                                             component);
         }
     }
-  } // namespace FEValuesViews
-} // namespace internal
+  }
+}
 
 /* ---------------- FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
 
@@ -2978,8 +2977,8 @@ namespace internal
         + MemoryConsumption::memory_consumption(shape_3rd_derivatives)
         + MemoryConsumption::memory_consumption(shape_function_to_row_table));
     }
-  } // namespace FEValuesImplementation
-} // namespace internal
+  }
+}
 
 /*------------------------------- FEValuesBase ---------------------------*/
 
@@ -3453,7 +3452,7 @@ namespace internal
               }
         }
   }
-} // namespace internal
+}
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4330,7 +4329,7 @@ namespace
       // if the types don't match, there is nothing we can do here
       present_cell = std_cxx14::make_unique<Type>(new_cell);
   }
-} // namespace
+}
 
 template <int dim, int spacedim>
 void

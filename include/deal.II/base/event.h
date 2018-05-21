@@ -165,7 +165,7 @@ namespace Algorithms
      * The time stepping scheme has changed the time step size.
      */
     extern const Event new_timestep_size;
-  } // namespace Events
+  }
 
   //----------------------------------------------------------------------//
 

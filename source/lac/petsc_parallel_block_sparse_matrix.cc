@@ -134,9 +134,8 @@ namespace PETScWrappers
     {
       return block(0, 0).get_mpi_communicator();
     }
-
-  } // namespace MPI
-} // namespace PETScWrappers
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -198,7 +198,7 @@ namespace Algorithms
                                                control.last_value()));
     // otherwise exit as normal
   }
-} // namespace Algorithms
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -43,7 +43,7 @@ namespace hp
   class MappingCollection;
   template <int dim, int spacedim>
   class FECollection;
-} // namespace hp
+}
 template <class MeshType>
 class InterGridMap;
 template <int dim, int spacedim>
@@ -2579,7 +2579,7 @@ namespace DoFTools
   /**
    * @}
    */
-} // namespace DoFTools
+}
 
 /* ------------------------- inline functions -------------- */
 

@@ -1185,7 +1185,7 @@ namespace Step37
         pcout << std::endl;
       };
   }
-} // namespace Step37
+}
 
 // @sect3{The <code>main</code> function}
 

@@ -276,7 +276,7 @@ namespace PETScWrappers
   SparseMatrix::do_reinit(const SparsityPattern&, const bool);
   template void
   SparseMatrix::do_reinit(const DynamicSparsityPattern&, const bool);
-} // namespace PETScWrappers
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

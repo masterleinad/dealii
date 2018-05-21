@@ -99,8 +99,7 @@ namespace GeometricUtilities
 
     // explicit instantiations
 #include "geometric_utilities.inst"
-
-  } // namespace Coordinates
-} // namespace GeometricUtilities
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE

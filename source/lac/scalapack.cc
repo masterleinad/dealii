@@ -2069,8 +2069,8 @@ namespace internal
         = H5Tenum_insert(property_enum_id, "upper_triangular", (int*) &prop);
       AssertThrow(status >= 0, ExcInternalError());
     }
-  } // namespace
-} // namespace internal
+  }
+}
 #  endif
 
 template <typename NumberType>
@@ -2896,9 +2896,8 @@ namespace internal
             matrix.local_el(i, j) *= s;
         }
     }
-
-  } // namespace
-} // namespace internal
+  }
+}
 
 template <typename NumberType>
 template <class InputVector>

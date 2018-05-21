@@ -82,8 +82,8 @@ namespace internal
           patches.back().patch_index = patches.size() - 1;
         }
     }
-  } // namespace DataOutRotationImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, typename DoFHandlerType>
 void

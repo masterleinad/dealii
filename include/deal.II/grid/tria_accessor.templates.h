@@ -337,8 +337,8 @@ namespace internal
     {
       return cells;
     }
-  } // namespace TriaAccessorBaseImplementation
-} // namespace internal
+  }
+}
 
 template <int structdim, int dim, int spacedim>
 inline dealii::internal::TriangulationImplementation::TriaObjects<
@@ -1028,8 +1028,8 @@ namespace internal
             accessor.face_rotation(face_index)));
       }
     };
-  } // namespace TriaAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
@@ -2715,8 +2715,8 @@ namespace internal
     {
       return cell.quad(i);
     }
-  } // namespace CellAccessorImplementation
-} // namespace internal
+  }
+}
 
 template <int dim, int spacedim>
 inline TriaIterator<TriaAccessor<dim - 1, dim, spacedim>>

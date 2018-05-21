@@ -130,7 +130,7 @@ namespace Gmsh
 #  ifdef DEAL_II_WITH_OPENCASCADE
 #    include "utilities.inst"
 #  endif
-} // namespace Gmsh
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

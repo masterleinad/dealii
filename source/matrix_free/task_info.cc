@@ -2089,8 +2089,8 @@ namespace internal
                                       - partition_n_blocked_workers[part];
         }
     }
-  } // namespace MatrixFreeFunctions
-} // namespace internal
+  }
+}
 
 // explicit instantiations of template functions
 template void

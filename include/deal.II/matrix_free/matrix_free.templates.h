@@ -578,8 +578,8 @@ namespace internal
           cell_its.emplace_back(cell->level(), cell->index());
         }
     }
-  } // namespace MatrixFreeFunctions
-} // namespace internal
+  }
+}
 
 template <int dim, typename Number>
 void

@@ -43,7 +43,7 @@ namespace internal
   void
   reinit(MatrixBlock<dealii::SparseMatrix<number>>& v,
          const BlockSparsityPattern&                p);
-} // namespace internal
+}
 
 /**
  * A wrapper around a matrix object, storing the coordinates in a block matrix
@@ -616,7 +616,7 @@ namespace internal
     v.column_indices = p.get_column_indices();
     v.matrix.reinit(p.block(v.row, v.column));
   }
-} // namespace internal
+}
 
 template <typename MatrixType>
 inline MatrixBlock<MatrixType>::MatrixBlock()

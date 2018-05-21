@@ -141,7 +141,7 @@ namespace MeshWorker
      */
     DeclException0(ExcPureFunction);
   };
-} // namespace MeshWorker
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -767,7 +767,7 @@ namespace GridOutFlags
    */
   struct Vtu : public DataOutBase::VtkFlags
   {};
-} // namespace GridOutFlags
+}
 
 /**
  * This class provides a means to output a triangulation to a file in

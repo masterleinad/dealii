@@ -733,9 +733,8 @@ namespace PETScWrappers
       // automatically casts the arguments).
       MatrixBase::Tmmult(C, B, V);
     }
-
-  } // namespace MPI
-} // namespace PETScWrappers
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

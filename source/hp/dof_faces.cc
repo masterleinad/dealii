@@ -62,8 +62,7 @@ namespace internal
       return (MemoryConsumption::memory_consumption(lines)
               + MemoryConsumption::memory_consumption(quads));
     }
-
-  } // namespace hp
-} // namespace internal
+  }
+}
 
 DEAL_II_NAMESPACE_CLOSE

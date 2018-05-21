@@ -74,7 +74,7 @@ namespace internal
   {
     struct Implementation;
   }
-} // namespace internal
+}
 
 namespace hp
 {
@@ -1058,7 +1058,7 @@ namespace internal
   std::string
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
                      PolicyBase<dim, spacedim>& policy);
-} // namespace internal
+}
 
 namespace hp
 {
@@ -1279,8 +1279,7 @@ namespace hp
   }
 
 #endif
-
-} // namespace hp
+}
 
 DEAL_II_NAMESPACE_CLOSE
 

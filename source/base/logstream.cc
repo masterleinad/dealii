@@ -28,7 +28,7 @@ namespace
 {
   Threads::Mutex log_lock;
   Threads::Mutex write_lock;
-} // namespace
+}
 
 // The standard log object of deal.II:
 LogStream deallog;

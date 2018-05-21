@@ -203,7 +203,7 @@ namespace Utilities
               std::copy(values.begin(), values.end(), output.begin());
           }
       }
-    } // namespace internal
+    }
 
     template <typename T>
     T

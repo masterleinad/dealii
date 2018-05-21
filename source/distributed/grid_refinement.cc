@@ -283,7 +283,7 @@ namespace
       Assert(false, ExcInternalError());
       return -1;
     }
-  } // namespace RefineAndCoarsenFixedNumber
+  }
 
   namespace RefineAndCoarsenFixedFraction
   {
@@ -391,8 +391,8 @@ namespace
       Assert(false, ExcInternalError());
       return -1;
     }
-  } // namespace RefineAndCoarsenFixedFraction
-} // namespace
+  }
+}
 
 namespace parallel
 {
@@ -530,9 +530,9 @@ namespace parallel
         // now refine the mesh
         mark_cells(tria, criteria, top_threshold, bottom_threshold);
       }
-    } // namespace GridRefinement
-  }   // namespace distributed
-} // namespace parallel
+    }
+  }
+}
 
 // explicit instantiations
 #  include "grid_refinement.inst"
