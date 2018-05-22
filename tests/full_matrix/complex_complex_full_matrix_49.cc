@@ -25,18 +25,17 @@
 
 
 
-
 template <typename number>
 void
-check ()
+check()
 {
-  FullMatrix<std::complex<number> > m;
-  make_complex_square_matrix (m);
-  Vector<std::complex<number> > v, w;
-  make_complex_range_vector (v);
-  make_complex_range_vector (w);
+  FullMatrix<std::complex<number>> m;
+  make_complex_square_matrix(m);
+  Vector<std::complex<number>> v, w;
+  make_complex_range_vector(v);
+  make_complex_range_vector(w);
 
-  m.precondition_Jacobi (v, w, 3.141);
-  print_vector (v);
-  print_vector (w);
+  m.precondition_Jacobi(v, w, 3.141);
+  print_vector(v);
+  print_vector(w);
 }

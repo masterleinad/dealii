@@ -25,7 +25,8 @@
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
-void test ()
+void
+test()
 {
   ParameterHandler foo;
   foo.enter_subsection("bar");
@@ -35,15 +36,16 @@ void test ()
   foo.parse_input(SOURCE_DIR "/parameter_handler_18.prm");
 
   foo.enter_subsection("bar");
-  deallog << foo.get ("val") << std::endl;
+  deallog << foo.get("val") << std::endl;
   foo.leave_subsection();
 }
 
-int main ()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 
   return 0;
 }

@@ -23,7 +23,8 @@
 #include <limits>
 
 
-int main()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
@@ -32,7 +33,7 @@ int main()
   o << "Yes" << std::endl;
   deallog << o.is_active() << std::endl;
 
-  o.set_condition (false);
+  o.set_condition(false);
   o << "No" << std::endl;
   deallog << o.is_active() << std::endl;
 }

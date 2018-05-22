@@ -43,7 +43,7 @@ public:
    * Generate a formula with <tt>n</tt> quadrature points (in each space
    * direction), exact for polynomials of degree <tt>2n-1</tt>.
    */
-  QGauss (const unsigned int n);
+  QGauss(const unsigned int n);
 };
 
 
@@ -92,7 +92,7 @@ template <int dim>
 class QMidpoint : public Quadrature<dim>
 {
 public:
-  QMidpoint ();
+  QMidpoint();
 };
 
 
@@ -104,7 +104,7 @@ template <int dim>
 class QSimpson : public Quadrature<dim>
 {
 public:
-  QSimpson ();
+  QSimpson();
 };
 
 
@@ -125,7 +125,7 @@ template <int dim>
 class QTrapez : public Quadrature<dim>
 {
 public:
-  QTrapez ();
+  QTrapez();
 };
 
 
@@ -140,7 +140,7 @@ template <int dim>
 class QMilne : public Quadrature<dim>
 {
 public:
-  QMilne ();
+  QMilne();
 };
 
 
@@ -154,7 +154,7 @@ template <int dim>
 class QWeddle : public Quadrature<dim>
 {
 public:
-  QWeddle ();
+  QWeddle();
 };
 
 
@@ -179,25 +179,21 @@ public:
   /**
    * Generate a formula with <tt>n</tt> quadrature points
    */
-  QGaussLog(const unsigned int n,
-            const bool revert=false);
+  QGaussLog(const unsigned int n, const bool revert = false);
 
 private:
   /**
    * Compute the points of the quadrature formula.
    */
-  static
-  std::vector<double>
+  static std::vector<double>
   get_quadrature_points(const unsigned int n);
 
   /**
    * Compute the weights of the quadrature formula.
    */
-  static
-  std::vector<double>
+  static std::vector<double>
   get_quadrature_weights(const unsigned int n);
 };
-
 
 
 
@@ -249,15 +245,15 @@ public:
    * formula or it is factored out, to be included in the integrand.
    */
   QGaussLogR(const unsigned int n,
-             const Point<dim> x0 = Point<dim>(),
-             const double alpha = 1,
-             const bool factor_out_singular_weight=false);
+             const Point<dim>   x0                         = Point<dim>(),
+             const double       alpha                      = 1,
+             const bool         factor_out_singular_weight = false);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
    * since it does not know about the additional member `fraction` of this class.
    */
-  QGaussLogR(QGaussLogR<dim> &&) noexcept = default;
+  QGaussLogR(QGaussLogR<dim>&&) noexcept = default;
 
 protected:
   /**
@@ -328,8 +324,8 @@ public:
    * @endcode
    */
   QGaussOneOverR(const unsigned int n,
-                 const Point<dim> singularity,
-                 const bool factor_out_singular_weight=false);
+                 const Point<dim>   singularity,
+                 const bool         factor_out_singular_weight = false);
   /**
    * The constructor takes three arguments: the order of the Gauss formula,
    * the index of the vertex where the singularity is located, and whether we
@@ -366,15 +362,16 @@ public:
    */
   QGaussOneOverR(const unsigned int n,
                  const unsigned int vertex_index,
-                 const bool factor_out_singular_weight=false);
+                 const bool         factor_out_singular_weight = false);
+
 private:
   /**
    * Given a quadrature point and a degree n, this function returns the size
    * of the singular quadrature rule, considering whether the point is inside
    * the cell, on an edge of the cell, or on a corner of the cell.
    */
-  static unsigned int quad_size(const Point<dim> singularity,
-                                const unsigned int n);
+  static unsigned int
+  quad_size(const Point<dim> singularity, const unsigned int n);
 };
 
 
@@ -396,7 +393,7 @@ public:
    * The constructor takes an arbitrary quadrature formula @p quad and sorts
    * its points and weights according to ascending weights.
    */
-  QSorted (const Quadrature<dim> &quad);
+  QSorted(const Quadrature<dim>& quad);
 
 private:
   /**
@@ -404,8 +401,8 @@ private:
    * @p a and @p b are indices into the weights array and the result will
    * be determined by comparing the weights.
    */
-  bool compare_weights(const unsigned int a,
-                       const unsigned int b) const;
+  bool
+  compare_weights(const unsigned int a, const unsigned int b) const;
 };
 
 /**
@@ -465,7 +462,7 @@ private:
  * @author Nicola Giuliani, Luca Heltai 2015
  */
 template <int dim>
-class QTelles: public Quadrature<dim>
+class QTelles : public Quadrature<dim>
 {
 public:
   /**
@@ -474,14 +471,13 @@ public:
    * sure that the order of the quadrature rule is appropriate for the
    * singularity in question.
    */
-  QTelles (const Quadrature<1> &base_quad, const Point<dim> &singularity);
+  QTelles(const Quadrature<1>& base_quad, const Point<dim>& singularity);
   /**
    * A variant of above constructor that takes as parameters the order @p n
    * and location of a singularity. A Gauss Legendre quadrature of order n
    * will be used
    */
-  QTelles (const unsigned int n, const Point<dim> &singularity);
-
+  QTelles(const unsigned int n, const Point<dim>& singularity);
 };
 
 /**
@@ -542,13 +538,13 @@ public:
   };
   /// Generate a formula with <tt>n</tt> quadrature points
   QGaussRadauChebyshev(const unsigned int n,
-                       EndPoint ep=QGaussRadauChebyshev::left);
+                       EndPoint           ep = QGaussRadauChebyshev::left);
 
   /**
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
    * since it does not know about the additional member `ep` of this class.
    */
-  QGaussRadauChebyshev(QGaussRadauChebyshev<dim> &&) noexcept = default;
+  QGaussRadauChebyshev(QGaussRadauChebyshev<dim>&&) noexcept = default;
 
 private:
   const EndPoint ep;
@@ -619,7 +615,7 @@ public:
    *
    * @param[in] quad The input quadrature.
    */
-  QSimplex(const Quadrature<dim> &quad);
+  QSimplex(const Quadrature<dim>& quad);
 
   /**
    * Return an affine transformation of this quadrature, that can be used to integrate
@@ -644,8 +640,8 @@ public:
    * @return A quadrature object that can be used to integrate on the simplex
    */
   Quadrature<dim>
-  compute_affine_transformation(const std::array<Point<dim>, dim+1> &vertices) const;
-
+  compute_affine_transformation(
+    const std::array<Point<dim>, dim + 1>& vertices) const;
 };
 
 /**
@@ -668,7 +664,7 @@ public:
  *
  * @author Luca Heltai, 2017
  */
-class  QTrianglePolar: public QSimplex<2>
+class QTrianglePolar : public QSimplex<2>
 {
 public:
   /**
@@ -678,8 +674,8 @@ public:
    * @param radial_quadrature Radial quadrature
    * @param angular_quadrature Angular quadrature
    */
-  QTrianglePolar(const Quadrature<1> &radial_quadrature,
-                 const Quadrature<1> &angular_quadrature);
+  QTrianglePolar(const Quadrature<1>& radial_quadrature,
+                 const Quadrature<1>& angular_quadrature);
 
   /**
    * Call the other constructor, with QGauss<1>(n) for both radial and
@@ -687,7 +683,7 @@ public:
    *
    * @param n Order of QGauss quadrature
    */
-  QTrianglePolar(const unsigned int &n);
+  QTrianglePolar(const unsigned int& n);
 };
 
 /**
@@ -724,7 +720,7 @@ public:
  *
  * @author Luca Heltai, Nicola Giuliani, 2017.
  */
-class  QDuffy: public QSimplex<2>
+class QDuffy : public QSimplex<2>
 {
 public:
   /**
@@ -740,9 +736,9 @@ public:
    * @param radial_quadrature Base quadrature to use in the radial direction
    * @param angular_quadrature Base quadrature to use in the angular direction
    */
-  QDuffy(const Quadrature<1> &radial_quadrature,
-         const Quadrature<1> &angular_quadrature,
-         const double beta = 1.0);
+  QDuffy(const Quadrature<1>& radial_quadrature,
+         const Quadrature<1>& angular_quadrature,
+         const double         beta = 1.0);
 
   /**
    * Call the above constructor with QGauss<1>(n) quadrature formulas for
@@ -750,8 +746,7 @@ public:
    *
    * @param n Order of QGauss quadrature
    */
-  QDuffy(const unsigned int n,
-         const double beta);
+  QDuffy(const unsigned int n, const double beta);
 };
 
 /**
@@ -760,7 +755,7 @@ public:
  *
  * @author Luca Heltai, 2017.
  */
-template<int dim>
+template <int dim>
 class QSplit : public Quadrature<dim>
 {
 public:
@@ -798,29 +793,49 @@ public:
    * @param base Base QSimplex quadrature to use
    * @param split_point Where to split the hyper cube
    */
-  QSplit(const QSimplex<dim> &base,
-         const Point<dim> &split_point);
+  QSplit(const QSimplex<dim>& base, const Point<dim>& split_point);
 };
 
 /*@}*/
 
 /* -------------- declaration of explicit specializations ------------- */
 
-template <> QGauss<1>::QGauss (const unsigned int n);
-template <> QGaussLobatto<1>::QGaussLobatto (const unsigned int n);
+template <>
+QGauss<1>::QGauss(const unsigned int n);
+template <>
+QGaussLobatto<1>::QGaussLobatto(const unsigned int n);
 
-template <> std::vector<double> QGaussLog<1>::get_quadrature_points(const unsigned int);
-template <> std::vector<double> QGaussLog<1>::get_quadrature_weights(const unsigned int);
+template <>
+std::vector<double>
+QGaussLog<1>::get_quadrature_points(const unsigned int);
+template <>
+std::vector<double>
+QGaussLog<1>::get_quadrature_weights(const unsigned int);
 
-template <> QMidpoint<1>::QMidpoint ();
-template <> QTrapez<1>::QTrapez ();
-template <> QSimpson<1>::QSimpson ();
-template <> QMilne<1>::QMilne ();
-template <> QWeddle<1>::QWeddle ();
-template <> QGaussLog<1>::QGaussLog (const unsigned int n, const bool revert);
-template <> QGaussLogR<1>::QGaussLogR (const unsigned int n, const Point<1> x0, const double alpha, const bool flag);
-template <> QGaussOneOverR<2>::QGaussOneOverR (const unsigned int n, const unsigned int index, const bool flag);
-template <> QTelles<1>::QTelles(const Quadrature<1> &base_quad, const Point<1> &singularity);
+template <>
+QMidpoint<1>::QMidpoint();
+template <>
+QTrapez<1>::QTrapez();
+template <>
+QSimpson<1>::QSimpson();
+template <>
+QMilne<1>::QMilne();
+template <>
+QWeddle<1>::QWeddle();
+template <>
+QGaussLog<1>::QGaussLog(const unsigned int n, const bool revert);
+template <>
+QGaussLogR<1>::QGaussLogR(const unsigned int n,
+                          const Point<1>     x0,
+                          const double       alpha,
+                          const bool         flag);
+template <>
+QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
+                                  const unsigned int index,
+                                  const bool         flag);
+template <>
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity);
 
 
 

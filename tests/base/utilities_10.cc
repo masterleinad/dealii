@@ -22,48 +22,41 @@
 #include <deal.II/base/utilities.h>
 
 
-void test ()
+void
+test()
 {
   // verify the documented behavior of eating trailing delimiters
   {
-    deallog << Utilities::split_string_list (",").size()
-            << std::endl;
-    deallog << Utilities::split_string_list (" , ").size()
-            << std::endl;
+    deallog << Utilities::split_string_list(",").size() << std::endl;
+    deallog << Utilities::split_string_list(" , ").size() << std::endl;
   }
 
   {
-    deallog << Utilities::split_string_list (",,").size()
-            << std::endl;
-    deallog << Utilities::split_string_list (" , , ").size()
-            << std::endl;
+    deallog << Utilities::split_string_list(",,").size() << std::endl;
+    deallog << Utilities::split_string_list(" , , ").size() << std::endl;
   }
 
   // try some more esoteric cases:
   {
-    deallog << Utilities::split_string_list (" , , ", ' ').size()
-            << std::endl;
+    deallog << Utilities::split_string_list(" , , ", ' ').size() << std::endl;
   }
 
   {
-    deallog << Utilities::split_string_list (" ", ' ').size()
-            << std::endl;
-    deallog << Utilities::split_string_list ("   ", ' ').size()
-            << std::endl;
+    deallog << Utilities::split_string_list(" ", ' ').size() << std::endl;
+    deallog << Utilities::split_string_list("   ", ' ').size() << std::endl;
   }
 
-  Assert (Utilities::split_string_list(" ; ", ';').size() == 1,
-          ExcInternalError());
-  Assert (Utilities::split_string_list(" ; ", ';')[0] == "",
-          ExcInternalError());
+  Assert(Utilities::split_string_list(" ; ", ';').size() == 1,
+         ExcInternalError());
+  Assert(Utilities::split_string_list(" ; ", ';')[0] == "", ExcInternalError());
 }
 
 
 
-
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

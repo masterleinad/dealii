@@ -28,13 +28,13 @@ char logname[] = "output";
 
 
 template <int dim>
-void test ()
+void
+test()
 {
   hp::FECollection<dim> fe;
-  for (unsigned int i=1; i<4; ++i)
-    for (unsigned int j=0; j<4; ++j)
-      fe.push_back (FESystem<dim>(FE_Q<dim>(i), 1,
-                                  FE_DGQ<dim>(j), 1));
+  for(unsigned int i = 1; i < 4; ++i)
+    for(unsigned int j = 0; j < 4; ++j)
+      fe.push_back(FESystem<dim>(FE_Q<dim>(i), 1, FE_DGQ<dim>(j), 1));
 
-  test_with_hanging_nodes_random_aniso (fe);
+  test_with_hanging_nodes_random_aniso(fe);
 }

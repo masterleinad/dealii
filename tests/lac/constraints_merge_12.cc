@@ -24,20 +24,22 @@
 
 
 
-void merge_check ()
+void
+merge_check()
 {
-  deallog << "Checking ConstraintMatrix::merge with localized lines" << std::endl;
+  deallog << "Checking ConstraintMatrix::merge with localized lines"
+          << std::endl;
 
   // set local lines to a very large range that surely triggers an error if
   // the implementation is wrong
-  IndexSet local_lines (100000000);
-  local_lines.add_range (99999800, 100000000);
+  IndexSet local_lines(100000000);
+  local_lines.add_range(99999800, 100000000);
   local_lines.compress();
 
   // works correctly
-  ConstraintMatrix c1 (local_lines), c2 (local_lines);
-  for (types::global_dof_index i=99999800; i<local_lines.size(); ++i)
-    if (i%2 == 1)
+  ConstraintMatrix c1(local_lines), c2(local_lines);
+  for(types::global_dof_index i = 99999800; i < local_lines.size(); ++i)
+    if(i % 2 == 1)
       c1.add_line(i);
 
   c2.add_line(99999800);
@@ -45,7 +47,7 @@ void merge_check ()
   c2.add_line(99999802);
 
   // now merge the two and print the results
-  c2.merge (c1, ConstraintMatrix::right_object_wins);
+  c2.merge(c1, ConstraintMatrix::right_object_wins);
   c2.print(deallog.get_file_stream());
 
   deallog << "OK" << std::endl;
@@ -53,9 +55,10 @@ void merge_check ()
 
 
 
-int main ()
+int
+main()
 {
   initlog();
 
-  merge_check ();
+  merge_check();
 }

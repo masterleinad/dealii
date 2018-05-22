@@ -22,9 +22,9 @@
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
-#include <deal.II/grid/tria.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
+#include <deal.II/grid/tria.h>
 
 #include <boost/archive/text_oarchive.hpp>
 
@@ -32,22 +32,23 @@
 #include <string>
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   Triangulation<2> triangulation;
-  GridGenerator::hyper_cube (triangulation);
-  triangulation.refine_global (4);
-  DoFHandler<2> dof_handler (triangulation);
-  FE_Q<2> finite_element (1);
-  dof_handler.distribute_dofs (finite_element);
+  GridGenerator::hyper_cube(triangulation);
+  triangulation.refine_global(4);
+  DoFHandler<2> dof_handler(triangulation);
+  FE_Q<2>       finite_element(1);
+  dof_handler.distribute_dofs(finite_element);
 
-  std::ostringstream out_stream;
+  std::ostringstream            out_stream;
   boost::archive::text_oarchive archive(out_stream);
 
   archive << dof_handler;
-  dof_handler.clear ();
+  dof_handler.clear();
 
   deallog << "OK" << std::endl;
 }

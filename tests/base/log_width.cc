@@ -19,22 +19,22 @@
 #include "../tests.h"
 #include <limits>
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  deallog << numbers::PI*2 << 42 << std::endl;
+  deallog << numbers::PI * 2 << 42 << std::endl;
 
   // test with a different width
   deallog.width(18);
-  deallog << numbers::PI*2 << 42 << std::endl;
+  deallog << numbers::PI * 2 << 42 << std::endl;
 
   // ensure that the width of the underlying file stream object remained
   // unchanged
-  deallog.get_file_stream() << numbers::PI*2 << 42 << std::endl;
+  deallog.get_file_stream() << numbers::PI * 2 << 42 << std::endl;
 
   return 0;
 }
-

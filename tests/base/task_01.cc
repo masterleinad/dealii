@@ -24,17 +24,19 @@
 #include <deal.II/base/thread_management.h>
 
 
-void test ()
+void
+test()
 {
-  sleep (3);
+  sleep(3);
   deallog << "OK" << std::endl;
 }
 
 
-int main()
+int
+main()
 {
   initlog();
 
-  Threads::Task<> t = Threads::new_task (test);
-  t.join ();
+  Threads::Task<> t = Threads::new_task(test);
+  t.join();
 }

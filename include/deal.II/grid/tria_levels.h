@@ -18,10 +18,10 @@
 
 
 #include <deal.II/base/config.h>
-#include <vector>
-#include <deal.II/grid/tria_object.h>
 #include <deal.II/base/point.h>
+#include <deal.II/grid/tria_object.h>
 #include <deal.II/grid/tria_objects.h>
+#include <vector>
 
 #include <boost/serialization/utility.hpp>
 
@@ -113,7 +113,7 @@ namespace internal
        * level down (in which case its neighbor pointer points to the mother
        * cell of this cell).
        */
-      std::vector<std::pair<int,int> > neighbors;
+      std::vector<std::pair<int, int>> neighbors;
 
       /**
        * One integer per cell to store which subdomain it belongs to. This
@@ -151,7 +151,7 @@ namespace internal
       /**
        * The object containing the data on lines and related functions
        */
-      TriaObjects<TriaObject<dim> > cells;
+      TriaObjects<TriaObject<dim>> cells;
 
 
       /**
@@ -165,41 +165,45 @@ namespace internal
        * have to pass that additionally.
        */
 
-      void reserve_space (const unsigned int total_cells,
-                          const unsigned int dimension,
-                          const unsigned int space_dimension);
+      void
+      reserve_space(const unsigned int total_cells,
+                    const unsigned int dimension,
+                    const unsigned int space_dimension);
 
       /**
        * Check the memory consistency of the different containers. Should only
        * be called with the preprocessor flag @p DEBUG set. The function
        * should be called from the functions of the higher TriaLevel classes.
        */
-      void monitor_memory (const unsigned int true_dimension) const;
+      void
+      monitor_memory(const unsigned int true_dimension) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t memory_consumption () const;
+      std::size_t
+      memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the
        * purpose of serialization
        */
       template <class Archive>
-      void serialize(Archive &ar,
-                     const unsigned int version);
+      void
+      serialize(Archive& ar, const unsigned int version);
 
       /**
        * Exception
        */
-      DeclException2 (ExcMemoryInexact,
-                      int, int,
-                      << "The containers have sizes " << arg1 << " and "
-                      << arg2 << ", which is not as expected.");
+      DeclException2(ExcMemoryInexact,
+                     int,
+                     int,
+                     << "The containers have sizes " << arg1 << " and " << arg2
+                     << ", which is not as expected.");
     };
 
-//TODO: Replace TriaObjectsHex to avoid this specialization
+    //TODO: Replace TriaObjectsHex to avoid this specialization
 
     /**
      * Specialization of TriaLevels for 3D. Since we need TriaObjectsHex
@@ -210,13 +214,13 @@ namespace internal
     class TriaLevel<3>
     {
     public:
-      std::vector<std::uint8_t> refine_flags;
-      std::vector<bool> coarsen_flags;
-      std::vector<unsigned int> active_cell_indices;
-      std::vector<std::pair<int,int> > neighbors;
+      std::vector<std::uint8_t>        refine_flags;
+      std::vector<bool>                coarsen_flags;
+      std::vector<unsigned int>        active_cell_indices;
+      std::vector<std::pair<int, int>> neighbors;
       std::vector<types::subdomain_id> subdomain_ids;
       std::vector<types::subdomain_id> level_subdomain_ids;
-      std::vector<int> parents;
+      std::vector<int>                 parents;
 
       // The following is not used
       // since we don't support
@@ -229,72 +233,76 @@ namespace internal
       TriaObjectsHex cells;
 
 
-      void reserve_space (const unsigned int total_cells,
-                          const unsigned int dimension,
-                          const unsigned int space_dimension);
-      void monitor_memory (const unsigned int true_dimension) const;
-      std::size_t memory_consumption () const;
+      void
+      reserve_space(const unsigned int total_cells,
+                    const unsigned int dimension,
+                    const unsigned int space_dimension);
+      void
+      monitor_memory(const unsigned int true_dimension) const;
+      std::size_t
+      memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the
        * purpose of serialization
        */
       template <class Archive>
-      void serialize(Archive &ar,
-                     const unsigned int version);
+      void
+      serialize(Archive& ar, const unsigned int version);
 
       /**
        * Exception
        */
-      DeclException2 (ExcMemoryInexact,
-                      int, int,
-                      << "The containers have sizes " << arg1 << " and "
-                      << arg2 << ", which is not as expected.");
+      DeclException2(ExcMemoryInexact,
+                     int,
+                     int,
+                     << "The containers have sizes " << arg1 << " and " << arg2
+                     << ", which is not as expected.");
     };
 
 
 
     template <int dim>
     template <class Archive>
-    void TriaLevel<dim>::serialize(Archive &ar,
-                                   const unsigned int)
+    void
+    TriaLevel<dim>::serialize(Archive& ar, const unsigned int)
     {
-      ar &refine_flags &coarsen_flags;
+      ar& refine_flags& coarsen_flags;
 
       // do not serialize 'active_cell_indices' here. instead of storing them
       // to the stream and re-reading them again later, we just rebuild them
       // in Triangulation::load()
 
-      ar &neighbors;
-      ar &subdomain_ids;
-      ar &level_subdomain_ids;
-      ar &parents;
-      ar &direction_flags;
-      ar &cells;
+      ar& neighbors;
+      ar& subdomain_ids;
+      ar& level_subdomain_ids;
+      ar& parents;
+      ar& direction_flags;
+      ar& cells;
     }
 
 
 
     template <class Archive>
-    void TriaLevel<3>::serialize(Archive &ar,
-                                 const unsigned int)
+    void
+    TriaLevel<3>::serialize(Archive& ar, const unsigned int)
     {
-      ar &refine_flags &coarsen_flags;
+      ar& refine_flags& coarsen_flags;
 
       // do not serialize 'active_cell_indices' here. instead of storing them
       // to the stream and re-reading them again later, we just rebuild them
       // in Triangulation::load()
 
-      ar &neighbors;
-      ar &subdomain_ids;
-      ar &level_subdomain_ids;
-      ar &parents;
-      ar &direction_flags;
-      ar &cells;
+      ar& neighbors;
+      ar& subdomain_ids;
+      ar& level_subdomain_ids;
+      ar& parents;
+      ar& direction_flags;
+      ar& cells;
     }
 
-  }
-}
+  } // namespace TriangulationImplementation
+} // namespace internal
 
 
 

@@ -22,31 +22,33 @@
 
 
 template <int dim>
-void check ()
+void
+check()
 {
-  SymmetricTensor<2,dim> S;
-  for (unsigned int i=0; i<S.n_independent_components; ++i)
-    S[S.unrolled_to_component_indices (i)] = Testing::rand() % 10;
+  SymmetricTensor<2, dim> S;
+  for(unsigned int i = 0; i < S.n_independent_components; ++i)
+    S[S.unrolled_to_component_indices(i)] = Testing::rand() % 10;
 
-  Tensor<1,dim> x;
-  for (unsigned int i=0; i<dim; ++i)
+  Tensor<1, dim> x;
+  for(unsigned int i = 0; i < dim; ++i)
     x[i] = Testing::rand() % 10;
 
   deallog << "S = " << S << std::endl;
   deallog << "x = " << x << std::endl;
-  deallog << "S*x = " << S *x << std::endl;
+  deallog << "S*x = " << S * x << std::endl;
 }
 
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  check<1> ();
-  check<2> ();
-  check<3> ();
+  check<1>();
+  check<2>();
+  check<3>();
 
   deallog << "OK" << std::endl;
 }

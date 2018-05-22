@@ -20,29 +20,31 @@
 
 
 #include "../tests.h"
-#include <deal.II/hp/mapping_collection.h>
 #include <deal.II/fe/mapping_q.h>
+#include <deal.II/hp/mapping_collection.h>
 
 
 
 template <int dim>
-void test ()
+void
+test()
 {
   hp::MappingCollection<dim> mapping_collection(MappingQ<dim>(2));
 }
 
 
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   logfile.precision(2);
 
   deallog.attach(logfile);
 
-  test<1> ();
-  test<2> ();
-  test<3> ();
+  test<1>();
+  test<2>();
+  test<3>();
 
   deallog << "OK" << std::endl;
 }

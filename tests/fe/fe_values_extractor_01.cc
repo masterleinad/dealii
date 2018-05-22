@@ -22,23 +22,22 @@
 
 
 
-
-
-int main()
+int
+main()
 {
-  std::ofstream logfile ("output");
-  deallog << std::setprecision (2);
+  std::ofstream logfile("output");
+  deallog << std::setprecision(2);
 
   deallog.attach(logfile);
 
   {
     std::vector<FEValuesExtractors::Scalar> x;
-    x.push_back (FEValuesExtractors::Scalar(42));
+    x.push_back(FEValuesExtractors::Scalar(42));
   }
 
   {
     std::vector<FEValuesExtractors::Vector> x;
-    x.push_back (FEValuesExtractors::Vector(42));
+    x.push_back(FEValuesExtractors::Vector(42));
   }
 
   deallog << "OK" << std::endl;

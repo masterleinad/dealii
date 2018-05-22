@@ -27,25 +27,27 @@ namespace internal
   struct ElementAccess
   {
   public:
-    static void add(const typename VectorType::value_type value,
-                    const types::global_dof_index         i,
-                    VectorType                           &V);
+    static void
+    add(const typename VectorType::value_type value,
+        const types::global_dof_index         i,
+        VectorType&                           V);
 
-    static void set(typename VectorType::value_type value,
-                    const types::global_dof_index   i,
-                    VectorType                     &V);
+    static void
+    set(typename VectorType::value_type value,
+        const types::global_dof_index   i,
+        VectorType&                     V);
 
-    static typename VectorType::value_type get(const VectorType             &V,
-                                               const types::global_dof_index i);
+    static typename VectorType::value_type
+    get(const VectorType& V, const types::global_dof_index i);
   };
 
 
 
   template <typename VectorType>
-  inline
-  void ElementAccess<VectorType>::add(const typename VectorType::value_type value,
-                                      const types::global_dof_index         i,
-                                      VectorType                           &V)
+  inline void
+  ElementAccess<VectorType>::add(const typename VectorType::value_type value,
+                                 const types::global_dof_index         i,
+                                 VectorType&                           V)
   {
     V(i) += value;
   }
@@ -53,10 +55,10 @@ namespace internal
 
 
   template <typename VectorType>
-  inline
-  void ElementAccess<VectorType>::set(const typename VectorType::value_type value,
-                                      const types::global_dof_index         i,
-                                      VectorType                           &V)
+  inline void
+  ElementAccess<VectorType>::set(const typename VectorType::value_type value,
+                                 const types::global_dof_index         i,
+                                 VectorType&                           V)
   {
     V(i) = value;
   }
@@ -64,9 +66,8 @@ namespace internal
 
 
   template <typename VectorType>
-  inline
-  typename VectorType::value_type
-  ElementAccess<VectorType>::get(const VectorType             &V,
+  inline typename VectorType::value_type
+  ElementAccess<VectorType>::get(const VectorType&             V,
                                  const types::global_dof_index i)
   {
     return V(i);
@@ -76,16 +77,16 @@ namespace internal
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
   template <>
-  inline
-  void ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::
-  add(const double                           value,
-      const types::global_dof_index          i,
-      LinearAlgebra::EpetraWrappers::Vector &V)
+  inline void
+  ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::add(
+    const double                           value,
+    const types::global_dof_index          i,
+    LinearAlgebra::EpetraWrappers::Vector& V)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector vector = V.trilinos_vector();
-    TrilinosWrappers::types::int_type trilinos_i =
-      vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
+    Epetra_FEVector                   vector = V.trilinos_vector();
+    TrilinosWrappers::types::int_type trilinos_i
+      = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 
     vector[0][trilinos_i] += value;
   }
@@ -93,37 +94,36 @@ namespace internal
 
 
   template <>
-  inline
-  void ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::
-  set(const double                           value,
-      const types::global_dof_index          i,
-      LinearAlgebra::EpetraWrappers::Vector &V)
+  inline void
+  ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::set(
+    const double                           value,
+    const types::global_dof_index          i,
+    LinearAlgebra::EpetraWrappers::Vector& V)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector vector = V.trilinos_vector();
-    TrilinosWrappers::types::int_type trilinos_i =
-      vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
+    Epetra_FEVector                   vector = V.trilinos_vector();
+    TrilinosWrappers::types::int_type trilinos_i
+      = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 
     vector[0][trilinos_i] = value;
   }
 
 
   template <>
-  inline
-  double
-  ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::
-  get(const LinearAlgebra::EpetraWrappers::Vector &V,
-      const types::global_dof_index                i)
+  inline double
+  ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::get(
+    const LinearAlgebra::EpetraWrappers::Vector& V,
+    const types::global_dof_index                i)
   {
     // Extract local indices in the vector.
-    Epetra_FEVector vector = V.trilinos_vector();
-    TrilinosWrappers::types::int_type trilinos_i =
-      vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
+    Epetra_FEVector                   vector = V.trilinos_vector();
+    TrilinosWrappers::types::int_type trilinos_i
+      = vector.Map().LID(static_cast<TrilinosWrappers::types::int_type>(i));
 
     return vector[0][trilinos_i];
   }
 #endif
-}
+} // namespace internal
 
 DEAL_II_NAMESPACE_CLOSE
 

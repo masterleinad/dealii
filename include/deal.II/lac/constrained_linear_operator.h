@@ -16,9 +16,9 @@
 #ifndef dealii_constrained_linear_operator_h
 #define dealii_constrained_linear_operator_h
 
+#include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/packaged_operation.h>
-#include <deal.II/lac/constraint_matrix.h>
 
 
 DEAL_II_NAMESPACE_OPEN
@@ -60,14 +60,14 @@ DEAL_II_NAMESPACE_OPEN
  * @ingroup constraints
  */
 template <typename Range, typename Domain>
-LinearOperator<Range, Domain> distribute_constraints_linear_operator(
-  const ConstraintMatrix &constraint_matrix,
-  const LinearOperator<Range, Domain> &exemplar)
+LinearOperator<Range, Domain>
+distribute_constraints_linear_operator(
+  const ConstraintMatrix&              constraint_matrix,
+  const LinearOperator<Range, Domain>& exemplar)
 {
   LinearOperator<Range, Domain> return_op = exemplar;
 
-  return_op.vmult_add = [&constraint_matrix](Range &v, const Domain &u)
-  {
+  return_op.vmult_add = [&constraint_matrix](Range& v, const Domain& u) {
     Assert(!dealii::PointerComparison::equal(&v, &u),
            dealii::ExcMessage("The domain and range vectors must be different "
                               "storage locations"));
@@ -76,15 +76,15 @@ LinearOperator<Range, Domain> distribute_constraints_linear_operator(
     // degrees of freedom later.
     v += u;
 
-    const auto &locally_owned_elements = v.locally_owned_elements();
-    for (const auto &line : constraint_matrix.get_lines())
+    const auto& locally_owned_elements = v.locally_owned_elements();
+    for(const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if (locally_owned_elements.is_element(i))
+        if(locally_owned_elements.is_element(i))
           {
             v(i) -= u(i);
-            const auto &entries = line.entries;
-            for (types::global_dof_index j = 0; j < entries.size(); ++j)
+            const auto& entries = line.entries;
+            for(types::global_dof_index j = 0; j < entries.size(); ++j)
               {
                 const auto pos = entries[j].first;
                 v(i) += u(pos) * entries[j].second;
@@ -95,8 +95,7 @@ LinearOperator<Range, Domain> distribute_constraints_linear_operator(
     v.compress(VectorOperation::add);
   };
 
-  return_op.Tvmult_add = [&constraint_matrix](Domain &v, const Range &u)
-  {
+  return_op.Tvmult_add = [&constraint_matrix](Domain& v, const Range& u) {
     Assert(!dealii::PointerComparison::equal(&v, &u),
            dealii::ExcMessage("The domain and range vectors must be different "
                               "storage locations"));
@@ -105,21 +104,21 @@ LinearOperator<Range, Domain> distribute_constraints_linear_operator(
     // degrees of freedom later.
     v += u;
 
-    const auto &locally_owned_elements = v.locally_owned_elements();
-    for (const auto &line : constraint_matrix.get_lines())
+    const auto& locally_owned_elements = v.locally_owned_elements();
+    for(const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
 
-        if (locally_owned_elements.is_element(i))
+        if(locally_owned_elements.is_element(i))
           {
             v(i) -= u(i);
           }
 
-        const auto &entries = line.entries;
-        for (types::global_dof_index j = 0; j < entries.size(); ++j)
+        const auto& entries = line.entries;
+        for(types::global_dof_index j = 0; j < entries.size(); ++j)
           {
             const auto pos = entries[j].first;
-            if (locally_owned_elements.is_element(pos))
+            if(locally_owned_elements.is_element(pos))
               v(pos) += u(i) * entries[j].second;
           }
       }
@@ -129,16 +128,14 @@ LinearOperator<Range, Domain> distribute_constraints_linear_operator(
 
   // lambda capture expressions are a C++14 feature...
   const auto vmult_add = return_op.vmult_add;
-  return_op.vmult = [vmult_add](Range &v, const Domain &u)
-  {
+  return_op.vmult      = [vmult_add](Range& v, const Domain& u) {
     v = 0.;
     vmult_add(v, u);
   };
 
   // lambda capture expressions are a C++14 feature...
   const auto Tvmult_add = return_op.Tvmult_add;
-  return_op.Tvmult = [Tvmult_add](Domain &v, const Range &u)
-  {
+  return_op.Tvmult      = [Tvmult_add](Domain& v, const Range& u) {
     v = 0.;
     Tvmult_add(v, u);
   };
@@ -159,19 +156,19 @@ LinearOperator<Range, Domain> distribute_constraints_linear_operator(
  * @ingroup constraints
  */
 template <typename Range, typename Domain>
-LinearOperator<Range, Domain> project_to_constrained_linear_operator(
-  const ConstraintMatrix &constraint_matrix,
-  const LinearOperator<Range, Domain> &exemplar)
+LinearOperator<Range, Domain>
+project_to_constrained_linear_operator(
+  const ConstraintMatrix&              constraint_matrix,
+  const LinearOperator<Range, Domain>& exemplar)
 {
   LinearOperator<Range, Domain> return_op = exemplar;
 
-  return_op.vmult_add = [&constraint_matrix](Range &v, const Domain &u)
-  {
-    const auto &locally_owned_elements = v.locally_owned_elements();
-    for (const auto &line : constraint_matrix.get_lines())
+  return_op.vmult_add = [&constraint_matrix](Range& v, const Domain& u) {
+    const auto& locally_owned_elements = v.locally_owned_elements();
+    for(const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if (locally_owned_elements.is_element(i))
+        if(locally_owned_elements.is_element(i))
           {
             v(i) += u(i);
           }
@@ -180,13 +177,12 @@ LinearOperator<Range, Domain> project_to_constrained_linear_operator(
     v.compress(VectorOperation::add);
   };
 
-  return_op.Tvmult_add = [&constraint_matrix](Domain &v, const Range &u)
-  {
-    const auto &locally_owned_elements = v.locally_owned_elements();
-    for (const auto &line : constraint_matrix.get_lines())
+  return_op.Tvmult_add = [&constraint_matrix](Domain& v, const Range& u) {
+    const auto& locally_owned_elements = v.locally_owned_elements();
+    for(const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if (locally_owned_elements.is_element(i))
+        if(locally_owned_elements.is_element(i))
           {
             v(i) += u(i);
           }
@@ -197,16 +193,14 @@ LinearOperator<Range, Domain> project_to_constrained_linear_operator(
 
   // lambda capture expressions are a C++14 feature...
   const auto vmult_add = return_op.vmult_add;
-  return_op.vmult = [vmult_add](Range &v, const Domain &u)
-  {
+  return_op.vmult      = [vmult_add](Range& v, const Domain& u) {
     v = 0.;
     vmult_add(v, u);
   };
 
   // lambda capture expressions are a C++14 feature...
   const auto Tvmult_add = return_op.Tvmult_add;
-  return_op.Tvmult = [Tvmult_add](Domain &v, const Range &u)
-  {
+  return_op.Tvmult      = [Tvmult_add](Domain& v, const Range& u) {
     v = 0.;
     Tvmult_add(v, u);
   };
@@ -254,14 +248,14 @@ LinearOperator<Range, Domain> project_to_constrained_linear_operator(
  */
 template <typename Range, typename Domain>
 LinearOperator<Range, Domain>
-constrained_linear_operator(const ConstraintMatrix &constraint_matrix,
-                            const LinearOperator<Range, Domain> &linop)
+constrained_linear_operator(const ConstraintMatrix& constraint_matrix,
+                            const LinearOperator<Range, Domain>& linop)
 {
-  const auto C =
-    distribute_constraints_linear_operator(constraint_matrix, linop);
+  const auto C
+    = distribute_constraints_linear_operator(constraint_matrix, linop);
   const auto Ct = transpose_operator(C);
-  const auto Id_c =
-    project_to_constrained_linear_operator(constraint_matrix, linop);
+  const auto Id_c
+    = project_to_constrained_linear_operator(constraint_matrix, linop);
   return Ct * linop * C + Id_c;
 }
 
@@ -302,33 +296,31 @@ constrained_linear_operator(const ConstraintMatrix &constraint_matrix,
  */
 template <typename Range, typename Domain>
 PackagedOperation<Range>
-constrained_right_hand_side(const ConstraintMatrix &constraint_matrix,
-                            const LinearOperator<Range, Domain> &linop,
-                            const Range &right_hand_side)
+constrained_right_hand_side(const ConstraintMatrix& constraint_matrix,
+                            const LinearOperator<Range, Domain>& linop,
+                            const Range& right_hand_side)
 {
   PackagedOperation<Range> return_comp;
 
   return_comp.reinit_vector = linop.reinit_range_vector;
 
-  return_comp.apply_add =
-    [&constraint_matrix, &linop, &right_hand_side](Range &v)
-  {
-    const auto C =
-      distribute_constraints_linear_operator(constraint_matrix, linop);
-    const auto Ct = transpose_operator(C);
+  return_comp.apply_add
+    = [&constraint_matrix, &linop, &right_hand_side](Range& v) {
+        const auto C
+          = distribute_constraints_linear_operator(constraint_matrix, linop);
+        const auto Ct = transpose_operator(C);
 
-    GrowingVectorMemory<Domain> vector_memory;
-    typename VectorMemory<Domain>::Pointer k (vector_memory);
-    linop.reinit_domain_vector(*k, /*bool fast=*/ false);
-    constraint_matrix.distribute(*k);
+        GrowingVectorMemory<Domain>            vector_memory;
+        typename VectorMemory<Domain>::Pointer k(vector_memory);
+        linop.reinit_domain_vector(*k, /*bool fast=*/false);
+        constraint_matrix.distribute(*k);
 
-    v += Ct * (right_hand_side - linop **k);
-  };
+        v += Ct * (right_hand_side - linop * *k);
+      };
 
   // lambda capture expressions are a C++14 feature...
   const auto apply_add = return_comp.apply_add;
-  return_comp.apply = [apply_add](Range &v)
-  {
+  return_comp.apply    = [apply_add](Range& v) {
     v = 0.;
     apply_add(v);
   };

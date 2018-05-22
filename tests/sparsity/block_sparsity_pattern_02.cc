@@ -24,7 +24,8 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 
 
-int main()
+int
+main()
 {
   std::ofstream logfile("output");
   logfile.setf(std::ios::fixed);
@@ -41,13 +42,13 @@ int main()
   col_blocks[1] = 3;
   col_blocks[2] = 2;
 
-  BlockDynamicSparsityPattern bcsp (row_blocks, col_blocks);
+  BlockDynamicSparsityPattern bcsp(row_blocks, col_blocks);
 
   BlockSparsityPattern bsp;
 
   // we used to access an invalid
   // block number here
-  bsp.copy_from (bcsp);
+  bsp.copy_from(bcsp);
 
   deallog << "OK" << std::endl;
 }

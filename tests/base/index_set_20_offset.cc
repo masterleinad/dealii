@@ -21,16 +21,14 @@
 
 #include <deal.II/base/index_set.h>
 
-void testor(IndexSet &a,
-            IndexSet &other,
-            unsigned int offset,
-            bool verbose)
+void
+testor(IndexSet& a, IndexSet& other, unsigned int offset, bool verbose)
 {
   IndexSet merged(a);
 
   merged.add_indices(other, offset);
 
-  if (verbose)
+  if(verbose)
     {
       deallog << "Original index set: " << std::endl;
       a.print(deallog);
@@ -40,20 +38,19 @@ void testor(IndexSet &a,
       merged.print(deallog);
     }
 
-  for (unsigned int i=0; i<merged.size(); ++i)
+  for(unsigned int i = 0; i < merged.size(); ++i)
     {
       Assert(
         merged.is_element(i)
-        ==
-        (a.is_element(i) || (i>=offset && other.is_element(i-offset))),
+          == (a.is_element(i) || (i >= offset && other.is_element(i - offset))),
         ExcInternalError());
     }
 }
 
 
 
-
-void test()
+void
+test()
 {
   const int size = 10;
 
@@ -80,12 +77,10 @@ void test()
 
 
 
-
-
-
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

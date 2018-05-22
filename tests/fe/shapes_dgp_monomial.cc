@@ -24,7 +24,8 @@
 
 
 template <int dim>
-void plot_FE_DGPMonomial_shape_functions()
+void
+plot_FE_DGPMonomial_shape_functions()
 {
   MappingQGeneric<dim> m(1);
 
@@ -38,7 +39,7 @@ void plot_FE_DGPMonomial_shape_functions()
   plot_face_shape_functions(m, p2, "DGPMonomial2");
   test_compute_functions(m, p2, "DGPMonomial2");
 
-  if (dim<3)
+  if(dim < 3)
     {
       FE_DGPMonomial<dim> p3(3);
       plot_shape_functions(m, p3, "DGPMonomial3");
@@ -51,7 +52,7 @@ void plot_FE_DGPMonomial_shape_functions()
 int
 main()
 {
-  std::ofstream logfile ("output");
+  std::ofstream logfile("output");
   deallog << std::setprecision(PRECISION) << std::fixed;
   deallog.attach(logfile);
 

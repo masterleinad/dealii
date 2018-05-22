@@ -24,34 +24,35 @@
 #include <vector>
 
 
-void test (PETScWrappers::MPI::Vector &v,
-           PETScWrappers::MPI::Vector &w)
+void
+test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector, but disjoint sets of elements
-  for (unsigned int i=0; i<v.size(); ++i)
-    if (i%3 == 0)
+  for(unsigned int i = 0; i < v.size(); ++i)
+    if(i % 3 == 0)
       v(i) = i;
     else
       w(i) = i;
-  v.compress (VectorOperation::insert);
-  w.compress (VectorOperation::insert);
+  v.compress(VectorOperation::insert);
+  w.compress(VectorOperation::insert);
 
   // make sure the scalar product is zero
-  AssertThrow (v*w == 0, ExcInternalError());
+  AssertThrow(v * w == 0, ExcInternalError());
 
   deallog << "OK" << std::endl;
 }
 
 
 
-int main (int argc,char **argv)
+int
+main(int argc, char** argv)
 {
   initlog();
 
   try
     {
-      Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, 1);
+      Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       {
         IndexSet indices(100);
         indices.add_range(0, 100);
@@ -59,11 +60,11 @@ int main (int argc,char **argv)
         PETScWrappers::MPI::Vector w(indices, MPI_COMM_WORLD);
         test(v, w);
       }
-
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << std::endl
@@ -74,9 +75,10 @@ int main (int argc,char **argv)
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl

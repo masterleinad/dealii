@@ -19,8 +19,8 @@
 
 #include "../tests.h"
 #include "create_matrix.h"
-#include <deal.II/lac/lapack_full_matrix.h>
 #include <deal.II/lac/full_matrix.h>
+#include <deal.II/lac/lapack_full_matrix.h>
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
@@ -34,7 +34,7 @@ test(const unsigned int size)
   FullMatrix<NumberType> F(size), invF(size);
   create_spd(F);
   invF.invert(F);
-  const double l1 = F.l1_norm();
+  const double l1     = F.l1_norm();
   const double inv_l1 = invF.l1_norm();
 
   // Lapack:
@@ -45,19 +45,20 @@ test(const unsigned int size)
   M.compute_cholesky_factorization();
   const double rcond = M.reciprocal_condition_number(la_l1);
 
-  deallog << 1./(l1*inv_l1) << " " << rcond << std::endl;
+  deallog << 1. / (l1 * inv_l1) << " " << rcond << std::endl;
 }
 
 
-int main()
+int
+main()
 {
   const std::string logname = "output";
-  std::ofstream logfile(logname.c_str());
+  std::ofstream     logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
-  const std::vector<unsigned int> sizes = {{1,3,11,17,32,64,200,391}};
-  for (const auto &s : sizes)
+  const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
+  for(const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;
       // test<float>(s);

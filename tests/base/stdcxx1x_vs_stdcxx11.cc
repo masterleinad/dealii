@@ -26,11 +26,11 @@
 #include <deal.II/base/std_cxx11/shared_ptr.h>
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   std_cxx1x::shared_ptr<int> p;
   deallog << "OK" << std::endl;
 }
-

@@ -23,12 +23,13 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe)
+check(const FiniteElement<dim>& fe)
 {
   deallog << "dim: " << dim << std::endl;
   deallog << "components: " << fe.n_components() << std::endl;
   deallog << "blocks: " << fe.n_blocks() << std::endl;
-  deallog << "conforms H1: " << fe.conforms(FiniteElementData<dim>::H1) << std::endl;
+  deallog << "conforms H1: " << fe.conforms(FiniteElementData<dim>::H1)
+          << std::endl;
   deallog << "n_base_elements: " << fe.n_base_elements() << std::endl;
   deallog << std::endl;
 }
@@ -39,7 +40,7 @@ move()
 {
   FE_Q<dim> fe(1);
   check(fe);
-  FE_Q<dim> fe2 (std::move(fe));
+  FE_Q<dim> fe2(std::move(fe));
   check(fe);
   check(fe2);
 }

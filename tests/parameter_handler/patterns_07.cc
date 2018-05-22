@@ -24,11 +24,12 @@
 using namespace dealii;
 using namespace Patterns::Tools;
 
-int main()
+int
+main()
 {
   initlog();
 
-  std::map<unsigned int, double>  a;
+  std::map<unsigned int, double> a;
   a[3] = 1.0;
   a[2] = 3.0;
 
@@ -38,16 +39,18 @@ int main()
 
   prm.log_parameters(deallog);
 
-  prm.set("A map",            "1:2.0, 3:4.0");
+  prm.set("A map", "1:2.0, 3:4.0");
 
   deallog << "After ParameterHandler::set =========================="
-          << std::endl << std::endl;
+          << std::endl
+          << std::endl;
   prm.log_parameters(deallog);
 
   deallog << "Actual variables            =========================="
-          << std::endl << std::endl;
+          << std::endl
+          << std::endl;
 
-  for (auto i : a)
+  for(auto i : a)
     deallog << i.first << ":" << i.second << std::endl;
 
   return 0;

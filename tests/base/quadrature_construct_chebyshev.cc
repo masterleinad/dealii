@@ -23,8 +23,8 @@
 
 #include "../tests.h"
 
-#include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/quadrature.h>
+#include <deal.II/base/quadrature_lib.h>
 
 template <int dim>
 void
@@ -38,7 +38,8 @@ construct_quadrature()
   deallog << "QGaussLobattoChebyshev<" << dim << ">: OK" << std::endl;
 }
 
-int main()
+int
+main()
 {
   initlog();
 
@@ -46,4 +47,3 @@ int main()
   construct_quadrature<2>();
   construct_quadrature<3>();
 }
-

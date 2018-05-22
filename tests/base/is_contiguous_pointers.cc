@@ -20,23 +20,25 @@
 
 #include <deal.II/base/array_view.h>
 
-void test ()
+void
+test()
 {
-  constexpr int *p = nullptr;
-  constexpr int *q = nullptr;
+  constexpr int* p = nullptr;
+  constexpr int* q = nullptr;
 
   // the following code would fail if we tried to call the
   // non-constexpr version of the function, so this really must be the
   // pointer overload which we know always returns true
-  constexpr bool b = internal::ArrayViewHelper::is_contiguous (p, q);
+  constexpr bool b = internal::ArrayViewHelper::is_contiguous(p, q);
 
-  Assert (b == true, ExcInternalError());
+  Assert(b == true, ExcInternalError());
 
   deallog << "OK" << std::endl;
 }
 
 
-int main()
+int
+main()
 {
   deal_II_exceptions::disable_abort_on_exception();
   initlog();

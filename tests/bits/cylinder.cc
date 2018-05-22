@@ -21,21 +21,22 @@
 
 
 #include "../tests.h"
-#include <deal.II/grid/tria.h>
-#include <deal.II/grid/tria_iterator.h>
-#include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/tria.h>
+#include <deal.II/grid/tria_accessor.h>
+#include <deal.II/grid/tria_iterator.h>
 
 
 
-int main ()
+int
+main()
 {
   initlog();
-  deallog << std::setprecision (2);
+  deallog << std::setprecision(2);
 
   // generate a cylinder
   Triangulation<3> tria;
-  GridGenerator::cylinder (tria, std::sqrt(2.));
+  GridGenerator::cylinder(tria, std::sqrt(2.));
 
   // output all faces. here, we
   // should have 18 (two layers of
@@ -43,22 +44,22 @@ int main ()
   // plus 5 faces each for the top
   // and bottom of the cylinder)
   unsigned int external_faces = 0;
-  for (Triangulation<3>::face_iterator face=tria.begin_face();
-       face!=tria.end_face(); ++face)
+  for(Triangulation<3>::face_iterator face = tria.begin_face();
+      face != tria.end_face();
+      ++face)
     {
-      deallog << face << "   "
-              << face->boundary_id() << "  "
-              << '<' << face->vertex(0) << '>' << std::endl
+      deallog << face << "   " << face->boundary_id() << "  " << '<'
+              << face->vertex(0) << '>' << std::endl
               << "           <" << face->vertex(1) << '>' << std::endl
               << "           <" << face->vertex(2) << '>' << std::endl
               << "           <" << face->vertex(3) << '>' << std::endl;
-      if (face->at_boundary())
+      if(face->at_boundary())
         ++external_faces;
     }
 
   deallog << "External faces: " << external_faces << std::endl;
 
-  Assert (external_faces == 18, ExcInternalError());
+  Assert(external_faces == 18, ExcInternalError());
 
   return 0;
 }

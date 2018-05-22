@@ -17,33 +17,33 @@
 
 #include "../tests.h"
 #include <deal.II/lac/block_sparse_matrix.h>
-#include <deal.II/lac/sparsity_pattern.h>
-#include <deal.II/lac/dynamic_sparsity_pattern.h>
-#include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_sparse_matrix_ez.h>
+#include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/constraint_matrix.h>
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
+#include <deal.II/lac/sparsity_pattern.h>
 
 #include <algorithm>
 
 
 
-
-void test ()
+void
+test()
 {
   std::ofstream logfile("output");
   deallog << std::fixed;
   deallog << std::setprecision(2);
   deallog.attach(logfile);
 
-  deallog << IsBlockMatrix<SparseMatrix<double> >::value << ' '
-          << IsBlockMatrix<SparseMatrix<float> >::value << ' '
-          << IsBlockMatrix<SparseMatrixEZ<double> >::value << ' '
-          << IsBlockMatrix<SparseMatrixEZ<float> >::value << std::endl;
+  deallog << IsBlockMatrix<SparseMatrix<double>>::value << ' '
+          << IsBlockMatrix<SparseMatrix<float>>::value << ' '
+          << IsBlockMatrix<SparseMatrixEZ<double>>::value << ' '
+          << IsBlockMatrix<SparseMatrixEZ<float>>::value << std::endl;
 
-  deallog << IsBlockMatrix<BlockSparseMatrix<double> >::value << ' '
-          << IsBlockMatrix<BlockSparseMatrix<float> >::value << ' '
-          << IsBlockMatrix<BlockSparseMatrixEZ<double> >::value << ' '
-          << IsBlockMatrix<BlockSparseMatrixEZ<float> >::value << std::endl;
+  deallog << IsBlockMatrix<BlockSparseMatrix<double>>::value << ' '
+          << IsBlockMatrix<BlockSparseMatrix<float>>::value << ' '
+          << IsBlockMatrix<BlockSparseMatrixEZ<double>>::value << ' '
+          << IsBlockMatrix<BlockSparseMatrixEZ<float>>::value << std::endl;
 
   deallog << IsBlockMatrix<SparsityPattern>::value << ' '
           << IsBlockMatrix<DynamicSparsityPattern>::value << std::endl;
@@ -54,16 +54,17 @@ void test ()
 
 
 
-
-int main ()
+int
+main()
 {
   try
     {
-      test ();
+      test();
     }
-  catch (std::exception &e)
+  catch(std::exception& e)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << e.what() << std::endl
@@ -73,9 +74,10 @@ int main ()
       // abort
       return 2;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl

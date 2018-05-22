@@ -25,13 +25,14 @@ char logname[] = "output";
 
 
 template <int dim>
-void test ()
+void
+test()
 {
-  if (dim == 1)
+  if(dim == 1)
     return;
 
   hp::FECollection<dim> fe;
-  for (unsigned int i=1; i<4; ++i)
-    fe.push_back (FE_RaviartThomas<dim>(i));
-  test_with_wrong_face_orientation  (fe);
+  for(unsigned int i = 1; i < 4; ++i)
+    fe.push_back(FE_RaviartThomas<dim>(i));
+  test_with_wrong_face_orientation(fe);
 }

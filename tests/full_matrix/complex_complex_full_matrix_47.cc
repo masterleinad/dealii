@@ -25,22 +25,21 @@
 
 
 
-
 template <typename number>
 void
-check ()
+check()
 {
-  FullMatrix<std::complex<number> > m;
-  make_complex_matrix (m);
-  Vector<std::complex<number> > v, w;
-  make_complex_domain_vector (v);
-  make_complex_range_vector (w);
+  FullMatrix<std::complex<number>> m;
+  make_complex_matrix(m);
+  Vector<std::complex<number>> v, w;
+  make_complex_domain_vector(v);
+  make_complex_range_vector(w);
 
-  m.Tvmult (v, w, true);
-  print_vector (v);
-  print_vector (w);
+  m.Tvmult(v, w, true);
+  print_vector(v);
+  print_vector(w);
 
-  m.Tvmult (v, w, false);
-  print_vector (v);
-  print_vector (w);
+  m.Tvmult(v, w, false);
+  print_vector(v);
+  print_vector(w);
 }

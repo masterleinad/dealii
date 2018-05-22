@@ -21,19 +21,20 @@
 
 
 template <int dim>
-void test ()
+void
+test()
 {
-  Tensor<2,dim> t;
+  Tensor<2, dim> t;
 
   // choose the same symmetric tensor
   // as in symmetric_tensor_10
-  for (unsigned int i=0; i<dim; ++i)
-    for (unsigned int j=0; j<dim; ++j)
+  for(unsigned int i = 0; i < dim; ++i)
+    for(unsigned int j = 0; j < dim; ++j)
       t[i][j] = random_value<double>();
 
-  for (unsigned int i=0; i<dim; ++i)
-    for (unsigned int j=0; j<dim; ++j)
-      deallog << "A[" << i+1 << ',' << j+1 << "] := " << t[i][j] << ';'
+  for(unsigned int i = 0; i < dim; ++i)
+    for(unsigned int j = 0; j < dim; ++j)
+      deallog << "A[" << i + 1 << ',' << j + 1 << "] := " << t[i][j] << ';'
               << std::endl;
 
   deallog << determinant(t) << std::endl;
@@ -41,18 +42,18 @@ void test ()
 
 
 
-
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  test<4> ();
-  test<5> ();
-  test<6> ();
-  test<7> ();
-  test<8> ();
+  test<4>();
+  test<5>();
+  test<6>();
+  test<7>();
+  test<8>();
 
   deallog << "OK" << std::endl;
 }

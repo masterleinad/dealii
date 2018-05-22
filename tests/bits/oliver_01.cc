@@ -25,15 +25,16 @@
 #include <deal.II/lac/sparse_matrix.h>
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   // this test only needs to compile, not run
-  if (false)
+  if(false)
     {
-      SparseMatrix<double>::iterator *i;
-      (*i)->value () = (int)0;
+      SparseMatrix<double>::iterator* i;
+      (*i)->value() = (int) 0;
     }
 
   deallog << "OK" << std::endl;

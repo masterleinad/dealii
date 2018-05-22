@@ -22,19 +22,20 @@
 #include <deal.II/base/index_set.h>
 
 
-void test ()
+void
+test()
 {
-  IndexSet is1 (100);
+  IndexSet is1(100);
 
-  is1.add_range(0,10);
-  is1.add_range(20,100);
+  is1.add_range(0, 10);
+  is1.add_range(20, 100);
 
   {
     std::ofstream out("a.idxset");
     is1.block_write(out);
   }
 
-  IndexSet is2;
+  IndexSet      is2;
   std::ifstream in("a.idxset");
   is2.block_read(in);
 
@@ -42,7 +43,7 @@ void test ()
 
 
   IndexSet is3(11);
-  is3.add_range(3,5);
+  is3.add_range(3, 5);
   std::ifstream in2("a.idxset");
   is3.block_read(in2);
 
@@ -50,15 +51,15 @@ void test ()
 
   deallog << "OK" << std::endl;
 
-  std::remove ("a.idxset");
+  std::remove("a.idxset");
 }
 
 
 
-
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

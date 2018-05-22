@@ -18,14 +18,15 @@
 // check GridTools::get_vertex_connectivity_of_cells for two different meshes
 
 #include "../tests.h"
-#include <deal.II/grid/tria.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_tools.h>
+#include <deal.II/grid/tria.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
 
 template <int dim>
-void test()
+void
+test()
 {
   // First check connectivity of plain mesh
   Triangulation<dim> tria;
@@ -43,7 +44,8 @@ void test()
 }
 
 
-int main ()
+int
+main()
 {
   initlog();
 

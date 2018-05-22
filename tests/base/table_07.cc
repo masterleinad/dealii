@@ -24,18 +24,21 @@
 class T
 {
 public:
-  T ()
+  T()
   {
     deallog << "Default construct." << std::endl;
   }
-  T (const T &) = delete;
-  T (T &&)
+  T(const T&) = delete;
+  T(T&&)
   {
     deallog << "Move construct." << std::endl;
   }
 
-  T &operator= (const T &) = delete;
-  T &operator= (T &&)
+  T&
+  operator=(const T&)
+    = delete;
+  T&
+  operator=(T&&)
   {
     deallog << "Move assign." << std::endl;
     return *this;
@@ -43,12 +46,13 @@ public:
 };
 
 
-int main()
+int
+main()
 {
   initlog();
-  dealii::Table<2,T> table(2,2);
+  dealii::Table<2, T> table(2, 2);
 
-  dealii::Table<2,T> table2;
+  dealii::Table<2, T> table2;
   table2 = std::move(table); // should not create new objects
 
   deallog << "OK" << std::endl;

@@ -140,8 +140,8 @@ namespace parallel
     using LinearAlgebra::distributed::Vector;
 
     /*@}*/
-  }
-}
+  } // namespace distributed
+} // namespace parallel
 
 DEAL_II_NAMESPACE_CLOSE
 

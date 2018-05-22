@@ -23,13 +23,14 @@
 #include <iostream>
 
 
-void test ()
+void
+test()
 {
-  TrilinosWrappers::SparseMatrix m(5U,5U,5U);
-  m.set (0,0,1);
-  m.set (1,1,2);
-  m.set (1,2,3);
-  m.compress (VectorOperation::insert);
+  TrilinosWrappers::SparseMatrix m(5U, 5U, 5U);
+  m.set(0, 0, 1);
+  m.set(1, 1, 2);
+  m.set(1, 2, 3);
+  m.compress(VectorOperation::insert);
   TrilinosWrappers::SparseMatrix::const_iterator i = m.begin();
   deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
   ++i;
@@ -42,22 +43,25 @@ void test ()
 
 
 
-int main (int argc,char **argv)
+int
+main(int argc, char** argv)
 {
   initlog();
 
-  Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, testing_max_num_threads());
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(
+    argc, argv, testing_max_num_threads());
 
 
   try
     {
       {
-        test ();
+        test();
       }
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << std::endl
@@ -68,9 +72,10 @@ int main (int argc,char **argv)
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl

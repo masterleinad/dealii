@@ -23,14 +23,16 @@
 
 using namespace dealii;
 
-void check(const std::string &input, const std::string &expected)
+void
+check(const std::string& input, const std::string& expected)
 {
   AssertThrow(Utilities::trim(input) == expected, ExcInternalError());
 }
 
 
 
-void test ()
+void
+test()
 {
   check("\r\nHello World\r\n\r", "Hello World");
   check("", "");
@@ -40,15 +42,17 @@ void test ()
   check("  \rmiddle\r\n   ", "middle");
   check("left\v\t\r\n   ", "left");
   check("  \n\v\f\r\nright", "right");
-  check(" \t\v\f\t\r\n\r multiple  words with spaces  \v\f\n", "multiple  words with spaces");
+  check(" \t\v\f\t\r\n\r multiple  words with spaces  \v\f\n",
+        "multiple  words with spaces");
 
   deallog << "OK" << std::endl;
 }
 
 
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

@@ -28,25 +28,26 @@
 
 
 template <typename T>
-void check ()
+void
+check()
 {
-  numbers::signaling_nan<Point<1,T> >();
-  numbers::signaling_nan<Point<2,T> >();
-  numbers::signaling_nan<Point<3,T> >();
+  numbers::signaling_nan<Point<1, T>>();
+  numbers::signaling_nan<Point<2, T>>();
+  numbers::signaling_nan<Point<3, T>>();
 
   deallog << "OK" << std::endl;
 }
 
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  check<float> ();
-  check<double> ();
+  check<float>();
+  check<double>();
 
   return 0;
 }
-

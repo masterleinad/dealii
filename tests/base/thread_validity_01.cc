@@ -23,34 +23,39 @@
 
 struct X
 {
-  X(int i) : i(i) {}
+  X(int i) : i(i)
+  {}
   int i;
+
 private:
-  X(const X &);
-  X &operator= (const X &);
+  X(const X&);
+  X&
+  operator=(const X&);
 };
 
 
-void execute (const X &x)
+void
+execute(const X& x)
 {
-  AssertThrow (x.i == 42, ExcInternalError());
+  AssertThrow(x.i == 42, ExcInternalError());
   deallog << "OK" << std::endl;
 }
 
 
-void test ()
+void
+test()
 {
-  X x(42);
-  Threads::Thread<void> t = Threads::new_thread (&execute, x);
-  t.join ();
+  X                     x(42);
+  Threads::Thread<void> t = Threads::new_thread(&execute, x);
+  t.join();
 }
 
 
 
-
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

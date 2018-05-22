@@ -25,33 +25,30 @@
 
 
 
-
-
-void test ()
+void
+test()
 {
-  std::vector<bool> v(12,false);
+  std::vector<bool> v(12, false);
   v[3] = true;
 
   ComponentMask m(v);
 
   // test for an initialized mask
-  Assert (m.first_selected_component() == 3,
-          ExcInternalError());
-  Assert (ComponentMask(12,true).first_selected_component() == 0,
-          ExcInternalError());
+  Assert(m.first_selected_component() == 3, ExcInternalError());
+  Assert(ComponentMask(12, true).first_selected_component() == 0,
+         ExcInternalError());
   // test for an empty mask
-  Assert (ComponentMask().first_selected_component(12) == 0,
-          ExcInternalError());
+  Assert(ComponentMask().first_selected_component(12) == 0, ExcInternalError());
 
   deallog << "OK" << std::endl;
 
   // the following should yield an exception:
   try
     {
-      Assert (ComponentMask(12,true).first_selected_component(13) == 0,
-              ExcInternalError());
+      Assert(ComponentMask(12, true).first_selected_component(13) == 0,
+             ExcInternalError());
     }
-  catch (ExceptionBase &e)
+  catch(ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -59,22 +56,23 @@ void test ()
   // as should this:
   try
     {
-      Assert (ComponentMask(12,false).first_selected_component() == 0,
-              ExcInternalError());
+      Assert(ComponentMask(12, false).first_selected_component() == 0,
+             ExcInternalError());
     }
-  catch (ExceptionBase &e)
+  catch(ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
 }
 
 
-int main()
+int
+main()
 {
   deal_II_exceptions::disable_abort_on_exception();
 
-  std::ofstream logfile ("output");
-  deallog << std::setprecision (4);
+  std::ofstream logfile("output");
+  deallog << std::setprecision(4);
 
   deallog.attach(logfile);
 

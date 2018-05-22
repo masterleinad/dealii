@@ -24,9 +24,10 @@
 #include <boost/math/special_functions/erf.hpp>
 
 
-int main()
+int
+main()
 {
   initlog();
 
-  deallog << boost::math::erf (0.5) << std::endl;
+  deallog << boost::math::erf(0.5) << std::endl;
 }

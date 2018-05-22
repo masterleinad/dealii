@@ -22,8 +22,10 @@
 DEAL_II_NAMESPACE_OPEN
 
 // Forward declarations
-template <typename T> struct EnableIfScalar;
-template <typename T, typename U> struct ProductType;
+template <typename T>
+struct EnableIfScalar;
+template <typename T, typename U>
+struct ProductType;
 
 #ifndef DEAL_II_HAVE_COMPLEX_OPERATOR_OVERLOADS
 /**
@@ -34,11 +36,11 @@ template <typename T, typename U> struct ProductType;
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-typename ProductType<std::complex<T>, std::complex<U> >::type
-inline
-operator*(const std::complex<T> &left, const std::complex<U> &right)
+typename ProductType<std::complex<T>, std::complex<U>>::type inline
+operator*(const std::complex<T>& left, const std::complex<U>& right)
 {
-  typedef typename ProductType<std::complex<T>, std::complex<U> >::type result_type;
+  typedef
+    typename ProductType<std::complex<T>, std::complex<U>>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
 }
 
@@ -52,9 +54,9 @@ operator*(const std::complex<T> &left, const std::complex<U> &right)
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-typename ProductType<std::complex<T>, typename EnableIfScalar<U>::type>::type
-inline
-operator*(const std::complex<T> &left, const U &right)
+typename ProductType<std::complex<T>,
+                     typename EnableIfScalar<U>::type>::type inline
+operator*(const std::complex<T>& left, const U& right)
 {
   typedef typename ProductType<std::complex<T>, U>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
@@ -70,9 +72,9 @@ operator*(const std::complex<T> &left, const U &right)
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-typename ProductType<typename EnableIfScalar<T>::type, std::complex<U> >::type
-inline
-operator*(const T &left, const std::complex<U> &right)
+typename ProductType<typename EnableIfScalar<T>::type,
+                     std::complex<U>>::type inline
+operator*(const T& left, const std::complex<U>& right)
 {
   typedef typename ProductType<std::complex<T>, U>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);

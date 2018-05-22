@@ -22,20 +22,21 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
 
-void test ()
+void
+test()
 {
   IndexSet rows(5);
   rows.add_index(1);
   rows.add_index(2);
   rows.add_index(4);
-  DynamicSparsityPattern sp (5,5,rows);
-  sp.add (1,1);
-  sp.add (2,2);
-  sp.add (4,4);
-  sp.compress ();
+  DynamicSparsityPattern sp(5, 5, rows);
+  sp.add(1, 1);
+  sp.add(2, 2);
+  sp.add(4, 4);
+  sp.compress();
 
   DynamicSparsityPattern::const_iterator i = sp.begin();
-  for (; i!=sp.end(); ++i)
+  for(; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
@@ -47,17 +48,19 @@ void test ()
 
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   try
     {
-      test ();
+      test();
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Exception on processing: " << std::endl
@@ -68,9 +71,10 @@ int main ()
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Unknown exception!" << std::endl

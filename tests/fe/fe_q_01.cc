@@ -21,7 +21,8 @@
 
 #include <deal.II/fe/fe_q.h>
 
-int main()
+int
+main()
 {
   initlog();
   deal_II_exceptions::disable_abort_on_exception();
@@ -29,11 +30,8 @@ int main()
     {
       FE_Q<3> fe(0);
     }
-  catch (ExceptionBase &e)
+  catch(ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
-
-

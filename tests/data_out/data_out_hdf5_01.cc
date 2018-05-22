@@ -17,22 +17,21 @@
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
-#include <deal.II/grid/tria.h>
-#include <deal.II/grid/grid_generator.h>
 #include <deal.II/fe/fe_q.h>
+#include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/tria.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
 
 
 
-
 template <int dim>
 void
-test ()
+test()
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, 0., 1.);
-  tria.refine_global (1);
+  tria.refine_global(1);
 
   FE_Q<dim> fe1(1);
 
@@ -40,21 +39,22 @@ test ()
   dof1.distribute_dofs(fe1);
 
   Vector<double> v1(dof1.n_dofs());
-  for (unsigned int i=0; i<v1.size(); ++i) v1(i) = i;
+  for(unsigned int i = 0; i < v1.size(); ++i)
+    v1(i) = i;
 
   DataOut<dim> data_out;
-  data_out.add_data_vector (dof1, v1, "linear");
-  data_out.build_patches (2);
+  data_out.add_data_vector(dof1, v1, "linear");
+  data_out.build_patches(2);
 
-  DataOutBase::DataOutFilter data_filter
-  (DataOutBase::DataOutFilterFlags (false, false));
-  data_out.write_filtered_data (data_filter);
-  data_out.write_hdf5_parallel (data_filter, "out.h5", MPI_COMM_SELF);
+  DataOutBase::DataOutFilter data_filter(
+    DataOutBase::DataOutFilterFlags(false, false));
+  data_out.write_filtered_data(data_filter);
+  data_out.write_hdf5_parallel(data_filter, "out.h5", MPI_COMM_SELF);
   std::vector<XDMFEntry> xdmf_entries;
-  xdmf_entries.push_back
-  (data_out.create_xdmf_entry (data_filter, "out.h5", 0, MPI_COMM_SELF));
+  xdmf_entries.push_back(
+    data_out.create_xdmf_entry(data_filter, "out.h5", 0, MPI_COMM_SELF));
 
-  data_out.write_xdmf_file (xdmf_entries, "out.xdmf", MPI_COMM_SELF);
+  data_out.write_xdmf_file(xdmf_entries, "out.xdmf", MPI_COMM_SELF);
 
   deallog << "ok" << std::endl;
 
@@ -68,7 +68,8 @@ test ()
 }
 
 
-int main(int argc, char *argv[])
+int
+main(int argc, char* argv[])
 {
   initlog();
 
@@ -78,9 +79,10 @@ int main(int argc, char *argv[])
 
       return 0;
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Exception on processing: " << std::endl
@@ -90,9 +92,10 @@ int main(int argc, char *argv[])
               << std::endl;
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Unknown exception!" << std::endl

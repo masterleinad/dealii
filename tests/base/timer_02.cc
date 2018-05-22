@@ -23,13 +23,13 @@
 #include "../tests.h"
 #include <deal.II/base/timer.h>
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
   {
-
     // use std::cout so that no output is saved to the logfile, because it
     // is difficult to test (timing)
     TimerOutput t(std::cout, TimerOutput::summary, TimerOutput::cpu_times);
@@ -40,4 +40,3 @@ int main ()
 
   deallog << "ok" << std::endl;
 }
-

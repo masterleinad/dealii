@@ -22,25 +22,27 @@
 #include <iostream>
 
 
-void test (PETScWrappers::SparseMatrix &m)
+void
+test(PETScWrappers::SparseMatrix& m)
 {
   // first set a few entries. count how many entries we have
-  for (unsigned int i=0; i<m.m(); ++i)
-    for (unsigned int j=0; j<m.m(); ++j)
-      if ((i+2*j+1) % 3 == 0)
-        m.set (i,j, std::complex<double> (0.,i*j*.5+.5));
+  for(unsigned int i = 0; i < m.m(); ++i)
+    for(unsigned int j = 0; j < m.m(); ++j)
+      if((i + 2 * j + 1) % 3 == 0)
+        m.set(i, j, std::complex<double>(0., i * j * .5 + .5));
 
-  m.compress (VectorOperation::insert);
+  m.compress(VectorOperation::insert);
 
   // compare against the exact value of the linfty-norm (max row-sum).
   deallog << m.linfty_norm() << std::endl;
-  AssertThrow (m.linfty_norm() == 8.5, ExcInternalError());
+  AssertThrow(m.linfty_norm() == 8.5, ExcInternalError());
 
   deallog << "OK" << std::endl;
 }
 
 
-int main (int argc,char **argv)
+int
+main(int argc, char** argv)
 {
   initlog();
   deallog.depth_console(0);
@@ -49,14 +51,14 @@ int main (int argc,char **argv)
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       {
-        PETScWrappers::SparseMatrix m(5,5,3);
-        test (m);
+        PETScWrappers::SparseMatrix m(5, 5, 3);
+        test(m);
       }
-
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << std::endl
@@ -67,9 +69,10 @@ int main (int argc,char **argv)
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl
@@ -79,5 +82,3 @@ int main (int argc,char **argv)
       return 1;
     };
 }
-
-

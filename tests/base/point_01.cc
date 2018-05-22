@@ -22,18 +22,20 @@
 
 
 template <int dim>
-void check ()
+void
+check()
 {
   Point<dim> p;
-  for (unsigned int i=0; i<dim; ++i)
+  for(unsigned int i = 0; i < dim; ++i)
     p[i] = i;
 
-  for (unsigned int i=0; i<dim; ++i)
+  for(unsigned int i = 0; i < dim; ++i)
     deallog << p(i) << ' ';
   deallog << std::endl;
 }
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);

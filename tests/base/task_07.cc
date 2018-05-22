@@ -22,30 +22,31 @@
 #include <deal.II/base/thread_management.h>
 
 
-void test (int i)
+void
+test(int i)
 {
   deallog << "Task " << i << " starting..." << std::endl;
-  sleep (1);
+  sleep(1);
   deallog << "Task " << i << " finished!" << std::endl;
 }
 
 
 
-
-int main()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
 
   Threads::TaskGroup<> tg;
-  tg += Threads::new_task (test, 1);
-  tg += Threads::new_task (test, 2);
+  tg += Threads::new_task(test, 1);
+  tg += Threads::new_task(test, 2);
 
-  tg.join_all ();
+  tg.join_all();
 
   deallog << "OK" << std::endl;
 
-  deallog.detach ();
-  logfile.close ();
-  sort_file_contents ("output");
+  deallog.detach();
+  logfile.close();
+  sort_file_contents("output");
 }

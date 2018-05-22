@@ -27,28 +27,29 @@
 
 
 
-
 template <int dim>
-void test ()
+void
+test()
 {
   FESystem<dim> fe(FE_Nothing<dim>(), 2);
-  FEValues<dim> fe_values (fe, QGauss<dim>(2), update_values);
+  FEValues<dim> fe_values(fe, QGauss<dim>(2), update_values);
 
   deallog << "OK" << std::endl;
 }
 
 
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   logfile.precision(2);
 
   deallog.attach(logfile);
 
-  test<1> ();
-  test<2> ();
-  test<3> ();
+  test<1>();
+  test<2>();
+  test<3>();
 
   deallog << "OK" << std::endl;
 }

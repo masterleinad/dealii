@@ -23,26 +23,29 @@
 #include <iostream>
 
 
-void test (TrilinosWrappers::MPI::Vector &v)
+void
+test(TrilinosWrappers::MPI::Vector& v)
 {
   // set only certain elements of the vector
-  for (unsigned int i=0; i<v.size(); i+=1+i)
+  for(unsigned int i = 0; i < v.size(); i += 1 + i)
     v(i) = i;
 
-  v.compress (VectorOperation::insert);
+  v.compress(VectorOperation::insert);
 
-  AssertThrow (v.size() == 100, ExcInternalError());
+  AssertThrow(v.size() == 100, ExcInternalError());
 
   deallog << "OK" << std::endl;
 }
 
 
 
-int main (int argc,char **argv)
+int
+main(int argc, char** argv)
 {
   initlog();
 
-  Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, testing_max_num_threads());
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(
+    argc, argv, testing_max_num_threads());
 
 
   try
@@ -50,12 +53,13 @@ int main (int argc,char **argv)
       {
         TrilinosWrappers::MPI::Vector v;
         v.reinit(complete_index_set(100), MPI_COMM_WORLD);
-        test (v);
+        test(v);
       }
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << std::endl
@@ -66,9 +70,10 @@ int main (int argc,char **argv)
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl

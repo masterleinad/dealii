@@ -24,31 +24,34 @@
 #include <deal.II/lac/vector.h>
 
 
-void test (Vector<std::complex<double> > &v)
+void
+test(Vector<std::complex<double>>& v)
 {
-  for (unsigned int i=0; i<v.size(); ++i)
-    v(i) = std::complex<double> (i+1., i+2.);
-  Vector<std::complex<float> > w(v);
+  for(unsigned int i = 0; i < v.size(); ++i)
+    v(i) = std::complex<double>(i + 1., i + 2.);
+  Vector<std::complex<float>> w(v);
 
-  AssertThrow (w==v, ExcInternalError());
+  AssertThrow(w == v, ExcInternalError());
 
   deallog << "OK" << std::endl;
 }
 
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   try
     {
-      Vector<std::complex<double> > v (100);
-      test (v);
+      Vector<std::complex<double>> v(100);
+      test(v);
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Exception on processing: " << std::endl
@@ -59,9 +62,10 @@ int main ()
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Unknown exception!" << std::endl

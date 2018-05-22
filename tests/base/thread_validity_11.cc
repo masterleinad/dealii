@@ -23,26 +23,28 @@
 
 #include <deal.II/base/thread_management.h>
 
-void execute ()
+void
+execute()
 {}
 
 
-void test ()
+void
+test()
 {
-  Threads::Thread<> t = Threads::new_thread (&execute);
+  Threads::Thread<> t = Threads::new_thread(&execute);
   deallog << "Before first join()" << std::endl;
-  t.join ();
+  t.join();
   deallog << "Between join()s" << std::endl;
-  t.join ();
+  t.join();
   deallog << "After second join()" << std::endl;
 }
 
 
 
-
-int main()
+int
+main()
 {
   initlog();
 
-  test ();
+  test();
 }

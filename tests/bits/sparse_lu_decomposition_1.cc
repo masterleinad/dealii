@@ -28,14 +28,14 @@
 
 
 
-int main ()
+int
+main()
 {
   initlog();
 
-  SmartPointer<SparseLUDecomposition<double> > sparse_decomp;
+  SmartPointer<SparseLUDecomposition<double>> sparse_decomp;
 
   deallog << "OK" << std::endl;
 
   return 0;
 }
-

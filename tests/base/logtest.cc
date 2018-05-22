@@ -23,7 +23,8 @@
 #include <limits>
 
 
-int main()
+int
+main()
 {
   initlog();
 
@@ -31,7 +32,8 @@ int main()
   deallog.push("l1");
   deallog << "Test1" << std::endl;
   deallog.push("l2");
-  deallog << "Test2" << "Test3" << std::endl;
+  deallog << "Test2"
+          << "Test3" << std::endl;
   deallog.push("l3");
   deallog << "Test4";
   deallog.pop();

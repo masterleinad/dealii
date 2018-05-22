@@ -19,10 +19,11 @@
 
 #include "../tests.h"
 
-#include <limits>
 #include <cfenv>
+#include <limits>
 
-int main ()
+int
+main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
@@ -43,4 +44,3 @@ int main ()
 
   return 0;
 }
-

@@ -22,13 +22,14 @@
 #include <iostream>
 
 
-void test ()
+void
+test()
 {
-  PETScWrappers::SparseMatrix m(5,5,5);
-  m.set (0,0,1);
-  m.set (1,1,2);
-  m.set (1,2,3);
-  m.compress (VectorOperation::insert);
+  PETScWrappers::SparseMatrix m(5, 5, 5);
+  m.set(0, 0, 1);
+  m.set(1, 1, 2);
+  m.set(1, 2, 3);
+  m.compress(VectorOperation::insert);
   PETScWrappers::SparseMatrix::const_iterator i = m.begin();
   deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
   ++i;
@@ -41,21 +42,22 @@ void test ()
 
 
 
-int main (int argc,char **argv)
+int
+main(int argc, char** argv)
 {
   initlog();
 
   try
     {
-      Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, 1);
+      Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       {
-        test ();
+        test();
       }
-
     }
-  catch (std::exception &exc)
+  catch(std::exception& exc)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Exception on processing: " << std::endl
@@ -66,9 +68,10 @@ int main (int argc,char **argv)
 
       return 1;
     }
-  catch (...)
+  catch(...)
     {
-      std::cerr << std::endl << std::endl
+      std::cerr << std::endl
+                << std::endl
                 << "----------------------------------------------------"
                 << std::endl;
       std::cerr << "Unknown exception!" << std::endl

@@ -15,13 +15,13 @@
 
 
 #ifndef dealii_occ_boundary_lib_h
-#define dealii_occ_boundary_lib_h
+#  define dealii_occ_boundary_lib_h
 
-#include <deal.II/base/config.h>
+#  include <deal.II/base/config.h>
 
-#ifdef DEAL_II_WITH_OPENCASCADE
+#  ifdef DEAL_II_WITH_OPENCASCADE
 
-#include <deal.II/opencascade/manifold_lib.h>
+#    include <deal.II/opencascade/manifold_lib.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -69,7 +69,8 @@ namespace OpenCASCADE
     /**
      * Clone the current Manifold.
      */
-    virtual std::unique_ptr<Manifold<dim,spacedim> > clone() const override;
+    virtual std::unique_ptr<Manifold<dim, spacedim>>
+    clone() const override;
   };
 
   /**
@@ -104,12 +105,14 @@ namespace OpenCASCADE
     /**
      * Inherit all constructors.
      */
-    using DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold;
+    using DirectionalProjectionManifold<dim, spacedim>::
+      DirectionalProjectionManifold;
 
     /**
      * Clone the current Manifold.
      */
-    virtual std::unique_ptr<Manifold<dim,spacedim> > clone() const override;
+    virtual std::unique_ptr<Manifold<dim, spacedim>>
+    clone() const override;
   };
 
 
@@ -168,21 +171,23 @@ namespace OpenCASCADE
     /**
      * Inherit all constructors.
      */
-    using NormalToMeshProjectionManifold<dim, spacedim>::NormalToMeshProjectionManifold;
+    using NormalToMeshProjectionManifold<dim, spacedim>::
+      NormalToMeshProjectionManifold;
 
     /**
      * Clone the current Manifold.
      */
-    virtual std::unique_ptr<Manifold<dim,spacedim> > clone() const override;
+    virtual std::unique_ptr<Manifold<dim, spacedim>>
+    clone() const override;
   };
-}
+} // namespace OpenCASCADE
 
 /*@}*/
 
 DEAL_II_NAMESPACE_CLOSE
 
 
-#endif // DEAL_II_WITH_OPENCASCADE
+#  endif // DEAL_II_WITH_OPENCASCADE
 
 /*------------------------------ occ_boundary_lib.h ------------------------------*/
 #endif

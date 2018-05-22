@@ -24,7 +24,8 @@
 
 
 template <int dim>
-void plot_FE_Q_shape_functions()
+void
+plot_FE_Q_shape_functions()
 {
   MappingQGeneric<dim> m(1);
 
@@ -40,7 +41,7 @@ void plot_FE_Q_shape_functions()
 
   // skip the following tests to
   // reduce run-time
-  if (dim < 3)
+  if(dim < 3)
     {
       FE_Q_iso_Q1<dim> q3(3);
       plot_shape_functions(m, q3, "Q3_iso_Q1");
@@ -52,14 +53,13 @@ void plot_FE_Q_shape_functions()
       plot_face_shape_functions(m, q4, "Q4_iso_Q1");
       test_compute_functions(m, q4, "Q4_iso_Q1");
     };
-
 }
 
 
 int
 main()
 {
-  std::ofstream logfile ("output");
+  std::ofstream logfile("output");
   deallog << std::setprecision(PRECISION) << std::fixed;
   deallog.attach(logfile);
 

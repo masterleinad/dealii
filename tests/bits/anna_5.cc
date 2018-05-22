@@ -20,8 +20,9 @@
 #include "../tests.h"
 #include <deal.II/lac/block_sparsity_pattern.h>
 
-int main ()
+int
+main()
 {
-  std::ofstream o("output");
-  BlockSparsityPattern      sparsity_pattern;
+  std::ofstream        o("output");
+  BlockSparsityPattern sparsity_pattern;
 }

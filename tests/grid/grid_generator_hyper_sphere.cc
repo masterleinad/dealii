@@ -19,9 +19,9 @@
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
-#include <deal.II/grid/tria.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
+#include <deal.II/grid/tria.h>
 
 
 #include <deal.II/grid/tria.h>
@@ -40,16 +40,17 @@
 
 
 template <int dim, int spacedim>
-void test(std::ostream &out)
+void
+test(std::ostream& out)
 {
-  Triangulation<dim,spacedim>   triangulation;
+  Triangulation<dim, spacedim> triangulation;
 
-  static SphericalManifold<dim,spacedim> surface_description;
+  static SphericalManifold<dim, spacedim> surface_description;
 
   GridGenerator::hyper_sphere(triangulation);
 
   triangulation.set_all_manifold_ids(0);
-  triangulation.set_manifold (0, surface_description);
+  triangulation.set_manifold(0, surface_description);
   triangulation.refine_global(3);
 
   GridOut go;
@@ -57,10 +58,11 @@ void test(std::ostream &out)
 }
 
 
-int main()
+int
+main()
 {
   initlog();
 
-  test<1,2>(deallog.get_file_stream());
-  test<2,3>(deallog.get_file_stream());
+  test<1, 2>(deallog.get_file_stream());
+  test<2, 3>(deallog.get_file_stream());
 }
