@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check has_support_on_face for some elements
 //
 // this program is a modified version of one by Roy Stogner,
@@ -27,7 +25,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
-
 template <int dim>
 void
 check(const FiniteElement<dim>& fe)
@@ -38,7 +35,6 @@ check(const FiniteElement<dim>& fe)
         deallog << "Basis function " << i << " has support on face " << face
                 << std::endl;
 }
-
 
 #define check_el(fe)             \
   {                              \
@@ -73,7 +69,6 @@ check()
   if(dim > 1)
     check_el(FESystem<dim>(FE_Nedelec<dim>(0), 2));
 }
-
 
 int
 main()

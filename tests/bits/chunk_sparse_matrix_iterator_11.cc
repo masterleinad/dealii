@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // comparisons between chunk sparse matrix iterators, same as
 // sparse_matrix_iterators_11 otherwise.
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -54,8 +51,6 @@ test(const unsigned int chunk_size)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

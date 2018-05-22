@@ -16,7 +16,6 @@
 #ifndef dealii_solver_bicgstab_h
 #define dealii_solver_bicgstab_h
 
-
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
@@ -291,7 +290,6 @@ private:
 
 #ifndef DOXYGEN
 
-
 template <typename VectorType>
 SolverBicgstab<VectorType>::IterationResult::IterationResult(
   const bool                 breakdown,
@@ -304,8 +302,6 @@ SolverBicgstab<VectorType>::IterationResult::IterationResult(
     last_residual(last_residual)
 {}
 
-
-
 template <typename VectorType>
 SolverBicgstab<VectorType>::SolverBicgstab(SolverControl&            cn,
                                            VectorMemory<VectorType>& mem,
@@ -313,21 +309,15 @@ SolverBicgstab<VectorType>::SolverBicgstab(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), Vx(nullptr), Vb(nullptr), additional_data(data)
 {}
 
-
-
 template <typename VectorType>
 SolverBicgstab<VectorType>::SolverBicgstab(SolverControl&        cn,
                                            const AdditionalData& data)
   : Solver<VectorType>(cn), Vx(nullptr), Vb(nullptr), additional_data(data)
 {}
 
-
-
 template <typename VectorType>
 SolverBicgstab<VectorType>::~SolverBicgstab()
 {}
-
-
 
 template <typename VectorType>
 template <typename MatrixType>
@@ -343,8 +333,6 @@ SolverBicgstab<VectorType>::criterion(const MatrixType& A,
   return res;
 }
 
-
-
 template <typename VectorType>
 template <typename MatrixType>
 SolverControl::State
@@ -357,8 +345,6 @@ SolverBicgstab<VectorType>::start(const MatrixType& A)
   return this->iteration_status(step, res, *Vx);
 }
 
-
-
 template <typename VectorType>
 void
 SolverBicgstab<VectorType>::print_vectors(const unsigned int,
@@ -366,8 +352,6 @@ SolverBicgstab<VectorType>::print_vectors(const unsigned int,
                                           const VectorType&,
                                           const VectorType&) const
 {}
-
-
 
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -454,7 +438,6 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
   while(state == SolverControl::iterate);
   return IterationResult(false, state, step, res);
 }
-
 
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>

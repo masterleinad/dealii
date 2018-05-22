@@ -24,7 +24,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * @brief Library of integrals over cells and faces
  *

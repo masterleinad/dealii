@@ -30,7 +30,6 @@
 #include <fstream>
 #include <iostream>
 
-
 template <typename NumberType>
 void
 test()
@@ -133,8 +132,6 @@ test()
   AssertThrow(scalapack_matrix.get_state() == scalapack_matrix_copy.get_state(),
               ExcInternalError());
 }
-
-
 
 int
 main(int argc, char** argv)

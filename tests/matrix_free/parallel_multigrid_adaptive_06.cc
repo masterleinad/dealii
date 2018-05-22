@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to parallel_multigrid_adaptive_06ref but using MGTransferBlockMatrixFree
 // to solve block-diagonal matrix with Laplace operator on diagonals.
 // As expected, when we use a block vector with a single block, we get
@@ -29,7 +27,6 @@
 //
 // DEAL:2d:cg::Starting value 31.02
 // DEAL:2d:cg::Convergence step 7 value 2.774e-07
-
 
 #include "../tests.h"
 
@@ -150,7 +147,6 @@ public:
     laplace.compute_diagonal();
   }
 
-
   virtual void
   clear()
   {
@@ -165,8 +161,6 @@ private:
                                        typename BlockVectorType::BlockType>
     laplace;
 };
-
-
 
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
@@ -195,8 +189,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -375,8 +367,6 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
     mg_matrices[level].clear();
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test(const unsigned int nbands = 1)
@@ -408,8 +398,6 @@ test(const unsigned int nbands = 1)
       do_test<dim, fe_degree, fe_degree + 1, double>(dof, nbands);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

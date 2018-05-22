@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test templated path of TensorProductMatrix with float instead of double
 
 #include "../testmatrix.h"
@@ -21,7 +20,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/tensor_product_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim, int size>
 void
@@ -93,7 +91,6 @@ do_test()
   deallog << "Verification of inverse: " << (norm < 5e-3 ? 0. : norm)
           << std::endl;
 }
-
 
 int
 main()

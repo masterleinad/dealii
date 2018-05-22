@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that we can fix up faces if we get distorted cells because a
 // face is out of whack
 
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 class MyManifold : public Manifold<dim>
@@ -60,8 +56,6 @@ class MyManifold : public Manifold<dim>
     return Point<dim>(0, 0, 1.25);
   }
 };
-
-
 
 template <int dim>
 void
@@ -115,7 +109,6 @@ check()
   // child cells
   GridOut().write_gnuplot(coarse_grid, deallog.get_file_stream());
 }
-
 
 int
 main()

@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that Vector::add_and_dot works correctly for complex-valued
 // vectors
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void
@@ -57,7 +54,6 @@ check()
               << ", is " << prod_check / static_cast<number>(size) << std::endl;
     }
 }
-
 
 int
 main()

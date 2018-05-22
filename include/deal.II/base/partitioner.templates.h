@@ -22,7 +22,6 @@
 
 #include <type_traits>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace Utilities
@@ -123,8 +122,6 @@ namespace Utilities
         }
     }
 
-
-
     template <typename Number>
     void
     Partitioner::export_to_ghosted_array_finish(
@@ -176,8 +173,6 @@ namespace Utilities
               }
         }
     }
-
-
 
     template <typename Number>
     void
@@ -306,8 +301,6 @@ namespace Utilities
         }
     }
 
-
-
     namespace internal
     {
       // In the import_from_ghosted_array_finish we need to invoke abs() also
@@ -331,8 +324,6 @@ namespace Utilities
       }
 
     } // namespace internal
-
-
 
     template <typename Number>
     void
@@ -465,14 +456,12 @@ namespace Utilities
       requests.resize(0);
     }
 
-
 #  endif // ifdef DEAL_II_WITH_MPI
 #endif   // ifndef DOXYGEN
 
   } // end of namespace MPI
 
 } // end of namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

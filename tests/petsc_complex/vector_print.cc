@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // verify that VectorBase::print uses the precision parameter correctly and
 // restores the previous value of the stream precision
 
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 int
 main(int argc, char** argv)

@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_matrix_ez_templates_h
 #define dealii_sparse_matrix_ez_templates_h
 
-
 #include <deal.II/lac/sparse_matrix_ez.h>
 #include <deal.II/lac/vector.h>
 
@@ -34,7 +33,6 @@ SparseMatrixEZ<number>::SparseMatrixEZ()
   : n_columns(0), increment(1), saved_default_row_length(0)
 {}
 
-
 template <typename number>
 SparseMatrixEZ<number>::SparseMatrixEZ(const SparseMatrixEZ<number>& m)
   : Subscriptor(m),
@@ -50,7 +48,6 @@ SparseMatrixEZ<number>::SparseMatrixEZ(const SparseMatrixEZ<number>& m)
                "SparseMatrixEZ::copy_from() function for that purpose."));
 }
 
-
 template <typename number>
 SparseMatrixEZ<number>::SparseMatrixEZ(const size_type    n_rows,
                                        const size_type    n_cols,
@@ -59,8 +56,6 @@ SparseMatrixEZ<number>::SparseMatrixEZ(const size_type    n_rows,
 {
   reinit(n_rows, n_cols, default_row_length, default_increment);
 }
-
-
 
 template <typename number>
 SparseMatrixEZ<number>&
@@ -74,7 +69,6 @@ SparseMatrixEZ<number>::operator=(const SparseMatrixEZ<number>& m)
                     "SparseMatrixEZ::copy_from() function for that purpose."));
   return *this;
 }
-
 
 template <typename number>
 SparseMatrixEZ<number>&
@@ -93,8 +87,6 @@ SparseMatrixEZ<number>::operator=(const double d)
 
   return *this;
 }
-
-
 
 template <typename number>
 void
@@ -119,7 +111,6 @@ SparseMatrixEZ<number>::reinit(const size_type n_rows,
     row_info[i].start = i * default_row_length;
 }
 
-
 template <typename number>
 void
 SparseMatrixEZ<number>::clear()
@@ -129,14 +120,12 @@ SparseMatrixEZ<number>::clear()
   data.resize(0);
 }
 
-
 template <typename number>
 bool
 SparseMatrixEZ<number>::empty() const
 {
   return ((n_columns == 0) && (row_info.size() == 0));
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -163,7 +152,6 @@ SparseMatrixEZ<number>::vmult(Vector<somenumber>&       dst,
     }
 }
 
-
 template <typename number>
 number
 SparseMatrixEZ<number>::l2_norm() const
@@ -181,8 +169,6 @@ SparseMatrixEZ<number>::l2_norm() const
   return std::sqrt(sum);
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -192,7 +178,6 @@ SparseMatrixEZ<number>::Tvmult(Vector<somenumber>&       dst,
   dst = 0.;
   Tvmult_add(dst, src);
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -242,7 +227,6 @@ SparseMatrixEZ<number>::Tvmult_add(Vector<somenumber>&       dst,
     }
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -265,8 +249,6 @@ SparseMatrixEZ<number>::precondition_Jacobi(Vector<somenumber>&       dst,
       *dst_ptr = om * *src_ptr / data[ri->start + ri->diagonal].value;
     }
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -296,8 +278,6 @@ SparseMatrixEZ<number>::precondition_SOR(Vector<somenumber>&       dst,
     }
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -326,8 +306,6 @@ SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>&       dst,
       *dst_ptr = om * s / data[ri->start + ri->diagonal].value;
     }
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -380,8 +358,6 @@ SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>&       dst,
     }
 }
 
-
-
 template <typename number>
 std::size_t
 SparseMatrixEZ<number>::memory_consumption() const
@@ -390,16 +366,12 @@ SparseMatrixEZ<number>::memory_consumption() const
          + sizeof(typename SparseMatrixEZ<number>::Entry) * data.capacity();
 }
 
-
-
 template <typename number>
 typename SparseMatrixEZ<number>::size_type
 SparseMatrixEZ<number>::get_row_length(const size_type row) const
 {
   return row_info[row].length;
 }
-
-
 
 template <typename number>
 typename SparseMatrixEZ<number>::size_type
@@ -414,8 +386,6 @@ SparseMatrixEZ<number>::n_nonzero_elements() const
     used += row->length;
   return used;
 }
-
-
 
 template <typename number>
 void
@@ -444,7 +414,6 @@ SparseMatrixEZ<number>::compute_statistics(size_type&              used,
   allocated = row->start + row->length;
   reserved  = data.capacity();
 
-
   if(full)
     {
       used_by_line.resize(max_length + 1);
@@ -455,7 +424,6 @@ SparseMatrixEZ<number>::compute_statistics(size_type&              used,
         }
     }
 }
-
 
 template <typename number>
 void
@@ -471,7 +439,6 @@ SparseMatrixEZ<number>::print(std::ostream& out) const
       ++i;
     }
 }
-
 
 template <typename number>
 void
@@ -523,7 +490,6 @@ SparseMatrixEZ<number>::print_formatted(std::ostream&      out,
   out.flags(old_flags);
 }
 
-
 template <typename number>
 void
 SparseMatrixEZ<number>::block_write(std::ostream& out) const
@@ -548,7 +514,6 @@ SparseMatrixEZ<number>::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
 
 #define DEAL_II_CHECK_INPUT(in, a, c)                                        \
   {                                                                          \
@@ -598,8 +563,6 @@ SparseMatrixEZ<number>::block_read(std::istream& in)
 }
 
 #undef DEAL_II_CHECK_INPUT
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

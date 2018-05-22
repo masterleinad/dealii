@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that the flat manifold does what it should on a sphere.
 
 #include "../tests.h"
-
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>

@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GridTools::volume
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -24,10 +22,7 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -68,7 +63,6 @@ test1()
               << (dim == 2 ? numbers::PI : 4. / 3. * numbers::PI) << std::endl;
     }
 }
-
 
 int
 main()

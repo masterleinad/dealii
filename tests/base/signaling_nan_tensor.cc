@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check numbers::signaling_nan<Tensor>
 //
 // the test only checks that the function can be called. It would have
@@ -26,7 +25,6 @@
 #include <deal.II/base/signaling_nan.h>
 #include <limits>
 
-
 template <typename T>
 void
 check()
@@ -37,7 +35,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

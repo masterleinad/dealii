@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityTools::distribute_sparsity_pattern for BlockDynamicSP
 
 #include "../tests.h"
@@ -24,8 +22,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
-
-
 
 void
 test_mpi()
@@ -94,7 +90,6 @@ test_mpi()
         Assert(csp.exists(indx, myid + 1), ExcInternalError());
     }
 
-
   //now a 2x2 block system where the 2,2 block has size 1x1:
   if(myid == 0)
     deallog << "part 2" << std::endl;
@@ -113,7 +108,6 @@ test_mpi()
   for(unsigned int i = 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu2[i].add_range((i) *num_local,
                                              (i + 1) * num_local);
-
 
   SparsityTools::distribute_sparsity_pattern(
     csp, locally_owned_dofs_per_cpu2, MPI_COMM_WORLD, locally_rel);
@@ -148,7 +142,6 @@ test_mpi()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

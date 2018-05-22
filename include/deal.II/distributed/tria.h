@@ -16,7 +16,6 @@
 #ifndef dealii_distributed_tria_h
 #define dealii_distributed_tria_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/base/subscriptor.h>
@@ -47,7 +46,6 @@
 #  include <p8est_connectivity.h>
 #  include <p8est_ghost.h>
 #endif
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -325,8 +323,6 @@ namespace parallel
         no_automatic_repartitioning = 0x4
       };
 
-
-
       /**
        * Constructor.
        *
@@ -545,7 +541,6 @@ namespace parallel
       void
       communicate_locally_moved_vertices(
         const std::vector<bool>& vertex_locally_moved);
-
 
       /**
        * Return true if the triangulation has hanging nodes.
@@ -823,7 +818,6 @@ namespace parallel
         const std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>&)
         override;
 
-
     private:
       /**
        * Override the function to update the number cache so we can fill data
@@ -1022,7 +1016,6 @@ namespace parallel
       friend class dealii::FETools::internal::ExtrapolateImplementation;
     };
 
-
     /**
      * Specialization of the general template for the 1d case. There is
      * currently no support for distributing 1d triangulations. Consequently,
@@ -1148,7 +1141,6 @@ namespace parallel
       std::vector<types::global_dof_index>
         p4est_tree_to_coarse_cell_permutation;
 
-
       //TODO: The following variable should really be private, but it is used in dof_handler_policy.cc ...
       /**
        * dummy settings object
@@ -1180,7 +1172,6 @@ namespace parallel
   } // namespace distributed
 } // namespace parallel
 
-
 #else // DEAL_II_WITH_P4EST
 
 namespace parallel
@@ -1211,9 +1202,7 @@ namespace parallel
   } // namespace distributed
 } // namespace parallel
 
-
 #endif
-
 
 DEAL_II_NAMESPACE_CLOSE
 

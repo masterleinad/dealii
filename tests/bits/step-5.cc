@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-5
-
 
 #include "../tests.h"
 
@@ -47,8 +44,6 @@
 
 #include <sstream>
 
-
-
 template <int dim>
 class LaplaceProblem
 {
@@ -78,8 +73,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 class Coefficient : public Function<dim>
 {
@@ -96,8 +89,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p,
@@ -108,8 +99,6 @@ Coefficient<dim>::value(const Point<dim>& p,
   else
     return 1;
 }
-
-
 
 template <int dim>
 void
@@ -133,13 +122,9 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -161,8 +146,6 @@ LaplaceProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -213,7 +196,6 @@ LaplaceProblem<dim>::assemble_system()
                             * fe_values.JxW(q_point));
           }
 
-
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -232,8 +214,6 @@ LaplaceProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -249,8 +229,6 @@ LaplaceProblem<dim>::solve()
   deallog << "   " << solver_control.last_step()
           << " CG iterations needed to obtain convergence." << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -275,8 +253,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
 
   data_out.write_eps(deallog.get_file_stream());
 }
-
-
 
 template <int dim>
 void
@@ -314,8 +290,6 @@ LaplaceProblem<dim>::run()
       output_results(cycle);
     }
 }
-
-
 
 int
 main()

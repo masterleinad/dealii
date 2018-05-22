@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // The test is used to check the restriction_is_additive flags. The
 // face degrees of freedom of a BDM element must be non-additive as
 // they have continuity requirements, however the interior DOFs must
@@ -27,7 +26,6 @@
 #include <deal.II/fe/fe_bdm.h>
 
 #include <string>
-
 
 std::ofstream logfile("output");
 
@@ -45,7 +43,6 @@ test(const unsigned int degree)
 
   deallog << std::endl;
 }
-
 
 int
 main()

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that DofRenumbering::hierarchical() gives the same DoF numbers
 // independent of their previous ordering. This was broken before where
 // the hierarchical numbering on each processor re-used the indices
 // the processor previously owned. This worked just fine with the
 // original ordering used by default by DoFHandler, but not if there
 // was another reordering step in between
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -41,7 +38,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <boost/concept_check.hpp>
-
 
 void
 test()
@@ -97,7 +93,6 @@ test()
           }
     }
 }
-
 
 int
 main(int argc, char* argv[])

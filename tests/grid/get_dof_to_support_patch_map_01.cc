@@ -15,14 +15,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test GridTools::map_dof_to_support_patch () using a quadratic FE_Q<dim>
 // space.  We output the barycenter of each cell in the patch around the dof
 // for a few dofs in the triangulation.  We have three layers of refinement in
 // the triangulation which represents the various patches that could arise in
 // practice.
-
-
 
 #include "../tests.h"
 #include <deal.II/base/point.h>
@@ -36,7 +33,6 @@
 #include <string>
 
 using namespace dealii;
-
 
 template <int dim>
 void
@@ -129,7 +125,6 @@ test()
     triangulation.execute_coarsening_and_refinement();
   }
 
-
   DoFHandler<dim> dof_handler(triangulation);
   unsigned int    iFEDeg = 2;
   FE_Q<dim>       finite_element(iFEDeg);
@@ -165,11 +160,9 @@ test()
         }
     }
 
-
   // clean up data
   dof_handler.clear();
 }
-
 
 int
 main()

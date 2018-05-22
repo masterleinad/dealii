@@ -16,7 +16,6 @@
 #ifndef dealii_solver_cg_h
 #define dealii_solver_cg_h
 
-
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -30,7 +29,6 @@ DEAL_II_NAMESPACE_OPEN
 
 // forward declaration
 class PreconditionIdentity;
-
 
 /*!@addtogroup Solvers */
 /*@{*/
@@ -238,14 +236,10 @@ SolverCG<VectorType>::SolverCG(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <typename VectorType>
 SolverCG<VectorType>::SolverCG(SolverControl& cn, const AdditionalData& data)
   : Solver<VectorType>(cn), additional_data(data)
 {}
-
-
 
 template <typename VectorType>
 void
@@ -254,8 +248,6 @@ SolverCG<VectorType>::print_vectors(const unsigned int,
                                     const VectorType&,
                                     const VectorType&) const
 {}
-
-
 
 template <typename VectorType>
 inline void
@@ -296,8 +288,6 @@ SolverCG<VectorType>::compute_eigs_and_cond(
         }
     }
 }
-
-
 
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -437,8 +427,6 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   // otherwise exit as normal
 }
 
-
-
 template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_coefficients_slot(
@@ -446,8 +434,6 @@ SolverCG<VectorType>::connect_coefficients_slot(
 {
   return coefficients_signal.connect(slot);
 }
-
-
 
 template <typename VectorType>
 boost::signals2::connection
@@ -465,8 +451,6 @@ SolverCG<VectorType>::connect_condition_number_slot(
     }
 }
 
-
-
 template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_eigenvalues_slot(
@@ -482,8 +466,6 @@ SolverCG<VectorType>::connect_eigenvalues_slot(
       return eigenvalues_signal.connect(slot);
     }
 }
-
-
 
 #endif // DOXYGEN
 

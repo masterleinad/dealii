@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -22,8 +21,6 @@
 //   FETools::get_interpolation_difference_matrix
 // we used to have a bug wherein we did not clear previous content of the matrix
 // passed to this function. check that this is now fixed
-
-
 
 template <int dim>
 void

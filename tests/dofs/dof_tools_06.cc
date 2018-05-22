@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
 // check
 //   DoFTools::extract_subdomain_dofs
-
-
 
 template <int dim>
 void

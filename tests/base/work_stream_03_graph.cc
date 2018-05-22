@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Like _03 but with a graph coloring algorithm for the iterators. The
 // graph coloring here is simple since all writes conflict (we just
 // add to a scalar)
@@ -31,7 +30,6 @@
 #include <deal.II/grid/tria.h>
 
 #include <vector>
-
 
 template <int dim>
 double
@@ -90,13 +88,11 @@ zero_subrange(const unsigned int   begin,
     dst[i] = 0;
 }
 
-
 void
 zero_element(std::vector<double>& dst, const unsigned int i)
 {
   dst[i] = 0;
 }
-
 
 template <int dim>
 void
@@ -123,13 +119,11 @@ mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
   copy_data.cell_rhs[0] = value(data.x_fe_values.quadrature_point(0));
 }
 
-
 void
 copy_local_to_global(const CopyData& data, double* sum)
 {
   *sum += data.cell_rhs[0];
 }
-
 
 // the function that defines conclicts. we always write into the same
 // field, so we need to always return the same index
@@ -139,7 +133,6 @@ conflictor(const typename Triangulation<dim>::active_cell_iterator&)
 {
   return std::vector<types::global_dof_index>(1, types::global_dof_index());
 }
-
 
 void
 do_project()
@@ -179,7 +172,6 @@ do_project()
       deallog << sum << std::endl;
     }
 }
-
 
 int
 main()

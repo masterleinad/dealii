@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // similar to log_nan, but test for infinities
 
 #include "../tests.h"

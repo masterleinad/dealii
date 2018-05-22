@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that we fixed a case where we tried to deal with some constraints in a
 // block matrix where the last few rows of one of the blocks were empty and we
 // ran into an unrelated assertion because we were accessing something beyond
@@ -60,10 +58,7 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 std::ofstream logfile("output");
-
 
 int
 main()
@@ -334,7 +329,6 @@ main()
               << ", mesh dof: " << solid_mesh_pairs[i].second << std::endl;
     }
   deallog << "------------------------------------------" << std::endl;
-
 
   //code crashes in the fluid assembly, mocked up below
   {

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a circle, a Triangulation, and try to project normally on
 // it.
 
@@ -66,8 +65,6 @@ main()
   // circle.
   SphericalManifold<2, 3> boundary_line_deal(Point<3>(.5, .5, 0));
 
-
-
   // The unit square.
   Triangulation<2, 3> tria;
   GridGenerator::hyper_cube(tria);
@@ -84,7 +81,6 @@ main()
   // outer points to end up on the
   // circle.
   tria.refine_global(2);
-
 
   // You can open the generated file
   // with paraview.

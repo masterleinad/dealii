@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DataOut for complex vectors, using the vector-valued path
 //
 // this test uses the method that generates the names of vector
@@ -37,8 +36,6 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-
-
 
 template <int dim>
 void
@@ -65,8 +62,6 @@ check()
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

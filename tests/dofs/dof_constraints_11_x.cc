@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing BlockDyanmicSparsityPattern. This
 // test was written when I changed a few things in the algorithm.
 
@@ -31,7 +29,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 template <int dim>
 void
@@ -88,8 +85,6 @@ test()
         deallog << r << ' ' << c << ' ' << i->row() << ' ' << i->column()
                 << std::endl;
 }
-
-
 
 int
 main()

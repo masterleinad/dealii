@@ -13,16 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // another check FullMatrix::Tadd
 // proper transposition of rectangular matrices is verified
 
-
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

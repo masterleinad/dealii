@@ -35,8 +35,6 @@ test(const double epsilon)
   deallog << std::endl;
 }
 
-
-
 int
 main()
 {

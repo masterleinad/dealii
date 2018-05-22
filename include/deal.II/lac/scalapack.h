@@ -917,8 +917,6 @@ ScaLAPACKMatrix<NumberType>::local_el(const unsigned int loc_row,
   return (*this)(loc_row, loc_column);
 }
 
-
-
 template <typename NumberType>
 inline NumberType&
 ScaLAPACKMatrix<NumberType>::local_el(const unsigned int loc_row,
@@ -927,15 +925,12 @@ ScaLAPACKMatrix<NumberType>::local_el(const unsigned int loc_row,
   return (*this)(loc_row, loc_column);
 }
 
-
 template <typename NumberType>
 inline unsigned int
 ScaLAPACKMatrix<NumberType>::m() const
 {
   return n_rows;
 }
-
-
 
 template <typename NumberType>
 inline unsigned int
@@ -944,8 +939,6 @@ ScaLAPACKMatrix<NumberType>::n() const
   return n_columns;
 }
 
-
-
 template <typename NumberType>
 unsigned int
 ScaLAPACKMatrix<NumberType>::local_m() const
@@ -953,15 +946,12 @@ ScaLAPACKMatrix<NumberType>::local_m() const
   return n_local_rows;
 }
 
-
-
 template <typename NumberType>
 unsigned int
 ScaLAPACKMatrix<NumberType>::local_n() const
 {
   return n_local_columns;
 }
-
 
 #  endif // DOXYGEN
 

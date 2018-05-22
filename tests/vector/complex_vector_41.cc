@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<std::complex<double> >::sadd(s, Vector)
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
@@ -47,8 +44,6 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

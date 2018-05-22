@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read the file side.iges, and
 // create a single-cell Triangulation
 

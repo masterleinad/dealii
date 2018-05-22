@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check correct behaviour of reinit of Trilinos vectors
 
 #include "../tests.h"
@@ -24,7 +22,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -33,7 +30,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   TrilinosWrappers::MPI::Vector test1, test2;
 
@@ -57,8 +53,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

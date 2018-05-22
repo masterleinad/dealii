@@ -16,7 +16,6 @@
 #ifndef dealii_vector_templates_h
 #define dealii_vector_templates_h
 
-
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/lac/block_vector.h>
@@ -31,7 +30,6 @@
 #ifdef DEAL_II_WITH_TRILINOS
 #  include <deal.II/lac/trilinos_vector.h>
 #endif
-
 
 #include <algorithm>
 #include <cmath>
@@ -56,8 +54,6 @@ Vector<Number>::Vector(const Vector<Number>& v)
     }
 }
 
-
-
 template <typename Number>
 Vector<Number>::Vector(Vector<Number>&& v) noexcept
   : Subscriptor(std::move(v)),
@@ -70,8 +66,6 @@ Vector<Number>::Vector(Vector<Number>&& v) noexcept
   v.max_vec_size = 0;
   v.values       = nullptr;
 }
-
-
 
 template <typename Number>
 template <typename OtherNumber>
@@ -87,8 +81,6 @@ Vector<Number>::Vector(const Vector<OtherNumber>& v)
       *this = v;
     }
 }
-
-
 
 #ifdef DEAL_II_WITH_PETSC
 namespace internal
@@ -134,8 +126,6 @@ namespace internal
   }
 } // namespace internal
 
-
-
 template <typename Number>
 Vector<Number>::Vector(const PETScWrappers::VectorBase& v)
   : Subscriptor(), vec_size(0), max_vec_size(0), values(nullptr, &free)
@@ -146,7 +136,6 @@ Vector<Number>::Vector(const PETScWrappers::VectorBase& v)
     }
 }
 #endif
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -189,7 +178,6 @@ Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector& v)
 
 #endif
 
-
 template <typename Number>
 inline Vector<Number>&
 Vector<Number>::operator=(const Vector<Number>& v)
@@ -212,8 +200,6 @@ Vector<Number>::operator=(const Vector<Number>& v)
   return *this;
 }
 
-
-
 template <typename Number>
 inline Vector<Number>&
 Vector<Number>::operator=(Vector<Number>&& v) noexcept
@@ -231,8 +217,6 @@ Vector<Number>::operator=(Vector<Number>&& v) noexcept
   return *this;
 }
 
-
-
 template <typename Number>
 template <typename Number2>
 inline Vector<Number>&
@@ -249,8 +233,6 @@ Vector<Number>::operator=(const Vector<Number2>& v)
 
   return *this;
 }
-
-
 
 template <typename Number>
 inline void
@@ -286,8 +268,6 @@ Vector<Number>::reinit(const size_type n, const bool omit_zeroing_entries)
   if(omit_zeroing_entries == false)
     *this = Number();
 }
-
-
 
 template <typename Number>
 inline void
@@ -326,8 +306,6 @@ Vector<Number>::grow_or_shrink(const size_type n)
     values[i] = Number();
 }
 
-
-
 template <typename Number>
 template <typename Number2>
 void
@@ -353,8 +331,6 @@ Vector<Number>::reinit(const Vector<Number2>& v,
     *this = Number();
 }
 
-
-
 template <typename Number>
 bool
 Vector<Number>::all_zero() const
@@ -366,8 +342,6 @@ Vector<Number>::all_zero() const
       return false;
   return true;
 }
-
-
 
 template <typename Number>
 bool
@@ -381,8 +355,6 @@ Vector<Number>::is_non_negative() const
 
   return true;
 }
-
-
 
 template <typename Number>
 Vector<Number>&
@@ -402,8 +374,6 @@ Vector<Number>::operator=(const Number s)
   return *this;
 }
 
-
-
 template <typename Number>
 Vector<Number>&
 Vector<Number>::operator*=(const Number factor)
@@ -421,8 +391,6 @@ Vector<Number>::operator*=(const Number factor)
   return *this;
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::add(const Number a, const Vector<Number>& v)
@@ -437,8 +405,6 @@ Vector<Number>::add(const Number a, const Vector<Number>& v)
   internal::VectorOperations::parallel_for(
     vector_add_av, 0, vec_size, thread_loop_partitioner);
 }
-
-
 
 template <typename Number>
 void
@@ -455,8 +421,6 @@ Vector<Number>::sadd(const Number x, const Number a, const Vector<Number>& v)
   internal::VectorOperations::parallel_for(
     vector_sadd_xav, 0, vec_size, thread_loop_partitioner);
 }
-
-
 
 template <typename Number>
 template <typename Number2>
@@ -479,8 +443,6 @@ Number Vector<Number>::operator*(const Vector<Number2>& v) const
   return sum;
 }
 
-
-
 template <typename Number>
 typename Vector<Number>::real_type
 Vector<Number>::norm_sqr() const
@@ -497,8 +459,6 @@ Vector<Number>::norm_sqr() const
   return sum;
 }
 
-
-
 template <typename Number>
 Number
 Vector<Number>::mean_value() const
@@ -513,8 +473,6 @@ Vector<Number>::mean_value() const
   return sum / real_type(size());
 }
 
-
-
 template <typename Number>
 typename Vector<Number>::real_type
 Vector<Number>::l1_norm() const
@@ -528,8 +486,6 @@ Vector<Number>::l1_norm() const
 
   return sum;
 }
-
-
 
 template <typename Number>
 typename Vector<Number>::real_type
@@ -573,8 +529,6 @@ Vector<Number>::l2_norm() const
     }
 }
 
-
-
 template <typename Number>
 typename Vector<Number>::real_type
 Vector<Number>::lp_norm(const real_type p) const
@@ -616,8 +570,6 @@ Vector<Number>::lp_norm(const real_type p) const
     }
 }
 
-
-
 template <typename Number>
 typename Vector<Number>::real_type
 Vector<Number>::linfty_norm() const
@@ -631,8 +583,6 @@ Vector<Number>::linfty_norm() const
 
   return max;
 }
-
-
 
 template <typename Number>
 Number
@@ -654,8 +604,6 @@ Vector<Number>::add_and_dot(const Number          a,
   return sum;
 }
 
-
-
 template <typename Number>
 Vector<Number>&
 Vector<Number>::operator+=(const Vector<Number>& v)
@@ -669,8 +617,6 @@ Vector<Number>::operator+=(const Vector<Number>& v)
     vector_add, 0, vec_size, thread_loop_partitioner);
   return *this;
 }
-
-
 
 template <typename Number>
 Vector<Number>&
@@ -687,8 +633,6 @@ Vector<Number>::operator-=(const Vector<Number>& v)
   return *this;
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::add(const Number v)
@@ -700,8 +644,6 @@ Vector<Number>::add(const Number v)
   internal::VectorOperations::parallel_for(
     vector_add, 0, vec_size, thread_loop_partitioner);
 }
-
-
 
 template <typename Number>
 void
@@ -723,8 +665,6 @@ Vector<Number>::add(const Number          a,
     vector_add, 0, vec_size, thread_loop_partitioner);
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::sadd(const Number x, const Vector<Number>& v)
@@ -740,8 +680,6 @@ Vector<Number>::sadd(const Number x, const Vector<Number>& v)
     vector_sadd, 0, vec_size, thread_loop_partitioner);
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::scale(const Vector<Number>& s)
@@ -755,8 +693,6 @@ Vector<Number>::scale(const Vector<Number>& s)
     vector_scale, 0, vec_size, thread_loop_partitioner);
 }
 
-
-
 template <typename Number>
 template <typename Number2>
 void
@@ -768,8 +704,6 @@ Vector<Number>::scale(const Vector<Number2>& s)
   for(size_type i = 0; i < vec_size; ++i)
     values[i] *= Number(s.values[i]);
 }
-
-
 
 template <typename Number>
 void
@@ -785,8 +719,6 @@ Vector<Number>::equ(const Number a, const Vector<Number>& u)
   internal::VectorOperations::parallel_for(
     vector_equ, 0, vec_size, thread_loop_partitioner);
 }
-
-
 
 template <typename Number>
 template <typename Number2>
@@ -808,8 +740,6 @@ Vector<Number>::equ(const Number a, const Vector<Number2>& u)
     values[i] = a * Number(u.values[i]);
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::ratio(const Vector<Number>& a, const Vector<Number>& b)
@@ -828,8 +758,6 @@ Vector<Number>::ratio(const Vector<Number>& a, const Vector<Number>& b)
     vector_ratio, 0, vec_size, thread_loop_partitioner);
 }
 
-
-
 template <typename Number>
 Vector<Number>&
 Vector<Number>::operator=(const BlockVector<Number>& v)
@@ -845,8 +773,6 @@ Vector<Number>::operator=(const BlockVector<Number>& v)
   return *this;
 }
 
-
-
 #ifdef DEAL_II_WITH_PETSC
 template <typename Number>
 Vector<Number>&
@@ -856,7 +782,6 @@ Vector<Number>::operator=(const PETScWrappers::VectorBase& v)
   return *this;
 }
 #endif
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -919,8 +844,6 @@ Vector<Number>::operator==(const Vector<Number2>& v) const
   return true;
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::print(const char* format) const
@@ -931,8 +854,6 @@ Vector<Number>::print(const char* format) const
     internal::VectorOperations::print(values[j], format);
   std::printf("\n");
 }
-
-
 
 template <typename Number>
 void
@@ -967,8 +888,6 @@ Vector<Number>::print(std::ostream&      out,
   out.precision(old_precision);
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::print(LogStream&         out,
@@ -985,7 +904,6 @@ Vector<Number>::print(LogStream&         out,
       out << values[i] << std::endl;
   out << std::endl;
 }
-
 
 template <typename Number>
 void
@@ -1021,8 +939,6 @@ Vector<Number>::block_write(std::ostream& out) const
   AssertThrow(out, ExcIO());
 }
 
-
-
 template <typename Number>
 void
 Vector<Number>::block_read(std::istream& in)
@@ -1032,7 +948,6 @@ Vector<Number>::block_read(std::istream& in)
   size_type sz;
 
   char buf[16];
-
 
   in.getline(buf, 16, '\n');
   sz = std::atoi(buf);
@@ -1055,8 +970,6 @@ Vector<Number>::block_read(std::istream& in)
   AssertThrow(c == ']', ExcIO());
 }
 
-
-
 template <typename Number>
 IndexSet
 Vector<Number>::locally_owned_elements() const
@@ -1064,16 +977,12 @@ Vector<Number>::locally_owned_elements() const
   return complete_index_set(size());
 }
 
-
-
 template <typename Number>
 std::size_t
 Vector<Number>::memory_consumption() const
 {
   return sizeof(*this) + (max_vec_size * sizeof(Number));
 }
-
-
 
 template <typename Number>
 void
@@ -1088,8 +997,6 @@ Vector<Number>::allocate(const size_type copy_n_el)
     new_values[i] = values[i];
   values.reset(new_values);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

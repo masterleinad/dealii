@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Markus Buerg, 2012 */
 /* Purpose: Check FEFieldFunction for hp::DoFHandler. */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -29,8 +25,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/fe_field_function.h>
-
-
 
 template <int dim>
 void
@@ -75,7 +69,6 @@ check()
   for(unsigned int q_point = 0; q_point < quadrature.size(); ++q_point)
     deallog << gradients[q_point] << std::endl;
 }
-
 
 int
 main()

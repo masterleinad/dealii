@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/table.h>
 #include <deal.II/base/tensor_product_polynomials_const.h>
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 /* ------------------- TensorProductPolynomialsConst -------------- */
-
 
 template <int dim>
 double
@@ -41,8 +37,6 @@ TensorProductPolynomialsConst<dim>::compute_value(const unsigned int i,
     return 1.;
 }
 
-
-
 template <>
 double
 TensorProductPolynomialsConst<0>::compute_value(const unsigned int,
@@ -51,7 +45,6 @@ TensorProductPolynomialsConst<0>::compute_value(const unsigned int,
   Assert(false, ExcNotImplemented());
   return 0.;
 }
-
 
 template <int dim>
 Tensor<1, dim>
@@ -155,7 +148,6 @@ TensorProductPolynomialsConst<dim>::compute(
   if(do_4th_derivatives)
     fourth_derivatives.emplace_back();
 }
-
 
 /* ------------------- explicit instantiations -------------- */
 template class TensorProductPolynomialsConst<1>;

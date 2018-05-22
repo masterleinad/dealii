@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // refine bottom-left cell after one global refinement of a square in 2d and check p4est-output
 
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <class TRIA>
 void
@@ -45,7 +41,6 @@ check(TRIA& tr)
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -77,12 +72,9 @@ test()
       check(tr);
     }
 
-
-
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

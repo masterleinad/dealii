@@ -24,7 +24,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/sparsity_tools.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 #ifdef DEAL_II_WITH_MPI
@@ -64,8 +63,6 @@ namespace parallel
           ExcMessage(
             "construct_multigrid_hierarchy requires allow_artificial_cells to be set to true."))
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -307,8 +304,6 @@ namespace parallel
 #  endif
     }
 
-
-
     template <int dim, int spacedim>
     bool
     Triangulation<dim, spacedim>::with_artificial_cells() const
@@ -316,16 +311,12 @@ namespace parallel
       return allow_artificial_cells;
     }
 
-
-
     template <int dim, int spacedim>
     const std::vector<types::subdomain_id>&
     Triangulation<dim, spacedim>::get_true_subdomain_ids_of_cells() const
     {
       return true_subdomain_ids_of_cells;
     }
-
-
 
     template <int dim, int spacedim>
     const std::vector<types::subdomain_id>&
@@ -335,8 +326,6 @@ namespace parallel
       return true_level_subdomain_ids_of_cells[level];
     }
 
-
-
     template <int dim, int spacedim>
     void
     Triangulation<dim, spacedim>::execute_coarsening_and_refinement()
@@ -345,8 +334,6 @@ namespace parallel
       partition();
       this->update_number_cache();
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -371,8 +358,6 @@ namespace parallel
       this->update_number_cache();
     }
 
-
-
     template <int dim, int spacedim>
     void
     Triangulation<dim, spacedim>::copy_triangulation(
@@ -391,8 +376,6 @@ namespace parallel
       partition();
       this->update_number_cache();
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -420,8 +403,6 @@ namespace parallel
       return true;
     }
 
-
-
     template <int dim, int spacedim>
     const std::vector<unsigned int>&
     Triangulation<dim, spacedim>::get_true_subdomain_ids_of_cells() const
@@ -429,8 +410,6 @@ namespace parallel
       Assert(false, ExcNotImplemented());
       return true_subdomain_ids_of_cells;
     }
-
-
 
     template <int dim, int spacedim>
     const std::vector<unsigned int>&
@@ -443,9 +422,7 @@ namespace parallel
   } // namespace shared
 } // namespace parallel
 
-
 #endif
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "shared_tria.inst"

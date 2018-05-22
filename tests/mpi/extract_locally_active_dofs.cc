@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFTools::extract_locally_active_dofs and ensure that it returns the
 // same result as DoFTools::extract_dofs_with_subdomain_association()
 
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/fe_q.h>
-
-
 
 template <int dim>
 void
@@ -71,14 +67,12 @@ test()
     }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

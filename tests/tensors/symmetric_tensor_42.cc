@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Verify that symmetric tensor construction and initialization
 // works as expected for non-trivial number types
 
@@ -51,7 +50,6 @@ test()
   test_initializer<2, rank, NumberType, OtherNumberType>();
   test_initializer<3, rank, NumberType, OtherNumberType>();
 }
-
 
 int
 main()

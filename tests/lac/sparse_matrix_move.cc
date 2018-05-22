@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 void
 graph_laplacian(const SparsityPattern& sparsity, SparseMatrix<double>& matrix)
@@ -36,7 +33,6 @@ graph_laplacian(const SparsityPattern& sparsity, SparseMatrix<double>& matrix)
     }
 }
 
-
 SparseMatrix<double>
 graph_laplacian(const SparsityPattern& sparsity)
 {
@@ -46,7 +42,6 @@ graph_laplacian(const SparsityPattern& sparsity)
   return A;
 }
 
-
 SparseMatrix<double>
 graph_laplacian_move_return(const SparsityPattern& sparsity)
 {
@@ -55,7 +50,6 @@ graph_laplacian_move_return(const SparsityPattern& sparsity)
 
   return std::move(A);
 }
-
 
 int
 main()

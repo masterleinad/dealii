@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to precondition_chebyshev_01 but using a separate preconditioner
 // class for providing the inverse diagonal that goes through another code
 // path in PreconditionChebyshev
-
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/vector.h>
-
-
 
 class DiagonalMatrixManual
 {
@@ -64,7 +60,6 @@ public:
 private:
   Vector<double> diagonal;
 };
-
 
 void
 check()
@@ -125,7 +120,6 @@ check()
     deallog << out(i) << " ";
   deallog << std::endl;
 }
-
 
 int
 main()

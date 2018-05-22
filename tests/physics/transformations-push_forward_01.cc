@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that the push-forward operation in the Physics::Transformations
 // namespace works as expected for all tensor types.
 // This gives particular scrutiny to the use of the contract() function

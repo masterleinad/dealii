@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/algorithms/newton.h>
 #include <deal.II/algorithms/operator.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 //test computing square root of 2 with newton's method
 
@@ -86,8 +84,6 @@ SquareRoot::solve(AnyData& out, const AnyData& in)
   v(0) = 1. / 2. / x(0) * r(0);
 }
 
-
-
 void
 test()
 {
@@ -114,8 +110,6 @@ test()
   deallog << " square root " << (*out_data.read<Vector<double>*>(0))(0)
           << std::endl;
 }
-
-
 
 int
 main()

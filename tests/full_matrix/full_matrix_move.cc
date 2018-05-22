@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that FullMatrix objects can be move constructed and assigned
 
 #include "../tests.h"

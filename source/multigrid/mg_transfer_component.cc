@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 
@@ -36,7 +35,6 @@
 #include <numeric>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace
 {
@@ -146,7 +144,6 @@ namespace
       }
   }
 
-
   /**
    * Adjust vectors on all levels
    * to correct size.  Count the
@@ -206,7 +203,6 @@ namespace
   }
 } // namespace
 
-
 template <typename number>
 template <int dim, class InVector, int spacedim>
 void
@@ -247,7 +243,6 @@ MGTransferSelect<number>::do_copy_to_mg(
         dst[level](i->second) = src(i->first);
     }
 }
-
 
 template <int dim, int spacedim>
 void
@@ -558,7 +553,6 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
     }
 }
 
-
 template <typename number>
 template <int dim, int spacedim>
 void
@@ -693,10 +687,7 @@ MGTransferSelect<number>::build_matrices(
     }
 }
 
-
-
 // explicit instantiations
 #include "mg_transfer_component.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -67,7 +67,6 @@ test()
   deallog << bounding_box.first << " " << bounding_box.second << std::endl;
 }
 
-
 int
 main()
 {

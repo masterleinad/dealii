@@ -16,7 +16,6 @@
 // construct an anisotropic simplex quadrature, and check that we can
 // get an affine transformation out of it.
 
-
 #include "../tests.h"
 #include "simplex.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -39,7 +38,6 @@ test(int n, const Point<dim>& split_point, stream_type& deallog)
   for(auto p : quad.get_points())
     deallog << p << std::endl;
 }
-
 
 int
 main()

@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check creation and output of a matrix
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

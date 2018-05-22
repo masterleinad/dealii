@@ -16,7 +16,6 @@
 #ifndef dealii_parallel_h
 #define dealii_parallel_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/synchronous_iterator.h>
@@ -34,7 +33,6 @@
 #  include <tbb/parallel_reduce.h>
 #  include <tbb/partitioner.h>
 #endif
-
 
 //TODO[WB]: allow calling functions to pass along a tbb::affinity_partitioner object to ensure that subsequent calls use the same cache lines
 
@@ -65,8 +63,6 @@ namespace parallel
       static const bool value = false;
     };
 #endif
-
-
 
     /**
      * Convert a function object of type F into an object that can be applied
@@ -126,7 +122,6 @@ namespace parallel
         *std::get<3>(p) = f(*std::get<0>(p), *std::get<1>(p), *std::get<2>(p));
       }
     };
-
 
     /**
      * Take a function object and create a Body object from it. We do this in
@@ -192,8 +187,6 @@ namespace parallel
 #endif
   }
 
-
-
   /**
    * An algorithm that performs the action <code>*out++ = predicate(*in1++,
    * *in2++)</code> where the <code>in1</code> iterator ranges over the given
@@ -248,8 +241,6 @@ namespace parallel
       tbb::auto_partitioner());
 #endif
   }
-
-
 
   /**
    * An algorithm that performs the action <code>*out++ = predicate(*in1++,
@@ -310,7 +301,6 @@ namespace parallel
 #endif
   }
 
-
   namespace internal
   {
 #ifdef DEAL_II_WITH_THREADS
@@ -327,7 +317,6 @@ namespace parallel
     }
 #endif
   } // namespace internal
-
 
   /**
    * This function applies the given function argument @p f to all elements in
@@ -430,8 +419,6 @@ namespace parallel
 #endif
   }
 
-
-
   /**
    * This is a class specialized to for loops with a fixed range given by
    * unsigned integers. This is an abstract base class that an actual worker
@@ -489,8 +476,6 @@ namespace parallel
     virtual void
     apply_to_subrange(const std::size_t, const std::size_t) const = 0;
   };
-
-
 
   namespace internal
   {
@@ -579,7 +564,6 @@ namespace parallel
     };
 #endif
   } // namespace internal
-
 
   /**
    * This function works a lot like the apply_to_subranges(), but it allows to
@@ -670,7 +654,6 @@ namespace parallel
 #endif
   }
 
-
   // --------------------- for loop affinity partitioner -----------------------
 
   /**
@@ -738,7 +721,6 @@ namespace parallel
   } // namespace internal
 } // namespace parallel
 
-
 namespace internal
 {
   namespace VectorImplementation
@@ -760,7 +742,6 @@ namespace internal
     extern unsigned int minimum_parallel_grain_size;
   } // namespace VectorImplementation
 
-
   namespace SparseMatrixImplementation
   {
     /**
@@ -771,7 +752,6 @@ namespace internal
   } // namespace SparseMatrixImplementation
 
 } // end of namespace internal
-
 
 /* --------------------------- inline functions ------------------------- */
 
@@ -802,7 +782,6 @@ namespace parallel
   } // namespace internal
 
 #endif
-
 
   inline void
   ParallelForInteger::apply_parallel(

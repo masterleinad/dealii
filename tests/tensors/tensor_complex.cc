@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as tensor.cc, but uses tensors based on std::complex<double> instead
 // of double
 

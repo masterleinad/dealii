@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Copy of no_flux_09 for a higher order element. The purpose here is to test the
 // Manifold::normal_vector function inside of VectorTools::compute_no_normal_flux_constraints
 // for points other than the vertices.
-
 
 #include "../tests.h"
 
@@ -29,7 +26,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -57,8 +53,6 @@ check()
 
   cm.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

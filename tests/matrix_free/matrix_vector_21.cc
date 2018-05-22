@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of matrix free matrix-vector products for two
 // vectors on the same DoFHandler. Similar to matrix_vector_20.cc but using
 // a single FEEvaluation rather than two.
@@ -43,7 +41,6 @@
 
 #include <iostream>
 
-
 template <int dim, int fe_degree, typename Number>
 void
 helmholtz_operator(const MatrixFree<dim, Number>&                    data,
@@ -70,8 +67,6 @@ helmholtz_operator(const MatrixFree<dim, Number>&                    data,
       fe_eval.distribute_local_to_global(dst);
     }
 }
-
-
 
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
@@ -100,8 +95,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -185,7 +178,6 @@ test()
 
   mf.vmult(out, in);
 
-
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
   SparsityPattern sparsity;
@@ -245,7 +237,6 @@ test()
     }
   deallog << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

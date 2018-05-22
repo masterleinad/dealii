@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // on a somewhat deformed cube, verify that if we push forward a bunch
 // of points from the reference to the real cell and then call
 // Mapping::transform_unit_to_real_cell that we get the same point as
@@ -31,7 +29,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim, int spacedim>
 void
@@ -86,7 +83,6 @@ test_real_to_unit_cell()
         break;
     }
 
-
   MappingQ<dim, spacedim> map(4);
 
   // work with this cell (unlike the
@@ -108,13 +104,11 @@ test_real_to_unit_cell()
   deallog << "OK" << std::endl;
 }
 
-
 int
 main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
-
 
   test_real_to_unit_cell<2, 3>();
 

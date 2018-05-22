@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -58,7 +56,6 @@ check_rect1(unsigned int n, bool color, bool log)
         grid_out.write_dx(tria, std::cout);
     }
 }
-
 
 int
 main()

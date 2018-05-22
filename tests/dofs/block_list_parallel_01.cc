@@ -15,7 +15,6 @@
 
 // Test DoFTools::make_cell_patches with parallel::distributed::Triangulation
 
-
 #include "block_list.h"
 
 template <int dim>
@@ -50,7 +49,6 @@ test_block_list(const parallel::distributed::Triangulation<dim>& tr,
         }
     }
 }
-
 
 int
 main(int argc, char** argv)

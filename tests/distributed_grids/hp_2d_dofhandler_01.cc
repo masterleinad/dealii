@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create a parallel hp::DoFHandler on a single CPU
 //
 // like the test without the hp_ prefix, but for hp::DoFHandler
@@ -38,7 +36,6 @@
 
 #include <fstream>
 
-
 template <int dim>
 void
 test()
@@ -60,8 +57,6 @@ test()
   const unsigned int dofs_per_cell = dofh.get_fe()[0].dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-
-
   for(; cell != dofh.end(); ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
@@ -72,7 +67,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

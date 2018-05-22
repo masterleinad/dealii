@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix. The mesh uses a mesh consisting of several different cell types

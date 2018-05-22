@@ -266,7 +266,6 @@ private:
   block_kernel(const size_type block_begin, const size_type block_end);
 };
 
-
 /**
  * Block Jacobi (additive Schwarz) method with possibly overlapping blocks.
  *
@@ -363,7 +362,6 @@ public:
   void
   Tvmult(VectorType& dst, const VectorType& rhs) const;
 };
-
 
 /**
  * Block Gauss-Seidel method with possibly overlapping blocks.
@@ -462,7 +460,6 @@ public:
   Tvmult(VectorType& dst, const VectorType& rhs) const;
 };
 
-
 /**
  * Symmetric block Gauss-Seidel method with possibly overlapping blocks.
  *
@@ -554,7 +551,6 @@ public:
   void
   Tvmult(VectorType& dst, const VectorType& rhs) const;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

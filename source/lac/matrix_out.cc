@@ -17,7 +17,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 MatrixOut::Options::Options(const bool         show_absolute_values,
                             const unsigned int block_size,
                             const bool         discontinuous)
@@ -26,15 +25,11 @@ MatrixOut::Options::Options(const bool         show_absolute_values,
     discontinuous(discontinuous)
 {}
 
-
-
 const std::vector<MatrixOut::Patch>&
 MatrixOut::get_patches() const
 {
   return patches;
 }
-
-
 
 std::vector<std::string>
 MatrixOut::get_dataset_names() const

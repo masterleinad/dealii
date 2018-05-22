@@ -17,7 +17,6 @@
  * Author: Guido Kanschat, Texas A&M University, 2009
  */
 
-
 // The first few files have already been covered in previous examples and will
 // thus not be further commented on:
 #include <deal.II/base/function.h>
@@ -74,7 +73,6 @@
 #include <fstream>
 #include <iostream>
 
-
 namespace Step12
 {
   using namespace dealii;
@@ -119,7 +117,6 @@ namespace Step12
       }
   }
 
-
   // Finally, a function that computes and returns the wind field
   // $\beta=\beta(\mathbf x)$. As explained in the introduction, we
   // will use a rotational field around the origin in 2d. In 3d, we
@@ -138,7 +135,6 @@ namespace Step12
 
     return wind_field;
   }
-
 
   // @sect3{The AdvectionProblem class}
   //
@@ -227,14 +223,12 @@ namespace Step12
                         CellInfo& info2);
   };
 
-
   // We start with the constructor. The 1 in the constructor call of
   // <code>fe</code> is the polynomial degree.
   template <int dim>
   AdvectionProblem<dim>::AdvectionProblem()
     : mapping(), fe(1), dof_handler(triangulation)
   {}
-
 
   template <int dim>
   void
@@ -341,7 +335,6 @@ namespace Step12
       &AdvectionProblem<dim>::integrate_face_term,
       assembler);
   }
-
 
   // @sect4{The local integrators}
 
@@ -501,7 +494,6 @@ namespace Step12
       }
   }
 
-
   // @sect3{All the rest}
   //
   // For this simple problem we use the simplest possible solver, called
@@ -530,7 +522,6 @@ namespace Step12
     // After these preparations we are ready to start the linear solver.
     solver.solve(system_matrix, solution, right_hand_side, preconditioner);
   }
-
 
   // We refine the grid according to a very simple refinement criterion,
   // namely an approximation to the gradient of the solution. As here we
@@ -580,7 +571,6 @@ namespace Step12
     triangulation.execute_coarsening_and_refinement();
   }
 
-
   // The output of this program consists of eps-files of the adaptively
   // refined grids and the numerical solutions given in gnuplot format.
   template <int dim>
@@ -613,7 +603,6 @@ namespace Step12
     }
   }
 
-
   // The following <code>run</code> function is similar to previous examples.
   template <int dim>
   void
@@ -632,7 +621,6 @@ namespace Step12
         else
           refine_grid();
 
-
         deallog << "Number of active cells:       "
                 << triangulation.n_active_cells() << std::endl;
 
@@ -648,7 +636,6 @@ namespace Step12
       }
   }
 } // namespace Step12
-
 
 // The following <code>main</code> function is similar to previous examples as
 // well, and need not be commented on.

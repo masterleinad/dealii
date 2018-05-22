@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridOut::write_vtk
 
 #include "../tests.h"
@@ -25,8 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim, int spacedim>
 void
@@ -44,7 +41,6 @@ test(std::ostream& logfile)
   GridOut grid_out;
   grid_out.write_vtk(tria, logfile);
 }
-
 
 int
 main()

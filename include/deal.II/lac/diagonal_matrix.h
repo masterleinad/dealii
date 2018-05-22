@@ -16,7 +16,6 @@
 #ifndef dealii_diagonal_matrix_h
 #define dealii_diagonal_matrix_h
 
-
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_operation.h>
 
@@ -220,16 +219,12 @@ DiagonalMatrix<VectorType>::clear()
   diagonal.reinit(0);
 }
 
-
-
 template <typename VectorType>
 std::size_t
 DiagonalMatrix<VectorType>::memory_consumption() const
 {
   return diagonal.memory_consumption();
 }
-
-
 
 template <typename VectorType>
 void
@@ -238,16 +233,12 @@ DiagonalMatrix<VectorType>::reinit(const VectorType& vec)
   diagonal = vec;
 }
 
-
-
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::initialize_dof_vector(VectorType& dst) const
 {
   dst.reinit(diagonal);
 }
-
-
 
 template <typename VectorType>
 void
@@ -256,16 +247,12 @@ DiagonalMatrix<VectorType>::compress(VectorOperation::values operation)
   diagonal.compress(operation);
 }
 
-
-
 template <typename VectorType>
 VectorType&
 DiagonalMatrix<VectorType>::get_vector()
 {
   return diagonal;
 }
-
-
 
 template <typename VectorType>
 const VectorType&
@@ -274,8 +261,6 @@ DiagonalMatrix<VectorType>::get_vector() const
   return diagonal;
 }
 
-
-
 template <typename VectorType>
 typename VectorType::size_type
 DiagonalMatrix<VectorType>::m() const
@@ -283,16 +268,12 @@ DiagonalMatrix<VectorType>::m() const
   return diagonal.size();
 }
 
-
-
 template <typename VectorType>
 typename VectorType::size_type
 DiagonalMatrix<VectorType>::n() const
 {
   return diagonal.size();
 }
-
-
 
 template <typename VectorType>
 typename VectorType::value_type
@@ -304,8 +285,6 @@ DiagonalMatrix<VectorType>::operator()(const size_type i,
   return diagonal(i);
 }
 
-
-
 template <typename VectorType>
 typename VectorType::value_type&
 DiagonalMatrix<VectorType>::operator()(const size_type i, const size_type j)
@@ -314,8 +293,6 @@ DiagonalMatrix<VectorType>::operator()(const size_type i, const size_type j)
   (void) j;
   return diagonal(i);
 }
-
-
 
 template <typename VectorType>
 template <typename number2>
@@ -332,8 +309,6 @@ DiagonalMatrix<VectorType>::add(const size_type  row,
       diagonal(row) += values[i];
 }
 
-
-
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::add(const size_type  i,
@@ -344,8 +319,6 @@ DiagonalMatrix<VectorType>::add(const size_type  i,
     diagonal(i) += value;
 }
 
-
-
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
@@ -354,16 +327,12 @@ DiagonalMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
   dst.scale(diagonal);
 }
 
-
-
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
 {
   vmult(dst, src);
 }
-
-
 
 template <typename VectorType>
 void
@@ -375,8 +344,6 @@ DiagonalMatrix<VectorType>::vmult_add(VectorType&       dst,
   dst += tmp;
 }
 
-
-
 template <typename VectorType>
 void
 DiagonalMatrix<VectorType>::Tvmult_add(VectorType&       dst,
@@ -384,7 +351,6 @@ DiagonalMatrix<VectorType>::Tvmult_add(VectorType&       dst,
 {
   vmult_add(dst, src);
 }
-
 
 #endif
 

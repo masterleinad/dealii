@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
 #include <deal.II/distributed/tria.h>
@@ -23,7 +22,6 @@
 #include <iomanip>
 #include <iterator>
 #include <unistd.h>
-
 
 template <int dim, int spacedim>
 void
@@ -58,7 +56,6 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
       }
   }
 }
-
 
 template <int dim>
 void

@@ -16,7 +16,6 @@
 #ifndef dealii_tensor_product_polynomials_h
 #define dealii_tensor_product_polynomials_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -194,7 +193,6 @@ public:
   unsigned int
   n() const;
 
-
 protected:
   /**
    * Copy of the vector <tt>pols</tt> of polynomials given to the constructor.
@@ -227,8 +225,6 @@ protected:
   compute_index(const unsigned int i,
                 unsigned int (&indices)[(dim > 0 ? dim : 1)]) const;
 };
-
-
 
 /**
  * Anisotropic tensor product of given polynomials.
@@ -401,9 +397,7 @@ private:
 
 #ifndef DOXYGEN
 
-
 /* ---------------- template and inline functions ---------- */
-
 
 template <int dim, typename PolynomialType>
 template <class Pol>
@@ -423,8 +417,6 @@ inline TensorProductPolynomials<dim, PolynomialType>::TensorProductPolynomials(
     }
 }
 
-
-
 template <int dim, typename PolynomialType>
 inline unsigned int
 TensorProductPolynomials<dim, PolynomialType>::n() const
@@ -435,15 +427,12 @@ TensorProductPolynomials<dim, PolynomialType>::n() const
     return n_tensor_pols;
 }
 
-
-
 template <int dim, typename PolynomialType>
 inline const std::vector<unsigned int>&
 TensorProductPolynomials<dim, PolynomialType>::get_numbering() const
 {
   return index_map;
 }
-
 
 template <int dim, typename PolynomialType>
 inline const std::vector<unsigned int>&
@@ -698,8 +687,6 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
         }
     }
 }
-
-
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

@@ -16,7 +16,6 @@
 #ifndef dealii_scalapack_templates_h
 #define dealii_scalapack_templates_h
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_SCALAPACK
@@ -606,7 +605,6 @@ extern "C"
   float
   pslamch_(const int* ictxt, const char* cmach);
 
-
   /**
    *  psyevx computes selected eigenvalues and, optionally, eigenvectors
    *  of a real symmetric matrix A. Eigenvalues/vectors can be selected by
@@ -883,8 +881,6 @@ extern "C"
            int*         info);
 }
 
-
-
 /*
  * In the following we have template wrappers for the ScaLAPACK routines
  * wrappers for other numeric types can be added in the future
@@ -914,7 +910,6 @@ Cgerv2d(int context, int M, int N, float* A, int lda, int rsrc, int csrc)
   Csgerv2d(context, M, N, A, lda, rsrc, csrc);
 }
 
-
 template <typename number>
 inline void
 Cgesd2d(int /*context*/,
@@ -939,7 +934,6 @@ Cgesd2d(int context, int M, int N, float* A, int lda, int rdest, int cdest)
 {
   Csgesd2d(context, M, N, A, lda, rdest, cdest);
 }
-
 
 template <typename number>
 inline void
@@ -977,7 +971,6 @@ ppotrf(const char* UPLO,
 {
   pspotrf_(UPLO, N, A, IA, JA, DESCA, INFO);
 }
-
 
 template <typename number>
 inline void
@@ -1019,7 +1012,6 @@ pgetrf(const int* m,
   psgetrf_(m, n, A, IA, JA, DESCA, ipiv, INFO);
 }
 
-
 template <typename number>
 inline void
 ppotri(const char* /*UPLO*/,
@@ -1056,7 +1048,6 @@ ppotri(const char* UPLO,
 {
   pspotri_(UPLO, N, A, IA, JA, DESCA, INFO);
 }
-
 
 template <typename number>
 inline void
@@ -1106,7 +1097,6 @@ pgetri(const int* N,
 {
   psgetri_(N, A, IA, JA, DESCA, ipiv, work, lwork, iwork, liwork, info);
 }
-
 
 template <typename number>
 inline void
@@ -1165,7 +1155,6 @@ ppocon(const char*  uplo,
     uplo, N, A, IA, JA, DESCA, ANORM, RCOND, WORK, LWORK, IWORK, LIWORK, INFO);
 }
 
-
 template <typename number>
 inline number
 plansy(const char* /*norm*/,
@@ -1205,7 +1194,6 @@ plansy(const char*  norm,
 {
   return pslansy_(norm, uplo, N, A, IA, JA, DESCA, work);
 }
-
 
 template <typename number>
 inline void
@@ -1258,7 +1246,6 @@ pgesv(const int* n,
 {
   psgesv_(n, nrhs, A, ia, ja, desca, ipiv, B, ib, jb, descb, info);
 }
-
 
 template <typename number>
 inline void
@@ -1369,7 +1356,6 @@ pgemm(const char*  transa,
           DESCC);
 }
 
-
 template <typename number>
 inline number
 plange(const char* /*norm*/,
@@ -1409,7 +1395,6 @@ plange(const char*  norm,
 {
   return pslange_(norm, m, n, A, ia, ja, desca, work);
 }
-
 
 template <typename number>
 inline void
@@ -1474,7 +1459,6 @@ psyev(const char* jobz,
     jobz, uplo, m, A, ia, ja, desca, w, z, iz, jz, descz, work, lwork, info);
 }
 
-
 template <typename number>
 inline void
 placpy(const char* /*uplo*/,
@@ -1523,7 +1507,6 @@ placpy(const char* uplo,
 {
   pslacpy_(uplo, m, n, A, ia, ja, desca, B, ib, jb, descb);
 }
-
 
 template <typename number>
 inline void
@@ -1574,7 +1557,6 @@ pgemr2d(const int*   m,
   psgemr2d_(m, n, A, ia, ja, desca, B, ib, jb, descb, ictxt);
 }
 
-
 template <typename number>
 inline void
 plamch(const int* /*ictxt*/, const char* /*cmach*/, number& /*val*/)
@@ -1593,7 +1575,6 @@ plamch(const int* ictxt, const char* cmach, float& val)
 {
   val = pslamch_(ictxt, cmach);
 }
-
 
 template <typename number>
 inline void
@@ -1754,7 +1735,6 @@ psyevx(const char* jobz,
            info);
 }
 
-
 template <typename number>
 inline void
 pgesvd(const char* /*jobu*/,
@@ -1869,7 +1849,6 @@ pgesvd(const char* jobu,
            info);
 }
 
-
 template <typename number>
 inline void
 pgels(const char* /*trans*/,
@@ -1933,7 +1912,6 @@ pgels(const char* trans,
     trans, m, n, nrhs, A, ia, ja, desca, B, ib, jb, descb, work, lwork, info);
 }
 
-
 template <typename number>
 inline void
 pgeadd(const char* /*transa*/,
@@ -1989,7 +1967,6 @@ pgeadd(const char*  transa,
   psgeadd_(transa, m, n, alpha, A, IA, JA, DESCA, beta, C, IC, JC, DESCC);
 }
 
-
 template <typename number>
 inline void
 ptran(const int* /*m*/,
@@ -2041,7 +2018,6 @@ ptran(const int*   m,
 {
   pstran_(m, n, alpha, A, IA, JA, DESCA, beta, C, IC, JC, DESCC);
 }
-
 
 template <typename number>
 inline void

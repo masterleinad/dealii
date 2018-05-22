@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -31,7 +30,6 @@
 //   map_dofs_to_support_points(...);
 // for the hp case with different finite elements
 // on different cells.
-
 
 using namespace std;
 
@@ -59,8 +57,6 @@ test()
   //distribute dofs
   hp_dof_handler.begin_active()->set_active_fe_index(1);
   hp_dof_handler.distribute_dofs(fe_collection);
-
-
 
   //now map the dofs to the support points and show them on the screen
   std::vector<Point<dim>> hp_map(hp_dof_handler.n_dofs());

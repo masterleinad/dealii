@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // when calling TrilinosWrappers::MPI::Vector::operator() (), the return type is a
 // reference object, not a reference to the actual element. this leads to the
 // funny situation that an assignment like v2(i)=v1(i) isn't really what it
@@ -28,7 +26,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
@@ -47,8 +44,6 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -56,7 +51,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

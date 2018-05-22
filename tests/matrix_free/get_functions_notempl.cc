@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in getting the function values, the function gradients, and the
 // function Laplacians on a hyperball mesh with different sizes in the number
@@ -27,7 +25,6 @@
 std::ofstream logfile("output");
 
 #include "get_functions_common.h"
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -47,8 +44,6 @@ sub_test(const DoFHandler<dim>&   dof,
   MatrixFreeTest<dim, -1, n_q_points_1d, number> mf(mf_data, mapping);
   mf.test_functions(solution);
 }
-
-
 
 template <int dim, int fe_degree>
 void
@@ -79,7 +74,6 @@ test()
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);
   constraints.close();
-
 
   // in the other functions, use do_test in
   // get_functions_common, but here we have to

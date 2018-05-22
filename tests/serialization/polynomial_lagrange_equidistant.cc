@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for LagrangeEquidistant
 
 #include "serialization.h"
@@ -35,7 +34,6 @@ test()
 
   verify(p1, p2);
 }
-
 
 int
 main()

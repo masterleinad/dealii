@@ -74,9 +74,7 @@ namespace LACExceptions
   //@}
 } // namespace LACExceptions
 
-
 using namespace LACExceptions;
-
 
 DEAL_II_NAMESPACE_CLOSE
 

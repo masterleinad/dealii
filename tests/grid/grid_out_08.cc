@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridOut::write_vtu for 1d meshes in 3d
 
 #include "../tests.h"
@@ -26,10 +25,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 test()
@@ -76,7 +72,6 @@ test()
   GridOut grid_out;
   grid_out.write_vtu(tria, logfile);
 }
-
 
 int
 main()

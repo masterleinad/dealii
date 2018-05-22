@@ -16,7 +16,6 @@
 #ifndef dealii_error_estimator_h
 #define dealii_error_estimator_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function.h>
@@ -25,7 +24,6 @@
 #include <map>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int, int>
 class Mapping;
@@ -37,8 +35,6 @@ namespace hp
   template <int>
   class QCollection;
 }
-
-
 
 /**
  * Implementation of the error indicator by Kelly, De S. R. Gago, Zienkiewicz
@@ -419,7 +415,6 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
-
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -441,7 +436,6 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
-
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -464,7 +458,6 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
-
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -486,7 +479,6 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
-
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -561,8 +553,6 @@ public:
                    "You need to specify at least one solution vector as "
                    "input.");
 };
-
-
 
 /**
  * This is a specialization of the general template for 1d. The implementation
@@ -706,7 +696,6 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
-
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -728,7 +717,6 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
-
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -751,7 +739,6 @@ public:
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
 
-
   /**
    * Equivalent to the set of functions above, except that this one takes a
    * quadrature collection for hp finite element dof handlers.
@@ -773,7 +760,6 @@ public:
            = numbers::invalid_subdomain_id,
            const types::material_id material_id = numbers::invalid_material_id,
            const Strategy           strategy    = cell_diameter_over_24);
-
 
   /**
    * Equivalent to the set of functions above, except that this one takes a
@@ -848,8 +834,6 @@ public:
                    "You need to specify at least one solution vector as "
                    "input.");
 };
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

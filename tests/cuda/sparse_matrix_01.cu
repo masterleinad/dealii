@@ -24,7 +24,6 @@
 #include <deal.II/lac/read_write_vector.h>
 #include <deal.II/lac/vector.h>
 
-
 void
 check_matrix(SparseMatrix<double> const&         A,
              CUDAWrappers::SparseMatrix<double>& A_dev)

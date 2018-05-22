@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: test that creating a mask from a vector<bool> works
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
-
-
 
 void
 test()
@@ -50,7 +45,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

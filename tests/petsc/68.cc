@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check PETScWrappers::MatrixBase::clear_row () with used second argument
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MatrixBase& m)
@@ -94,8 +91,6 @@ test(PETScWrappers::MatrixBase& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

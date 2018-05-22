@@ -16,14 +16,12 @@
 #ifndef dealii_vector_memory_templates_h
 #define dealii_vector_memory_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/std_cxx14/memory.h>
 
 #include <deal.II/lac/vector_memory.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename VectorType>
 typename GrowingVectorMemory<VectorType>::Pool
@@ -35,8 +33,6 @@ Threads::Mutex GrowingVectorMemory<VectorType>::mutex;
 template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::Pool::Pool() : data(nullptr)
 {}
-
-
 
 template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::Pool::~Pool()
@@ -50,7 +46,6 @@ inline GrowingVectorMemory<VectorType>::Pool::~Pool()
   data->clear();
   delete data;
 }
-
 
 template <typename VectorType>
 inline void
@@ -70,7 +65,6 @@ GrowingVectorMemory<VectorType>::Pool::initialize(const size_type size)
     }
 }
 
-
 template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::GrowingVectorMemory(
   const size_type initial_size,
@@ -81,7 +75,6 @@ inline GrowingVectorMemory<VectorType>::GrowingVectorMemory(
   Threads::Mutex::ScopedLock lock(mutex);
   pool.initialize(initial_size);
 }
-
 
 template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::~GrowingVectorMemory()
@@ -96,8 +89,6 @@ inline GrowingVectorMemory<VectorType>::~GrowingVectorMemory()
               << pool.data->size() << std::endl;
     }
 }
-
-
 
 template <typename VectorType>
 inline VectorType*
@@ -127,8 +118,6 @@ GrowingVectorMemory<VectorType>::alloc()
   return pool.data->back().second.get();
 }
 
-
-
 template <typename VectorType>
 inline void
 GrowingVectorMemory<VectorType>::free(const VectorType* const v)
@@ -149,8 +138,6 @@ GrowingVectorMemory<VectorType>::free(const VectorType* const v)
   Assert(false, typename VectorMemory<VectorType>::ExcNotAllocatedHere());
 }
 
-
-
 template <typename VectorType>
 inline void
 GrowingVectorMemory<VectorType>::release_unused_memory()
@@ -160,8 +147,6 @@ GrowingVectorMemory<VectorType>::release_unused_memory()
   if(pool.data != nullptr)
     pool.data->clear();
 }
-
-
 
 template <typename VectorType>
 inline std::size_t
@@ -178,7 +163,6 @@ GrowingVectorMemory<VectorType>::memory_consumption() const
 
   return result;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

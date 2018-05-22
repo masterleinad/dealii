@@ -17,7 +17,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // explicit instantiations
 template class SparseILU<double>;
 template void
@@ -34,7 +33,6 @@ template void
 SparseILU<double>::vmult<float>(Vector<float>&, const Vector<float>&) const;
 template void
 SparseILU<double>::Tvmult<float>(Vector<float>&, const Vector<float>&) const;
-
 
 template class SparseILU<float>;
 template void

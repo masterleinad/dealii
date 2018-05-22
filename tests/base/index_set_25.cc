@@ -37,7 +37,6 @@ main()
   deallog << is1.n_elements() << ", ";
   deallog << is1.pop_front() << std::endl;
 
-
   is1.add_index(1);
 
   deallog << is1.n_elements() << ", ";

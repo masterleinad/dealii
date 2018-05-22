@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like kelly_crash_01 (which has since been renamed circular_01 because it
 // continued to fail, though for other reasons) but much reduced. it turned
 // out that cell->face(f)->at_boundary() and cell->at_boundary(f) did not
@@ -31,15 +29,12 @@
 
 #include "../tests.h"
 
-
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void
 test()
@@ -193,7 +188,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

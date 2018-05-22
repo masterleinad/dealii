@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test direction vector of flat manifold without periodicity
 
 #include "../tests.h"
 #include <deal.II/grid/manifold.h>
-
-
 
 // Helper function
 template <int dim, int spacedim>

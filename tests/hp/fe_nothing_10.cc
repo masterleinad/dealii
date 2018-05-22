@@ -13,19 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // an extract of _09 that failed at the time of writing the test
 // with an internal error
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim>
 void
@@ -36,8 +31,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

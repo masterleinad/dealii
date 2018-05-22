@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::subdivided_hyper_rectangle with vector of step
 // sizes and the table argument for material id
 
@@ -24,8 +22,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 Table<dim, types::material_id>
@@ -41,7 +37,6 @@ material_ids<1>()
   return t;
 }
 
-
 template <>
 Table<2, types::material_id>
 material_ids<2>()
@@ -54,7 +49,6 @@ material_ids<2>()
   t[1][1] = (types::material_id)(-1);
   return t;
 }
-
 
 template <>
 Table<3, types::material_id>
@@ -70,8 +64,6 @@ material_ids<3>()
   t[1][1][2] = (types::material_id)(-1);
   return t;
 }
-
-
 
 template <int dim>
 void
@@ -115,7 +107,6 @@ test(std::ostream& out)
         go.write_gnuplot(tr, out);
     }
 
-
   // non-uniformly subdivided mesh
   if(true)
     {
@@ -135,7 +126,6 @@ test(std::ostream& out)
         go.write_gnuplot(tr, out);
     }
 }
-
 
 int
 main()

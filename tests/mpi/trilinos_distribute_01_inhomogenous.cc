@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix.distribute() for a trilinos vector
 //
 // like _01, but with an inhomogeneity
@@ -24,8 +22,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <sstream>
-
-
 
 void
 test()
@@ -56,7 +52,6 @@ test()
       exact_l1 += i;
     AssertThrow(vec.l1_norm() == exact_l1, ExcInternalError());
   }
-
 
   // create a ConstraintMatrix with a range that exceeds the locally
   // owned range by 50 on each side
@@ -142,14 +137,12 @@ test()
   }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

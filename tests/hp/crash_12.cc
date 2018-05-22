@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the complex case described in the hp paper by playing through all
 // sorts of arrangements of finite elements on one coarse and one refined cell
 //
@@ -27,7 +25,6 @@
 // exacerbate the problem, but the code there appears to be robust.
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -48,8 +45,6 @@ char logname[] = "output";
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -106,8 +101,6 @@ test()
       }
 }
 
-
-
 int
 main()
 {
@@ -115,7 +108,6 @@ main()
   logfile.precision(7);
 
   deallog.attach(logfile);
-
 
   test<2>();
   test<3>();

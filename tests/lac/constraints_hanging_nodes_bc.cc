@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of mixing hanging
 // node constraints and Dirichlet boundary constraints. This is trivial in 2D
 // because then hanging nodes never appear on the boundary, but needs to be
@@ -40,7 +38,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -135,7 +132,6 @@ test()
     }
   deallog << "OK." << std::endl;
 }
-
 
 int
 main()

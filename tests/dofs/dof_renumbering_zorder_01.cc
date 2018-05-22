@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check DoFRenumbering::hierarchical changes nothing for a regular refined mesh
 
 #include "../tests.h"
@@ -32,7 +31,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
 
 template <int dim, class stream>
 void
@@ -66,8 +64,6 @@ print_dofs(const DoFHandler<dim>& dof, stream& out)
       out << std::endl;
     }
 }
-
-
 
 template <int dim>
 void

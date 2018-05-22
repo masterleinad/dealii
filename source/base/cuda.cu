@@ -38,8 +38,6 @@ namespace Utilities
       AssertCusparse(cusparse_error_code);
     }
 
-
-
     Handle::~Handle()
     {
       dealii::GrowingVectorMemory<

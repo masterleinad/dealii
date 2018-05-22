@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::operator!=(Vector<double>) for vectors that are not
 // equal
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v, Vector<double>& w)
@@ -39,8 +36,6 @@ test(Vector<double>& v, Vector<double>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests that the matrix-free implementation works correctly with periodic
 // boundary conditions by counting the number of faces in the different categories
 
@@ -29,8 +27,6 @@
 #include <deal.II/matrix_free/matrix_free.h>
 
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -131,8 +127,6 @@ test()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main(int argc, char** argv)

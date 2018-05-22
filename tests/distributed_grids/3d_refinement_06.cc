@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check if p4est does limit_level_difference_at_vertices in one 3d tree
 // and in different trees
 // test1 divides the lower-right cell of a square three times
 // test2 does the same with a subdivided_hyper_cube
 //
 // this test is exactly analogous to 2d_refinement_06
-
 
 #include "../tests.h"
 #include "coarse_grid_common.h"
@@ -32,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -78,7 +73,6 @@ test(std::ostream& /*out*/)
     Assert(tr.n_active_cells() == 120, ExcInternalError());
   }
 }
-
 
 int
 main(int argc, char* argv[])

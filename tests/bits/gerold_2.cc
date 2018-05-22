@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // apply SparsityTools::reorder_Cuthill_McKee to the cell connectivity
 // graph for the mesh used in gerold_2. apparently the mesh consists
 // of two or more non-connected parts, and the reordering algorithm
@@ -28,11 +26,8 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
 
-
-
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/manifold_lib.h>
-
 
 template <int dim>
 class LaplaceProblem
@@ -44,7 +39,6 @@ public:
 private:
   Triangulation<dim> triangulation;
 };
-
 
 template <int dim>
 void
@@ -65,7 +59,6 @@ LaplaceProblem<dim>::run()
   for(unsigned int i = 0; i < permutation.size(); ++i)
     deallog << permutation[i] << std::endl;
 }
-
 
 int
 main()

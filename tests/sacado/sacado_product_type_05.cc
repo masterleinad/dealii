@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ProductType with sacado
 
 #include <typeinfo>
@@ -31,14 +30,12 @@ check()
               ExcInternalError());
 }
 
-
 int
 main()
 {
   typedef Sacado::Fad::DFad<double>  Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
-
 
   // check product with Tensor<2,dim>
   check<Tensor<1, 2, Sdouble>, Tensor<1, 2, Sdouble>, Sdouble>();
@@ -65,7 +62,6 @@ main()
   t1* t2;
 
   t2 += a * t1;
-
 
   deallog << "OK" << std::endl;
 }

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh and refine it
 
 #include "../tests.h"
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim, int spacedim>
 void
@@ -48,8 +46,6 @@ write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
   }
 }
 
-
-
 template <int dim>
 void
 test()
@@ -67,7 +63,6 @@ test()
 
   AssertThrow(true_subdomain_ids_of_cells.size() == tr.n_active_cells(),
               ExcInternalError());
-
 
   GridGenerator::hyper_cube(tr);
   tr.begin_active()->set_refine_flag();
@@ -106,7 +101,6 @@ test()
 
   //write_mesh(tr, "mesh");
 }
-
 
 int
 main(int argc, char* argv[])

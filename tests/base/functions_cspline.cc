@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // CSpline
 // take example from https://www.gnu.org/software/gsl/manual/html_node/Interpolation-Example-programs.html
 
@@ -31,7 +30,6 @@ check()
       x[i] = i + 0.5 * std::sin(i);
       y[i] = i + std::cos(i * i);
     }
-
 
   std::vector<double> y_native;
   // native version

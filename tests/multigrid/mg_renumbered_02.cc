@@ -63,7 +63,6 @@
 
 using namespace dealii;
 
-
 template <int dim, typename number, int spacedim>
 void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
@@ -96,7 +95,6 @@ initialize(const DoFHandler<dim>& dof, Vector<double>& u)
     }
 }
 
-
 template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
@@ -109,7 +107,6 @@ initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
   for(unsigned int i = 0; i < dofs_per_cell; ++i)
     u[0](dof_indices[i]) = ++counter;
 }
-
 
 template <int dim>
 void
@@ -139,7 +136,6 @@ diff(Vector<double>&        diff,
         }
     }
 }
-
 
 template <int dim>
 class OutputCreator : public Subscriptor
@@ -173,7 +169,6 @@ OutputCreator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
     }
 }
 
-
 template <int dim>
 class LaplaceProblem
 {
@@ -203,7 +198,6 @@ private:
   std::vector<std::set<types::global_dof_index>> boundary_indices_renumbered;
 };
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem(const unsigned int deg)
   : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
@@ -212,7 +206,6 @@ LaplaceProblem<dim>::LaplaceProblem(const unsigned int deg)
     mg_dof_handler_renumbered(triangulation),
     degree(deg)
 {}
-
 
 template <int dim>
 void
@@ -315,8 +308,6 @@ LaplaceProblem<dim>::test_boundary()
   output_gpl(mg_dof_handler_renumbered, u);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::refine_local()
@@ -350,7 +341,6 @@ LaplaceProblem<dim>::refine_local()
         cell != triangulation.end();
         ++cell)
       cell->set_refine_flag();
-
 
   triangulation.execute_coarsening_and_refinement();
 }

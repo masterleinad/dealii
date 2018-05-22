@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_piecewise.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
@@ -33,7 +32,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -64,8 +62,6 @@ namespace internal
         return std::vector<unsigned int>();
       }
 
-
-
       // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
       // tensorization on inner loops for performance reasons. this clears a
       // dim-array
@@ -76,8 +72,6 @@ namespace internal
         for(unsigned int d = 0; d < dim; ++d)
           indices[d] = 0;
       }
-
-
 
       // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
       // tensorization on inner loops for performance reasons. this increments
@@ -98,8 +92,6 @@ namespace internal
   }   // namespace FE_Q_Base
 } // namespace internal
 
-
-
 /**
  * A class with the same purpose as the similarly named class of the
  * Triangulation class. See there for more information.
@@ -118,7 +110,6 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
   {
     // no constraints in 1d
   }
-
 
   template <int spacedim>
   static void
@@ -231,7 +222,6 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
             fe.interface_constraints(i, face_index_map[j]) = 0;
         }
   }
-
 
   template <int spacedim>
   static void
@@ -424,8 +414,6 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
   }
 };
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
   const PolynomialType&         poly_space,
@@ -441,8 +429,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
                this->degree - 1 :
                this->degree)
 {}
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -488,8 +474,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize(
   // initialized on demand in get_restriction_matrix and
   // get_prolongation_matrix
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -587,8 +571,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_face_interpolation_matrix(
@@ -599,8 +581,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -696,16 +676,12 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 bool
 FE_Q_Base<PolynomialType, dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -745,8 +721,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_vertex_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -810,8 +784,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -881,8 +853,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
     }
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
@@ -924,12 +894,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -953,8 +920,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_support_points(
     this->unit_support_points[index_map_inverse[k]]
       = support_quadrature.point(k);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -988,8 +953,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_face_support_points(
       = support_quadrature.point(k);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::
@@ -1022,7 +985,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::
   // y-direction running from 0 to n-1.  to extract i and j we can use
   // i=dof_no%n and j=dof_no/n. i and j can then be used to construct the
   // rotated and mirrored numbers.
-
 
   for(unsigned int local = 0; local < this->dofs_per_quad; ++local)
     // face support points are in lexicographic ordering with x running
@@ -1060,8 +1022,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::
     this->adjust_line_dof_index_for_line_orientation_table[i]
       = this->dofs_per_line - 1 - i - i;
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 unsigned int
@@ -1177,8 +1137,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::face_to_cell_index(
     }
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>
 FE_Q_Base<PolynomialType, dim, spacedim>::get_dpo_vector(
@@ -1192,8 +1150,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_dpo_vector(
   return dpo;
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::initialize_constraints(
@@ -1201,8 +1157,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_constraints(
 {
   Implementation::initialize_constraints(points, *this);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 const FullMatrix<double>&
@@ -1404,8 +1358,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
   return this->prolongation[refinement_case - 1][child];
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 const FullMatrix<double>&
 FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
@@ -1543,12 +1495,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
   return this->restriction[refinement_case - 1][child];
 }
 
-
-
 //---------------------------------------------------------------------------
 // Data field initialization
 //---------------------------------------------------------------------------
-
 
 template <class PolynomialType, int dim, int spacedim>
 bool
@@ -1648,8 +1597,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::has_support_on_face(
   return false;
 }
 
-
-
 template <typename PolynomialType, int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_Q_Base<PolynomialType, dim, spacedim>::get_constant_modes() const
@@ -1664,8 +1611,6 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_constant_modes() const
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
 }
-
-
 
 // explicit instantiations
 #include "fe_q_base.inst"

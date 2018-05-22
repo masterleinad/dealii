@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test PreconditionChebyshev on parallel Trilinos matrix and vector
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -36,7 +32,6 @@ main(int argc, char** argv)
   deallog << std::setprecision(4);
   deallog.attach(logfile);
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
-
 
   for(unsigned int size = 4; size <= 16; size *= 2)
     {

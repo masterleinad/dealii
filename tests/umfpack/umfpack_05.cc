@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the umfpack sparse direct solver on a simple 2x2 block matrix
 // that equals the unit matrix
 
@@ -24,7 +23,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/sparse_direct.h>
 #include <deal.II/lac/vector.h>
-
 
 void
 test()
@@ -60,7 +58,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

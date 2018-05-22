@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that anisotropic refinement really doesn't work
 
 #include "../tests.h"
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -37,7 +33,6 @@ test(std::ostream& /*out*/)
 
   GridGenerator::hyper_cube(tr);
   tr.begin_active()->set_refine_flag(RefinementCase<dim>::cut_x);
-
 
   try
     {
@@ -48,7 +43,6 @@ test(std::ostream& /*out*/)
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

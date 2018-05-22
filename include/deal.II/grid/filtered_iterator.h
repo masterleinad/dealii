@@ -16,7 +16,6 @@
 #ifndef dealii_filtered_iterator_h
 #  define dealii_filtered_iterator_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
 #  include <deal.II/base/iterator_range.h>
@@ -27,7 +26,6 @@
 #  include <tuple>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * In this namespace a number of classes is declared that may be used as
@@ -85,7 +83,6 @@ namespace IteratorFilters
     operator()(const Iterator& i) const;
   };
 
-
   /**
    * Filter that evaluates to true if either the iterator points to an object
    * for which the user flag is not set or an iterator past the end. Inverse
@@ -104,7 +101,6 @@ namespace IteratorFilters
     bool
     operator()(const Iterator& i) const;
   };
-
 
   /**
    * Filter for iterators that evaluates to true if either the iterator is
@@ -137,8 +133,6 @@ namespace IteratorFilters
      */
     const unsigned int level;
   };
-
-
 
   /**
    * Filter for iterators that evaluates to true if either the iterator is
@@ -173,8 +167,6 @@ namespace IteratorFilters
     const types::subdomain_id subdomain_id;
   };
 
-
-
   /**
    * Filter for iterators that evaluates to true if a cell is owned by the
    * current processor, i.e., if it is a
@@ -197,8 +189,6 @@ namespace IteratorFilters
     operator()(const Iterator& i) const;
   };
 
-
-
   /**
    * Filter for iterators that evaluates to true if the level subdomain id of
    * a cell is equal to the current processor id.
@@ -216,7 +206,6 @@ namespace IteratorFilters
     bool
     operator()(const Iterator& i) const;
   };
-
 
   /**
    * Filter for iterators that evaluates to true if the iterator of the object
@@ -331,7 +320,6 @@ namespace IteratorFilters
     operator()(const Iterator& i) const;
   };
 } // namespace IteratorFilters
-
 
 /**
  * This class provides a certain view on a range of triangulation or
@@ -730,7 +718,6 @@ private:
     clone() const = 0;
   };
 
-
   /**
    * Actual implementation of the above abstract base class. Use a template
    * parameter to denote the actual type of the predicate and store a copy of
@@ -775,8 +762,6 @@ private:
   std::unique_ptr<const PredicateBase> predicate;
 };
 
-
-
 /**
  * Create an object of type FilteredIterator given the base iterator and
  * predicate.  This function makes the creation of temporary objects (for
@@ -794,8 +779,6 @@ make_filtered_iterator(const BaseIterator& i, const Predicate& p)
   fi.set_to_next_positive(i);
   return fi;
 }
-
-
 
 namespace internal
 {
@@ -824,8 +807,6 @@ namespace internal
     };
   } // namespace FilteredIteratorImplementation
 } // namespace internal
-
-
 
 /**
  * Filter the  given range of iterators using a Predicate. This allows to
@@ -867,8 +848,6 @@ filter_iterators(IteratorRange<BaseIterator> i, const Predicate& p)
 
   return IteratorRange<FilteredIterator<BaseIterator>>(fi, fi_end);
 }
-
-
 
 /**
  * Filter the given range of iterators through an arbitrary number of
@@ -918,17 +897,13 @@ filter_iterators(IteratorRange<BaseIterator> i,
   return filter_iterators(fi, args...);
 }
 
-
 /* ------------------ Inline functions and templates ------------ */
-
 
 template <typename BaseIterator>
 template <typename Predicate>
 inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate p)
   : predicate(new PredicateTemplate<Predicate>(p))
 {}
-
-
 
 template <typename BaseIterator>
 template <typename Predicate>
@@ -939,8 +914,6 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate           p,
   if((this->state() == IteratorState::valid) && !(*predicate)(*this))
     set_to_next_positive(bi);
 }
-
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>::FilteredIterator(
@@ -953,15 +926,11 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(
     predicate(fi.predicate->clone())
 {}
 
-
-
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>::~FilteredIterator()
 {
   predicate.reset();
 }
-
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
@@ -976,8 +945,6 @@ FilteredIterator<BaseIterator>::operator=(const FilteredIterator& fi)
   return              operator=(bi);
 }
 
-
-
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::operator=(const BaseIterator& bi)
@@ -987,8 +954,6 @@ FilteredIterator<BaseIterator>::operator=(const BaseIterator& bi)
   BaseIterator::operator=(bi);
   return *this;
 }
-
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
@@ -1001,8 +966,6 @@ FilteredIterator<BaseIterator>::set_to_next_positive(const BaseIterator& bi)
   return *this;
 }
 
-
-
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::set_to_previous_positive(const BaseIterator& bi)
@@ -1014,8 +977,6 @@ FilteredIterator<BaseIterator>::set_to_previous_positive(const BaseIterator& bi)
   return *this;
 }
 
-
-
 template <typename BaseIterator>
 inline bool
 FilteredIterator<BaseIterator>::operator==(const FilteredIterator& fi) const
@@ -1023,8 +984,6 @@ FilteredIterator<BaseIterator>::operator==(const FilteredIterator& fi) const
   return (static_cast<const BaseIterator&>(*this)
           == static_cast<const BaseIterator&>(fi));
 }
-
-
 
 template <typename BaseIterator>
 inline bool
@@ -1034,8 +993,6 @@ FilteredIterator<BaseIterator>::operator!=(const FilteredIterator& fi) const
           != static_cast<const BaseIterator&>(fi));
 }
 
-
-
 template <typename BaseIterator>
 inline bool
 FilteredIterator<BaseIterator>::operator<(const FilteredIterator& fi) const
@@ -1044,16 +1001,12 @@ FilteredIterator<BaseIterator>::operator<(const FilteredIterator& fi) const
           < static_cast<const BaseIterator&>(fi));
 }
 
-
-
 template <typename BaseIterator>
 inline bool
 FilteredIterator<BaseIterator>::operator==(const BaseIterator& bi) const
 {
   return (static_cast<const BaseIterator&>(*this) == bi);
 }
-
-
 
 template <typename BaseIterator>
 inline bool
@@ -1062,15 +1015,12 @@ FilteredIterator<BaseIterator>::operator!=(const BaseIterator& bi) const
   return (static_cast<const BaseIterator&>(*this) != bi);
 }
 
-
-
 template <typename BaseIterator>
 inline bool
 FilteredIterator<BaseIterator>::operator<(const BaseIterator& bi) const
 {
   return (static_cast<const BaseIterator&>(*this) < bi);
 }
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
@@ -1082,8 +1032,6 @@ FilteredIterator<BaseIterator>::operator++()
     while((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return *this;
 }
-
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>
@@ -1098,8 +1046,6 @@ FilteredIterator<BaseIterator>::operator++(int)
   return old_state;
 }
 
-
-
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::operator--()
@@ -1110,8 +1056,6 @@ FilteredIterator<BaseIterator>::operator--()
     while((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return *this;
 }
-
-
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>
@@ -1126,16 +1070,12 @@ FilteredIterator<BaseIterator>::operator--(int)
   return old_state;
 }
 
-
-
 template <typename BaseIterator>
 template <typename Predicate>
 inline FilteredIterator<BaseIterator>::PredicateTemplate<
   Predicate>::PredicateTemplate(const Predicate& predicate)
   : predicate(predicate)
 {}
-
-
 
 template <typename BaseIterator>
 template <typename Predicate>
@@ -1146,8 +1086,6 @@ operator()(const BaseIterator& bi) const
   return predicate(bi);
 }
 
-
-
 template <typename BaseIterator>
 template <typename Predicate>
 std::unique_ptr<typename FilteredIterator<BaseIterator>::PredicateBase>
@@ -1155,8 +1093,6 @@ FilteredIterator<BaseIterator>::PredicateTemplate<Predicate>::clone() const
 {
   return std_cxx14::make_unique<PredicateTemplate>(predicate);
 }
-
-
 
 namespace IteratorFilters
 {
@@ -1169,7 +1105,6 @@ namespace IteratorFilters
     return (i->active());
   }
 
-
   // ---------------- IteratorFilters::UserFlagSet ---------
 
   template <class Iterator>
@@ -1178,7 +1113,6 @@ namespace IteratorFilters
   {
     return (i->user_flag_set());
   }
-
 
   // ---------------- IteratorFilters::UserFlagNotSet ---------
 
@@ -1189,12 +1123,9 @@ namespace IteratorFilters
     return (!i->user_flag_set());
   }
 
-
   // ---------------- IteratorFilters::LevelEqualTo ---------
   inline LevelEqualTo::LevelEqualTo(const unsigned int level) : level(level)
   {}
-
-
 
   template <class Iterator>
   inline bool
@@ -1203,15 +1134,11 @@ namespace IteratorFilters
     return (static_cast<unsigned int>(i->level()) == level);
   }
 
-
-
   // ---------------- IteratorFilters::SubdomainEqualTo ---------
   inline SubdomainEqualTo::SubdomainEqualTo(
     const types::subdomain_id subdomain_id)
     : subdomain_id(subdomain_id)
   {}
-
-
 
   template <class Iterator>
   inline bool
@@ -1219,8 +1146,6 @@ namespace IteratorFilters
   {
     return (i->subdomain_id() == subdomain_id);
   }
-
-
 
   // ---------------- IteratorFilters::LocallyOwnedCell ---------
 
@@ -1231,7 +1156,6 @@ namespace IteratorFilters
     return (i->is_locally_owned());
   }
 
-
   // ---------------- IteratorFilters::LocallyOwnedLevelCell ---------
 
   template <class Iterator>
@@ -1241,8 +1165,6 @@ namespace IteratorFilters
     return (i->is_locally_owned_on_level());
   }
 
-
-
   // ---------------- IteratorFilters::MaterialIdEqualTo ---------
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const types::material_id material_id,
@@ -1250,15 +1172,11 @@ namespace IteratorFilters
     : material_ids{material_id}, only_locally_owned(only_locally_owned)
   {}
 
-
-
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const std::set<types::material_id>& material_ids,
     const bool                          only_locally_owned)
     : material_ids(material_ids), only_locally_owned(only_locally_owned)
   {}
-
-
 
   template <class Iterator>
   inline bool
@@ -1270,8 +1188,6 @@ namespace IteratorFilters
              material_ids.find(i->material_id()) != material_ids.end();
   }
 
-
-
   // ---------------- IteratorFilters::ActiveFEIndexEqualTo ---------
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const unsigned int active_fe_index,
@@ -1279,16 +1195,12 @@ namespace IteratorFilters
     : active_fe_indices{active_fe_index}, only_locally_owned(only_locally_owned)
   {}
 
-
-
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const std::set<unsigned int>& active_fe_indices,
     const bool                    only_locally_owned)
     : active_fe_indices(active_fe_indices),
       only_locally_owned(only_locally_owned)
   {}
-
-
 
   template <class Iterator>
   inline bool
@@ -1302,8 +1214,6 @@ namespace IteratorFilters
                != active_fe_indices.end();
   }
 
-
-
   // ---------------- IteratorFilters::AtBoundary ---------
 
   template <class Iterator>
@@ -1313,7 +1223,6 @@ namespace IteratorFilters
     return (i->at_boundary());
   }
 } // namespace IteratorFilters
-
 
 DEAL_II_NAMESPACE_CLOSE
 

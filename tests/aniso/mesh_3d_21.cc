@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // adapted from mesh_3d_14, but check that quadrature points are
 // correct for anisotropic refinement
 
@@ -33,7 +31,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
 
 // declare these global in order to reduce time needed upon construction of
 // these objects which is considerable
@@ -94,7 +91,6 @@ void check_this(Triangulation<3>& tria)
           }
 }
 
-
 // perform the usual check, i.e. first refine a single cell (anisotropically),
 // then global refinement, then global coarsening. For each step, check, that
 // quadrature points both on faces and neighboring subfaces match.
@@ -134,7 +130,6 @@ void check(Triangulation<3>& tria_org)
         check_this(tria);
       }
 }
-
 
 // perform an additional check: simulate an isotropic refinement of a given cell
 // via several anisotropic refinements. Then, perform the usual checks. This
@@ -185,8 +180,6 @@ void check2(Triangulation<3>& orig_tria)
       check_this(tria);
     }
 }
-
-
 
 int
 main()

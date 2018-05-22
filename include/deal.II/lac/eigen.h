@@ -16,7 +16,6 @@
 #ifndef dealii_eigen_h
 #define dealii_eigen_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/precondition.h>
@@ -30,7 +29,6 @@
 #include <cmath>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup Solvers */
 /*@{*/
@@ -174,7 +172,6 @@ public:
                VectorMemory<VectorType>& mem,
                const AdditionalData&     data = AdditionalData());
 
-
   /**
    * Virtual destructor.
    */
@@ -201,7 +198,6 @@ protected:
 /*@}*/
 //---------------------------------------------------------------------------
 
-
 template <class VectorType>
 EigenPower<VectorType>::EigenPower(SolverControl&            cn,
                                    VectorMemory<VectorType>& mem,
@@ -209,13 +205,9 @@ EigenPower<VectorType>::EigenPower(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <class VectorType>
 EigenPower<VectorType>::~EigenPower()
 {}
-
-
 
 template <class VectorType>
 template <typename MatrixType>
@@ -296,13 +288,9 @@ EigenInverse<VectorType>::EigenInverse(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <class VectorType>
 EigenInverse<VectorType>::~EigenInverse()
 {}
-
-
 
 template <class VectorType>
 template <typename MatrixType>

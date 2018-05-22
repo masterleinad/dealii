@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test for symmetric tridiagonal matrices;
 // copies part of the tests in tridiagonal_matrix.cc
 
@@ -25,12 +24,9 @@
 // Tests TridiagonalMatrix::Tvmult_add
 // Tests TridiagonalMatrix::print
 
-
 #include "../tests.h"
 #include <deal.II/lac/tridiagonal_matrix.h>
 #include <deal.II/lac/vector.h>
-
-
 
 // Symmetric matrix with constant diagonals [-1,2,-1]
 template <typename number>
@@ -50,7 +46,6 @@ matrix1(TridiagonalMatrix<number>& M)
     }
 }
 
-
 // Symmetric matrix with increasing diagonals
 template <typename number>
 void
@@ -66,7 +61,6 @@ matrix4(TridiagonalMatrix<number>& M)
         M(i, i + 1) = -1. - i;
     }
 }
-
 
 template <typename number>
 void
@@ -121,7 +115,6 @@ check_vmult(TridiagonalMatrix<number>& M)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 }
-
 
 template <typename number>
 void

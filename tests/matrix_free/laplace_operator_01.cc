@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This is the same as mass_operator_01.cc, but tests Laplace operator instead.
 
 #include "../tests.h"
@@ -35,8 +33,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -129,7 +125,6 @@ test()
 
   mf.vmult(out, in);
 
-
   // assemble trilinos sparse matrix with
   // (v, u) for reference
   TrilinosWrappers::SparseMatrix sparse_matrix;
@@ -186,7 +181,6 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

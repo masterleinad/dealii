@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::index_within_set () for an empty index set
 
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -33,8 +31,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

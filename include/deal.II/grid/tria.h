@@ -16,7 +16,6 @@
 #ifndef dealii_tria_h
 #define dealii_tria_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/iterator_range.h>
@@ -38,7 +37,6 @@
 #include <memory>
 #include <numeric>
 #include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -89,7 +87,6 @@ namespace hp
   template <int dim, int spacedim>
   class DoFHandler;
 }
-
 
 /*------------------------------------------------------------------------*/
 
@@ -189,8 +186,6 @@ struct CellData
   CellData();
 };
 
-
-
 /**
  * The SubCellData class is used to describe information about faces and
  * edges at the boundary of a mesh when creating a triangulation via
@@ -274,9 +269,7 @@ struct SubCellData
   check_consistency(const unsigned int dim) const;
 };
 
-
 /*------------------------------------------------------------------------*/
-
 
 namespace internal
 {
@@ -365,7 +358,6 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
     /**
      * Cache class used to store the number of used and active elements (lines
      * or quads etc) within the levels of a triangulation. This specialization
@@ -423,7 +415,6 @@ namespace internal
       void
       serialize(Archive& ar, const unsigned int version);
     };
-
 
     /**
      * Cache class used to store the number of used and active elements (lines
@@ -486,9 +477,7 @@ namespace internal
   } // namespace TriangulationImplementation
 } // namespace internal
 
-
 /*------------------------------------------------------------------------*/
-
 
 /**
  * Triangulations denote a hierarchy of levels of elements which together form
@@ -1738,7 +1727,6 @@ public:
   set_manifold(const types::manifold_id       number,
                const Manifold<dim, spacedim>& manifold_object);
 
-
   /**
    * Reset those parts of the triangulation with the given manifold_id
    * to use a FlatManifold object. This is the default state of a
@@ -2066,7 +2054,6 @@ public:
    * @name Keeping up with what happens to a triangulation
    * @{
    */
-
 
   /**
    * Used to inform functions in derived classes how the cell with the given
@@ -2471,7 +2458,6 @@ public:
   void
   load_user_flags_quad(const std::vector<bool>& v);
 
-
   /**
    * Clear all user flags on quads.  See also
    * @ref GlossUserFlags.
@@ -2686,7 +2672,6 @@ public:
    */
   active_cell_iterator
   end_active(const unsigned int level) const;
-
 
   /**
    * Return an iterator pointing to the last used cell.
@@ -2980,7 +2965,6 @@ public:
   virtual types::global_dof_index
   n_global_active_cells() const;
 
-
   /**
    * Return the total number of active cells on level @p level.  Maps to
    * <tt>n_active_lines(level)</tt> in one space dimension and so on.
@@ -3128,7 +3112,6 @@ public:
   const Triangulation<dim, spacedim>&
   get_triangulation() const;
 
-
   /*
    * @}
    */
@@ -3269,7 +3252,6 @@ public:
   void
   load(Archive& ar, const unsigned int version);
 
-
   /**
    * Declare the (coarse) face pairs given in the argument of this function as
    * periodic. This way it is possible to obtain neighbors across periodic
@@ -3296,7 +3278,6 @@ public:
     std::pair<cell_iterator, unsigned int>,
     std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3>>>&
   get_periodic_face_map() const;
-
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -3412,7 +3393,6 @@ protected:
    */
   void
   update_periodic_face_map();
-
 
 private:
   /**
@@ -3579,7 +3559,6 @@ private:
    * @}
    */
 
-
   /**
    * The (public) function clear() will only work when the triangulation is
    * not subscribed to by other users. The clear_despite_subscriptions()
@@ -3653,7 +3632,6 @@ private:
   std::unique_ptr<dealii::internal::TriangulationImplementation::TriaFaces<dim>>
     faces;
 
-
   /**
    * Array of the vertices of this triangulation.
    */
@@ -3675,7 +3653,6 @@ private:
    * Flag indicating whether anisotropic refinement took place.
    */
   bool anisotropic_refinement;
-
 
   /**
    * A flag that determines whether we are to check for distorted cells upon
@@ -3710,7 +3687,6 @@ private:
    */
   std::unique_ptr<std::map<unsigned int, types::boundary_id>>
     vertex_to_boundary_id_map_1d;
-
 
   /**
    * A map that relates the number of a boundary vertex to the manifold
@@ -3761,9 +3737,7 @@ private:
 #endif
 };
 
-
 #ifndef DOXYGEN
-
 
 template <int structdim>
 inline CellData<structdim>::CellData()
@@ -3776,8 +3750,6 @@ inline CellData<structdim>::CellData()
   // And the manifold to be invalid
   manifold_id = numbers::invalid_manifold_id;
 }
-
-
 
 namespace internal
 {
@@ -3792,7 +3764,6 @@ namespace internal
       ar& n_active_lines& n_active_lines_level;
     }
 
-
     template <class Archive>
     void
     NumberCache<2>::serialize(Archive& ar, const unsigned int version)
@@ -3802,7 +3773,6 @@ namespace internal
       ar& n_quads& n_quads_level;
       ar& n_active_quads& n_active_quads_level;
     }
-
 
     template <class Archive>
     void
@@ -3817,7 +3787,6 @@ namespace internal
   } // namespace TriangulationImplementation
 } // namespace internal
 
-
 template <int dim, int spacedim>
 inline bool
 Triangulation<dim, spacedim>::vertex_used(const unsigned int index) const
@@ -3826,8 +3795,6 @@ Triangulation<dim, spacedim>::vertex_used(const unsigned int index) const
          ExcIndexRange(index, 0, vertices_used.size()));
   return vertices_used[index];
 }
-
-
 
 template <int dim, int spacedim>
 inline unsigned int
@@ -3843,7 +3810,6 @@ Triangulation<dim, spacedim>::n_global_levels() const
   return number_cache.n_levels;
 }
 
-
 template <int dim, int spacedim>
 inline unsigned int
 Triangulation<dim, spacedim>::n_vertices() const
@@ -3851,15 +3817,12 @@ Triangulation<dim, spacedim>::n_vertices() const
   return vertices.size();
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<Point<spacedim>>&
 Triangulation<dim, spacedim>::get_vertices() const
 {
   return vertices;
 }
-
 
 template <int dim, int spacedim>
 template <class Archive>
@@ -3897,8 +3860,6 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
       ar& vertex_to_manifold_id_map_1d;
     }
 }
-
-
 
 template <int dim, int spacedim>
 template <class Archive>
@@ -3944,7 +3905,6 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
     reset_active_cell_indices();
   }
 
-
   bool my_check_for_distorted_cells;
   ar&  my_check_for_distorted_cells;
 
@@ -3964,7 +3924,6 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   // the triangulation
   signals.create();
 }
-
 
 /* -------------- declaration of explicit specializations ------------- */
 
@@ -3996,10 +3955,8 @@ template <>
 unsigned int
 Triangulation<1, 1>::max_adjacent_cells() const;
 
-
 // -------------------------------------------------------------------
 // -- Explicit specializations for codimension one grids
-
 
 template <>
 unsigned int
@@ -4032,7 +3989,6 @@ Triangulation<1, 2>::max_adjacent_cells() const;
 // -------------------------------------------------------------------
 // -- Explicit specializations for codimension two grids
 
-
 template <>
 unsigned int
 Triangulation<1, 3>::n_raw_lines(const unsigned int level) const;
@@ -4060,7 +4016,6 @@ Triangulation<1, 3>::n_active_quads() const;
 template <>
 unsigned int
 Triangulation<1, 3>::max_adjacent_cells() const;
-
 
 #endif // DOXYGEN
 

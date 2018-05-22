@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::pack/unpack on some types.
 
 #include "../tests.h"

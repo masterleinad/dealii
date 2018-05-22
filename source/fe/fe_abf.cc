@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -32,14 +31,11 @@
 #include <iostream>
 #include <sstream>
 
-
 //TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
 //adjust_line_dof_index_for_line_orientation_table fields, and write tests
 //similar to bits/face_orientation_and_fe_q_*
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 FE_ABF<dim>::FE_ABF(const unsigned int deg)
@@ -104,8 +100,6 @@ FE_ABF<dim>::FE_ABF(const unsigned int deg)
       }
 }
 
-
-
 template <int dim>
 std::string
 FE_ABF<dim>::get_name() const
@@ -124,8 +118,6 @@ FE_ABF<dim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_ABF<dim>::clone() const
@@ -133,12 +125,9 @@ FE_ABF<dim>::clone() const
   return std_cxx14::make_unique<FE_ABF<dim>>(rt_order);
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary and internal functions
 //---------------------------------------------------------------------------
-
-
 
 // Version for 2d and higher. See above for 1d version
 template <int dim>
@@ -156,7 +145,6 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   this->generalized_support_points.resize(
     GeometryInfo<dim>::faces_per_cell * n_face_points + n_interior_points);
   this->generalized_face_support_points.resize(n_face_points);
-
 
   // These might be required when the faces contribution is computed
   // Therefore they will be initialized at this point.
@@ -211,7 +199,6 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
           this->generalized_support_points[current] = faces.point(current);
         }
 
-
       // Now initialize edge interior weights for the ABF elements.
       // These are completely independent from the usual edge moments. They
       // stem from applying the Gauss theorem to the nodal values, which
@@ -262,7 +249,6 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
         delete polynomials[d];
     }
 
-
   // Decouple the creation of the generalized support points
   // from computation of interior weights.
   for(unsigned int k = 0; k < cell_quadrature.size(); ++k)
@@ -295,8 +281,6 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   Assert(current == this->generalized_support_points.size(),
          ExcInternalError());
 }
-
-
 
 // This function is the same Raviart-Thomas interpolation performed by
 // interpolate. Still, we cannot use interpolate, since it was written
@@ -440,8 +424,6 @@ FE_ABF<dim>::initialize_restriction()
     delete polynomials[d];
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_ABF<dim>::get_dpo_vector(const unsigned int rt_order)
@@ -516,8 +498,6 @@ FE_ABF<dim>::has_support_on_face(const unsigned int shape_index,
 
   return true;
 }
-
-
 
 template <int dim>
 void
@@ -594,8 +574,6 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
       nodal_values[start_abf_dofs + i] = 0.0;
 }
 
-
-
 template <int dim>
 std::size_t
 FE_ABF<dim>::memory_consumption() const
@@ -603,8 +581,6 @@ FE_ABF<dim>::memory_consumption() const
   Assert(false, ExcNotImplemented());
   return 0;
 }
-
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "fe_abf.inst"

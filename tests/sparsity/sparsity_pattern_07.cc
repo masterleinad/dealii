@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityPattern::copy_from
 
 #include "sparsity_pattern_common.h"

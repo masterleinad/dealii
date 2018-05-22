@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test DoFTools::extract_constant_modes with FE_Q_DG0
 
 #include "../tests.h"
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/fe_q_dg0.h>
-
-
 
 template <int dim>
 void
@@ -70,7 +66,6 @@ test()
         }
     }
 }
-
 
 int
 main(int argc, char* argv[])

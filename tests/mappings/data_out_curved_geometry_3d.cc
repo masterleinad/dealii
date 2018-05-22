@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like data_out_curved_geometry.cc, but in 3d
 
 #include "../tests.h"
@@ -33,8 +31,6 @@
 #include <deal.II/fe/mapping_q.h>
 
 #include <deal.II/numerics/data_out.h>
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // The first attempt to fix the _01 test had a bug in it in that we
 // managed to invalidate the cell stored in FEValues but forgot to
 // disconnect from the triangulation's signal. We were therefore still
@@ -27,8 +25,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/grid/grid_generator.h>
-
-
 
 template <int dim>
 void
@@ -53,7 +49,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

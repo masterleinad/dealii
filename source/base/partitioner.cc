@@ -35,8 +35,6 @@ namespace Utilities
         have_ghost_indices(false)
     {}
 
-
-
     Partitioner::Partitioner(const unsigned int size)
       : global_size(size),
         locally_owned_range_data(size),
@@ -55,8 +53,6 @@ namespace Utilities
       ghost_indices_data.set_size(size);
     }
 
-
-
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
                              const IndexSet& ghost_indices_in,
                              const MPI_Comm  communicator_in)
@@ -74,8 +70,6 @@ namespace Utilities
       set_ghost_indices(ghost_indices_in);
     }
 
-
-
     Partitioner::Partitioner(const IndexSet& locally_owned_indices,
                              const MPI_Comm  communicator_in)
       : global_size(
@@ -91,8 +85,6 @@ namespace Utilities
       set_owned_indices(locally_owned_indices);
     }
 
-
-
     void
     Partitioner::reinit(const IndexSet& vector_space_vector_index_set,
                         const IndexSet& read_write_vector_index_set,
@@ -103,8 +95,6 @@ namespace Utilities
       set_owned_indices(vector_space_vector_index_set);
       set_ghost_indices(read_write_vector_index_set);
     }
-
-
 
     void
     Partitioner::set_owned_indices(const IndexSet& locally_owned_indices)
@@ -144,8 +134,6 @@ namespace Utilities
 
       ghost_indices_data.set_size(locally_owned_indices.size());
     }
-
-
 
     void
     Partitioner::set_ghost_indices(const IndexSet& ghost_indices_in,
@@ -467,8 +455,6 @@ namespace Utilities
         }
     }
 
-
-
     bool
     Partitioner::is_compatible(const Partitioner& part) const
     {
@@ -493,8 +479,6 @@ namespace Utilities
               && ghost_indices_data == part.ghost_indices_data);
     }
 
-
-
     bool
     Partitioner::is_globally_compatible(const Partitioner& part) const
     {
@@ -502,8 +486,6 @@ namespace Utilities
                                  communicator)
              == 1;
     }
-
-
 
     std::size_t
     Partitioner::memory_consumption() const
@@ -527,8 +509,6 @@ namespace Utilities
   } // end of namespace MPI
 
 } // end of namespace Utilities
-
-
 
 // explicit instantiations from .templates.h file
 #include "partitioner.inst"

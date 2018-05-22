@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::pack/unpack on some types. this test checks that
 // for trivially-copyable (small) types, packing is just a memcpy
 // operation
@@ -46,8 +45,6 @@ struct X
   }
 };
 
-
-
 template <typename T>
 void
 check(const T& object)
@@ -71,7 +68,6 @@ check(const T& object)
 
   deallog << std::endl;
 }
-
 
 void
 test()

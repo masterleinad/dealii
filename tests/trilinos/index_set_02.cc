@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test conversion from epetra map back to indexset, this was broken for
 // overlapping IndexSets
 
@@ -22,7 +20,6 @@
 #include <deal.II/base/index_set.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 void
 test()
@@ -70,8 +67,6 @@ test()
 
   from_partitioner.print(deallog);
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, ETH Zurich, 2002
  */
 
-
 // Start out with well known things...
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
@@ -89,12 +88,9 @@ namespace Step14
       unsigned int refinement_cycle;
     };
 
-
     template <int dim>
     EvaluationBase<dim>::~EvaluationBase()
     {}
-
-
 
     template <int dim>
     void
@@ -102,7 +98,6 @@ namespace Step14
     {
       refinement_cycle = step;
     }
-
 
     // @sect4{The PointValueEvaluation class}
     template <int dim>
@@ -125,14 +120,11 @@ namespace Step14
       const Point<dim> evaluation_point;
     };
 
-
     template <int dim>
     PointValueEvaluation<dim>::PointValueEvaluation(
       const Point<dim>& evaluation_point)
       : evaluation_point(evaluation_point)
     {}
-
-
 
     template <int dim>
     void
@@ -163,7 +155,6 @@ namespace Step14
 
       std::cout << "   Point value=" << point_value << std::endl;
     }
-
 
     // @sect4{The PointXDerivativeEvaluation class}
 
@@ -198,13 +189,11 @@ namespace Step14
       const Point<dim> evaluation_point;
     };
 
-
     template <int dim>
     PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
       const Point<dim>& evaluation_point)
       : evaluation_point(evaluation_point)
     {}
-
 
     // The more interesting things happen inside the function doing the actual
     // evaluation:
@@ -301,8 +290,6 @@ namespace Step14
       std::cout << "   Point x-derivative=" << point_derivative << std::endl;
     }
 
-
-
     // @sect4{The GridOutput class}
 
     // Since this program has a more difficult structure (it computed a dual
@@ -330,12 +317,10 @@ namespace Step14
       const std::string output_name_base;
     };
 
-
     template <int dim>
     GridOutput<dim>::GridOutput(const std::string& output_name_base)
       : output_name_base(output_name_base)
     {}
-
 
     template <int dim>
     void
@@ -347,7 +332,6 @@ namespace Step14
       GridOut().write_eps(dof_handler.get_triangulation(), out);
     }
   } // namespace Evaluation
-
 
   // @sect3{The Laplace solver classes}
 
@@ -395,19 +379,15 @@ namespace Step14
       unsigned int refinement_cycle;
     };
 
-
     template <int dim>
     Base<dim>::Base(Triangulation<dim>& coarse_grid)
       : triangulation(&coarse_grid),
         refinement_cycle(numbers::invalid_unsigned_int)
     {}
 
-
     template <int dim>
     Base<dim>::~Base()
     {}
-
-
 
     template <int dim>
     void
@@ -415,7 +395,6 @@ namespace Step14
     {
       refinement_cycle = cycle;
     }
-
 
     // @sect4{The Laplace Solver class}
 
@@ -467,7 +446,6 @@ namespace Step14
         Vector<double>       rhs;
       };
 
-
       // The remainder of the class is essentially a copy of step-13
       // as well, including the data structures and functions
       // necessary to compute the linear system in parallel using the
@@ -487,7 +465,6 @@ namespace Step14
         std::vector<types::global_dof_index> local_dof_indices;
       };
 
-
       void
       assemble_linear_system(LinearSystem& linear_system);
 
@@ -497,13 +474,10 @@ namespace Step14
         AssemblyScratchData&                                  scratch_data,
         AssemblyCopyData&                                     copy_data) const;
 
-
       void
       copy_local_to_global(const AssemblyCopyData& copy_data,
                            LinearSystem&           linear_system) const;
     };
-
-
 
     template <int dim>
     Solver<dim>::Solver(Triangulation<dim>&        triangulation,
@@ -519,13 +493,11 @@ namespace Step14
         boundary_values(&boundary_values)
     {}
 
-
     template <int dim>
     Solver<dim>::~Solver()
     {
       dof_handler.clear();
     }
-
 
     template <int dim>
     void
@@ -539,7 +511,6 @@ namespace Step14
       linear_system.solve(solution);
     }
 
-
     template <int dim>
     void
     Solver<dim>::postprocess(
@@ -548,14 +519,12 @@ namespace Step14
       postprocessor(dof_handler, solution);
     }
 
-
     template <int dim>
     unsigned int
     Solver<dim>::n_dofs() const
     {
       return dof_handler.n_dofs();
     }
-
 
     // The following few functions and constructors are verbatim
     // copies taken from step-13:
@@ -592,14 +561,12 @@ namespace Step14
         boundary_value_map, linear_system.matrix, solution, linear_system.rhs);
     }
 
-
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
       const FiniteElement<dim>& fe,
       const Quadrature<dim>&    quadrature)
       : fe_values(fe, quadrature, update_gradients | update_JxW_values)
     {}
-
 
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
@@ -608,7 +575,6 @@ namespace Step14
                   scratch_data.fe_values.get_quadrature(),
                   update_gradients | update_JxW_values)
     {}
-
 
     template <int dim>
     void
@@ -637,8 +603,6 @@ namespace Step14
       cell->get_dof_indices(copy_data.local_dof_indices);
     }
 
-
-
     template <int dim>
     void
     Solver<dim>::copy_local_to_global(const AssemblyCopyData& copy_data,
@@ -650,7 +614,6 @@ namespace Step14
                                    copy_data.local_dof_indices[j],
                                    copy_data.cell_matrix(i, j));
     }
-
 
     // Now for the functions that implement actions in the linear
     // system class. First, the constructor initializes all data
@@ -702,8 +665,6 @@ namespace Step14
       DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
       DoFTools::make_sparsity_pattern(dof_handler, dsp);
 
-
-
       // Wait for the side task to be done before going further
       side_task.join();
 
@@ -714,8 +675,6 @@ namespace Step14
       matrix.reinit(sparsity_pattern);
       rhs.reinit(dof_handler.n_dofs());
     }
-
-
 
     template <int dim>
     void
@@ -731,8 +690,6 @@ namespace Step14
 
       hanging_node_constraints.distribute(solution);
     }
-
-
 
     // @sect4{The PrimalSolver class}
 
@@ -763,7 +720,6 @@ namespace Step14
       assemble_rhs(Vector<double>& rhs) const override;
     };
 
-
     template <int dim>
     PrimalSolver<dim>::PrimalSolver(Triangulation<dim>&        triangulation,
                                     const FiniteElement<dim>&  fe,
@@ -780,8 +736,6 @@ namespace Step14
         rhs_function(&rhs_function)
     {}
 
-
-
     template <int dim>
     void
     PrimalSolver<dim>::output_solution() const
@@ -795,8 +749,6 @@ namespace Step14
                         + ".gnuplot");
       data_out.write(out, DataOutBase::gnuplot);
     }
-
-
 
     template <int dim>
     void
@@ -837,7 +789,6 @@ namespace Step14
         }
     }
 
-
     // @sect4{The RefinementGlobal and RefinementKelly classes}
 
     // For the following two classes, the same applies as for most of the
@@ -857,8 +808,6 @@ namespace Step14
       refine_grid() override;
     };
 
-
-
     template <int dim>
     RefinementGlobal<dim>::RefinementGlobal(
       Triangulation<dim>&        coarse_grid,
@@ -876,16 +825,12 @@ namespace Step14
                           boundary_values)
     {}
 
-
-
     template <int dim>
     void
     RefinementGlobal<dim>::refine_grid()
     {
       this->triangulation->refine_global(1);
     }
-
-
 
     template <int dim>
     class RefinementKelly : public PrimalSolver<dim>
@@ -901,8 +846,6 @@ namespace Step14
       virtual void
       refine_grid() override;
     };
-
-
 
     template <int dim>
     RefinementKelly<dim>::RefinementKelly(
@@ -921,8 +864,6 @@ namespace Step14
                           boundary_values)
     {}
 
-
-
     template <int dim>
     void
     RefinementKelly<dim>::refine_grid()
@@ -938,8 +879,6 @@ namespace Step14
         *this->triangulation, estimated_error_per_cell, 0.3, 0.03);
       this->triangulation->execute_coarsening_and_refinement();
     }
-
-
 
     // @sect4{The RefinementWeightedKelly class}
 
@@ -972,8 +911,6 @@ namespace Step14
       const SmartPointer<const Function<dim>> weighting_function;
     };
 
-
-
     template <int dim>
     RefinementWeightedKelly<dim>::RefinementWeightedKelly(
       Triangulation<dim>&        coarse_grid,
@@ -992,8 +929,6 @@ namespace Step14
                           boundary_values),
         weighting_function(&weighting_function)
     {}
-
-
 
     // Now, here comes the main function, including the weighting:
     template <int dim>
@@ -1033,7 +968,6 @@ namespace Step14
     }
 
   } // namespace LaplaceSolver
-
 
   // @sect3{Equation data}
   //
@@ -1123,7 +1057,6 @@ namespace Step14
       create_coarse_grid(Triangulation<dim>& coarse_grid) const = 0;
     };
 
-
     // And now for the derived class that takes the template argument as
     // explained above.
     //
@@ -1137,7 +1070,6 @@ namespace Step14
 
       virtual const Function<dim>&
       get_right_hand_side() const override;
-
 
       virtual void
       create_coarse_grid(Triangulation<dim>& coarse_grid) const override;
@@ -1162,14 +1094,12 @@ namespace Step14
       return boundary_values;
     }
 
-
     template <class Traits, int dim>
     const Function<dim>&
     SetUp<Traits, dim>::get_right_hand_side() const
     {
       return right_hand_side;
     }
-
 
     template <class Traits, int dim>
     void
@@ -1178,7 +1108,6 @@ namespace Step14
     {
       Traits::create_coarse_grid(coarse_grid);
     }
-
 
     // @sect4{The CurvedRidges class}
 
@@ -1198,7 +1127,6 @@ namespace Step14
         value(const Point<dim>& p, const unsigned int component) const;
       };
 
-
       class RightHandSide : public Function<dim>
       {
       public:
@@ -1213,7 +1141,6 @@ namespace Step14
       create_coarse_grid(Triangulation<dim>& coarse_grid);
     };
 
-
     template <int dim>
     double
     CurvedRidges<dim>::BoundaryValues::value(
@@ -1226,8 +1153,6 @@ namespace Step14
       const double exponential = std::exp(q);
       return exponential;
     }
-
-
 
     template <int dim>
     double
@@ -1254,7 +1179,6 @@ namespace Step14
       return -u * (t1 + t2 + t3);
     }
 
-
     template <int dim>
     void
     CurvedRidges<dim>::create_coarse_grid(Triangulation<dim>& coarse_grid)
@@ -1262,7 +1186,6 @@ namespace Step14
       GridGenerator::hyper_cube(coarse_grid, -1, 1);
       coarse_grid.refine_global(2);
     }
-
 
     // @sect4{The Exercise_2_3 class}
 
@@ -1297,7 +1220,6 @@ namespace Step14
       static void
       create_coarse_grid(Triangulation<dim>& coarse_grid);
     };
-
 
     // As stated above, the grid for this example is the square [-1,1]^2 with
     // the square [-1/2,1/2]^2 as hole in it. We create the coarse grid as 4
@@ -1449,7 +1371,6 @@ namespace Step14
   // to test cases and their data, without having to bring their actual
   // implementation into contact with the rest of the program.
 
-
   // @sect3{Dual functionals}
 
   // As with the other components of the program, we put everything we need to
@@ -1478,7 +1399,6 @@ namespace Step14
                    Vector<double>&        rhs) const = 0;
     };
 
-
     // @sect4{The PointValueEvaluation class}
 
     // As a first application, we consider the functional corresponding to the
@@ -1506,13 +1426,11 @@ namespace Step14
       const Point<dim> evaluation_point;
     };
 
-
     template <int dim>
     PointValueEvaluation<dim>::PointValueEvaluation(
       const Point<dim>& evaluation_point)
       : evaluation_point(evaluation_point)
     {}
-
 
     // As for doing the main purpose of the class, assembling the right hand
     // side, let us first consider what is necessary: The right hand side of
@@ -1559,7 +1477,6 @@ namespace Step14
       AssertThrow(false, ExcEvaluationPointNotFound(evaluation_point));
     }
 
-
     // @sect4{The PointXDerivativeEvaluation class}
 
     // As second application, we again consider the evaluation of the
@@ -1586,13 +1503,11 @@ namespace Step14
       const Point<dim> evaluation_point;
     };
 
-
     template <int dim>
     PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
       const Point<dim>& evaluation_point)
       : evaluation_point(evaluation_point)
     {}
-
 
     // What is interesting is the implementation of this functional: here,
     // J(phi_i)=d/dx phi_i(x0).
@@ -1685,9 +1600,7 @@ namespace Step14
       rhs /= total_volume;
     }
 
-
   } // namespace DualFunctional
-
 
   // @sect3{Extending the LaplaceSolver namespace}
   namespace LaplaceSolver
@@ -1749,15 +1662,12 @@ namespace Step14
         dual_functional(&dual_functional)
     {}
 
-
-
     template <int dim>
     void
     DualSolver<dim>::assemble_rhs(Vector<double>& rhs) const
     {
       dual_functional->assemble_rhs(this->dof_handler, rhs);
     }
-
 
     // @sect4{The WeightedResidual class}
 
@@ -1911,7 +1821,6 @@ namespace Step14
         Vector<double> dual_weights;
       };
 
-
       // WorkStream::run generally wants both a scratch object and a copy object.
       // Here, for reasons similar to what we had in step-9 when discussing the
       // computation of an approximation of the gradient, we don't actually
@@ -1920,8 +1829,6 @@ namespace Step14
       // being there.
       struct WeightedResidualCopyData
       {};
-
-
 
       // Regarding the evaluation of the error estimator, we have one driver
       // function that uses WorkStream::run() to call the second function on every
@@ -1963,8 +1870,6 @@ namespace Step14
                                     FaceIntegrals& face_integrals) const;
     };
 
-
-
     // In the implementation of this class, we first have the constructors of
     // the <code>CellData</code> and <code>FaceData</code> member classes, and
     // the <code>WeightedResidual</code> constructor. They only initialize
@@ -1986,8 +1891,6 @@ namespace Step14
         cell_laplacians(quadrature.size())
     {}
 
-
-
     template <int dim>
     WeightedResidual<dim>::CellData::CellData(const CellData& cell_data)
       : fe_values(cell_data.fe_values.get_fe(),
@@ -2000,8 +1903,6 @@ namespace Step14
         dual_weights(cell_data.dual_weights),
         cell_laplacians(cell_data.cell_laplacians)
     {}
-
-
 
     template <int dim>
     WeightedResidual<dim>::FaceData::FaceData(
@@ -2025,8 +1926,6 @@ namespace Step14
       neighbor_grads.resize(n_face_q_points);
     }
 
-
-
     template <int dim>
     WeightedResidual<dim>::FaceData::FaceData(const FaceData& face_data)
       : fe_face_values_cell(face_data.fe_face_values_cell.get_fe(),
@@ -2047,8 +1946,6 @@ namespace Step14
         cell_grads(face_data.cell_grads),
         neighbor_grads(face_data.neighbor_grads)
     {}
-
-
 
     template <int dim>
     WeightedResidual<dim>::WeightedResidualScratchData::
@@ -2075,8 +1972,6 @@ namespace Step14
         dual_weights(scratch_data.dual_weights)
     {}
 
-
-
     template <int dim>
     WeightedResidual<dim>::WeightedResidual(
       Triangulation<dim>&                            coarse_grid,
@@ -2101,7 +1996,6 @@ namespace Step14
                         dual_functional)
     {}
 
-
     // The next five functions are boring, as they simply relay their work to
     // the base classes. The first calls the primal and dual solvers in
     // parallel, while postprocessing the solution and retrieving the number
@@ -2118,7 +2012,6 @@ namespace Step14
       tasks.join_all();
     }
 
-
     template <int dim>
     void
     WeightedResidual<dim>::solve_primal_problem()
@@ -2133,7 +2026,6 @@ namespace Step14
       DualSolver<dim>::solve_problem();
     }
 
-
     template <int dim>
     void
     WeightedResidual<dim>::postprocess(
@@ -2142,15 +2034,12 @@ namespace Step14
       PrimalSolver<dim>::postprocess(postprocessor);
     }
 
-
     template <int dim>
     unsigned int
     WeightedResidual<dim>::n_dofs() const
     {
       return PrimalSolver<dim>::n_dofs();
     }
-
-
 
     // Now, it is becoming more interesting: the <code>refine_grid()</code>
     // function asks the error estimator to compute the cell-wise error
@@ -2180,7 +2069,6 @@ namespace Step14
         *this->triangulation, error_indicators, 0.8, 0.02);
       this->triangulation->execute_coarsening_and_refinement();
     }
-
 
     // Since we want to output both the primal and the dual solution, we
     // overload the <code>output_solution</code> function. The only
@@ -2223,7 +2111,6 @@ namespace Step14
                         + ".gnuplot");
       data_out.write(out, DataOutBase::gnuplot);
     }
-
 
     // @sect3{Estimating errors}
 
@@ -2362,7 +2249,6 @@ namespace Step14
                 << std::endl;
     }
 
-
     // @sect4{Estimating on a single cell}
 
     // Next we have the function that is called to estimate the error on a
@@ -2431,7 +2317,6 @@ namespace Step14
             if(cell->neighbor(face_no)->level() < cell->level())
               continue;
 
-
           // Now we know that we are in charge here, so actually compute
           // the face jump terms. If the face is a regular one, i.e.  the
           // other side's cell is neither coarser not finer than this
@@ -2456,7 +2341,6 @@ namespace Step14
                                           face_integrals);
         }
     }
-
 
     // @sect4{Computing cell term error contributions}
 
@@ -2493,7 +2377,6 @@ namespace Step14
                 * cell_data.dual_weights[p] * cell_data.fe_values.JxW(p));
       error_indicators(cell->active_cell_index()) += sum;
     }
-
 
     // @sect4{Computing edge term error contributions -- 1}
 
@@ -2584,7 +2467,6 @@ namespace Step14
       // each cell individually.
       face_integrals[cell->face(face_no)] = face_integral;
     }
-
 
     // @sect4{Computing edge term error contributions -- 2}
 
@@ -2698,7 +2580,6 @@ namespace Step14
 
   } // namespace LaplaceSolver
 
-
   // @sect3{A simulation framework}
 
   // In the previous example program, we have had two functions that were used
@@ -2724,7 +2605,6 @@ namespace Step14
     // data types:
     typedef Evaluation::EvaluationBase<dim> Evaluator;
     typedef std::list<Evaluator*>           EvaluatorList;
-
 
     // Then we have the structure which declares all the parameters that may
     // be set. In the default constructor of the structure, these values are
@@ -2796,7 +2676,6 @@ namespace Step14
     run(const ProblemDescription& descriptor);
   };
 
-
   // As for the implementation, first the constructor of the parameter object,
   // setting all values to their defaults:
   template <int dim>
@@ -2806,8 +2685,6 @@ namespace Step14
       refinement_criterion(dual_weighted_error_estimator),
       max_degrees_of_freedom(20000)
   {}
-
-
 
   // Then the function which drives the whole process:
   template <int dim>
@@ -2916,7 +2793,6 @@ namespace Step14
             solver->postprocess(**e);
           }
 
-
         if(solver->n_dofs() < descriptor.max_degrees_of_freedom)
           solver->refine_grid();
         else
@@ -2928,8 +2804,6 @@ namespace Step14
   }
 
 } // namespace Step14
-
-
 
 // @sect3{The main function}
 

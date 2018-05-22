@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix for a distributed mesh on hyper shell with both
 // hanging nodes and no-normal-flux constraints on the outer boundary of the
 // shell.
@@ -206,7 +204,6 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -214,7 +211,6 @@ main(int argc, char* argv[])
     Utilities::MPI::MPI_InitFinalize mpi_initialization(
       argc, argv, testing_max_num_threads());
     unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
     deallog.push(Utilities::int_to_string(myid));
 

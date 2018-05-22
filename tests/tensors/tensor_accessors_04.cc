@@ -20,7 +20,6 @@
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/tensor_accessors.h>
 
-
 int
 main()
 {
@@ -46,7 +45,6 @@ main()
   int                     c_right[5] = {0, 100, 200, 300, 400};
   const Tensor<1, 5, int> right(c_right);
 
-
   // Contract rank 1, rank 1, rank 0:
   {
     const int c = -10;
@@ -59,7 +57,6 @@ main()
             << std::endl;
     deallog << std::endl;
   }
-
 
   // Contract rank 0, rank 1, rank 1:
   {
@@ -126,7 +123,6 @@ main()
     //     manually verified to be equal to the old implementation
     //     deallog << contract3(left, middle3, middle) << std::endl;
   }
-
 
   Tensor<4, 5, int> middle4;
   middle4[0] = middle3;

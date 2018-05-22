@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -29,8 +28,6 @@
 // characteristics. in contrast to the _01 test, we choose a FE that has less
 // DoFs than there are quadrature points -- not an uncommon case, and one that
 // needs to work
-
-
 
 template <int dim>
 void
@@ -49,7 +46,6 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   if(already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
-
 
   // test with different quadrature formulas
   QGauss<dim> q_lhs(fe.degree + 1);

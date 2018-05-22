@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test VectorFunctionFromScalarFunctionObject
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -48,7 +46,6 @@ check1()
   deallog << "OK" << std::endl;
 }
 
-
 template <int dim>
 void
 check2()
@@ -71,7 +68,6 @@ check2()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -48,7 +48,6 @@ test()
   deallog << "Error   : " << T.norm() - numbers::PI / 2 << std::endl;
 }
 
-
 int
 main()
 {

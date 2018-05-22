@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework for the various full_matrix_*.cc tests
 
 #include "../tests.h"
@@ -27,7 +26,6 @@
 #include <iostream>
 #include <string>
 
-
 // forward declaration of the function that must be provided in the
 // .cc files
 template <typename number>
@@ -36,7 +34,6 @@ check();
 
 static constexpr int n_rows = 5;
 static constexpr int n_cols = 4;
-
 
 template <typename number>
 void
@@ -48,8 +45,6 @@ make_square_matrix(FullMatrix<number>& m)
       m(i, j) = (i + 1) * (j + 2);
 }
 
-
-
 template <typename number>
 void
 make_matrix(FullMatrix<number>& m)
@@ -59,7 +54,6 @@ make_matrix(FullMatrix<number>& m)
     for(unsigned int j = 0; j < n_cols; ++j)
       m(i, j) = (i + 1) * (j + 2);
 }
-
 
 template <typename number>
 void
@@ -71,7 +65,6 @@ make_complex_square_matrix(FullMatrix<std::complex<number>>& m)
       m(i, j) = std::complex<number>((i + 1) * (j + 2), (i + 3) * (j + 4));
 }
 
-
 template <typename number>
 void
 make_complex_matrix(FullMatrix<std::complex<number>>& m)
@@ -82,7 +75,6 @@ make_complex_matrix(FullMatrix<std::complex<number>>& m)
       m(i, j) = std::complex<number>((i + 1) * (j + 2), (i + 3) * (j + 4));
 }
 
-
 template <typename number>
 void
 make_domain_vector(Vector<number>& v)
@@ -91,8 +83,6 @@ make_domain_vector(Vector<number>& v)
   for(unsigned int i = 0; i < n_cols; ++i)
     v(i) = (i + 1);
 }
-
-
 
 template <typename number>
 void
@@ -103,8 +93,6 @@ make_range_vector(Vector<number>& v)
     v(i) = (i + 1);
 }
 
-
-
 template <typename number>
 void
 make_complex_domain_vector(Vector<std::complex<number>>& v)
@@ -114,8 +102,6 @@ make_complex_domain_vector(Vector<std::complex<number>>& v)
     v(i) = std::complex<number>(i + 1, i + 3);
 }
 
-
-
 template <typename number>
 void
 make_complex_range_vector(Vector<std::complex<number>>& v)
@@ -124,8 +110,6 @@ make_complex_range_vector(Vector<std::complex<number>>& v)
   for(unsigned int i = 0; i < n_rows; ++i)
     v(i) = std::complex<number>(i + 1, i + 3);
 }
-
-
 
 template <typename number>
 void
@@ -138,8 +122,6 @@ print_matrix(const FullMatrix<number>& m)
               << filter_out_small_numbers(m(i, j), tolerance) << std::endl;
 }
 
-
-
 template <typename number>
 void
 print_matrix(const FullMatrix<std::complex<number>>& m)
@@ -150,8 +132,6 @@ print_matrix(const FullMatrix<std::complex<number>>& m)
       deallog << i << ' ' << j << ' '
               << filter_out_small_numbers(m(i, j), tolerance) << std::endl;
 }
-
-
 
 template <typename number>
 void
@@ -193,7 +173,6 @@ display_matrix(FullMatrix<std::complex<number>> M)
       deallog << std::endl;
     }
 }
-
 
 template <typename number>
 void

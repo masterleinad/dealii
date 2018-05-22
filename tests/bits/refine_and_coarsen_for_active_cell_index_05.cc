@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that cell->active_cell_index() works as advertised
 //
 // like _03, but with a triangulation restored from serialization
-
 
 #include "../tests.h"
 
@@ -33,8 +30,6 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <sstream>
 
-
-
 template <int dim>
 void
 check(const Triangulation<dim>& tria)
@@ -47,15 +42,12 @@ check(const Triangulation<dim>& tria)
     Assert(cell->active_cell_index() == index, ExcInternalError());
 }
 
-
-
 void do_refine(Triangulation<1>& tria)
 {
   tria.refine_global(2);
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 }
-
 
 void do_refine(Triangulation<2>& tria)
 {
@@ -69,7 +61,6 @@ void do_refine(Triangulation<2>& tria)
   tria.begin_active()->set_refine_flag(RefinementPossibilities<dim>::cut_y);
   tria.execute_coarsening_and_refinement();
 }
-
 
 void do_refine(Triangulation<3>& tria)
 {
@@ -91,7 +82,6 @@ void do_refine(Triangulation<3>& tria)
   tria.begin_active()->set_refine_flag(RefinementPossibilities<dim>::cut_yz);
   tria.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 void
@@ -161,7 +151,6 @@ check()
 
   deallog << "OK for " << dim << "d" << std::endl;
 }
-
 
 int
 main()

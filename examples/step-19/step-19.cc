@@ -17,7 +17,6 @@
  * Author: Luca Heltai, Wolfgang Bangerth, 2005
  */
 
-
 // @sect4{Preliminaries}
 
 // As usual, we start with include files. This program is content with really
@@ -57,7 +56,6 @@ namespace Step19
   std::string              output_file;
   std::string              output_format;
 
-
   // All the stuff this program does can be done from here on. As described in
   // the introduction, what we have to do is declare what values the parameter
   // file can have, parse the command line, read the input files, then write
@@ -90,7 +88,6 @@ namespace Step19
 
     prm.print_parameters(std::cout, ParameterHandler::Text);
   }
-
 
   // @sect4{Declaring parameters for the input file}
 
@@ -224,7 +221,6 @@ namespace Step19
     // entry "red" for the parameter "Generate output".
   }
 
-
   // @sect4{Parsing the command line}
 
   // Our next task is to see what information has been provided on the command
@@ -351,7 +347,6 @@ namespace Step19
       }
   }
 
-
   // @sect4{Generating output}
 
   // Now that we have all the information, we need to read all the input
@@ -408,7 +403,6 @@ namespace Step19
     // Finally, write the merged data to the output:
     merged_data.write(output_stream, format);
   }
-
 
   // @sect4{Dispatching output generation}
 
@@ -487,8 +481,6 @@ namespace Step19
     AssertThrow(false, ExcNotImplemented());
   }
 } // namespace Step19
-
-
 
 // @sect4{main()}
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that indeed Triangulation::create_triangulation throws an
 // exception if we have distorted cells. this test is like the _01
 // case except that it reads the mesh from a file
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 check()
@@ -42,7 +38,6 @@ check()
   std::ifstream in(dim == 2 ? SOURCE_DIR "/grids/2d" : SOURCE_DIR "/grids/3d");
 
   gi.attach_triangulation(coarse_grid);
-
 
   bool flag = false;
   try
@@ -62,7 +57,6 @@ check()
   Assert(coarse_grid.n_levels() == 1, ExcInternalError());
   Assert(coarse_grid.n_active_cells() == 1, ExcInternalError());
 }
-
 
 int
 main()

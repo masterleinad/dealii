@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::operator = (Vector), except that we don't
 // resize the vector to be copied to beforehand
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v)
@@ -45,8 +42,6 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

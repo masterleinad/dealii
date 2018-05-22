@@ -114,15 +114,12 @@ namespace Step55
       const Preconditioner&            preconditioner;
     };
 
-
     template <class Matrix, class Preconditioner>
     InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
       const Matrix&         m,
       const Preconditioner& preconditioner)
       : matrix(&m), preconditioner(preconditioner)
     {}
-
-
 
     template <class Matrix, class Preconditioner>
     template <typename VectorType>
@@ -143,7 +140,6 @@ namespace Step55
           Assert(false, ExcMessage(e.what()));
         }
     }
-
 
     // The class A template class for a simple block diagonal preconditioner
     // for 2x2 matrices.
@@ -168,7 +164,6 @@ namespace Step55
                                   const PreconditionerS& preconditioner_S)
       : preconditioner_A(preconditioner_A), preconditioner_S(preconditioner_S)
     {}
-
 
     template <class PreconditionerA, class PreconditionerS>
     void
@@ -198,7 +193,6 @@ namespace Step55
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
@@ -223,7 +217,6 @@ namespace Step55
                     * sin(2 * R_y * pi) / pi;
     values[2] = 0;
   }
-
 
   template <int dim>
   class ExactSolution : public Function<dim>
@@ -266,8 +259,6 @@ namespace Step55
         + 0.00336897349954273 * exp(1.0 * sqrt(25.0 + 4 * pi2))
             / (-10.0 + 2.0 * sqrt(25.0 + 4 * pi2));
   }
-
-
 
   // @sect3{The main program}
   //
@@ -321,8 +312,6 @@ namespace Step55
     TimerOutput        computing_timer;
   };
 
-
-
   template <int dim>
   StokesProblem<dim>::StokesProblem(unsigned int velocity_degree)
     : velocity_degree(velocity_degree),
@@ -341,7 +330,6 @@ namespace Step55
                       TimerOutput::summary,
                       TimerOutput::wall_times)
   {}
-
 
   // The Kovasnay flow is defined on the domain [-0.5, 1.5]^2, which we
   // create by passing the min and max values to GridGenerator::hyper_cube.
@@ -484,8 +472,6 @@ namespace Step55
     system_rhs.reinit(owned_partitioning, mpi_communicator);
   }
 
-
-
   // @sect3{Assembly}
   //
   // This function assembles the system matrix, the preconditioner matrix,
@@ -569,7 +555,6 @@ namespace Step55
                 }
             }
 
-
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(cell_matrix,
                                                  cell_rhs,
@@ -585,8 +570,6 @@ namespace Step55
     preconditioner_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
-
-
 
   // @sect3{Solving}
   //
@@ -678,8 +661,6 @@ namespace Step55
     locally_relevant_solution.block(1) = distributed_solution.block(1);
   }
 
-
-
   // @sect3{The rest}
   //
   // The remainder of the code that deals with mesh refinement, output, and
@@ -710,8 +691,6 @@ namespace Step55
         triangulation.execute_coarsening_and_refinement();
       }
   }
-
-
 
   template <int dim>
   void
@@ -751,7 +730,6 @@ namespace Step55
             << std::endl;
     }
 
-
     std::vector<std::string> solution_names(dim, "velocity");
     solution_names.emplace_back("pressure");
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -783,7 +761,6 @@ namespace Step55
                                data_component_interpretation);
     }
 
-
     Vector<float> subdomain(triangulation.n_active_cells());
     for(unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
@@ -812,8 +789,6 @@ namespace Step55
         data_out.write_pvtu_record(master_output, filenames);
       }
   }
-
-
 
   template <int dim>
   void
@@ -852,8 +827,6 @@ namespace Step55
       }
   }
 } // namespace Step55
-
-
 
 int
 main(int argc, char* argv[])

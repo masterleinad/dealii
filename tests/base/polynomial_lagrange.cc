@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Lagrange interpolation
 
 #include "../tests.h"
@@ -51,7 +50,6 @@ check_interpolation(const std::vector<Polynomial<double>>& p,
     }
 }
 
-
 void
 check_poly(const Quadrature<1>& q)
 {
@@ -60,7 +58,6 @@ check_poly(const Quadrature<1>& q)
     = generate_complete_Lagrange_basis(q.get_points());
   check_interpolation(p, q.get_points());
 }
-
 
 void
 check_lge(unsigned int n)
@@ -74,7 +71,6 @@ check_lge(unsigned int n)
     x[i](0) = h * i;
   check_interpolation(p, x);
 }
-
 
 int
 main()

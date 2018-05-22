@@ -16,7 +16,6 @@
 #ifndef dealii_householder_h
 #define dealii_householder_h
 
-
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/lac/full_matrix.h>
@@ -26,16 +25,13 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // forward declarations
 template <typename number>
 class Vector;
 
-
 /*! @addtogroup Matrix2
  *@{
  */
-
 
 /**
  * QR-decomposition of a full matrix.
@@ -142,7 +138,6 @@ public:
   void
   Tvmult(VectorType& dst, const VectorType& src) const;
 
-
 private:
   /**
    * Storage for the diagonal elements of the orthogonal
@@ -203,7 +198,6 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
       for(i = j + 1; i < m; ++i)
         storage(i, j) *= beta;
 
-
       // For all subsequent columns do
       // the Householder reflection
       for(size_type k = j + 1; k < n; ++k)
@@ -219,16 +213,12 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
     }
 }
 
-
-
 template <typename number>
 template <typename number2>
 Householder<number>::Householder(const FullMatrix<number2>& M)
 {
   initialize(M);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -272,8 +262,6 @@ Householder<number>::least_squares(Vector<number2>&       dst,
 
   return std::sqrt(sum);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -327,7 +315,6 @@ Householder<number>::least_squares(BlockVector<number2>&       dst,
   return std::sqrt(sum);
 }
 
-
 template <typename number>
 template <class VectorType>
 void
@@ -336,7 +323,6 @@ Householder<number>::vmult(VectorType& dst, const VectorType& src) const
   least_squares(dst, src);
 }
 
-
 template <typename number>
 template <class VectorType>
 void
@@ -344,8 +330,6 @@ Householder<number>::Tvmult(VectorType&, const VectorType&) const
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 #endif // DOXYGEN
 

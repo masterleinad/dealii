@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_parallel_block_vector_h
 #define dealii_petsc_parallel_block_vector_h
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_PETSC
@@ -28,7 +27,6 @@
 #  include <deal.II/lac/vector_type_traits.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace PETScWrappers
 {
@@ -129,8 +127,6 @@ namespace PETScWrappers
       BlockVector(const std::vector<IndexSet>& parallel_partitioning,
                   const std::vector<IndexSet>& ghost_indices,
                   const MPI_Comm&              communicator);
-
-
 
       /**
        * Destructor. Clears memory
@@ -298,8 +294,6 @@ namespace PETScWrappers
       reinit(n_blocks, communicator, block_size, local_size);
     }
 
-
-
     inline BlockVector::BlockVector(
       const std::vector<size_type>& block_sizes,
       const MPI_Comm&               communicator,
@@ -307,7 +301,6 @@ namespace PETScWrappers
     {
       reinit(block_sizes, communicator, local_elements, false);
     }
-
 
     inline BlockVector::BlockVector(const BlockVector& v)
       : BlockVectorBase<Vector>()
@@ -360,8 +353,6 @@ namespace PETScWrappers
       return *this;
     }
 
-
-
     inline void
     BlockVector::reinit(const unsigned int n_blocks,
                         const MPI_Comm&    communicator,
@@ -374,8 +365,6 @@ namespace PETScWrappers
              std::vector<size_type>(n_blocks, local_size),
              omit_zeroing_entries);
     }
-
-
 
     inline void
     BlockVector::reinit(const std::vector<size_type>& block_sizes,
@@ -391,7 +380,6 @@ namespace PETScWrappers
         this->components[i].reinit(
           communicator, block_sizes[i], local_sizes[i], omit_zeroing_entries);
     }
-
 
     inline void
     BlockVector::reinit(const BlockVector& v, const bool omit_zeroing_entries)
@@ -438,8 +426,6 @@ namespace PETScWrappers
           parallel_partitioning[i], ghost_entries[i], communicator);
     }
 
-
-
     inline const MPI_Comm&
     BlockVector::get_mpi_communicator() const
     {
@@ -457,7 +443,6 @@ namespace PETScWrappers
       return ghosted;
     }
 
-
     inline void
     BlockVector::swap(BlockVector& v)
     {
@@ -465,8 +450,6 @@ namespace PETScWrappers
 
       ::dealii::swap(this->block_indices, v.block_indices);
     }
-
-
 
     inline void
     BlockVector::print(std::ostream&      out,
@@ -483,8 +466,6 @@ namespace PETScWrappers
           this->components[i].print(out, precision, scientific, across);
         }
     }
-
-
 
     /**
      * Global function which overloads the default implementation of the C++
@@ -543,7 +524,6 @@ namespace internal
   } // namespace LinearOperatorImplementation
 } /* namespace internal */
 
-
 /**
  * Declare dealii::PETScWrappers::MPI::BlockVector as distributed vector.
  *
@@ -552,7 +532,6 @@ namespace internal
 template <>
 struct is_serial_vector<PETScWrappers::MPI::BlockVector> : std::false_type
 {};
-
 
 DEAL_II_NAMESPACE_CLOSE
 

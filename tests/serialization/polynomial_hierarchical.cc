@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Hierarchical
 
 #include "serialization.h"
@@ -31,7 +30,6 @@ test()
 
   verify(p1, p2);
 }
-
 
 int
 main()

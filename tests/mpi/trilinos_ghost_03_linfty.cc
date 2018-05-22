@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // while computing the l2norm on ghosted vectors is unsafe, computing
 // the linfty norm should be ok. test this
 
@@ -25,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -34,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor owns 2 indices and all
   // are ghosting element 1 (the second)
@@ -46,7 +42,6 @@ test()
 
   TrilinosWrappers::MPI::Vector v(local_active, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v_tmp(local_relevant, MPI_COMM_WORLD);
-
 
   // set local values
   v(myid * 2)     = myid * 2;
@@ -77,8 +72,6 @@ test()
       deallog << "OK" << std::endl;
     }
 }
-
-
 
 int
 main(int argc, char** argv)

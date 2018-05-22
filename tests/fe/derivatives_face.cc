@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -28,7 +27,6 @@
 #include <deal.II/lac/vector.h>
 #include <string>
 #include <vector>
-
 
 template <int dim>
 inline void
@@ -66,8 +64,6 @@ plot_derivatives(Mapping<dim>&       mapping,
   deallog.pop();
 }
 
-
-
 template <int dim>
 void
 plot_FE_Q_shape_functions()
@@ -84,7 +80,6 @@ plot_FE_Q_shape_functions()
   plot_derivatives(m, q4, "Q4");
 }
 
-
 template <int dim>
 void
 plot_FE_DGQ_shape_functions()
@@ -99,7 +94,6 @@ plot_FE_DGQ_shape_functions()
   FE_DGQ<dim> q4(4);
   plot_derivatives(m, q4, "DGQ4");
 }
-
 
 int
 main()

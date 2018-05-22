@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // it turns out that FE_Q::face_to_cell_index() had a bug for elements beyond
 // Q2 when using the face flip flag. this test is for the 2d case for the Q3XQ4
 // case

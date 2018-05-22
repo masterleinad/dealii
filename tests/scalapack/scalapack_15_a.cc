@@ -36,7 +36,6 @@
 #include <iostream>
 #include <memory>
 
-
 template <typename NumberType>
 void
 test(const unsigned int size,
@@ -175,8 +174,6 @@ test(const unsigned int size,
   pcout << "   with respect to the given tolerance the eigenvalues coincide"
         << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_sparse_ilu_h
 #define dealii_sparse_ilu_h
-
 
 #include <deal.II/base/config.h>
 #include <deal.II/lac/exceptions.h>
@@ -111,7 +109,6 @@ public:
   void
   vmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
 
-
   /**
    * Apply the transpose of the incomplete decomposition, i.e. do one forward-
    * backward step $dst=(LU)^{-T}src$.
@@ -121,7 +118,6 @@ public:
   template <typename somenumber>
   void
   Tvmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
-
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -158,7 +154,6 @@ public:
 
 /*@}*/
 //---------------------------------------------------------------------------
-
 
 DEAL_II_NAMESPACE_CLOSE
 

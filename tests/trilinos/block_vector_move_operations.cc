@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/trilinos_vector.h>
@@ -27,7 +26,6 @@
         deallog << var.block(i)[j] << " ";                  \
       deallog << std::endl;                                 \
     }
-
 
 int
 main(int argc, char** argv)

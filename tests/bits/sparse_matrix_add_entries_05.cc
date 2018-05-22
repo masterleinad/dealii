@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check adding elements into a matrix using
 // SparseMatrix::add(row, n_cols, col_indices, values, elide_zero_values,
 //                   col_indices_are_sorted)
@@ -22,7 +20,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 void
 test()
@@ -69,8 +66,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check mg transfer in parallel, especially communication of copy_indices
 
 #include "../tests.h"
@@ -73,7 +72,6 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
     }
   tr.execute_coarsening_and_refinement();
 
-
   for(typename parallel::distributed::Triangulation<dim>::cell_iterator cell
       = tr.begin();
       cell != tr.end();
@@ -84,8 +82,6 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
               << std::endl;
     }
 }
-
-
 
 template <int dim>
 void
@@ -167,7 +163,6 @@ check_fe(FiniteElement<dim>& fe)
   }
   deallog << "ok" << std::endl;
 }
-
 
 template <int dim>
 void

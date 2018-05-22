@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like hp/matrices, but with different fe objects
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -38,8 +35,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 
-
-
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -60,8 +55,6 @@ public:
     values(1) = value(p, 1);
   }
 };
-
-
 
 template <int dim>
 void
@@ -111,13 +104,9 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
   matrix.print(deallog.get_file_stream());
 }
 
-
-
 void
 check_boundary(const hp::DoFHandler<1>&, const hp::MappingCollection<1>&)
 {}
-
-
 
 template <int dim>
 void
@@ -219,8 +208,6 @@ check()
   if(dim > 1)
     check_boundary(dof, mapping);
 }
-
-
 
 int
 main()

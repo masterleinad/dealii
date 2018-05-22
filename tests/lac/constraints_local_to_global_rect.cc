@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // ConstraintMatrix::distribute_local_to_global for row and column indices
 // with different constraints on the rows and columns.
@@ -59,7 +57,6 @@ test()
   deallog << "Different constraints: " << std::endl;
   global2.print_formatted(deallog.get_file_stream(), 2, true, 0, "0");
 }
-
 
 int
 main()

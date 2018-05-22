@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // deal.II includes
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_vector.h>
@@ -75,7 +74,6 @@ main(int argc, char** argv)
         v.print(logfile);
       }
     }
-
 
   catch(std::exception& exc)
     {

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test by Michal Wichrowski: ensure that
 // DoFRenumbering::Cuthill_McKee also works on empty processors
 
@@ -40,7 +38,6 @@ test()
   dofh.distribute_dofs(fe);
   DoFRenumbering::Cuthill_McKee(dofh);
 }
-
 
 int
 main(int argc, char* argv[])

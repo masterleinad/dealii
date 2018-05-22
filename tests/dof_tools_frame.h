@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -34,13 +33,11 @@
 #include <iostream>
 #include <string>
 
-
 // forward declaration of the function that must be provided in the
 // .cc files
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler);
-
 
 void
 output_vector(std::vector<bool>& v)
@@ -50,7 +47,6 @@ output_vector(std::vector<bool>& v)
   deallog << std::endl;
 }
 
-
 void
 output_vector(std::vector<unsigned int>& v)
 {
@@ -58,8 +54,6 @@ output_vector(std::vector<unsigned int>& v)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -73,7 +67,6 @@ check(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
   // call main function in .cc files
   check_this(dof_handler);
 }
-
 
 template <int dim>
 void

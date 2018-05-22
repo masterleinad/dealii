@@ -118,7 +118,6 @@ namespace Functions
       unit_phi[2] = -sin_phi;
     }
 
-
     /**
      * calculates out[i][j] += v*(in1[i]*in2[j]+in1[j]*in2[i])
      */
@@ -149,8 +148,6 @@ namespace Functions
     }
   } // namespace
 
-
-
   template <int dim>
   Spherical<dim>::Spherical(const Point<dim>&  p,
                             const unsigned int n_components)
@@ -158,8 +155,6 @@ namespace Functions
   {
     AssertThrow(dim == 3, ExcNotImplemented());
   }
-
-
 
   template <int dim>
   double
@@ -172,8 +167,6 @@ namespace Functions
     return svalue(sp, component);
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   Spherical<dim>::gradient(const Point<dim>& /*p_*/,
@@ -183,8 +176,6 @@ namespace Functions
     Assert(false, ExcNotImplemented());
     return {};
   }
-
-
 
   template <>
   Tensor<1, 3>
@@ -228,8 +219,6 @@ namespace Functions
     return res;
   }
 
-
-
   template <int dim>
   SymmetricTensor<2, dim>
   Spherical<dim>::hessian(const Point<dim>& /*p*/,
@@ -238,8 +227,6 @@ namespace Functions
     Assert(false, ExcNotImplemented());
     return {};
   }
-
-
 
   template <>
   SymmetricTensor<2, 3>
@@ -301,16 +288,12 @@ namespace Functions
     return res;
   }
 
-
-
   template <int dim>
   std::size_t
   Spherical<dim>::memory_consumption() const
   {
     return sizeof(Spherical<dim>);
   }
-
-
 
   template <int dim>
   double
@@ -321,8 +304,6 @@ namespace Functions
     return 0.;
   }
 
-
-
   template <int dim>
   std::array<double, dim>
   Spherical<dim>::sgradient(const std::array<double, dim>& /* sp */,
@@ -332,8 +313,6 @@ namespace Functions
     return std::array<double, dim>();
   }
 
-
-
   template <int dim>
   std::array<double, 6>
   Spherical<dim>::shessian(const std::array<double, dim>& /* sp */,
@@ -342,8 +321,6 @@ namespace Functions
     AssertThrow(false, ExcNotImplemented());
     return std::array<double, 6>();
   }
-
-
 
   // explicit instantiations
   template class Spherical<1>;

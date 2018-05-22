@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check existence Vector<std::complex<double> >::Vector(Vector<std::complex<float> >). this conversion
 // constructor was disabled previously altogether because of a compiler defect
 // that did not honor the 'explicit' keyword on template constructors. this is
@@ -22,7 +20,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
-
 
 void
 test(Vector<std::complex<double>>& v)
@@ -35,8 +32,6 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

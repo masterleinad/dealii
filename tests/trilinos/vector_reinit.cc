@@ -17,7 +17,6 @@
 // to test IndexSet::make_trilinos_map(), which contained an MPI-related bug.
 // Namely, a Fortran type MPI_LOGICAL was used instead of MPI_INT.
 
-
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
@@ -62,7 +61,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

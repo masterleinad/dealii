@@ -95,7 +95,6 @@ main(int argc, char** argv)
       next_number = std::find_if(next_number, output.end(), is_digit);
     }
 
-
   deallog << output << std::endl;
 
   // restore stream

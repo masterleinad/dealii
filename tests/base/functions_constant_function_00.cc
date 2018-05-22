@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test ConstantVectorFunction class
 
 #include "../tests.h"

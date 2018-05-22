@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_13 but using another mesh that triggers a
 // more difficult case in terms of the numbers in the mesh
 
@@ -30,7 +28,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

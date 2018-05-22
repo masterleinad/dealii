@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // something that crashed at one point and for which I needed a simple testcase
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -32,7 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -53,7 +49,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

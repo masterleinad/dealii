@@ -57,7 +57,6 @@ print_formatted(const FullMatrix<number>& A,
     };
 }
 
-
 template <int dim>
 inline void
 check_restriction(FiniteElement<dim>& fe, const char* name)
@@ -72,7 +71,6 @@ check_restriction(FiniteElement<dim>& fe, const char* name)
         print_formatted(fe.get_restriction_matrix(i), 7, 8);
     }
 }
-
 
 #define CHECK_ALL(EL, deg, dim)      \
   {                                  \

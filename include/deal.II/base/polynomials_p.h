@@ -16,7 +16,6 @@
 #ifndef dealii_polynomials_P_h
 #define dealii_polynomials_P_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -100,7 +99,6 @@ PolynomialsP<dim>::degree() const
 {
   return p;
 }
-
 
 template <int dim>
 inline std::array<unsigned int, dim>

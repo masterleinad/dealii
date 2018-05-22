@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityTools::distribute_sparsity_pattern
 
 #include "../tests.h"
@@ -24,13 +22,10 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
 
-
-
 void
 test_mpi()
 {
   Assert(Utilities::MPI::job_supports_mpi(), ExcInternalError());
-
 
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
@@ -86,7 +81,6 @@ test_mpi()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

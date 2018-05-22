@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/qprojector.h>
@@ -35,16 +34,11 @@
 #include <cmath>
 #include <memory>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 template <int dim, int spacedim>
 MappingQ1<dim, spacedim>::MappingQ1() : MappingQGeneric<dim, spacedim>(1)
 {}
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
@@ -55,15 +49,11 @@ MappingQ1<dim, spacedim>::clone() const
 
 //---------------------------------------------------------------------------
 
-
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim> StaticMappingQ1<dim, spacedim>::mapping
   = MappingQGeneric<dim, spacedim>(1);
 
-
-
 //--------------------------- Explicit instantiations -----------------------
 #include "mapping_q1.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

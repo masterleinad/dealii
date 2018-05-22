@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check LAPACKFullMatrix::print_formatted on NaN entry
 
 #include "../tests.h"
 
 #include <deal.II/lac/lapack_full_matrix.h>
-
 
 int
 main()

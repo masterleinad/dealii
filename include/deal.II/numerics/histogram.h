@@ -16,7 +16,6 @@
 #ifndef dealii_histogram_h
 #define dealii_histogram_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/lac/vector.h>
@@ -24,7 +23,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * This class provides some facilities to generate 2d and 3d histograms. It is
@@ -83,7 +81,6 @@ public:
      */
     logarithmic
   };
-
 
   /**
    * Take several lists of values, each on to produce one histogram that will
@@ -238,7 +235,6 @@ private:
    */
   std::vector<double> y_values;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

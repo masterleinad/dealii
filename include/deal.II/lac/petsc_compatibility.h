@@ -54,8 +54,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   /**
    * Destroy a PETSc matrix. This function wraps MatDestroy with a version
    * check (the signature of this function changed in PETSc 3.2.0).
@@ -72,8 +70,6 @@ namespace PETScWrappers
     // PETSc will check whether or not matrix is nullptr.
     return MatDestroy(&matrix);
   }
-
-
 
   /**
    * Destroy a Krylov Subspace (KSP) PETSc solver. This function wraps
@@ -92,8 +88,6 @@ namespace PETScWrappers
     return KSPDestroy(&krylov_solver);
   }
 
-
-
   /**
    * Set a PETSc matrix option. This function wraps MatSetOption with a
    * version check.
@@ -110,8 +104,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   /**
    * Tell PETSc that we are not planning on adding new entries to the
    * matrix. Generate errors in debug mode.
@@ -125,8 +117,6 @@ namespace PETScWrappers
     set_matrix_option(matrix, MAT_NEW_NONZERO_LOCATIONS, PETSC_FALSE);
 #  endif
   }
-
-
 
   /**
    * Tell PETSc to keep the SparsityPattern entries even if we delete a

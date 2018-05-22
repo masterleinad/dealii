@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that the GMSH executable actually works.
 // This is a reduced version of gmsh/create_tria_01.
 

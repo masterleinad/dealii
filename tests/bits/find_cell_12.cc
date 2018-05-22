@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // find_active_cell_around_point goes into an endless loop, reported
 // on the mailing list by Giorgos Kourakos (2014-04-10).
 
 #include "../tests.h"
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -33,7 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 #include <iostream>
 #include <list>
@@ -53,7 +49,6 @@ test()
   std::vector<unsigned int> n_cells;
   n_cells.push_back(10);
   n_cells.push_back(2);
-
 
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, n_cells, left_bottom, right_top, true);

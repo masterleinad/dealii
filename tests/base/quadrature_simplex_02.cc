@@ -16,7 +16,6 @@
 // construct a simplex quadrature, and check that we can get an affine
 // transformation out of it.
 
-
 #include "../tests.h"
 #include "simplex.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -44,7 +43,6 @@ test(int n)
   for(auto p : quad2.get_points())
     deallog << p << std::endl;
 
-
   deallog << std::endl
           << "# Area 2: "
           << std::accumulate(
@@ -52,7 +50,6 @@ test(int n)
           << std::endl
           << std::endl;
 }
-
 
 int
 main()

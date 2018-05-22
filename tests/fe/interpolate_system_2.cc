@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "interpolate_common.h"
 #include <deal.II/base/quadrature_lib.h>
 
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
-
 
 //
 // Check convert_generalized_support_opint_values_to_dof_values for systems

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test mesh_loop in parallel
 
 #include "../tests.h"
@@ -111,7 +109,6 @@ test()
             << " n_own_cells: " << data.n_own_cells
             << " n_ghost_cells: " << data.n_ghost_cells << std::endl;
   };
-
 
   {
     MPILogInitAll log;
@@ -219,12 +216,10 @@ test()
   deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-
 
   test<2, 2>();
 }

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test by Brian: check some of the scaling operations on matrices
 
 #include "../tests.h"
@@ -46,8 +45,6 @@
 
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 int
 main()

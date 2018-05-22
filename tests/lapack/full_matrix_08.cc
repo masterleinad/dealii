@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests LAPACKFullMatrix::mmult
 
 #include "../tests.h"
@@ -22,8 +21,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
-
 
 void
 test()

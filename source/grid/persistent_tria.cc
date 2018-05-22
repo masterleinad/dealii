@@ -20,21 +20,17 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, int spacedim>
 const unsigned int PersistentTriangulation<dim, spacedim>::dimension;
 
 template <int dim, int spacedim>
 const unsigned int PersistentTriangulation<dim, spacedim>::spacedimension;
 
-
 template <int dim, int spacedim>
 PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
   const Triangulation<dim, spacedim>& coarse_grid)
   : coarse_grid(&coarse_grid, typeid(*this).name())
 {}
-
-
 
 template <int dim, int spacedim>
 PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
@@ -49,8 +45,6 @@ PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
 {
   Assert(old_tria.n_levels() == 0, ExcTriaNotEmpty());
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -69,8 +63,6 @@ PersistentTriangulation<dim, spacedim>::execute_coarsening_and_refinement()
   Triangulation<dim, spacedim>::execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::restore()
@@ -80,8 +72,6 @@ PersistentTriangulation<dim, spacedim>::restore()
   for(unsigned int i = 0; i < refine_flags.size() + 1; ++i)
     restore(i);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -107,16 +97,12 @@ PersistentTriangulation<dim, spacedim>::restore(const unsigned int step)
     }
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 PersistentTriangulation<dim, spacedim>::n_refinement_steps() const
 {
   return refine_flags.size();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -129,8 +115,6 @@ PersistentTriangulation<dim, spacedim>::copy_triangulation(
   coarsen_flags.clear();
 }
 
-
-
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::create_triangulation(
@@ -141,8 +125,6 @@ PersistentTriangulation<dim, spacedim>::create_triangulation(
   Assert(false, ExcImpossibleInDim(dim));
 }
 
-
-
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::create_triangulation_compatibility(
@@ -152,8 +134,6 @@ PersistentTriangulation<dim, spacedim>::create_triangulation_compatibility(
 {
   Assert(false, ExcImpossibleInDim(dim));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -181,8 +161,6 @@ PersistentTriangulation<dim, spacedim>::write_flags(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -220,8 +198,6 @@ PersistentTriangulation<dim, spacedim>::read_flags(std::istream& in)
   AssertThrow(in, ExcIO());
 }
 
-
-
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::clear_flags()
@@ -229,8 +205,6 @@ PersistentTriangulation<dim, spacedim>::clear_flags()
   refine_flags.clear();
   coarsen_flags.clear();
 }
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -241,7 +215,6 @@ PersistentTriangulation<dim, spacedim>::memory_consumption() const
           + MemoryConsumption::memory_consumption(refine_flags)
           + MemoryConsumption::memory_consumption(coarsen_flags));
 }
-
 
 // explicit instantiations
 template class PersistentTriangulation<1>;

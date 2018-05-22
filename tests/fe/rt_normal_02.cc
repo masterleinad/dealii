@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Small test to analyse the equivalence of the normal component
  * on the element edges for the Raviart-Thomas elements.
  */
 
-
-
 #include "../tests.h"
 
 #define PRECISION 8
-
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -50,7 +46,6 @@
 #include <deal.II/fe/fe_values.h>
 
 std::ofstream logfile("output");
-
 
 /*
  * Check if the normal component is continuous over element edges.
@@ -159,8 +154,6 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
     }
 }
 
-
-
 /*
  * Check if the normal component is continuous over element edges.
  */
@@ -240,7 +233,6 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
         }
     }
 }
-
 
 int
 main(int /*argc*/, char** /*argv*/)

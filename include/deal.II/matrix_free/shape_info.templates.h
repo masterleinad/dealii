@@ -16,7 +16,6 @@
 #ifndef dealii_matrix_free_shape_info_templates_h
 #define dealii_matrix_free_shape_info_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/polynomials_piecewise.h>
@@ -29,9 +28,7 @@
 
 #include <deal.II/matrix_free/shape_info.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -67,8 +64,6 @@ namespace internal
         dofs_per_component_on_face(0),
         nodal_at_cell_boundaries(false)
     {}
-
-
 
     template <typename Number>
     template <int dim>
@@ -418,8 +413,6 @@ namespace internal
         }
     }
 
-
-
     template <typename Number>
     bool
     ShapeInfo<Number>::check_1d_shapes_symmetric(
@@ -535,8 +528,6 @@ namespace internal
       return true;
     }
 
-
-
     template <typename Number>
     bool
     ShapeInfo<Number>::check_1d_shapes_collocation()
@@ -567,8 +558,6 @@ namespace internal
             }
       return true;
     }
-
-
 
     template <typename Number>
     std::size_t
@@ -601,7 +590,6 @@ namespace internal
 
   } // end of namespace MatrixFreeFunctions
 } // end of namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

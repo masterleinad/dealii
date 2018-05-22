@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FE_Enriched in real-life application on eigenvalue problem similar
 // to Step-36. That involves assembly (shape values and gradients) and
 // error estimator (Kelly - > face gradients) and MPI run.
@@ -238,7 +237,6 @@ namespace Step36
     // usual elements (active_fe_index ==0):
     fe_collection.push_back(FE_Enriched<dim>(FE_Q<dim>(2)));
 
-
     // enriched elements (active_fe_index==1):
     fe_collection.push_back(
       FE_Enriched<dim>(FE_Q<dim>(2), FE_Q<dim>(1), &enrichment));
@@ -355,7 +353,6 @@ namespace Step36
     return cell->material_id() == pou_material_id;
   }
 
-
   template <int dim>
   void
   EigenvalueProblem<dim>::assemble_system()
@@ -372,7 +369,6 @@ namespace Step36
                                    update_values | update_gradients
                                      | update_quadrature_points
                                      | update_JxW_values);
-
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -586,7 +582,6 @@ namespace Step36
         output.close();
       } //end scope
   }
-
 
   template <int dim>
   void

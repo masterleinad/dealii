@@ -25,8 +25,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 /**
  * This class represents a mask that can be used to select individual vector
  * components of a finite element (see also
@@ -239,7 +237,6 @@ private:
   operator<<(std::ostream& out, const ComponentMask& mask);
 };
 
-
 /**
  * Write a component mask to an output stream. If the component mask
  * represents one where all components are selected without specifying a
@@ -253,19 +250,16 @@ private:
 std::ostream&
 operator<<(std::ostream& out, const ComponentMask& mask);
 
-
 // -------------------- inline functions ---------------------
 
 inline ComponentMask::ComponentMask(const std::vector<bool>& component_mask)
   : component_mask(component_mask)
 {}
 
-
 inline ComponentMask::ComponentMask(const unsigned int n_components,
                                     const bool         initializer)
   : component_mask(n_components, initializer)
 {}
-
 
 inline unsigned int
 ComponentMask::size() const
@@ -273,14 +267,12 @@ ComponentMask::size() const
   return component_mask.size();
 }
 
-
 inline void
 ComponentMask::set(const unsigned int index, const bool value)
 {
   AssertIndexRange(index, component_mask.size());
   component_mask[index] = value;
 }
-
 
 inline bool ComponentMask::operator[](const unsigned int component_index) const
 {
@@ -297,13 +289,11 @@ inline bool ComponentMask::operator[](const unsigned int component_index) const
     }
 }
 
-
 inline bool
 ComponentMask::represents_n_components(const unsigned int n) const
 {
   return ((component_mask.size() == 0) || (component_mask.size() == n));
 }
-
 
 inline unsigned int
 ComponentMask::n_selected_components(const unsigned int n) const
@@ -325,7 +315,6 @@ ComponentMask::n_selected_components(const unsigned int n) const
     }
 }
 
-
 inline unsigned int
 ComponentMask::first_selected_component(const unsigned int n) const
 {
@@ -345,15 +334,11 @@ ComponentMask::first_selected_component(const unsigned int n) const
     }
 }
 
-
-
 inline bool
 ComponentMask::represents_the_all_selected_mask() const
 {
   return (component_mask.size() == 0);
 }
-
-
 
 inline ComponentMask
 ComponentMask::operator|(const ComponentMask& mask) const
@@ -377,7 +362,6 @@ ComponentMask::operator|(const ComponentMask& mask) const
     }
 }
 
-
 inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
 {
   // if one of the two masks denotes the all-component mask,
@@ -399,21 +383,17 @@ inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
     }
 }
 
-
 inline bool
 ComponentMask::operator==(const ComponentMask& mask) const
 {
   return component_mask == mask.component_mask;
 }
 
-
 inline bool
 ComponentMask::operator!=(const ComponentMask& mask) const
 {
   return component_mask != mask.component_mask;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

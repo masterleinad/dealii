@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test TrilinosVector::locally_owned_elements
-
 
 #include "../tests.h"
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <sstream>
-
 
 void
 test()
@@ -80,8 +76,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

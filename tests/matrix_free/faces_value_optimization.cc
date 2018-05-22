@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation with the option to compress
 
 #include "../tests.h"
@@ -167,8 +165,6 @@ private:
   mutable std::vector<double>    error;
 };
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -236,8 +232,6 @@ test()
 
   mf.check_error(in);
 }
-
-
 
 int
 main()

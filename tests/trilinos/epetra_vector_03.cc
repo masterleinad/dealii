@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/read_write_vector.h>
@@ -44,7 +43,6 @@ test()
   a.import(read_write, VectorOperation::insert);
   AssertThrow(a.all_zero() == false, ExcInternalError());
 }
-
 
 int
 main(int argc, char** argv)

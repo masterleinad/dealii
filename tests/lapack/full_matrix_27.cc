@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::rank1_update() for rank1 update of a matrix
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -44,7 +42,6 @@ test(const unsigned int size)
         }
     }
 
-
   const NumberType a = random_value<NumberType>();
 
   LAPACKFullMatrix<NumberType> B(size);
@@ -62,7 +59,6 @@ test(const unsigned int size)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

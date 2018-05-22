@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of MPI-parallel matrix free matrix-vector
 // products by comparing the result with a Trilinos sparse matrix assembled in
 // the usual way. The mesh is distributed among processors (hypercube) and has
@@ -43,8 +41,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -132,7 +128,6 @@ test()
 
   mf.vmult(out, in);
 
-
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
@@ -195,7 +190,6 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

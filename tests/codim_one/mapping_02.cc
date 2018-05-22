@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _01, but use a quadratic mapping. since we now map line segments to
 // curves, the normal vectors at different quadrature points should no longer
 // be parallel
@@ -30,7 +28,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -68,8 +65,6 @@ test()
                 << std::endl;
     }
 }
-
-
 
 int
 main()

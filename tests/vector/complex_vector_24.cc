@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test used to check for Vector::clear(). However, this
 // function has since been removed, so we test for v=0 instead, although that
 // may be covered by one of the other tests
@@ -22,7 +20,6 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v)
@@ -42,8 +39,6 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

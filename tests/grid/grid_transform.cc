@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the deformation of a circular annulus to a domain where the central
 // circle is displaced
-
 
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
@@ -26,8 +24,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 int
 main()

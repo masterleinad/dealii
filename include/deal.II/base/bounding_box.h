@@ -16,7 +16,6 @@
 #ifndef dealii_base_bounding_box_h
 #define dealii_base_bounding_box_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -158,7 +157,6 @@ private:
 
 #ifndef DOXYGEN
 
-
 template <int spacedim, typename Number>
 inline BoundingBox<spacedim, Number>::BoundingBox(
   const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
@@ -173,7 +171,6 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
 
   this->boundary_points = boundary_points;
 }
-
 
 template <int spacedim, typename Number>
 template <class Archive>

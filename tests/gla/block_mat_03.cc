@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document problem in PETSc block system ("inserting nonzero")
 
 #define USE_PETSC_LA
@@ -91,7 +89,6 @@ test()
   locally_owned_dofs.print(deallog);
   deallog << "relevant: ";
   locally_relevant_dofs.print(deallog);
-
 
   ConstraintMatrix constraints(locally_relevant_dofs);
   constraints.close();
@@ -195,7 +192,6 @@ test_alt()
   deallog << "relevant: ";
   locally_relevant_dofs.print(deallog);
 
-
   ConstraintMatrix constraints(locally_relevant_dofs);
   constraints.close();
 
@@ -247,7 +243,6 @@ test_alt()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

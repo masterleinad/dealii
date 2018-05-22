@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // compute the deviator tensor as stated in the documentation of outer_product
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -35,8 +33,6 @@ test()
   AssertThrow((T - deviator_tensor<dim>()).norm() <= 1e-15 * T.norm(),
               ExcInternalError());
 }
-
-
 
 int
 main()

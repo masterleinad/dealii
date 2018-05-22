@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // an attempt to understand the failure of mesh_3d_18
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -30,8 +27,6 @@ char logname[] = "output";
 #include <deal.II/grid/tria_iterator.h>
 
 #include <vector>
-
-
 
 void
 test_with_wrong_face_orientation()
@@ -53,8 +48,6 @@ test_with_wrong_face_orientation()
     deallog << "cell->neighbor(3)->face(" << i
             << ")=" << cell->neighbor(3)->face(i) << std::endl;
 }
-
-
 
 int
 main()

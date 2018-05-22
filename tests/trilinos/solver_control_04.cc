@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that we can reuse a Trilinos solver in a LinearOperator
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -38,7 +36,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   {
     const unsigned int size = 32;

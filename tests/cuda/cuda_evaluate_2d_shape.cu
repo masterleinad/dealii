@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the 2d evaluation functions used in
 // CUDAWrappers::FEEvaluation. These functions are marked 'internal' but it is
 // much easier to check their correctness directly rather than from the results

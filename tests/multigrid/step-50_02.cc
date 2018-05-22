@@ -21,7 +21,6 @@
 
 #include "../tests.h"
 
-
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
@@ -67,9 +66,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
-
 #include <deal.II/lac/generic_linear_algebra.h>
-
 
 namespace LA
 {
@@ -83,8 +80,6 @@ namespace LA
 namespace Step50
 {
   using namespace dealii;
-
-
 
   template <int dim>
   class LaplaceProblem
@@ -129,8 +124,6 @@ namespace Step50
     MGConstrainedDoFs       mg_constrained_dofs;
   };
 
-
-
   template <int dim>
   class Coefficient : public Function<dim>
   {
@@ -147,8 +140,6 @@ namespace Step50
                const unsigned int             component = 0) const;
   };
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -158,8 +149,6 @@ namespace Step50
     else
       return 1;
   }
-
-
 
   template <int dim>
   void
@@ -179,7 +168,6 @@ namespace Step50
       values[i] = Coefficient<dim>::value(points[i]);
   }
 
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     : triangulation(
@@ -196,8 +184,6 @@ namespace Step50
       mg_dof_handler(triangulation),
       degree(degree)
   {}
-
-
 
   template <int dim>
   void
@@ -230,12 +216,10 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
-
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
-
 
     const unsigned int n_levels = triangulation.n_global_levels();
 
@@ -264,8 +248,6 @@ namespace Step50
           true);
       }
   }
-
-
 
   template <int dim>
   void
@@ -328,8 +310,6 @@ namespace Step50
     system_rhs.compress(VectorOperation::add);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_multigrid()
@@ -350,8 +330,6 @@ namespace Step50
 
     const Coefficient<dim> coefficient;
     std::vector<double>    coefficient_values(n_q_points);
-
-
 
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_global_levels());
@@ -396,7 +374,6 @@ namespace Step50
           boundary_constraints[cell->level()].distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
-
           const IndexSet& interface_dofs_on_level
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
@@ -427,7 +404,6 @@ namespace Step50
                   cell_matrix(i, j) = 0;
                 }
 
-
           empty_constraints.distribute_local_to_global(
             cell_matrix,
             local_dof_indices,
@@ -440,8 +416,6 @@ namespace Step50
         mg_interface_matrices[i].compress(VectorOperation::add);
       }
   }
-
-
 
   template <int dim>
   void
@@ -477,7 +451,6 @@ namespace Step50
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
 
-
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
 
@@ -507,8 +480,6 @@ namespace Step50
     constraints.distribute(solution);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::refine_grid()
@@ -522,8 +493,6 @@ namespace Step50
           cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   template <int dim>
   void
@@ -562,7 +531,6 @@ namespace Step50
       }
   }
 } // namespace Step50
-
 
 int
 main(int argc, char* argv[])

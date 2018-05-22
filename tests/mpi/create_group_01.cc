@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that Utilities::MPI::create_group is only collective over the group of
 // processes that actually want to create the communicator.
 // In p4est-2.0, sc_init() leads to a deadlock when MPI_Comm_create_group is

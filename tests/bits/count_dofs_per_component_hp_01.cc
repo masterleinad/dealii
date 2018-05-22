@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -28,7 +27,6 @@
 //   DoFTools::
 //   count_dofs_per_component (...);
 // for the hp case
-
 
 using namespace std;
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that the time step can be increased when using an embedded method.
 // Bug reported by Vaibhav Palkar on the mailing list.
 
@@ -50,7 +49,6 @@ test(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
   Vector<double> solution(size);
   for(unsigned int i = 0; i < size; ++i)
     solution[i] = my(initial_time);
-
 
   while(time < final_time)
     {

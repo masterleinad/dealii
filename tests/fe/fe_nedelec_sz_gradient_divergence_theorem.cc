@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the correctness of fe_values.shape_gradient for FE_NedelecSZ by comparing
 // the integral of all shape gradients with the flux over the boundary by the
 // divergence theorem
@@ -147,8 +146,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_ball(const double tolerance)
@@ -164,7 +161,6 @@ test_hyper_ball(const double tolerance)
   FE_NedelecSZ<dim> fe(1);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

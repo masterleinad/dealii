@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // getting boundary indicators
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int spacedim>
 void
@@ -39,8 +35,6 @@ test()
   deallog << (int) tria.begin_active()->face(0)->boundary_id() << std::endl;
   deallog << (int) tria.begin_active()->face(1)->boundary_id() << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // GridTools::regularize_corner_cells on more complicated mesh
 
 #include "../tests.h"

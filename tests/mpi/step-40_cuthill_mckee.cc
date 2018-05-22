@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // A lightly adapted version of the step-40 tutorial program
 //
 // like the step-40 test, but using a Cuthill-McKee renumbering
@@ -61,7 +60,6 @@ namespace Step40
 {
   using namespace dealii;
 
-
   template <int dim>
   class LaplaceProblem
   {
@@ -101,8 +99,6 @@ namespace Step40
     ConditionalOStream pcout;
   };
 
-
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
     : mpi_communicator(MPI_COMM_WORLD),
@@ -118,15 +114,11 @@ namespace Step40
             (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
   {}
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     dof_handler.clear();
   }
-
-
 
   template <int dim>
   void
@@ -139,7 +131,6 @@ namespace Step40
     {
       std::vector<types::global_dof_index> starting_indices;
 
-
       const QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
       FEFaceValues<dim>     fe_face_values(fe,
                                        face_quadrature_formula,
@@ -150,7 +141,6 @@ namespace Step40
       Tensor<1, dim>                       u;
       Point<dim>                           down{0, -1};
       std::vector<types::global_dof_index> dof_indices(fe.n_dofs_per_face(), 0);
-
 
       for(const auto& cell : dof_handler.active_cell_iterators())
         {
@@ -221,8 +211,6 @@ namespace Step40
                          Utilities::MPI::this_mpi_process(mpi_communicator));
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_system()
@@ -289,8 +277,6 @@ namespace Step40
     system_rhs.compress(VectorOperation::add);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -335,16 +321,12 @@ namespace Step40
     locally_relevant_solution = completely_distributed_solution;
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::refine_grid()
   {
     triangulation.refine_global(1);
   }
-
-
 
   template <int dim>
   void
@@ -392,7 +374,6 @@ namespace Step40
   }
 } // namespace Step40
 
-
 int
 test_mpi()
 {
@@ -400,7 +381,6 @@ test_mpi()
     {
       using namespace dealii;
       using namespace Step40;
-
 
       {
         LaplaceProblem<2> laplace_problem_2d;
@@ -436,8 +416,6 @@ test_mpi()
 
   return 0;
 }
-
-
 
 int
 main(int argc, char* argv[])

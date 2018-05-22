@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 1999
  */
 
-
 // @sect3{Include files}
 
 // Again, the first few include files are already known, so we won't comment
@@ -55,10 +54,8 @@
 #include <fstream>
 #include <iostream>
 
-
 // Finally, this has been discussed in previous tutorial programs before:
 using namespace dealii;
-
 
 // @sect3{The <code>Step5</code> class template}
 
@@ -96,7 +93,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
 // @sect3{Working with nonconstant coefficients}
 
 // In step-4, we showed how to use non-constant boundary values and right hand
@@ -127,8 +123,6 @@ template <int dim>
 Step5<dim>::Step5() : fe(1), dof_handler(triangulation)
 {}
 
-
-
 // @sect4{Step5::setup_system}
 
 // This is the function <code>make_grid_and_dofs</code> from the previous
@@ -151,8 +145,6 @@ Step5<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 // @sect4{Step5::assemble_system}
 
@@ -218,7 +210,6 @@ Step5<dim>::assemble_system()
             }
         }
 
-
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -237,7 +228,6 @@ Step5<dim>::assemble_system()
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
-
 
 // @sect4{Step5::solve}
 
@@ -281,7 +271,6 @@ Step5<dim>::solve()
   std::cout << "   " << solver_control.last_step()
             << " CG iterations needed to obtain convergence." << std::endl;
 }
-
 
 // @sect4{Step5::output_results and setting output flags}
 
@@ -348,8 +337,6 @@ Step5<dim>::output_results(const unsigned int cycle) const
   std::ofstream output("solution-" + std::to_string(cycle) + ".eps");
   data_out.write_eps(output);
 }
-
-
 
 // @sect4{Step5::run}
 
@@ -473,7 +460,6 @@ Step5<dim>::run()
       output_results(cycle);
     }
 }
-
 
 // @sect3{The <code>main</code> function}
 

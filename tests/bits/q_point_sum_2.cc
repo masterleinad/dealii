@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrating \vec x over the surface of the [-1,1] hypercube and
 // hyperball in 2d and 3d should yield zero
 //
 // same as q_point_sum_1, but with different mappings
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -32,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -91,7 +86,6 @@ check(const Triangulation<dim>& tria, const unsigned int order)
   deallog << " subface integration is ok: " << std::sqrt(n2 * n2) << std::endl;
 }
 
-
 int
 main()
 {
@@ -112,7 +106,6 @@ main()
     check(coarse_grid, 2);
     check(coarse_grid, 3);
   }
-
 
   {
     Triangulation<2> coarse_grid;

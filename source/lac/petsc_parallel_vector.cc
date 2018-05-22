@@ -35,8 +35,6 @@ namespace PETScWrappers
       Vector::create_vector(0, 0);
     }
 
-
-
     Vector::Vector(const MPI_Comm& communicator,
                    const size_type n,
                    const size_type local_size)
@@ -44,8 +42,6 @@ namespace PETScWrappers
     {
       Vector::create_vector(n, local_size);
     }
-
-
 
     Vector::Vector(const MPI_Comm&   communicator,
                    const VectorBase& v,
@@ -64,8 +60,6 @@ namespace PETScWrappers
       (void) local_size;
     }
 
-
-
     Vector::Vector(const IndexSet& local,
                    const IndexSet& ghost,
                    const MPI_Comm& communicator)
@@ -80,8 +74,6 @@ namespace PETScWrappers
       Vector::create_vector(local.size(), local.n_elements(), ghost_set);
     }
 
-
-
     Vector::Vector(const IndexSet& local, const MPI_Comm& communicator)
       : communicator(communicator)
     {
@@ -89,8 +81,6 @@ namespace PETScWrappers
              ExcNotImplemented());
       Vector::create_vector(local.size(), local.n_elements());
     }
-
-
 
     Vector&
     Vector::operator=(const Vector& v)
@@ -126,8 +116,6 @@ namespace PETScWrappers
       return *this;
     }
 
-
-
     void
     Vector::clear()
     {
@@ -136,8 +124,6 @@ namespace PETScWrappers
 
       create_vector(0, 0);
     }
-
-
 
     void
     Vector::reinit(const MPI_Comm& comm,
@@ -180,8 +166,6 @@ namespace PETScWrappers
         *this = 0;
     }
 
-
-
     void
     Vector::reinit(const Vector& v, const bool omit_zeroing_entries)
     {
@@ -197,8 +181,6 @@ namespace PETScWrappers
       else
         reinit(v.communicator, v.size(), v.local_size(), omit_zeroing_entries);
     }
-
-
 
     void
     Vector::reinit(const IndexSet& local,
@@ -231,7 +213,6 @@ namespace PETScWrappers
       create_vector(local.size(), local.n_elements());
     }
 
-
     void
     Vector::create_vector(const size_type n, const size_type local_size)
     {
@@ -245,8 +226,6 @@ namespace PETScWrappers
 
       Assert(size() == n, ExcDimensionMismatch(size(), n));
     }
-
-
 
     void
     Vector::create_vector(const size_type n,
@@ -301,7 +280,6 @@ namespace PETScWrappers
       }
 #  endif
 
-
       // in PETSc versions up to 3.5, VecCreateGhost zeroed out the locally
       // owned vector elements but forgot about the ghost elements. we need to
       // do this ourselves
@@ -313,8 +291,6 @@ namespace PETScWrappers
       *this = zero;
 #  endif
     }
-
-
 
     bool
     Vector::all_zero() const
@@ -329,7 +305,6 @@ namespace PETScWrappers
       return has_nonzero == 0;
 #  endif
     }
-
 
     void
     Vector::print(std::ostream&      out,

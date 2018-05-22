@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler::declare_entry did not allow to redeclare an
 // entry. make sure this works now
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

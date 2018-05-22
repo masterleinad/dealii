@@ -16,7 +16,6 @@
 #ifndef dealii_function_time_h
 #define dealii_function_time_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -107,8 +106,6 @@ private:
    */
   Number time;
 };
-
-
 
 /*------------------------------ Inline functions ------------------------------*/
 

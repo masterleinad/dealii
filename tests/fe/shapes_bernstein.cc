@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/mapping_q1.h>
@@ -23,7 +22,6 @@
 //#include "../../include/fe_bernstein.h"
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -56,7 +54,6 @@ plot_FE_Bernstein_shape_functions()
       test_compute_functions(m, b4, "B4");
     };
 }
-
 
 int
 main()

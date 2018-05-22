@@ -46,12 +46,8 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 // Static member variable
 const Table<2, bool> ConstraintMatrix::default_empty_table = Table<2, bool>();
-
-
 
 void
 ConstraintMatrix::copy_from(const ConstraintMatrix& other)
@@ -62,15 +58,11 @@ ConstraintMatrix::copy_from(const ConstraintMatrix& other)
   sorted      = other.sorted;
 }
 
-
-
 bool
 ConstraintMatrix::check_zero_weight(const std::pair<size_type, double>& p)
 {
   return (p.second == 0);
 }
-
-
 
 bool
 ConstraintMatrix::ConstraintLine::operator<(const ConstraintLine& a) const
@@ -78,15 +70,11 @@ ConstraintMatrix::ConstraintLine::operator<(const ConstraintLine& a) const
   return index < a.index;
 }
 
-
-
 bool
 ConstraintMatrix::ConstraintLine::operator==(const ConstraintLine& a) const
 {
   return index == a.index;
 }
-
-
 
 std::size_t
 ConstraintMatrix::ConstraintLine::memory_consumption() const
@@ -96,15 +84,11 @@ ConstraintMatrix::ConstraintLine::memory_consumption() const
           + MemoryConsumption::memory_consumption(inhomogeneity));
 }
 
-
-
 const ConstraintMatrix::LineRange
 ConstraintMatrix::get_lines() const
 {
   return boost::make_iterator_range(lines.begin(), lines.end());
 }
-
-
 
 bool
 ConstraintMatrix::is_consistent_in_parallel(
@@ -194,8 +178,6 @@ ConstraintMatrix::is_consistent_in_parallel(
   return total == 0;
 }
 
-
-
 void
 ConstraintMatrix::add_lines(const std::set<size_type>& lines)
 {
@@ -203,8 +185,6 @@ ConstraintMatrix::add_lines(const std::set<size_type>& lines)
       ++i)
     add_line(*i);
 }
-
-
 
 void
 ConstraintMatrix::add_lines(const std::vector<bool>& lines)
@@ -214,16 +194,12 @@ ConstraintMatrix::add_lines(const std::vector<bool>& lines)
       add_line(i);
 }
 
-
-
 void
 ConstraintMatrix::add_lines(const IndexSet& lines)
 {
   for(size_type i = 0; i < lines.n_elements(); ++i)
     add_line(lines.nth_index_in_set(i));
 }
-
-
 
 void
 ConstraintMatrix::add_entries(
@@ -266,8 +242,6 @@ ConstraintMatrix::add_entries(
     }
 }
 
-
-
 void
 ConstraintMatrix::add_selected_constraints(const ConstraintMatrix& constraints,
                                            const IndexSet&         filter)
@@ -293,8 +267,6 @@ ConstraintMatrix::add_selected_constraints(const ConstraintMatrix& constraints,
                       line->entries[i].second);
       }
 }
-
-
 
 void
 ConstraintMatrix::close()
@@ -335,8 +307,6 @@ ConstraintMatrix::close()
                                        line->entries.end(),
                                        &check_zero_weight),
                         line->entries.end());
-
-
 
 #ifdef DEBUG
   // In debug mode we are computing an estimate for the maximum number
@@ -588,8 +558,6 @@ ConstraintMatrix::close()
   sorted = true;
 }
 
-
-
 void
 ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
                         const MergeConflictBehavior merge_conflict_behavior,
@@ -739,8 +707,6 @@ ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
     close();
 }
 
-
-
 void
 ConstraintMatrix::shift(const size_type offset)
 {
@@ -774,8 +740,6 @@ ConstraintMatrix::shift(const size_type offset)
 #endif
 }
 
-
-
 void
 ConstraintMatrix::clear()
 {
@@ -792,8 +756,6 @@ ConstraintMatrix::clear()
   sorted = false;
 }
 
-
-
 void
 ConstraintMatrix::reinit(const IndexSet& local_constraints)
 {
@@ -806,8 +768,6 @@ ConstraintMatrix::reinit(const IndexSet& local_constraints)
 
   clear();
 }
-
-
 
 void
 ConstraintMatrix::condense(SparsityPattern& sparsity) const
@@ -891,8 +851,6 @@ ConstraintMatrix::condense(SparsityPattern& sparsity) const
 
   sparsity.compress();
 }
-
-
 
 void
 ConstraintMatrix::condense(DynamicSparsityPattern& sparsity) const
@@ -984,8 +942,6 @@ ConstraintMatrix::condense(DynamicSparsityPattern& sparsity) const
           }
     }
 }
-
-
 
 void
 ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
@@ -1102,8 +1058,6 @@ ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
   sparsity.compress();
 }
 
-
-
 void
 ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
 {
@@ -1217,8 +1171,6 @@ ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
     }
 }
 
-
-
 bool
 ConstraintMatrix::is_identity_constrained(const size_type index) const
 {
@@ -1232,7 +1184,6 @@ ConstraintMatrix::is_identity_constrained(const size_type index) const
   // entry equal to 1.0
   return ((p.entries.size() == 1) && (p.entries[0].second == 1.0));
 }
-
 
 bool
 ConstraintMatrix::are_identity_constrained(const size_type index1,
@@ -1264,8 +1215,6 @@ ConstraintMatrix::are_identity_constrained(const size_type index1,
     return false;
 }
 
-
-
 ConstraintMatrix::size_type
 ConstraintMatrix::max_constraint_indirections() const
 {
@@ -1281,8 +1230,6 @@ ConstraintMatrix::max_constraint_indirections() const
   return return_value;
 }
 
-
-
 bool
 ConstraintMatrix::has_inhomogeneities() const
 {
@@ -1294,7 +1241,6 @@ ConstraintMatrix::has_inhomogeneities() const
 
   return false;
 }
-
 
 void
 ConstraintMatrix::print(std::ostream& out) const
@@ -1329,8 +1275,6 @@ ConstraintMatrix::print(std::ostream& out) const
   AssertThrow(out, ExcIO());
 }
 
-
-
 void
 ConstraintMatrix::write_dot(std::ostream& out) const
 {
@@ -1348,8 +1292,6 @@ ConstraintMatrix::write_dot(std::ostream& out) const
   out << "}" << std::endl;
 }
 
-
-
 std::size_t
 ConstraintMatrix::memory_consumption() const
 {
@@ -1358,8 +1300,6 @@ ConstraintMatrix::memory_consumption() const
           + MemoryConsumption::memory_consumption(sorted)
           + MemoryConsumption::memory_consumption(local_lines));
 }
-
-
 
 void
 ConstraintMatrix::resolve_indices(
@@ -1386,8 +1326,6 @@ ConstraintMatrix::resolve_indices(
   it = std::unique(indices.begin(), indices.end());
   indices.resize(it - indices.begin());
 }
-
-
 
 // explicit instantiations
 //
@@ -1500,7 +1438,6 @@ MATRIX_FUNCTIONS(SparseMatrixEZ<float>, float);
 MATRIX_FUNCTIONS(ChunkSparseMatrix<double>, double);
 MATRIX_FUNCTIONS(ChunkSparseMatrix<float>, float);
 
-
 BLOCK_MATRIX_FUNCTIONS(BlockSparseMatrix<double>);
 BLOCK_MATRIX_FUNCTIONS(BlockSparseMatrix<float>);
 BLOCK_MATRIX_VECTOR_FUNCTIONS(BlockSparseMatrix<double>, BlockVector<double>);
@@ -1529,7 +1466,6 @@ MATRIX_VECTOR_FUNCTIONS(TrilinosWrappers::SparseMatrix,
 BLOCK_MATRIX_VECTOR_FUNCTIONS(TrilinosWrappers::BlockSparseMatrix,
                               TrilinosWrappers::MPI::BlockVector);
 #endif
-
 
 #define SPARSITY_FUNCTIONS(SparsityPatternType)                       \
   template void                                                       \
@@ -1571,7 +1507,6 @@ BLOCK_SPARSITY_FUNCTIONS(BlockDynamicSparsityPattern);
 SPARSITY_FUNCTIONS(TrilinosWrappers::SparsityPattern);
 BLOCK_SPARSITY_FUNCTIONS(TrilinosWrappers::BlockSparsityPattern);
 #endif
-
 
 #define ONLY_MATRIX_FUNCTIONS(MatrixType)                                 \
   template void ConstraintMatrix::distribute_local_to_global<MatrixType>( \
@@ -1631,6 +1566,5 @@ namespace internals
   SCRATCH_INITIALIZER(float, std::complex<float>, fc);
 #undef SCRATCH_INITIALIZER
 } // namespace internals
-
 
 DEAL_II_NAMESPACE_CLOSE

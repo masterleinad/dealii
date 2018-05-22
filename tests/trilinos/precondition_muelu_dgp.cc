@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // solves a 2D Poisson equation for linear FE_DGP elements (SIP
 // discretization) with MueLu preconditioner
 
@@ -38,8 +36,6 @@
 #include <deal.II/meshworker/dof_info.h>
 #include <deal.II/meshworker/integration_info.h>
 #include <deal.II/meshworker/loop.h>
-
-
 
 template <int dim>
 class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
@@ -100,7 +96,6 @@ MatrixIntegrator<dim>::face(
     LocalIntegrators::Laplace::compute_penalty(dinfo1, dinfo2, deg, deg));
 }
 
-
 template <int dim>
 class Step4
 {
@@ -127,12 +122,9 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -141,8 +133,6 @@ Step4<dim>::make_grid()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(6);
 }
-
-
 
 template <int dim>
 void
@@ -180,8 +170,6 @@ Step4<dim>::setup_system()
     system_rhs(i) = 0.01 * i - 0.000001 * i * i;
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::solve()
@@ -207,8 +195,6 @@ Step4<dim>::solve()
   deallog.pop();
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::run()
@@ -224,7 +210,6 @@ Step4<dim>::run()
       solve();
     }
 }
-
 
 int
 main(int argc, char** argv)

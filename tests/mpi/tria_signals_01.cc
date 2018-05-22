@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test signals of Triangulation class in parallel
 
 #include "../tests.h"
@@ -92,7 +91,6 @@ f_any_change()
   ++signal_counter_any_change;
   return;
 }
-
 
 template <int dim, int spacedim>
 void

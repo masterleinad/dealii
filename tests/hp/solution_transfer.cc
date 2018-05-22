@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
@@ -57,7 +55,6 @@ public:
     return f;
   };
 };
-
 
 template <int dim>
 void
@@ -125,7 +122,6 @@ transfer(std::ostream& out)
     q_dof_handler);
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> dgq_soltrans(
     dgq_dof_handler);
-
 
   // test b): do some coarsening and
   // refinement
@@ -224,7 +220,6 @@ transfer(std::ostream& out)
     deallog << "Error in interpolating hp FE_DGQ: " << error << std::endl;
   }
 }
-
 
 int
 main()

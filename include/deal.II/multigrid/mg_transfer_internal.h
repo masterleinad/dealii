@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mg_transfer_internal_h
 #define dealii_mg_transfer_internal_h
 
@@ -51,8 +50,6 @@ namespace internal
         std::pair<types::global_dof_index, types::global_dof_index>>>&
                  copy_indices_level_mine,
       const bool skip_interface_dofs = true);
-
-
 
     /**
      * Given the collection of child cells in lexicographic ordering as seen

@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // A redux of the _01 test that happened to fail on a branch to remove
 // a bunch of iterator functions.
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -34,8 +30,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 std::vector<types::global_dof_index>
@@ -57,8 +51,6 @@ get_dofs(const hp::DoFHandler<dim>& dof)
   return global;
 }
 
-
-
 template <int dim>
 void
 check_renumbering(hp::DoFHandler<dim>& dof)
@@ -70,7 +62,6 @@ check_renumbering(hp::DoFHandler<dim>& dof)
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -104,7 +95,6 @@ check()
   check_renumbering(dof);
   dof.clear();
 }
-
 
 int
 main()

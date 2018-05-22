@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this function tests whether the compression of mapping (Jacobians) works
 // properly. There should only be a few different Jacobians also when there
 // are many cells as the weights should be identical
@@ -33,8 +32,6 @@
 #include "create_mesh.h"
 
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -91,8 +88,6 @@ test()
   deallog << "OK" << std::endl;
 }
 
-
-
 template <int dim>
 void
 test_cube()
@@ -127,8 +122,6 @@ test_cube()
   Assert(n_macro_cells > 1, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -171,8 +164,6 @@ test_parallelogram()
   Assert(n_macro_cells > 1, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

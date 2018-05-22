@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test basic output of the class (name, n_blocks, n_compoennts, n_dofs_per_cell)
 
 #include "../tests.h"
@@ -82,7 +81,6 @@ test_base()
   deallog << fe.n_components() << std::endl;
   deallog << fe.n_dofs_per_cell() << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

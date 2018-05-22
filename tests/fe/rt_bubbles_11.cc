@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Observe how the values of the shape functions change as we refine
 // the grid. Then, evaluate the values with FEFaceValues, to
 // make sure the values scale as in rt_bubbles_10 where we used FEValues.
@@ -38,7 +37,6 @@
 #include <vector>
 
 #define PRECISION 5
-
 
 std::ofstream logfile("output");
 
@@ -78,8 +76,6 @@ test(const unsigned int degree)
         }
     }
 }
-
-
 
 int
 main()

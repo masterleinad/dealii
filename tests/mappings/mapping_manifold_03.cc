@@ -16,7 +16,6 @@
 // Check that the Jacobian obtained through MappingManifold and
 // MappingQ1 are the same on a FlatManifold, on trivial meshes
 
-
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
@@ -89,7 +88,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

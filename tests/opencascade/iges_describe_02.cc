@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read goteborg.iges and dump its topological structure to the
 // logfile.
 

@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that internal::VectorOperations::parallel_for works for start-end
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>
 #include <deal.II/lac/vector_operations_internal.h>
-
-
 
 template <typename Number>
 void
@@ -60,7 +57,6 @@ check()
       free(val);
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test whether the various assember classes put the right data in the
 // right place.
 
@@ -32,7 +31,6 @@
 #include <functional>
 
 using namespace dealii;
-
 
 // Define a class that fills all available entries in the info objects
 // with recognizable numbers.
@@ -99,12 +97,10 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     }
 }
 
-
 template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>&, CellInfo&) const
 {}
-
 
 template <int dim>
 void
@@ -113,7 +109,6 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>&,
                  CellInfo&,
                  CellInfo&) const
 {}
-
 
 template <int dim>
 void
@@ -185,7 +180,6 @@ test_simple(DoFHandler<dim>& mgdofs)
   matrix.print(deallog, true);
 }
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -219,7 +213,6 @@ test(const FiniteElement<dim>& fe)
 
   test_simple(dofs);
 }
-
 
 int
 main()

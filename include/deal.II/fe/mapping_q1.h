@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_q1_h
 #define dealii_mapping_q1_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/fe/mapping_q_generic.h>
 
@@ -26,7 +25,6 @@ DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup mapping */
 /*@{*/
-
 
 /**
  * Implementation of a $d$-linear mapping from the reference cell to a general
@@ -66,8 +64,6 @@ public:
   clone() const override;
 };
 
-
-
 /**
  * Many places in the library by default use (bi-,tri-)linear mappings unless
  * users explicitly provide a different mapping to use. In these cases, the
@@ -93,9 +89,7 @@ struct StaticMappingQ1
   static MappingQGeneric<dim, spacedim> mapping;
 };
 
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

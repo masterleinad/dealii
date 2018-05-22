@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test FEEvaluation for assembling the Laplace matrix. Similar to
 // assemble_matrix_01 but doing the whole thing in parallel with WorkStream
-
 
 #include "../tests.h"
 #include <deal.II/base/work_stream.h>
@@ -32,9 +29,7 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 
-
 std::ofstream logfile("output");
-
 
 namespace Assembly
 {
@@ -75,8 +70,6 @@ namespace Assembly
     };
   } // namespace Scratch
 } // namespace Assembly
-
-
 
 // compute matrix with (\nabla v, \nabla u) + (v, 10 * u)
 template <int dim, int fe_degree>
@@ -135,11 +128,9 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
   AssertThrow(data.test_matrix.frobenius_norm() < 1e-10, ExcInternalError());
 }
 
-
 void
 copy_data_local_to_global(const unsigned int&)
 {}
-
 
 template <int dim, int fe_degree>
 void
@@ -158,8 +149,6 @@ do_test(const DoFHandler<dim>& dof)
                   1);
   deallog << "OK" << std::endl;
 }
-
-
 
 template <int dim, int fe_degree>
 void
@@ -186,8 +175,6 @@ test()
   dof.distribute_dofs(fe);
   do_test<dim, fe_degree>(dof);
 }
-
-
 
 int
 main()

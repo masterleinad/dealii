@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Wolfgang Bangerth, University of Heidelberg, 1999 */
 /* adapted from step-4. */
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -38,10 +35,7 @@
 #include <deal.II/numerics/data_out_faces.h>
 #include <deal.II/numerics/data_out_rotation.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 class LaplaceProblem
@@ -66,12 +60,9 @@ private:
   Vector<double> solution;
 };
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -84,7 +75,6 @@ LaplaceProblem<dim>::make_grid_and_dofs()
       triangulation.begin_active()->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     };
-
 
   deallog << "   Number of active cells: " << triangulation.n_active_cells()
           << std::endl
@@ -99,8 +89,6 @@ LaplaceProblem<dim>::make_grid_and_dofs()
   solution.reinit(dof_handler.n_dofs());
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -110,8 +98,6 @@ LaplaceProblem<dim>::solve()
   for(unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 }
-
-
 
 template <>
 void
@@ -161,8 +147,6 @@ LaplaceProblem<2>::output_results() const
     };
 }
 
-
-
 template <>
 void
 LaplaceProblem<3>::output_results() const
@@ -200,8 +184,6 @@ LaplaceProblem<3>::output_results() const
     };
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -210,8 +192,6 @@ LaplaceProblem<dim>::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

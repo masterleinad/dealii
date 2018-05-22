@@ -16,7 +16,6 @@
 #ifndef dealii_solver_selector_h
 #define dealii_solver_selector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/lac/precondition.h>
@@ -31,7 +30,6 @@
 #include <deal.II/lac/vector_memory.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup Solvers */
 /*@{*/
@@ -197,8 +195,6 @@ public:
                  << std::endl
                  << get_solver_names());
 
-
-
 protected:
   /**
    * Stores the @p SolverControl that is needed in the constructor of each @p
@@ -246,11 +242,9 @@ private:
 /*@}*/
 /* --------------------- Inline and template functions ------------------- */
 
-
 template <typename VectorType>
 SolverSelector<VectorType>::~SolverSelector()
 {}
-
 
 template <typename VectorType>
 void
@@ -258,7 +252,6 @@ SolverSelector<VectorType>::select(const std::string& name)
 {
   solver_name = name;
 }
-
 
 template <typename VectorType>
 template <class Matrix, class Preconditioner>
@@ -302,7 +295,6 @@ SolverSelector<VectorType>::solve(const Matrix&         A,
     Assert(false, ExcSolverDoesNotExist(solver_name));
 }
 
-
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_control(SolverControl& ctrl)
@@ -310,14 +302,12 @@ SolverSelector<VectorType>::set_control(SolverControl& ctrl)
   control = &ctrl;
 }
 
-
 template <typename VectorType>
 std::string
 SolverSelector<VectorType>::get_solver_names()
 {
   return "richardson|cg|bicgstab|gmres|fgmres|minres";
 }
-
 
 template <typename VectorType>
 void
@@ -327,7 +317,6 @@ SolverSelector<VectorType>::set_data(
   gmres_data = data;
 }
 
-
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
@@ -335,7 +324,6 @@ SolverSelector<VectorType>::set_data(
 {
   fgmres_data = data;
 }
-
 
 template <typename VectorType>
 void
@@ -345,7 +333,6 @@ SolverSelector<VectorType>::set_data(
   richardson_data = data;
 }
 
-
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
@@ -353,7 +340,6 @@ SolverSelector<VectorType>::set_data(
 {
   cg_data = data;
 }
-
 
 template <typename VectorType>
 void
@@ -363,7 +349,6 @@ SolverSelector<VectorType>::set_data(
   minres_data = data;
 }
 
-
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
@@ -371,7 +356,6 @@ SolverSelector<VectorType>::set_data(
 {
   bicgstab_data = data;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

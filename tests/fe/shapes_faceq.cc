@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_dgq.h>
@@ -23,7 +22,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -50,7 +48,6 @@ plot_FE_FaceQ_shape_functions()
   plot_face_shape_functions(m, sys00, "System0-0", update_values);
   plot_face_shape_functions(m, sys11, "System1-1", update_values);
 }
-
 
 int
 main()

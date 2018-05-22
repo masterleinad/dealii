@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/block_mask.h>
 
 #include <iostream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -41,13 +39,10 @@ operator<<(std::ostream& out, const BlockMask& mask)
   return out;
 }
 
-
-
 std::size_t
 BlockMask::memory_consumption() const
 {
   return sizeof(*this) + MemoryConsumption::memory_consumption(block_mask);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

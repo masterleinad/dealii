@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this function tests whether the compression of constraint weights
 // (constraint pool) works properly
 
@@ -33,8 +32,6 @@
 #include "create_mesh.h"
 
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -84,7 +81,6 @@ test()
   deallog << "Number of different constraint weights: "
           << mf.n_constraint_pool_entries() << std::endl;
 }
-
 
 int
 main()

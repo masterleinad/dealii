@@ -67,9 +67,7 @@
 
 #include <deal.II/numerics/data_out.h>
 
-
 using namespace dealii;
-
 
 /*
  * Right hand side
@@ -96,7 +94,6 @@ RightHandSide<dim>::value(const Point<dim>&  p,
   return val;
 }
 
-
 /*
  * Boundary values
  */
@@ -122,7 +119,6 @@ BoundaryValues<dim>::value(const Point<dim>&  p,
   return val;
 }
 
-
 /*
  * Flux boundary values
  */
@@ -145,7 +141,6 @@ FluxBoundaryValues<dim>::value(const Point<dim>&  p,
   double val = 1; // g = 1
   return val;
 }
-
 
 /*
  * Advection coefficient
@@ -171,7 +166,6 @@ Advection<dim>::value(const Point<dim>& p) const
 
   return value;
 }
-
 
 /*
  * System integrator
@@ -232,7 +226,6 @@ SystemIntegrator<dim>::cell(
     }
 }
 
-
 template <int dim>
 void
 SystemIntegrator<dim>::boundary(
@@ -252,7 +245,6 @@ SystemIntegrator<dim>::boundary(
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * flux_bd_value);
     }
 }
-
 
 template <int dim>
 void
@@ -301,7 +293,6 @@ SystemIntegrator<dim>::face(
     }
 }
 
-
 /*
  * Matrix integrator
  */
@@ -349,14 +340,12 @@ MatrixIntegrator<dim>::cell(
     }
 }
 
-
 template <int dim>
 void
 MatrixIntegrator<dim>::boundary(
   MeshWorker::DoFInfo<dim>&                  dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {}
-
 
 template <int dim>
 void
@@ -405,7 +394,6 @@ MatrixIntegrator<dim>::face(
     }
 }
 
-
 /*
  * Vector integrator
  */
@@ -426,7 +414,6 @@ public:
        typename MeshWorker::IntegrationInfo<dim>& info2) const;
 };
 
-
 template <int dim>
 void
 RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&                  dinfo,
@@ -445,7 +432,6 @@ RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&                  dinfo,
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * fval);
     }
 }
-
 
 template <int dim>
 void
@@ -467,7 +453,6 @@ RHSIntegrator<dim>::boundary(
     }
 }
 
-
 template <int dim>
 void
 RHSIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&,
@@ -475,7 +460,6 @@ RHSIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&,
                          typename MeshWorker::IntegrationInfo<dim>&,
                          typename MeshWorker::IntegrationInfo<dim>&) const
 {}
-
 
 /*
  * Main class
@@ -519,7 +503,6 @@ private:
   ConstraintMatrix constraintsAll;
 };
 
-
 template <int dim>
 MeshWorkerConstraintMatrixTest<dim>::MeshWorkerConstraintMatrixTest(
   const FiniteElement<dim>& fe)
@@ -534,13 +517,11 @@ MeshWorkerConstraintMatrixTest<dim>::MeshWorkerConstraintMatrixTest(
   this->triangulation.refine_global(1);
 }
 
-
 template <int dim>
 MeshWorkerConstraintMatrixTest<dim>::~MeshWorkerConstraintMatrixTest()
 {
   dof_handler.clear();
 }
-
 
 template <int dim>
 void
@@ -655,7 +636,6 @@ MeshWorkerConstraintMatrixTest<dim>::assemble_MeshWorker()
                                          assemblerVector);
 }
 
-
 template <int dim>
 void
 MeshWorkerConstraintMatrixTest<dim>::createInhomConstraints()
@@ -685,7 +665,6 @@ MeshWorkerConstraintMatrixTest<dim>::createInhomConstraints()
     }
   this->constraintsInhom.close();
 }
-
 
 template <int dim>
 void
@@ -721,7 +700,6 @@ MeshWorkerConstraintMatrixTest<dim>::run()
   deallog << "difference rhs " << error_rhs.l2_norm() << std::endl;
   deallog << "difference matrix " << error_matrix.frobenius_norm() << std::endl;
 }
-
 
 int
 main()

@@ -41,8 +41,6 @@ create_spd(FullMatrix& A)
       }
 }
 
-
-
 template <typename FullMatrix>
 void
 create_random(FullMatrix& A)
@@ -51,8 +49,6 @@ create_random(FullMatrix& A)
     for(unsigned int j = 0; j < A.n(); ++j)
       A(i, j) = random_value<typename FullMatrix::value_type>();
 }
-
-
 
 template <typename NumberType>
 void

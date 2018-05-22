@@ -25,17 +25,13 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <class MeshType>
 InterGridMap<MeshType>::InterGridMap()
   : source_grid(nullptr, typeid(*this).name()),
     destination_grid(nullptr, typeid(*this).name())
 {}
-
-
 
 template <class MeshType>
 void
@@ -91,8 +87,6 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
   Assert(dst_cell == destination_grid.end(0), ExcIncompatibleGrids());
 }
 
-
-
 template <class MeshType>
 void
 InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
@@ -130,8 +124,6 @@ InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
   // to be set
 }
 
-
-
 template <class MeshType>
 void
 InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
@@ -146,7 +138,6 @@ InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
     for(unsigned int c = 0; c < src_cell->n_children(); ++c)
       set_entries_to_cell(src_cell->child(c), dst_cell);
 }
-
 
 template <class MeshType>
 typename InterGridMap<MeshType>::cell_iterator InterGridMap<MeshType>::
@@ -163,8 +154,6 @@ typename InterGridMap<MeshType>::cell_iterator InterGridMap<MeshType>::
   return mapping[source_cell->level()][source_cell->index()];
 }
 
-
-
 template <class MeshType>
 void
 InterGridMap<MeshType>::clear()
@@ -174,8 +163,6 @@ InterGridMap<MeshType>::clear()
   destination_grid = nullptr;
 }
 
-
-
 template <class MeshType>
 const MeshType&
 InterGridMap<MeshType>::get_source_grid() const
@@ -183,16 +170,12 @@ InterGridMap<MeshType>::get_source_grid() const
   return *source_grid;
 }
 
-
-
 template <class MeshType>
 const MeshType&
 InterGridMap<MeshType>::get_destination_grid() const
 {
   return *destination_grid;
 }
-
-
 
 template <class MeshType>
 std::size_t
@@ -202,8 +185,6 @@ InterGridMap<MeshType>::memory_consumption() const
           + MemoryConsumption::memory_consumption(source_grid)
           + MemoryConsumption::memory_consumption(destination_grid));
 }
-
-
 
 // explicit instantiations
 #include "intergrid_map.inst"

@@ -16,36 +16,29 @@
 #ifndef dealii_tria_iterator_templates_h
 #define dealii_tria_iterator_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /* Note: This file only contains template definitions and will thus
    not produce an object file. It is rather thought to be included
    into the *_accessor.cc files.
 */
 
-
 /*------------------------ Functions: TriaRawIterator ------------------*/
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator()
   : accessor(nullptr, -2, -2, nullptr)
 {}
 
-
 template <typename Accessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(
   const TriaRawIterator<Accessor>& i)
   : accessor(i.accessor)
 {}
-
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(
@@ -55,7 +48,6 @@ inline TriaRawIterator<Accessor>::TriaRawIterator(
   const typename Accessor::AccessorData* local_data)
   : accessor(parent, level, index, local_data)
 {}
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(
@@ -68,7 +60,6 @@ inline TriaRawIterator<Accessor>::TriaRawIterator(
   accessor.copy_from(tria_accessor);
 }
 
-
 template <typename Accessor>
 inline TriaRawIterator<Accessor>&
 TriaRawIterator<Accessor>::operator=(const TriaRawIterator<Accessor>& i)
@@ -78,8 +69,6 @@ TriaRawIterator<Accessor>::operator=(const TriaRawIterator<Accessor>& i)
   return *this;
 }
 
-
-
 template <typename Accessor>
 inline bool
 TriaRawIterator<Accessor>::
@@ -88,7 +77,6 @@ operator==(const TriaRawIterator<Accessor>& other) const
   return accessor == other.accessor;
 }
 
-
 template <typename Accessor>
 inline bool
 TriaRawIterator<Accessor>::
@@ -96,7 +84,6 @@ operator!=(const TriaRawIterator<Accessor>& other) const
 {
   return !(*this == other);
 }
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>
@@ -108,7 +95,6 @@ TriaRawIterator<Accessor>::operator++(int)
   return tmp;
 }
 
-
 template <typename Accessor>
 inline TriaRawIterator<Accessor>
 TriaRawIterator<Accessor>::operator--(int)
@@ -119,20 +105,16 @@ TriaRawIterator<Accessor>::operator--(int)
   return tmp;
 }
 
-
 /*-----------------------  functions: TriaIterator ---------------*/
-
 
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator() : TriaRawIterator<Accessor>()
 {}
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(const TriaIterator<Accessor>& i)
   : TriaRawIterator<Accessor>(i.accessor)
 {}
-
 
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(const TriaRawIterator<Accessor>& i)
@@ -149,7 +131,6 @@ inline TriaIterator<Accessor>::TriaIterator(const TriaRawIterator<Accessor>& i)
     Assert(this->accessor.used(), ExcAssignmentOfUnusedObject());
 #endif
 }
-
 
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(
@@ -171,7 +152,6 @@ inline TriaIterator<Accessor>::TriaIterator(
 #endif
 }
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>::TriaIterator(
   const TriaAccessorBase<Accessor::structure_dimension,
@@ -192,7 +172,6 @@ inline TriaIterator<Accessor>::TriaIterator(
 #endif
 }
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>&
 TriaIterator<Accessor>::operator=(const TriaIterator<Accessor>& i)
@@ -200,7 +179,6 @@ TriaIterator<Accessor>::operator=(const TriaIterator<Accessor>& i)
   this->accessor.copy_from(i.accessor);
   return *this;
 }
-
 
 template <typename Accessor>
 template <typename OtherAccessor>
@@ -210,7 +188,6 @@ TriaIterator<Accessor>::operator=(const TriaIterator<OtherAccessor>& i)
   this->accessor.copy_from(i.accessor);
   return *this;
 }
-
 
 template <typename Accessor>
 inline TriaIterator<Accessor>&
@@ -229,7 +206,6 @@ TriaIterator<Accessor>::operator=(const TriaRawIterator<Accessor>& i)
 #endif
   return *this;
 }
-
 
 template <typename Accessor>
 template <typename OtherAccessor>
@@ -250,7 +226,6 @@ TriaIterator<Accessor>::operator=(const TriaRawIterator<OtherAccessor>& i)
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>&
 TriaIterator<Accessor>::operator++()
@@ -262,7 +237,6 @@ TriaIterator<Accessor>::operator++()
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>
 TriaIterator<Accessor>::operator++(int)
@@ -272,7 +246,6 @@ TriaIterator<Accessor>::operator++(int)
 
   return tmp;
 }
-
 
 template <typename Accessor>
 inline TriaIterator<Accessor>&
@@ -285,7 +258,6 @@ TriaIterator<Accessor>::operator--()
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaIterator<Accessor>
 TriaIterator<Accessor>::operator--(int)
@@ -296,22 +268,18 @@ TriaIterator<Accessor>::operator--(int)
   return tmp;
 }
 
-
 /*-----------------------  functions: TriaActiveIterator ---------------*/
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator()
   : TriaIterator<Accessor>()
 {}
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   const TriaActiveIterator<Accessor>& i)
   : TriaIterator<Accessor>(static_cast<TriaIterator<Accessor>>(i))
 {}
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
@@ -331,7 +299,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
 #endif
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   const TriaIterator<Accessor>& i)
@@ -349,7 +316,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
            ExcAssignmentOfInactiveObject());
 #endif
 }
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
@@ -372,7 +338,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
 #endif
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   const TriaAccessorBase<Accessor::structure_dimension,
@@ -394,7 +359,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
 #endif
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>&
 TriaActiveIterator<Accessor>::operator=(const TriaActiveIterator<Accessor>& i)
@@ -402,7 +366,6 @@ TriaActiveIterator<Accessor>::operator=(const TriaActiveIterator<Accessor>& i)
   this->accessor.copy_from(i.accessor);
   return *this;
 }
-
 
 template <typename Accessor>
 template <class OtherAccessor>
@@ -413,7 +376,6 @@ operator=(const TriaActiveIterator<OtherAccessor>& i)
   this->accessor.copy_from(i.accessor);
   return *this;
 }
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>&
@@ -433,7 +395,6 @@ TriaActiveIterator<Accessor>::operator=(const TriaRawIterator<Accessor>& i)
 #endif
   return *this;
 }
-
 
 template <typename Accessor>
 template <class OtherAccessor>
@@ -455,7 +416,6 @@ TriaActiveIterator<Accessor>::operator=(const TriaRawIterator<OtherAccessor>& i)
   return *this;
 }
 
-
 template <typename Accessor>
 template <class OtherAccessor>
 inline TriaActiveIterator<Accessor>&
@@ -476,7 +436,6 @@ TriaActiveIterator<Accessor>::operator=(const TriaIterator<OtherAccessor>& i)
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>&
 TriaActiveIterator<Accessor>::operator=(const TriaIterator<Accessor>& i)
@@ -496,7 +455,6 @@ TriaActiveIterator<Accessor>::operator=(const TriaIterator<Accessor>& i)
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>&
 TriaActiveIterator<Accessor>::operator++()
@@ -508,7 +466,6 @@ TriaActiveIterator<Accessor>::operator++()
   return *this;
 }
 
-
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>
 TriaActiveIterator<Accessor>::operator++(int)
@@ -518,7 +475,6 @@ TriaActiveIterator<Accessor>::operator++(int)
 
   return tmp;
 }
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>&
@@ -530,7 +486,6 @@ TriaActiveIterator<Accessor>::operator--()
       return *this;
   return *this;
 }
-
 
 template <typename Accessor>
 inline TriaActiveIterator<Accessor>

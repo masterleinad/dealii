@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /**
  * @file Test whether
  */
@@ -45,7 +44,6 @@
 using namespace dealii;
 using namespace LocalIntegrators;
 
-
 template <int dim>
 class LaplaceMatrix : public MeshWorker::LocalIntegrator<dim>
 {
@@ -64,11 +62,9 @@ public:
        MeshWorker::IntegrationInfo<dim>& info2) const;
 };
 
-
 template <int dim>
 LaplaceMatrix<dim>::LaplaceMatrix()
 {}
-
 
 template <int dim>
 void
@@ -77,7 +73,6 @@ LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
 {
   Laplace::cell_matrix(dinfo.matrix(0, false).matrix, info.fe_values(0));
 }
-
 
 template <int dim>
 void
@@ -90,7 +85,6 @@ LaplaceMatrix<dim>::boundary(
                           info.fe_values(0),
                           Laplace::compute_penalty(dinfo, dinfo, deg, deg));
 }
-
 
 template <int dim>
 void
@@ -123,7 +117,6 @@ LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
                        info2.fe_values(0),
                        Laplace::compute_penalty(dinfo1, dinfo2, deg, deg));
 }
-
 
 template <int dim>
 void
@@ -167,7 +160,6 @@ assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
           mg.matrix[level].set(i, i, 1.);
     }
 }
-
 
 template <int dim>
 void
@@ -224,7 +216,6 @@ test(FiniteElement<dim>& fe)
         }
     }
 }
-
 
 int
 main()

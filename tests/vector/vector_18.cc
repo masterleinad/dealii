@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::l2_norm()
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v)
@@ -41,8 +38,6 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

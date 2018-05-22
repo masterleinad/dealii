@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create LA::MPI::SparseMatrix where one CPU has no DoFs
 
 // this bug got fixed in PETScWrappers in r29776
@@ -81,8 +79,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

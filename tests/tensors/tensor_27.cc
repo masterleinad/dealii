@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check the inverse of a rank-2 Tensor
 
 // Equivalent matlab script:

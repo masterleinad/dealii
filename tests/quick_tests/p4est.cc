@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFTools::count_dofs_per_component
-
 
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/utilities.h>
@@ -67,7 +64,6 @@ test()
                 << " global dofs" << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

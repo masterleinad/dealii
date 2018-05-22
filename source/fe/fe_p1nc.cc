@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/fe/fe_p1nc.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 FE_P1NC::FE_P1NC()
   : FiniteElement<2, 2>(
@@ -35,15 +33,11 @@ FE_P1NC::FE_P1NC()
   initialize_constraints();
 }
 
-
-
 std::string
 FE_P1NC::get_name() const
 {
   return "FE_P1NC";
 }
-
-
 
 UpdateFlags
 FE_P1NC::requires_update_flags(const UpdateFlags flags) const
@@ -62,15 +56,11 @@ FE_P1NC::requires_update_flags(const UpdateFlags flags) const
   return out;
 }
 
-
-
 std::unique_ptr<FiniteElement<2, 2>>
 FE_P1NC::clone() const
 {
   return std_cxx14::make_unique<FE_P1NC>(*this);
 }
-
-
 
 std::vector<unsigned int>
 FE_P1NC::get_dpo_vector()
@@ -81,8 +71,6 @@ FE_P1NC::get_dpo_vector()
   dpo[2] = 0; // quad
   return dpo;
 }
-
-
 
 std::array<std::array<double, 3>, 4>
 FE_P1NC::get_linear_shape_coefficients(
@@ -136,8 +124,6 @@ FE_P1NC::get_linear_shape_coefficients(
   return coeffs;
 }
 
-
-
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_data(
   const UpdateFlags update_flags,
@@ -159,8 +145,6 @@ FE_P1NC::get_data(
 
   return data;
 }
-
-
 
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_face_data(
@@ -184,8 +168,6 @@ FE_P1NC::get_face_data(
   return data;
 }
 
-
-
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_subface_data(
   const UpdateFlags update_flags,
@@ -207,8 +189,6 @@ FE_P1NC::get_subface_data(
 
   return data;
 }
-
-
 
 void
 FE_P1NC::fill_fe_values(
@@ -246,8 +226,6 @@ FE_P1NC::fill_fe_values(
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
-
-
 
 void
 FE_P1NC::fill_fe_face_values(
@@ -289,8 +267,6 @@ FE_P1NC::fill_fe_face_values(
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
-
-
 
 void
 FE_P1NC::fill_fe_subface_values(
@@ -337,8 +313,6 @@ FE_P1NC::fill_fe_subface_values(
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
 
-
-
 void
 FE_P1NC::initialize_constraints()
 {
@@ -349,6 +323,5 @@ FE_P1NC::initialize_constraints()
   interface_constraints(0, 0) = 0.5;
   interface_constraints(0, 1) = 0.5;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_solver_h
 #  define dealii_trilinos_solver_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_TRILINOS
@@ -33,7 +32,6 @@
 #    include <Epetra_LinearProblem.h>
 #    include <Epetra_Operator.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace TrilinosWrappers
@@ -41,7 +39,6 @@ namespace TrilinosWrappers
   // forward declarations
   class SparseMatrix;
   class PreconditionBase;
-
 
   /**
    * Base class for solver classes using the Trilinos solvers. Since solvers
@@ -214,8 +211,6 @@ namespace TrilinosWrappers
           const Epetra_MultiVector& b,
           const Epetra_Operator&    preconditioner);
 
-
-
     /**
      * Solve the linear system <tt>Ax=b</tt>. Depending on the information
      * provided by derived classes and the object passed as a preconditioner,
@@ -273,7 +268,6 @@ namespace TrilinosWrappers
           dealii::LinearAlgebra::distributed::Vector<double>&       x,
           const dealii::LinearAlgebra::distributed::Vector<double>& b,
           const PreconditionBase& preconditioner);
-
 
     /**
      * Access to object that controls convergence.
@@ -339,7 +333,6 @@ namespace TrilinosWrappers
     const AdditionalData additional_data;
   };
 
-
   // provide a declaration for two explicit specializations
   template <>
   void
@@ -350,8 +343,6 @@ namespace TrilinosWrappers
   void
   SolverBase::set_preconditioner(AztecOO&               solver,
                                  const Epetra_Operator& preconditioner);
-
-
 
   /**
    * An implementation of the solver interface using the Trilinos CG solver.
@@ -390,8 +381,6 @@ namespace TrilinosWrappers
     const AdditionalData additional_data;
   };
 
-
-
   /**
    * An implementation of the solver interface using the Trilinos CGS solver.
    *
@@ -427,8 +416,6 @@ namespace TrilinosWrappers
      */
     const AdditionalData additional_data;
   };
-
-
 
   /**
    * An implementation of the solver interface using the Trilinos GMRES
@@ -469,8 +456,6 @@ namespace TrilinosWrappers
     const AdditionalData additional_data;
   };
 
-
-
   /**
    * An implementation of the solver interface using the Trilinos BiCGStab
    * solver.
@@ -509,8 +494,6 @@ namespace TrilinosWrappers
     const AdditionalData additional_data;
   };
 
-
-
   /**
    * An implementation of the solver interface using the Trilinos TFQMR
    * solver.
@@ -548,8 +531,6 @@ namespace TrilinosWrappers
      */
     const AdditionalData additional_data;
   };
-
-
 
   /**
    * An implementation of Trilinos direct solvers (using the Amesos package).

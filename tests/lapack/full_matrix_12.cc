@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests LAPACKFullMatrix::apply_lu_factorization in two different variants
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
-
 
 void
 test()

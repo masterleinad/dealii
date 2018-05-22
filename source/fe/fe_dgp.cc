@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_tools.h>
 
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -51,7 +49,6 @@ FE_DGP<dim, spacedim>::FE_DGP(const unsigned int degree)
     }
 }
 
-
 template <int dim, int spacedim>
 std::string
 FE_DGP<dim, spacedim>::get_name() const
@@ -67,8 +64,6 @@ FE_DGP<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGP<dim, spacedim>::clone() const
@@ -76,12 +71,9 @@ FE_DGP<dim, spacedim>::clone() const
   return std_cxx14::make_unique<FE_DGP<dim, spacedim>>(*this);
 }
 
-
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -96,8 +88,6 @@ FE_DGP<dim, spacedim>::get_dpo_vector(const unsigned int deg)
     }
   return dpo;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -121,8 +111,6 @@ FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -148,16 +136,12 @@ FE_DGP<dim, spacedim>::get_subface_interpolation_matrix(
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_DGP<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -174,8 +158,6 @@ FE_DGP<dim, spacedim>::hp_vertex_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGP<dim, spacedim>::hp_line_dof_identities(
@@ -190,8 +172,6 @@ FE_DGP<dim, spacedim>::hp_line_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -208,8 +188,6 @@ FE_DGP<dim, spacedim>::hp_quad_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_DGP<dim, spacedim>::compare_for_face_domination(
@@ -224,8 +202,6 @@ FE_DGP<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_DGP<dim, spacedim>::has_support_on_face(const unsigned int,
@@ -234,8 +210,6 @@ FE_DGP<dim, spacedim>::has_support_on_face(const unsigned int,
   // all shape functions have support on all faces
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -247,8 +221,6 @@ FE_DGP<dim, spacedim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FE_DGP<dim, spacedim>::memory_consumption() const
@@ -257,10 +229,7 @@ FE_DGP<dim, spacedim>::memory_consumption() const
   return 0;
 }
 
-
-
 // explicit instantiations
 #include "fe_dgp.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

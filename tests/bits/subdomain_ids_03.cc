@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFRenumbering::compute_subdomain_wise
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -31,9 +29,7 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -75,7 +71,6 @@ test()
   for(unsigned int i = 0; i < new_indices.size(); ++i)
     deallog << i << ' ' << new_indices[i] << std::endl;
 }
-
 
 int
 main()

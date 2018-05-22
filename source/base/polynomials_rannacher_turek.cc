@@ -13,20 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/polynomials_rannacher_turek.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 PolynomialsRannacherTurek<dim>::PolynomialsRannacherTurek()
 {
   Assert(dim == 2, ExcNotImplemented());
 }
-
-
 
 template <int dim>
 double
@@ -58,8 +54,6 @@ PolynomialsRannacherTurek<dim>::compute_value(const unsigned int i,
   Assert(false, ExcNotImplemented());
   return 0;
 }
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -95,8 +89,6 @@ PolynomialsRannacherTurek<dim>::compute_grad(const unsigned int i,
 
   return grad;
 }
-
-
 
 template <int dim>
 Tensor<2, dim>
@@ -135,8 +127,6 @@ PolynomialsRannacherTurek<dim>::compute_grad_grad(const unsigned int i,
     }
   return grad_grad;
 }
-
-
 
 template <int dim>
 void
@@ -184,7 +174,6 @@ PolynomialsRannacherTurek<dim>::compute(
         }
     }
 }
-
 
 // explicit instantiations
 #include "polynomials_rannacher_turek.inst"

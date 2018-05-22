@@ -30,7 +30,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   namespace DataOutImplementation
@@ -57,8 +56,6 @@ namespace internal
     {}
   } // namespace DataOutImplementation
 } // namespace internal
-
-
 
 template <int dim, typename DoFHandlerType>
 void
@@ -137,7 +134,6 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
       patch.data.reinit(scratch_data.n_datasets, n_q_points);
       patch.points_are_available = false;
     }
-
 
   if(scratch_data.n_datasets > 0)
     {
@@ -358,7 +354,6 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
         }
     }
 
-
   for(unsigned int f = 0;
       f < GeometryInfo<DoFHandlerType::dimension>::faces_per_cell;
       ++f)
@@ -416,8 +411,6 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
   this->patches[patch_idx].swap(patch);
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 void
 DataOut<dim, DoFHandlerType>::build_patches(const unsigned int n_subdivisions)
@@ -427,8 +420,6 @@ DataOut<dim, DoFHandlerType>::build_patches(const unsigned int n_subdivisions)
                 n_subdivisions,
                 no_curved_cells);
 }
-
-
 
 template <int dim, typename DoFHandlerType>
 void
@@ -601,16 +592,12 @@ DataOut<dim, DoFHandlerType>::build_patches(
       64);
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::first_cell()
 {
   return this->triangulation->begin_active();
 }
-
-
 
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
@@ -627,8 +614,6 @@ DataOut<dim, DoFHandlerType>::next_cell(
   return active_cell;
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::first_locally_owned_cell()
@@ -644,8 +629,6 @@ DataOut<dim, DoFHandlerType>::first_locally_owned_cell()
   return cell;
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 typename DataOut<dim, DoFHandlerType>::cell_iterator
 DataOut<dim, DoFHandlerType>::next_locally_owned_cell(
@@ -658,7 +641,6 @@ DataOut<dim, DoFHandlerType>::next_locally_owned_cell(
     cell = next_cell(cell);
   return cell;
 }
-
 
 // explicit instantiations
 #include "data_out.inst"

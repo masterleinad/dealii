@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar as parallel_multigrid but using adaptive meshes with hanging nodes
 // (doing local smoothing)
 
@@ -45,7 +43,6 @@
 
 std::ofstream logfile("output");
 
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -54,7 +51,6 @@ class LaplaceOperator : public Subscriptor
 {
 public:
   LaplaceOperator(){};
-
 
   void
   initialize(const Mapping<dim>&                    mapping,
@@ -300,7 +296,6 @@ public:
     return inverse_diagonal_entries;
   }
 
-
 private:
   void
   local_apply(const MatrixFree<dim, number>&                    data,
@@ -341,7 +336,6 @@ private:
         inverse_diagonal_entries.local_element(edge_constrained_indices[i])
           = 1.;
       }
-
 
     for(unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
       if(std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
@@ -389,8 +383,6 @@ private:
   bool                                           have_interface_matrices;
 };
 
-
-
 template <typename LAPLACEOPERATOR>
 class MGInterfaceMatrix : public Subscriptor
 {
@@ -418,8 +410,6 @@ public:
 private:
   SmartPointer<const LAPLACEOPERATOR> laplace;
 };
-
-
 
 template <typename LAPLACEOPERATOR>
 class MGTransferMF
@@ -454,8 +444,6 @@ private:
   const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -483,8 +471,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -605,8 +591,6 @@ do_test(const DoFHandler<dim>& dof)
     deallog.pop();
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -638,8 +622,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

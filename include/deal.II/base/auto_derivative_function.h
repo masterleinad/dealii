@@ -16,7 +16,6 @@
 #ifndef dealii_auto_derivative_function_h
 #define dealii_auto_derivative_function_h
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function.h>
 
@@ -209,7 +208,6 @@ public:
   static DifferenceFormula
   get_formula_of_order(const unsigned int ord);
 
-
 private:
   /**
    * Step size of the difference formula. Set by the set_h() function.
@@ -226,7 +224,6 @@ private:
    */
   DifferenceFormula formula;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

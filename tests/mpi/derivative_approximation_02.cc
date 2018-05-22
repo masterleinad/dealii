@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // DerivativeApproximation didn't work in parallel at all. This test verifies
 // that it now does.
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -35,7 +32,6 @@
 
 #include <sstream>
 
-
 template <int dim>
 class Quadratic : public Function<dim>
 {
@@ -46,7 +42,6 @@ public:
     return p * p;
   }
 };
-
 
 template <int dim>
 void
@@ -90,8 +85,6 @@ test()
   if(myid == 0)
     deallog << sum << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

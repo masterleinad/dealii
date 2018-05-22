@@ -23,7 +23,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup fe */
 /*@{*/
 
@@ -164,8 +163,6 @@ public:
     const FiniteElement<dim, spacedim>& fe_other) const override;
   //@}
 };
-
-
 
 /*@}*/
 

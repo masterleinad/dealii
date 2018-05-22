@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the _02 test, but project to the faces of a distorted cell
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -26,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -49,7 +43,6 @@ test()
   cell->vertex(6)[0] -= 0.25;
   cell->vertex(2)[0] += 0.25;
   cell->vertex(4)[0] += 0.25;
-
 
   for(unsigned int point = 0; point < 9; ++point)
     {
@@ -96,8 +89,6 @@ test()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

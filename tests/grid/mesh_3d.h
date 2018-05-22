@@ -19,7 +19,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 // generate two cubes that are attached to each other in a way so that
 // the edges are all ok, but the normals of the common face don't
 // match up for the standard orientation of the normals. we thus have
@@ -59,8 +58,6 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
   coarse_grid.create_triangulation_compatibility(
     vertices, cells, SubCellData());
 }
-
-
 
 // generate two cubes that are attached to each other in a way so that
 // the edges are not all ok and the common face is rotated. we thus have
@@ -106,8 +103,6 @@ void create_two_cubes_rotation(Triangulation<3>&  coarse_grid,
   coarse_grid.create_triangulation_compatibility(
     vertices, cells, SubCellData());
 }
-
-
 
 void create_L_shape(Triangulation<3>& coarse_grid)
 {
@@ -156,7 +151,6 @@ void create_L_shape(Triangulation<3>& coarse_grid)
   coarse_grid.create_triangulation_compatibility(
     vertices, cells, SubCellData());
 }
-
 
 void coarsen_global(Triangulation<3>& grid)
 {

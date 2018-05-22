@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_local_integrator_h
 #define dealii_mesh_worker_local_integrator_h
 
@@ -143,8 +142,6 @@ namespace MeshWorker
     DeclException0(ExcPureFunction);
   };
 } // namespace MeshWorker
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

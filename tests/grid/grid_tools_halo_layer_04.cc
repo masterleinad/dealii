@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/filtered_iterator.h>
 #include <deal.II/grid/grid_generator.h>
@@ -69,7 +67,6 @@ write_vtk(const hp::DoFHandler<dim>& dof_handler, const std::string filename)
   std::ofstream output(filename.c_str());
   data_out.write_vtk(output);
 }
-
 
 template <int dim>
 void
@@ -134,7 +131,6 @@ test()
     write_vtk(dof_handler, filename.c_str());
   }
 }
-
 
 int
 main()

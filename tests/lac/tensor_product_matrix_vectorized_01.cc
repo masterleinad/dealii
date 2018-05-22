@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as 'tensor_product_matrix_04.cc' except that we replaced the scalar data
 // type 'double' by the vectorized data type 'VectorizedArray<double>'.
 // Note, all lanes compute the same.
@@ -139,7 +138,6 @@ do_test(const unsigned int size)
     false, mat.m(), v3.begin(), offsets.data(), vec_flat.begin());
   deallog << "Verification of inverse: " << vec_flat.linfty_norm() << std::endl;
 }
-
 
 int
 main()

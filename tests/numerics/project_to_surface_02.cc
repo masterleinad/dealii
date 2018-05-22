@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test GridTools::project_to_object for quads
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -26,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 class Rotate2d
 {
@@ -51,7 +45,6 @@ private:
   const double angle;
 };
 
-
 template <int dim>
 void
 do_rotate(Triangulation<dim>& tria)
@@ -59,11 +52,8 @@ do_rotate(Triangulation<dim>& tria)
   GridTools::transform(Rotate2d(numbers::PI / 4), tria);
 }
 
-
 void do_rotate(Triangulation<1>&)
 {}
-
-
 
 template <int dim>
 void
@@ -74,7 +64,6 @@ create_triangulation(const bool rotate, Triangulation<dim>& tria)
   if(rotate)
     do_rotate(tria);
 }
-
 
 template <int dim>
 void
@@ -129,8 +118,6 @@ test()
       tria.clear();
     }
 }
-
-
 
 int
 main()

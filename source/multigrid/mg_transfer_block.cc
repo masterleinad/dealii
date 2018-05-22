@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 
 #include <deal.II/dofs/dof_accessor.h>
@@ -84,7 +83,6 @@ namespace
       }
   }
 
-
   /**
    * Adjust block vectors on all
    * levels to correct size. The
@@ -122,7 +120,6 @@ namespace
   }
 } // namespace
 
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -147,8 +144,6 @@ MGTransferBlockSelect<number>::copy_to_mg(
     }
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -172,8 +167,6 @@ MGTransferBlockSelect<number>::copy_to_mg(
     }
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -196,8 +189,6 @@ MGTransferBlock<number>::copy_to_mg(
               = src.block(block)(i->first);
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -464,8 +455,6 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
     }
 }
 
-
-
 template <typename number>
 template <int dim, int spacedim>
 void
@@ -553,8 +542,6 @@ MGTransferBlockSelect<number>::build_matrices(
     }
 }
 
-
-
 template <typename number>
 template <int dim, int spacedim>
 void
@@ -638,10 +625,7 @@ MGTransferBlock<number>::build_matrices(const DoFHandler<dim, spacedim>& dof,
     }
 }
 
-
-
 // explicit instantiations
 #include "mg_transfer_block.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

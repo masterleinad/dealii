@@ -46,12 +46,10 @@ namespace TrilinosWrappers
     }
   } // namespace internal
 
-
   /**
    * @name Creation of a LinearOperator
    */
   //@{
-
 
   /**
    * @relatesalso LinearOperator
@@ -84,7 +82,6 @@ namespace TrilinosWrappers
         operator_exemplar, matrix);
   }
 
-
   /**
    * @relatesalso LinearOperator
    *
@@ -113,13 +110,11 @@ namespace TrilinosWrappers
       matrix, matrix);
   }
 
-
   //@}
   /**
    * @name Creation of a BlockLinearOperator
    */
   //@{
-
 
   /**
    * @relatesalso BlockLinearOperator
@@ -152,7 +147,6 @@ namespace TrilinosWrappers
     return dealii::block_operator<Range, Domain, BlockPayload, BlockMatrix>(
       block_matrix);
   }
-
 
   /**
    * @relatesalso BlockLinearOperator
@@ -194,7 +188,6 @@ namespace TrilinosWrappers
     return dealii::block_operator<m, n, Range, Domain, BlockPayload>(ops);
   }
 
-
   /**
    * @relatesalso BlockLinearOperator
    *
@@ -232,7 +225,6 @@ namespace TrilinosWrappers
       block_diagonal_operator<Range, Domain, BlockPayload, BlockMatrix>(
         block_matrix);
   }
-
 
   /**
    * @relatesalso BlockLinearOperator

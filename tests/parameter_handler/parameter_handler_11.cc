@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _10 but for Patterns::Double::match : the first line of the parameter
 // file does not match the given pattern.
 
@@ -42,7 +40,6 @@ check(const char* p)
       exc.print_info(deallog.get_file_stream());
     }
 }
-
 
 int
 main()

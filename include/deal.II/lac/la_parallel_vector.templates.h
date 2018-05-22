@@ -16,7 +16,6 @@
 #ifndef dealii_la_parallel_vector_templates_h
 #define dealii_la_parallel_vector_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/lac/exceptions.h>
@@ -26,9 +25,7 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector_operations_internal.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace LinearAlgebra
 {
@@ -53,8 +50,6 @@ namespace LinearAlgebra
       update_ghost_values_requests.clear();
 #endif
     }
-
-
 
     template <typename Number>
     void
@@ -82,8 +77,6 @@ namespace LinearAlgebra
         = std::make_shared<::dealii::parallel::internal::TBBPartitioner>();
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::reinit(const size_type size,
@@ -106,8 +99,6 @@ namespace LinearAlgebra
       else
         zero_out_ghosts();
     }
-
-
 
     template <typename Number>
     template <typename Number2>
@@ -144,8 +135,6 @@ namespace LinearAlgebra
       thread_loop_partitioner = v.thread_loop_partitioner;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::reinit(const IndexSet& locally_owned_indices,
@@ -159,8 +148,6 @@ namespace LinearAlgebra
       reinit(new_partitioner);
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::reinit(const IndexSet& locally_owned_indices,
@@ -171,8 +158,6 @@ namespace LinearAlgebra
         new Utilities::MPI::Partitioner(locally_owned_indices, communicator));
       reinit(new_partitioner);
     }
-
-
 
     template <typename Number>
     void
@@ -190,7 +175,6 @@ namespace LinearAlgebra
       // initialize to zero
       this->operator=(Number());
 
-
       // do not reallocate import_data directly, but only upon request. It
       // is only used as temporary storage for compress() and
       // update_ghost_values, and we might have vectors where we never
@@ -200,8 +184,6 @@ namespace LinearAlgebra
       vector_is_ghosted = false;
     }
 
-
-
     template <typename Number>
     Vector<Number>::Vector()
       : partitioner(new Utilities::MPI::Partitioner()),
@@ -210,8 +192,6 @@ namespace LinearAlgebra
     {
       reinit(0);
     }
-
-
 
     template <typename Number>
     Vector<Number>::Vector(const Vector<Number>& v)
@@ -234,8 +214,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
                            const IndexSet& ghost_indices,
@@ -245,8 +223,6 @@ namespace LinearAlgebra
       reinit(local_range, ghost_indices, communicator);
     }
 
-
-
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
                            const MPI_Comm  communicator)
@@ -255,16 +231,12 @@ namespace LinearAlgebra
       reinit(local_range, communicator);
     }
 
-
-
     template <typename Number>
     Vector<Number>::Vector(const size_type size)
       : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
     {
       reinit(size, false);
     }
-
-
 
     template <typename Number>
     Vector<Number>::Vector(
@@ -273,8 +245,6 @@ namespace LinearAlgebra
     {
       reinit(partitioner);
     }
-
-
 
     template <typename Number>
     inline Vector<Number>::~Vector()
@@ -287,8 +257,6 @@ namespace LinearAlgebra
         {}
     }
 
-
-
     template <typename Number>
     inline Vector<Number>&
     Vector<Number>::operator=(const Vector<Number>& c)
@@ -299,8 +267,6 @@ namespace LinearAlgebra
       return this->template operator=<Number>(c);
 #endif
     }
-
-
 
     template <typename Number>
     template <typename Number2>
@@ -369,8 +335,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     template <typename Number2>
     void
@@ -385,8 +349,6 @@ namespace LinearAlgebra
             copier, 0, partitioner->local_size(), thread_loop_partitioner);
         }
     }
-
-
 
 #ifdef DEAL_II_WITH_PETSC
 
@@ -457,8 +419,6 @@ namespace LinearAlgebra
 
 #endif
 
-
-
 #ifdef DEAL_II_WITH_TRILINOS
 
     template <typename Number>
@@ -483,8 +443,6 @@ namespace LinearAlgebra
 
 #endif
 
-
-
     template <typename Number>
     void
     Vector<Number>::compress(::dealii::VectorOperation::values operation)
@@ -493,8 +451,6 @@ namespace LinearAlgebra
       compress_finish(operation);
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::update_ghost_values() const
@@ -502,8 +458,6 @@ namespace LinearAlgebra
       update_ghost_values_start();
       update_ghost_values_finish();
     }
-
-
 
     template <typename Number>
     void
@@ -515,8 +469,6 @@ namespace LinearAlgebra
                     Number());
       vector_is_ghosted = false;
     }
-
-
 
     template <typename Number>
     void
@@ -547,8 +499,6 @@ namespace LinearAlgebra
 #endif
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::compress_finish(::dealii::VectorOperation::values operation)
@@ -577,8 +527,6 @@ namespace LinearAlgebra
       (void) operation;
 #endif
     }
-
-
 
     template <typename Number>
     void
@@ -611,8 +559,6 @@ namespace LinearAlgebra
 #endif
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::update_ghost_values_finish() const
@@ -636,8 +582,6 @@ namespace LinearAlgebra
 #endif
       vector_is_ghosted = true;
     }
-
-
 
     template <typename Number>
     void
@@ -692,8 +636,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::swap(Vector<Number>& v)
@@ -744,8 +686,6 @@ namespace LinearAlgebra
       std::swap(vector_is_ghosted, v.vector_is_ghosted);
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator=(const Number s)
@@ -768,8 +708,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
@@ -782,8 +720,6 @@ namespace LinearAlgebra
 
       reinit(down_V, omit_zeroing_entries);
     }
-
-
 
     template <typename Number>
     Vector<Number>&
@@ -807,8 +743,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator-=(const VectorSpaceVector<Number>& vv)
@@ -831,8 +765,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::add(const Number a)
@@ -847,8 +779,6 @@ namespace LinearAlgebra
       if(vector_is_ghosted)
         update_ghost_values();
     }
-
-
 
     template <typename Number>
     void
@@ -873,8 +803,6 @@ namespace LinearAlgebra
         vector_add, 0, partitioner->local_size(), thread_loop_partitioner);
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::add(const Number a, const VectorSpaceVector<Number>& vv)
@@ -884,8 +812,6 @@ namespace LinearAlgebra
       if(vector_is_ghosted)
         update_ghost_values();
     }
-
-
 
     template <typename Number>
     void
@@ -917,8 +843,6 @@ namespace LinearAlgebra
         update_ghost_values();
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::add(const std::vector<size_type>& indices,
@@ -929,8 +853,6 @@ namespace LinearAlgebra
           this->operator()(indices[i]) += values[i];
         }
     }
-
-
 
     template <typename Number>
     void
@@ -947,8 +869,6 @@ namespace LinearAlgebra
       if(vector_is_ghosted)
         update_ghost_values();
     }
-
-
 
     template <typename Number>
     void
@@ -971,8 +891,6 @@ namespace LinearAlgebra
         vector_sadd, 0, partitioner->local_size(), thread_loop_partitioner);
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::sadd(const Number                     x,
@@ -984,8 +902,6 @@ namespace LinearAlgebra
       if(vector_is_ghosted)
         update_ghost_values();
     }
-
-
 
     template <typename Number>
     void
@@ -1011,8 +927,6 @@ namespace LinearAlgebra
         update_ghost_values();
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator*=(const Number factor)
@@ -1030,8 +944,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator/=(const Number factor)
@@ -1039,8 +951,6 @@ namespace LinearAlgebra
       operator*=(static_cast<Number>(1.) / factor);
       return *this;
     }
-
-
 
     template <typename Number>
     void
@@ -1062,8 +972,6 @@ namespace LinearAlgebra
         update_ghost_values();
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::equ(const Number a, const VectorSpaceVector<Number>& vv)
@@ -1084,8 +992,6 @@ namespace LinearAlgebra
       if(vector_is_ghosted)
         update_ghost_values();
     }
-
-
 
     template <typename Number>
     void
@@ -1109,8 +1015,6 @@ namespace LinearAlgebra
         update_ghost_values();
     }
 
-
-
     template <typename Number>
     bool
     Vector<Number>::all_zero_local() const
@@ -1121,8 +1025,6 @@ namespace LinearAlgebra
           return false;
       return true;
     }
-
-
 
     template <typename Number>
     bool
@@ -1140,8 +1042,6 @@ namespace LinearAlgebra
       else
         return -local_result;
     }
-
-
 
     template <typename Number>
     template <typename Number2>
@@ -1163,8 +1063,6 @@ namespace LinearAlgebra
       return sum;
     }
 
-
-
     template <typename Number>
     Number Vector<Number>::operator*(const VectorSpaceVector<Number>& vv) const
     {
@@ -1181,8 +1079,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::norm_sqr_local() const
@@ -1195,8 +1091,6 @@ namespace LinearAlgebra
 
       return sum;
     }
-
-
 
     template <typename Number>
     Number
@@ -1215,8 +1109,6 @@ namespace LinearAlgebra
       return sum / real_type(partitioner->local_size());
     }
 
-
-
     template <typename Number>
     Number
     Vector<Number>::mean_value() const
@@ -1231,8 +1123,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::l1_norm_local() const
@@ -1244,8 +1134,6 @@ namespace LinearAlgebra
 
       return sum;
     }
-
-
 
     template <typename Number>
     typename Vector<Number>::real_type
@@ -1259,8 +1147,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::norm_sqr() const
@@ -1273,16 +1159,12 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::l2_norm() const
     {
       return std::sqrt(norm_sqr());
     }
-
-
 
     template <typename Number>
     typename Vector<Number>::real_type
@@ -1295,8 +1177,6 @@ namespace LinearAlgebra
         normp, 0, partitioner->local_size(), sum, thread_loop_partitioner);
       return std::pow(sum, 1. / p);
     }
-
-
 
     template <typename Number>
     typename Vector<Number>::real_type
@@ -1312,8 +1192,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::linfty_norm_local() const
@@ -1327,8 +1205,6 @@ namespace LinearAlgebra
       return max;
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::real_type
     Vector<Number>::linfty_norm() const
@@ -1340,8 +1216,6 @@ namespace LinearAlgebra
       else
         return local_result;
     }
-
-
 
     template <typename Number>
     Number
@@ -1361,8 +1235,6 @@ namespace LinearAlgebra
       AssertIsFinite(sum);
       return sum;
     }
-
-
 
     template <typename Number>
     Number
@@ -1386,8 +1258,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     inline bool
     Vector<Number>::partitioners_are_compatible(
@@ -1396,8 +1266,6 @@ namespace LinearAlgebra
       return partitioner->is_compatible(part);
     }
 
-
-
     template <typename Number>
     inline bool
     Vector<Number>::partitioners_are_globally_compatible(
@@ -1405,8 +1273,6 @@ namespace LinearAlgebra
     {
       return partitioner->is_globally_compatible(part);
     }
-
-
 
     template <typename Number>
     std::size_t
@@ -1426,8 +1292,6 @@ namespace LinearAlgebra
                    * sizeof(Number));
       return memory;
     }
-
-
 
     template <typename Number>
     void
@@ -1514,7 +1378,6 @@ namespace LinearAlgebra
   } // end of namespace distributed
 
 } // namespace LinearAlgebra
-
 
 DEAL_II_NAMESPACE_CLOSE
 

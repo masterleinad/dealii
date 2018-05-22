@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like coarse_grid_x_01, but instead of checking that what we copy into
 // the p4est data structure is correct, check that what we get back is
 // correct
@@ -25,8 +23,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -44,7 +40,6 @@ test(std::ostream& /*out*/)
               << tr.n_active_cells() << " active cells" << std::endl;
       GridOut().write_gnuplot(tr, deallog.get_file_stream());
     }
-
 
   if(true)
     {
@@ -72,7 +67,6 @@ test(std::ostream& /*out*/)
       GridOut().write_gnuplot(tr, deallog.get_file_stream());
     }
 }
-
 
 int
 main(int argc, char* argv[])

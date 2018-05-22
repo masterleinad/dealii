@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 //  Asking for face normal vectors in the codim-1 case led to aborts.
-
 
 #include "../tests.h"
 
@@ -71,8 +69,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

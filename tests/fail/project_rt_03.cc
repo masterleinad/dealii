@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::project works for RT elements correctly
 
 char logname[] = "output";
 
-
 #include "../deal.II/project_common.h"
-
 
 template <int dim>
 void

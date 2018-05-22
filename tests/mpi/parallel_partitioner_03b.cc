@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a variation of parallel_partitioner_03, which is used to draw a figure in
 // MPI::Partitioner documentation.
 
@@ -23,7 +22,6 @@
 #include <deal.II/base/utilities.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -134,8 +132,6 @@ test()
         }
     }
 }
-
-
 
 int
 main(int argc, char** argv)

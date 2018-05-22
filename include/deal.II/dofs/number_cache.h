@@ -21,7 +21,6 @@
 
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -61,7 +60,6 @@ namespace internal
        * works only on one MPI process.)
        */
       NumberCache(const types::global_dof_index n_global_dofs);
-
 
       /**
        * Create a NumberCache object that corresponds to a parallel
@@ -166,7 +164,6 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
     template <class Archive>
     void
     NumberCache::serialize(Archive& ar, const unsigned int /*version*/)
@@ -179,7 +176,6 @@ namespace internal
 
   } // namespace DoFHandlerImplementation
 } // namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

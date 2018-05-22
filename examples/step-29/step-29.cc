@@ -17,7 +17,6 @@
  * Author: Moritz Allmaras, Texas A&M University, 2007
  */
 
-
 // @sect3{Include files}
 
 // The following header files are unchanged from step-7 and have been
@@ -81,7 +80,6 @@ namespace Step29
 {
   using namespace dealii;
 
-
   // @sect3{The <code>DirichletBoundaryValues</code> class}
 
   // First we define a class for the function representing the Dirichlet
@@ -109,7 +107,6 @@ namespace Step29
                       std::vector<Vector<double>>&   value_list) const override;
   };
 
-
   template <int dim>
   inline void
   DirichletBoundaryValues<dim>::vector_value(const Point<dim>& /*p*/,
@@ -120,7 +117,6 @@ namespace Step29
     values(0) = 1;
     values(1) = 0;
   }
-
 
   template <int dim>
   void
@@ -208,7 +204,6 @@ namespace Step29
     }
     prm.leave_subsection();
 
-
     // Last but not least we would like to be able to change some properties
     // of the output, like filename and format, through entries in the
     // configuration file, which is the purpose of the last subsection:
@@ -260,8 +255,6 @@ namespace Step29
 
     prm.parse_input(parameter_file);
   }
-
-
 
   // @sect3{The <code>ComputeIntensity</code> class}
 
@@ -328,7 +321,6 @@ namespace Step29
     : DataPostprocessorScalar<dim>("Intensity", update_values)
   {}
 
-
   // The actual postprocessing happens in the following function. Its input is
   // an object that stores values of the function (which is here vector-valued)
   // representing the data vector given to DataOut::add_data_vector, evaluated
@@ -366,7 +358,6 @@ namespace Step29
           + inputs.solution_values[i](1) * inputs.solution_values[i](1));
       }
   }
-
 
   // @sect3{The <code>UltrasoundProblem</code> class}
 
@@ -409,8 +400,6 @@ namespace Step29
     Vector<double>       solution, system_rhs;
   };
 
-
-
   // The constructor takes the ParameterHandler object and stores it in a
   // reference. It also initializes the DoF-Handler and the finite element
   // system, which consists of two copies of the scalar Q1 field, one for $v$
@@ -419,7 +408,6 @@ namespace Step29
   UltrasoundProblem<dim>::UltrasoundProblem(ParameterHandler& param)
     : prm(param), dof_handler(triangulation), fe(FE_Q<dim>(1), 2)
   {}
-
 
   template <int dim>
   UltrasoundProblem<dim>::~UltrasoundProblem()
@@ -463,7 +451,6 @@ namespace Step29
     const Point<dim> focal_point = (dim == 2) ?
                                      Point<dim>(0.5, focal_distance) :
                                      Point<dim>(0.5, 0.5, focal_distance);
-
 
     // As initial coarse grid we take a simple unit square with 5 subdivisions
     // in each direction. The number of subdivisions is chosen so that the
@@ -509,7 +496,6 @@ namespace Step29
             << std::endl;
   }
 
-
   // @sect4{<code>UltrasoundProblem::setup_system</code>}
   //
   // Initialization of the system matrix, sparsity patterns and vectors are
@@ -539,7 +525,6 @@ namespace Step29
     deallog << "  Number of degrees of freedom: " << dof_handler.n_dofs()
             << std::endl;
   }
-
 
   // @sect4{<code>UltrasoundProblem::assemble_system</code>}
 
@@ -678,7 +663,6 @@ namespace Step29
               }
           }
 
-
         // We also have to add contributions due to boundary terms. To this
         // end, we loop over all faces of the current cell and see if first it
         // is at the boundary, and second has the correct boundary indicator
@@ -694,7 +678,6 @@ namespace Step29
               // object to provide us with the shape function values on this
               // face:
               fe_face_values.reinit(cell, face);
-
 
               // Next, we loop through all DoFs of the current cell to find
               // pairs that belong to different components and both have
@@ -742,14 +725,12 @@ namespace Step29
         // DoFs...
         cell->get_dof_indices(local_dof_indices);
 
-
         // ...and then add the entries to the system matrix one by one:
         for(unsigned int i = 0; i < dofs_per_cell; ++i)
           for(unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       }
-
 
     // The only thing left are the Dirichlet boundary values on $\Gamma_1$,
     // which is characterized by the boundary indicator 1. The Dirichlet
@@ -765,8 +746,6 @@ namespace Step29
     timer.stop();
     deallog << "done (" << timer.cpu_time() << "s)" << std::endl;
   }
-
-
 
   // @sect4{<code>UltrasoundProblem::solve</code>}
 
@@ -806,8 +785,6 @@ namespace Step29
     timer.stop();
     deallog << "done (" << timer.cpu_time() << "s)" << std::endl;
   }
-
-
 
   // @sect4{<code>UltrasoundProblem::output_results</code>}
 
@@ -875,8 +852,6 @@ namespace Step29
     deallog << "done (" << timer.cpu_time() << "s)" << std::endl;
   }
 
-
-
   // @sect4{<code>UltrasoundProblem::run</code>}
 
   // Here we simply execute our functions one after the other:
@@ -891,7 +866,6 @@ namespace Step29
     output_results();
   }
 } // namespace Step29
-
 
 // @sect4{The <code>main</code> function}
 

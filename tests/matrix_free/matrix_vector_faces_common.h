@@ -13,7 +13,6 @@
 //
 //------------------  matrix_vector_faces_common.h  ------------------------
 
-
 // this is a template for matrix-vector products with face integration (DG
 // case, symmetric interior penalty + Nitsche) on different kinds of meshes
 // (Cartesian, general, with and without hanging nodes). It also tests the
@@ -48,13 +47,10 @@
 
 #include <iostream>
 
-
 // forward declare this function. will be implemented in .cc files
 template <int dim, int fe_degree>
 void
 test();
-
-
 
 template <int dim,
           int fe_degree,
@@ -158,7 +154,6 @@ private:
       }
   }
 
-
   void
   local_apply_boundary_face(
     const MatrixFree<dim, number>&               data,
@@ -201,8 +196,6 @@ private:
 
   const MatrixFree<dim, number>& data;
 };
-
-
 
 // A variant class used in some of the tests that goes through the combined
 // vector-access/evaluate routines that typically give better performance
@@ -369,8 +362,6 @@ private:
   const unsigned int             start_vector_component;
 };
 
-
-
 template <int dim, int n_components, typename Number>
 Tensor<1, n_components, Tensor<1, dim, Number>>
 multiply_by_advection(const Tensor<1, dim, Number>&          advection,
@@ -383,8 +374,6 @@ multiply_by_advection(const Tensor<1, dim, Number>&          advection,
   return out;
 }
 
-
-
 template <int dim, typename Number>
 Tensor<1, dim, Number>
 multiply_by_advection(const Tensor<1, dim, Number>& advection,
@@ -395,8 +384,6 @@ multiply_by_advection(const Tensor<1, dim, Number>& advection,
     out[d] = advection[d] * values;
   return out;
 }
-
-
 
 // An implementation of matrix-free advection operator
 template <int dim,
@@ -557,8 +544,6 @@ private:
   Tensor<1, dim, VectorizedArray<number>> advection;
 };
 
-
-
 // Reference solution created with MeshWorker
 template <int dim>
 class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
@@ -577,8 +562,6 @@ public:
        typename MeshWorker::IntegrationInfo<dim>& info2) const;
 };
 
-
-
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(
@@ -588,8 +571,6 @@ MatrixIntegrator<dim>::cell(
   LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
                                          info.fe_values());
 }
-
-
 
 template <int dim>
 void
@@ -625,8 +606,6 @@ MatrixIntegrator<dim>::face(
                                         penalty);
 }
 
-
-
 template <int dim>
 void
 MatrixIntegrator<dim>::boundary(
@@ -644,8 +623,6 @@ MatrixIntegrator<dim>::boundary(
   LocalIntegrators::Laplace ::nitsche_matrix(
     dinfo.matrix(0, false).matrix, info.fe_values(0), penalty);
 }
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -744,8 +721,6 @@ do_test(const DoFHandler<dim>&  dof,
   if(types_are_equal<number, float>::value == true)
     deallog.pop();
 }
-
-
 
 #ifdef DEAL_II_WITH_MPI
 int

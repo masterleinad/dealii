@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the correctness of an implementation for the Stokes operator
 // based on MatrixFreeOperators::Base by comparing with a matrix version.
 
@@ -98,8 +97,6 @@ protected:
       }
   }
 };
-
-
 
 template <int dim, int degree>
 void
@@ -286,8 +283,6 @@ test()
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main(int /*argc*/, char** /*argv*/)

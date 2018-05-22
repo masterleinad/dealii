@@ -16,7 +16,6 @@
 #ifndef dealii_vector_selector_templates_h
 #define dealii_vector_selector_templates_h
 
-
 #include <deal.II/base/vector_slice.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/meshworker/vector_selector.h>
@@ -30,8 +29,6 @@ namespace MeshWorker
     : VectorSelector(v)
   {}
 
-
-
   template <int dim, int spacedim, typename Number>
   void
   VectorDataBase<dim, spacedim, Number>::initialize(const AnyData& d)
@@ -39,7 +36,6 @@ namespace MeshWorker
     this->data = d;
     VectorSelector::initialize(d);
   }
-
 
   template <int dim, int spacedim, typename Number>
   void
@@ -56,7 +52,6 @@ namespace MeshWorker
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   template <int dim, int spacedim, typename Number>
   void
@@ -75,14 +70,12 @@ namespace MeshWorker
     Assert(false, ExcNotImplemented());
   }
 
-
   //----------------------------------------------------------------------//
 
   template <typename VectorType, int dim, int spacedim>
   VectorData<VectorType, dim, spacedim>::VectorData(const VectorSelector& s)
     : VectorDataBase<dim, spacedim, typename VectorType::value_type>(s)
   {}
-
 
   template <typename VectorType, int dim, int spacedim>
   void
@@ -91,7 +84,6 @@ namespace MeshWorker
     this->data = d;
     VectorSelector::initialize(d);
   }
-
 
   template <typename VectorType, int dim, int spacedim>
   void
@@ -102,7 +94,6 @@ namespace MeshWorker
     this->data.add(p, name);
     VectorSelector::initialize(this->data);
   }
-
 
   template <typename VectorType, int dim, int spacedim>
   void
@@ -158,7 +149,6 @@ namespace MeshWorker
       }
   }
 
-
   template <typename VectorType, int dim, int spacedim>
   std::size_t
   VectorData<VectorType, dim, spacedim>::memory_consumption() const
@@ -175,7 +165,6 @@ namespace MeshWorker
     : VectorData<VectorType, dim, spacedim>(s)
   {}
 
-
   template <typename VectorType, int dim, int spacedim>
   void
   MGVectorData<VectorType, dim, spacedim>::initialize(const AnyData& d)
@@ -183,7 +172,6 @@ namespace MeshWorker
     this->data = d;
     VectorSelector::initialize(d);
   }
-
 
   template <typename VectorType, int dim, int spacedim>
   void
@@ -197,7 +185,6 @@ namespace MeshWorker
     this->data.add(p, name);
     VectorSelector::initialize(this->data);
   }
-
 
   template <typename VectorType, int dim, int spacedim>
   void

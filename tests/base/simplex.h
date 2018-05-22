@@ -26,7 +26,6 @@
 
 #include <numeric>
 
-
 // Helper functions
 template <int dim>
 std::array<Point<dim>, dim + 1>
@@ -39,14 +38,12 @@ get_simplex()
   return {{Point<1>(3), Point<1>(5)}};
 }
 
-
 template <>
 std::array<Point<2>, 3>
 get_simplex()
 {
   return {{Point<2>(4, 2), Point<2>(3, 3), Point<2>(2, 2.5)}};
 }
-
 
 template <>
 std::array<Point<3>, 4>
@@ -57,7 +54,6 @@ get_simplex()
            Point<3>(2, 2.5, 0),
            Point<3>(4.5, 3, 2)}};
 }
-
 
 // Exact integral of 1/R times a polynomial computed using Maple.
 double
@@ -243,8 +239,6 @@ exact_integral_one_over_r(const unsigned int vertex_index,
   return v[vertex_index][i][j];
 }
 
-
-
 double
 exact_integral_one_over_r_middle(const unsigned int i, const unsigned int j)
 {
@@ -262,7 +256,6 @@ exact_integral_one_over_r_middle(const unsigned int i, const unsigned int j)
   //      x^n*y^m/Sqrt[(x - x0)^2 + (y - y0)^2], {x, 0, 1}, {y, 0, 1},
   //      MaxRecursion -> 10000, PrecisionGoal -> 9], 9], ";"], {n, 0,
   //    4}], {m, 0, 4}]
-
 
   static double v[6][6] = {{0}};
 

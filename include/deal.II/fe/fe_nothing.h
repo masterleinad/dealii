@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup fe */
 /*@{*/
 
@@ -193,8 +192,6 @@ public:
   compare_for_face_domination(
     const FiniteElement<dim, spacedim>& fe_other) const override;
 
-
-
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
     const FiniteElement<dim, spacedim>& fe_other) const override;
@@ -234,7 +231,6 @@ public:
     const FiniteElement<dim, spacedim>& source_fe,
     FullMatrix<double>&                 interpolation_matrix) const override;
 
-
   /**
    * Return the matrix interpolating from a face of one element to the
    * subface of the neighboring element. The size of the matrix is then
@@ -273,7 +269,6 @@ private:
    */
   const bool dominate;
 };
-
 
 /*@}*/
 

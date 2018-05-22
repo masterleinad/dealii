@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that DataOut::add_data_vector checks for consistent number of
 // components in the names and in the finite element
-
 
 #include "../tests.h"
 #include <deal.II/numerics/data_out.h>
@@ -28,8 +26,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -85,7 +81,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

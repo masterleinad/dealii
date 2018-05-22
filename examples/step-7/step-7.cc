@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth and Ralf Hartmann, University of Heidelberg, 2000
  */
 
-
 // @sect3{Include files}
 
 // These first include files have all been treated in previous examples, so we
@@ -103,7 +102,6 @@ namespace Step7
     static const double       width;
   };
 
-
   // The variables which denote the centers and the width of the exponentials
   // have just been declared, now we still need to assign values to
   // them. Here, we can show another small piece of template sorcery, namely
@@ -141,8 +139,6 @@ namespace Step7
   // value:
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 8.;
-
-
 
   // After declaring and defining the characteristics of solution and right
   // hand side, we can declare the classes representing these two. They both
@@ -192,7 +188,6 @@ namespace Step7
              const unsigned int component = 0) const override;
   };
 
-
   // The actual definition of the values and gradients of the exact solution
   // class is according to their mathematical definition and does not need
   // much explanation.
@@ -221,7 +216,6 @@ namespace Step7
 
     return return_value;
   }
-
 
   // Likewise, this is the computation of the gradient of the solution.  In
   // order to accumulate the gradient from the contributions of the
@@ -269,8 +263,6 @@ namespace Step7
     return return_value;
   }
 
-
-
   // Besides the function that represents the exact solution, we also need a
   // function which we can use as right hand side when assembling the linear
   // system of discretized equations. This is accomplished using the following
@@ -287,7 +279,6 @@ namespace Step7
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
-
 
   // The value of the right hand side is given by the negative Laplacian of
   // the solution plus the solution itself, since we wanted to solve
@@ -315,7 +306,6 @@ namespace Step7
 
     return return_value;
   }
-
 
   // @sect3{The Helmholtz solver class}
 
@@ -475,7 +465,6 @@ namespace Step7
     ConvergenceTable convergence_table;
   };
 
-
   // @sect3{The HelmholtzProblem class implementation}
 
   // @sect4{HelmholtzProblem::HelmholtzProblem}
@@ -489,7 +478,6 @@ namespace Step7
     : dof_handler(triangulation), fe(&fe), refinement_mode(refinement_mode)
   {}
 
-
   // @sect4{HelmholtzProblem::~HelmholtzProblem}
 
   // This is no different than before:
@@ -498,7 +486,6 @@ namespace Step7
   {
     dof_handler.clear();
   }
-
 
   // @sect4{HelmholtzProblem::setup_system}
 
@@ -551,7 +538,6 @@ namespace Step7
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
 
   // @sect4{HelmholtzProblem::assemble_system}
 
@@ -750,7 +736,6 @@ namespace Step7
       boundary_values, system_matrix, solution, system_rhs);
   }
 
-
   // @sect4{HelmholtzProblem::solve}
 
   // Solving the system of equations is done in the same way as before:
@@ -768,7 +753,6 @@ namespace Step7
 
     hanging_node_constraints.distribute(solution);
   }
-
 
   // @sect4{HelmholtzProblem::refine_grid}
 
@@ -840,7 +824,6 @@ namespace Step7
           }
       }
   }
-
 
   // @sect4{HelmholtzProblem::process_solution}
 
@@ -946,7 +929,6 @@ namespace Step7
     convergence_table.add_value("Linfty", Linfty_error);
   }
 
-
   // @sect4{HelmholtzProblem::run}
 
   // As in previous example programs, the <code>run</code> function controls
@@ -1012,7 +994,6 @@ namespace Step7
           }
         else
           refine_grid();
-
 
         // The next steps are already known from previous examples. This is
         // mostly the basic set-up of every finite element program:
@@ -1202,7 +1183,6 @@ namespace Step7
     std::ofstream error_table_file(error_filename);
 
     convergence_table.write_tex(error_table_file);
-
 
     // @sect5{Further table manipulations}
 

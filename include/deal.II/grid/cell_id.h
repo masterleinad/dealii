@@ -192,8 +192,6 @@ private:
   operator<<(std::ostream& os, const CellId& cid);
 };
 
-
-
 /**
  * Write a CellId object into a stream.
  */
@@ -209,8 +207,6 @@ operator<<(std::ostream& os, const CellId& cid)
     os << static_cast<unsigned char>('0' + cid.child_indices[i]);
   return os;
 }
-
-
 
 /**
  * Serialization function
@@ -254,8 +250,6 @@ operator>>(std::istream& is, CellId& cid)
   return is;
 }
 
-
-
 inline bool
 CellId::operator==(const CellId& other) const
 {
@@ -271,15 +265,11 @@ CellId::operator==(const CellId& other) const
   return true;
 }
 
-
-
 inline bool
 CellId::operator!=(const CellId& other) const
 {
   return !(*this == other);
 }
-
-
 
 inline bool
 CellId::operator<(const CellId& other) const

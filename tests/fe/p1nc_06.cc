@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the P1NC element's gradient on a rectangle
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 
 #include <string>
 
-
-
 template <int dim>
 Point<dim>
 stretch(const Point<dim>& p)
@@ -40,8 +36,6 @@ stretch(const Point<dim>& p)
 
   return q;
 }
-
-
 
 template <int dim>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Trilinos has_ghost_elements() if run on one CPU only
 
 #include "../tests.h"
@@ -24,7 +22,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -33,7 +30,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor owns 2 indices and all
   // are ghosting element 1 (the second)
@@ -74,7 +70,6 @@ test()
       Assert(flag != 0, ExcMessage("hang in has_ghost_elements()"));
     }
 
-
   MPI_Barrier(MPI_COMM_WORLD);
 
   deallog << v_tmp.has_ghost_elements() << std::endl;
@@ -82,8 +77,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

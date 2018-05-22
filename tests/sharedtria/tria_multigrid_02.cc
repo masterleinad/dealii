@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh and distribute multigrid
 // Unlike tria_multigrid_01, this test does not need p4est library
 
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void

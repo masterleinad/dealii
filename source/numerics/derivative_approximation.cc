@@ -42,8 +42,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 namespace
 {
   template <typename T>
@@ -125,7 +123,6 @@ namespace DerivativeApproximation
     template <int dim>
     const UpdateFlags Gradient<dim>::update_flags = update_values;
 
-
     template <int dim>
     template <class InputVector, int spacedim>
     inline typename Gradient<dim>::ProjectedDerivative
@@ -151,8 +148,6 @@ namespace DerivativeApproximation
         }
     }
 
-
-
     template <int dim>
     inline double
     Gradient<dim>::derivative_norm(const Derivative& d)
@@ -163,16 +158,12 @@ namespace DerivativeApproximation
       return std::sqrt(s);
     }
 
-
-
     template <int dim>
     inline void
     Gradient<dim>::symmetrize(Derivative&)
     {
       // nothing to do here
     }
-
-
 
     /**
      * The following class is used to describe the data needed to compute the
@@ -242,7 +233,6 @@ namespace DerivativeApproximation
     template <int dim>
     const UpdateFlags SecondDerivative<dim>::update_flags = update_gradients;
 
-
     template <int dim>
     template <class InputVector, int spacedim>
     inline typename SecondDerivative<dim>::ProjectedDerivative
@@ -271,16 +261,12 @@ namespace DerivativeApproximation
         };
     }
 
-
-
     template <>
     inline double
     SecondDerivative<1>::derivative_norm(const Derivative& d)
     {
       return std::fabs(d[0][0]);
     }
-
-
 
     template <>
     inline double
@@ -302,8 +288,6 @@ namespace DerivativeApproximation
 
       return std::max(std::fabs(eigenvalues[0]), std::fabs(eigenvalues[1]));
     }
-
-
 
     template <>
     inline double
@@ -478,8 +462,6 @@ namespace DerivativeApproximation
                       std::max(std::fabs(EE[1]), std::fabs(EE[2])));
     }
 
-
-
     template <int dim>
     inline double
     SecondDerivative<dim>::derivative_norm(const Derivative&)
@@ -501,8 +483,6 @@ namespace DerivativeApproximation
       return 0;
     }
 
-
-
     template <int dim>
     inline void
     SecondDerivative<dim>::symmetrize(Derivative& d)
@@ -515,8 +495,6 @@ namespace DerivativeApproximation
             d[i][j] = d[j][i] = s;
           };
     }
-
-
 
     template <int dim>
     class ThirdDerivative
@@ -579,7 +557,6 @@ namespace DerivativeApproximation
     template <int dim>
     const UpdateFlags ThirdDerivative<dim>::update_flags = update_hessians;
 
-
     template <int dim>
     template <class InputVector, int spacedim>
     inline typename ThirdDerivative<dim>::ProjectedDerivative
@@ -608,16 +585,12 @@ namespace DerivativeApproximation
         };
     }
 
-
-
     template <>
     inline double
     ThirdDerivative<1>::derivative_norm(const Derivative& d)
     {
       return std::fabs(d[0][0][0]);
     }
-
-
 
     template <int dim>
     inline double
@@ -627,7 +600,6 @@ namespace DerivativeApproximation
       // member function of Tensor<rank_,dim>
       return d.norm();
     }
-
 
     template <int dim>
     inline void
@@ -664,7 +636,6 @@ namespace DerivativeApproximation
             d[i][j][j] = d[j][i][j] = d[j][j][i] = t;
           }
     }
-
 
     template <int order, int dim>
     class DerivativeSelector
@@ -770,7 +741,6 @@ namespace DerivativeApproximation
       // matrix Y=sum_i y_i y_i^T
       Tensor<2, dim> Y;
 
-
       // vector to hold iterators to all
       // active neighbors of a cell
       // reserve the maximal number of
@@ -846,7 +816,6 @@ namespace DerivativeApproximation
           const Point<dim> neighbor_center
             = neighbor_fe_midpoint_value.quadrature_point(0);
 
-
           // vector for the
           // normalized
           // direction between
@@ -902,8 +871,6 @@ namespace DerivativeApproximation
       DerivativeDescription::symmetrize(derivative);
     }
 
-
-
     /**
      * Compute the derivative approximation on a given cell.  Fill the @p
      * derivative_norm vector with the norm of the computed derivative tensors
@@ -950,7 +917,6 @@ namespace DerivativeApproximation
             = DerivativeDescription::derivative_norm(derivative);
         }
     }
-
 
     /**
      * Kind of the main function of this class. It is called by the public entry
@@ -1018,7 +984,6 @@ namespace DerivativeApproximation
 
 } // namespace DerivativeApproximation
 
-
 // ------------------------ finally for the public interface of this namespace
 
 namespace DerivativeApproximation
@@ -1038,7 +1003,6 @@ namespace DerivativeApproximation
       mapping, dof_handler, solution, component, derivative_norm);
   }
 
-
   template <int dim,
             template <int, int> class DoFHandlerType,
             class InputVector,
@@ -1057,7 +1021,6 @@ namespace DerivativeApproximation
       derivative_norm);
   }
 
-
   template <int dim,
             template <int, int> class DoFHandlerType,
             class InputVector,
@@ -1073,7 +1036,6 @@ namespace DerivativeApproximation
     internal::approximate_derivative<internal::SecondDerivative<dim>, dim>(
       mapping, dof_handler, solution, component, derivative_norm);
   }
-
 
   template <int dim,
             template <int, int> class DoFHandlerType,
@@ -1093,7 +1055,6 @@ namespace DerivativeApproximation
       component,
       derivative_norm);
   }
-
 
   template <typename DoFHandlerType, class InputVector, int order>
   void
@@ -1115,8 +1076,6 @@ namespace DerivativeApproximation
       typename internal::DerivativeSelector<order, DoFHandlerType::dimension>::
         DerivDescr>(mapping, dof, solution, component, cell, derivative);
   }
-
-
 
   template <typename DoFHandlerType, class InputVector, int order>
   void
@@ -1143,8 +1102,6 @@ namespace DerivativeApproximation
       component);
   }
 
-
-
   template <int dim, int order>
   double
   derivative_norm(const Tensor<order, dim>& derivative)
@@ -1155,9 +1112,7 @@ namespace DerivativeApproximation
 
 } // namespace DerivativeApproximation
 
-
 // --------------------------- explicit instantiations ---------------------
 #include "derivative_approximation.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

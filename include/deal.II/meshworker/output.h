@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_output_h
 #define dealii_mesh_worker_output_h
 
@@ -22,7 +21,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/meshworker/dof_info.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -149,7 +147,6 @@ namespace MeshWorker
         (*os) << d;
     }
 
-
     inline void
     GnuplotPatch::write_endl() const
     {
@@ -159,13 +156,11 @@ namespace MeshWorker
         (*os) << std::endl;
     }
 
-
     inline GnuplotPatch::GnuplotPatch()
       : n_vectors(numbers::invalid_unsigned_int),
         n_points(numbers::invalid_unsigned_int),
         os(nullptr)
     {}
-
 
     inline void
     GnuplotPatch::initialize(const unsigned int np, const unsigned int nv)
@@ -174,13 +169,11 @@ namespace MeshWorker
       n_points  = np;
     }
 
-
     inline void
     GnuplotPatch::initialize_stream(std::ostream& stream)
     {
       os = &stream;
     }
-
 
     template <int dim>
     inline void
@@ -193,7 +186,6 @@ namespace MeshWorker
         info.initialize_quadrature(Utilities::fixed_power<dim>(n_points),
                                    n_vectors + dim);
     }
-
 
     template <int dim>
     inline void
@@ -213,7 +205,6 @@ namespace MeshWorker
       //      AssertDimension(np, Utilities::fixed_power<dim>(n_points));
       AssertDimension(nv, n_vectors + dim);
 
-
       for(unsigned int k = 0; k < np; ++k)
         {
           if(k % row_length == 0)
@@ -229,7 +220,6 @@ namespace MeshWorker
           write_endl();
         }
     }
-
 
     template <int dim>
     inline void

@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check downstream numbering
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -67,8 +63,6 @@ print_dofs(const DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof, unsigned int level)
@@ -101,7 +95,6 @@ print_dofs(const DoFHandler<dim>& dof, unsigned int level)
       deallog << std::endl;
     }
 }
-
 
 template <int dim>
 void
@@ -146,7 +139,6 @@ check_renumbering(DoFHandler<dim>& mgdof)
     }
 }
 
-
 template <int dim>
 void
 check()
@@ -179,7 +171,6 @@ check()
   check_renumbering(mgdof);
   mgdof.clear();
 }
-
 
 int
 main()

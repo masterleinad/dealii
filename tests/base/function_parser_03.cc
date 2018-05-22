@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // functionparser: check if you can change the expression in an existing object
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/base/point.h>
 #include <deal.II/lac/vector.h>
 #include <map>
-
 
 int
 main()

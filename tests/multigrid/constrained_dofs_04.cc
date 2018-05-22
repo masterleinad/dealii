@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that we get a reasonable error message when trying to call
 // MGConstrainedDofs::initialize() with distributing level dofs.
 

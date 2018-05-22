@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::interpolate with a component mask works for
 // FE_System(FE_Q(p)) elements correctly on an adaptively refined mesh for
 // functions of degree q
@@ -40,7 +38,6 @@
 
 #include <vector>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -64,8 +61,6 @@ private:
   const unsigned int q;
   const double       adj;
 };
-
-
 
 template <int dim>
 void
@@ -112,7 +107,6 @@ test()
             dof_handler, F<dim>(q, adj2), interpolant, mask2);
           constraints.distribute(interpolant);
 
-
           // then compute the interpolation error for mask 1
           VectorTools::integrate_difference(dof_handler,
                                             interpolant,
@@ -147,8 +141,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

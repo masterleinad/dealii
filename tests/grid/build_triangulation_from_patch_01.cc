@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridTools::build_triangulation_from_patch ()
-
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -26,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -38,7 +32,6 @@ test()
 
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
-
 
   unsigned int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -80,7 +73,6 @@ test()
         }
     }
 }
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
 
-
 #include <bitset>
 
 using namespace dealii;
@@ -25,7 +24,6 @@ using namespace dealii;
 // Test GeometryInfo<dim>::face_to_cell_vertices
 // for correct behaviour under face_orientation face_flip and face_rotation
 //
-
 
 template <int dim>
 void
@@ -58,7 +56,6 @@ test_vertices()
     }
 }
 
-
 template <int dim>
 void
 test_lines()
@@ -89,7 +86,6 @@ test_lines()
         }
     }
 }
-
 
 int
 main()

@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check some things about subdomain_ids
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -29,16 +27,13 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 DeclException2(ExcNumberMismatch,
                int,
                int,
                << "The numbers " << arg1 << " and " << arg2
                << " should be equal, but are not.");
-
 
 template <int dim>
 void
@@ -136,7 +131,6 @@ test()
       deallog << "Check 3 (dim=" << dim << ") ok" << std::endl;
     };
 
-
   // check 4: check again for
   // continuous elements. note that
   // the number of dofs here is
@@ -169,7 +163,6 @@ test()
       deallog << "Check 4 (dim=" << dim << ") ok" << std::endl;
     };
 }
-
 
 int
 main()

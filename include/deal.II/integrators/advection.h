@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_advection_h
 #define dealii_integrators_advection_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -118,8 +117,6 @@ namespace LocalIntegrators
         }
     }
 
-
-
     /**
      * Scalar advection residual operator in strong form
      *
@@ -159,8 +156,6 @@ namespace LocalIntegrators
                            * velocity[d][k * v_increment];
         }
     }
-
-
 
     /**
      * Vector-valued advection residual operator in strong form
@@ -208,8 +203,6 @@ namespace LocalIntegrators
         }
     }
 
-
-
     /**
      * Scalar advection residual operator in weak form
      *
@@ -246,8 +239,6 @@ namespace LocalIntegrators
                            * velocity[d][k * v_increment];
         }
     }
-
-
 
     /**
      * Vector-valued advection residual operator in weak form
@@ -291,8 +282,6 @@ namespace LocalIntegrators
                              * velocity[d][k * v_increment];
         }
     }
-
-
 
     /**
      * Upwind flux at the boundary for weak advection operator. This is the
@@ -359,8 +348,6 @@ namespace LocalIntegrators
         }
     }
 
-
-
     /**
      * Scalar case: Residual for upwind flux at the boundary for weak
      * advection operator. This is the value of the trial function at the
@@ -407,7 +394,6 @@ namespace LocalIntegrators
           AssertVectorVectorDimension(velocity, dim, fe.n_quadrature_points);
         }
 
-
       for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = factor * fe.JxW(k);
@@ -426,8 +412,6 @@ namespace LocalIntegrators
             }
         }
     }
-
-
 
     /**
      * Vector-valued case: Residual for upwind flux at the boundary for weak
@@ -476,7 +460,6 @@ namespace LocalIntegrators
           AssertVectorVectorDimension(velocity, dim, fe.n_quadrature_points);
         }
 
-
       for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = factor * fe.JxW(k);
@@ -498,8 +481,6 @@ namespace LocalIntegrators
             }
         }
     }
-
-
 
     /**
      * Upwind flux in the interior for weak advection operator. Matrix entries
@@ -583,8 +564,6 @@ namespace LocalIntegrators
         }
     }
 
-
-
     /**
      * Scalar case: Upwind flux in the interior for weak advection operator.
      * Matrix entries correspond to the upwind value of the trial function,
@@ -660,8 +639,6 @@ namespace LocalIntegrators
             }
         }
     }
-
-
 
     /**
      * Vector-valued case: Upwind flux in the interior for weak advection
@@ -741,7 +718,6 @@ namespace LocalIntegrators
 
   } // namespace Advection
 } // namespace LocalIntegrators
-
 
 DEAL_II_NAMESPACE_CLOSE
 

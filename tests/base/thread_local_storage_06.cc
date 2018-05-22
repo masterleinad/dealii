@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ThreadLocalStorage::clear but using a sample object to
 // initialize the thread local storage
 
@@ -22,7 +21,6 @@
 
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
-
 
 struct X
 {
@@ -41,9 +39,7 @@ initializer()
 
 X forty_two = initializer();
 
-
 Threads::ThreadLocalStorage<X> tls_data(forty_two);
-
 
 void
 execute(Threads::Mutex& m)
@@ -73,7 +69,6 @@ execute(Threads::Mutex& m)
   AssertThrow(exists == false, ExcInternalError());
 }
 
-
 void
 test()
 {
@@ -102,8 +97,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

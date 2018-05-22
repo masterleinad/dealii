@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to polynomial_lagrange_order, but for Legendre interpolation
 // This tests the stability of the polynomial evaluation
 
@@ -22,9 +21,7 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 void
 check_at_one(const std::vector<Polynomial<double>>& p)
@@ -41,8 +38,6 @@ check_at_one(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_poly(const unsigned int n)
 {
@@ -51,8 +46,6 @@ check_poly(const unsigned int n)
   check_at_one(p);
   deallog << std::endl;
 }
-
-
 
 int
 main()

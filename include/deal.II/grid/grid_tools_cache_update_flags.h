@@ -16,7 +16,6 @@
 #ifndef dealii_grid_tria_info_cache_update_flags_h
 #define dealii_grid_tria_info_cache_update_flags_h
 
-
 #include <deal.II/base/config.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -67,7 +66,6 @@ namespace GridTools
     update_all = 0xFF,
   };
 
-
   /**
    * Output operator which outputs assemble flags as a set of or'd text values.
    *
@@ -88,7 +86,6 @@ namespace GridTools
 #endif
     return s;
   }
-
 
   /**
    * Global operator which returns an object in which all bits are set which are
@@ -122,8 +119,6 @@ namespace GridTools
       static_cast<unsigned int>(f1) ^ static_cast<unsigned int>(update_all));
   }
 
-
-
   /**
    * Global operator which sets the bits from the second argument also in the
    * first one.
@@ -136,7 +131,6 @@ namespace GridTools
     f1 = f1 | f2;
     return f1;
   }
-
 
   /**
    * Global operator which returns an object in which all bits are set which are
@@ -153,7 +147,6 @@ namespace GridTools
     return static_cast<CacheUpdateFlags>(static_cast<unsigned int>(f1)
                                          & static_cast<unsigned int>(f2));
   }
-
 
   /**
    * Global operator which clears all the bits in the first argument if they are

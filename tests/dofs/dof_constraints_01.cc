@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DoFConstraints::distribute_local_to_global for matrices
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -125,8 +122,6 @@ test()
   deallog << "|B|=" << B.frobenius_norm() << std::endl;
   Assert(A.frobenius_norm() < 1e-12 * B.frobenius_norm(), ExcInternalError());
 }
-
-
 
 int
 main()

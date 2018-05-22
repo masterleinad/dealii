@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // See documentation of BlockMatrixArray for documentation of this example
 
 #include <deal.II/base/logstream.h>

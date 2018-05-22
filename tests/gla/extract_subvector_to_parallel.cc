@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the various extract_subvector_to functions for
 // parallel vectors and block vectors
 
@@ -25,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 template <typename VectorType>
 void
 set(VectorType& vector)
@@ -35,7 +32,6 @@ set(VectorType& vector)
       vector(i) = i;
   vector.compress(VectorOperation::insert);
 }
-
 
 template <typename VectorType>
 void
@@ -67,8 +63,6 @@ test(VectorType& vector)
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)
@@ -117,7 +111,6 @@ main(int argc, char** argv)
       deallog.pop();
     }
 
-
     std::vector<IndexSet> partitioning;
     {
       IndexSet block1(10);
@@ -147,7 +140,6 @@ main(int argc, char** argv)
       dense_partitioning.push_back(block1);
       dense_partitioning.push_back(block2);
     }
-
 
     {
       deallog.push("deal.II");

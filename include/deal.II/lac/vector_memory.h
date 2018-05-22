@@ -16,7 +16,6 @@
 #ifndef dealii_vector_memory_h
 #define dealii_vector_memory_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/smartpointer.h>
@@ -28,7 +27,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup VMemory */
 /*@{*/
@@ -228,8 +226,6 @@ public:
   };
 };
 
-
-
 /**
  * Simple memory management. See the documentation of the base class for a
  * description of its purpose.
@@ -286,8 +282,6 @@ public:
   virtual void
   free(const VectorType* const v) override;
 };
-
-
 
 /**
  * A pool based memory management class. See the documentation of the base
@@ -464,8 +458,6 @@ private:
   static Threads::Mutex mutex;
 };
 
-
-
 namespace internal
 {
   namespace GrowingVectorMemoryImplementation
@@ -480,15 +472,12 @@ namespace internal
 #ifndef DOXYGEN
 /* --------------------- inline functions ---------------------- */
 
-
 template <typename VectorType>
 inline VectorMemory<VectorType>::Pointer::Pointer(VectorMemory<VectorType>& mem)
   : std::unique_ptr<VectorType, std::function<void(VectorType*)>>(
       mem.alloc(),
       [&mem](VectorType* v) { mem.free(v); })
 {}
-
-
 
 template <typename VectorType>
 VectorType*
@@ -497,16 +486,12 @@ PrimitiveVectorMemory<VectorType>::alloc()
   return new VectorType();
 }
 
-
-
 template <typename VectorType>
 void
 PrimitiveVectorMemory<VectorType>::free(const VectorType* const v)
 {
   delete v;
 }
-
-
 
 #endif // DOXYGEN
 

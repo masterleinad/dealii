@@ -27,9 +27,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /* -------------- Adol-C taped (Differentiation::AD::NumberTypes::adolc_taped) -------------- */
-
 
 namespace internal
 {
@@ -166,13 +164,11 @@ struct EnableIfScalar<std::complex<adouble>>
   typedef std::complex<adouble> type;
 };
 
-
 template <>
 struct EnableIfScalar<adub>
 {
   typedef adouble type;
 };
-
 
 template <>
 struct EnableIfScalar<std::complex<adub>>
@@ -180,9 +176,7 @@ struct EnableIfScalar<std::complex<adub>>
   typedef std::complex<adouble> type;
 };
 
-
 /* -------------- Adol-C tapeless (Differentiation::AD::NumberTypes::adolc_tapeless) -------------- */
-
 
 namespace internal
 {
@@ -257,20 +251,17 @@ namespace internal
 
 } // namespace internal
 
-
 template <>
 struct EnableIfScalar<adtl::adouble>
 {
   typedef adtl::adouble type;
 };
 
-
 template <>
 struct EnableIfScalar<std::complex<adtl::adouble>>
 {
   typedef std::complex<adtl::adouble> type;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

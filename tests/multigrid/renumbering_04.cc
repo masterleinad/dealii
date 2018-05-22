@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test DoFRenumbering::block_wise(dh, level)
 
 #include "../tests.h"
@@ -94,8 +93,6 @@ check(FiniteElement<dim>& fe)
   }
 }
 
-
-
 int
 main()
 {
@@ -105,7 +102,6 @@ main()
     FESystem<1> fe(FE_Q<1>(1), 1, FE_DGQ<1>(0), 1);
     check<1>(fe);
   }
-
 
   {
     FESystem<2> fe(FE_RaviartThomas<2>(0), 1, FE_DGQ<2>(0), 1);

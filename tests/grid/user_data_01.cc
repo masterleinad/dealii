@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check the handling of user pointers and user indices
 
 #include "../tests.h"
@@ -25,8 +23,6 @@
 #include <deal.II/grid/grid_generator.h>
 
 #include <string>
-
-
 
 /**
  * Check if user pointers are the same as entered below
@@ -132,7 +128,6 @@ check_user_indices(Triangulation<dim>& tr)
   deallog << "lines" << std::endl;
 }
 
-
 template <int dim>
 void
 user_pointers(Triangulation<dim>& tr)
@@ -185,7 +180,6 @@ user_pointers(Triangulation<dim>& tr)
     {}
   tr.begin()->user_pointer();
 
-
   // Check if save and load work
   std::vector<void*> cell_pointers(tr.n_cells());
   deallog << "Save" << dim << 'D' << std::endl;
@@ -195,7 +189,6 @@ user_pointers(Triangulation<dim>& tr)
   tr.load_user_pointers(cell_pointers);
   check_user_pointers(tr);
 }
-
 
 template <int dim>
 void
@@ -220,7 +213,6 @@ user_indices(Triangulation<dim>& tr)
         for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
           it->line(l)->clear_user_index();
     }
-
 
   unsigned int p = 1;
   for(typename Triangulation<dim>::cell_iterator it = tr.begin();
@@ -267,8 +259,6 @@ user_indices(Triangulation<dim>& tr)
     }
   tr.begin()->user_index();
 
-
-
   // Check if save and load work
   std::vector<unsigned int> indices(tr.n_cells());
   deallog << "Save" << dim << 'D' << std::endl;
@@ -278,7 +268,6 @@ user_indices(Triangulation<dim>& tr)
   tr.load_user_indices(indices);
   check_user_indices(tr);
 }
-
 
 template <int dim>
 void
@@ -292,7 +281,6 @@ check()
   tr.clear_user_data();
   user_indices(tr);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check n_nonzero_elements() for an empty matrix
 
 #include "../tests.h"
@@ -26,7 +24,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
-
 
 void
 test()
@@ -45,7 +42,6 @@ test()
   const IndexSet system_partitioning = dof_handler.locally_owned_dofs();
   IndexSet       system_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof_handler, system_relevant_set);
-
 
   // create an empty sparsity pattern
   TrilinosWrappers::SparsityPattern sparsity;
@@ -69,8 +65,6 @@ test()
   // see how many nonzero elements it reports
   deallog << A.n_nonzero_elements() << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

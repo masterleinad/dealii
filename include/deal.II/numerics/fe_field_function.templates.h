@@ -16,7 +16,6 @@
 #ifndef dealii_fe_field_function_templates_h
 #define dealii_fe_field_function_templates_h
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/fe/fe_values.h>
@@ -30,8 +29,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <tuple>
-
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -51,8 +48,6 @@ namespace Functions
       cell_hint(dh->end())
   {}
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::set_active_cell(
@@ -60,8 +55,6 @@ namespace Functions
   {
     cell_hint.get() = newcell;
   }
-
-
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
@@ -105,8 +98,6 @@ namespace Functions
     values = vvalues[0];
   }
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   typename VectorType::value_type
   FEFieldFunction<dim, DoFHandlerType, VectorType>::value(
@@ -117,8 +108,6 @@ namespace Functions
     vector_value(p, values);
     return values(comp);
   }
-
-
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
@@ -179,8 +168,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   Tensor<1, dim, typename VectorType::value_type>
   FEFieldFunction<dim, DoFHandlerType, VectorType>::gradient(
@@ -192,8 +179,6 @@ namespace Functions
     vector_gradient(p, grads);
     return grads[comp];
   }
-
-
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
@@ -237,8 +222,6 @@ namespace Functions
     values = vvalues[0];
   }
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   typename VectorType::value_type
   FEFieldFunction<dim, DoFHandlerType, VectorType>::laplacian(
@@ -249,7 +232,6 @@ namespace Functions
     vector_laplacian(p, lap);
     return lap[comp];
   }
-
 
   // Now the list versions
   // ==============================
@@ -300,8 +282,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::value_list(
@@ -318,8 +298,6 @@ namespace Functions
     for(unsigned int q = 0; q < points.size(); ++q)
       values[q] = vvalues[q](component);
   }
-
-
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
@@ -397,7 +375,6 @@ namespace Functions
       values[q] = vvalues[q][component];
   }
 
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   void
   FEFieldFunction<dim, DoFHandlerType, VectorType>::vector_laplacian_list(
@@ -464,8 +441,6 @@ namespace Functions
       values[q] = vvalues[q](component);
   }
 
-
-
   template <int dim, typename DoFHandlerType, typename VectorType>
   unsigned int
   FEFieldFunction<dim, DoFHandlerType, VectorType>::compute_point_locations(
@@ -486,7 +461,6 @@ namespace Functions
     maps    = std::get<2>(cell_qpoint_map);
     return cells.size();
   }
-
 
   template <int dim, typename DoFHandlerType, typename VectorType>
   boost::optional<Point<dim>>

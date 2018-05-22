@@ -6,7 +6,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim>
 KDTree<dim>::KDTree(const unsigned int&            max_leaf_size,
                     const std::vector<Point<dim>>& pts)
@@ -15,8 +14,6 @@ KDTree<dim>::KDTree(const unsigned int&            max_leaf_size,
   if(pts.size() > 0)
     set_points(pts);
 }
-
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, double>>
@@ -37,8 +34,6 @@ KDTree<dim>::get_points_within_ball(const Point<dim>& center,
 
   return matches;
 }
-
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, double>>
@@ -62,8 +57,6 @@ KDTree<dim>::get_closest_points(const Point<dim>&  target,
   return matches;
 }
 
-
-
 template <int dim>
 void
 KDTree<dim>::set_points(const std::vector<Point<dim>>& pts)
@@ -74,7 +67,6 @@ KDTree<dim>::set_points(const std::vector<Point<dim>>& pts)
     dim, *adaptor, nanoflann::KDTreeSingleIndexAdaptorParams(max_leaf_size));
   kdtree->buildIndex();
 }
-
 
 template class KDTree<1>;
 template class KDTree<2>;

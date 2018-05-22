@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::subtract_mean_value() for deal.II parallel vector
 
 #include "../tests.h"

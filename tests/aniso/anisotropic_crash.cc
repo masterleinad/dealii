@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // GridTools::find_cells_adjacent_to_vertex had a problem in that it
 // wasn't prepared to deal with anisotropic refinement
 
@@ -26,7 +24,6 @@
 
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
-
 
 /// to generate random numbers
 

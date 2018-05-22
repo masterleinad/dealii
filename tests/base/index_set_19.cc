@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::fill_index_vector
 
 #include "../tests.h"
 #include <stdlib.h>
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -49,8 +47,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

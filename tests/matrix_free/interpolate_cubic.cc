@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in getting the function values, the function gradients, and the
 // function Laplacians on a cartesian mesh (hyper cube). This tests whether
@@ -25,9 +23,7 @@
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_q.h>
 
-
 #include "interpolate_functions_common.h"
-
 
 template <int dim>
 class CompareFunction : public Function<dim>
@@ -82,7 +78,6 @@ public:
     return hess;
   }
 };
-
 
 template <int dim, int fe_degree>
 void

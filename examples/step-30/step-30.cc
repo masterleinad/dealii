@@ -17,7 +17,6 @@
  * Author: Tobias Leicht, 2007
  */
 
-
 // The deal.II include files have already been covered in previous examples
 // and will thus not be further commented on.
 #include <deal.II/base/function.h>
@@ -66,7 +65,6 @@ namespace Step30
                const unsigned int             component = 0) const override;
   };
 
-
   template <int dim>
   class BoundaryValues : public Function<dim>
   {
@@ -76,7 +74,6 @@ namespace Step30
                std::vector<double>&           values,
                const unsigned int             component = 0) const override;
   };
-
 
   template <int dim>
   class Beta
@@ -88,7 +85,6 @@ namespace Step30
     value_list(const std::vector<Point<dim>>& points,
                std::vector<Point<dim>>&       values) const;
   };
-
 
   template <int dim>
   void
@@ -103,7 +99,6 @@ namespace Step30
     for(unsigned int i = 0; i < values.size(); ++i)
       values[i] = 0;
   }
-
 
   // The flow field is chosen to be a quarter circle with counterclockwise
   // flow direction and with the origin as midpoint for the right half of the
@@ -138,7 +133,6 @@ namespace Step30
       }
   }
 
-
   template <int dim>
   void
   BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -156,7 +150,6 @@ namespace Step30
           values[i] = 0.;
       }
   }
-
 
   // @sect3{Class: DGTransportEquation}
   //
@@ -193,7 +186,6 @@ namespace Step30
     const BoundaryValues<dim> boundary_function;
   };
 
-
   // Likewise, the constructor of the class as well as the functions
   // assembling the terms corresponding to cell interiors and boundary faces
   // are unchanged from before. The function that assembles face terms between
@@ -207,7 +199,6 @@ namespace Step30
   DGTransportEquation<dim>::DGTransportEquation()
     : beta_function(), rhs_function(), boundary_function()
   {}
-
 
   template <int dim>
   void
@@ -235,7 +226,6 @@ namespace Step30
             += rhs[point] * fe_v.shape_value(i, point) * JxW[point];
         }
   }
-
 
   template <int dim>
   void
@@ -267,7 +257,6 @@ namespace Step30
               -= beta_n * g[point] * fe_v.shape_value(i, point) * JxW[point];
       }
   }
-
 
   template <int dim>
   void
@@ -318,7 +307,6 @@ namespace Step30
           }
       }
   }
-
 
   // @sect3{Class: DGMethod}
   //
@@ -382,7 +370,6 @@ namespace Step30
     const DGTransportEquation<dim> dg;
   };
 
-
   template <int dim>
   DGMethod<dim>::DGMethod(const bool anisotropic)
     : mapping(),
@@ -402,13 +389,11 @@ namespace Step30
       dg()
   {}
 
-
   template <int dim>
   DGMethod<dim>::~DGMethod()
   {
     dof_handler.clear();
   }
-
 
   template <int dim>
   void
@@ -431,7 +416,6 @@ namespace Step30
     solution2.reinit(dof_handler.n_dofs());
     right_hand_side.reinit(dof_handler.n_dofs());
   }
-
 
   // @sect4{Function: assemble_system2}
   //
@@ -468,7 +452,6 @@ namespace Step30
       mapping, fe, face_quadrature, face_update_flags);
     FEFaceValues<dim> fe_v_face_neighbor(
       mapping, fe, face_quadrature, neighbor_face_update_flags);
-
 
     FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
@@ -638,7 +621,6 @@ namespace Step30
       }
   }
 
-
   // @sect3{Solver}
   //
   // For this simple problem we use the simple Richardson iteration again. The
@@ -656,7 +638,6 @@ namespace Step30
 
     solver.solve(system_matrix, solution, right_hand_side, preconditioner);
   }
-
 
   // @sect3{Refinement}
   //
@@ -962,7 +943,6 @@ namespace Step30
     data_out.write_gnuplot(gnuplot_output);
   }
 
-
   template <int dim>
   void
   DGMethod<dim>::run()
@@ -991,7 +971,6 @@ namespace Step30
         else
           refine_grid();
 
-
         std::cout << "   Number of active cells:       "
                   << triangulation.n_active_cells() << std::endl;
 
@@ -1010,8 +989,6 @@ namespace Step30
       }
   }
 } // namespace Step30
-
-
 
 int
 main()

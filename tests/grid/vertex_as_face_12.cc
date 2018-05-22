@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // check that we can assign iterators using the copy constructor
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int spacedim>
 void
@@ -38,8 +34,6 @@ test()
 
   deallog << face << std::endl;
 }
-
-
 
 int
 main()

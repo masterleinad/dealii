@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that block vector iterator allows reading and writing correctly
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_block_vector.h>
 #include <iostream>
-
 
 void
 test()
@@ -75,8 +72,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

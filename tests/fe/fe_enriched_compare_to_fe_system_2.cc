@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FE_Enriched class by comparing with FE_System for multiple enrichment
 // functions.
 
@@ -151,8 +150,6 @@ check_consistency(const Point<dim>&     p,
   const double                  v_f3 = func3.value(p);
   const Tensor<1, dim>          g_f3 = func3.gradient(p);
   const SymmetricTensor<2, dim> h_f3 = func3.hessian(p);
-
-
 
   // product rule:
   const double         v_s = v_s0 + v_s1 * v_f1 + v_s2 * v_f2 + v_s3 * v_f3;
@@ -362,13 +359,10 @@ test(const FiniteElement<dim>&  fe_base,
         }
     }
 
-
   deallog << "Ok" << std::endl;
   dof_handler_enriched.clear();
   dof_handler_system.clear();
 }
-
-
 
 int
 main(int argc, char** argv)
@@ -378,7 +372,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

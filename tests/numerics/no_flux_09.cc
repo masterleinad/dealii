@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Currently fails. We get this crash in 3d with the quarter shell and no normal flux conditions:
 //
 //An error occurred in line <2571> of file </w/heister/deal-trunk/deal.II/include/deal.II/numerics/vectors.templates.h> in function
@@ -26,7 +24,6 @@
 //Additional Information:
 //(none)
 
-
 #include "../tests.h"
 
 #include <deal.II/fe/fe_system.h>
@@ -36,7 +33,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -64,8 +60,6 @@ check()
 
   cm.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

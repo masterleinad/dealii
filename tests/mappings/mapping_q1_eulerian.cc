@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -26,8 +25,6 @@
 #include <deal.II/lac/vector.h>
 #include <string>
 #include <vector>
-
-
 
 template <int dim>
 inline void
@@ -45,7 +42,6 @@ show_values(FiniteElement<dim>& fe, const char* name)
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 
-
   // construct the MappingQ1Eulerian
   // object
 
@@ -54,7 +50,6 @@ show_values(FiniteElement<dim>& fe, const char* name)
   flowfield_dof_handler.distribute_dofs(mapping_fe);
   Vector<double>         map_points(flowfield_dof_handler.n_dofs());
   MappingQ1Eulerian<dim> mapping(flowfield_dof_handler, map_points);
-
 
   QGauss<dim> quadrature_formula(2);
 
@@ -82,8 +77,6 @@ show_values(FiniteElement<dim>& fe, const char* name)
   deallog.pop();
 }
 
-
-
 template <int dim>
 void
 show_values()
@@ -95,7 +88,6 @@ show_values()
   show_values(q2, "Q2");
 }
 
-
 int
 main()
 {
@@ -103,8 +95,6 @@ main()
   deallog << std::setprecision(2);
   deallog << std::fixed;
   deallog.attach(logfile);
-
-
 
   deallog.push("1d");
   show_values<1>();

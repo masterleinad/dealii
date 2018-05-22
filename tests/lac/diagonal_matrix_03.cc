@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Make sure DiagonalMatrix can be used with linear_operator
 // Otherwise this test is exact copy of diagonal_matrix.cc
-
 
 #include "../tests.h"
 #include <deal.II/lac/diagonal_matrix.h>
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 check()
@@ -91,7 +87,6 @@ check()
   out -= exact;
   deallog << "Error vmult set 3: " << out.linfty_norm() << std::endl;
 }
-
 
 int
 main()

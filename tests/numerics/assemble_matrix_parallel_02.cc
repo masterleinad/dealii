@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests that assembly in parallel works properly even when using two separate
 // loops on the same constraint matrix, otherwise similar to
 // assemble_matrix_parallel_01
@@ -53,7 +51,6 @@
 std::ofstream logfile("output");
 
 using namespace dealii;
-
 
 namespace Assembly
 {
@@ -165,8 +162,6 @@ private:
   const unsigned int max_degree;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -177,7 +172,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -190,7 +184,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
   return sum;
 }
 
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -202,7 +195,6 @@ public:
   value(const Point<dim>& p, const unsigned int component) const;
 };
 
-
 template <int dim>
 double
 RightHandSide<dim>::value(const Point<dim>& p,
@@ -213,7 +205,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
     product *= (p[d] + 1);
   return product;
 }
-
 
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
@@ -235,14 +226,11 @@ LaplaceProblem<dim>::LaplaceProblem()
       }
 }
 
-
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 std::vector<types::global_dof_index>
@@ -291,7 +279,6 @@ LaplaceProblem<dim>::setup_system()
                 this,
                 std::placeholders::_1)));
 
-
   DynamicSparsityPattern csp(dof_handler.n_dofs(), dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, csp, constraints, false);
   sparsity_pattern.copy_from(csp);
@@ -300,8 +287,6 @@ LaplaceProblem<dim>::setup_system()
   test_matrix.reinit(sparsity_pattern);
   test_matrix_2.reinit(sparsity_pattern);
 }
-
-
 
 template <int dim>
 void
@@ -346,8 +331,6 @@ LaplaceProblem<dim>::local_assemble(
   cell->get_dof_indices(data.local_dof_indices);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data& data)
@@ -365,8 +348,6 @@ LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data& data)
                                            test_matrix,
                                            test_rhs);
 }
-
-
 
 template <int dim>
 void
@@ -394,8 +375,6 @@ LaplaceProblem<dim>::assemble_reference()
   reference_rhs = test_rhs;
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::assemble_test_1()
@@ -417,7 +396,6 @@ LaplaceProblem<dim>::assemble_test_1()
     MultithreadInfo::n_threads(),
     1);
 }
-
 
 template <int dim>
 void
@@ -466,8 +444,6 @@ LaplaceProblem<dim>::assemble_test()
   deallog << "error in vector 2: " << test_rhs_2.l2_norm() << std::endl;
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::postprocess()
@@ -486,8 +462,6 @@ LaplaceProblem<dim>::postprocess()
       ++cell)
     cell->set_active_fe_index(rand() % fe_collection.size());
 }
-
-
 
 template <int dim>
 void
@@ -511,8 +485,6 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
-
-
 
 int
 main()

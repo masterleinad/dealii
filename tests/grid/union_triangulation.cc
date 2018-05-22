@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -23,10 +21,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -63,7 +58,6 @@ test()
           << "     Total number of active cells = " << tria_3.n_active_cells()
           << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // start several tasks and see that return_value() waits for the correct
 // result
 //
@@ -28,7 +27,6 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 int
 test(int i)
 {
@@ -37,8 +35,6 @@ test(int i)
     k += j % 17 + i;
   return k;
 }
-
-
 
 int
 main()

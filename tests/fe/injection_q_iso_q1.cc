@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 char logname[] = "output";
-
 
 #include "injection_common.h"
 #include <deal.II/fe/fe_q_iso_q1.h>

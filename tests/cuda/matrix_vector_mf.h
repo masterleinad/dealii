@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // This is a template for matrix-vector products with the Helmholtz equation
 // (zero and first derivatives) on different kinds of meshes (Cartesian,
 // general, with and without hanging nodes).
@@ -35,8 +34,6 @@ public:
     const unsigned int q_point) const;
 };
 
-
-
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 __device__ void HelmholtzOperatorQuad<dim, fe_degree, Number, n_q_points_1d>::
                 operator()(
@@ -46,8 +43,6 @@ __device__ void HelmholtzOperatorQuad<dim, fe_degree, Number, n_q_points_1d>::
   fe_eval->submit_value(Number(10) * fe_eval->get_value(q), q);
   fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
 }
-
-
 
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 class HelmholtzOperator
@@ -68,8 +63,6 @@ public:
     = dealii::Utilities::fixed_int_power<n_q_points_1d, dim>::value;
 };
 
-
-
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 __device__ void
 HelmholtzOperator<dim, fe_degree, Number, n_q_points_1d>::
@@ -89,8 +82,6 @@ operator()(const unsigned int                                          cell,
   fe_eval.distribute_local_to_global(dst);
 }
 
-
-
 template <int dim,
           int fe_degree,
           typename Number,
@@ -108,8 +99,6 @@ public:
 private:
   const CUDAWrappers::MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 void

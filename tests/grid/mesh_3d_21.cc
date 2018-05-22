@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check, that we find our way back from fine cells over coarser neighbors to
 // the fine cell agaion and vice versa
 
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void check_this(Triangulation<3>& tria)
 {
@@ -95,8 +91,6 @@ void check_this(Triangulation<3>& tria)
         }
 }
 
-
-
 void check(Triangulation<3>& tria)
 {
   (++tria.begin_active())->set_refine_flag();
@@ -120,7 +114,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

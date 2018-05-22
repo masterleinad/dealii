@@ -16,8 +16,6 @@
 #ifndef dealii_data_postprocessor_h
 #define dealii_data_postprocessor_h
 
-
-
 #include <deal.II/base/point.h>
 #include <deal.II/base/subscriptor.h>
 #include <deal.II/base/tensor.h>
@@ -31,7 +29,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A namespace for data structures that are going to be passed from
@@ -263,8 +260,6 @@ namespace DataPostprocessorInputs
     std::vector<Tensor<2, spacedim>> solution_hessians;
   };
 
-
-
   /**
    * A structure that is used to pass information to
    * DataPostprocessor::evaluate_vector_field(). It contains
@@ -332,7 +327,6 @@ namespace DataPostprocessorInputs
   };
 
 } // namespace DataPostprocessorInputs
-
 
 /**
  * This class provides an interface to compute derived quantities from a
@@ -505,8 +499,6 @@ public:
   get_needed_update_flags() const = 0;
 };
 
-
-
 /**
  * This class provides a simpler interface to the functionality offered by the
  * DataPostprocessor class in case one wants to compute only a single scalar
@@ -581,8 +573,6 @@ private:
   const std::string name;
   const UpdateFlags update_flags;
 };
-
-
 
 /**
  * This class provides a simpler interface to the functionality offered by the
@@ -817,8 +807,6 @@ private:
   const std::string name;
   const UpdateFlags update_flags;
 };
-
-
 
 /**
  * This class provides a simpler interface to the functionality offered by the
@@ -1058,8 +1046,6 @@ private:
   const UpdateFlags update_flags;
 };
 
-
-
 #ifndef DOXYGEN
 // -------------------- template functions ----------------------
 
@@ -1082,8 +1068,6 @@ namespace DataPostprocessorInputs
       // data type, just let boost::any replace things
       cell = new_cell;
   }
-
-
 
   template <int spacedim>
   template <typename DoFHandlerType>

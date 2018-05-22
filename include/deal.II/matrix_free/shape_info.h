@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_shape_info_h
 #define dealii_matrix_free_shape_info_h
-
 
 #include <deal.II/base/aligned_vector.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -355,8 +352,6 @@ namespace internal
       bool
       check_1d_shapes_collocation();
     };
-
-
 
     // ------------------------------------------ inline functions
 

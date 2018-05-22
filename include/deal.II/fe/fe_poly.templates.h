@@ -16,7 +16,6 @@
 #ifndef dealii_fe_poly_templates_h
 #define dealii_fe_poly_templates_h
 
-
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/tensor_product_polynomials.h>
@@ -24,7 +23,6 @@
 #include <deal.II/base/tensor_product_polynomials_const.h>
 #include <deal.II/fe/fe_poly.h>
 #include <deal.II/fe/fe_values.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -42,14 +40,12 @@ FE_Poly<PolynomialType, dim, spacedim>::FE_Poly(
   AssertDimension(dim, PolynomialType::dimension);
 }
 
-
 template <class PolynomialType, int dim, int spacedim>
 unsigned int
 FE_Poly<PolynomialType, dim, spacedim>::get_degree() const
 {
   return this->degree;
 }
-
 
 template <class PolynomialType, int dim, int spacedim>
 double
@@ -59,7 +55,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_value(const unsigned int i,
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.compute_value(i, p);
 }
-
 
 template <class PolynomialType, int dim, int spacedim>
 double
@@ -74,8 +69,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_value_component(
   return poly_space.compute_value(i, p);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad(const unsigned int i,
@@ -84,8 +77,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_grad(const unsigned int i,
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<1>(i, p);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
@@ -100,8 +91,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_grad_component(
   return poly_space.template compute_derivative<1>(i, p);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_grad_grad(
@@ -111,8 +100,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_grad_grad(
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<2>(i, p);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
@@ -127,8 +114,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_grad_grad_component(
   return poly_space.template compute_derivative<2>(i, p);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<3, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_3rd_derivative(
@@ -138,8 +123,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_3rd_derivative(
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<3>(i, p);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<3, dim>
@@ -154,8 +137,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_3rd_derivative_component(
   return poly_space.template compute_derivative<3>(i, p);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<4, dim>
 FE_Poly<PolynomialType, dim, spacedim>::shape_4th_derivative(
@@ -165,8 +146,6 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_4th_derivative(
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return poly_space.template compute_derivative<4>(i, p);
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<4, dim>
@@ -181,12 +160,9 @@ FE_Poly<PolynomialType, dim, spacedim>::shape_4th_derivative_component(
   return poly_space.template compute_derivative<4>(i, p);
 }
 
-
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <class PolynomialType, int dim, int spacedim>
 UpdateFlags
@@ -213,12 +189,9 @@ FE_Poly<PolynomialType, dim, spacedim>::requires_update_flags(
   return out;
 }
 
-
-
 //---------------------------------------------------------------------------
 // Fill data of FEValues
 //---------------------------------------------------------------------------
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -287,8 +260,6 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
           output_data, mapping_data, quadrature.size(), k);
     }
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -375,8 +346,6 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
           output_data, mapping_data, quadrature.size(), k);
     }
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -468,8 +437,6 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
     }
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 inline void
 FE_Poly<PolynomialType, dim, spacedim>::correct_third_derivatives(
@@ -549,8 +516,6 @@ namespace internal
   }
 } // namespace internal
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>
 FE_Poly<PolynomialType, dim, spacedim>::get_poly_space_numbering() const
@@ -558,16 +523,12 @@ FE_Poly<PolynomialType, dim, spacedim>::get_poly_space_numbering() const
   return internal::get_poly_space_numbering(poly_space);
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>
 FE_Poly<PolynomialType, dim, spacedim>::get_poly_space_numbering_inverse() const
 {
   return internal::get_poly_space_numbering_inverse(poly_space);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

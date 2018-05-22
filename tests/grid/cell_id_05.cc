@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // testing serialize function for class CellId
 
 #include "../tests.h"

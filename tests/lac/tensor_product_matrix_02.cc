@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test templated path of TensorProductMatrix
 
 #include "../testmatrix.h"
@@ -21,7 +20,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/tensor_product_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim, int size>
 void
@@ -85,7 +83,6 @@ do_test()
   v3 -= v2;
   deallog << "Verification of inverse: " << v3.linfty_norm() << std::endl;
 }
-
 
 int
 main()

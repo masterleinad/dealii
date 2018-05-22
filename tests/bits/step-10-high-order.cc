@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // step-10 with MappingQ(8) that shows pi with 14 digits already at the first
 // iteration for the volume and MappingQ(20) for the boundary part that shows
 // that things still work for very high order
 
-
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -39,10 +35,7 @@ std::ofstream logfile("output");
 
 #include <deal.II/fe/mapping_q.h>
 
-
 const long double pi = 3.141592653589793238462643;
-
-
 
 template <int dim>
 void
@@ -115,15 +108,12 @@ compute_pi_by_area()
   deallog << std::endl;
 }
 
-
-
 template <int dim>
 void
 compute_pi_by_perimeter()
 {
   deallog << "Computation of Pi by the perimeter:" << std::endl
           << "===================================" << std::endl;
-
 
   const unsigned int degree = 20;
   deallog << "Degree = " << degree << std::endl;
@@ -172,7 +162,6 @@ compute_pi_by_perimeter()
 
   deallog << std::endl;
 }
-
 
 int
 main()

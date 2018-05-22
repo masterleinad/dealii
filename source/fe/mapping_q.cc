@@ -33,13 +33,10 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, int spacedim>
 MappingQ<dim, spacedim>::InternalData::InternalData()
   : use_mapping_q1_on_current_cell(false)
 {}
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -51,8 +48,6 @@ MappingQ<dim, spacedim>::InternalData::memory_consumption() const
     + MemoryConsumption::memory_consumption(mapping_q1_data)
     + MemoryConsumption::memory_consumption(mapping_qp_data));
 }
-
-
 
 template <int dim, int spacedim>
 MappingQ<dim, spacedim>::MappingQ(const unsigned int degree,
@@ -77,8 +72,6 @@ MappingQ<dim, spacedim>::MappingQ(const unsigned int degree,
         std::make_shared<const MappingQGeneric<dim, spacedim>>(degree) :
         q1_mapping)
 {}
-
-
 
 template <int dim, int spacedim>
 MappingQ<dim, spacedim>::MappingQ(const MappingQ<dim, spacedim>& mapping)
@@ -110,16 +103,12 @@ MappingQ<dim, spacedim>::MappingQ(const MappingQ<dim, spacedim>& mapping)
     }
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 MappingQ<dim, spacedim>::get_degree() const
 {
   return polynomial_degree;
 }
-
-
 
 template <int dim, int spacedim>
 inline bool
@@ -128,8 +117,6 @@ MappingQ<dim, spacedim>::preserves_vertex_locations() const
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 UpdateFlags
 MappingQ<dim, spacedim>::requires_update_flags(const UpdateFlags in) const
@@ -137,8 +124,6 @@ MappingQ<dim, spacedim>::requires_update_flags(const UpdateFlags in) const
   return (q1_mapping->requires_update_flags(in)
           | qp_mapping->requires_update_flags(in));
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -166,8 +151,6 @@ MappingQ<dim, spacedim>::get_data(const UpdateFlags      update_flags,
     std::move(do_get_data.return_value()));
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -198,8 +181,6 @@ MappingQ<dim, spacedim>::get_face_data(
   return std::move(data);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQ<dim, spacedim>::get_subface_data(
@@ -229,7 +210,6 @@ MappingQ<dim, spacedim>::get_subface_data(
   return std::move(data);
 }
 
-
 // Note that the CellSimilarity flag is modifiable, since MappingQ can need to
 // recalculate data even when cells are similar.
 template <int dim, int spacedim>
@@ -252,7 +232,6 @@ MappingQ<dim, spacedim>::fill_fe_values(
   // reduced Q1 mapping, e.g. if the cell is in the interior of the domain
   data.use_mapping_q1_on_current_cell
     = !(use_mapping_q_on_all_cells || cell->has_boundary_lines());
-
 
   // call the base class. we need to ensure that the flag indicating whether
   // we can use some similarity has to be modified - for a general MappingQ,
@@ -283,8 +262,6 @@ MappingQ<dim, spacedim>::fill_fe_values(
 
   return updated_cell_similarity;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -320,7 +297,6 @@ MappingQ<dim, spacedim>::fill_fe_face_values(
     qp_mapping->fill_fe_face_values(
       cell, face_no, quadrature, *data.mapping_qp_data, output_data);
 }
-
 
 template <int dim, int spacedim>
 void
@@ -366,8 +342,6 @@ MappingQ<dim, spacedim>::fill_fe_subface_values(
                                        output_data);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQ<dim, spacedim>::transform(
@@ -388,8 +362,6 @@ MappingQ<dim, spacedim>::transform(
     // otherwise use the full mapping
     qp_mapping->transform(input, mapping_type, *data->mapping_qp_data, output);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -414,8 +386,6 @@ MappingQ<dim, spacedim>::transform(
     qp_mapping->transform(input, mapping_type, *data->mapping_qp_data, output);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQ<dim, spacedim>::transform(
@@ -438,8 +408,6 @@ MappingQ<dim, spacedim>::transform(
     // otherwise use the full mapping
     qp_mapping->transform(input, mapping_type, *data->mapping_qp_data, output);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -464,8 +432,6 @@ MappingQ<dim, spacedim>::transform(
     qp_mapping->transform(input, mapping_type, *data->mapping_qp_data, output);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQ<dim, spacedim>::transform(
@@ -489,8 +455,6 @@ MappingQ<dim, spacedim>::transform(
     qp_mapping->transform(input, mapping_type, *data->mapping_qp_data, output);
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 MappingQ<dim, spacedim>::transform_unit_to_real_cell(
@@ -506,8 +470,6 @@ MappingQ<dim, spacedim>::transform_unit_to_real_cell(
     return q1_mapping->transform_unit_to_real_cell(cell, p);
 }
 
-
-
 template <int dim, int spacedim>
 Point<dim>
 MappingQ<dim, spacedim>::transform_real_to_unit_cell(
@@ -521,8 +483,6 @@ MappingQ<dim, spacedim>::transform_real_to_unit_cell(
     return q1_mapping->transform_real_to_unit_cell(cell, p);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingQ<dim, spacedim>::clone() const
@@ -531,10 +491,7 @@ MappingQ<dim, spacedim>::clone() const
     this->polynomial_degree, this->use_mapping_q_on_all_cells);
 }
 
-
-
 // explicit instantiations
 #include "mapping_q.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

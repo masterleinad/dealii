@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // copying of ghosted vectors
 
 #include "../tests.h"
@@ -70,7 +68,6 @@ test()
   v.reinit(partitioning, MPI_COMM_WORLD);
   Assert(!v.has_ghost_elements(), ExcInternalError());
 
-
   typename LA::MPI::BlockVector v3 = v2;
   Assert(v3.has_ghost_elements(), ExcInternalError());
 
@@ -84,8 +81,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

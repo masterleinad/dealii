@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::sum() for LAPACKFullMatrix objects
 
 #include "../tests.h"
@@ -50,7 +48,6 @@ test(const unsigned int m = 13, const unsigned int n = 5)
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

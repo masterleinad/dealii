@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tasks cannot be abandoned, i.e. if you don't explicitly wait for a
 // task to finish then the destructor of Task will wait for the task
 // to finish
@@ -23,15 +22,12 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 void
 test(int i)
 {
   sleep(1);
   deallog << "Task " << i << " finished!" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check assignment from IdentityMatrix to SparseMatrix
-
 
 #include "../tests.h"
 #include <deal.II/lac/identity_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <typename number>
 void
@@ -66,7 +63,6 @@ check_vmult()
     deallog << ' ' << v(i);
   deallog << std::endl;
 }
-
 
 int
 main()

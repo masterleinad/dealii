@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // since early 2009, the FEValues objects try to be more efficient by only
 // recomputing things like gradients of shape functions if the cell on which
 // we are is not a translation of the previous one. in this series of tests we
@@ -26,7 +24,6 @@
 //
 // the various tests cell_similarity_?? differ in the mappings and finite
 // elements in use
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -43,8 +40,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
 
-
-
 bool
 equal(const FullMatrix<double>& m1, const FullMatrix<double>& m2)
 {
@@ -58,7 +53,6 @@ equal(const FullMatrix<double>& m1, const FullMatrix<double>& m2)
   return (d < 1e-8 * s);
 }
 
-
 template <int dim>
 void
 test(const Triangulation<dim>& tr)
@@ -68,7 +62,6 @@ test(const Triangulation<dim>& tr)
 
   MappingQ<dim> mapping(1);
   deallog << "Mapping=Q1" << std::endl;
-
 
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -135,8 +128,6 @@ test(const Triangulation<dim>& tr)
     }
 }
 
-
-
 template <int dim>
 void
 test()
@@ -158,7 +149,6 @@ test()
 
   test(tr);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test properties of FilteredMatrix and iterators
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/lac/matrix_lib.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/vector.h>
-
 
 template <typename VectorType>
 void

@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GridTools::distort_random
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -38,8 +35,6 @@ test1(const bool keep_boundary)
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   GridOut().write_gnuplot(tria, logfile);
 }
-
-
 
 int
 main()

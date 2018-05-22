@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure that we write boundary lines marked with a non-zero boundary
 // indicator correctly in MSH format
 
@@ -27,10 +26,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -47,7 +43,6 @@ test()
   grid_out.set_flags(flags);
   grid_out.write_msh(tria, logfile);
 }
-
 
 int
 main()

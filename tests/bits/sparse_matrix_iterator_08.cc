@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test setting some elements using a non-const matrix iterator and operator/=,
 // and reading them back through the matrix itself
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 void
 test()
@@ -52,8 +50,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

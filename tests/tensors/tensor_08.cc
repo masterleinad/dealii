@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check contract(Tensor<1,dim>,Tensor<2,dim>,Tensor<1,dim>)
 
 #include "../tests.h"
@@ -40,7 +39,6 @@ test_select(double f1, double f2)
       }
   deallog << std::endl;
 }
-
 
 int
 main()

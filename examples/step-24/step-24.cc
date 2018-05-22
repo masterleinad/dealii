@@ -17,7 +17,6 @@
  * Author: Xing Jin, Wolfgang Bangerth, Texas A&M University, 2006
  */
 
-
 // @sect3{Include files}
 
 // The following have all been covered previously:
@@ -118,7 +117,6 @@ namespace Step24
     std::vector<Point<dim>> detector_locations;
   };
 
-
   // @sect3{Equation data}
 
   // As usual, we have to define our initial values, boundary conditions, and
@@ -161,7 +159,6 @@ namespace Step24
     };
   };
 
-
   template <int dim>
   double
   InitialValuesP<dim>::value(const Point<dim>& p,
@@ -180,7 +177,6 @@ namespace Step24
 
     return 0;
   }
-
 
   // @sect3{Implementation of the <code>TATForwardProblem</code> class}
 
@@ -226,8 +222,6 @@ namespace Step24
         Point<dim>(std::cos(detector_angle), std::sin(detector_angle))
         * detector_radius);
   }
-
-
 
   // @sect4{TATForwardProblem::setup_system}
 
@@ -350,8 +344,6 @@ namespace Step24
 
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-
-
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
@@ -385,7 +377,6 @@ namespace Step24
                       laplace_matrix);
     system_matrix.add(wave_speed * theta * time_step, boundary_matrix);
 
-
     solution_p.reinit(dof_handler.n_dofs());
     old_solution_p.reinit(dof_handler.n_dofs());
     system_rhs_p.reinit(dof_handler.n_dofs());
@@ -396,7 +387,6 @@ namespace Step24
 
     constraints.close();
   }
-
 
   // @sect4{TATForwardProblem::solve_p and TATForwardProblem::solve_v}
 
@@ -417,7 +407,6 @@ namespace Step24
               << " CG iterations." << std::endl;
   }
 
-
   template <int dim>
   void
   TATForwardProblem<dim>::solve_v()
@@ -430,8 +419,6 @@ namespace Step24
     std::cout << "   v-equation: " << solver_control.last_step()
               << " CG iterations." << std::endl;
   }
-
-
 
   // @sect4{TATForwardProblem::output_results}
 
@@ -453,8 +440,6 @@ namespace Step24
     std::ofstream output(filename);
     data_out.write_gnuplot(output);
   }
-
-
 
   // @sect4{TATForwardProblem::run}
 
@@ -482,7 +467,6 @@ namespace Step24
                          InitialValuesP<dim>(),
                          old_solution_p);
     old_solution_v = 0;
-
 
     std::ofstream detector_data("detectors.dat");
 
@@ -514,7 +498,6 @@ namespace Step24
 
         solve_p();
 
-
         system_rhs_v = G2;
         laplace_matrix.vmult(tmp, solution_p);
         system_rhs_v.add(-time_step * theta * wave_speed * wave_speed, tmp);
@@ -526,7 +509,6 @@ namespace Step24
 
         output_results();
 
-
         detector_data << time;
         for(unsigned int i = 0; i < detector_locations.size(); ++i)
           detector_data << " "
@@ -535,14 +517,11 @@ namespace Step24
                         << " ";
         detector_data << std::endl;
 
-
         old_solution_p = solution_p;
         old_solution_v = solution_v;
       }
   }
 } // namespace Step24
-
-
 
 // @sect3{The <code>main</code> function}
 

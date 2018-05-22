@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check existence of
 // BlockVector<double>::BlockVector(BlockVector<float>). this conversion
 // constructor was disabled previously altogether because of a compiler defect
@@ -23,7 +21,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
-
 
 void
 test(BlockVector<double>& v)
@@ -36,8 +33,6 @@ test(BlockVector<double>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

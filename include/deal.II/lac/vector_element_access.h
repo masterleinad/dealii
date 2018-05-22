@@ -16,7 +16,6 @@
 #ifndef dealii_vector_element_access_h
 #define dealii_vector_element_access_h
 
-
 #include <deal.II/lac/trilinos_epetra_vector.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -41,8 +40,6 @@ namespace internal
     get(const VectorType& V, const types::global_dof_index i);
   };
 
-
-
   template <typename VectorType>
   inline void
   ElementAccess<VectorType>::add(const typename VectorType::value_type value,
@@ -51,8 +48,6 @@ namespace internal
   {
     V(i) += value;
   }
-
-
 
   template <typename VectorType>
   inline void
@@ -63,8 +58,6 @@ namespace internal
     V(i) = value;
   }
 
-
-
   template <typename VectorType>
   inline typename VectorType::value_type
   ElementAccess<VectorType>::get(const VectorType&             V,
@@ -72,8 +65,6 @@ namespace internal
   {
     return V(i);
   }
-
-
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
   template <>
@@ -91,8 +82,6 @@ namespace internal
     vector[0][trilinos_i] += value;
   }
 
-
-
   template <>
   inline void
   ElementAccess<LinearAlgebra::EpetraWrappers::Vector>::set(
@@ -107,7 +96,6 @@ namespace internal
 
     vector[0][trilinos_i] = value;
   }
-
 
   template <>
   inline double

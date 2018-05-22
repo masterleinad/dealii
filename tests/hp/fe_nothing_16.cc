@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test a problem we used to have: FESystem would delete an internal object
 // after reinitialization for the first time if it determined that it was no
 // longer necessary. yet, somehow, it was still referenced. the point seems to
@@ -23,7 +21,6 @@
 // base element is FE_Nothing)
 //
 // an extract of this bug is fe/crash_01
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -41,8 +38,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 template <int dim>
 void
@@ -68,8 +63,6 @@ test()
       deallog << "i=" << i << ", q=" << q
               << ", value=" << fe_values[nothing].value(i, q) << std::endl;
 }
-
-
 
 int
 main()

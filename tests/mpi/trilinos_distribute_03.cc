@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in the new ConstraintMatrix::distribute() from r29593
 // if one vector owns all DoFs, then distribute() hangs.
 
@@ -23,8 +21,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <sstream>
-
-
 
 void
 test()
@@ -55,14 +51,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

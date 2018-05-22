@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -36,8 +34,6 @@
 #include <deal.II/numerics/vector_tools.h>
 #include <string>
 #include <vector>
-
-
 
 void
 solve_filtered(std::map<types::global_dof_index, double>& bv,
@@ -68,8 +64,6 @@ solve_filtered(std::map<types::global_dof_index, double>& bv,
     AssertThrow(std::fabs(u(i->first) - i->second) < 1e-8, ExcInternalError());
 }
 
-
-
 template <int dim>
 void
 solve_eliminated(std::map<types::global_dof_index, double>& bv,
@@ -87,8 +81,6 @@ solve_eliminated(std::map<types::global_dof_index, double>& bv,
 
   solver.solve(A, u, f, prec);
 }
-
-
 
 template <int dim>
 void
@@ -196,7 +188,6 @@ check()
              ExcInternalError());
     };
 }
-
 
 int
 main()

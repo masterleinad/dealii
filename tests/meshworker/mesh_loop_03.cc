@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test assemble_flags.h
 
 #include "../tests.h"
@@ -52,8 +50,6 @@ test()
 
   typedef decltype(cell) Iterator;
 
-
-
   auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
     deallog << "Cell worker on : " << cell << std::endl;
   };
@@ -84,12 +80,10 @@ test()
 
   mesh_loop(cell, endc, cell_worker, copier, scratch, copy);
 
-
   deallog << "CELLS ONLY WORKSTREAM" << std::endl << std::endl;
 
   WorkStream::run(cell, endc, cell_worker, copier, scratch, copy);
 }
-
 
 int
 main()

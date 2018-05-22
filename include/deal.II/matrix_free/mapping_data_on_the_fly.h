@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_mapping_data_on_the_fly_h
 #define dealii_matrix_free_mapping_data_on_the_fly_h
-
 
 #include <deal.II/base/aligned_vector.h>
 #include <deal.II/base/config.h>
@@ -29,9 +27,7 @@
 #include <deal.II/matrix_free/mapping_info.h>
 #include <deal.II/matrix_free/shape_info.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -150,7 +146,6 @@ namespace internal
       MappingInfoStorage<dim, dim, Number> mapping_info_storage;
     };
 
-
     /*----------------------- Inline functions ----------------------------------*/
 
     template <int dim, typename Number>
@@ -186,8 +181,6 @@ namespace internal
              ExcNotImplemented());
     }
 
-
-
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(
       const Quadrature<1>& quadrature,
@@ -196,8 +189,6 @@ namespace internal
                             quadrature,
                             update_flags)
     {}
-
-
 
     template <int dim, typename Number>
     inline void
@@ -236,8 +227,6 @@ namespace internal
         }
     }
 
-
-
     template <int dim, typename Number>
     inline bool
     MappingDataOnTheFly<dim, Number>::is_initialized() const
@@ -246,16 +235,12 @@ namespace internal
              typename dealii::Triangulation<dim>::cell_iterator();
     }
 
-
-
     template <int dim, typename Number>
     inline typename dealii::Triangulation<dim>::cell_iterator
     MappingDataOnTheFly<dim, Number>::get_cell() const
     {
       return fe_values.get_cell();
     }
-
-
 
     template <int dim, typename Number>
     inline const dealii::FEValues<dim>&
@@ -264,16 +249,12 @@ namespace internal
       return fe_values;
     }
 
-
-
     template <int dim, typename Number>
     inline const MappingInfoStorage<dim, dim, Number>&
     MappingDataOnTheFly<dim, Number>::get_data_storage() const
     {
       return mapping_info_storage;
     }
-
-
 
     template <int dim, typename Number>
     inline const Quadrature<1>&
@@ -282,10 +263,8 @@ namespace internal
       return quadrature_1d;
     }
 
-
   } // end of namespace MatrixFreeFunctions
 } // end of namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

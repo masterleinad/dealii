@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/polynomials_bdm.h>
@@ -22,7 +21,6 @@
 #include <iostream>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 PolynomialsBDM<dim>::PolynomialsBDM(const unsigned int k)
@@ -46,8 +44,6 @@ PolynomialsBDM<dim>::PolynomialsBDM(const unsigned int k)
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim>
 void
@@ -356,7 +352,6 @@ PolynomialsBDM<dim>::compute(
     }
 }
 
-
 /*
 template <int dim>
 void
@@ -439,10 +434,8 @@ PolynomialsBDM<dim>::compute_n_pols(unsigned int k)
   return 0;
 }
 
-
 template class PolynomialsBDM<1>;
 template class PolynomialsBDM<2>;
 template class PolynomialsBDM<3>;
-
 
 DEAL_II_NAMESPACE_CLOSE

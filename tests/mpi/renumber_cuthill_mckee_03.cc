@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that DofRenumbering::Cuthill_McKee works in parallel also when
 // a set of starting indices is given.
 //
@@ -22,7 +20,6 @@
 // even though they will not be part of the renumbering on each
 // cell. verify that this works by using as starting indices the ones
 // that are located on processor boundaries
-
 
 #include "../tests.h"
 #include <deal.II/base/mpi.h>
@@ -36,8 +33,6 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -115,7 +110,6 @@ test()
   DoFTools::write_gnuplot_dof_support_point_info(deallog.get_file_stream(),
                                                  support_points);
 }
-
 
 int
 main(int argc, char* argv[])

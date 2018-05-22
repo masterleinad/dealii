@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/read_write_vector.h>
@@ -111,7 +110,6 @@ test()
                     ExcMessage("Problem in add(scalar,Vector)."));
     }
 
-
   LinearAlgebra::EpetraWrappers::Vector d(a);
   a.add(2., b, 3., d);
   read_write_3.import(a, VectorOperation::insert);
@@ -129,7 +127,6 @@ test()
                       == read_write_3[i],
                     ExcMessage("Problem in add(scalar,Vector,scalar,Vector)."));
     }
-
 
   a.import(read_write_1, VectorOperation::insert);
   a.sadd(3., 2., c);
@@ -149,7 +146,6 @@ test()
                     ExcMessage("Problem in sadd(scalar,scalar,Vector)."));
     }
 
-
   a.import(read_write_1, VectorOperation::insert);
   a.scale(b);
   read_write_3.import(a, VectorOperation::insert);
@@ -166,7 +162,6 @@ test()
                     ExcMessage("Problem in scale."));
     }
 
-
   a.equ(2., c);
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
@@ -182,7 +177,6 @@ test()
                     ExcMessage("Problem in equ."));
     }
 
-
   AssertThrow(b.l1_norm() == 95., ExcMessage("Problem in l1_norm."));
 
   const double eps = 1e-6;
@@ -195,7 +189,6 @@ test()
   const double val = a.add_and_dot(2., a, b);
   AssertThrow(val == 1530., ExcMessage("Problem in add_and_dot"));
 }
-
 
 int
 main(int argc, char** argv)

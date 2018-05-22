@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure we print something at all when an entry in the table corresponds
 // to the empty string
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -24,7 +22,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()

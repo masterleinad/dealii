@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this is a template for matrix-vector products with the Helmholtz equation
 // (zero and first derivatives) on different kinds of meshes (Cartesian,
 // general, with and without hanging nodes). It also tests the multithreading
@@ -40,13 +39,10 @@
 
 #include <iostream>
 
-
 // forward declare this function. will be implemented in .cc files
 template <int dim, int fe_degree>
 void
 test();
-
-
 
 template <int dim, int fe_degree, typename number, int n_q_points_1d>
 void
@@ -99,7 +95,6 @@ do_test(const DoFHandler<dim>&  dof,
     }
 
   mf.vmult(out_dist, in_dist);
-
 
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u)
   SparsityPattern sparsity;
@@ -154,7 +149,6 @@ do_test(const DoFHandler<dim>&  dof,
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
-
 
 int
 main()

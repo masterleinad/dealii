@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check accuracy of various quadrature formulas by using them to
 // integrate polynomials of increasing degree, and finding the degree
 // until which they integrate exactly
-
 
 #include "../tests.h"
 
@@ -111,7 +108,6 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
         }
     }
 }
-
 
 template <int dim>
 void

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_face_setup_internal_h
 #define dealii_face_setup_internal_h
 
@@ -26,9 +25,7 @@
 
 #include <fstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -51,8 +48,6 @@ namespace internal
       unsigned int                           n_hanging_faces_smaller_subdomain;
       unsigned int                           n_hanging_faces_larger_subdomain;
     };
-
-
 
     /**
      * A struct that extracts the faces relevant to a given set of cells,
@@ -132,8 +127,6 @@ namespace internal
       std::vector<FaceToCellTopology<1>> refinement_edge_faces;
     };
 
-
-
     /**
      * Actually form the batches for vectorized execution of face integrals.
      */
@@ -145,8 +138,6 @@ namespace internal
       std::vector<unsigned int>&                face_partition_data,
       std::vector<FaceToCellTopology<vectorization_width>>& faces_out);
 
-
-
     /* -------------------------------------------------------------------- */
 
 #ifndef DOXYGEN
@@ -154,8 +145,6 @@ namespace internal
     template <int dim>
     FaceSetup<dim>::FaceSetup() : use_active_cells(true)
     {}
-
-
 
     template <int dim>
     template <typename MFAddData>
@@ -434,7 +423,6 @@ namespace internal
                         count = 0;
                       }
                 }
-
 
               // divide the faces evenly between the two processors. the
               // processor with small rank takes the first half, the processor
@@ -715,8 +703,6 @@ namespace internal
       cells_close_to_boundary = std::move(final_cells);
     }
 
-
-
     template <int dim>
     void
     FaceSetup<dim>::generate_faces(
@@ -933,8 +919,6 @@ namespace internal
         = refinement_edge_faces.size();
     }
 
-
-
     template <int dim>
     FaceToCellTopology<1>
     FaceSetup<dim>::create_face(
@@ -986,8 +970,6 @@ namespace internal
       return info;
     }
 
-
-
     /**
      * This simple comparison for collect_faces_vectorization() identifies
      * faces of the same type, i.e., where all of the interior and exterior
@@ -1008,8 +990,6 @@ namespace internal
         return false;
       return true;
     }
-
-
 
     /**
      * This comparator is used within collect_faces_vectorization() to create
@@ -1052,8 +1032,6 @@ namespace internal
         return false;
       }
     };
-
-
 
     template <int vectorization_width>
     void
@@ -1256,7 +1234,6 @@ namespace internal
 
   } // namespace MatrixFreeFunctions
 } // namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

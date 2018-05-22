@@ -65,9 +65,7 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
-
 #include <deal.II/lac/generic_linear_algebra.h>
-
 
 namespace LA
 {
@@ -84,7 +82,6 @@ namespace LA
 namespace Step50
 {
   using namespace dealii;
-
 
   template <int dim>
   struct ScratchData
@@ -115,7 +112,6 @@ namespace Step50
     Vector<double>                       cell_rhs;
     std::vector<types::global_dof_index> local_dof_indices;
   };
-
 
   template <int dim>
   class LaplaceProblem
@@ -181,8 +177,6 @@ namespace Step50
                const unsigned int             component = 0) const;
   };
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -192,8 +186,6 @@ namespace Step50
     else
       return 1;
   }
-
-
 
   template <int dim>
   void
@@ -213,8 +205,6 @@ namespace Step50
       values[i] = Coefficient<dim>::value(points[i]);
   }
 
-
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     : triangulation(MPI_COMM_WORLD,
@@ -225,8 +215,6 @@ namespace Step50
       mg_dof_handler(triangulation),
       degree(degree)
   {}
-
-
 
   template <int dim>
   void
@@ -259,12 +247,10 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
-
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
-
 
     const unsigned int n_levels = triangulation.n_global_levels();
 
@@ -302,8 +288,6 @@ namespace Step50
         }
       }
   }
-
-
 
   template <int dim>
   template <class IteratorType>
@@ -350,8 +334,6 @@ namespace Step50
                   * scratch_data.fe_values.JxW(q_point));
         }
   }
-
-
 
   template <int dim>
   void
@@ -439,8 +421,6 @@ namespace Step50
       }
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -475,7 +455,6 @@ namespace Step50
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
 
-
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
 
@@ -486,8 +465,6 @@ namespace Step50
 
     constraints.distribute(solution);
   }
-
-
 
   template <int dim>
   void
@@ -502,7 +479,6 @@ namespace Step50
           cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
   }
-
 
   template <int dim>
   void
@@ -540,7 +516,6 @@ namespace Step50
       }
   }
 } // namespace Step50
-
 
 int
 main(int argc, char* argv[])

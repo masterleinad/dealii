@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Try something remarkably simple: take some arbitrary (discrete)
 // function and transfer it to a coarser grid. transfer it back to the
 // fine grid. store it and call it X. transfer down to the coarse grid
@@ -40,7 +39,6 @@
 
 #define PRECISION 2
 
-
 template <int dim>
 Point<dim>
 transform(const Point<dim> p)
@@ -60,7 +58,6 @@ transform(const Point<dim> p)
         return Point<dim>();
     };
 }
-
 
 template <int dim>
 void
@@ -124,7 +121,6 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           << (relative_residual < threshold ? "ok" : "botched up!")
           << std::endl;
 }
-
 
 template <int dim>
 void
@@ -221,8 +217,6 @@ test()
 
       tr.execute_coarsening_and_refinement();
 
-
-
       for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
         if(fe_list[i] != nullptr)
           {
@@ -232,13 +226,10 @@ test()
           }
     }
 
-
   for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
     if(fe_list[i] != nullptr)
       delete fe_list[i];
 }
-
-
 
 int
 main()

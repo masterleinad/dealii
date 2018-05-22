@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-16
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
@@ -52,7 +49,6 @@ std::ofstream logfile("output");
 
 #include <sstream>
 
-
 template <int dim>
 class LaplaceProblem
 {
@@ -87,15 +83,12 @@ private:
   Vector<double> system_rhs;
 };
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
     fe(1),
     mg_dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -177,7 +170,6 @@ LaplaceProblem<dim>::assemble_system()
                             * fe_values.JxW(q_point));
           };
 
-
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -189,8 +181,6 @@ LaplaceProblem<dim>::assemble_system()
         };
     };
 }
-
-
 
 template <int dim>
 void
@@ -230,7 +220,6 @@ LaplaceProblem<dim>::assemble_multigrid()
                                    * fe_values.JxW(q_point);
           };
 
-
       cell->get_mg_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         {
@@ -240,8 +229,6 @@ LaplaceProblem<dim>::assemble_multigrid()
         };
     };
 }
-
-
 
 template <int dim>
 void
@@ -278,14 +265,11 @@ LaplaceProblem<dim>::solve()
   SolverControl solver_control(1000, 1e-12);
   SolverCG<>    cg(solver_control);
 
-
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 
   deallog << "   " << solver_control.last_step()
           << " CG iterations needed to obtain convergence." << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -302,8 +286,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 template <int dim>
 void
@@ -332,8 +314,6 @@ LaplaceProblem<dim>::run()
       output_results(cycle);
     };
 }
-
-
 
 int
 main()

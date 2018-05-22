@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // A testcase by Andrea Bonito (in modified form): Given a particular
 // set of refinement indicators, we get no refinement at all because
 // the threshold is computed to be *larger* than the largest
@@ -33,8 +31,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -90,14 +86,12 @@ test()
           << triangulation.n_active_cells() << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check a crash in hp::DoFHandler because the
 // DoFHandler::active_fe_indices array isn't initialized when
 // attaching to a triangulation
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -29,8 +26,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -47,8 +42,6 @@ test()
 
   dof_handler.begin_active()->set_active_fe_index(0);
 }
-
-
 
 int
 main()

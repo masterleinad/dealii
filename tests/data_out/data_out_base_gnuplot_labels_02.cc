@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Test that manually specified labels for Gnuplot output show up correctly.
  */
@@ -31,7 +30,6 @@
 
 // define this as 1 to get output into a separate file for each testcase
 #define SEPARATE_FILES 0
-
 
 template <int dim, int spacedim>
 class DataOutX : public DataOutInterface<dim, spacedim>
@@ -59,8 +57,6 @@ private:
   const std::vector<std::string>&                         names;
 };
 
-
-
 template <int dim, int spacedim>
 void
 check(DataOutBase::GnuplotFlags flags, std::ostream& out)
@@ -82,7 +78,6 @@ check(DataOutBase::GnuplotFlags flags, std::ostream& out)
   data_out.set_flags(flags);
   data_out.write_gnuplot(out);
 }
-
 
 template <int dim, int spacedim>
 void

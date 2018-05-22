@@ -16,7 +16,6 @@
 #ifndef dealii_block_sparse_matrix_ez_templates_h
 #define dealii_block_sparse_matrix_ez_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/lac/block_sparse_matrix_ez.h>
@@ -29,8 +28,6 @@ BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(const unsigned int rows,
   : row_indices(rows, 0), column_indices(cols, 0)
 {}
 
-
-
 //  template <typename number>
 //  BlockSparseMatrixEZ<number>::~BlockSparseMatrixEZ ()
 //  {
@@ -38,8 +35,6 @@ BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(const unsigned int rows,
 //                                 // the subobjects array
 //    clear ();
 //  };
-
-
 
 template <typename number>
 BlockSparseMatrixEZ<number>&
@@ -59,8 +54,6 @@ BlockSparseMatrixEZ<number>::operator=(const BlockSparseMatrixEZ<number>& m)
   return *this;
 }
 
-
-
 template <typename number>
 BlockSparseMatrixEZ<number>&
 BlockSparseMatrixEZ<number>::operator=(const double d)
@@ -75,8 +68,6 @@ BlockSparseMatrixEZ<number>::operator=(const double d)
   return *this;
 }
 
-
-
 template <typename number>
 BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(
   const BlockSparseMatrixEZ<number>& m)
@@ -85,8 +76,6 @@ BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(
     column_indices(m.column_indices),
     blocks(m.blocks)
 {}
-
-
 
 template <typename number>
 void
@@ -98,8 +87,6 @@ BlockSparseMatrixEZ<number>::reinit(const unsigned int rows,
   blocks.reinit(rows, cols);
 }
 
-
-
 template <typename number>
 void
 BlockSparseMatrixEZ<number>::clear()
@@ -108,8 +95,6 @@ BlockSparseMatrixEZ<number>::clear()
   column_indices.reinit(0, 0);
   blocks.reinit(0, 0);
 }
-
-
 
 template <typename number>
 bool
@@ -121,8 +106,6 @@ BlockSparseMatrixEZ<number>::empty() const
         return false;
   return true;
 }
-
-
 
 template <typename number>
 void
@@ -149,7 +132,6 @@ BlockSparseMatrixEZ<number>::collect_sizes()
   // indices with this array
   row_indices.reinit(row_sizes);
 
-
   // then do the same with the columns
   for(unsigned int c = 0; c < columns; ++c)
     col_sizes[c] = blocks[0][c].n();
@@ -162,8 +144,6 @@ BlockSparseMatrixEZ<number>::collect_sizes()
   // indices with this array
   column_indices.reinit(col_sizes);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that we abort if you refine further than p4est::max_level
 
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -46,7 +42,6 @@ test(std::ostream& /*out*/)
       while(it->level() < static_cast<int>(tr.n_levels() - 1))
         ++it;
 
-
       it->set_refine_flag();
       try
         {
@@ -58,7 +53,6 @@ test(std::ostream& /*out*/)
         }
     }
 }
-
 
 int
 main(int argc, char* argv[])

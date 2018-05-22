@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as fe_enriched_08, but checks the constraints from FESystem directly.
 
 #include "../tests.h"
@@ -101,7 +100,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

@@ -29,8 +29,6 @@
 
 using namespace dealii;
 
-
-
 void
 run()
 {
@@ -71,7 +69,6 @@ run()
 
   deallog << "Closed" << std::endl;
 }
-
 
 int
 main()

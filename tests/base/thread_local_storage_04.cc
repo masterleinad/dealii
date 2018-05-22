@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ThreadLocalStorage::operator= (const T&)
 
 #include "../tests.h"
@@ -43,7 +42,6 @@ struct X
   }
 };
 
-
 void
 test()
 {
@@ -61,8 +59,6 @@ test()
 
   AssertThrow(counter == 12, ExcInternalError());
 }
-
-
 
 int
 main()

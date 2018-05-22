@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_event_h
 #define dealii_event_h
 
@@ -168,9 +167,7 @@ namespace Algorithms
     extern const Event new_timestep_size;
   } // namespace Events
 
-
   //----------------------------------------------------------------------//
-
 
   inline bool
   Event::any() const
@@ -183,7 +180,6 @@ namespace Algorithms
         return true;
     return false;
   }
-
 
   inline bool
   Event::test(const Event& event) const
@@ -229,8 +225,6 @@ namespace Algorithms
     return true;
   }
 
-
-
   inline Event&
   Event::operator+=(const Event& event)
   {
@@ -245,7 +239,6 @@ namespace Algorithms
 
     return *this;
   }
-
 
   inline Event&
   Event::operator-=(const Event& event)
@@ -271,7 +264,6 @@ namespace Algorithms
     return *this;
   }
 
-
   template <class OS>
   inline void
   Event::print(OS& os) const
@@ -284,7 +276,6 @@ namespace Algorithms
         os << ' ' << names[i];
   }
 
-
   template <class OS>
   inline void
   Event::print_assigned(OS& os)
@@ -292,7 +283,6 @@ namespace Algorithms
     for(unsigned int i = 0; i < names.size(); ++i)
       os << i << '\t' << names[i] << std::endl;
   }
-
 
   /**
    * Output shift operator for events. Calls Event::print().

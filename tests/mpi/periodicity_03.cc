@@ -106,7 +106,6 @@ namespace Step22
     Tensor<1, dim>     offset;
   };
 
-
   template <class Matrix, class Preconditioner>
   class InverseMatrix : public Preconditioner
   {
@@ -128,7 +127,6 @@ namespace Step22
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
-
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
     const Matrix&         m,
@@ -140,8 +138,6 @@ namespace Step22
       mpi_communicator(&mpi_communicator),
       tmp(locally_owned, mpi_communicator)
   {}
-
-
 
   template <class Matrix, class Preconditioner>
   void
@@ -157,8 +153,6 @@ namespace Step22
     cg.solve(*matrix, tmp, src, *preconditioner);
     dst = tmp;
   }
-
-
 
   template <class Preconditioner>
   class SchurComplement : public TrilinosWrappers::SparseMatrix
@@ -182,8 +176,6 @@ namespace Step22
     mutable TrilinosWrappers::MPI::Vector tmp1, tmp2;
   };
 
-
-
   template <class Preconditioner>
   SchurComplement<Preconditioner>::SchurComplement(
     const TrilinosWrappers::BlockSparseMatrix& system_matrix,
@@ -197,7 +189,6 @@ namespace Step22
       tmp2(tmp1)
   {}
 
-
   template <class Preconditioner>
   void
   SchurComplement<Preconditioner>::vmult(
@@ -208,8 +199,6 @@ namespace Step22
     A_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
-
 
   template <int dim>
   StokesProblem<dim>::StokesProblem (const unsigned int degree)
@@ -238,8 +227,6 @@ namespace Step22
     offset[0] = 0;
     offset[1] = 0;
   }
-
-
 
   template <int dim>
   void
@@ -347,8 +334,6 @@ namespace Step22
       owned_partitioning, relevant_partitioning, mpi_communicator);
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::assemble_system()
@@ -418,7 +403,6 @@ namespace Step22
                 }
             }
 
-
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
@@ -434,8 +418,6 @@ namespace Step22
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
-
-
 
   template <int dim>
   void
@@ -470,7 +452,6 @@ namespace Step22
 
       TrilinosWrappers::PreconditionAMG preconditioner;
       preconditioner.initialize(system_matrix.block(1, 1));
-
 
       cg.solve(schur_complement, tmp.block(1), schur_rhs, preconditioner);
 
@@ -508,7 +489,6 @@ namespace Step22
       {
         pcout << "Point: " << point << " is not inside a cell!" << std::endl;
       }
-
 
     std::vector<double> tmp(value.size());
     for(unsigned int i = 0; i < value.size(); ++i)
@@ -747,7 +727,6 @@ namespace Step22
     }
   }
 
-
   template <int dim>
   void
   StokesProblem<dim>::output_results(const unsigned int refinement_cycle) const
@@ -800,8 +779,6 @@ namespace Step22
       }
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::refine_mesh()
@@ -820,8 +797,6 @@ namespace Step22
       triangulation, estimated_error_per_cell, 0.3, 0.0);
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   template <int dim>
   void
@@ -862,8 +837,6 @@ namespace Step22
       }
   }
 } // namespace Step22
-
-
 
 int
 main(int argc, char* argv[])

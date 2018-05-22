@@ -57,7 +57,6 @@
 #include <map>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace DoFRenumbering
@@ -81,7 +80,6 @@ namespace DoFRenumbering
 
       typedef std::pair<size_type, size_type> Pair;
     } // namespace boosttypes
-
 
     namespace internal
     {
@@ -120,7 +118,6 @@ namespace DoFRenumbering
       }
     } // namespace internal
 
-
     template <typename DoFHandlerType>
     void
     Cuthill_McKee(DoFHandlerType& dof_handler,
@@ -138,7 +135,6 @@ namespace DoFRenumbering
       dof_handler.renumber_dofs(renumbering);
     }
 
-
     template <typename DoFHandlerType>
     void
     compute_Cuthill_McKee(std::vector<types::global_dof_index>& new_dof_indices,
@@ -155,7 +151,6 @@ namespace DoFRenumbering
       boosttypes::property_map<boosttypes::Graph,
                                boosttypes::vertex_index_t>::type index_map
         = get(::boost::vertex_index, graph);
-
 
       std::vector<boosttypes::Vertex> inv_perm(num_vertices(graph));
 
@@ -180,8 +175,6 @@ namespace DoFRenumbering
              ExcInternalError());
     }
 
-
-
     template <typename DoFHandlerType>
     void
     king_ordering(DoFHandlerType& dof_handler,
@@ -198,7 +191,6 @@ namespace DoFRenumbering
       // thus needs an own function
       dof_handler.renumber_dofs(renumbering);
     }
-
 
     template <typename DoFHandlerType>
     void
@@ -217,7 +209,6 @@ namespace DoFRenumbering
                                boosttypes::vertex_index_t>::type index_map
         = get(::boost::vertex_index, graph);
 
-
       std::vector<boosttypes::Vertex> inv_perm(num_vertices(graph));
 
       if(reversed_numbering == false)
@@ -235,8 +226,6 @@ namespace DoFRenumbering
              ExcInternalError());
     }
 
-
-
     template <typename DoFHandlerType>
     void
     minimum_degree(DoFHandlerType& dof_handler,
@@ -253,7 +242,6 @@ namespace DoFRenumbering
       // thus needs an own function
       dof_handler.renumber_dofs(renumbering);
     }
-
 
     template <typename DoFHandlerType>
     void
@@ -305,14 +293,11 @@ namespace DoFRenumbering
                 }
         }
 
-
       typedef std::vector<int> Vector;
-
 
       Vector inverse_perm(n, 0);
 
       Vector perm(n, 0);
-
 
       Vector supernode_sizes(n, 1);
       // init has to be 1
@@ -320,9 +305,7 @@ namespace DoFRenumbering
       ::boost::property_map<Graph, vertex_index_t>::type id
         = get(vertex_index, G);
 
-
       Vector degree(n, 0);
-
 
       minimum_degree_ordering(
         G,
@@ -333,7 +316,6 @@ namespace DoFRenumbering
           supernode_sizes.begin(), id, supernode_sizes[0]),
         delta,
         id);
-
 
       for(int i = 0; i < n; ++i)
         {
@@ -353,8 +335,6 @@ namespace DoFRenumbering
     }
 
   } // namespace boost
-
-
 
   template <typename DoFHandlerType>
   void
@@ -377,8 +357,6 @@ namespace DoFRenumbering
     // thus needs an own function
     dof_handler.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -583,8 +561,6 @@ namespace DoFRenumbering
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   Cuthill_McKee(DoFHandlerType&                             dof_handler,
@@ -611,8 +587,6 @@ namespace DoFRenumbering
     // thus needs an own function
     dof_handler.renumber_dofs(level, new_indices);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -648,8 +622,6 @@ namespace DoFRenumbering
     dof_handler.renumber_dofs(renumbering);
   }
 
-
-
   template <typename DoFHandlerType>
   void
   component_wise(DoFHandlerType&                  dof_handler,
@@ -679,8 +651,6 @@ namespace DoFRenumbering
     if(renumbering.size() != 0)
       dof_handler.renumber_dofs(level, renumbering);
   }
-
-
 
   template <int dim, int spacedim, typename CellIterator>
   types::global_dof_index
@@ -849,7 +819,6 @@ namespace DoFRenumbering
         for(unsigned int c = 0; c < n_buckets; ++c)
           local_dof_count[c] = component_to_dof_map[c].size();
 
-
         // gather information from all CPUs
         std::vector<types::global_dof_index> all_dof_counts(
           fe_collection.n_components()
@@ -894,8 +863,6 @@ namespace DoFRenumbering
           shifts[c] = shifts[c - 1] + component_to_dof_map[c - 1].size();
       }
 
-
-
     // now concatenate all the
     // components in the order the user
     // desired to see
@@ -930,8 +897,6 @@ namespace DoFRenumbering
 
     return next_free_index;
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -969,8 +934,6 @@ namespace DoFRenumbering
     dof_handler.renumber_dofs(renumbering);
   }
 
-
-
   template <int dim, int spacedim>
   void
   block_wise(hp::DoFHandler<dim, spacedim>& dof_handler)
@@ -997,8 +960,6 @@ namespace DoFRenumbering
 
     dof_handler.renumber_dofs(renumbering);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1030,8 +991,6 @@ namespace DoFRenumbering
     if(renumbering.size() != 0)
       dof_handler.renumber_dofs(level, renumbering);
   }
-
-
 
   template <int dim, int spacedim, class ITERATOR, class ENDITERATOR>
   types::global_dof_index
@@ -1149,7 +1108,6 @@ namespace DoFRenumbering
         for(unsigned int c = 0; c < n_buckets; ++c)
           local_dof_count[c] = block_to_dof_map[c].size();
 
-
         // gather information from all CPUs
         std::vector<types::global_dof_index> all_dof_counts(
           fe_collection.n_components()
@@ -1194,8 +1152,6 @@ namespace DoFRenumbering
           shifts[c] = shifts[c - 1] + block_to_dof_map[c - 1].size();
       }
 
-
-
     // now concatenate all the
     // components in the order the user
     // desired to see
@@ -1229,8 +1185,6 @@ namespace DoFRenumbering
 
     return next_free_index;
   }
-
-
 
   namespace
   {
@@ -1322,8 +1276,6 @@ namespace DoFRenumbering
       return current_next_free_dof_offset;
     }
   } // namespace
-
-
 
   template <int dim>
   void
@@ -1423,8 +1375,6 @@ namespace DoFRenumbering
     dof_handler.renumber_dofs(renumbering);
   }
 
-
-
   template <typename DoFHandlerType>
   void
   sort_selected_dofs_back(DoFHandlerType&          dof_handler,
@@ -1436,8 +1386,6 @@ namespace DoFRenumbering
 
     dof_handler.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1455,8 +1403,6 @@ namespace DoFRenumbering
 
     dof_handler.renumber_dofs(level, renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1493,8 +1439,6 @@ namespace DoFRenumbering
     Assert(next_unselected == n_selected_dofs, ExcInternalError());
     Assert(next_selected == n_dofs, ExcInternalError());
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1536,8 +1480,6 @@ namespace DoFRenumbering
     Assert(next_selected == n_dofs, ExcInternalError());
   }
 
-
-
   template <typename DoFHandlerType>
   void
   cell_wise(
@@ -1550,7 +1492,6 @@ namespace DoFRenumbering
 
     dof.renumber_dofs(renumbering);
   }
-
 
   template <typename DoFHandlerType>
   void
@@ -1626,8 +1567,6 @@ namespace DoFRenumbering
       new_indices[reverse[i]] = i;
   }
 
-
-
   template <typename DoFHandlerType>
   void
   cell_wise(
@@ -1645,8 +1584,6 @@ namespace DoFRenumbering
     compute_cell_wise(renumbering, reverse, dof, level, cells);
     dof.renumber_dofs(level, renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1703,8 +1640,6 @@ namespace DoFRenumbering
       new_order[reverse[i]] = i;
   }
 
-
-
   template <typename DoFHandlerType>
   void
   downstream(DoFHandlerType&                                   dof,
@@ -1718,8 +1653,6 @@ namespace DoFRenumbering
 
     dof.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1825,8 +1758,6 @@ namespace DoFRenumbering
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   downstream(DoFHandlerType&                                   dof,
@@ -1841,8 +1772,6 @@ namespace DoFRenumbering
 
     dof.renumber_dofs(level, renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1924,8 +1853,6 @@ namespace DoFRenumbering
       }
   }
 
-
-
   /**
    * Provide comparator for DoFCellAccessors
    */
@@ -1979,7 +1906,6 @@ namespace DoFRenumbering
         return (counter ? (s1 > s2) : (s2 > s1));
       }
 
-
       /**
        * Comparison operator for dim==1
        * where this function makes no sense
@@ -1997,8 +1923,6 @@ namespace DoFRenumbering
     };
   } // namespace internal
 
-
-
   template <typename DoFHandlerType>
   void
   clockwise_dg(DoFHandlerType&                               dof,
@@ -2010,8 +1934,6 @@ namespace DoFRenumbering
 
     dof.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -2039,8 +1961,6 @@ namespace DoFRenumbering
     compute_cell_wise(new_indices, reverse, dof, ordered_cells);
   }
 
-
-
   template <typename DoFHandlerType>
   void
   clockwise_dg(DoFHandlerType&                               dof,
@@ -2066,8 +1986,6 @@ namespace DoFRenumbering
     cell_wise(dof, level, ordered_cells);
   }
 
-
-
   template <typename DoFHandlerType>
   void
   random(DoFHandlerType& dof_handler)
@@ -2078,8 +1996,6 @@ namespace DoFRenumbering
 
     dof_handler.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -2108,8 +2024,6 @@ namespace DoFRenumbering
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   subdomain_wise(DoFHandlerType& dof_handler)
@@ -2128,8 +2042,6 @@ namespace DoFRenumbering
 
     dof_handler.renumber_dofs(renumbering);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -2183,10 +2095,7 @@ namespace DoFRenumbering
 
 } // namespace DoFRenumbering
 
-
-
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_renumbering.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

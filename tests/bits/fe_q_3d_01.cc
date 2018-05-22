@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we used to have constraint matrices for the FE_Q elements precomputed and
 // stored, but later moved to compute them on the fly. make sure these
 // correspond to the previously available precomputed ones for 3d and q=1,2
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
-
-
 
 // matrices taken from the old file deal.II/source/fe/fe_q_3d.cc
 namespace FE_Q_3d
@@ -62,7 +57,6 @@ namespace FE_Q_3d
     -0.046875, 0.140625,  -0.09375, 0.28125,   -0.09375,  0.28125,  0.5625};
 } // namespace FE_Q_3d
 
-
 namespace Matrices
 {
   const double* const constraint_matrices[]
@@ -71,8 +65,6 @@ namespace Matrices
   const unsigned int n_constraint_matrices
     = sizeof(constraint_matrices) / sizeof(constraint_matrices[0]);
 } // namespace Matrices
-
-
 
 void
 check()
@@ -100,7 +92,6 @@ check()
     }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

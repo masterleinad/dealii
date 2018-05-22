@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check periodic boundary conditions for a simple enough case where we know
 // the exact set of constraints
 //
@@ -34,8 +32,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -69,8 +65,6 @@ test()
     dof_handler.begin(0)->face(0), (++dof_handler.begin(0))->face(1), cm, mask);
   cm.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

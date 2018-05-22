@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe.h>
 #include <deal.II/fe/fe_tools.h>
@@ -29,7 +28,6 @@ public:
     generate<3, 3>(myname);
   }
 
-
   template <int dim, int spacedim>
   void
   generate(const char* myname)
@@ -43,7 +41,6 @@ public:
     deallog << "Generated :" << std::endl;
     deallog << fe->get_name() << std::endl;
   }
-
 
   void
   generate_all_codim(const char* myname)
@@ -61,7 +58,6 @@ int
 main()
 {
   initlog();
-
 
   Test gen;
   // For some of the finite element types, their

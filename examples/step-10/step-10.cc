@@ -17,7 +17,6 @@
  * Authors: Wolfgang Bangerth, Ralf Hartmann, University of Heidelberg, 2001
  */
 
-
 // The first of the following include files are probably well-known by now and
 // need no further explanation.
 #include <deal.II/base/convergence_table.h>
@@ -55,8 +54,6 @@ namespace Step10
   // digits which a double variable can hold, we rather declare the reference
   // value as a <code>long double</code> and give it a number of extra digits:
   const long double pi = 3.141592653589793238462643L;
-
-
 
   // Then, the first task will be to generate some output. Since this program
   // is so small, we do not employ object oriented techniques in it and do not
@@ -117,7 +114,6 @@ namespace Step10
             // class that is used implicitly in many places of the
             // library if you do not specify another mapping
             // explicitly.
-
 
             // In degree to actually write out the present grid with this
             // mapping, we set up an object which we will use for output. We
@@ -312,7 +308,6 @@ namespace Step10
       }
   }
 
-
   // The following, second function also computes an approximation of $\pi$
   // but this time via the perimeter $2\pi r$ of the domain instead of the
   // area. This function is only a variation of the previous function. So we
@@ -400,7 +395,6 @@ namespace Step10
       }
   }
 } // namespace Step10
-
 
 // The following main function just calls the above functions in the order of
 // their appearance. Apart from this, it looks just like the main functions of

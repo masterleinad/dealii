@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that the product between a tensor of rank 1 and a scalar
 // results a result type as expected
 
@@ -24,7 +23,6 @@
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/base/tensor.h>
 
-
 template <typename T, typename U, typename CompareType>
 void
 check()
@@ -32,7 +30,6 @@ check()
   AssertThrow(typeid(T() * U()) == typeid(CompareType), ExcInternalError());
   AssertThrow(typeid(T() * U()) == typeid(CompareType), ExcInternalError());
 }
-
 
 int
 main()

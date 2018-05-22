@@ -34,8 +34,6 @@
 
 #include <deal.II/distributed/tria.h>
 
-
-
 template <int dim>
 void
 test()
@@ -96,8 +94,6 @@ test()
       grid_out.write_svg(tria, grid_output);
     }
 }
-
-
 
 int
 main(int argc, char* argv[])

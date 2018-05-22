@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test scalar_product between tensors and symmetric tensors
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -49,8 +47,6 @@ test()
   AssertThrow(scalar_product(t, s) == s * symmetrize(t), ExcInternalError());
   AssertThrow(scalar_product(t, s) == symmetrize(t) * s, ExcInternalError());
 }
-
-
 
 int
 main()

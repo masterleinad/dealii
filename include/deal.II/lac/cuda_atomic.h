@@ -37,8 +37,6 @@ namespace LinearAlgebra
       return atomicAdd(address, val);
     }
 
-
-
     /**
      * Provide atomicAdd for doubles.
      *
@@ -70,8 +68,6 @@ namespace LinearAlgebra
 #  endif
     }
 
-
-
     /**
      * Provide atomicMax for floats.
      *
@@ -93,8 +89,6 @@ namespace LinearAlgebra
 
       return __longlong_as_double(old);
     }
-
-
 
     /**
      * Provide atomicMax for doubles.

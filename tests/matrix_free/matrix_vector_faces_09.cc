@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_03 but we now compare against the combined
 // evaluation with gather_evaluate and integrate_scatter
 
@@ -28,8 +26,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

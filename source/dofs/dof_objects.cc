@@ -32,8 +32,6 @@ namespace internal
       return (MemoryConsumption::memory_consumption(dofs));
     }
 
-
-
     template <int dim>
     template <int dh_dim, int spacedim>
     void
@@ -65,7 +63,6 @@ namespace internal
     }
   } // namespace DoFHandlerImplementation
 } // namespace internal
-
 
 // explicit instantiations
 namespace internal

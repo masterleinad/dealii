@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // compute the inverse of a small matrix using the SparseILU with
 // infinite fill-in
 
@@ -25,7 +23,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
-
 int
 main()
 {
@@ -33,7 +30,6 @@ main()
   deallog << std::fixed;
   deallog << std::setprecision(3);
   deallog.attach(logfile);
-
 
   for(unsigned int N = 1; N < 5; ++N)
     {

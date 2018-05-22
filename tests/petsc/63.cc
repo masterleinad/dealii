@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MatrixBase& m)
@@ -36,8 +33,6 @@ test(PETScWrappers::MatrixBase& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

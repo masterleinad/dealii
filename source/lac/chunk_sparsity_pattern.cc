@@ -13,21 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/chunk_sparsity_pattern.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/full_matrix.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 ChunkSparsityPattern::ChunkSparsityPattern()
 {
   reinit(0, 0, 0, 1);
 }
-
-
 
 ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
   : Subscriptor(),
@@ -43,8 +38,6 @@ ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
   reinit(0, 0, 0, chunk_size);
 }
 
-
-
 ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
                                            const size_type n,
                                            const size_type max_per_row,
@@ -54,8 +47,6 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
 
   reinit(m, n, max_per_row, chunk_size);
 }
-
-
 
 ChunkSparsityPattern::ChunkSparsityPattern(
   const size_type               m,
@@ -68,16 +59,12 @@ ChunkSparsityPattern::ChunkSparsityPattern(
   reinit(m, n, row_lengths, chunk_size);
 }
 
-
-
 ChunkSparsityPattern::ChunkSparsityPattern(const size_type n,
                                            const size_type max_per_row,
                                            const size_type chunk_size)
 {
   reinit(n, n, max_per_row, chunk_size);
 }
-
-
 
 ChunkSparsityPattern::ChunkSparsityPattern(
   const size_type               m,
@@ -88,8 +75,6 @@ ChunkSparsityPattern::ChunkSparsityPattern(
 
   reinit(m, m, row_lengths, chunk_size);
 }
-
-
 
 ChunkSparsityPattern&
 ChunkSparsityPattern::operator=(const ChunkSparsityPattern& s)
@@ -110,8 +95,6 @@ ChunkSparsityPattern::operator=(const ChunkSparsityPattern& s)
   return *this;
 }
 
-
-
 void
 ChunkSparsityPattern::reinit(const size_type m,
                              const size_type n,
@@ -124,8 +107,6 @@ ChunkSparsityPattern::reinit(const size_type m,
   const std::vector<size_type> row_lengths(m, max_per_row);
   reinit(m, n, row_lengths, chunk_size);
 }
-
-
 
 void
 ChunkSparsityPattern::reinit(
@@ -169,15 +150,11 @@ ChunkSparsityPattern::reinit(
   sparsity_pattern.reinit(m_chunks, n_chunks, chunk_row_lengths);
 }
 
-
-
 void
 ChunkSparsityPattern::compress()
 {
   sparsity_pattern.compress();
 }
-
-
 
 template <typename SparsityPatternType>
 void
@@ -219,8 +196,6 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
   sparsity_pattern.copy_from(temporary_sp);
 }
 
-
-
 template <typename number>
 void
 ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
@@ -255,8 +230,6 @@ ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
   compress();
 }
 
-
-
 void
 ChunkSparsityPattern::reinit(const size_type               m,
                              const size_type               n,
@@ -267,8 +240,6 @@ ChunkSparsityPattern::reinit(const size_type               m,
 
   reinit(m, n, make_slice(row_lengths), chunk_size);
 }
-
-
 
 namespace internal
 {
@@ -288,8 +259,6 @@ namespace internal
     }
   } // namespace
 } // namespace internal
-
-
 
 template <typename Sparsity>
 void
@@ -315,23 +284,17 @@ ChunkSparsityPattern::create_from(const unsigned int m,
   cols       = n;
 }
 
-
-
 bool
 ChunkSparsityPattern::empty() const
 {
   return sparsity_pattern.empty();
 }
 
-
-
 ChunkSparsityPattern::size_type
 ChunkSparsityPattern::max_entries_per_row() const
 {
   return sparsity_pattern.max_entries_per_row() * chunk_size;
 }
-
-
 
 void
 ChunkSparsityPattern::add(const size_type i, const size_type j)
@@ -342,7 +305,6 @@ ChunkSparsityPattern::add(const size_type i, const size_type j)
   sparsity_pattern.add(i / chunk_size, j / chunk_size);
 }
 
-
 bool
 ChunkSparsityPattern::exists(const size_type i, const size_type j) const
 {
@@ -351,8 +313,6 @@ ChunkSparsityPattern::exists(const size_type i, const size_type j) const
 
   return sparsity_pattern.exists(i / chunk_size, j / chunk_size);
 }
-
-
 
 void
 ChunkSparsityPattern::symmetrize()
@@ -364,8 +324,6 @@ ChunkSparsityPattern::symmetrize()
 
   sparsity_pattern.symmetrize();
 }
-
-
 
 ChunkSparsityPattern::size_type
 ChunkSparsityPattern::row_length(const size_type i) const
@@ -391,8 +349,6 @@ ChunkSparsityPattern::row_length(const size_type i) const
       return n;
     }
 }
-
-
 
 ChunkSparsityPattern::size_type
 ChunkSparsityPattern::n_nonzero_elements() const
@@ -449,8 +405,6 @@ ChunkSparsityPattern::n_nonzero_elements() const
     }
 }
 
-
-
 void
 ChunkSparsityPattern::print(std::ostream& out) const
 {
@@ -479,8 +433,6 @@ ChunkSparsityPattern::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 void
 ChunkSparsityPattern::print_gnuplot(std::ostream& out) const
@@ -514,8 +466,6 @@ ChunkSparsityPattern::print_gnuplot(std::ostream& out) const
   AssertThrow(out, ExcIO());
 }
 
-
-
 ChunkSparsityPattern::size_type
 ChunkSparsityPattern::bandwidth() const
 {
@@ -529,8 +479,6 @@ ChunkSparsityPattern::bandwidth() const
                   std::max(n_rows(), n_cols()));
 }
 
-
-
 bool
 ChunkSparsityPattern::stores_only_added_elements() const
 {
@@ -539,8 +487,6 @@ ChunkSparsityPattern::stores_only_added_elements() const
   else
     return false;
 }
-
-
 
 void
 ChunkSparsityPattern::block_write(std::ostream& out) const
@@ -555,8 +501,6 @@ ChunkSparsityPattern::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 void
 ChunkSparsityPattern::block_read(std::istream& in)
@@ -582,15 +526,11 @@ ChunkSparsityPattern::block_read(std::istream& in)
   AssertThrow(c == ']', ExcIO());
 }
 
-
-
 std::size_t
 ChunkSparsityPattern::memory_consumption() const
 {
   return (sizeof(*this) + sparsity_pattern.memory_consumption());
 }
-
-
 
 // explicit instantiations
 template void

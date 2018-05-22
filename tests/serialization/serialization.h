@@ -23,7 +23,6 @@
 #include <iomanip>
 #include <sstream>
 
-
 // compare objects for equality and pointers for equality of the object
 // pointed to
 template <typename T>
@@ -39,7 +38,6 @@ compare(T* t1, T* t2)
 {
   return *t1 == *t2;
 }
-
 
 template <typename T>
 void
@@ -60,7 +58,6 @@ verify(const T& t1, T& t2)
   {
     std::istringstream            iss(oss.str());
     boost::archive::text_iarchive ia(iss, boost::archive::no_header);
-
 
     ia >> t2;
 

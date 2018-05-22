@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that we can read in and edge orient meshes in 3d with a
 // significant number of cells. this tests Mike's reorienting
 // algorithm. while the grid_in_3d test checks artificial meshes, this
@@ -33,10 +31,7 @@
 // #include <deal.II/fe/fe_q.h>
 // #include <deal.II/numerics/data_out.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 test(const char* filename)
@@ -81,7 +76,6 @@ test(const char* filename)
   //   std::ofstream gnufile("xx.vtk");
   //   d_o.write_vtk (gnufile);
 }
-
 
 int
 main()

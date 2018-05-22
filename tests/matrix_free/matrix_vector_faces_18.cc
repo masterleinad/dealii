@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_faces_15 except for a larger mesh
 
 #include "../tests.h"
@@ -28,7 +26,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

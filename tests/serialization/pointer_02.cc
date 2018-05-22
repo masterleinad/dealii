@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test what happens when serializing a pointer. is a new object created when
 // loading into another pointer that is non-NULL and the old pointer
 // destroyed? Or is the old object pointed to being co-opted? the former is in
@@ -68,7 +67,6 @@ private:
   unsigned int object_number;
 };
 
-
 void
 test()
 {
@@ -97,7 +95,6 @@ test()
   // error messages from memory checkers about leaked memory
   delete backup;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we get a diagonal matrix when using FE_DGQArbitraryNodes with
 // the same quadrature formula for integration as for construction of the FE.
 
@@ -27,8 +26,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/numerics/matrix_tools.h>
-
-
 
 template <int dim>
 void
@@ -70,8 +67,6 @@ check()
         }
     }
 }
-
-
 
 int
 main()

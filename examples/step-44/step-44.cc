@@ -19,7 +19,6 @@
  *          Andrew McBride, University of Erlangen-Nuremberg, 2010
  */
 
-
 // We start by including all the necessary deal.II header files and some C++
 // related ones. They have been discussed in detail in previous tutorial
 // programs, so you need only refer to past tutorials for details.
@@ -80,7 +79,6 @@
 #include <fstream>
 #include <iostream>
 
-
 // We then stick everything that relates to this tutorial program into a
 // namespace of its own, and import all the deal.II function and class names
 // into it:
@@ -116,7 +114,6 @@ namespace Step44
       void
       parse_parameters(ParameterHandler& prm);
     };
-
 
     void
     FESystem::declare_parameters(ParameterHandler& prm)
@@ -855,7 +852,6 @@ namespace Step44
     SymmetricTensor<4, dim> Jc;
   };
 
-
   // @sect3{Quasi-static quasi-incompressible finite-strain solid}
 
   // The Solid class is the central class in that it represents the problem at
@@ -1164,7 +1160,6 @@ namespace Step44
     dof_handler_ref.clear();
   }
 
-
   // In solving the quasi-static problem, the time becomes a loading parameter,
   // i.e. we increasing the loading linearly with time, making the two concepts
   // interchangeable. We choose to increment time linearly using a constant time
@@ -1235,7 +1230,6 @@ namespace Step44
       }
   }
 
-
   // @sect3{Private interface}
 
   // @sect4{Threading-building-blocks structures}
@@ -1267,7 +1261,6 @@ namespace Step44
       cell_matrix = 0.0;
     }
   };
-
 
   // On the other hand, the ScratchData object stores the larger objects such as
   // the shape-function values array (<code>Nx</code>) and a shape function
@@ -1344,7 +1337,6 @@ namespace Step44
       cell_rhs = 0.0;
     }
   };
-
 
   template <int dim>
   struct Solid<dim>::ScratchData_RHS
@@ -1446,7 +1438,6 @@ namespace Step44
     {}
   };
 
-
   // The ScratchData object for the operations we wish to perform here is empty
   // since we need no temporary data, but it still needs to be defined for the
   // current implementation of TBB in deal.II.  So we create a dummy struct for
@@ -1458,7 +1449,6 @@ namespace Step44
     reset()
     {}
   };
-
 
   // And finally we define the structures to assist with updating the quadrature
   // point information. Similar to the SC assembly process, we do not need the
@@ -1482,7 +1472,6 @@ namespace Step44
     reset()
     {}
   };
-
 
   // The ScratchData object will be used to store an alias for the solution
   // vector so that we don't have to copy this large data structure. We then
@@ -1532,7 +1521,6 @@ namespace Step44
         }
     }
   };
-
 
   // @sect4{Solid::make_grid}
 
@@ -1587,7 +1575,6 @@ namespace Step44
             }
         }
   }
-
 
   // @sect4{Solid::system_setup}
 
@@ -1694,7 +1681,6 @@ namespace Step44
     timer.leave_subsection();
   }
 
-
   // @sect4{Solid::determine_component_extractors}
   // Next we compute some information from the FE system that describes which local
   // element DOFs are attached to which block component.  This is used later to
@@ -1795,7 +1781,6 @@ namespace Step44
     timer.leave_subsection();
   }
 
-
   // Now we describe how we extract data from the solution vector and pass it
   // along to each QP storage object for processing.
   template <int dim>
@@ -1835,7 +1820,6 @@ namespace Step44
                                    scratch.solution_values_p_total[q_point],
                                    scratch.solution_values_J_total[q_point]);
   }
-
 
   // @sect4{Solid::solve_nonlinear_timestep}
 
@@ -1947,7 +1931,6 @@ namespace Step44
                 ExcMessage("No convergence in nonlinear solver!"));
   }
 
-
   // @sect4{Solid::print_conv_header and Solid::print_conv_footer}
 
   // This program prints out data in a nice table that is updated
@@ -1973,8 +1956,6 @@ namespace Step44
     std::cout << std::endl;
   }
 
-
-
   template <int dim>
   void
   Solid<dim>::print_conv_footer()
@@ -1996,7 +1977,6 @@ namespace Step44
               << "v / V_0:\t" << error_dil.second * vol_reference << " / "
               << vol_reference << " = " << error_dil.second << std::endl;
   }
-
 
   // @sect4{Solid::get_error_dilation}
 
@@ -2079,7 +2059,6 @@ namespace Step44
                           compute_vol_current() / vol_reference);
   }
 
-
   // @sect4{Solid::get_error_residual}
 
   // Determine the true residual error for the problem.  That is, determine the
@@ -2102,7 +2081,6 @@ namespace Step44
     error_residual.J    = error_res.block(J_dof).l2_norm();
   }
 
-
   // @sect4{Solid::get_error_update}
 
   // Determine the true Newton update error for the problem
@@ -2122,8 +2100,6 @@ namespace Step44
     error_update.J    = error_ud.block(J_dof).l2_norm();
   }
 
-
-
   // @sect4{Solid::get_total_solution}
 
   // This function provides the total solution, which is valid at any Newton step.
@@ -2138,7 +2114,6 @@ namespace Step44
     solution_total += solution_delta;
     return solution_total;
   }
-
 
   // @sect4{Solid::assemble_system_tangent}
 
@@ -2371,8 +2346,6 @@ namespace Step44
     timer.leave_subsection();
   }
 
-
-
   template <int dim>
   void
   Solid<dim>::copy_local_to_global_rhs(const PerTaskData_RHS& data)
@@ -2380,8 +2353,6 @@ namespace Step44
     for(unsigned int i = 0; i < dofs_per_cell; ++i)
       system_rhs(data.local_dof_indices[i]) += data.cell_rhs(i);
   }
-
-
 
   template <int dim>
   void
@@ -2753,7 +2724,6 @@ namespace Step44
     timer.leave_subsection();
   }
 
-
   template <int dim>
   void
   Solid<dim>::copy_local_to_global_sc(const PerTaskData_SC& data)
@@ -2764,7 +2734,6 @@ namespace Step44
                            data.local_dof_indices[j],
                            data.cell_matrix(i, j));
   }
-
 
   // Now we describe the static condensation process. As per usual, we must
   // first find out which global numbers the degrees of freedom on this cell
@@ -3015,7 +2984,6 @@ namespace Step44
         // linear solver iterations and the (hopefully converged) residual.
         BlockVector<double> A(dofs_per_block);
         BlockVector<double> B(dofs_per_block);
-
 
         // In the first step of this function, we solve for the incremental
         // displacement $d\mathbf{u}$.  To this end, we perform static
@@ -3473,7 +3441,6 @@ namespace Step44
   }
 
 } // namespace Step44
-
 
 // @sect3{Main function}
 // Lastly we provide the main driver function which appears

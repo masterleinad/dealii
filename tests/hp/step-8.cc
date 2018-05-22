@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-8
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -49,8 +45,6 @@ std::ofstream logfile("output");
 #include <deal.II/fe/fe_system.h>
 
 #include <iostream>
-
-
 
 template <int dim>
 class ElasticProblem
@@ -87,8 +81,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -103,11 +95,9 @@ public:
                     std::vector<Vector<double>>&   value_list) const;
 };
 
-
 template <int dim>
 RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
 {}
-
 
 template <int dim>
 inline void
@@ -133,8 +123,6 @@ RightHandSide<dim>::vector_value(const Point<dim>& p,
     values(1) = 0;
 }
 
-
-
 template <int dim>
 void
 RightHandSide<dim>::vector_value_list(
@@ -150,22 +138,16 @@ RightHandSide<dim>::vector_value_list(
     RightHandSide<dim>::vector_value(points[p], value_list[p]);
 }
 
-
-
 template <int dim>
 ElasticProblem<dim>::ElasticProblem()
   : dof_handler(triangulation), fe(FESystem<dim>(FE_Q<dim>(1), dim))
 {}
-
-
 
 template <int dim>
 ElasticProblem<dim>::~ElasticProblem()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 void
@@ -190,8 +172,6 @@ ElasticProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -220,7 +200,6 @@ ElasticProblem<dim>::assemble_system()
 
   RightHandSide<dim>          right_hand_side;
   std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
-
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -300,8 +279,6 @@ ElasticProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 template <int dim>
 void
 ElasticProblem<dim>::solve()
@@ -316,8 +293,6 @@ ElasticProblem<dim>::solve()
 
   hanging_node_constraints.distribute(solution);
 }
-
-
 
 template <int dim>
 void
@@ -338,8 +313,6 @@ ElasticProblem<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim>
 void
 ElasticProblem<dim>::output_results(const unsigned int cycle) const
@@ -352,8 +325,6 @@ ElasticProblem<dim>::output_results(const unsigned int cycle) const
 
   DataOut<dim, hp::DoFHandler<dim>> data_out;
   data_out.attach_dof_handler(dof_handler);
-
-
 
   std::vector<std::string> solution_names;
   switch(dim)
@@ -378,8 +349,6 @@ ElasticProblem<dim>::output_results(const unsigned int cycle) const
   data_out.build_patches();
   data_out.write_gmv(deallog.get_file_stream());
 }
-
-
 
 template <int dim>
 void
@@ -410,7 +379,6 @@ ElasticProblem<dim>::run()
       output_results(cycle);
     }
 }
-
 
 int
 main()

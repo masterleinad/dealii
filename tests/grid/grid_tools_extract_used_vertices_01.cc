@@ -21,7 +21,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
-
 template <int dim, int spacedim>
 void
 test()
@@ -45,7 +44,6 @@ test()
   for(auto& e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 };
-
 
 int
 main()

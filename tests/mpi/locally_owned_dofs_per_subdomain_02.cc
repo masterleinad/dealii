@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test DoFTools::locally_owned_dofs_per_subdomain (for a standard Triangulation)
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check number cache for shared_tria with artificial cells and renumbering
 
 #include "../tests.h"
@@ -32,7 +30,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -140,7 +137,6 @@ test()
       Assert(all == complete_index_set(N), ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // adapted from hp/crash_06, which itself is from
 // make_hanging_node_constraints for hp elements. used to crash. triggers the
 // crash that at the time of writing the test afflicts all
 // hp/hp_constraints_*_03 tests
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -33,8 +30,6 @@ char logname[] = "output";
 #include <deal.II/grid/tria_iterator.h>
 
 #include <vector>
-
-
 
 void
 test_with_wrong_face_orientation()
@@ -98,8 +93,6 @@ test_with_wrong_face_orientation()
                 == neighbor_child->face(cell->neighbor_of_neighbor(3)),
               ExcInternalError());
 }
-
-
 
 int
 main()

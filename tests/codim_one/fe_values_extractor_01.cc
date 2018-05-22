@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // DataOut::build_patches appeared to have a problem with outputting
 // lines in 2d where nodes were numbered differently when writing data
 // vectors as opposed to writing node locations. in the end this
@@ -37,7 +35,6 @@
 #include <deal.II/numerics/data_out.h>
 
 std::ofstream logfile("output");
-
 
 int
 main()

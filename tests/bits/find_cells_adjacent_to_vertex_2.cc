@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as the first test, but on a 3D grid of the same structure
 
 #include "../tests.h"
@@ -24,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check(Triangulation<3>& tria)
 {
@@ -41,7 +37,6 @@ void check(Triangulation<3>& tria)
         deallog << "   " << cells[c] << std::endl;
     }
 }
-
 
 int
 main()

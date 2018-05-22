@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // when we coarsen away a whole level, the level data structures
 // remain but contains only unused cells. make sure that tria.last()
 // and tria.last_active() still produce something sensible in that
@@ -26,10 +25,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -51,7 +47,6 @@ test()
   deallog << tria.n_levels() << ' ' << tria.n_global_levels() << ' '
           << tria.last() << ' ' << tria.last_active() << std::endl;
 }
-
 
 int
 main()

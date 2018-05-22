@@ -111,7 +111,6 @@ private:
   const double y_FoR;
 };
 
-
 template <int dim>
 double
 PushForward<dim>::value(const Point<dim>& p, const unsigned int component) const

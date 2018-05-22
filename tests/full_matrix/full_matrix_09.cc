@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //check method TmTmult of FullMatrix on larger size than full_matrix_03 where
 //we interface to the external BLAS by comparison to mmult of the transpose
 //matrix
@@ -21,7 +20,6 @@
 #include "../tests.h"
 
 #include <deal.II/lac/full_matrix.h>
-
 
 template <typename Number>
 void

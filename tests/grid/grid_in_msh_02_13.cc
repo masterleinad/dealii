@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // in 1d, we have to read vertex information to set boundary
 // indicators
 //
@@ -22,7 +21,6 @@
 // this is a variation of the grid_in_msh_02 testcase, but as in Jan's
 // original code snippet, it uses GridIn<1,3> (which wasn't
 // instantiated at the time)
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -37,7 +35,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 void
 check_file()
@@ -61,7 +58,6 @@ check_file()
         }
     }
 }
-
 
 int
 main()

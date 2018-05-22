@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_full_matrix_h
 #  define dealii_petsc_full_matrix_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_PETSC
@@ -25,8 +24,6 @@
 #    include <deal.II/lac/petsc_matrix_base.h>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace PETScWrappers
 {
@@ -54,18 +51,15 @@ namespace PETScWrappers
      */
     typedef types::global_dof_index size_type;
 
-
     /**
      * Default constructor. Create an empty matrix.
      */
     FullMatrix();
 
-
     /**
      * Create a full matrix of dimensions @p m times @p n.
      */
     FullMatrix(const size_type m, const size_type n);
-
 
     /**
      * Throw away the present matrix and generate one that has the same
@@ -74,7 +68,6 @@ namespace PETScWrappers
      */
     void
     reinit(const size_type m, const size_type n);
-
 
     /**
      * Return a reference to the MPI communicator object in use with this
@@ -96,7 +89,6 @@ namespace PETScWrappers
 
   /*@}*/
 } // namespace PETScWrappers
-
 
 DEAL_II_NAMESPACE_CLOSE
 

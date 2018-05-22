@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Wolfgang Bangerth, University of Heidelberg, 2001 */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -32,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -52,8 +46,6 @@ print_dofs(const DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof, unsigned int level)
@@ -70,7 +62,6 @@ print_dofs(const DoFHandler<dim>& dof, unsigned int level)
       deallog << std::endl;
     }
 }
-
 
 template <int dim>
 void
@@ -105,7 +96,6 @@ check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
       DoFRenumbering::Cuthill_McKee(dof, true, true);
       print_dofs(dof);
     }
-
 
   DoFRenumbering::component_wise(dof, order);
   print_dofs(dof);
@@ -147,7 +137,6 @@ check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
     }
 }
 
-
 template <int dim>
 void
 check()
@@ -178,7 +167,6 @@ check()
   check_renumbering(mgdof, true);
   mgdof.clear();
 }
-
 
 int
 main()

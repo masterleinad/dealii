@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test VectorTools::compute_mean_value for parallel computations. we
 // interpolate a linear function onto the grid with a symmetric mesh. the mean
 // value of the interpolation must be the mean of the linear function
@@ -36,8 +34,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class LinearFunction : public Function<dim>
 {
@@ -48,7 +44,6 @@ public:
     return p[0] + 2;
   }
 };
-
 
 template <int dim>
 void
@@ -81,14 +76,12 @@ test()
   Assert(std::fabs(mean - 2) < 1e-3, ExcInternalError());
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

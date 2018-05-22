@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test left and right inversion of FullMatrix
 
 #include "../tests.h"
 #include "full_matrix_common.h"
 #include <limits>
 
-
 using namespace dealii;
-
 
 template <typename number>
 void
@@ -36,7 +33,6 @@ fill_matrix_invertible(FullMatrix<number>& A)
           A(i, i) += i + A.m();
       }
 }
-
 
 template <typename number>
 bool
@@ -93,7 +89,6 @@ calculate(const FullMatrix<number> A, bool disp = true)
 
   return retval;
 }
-
 
 template <typename number>
 void

@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that LinearAlgebra::distributed::Vector::reinit does not carry over any
 // state that can lead to invalid memory access. In this test, the MPI
 // communicator is deleted.
-
 
 #include "../tests.h"
 #include <deal.II/base/mpi.h>

@@ -13,8 +13,6 @@
 //
 //-----------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/path_search.h>
@@ -55,7 +53,6 @@ main()
 
   // Absolute (== relative if no other path is added)
   Test c("/Class B", "Parameter C", "c");
-
 
   // Absolute (== relative if no other path is added)
   Test c2("/Class C/", "Parameter C", "c");

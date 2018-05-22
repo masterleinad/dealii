@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_fe_h
 #define dealii_mapping_fe_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/table.h>
 #include <deal.II/base/thread_management.h>
@@ -28,9 +27,7 @@
 
 #include <array>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup mapping */
 /*@{*/
@@ -501,7 +498,6 @@ private:
    * @}
    */
 
-
   /**
    * Reference to the vector of shifts.
    */
@@ -534,7 +530,6 @@ private:
    */
   Point<spacedim>
   do_transform_unit_to_real_cell(const InternalData& mdata) const;
-
 
   /**
    * Transform the point @p p on the real cell to the corresponding point on
@@ -613,7 +608,6 @@ private:
                     const Quadrature<dim>& q,
                     const unsigned int     n_original_q_points,
                     InternalData&          data) const;
-
 
   /**
    * Declare other MappingFEField classes friends.

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // on a somewhat deformed cube, verify that if we push forward a bunch
 // of points from the reference to the real cell and then call
 // Mapping::transform_unit_to_real_cell that we get the same point as
@@ -26,7 +24,6 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim, int spacedim>
 void
@@ -71,7 +68,6 @@ test_real_to_unit_cell()
         break;
     }
 
-
   MappingQGeneric<dim, spacedim> map(1);
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
@@ -108,13 +104,11 @@ test_real_to_unit_cell()
   deallog << "OK" << std::endl;
 }
 
-
 int
 main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
-
 
   test_real_to_unit_cell<1, 1>();
   test_real_to_unit_cell<2, 2>();

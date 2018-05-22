@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the thread parallelization of the
 // matrix-free class extensively
 
@@ -25,7 +23,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
 
 template <int dim, int fe_degree, typename number>
 void
@@ -144,7 +141,6 @@ sub_test()
     }
   deallog << std::endl;
 }
-
 
 template <int dim, int fe_degree>
 void

@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GeometricUtilities::Coordinates::to_spherical and
 // GeometricUtilities::Coordinates::from_spherical.
 
 #include "../tests.h"
 #include <deal.II/base/geometric_utilities.h>
-
 
 using namespace dealii;
 using namespace dealii::GeometricUtilities::Coordinates;
@@ -106,7 +103,6 @@ test3d()
   print<3>(dateline, from_spherical(sdateline));
   print<3>(to_spherical(dateline), sdateline);
 }
-
 
 int
 main()

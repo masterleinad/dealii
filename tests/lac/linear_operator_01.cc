@@ -21,7 +21,6 @@
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/vector_memory.templates.h>
 
-
 using namespace dealii;
 
 // Dummy vectors with different, non convertible types:
@@ -137,7 +136,6 @@ main()
     = [](RightVector& v, const LeftVector& u) { v.value = 4 * u.value; };
   multiply4.Tvmult_add
     = [](RightVector& v, const LeftVector& u) { v.value += 4 * u.value; };
-
 
   // Small unit tests for all functions:
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Legendre expansion in 1D for a function given using Legendre functions.
 
 #include "../tests.h"

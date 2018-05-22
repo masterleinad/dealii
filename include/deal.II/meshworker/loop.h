@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_loop_h
 #define dealii_mesh_worker_loop_h
 
@@ -67,8 +66,6 @@ namespace internal
     dinfo.assemble(*assembler);
   }
 } // namespace internal
-
-
 
 namespace MeshWorker
 {
@@ -151,8 +148,6 @@ namespace MeshWorker
      */
     bool cells_first;
   };
-
-
 
   /**
    * The function called by loop() to perform the required actions on a cell
@@ -412,7 +407,6 @@ namespace MeshWorker
       cell_worker(dof_info.cell, info.cell);
   }
 
-
   /**
    * The main work function of this namespace. It is a loop over all cells in
    * an iterator range, in which cell_action() is called for each cell.
@@ -477,7 +471,6 @@ namespace MeshWorker
       info,
       dof_info);
   }
-
 
   /**
    * Simplified interface for loop() if specialized for integration, using the

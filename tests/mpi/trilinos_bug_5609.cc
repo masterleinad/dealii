@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // not really a testcase for deal.II but one that verifies that the recurring
 // Trilinos bug 5609 is indeed fixed, see
 //   http://software.sandia.gov/bugzilla/show_bug.cgi?id=5609
-
 
 #include "../tests.h"
 #include <Epetra_FEVector.h>
@@ -28,7 +25,6 @@
 #include <mpi.h>
 
 #include <iostream>
-
 
 void
 test()
@@ -65,7 +61,6 @@ test()
   if(Comm.MyPID() == 0)
     AssertThrow(x1[0][0] == 1, ExcInternalError());
 }
-
 
 int
 main(int argc, char** argv)

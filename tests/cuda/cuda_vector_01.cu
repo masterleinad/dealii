@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check LinearAlgebra::CUDAWrappers::Vector assignment and import
 
 #include "../tests.h"
@@ -41,7 +40,6 @@ test()
   a.reinit(size);
   AssertThrow(a.size() == size, ExcMessage("Vector has the wrong size."));
 
-
   LinearAlgebra::ReadWriteVector<double> read_write_1(size);
   LinearAlgebra::ReadWriteVector<double> read_write_2(size);
   LinearAlgebra::ReadWriteVector<double> read_write_3(size);
@@ -54,7 +52,6 @@ test()
   a.import(read_write_2, VectorOperation::insert);
   b.import(read_write_1, VectorOperation::insert);
   c.import(read_write_2, VectorOperation::insert);
-
 
   read_write_3.import(a, VectorOperation::insert);
   for(unsigned int i = 0; i < size; ++i)

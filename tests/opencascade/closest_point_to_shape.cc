@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Makes a OpenCASCADE cicrular arc, and project a few points onto it.
-
 
 #include "../tests.h"
 
@@ -36,7 +34,6 @@
 #include <gp_Pnt.hxx>
 
 using namespace OpenCASCADE;
-
 
 int
 main()
@@ -67,7 +64,6 @@ main()
   // should give the same result.
   points.push_back(Point<3>(.1, 0, 3));
   points.push_back(Point<3>(.1, 0, 4));
-
 
   double       u, v;
   TopoDS_Shape sh;

@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, int spacedim>
 void
 BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
@@ -53,7 +52,6 @@ BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
     }
 }
 
-
 template <int dim, int spacedim>
 void
 BlockInfo::initialize_local(const DoFHandler<dim, spacedim>& dof)
@@ -70,7 +68,6 @@ BlockInfo::initialize_local(const DoFHandler<dim, spacedim>& dof)
   FETools::compute_block_renumbering(fe, local_renumbering, sizes, false);
   bi_local.reinit(sizes);
 }
-
 
 // explicit instantiations
 #include "block_info.inst"

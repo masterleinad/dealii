@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix. The mesh uses a hyperball mesh with hanging nodes for a
@@ -48,7 +46,6 @@ std::ofstream logfile("output");
 #include <iostream>
 
 const double global_coefficient = 0.1;
-
 
 template <int dim, int degree, typename VectorType>
 class MatrixFreeTest
@@ -95,8 +92,6 @@ private:
   const MatrixFree<dim, Number>& data;
 };
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -125,7 +120,6 @@ test()
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
-
 
   FE_Q<dim>       fe_sca(QGaussLobatto<1>(fe_degree + 1));
   FESystem<dim>   fe(fe_sca, dim);
@@ -268,8 +262,6 @@ test()
           << error / relative << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

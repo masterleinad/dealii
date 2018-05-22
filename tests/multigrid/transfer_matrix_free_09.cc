@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that MGTransferMatrixFree::clear works correctly by comparing a
 // cleared transfer system with a freshly constructed one
 #include "../tests.h"
@@ -26,7 +25,6 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer_matrix_free.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim, typename Number>
 void
@@ -105,7 +103,6 @@ check(const FiniteElement<dim>& fe)
         }
     }
 }
-
 
 int
 main(int argc, char** argv)

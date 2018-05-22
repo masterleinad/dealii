@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -22,8 +21,6 @@
 //   FETools::get_fe_by_name
 // like fe_tools_09 and fe_tools_10, but this time with no dimension
 // marker at all (see the documentation)
-
-
 
 template <int dim>
 std::string
@@ -41,8 +38,6 @@ modify_name(const std::string& name)
 
   return new_name;
 }
-
-
 
 template <int dim>
 void

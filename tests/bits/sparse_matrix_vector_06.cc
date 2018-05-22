@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::matrix_norm_square
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v)
@@ -61,8 +58,6 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

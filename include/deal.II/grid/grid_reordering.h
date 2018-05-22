@@ -16,7 +16,6 @@
 #ifndef dealii_grid_reordering_h
 #define dealii_grid_reordering_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/grid/tria.h>
 
@@ -30,7 +29,6 @@ DEAL_II_NAMESPACE_OPEN
  */
 DeclExceptionMsg(ExcMeshNotOrientable,
                  "The edges of the mesh are not consistently orientable.");
-
 
 /**
  * This class reorders the vertices of cells such that they meet the standard
@@ -670,7 +668,6 @@ public:
     const std::vector<Point<spacedim>>& all_vertices,
     std::vector<CellData<dim>>&         original_cells);
 };
-
 
 // declaration of explicit specializations
 template <>

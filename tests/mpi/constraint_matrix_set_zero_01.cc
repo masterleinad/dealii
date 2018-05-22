@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix::set_zero(Vector) for parallel vectors.
 // this documents a bug introduced in r29678 for block vectors
 // that was fixed in 29940.
@@ -25,8 +23,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/lac/petsc_parallel_block_vector.h>
 #include <deal.II/lac/petsc_parallel_vector.h>
-
-
 
 void
 test()
@@ -71,7 +67,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

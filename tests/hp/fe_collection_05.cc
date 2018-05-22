@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the results of FECollection::find_least_face_dominating_fe(), namely for:
 // {Q1,Q2,Q3,Q4}                with {2,3} => Q3          2
 // {Q1xQ1, Q2xQ2, Q3xQ4, Q4xQ3} with {2,3} => Q2xQ2       1
@@ -26,14 +24,11 @@
 // {Q1,Q2,Q4,Q3}                with {3}   => Q3          3
 // {Q3,Q4,Q1,Q1}                with {2,3} => Q1          2    // self-domination
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -107,7 +102,6 @@ test()
       FESystem<dim>(FE_Nothing<dim>(1, true), 1, FE_Q<dim>(1), 1));
     deallog << fe_collection.find_least_face_dominating_fe(fes) << std::endl;
   }
-
 
   // {Q1xQ1,Q1xQ1,Q2xQ1,Q1,Q2}
   {

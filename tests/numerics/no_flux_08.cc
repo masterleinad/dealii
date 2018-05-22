@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we used to get this crash:
 //
 // An error occurred in line <4646> of file </w/heister/deal-trunk/deal.II/include/deal.II/numerics/vectors.templates.h> in function
@@ -39,7 +37,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 template <int dim>
 void
 check()
@@ -63,8 +60,6 @@ check()
 
   cm.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

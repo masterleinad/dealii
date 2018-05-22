@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // find_active_cell_around_point() stops working if some cells are refined in 3d.
 // this is caused by a bug in GridTools::find_cells_adjacent_to_vertex that got fixed in r 25562.
 
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 #include <deal.II/fe/mapping_q1.h>
 

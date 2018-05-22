@@ -16,7 +16,6 @@
 #ifndef dealii_thread_management_h
 #  define dealii_thread_management_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
 #  include <deal.II/base/multithread_info.h>
@@ -36,7 +35,6 @@
 #  include <utility>
 #  include <vector>
 
-
 #  ifdef DEAL_II_WITH_THREADS
 #    ifdef DEAL_II_USE_MT_POSIX
 #      include <pthread.h>
@@ -45,13 +43,10 @@
 #    include <tbb/tbb_stddef.h>
 #  endif
 
-
-
 DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup threads */
 /*@{*/
-
 
 /**
  * A namespace for the implementation of thread management in deal.II. Most of
@@ -128,8 +123,6 @@ namespace Threads
     {}
   };
 
-
-
   /**
    * This class is used in single threaded mode instead of a class
    * implementing real condition variable semantics. It allows to write
@@ -179,8 +172,6 @@ namespace Threads
     wait(DummyThreadMutex&) const
     {}
   };
-
-
 
   /**
    * This class is used instead of a true barrier class when not using
@@ -242,7 +233,6 @@ namespace Threads
 
     //@}
   };
-
 
 #  ifdef DEAL_II_WITH_THREADS
 
@@ -318,7 +308,6 @@ namespace Threads
     Mutex(const Mutex&) : mutex()
     {}
 
-
     /**
      * Copy operators. As discussed in this class's documentation, no state
      * is copied from the object given as argument.
@@ -328,7 +317,6 @@ namespace Threads
     {
       return *this;
     }
-
 
     /**
      * Acquire a mutex.
@@ -360,7 +348,6 @@ namespace Threads
      */
     friend class ConditionVariable;
   };
-
 
   /**
    * Class implementing a condition variable. The semantics of this class and
@@ -414,7 +401,6 @@ namespace Threads
     std::condition_variable condition_variable;
   };
 
-
   /**
    * Implementation of a thread barrier class, based on the POSIX thread
    * functions. POSIX barriers are a relatively new feature and are not
@@ -466,7 +452,6 @@ namespace Threads
 #    endif
   };
 
-
   /**
    * If using POSIX functions, then alias the POSIX wrapper classes to the
    * names we use throughout the library.
@@ -497,7 +482,6 @@ namespace Threads
 #  endif
 
 } // namespace Threads
-
 
 namespace Threads
 {
@@ -739,7 +723,6 @@ namespace Threads
       }
     };
 
-
     /**
      * @internal
      *
@@ -774,7 +757,6 @@ namespace Threads
       }
     };
 
-
     /**
      * @internal
      *
@@ -794,8 +776,6 @@ namespace Threads
     };
   } // namespace internal
 
-
-
   namespace internal
   {
     template <typename RT>
@@ -806,15 +786,12 @@ namespace Threads
       ret_val.set(function());
     }
 
-
     inline void
     call(const std::function<void()>& function, internal::return_value<void>&)
     {
       function();
     }
   } // namespace internal
-
-
 
   namespace internal
   {
@@ -912,7 +889,6 @@ namespace Threads
         thread           = std::thread(thread_entry_point, function, ret_val);
       }
 
-
       /**
        * Wait for the thread to end.
        */
@@ -1003,7 +979,6 @@ namespace Threads
 
 #  endif
   } // namespace internal
-
 
   /**
    * An object that represents a spawned thread. This object can be freely
@@ -1122,7 +1097,6 @@ namespace Threads
       return static_cast<bool>(thread_descriptor);
     }
 
-
     /**
      * Check for equality of thread objects. Since objects of this class store
      * an implicit pointer to an object that exists exactly once for each
@@ -1143,7 +1117,6 @@ namespace Threads
     std::shared_ptr<internal::ThreadDescriptor<RT>> thread_descriptor;
   };
 
-
   namespace internal
   {
     /**
@@ -1163,8 +1136,6 @@ namespace Threads
       }
     };
 
-
-
     /**
      * A general template that returns std::ref(t) if t is of reference
      * type, and t otherwise.
@@ -1183,8 +1154,6 @@ namespace Threads
     };
   } // namespace internal
 
-
-
   // ----------- thread starters for functions not taking any parameters
 
   /**
@@ -1201,8 +1170,6 @@ namespace Threads
   {
     return Thread<RT>(function);
   }
-
-
 
   /**
    * Overload of the new_thread() function for objects that can be called like a
@@ -1276,8 +1243,6 @@ namespace Threads
     return Thread<return_type>(std::function<return_type()>(function_object));
   }
 
-
-
   /**
    * Overload of the new_thread function for non-member or static member
    * functions.
@@ -1291,8 +1256,6 @@ namespace Threads
     return new_thread(std::function<RT()>(
       std::bind(fun_ptr, internal::maybe_make_ref<Args>::act(args)...)));
   }
-
-
 
   /**
    * Overload of the non-const new_thread function for member functions.
@@ -1372,10 +1335,8 @@ namespace Threads
     std::list<Thread<RT>> threads;
   };
 
-
   template <typename>
   class Task;
-
 
   namespace internal
   {
@@ -1518,20 +1479,16 @@ namespace Threads
       void
       join();
 
-
       template <typename>
       friend struct TaskEntryPoint;
       friend class dealii::Threads::Task<RT>;
     };
-
-
 
     template <typename RT>
     inline TaskDescriptor<RT>::TaskDescriptor(
       const std::function<RT()>& function)
       : function(function), task(nullptr), task_is_done(false)
     {}
-
 
     template <typename RT>
     inline void
@@ -1556,15 +1513,11 @@ namespace Threads
 #    endif
     }
 
-
-
     template <typename RT>
     TaskDescriptor<RT>::TaskDescriptor() : task_is_done(false)
     {
       Assert(false, ExcInternalError());
     }
-
-
 
     template <typename RT>
     TaskDescriptor<RT>::TaskDescriptor(const TaskDescriptor&)
@@ -1574,8 +1527,6 @@ namespace Threads
       // can't be copied
       Assert(false, ExcInternalError());
     }
-
-
 
     template <typename RT>
     inline TaskDescriptor<RT>::~TaskDescriptor()
@@ -1598,7 +1549,6 @@ namespace Threads
       task->destroy(*task);
     }
 
-
     template <typename RT>
     TaskDescriptor<RT>&
     TaskDescriptor<RT>::operator=(const TaskDescriptor&)
@@ -1608,7 +1558,6 @@ namespace Threads
       Assert(false, ExcInternalError());
       return *this;
     }
-
 
     template <typename RT>
     inline void
@@ -1630,8 +1579,6 @@ namespace Threads
       task_is_done = true;
       task->wait_for_all();
     }
-
-
 
 #  else // no threading enabled
 
@@ -1677,8 +1624,6 @@ namespace Threads
 
   } // namespace internal
 
-
-
   /**
    * Describes one task object based on the Threading Building Blocks' Task.
    * Note that the call to join() must be executed on the same thread as the
@@ -1709,7 +1654,6 @@ namespace Threads
       task_descriptor->queue_task();
     }
 
-
     /**
      * Copy constructor.
      *
@@ -1718,7 +1662,6 @@ namespace Threads
      */
     Task(const Task<RT>& t) : task_descriptor(t.task_descriptor)
     {}
-
 
     /**
      * Default constructor. You can't do much with a task object constructed
@@ -1766,7 +1709,6 @@ namespace Threads
       return (task_descriptor
               != std::shared_ptr<internal::TaskDescriptor<RT>>());
     }
-
 
     /**
      * Get the return value of the function of the task. Since it is
@@ -1818,7 +1760,6 @@ namespace Threads
       return task_descriptor->ret_val.get();
     }
 
-
     /**
      * Check for equality of task objects. Since objects of this class store
      * an implicit pointer to an object that exists exactly once for each
@@ -1852,8 +1793,6 @@ namespace Threads
     std::shared_ptr<internal::TaskDescriptor<RT>> task_descriptor;
   };
 
-
-
   /**
    * Overload of the new_task function for objects that can be converted to
    * std::function<RT ()>, i.e. anything that can be called like a
@@ -1868,8 +1807,6 @@ namespace Threads
   {
     return Task<RT>(function);
   }
-
-
 
   /**
    * Overload of the new_task function for objects that can be called like a
@@ -1944,8 +1881,6 @@ namespace Threads
     return Task<return_type>(std::function<return_type()>(function_object));
   }
 
-
-
   /**
    * Overload of the new_task function for non-member or static member
    * functions.
@@ -1959,8 +1894,6 @@ namespace Threads
     return new_task(std::function<RT()>(
       std::bind(fun_ptr, internal::maybe_make_ref<Args>::act(args)...)));
   }
-
-
 
   /**
    * Overload of the non-const new_task function.
@@ -1993,7 +1926,6 @@ namespace Threads
       fun_ptr, std::cref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
 #  endif
-
 
   // ------------------------ TaskGroup -------------------------------------
 
@@ -2051,7 +1983,6 @@ namespace Threads
 /**
  * @}
  */
-
 
 //---------------------------------------------------------------------------
 DEAL_II_NAMESPACE_CLOSE

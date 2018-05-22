@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // During the conversion to 64-bit indices in Trilinos, we started to end up
 // with vectors on the locally_owned subset that returned true on
 // has_ghost_elements(). this shouldn't happen.
@@ -36,8 +34,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 void
 test()
 {
@@ -56,7 +52,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

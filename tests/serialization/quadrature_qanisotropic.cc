@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for QAnisotropic
 
 #include "serialization.h"
@@ -46,7 +45,6 @@ test()
 
   verify(q1, q2);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Show the shape functions of the RT_Bubbles element on a grid
 // with only one cell. This cell is rotated, stretched, scaled, etc,
 // and on each of these transformed cells we evaluate the shape
@@ -33,23 +32,17 @@
 #include <string>
 #include <vector>
 
-
-
 Point<2>
 stretch_coordinates(const Point<2> p)
 {
   return Point<2>(2 * p(0), p(1));
 }
 
-
-
 Point<2>
 tilt_coordinates(const Point<2> p)
 {
   return Point<2>(p(0) + p(1), p(1));
 }
-
-
 
 void transform_grid(Triangulation<2>& tria, const unsigned int transform)
 {
@@ -82,8 +75,6 @@ void transform_grid(Triangulation<2>& tria, const unsigned int transform)
         Assert(false, ExcNotImplemented());
     };
 }
-
-
 
 template <int dim>
 void
@@ -158,8 +149,6 @@ plot_shape_functions(const unsigned int degree)
       deallog.pop();
     }
 }
-
-
 
 int
 main()

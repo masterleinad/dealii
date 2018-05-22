@@ -40,12 +40,10 @@
 #  include <cfenv>
 #endif
 
-
 // silence extra diagnostics in the testsuite
 #ifdef DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #endif
-
 
 #ifdef DEAL_II_MSVC
 // Under windows tests will hang and show a debugging dialog box from the
@@ -64,7 +62,6 @@ struct DisableWindowsDebugRuntimeDialog
 // implicitly use the deal.II namespace everywhere, without us having to say
 // so in each and every testcase
 using namespace dealii;
-
 
 // ------------------------------ Utility functions used in tests -----------------------
 
@@ -136,7 +133,6 @@ get_real_assert_zero_imag(const number& a)
 {
   return a;
 }
-
 
 // Cygwin has a different implementation for rand() which causes many tests to fail.
 // This here is a reimplementation that gives the same sequence of numbers as a program
@@ -230,8 +226,6 @@ namespace Testing
   }
 } // namespace Testing
 
-
-
 // Get a uniformly distributed random value between min and max
 template <typename T = double>
 T
@@ -241,8 +235,6 @@ random_value(const T& min = static_cast<T>(0), const T& max = static_cast<T>(1))
          + (max - min)
              * (static_cast<T>(Testing::rand()) / static_cast<T>(RAND_MAX));
 }
-
-
 
 // Construct a uniformly distributed random point, with each coordinate
 // between min and max
@@ -256,8 +248,6 @@ random_point(const double& min = 0.0, const double& max = 1.0)
     p[i] = random_value(min, max);
   return p;
 }
-
-
 
 // given the name of a file, copy it to deallog
 // and then delete it
@@ -278,7 +268,6 @@ cat_file(const char* filename)
   std::remove(filename);
 }
 
-
 /*
  * Some tests (notably base/thread*, base/task*) create output that
  * comes out in random order. To make the output of these tests comparable,
@@ -294,7 +283,6 @@ sort_file_contents(const std::string& filename)
     (std::string("LC_ALL=C sort ") + filename + " -o " + filename).c_str());
   AssertThrow(error == 0, ExcInternalError());
 }
-
 
 /*
  * simple ADLER32 checksum for a range of chars
@@ -321,8 +309,6 @@ checksum(const IT& begin, const IT& end)
   return (b << 16) | a;
 }
 
-
-
 /*
  * Replace all occurrences of ' &' by '& ' from the given file to hopefully be
  * more compiler independent with respect to __PRETTY_FUNCTION__
@@ -341,7 +327,6 @@ unify_pretty_function(const std::string& text)
   t             = Utilities::replace_in_string(t, "virtual ", "");
   return t;
 }
-
 
 /*
  * Test that a solver converged within a certain range of iteration steps.
@@ -394,7 +379,6 @@ filter_out_small_numbers(const Number number, const double tolerance)
 
 // ------------------------------ Functions used in initializing subsystems -------------------
 
-
 /*
  * If we run 64 tests at the same time on a 64-core system, and
  * each of them runs 64 threads, then we get astronomical loads.
@@ -414,8 +398,6 @@ struct LimitConcurrency
     MultithreadInfo::set_thread_limit(testing_max_num_threads());
   }
 } limit_concurrency;
-
-
 
 #ifdef DEAL_II_WITH_PETSC
 #  include <petscsys.h>
@@ -461,7 +443,6 @@ namespace
 } // namespace
 #endif
 
-
 // Function to initialize deallog. Normally, it should be called at
 // the beginning of main() like
 //
@@ -482,7 +463,6 @@ initlog(bool console = false)
   deallog.depth_console(console ? 10 : 0);
 }
 
-
 inline void
 mpi_initlog(const bool console = false)
 {
@@ -501,8 +481,6 @@ mpi_initlog(const bool console = false)
   Assert(false, ExcInternalError());
 #endif
 }
-
-
 
 /**
  * A helper class that gives each MPI process its own output file
@@ -580,8 +558,6 @@ struct MPILogInitAll
   }
 };
 
-
-
 /* Override the tbb assertion handler in order to print a stacktrace:*/
 
 #ifdef TBB_DO_ASSERT
@@ -595,7 +571,6 @@ namespace deal_II_exceptions
   extern bool show_stacktrace;
 } // namespace deal_II_exceptions
 DEAL_II_NAMESPACE_CLOSE
-
 
 void
 new_tbb_assertion_handler(const char* file,
@@ -627,9 +602,7 @@ struct SetTBBAssertionHandler
 
 #endif /*TBB_DO_ASSERT*/
 
-
 // ------------------------------ Adjust global variables in deal.II -----------------------
-
 
 DEAL_II_NAMESPACE_OPEN
 /*
@@ -646,8 +619,6 @@ struct SwitchOffStacktrace
   }
 } deal_II_stacktrace_dummy;
 
-
-
 /* Enable floating point exceptions in debug mode and if we have
    detected that they are usable: */
 
@@ -661,7 +632,6 @@ struct EnableFPE
 #endif
   }
 } deal_II_enable_fpe;
-
 
 /* Set grainsizes for parallel mode smaller than they would otherwise be.
  * This is used to test that the parallel algorithms in lac/ work alright:
@@ -719,6 +689,5 @@ operator<<(LogStream& out, const std::vector<double>& v)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
-
 
 #endif // dealii_tests_h

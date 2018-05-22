@@ -394,8 +394,6 @@ private:
   friend class MappingQ;
 };
 
-
-
 /**
  * Implementation of scalar, discontinuous tensor product elements based on
  * Lagrange polynomials with arbitrary nodes. The primary purpose of this
@@ -447,8 +445,6 @@ public:
   clone() const override;
 };
 
-
-
 /**
  * Implementation of scalar, discontinuous tensor product elements based on
  * Legendre polynomials, described by the tensor product of the polynomial
@@ -490,8 +486,6 @@ public:
   clone() const override;
 };
 
-
-
 /**
  * Implementation of scalar, discontinuous tensor product elements based on
  * Hermite-like polynomials, described by the polynomial space
@@ -531,7 +525,6 @@ public:
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 };
-
 
 /*@}*/
 

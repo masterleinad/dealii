@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that we can do include statements. the current test verifies what
 // happens if such an include statement fails
 
@@ -43,7 +41,6 @@ check(const char* p)
   // have still picked up the first statement:
   deallog << "test_1=" << prm.get("test_1") << std::endl;
 }
-
 
 int
 main()

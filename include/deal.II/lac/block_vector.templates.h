@@ -16,7 +16,6 @@
 #ifndef dealii_block_vector_templates_h
 #define dealii_block_vector_templates_h
 
-
 #include <algorithm>
 #include <cmath>
 #include <deal.II/base/config.h>
@@ -32,21 +31,17 @@ BlockVector<Number>::BlockVector(const unsigned int n_blocks,
   reinit(n_blocks, block_size);
 }
 
-
-
 template <typename Number>
 BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes)
 {
   reinit(block_sizes, false);
 }
 
-
 template <typename Number>
 BlockVector<Number>::BlockVector(const BlockIndices& n)
 {
   reinit(n, false);
 }
-
 
 template <typename Number>
 BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
@@ -59,8 +54,6 @@ BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
     this->components[i] = v.components[i];
 }
 
-
-
 template <typename Number>
 template <typename OtherNumber>
 BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
@@ -68,8 +61,6 @@ BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
   reinit(v, true);
   *this = v;
 }
-
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -87,7 +78,6 @@ BlockVector<Number>::BlockVector(const TrilinosWrappers::MPI::BlockVector& v)
 
 #endif
 
-
 template <typename Number>
 void
 BlockVector<Number>::reinit(const unsigned int n_blocks,
@@ -97,7 +87,6 @@ BlockVector<Number>::reinit(const unsigned int n_blocks,
   std::vector<size_type> block_sizes(n_blocks, block_size);
   reinit(block_sizes, omit_zeroing_entries);
 }
-
 
 template <typename Number>
 void
@@ -112,7 +101,6 @@ BlockVector<Number>::reinit(const std::vector<size_type>& block_sizes,
     this->components[i].reinit(block_sizes[i], omit_zeroing_entries);
 }
 
-
 template <typename Number>
 void
 BlockVector<Number>::reinit(const BlockIndices& n,
@@ -125,7 +113,6 @@ BlockVector<Number>::reinit(const BlockIndices& n,
   for(size_type i = 0; i < this->n_blocks(); ++i)
     this->components[i].reinit(n.block_size(i), omit_zeroing_entries);
 }
-
 
 template <typename Number>
 template <typename Number2>
@@ -141,8 +128,6 @@ BlockVector<Number>::reinit(const BlockVector<Number2>& v,
     this->block(i).reinit(v.block(i), omit_zeroing_entries);
 }
 
-
-
 #ifdef DEAL_II_WITH_TRILINOS
 template <typename Number>
 inline BlockVector<Number>&
@@ -153,7 +138,6 @@ BlockVector<Number>::operator=(const TrilinosWrappers::MPI::BlockVector& v)
 }
 #endif
 
-
 template <typename Number>
 void
 BlockVector<Number>::swap(BlockVector<Number>& v)
@@ -162,8 +146,6 @@ BlockVector<Number>::swap(BlockVector<Number>& v)
 
   dealii::swap(this->block_indices, v.block_indices);
 }
-
-
 
 template <typename Number>
 void
@@ -182,8 +164,6 @@ BlockVector<Number>::print(std::ostream&      out,
     }
 }
 
-
-
 template <typename Number>
 void
 BlockVector<Number>::block_write(std::ostream& out) const
@@ -192,8 +172,6 @@ BlockVector<Number>::block_write(std::ostream& out) const
     this->components[i].block_write(out);
 }
 
-
-
 template <typename Number>
 void
 BlockVector<Number>::block_read(std::istream& in)
@@ -201,8 +179,6 @@ BlockVector<Number>::block_read(std::istream& in)
   for(size_type i = 0; i < this->n_blocks(); ++i)
     this->components[i].block_read(in);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

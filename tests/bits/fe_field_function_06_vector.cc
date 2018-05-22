@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // FEFieldFunction ran into an assertion after
 // Mapping::transform_real_to_unit_cell started throwing exceptions
 // when it couldn't find the point on the reference cell that belongs
@@ -36,7 +34,6 @@
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -50,8 +47,6 @@ public:
     v[0] = p.square();
   }
 };
-
-
 
 template <int dim>
 void
@@ -108,7 +103,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

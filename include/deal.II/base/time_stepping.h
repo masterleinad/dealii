@@ -16,7 +16,6 @@
 #ifndef dealii_time_stepping_h
 #define dealii_time_stepping_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/signaling_nan.h>
 
@@ -70,8 +69,6 @@ namespace TimeStepping
     invalid
   };
 
-
-
   /**
    * Reason for exiting evolve_one_time_step when using an embedded method:
    * DELTA_T (the time step is in the valid range), MIN_DELTA_T (the time step
@@ -84,8 +81,6 @@ namespace TimeStepping
     MIN_DELTA_T,
     MAX_DELTA_T
   };
-
-
 
   /**
    * Abstract class for time stepping methods. These methods assume that the
@@ -133,8 +128,6 @@ namespace TimeStepping
     virtual const Status&
     get_status() const = 0;
   };
-
-
 
   /**
    * Base class for the Runge-Kutta method
@@ -222,8 +215,6 @@ namespace TimeStepping
      */
     std::vector<std::vector<double>> a;
   };
-
-
 
   /**
    * ExplicitRungeKutta is derived from RungeKutta and implement the explicit
@@ -322,8 +313,6 @@ namespace TimeStepping
      */
     Status status;
   };
-
-
 
   /**
    * This class is derived from RungeKutta and implement the implicit methods.
@@ -469,8 +458,6 @@ namespace TimeStepping
      */
     Status status;
   };
-
-
 
   /**
    * This is class is derived from RungeKutta and implement embedded explicit

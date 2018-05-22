@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing works as intended
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -32,8 +29,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim>
 void
@@ -75,8 +70,6 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
-
-
   // .... new test code beyond fe_nothing_01.cc
 
   hp::QCollection<dim> quadrature_collection;
@@ -117,8 +110,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

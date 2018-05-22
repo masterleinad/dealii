@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as previous tests except that we initialize the 'TensorProductMatrix'
 // with the same mass and derivative matrix in each tensor direction,
 // respectively.
@@ -133,7 +132,6 @@ do_test(const unsigned int size)
     false, mat.m(), v3.begin(), offsets.data(), vec_flat.begin());
   deallog << "Verification of inverse: " << vec_flat.linfty_norm() << std::endl;
 }
-
 
 int
 main()

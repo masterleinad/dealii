@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in GridGenerator::truncated_cone
 // (no cells are returned if half_length < 0.5*radius for dim=3)
 
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -72,7 +69,6 @@ check<3>()
 
   GridOut().write_gnuplot(triangulation, deallog.get_file_stream());
 }
-
 
 int
 main()

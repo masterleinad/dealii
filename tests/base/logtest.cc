@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // some tests for the logstream class, writing output, pushing and
 // popping levels, etc
 
-
 #include "../tests.h"
 #include <limits>
-
 
 int
 main()

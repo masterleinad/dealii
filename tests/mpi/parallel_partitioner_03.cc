@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // let processors write ghost_targets, import_indices, import_targets to file
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/base/utilities.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -99,8 +97,6 @@ test()
         }
     }
 }
-
-
 
 int
 main(int argc, char** argv)

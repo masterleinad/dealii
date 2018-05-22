@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just check initialising SLEPc can be done and that it initialises
 // PETSc in the way we expect, ie. *a* PETSc object exist.
 
@@ -46,7 +44,6 @@ main(int argc, char** argv)
         logfile << "   pi:           " << pi << std::endl
                 << "   two:          " << two << std::endl
                 << "   two times pi: " << two * pi << std::endl;
-
 
         logfile << "Finalizing SLEPc (PETSc): " << std::flush;
       }

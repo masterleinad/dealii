@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // derived from _01, but with maximal cell number limit
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test(const double max_n_cell_ratio)
@@ -102,7 +98,6 @@ test(const double max_n_cell_ratio)
     }
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -110,9 +105,7 @@ main(int argc, char* argv[])
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-
   deallog.push(Utilities::int_to_string(myid));
-
 
   // test effective maximal cell number limit
   {
@@ -130,7 +123,6 @@ main(int argc, char* argv[])
   }
   MPI_Barrier(MPI_COMM_WORLD);
 
-
   // cell number already exceeded maximal cell number limit
   {
     const double max_n_cell_ratio = 0.8;
@@ -145,7 +137,6 @@ main(int argc, char* argv[])
       test(max_n_cell_ratio);
   }
   MPI_Barrier(MPI_COMM_WORLD);
-
 
   // test non-effective maximal cell number limit
   {

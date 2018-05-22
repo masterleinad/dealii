@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that computation of hp constraints works for DGPNonparametric elements
 // correctly on a uniformly refined mesh for functions of degree q
 
 char logname[] = "output";
 
-
 #include "../hp/hp_constraints_common.h"
-
 
 template <int dim>
 void

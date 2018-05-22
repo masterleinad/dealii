@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that if multiple threads are waiting for one single thread, all of the
 // waiting ones will be woken up.
 
@@ -21,7 +20,6 @@
 #include <unistd.h>
 
 #include <deal.II/base/thread_management.h>
-
 
 void
 worker()
@@ -40,8 +38,6 @@ waiter(int i)
 
   deallog << "Waiting thread " << i << " was woken up." << std::endl;
 }
-
-
 
 int
 main()

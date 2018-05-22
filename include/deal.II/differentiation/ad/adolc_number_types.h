@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace Differentiation
 {
   namespace AD
@@ -37,7 +36,6 @@ namespace Differentiation
     struct is_adolc_number : std::false_type
     {};
 
-
     /**
      * A struct to indicate whether a given @p NumberType is a taped
      * Adol-C number or not. By default, numbers are not considered to
@@ -48,7 +46,6 @@ namespace Differentiation
     template <typename NumberType, typename = void>
     struct is_adolc_taped_number : std::false_type
     {};
-
 
     /**
      * A struct to indicate whether a given @p NumberType is a tapeless
@@ -63,9 +60,7 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #ifdef DEAL_II_WITH_ADOLC
 
@@ -96,12 +91,9 @@ DeclExceptionMsg(ExcADOLCAdvancedBranching,
                  "This function has not yet been implemented for taped Adol-C "
                  "numbers when the advanced branching feature is activated.");
 
-
 /* --------------------------- inline and template functions and specializations ------------------------- */
 
-
 #  ifndef DOXYGEN
-
 
 namespace Differentiation
 {
@@ -127,7 +119,6 @@ namespace Differentiation
           = std::numeric_limits<unsigned int>::max();
       };
 
-
       /**
        * A specialization for the information struct for tapeless Adol-C
        * numbers.
@@ -144,7 +135,6 @@ namespace Differentiation
         typedef double            derivative_type;
         static const unsigned int n_supported_derivative_levels = 1;
       };
-
 
       template <typename ADNumberType>
       struct Marking<
@@ -229,7 +219,6 @@ namespace Differentiation
         }
       };
 
-
       /**
       * A struct to help extract certain information associated with
       * taped Adol-C auto-differentiable numbers.
@@ -248,7 +237,6 @@ namespace Differentiation
           return x.getValue();
         }
 
-
         /**
          * Extract the number of directional derivatives.
          *
@@ -260,7 +248,6 @@ namespace Differentiation
         {
           return 0;
         }
-
 
         /**
          * Extract the directional derivative in the specified @p direction.
@@ -280,7 +267,6 @@ namespace Differentiation
         }
       };
 
-
       /**
        * A struct to help extract certain information associated with
        * tapeless Adol-C auto-differentiable numbers.
@@ -299,7 +285,6 @@ namespace Differentiation
           return x.getValue();
         }
 
-
         /**
          * Extract the number of directional derivatives.
          */
@@ -309,7 +294,6 @@ namespace Differentiation
           // This is a global function call...
           return adtl::getNumDir();
         }
-
 
         /**
          * Extract the directional derivative in the specified @p direction.
@@ -328,8 +312,6 @@ namespace Differentiation
       };
 
     } // namespace internal
-
-
 
     /**
      * Specialization of the general AdolCWrappers::ADNumberTraits class that
@@ -351,8 +333,6 @@ namespace Differentiation
                     "Incorrect template type selected for taped ad_type");
       static_assert(is_taped == true, "Incorrect setting for taping");
     };
-
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -377,8 +357,6 @@ namespace Differentiation
       static_assert(is_taped == true, "Incorrect setting for taping");
     };
 
-
-
     /**
      * Specialization of the general ADNumberTraits class that
      * provides relevant information for auto-differentiable numbers.
@@ -400,8 +378,6 @@ namespace Differentiation
                     "Incorrect template type selected for tapeless ad_type");
       static_assert(is_tapeless == true, "Incorrect setting for taping");
     };
-
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -426,8 +402,6 @@ namespace Differentiation
       static_assert(is_tapeless == true, "Incorrect setting for taping");
     };
 
-
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) taped Adol-C number type.
@@ -437,7 +411,6 @@ namespace Differentiation
       : NumberTraits<typename ADNumberTraits<adouble>::scalar_type,
                      NumberTypes::adolc_taped>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -450,7 +423,6 @@ namespace Differentiation
           NumberTypes::adolc_taped>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) tapeless Adol-C number type.
@@ -460,7 +432,6 @@ namespace Differentiation
       : NumberTraits<typename ADNumberTraits<adtl::adouble>::scalar_type,
                      NumberTypes::adolc_tapeless>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -474,7 +445,6 @@ namespace Differentiation
           NumberTypes::adolc_tapeless>
     {};
 
-
     /**
      * Specialization of the struct for the case when the input template
      * parameter is a (real or complex) taped Adol-C number.
@@ -487,7 +457,6 @@ namespace Differentiation
         == NumberTypes::adolc_taped>::type> : std::true_type
     {};
 
-
     /**
      * Specialization of the struct for the case when the input template
      * parameter is a (real or complex) tapeless Adol-C number.
@@ -499,7 +468,6 @@ namespace Differentiation
         ADNumberTraits<typename std::decay<NumberType>::type>::type_code
         == NumberTypes::adolc_tapeless>::type> : std::true_type
     {};
-
 
     /**
      * Specialization of the struct for the case when the input template
@@ -516,12 +484,9 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-
 #  endif // DOXYGEN
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif // DEAL_II_WITH_ADOLC
 

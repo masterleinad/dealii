@@ -120,8 +120,6 @@ ConvergenceTable::evaluate_convergence_rates(
     }
 }
 
-
-
 void
 ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
                                              const RateMode     rate_mode)
@@ -211,8 +209,6 @@ ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
     }
 }
 
-
-
 void
 ConvergenceTable::omit_column_from_convergence_rate_evaluation(
   const std::string& key)
@@ -222,8 +218,6 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
   const std::map<std::string, Column>::iterator col_iter = columns.find(key);
   col_iter->second.flag                                  = 1;
 }
-
-
 
 void
 ConvergenceTable::evaluate_all_convergence_rates(
@@ -237,8 +231,6 @@ ConvergenceTable::evaluate_all_convergence_rates(
       evaluate_convergence_rates(
         col_iter->first, reference_column_key, rate_mode);
 }
-
-
 
 void
 ConvergenceTable::evaluate_all_convergence_rates(const RateMode rate_mode)

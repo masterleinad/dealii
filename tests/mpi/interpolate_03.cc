@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // In Trilinos 10.12.1 interpolate() hangs with a small number of cells (smaller than the number of CPUs). This works fine in 10.4.2 and 10.8.5
 // As it turns out, this is because vector creation after interpolate()
 // reacts differently in 10.12.1 and causes a hang. The bug is
@@ -37,8 +35,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class LinearFunction : public Function<dim>
 {
@@ -49,7 +45,6 @@ public:
     return 1;
   }
 };
-
 
 template <int dim>
 void
@@ -74,14 +69,12 @@ test()
     deallog << "norm = " << norm << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

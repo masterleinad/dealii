@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create a parallel DoFHandler and output data on a single
 // cell. DataOut was not prepared to handle situations where a
 // processor has no active cells at all.
@@ -38,8 +36,6 @@
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
-
 
 template <int dim>
 void
@@ -78,14 +74,12 @@ test()
     }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

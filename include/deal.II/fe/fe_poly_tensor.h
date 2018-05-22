@@ -16,7 +16,6 @@
 #ifndef dealii_fe_poly_tensor_h
 #define dealii_fe_poly_tensor_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/quadrature.h>
@@ -24,7 +23,6 @@
 #include <deal.II/base/thread_management.h>
 #include <deal.II/fe/fe.h>
 #include <deal.II/lac/full_matrix.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -206,7 +204,6 @@ protected:
    * cell to the mesh cell.
    */
   MappingType mapping_type;
-
 
   /* NOTE: The following function has its definition inlined into the class declaration
      because we otherwise run into a compiler error with MS Visual Studio. */
@@ -419,8 +416,6 @@ protected:
     mutable std::vector<Tensor<3, spacedim>> transformed_shape_hessians;
     mutable std::vector<Tensor<3, dim>> untransformed_shape_hessian_tensors;
   };
-
-
 
   /**
    * The polynomial space. Its type is given by the template parameter

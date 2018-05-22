@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test direction vector on a cylinder surface. this is like the _07
 // test, but choose points in such a way that we wrap around the
 // periodicity in phi
 
 #include "../tests.h"
 #include <deal.II/grid/manifold.h>
-
 
 Tensor<1, 3>
   periodicity(static_cast<Tensor<1, 3>>(Point<3>(0, 2 * numbers::PI, 0)));
@@ -53,7 +51,6 @@ public:
 
     return Point<3>(r, phi, z);
   }
-
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim>& chart_point) const override
@@ -90,8 +87,6 @@ public:
   }
 };
 
-
-
 void
 test_direction(const Point<3>& x1, const Point<3>& x2)
 {
@@ -103,7 +98,6 @@ test_direction(const Point<3>& x1, const Point<3>& x2)
   deallog << '[' << x2 << "] -> [" << x1
           << "]: " << manifold.get_tangent_vector(x2, x1) << std::endl;
 }
-
 
 void
 test()

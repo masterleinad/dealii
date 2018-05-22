@@ -22,7 +22,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 using namespace dealii;
 
 Triangulation<2, 2>

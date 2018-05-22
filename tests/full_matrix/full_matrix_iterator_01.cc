@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like sparse_matrix_iterator_12, but for FullMatrix
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
-
 
 void
 test()
@@ -49,11 +46,8 @@ test()
   AssertThrow(l > m, ExcInternalError());
   AssertThrow(l->column() == k->column() + 1, ExcInternalError());
 
-
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

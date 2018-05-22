@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that CellDataStorage erase() and clear()
-
 
 #include "../tests.h"
 
@@ -31,7 +28,6 @@
 #include <deal.II/grid/tria_accessor.h>
 
 #include <deal.II/base/quadrature_point_data.h>
-
 
 using namespace dealii;
 
@@ -68,7 +64,6 @@ DeclException3(ExcWrongValue,
                double,
                double,
                << arg1 << " != " << arg2 << " with delta = " << arg3);
-
 
 template <int dim>
 void
@@ -131,7 +126,6 @@ test()
 
   deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

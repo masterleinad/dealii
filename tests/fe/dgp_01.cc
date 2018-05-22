@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check the documented property of the DGP element that the first shape
 // function is constant in space
 
@@ -30,8 +28,6 @@
 #include <string>
 
 #define PRECISION 3
-
-
 
 template <int dim>
 void
@@ -60,7 +56,6 @@ test(const unsigned int degree)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

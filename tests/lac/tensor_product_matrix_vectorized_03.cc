@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as 'tensor_product_matrix_06.cc' except that we replaced the scalar data
 // type 'float' by the vectorized data type 'VectorizedArray<float>'.
 // Note, all lanes compute the same.
@@ -144,7 +143,6 @@ do_test()
   deallog << "Verification of inverse: " << (norm < 5e-3 ? 0. : norm)
           << std::endl;
 }
-
 
 int
 main()

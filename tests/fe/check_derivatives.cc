@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // at a number of quadrature points, evaluate the gradients of shape functions
 // and compare it to a finite difference approximation computed using the
 // shape values
@@ -31,9 +30,7 @@
 #include <string>
 #include <vector>
 
-
 const double delta_x = 1e-8;
-
 
 template <int dim>
 void
@@ -64,8 +61,6 @@ test(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
   deallog << "OK" << std::endl;
 }
 
-
-
 template <template <int, int> class FE>
 void
 check(const unsigned int min_degree, const unsigned int max_degree)
@@ -80,7 +75,6 @@ check(const unsigned int min_degree, const unsigned int max_degree)
       test<3>(fe3, QGauss<3>(degree + 1));
     }
 }
-
 
 template <template <int> class FE>
 void
@@ -97,7 +91,6 @@ check1(const unsigned int min_degree, const unsigned int max_degree)
     }
 }
 
-
 // Nedelec exists only in 2d/3d
 template <>
 void
@@ -109,7 +102,6 @@ check1<FE_Nedelec>(const unsigned int min_degree, const unsigned int max_degree)
       test<3>(FE_Nedelec<3>(degree), QGauss<3>(degree + 1));
     }
 }
-
 
 // Raviart-Thomas doesn't exists 1d. so does the nodal variant of it. the
 // former is also not implemented in 3d
@@ -135,8 +127,6 @@ check1<FE_RaviartThomasNodal>(const unsigned int min_degree,
       test<3>(FE_RaviartThomasNodal<3>(degree), QGauss<3>(degree + 1));
     }
 }
-
-
 
 int
 main()

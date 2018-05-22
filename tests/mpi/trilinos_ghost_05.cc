@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check correct behaviour of Trilinos ghosted vectors
 // check if assignment from a normal vector works correctly and updates the ghost values
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -77,8 +74,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

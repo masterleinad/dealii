@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // merge and print a bunch of ConstrainMatrices. test the case where we have
 // conflicting constraints and don't allow any conflicts
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 merge_check()
@@ -74,7 +69,6 @@ merge_check()
       c1.print(logfile);
     }
 }
-
 
 int
 main()

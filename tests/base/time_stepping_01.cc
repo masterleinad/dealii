@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/time_stepping.h>
 #include <deal.II/lac/vector.h>
@@ -181,7 +180,6 @@ test2(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
       solution[i]       = my(initial_time);
       exact_solution[i] = my(final_time);
     }
-
 
   while(time < final_time)
     {

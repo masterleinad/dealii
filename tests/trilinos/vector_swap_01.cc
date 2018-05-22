@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
   test ::Vector::swap() (fixed in r 25668)
  */
-
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
@@ -32,7 +30,6 @@ print(TrilinosWrappers::MPI::Vector& v)
           << " l2norm()= " << v.l2_norm() << std::endl;
 }
 
-
 void
 test()
 {
@@ -44,7 +41,6 @@ test()
   w.reinit(complete_index_set(9), MPI_COMM_WORLD);
   for(unsigned int i = 0; i < w.size(); ++i)
     w(i) = 2;
-
 
   deallog << "v: ";
   print(v);
@@ -65,8 +61,6 @@ test()
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -74,7 +68,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

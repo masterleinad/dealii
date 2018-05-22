@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // another failure that had to do that in the library we assumed that
 // the left neighbor of the right neighbor of a cell is the cell
 // itself. this holds true if dim==spacedim, but not
@@ -29,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 
 using namespace std;
-
 
 void
 test()
@@ -58,8 +56,6 @@ test()
               << cell->neighbor(1) << std::endl;
     }
 }
-
-
 
 int
 main()

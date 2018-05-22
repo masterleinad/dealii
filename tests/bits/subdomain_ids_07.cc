@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFTools::dof_indices_with_subdomain_association
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -30,9 +28,7 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -86,7 +82,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

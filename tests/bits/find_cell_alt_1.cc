@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as find_cell_1, but for the alternative algorithm
 // take a 2d mesh and check that we can find an arbitrary point's cell
 // in it
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/mapping_q.h>
-
-
 
 void check(Triangulation<2>& tria)
 {
@@ -49,7 +45,6 @@ void check(Triangulation<2>& tria)
   Assert(p.distance(cell.first->center()) < cell.first->diameter() / 2,
          ExcInternalError());
 }
-
 
 int
 main()

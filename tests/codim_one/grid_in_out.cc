@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // read a couple meshes with a codimension and write them out again
 
 #include "../tests.h"

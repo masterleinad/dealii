@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ChunkSparseMatrix::Tvmult
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(const unsigned int chunk_size, Vector<double>& v, Vector<double>& w)
@@ -62,8 +59,6 @@ test(const unsigned int chunk_size, Vector<double>& v, Vector<double>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

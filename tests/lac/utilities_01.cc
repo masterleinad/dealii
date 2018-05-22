@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test estimate of largest eigenvalue of a matrix.
 // The matrix is the same as in slepc/solve_04 test which has eingenvalues:
 // 3.98974 > 3.95906 > 3.90828 > 3.83792

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // TrilinosWrappers::internal::VectorReference had its non-const copy
 // operator return a const reference. That was non-intuitive but,
 // because of the particular semantics of copying vector reference
@@ -24,7 +22,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
-
 
 void
 test()
@@ -57,8 +54,6 @@ test()
   deallog << static_cast<TrilinosScalar>(c)
           << std::endl; // should point to v(1)
 }
-
-
 
 int
 main(int argc, char** argv)

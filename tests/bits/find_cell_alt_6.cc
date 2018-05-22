@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // On a 2D mesh of the following structure look for the cells surrounding
 // each vertex, using the find_active_cell_around_point with Mapping:
 //
@@ -38,8 +36,6 @@
 
 #include <deal.II/fe/mapping_q1.h>
 
-
-
 void check(Triangulation<2>& tria)
 {
   const std::vector<Point<2>>& v = tria.get_vertices();
@@ -56,7 +52,6 @@ void check(Triangulation<2>& tria)
       deallog << " [local: " << cell.second << "]" << std::endl;
     }
 }
-
 
 int
 main()

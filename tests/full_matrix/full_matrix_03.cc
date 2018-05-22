@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //check method TmTmult of FullMatrix
 
 #include "../tests.h"

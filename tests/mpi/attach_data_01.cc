@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check register_data_attach and notify_ready_to_unpack
 
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -97,7 +93,6 @@ unpack_function(
     }
 }
 
-
 template <int dim>
 void
 test()
@@ -161,7 +156,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

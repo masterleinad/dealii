@@ -16,7 +16,6 @@
 #ifndef dealii_fe_values_h
 #define dealii_fe_values_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/exceptions.h>
@@ -39,7 +38,6 @@
 #include <algorithm>
 #include <memory>
 #include <type_traits>
-
 
 // dummy include in order to have the
 // definition of PetscScalar available
@@ -98,8 +96,6 @@ namespace internal
     typedef Tensor<1, 3, NumberType> type;
   };
 } // namespace internal
-
-
 
 /**
  * A namespace for "views" on a FEValues, FEFaceValues, or FESubfaceValues
@@ -449,7 +445,6 @@ namespace FEValuesViews
         typename OutputType<typename InputVector::value_type>::hessian_type>&
         hessians) const;
 
-
     /**
      * Return the Laplacians of the selected scalar component of the finite
      * element function characterized by <tt>fe_function</tt> at the
@@ -487,7 +482,6 @@ namespace FEValuesViews
         typename OutputType<typename InputVector::value_type>::laplacian_type>&
         laplacians) const;
 
-
     /**
      * Return the third derivatives of the selected scalar component of the
      * finite element function characterized by <tt>fe_function</tt> at the
@@ -524,7 +518,6 @@ namespace FEValuesViews
       std::vector<typename OutputType<typename InputVector::value_type>::
                     third_derivative_type>& third_derivatives) const;
 
-
   private:
     /**
      * A pointer to the FEValuesBase object we operate on.
@@ -542,8 +535,6 @@ namespace FEValuesViews
      */
     std::vector<ShapeFunctionData> shape_function_data;
   };
-
-
 
   /**
    * A class representing a view to a set of <code>spacedim</code> components
@@ -1227,7 +1218,6 @@ namespace FEValuesViews
     std::vector<ShapeFunctionData> shape_function_data;
   };
 
-
   template <int rank, int dim, int spacedim = dim>
   class SymmetricTensor;
 
@@ -1520,7 +1510,6 @@ namespace FEValuesViews
     std::vector<ShapeFunctionData> shape_function_data;
   };
 
-
   template <int rank, int dim, int spacedim = dim>
   class Tensor;
 
@@ -1657,7 +1646,6 @@ namespace FEValuesViews
      */
     Tensor(const FEValuesBase<dim, spacedim>& fe_values_base,
            const unsigned int                 first_tensor_component);
-
 
     /**
      * Copy operator. This is not a lightweight object so we don't allow
@@ -1867,7 +1855,6 @@ namespace FEValuesViews
 
 } // namespace FEValuesViews
 
-
 namespace internal
 {
   namespace FEValuesViews
@@ -1900,8 +1887,6 @@ namespace internal
     };
   } // namespace FEValuesViews
 } // namespace internal
-
-
 
 /**
  * FEValues, FEFaceValues and FESubfaceValues objects are interfaces to finite
@@ -2031,7 +2016,6 @@ public:
    */
   const unsigned int dofs_per_cell;
 
-
   /**
    * Constructor. Set up the array sizes with <tt>n_q_points</tt> quadrature
    * points, <tt>dofs_per_cell</tt> trial functions per cell and with the
@@ -2045,12 +2029,10 @@ public:
                const Mapping<dim, spacedim>&       mapping,
                const FiniteElement<dim, spacedim>& fe);
 
-
   /**
    * Destructor.
    */
   ~FEValuesBase() override;
-
 
   /// @name ShapeAccess Access to shape function values. These fields are filled by the finite element.
   //@{
@@ -2361,7 +2343,6 @@ public:
     const InputVector&                                             fe_function,
     const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     std::vector<Vector<typename InputVector::value_type>>& values) const;
-
 
   /**
    * Generate vector function values from an arbitrary vector.
@@ -3109,7 +3090,6 @@ public:
   const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
   operator[](const FEValuesExtractors::SymmetricTensor<2>& tensor) const;
 
-
   /**
    * Create a view of the current FEValues object that represents a set of
    * <code>(dim*dim)</code> scalar components (i.e. a 2nd order tensor) of the
@@ -3165,7 +3145,6 @@ public:
   std::size_t
   memory_consumption() const;
   //@}
-
 
   /**
    * This exception is thrown if FEValuesBase is asked to return the value of
@@ -3323,7 +3302,6 @@ protected:
   dealii::internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     mapping_output;
 
-
   /**
    * A pointer to the finite element object associated with this FEValues
    * object.
@@ -3347,7 +3325,6 @@ protected:
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>
     finite_element_output;
-
 
   /**
    * Original update flags handed to the constructor of FEValues.
@@ -3413,8 +3390,6 @@ private:
   template <int, int, int>
   friend class FEValuesViews::Tensor;
 };
-
-
 
 /**
  * Finite element evaluated in quadrature points of a cell.
@@ -3534,7 +3509,6 @@ private:
   do_reinit();
 };
 
-
 /**
  * Extend the interface of FEValuesBase to values that only make sense when
  * evaluating something on the surface of a cell. All the data that is
@@ -3625,8 +3599,6 @@ protected:
    */
   const Quadrature<dim - 1> quadrature;
 };
-
-
 
 /**
  * Finite element evaluated in quadrature points on a face.
@@ -3738,7 +3710,6 @@ private:
   void
   do_reinit(const unsigned int face_no);
 };
-
 
 /**
  * Finite element evaluated in quadrature points on a face.
@@ -3874,9 +3845,7 @@ private:
   do_reinit(const unsigned int face_no, const unsigned int subface_no);
 };
 
-
 #ifndef DOXYGEN
-
 
 /*------------------------ Inline functions: namespace FEValuesViews --------*/
 
@@ -3904,8 +3873,6 @@ namespace FEValuesViews
       return 0;
   }
 
-
-
   template <int dim, int spacedim>
   inline typename Scalar<dim, spacedim>::gradient_type
   Scalar<dim, spacedim>::gradient(const unsigned int shape_function,
@@ -3928,8 +3895,6 @@ namespace FEValuesViews
       return gradient_type();
   }
 
-
-
   template <int dim, int spacedim>
   inline typename Scalar<dim, spacedim>::hessian_type
   Scalar<dim, spacedim>::hessian(const unsigned int shape_function,
@@ -3950,8 +3915,6 @@ namespace FEValuesViews
     else
       return hessian_type();
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Scalar<dim, spacedim>::third_derivative_type
@@ -3974,8 +3937,6 @@ namespace FEValuesViews
     else
       return third_derivative_type();
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::value_type
@@ -4013,8 +3974,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::gradient_type
@@ -4054,8 +4013,6 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::divergence_type
   Vector<dim, spacedim>::divergence(const unsigned int shape_function,
@@ -4091,8 +4048,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::curl_type
@@ -4270,8 +4225,6 @@ namespace FEValuesViews
     return curl_type();
   }
 
-
-
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::hessian_type
   Vector<dim, spacedim>::hessian(const unsigned int shape_function,
@@ -4310,8 +4263,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::third_derivative_type
@@ -4353,8 +4304,6 @@ namespace FEValuesViews
       }
   }
 
-
-
   namespace
   {
     /**
@@ -4370,8 +4319,6 @@ namespace FEValuesViews
       const double array[1] = {t[0]};
       return dealii::SymmetricTensor<2, 1>(array);
     }
-
-
 
     inline dealii::SymmetricTensor<2, 2>
     symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 2>& t)
@@ -4395,8 +4342,6 @@ namespace FEValuesViews
             }
         }
     }
-
-
 
     inline dealii::SymmetricTensor<2, 3>
     symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 3>& t)
@@ -4426,8 +4371,6 @@ namespace FEValuesViews
         }
     }
   } // namespace
-
-
 
   template <int dim, int spacedim>
   inline typename Vector<dim, spacedim>::symmetric_gradient_type
@@ -4462,8 +4405,6 @@ namespace FEValuesViews
         return symmetrize(return_value);
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename SymmetricTensor<2, dim, spacedim>::value_type
@@ -4507,8 +4448,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename SymmetricTensor<2, dim, spacedim>::divergence_type
@@ -4588,8 +4527,6 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   inline typename Tensor<2, dim, spacedim>::value_type
   Tensor<2, dim, spacedim>::value(const unsigned int shape_function,
@@ -4638,8 +4575,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Tensor<2, dim, spacedim>::divergence_type
@@ -4695,8 +4630,6 @@ namespace FEValuesViews
         return return_value;
       }
   }
-
-
 
   template <int dim, int spacedim>
   inline typename Tensor<2, dim, spacedim>::gradient_type
@@ -4754,11 +4687,7 @@ namespace FEValuesViews
 
 } // namespace FEValuesViews
 
-
-
 /*------------------------ Inline functions: FEValuesBase ------------------------*/
-
-
 
 template <int dim, int spacedim>
 inline const FEValuesViews::Scalar<dim, spacedim>& FEValuesBase<dim, spacedim>::
@@ -4771,8 +4700,6 @@ inline const FEValuesViews::Scalar<dim, spacedim>& FEValuesBase<dim, spacedim>::
   return fe_values_views_cache.scalars[scalar.component];
 }
 
-
-
 template <int dim, int spacedim>
 inline const FEValuesViews::Vector<dim, spacedim>& FEValuesBase<dim, spacedim>::
                                                    operator[](const FEValuesExtractors::Vector& vector) const
@@ -4784,8 +4711,6 @@ inline const FEValuesViews::Vector<dim, spacedim>& FEValuesBase<dim, spacedim>::
 
   return fe_values_views_cache.vectors[vector.first_vector_component];
 }
-
-
 
 template <int dim, int spacedim>
 inline const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
@@ -4803,8 +4728,6 @@ inline const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
     .symmetric_second_order_tensors[tensor.first_tensor_component];
 }
 
-
-
 template <int dim, int spacedim>
 inline const FEValuesViews::Tensor<2, dim, spacedim>&
   FEValuesBase<dim, spacedim>::
@@ -4819,8 +4742,6 @@ inline const FEValuesViews::Tensor<2, dim, spacedim>&
   return fe_values_views_cache
     .second_order_tensors[tensor.first_tensor_component];
 }
-
-
 
 template <int dim, int spacedim>
 inline const double&
@@ -4854,8 +4775,6 @@ FEValuesBase<dim, spacedim>::shape_value(const unsigned int i,
     }
 }
 
-
-
 template <int dim, int spacedim>
 inline double
 FEValuesBase<dim, spacedim>::shape_value_component(
@@ -4885,8 +4804,6 @@ FEValuesBase<dim, spacedim>::shape_value_component(
         .shape_function_to_row_table[i * fe->n_components() + component];
   return this->finite_element_output.shape_values(row, j);
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<1, spacedim>&
@@ -4920,8 +4837,6 @@ FEValuesBase<dim, spacedim>::shape_grad(const unsigned int i,
     }
 }
 
-
-
 template <int dim, int spacedim>
 inline Tensor<1, spacedim>
 FEValuesBase<dim, spacedim>::shape_grad_component(
@@ -4950,8 +4865,6 @@ FEValuesBase<dim, spacedim>::shape_grad_component(
         .shape_function_to_row_table[i * fe->n_components() + component];
   return this->finite_element_output.shape_gradients[row][j];
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<2, spacedim>&
@@ -4985,8 +4898,6 @@ FEValuesBase<dim, spacedim>::shape_hessian(const unsigned int i,
     }
 }
 
-
-
 template <int dim, int spacedim>
 inline Tensor<2, spacedim>
 FEValuesBase<dim, spacedim>::shape_hessian_component(
@@ -5015,8 +4926,6 @@ FEValuesBase<dim, spacedim>::shape_hessian_component(
         .shape_function_to_row_table[i * fe->n_components() + component];
   return this->finite_element_output.shape_hessians[row][j];
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<3, spacedim>&
@@ -5050,8 +4959,6 @@ FEValuesBase<dim, spacedim>::shape_3rd_derivative(const unsigned int i,
     }
 }
 
-
-
 template <int dim, int spacedim>
 inline Tensor<3, spacedim>
 FEValuesBase<dim, spacedim>::shape_3rd_derivative_component(
@@ -5081,16 +4988,12 @@ FEValuesBase<dim, spacedim>::shape_3rd_derivative_component(
   return this->finite_element_output.shape_3rd_derivatives[row][j];
 }
 
-
-
 template <int dim, int spacedim>
 inline const FiniteElement<dim, spacedim>&
 FEValuesBase<dim, spacedim>::get_fe() const
 {
   return *fe;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Mapping<dim, spacedim>&
@@ -5099,16 +5002,12 @@ FEValuesBase<dim, spacedim>::get_mapping() const
   return *mapping;
 }
 
-
-
 template <int dim, int spacedim>
 inline UpdateFlags
 FEValuesBase<dim, spacedim>::get_update_flags() const
 {
   return this->update_flags;
 }
-
-
 
 template <int dim, int spacedim>
 inline const std::vector<Point<spacedim>>&
@@ -5121,8 +5020,6 @@ FEValuesBase<dim, spacedim>::get_quadrature_points() const
   return this->mapping_output.quadrature_points;
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<double>&
 FEValuesBase<dim, spacedim>::get_JxW_values() const
@@ -5133,8 +5030,6 @@ FEValuesBase<dim, spacedim>::get_JxW_values() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.JxW_values;
 }
-
-
 
 template <int dim, int spacedim>
 inline const std::vector<DerivativeForm<1, dim, spacedim>>&
@@ -5147,8 +5042,6 @@ FEValuesBase<dim, spacedim>::get_jacobians() const
   return this->mapping_output.jacobians;
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<DerivativeForm<2, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_grads() const
@@ -5159,8 +5052,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_grads() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.jacobian_grads;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<3, spacedim>&
@@ -5174,8 +5065,6 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_grad(
   return this->mapping_output.jacobian_pushed_forward_grads[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<Tensor<3, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_grads() const
@@ -5186,8 +5075,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_grads() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.jacobian_pushed_forward_grads;
 }
-
-
 
 template <int dim, int spacedim>
 inline const DerivativeForm<3, dim, spacedim>&
@@ -5200,8 +5087,6 @@ FEValuesBase<dim, spacedim>::jacobian_2nd_derivative(const unsigned int i) const
   return this->mapping_output.jacobian_2nd_derivatives[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<DerivativeForm<3, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_2nd_derivatives() const
@@ -5212,8 +5097,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_2nd_derivatives() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.jacobian_2nd_derivatives;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<4, spacedim>&
@@ -5228,8 +5111,6 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_2nd_derivative(
   return this->mapping_output.jacobian_pushed_forward_2nd_derivatives[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<Tensor<4, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_2nd_derivatives() const
@@ -5242,8 +5123,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_2nd_derivatives() const
   return this->mapping_output.jacobian_pushed_forward_2nd_derivatives;
 }
 
-
-
 template <int dim, int spacedim>
 inline const DerivativeForm<4, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_3rd_derivative(const unsigned int i) const
@@ -5255,8 +5134,6 @@ FEValuesBase<dim, spacedim>::jacobian_3rd_derivative(const unsigned int i) const
   return this->mapping_output.jacobian_3rd_derivatives[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<DerivativeForm<4, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_3rd_derivatives() const
@@ -5267,8 +5144,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_3rd_derivatives() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.jacobian_3rd_derivatives;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<5, spacedim>&
@@ -5283,8 +5158,6 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_3rd_derivative(
   return this->mapping_output.jacobian_pushed_forward_3rd_derivatives[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<Tensor<5, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_3rd_derivatives() const
@@ -5297,8 +5170,6 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_3rd_derivatives() const
   return this->mapping_output.jacobian_pushed_forward_3rd_derivatives;
 }
 
-
-
 template <int dim, int spacedim>
 inline const std::vector<DerivativeForm<1, spacedim, dim>>&
 FEValuesBase<dim, spacedim>::get_inverse_jacobians() const
@@ -5309,8 +5180,6 @@ FEValuesBase<dim, spacedim>::get_inverse_jacobians() const
          ExcMessage("FEValues object is not reinit'ed to any cell"));
   return this->mapping_output.inverse_jacobians;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Point<spacedim>&
@@ -5326,8 +5195,6 @@ FEValuesBase<dim, spacedim>::quadrature_point(const unsigned int i) const
   return this->mapping_output.quadrature_points[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline double
 FEValuesBase<dim, spacedim>::JxW(const unsigned int i) const
@@ -5341,8 +5208,6 @@ FEValuesBase<dim, spacedim>::JxW(const unsigned int i) const
 
   return this->mapping_output.JxW_values[i];
 }
-
-
 
 template <int dim, int spacedim>
 inline const DerivativeForm<1, dim, spacedim>&
@@ -5358,8 +5223,6 @@ FEValuesBase<dim, spacedim>::jacobian(const unsigned int i) const
   return this->mapping_output.jacobians[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const DerivativeForm<2, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_grad(const unsigned int i) const
@@ -5374,8 +5237,6 @@ FEValuesBase<dim, spacedim>::jacobian_grad(const unsigned int i) const
   return this->mapping_output.jacobian_grads[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline const DerivativeForm<1, spacedim, dim>&
 FEValuesBase<dim, spacedim>::inverse_jacobian(const unsigned int i) const
@@ -5389,8 +5250,6 @@ FEValuesBase<dim, spacedim>::inverse_jacobian(const unsigned int i) const
 
   return this->mapping_output.inverse_jacobians[i];
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<1, spacedim>&
@@ -5407,10 +5266,7 @@ FEValuesBase<dim, spacedim>::normal_vector(const unsigned int i) const
   return this->mapping_output.normal_vectors[i];
 }
 
-
-
 /*------------------------ Inline functions: FEValues ----------------------------*/
-
 
 template <int dim, int spacedim>
 inline const Quadrature<dim>&
@@ -5419,8 +5275,6 @@ FEValues<dim, spacedim>::get_quadrature() const
   return quadrature;
 }
 
-
-
 template <int dim, int spacedim>
 inline const FEValues<dim, spacedim>&
 FEValues<dim, spacedim>::get_present_fe_values() const
@@ -5428,9 +5282,7 @@ FEValues<dim, spacedim>::get_present_fe_values() const
   return *this;
 }
 
-
 /*------------------------ Inline functions: FEFaceValuesBase --------------------*/
-
 
 template <int dim, int spacedim>
 inline unsigned int
@@ -5438,7 +5290,6 @@ FEFaceValuesBase<dim, spacedim>::get_face_index() const
 {
   return present_face_index;
 }
-
 
 /*------------------------ Inline functions: FE*FaceValues --------------------*/
 
@@ -5449,8 +5300,6 @@ FEFaceValuesBase<dim, spacedim>::get_quadrature() const
   return quadrature;
 }
 
-
-
 template <int dim, int spacedim>
 inline const FEFaceValues<dim, spacedim>&
 FEFaceValues<dim, spacedim>::get_present_fe_values() const
@@ -5458,16 +5307,12 @@ FEFaceValues<dim, spacedim>::get_present_fe_values() const
   return *this;
 }
 
-
-
 template <int dim, int spacedim>
 inline const FESubfaceValues<dim, spacedim>&
 FESubfaceValues<dim, spacedim>::get_present_fe_values() const
 {
   return *this;
 }
-
-
 
 template <int dim, int spacedim>
 inline const Tensor<1, spacedim>&

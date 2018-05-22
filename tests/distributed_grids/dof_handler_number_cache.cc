@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the dofs/dof_handler_number_cache test but this time use a
 // parallel::distributed::Triangulation object. We still use only a
 // single processor so the end result should be the same but we use
 // entirely different code paths
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,8 +30,6 @@
 #include <deal.II/grid/intergrid_map.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -102,7 +97,6 @@ test()
                   ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

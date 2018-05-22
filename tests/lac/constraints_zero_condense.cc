@@ -13,19 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // generate the constraints for a case where there are nodes that have
 // a constraint x[i]=0, i.e. where the right hand side is a trivial
 // linear combination of other degrees of freedom. then check that if
 // we condense a matrix with this then the right thing happens
 
-
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
-
-
 
 void
 test()
@@ -62,7 +57,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

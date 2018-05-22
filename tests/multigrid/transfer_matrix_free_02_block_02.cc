@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check MGTransferBlockMatrixFree by comparison with MGTransferMatrixFree on a
 // series of adaptive meshes for FE_Q. This is similar to transfer_matrix_free_02.cc
 // but using separate DoFHandlers for each block.
@@ -28,7 +27,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer_matrix_free.h>
-
 
 template <int dim, typename Number>
 void
@@ -192,7 +190,6 @@ check(const unsigned int fe_degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main(int argc, char** argv)

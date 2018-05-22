@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ParameterHandler::parse_input_from_xml. try to read a file with a
 // parameter that has not been declared
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // crash with fe nedelec reported on mailing list (01/14/2014)
 /*
 #0  0x00007fffeba50425 in __GI_raise (sig=<optimized out>) at ../nptl/sysdeps/unix/sysv/linux/raise.c:64
@@ -42,7 +41,6 @@
 
 */
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_system.h>
@@ -55,7 +53,6 @@
 
 #include <string>
 #include <vector>
-
 
 template <int dim>
 void
@@ -72,8 +69,6 @@ test(FiniteElement<dim>& fe)
   VectorTools::project_boundary_values_curl_conforming(
     dof_handler, 0, boundary_values, 0, constraints);
 }
-
-
 
 int
 main()

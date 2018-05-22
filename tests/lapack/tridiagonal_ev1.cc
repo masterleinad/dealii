@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests compute_eigenvalues() and eigenvalue() of TridiagonalMatrix
 
 #include "../tests.h"
@@ -21,7 +20,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 // Build the one dimensional discrete Laplacian for n intervals
 template <typename number>
@@ -41,7 +39,6 @@ test_laplacian(unsigned int n)
     deallog << '\t' << M.eigenvalue(i) * n * n;
   deallog << "\t cond " << M.eigenvalue(n - 2) / M.eigenvalue(0) << std::endl;
 }
-
 
 int
 main()

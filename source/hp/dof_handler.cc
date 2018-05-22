@@ -59,8 +59,6 @@ namespace parallel
   }
 } // namespace parallel
 
-
-
 namespace internal
 {
   namespace hp
@@ -112,8 +110,6 @@ namespace internal
                 internal::hp::DoFIndicesOnFaces<dim>>();
           }
         }
-
-
 
         /**
          * Do that part of reserving space that pertains to vertices,
@@ -233,7 +229,6 @@ namespace internal
                 }
         }
 
-
         /**
          * Do that part of reserving space that pertains to cells,
          * since this is the same in all space dimensions.
@@ -326,8 +321,6 @@ namespace internal
             }
 #endif
         }
-
-
 
         /**
          * Do that part of reserving space that pertains to faces,
@@ -613,7 +606,6 @@ namespace internal
           }
         }
 
-
         /**
          * Reserve enough space in the <tt>levels[]</tt> objects to
          * store the numbers of the degrees of freedom needed for the
@@ -636,8 +628,6 @@ namespace internal
           reserve_space_vertices(dof_handler);
         }
 
-
-
         template <int spacedim>
         static void reserve_space(DoFHandler<2, spacedim>& dof_handler)
         {
@@ -658,8 +648,6 @@ namespace internal
           reserve_space_vertices(dof_handler);
         }
 
-
-
         template <int spacedim>
         static void reserve_space(DoFHandler<3, spacedim>& dof_handler)
         {
@@ -677,7 +665,6 @@ namespace internal
           // FIRST CELLS AND FACES
           reserve_space_cells(dof_handler);
           reserve_space_faces(dof_handler);
-
 
           // LINE DOFS
 
@@ -775,11 +762,9 @@ namespace internal
                   }
             }
 
-
           // VERTEX DOFS
           reserve_space_vertices(dof_handler);
         }
-
 
         /**
          * Implement the function of same name in the mother class.
@@ -794,8 +779,6 @@ namespace internal
               + 2 * dof_handler.fe_collection.max_dofs_per_line()),
             dof_handler.n_dofs());
         }
-
-
 
         template <int spacedim>
         static unsigned int
@@ -860,7 +843,6 @@ namespace internal
           return std::min(max_couplings, dof_handler.n_dofs());
         }
 
-
         template <int spacedim>
         static unsigned int
         max_couplings_between_dofs(const DoFHandler<3, spacedim>& dof_handler)
@@ -891,7 +873,6 @@ namespace internal
 
           return std::min(max_couplings, dof_handler.n_dofs());
         }
-
 
         /**
          * Given a hp::DoFHandler object, make sure that the active_fe_indices that
@@ -989,7 +970,6 @@ namespace internal
   }   // namespace hp
 } // namespace internal
 
-
 namespace hp
 {
   template <int dim, int spacedim>
@@ -1001,13 +981,10 @@ namespace hp
   template <int dim, int spacedim>
   const unsigned int DoFHandler<dim, spacedim>::default_fe_index;
 
-
-
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::DoFHandler()
     : tria(nullptr, typeid(*this).name()), faces(nullptr)
   {}
-
 
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::DoFHandler(
@@ -1018,7 +995,6 @@ namespace hp
 
     create_active_fe_table();
   }
-
 
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::~DoFHandler()
@@ -1036,7 +1012,6 @@ namespace hp
     DoFHandler<dim, spacedim>::clear();
   }
 
-
   /*------------------------ Cell iterator functions ------------------------*/
 
   template <int dim, int spacedim>
@@ -1045,8 +1020,6 @@ namespace hp
   {
     return cell_iterator(*this->get_triangulation().begin(level), this);
   }
-
-
 
   template <int dim, int spacedim>
   typename DoFHandler<dim, spacedim>::active_cell_iterator
@@ -1062,15 +1035,12 @@ namespace hp
     return i;
   }
 
-
-
   template <int dim, int spacedim>
   typename DoFHandler<dim, spacedim>::cell_iterator
   DoFHandler<dim, spacedim>::end() const
   {
     return cell_iterator(&this->get_triangulation(), -1, -1, this);
   }
-
 
   template <int dim, int spacedim>
   typename DoFHandler<dim, spacedim>::cell_iterator
@@ -1081,7 +1051,6 @@ namespace hp
               begin(level + 1));
   }
 
-
   template <int dim, int spacedim>
   typename DoFHandler<dim, spacedim>::active_cell_iterator
   DoFHandler<dim, spacedim>::end_active(const unsigned int level) const
@@ -1091,8 +1060,6 @@ namespace hp
               begin_active(level + 1));
   }
 
-
-
   template <int dim, int spacedim>
   IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>
   DoFHandler<dim, spacedim>::cell_iterators() const
@@ -1100,7 +1067,6 @@ namespace hp
     return IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>(
       begin(), end());
   }
-
 
   template <int dim, int spacedim>
   IteratorRange<typename DoFHandler<dim, spacedim>::active_cell_iterator>
@@ -1111,8 +1077,6 @@ namespace hp
                                                                 end());
   }
 
-
-
   template <int dim, int spacedim>
   IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>
   DoFHandler<dim, spacedim>::cell_iterators_on_level(
@@ -1121,8 +1085,6 @@ namespace hp
     return IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>(
       begin(level), end(level));
   }
-
-
 
   template <int dim, int spacedim>
   IteratorRange<typename DoFHandler<dim, spacedim>::active_cell_iterator>
@@ -1134,10 +1096,7 @@ namespace hp
       begin_active(level), end_active(level));
   }
 
-
-
   //------------------------------------------------------------------
-
 
   template <int dim, int spacedim>
   types::global_dof_index
@@ -1171,8 +1130,6 @@ namespace hp
           }
     return boundary_dofs.size();
   }
-
-
 
   template <int dim, int spacedim>
   types::global_dof_index
@@ -1210,8 +1167,6 @@ namespace hp
     return boundary_dofs.size();
   }
 
-
-
   template <>
   types::global_dof_index
   DoFHandler<2, 3>::n_boundary_dofs() const
@@ -1219,8 +1174,6 @@ namespace hp
     Assert(false, ExcNotImplemented());
     return 0;
   }
-
-
 
   template <>
   template <typename number>
@@ -1232,8 +1185,6 @@ namespace hp
     return 0;
   }
 
-
-
   template <>
   types::global_dof_index
   DoFHandler<2, 3>::n_boundary_dofs(const std::set<types::boundary_id>&) const
@@ -1241,8 +1192,6 @@ namespace hp
     Assert(false, ExcNotImplemented());
     return 0;
   }
-
-
 
   template <int dim, int spacedim>
   std::size_t
@@ -1265,8 +1214,6 @@ namespace hp
     return mem;
   }
 
-
-
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::set_active_fe_indices(
@@ -1286,8 +1233,6 @@ namespace hp
       if(cell->is_locally_owned())
         cell->set_active_fe_index(active_fe_indices[i]);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1325,7 +1270,6 @@ namespace hp
 
     distribute_dofs(fe);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -1389,11 +1333,9 @@ namespace hp
           cell->active_fe_index() < fe_collection.size(),
           ExcInvalidFEIndex(cell->active_fe_index(), fe_collection.size()));
 
-
     // then allocate space for all the other tables
     dealii::internal::hp::DoFHandlerImplementation::Implementation::
       reserve_space(*this);
-
 
     // now undo the subdomain modification
     if(const parallel::shared::Triangulation<dim, spacedim>* shared_tria
@@ -1410,7 +1352,6 @@ namespace hp
             cell->set_subdomain_id(saved_subdomain_ids[index]);
         }
 
-
     // Clear user flags because we will need them. But first we save
     // them and make sure that we restore them later such that at the
     // end of this function the Triangulation will be in the same
@@ -1418,7 +1359,6 @@ namespace hp
     std::vector<bool> user_flags;
     tria->save_user_flags(user_flags);
     const_cast<Triangulation<dim, spacedim>&>(*tria).clear_user_flags();
-
 
     /////////////////////////////////
 
@@ -1442,7 +1382,6 @@ namespace hp
     const_cast<Triangulation<dim, spacedim>&>(*tria).load_user_flags(
       user_flags);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -1479,7 +1418,6 @@ namespace hp
       &DoFHandler<dim, spacedim>::post_refinement_action, std::ref(*this))));
   }
 
-
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::clear()
@@ -1487,8 +1425,6 @@ namespace hp
     // release memory
     clear_space();
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1555,8 +1491,6 @@ namespace hp
     }
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   DoFHandler<dim, spacedim>::max_couplings_between_dofs() const
@@ -1565,8 +1499,6 @@ namespace hp
     return dealii::internal::hp::DoFHandlerImplementation::Implementation::
       max_couplings_between_dofs(*this);
   }
-
-
 
   template <int dim, int spacedim>
   unsigned int
@@ -1599,8 +1531,6 @@ namespace hp
           return 0;
       }
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1635,7 +1565,6 @@ namespace hp
         levels[level]->normalize_active_fe_indices();
       }
   }
-
 
   template <int dim, int spacedim>
   void
@@ -1673,8 +1602,6 @@ namespace hp
         has_children.emplace_back(std::move(has_children_level));
       }
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1750,7 +1677,6 @@ namespace hp
     has_children.clear();
   }
 
-
   template <int dim, int spacedim>
   template <int structdim>
   types::global_dof_index
@@ -1762,7 +1688,6 @@ namespace hp
     Assert(false, ExcNotImplemented());
     return numbers::invalid_dof_index;
   }
-
 
   template <int dim, int spacedim>
   template <int structdim>
@@ -1776,7 +1701,6 @@ namespace hp
     Assert(false, ExcNotImplemented());
   }
 
-
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::clear_space()
@@ -1789,10 +1713,7 @@ namespace hp
   }
 } // namespace hp
 
-
-
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // calculates the measure of the surface of a hypersphere
 
 #include "../tests.h"
@@ -94,8 +92,6 @@ test(std::string filename)
               / fe_values.n_quadrature_points)
           << std::endl;
 }
-
-
 
 int
 main()

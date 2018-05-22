@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like matrix_out.cc, but test for Trilinos matrices
 //
 // also test some of the other options of the MatrixOut::Options class
-
 
 #include "../tests.h"
 #include <deal.II/lac/matrix_out.h>

@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test matrix-free Laplace and Mass operators with MappingQEulerian
 // by comparing to the results obtained from a deformed mesh.
 // As a displacement function use:  x exp (-2|x|)
-
 
 #include "../tests.h"
 #include <deal.II/base/multithread_info.h>
@@ -59,7 +57,6 @@ public:
     return p[component] * std::exp(-2. * std::abs(p[component]));
   }
 };
-
 
 template <int dim,
           int fe_degree       = 2,

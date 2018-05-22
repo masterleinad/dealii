@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../bits/dof_tools_common.h"
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -27,8 +26,6 @@
 // check an abort in FEPolyTensor when used with RaviartThomas
 // elements, when computing some sort of edge directions. This is the
 // case left over from dof_tools_19
-
-
 
 template <int dim>
 void

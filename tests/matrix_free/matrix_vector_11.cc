@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of matrix free matrix-vector products when
 // threads are additionally used to MPI by comparing the result with a
 // non-parallel version. Otherwise same problem as matrix_vector_10.cc
@@ -36,8 +34,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -170,7 +166,6 @@ test()
     }
   deallog << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

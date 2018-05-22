@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that we can generate an ABF(0) element in 3d. There used to
 // be a number of exceptions that happened when one tried, so this
 // test verifies that that no longer happens.
@@ -25,7 +23,6 @@
 
 #include "../tests.h"
 #include <deal.II/fe/fe_abf.h>
-
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
@@ -53,8 +50,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
-
-
 
 /*
  * Check the value of the derivative field.
@@ -138,7 +133,6 @@ void EvaluateDerivative(DoFHandler<3>& dof_handler, Vector<double>& solution)
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -308,7 +302,6 @@ create_mass_matrix(const Mapping<dim>&        mapping,
     }
 }
 
-
 template <int dim>
 void
 create_right_hand_side(const Mapping<dim>&    mapping,
@@ -398,8 +391,6 @@ create_right_hand_side(const Mapping<dim>&    mapping,
     }
 }
 
-
-
 //
 // This function replaces the deal.II implementation of the projection.
 // The purpose is to have more freedom in assembling the matrix.
@@ -471,7 +462,6 @@ project(const Mapping<dim>&     mapping,
             };
     }
 
-
   // set up mass matrix and right hand side
   vec.reinit(dof.n_dofs());
   SparsityPattern sparsity(
@@ -503,8 +493,6 @@ project(const Mapping<dim>&     mapping,
   constraints.distribute(vec);
 }
 
-
-
 int
 main()
 {
@@ -512,7 +500,6 @@ main()
 
   Triangulation<3> tria_test;
   GridGenerator::hyper_cube(tria_test);
-
 
   for(Triangulation<3>::active_cell_iterator cell = tria_test.begin_active();
       cell != tria_test.end();
@@ -522,7 +509,6 @@ main()
       for(unsigned int v = 0; v < 4; ++v)
         deallog << "    " << cell->vertex(v) << std::endl;
     }
-
 
   FE_ABF<3> fe(0);
   deallog << "Dofs/cell " << fe.dofs_per_cell << ", Dofs/face "

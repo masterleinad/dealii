@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<std::complex<double> >::operator==(Vector<std::complex<float> >) for vectors that are
 // equal and different template arguments
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v, Vector<std::complex<float>>& w)
@@ -42,8 +39,6 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<float>>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

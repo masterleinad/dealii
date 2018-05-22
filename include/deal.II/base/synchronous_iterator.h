@@ -16,10 +16,8 @@
 #ifndef dealii_synchronous_iterator_h
 #define dealii_synchronous_iterator_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
-
 
 #include <iterator>
 #include <tuple>
@@ -75,14 +73,10 @@ private:
   Iterators iterators;
 };
 
-
-
 template <typename Iterators>
 inline SynchronousIterators<Iterators>::SynchronousIterators(const Iterators& i)
   : iterators(i)
 {}
-
-
 
 template <typename Iterators>
 inline const Iterators& SynchronousIterators<Iterators>::operator*() const
@@ -90,15 +84,11 @@ inline const Iterators& SynchronousIterators<Iterators>::operator*() const
   return iterators;
 }
 
-
-
 template <typename Iterators>
 inline Iterators& SynchronousIterators<Iterators>::operator*()
 {
   return iterators;
 }
-
-
 
 /**
  * Return whether the first element of the first argument is less than the
@@ -116,8 +106,6 @@ operator<(const SynchronousIterators<Iterators>& a,
   return std::get<0>(*a) < std::get<0>(*b);
 }
 
-
-
 /**
  * Return the distance between the first and the second argument. Since the
  * objects compared march forward all elements at the same time, differencing
@@ -134,7 +122,6 @@ operator-(const SynchronousIterators<Iterators>& a,
          ExcInternalError());
   return std::distance(std::get<0>(*b), std::get<0>(*a));
 }
-
 
 /**
  * Advance a tuple of iterators by $n$.
@@ -178,8 +165,6 @@ advance(std::tuple<I1, I2, I3, I4>& t, const unsigned int n)
   std::advance(std::get<3>(t), n);
 }
 
-
-
 /**
  * Advance a tuple of iterators by 1.
  *
@@ -222,8 +207,6 @@ advance_by_one(std::tuple<I1, I2, I3, I4>& t)
   ++std::get<3>(t);
 }
 
-
-
 /**
  * Advance the elements of this iterator by $n$.
  *
@@ -250,7 +233,6 @@ operator++(SynchronousIterators<Iterators>& a)
   dealii::advance_by_one(*a);
   return a;
 }
-
 
 /**
  * Compare synch iterators for inequality. Since they march in synch,

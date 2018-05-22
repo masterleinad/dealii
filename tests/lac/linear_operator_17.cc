@@ -21,9 +21,7 @@
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/vector.h>
 
-
 using namespace dealii;
-
 
 int
 main()

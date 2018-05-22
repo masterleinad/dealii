@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check setting off-processor entries of Epetra_CrsMatrix. It turns out that
 // the underlying Epetra data structures actually add the entries even though
 // we want to insert them only.
@@ -23,7 +21,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test()
@@ -138,8 +135,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

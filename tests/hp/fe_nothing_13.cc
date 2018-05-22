@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the case where the two children on a face with a hanging node have
 // different FENothing structure. while all cells in the _12 test had degrees
 // of freedom, here, cells with active_fe_index==1 are simply FE_Nothing:
@@ -29,7 +27,6 @@
 // *--*--*
 // | 1| 0|
 // *--*--*
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -47,8 +44,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -111,8 +106,6 @@ test()
       }
   }
 }
-
-
 
 int
 main()

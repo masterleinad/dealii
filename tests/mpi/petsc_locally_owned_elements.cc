@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix.distribute() for a petsc vector
 //
 // like _01, but for a block vector. this has the additional complication that
@@ -26,8 +24,6 @@
 #include <deal.II/lac/petsc_parallel_block_vector.h>
 
 #include <sstream>
-
-
 
 void
 test()
@@ -64,14 +60,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

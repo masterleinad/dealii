@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same test as matrix_vector_06 (quite large mesh, hanging nodes, different
 // cell types), but very large domain of size 1e20 to test correctness of
 // relative scaling in mapping info

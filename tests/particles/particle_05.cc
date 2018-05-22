@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like particle_02, but tests particle serialization and deserialization using boost archive.
 
 #include "../tests.h"
@@ -73,8 +71,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

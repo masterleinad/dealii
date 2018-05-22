@@ -36,8 +36,6 @@ namespace TrilinosWrappers
       {}
   }
 
-
-
   void
   BlockSparseMatrix::reinit(const size_type n_block_rows,
                             const size_type n_block_columns)
@@ -63,8 +61,6 @@ namespace TrilinosWrappers
           this->sub_objects[r][c] = p;
         }
   }
-
-
 
   template <typename BlockSparsityPatternType>
   void
@@ -92,7 +88,6 @@ namespace TrilinosWrappers
            ExcDimensionMismatch(n_block_rows,
                                 block_sparsity_pattern.n_block_cols()));
 
-
     // Call the other basic reinit function, ...
     reinit(block_sparsity_pattern.n_block_rows(),
            block_sparsity_pattern.n_block_cols());
@@ -113,8 +108,6 @@ namespace TrilinosWrappers
         }
   }
 
-
-
   template <typename BlockSparsityPatternType>
   void
   BlockSparseMatrix::reinit(
@@ -131,8 +124,6 @@ namespace TrilinosWrappers
     reinit(epetra_maps, block_sparsity_pattern, exchange_data);
   }
 
-
-
   template <typename BlockSparsityPatternType>
   void
   BlockSparseMatrix::reinit(
@@ -148,8 +139,6 @@ namespace TrilinosWrappers
 
     reinit(parallel_partitioning, block_sparsity_pattern);
   }
-
-
 
   template <>
   void
@@ -171,8 +160,6 @@ namespace TrilinosWrappers
           this->sub_objects[r][c]->reinit(block_sparsity_pattern.block(r, c));
         }
   }
-
-
 
   void
   BlockSparseMatrix::reinit(
@@ -207,8 +194,6 @@ namespace TrilinosWrappers
     collect_sizes();
   }
 
-
-
   void
   BlockSparseMatrix::reinit(
     const ::dealii::BlockSparseMatrix<double>& dealii_block_sparse_matrix,
@@ -241,16 +226,12 @@ namespace TrilinosWrappers
     reinit(parallel_partitioning, dealii_block_sparse_matrix, drop_tolerance);
   }
 
-
-
   void
   BlockSparseMatrix::collect_sizes()
   {
     // simply forward to the (non-public) function of the base class
     BaseClass::collect_sizes();
   }
-
-
 
   BlockSparseMatrix::size_type
   BlockSparseMatrix::n_nonzero_elements() const
@@ -263,8 +244,6 @@ namespace TrilinosWrappers
     return n_nonzero;
   }
 
-
-
   TrilinosScalar
   BlockSparseMatrix::residual(MPI::BlockVector&       dst,
                               const MPI::BlockVector& x,
@@ -276,8 +255,6 @@ namespace TrilinosWrappers
 
     return dst.l2_norm();
   }
-
-
 
   // TODO: In the following we
   // use the same code as just
@@ -295,8 +272,6 @@ namespace TrilinosWrappers
     return dst.l2_norm();
   }
 
-
-
   TrilinosScalar
   BlockSparseMatrix::residual(MPI::Vector&            dst,
                               const MPI::BlockVector& x,
@@ -309,8 +284,6 @@ namespace TrilinosWrappers
     return dst.l2_norm();
   }
 
-
-
   TrilinosScalar
   BlockSparseMatrix::residual(MPI::Vector&       dst,
                               const MPI::Vector& x,
@@ -322,8 +295,6 @@ namespace TrilinosWrappers
 
     return dst.l2_norm();
   }
-
-
 
   std::vector<Epetra_Map>
   BlockSparseMatrix::domain_partitioner() const
@@ -339,8 +310,6 @@ namespace TrilinosWrappers
     return domain_partitioner;
   }
 
-
-
   std::vector<Epetra_Map>
   BlockSparseMatrix::range_partitioner() const
   {
@@ -354,8 +323,6 @@ namespace TrilinosWrappers
     return range_partitioner;
   }
 
-
-
   MPI_Comm
   BlockSparseMatrix::get_mpi_communicator() const
   {
@@ -363,8 +330,6 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
     return this->sub_objects[0][0]->get_mpi_communicator();
   }
-
-
 
   // -------------------- explicit instantiations -----------------------
   //
@@ -389,7 +354,6 @@ namespace TrilinosWrappers
                             const bool);
 
 } // namespace TrilinosWrappers
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::split_string_list with a string that only contains
 // the delimiter and, possibly, spaces
 
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
-
 
 void
 test()
@@ -50,8 +48,6 @@ test()
          ExcInternalError());
   Assert(Utilities::split_string_list(" ; ", ';')[0] == "", ExcInternalError());
 }
-
-
 
 int
 main()

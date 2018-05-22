@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create a parallel DoFHandler on a 2d mesh and check componentwise
 // renumbering
 //
 // this is like the _01 testcase but with a simpler mesh for which I
 // can actually count DoFs and decide who owns what
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -37,8 +34,6 @@
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 template <int dim>
 void
@@ -108,14 +103,12 @@ test()
   }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

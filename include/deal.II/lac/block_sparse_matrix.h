@@ -16,7 +16,6 @@
 #ifndef dealii_block_sparse_matrix_h
 #define dealii_block_sparse_matrix_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/table.h>
 #include <deal.II/lac/block_matrix_base.h>
@@ -29,11 +28,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*! @addtogroup Matrix1
  *@{
  */
-
 
 /**
  * Blocked sparse matrix based on the SparseMatrix class. This class
@@ -107,8 +104,6 @@ public:
    * Destructor.
    */
   virtual ~BlockSparseMatrix() override;
-
-
 
   /**
    * Pseudo copy operator only copying empty objects. The sizes of the block
@@ -368,12 +363,8 @@ private:
     sparsity_pattern;
 };
 
-
-
 /*@}*/
 /* ------------------------- Template functions ---------------------- */
-
-
 
 template <typename number>
 inline BlockSparseMatrix<number>&
@@ -388,8 +379,6 @@ BlockSparseMatrix<number>::operator=(const double d)
   return *this;
 }
 
-
-
 template <typename number>
 template <typename block_number>
 inline void
@@ -398,8 +387,6 @@ BlockSparseMatrix<number>::vmult(BlockVector<block_number>&       dst,
 {
   BaseClass::vmult_block_block(dst, src);
 }
-
-
 
 template <typename number>
 template <typename block_number, typename nonblock_number>
@@ -410,8 +397,6 @@ BlockSparseMatrix<number>::vmult(BlockVector<block_number>&     dst,
   BaseClass::vmult_block_nonblock(dst, src);
 }
 
-
-
 template <typename number>
 template <typename block_number, typename nonblock_number>
 inline void
@@ -420,8 +405,6 @@ BlockSparseMatrix<number>::vmult(Vector<nonblock_number>&         dst,
 {
   BaseClass::vmult_nonblock_block(dst, src);
 }
-
-
 
 template <typename number>
 template <typename nonblock_number>
@@ -432,8 +415,6 @@ BlockSparseMatrix<number>::vmult(Vector<nonblock_number>&       dst,
   BaseClass::vmult_nonblock_nonblock(dst, src);
 }
 
-
-
 template <typename number>
 template <typename block_number>
 inline void
@@ -442,8 +423,6 @@ BlockSparseMatrix<number>::Tvmult(BlockVector<block_number>&       dst,
 {
   BaseClass::Tvmult_block_block(dst, src);
 }
-
-
 
 template <typename number>
 template <typename block_number, typename nonblock_number>
@@ -454,8 +433,6 @@ BlockSparseMatrix<number>::Tvmult(BlockVector<block_number>&     dst,
   BaseClass::Tvmult_block_nonblock(dst, src);
 }
 
-
-
 template <typename number>
 template <typename block_number, typename nonblock_number>
 inline void
@@ -465,8 +442,6 @@ BlockSparseMatrix<number>::Tvmult(Vector<nonblock_number>&         dst,
   BaseClass::Tvmult_nonblock_block(dst, src);
 }
 
-
-
 template <typename number>
 template <typename nonblock_number>
 inline void
@@ -475,8 +450,6 @@ BlockSparseMatrix<number>::Tvmult(Vector<nonblock_number>&       dst,
 {
   BaseClass::Tvmult_nonblock_nonblock(dst, src);
 }
-
-
 
 template <typename number>
 template <class BlockVectorType>
@@ -496,8 +469,6 @@ BlockSparseMatrix<number>::precondition_Jacobi(BlockVectorType&       dst,
   for(size_type i = 0; i < this->n_block_rows(); ++i)
     this->block(i, i).precondition_Jacobi(dst.block(i), src.block(i), omega);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -520,7 +491,6 @@ BlockSparseMatrix<number>::precondition_Jacobi(Vector<number2>&       dst,
   // the diagonal blocks of the matrix
   this->block(0, 0).precondition_Jacobi(dst, src, omega);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

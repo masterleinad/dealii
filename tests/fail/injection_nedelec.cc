@@ -13,13 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 char logname[] = "output";
 
-
 #include "../fe/injection_common.h"
-
 
 template <int dim>
 void

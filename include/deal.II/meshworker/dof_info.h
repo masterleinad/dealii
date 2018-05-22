@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_dof_info_h
 #define dealii_mesh_worker_dof_info_h
 
@@ -32,7 +31,6 @@ namespace MeshWorker
 {
   template <int dim, class DOFINFO>
   class DoFInfoBox;
-
 
   /**
    * A class containing information on geometry and degrees of freedom of a
@@ -162,7 +160,6 @@ namespace MeshWorker
     const BlockIndices&
     local_indices() const;
 
-
     /// The block structure of the system
     SmartPointer<const BlockInfo, DoFInfo<dim, spacedim>> block_info;
 
@@ -200,7 +197,6 @@ namespace MeshWorker
 
     friend class DoFInfoBox<dim, DoFInfo<dim, spacedim, number>>;
   };
-
 
   /**
    * A class bundling the MeshWorker::DoFInfo objects used on a cell.
@@ -243,7 +239,6 @@ namespace MeshWorker
     void
     assemble(ASSEMBLER& ass) const;
 
-
     /**
      * The data for the cell.
      */
@@ -284,8 +279,6 @@ namespace MeshWorker
       level_cell(false)
   {}
 
-
-
   template <int dim, int spacedim, typename number>
   DoFInfo<dim, spacedim, number>::DoFInfo(
     const DoFHandler<dim, spacedim>& dof_handler)
@@ -297,7 +290,6 @@ namespace MeshWorker
     aux[0] = dof_handler.get_fe().dofs_per_cell;
     aux_local_indices.reinit(aux);
   }
-
 
   template <int dim, int spacedim, typename number>
   template <class DHCellIterator>
@@ -314,7 +306,6 @@ namespace MeshWorker
         set_block_indices();
       }
   }
-
 
   template <int dim, int spacedim, typename number>
   template <class DHCellIterator>
@@ -333,7 +324,6 @@ namespace MeshWorker
       LocalResults<number>::reinit(aux_local_indices);
   }
 
-
   template <int dim, int spacedim, typename number>
   template <class DHFaceIterator>
   inline void
@@ -344,7 +334,6 @@ namespace MeshWorker
     face_number = face_no;
     sub_number  = numbers::invalid_unsigned_int;
   }
-
 
   template <int dim, int spacedim, typename number>
   template <class DHCellIterator, class DHFaceIterator>
@@ -367,7 +356,6 @@ namespace MeshWorker
       LocalResults<number>::reinit(aux_local_indices);
   }
 
-
   template <int dim, int spacedim, typename number>
   template <class DHFaceIterator>
   inline void
@@ -379,7 +367,6 @@ namespace MeshWorker
     face_number = face_no;
     sub_number  = subface_no;
   }
-
 
   template <int dim, int spacedim, typename number>
   template <class DHCellIterator, class DHFaceIterator>
@@ -405,7 +392,6 @@ namespace MeshWorker
       LocalResults<number>::reinit(aux_local_indices);
   }
 
-
   template <int dim, int spacedim, typename number>
   inline const BlockIndices&
   DoFInfo<dim, spacedim, number>::local_indices() const
@@ -430,7 +416,6 @@ namespace MeshWorker
       }
   }
 
-
   template <int dim, class DOFINFO>
   inline DoFInfoBox<dim, DOFINFO>::DoFInfoBox(
     const DoFInfoBox<dim, DOFINFO>& other)
@@ -445,7 +430,6 @@ namespace MeshWorker
       }
   }
 
-
   template <int dim, class DOFINFO>
   inline void
   DoFInfoBox<dim, DOFINFO>::reset()
@@ -457,7 +441,6 @@ namespace MeshWorker
         exterior_face_available[i] = false;
       }
   }
-
 
   template <int dim, class DOFINFO>
   template <class ASSEMBLER>

@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "interpolate_common.h"
 #include <deal.II/base/quadrature_lib.h>
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
 
 // FE_Q<dim>::interpolate(...)
 

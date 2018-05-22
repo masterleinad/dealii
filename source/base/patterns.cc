@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/path_search.h>
@@ -36,10 +35,7 @@
 #include <limits>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 //TODO[WB]: various functions here could be simplified by using namespace Utilities
 
@@ -102,7 +98,6 @@ namespace Patterns
 
   } // namespace internal
 
-
   namespace
   {
     /**
@@ -129,8 +124,6 @@ namespace Patterns
       return true;
     }
   } // namespace
-
-
 
   std::unique_ptr<PatternBase>
   pattern_factory(const std::string& description)
@@ -182,8 +175,6 @@ namespace Patterns
     return p;
   }
 
-
-
   std::size_t
   PatternBase::memory_consumption() const
   {
@@ -199,8 +190,6 @@ namespace Patterns
       return sizeof(*this) + 32;
   }
 
-
-
   const int Integer::min_int_value = std::numeric_limits<int>::min();
   const int Integer::max_int_value = std::numeric_limits<int>::max();
 
@@ -209,8 +198,6 @@ namespace Patterns
   Integer::Integer(const int lower_bound, const int upper_bound)
     : lower_bound(lower_bound), upper_bound(upper_bound)
   {}
-
-
 
   bool
   Integer::match(const std::string& test_string) const
@@ -231,8 +218,6 @@ namespace Patterns
     else
       return true;
   }
-
-
 
   std::string
   Integer::description(const OutputStyle style) const
@@ -293,15 +278,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Integer::clone() const
   {
     return std::unique_ptr<PatternBase>(new Integer(lower_bound, upper_bound));
   }
-
-
 
   std::unique_ptr<Integer>
   Integer::create(const std::string& description)
@@ -335,8 +316,6 @@ namespace Patterns
       return std::unique_ptr<Integer>();
   }
 
-
-
   const double Double::min_double_value = -std::numeric_limits<double>::max();
   const double Double::max_double_value = std::numeric_limits<double>::max();
 
@@ -345,8 +324,6 @@ namespace Patterns
   Double::Double(const double lower_bound, const double upper_bound)
     : lower_bound(lower_bound), upper_bound(upper_bound)
   {}
-
-
 
   bool
   Double::match(const std::string& test_string) const
@@ -368,8 +345,6 @@ namespace Patterns
     else
       return true;
   }
-
-
 
   std::string
   Double::description(const OutputStyle style) const
@@ -470,14 +445,11 @@ namespace Patterns
     return "";
   }
 
-
   std::unique_ptr<PatternBase>
   Double::clone() const
   {
     return std::unique_ptr<PatternBase>(new Double(lower_bound, upper_bound));
   }
-
-
 
   std::unique_ptr<Double>
   Double::create(const std::string& description)
@@ -517,10 +489,7 @@ namespace Patterns
     return std_cxx14::make_unique<Double>(lower_bound, upper_bound);
   }
 
-
-
   const char* Selection::description_init = "[Selection";
-
 
   Selection::Selection(const std::string& seq) : sequence(seq)
   {
@@ -529,8 +498,6 @@ namespace Patterns
     while(sequence.find("| ") != std::string::npos)
       sequence.replace(sequence.find("| "), 2, "|");
   }
-
-
 
   bool
   Selection::match(const std::string& test_string) const
@@ -561,8 +528,6 @@ namespace Patterns
     // not found
     return false;
   }
-
-
 
   std::string
   Selection::description(const OutputStyle style) const
@@ -597,14 +562,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Selection::clone() const
   {
     return std::unique_ptr<PatternBase>(new Selection(sequence));
   }
-
 
   std::size_t
   Selection::memory_consumption() const
@@ -612,8 +574,6 @@ namespace Patterns
     return (sizeof(PatternBase)
             + MemoryConsumption::memory_consumption(sequence));
   }
-
-
 
   std::unique_ptr<Selection>
   Selection::create(const std::string& description)
@@ -632,13 +592,10 @@ namespace Patterns
       return std::unique_ptr<Selection>();
   }
 
-
-
   const unsigned int List::max_int_value
     = std::numeric_limits<unsigned int>::max();
 
   const char* List::description_init = "[List";
-
 
   List::List(const PatternBase& p,
              const unsigned int min_elements,
@@ -655,8 +612,6 @@ namespace Patterns
            ExcMessage("The separator must have a non-zero length."));
   }
 
-
-
   List::List(const List& other)
     : pattern(other.pattern->clone()),
       min_elements(other.min_elements),
@@ -664,22 +619,17 @@ namespace Patterns
       separator(other.separator)
   {}
 
-
   const std::string&
   List::get_separator() const
   {
     return separator;
   }
 
-
-
   const PatternBase&
   List::get_base_pattern() const
   {
     return *pattern;
   }
-
-
 
   bool
   List::match(const std::string& test_string_list) const
@@ -697,8 +647,6 @@ namespace Patterns
 
     return true;
   }
-
-
 
   std::string
   List::description(const OutputStyle style) const
@@ -742,8 +690,6 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   List::clone() const
   {
@@ -751,15 +697,12 @@ namespace Patterns
       new List(*pattern, min_elements, max_elements, separator));
   }
 
-
   std::size_t
   List::memory_consumption() const
   {
     return (sizeof(*this) + MemoryConsumption::memory_consumption(*pattern)
             + MemoryConsumption::memory_consumption(separator));
   }
-
-
 
   std::unique_ptr<List>
   List::create(const std::string& description)
@@ -799,13 +742,10 @@ namespace Patterns
       return std::unique_ptr<List>();
   }
 
-
-
   const unsigned int Map::max_int_value
     = std::numeric_limits<unsigned int>::max();
 
   const char* Map::description_init = "[Map";
-
 
   Map::Map(const PatternBase& p_key,
            const PatternBase& p_value,
@@ -833,8 +773,6 @@ namespace Patterns
                  "of <key:value> pairs"));
   }
 
-
-
   Map::Map(const Map& other)
     : key_pattern(other.key_pattern->clone()),
       value_pattern(other.value_pattern->clone()),
@@ -843,8 +781,6 @@ namespace Patterns
       separator(other.separator),
       key_value_separator(other.key_value_separator)
   {}
-
-
 
   bool
   Map::match(const std::string& test_string_list) const
@@ -872,8 +808,6 @@ namespace Patterns
 
     return true;
   }
-
-
 
   std::string
   Map::description(const OutputStyle style) const
@@ -923,8 +857,6 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Map::clone() const
   {
@@ -936,7 +868,6 @@ namespace Patterns
                                                 key_value_separator));
   }
 
-
   std::size_t
   Map::memory_consumption() const
   {
@@ -945,8 +876,6 @@ namespace Patterns
             + MemoryConsumption::memory_consumption(separator)
             + MemoryConsumption::memory_consumption(key_value_separator));
   }
-
-
 
   std::unique_ptr<Map>
   Map::create(const std::string& description)
@@ -999,15 +928,11 @@ namespace Patterns
       return std::unique_ptr<Map>();
   }
 
-
-
   const PatternBase&
   Map::get_key_pattern() const
   {
     return *key_pattern;
   }
-
-
 
   const PatternBase&
   Map::get_value_pattern() const
@@ -1015,14 +940,11 @@ namespace Patterns
     return *value_pattern;
   }
 
-
-
   const std::string&
   Map::get_separator() const
   {
     return separator;
   }
-
 
   const std::string&
   Map::get_key_value_separator() const
@@ -1030,10 +952,7 @@ namespace Patterns
     return key_value_separator;
   }
 
-
-
   const char* Tuple::description_init = "[Tuple";
-
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
                const std::string&                               separator)
@@ -1048,14 +967,10 @@ namespace Patterns
       patterns[i] = ps[i]->clone();
   }
 
-
-
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
                const char*                                      separator)
     : Tuple(ps, std::string(separator))
   {}
-
-
 
   Tuple::Tuple(const Tuple& other) : separator(other.separator)
   {
@@ -1063,8 +978,6 @@ namespace Patterns
     for(unsigned int i = 0; i < other.patterns.size(); ++i)
       patterns[i] = other.patterns[i]->clone();
   }
-
-
 
   bool
   Tuple::match(const std::string& test_string_list) const
@@ -1082,8 +995,6 @@ namespace Patterns
 
     return true;
   }
-
-
 
   std::string
   Tuple::description(const OutputStyle style) const
@@ -1133,14 +1044,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Tuple::clone() const
   {
     return std::unique_ptr<PatternBase>(new Tuple(patterns, separator));
   }
-
 
   std::size_t
   Tuple::memory_consumption() const
@@ -1148,8 +1056,6 @@ namespace Patterns
     return (sizeof(*this) + MemoryConsumption::memory_consumption(patterns)
             + MemoryConsumption::memory_consumption(separator));
   }
-
-
 
   std::unique_ptr<Tuple>
   Tuple::create(const std::string& description)
@@ -1196,15 +1102,11 @@ namespace Patterns
       return std::unique_ptr<Tuple>();
   }
 
-
-
   const PatternBase&
   Tuple::get_pattern(const unsigned int& i) const
   {
     return *patterns[i];
   }
-
-
 
   const std::string&
   Tuple::get_separator() const
@@ -1212,10 +1114,7 @@ namespace Patterns
     return separator;
   }
 
-
-
   const char* MultipleSelection::description_init = "[MultipleSelection";
-
 
   MultipleSelection::MultipleSelection(const std::string& seq)
   {
@@ -1228,8 +1127,6 @@ namespace Patterns
     while(sequence.find("| ") != std::string::npos)
       sequence.replace(sequence.find("| "), 2, "|");
   }
-
-
 
   bool
   MultipleSelection::match(const std::string& test_string_list) const
@@ -1258,7 +1155,6 @@ namespace Patterns
 
         split_names.push_back(name);
       };
-
 
     // check the different possibilities
     for(std::vector<std::string>::const_iterator test_string
@@ -1295,8 +1191,6 @@ namespace Patterns
     return true;
   }
 
-
-
   std::string
   MultipleSelection::description(const OutputStyle style) const
   {
@@ -1330,14 +1224,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   MultipleSelection::clone() const
   {
     return std::unique_ptr<PatternBase>(new MultipleSelection(sequence));
   }
-
 
   std::size_t
   MultipleSelection::memory_consumption() const
@@ -1345,8 +1236,6 @@ namespace Patterns
     return (sizeof(PatternBase)
             + MemoryConsumption::memory_consumption(sequence));
   }
-
-
 
   std::unique_ptr<MultipleSelection>
   MultipleSelection::create(const std::string& description)
@@ -1365,15 +1254,10 @@ namespace Patterns
       return std::unique_ptr<MultipleSelection>();
   }
 
-
-
   const char* Bool::description_init = "[Bool";
-
 
   Bool::Bool() : Selection("true|false")
   {}
-
-
 
   std::string
   Bool::description(const OutputStyle style) const
@@ -1401,15 +1285,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Bool::clone() const
   {
     return std::unique_ptr<PatternBase>(new Bool());
   }
-
-
 
   std::unique_ptr<Bool>
   Bool::create(const std::string& description)
@@ -1421,19 +1301,13 @@ namespace Patterns
       return std::unique_ptr<Bool>();
   }
 
-
-
   const char* Anything::description_init = "[Anything";
-
-
 
   bool
   Anything::match(const std::string&) const
   {
     return true;
   }
-
-
 
   std::string
   Anything::description(const OutputStyle style) const
@@ -1461,15 +1335,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   Anything::clone() const
   {
     return std::unique_ptr<PatternBase>(new Anything());
   }
-
-
 
   std::unique_ptr<Anything>
   Anything::create(const std::string& description)
@@ -1481,23 +1351,16 @@ namespace Patterns
       return std::unique_ptr<Anything>();
   }
 
-
-
   const char* FileName::description_init = "[FileName";
-
 
   FileName::FileName(const FileType type) : file_type(type)
   {}
-
-
 
   bool
   FileName::match(const std::string&) const
   {
     return true;
   }
-
-
 
   std::string
   FileName::description(const OutputStyle style) const
@@ -1533,15 +1396,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   FileName::clone() const
   {
     return std::unique_ptr<PatternBase>(new FileName(file_type));
   }
-
-
 
   std::unique_ptr<FileName>
   FileName::create(const std::string& description)
@@ -1568,19 +1427,13 @@ namespace Patterns
       return std::unique_ptr<FileName>();
   }
 
-
-
   const char* DirectoryName::description_init = "[DirectoryName";
-
-
 
   bool
   DirectoryName::match(const std::string&) const
   {
     return true;
   }
-
-
 
   std::string
   DirectoryName::description(const OutputStyle style) const
@@ -1608,15 +1461,11 @@ namespace Patterns
     return "";
   }
 
-
-
   std::unique_ptr<PatternBase>
   DirectoryName::clone() const
   {
     return std::unique_ptr<PatternBase>(new DirectoryName());
   }
-
-
 
   std::unique_ptr<DirectoryName>
   DirectoryName::create(const std::string& description)

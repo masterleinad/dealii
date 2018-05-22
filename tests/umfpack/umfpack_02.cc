@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the umfpack sparse direct solver on a mass matrix; test that the
 // functions that allow for repeated solves yield the correct result even
 // though the matrix is decomposed only once
@@ -39,7 +38,6 @@
 
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -108,7 +106,6 @@ test(bool transpose = false)
       Assert(x.l2_norm() / solution.l2_norm() < 1e-8, ExcInternalError());
     }
 }
-
 
 int
 main()

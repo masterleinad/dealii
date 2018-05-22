@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::partition_triangulation
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -54,8 +51,6 @@ test()
       ++cell)
     deallog << cell << ' ' << cell->subdomain_id() << std::endl;
 }
-
-
 
 int
 main()

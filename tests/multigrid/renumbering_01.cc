@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the new DoFRenumbering::component_wise function that handles
 // DoFHandlers and renumbers all MG and non-MG dofs
 
@@ -52,7 +51,6 @@ check()
   DoFRenumbering::component_wise(mgdof);
   for(unsigned int l = 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l);
-
 
   typename DoFHandler<dim>::level_cell_iterator cell = mgdof.begin_mg(),
                                                 endc = mgdof.end_mg();
@@ -97,7 +95,6 @@ check()
           }
     }
 }
-
 
 int
 main()

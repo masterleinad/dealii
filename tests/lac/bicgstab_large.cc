@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that bicgstab does not exit early when very large matrices are used
 
 #include "../testmatrix.h"
@@ -22,7 +21,6 @@
 #include <deal.II/lac/solver_bicgstab.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 int
 main()

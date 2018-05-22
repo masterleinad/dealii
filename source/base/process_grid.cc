@@ -200,8 +200,6 @@ namespace Utilities
 #  endif
     }
 
-
-
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
                              const unsigned int n_rows_matrix,
                              const unsigned int n_columns_matrix,
@@ -215,15 +213,11 @@ namespace Utilities
                                                  column_block_size))
     {}
 
-
-
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
                              const unsigned int n_rows,
                              const unsigned int n_columns)
       : ProcessGrid(mpi_comm, std::make_pair(n_rows, n_columns))
     {}
-
-
 
     ProcessGrid::~ProcessGrid()
     {
@@ -233,8 +227,6 @@ namespace Utilities
       if(mpi_communicator_inactive_with_root != MPI_COMM_NULL)
         MPI_Comm_free(&mpi_communicator_inactive_with_root);
     }
-
-
 
     template <typename NumberType>
     void

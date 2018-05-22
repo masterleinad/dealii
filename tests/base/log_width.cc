@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that we can set the width of LogStream objects
 
 #include "../tests.h"

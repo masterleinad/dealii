@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing compressed sparsity
 // patterns. This test was written when I changed a few things in the
 // algorithm.
@@ -32,7 +30,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 template <int dim>
 void
@@ -75,8 +72,6 @@ test()
   for(SparsityPattern::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 }
-
-
 
 int
 main()

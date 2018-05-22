@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Observe how the values of the shape functions change as we refine
 // the grid
 
@@ -37,7 +36,6 @@
 #include <vector>
 
 #define PRECISION 5
-
 
 std::ofstream logfile("output");
 
@@ -77,8 +75,6 @@ test(const unsigned int degree)
         }
     }
 }
-
-
 
 int
 main()

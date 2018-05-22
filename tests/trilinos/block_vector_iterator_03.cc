@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this test is an adaptation of lac/block_vector_iterator for Trilinos block
 // vectors
 
@@ -38,7 +37,6 @@ operator==(const TrilinosWrappers::MPI::BlockVector& v1,
       return false;
   return true;
 }
-
 
 void
 test()
@@ -103,7 +101,6 @@ test()
       // everything is alright
       deallog << "Check 3: true" << std::endl;
     };
-
 
   // Check 3: same, but this time
   // with const iterators
@@ -174,7 +171,6 @@ test()
       v2 *= 1. / 2.;
       deallog << "Check 7: " << (v1 == v2 ? "true" : "false") << std::endl;
 
-
       // check operators +/-, +=/-=
       deallog << "Check 8: "
               << (std::distance(v1.begin(), v1.begin() + 3) == 3 ? "true" :
@@ -231,8 +227,6 @@ test()
     };
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -243,7 +237,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {
@@ -277,7 +270,6 @@ main(int argc, char** argv)
       // abort
       return 3;
     };
-
 
   return 0;
 }

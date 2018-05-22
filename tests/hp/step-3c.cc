@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a tiny variation of step-3b (using up to q6, instead of only up to
 // q5), but this one crashed at one time before even calling the solver
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -48,8 +45,6 @@
 
 #include <deal.II/numerics/data_out.h>
 #include <iostream>
-
-
 
 class LaplaceProblem
 {
@@ -85,11 +80,8 @@ private:
   Vector<double> system_rhs;
 };
 
-
 LaplaceProblem::LaplaceProblem() : dof_handler(triangulation)
 {}
-
-
 
 void
 LaplaceProblem::make_grid_and_dofs()
@@ -140,8 +132,6 @@ LaplaceProblem::make_grid_and_dofs()
   sparsity_pattern.compress();
   system_matrix.reinit(sparsity_pattern);
 }
-
-
 
 void
 LaplaceProblem::assemble_system()
@@ -212,8 +202,6 @@ LaplaceProblem::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 void
 LaplaceProblem::solve()
 {
@@ -231,8 +219,6 @@ LaplaceProblem::solve()
   hanging_node_constraints.distribute(solution);
 }
 
-
-
 void
 LaplaceProblem::output_results() const
 {
@@ -243,8 +229,6 @@ LaplaceProblem::output_results() const
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 void
 LaplaceProblem::run()
@@ -265,8 +249,6 @@ LaplaceProblem::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

@@ -60,7 +60,6 @@ namespace SUNDIALS
 
 #    ifdef DEAL_II_WITH_TRILINOS
 
-
     void
     copy(TrilinosWrappers::MPI::Vector& dst, const N_Vector& src)
     {

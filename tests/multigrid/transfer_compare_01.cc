@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Compare MGTransferPrebuilt, MGTransferBlock and MGTransferSelect
 
 #include "../tests.h"
@@ -37,7 +36,6 @@
 #include <numeric>
 
 using namespace std;
-
 
 template <int dim, typename number, int spacedim>
 void
@@ -67,7 +65,6 @@ reinit_vector_by_blocks(
       v[level].reinit(ndofs[level][selected_block]);
     }
 }
-
 
 template <int dim, typename number, int spacedim>
 void
@@ -106,8 +103,6 @@ reinit_vector_by_blocks(
         }
     }
 }
-
-
 
 template <int dim>
 void
@@ -207,7 +202,6 @@ check_block(const FiniteElement<dim>& fe)
   deallog << "Select   " << v0.block(0).l2_norm() << ' '
           << v1.block(0).l2_norm() << std::endl;
 
-
   // Check copy to mg and back
   BlockVector<double> u;
   u.reinit(ndofs);
@@ -256,7 +250,6 @@ check_block(const FiniteElement<dim>& fe)
   u.add(-1., uu);
   deallog << u.l2_norm() << std::endl;
 }
-
 
 int
 main()

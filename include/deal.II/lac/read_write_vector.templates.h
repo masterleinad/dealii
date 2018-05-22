@@ -16,7 +16,6 @@
 #ifndef dealii_parallel_vector_templates_h
 #define dealii_parallel_vector_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/partitioner.h>
 
@@ -45,7 +44,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace LinearAlgebra
 {
   template <typename Number>
@@ -73,8 +71,6 @@ namespace LinearAlgebra
       }
   }
 
-
-
   template <typename Number>
   void
   ReadWriteVector<Number>::reinit(const size_type size,
@@ -95,8 +91,6 @@ namespace LinearAlgebra
     comm_pattern.reset();
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   void
@@ -114,8 +108,6 @@ namespace LinearAlgebra
     source_stored_elements.clear();
     comm_pattern.reset();
   }
-
-
 
   template <typename Number>
   void
@@ -135,8 +127,6 @@ namespace LinearAlgebra
     source_stored_elements.clear();
     comm_pattern.reset();
   }
-
-
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
   template <typename Number>
@@ -167,8 +157,6 @@ namespace LinearAlgebra
   }
 #endif
 
-
-
   template <typename Number>
   template <typename Functor>
   void
@@ -178,8 +166,6 @@ namespace LinearAlgebra
     internal::VectorOperations::parallel_for(
       functor, 0, n_elements(), thread_loop_partitioner);
   }
-
-
 
   template <typename Number>
   ReadWriteVector<Number>&
@@ -200,8 +186,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   ReadWriteVector<Number>&
@@ -218,8 +202,6 @@ namespace LinearAlgebra
 
     return *this;
   }
-
-
 
   template <typename Number>
   ReadWriteVector<Number>&
@@ -240,8 +222,6 @@ namespace LinearAlgebra
 
     return *this;
   }
-
-
 
   template <typename Number>
   void
@@ -284,8 +264,6 @@ namespace LinearAlgebra
         local_element(i) = tmp_vector(stored.nth_index_in_set(i));
   }
 
-
-
 #ifdef DEAL_II_WITH_PETSC
   namespace internal
   {
@@ -317,8 +295,6 @@ namespace LinearAlgebra
     }
   } // namespace internal
 
-
-
   template <typename Number>
   void
   ReadWriteVector<Number>::import(
@@ -345,8 +321,6 @@ namespace LinearAlgebra
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 #endif
-
-
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
   template <typename Number>
@@ -432,7 +406,6 @@ namespace LinearAlgebra
       AssertThrow(false, ExcNotImplemented());
   }
 
-
   template <typename Number>
   void
   ReadWriteVector<Number>::import(
@@ -454,8 +427,6 @@ namespace LinearAlgebra
            communication_pattern);
   }
 
-
-
   template <typename Number>
   void
   ReadWriteVector<Number>::import(
@@ -470,8 +441,6 @@ namespace LinearAlgebra
            communication_pattern);
   }
 #endif
-
-
 
 #ifdef DEAL_II_WITH_CUDA
   template <typename Number>
@@ -507,8 +476,6 @@ namespace LinearAlgebra
   }
 #endif
 
-
-
   template <typename Number>
   void
   ReadWriteVector<Number>::swap(ReadWriteVector<Number>& v)
@@ -516,8 +483,6 @@ namespace LinearAlgebra
     std::swap(stored_elements, v.stored_elements);
     std::swap(values, v.values);
   }
-
-
 
   template <typename Number>
   std::size_t
@@ -530,8 +495,6 @@ namespace LinearAlgebra
 
     return memory;
   }
-
-
 
   template <typename Number>
   void
@@ -559,8 +522,6 @@ namespace LinearAlgebra
     AssertThrow(out, ExcIO());
   }
 
-
-
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
   template <typename Number>
   EpetraWrappers::CommunicationPattern
@@ -578,7 +539,6 @@ namespace LinearAlgebra
   }
 #endif
 } // end of namespace LinearAlgebra
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -35,8 +35,6 @@ namespace NonMatching
       }
   }
 
-
-
   template <int dim>
   void
   ImmersedSurfaceQuadrature<dim>::push_back(const Point<dim>&     point,
@@ -50,8 +48,6 @@ namespace NonMatching
            ExcMessage("Normal is not normalized."));
   }
 
-
-
   template <int dim>
   const Tensor<1, dim>&
   ImmersedSurfaceQuadrature<dim>::normal_vector(const unsigned int i) const
@@ -60,16 +56,12 @@ namespace NonMatching
     return normals[i];
   }
 
-
-
   template <int dim>
   const std::vector<Tensor<1, dim>>&
   ImmersedSurfaceQuadrature<dim>::get_normal_vectors() const
   {
     return normals;
   }
-
-
 
   template class ImmersedSurfaceQuadrature<1>;
   template class ImmersedSurfaceQuadrature<2>;

@@ -35,7 +35,6 @@
 #include <iostream>
 #include <memory>
 
-
 template <typename NumberType>
 void
 test(const unsigned int size,
@@ -98,8 +97,6 @@ test(const unsigned int size,
     }
   pcout << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

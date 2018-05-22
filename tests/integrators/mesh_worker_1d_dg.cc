@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that we can use MeshWorker also in 1d. test by Scott Miller
 
 #include "../tests.h"
@@ -34,7 +33,6 @@
 
 using namespace dealii;
 
-
 //! Solve the advection equation:  \dot{u} + \div{\mathbf{c} u} = 0.0,
 //! with c={1}, {1,0}, {1,0,0} in d=1,2,3
 
@@ -43,7 +41,6 @@ using namespace dealii;
 //! Boundary condition at x=0:  u=1
 
 //! Use a DG formulation with upwind fluxes
-
 
 namespace Advection
 {
@@ -96,7 +93,6 @@ namespace Advection
 
     const double wavespeed;
 
-
     // DATA:
     Triangulation<dim> triangulation;
     DoFHandler<dim>    dof_handler;
@@ -107,7 +103,6 @@ namespace Advection
 
     const FEValuesExtractors::Scalar upos;
   };
-
 
   template <int dim>
   AdvectionProblem<dim>::AdvectionProblem()
@@ -123,7 +118,6 @@ namespace Advection
   {
     dof_handler.clear();
   }
-
 
   template <>
   void
@@ -203,7 +197,6 @@ namespace Advection
     solution = 0.0;
     stage    = 0.0;
   } //setup_system
-
 
   template <int dim>
   void
@@ -389,7 +382,6 @@ namespace Advection
 
   } //integrate_face_term
 
-
   template <int dim>
   void
   AdvectionProblem<dim>::output_results(int timestep) const
@@ -411,7 +403,6 @@ namespace Advection
     data_out.write_gnuplot(deallog.get_file_stream());
 
   } //output_results
-
 
   template <int dim>
   void
@@ -449,7 +440,6 @@ namespace Advection
   } //AdvectionProblem::run()
 
 } // namespace Advection
-
 
 int
 main()

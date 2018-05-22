@@ -32,7 +32,6 @@ class LinearOperator;
 template <typename Range = Vector<double>>
 class PackagedOperation;
 
-
 /**
  * A class to store a computation.
  *
@@ -271,7 +270,6 @@ public:
   std::function<void(Range& v, bool omit_zeroing_entries)> reinit_vector;
 };
 
-
 /**
  * @name Vector space operations
  */
@@ -446,7 +444,6 @@ operator-(const PackagedOperation<Range>& comp, const Range& offset)
   return comp - PackagedOperation<Range>(offset);
 }
 
-
 /**
  * @relatesalso PackagedOperation
  *
@@ -464,7 +461,6 @@ operator-(const Range& offset, const PackagedOperation<Range>& comp)
 }
 
 //@}
-
 
 /**
  * @name Creation of a PackagedOperation object
@@ -497,7 +493,6 @@ namespace
     typedef decltype(test<T>(nullptr, nullptr, nullptr)) type;
   };
 } // namespace
-
 
 /**
  * @relatesalso PackagedOperation
@@ -540,7 +535,6 @@ operator+(const Range& u, const Range& v)
 
   return return_comp;
 }
-
 
 /**
  * @relatesalso PackagedOperation
@@ -585,7 +579,6 @@ operator-(const Range& u, const Range& v)
   return return_comp;
 }
 
-
 /**
  * @relatesalso PackagedOperation
  *
@@ -609,7 +602,6 @@ PackagedOperation<Range> operator*(const Range&               u,
   return PackagedOperation<Range>(u) * number;
 }
 
-
 /**
  * @relatesalso PackagedOperation
  *
@@ -632,7 +624,6 @@ PackagedOperation<Range> operator*(typename Range::value_type number,
 {
   return number * PackagedOperation<Range>(u);
 }
-
 
 /**
  * @relatesalso PackagedOperation
@@ -668,7 +659,6 @@ operator*(const LinearOperator<Range, Domain, Payload>& op, const Domain& u)
   return return_comp;
 }
 
-
 /**
  * @relatesalso PackagedOperation
  *
@@ -702,7 +692,6 @@ operator*(const Range& u, const LinearOperator<Range, Domain, Payload>& op)
 
   return return_comp;
 }
-
 
 /**
  * @relatesalso PackagedOperation
@@ -746,7 +735,6 @@ operator*(const LinearOperator<Range, Domain, Payload>& op,
 
   return return_comp;
 }
-
 
 /**
  * @relatesalso PackagedOperation

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that each cell with a neighbor is also that neighbor's
 // neighbor on exactly one side. this is tricky to get right for 3d
 // meshes with misoriented faces
@@ -66,7 +64,6 @@ void check_this(Triangulation<3>& tria)
   deallog << "    ok." << std::endl;
 }
 
-
 void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
@@ -87,7 +84,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

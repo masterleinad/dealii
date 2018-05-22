@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_divergence_h
 #define dealii_integrators_divergence_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -115,7 +114,6 @@ namespace LocalIntegrators
         }
     }
 
-
     /**
      * The residual of the divergence operator in weak form. \f[ - \int_Z
      * \nabla v \cdot \mathbf u \,dx \f] This is the weak divergence operator
@@ -151,7 +149,6 @@ namespace LocalIntegrators
               result(i) -= dx * input[d][k] * fetest.shape_grad(i, k)[d];
         }
     }
-
 
     /**
      * Cell matrix for gradient. The derivative is on the trial function. \f[
@@ -563,7 +560,6 @@ namespace LocalIntegrators
 
   } // namespace Divergence
 } // namespace LocalIntegrators
-
 
 DEAL_II_NAMESPACE_CLOSE
 

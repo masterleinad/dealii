@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that LinearAlgebra::distributed::Vector::operator= does not carry
 // over any state from a duplicated MPI communicator in conjunction with a
 // distributed mesh
-
 
 #include "../tests.h"
 #include <deal.II/base/mpi.h>
@@ -51,8 +49,6 @@ do_test(MPI_Comm communicator)
 
   deallog << v1.l2_norm() << " " << v3->l2_norm() << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

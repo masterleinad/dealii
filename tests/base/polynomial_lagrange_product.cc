@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests correctness of values and derivatives for polynomials derived from
 // Lagrange product form
 
@@ -22,9 +21,7 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 void
 check_derivatives(const std::vector<Polynomial<double>>& p,
@@ -62,8 +59,6 @@ check_derivatives(const std::vector<Polynomial<double>>& p,
   deallog << std::endl;
 }
 
-
-
 void
 check_poly(const Quadrature<1>& q)
 {
@@ -75,8 +70,6 @@ check_poly(const Quadrature<1>& q)
   deallog << std::endl;
 }
 
-
-
 void
 check_lge(unsigned int n)
 {
@@ -87,8 +80,6 @@ check_lge(unsigned int n)
     check_derivatives(p, i);
   deallog << std::endl;
 }
-
-
 
 int
 main()

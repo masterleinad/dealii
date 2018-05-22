@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // compare collective setting elements in a trilinos matrix using
 // TrilinosWrappers::BlockSparseMatrix::set() and a FullMatrix<double> with
 // setting the same elements on an entry-by-entry. Use the entries as they
@@ -26,7 +24,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/trilinos_block_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test()
@@ -131,8 +128,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

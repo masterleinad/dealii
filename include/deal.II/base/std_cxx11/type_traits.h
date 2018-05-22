@@ -16,7 +16,6 @@
 #ifndef dealii_std_cxx11_type_traits_h
 #define dealii_std_cxx11_type_traits_h
 
-
 #include <deal.II/base/config.h>
 
 #include <type_traits>
@@ -35,7 +34,6 @@ namespace std_cxx11
   using std::true_type;
 } // namespace std_cxx11
 DEAL_II_NAMESPACE_CLOSE
-
 
 // then allow using the old namespace name instead of the new one
 DEAL_II_NAMESPACE_OPEN

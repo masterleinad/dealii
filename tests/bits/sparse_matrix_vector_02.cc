@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::Tvmult
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v, Vector<double>& w)
@@ -62,8 +59,6 @@ test(Vector<double>& v, Vector<double>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

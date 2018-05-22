@@ -145,7 +145,6 @@ namespace Step36
     parameters.parse_input(prm_file);
   }
 
-
   // @sect4{EigenvalueProblem::make_grid_and_dofs}
 
   // The next function creates a mesh on the domain $[-1,1]^d$, refines it as
@@ -223,7 +222,6 @@ namespace Step36
     eigenvalues.resize(eigenfunctions.size());
   }
 
-
   // @sect4{EigenvalueProblem::assemble_system}
 
   // Here, we assemble the global stiffness and mass matrices from local
@@ -262,7 +260,6 @@ namespace Step36
                          typename FunctionParser<dim>::ConstMap());
 
     std::vector<double> potential_values(n_q_points);
-
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -309,7 +306,6 @@ namespace Step36
     stiffness_matrix.compress(VectorOperation::add);
     mass_matrix.compress(VectorOperation::add);
 
-
     // Before leaving the function, we calculate spurious eigenvalues,
     // introduced to the system by zero Dirichlet constraints. As
     // discussed in the introduction, the use of Dirichlet boundary
@@ -334,7 +330,6 @@ namespace Step36
               << "[" << min_spurious_eigenvalue << ","
               << max_spurious_eigenvalue << "]" << std::endl;
   }
-
 
   // @sect4{EigenvalueProblem::solve}
 
@@ -398,7 +393,6 @@ namespace Step36
     return solver_control.last_step();
   }
 
-
   // @sect4{EigenvalueProblem::output_results}
 
   // This is the last significant function of this program. It uses the
@@ -443,7 +437,6 @@ namespace Step36
     data_out.write_vtk(output);
   }
 
-
   // @sect4{EigenvalueProblem::run}
 
   // This is the function which has the top-level control over everything. It
@@ -484,7 +477,6 @@ main(int argc, char** argv)
       using namespace Step36;
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-
 
       // This program can only be run in serial. Otherwise, throw an exception.
       AssertThrow(

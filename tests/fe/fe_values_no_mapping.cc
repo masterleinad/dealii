@@ -25,7 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -72,7 +71,6 @@ test()
   for(int d = 0; d < dim - 1; ++d)
     f_quad_p(d) = 0.42 + 0.11 * d;
   Quadrature<dim - 1> f_quad(f_quad_p);
-
 
   {
     DoFHandler<dim> dof_handler(tria);
@@ -134,7 +132,6 @@ test()
     deallog << "OK" << std::endl;
   }
 }
-
 
 int
 main()

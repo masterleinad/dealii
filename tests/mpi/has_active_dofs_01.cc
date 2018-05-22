@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // verify that DoFHandler::has_active_dofs() works also on meshes
 // where some processors have no active dofs because they don't own
 // any cells
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -105,7 +101,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

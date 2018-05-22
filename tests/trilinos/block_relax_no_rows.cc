@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Trilinos PreconditionBlock* used to fail if one processor has no locally
 // owned rows
 
 #include "../tests.h"
 #include <deal.II/lac/trilinos_precondition.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
-
 
 template <class Prec>
 void
@@ -65,7 +63,6 @@ test()
 
   deallog << "dst: " << dst.l2_norm() << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

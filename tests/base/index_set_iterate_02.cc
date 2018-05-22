@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::at()
 
 #include "../tests.h"
@@ -57,8 +56,6 @@ test()
   empty.print(deallog);
   test(empty, 6);
 }
-
-
 
 int
 main()

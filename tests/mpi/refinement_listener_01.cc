@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Create a mesh and attach a function to the signal that is triggered
 // whenever we refine the mesh. count how often it is called on each
 // processor. (note: this is more than once per refinement cycle because we
@@ -32,15 +30,12 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
 
-
-
 int counter = 0;
 void
 listener()
 {
   ++counter;
 }
-
 
 void
 test()
@@ -64,7 +59,6 @@ test()
     deallog << "refine_global(3) results in a total of " << counter
             << std::endl;
 
-
   // now also find the bottom left corner of the domain and, on the processor
   // that owns this cell, refine it 4 times
   for(unsigned int i = 0; i < 4; ++i)
@@ -82,14 +76,12 @@ test()
     }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

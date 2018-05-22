@@ -16,14 +16,12 @@
 // check that IterationNumber control works as expected, i.e., it terminates
 // with success when reaching the maximum number of iterations
 
-
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_cg.h>
 #include <deal.II/lac/solver_control.h>
 #include <deal.II/lac/vector.h>
-
 
 void
 check()

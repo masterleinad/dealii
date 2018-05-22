@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test print functions of Trilinos sparsity pattern
 
 #include "../tests.h"

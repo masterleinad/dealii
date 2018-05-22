@@ -53,8 +53,6 @@ namespace TimeStepping
     return evolve_one_time_step(F[0], J_inverse[0], t, delta_t, y);
   }
 
-
-
   // ----------------------------------------------------------------------
   // ExplicitRungeKutta
   // ----------------------------------------------------------------------
@@ -68,8 +66,6 @@ namespace TimeStepping
     // for clarity be explicit on which function is called
     ExplicitRungeKutta<VectorType>::initialize(method);
   }
-
-
 
   template <typename VectorType>
   void
@@ -147,8 +143,6 @@ namespace TimeStepping
       }
   }
 
-
-
   template <typename VectorType>
   double
   ExplicitRungeKutta<VectorType>::evolve_one_time_step(
@@ -163,8 +157,6 @@ namespace TimeStepping
   {
     return evolve_one_time_step(f, t, delta_t, y);
   }
-
-
 
   template <typename VectorType>
   double
@@ -185,16 +177,12 @@ namespace TimeStepping
     return (t + delta_t);
   }
 
-
-
   template <typename VectorType>
   const typename ExplicitRungeKutta<VectorType>::Status&
   ExplicitRungeKutta<VectorType>::get_status() const
   {
     return status;
   }
-
-
 
   template <typename VectorType>
   void
@@ -215,8 +203,6 @@ namespace TimeStepping
       }
   }
 
-
-
   // ----------------------------------------------------------------------
   // ImplicitRungeKutta
   // ----------------------------------------------------------------------
@@ -236,8 +222,6 @@ namespace TimeStepping
     // for clarity be explicit on which function is called
     ImplicitRungeKutta<VectorType>::initialize(method);
   }
-
-
 
   template <typename VectorType>
   void
@@ -302,8 +286,6 @@ namespace TimeStepping
       }
   }
 
-
-
   template <typename VectorType>
   double
   ImplicitRungeKutta<VectorType>::evolve_one_time_step(
@@ -331,8 +313,6 @@ namespace TimeStepping
     return (t + delta_t);
   }
 
-
-
   template <typename VectorType>
   void
   ImplicitRungeKutta<VectorType>::set_newton_solver_parameters(
@@ -343,16 +323,12 @@ namespace TimeStepping
     tolerance = tolerance_;
   }
 
-
-
   template <typename VectorType>
   const typename ImplicitRungeKutta<VectorType>::Status&
   ImplicitRungeKutta<VectorType>::get_status() const
   {
     return status;
   }
-
-
 
   template <typename VectorType>
   void
@@ -392,8 +368,6 @@ namespace TimeStepping
       }
   }
 
-
-
   template <typename VectorType>
   void
   ImplicitRungeKutta<VectorType>::newton_solve(
@@ -419,8 +393,6 @@ namespace TimeStepping
     status.norm_residual = norm_residual;
   }
 
-
-
   template <typename VectorType>
   void
   ImplicitRungeKutta<VectorType>::compute_residual(
@@ -438,8 +410,6 @@ namespace TimeStepping
     residual.sadd(delta_t, 1.0, old_y);
     residual.sadd(-1.0, 1., y);
   }
-
-
 
   // ----------------------------------------------------------------------
   // EmbeddedExplicitRungeKutta
@@ -469,8 +439,6 @@ namespace TimeStepping
     // for clarity be explicit on which function is called
     EmbeddedExplicitRungeKutta<VectorType>::initialize(method);
   }
-
-
 
   template <typename VectorType>
   void
@@ -713,8 +681,6 @@ namespace TimeStepping
       }
   }
 
-
-
   template <typename VectorType>
   void
   EmbeddedExplicitRungeKutta<VectorType>::free_memory()
@@ -724,8 +690,6 @@ namespace TimeStepping
 
     last_stage = nullptr;
   }
-
-
 
   template <typename VectorType>
   double
@@ -741,8 +705,6 @@ namespace TimeStepping
   {
     return evolve_one_time_step(f, t, delta_t, y);
   }
-
-
 
   template <typename VectorType>
   double
@@ -835,8 +797,6 @@ namespace TimeStepping
     return (t + delta_t);
   }
 
-
-
   template <typename VectorType>
   void
   EmbeddedExplicitRungeKutta<VectorType>::set_time_adaptation_parameters(
@@ -855,15 +815,12 @@ namespace TimeStepping
     coarsen_tol   = coarsen_tol_;
   }
 
-
-
   template <typename VectorType>
   const typename EmbeddedExplicitRungeKutta<VectorType>::Status&
   EmbeddedExplicitRungeKutta<VectorType>::get_status() const
   {
     return status;
   }
-
 
   template <typename VectorType>
   void

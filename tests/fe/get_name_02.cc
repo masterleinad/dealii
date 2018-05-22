@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test get_name()
 
 #include "../tests.h"
@@ -27,14 +25,12 @@
 
 #include <string>
 
-
 template <int dim, int spacedim>
 void
 test(const FiniteElement<dim, spacedim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 }
-
 
 int
 main()
@@ -69,8 +65,6 @@ main()
     FE_DGQArbitraryNodes<2, 3> fe(quadrature);
     test(fe);
   }
-
-
 
   return 0;
 }

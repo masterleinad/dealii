@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like particle_03, but tests the creation and use of a
 // particle iterator from the created particle.
 
@@ -23,7 +21,6 @@
 #include <deal.II/particles/particle_iterator.h>
 
 #include <deal.II/base/array_view.h>
-
 
 template <int dim>
 void
@@ -78,8 +75,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

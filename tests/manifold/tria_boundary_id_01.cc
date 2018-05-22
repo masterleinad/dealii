@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that an overlap in boundary and manifold IDs does not lead to the
 // boundary being treated as a (curved) manifold upon refinement. More
 // exactly: with the old boundary compatibility code (removed for the 9.0

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create, size, and reinit of LA::MPI::SparseMatrix
 
 #include "../tests.h"
@@ -51,7 +49,6 @@ test()
 
   csp.add(0, 1);
 
-
   typename LA::MPI::SparseMatrix mat;
   mat.reinit(local_active, local_active, csp, MPI_COMM_WORLD);
 
@@ -84,8 +81,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

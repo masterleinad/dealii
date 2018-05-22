@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test distributed solution_transfer with one processor
 
 #include "../tests.h"
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/fe_q.h>
-
-
 
 template <int dim>
 void
@@ -71,7 +67,6 @@ test(std::ostream& /*out*/)
 
   deallog << "norm: " << interpolated_solution.l2_norm() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

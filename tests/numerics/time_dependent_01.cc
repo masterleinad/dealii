@@ -13,22 +13,17 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that a change to TimeDependent::end_sweep works as expected:
 // TimeStep::end_sweep must be called once for every time step object
-
 
 #include "../tests.h"
 #include <deal.II/numerics/time_dependent.h>
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
 
-
 std::vector<bool> end_sweep_flags;
-
 
 class TimeStep : public TimeStepBase
 {
@@ -53,7 +48,6 @@ private:
   const unsigned int time_step_number;
 };
 
-
 void
 test()
 {
@@ -74,7 +68,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

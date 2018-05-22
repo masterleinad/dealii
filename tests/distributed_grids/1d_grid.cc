@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that we can compile p::d::Tria<1>
 
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
-
 
 int
 main(int argc, char* argv[])

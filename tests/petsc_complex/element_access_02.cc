@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // deal.II includes
 #include "../tests.h"
 #include <deal.II/lac/petsc_sparse_matrix.h>

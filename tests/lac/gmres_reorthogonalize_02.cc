@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tests that GMRES builds an orthonormal basis properly for a larger matrix
 // and basis size than gmres_orthogonalize_01
 
@@ -22,8 +21,6 @@
 #include <deal.II/lac/solver_gmres.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void

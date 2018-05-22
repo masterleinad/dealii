@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_time_step_control_h
 #define dealii_time_step_control_h
 
@@ -204,13 +203,11 @@ namespace Algorithms
     char format[30];
   };
 
-
   inline double
   TimestepControl::start() const
   {
     return start_val;
   }
-
 
   inline double
   TimestepControl::final() const
@@ -218,13 +215,11 @@ namespace Algorithms
     return final_val;
   }
 
-
   inline double
   TimestepControl::step() const
   {
     return current_step_val;
   }
-
 
   inline double
   TimestepControl::tolerance() const
@@ -232,13 +227,11 @@ namespace Algorithms
     return tolerance_val;
   }
 
-
   inline double
   TimestepControl::now() const
   {
     return now_val;
   }
-
 
   inline void
   TimestepControl::start(double t)
@@ -246,13 +239,11 @@ namespace Algorithms
     start_val = t;
   }
 
-
   inline void
   TimestepControl::final(double t)
   {
     final_val = t;
   }
-
 
   inline void
   TimestepControl::tolerance(double t)
@@ -260,13 +251,11 @@ namespace Algorithms
     tolerance_val = t;
   }
 
-
   inline void
   TimestepControl::strategy(Strategy t)
   {
     strategy_val = t;
   }
-
 
   inline void
   TimestepControl::start_step(const double t)
@@ -274,13 +263,11 @@ namespace Algorithms
     start_step_val = t;
   }
 
-
   inline void
   TimestepControl::max_step(double t)
   {
     max_step_val = t;
   }
-
 
   inline void
   TimestepControl::restart()
@@ -294,13 +281,11 @@ namespace Algorithms
       next_print_val = now_val - 1.;
   }
 
-
   inline void
   TimestepControl::file_name_format(const char* fmt)
   {
     strcpy(format, fmt);
   }
-
 
   inline const char*
   TimestepControl::file_name_format()

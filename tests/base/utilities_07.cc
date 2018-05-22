@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that Utilities::string_to_double actually catches errors
 
 #include "../tests.h"
@@ -22,8 +21,6 @@
 #include <deal.II/base/utilities.h>
 
 using namespace dealii;
-
-
 
 void
 verify(const std::string& s)
@@ -41,8 +38,6 @@ verify(const std::string& s)
 
   deallog << "Done correctly: " << s << std::endl;
 }
-
-
 
 int
 main()

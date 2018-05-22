@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridTools::exchange_cell_data_to_ghosts
 
 #include "../tests.h"
@@ -65,7 +64,6 @@ test()
   for(auto& it : output)
     deallog << it << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

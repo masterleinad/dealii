@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _10, but this time try to use manifold ids that can be copied
 // from the volume to the surface mesh
 
@@ -24,8 +23,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
-
 
 void
 test()
@@ -72,7 +69,6 @@ test()
   deallog << triangulation_surface.n_used_vertices() << std::endl;
   deallog << triangulation_surface.n_active_cells() << std::endl;
 }
-
 
 int
 main()

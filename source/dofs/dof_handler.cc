@@ -34,7 +34,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, int spacedim>
 const unsigned int DoFHandler<dim, spacedim>::dimension;
 
@@ -47,7 +46,6 @@ const types::global_dof_index DoFHandler<dim, spacedim>::invalid_dof_index;
 template <int dim, int spacedim>
 const unsigned int DoFHandler<dim, spacedim>::default_fe_index;
 
-
 // reference the invalid_dof_index variable explicitly to work around
 // a bug in the icc8 compiler
 namespace internal
@@ -59,8 +57,6 @@ namespace internal
     return &dealii::numbers::invalid_dof_index;
   }
 } // namespace internal
-
-
 
 namespace internal
 {
@@ -102,14 +98,12 @@ namespace internal
     return policy_name;
   }
 
-
   namespace DoFHandlerImplementation
   {
     // access class
     // dealii::DoFHandler instead of
     // namespace internal::DoFHandler
     using dealii::DoFHandler;
-
 
     /**
      * A class with the same purpose as the similarly named class of the
@@ -130,8 +124,6 @@ namespace internal
                           + 2 * dof_handler.get_fe().dofs_per_line),
                         dof_handler.n_dofs());
       }
-
-
 
       template <int spacedim>
       static unsigned int
@@ -239,7 +231,6 @@ namespace internal
         return std::min(max_couplings, dof_handler.n_dofs());
       }
 
-
       template <int spacedim>
       static unsigned int
       max_couplings_between_dofs(const DoFHandler<3, spacedim>& dof_handler)
@@ -275,7 +266,6 @@ namespace internal
         return std::min(max_couplings, dof_handler.n_dofs());
       }
 
-
       /**
        * Reserve enough space in the
        * <tt>levels[]</tt> objects to store the
@@ -308,7 +298,6 @@ namespace internal
               numbers::invalid_dof_index);
           }
       }
-
 
       template <int spacedim>
       static void reserve_space(DoFHandler<2, spacedim>& dof_handler)
@@ -344,7 +333,6 @@ namespace internal
               numbers::invalid_dof_index);
           }
       }
-
 
       template <int spacedim>
       static void reserve_space(DoFHandler<3, spacedim>& dof_handler)
@@ -605,8 +593,6 @@ namespace internal
             }
       }
 
-
-
       template <int spacedim>
       static types::global_dof_index
       get_dof_index(
@@ -808,8 +794,6 @@ namespace internal
   } // namespace DoFHandlerImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)
   : tria(&tria, typeid(*this).name()), faces(nullptr), mg_faces(nullptr)
@@ -833,11 +817,9 @@ DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)
         DoFHandler<dim, spacedim>>>(*this);
 }
 
-
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::DoFHandler() : tria(nullptr, typeid(*this).name())
 {}
-
 
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::~DoFHandler()
@@ -853,7 +835,6 @@ DoFHandler<dim, spacedim>::~DoFHandler()
   // store references to the DoFhandler object they work on
   policy.reset();
 }
-
 
 template <int dim, int spacedim>
 void
@@ -885,8 +866,6 @@ DoFHandler<dim, spacedim>::initialize(const Triangulation<dim, spacedim>& t,
   distribute_dofs(fe);
 }
 
-
-
 /*------------------------ Cell iterator functions ------------------------*/
 
 template <int dim, int spacedim>
@@ -899,8 +878,6 @@ DoFHandler<dim, spacedim>::begin(const unsigned int level) const
     return end(level);
   return cell_iterator(*cell, this);
 }
-
-
 
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::active_cell_iterator
@@ -916,15 +893,12 @@ DoFHandler<dim, spacedim>::begin_active(const unsigned int level) const
   return i;
 }
 
-
-
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::cell_iterator
 DoFHandler<dim, spacedim>::end() const
 {
   return cell_iterator(&this->get_triangulation(), -1, -1, this);
 }
-
 
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::cell_iterator
@@ -937,7 +911,6 @@ DoFHandler<dim, spacedim>::end(const unsigned int level) const
   return cell_iterator(*cell, this);
 }
 
-
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::active_cell_iterator
 DoFHandler<dim, spacedim>::end_active(const unsigned int level) const
@@ -948,8 +921,6 @@ DoFHandler<dim, spacedim>::end_active(const unsigned int level) const
     return active_cell_iterator(end());
   return active_cell_iterator(*cell, this);
 }
-
-
 
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::level_cell_iterator
@@ -964,7 +935,6 @@ DoFHandler<dim, spacedim>::begin_mg(const unsigned int level) const
   return level_cell_iterator(*cell, this);
 }
 
-
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::level_cell_iterator
 DoFHandler<dim, spacedim>::end_mg(const unsigned int level) const
@@ -978,15 +948,12 @@ DoFHandler<dim, spacedim>::end_mg(const unsigned int level) const
   return level_cell_iterator(*cell, this);
 }
 
-
 template <int dim, int spacedim>
 typename DoFHandler<dim, spacedim>::level_cell_iterator
 DoFHandler<dim, spacedim>::end_mg() const
 {
   return level_cell_iterator(&this->get_triangulation(), -1, -1, this);
 }
-
-
 
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>
@@ -995,7 +962,6 @@ DoFHandler<dim, spacedim>::cell_iterators() const
   return IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>(
     begin(), end());
 }
-
 
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::active_cell_iterator>
@@ -1006,8 +972,6 @@ DoFHandler<dim, spacedim>::active_cell_iterators() const
                                                               end());
 }
 
-
-
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::level_cell_iterator>
 DoFHandler<dim, spacedim>::mg_cell_iterators() const
@@ -1015,8 +979,6 @@ DoFHandler<dim, spacedim>::mg_cell_iterators() const
   return IteratorRange<typename DoFHandler<dim, spacedim>::level_cell_iterator>(
     begin_mg(), end_mg());
 }
-
-
 
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>
@@ -1026,8 +988,6 @@ DoFHandler<dim, spacedim>::cell_iterators_on_level(
   return IteratorRange<typename DoFHandler<dim, spacedim>::cell_iterator>(
     begin(level), end(level));
 }
-
-
 
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::active_cell_iterator>
@@ -1039,8 +999,6 @@ DoFHandler<dim, spacedim>::active_cell_iterators_on_level(
     begin_active(level), end_active(level));
 }
 
-
-
 template <int dim, int spacedim>
 IteratorRange<typename DoFHandler<dim, spacedim>::level_cell_iterator>
 DoFHandler<dim, spacedim>::mg_cell_iterators_on_level(
@@ -1050,11 +1008,7 @@ DoFHandler<dim, spacedim>::mg_cell_iterators_on_level(
     begin_mg(level), end_mg(level));
 }
 
-
-
 //---------------------------------------------------------------------------
-
-
 
 template <int dim, int spacedim>
 types::global_dof_index
@@ -1092,8 +1046,6 @@ DoFHandler<dim, spacedim>::n_boundary_dofs() const
   return boundary_dofs.size();
 }
 
-
-
 template <int dim, int spacedim>
 types::global_dof_index
 DoFHandler<dim, spacedim>::n_boundary_dofs(
@@ -1128,8 +1080,6 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
   return boundary_dofs.size();
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 DoFHandler<dim, spacedim>::memory_consumption() const
@@ -1160,8 +1110,6 @@ DoFHandler<dim, spacedim>::memory_consumption() const
 
   return mem;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1213,8 +1161,6 @@ DoFHandler<dim, spacedim>::distribute_dofs(
     block_info_object.initialize(*this, false, true);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::distribute_mg_dofs(
@@ -1222,8 +1168,6 @@ DoFHandler<dim, spacedim>::distribute_mg_dofs(
 {
   this->distribute_mg_dofs();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1256,8 +1200,6 @@ DoFHandler<dim, spacedim>::distribute_mg_dofs()
     block_info_object.initialize(*this, true, false);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::clear_mg_space()
@@ -1272,15 +1214,12 @@ DoFHandler<dim, spacedim>::clear_mg_space()
   mg_number_cache.clear();
 }
 
-
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::initialize_local_block_info()
 {
   block_info_object.initialize_local(*this);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1290,8 +1229,6 @@ DoFHandler<dim, spacedim>::clear()
   clear_space();
   clear_mg_space();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1349,7 +1286,6 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   number_cache = policy->renumber_dofs(new_numbers);
 }
 
-
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::renumber_dofs(
@@ -1388,8 +1324,6 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   mg_number_cache[level] = policy->renumber_mg_dofs(level, new_numbers);
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 DoFHandler<dim, spacedim>::max_couplings_between_dofs() const
@@ -1397,8 +1331,6 @@ DoFHandler<dim, spacedim>::max_couplings_between_dofs() const
   return internal::DoFHandlerImplementation::Implementation::
     max_couplings_between_dofs(*this);
 }
-
-
 
 template <int dim, int spacedim>
 unsigned int
@@ -1435,8 +1367,6 @@ DoFHandler<dim, spacedim>::max_couplings_between_boundary_dofs() const
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::clear_space()
@@ -1449,8 +1379,6 @@ DoFHandler<dim, spacedim>::clear_space()
 
   number_cache.clear();
 }
-
-
 
 template <int dim, int spacedim>
 template <int structdim>
@@ -1469,8 +1397,6 @@ DoFHandler<dim, spacedim>::get_dof_index(const unsigned int obj_level,
     local_index,
     std::integral_constant<int, structdim>());
 }
-
-
 
 template <int dim, int spacedim>
 template <int structdim>
@@ -1493,14 +1419,10 @@ DoFHandler<dim, spacedim>::set_dof_index(
     std::integral_constant<int, structdim>());
 }
 
-
-
 template <int dim, int spacedim>
 DoFHandler<dim, spacedim>::MGVertexDoFs::MGVertexDoFs()
   : coarsest_level(numbers::invalid_unsigned_int), finest_level(0)
 {}
-
-
 
 template <int dim, int spacedim>
 void
@@ -1525,16 +1447,12 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::init(
     indices.reset();
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 DoFHandler<dim, spacedim>::MGVertexDoFs::get_coarsest_level() const
 {
   return coarsest_level;
 }
-
-
 
 template <int dim, int spacedim>
 unsigned int
@@ -1543,9 +1461,7 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::get_finest_level() const
   return finest_level;
 }
 
-
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

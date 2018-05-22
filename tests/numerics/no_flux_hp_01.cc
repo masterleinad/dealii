@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -26,8 +25,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -51,7 +48,6 @@ test(const Triangulation<dim>& tr, const hp::FECollection<dim>& fe)
     }
 }
 
-
 template <int dim>
 void
 test_hyper_cube()
@@ -70,7 +66,6 @@ test_hyper_cube()
       test(tr, fe);
     }
 }
-
 
 int
 main()

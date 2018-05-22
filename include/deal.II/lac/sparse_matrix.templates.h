@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_sparse_matrix_templates_h
 #define dealii_sparse_matrix_templates_h
-
 
 #include <deal.II/base/config.h>
 #include <deal.II/base/parallel.h>
@@ -38,17 +36,12 @@
 #include <ostream>
 #include <vector>
 
-
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename number>
 SparseMatrix<number>::SparseMatrix()
   : cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
 {}
-
-
 
 template <typename number>
 SparseMatrix<number>::SparseMatrix(const SparseMatrix& m)
@@ -62,8 +55,6 @@ SparseMatrix<number>::SparseMatrix(const SparseMatrix& m)
                "SparseMatrix::copy_from() function for that purpose."));
 }
 
-
-
 template <typename number>
 SparseMatrix<number>::SparseMatrix(SparseMatrix<number>&& m) noexcept
   : Subscriptor(std::move(m)),
@@ -75,8 +66,6 @@ SparseMatrix<number>::SparseMatrix(SparseMatrix<number>&& m) noexcept
   m.val     = nullptr;
   m.max_len = 0;
 }
-
-
 
 template <typename number>
 SparseMatrix<number>&
@@ -91,8 +80,6 @@ SparseMatrix<number>::operator=(const SparseMatrix<number>& m)
 
   return *this;
 }
-
-
 
 template <typename number>
 SparseMatrix<number>&
@@ -109,8 +96,6 @@ SparseMatrix<number>::operator=(SparseMatrix<number>&& m) noexcept
   return *this;
 }
 
-
-
 template <typename number>
 SparseMatrix<number>::SparseMatrix(const SparsityPattern& c)
   : cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
@@ -120,8 +105,6 @@ SparseMatrix<number>::SparseMatrix(const SparsityPattern& c)
   // for clarity be explicit on which function is called
   SparseMatrix<number>::reinit(c);
 }
-
-
 
 template <typename number>
 SparseMatrix<number>::SparseMatrix(const SparsityPattern& c,
@@ -140,15 +123,11 @@ SparseMatrix<number>::SparseMatrix(const SparsityPattern& c,
     this->set(i, i, 1.);
 }
 
-
-
 template <typename number>
 SparseMatrix<number>::~SparseMatrix()
 {
   cols = nullptr;
 }
-
-
 
 namespace internal
 {
@@ -171,8 +150,6 @@ namespace internal
     }
   } // namespace SparseMatrixImplementation
 } // namespace internal
-
-
 
 template <typename number>
 SparseMatrix<number>&
@@ -221,8 +198,6 @@ SparseMatrix<number>::operator=(const double d)
   return *this;
 }
 
-
-
 template <typename number>
 SparseMatrix<number>&
 SparseMatrix<number>::operator=(const IdentityMatrix& id)
@@ -239,8 +214,6 @@ SparseMatrix<number>::operator=(const IdentityMatrix& id)
 
   return *this;
 }
-
-
 
 template <typename number>
 void
@@ -265,8 +238,6 @@ SparseMatrix<number>::reinit(const SparsityPattern& sparsity)
   *this = 0.;
 }
 
-
-
 template <typename number>
 void
 SparseMatrix<number>::clear()
@@ -275,8 +246,6 @@ SparseMatrix<number>::clear()
   val.reset();
   max_len = 0;
 }
-
-
 
 template <typename number>
 bool
@@ -288,8 +257,6 @@ SparseMatrix<number>::empty() const
     return cols->empty();
 }
 
-
-
 template <typename number>
 typename SparseMatrix<number>::size_type
 SparseMatrix<number>::get_row_length(const size_type row) const
@@ -298,8 +265,6 @@ SparseMatrix<number>::get_row_length(const size_type row) const
   return cols->row_length(row);
 }
 
-
-
 template <typename number>
 std::size_t
 SparseMatrix<number>::n_nonzero_elements() const
@@ -307,8 +272,6 @@ SparseMatrix<number>::n_nonzero_elements() const
   Assert(cols != nullptr, ExcNotInitialized());
   return cols->n_nonzero_elements();
 }
-
-
 
 template <typename number>
 std::size_t
@@ -323,8 +286,6 @@ SparseMatrix<number>::n_actually_nonzero_elements(const double threshold) const
       ++nnz;
   return nnz;
 }
-
-
 
 template <typename number>
 void
@@ -363,8 +324,6 @@ SparseMatrix<number>::symmetrize()
     };
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 SparseMatrix<number>&
@@ -380,8 +339,6 @@ SparseMatrix<number>::copy_from(const SparseMatrix<somenumber>& matrix)
   return *this;
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -396,8 +353,6 @@ SparseMatrix<number>::copy_from(const FullMatrix<somenumber>& matrix)
       if(matrix(row, col) != somenumber())
         set(row, col, number(matrix(row, col)));
 }
-
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -445,7 +400,6 @@ SparseMatrix<number>::copy_from(const TrilinosWrappers::SparseMatrix& matrix)
 
 #endif
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -463,8 +417,6 @@ SparseMatrix<number>::add(const number                    factor,
   while(val_ptr != end_ptr)
     *val_ptr++ += factor * number(*matrix_ptr++);
 }
-
-
 
 namespace internal
 {
@@ -516,7 +468,6 @@ namespace internal
     }
   } // namespace SparseMatrixImplementation
 } // namespace internal
-
 
 template <typename number>
 template <typename number2>
@@ -664,8 +615,6 @@ SparseMatrix<number>::add(const size_type  row,
     }
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -747,8 +696,6 @@ SparseMatrix<number>::set(const size_type  row,
     }
 }
 
-
-
 template <typename number>
 template <class OutVector, class InVector>
 void
@@ -777,8 +724,6 @@ SparseMatrix<number>::vmult(OutVector& dst, const InVector& src) const
     internal::SparseMatrixImplementation::minimum_parallel_grain_size);
 }
 
-
-
 template <typename number>
 template <class OutVector, class InVector>
 void
@@ -803,8 +748,6 @@ SparseMatrix<number>::Tvmult(OutVector& dst, const InVector& src) const
         }
     }
 }
-
-
 
 template <typename number>
 template <class OutVector, class InVector>
@@ -834,8 +777,6 @@ SparseMatrix<number>::vmult_add(OutVector& dst, const InVector& src) const
     internal::SparseMatrixImplementation::minimum_parallel_grain_size);
 }
 
-
-
 template <typename number>
 template <class OutVector, class InVector>
 void
@@ -856,7 +797,6 @@ SparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
                   typename OutVector::value_type(src(i));
       }
 }
-
 
 namespace internal
 {
@@ -895,8 +835,6 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
-
-
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -920,8 +858,6 @@ SparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
     m(),
     internal::SparseMatrixImplementation::minimum_parallel_grain_size);
 }
-
-
 
 namespace internal
 {
@@ -961,8 +897,6 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
-
-
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -988,8 +922,6 @@ SparseMatrix<number>::matrix_scalar_product(const Vector<somenumber>& u,
     m(),
     internal::SparseMatrixImplementation::minimum_parallel_grain_size);
 }
-
-
 
 template <typename number>
 template <typename numberB, typename numberC>
@@ -1094,8 +1026,6 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
         }
     }
 }
-
-
 
 template <typename number>
 template <typename numberB, typename numberC>
@@ -1231,8 +1161,6 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
     }
 }
 
-
-
 template <typename number>
 typename SparseMatrix<number>::real_type
 SparseMatrix<number>::l1_norm() const
@@ -1249,8 +1177,6 @@ SparseMatrix<number>::l1_norm() const
 
   return column_sums.linfty_norm();
 }
-
-
 
 template <typename number>
 typename SparseMatrix<number>::real_type
@@ -1275,8 +1201,6 @@ SparseMatrix<number>::linfty_norm() const
   return max;
 }
 
-
-
 template <typename number>
 typename SparseMatrix<number>::real_type
 SparseMatrix<number>::frobenius_norm() const
@@ -1292,8 +1216,6 @@ SparseMatrix<number>::frobenius_norm() const
 
   return std::sqrt(norm_sqr);
 }
-
-
 
 namespace internal
 {
@@ -1335,7 +1257,6 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
-
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -1369,7 +1290,6 @@ SparseMatrix<number>::residual(Vector<somenumber>&       dst,
     internal::SparseMatrixImplementation::minimum_parallel_grain_size));
 }
 
-
 namespace
 {
   // assert that the matrix has no zeros on the diagonal. this is important
@@ -1400,7 +1320,6 @@ namespace
 #endif
   }
 } // namespace
-
 
 template <typename number>
 template <typename somenumber>
@@ -1440,8 +1359,6 @@ SparseMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
     for(size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr, ++rowstart_ptr)
       *dst_ptr = *src_ptr / somenumber(val[*rowstart_ptr]);
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1575,7 +1492,6 @@ SparseMatrix<number>::precondition_SSOR(
     };
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1590,7 +1506,6 @@ SparseMatrix<number>::precondition_SOR(Vector<somenumber>&       dst,
   SOR(dst, om);
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1604,7 +1519,6 @@ SparseMatrix<number>::precondition_TSOR(Vector<somenumber>&       dst,
   dst = src;
   TSOR(dst, om);
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1631,7 +1545,6 @@ SparseMatrix<number>::SOR(Vector<somenumber>& dst, const number om) const
       dst(row) = s * somenumber(om) / somenumber(val[cols->rowstart[row]]);
     }
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1661,7 +1574,6 @@ SparseMatrix<number>::TSOR(Vector<somenumber>& dst, const number om) const
       --row;
     }
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1701,7 +1613,6 @@ SparseMatrix<number>::PSOR(Vector<somenumber>&           dst,
     }
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1738,8 +1649,6 @@ SparseMatrix<number>::TPSOR(Vector<somenumber>&           dst,
     }
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1769,8 +1678,6 @@ SparseMatrix<number>::Jacobi_step(Vector<somenumber>&       v,
   v -= *w;
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1796,8 +1703,6 @@ SparseMatrix<number>::SOR_step(Vector<somenumber>&       v,
       v(row) += s * somenumber(om) / somenumber(val[cols->rowstart[row]]);
     }
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1825,8 +1730,6 @@ SparseMatrix<number>::TSOR_step(Vector<somenumber>&       v,
     }
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1837,8 +1740,6 @@ SparseMatrix<number>::SSOR_step(Vector<somenumber>&       v,
   SOR_step(v, b, om);
   TSOR_step(v, b, om);
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1892,8 +1793,6 @@ SparseMatrix<number>::SSOR(Vector<somenumber>& dst, const number om) const
     }
 }
 
-
-
 template <typename number>
 const SparsityPattern&
 SparseMatrix<number>::get_sparsity_pattern() const
@@ -1901,8 +1800,6 @@ SparseMatrix<number>::get_sparsity_pattern() const
   Assert(cols != nullptr, ExcNotInitialized());
   return *cols;
 }
-
-
 
 template <typename number>
 void
@@ -1951,8 +1848,6 @@ SparseMatrix<number>::print_formatted(std::ostream&      out,
   out.flags(old_flags);
 }
 
-
-
 template <typename number>
 void
 SparseMatrix<number>::print_pattern(std::ostream& out,
@@ -1975,8 +1870,6 @@ SparseMatrix<number>::print_pattern(std::ostream& out,
   AssertThrow(out, ExcIO());
 }
 
-
-
 template <typename number>
 void
 SparseMatrix<number>::block_write(std::ostream& out) const
@@ -1994,8 +1887,6 @@ SparseMatrix<number>::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 template <typename number>
 void
@@ -2026,11 +1917,9 @@ SparseMatrix<number>::block_read(std::istream& in)
   AssertThrow(c == ']', ExcIO());
 }
 
-
 template <typename number>
 void SparseMatrix<number>::compress(::dealii::VectorOperation::values)
 {}
-
 
 template <typename number>
 std::size_t
@@ -2038,7 +1927,6 @@ SparseMatrix<number>::memory_consumption() const
 {
   return max_len * static_cast<std::size_t>(sizeof(number)) + sizeof(*this);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

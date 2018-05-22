@@ -22,7 +22,6 @@
 #include <deal.II/lac/packaged_operation.h>
 #include <deal.II/lac/vector_memory.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -245,7 +244,6 @@ schur_complement(const LinearOperator<Domain_1, Range_1, Payload>& A_inv,
 }
 
 //@}
-
 
 /**
  * @name Creation of PackagedOperation objects related to the Schur Complement

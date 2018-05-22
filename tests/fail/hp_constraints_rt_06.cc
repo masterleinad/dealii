@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that computation of hp constraints works for RT elements correctly
 
 char logname[] = "output";
 
-
 #include "../hp/hp_constraints_common.h"
 #include <deal.II/fe/fe_raviart_thomas.h>
-
 
 template <int dim>
 void

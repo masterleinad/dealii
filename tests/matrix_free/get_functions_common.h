@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this is a template for getting the function values and comparing them with
 // the output of FEValues on different kinds of meshes (Cartesian, general,
 // with and without hanging nodes). The tests does not include multithreading
@@ -41,13 +40,10 @@
 #include <fstream>
 #include <iostream>
 
-
 // forward declare this function. will be implemented in .cc files
 template <int dim, int fe_degree>
 void
 test();
-
-
 
 template <int dim,
           int fe_degree,
@@ -140,8 +136,6 @@ public:
       }
   }
 
-
-
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -201,8 +195,6 @@ protected:
   mutable double                 errors[5], total[5];
 };
 
-
-
 // dummy with empty quadrature formula
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest<dim, fe_degree, 0, Number>
@@ -222,8 +214,6 @@ public:
   test_functions(const Vector<Number>&) const
   {}
 };
-
-
 
 template <int dim, int fe_degree, typename number>
 void
@@ -260,7 +250,6 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   MatrixFreeTest<dim, fe_degree, fe_degree + 1, number> mf(mf_data);
   mf.test_functions(solution);
 }
-
 
 int
 main()

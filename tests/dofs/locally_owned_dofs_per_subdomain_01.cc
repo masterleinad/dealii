@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that the structures reporting DoF indexing are sized correctly for
 // the hp::DoFHandler. In particular, we're interested in the case when one
 // subdomain has no DoFs associated with it.
@@ -30,7 +29,6 @@
 #include <deal.II/hp/fe_collection.h>
 
 #include <fstream>
-
 
 using namespace dealii;
 

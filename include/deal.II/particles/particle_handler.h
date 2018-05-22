@@ -177,7 +177,6 @@ namespace Particles
     particles_in_cell(
       const typename Triangulation<dim, spacedim>::active_cell_iterator& cell);
 
-
     /**
      * Return a pair of particle iterators that mark the begin and end of
      * the particles in a particular cell. The last iterator is the first

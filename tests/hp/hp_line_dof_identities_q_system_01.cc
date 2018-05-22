@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FESystem(FE_Q)::hp_line_dof_identities
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -57,8 +52,6 @@ test()
           }
       }
 }
-
-
 
 int
 main()

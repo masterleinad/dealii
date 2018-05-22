@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::create_boundary_right_hand_side, but this time for a scalar
 // primitive element
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -39,8 +36,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -60,8 +55,6 @@ public:
     values(0) = value(p, 0);
   }
 };
-
-
 
 template <int dim>
 void
@@ -101,8 +94,6 @@ check()
   for(unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
-
-
 
 int
 main()

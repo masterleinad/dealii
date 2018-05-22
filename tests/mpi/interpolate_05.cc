@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // This is a modified copy from interpolate_01.cc.
 // VectorTools::interpolate used to accidentally read from non-owned
 // dofs when called with a component mask that excluded some components.
@@ -43,7 +42,6 @@
 #include <deal.II/fe/fe_system.h>
 
 #include <sstream>
-
 
 template <int dim>
 void
@@ -118,7 +116,6 @@ test()
     deallog << "Error of not interpolated component: " << norm << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -132,7 +129,6 @@ main(int argc, char* argv[])
 #endif
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

@@ -13,21 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ensure that we end up in a defined state if an action throws an
 // exception
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
-
 std::string input = "set test_1 = 1\n"
                     "subsection subsec\n"
                     "  set test_2 = -1\n"
                     "end\n";
-
-
 
 void
 check(const char* p)
@@ -56,7 +51,6 @@ check(const char* p)
       deallog << "Caught an exception -- ignoring..." << std::endl;
     }
 
-
   // make sure the prm object was reset to a state where we are in the
   // subsection we were in before attempting the `parse_input` call
   // (namely, in the top-level section of the prm tree)
@@ -69,7 +63,6 @@ check(const char* p)
           << std::endl;
   prm.leave_subsection();
 }
-
 
 int
 main()

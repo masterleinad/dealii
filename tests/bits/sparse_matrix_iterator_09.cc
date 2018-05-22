@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test, extracted from dof_constraints_09 and
 // sparse_matrix_iterator_09, used to fail with aborts
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -41,8 +38,6 @@ test()
   for(SparseMatrix<double>::const_iterator k = A.begin(); k != A.end(); ++k)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
-
-
 
 int
 main()

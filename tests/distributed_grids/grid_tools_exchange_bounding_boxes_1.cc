@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridTools::exchange_local_bounding_boxes
 
 #include "../tests.h"
@@ -54,7 +53,6 @@ test_exchange_bbox()
 
   std::vector<std::vector<BoundingBox<spacedim>>> global_boxes
     = GridTools::exchange_local_bounding_boxes(loc_bboxes, mpi_communicator);
-
 
   bool passed = true;
   // First check if the dimensions are correct:

@@ -19,8 +19,6 @@
  * *_projection_* tests.
  */
 
-
-
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
 
@@ -64,7 +62,6 @@
 void
 test();
 
-
 template <int dim>
 class TestMap1 : public Function<dim>
 {
@@ -82,15 +79,12 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestMap1<dim>::value(const Point<dim>&, const unsigned int) const
 {
   return (1.0);
 }
-
 
 template <int dim>
 void
@@ -104,7 +98,6 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
 
 /*
  * Check the value of the derivative field.
@@ -181,7 +174,6 @@ void EvaluateDerivative(DoFHandler<2>* dof_handler, Vector<double>& solution)
   deallog << "L2-Err " << pow(err_l2, 0.5) << "  Hdiv-Err "
           << pow(err_hdiv, 0.5) << std::endl;
 }
-
 
 template <int dim>
 void
@@ -351,7 +343,6 @@ create_mass_matrix(const Mapping<dim>&        mapping,
                             }
                     }
 
-
               for(unsigned int i = 0; i < dofs_per_cell; ++i)
                 for(unsigned int comp_i = 0; comp_i < fe.n_components();
                     ++comp_i)
@@ -379,7 +370,6 @@ create_mass_matrix(const Mapping<dim>&        mapping,
         rhs_vector(dof_indices[i]) += cell_vector(i);
     }
 }
-
 
 template <int dim>
 void
@@ -467,8 +457,6 @@ create_right_hand_side(const Mapping<dim>&    mapping,
         }
     }
 }
-
-
 
 //
 // This function replaces the deal.II implementation of the projection.
@@ -559,7 +547,6 @@ project(const Mapping<dim>&     mapping,
         */
     }
 
-
   // set up mass matrix and right hand side
   vec.reinit(dof.n_dofs());
   SparsityPattern sparsity(
@@ -596,7 +583,6 @@ project(const Mapping<dim>&     mapping,
   // distribute solution
   constraints.distribute(vec);
 }
-
 
 int
 create_tria(unsigned int elm, Triangulation<2>& tria)
@@ -651,7 +637,6 @@ create_tria(unsigned int elm, Triangulation<2>& tria)
   return (0);
 }
 
-
 void plot_shapes(DoFHandler<2>& dof_handler)
 {
   Vector<double>         solution(dof_handler.n_dofs());
@@ -696,7 +681,6 @@ void plot_shapes(DoFHandler<2>& dof_handler)
     }
 }
 
-
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -710,8 +694,6 @@ main(int /*argc*/, char** /*argv*/)
 
   test();
 }
-
-
 
 void
 check(const FiniteElement<2>&            fe,

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the umfpack sparse direct solver on a mass matrix that is
 // slightly modified to make it nonsymmetric. same as umfpack_03, but
 // for a BlockSparseMatrix<float> instead of SparseMatrix<double> matrix
@@ -38,7 +37,6 @@
 
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -116,7 +114,6 @@ test()
       B.set(i->row(), i->column(), i->value());
   }
 
-
   // for a number of different solution
   // vectors, make up a matching rhs vector
   // and check what the UMFPACK solver finds
@@ -151,7 +148,6 @@ test()
       Assert(x.l2_norm() / solution.l2_norm() < 1e-8, ExcInternalError());
     }
 }
-
 
 int
 main()

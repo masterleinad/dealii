@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check
 
 #include "../testmatrix.h"
@@ -23,15 +21,12 @@
 
 const unsigned int N = 15;
 
-
 // reinitialize sparsity patterns for 5-point star
 void
 do_reinit(TrilinosWrappers::SparsityPattern& sp)
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1));
 }
-
-
 
 void
 build_sparsity(TrilinosWrappers::SparsityPattern& sparsity_pattern)
@@ -46,8 +41,6 @@ build_sparsity(TrilinosWrappers::SparsityPattern& sparsity_pattern)
           << sparsity_pattern.n_nonzero_elements() << std::endl;
 }
 
-
-
 void
 row_length()
 {
@@ -60,8 +53,6 @@ row_length()
   deallog << "OK" << std::endl;
 }
 
-
-
 void
 print_gnuplot()
 {
@@ -72,8 +63,6 @@ print_gnuplot()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 void
 print()

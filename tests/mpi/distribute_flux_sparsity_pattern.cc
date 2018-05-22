@@ -20,7 +20,6 @@
  * pattern with flux terms.
  */
 
-
 #include "../tests.h"
 
 #include <deal.II/base/geometry_info.h>
@@ -87,8 +86,6 @@ namespace LinearAdvectionTest
     TrilinosWrappers::SparseMatrix system_matrix;
   };
 
-
-
   template <int dim>
   AdvectionProblem<dim>::AdvectionProblem()
     : triangulation(MPI_COMM_WORLD), fe(1), dof_handler(triangulation)
@@ -140,8 +137,6 @@ namespace LinearAdvectionTest
                          dynamic_sparsity_pattern,
                          MPI_COMM_WORLD);
   }
-
-
 
   template <int dim>
   void
@@ -206,8 +201,6 @@ namespace LinearAdvectionTest
     system_matrix.add(neighbor_dofs, neighbor_to_neighbor_flux);
     system_matrix.add(current_dofs, neighbor_dofs, neighbor_to_current_flux);
   }
-
-
 
   template <int dim>
   void
@@ -318,8 +311,6 @@ namespace LinearAdvectionTest
 
     system_matrix.compress(VectorOperation::add);
   }
-
-
 
   template <int dim>
   void

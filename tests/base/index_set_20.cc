@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::add_indices(IndexSet)
 
 #include "../tests.h"
@@ -44,8 +43,6 @@ testor(IndexSet& a, IndexSet& other, bool verbose = true)
              ExcInternalError());
     }
 }
-
-
 
 void
 test()
@@ -86,8 +83,6 @@ test()
       testor(a, b, false);
     }
 }
-
-
 
 int
 main()

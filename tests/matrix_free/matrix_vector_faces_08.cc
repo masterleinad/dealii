@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_faces_03 but without setting a template on the
 // polynomial degree, i.e., we use the path "-1" of FEEvaluation that does
 // runtime expansion of loops
@@ -29,7 +27,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -28,8 +27,6 @@
 // the test makes sure that if the FE has support points and we use
 // these support points as quadrature points, that the resulting
 // matrix is the unit matrix
-
-
 
 template <int dim>
 void

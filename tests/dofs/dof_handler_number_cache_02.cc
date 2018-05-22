@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that DoFHandler::clear() clears the NumberCache (a bug that is now fixed)
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -103,7 +99,6 @@ test()
               << " " << dof_handler.n_dofs() << std::endl;
     }
 }
-
 
 int
 main()

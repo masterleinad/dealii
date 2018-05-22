@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // LA::MPI::SparseMatrix, make sure it has the same
 // entries in Trilinos and PETSc (also when using
 // a TrilinosWrappers::SparsityPattern instead)
@@ -85,16 +83,12 @@ test()
   sp.compress();
   matrix.reinit(owned, owned, sp, MPI_COMM_WORLD);
 
-
   matrix.print(deallog.get_file_stream());
-
 
   // done
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 template <int dim>
 void

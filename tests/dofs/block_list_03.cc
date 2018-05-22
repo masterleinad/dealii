@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "block_list.h"
 
 template <int dim>
@@ -47,7 +46,6 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     deallog << std::endl;
   }
 }
-
 
 int
 main()

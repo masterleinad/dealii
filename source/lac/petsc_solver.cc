@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/lac/petsc_solver.h>
@@ -38,13 +37,9 @@ namespace PETScWrappers
     destroy_krylov_solver(ksp);
   }
 
-
-
   SolverBase::SolverBase(SolverControl& cn, const MPI_Comm& mpi_communicator)
     : solver_control(cn), mpi_communicator(mpi_communicator)
   {}
-
-
 
   void
   SolverBase::solve(const MatrixBase&         A,
@@ -138,13 +133,11 @@ namespace PETScWrappers
     // otherwise exit as normal
   }
 
-
   void
   SolverBase::set_prefix(const std::string& prefix)
   {
     prefix_name = prefix;
   }
-
 
   void
   SolverBase::reset()
@@ -152,13 +145,11 @@ namespace PETScWrappers
     solver_data.reset();
   }
 
-
   SolverControl&
   SolverBase::control() const
   {
     return solver_control;
   }
-
 
   int
   SolverBase::convergence_test(KSP /*ksp*/,
@@ -234,22 +225,17 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   /* ---------------------- SolverRichardson ------------------------ */
 
   SolverRichardson::AdditionalData::AdditionalData(const double omega)
     : omega(omega)
   {}
 
-
-
   SolverRichardson::SolverRichardson(SolverControl&        cn,
                                      const MPI_Comm&       mpi_communicator,
                                      const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverRichardson::set_solver_type(KSP& ksp) const
@@ -288,7 +274,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverChebychev ------------------------ */
 
   SolverChebychev::SolverChebychev(SolverControl&        cn,
@@ -296,7 +281,6 @@ namespace PETScWrappers
                                    const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverChebychev::set_solver_type(KSP& ksp) const
@@ -311,7 +295,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverCG ------------------------ */
 
   SolverCG::SolverCG(SolverControl&        cn,
@@ -319,7 +302,6 @@ namespace PETScWrappers
                      const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverCG::set_solver_type(KSP& ksp) const
@@ -334,7 +316,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverBiCG ------------------------ */
 
   SolverBiCG::SolverBiCG(SolverControl&        cn,
@@ -342,7 +323,6 @@ namespace PETScWrappers
                          const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverBiCG::set_solver_type(KSP& ksp) const
@@ -357,7 +337,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverGMRES ------------------------ */
 
   SolverGMRES::AdditionalData::AdditionalData(
@@ -367,14 +346,11 @@ namespace PETScWrappers
       right_preconditioning(right_preconditioning)
   {}
 
-
-
   SolverGMRES::SolverGMRES(SolverControl&        cn,
                            const MPI_Comm&       mpi_communicator,
                            const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverGMRES::set_solver_type(KSP& ksp) const
@@ -425,7 +401,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverBicgstab ------------------------ */
 
   SolverBicgstab::SolverBicgstab(SolverControl&        cn,
@@ -433,7 +408,6 @@ namespace PETScWrappers
                                  const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverBicgstab::set_solver_type(KSP& ksp) const
@@ -448,7 +422,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverCGS ------------------------ */
 
   SolverCGS::SolverCGS(SolverControl&        cn,
@@ -456,7 +429,6 @@ namespace PETScWrappers
                        const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverCGS::set_solver_type(KSP& ksp) const
@@ -471,7 +443,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverTFQMR ------------------------ */
 
   SolverTFQMR::SolverTFQMR(SolverControl&        cn,
@@ -479,7 +450,6 @@ namespace PETScWrappers
                            const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverTFQMR::set_solver_type(KSP& ksp) const
@@ -494,7 +464,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverTCQMR ------------------------ */
 
   SolverTCQMR::SolverTCQMR(SolverControl&        cn,
@@ -502,7 +471,6 @@ namespace PETScWrappers
                            const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverTCQMR::set_solver_type(KSP& ksp) const
@@ -517,7 +485,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverCR ------------------------ */
 
   SolverCR::SolverCR(SolverControl&        cn,
@@ -525,7 +492,6 @@ namespace PETScWrappers
                      const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverCR::set_solver_type(KSP& ksp) const
@@ -540,7 +506,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverLSQR ------------------------ */
 
   SolverLSQR::SolverLSQR(SolverControl&        cn,
@@ -548,7 +513,6 @@ namespace PETScWrappers
                          const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverLSQR::set_solver_type(KSP& ksp) const
@@ -563,7 +527,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SolverPreOnly ------------------------ */
 
   SolverPreOnly::SolverPreOnly(SolverControl&        cn,
@@ -571,7 +534,6 @@ namespace PETScWrappers
                                const AdditionalData& data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
-
 
   void
   SolverPreOnly::set_solver_type(KSP& ksp) const
@@ -596,7 +558,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ---------------------- SparseDirectMUMPS------------------------ */
 
   SparseDirectMUMPS::SolverDataMUMPS::~SolverDataMUMPS()
@@ -606,7 +567,6 @@ namespace PETScWrappers
     // does not have to be destroyed explicitly here
   }
 
-
   SparseDirectMUMPS::SparseDirectMUMPS(SolverControl&        cn,
                                        const MPI_Comm&       mpi_communicator,
                                        const AdditionalData& data)
@@ -614,7 +574,6 @@ namespace PETScWrappers
       additional_data(data),
       symmetric_mode(false)
   {}
-
 
   void
   SparseDirectMUMPS::set_solver_type(KSP& ksp) const

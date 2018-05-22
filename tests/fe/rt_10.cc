@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Observe how the values of the shape functions change as we make a
 // cell smaller and smaller
 
@@ -37,7 +36,6 @@
 #include <vector>
 
 #define PRECISION 8
-
 
 std::ofstream logfile("output");
 
@@ -77,7 +75,6 @@ test(const unsigned int degree)
         }
     }
 }
-
 
 int
 main()

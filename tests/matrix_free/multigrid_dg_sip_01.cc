@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test of a multigrid solver including face integration (DG case, symmetric
 // interior penalty + Nitsche).
 
@@ -47,7 +45,6 @@
 #include <deal.II/matrix_free/matrix_free.h>
 
 std::ofstream logfile("output");
-
 
 template <int dim,
           int fe_degree,
@@ -166,7 +163,6 @@ public:
   {
     return inverse_diagonal_entries;
   }
-
 
 private:
   void
@@ -452,12 +448,9 @@ private:
       }
   }
 
-
   MatrixFree<dim, number>               data;
   parallel::distributed::Vector<number> inverse_diagonal_entries;
 };
-
-
 
 template <typename MATRIX, typename Number>
 class MGCoarseIterative
@@ -486,8 +479,6 @@ public:
 
   const MATRIX* coarse_matrix;
 };
-
-
 
 template <int dim, typename LAPLACEOPERATOR>
 class MGTransferMF
@@ -519,8 +510,6 @@ public:
 private:
   const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -602,8 +591,6 @@ do_test(const DoFHandler<dim>& dof, const bool also_test_parallel = false)
   }
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -626,8 +613,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof, true);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

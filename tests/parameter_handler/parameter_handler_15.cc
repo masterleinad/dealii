@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler could not deal with missing endline at end of file
 // or can it?
 // http://code.google.com/p/dealii/issues/detail?id=126
@@ -34,8 +32,6 @@ check(const char* content, double& v1, double& v2)
   std::stringstream ss(content);
 
   foo.parse_input(ss);
-
-
 
   foo.enter_subsection("bar");
   deallog << foo.get("val") << std::endl;

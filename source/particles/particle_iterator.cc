@@ -27,23 +27,17 @@ namespace Particles
     : accessor(map, particle)
   {}
 
-
-
   template <int dim, int spacedim>
   ParticleAccessor<dim, spacedim>& ParticleIterator<dim, spacedim>::operator*()
   {
     return accessor;
   }
 
-
-
   template <int dim, int spacedim>
   ParticleAccessor<dim, spacedim>* ParticleIterator<dim, spacedim>::operator->()
   {
     return &(this->operator*());
   }
-
-
 
   template <int dim, int spacedim>
   const ParticleAccessor<dim, spacedim>& ParticleIterator<dim, spacedim>::
@@ -52,15 +46,12 @@ namespace Particles
     return accessor;
   }
 
-
-
   template <int dim, int spacedim>
   const ParticleAccessor<dim, spacedim>* ParticleIterator<dim, spacedim>::
                                          operator->() const
   {
     return &(this->operator*());
   }
-
 
   template <int dim, int spacedim>
   ParticleIterator<dim, spacedim>&
@@ -70,8 +61,6 @@ namespace Particles
     return *this;
   }
 
-
-
   template <int dim, int spacedim>
   bool
   ParticleIterator<dim, spacedim>::
@@ -79,8 +68,6 @@ namespace Particles
   {
     return accessor != other.accessor;
   }
-
-
 
   template <int dim, int spacedim>
   bool
@@ -90,8 +77,6 @@ namespace Particles
     return accessor == other.accessor;
   }
 
-
-
   template <int dim, int spacedim>
   ParticleIterator<dim, spacedim>&
   ParticleIterator<dim, spacedim>::operator++()
@@ -99,8 +84,6 @@ namespace Particles
     accessor.next();
     return *this;
   }
-
-
 
   template <int dim, int spacedim>
   ParticleIterator<dim, spacedim>
@@ -112,8 +95,6 @@ namespace Particles
     return tmp;
   }
 
-
-
   template <int dim, int spacedim>
   ParticleIterator<dim, spacedim>&
   ParticleIterator<dim, spacedim>::operator--()
@@ -121,8 +102,6 @@ namespace Particles
     accessor.prev();
     return *this;
   }
-
-
 
   template <int dim, int spacedim>
   ParticleIterator<dim, spacedim>
@@ -134,7 +113,6 @@ namespace Particles
     return tmp;
   }
 } // namespace Particles
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace Functions
 {
   template <int dim>
@@ -33,14 +32,12 @@ namespace Functions
     : Function<dim>(n_components), center(p), radius(r), selected(select)
   {}
 
-
   template <int dim>
   void
   CutOffFunctionBase<dim>::new_center(const Point<dim>& p)
   {
     center = p;
   }
-
 
   template <int dim>
   void
@@ -60,7 +57,6 @@ namespace Functions
     : CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
 
-
   template <int dim>
   double
   CutOffFunctionLinfty<dim>::value(const Point<dim>&  p,
@@ -71,7 +67,6 @@ namespace Functions
       return ((this->center.distance(p) < this->radius) ? 1. : 0.);
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -84,7 +79,6 @@ namespace Functions
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
 
-
     if(this->selected == CutOffFunctionBase<dim>::no_component
        || component == this->selected)
       for(unsigned int k = 0; k < values.size(); ++k)
@@ -92,7 +86,6 @@ namespace Functions
     else
       std::fill(values.begin(), values.end(), 0.);
   }
-
 
   template <int dim>
   void
@@ -117,7 +110,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   CutOffFunctionW1<dim>::CutOffFunctionW1(const double       r,
                                           const Point<dim>   p,
@@ -125,7 +117,6 @@ namespace Functions
                                           const unsigned int select)
     : CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
-
 
   template <int dim>
   double
@@ -140,7 +131,6 @@ namespace Functions
       }
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -161,8 +151,6 @@ namespace Functions
     else
       std::fill(values.begin(), values.end(), 0.);
   }
-
-
 
   template <int dim>
   void
@@ -187,7 +175,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   CutOffFunctionCinfty<dim>::CutOffFunctionCinfty(
     const double       r,
@@ -196,7 +183,6 @@ namespace Functions
     const unsigned int select)
     : CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
-
 
   template <int dim>
   double
@@ -215,7 +201,6 @@ namespace Functions
       }
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -246,7 +231,6 @@ namespace Functions
     else
       std::fill(values.begin(), values.end(), 0.);
   }
-
 
   template <int dim>
   void
@@ -279,8 +263,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   CutOffFunctionCinfty<dim>::gradient(const Point<dim>& p,
@@ -296,7 +278,6 @@ namespace Functions
               (p - this->center) / d
                 * (-2.0 * r * r / pow(-r * r + d * d, 2.0) * d * exp(e)));
   }
-
 
   // explicit instantiations
   template class CutOffFunctionLinfty<1>;

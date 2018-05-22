@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read the file side.iges, attach it to a projector, create a
 // single-cell Triangulation, ask the center of the single cell, and
 // then repeat by using the version which queries the manifold.
@@ -41,7 +40,6 @@
 #include <gp_Dir.hxx>
 #include <gp_Pnt.hxx>
 
-
 using namespace OpenCASCADE;
 
 int
@@ -55,7 +53,6 @@ main()
   std::vector<TopoDS_Vertex> vertices;
 
   extract_geometrical_shapes(sh, faces, edges, vertices);
-
 
   // Create a boundary projector on the first face.
   NormalProjectionBoundary<2, 3> boundary(faces[0]);
@@ -71,7 +68,6 @@ main()
   deallog << "Ncells: " << tria.n_active_cells() << std::endl
           << "Cell[0] center: " << tria.begin()->center() << std::endl
           << "Projected center: " << tria.begin()->center(true) << std::endl;
-
 
   return 0;
 }

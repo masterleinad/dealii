@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check VectorTools::point_gradient
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -29,8 +26,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -51,7 +46,6 @@ public:
     values[0] = value(p, 0);
   }
 
-
   virtual Tensor<1, dim>
   gradient(const Point<dim>& p, const unsigned int component) const
   {
@@ -68,7 +62,6 @@ public:
     gradients[0] = gradient(p, 0);
   }
 };
-
 
 template <int dim>
 class MyExpFunction : public Function<dim>
@@ -103,8 +96,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 void
 make_mesh(Triangulation<dim>& tria)
@@ -126,8 +117,6 @@ make_mesh(Triangulation<dim>& tria)
       tria.execute_coarsening_and_refinement();
     }
 }
-
-
 
 template <int dim>
 void
@@ -190,7 +179,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -33,7 +33,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/constraint_matrix.h>
 
-
 template <int dim>
 void
 check()
@@ -132,7 +131,6 @@ check()
             dof_1, 1, dof_2, 0, intergrid_map, intergrid_constraints);
         };
 
-
       // continuous
       // quadratic. continuous
       // elements only work for 1d at
@@ -142,8 +140,6 @@ check()
           dof_1, 3, dof_2, 5, intergrid_map, intergrid_constraints);
 
       intergrid_constraints.print(deallog.get_file_stream());
-
-
 
       // now refine grids a little,
       // but make sure that grid 2 is
@@ -200,8 +196,6 @@ check()
   delete fe_2;
   delete fe_dq_quadratic;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this is part of a whole suite of tests that checks the relative speed of
 // using PETSc for sparse matrices as compared to the speed of our own
 // library. the tests therefore may not all actually use PETSc, but they are
@@ -27,7 +25,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <iostream>
-
 
 void
 test()
@@ -76,8 +73,6 @@ test()
 
   deallog << v1 * v2 << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

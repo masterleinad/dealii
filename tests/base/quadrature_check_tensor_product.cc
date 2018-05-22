@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the boolean is_tensor_product for all the quadrature classes
-
 
 #include "../tests.h"
 

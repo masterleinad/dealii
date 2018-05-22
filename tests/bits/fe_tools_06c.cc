@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -21,8 +20,6 @@
 // check
 //   FETools::back_interpolate(6)
 // for hp::DoFHandler without hanging nodes
-
-
 
 template <int dim>
 void

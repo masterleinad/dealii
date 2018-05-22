@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::min()
 
 #include "../tests.h"
@@ -40,7 +38,6 @@ test()
     deallog << int_sum << ' ' << uint_sum << ' ' << double_sum << ' '
             << float_sum << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can indeed call extract_boundary_mesh with DoFHandler
 // arguments. based on a test by Korosh Taebi
 
@@ -64,7 +63,6 @@ namespace Step38
     DoFHandler<boundary_dim, spacedim> contact_dof_handler;
   };
 
-
   template <int spacedim>
   Extract_Mesh_Test<spacedim>::Extract_Mesh_Test()
     : space_fe(spacedim),
@@ -103,7 +101,6 @@ namespace Step38
       }
   }
 } // namespace Step38
-
 
 int
 main()

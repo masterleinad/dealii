@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as matrix_vector_06 for testing correctness of matrix-vector products
 // compared with deal.II sparse matrices, but using floats instead of
 // doubles. this tests whether everything is alright for longer vector lengths
@@ -26,7 +24,6 @@ std::ofstream logfile("output");
 
 #include "create_mesh.h"
 #include "matrix_vector_common.h"
-
 
 template <int dim, int fe_degree>
 void

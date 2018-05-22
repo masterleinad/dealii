@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/table.h>
@@ -29,9 +28,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 FE_RT_Bubbles<dim>::FE_RT_Bubbles(const unsigned int deg)
@@ -94,8 +91,6 @@ FE_RT_Bubbles<dim>::FE_RT_Bubbles(const unsigned int deg)
       }
 }
 
-
-
 template <int dim>
 std::string
 FE_RT_Bubbles<dim>::get_name() const
@@ -108,8 +103,6 @@ FE_RT_Bubbles<dim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_RT_Bubbles<dim>::clone() const
@@ -117,12 +110,9 @@ FE_RT_Bubbles<dim>::clone() const
   return std_cxx14::make_unique<FE_RT_Bubbles<dim>>(*this);
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary and internal functions
 //---------------------------------------------------------------------------
-
-
 
 template <int dim>
 void
@@ -197,8 +187,6 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
   Assert(current == this->dofs_per_cell, ExcInternalError());
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_RT_Bubbles<dim>::get_dpo_vector(const unsigned int deg)
@@ -218,8 +206,6 @@ FE_RT_Bubbles<dim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <>
 std::vector<bool>
 FE_RT_Bubbles<1>::get_ria_vector(const unsigned int)
@@ -227,8 +213,6 @@ FE_RT_Bubbles<1>::get_ria_vector(const unsigned int)
   Assert(false, ExcImpossibleInDim(1));
   return std::vector<bool>();
 }
-
-
 
 template <int dim>
 std::vector<bool>
@@ -250,8 +234,6 @@ FE_RT_Bubbles<dim>::get_ria_vector(const unsigned int deg)
 
   return ret_val;
 }
-
-
 
 template <int dim>
 void
@@ -299,10 +281,7 @@ FE_RT_Bubbles<dim>::convert_generalized_support_point_values_to_dof_values(
   Assert(fbase == this->dofs_per_cell, ExcInternalError());
 }
 
-
-
 // explicit instantiations
 #include "fe_rt_bubbles.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

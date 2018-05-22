@@ -70,8 +70,6 @@ namespace NonMatching
                                      immersed_mapping);
   }
 
-
-
   template <int dim0, int dim1, int spacedim, typename Sparsity>
   void
   create_coupling_sparsity_pattern(
@@ -187,8 +185,6 @@ namespace NonMatching
       }
   }
 
-
-
   template <int dim0, int dim1, int spacedim, typename Matrix>
   void
   create_coupling_mass_matrix(const DoFHandler<dim0, spacedim>& space_dh,
@@ -213,8 +209,6 @@ namespace NonMatching
                                 immersed_comps,
                                 immersed_mapping);
   }
-
-
 
   template <int dim0, int dim1, int spacedim, typename Matrix>
   void
@@ -358,6 +352,5 @@ namespace NonMatching
 
 #include "coupling.inst"
 } // namespace NonMatching
-
 
 DEAL_II_NAMESPACE_CLOSE

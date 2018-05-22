@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler::declare_entry throws an exception if the default
 // value of an entry doesn't match the pattern; but it should still
 // yield a properly declared entry
@@ -41,7 +39,6 @@ check(const char* p)
 
   deallog << "test_1=" << prm.get("test_1") << std::endl;
 }
-
 
 int
 main()

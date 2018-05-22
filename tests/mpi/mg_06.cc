@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test to show bug when using hyper_cube_slit:
 /*
 An error occurred in line <1858> of file </ssd/deal-trunk/deal.II/source/dofs/dof_handler_policy.cc> in function
@@ -43,7 +41,6 @@ Additional Information:
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 template <int dim>
 void
@@ -149,7 +146,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // compute some convergence results from computing pi on a mesh that
 // is deformed to represent a quarter of a ring
 
@@ -44,7 +43,6 @@
 
 #include <deal.II/fe/mapping_q_eulerian.h>
 
-
 // .... IMPOSED DISPLACEMENT
 
 template <int dim>
@@ -67,7 +65,6 @@ ImposedDisplacement<2>::vector_value(const Point<2>& p,
   value(0)      = radius * sin(angle) - p(0);
   value(1)      = radius * cos(angle) - p(1);
 }
-
 
 // .... MAPPING TEST CLASS
 
@@ -101,14 +98,12 @@ private:
   Vector<double>           displacements;
 };
 
-
 // .... CONSTRUCTOR
 
 template <int dim>
 MappingTest<dim>::MappingTest(unsigned int degree)
   : dof_handler(triangulation), fe(FE_Q<dim>(degree), dim), degree(degree)
 {}
-
 
 // .... DESTRUCTOR
 
@@ -117,7 +112,6 @@ MappingTest<dim>::~MappingTest()
 {
   dof_handler.clear();
 }
-
 
 // .... COMPUTE AREA
 
@@ -149,7 +143,6 @@ MappingTest<dim>::compute_area()
   return area;
 }
 
-
 // .... RUN TEST
 
 template <int dim>
@@ -171,7 +164,6 @@ MappingTest<dim>::run_test()
                                imposed_displacement,
                                displacements);
 
-
       table.add_value("cells", triangulation.n_active_cells());
       table.add_value("dofs", dof_handler.n_dofs());
 
@@ -190,7 +182,6 @@ MappingTest<dim>::run_test()
   table.write_text(deallog.get_file_stream());
   deallog << std::endl;
 }
-
 
 // .... EXPLICITLY MOVE MESH
 
@@ -223,8 +214,6 @@ MappingTest<dim>::explicitly_move_mesh()
     }
 }
 
-
-
 // .... GRAPHICAL OUTPUT
 
 template <int dim>
@@ -242,7 +231,6 @@ MappingTest<dim>::graphical_output()
 
   explicitly_move_mesh();
 }
-
 
 // .... MAIN
 

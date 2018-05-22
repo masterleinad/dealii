@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // set a few elements in a chunk sparse matrix, perform a matrix-vector
 // product through the iterator and compare with a matrix-vector product
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -66,8 +63,6 @@ test(const unsigned int chunk_size)
               << dst.linfty_norm() << std::endl;
     }
 }
-
-
 
 int
 main()

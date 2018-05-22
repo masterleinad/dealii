@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // testing reading a parameter that doesn't conform to its specs. this
 // incidentally also uncovered a bug in Patterns::Integer::match
 
@@ -42,7 +40,6 @@ check(const char* p)
       exc.print_info(deallog.get_file_stream());
     }
 }
-
 
 int
 main()

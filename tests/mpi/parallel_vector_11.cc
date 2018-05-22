@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that add, sadd, equ, scale work correctly on a vector where some
 // processor do not own any degrees of freedom
 
@@ -23,7 +22,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -200,8 +198,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

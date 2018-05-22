@@ -77,7 +77,6 @@ test()
     }
 }
 
-
 int
 main()
 {

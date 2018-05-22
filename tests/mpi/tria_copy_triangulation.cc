@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a simple grid in 2d. here, we test
 // that refining a mesh actually works, where we refine several times
 // more or less randomly by choosing a single cell for refinement
@@ -40,8 +38,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -124,7 +120,6 @@ test()
         Assert(false, ExcInternalError());
     };
 }
-
 
 int
 main(int argc, char* argv[])

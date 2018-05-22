@@ -38,16 +38,12 @@ namespace GridTools
       tria_signal.disconnect();
   }
 
-
-
   template <int dim, int spacedim>
   void
   Cache<dim, spacedim>::mark_for_update(const CacheUpdateFlags& flags)
   {
     update_flags |= flags;
   }
-
-
 
   template <int dim, int spacedim>
   const std::vector<
@@ -62,8 +58,6 @@ namespace GridTools
     return vertex_to_cells;
   }
 
-
-
   template <int dim, int spacedim>
   const std::vector<std::vector<Tensor<1, spacedim>>>&
   Cache<dim, spacedim>::get_vertex_to_cell_centers_directions() const
@@ -77,8 +71,6 @@ namespace GridTools
     return vertex_to_cell_centers;
   }
 
-
-
   template <int dim, int spacedim>
   const std::map<unsigned int, Point<spacedim>>&
   Cache<dim, spacedim>::get_used_vertices() const
@@ -90,8 +82,6 @@ namespace GridTools
       }
     return used_vertices;
   }
-
-
 
 #ifdef DEAL_II_WITH_NANOFLANN
   template <int dim, int spacedim>

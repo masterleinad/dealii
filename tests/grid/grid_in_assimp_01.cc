@@ -18,7 +18,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
-
 int
 main()
 {

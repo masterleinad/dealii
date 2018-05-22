@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh with artificial cells and refine it
 
 #include "../tests.h"
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim, int spacedim>
 void
@@ -50,8 +48,6 @@ write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
     data_out.write_vtu(output);
   }
 }
-
-
 
 template <int dim>
 void
@@ -114,7 +110,6 @@ test()
   //                                "D_");
   //  write_mesh(tr, filename.c_str());
 }
-
 
 int
 main(int argc, char* argv[])

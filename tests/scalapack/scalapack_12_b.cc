@@ -30,7 +30,6 @@
 #include <iostream>
 #include <typeinfo>
 
-
 template <typename NumberType>
 void
 test()
@@ -99,8 +98,6 @@ test()
         << std::endl;
   pcout << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

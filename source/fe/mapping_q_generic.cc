@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/array_view.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/memory_consumption.h>
@@ -45,9 +44,7 @@
 #include <memory>
 #include <numeric>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -87,8 +84,6 @@ namespace internal
         return Point<1>((p[0] - vertices[0](0))
                         / (vertices[1](0) - vertices[0](0)));
       }
-
-
 
       template <int spacedim>
       Point<2>
@@ -201,8 +196,6 @@ namespace internal
                         std::numeric_limits<double>::quiet_NaN());
       }
 
-
-
       template <int spacedim>
       Point<3>
       transform_real_to_unit_cell(
@@ -214,8 +207,6 @@ namespace internal
         Assert(false, ExcInternalError());
         return Point<3>();
       }
-
-
 
       template <int dim, int spacedim>
       void
@@ -284,7 +275,6 @@ namespace internal
             grad4.resize(n_shape_functions);
           }
 
-
         if(data.shape_values.size() != 0 || data.shape_derivatives.size() != 0
            || data.shape_second_derivatives.size() != 0
            || data.shape_third_derivatives.size() != 0
@@ -315,7 +305,6 @@ namespace internal
                   data.fourth_derivative(point, renumber[i]) = grad4[i];
             }
       }
-
 
       void
       compute_shape_function_values_hardcode(
@@ -374,7 +363,6 @@ namespace internal
               }
           }
       }
-
 
       void
       compute_shape_function_values_hardcode(
@@ -455,8 +443,6 @@ namespace internal
               }
           }
       }
-
-
 
       void
       compute_shape_function_values_hardcode(
@@ -637,8 +623,6 @@ namespace internal
   }   // namespace MappingQ1
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::InternalData::InternalData(
   const unsigned int polynomial_degree)
@@ -647,8 +631,6 @@ MappingQGeneric<dim, spacedim>::InternalData::InternalData(
     line_support_points(QGaussLobatto<1>(polynomial_degree + 1)),
     tensor_product_quadrature(false)
 {}
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -668,7 +650,6 @@ MappingQGeneric<dim, spacedim>::InternalData::memory_consumption() const
     + MemoryConsumption::memory_consumption(polynomial_degree)
     + MemoryConsumption::memory_consumption(n_shape_functions));
 }
-
 
 template <int dim, int spacedim>
 void
@@ -783,8 +764,6 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
@@ -887,8 +866,6 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
     }
 }
 
-
-
 template <>
 void
 MappingQGeneric<1, 1>::InternalData::compute_shape_function_values(
@@ -954,7 +931,6 @@ MappingQGeneric<dim, spacedim>::InternalData::compute_shape_function_values(
     n_shape_functions, unit_points, *this);
 }
 
-
 namespace internal
 {
   namespace MappingQGenericImplementation
@@ -1013,8 +989,6 @@ namespace internal
 
         return loqvs;
       }
-
-
 
       /**
        * This function is needed by the constructor of <tt>MappingQ<3></tt>.
@@ -1106,8 +1080,6 @@ namespace internal
         return lohvs;
       }
 
-
-
       /**
        * This function collects the output of
        * compute_support_point_weights_on_{quad,hex} in a single data structure.
@@ -1168,8 +1140,6 @@ namespace internal
         return output;
       }
 
-
-
       /**
        * Using the relative weights of the shape functions evaluated at
        * one point on the reference cell (and stored in data.shape_values
@@ -1194,8 +1164,6 @@ namespace internal
         return p_real;
       }
 
-
-
       /**
        * Implementation of transform_real_to_unit_cell for dim==spacedim
        */
@@ -1216,7 +1184,6 @@ namespace internal
 
         std::vector<Point<spacedim>>& points = mdata.mapping_support_points;
         AssertDimension(points.size(), n_shapes);
-
 
         // Newton iteration to solve
         //    f(x)=p(x)-p=0
@@ -1375,8 +1342,6 @@ namespace internal
         return p_unit;
       }
 
-
-
       /**
        * Implementation of transform_real_to_unit_cell for dim==spacedim-1
        */
@@ -1429,7 +1394,6 @@ namespace internal
         p_minus_F = p;
         p_minus_F -= compute_mapped_location_of_point<dim, spacedim>(mdata);
 
-
         for(unsigned int j = 0; j < dim; ++j)
           f[j] = DF[j] * p_minus_F;
 
@@ -1439,7 +1403,6 @@ namespace internal
             for(unsigned int l = 0; l < dim; ++l)
               df[j][l] = -DF[j] * DF[l] + D2F[j][l] * p_minus_F;
           }
-
 
         const double       eps        = 1.e-12 * cell->diameter();
         const unsigned int loop_limit = 10;
@@ -1489,7 +1452,6 @@ namespace internal
                   df[j][l] = -DF[j] * DF[l] + D2F[j][l] * p_minus_F;
               }
           }
-
 
         // Here we check that in the last execution of while the first
         // condition was already wrong, meaning the residual was below
@@ -1666,7 +1628,6 @@ namespace internal
           }
       }
 
-
       /**
        * Compute the locations of quadrature points on the object described by
        * the first argument (and the cell for which the mapping support points
@@ -1695,8 +1656,6 @@ namespace internal
               quadrature_points[point] = result;
             }
       }
-
-
 
       /**
        * Update the co- and contravariant matrices as well as their determinant, for the cell
@@ -2246,8 +2205,6 @@ namespace internal
   }   // namespace MappingQGenericImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
   : polynomial_degree(p),
@@ -2267,8 +2224,6 @@ MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
                     "with a polynomial degree greater or equal to one."));
 }
 
-
-
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::MappingQGeneric(
   const MappingQGeneric<dim, spacedim>& mapping)
@@ -2280,8 +2235,6 @@ MappingQGeneric<dim, spacedim>::MappingQGeneric(
     support_point_weights_cell(mapping.support_point_weights_cell)
 {}
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingQGeneric<dim, spacedim>::clone() const
@@ -2289,16 +2242,12 @@ MappingQGeneric<dim, spacedim>::clone() const
   return std_cxx14::make_unique<MappingQGeneric<dim, spacedim>>(*this);
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 MappingQGeneric<dim, spacedim>::get_degree() const
 {
   return polynomial_degree;
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -2332,7 +2281,6 @@ MappingQGeneric<dim, spacedim>::transform_unit_to_real_cell(
   return mapped_point;
 }
 
-
 // In the code below, GCC tries to instantiate MappingQGeneric<3,4> when
 // seeing which of the overloaded versions of
 // do_transform_real_to_unit_cell_internal() to call. This leads to bad
@@ -2343,8 +2291,6 @@ MappingQGeneric<dim, spacedim>::transform_unit_to_real_cell(
 template <>
 class MappingQGeneric<3, 4>
 {};
-
-
 
 // visual studio freaks out when trying to determine if
 // do_transform_real_to_unit_cell_internal with dim=3 and spacedim=4 is a good
@@ -2442,8 +2388,6 @@ MappingQGeneric<3, 3>::transform_real_to_unit_cell_internal(
     do_transform_real_to_unit_cell_internal<3>(cell, p, initial_p_unit, *mdata);
 }
 
-
-
 template <>
 Point<1>
 MappingQGeneric<1, 2>::transform_real_to_unit_cell_internal(
@@ -2470,8 +2414,6 @@ MappingQGeneric<1, 2>::transform_real_to_unit_cell_internal(
     do_transform_real_to_unit_cell_internal_codim1<1>(
       cell, p, initial_p_unit, *mdata);
 }
-
-
 
 template <>
 Point<2>
@@ -2510,8 +2452,6 @@ MappingQGeneric<1, 3>::transform_real_to_unit_cell_internal(
   Assert(false, ExcNotImplemented());
   return Point<1>();
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim>
@@ -2598,7 +2538,6 @@ MappingQGeneric<dim, spacedim>::transform_real_to_unit_cell(
       // we can't use an explicit formula,
     }
 
-
   // Find the initial value for the Newton iteration by a normal
   // projection to the least square plane determined by the vertices
   // of the cell
@@ -2645,8 +2584,6 @@ MappingQGeneric<dim, spacedim>::transform_real_to_unit_cell(
         cell, p, initial_p_unit);
     }
 }
-
-
 
 template <int dim, int spacedim>
 UpdateFlags
@@ -2704,8 +2641,6 @@ MappingQGeneric<dim, spacedim>::requires_update_flags(
   return out;
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQGeneric<dim, spacedim>::get_data(const UpdateFlags      update_flags,
@@ -2716,8 +2651,6 @@ MappingQGeneric<dim, spacedim>::get_data(const UpdateFlags      update_flags,
 
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -2733,8 +2666,6 @@ MappingQGeneric<dim, spacedim>::get_face_data(
   return std::move(data);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQGeneric<dim, spacedim>::get_subface_data(
@@ -2748,8 +2679,6 @@ MappingQGeneric<dim, spacedim>::get_subface_data(
 
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 CellSimilarity::Similarity
@@ -2869,7 +2798,6 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
           || (output_data.normal_vectors.size() == n_q_points),
         ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
 
-
       if(computed_cell_similarity != CellSimilarity::translation)
         for(unsigned int point = 0; point < n_q_points; ++point)
           {
@@ -2947,8 +2875,6 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
           }
     }
 
-
-
   // copy values from InternalData to vector given by reference
   if(update_flags & update_jacobians)
     {
@@ -2970,8 +2896,6 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
 
   return computed_cell_similarity;
 }
-
-
 
 namespace internal
 {
@@ -3151,7 +3075,6 @@ namespace internal
           }
       }
 
-
       /**
        * Do the work of MappingQGeneric::fill_fe_face_values() and
        * MappingQGeneric::fill_fe_subface_values() in a generic way,
@@ -3229,8 +3152,6 @@ namespace internal
   }   // namespace MappingQGenericImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::fill_fe_face_values(
@@ -3273,8 +3194,6 @@ MappingQGeneric<dim, spacedim>::fill_fe_face_values(
     data,
     output_data);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -3321,8 +3240,6 @@ MappingQGeneric<dim, spacedim>::fill_fe_subface_values(
     data,
     output_data);
 }
-
-
 
 namespace internal
 {
@@ -3407,7 +3324,6 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-
 
       template <int dim, int spacedim, int rank>
       void
@@ -3506,8 +3422,6 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-
-
 
       template <int dim, int spacedim>
       void
@@ -3677,8 +3591,6 @@ namespace internal
           }
       }
 
-
-
       template <int dim, int spacedim, int rank>
       void
       transform_differential_forms(
@@ -3720,8 +3632,6 @@ namespace internal
   }   // namespace MappingQGenericImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
@@ -3734,8 +3644,6 @@ MappingQGeneric<dim, spacedim>::transform(
     input, mapping_type, mapping_data, output);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
@@ -3747,8 +3655,6 @@ MappingQGeneric<dim, spacedim>::transform(
   internal::MappingQGenericImplementation::transform_differential_forms(
     input, mapping_type, mapping_data, output);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -3775,8 +3681,6 @@ MappingQGeneric<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -3825,8 +3729,6 @@ MappingQGeneric<dim, spacedim>::transform(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
@@ -3847,8 +3749,6 @@ MappingQGeneric<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -3912,8 +3812,6 @@ MappingQGeneric<dim, spacedim>::add_line_support_points(
         }
     }
 }
-
-
 
 template <>
 void
@@ -3982,8 +3880,6 @@ MappingQGeneric<3, 3>::add_quad_support_points(
     }
 }
 
-
-
 template <>
 void
 MappingQGeneric<2, 3>::add_quad_support_points(
@@ -4012,8 +3908,6 @@ MappingQGeneric<2, 3>::add_quad_support_points(
     make_array_view(vertices.begin(), vertices.end()), weights, a_view);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::add_quad_support_points(
@@ -4022,8 +3916,6 @@ MappingQGeneric<dim, spacedim>::add_quad_support_points(
 {
   Assert(false, ExcInternalError());
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<Point<spacedim>>
@@ -4124,10 +4016,7 @@ MappingQGeneric<dim, spacedim>::compute_mapping_support_points(
   return a;
 }
 
-
-
 //--------------------------- Explicit instantiations -----------------------
 #include "mapping_q_generic.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check mg constrained dofs in parallel (different mesh than 01)
 
 #include "../tests.h"
@@ -72,7 +71,6 @@ setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
   }
 }
 
-
 template <typename DoFHandlerType>
 void
 extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
@@ -114,8 +112,6 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
 
   dof_set.compress();
 }
-
-
 
 template <int dim>
 void
@@ -185,8 +181,6 @@ check_fe(FiniteElement<dim>& fe)
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
 
-
-
   MGConstrainedDoFs mg_constrained_dofs;
 
   typename FunctionMap<dim>::type dirichlet_boundary;
@@ -233,7 +227,6 @@ check_fe(FiniteElement<dim>& fe)
               << std::endl;
     }
 }
-
 
 template <int dim>
 void

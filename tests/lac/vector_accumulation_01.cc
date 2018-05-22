@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the l2 norm is exactly the same for many runs on random vector
 // size with random vector entries. this is to ensure that the result is
 // reproducible also when parallel evaluation is done
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void
@@ -42,7 +39,6 @@ check_norms()
         AssertThrow(vec2.l2_norm() == norm, ExcInternalError());
     }
 }
-
 
 int
 main()

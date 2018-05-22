@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix.distribute() for a trilinos vector
 //
 // like _01, but for a block vector. this has the additional complication that
@@ -26,8 +24,6 @@
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 
 #include <sstream>
-
-
 
 void
 test()
@@ -73,7 +69,6 @@ test()
       exact_l1 += 2 * i;
     AssertThrow(vec.l1_norm() == exact_l1, ExcInternalError());
   }
-
 
   // create a ConstraintMatrix with a range that exceeds the locally
   // owned range by 50 on each side
@@ -145,7 +140,6 @@ test()
                   == vec.block(1).local_range().first + 105,
                 ExcInternalError());
 
-
   for(unsigned int i = vec.block(0).local_range().first;
       i < vec.block(0).local_range().second;
       ++i)
@@ -195,14 +189,12 @@ test()
   }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

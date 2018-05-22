@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test a simple parabolic manifold, including gradients and tangent vector
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
@@ -85,7 +82,6 @@ int
 main()
 {
   initlog();
-
 
   test<2, 2>();
   test<2, 3>();

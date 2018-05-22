@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of cached quadrature points
 
 #include "../tests.h"
@@ -38,7 +36,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim, int fe_degree>
 void
@@ -104,7 +101,6 @@ test()
   deallog << "Norm of difference: " << error_points / abs_points << std::endl
           << std::endl;
 }
-
 
 int
 main()

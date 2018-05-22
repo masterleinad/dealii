@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test FE_Q_DG0 (modified step-22)
 
 #include "../tests.h"
@@ -139,7 +137,6 @@ namespace Step22
     laplacian(const Point<dim>& p, const unsigned int component) const;
   };
 
-
   template <int dim>
   double
   ExactSolution<dim>::value(const Point<dim>&  p,
@@ -228,7 +225,6 @@ namespace Step22
     return gradient;
   }
 
-
   template <int dim>
   double
   ExactSolution<dim>::laplacian(const Point<dim>&  p,
@@ -316,7 +312,6 @@ namespace Step22
            - solution.laplacian(p, component);
   }
 
-
   template <class Matrix, class Preconditioner>
   class InverseMatrix : public Subscriptor
   {
@@ -330,7 +325,6 @@ namespace Step22
     const SmartPointer<const Matrix>         matrix;
     const SmartPointer<const Preconditioner> preconditioner;
   };
-
 
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
@@ -377,8 +371,6 @@ namespace Step22
     mutable Vector<double> tmp1, tmp2;
   };
 
-
-
   template <class Preconditioner>
   SchurComplement<Preconditioner>::SchurComplement(
     const BlockSparseMatrix<double>&                           system_matrix,
@@ -388,7 +380,6 @@ namespace Step22
       tmp1(system_matrix.block(0, 0).m()),
       tmp2(system_matrix.block(0, 0).m())
   {}
-
 
   template <class Preconditioner>
   void
@@ -885,7 +876,6 @@ namespace Step22
 
     //std::cout << std::endl;
     //convergence_table.write_text(std::cout);
-
 
     convergence_table.add_column_to_supercolumn("cycle", "n cells");
     convergence_table.add_column_to_supercolumn("cells", "n cells");

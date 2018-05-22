@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // an extract of the _01 test that shows the essence of what's going
 // wrong. compared to the _03 testcase, upon refinement of the middle
 // cell (0.0), cell 0.1 forgets who some of its neighbors are. this is
@@ -31,7 +29,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 int
 main()

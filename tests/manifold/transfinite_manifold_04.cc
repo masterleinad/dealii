@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that clearing a triangulation is behaving correctly for the transfinite
 // interpolation on a test that is similar to transfinite_manifold_01.cc
 
@@ -23,7 +22,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 template <int dim, int spacedim>
 void
@@ -125,7 +123,6 @@ test_polar()
     do_test(tria);
   }
 }
-
 
 int
 main()

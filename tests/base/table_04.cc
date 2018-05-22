@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like_02, but don't just check TableBase::fill but instead use the
 // constructors that already initialize
-
 
 #include "../tests.h"
 
 #include <deal.II/base/table.h>
-
 
 int
 main()
@@ -55,7 +52,6 @@ main()
     }
   }
 
-
   // rank=2
   {
     deallog << "rank=2" << std::endl;
@@ -86,7 +82,6 @@ main()
         }
     }
   }
-
 
   // rank=3
   {

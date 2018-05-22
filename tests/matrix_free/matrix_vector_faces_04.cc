@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation, matrix-vector products as compared to
 // the same implementation with MeshWorker. This example uses a hyperball mesh
 // with both hanging nodes and curved boundaries

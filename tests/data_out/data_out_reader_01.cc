@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
 
@@ -71,7 +70,6 @@ check()
   cat_file("outfile");
   std::remove("outfile");
 }
-
 
 int
 main()

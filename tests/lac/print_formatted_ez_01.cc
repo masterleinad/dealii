@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check SparseMatrixEZ::print_formatted
 
 #include "../tests.h"
 
-
 #include <deal.II/lac/sparse_matrix_ez.h>
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test problem in MGTools::make_flux_sparsity_pattern_edge
 
 #include "../tests.h"
@@ -90,7 +89,6 @@ namespace Step39
     MGLevelObject<TrilinosWrappers::SparseMatrix> mg_matrix_dg_up;
   };
 
-
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
     const FiniteElement<dim>& fe)
@@ -104,7 +102,6 @@ namespace Step39
   {
     GridGenerator::hyper_cube_slit(triangulation, -1, 1);
   }
-
 
   template <int dim>
   void
@@ -165,7 +162,6 @@ namespace Step39
       }
   }
 
-
   template <int dim>
   void
   InteriorPenaltyProblem<dim>::run(unsigned int n_steps)
@@ -197,8 +193,6 @@ namespace Step39
       }
   }
 } // namespace Step39
-
-
 
 int
 main(int argc, char* argv[])

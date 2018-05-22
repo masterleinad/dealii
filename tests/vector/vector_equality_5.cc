@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::operator==(Vector<float>) for vectors that are not
 // equal and different template arguments
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v, Vector<float>& w)
@@ -40,8 +37,6 @@ test(Vector<double>& v, Vector<float>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

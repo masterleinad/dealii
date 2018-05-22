@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // ParameterHandler could not handle files with DOS line endings.
 
 #include "../tests.h"

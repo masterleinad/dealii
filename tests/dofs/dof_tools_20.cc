@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
 // check
 //   DoFTools::extract_dofs_with_support_on_boundary
-
-
 
 template <int dim>
 void

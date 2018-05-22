@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<std::complex<double> >::linfty_norm()
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v)
@@ -39,8 +36,6 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

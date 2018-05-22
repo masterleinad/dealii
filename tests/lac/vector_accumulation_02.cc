@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the inner product is exactly the same down to roundoff for
 // various vectors. Due to vectorization and its requirements for alignment,
 // we also test that the result does not depend on the alignment of any of the
@@ -23,8 +22,6 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_view.h>
-
-
 
 template <typename number>
 void
@@ -60,7 +57,6 @@ check_norms()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

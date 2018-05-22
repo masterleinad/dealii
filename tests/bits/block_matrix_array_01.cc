@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This tests the construction of a BlockMatrixArray and outputs the
 // entered blocks using print_latex.
 
 #include "../tests.h"
 #include <deal.II/lac/block_matrix_array.h>
 #include <deal.II/lac/full_matrix.h>
-
 
 int
 main()

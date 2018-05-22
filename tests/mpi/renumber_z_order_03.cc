@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that DofRenumbering::hierarchical() also works for a
 // parallel::shared::Triangulation
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -35,8 +32,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/trilinos_vector.h>
-
-
 
 int
 main(int argc, char* argv[])

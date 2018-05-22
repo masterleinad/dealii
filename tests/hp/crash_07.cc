@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a distilled version of hp_constraints_q_05 and a couple of other tests
 // where DoFs were constrained to other DoFs already constrained
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -41,8 +38,6 @@ char logname[] = "output";
 
 #include <vector>
 
-
-
 int
 main()
 {
@@ -50,7 +45,6 @@ main()
   logfile.precision(3);
 
   deallog.attach(logfile);
-
 
   std::vector<Point<2>> points_glob;
   std::vector<Point<2>> points;
@@ -126,7 +120,6 @@ main()
         deallog << local_dofs[i] << ' ';
       deallog << std::endl;
     }
-
 
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);

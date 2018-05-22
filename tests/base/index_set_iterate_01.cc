@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet iterators
 
 #include "../tests.h"
@@ -102,7 +101,6 @@ test(IndexSet& index_set)
       }
   }
 
-
   // pre vs post increment
   {
     IndexSet::ElementIterator it  = index_set.begin();
@@ -154,8 +152,6 @@ test()
   IndexSet empty(42);
   test(empty);
 }
-
-
 
 int
 main()

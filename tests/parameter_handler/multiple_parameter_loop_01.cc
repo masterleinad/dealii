@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the MultipleParameterLoop class
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 // Take the example from the
 // documentation but instead of
@@ -40,7 +37,6 @@ public:
   unsigned int run_no;
 };
 
-
 void
 HelperClass::declare_parameters(ParameterHandler& prm)
 {
@@ -54,7 +50,6 @@ HelperClass::declare_parameters(ParameterHandler& prm)
   prm.leave_subsection();
 }
 
-
 void
 HelperClass::run(ParameterHandler& prm)
 {
@@ -62,8 +57,6 @@ HelperClass::run(ParameterHandler& prm)
 
   prm.print_parameters(deallog.get_file_stream(), ParameterHandler::Text);
 }
-
-
 
 void
 check()
@@ -75,7 +68,6 @@ check()
   prm.parse_input(SOURCE_DIR "/prm/multiple_parameter_loop_01.prm");
   prm.loop(h);
 }
-
 
 int
 main()

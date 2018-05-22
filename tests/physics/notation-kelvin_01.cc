@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that rolling to, and unrolling from, Kelvin notation.
 
 #include "../tests.h"
@@ -24,7 +23,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <deal.II/physics/notation.h>
-
 
 using namespace dealii;
 using namespace dealii::Physics;

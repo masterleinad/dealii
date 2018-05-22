@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // GridTools::regularize_corner_cells
 
 #include "../tests.h"
@@ -37,8 +36,6 @@ test()
   GridOut grid_out;
   grid_out.write_msh(tria, deallog.get_file_stream());
 }
-
-
 
 int
 main()

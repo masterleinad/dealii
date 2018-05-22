@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test move constructor of sparse matrix and check that the matrix that has
 // been move can be reinitialized
 

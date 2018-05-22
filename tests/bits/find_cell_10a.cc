@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // transform_real_to_unit_cell works for MappingQ(1) but fails for MappingQ1.
 //
 // this is a case where a cell is extremely elongated, and just taking the l2
@@ -22,7 +20,6 @@
 // variable norm that keeps the elongation of the cell in mind.
 
 #include "../tests.h"
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -37,7 +34,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 #include <iostream>
 #include <list>
 #include <sstream>
@@ -45,7 +41,6 @@
 #include <time.h>
 
 using namespace dealii;
-
 
 void create_coarse_grid(Triangulation<2>& coarse_grid)
 {

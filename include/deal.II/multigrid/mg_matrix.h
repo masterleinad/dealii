@@ -107,7 +107,6 @@ namespace mg
 
 } // namespace mg
 
-
 /**
  * Multilevel matrix selecting from block matrices. This class implements the
  * interface defined by MGMatrixBase.  The template parameter @p MatrixType
@@ -213,16 +212,12 @@ namespace mg
       }
   }
 
-
-
   template <typename VectorType>
   inline void
   Matrix<VectorType>::reset()
   {
     matrices.resize(0, 0);
   }
-
-
 
   template <typename VectorType>
   template <typename MatrixType>
@@ -231,16 +226,12 @@ namespace mg
     initialize(p);
   }
 
-
-
   template <typename VectorType>
   inline const LinearOperator<VectorType>& Matrix<VectorType>::
                                            operator[](unsigned int level) const
   {
     return matrices[level];
   }
-
-
 
   template <typename VectorType>
   void
@@ -251,8 +242,6 @@ namespace mg
     matrices[level].vmult(dst, src);
   }
 
-
-
   template <typename VectorType>
   void
   Matrix<VectorType>::vmult_add(const unsigned int level,
@@ -261,8 +250,6 @@ namespace mg
   {
     matrices[level].vmult_add(dst, src);
   }
-
-
 
   template <typename VectorType>
   void
@@ -273,8 +260,6 @@ namespace mg
     matrices[level].Tvmult(dst, src);
   }
 
-
-
   template <typename VectorType>
   void
   Matrix<VectorType>::Tvmult_add(const unsigned int level,
@@ -284,16 +269,12 @@ namespace mg
     matrices[level].Tvmult_add(dst, src);
   }
 
-
-
   template <typename VectorType>
   unsigned int
   Matrix<VectorType>::get_minlevel() const
   {
     return matrices.min_level();
   }
-
-
 
   template <typename VectorType>
   unsigned int
@@ -302,8 +283,6 @@ namespace mg
     return matrices.max_level();
   }
 
-
-
   template <typename VectorType>
   inline std::size_t
   Matrix<VectorType>::memory_consumption() const
@@ -311,7 +290,6 @@ namespace mg
     return sizeof(*this) + matrices->memory_consumption();
   }
 } // namespace mg
-
 
 /*----------------------------------------------------------------------*/
 
@@ -322,16 +300,12 @@ MGMatrixSelect<MatrixType, number>::MGMatrixSelect(const unsigned int row,
   : matrix(p, typeid(*this).name()), row(row), col(col)
 {}
 
-
-
 template <typename MatrixType, typename number>
 void
 MGMatrixSelect<MatrixType, number>::set_matrix(MGLevelObject<MatrixType>* p)
 {
   matrix = p;
 }
-
-
 
 template <typename MatrixType, typename number>
 void
@@ -341,8 +315,6 @@ MGMatrixSelect<MatrixType, number>::select_block(const unsigned int brow,
   row = brow;
   col = bcol;
 }
-
-
 
 template <typename MatrixType, typename number>
 void
@@ -356,8 +328,6 @@ MGMatrixSelect<MatrixType, number>::vmult(const unsigned int    level,
   m[level].block(row, col).vmult(dst, src);
 }
 
-
-
 template <typename MatrixType, typename number>
 void
 MGMatrixSelect<MatrixType, number>::vmult_add(const unsigned int    level,
@@ -370,8 +340,6 @@ MGMatrixSelect<MatrixType, number>::vmult_add(const unsigned int    level,
   m[level].block(row, col).vmult_add(dst, src);
 }
 
-
-
 template <typename MatrixType, typename number>
 void
 MGMatrixSelect<MatrixType, number>::Tvmult(const unsigned int    level,
@@ -383,8 +351,6 @@ MGMatrixSelect<MatrixType, number>::Tvmult(const unsigned int    level,
   const MGLevelObject<MatrixType>& m = *matrix;
   m[level].block(row, col).Tvmult(dst, src);
 }
-
-
 
 template <typename MatrixType, typename number>
 void

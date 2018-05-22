@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::left_invert and FullMatrix::right_invert
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void
@@ -51,7 +46,6 @@ calculate(const FullMatrix<number> A, const FullMatrix<number> B)
   B_l_inv.mmult(identity2, B);
   display_matrix(identity2);
 }
-
 
 template <typename number>
 void

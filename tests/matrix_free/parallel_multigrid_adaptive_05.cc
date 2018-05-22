@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same test as parallel_multigrid_adaptive_03 but using partition_color
 
 #include "../tests.h"
@@ -41,7 +40,6 @@
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
 
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d = fe_degree + 1,
@@ -52,7 +50,6 @@ public:
   typedef number value_type;
 
   LaplaceOperator(){};
-
 
   void
   initialize(const Mapping<dim>&                    mapping,
@@ -303,7 +300,6 @@ public:
     return inverse_diagonal_entries;
   }
 
-
 private:
   void
   local_apply(const MatrixFree<dim, number>&                    data,
@@ -344,7 +340,6 @@ private:
         inverse_diagonal_entries.local_element(edge_constrained_indices[i])
           = 1.;
       }
-
 
     for(unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
       if(std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
@@ -392,8 +387,6 @@ private:
   bool                                           have_interface_matrices;
 };
 
-
-
 template <typename LAPLACEOPERATOR>
 class MGInterfaceMatrix : public Subscriptor
 {
@@ -425,8 +418,6 @@ public:
 private:
   SmartPointer<const LAPLACEOPERATOR> laplace;
 };
-
-
 
 template <int dim, typename LAPLACEOPERATOR>
 class MGTransferMF
@@ -464,8 +455,6 @@ private:
   const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -493,8 +482,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -608,8 +595,6 @@ do_test(const DoFHandler<dim>& dof, const bool threaded)
   }
 }
 
-
-
 template <int dim, int fe_degree, typename Number>
 void
 test()
@@ -643,8 +628,6 @@ test()
       deallog.pop();
     }
 }
-
-
 
 int
 main(int argc, char** argv)

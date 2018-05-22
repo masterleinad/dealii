@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/partitioner.h>
@@ -47,7 +46,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   namespace DoFHandlerImplementation
@@ -63,7 +61,6 @@ namespace internal
       {
         using dealii::hp::DoFHandler;
       }
-
 
       namespace
       {
@@ -104,7 +101,6 @@ namespace internal
                           /* chunk_size = */ 32);
         }
 
-
         /**
          * Update the cache used for cell dof indices on all (non-artificial)
          * level (multigrid) cells of the given DoFHandler.
@@ -142,10 +138,8 @@ namespace internal
                           /* chunk_size = */ 32);
         }
 
-
         typedef std::vector<std::pair<unsigned int, unsigned int>>
           DoFIdentities;
-
 
         /**
          * Make sure that the given @p identities pointer points to a
@@ -209,8 +203,6 @@ namespace internal
             }
         }
 
-
-
         /**
          * For an object, such as a line or a quad iterator, determine
          * the fe_index of the most dominating finite element that
@@ -268,8 +260,6 @@ namespace internal
         }
       } // namespace
 
-
-
       struct Implementation
       {
         /* -------------- distribute_dofs functionality ------------- */
@@ -318,8 +308,6 @@ namespace internal
           return next_free_dof;
         }
 
-
-
         template <int spacedim>
         static types::global_dof_index
         distribute_dofs_on_cell(
@@ -359,7 +347,6 @@ namespace internal
                     line->set_dof_index(d, next_free_dof++);
               }
 
-
           // dofs of quad
           if(dof_handler.get_fe().dofs_per_quad > 0)
             for(unsigned int d = 0; d < dof_handler.get_fe().dofs_per_quad; ++d)
@@ -367,8 +354,6 @@ namespace internal
 
           return next_free_dof;
         }
-
-
 
         template <int spacedim>
         static types::global_dof_index
@@ -425,7 +410,6 @@ namespace internal
                     quad->set_dof_index(d, next_free_dof++);
               }
 
-
           // dofs of hex
           if(dof_handler.get_fe().dofs_per_hex > 0)
             for(unsigned int d = 0; d < dof_handler.get_fe().dofs_per_hex; ++d)
@@ -433,8 +417,6 @@ namespace internal
 
           return next_free_dof;
         }
-
-
 
         // same for the hp::DoFHandler
         template <int spacedim>
@@ -483,8 +465,6 @@ namespace internal
           return next_free_dof;
         }
 
-
-
         template <int spacedim>
         static types::global_dof_index
         distribute_dofs_on_cell(
@@ -528,7 +508,6 @@ namespace internal
                     line->set_dof_index(d, next_free_dof, fe_index);
               }
 
-
           // finally for the quad. this one shouldn't be numbered yet
           if(fe.dofs_per_quad > 0)
             {
@@ -546,8 +525,6 @@ namespace internal
 
           return next_free_dof;
         }
-
-
 
         template <int spacedim>
         static types::global_dof_index
@@ -605,7 +582,6 @@ namespace internal
                     quad->set_dof_index(d, next_free_dof, fe_index);
               }
 
-
           // finally for the hex. this one shouldn't be numbered yet
           if(fe.dofs_per_hex > 0)
             {
@@ -622,8 +598,6 @@ namespace internal
 
           return next_free_dof;
         }
-
-
 
         /**
          * Compute identities between DoFs located on vertices. Called from
@@ -756,7 +730,6 @@ namespace internal
           return dof_identities;
         }
 
-
         /**
          * Compute identities between DoFs located on lines. Called from
          * distribute_dofs().
@@ -767,7 +740,6 @@ namespace internal
         {
           return std::map<types::global_dof_index, types::global_dof_index>();
         }
-
 
         template <int dim, int spacedim>
         static std::map<types::global_dof_index, types::global_dof_index>
@@ -1024,8 +996,6 @@ namespace internal
           return dof_identities;
         }
 
-
-
         /**
          * Compute identities between DoFs located on quads. Called from
          * distribute_dofs().
@@ -1042,7 +1012,6 @@ namespace internal
           return std::map<types::global_dof_index, types::global_dof_index>();
         }
 
-
         template <int spacedim>
         static std::map<types::global_dof_index, types::global_dof_index>
           compute_quad_dof_identities(hp::DoFHandler<3, spacedim>& dof_handler)
@@ -1051,7 +1020,6 @@ namespace internal
 
           std::map<types::global_dof_index, types::global_dof_index>
             dof_identities;
-
 
           // we will mark quads that we have already treated, so first
           // save and clear the user flags on quads and later restore
@@ -1087,7 +1055,6 @@ namespace internal
                 for(unsigned int q = 0; q < GeometryInfo<dim>::quads_per_cell;
                     ++q)
                   cell->quad(q)->set_user_flag();
-
 
           // An implementation of the algorithm described in the hp
           // paper, including the modification mentioned later in the
@@ -1182,8 +1149,6 @@ namespace internal
           return dof_identities;
         }
 
-
-
         /**
          * Once degrees of freedom have been distributed on all cells, see if
          * we can identify DoFs on neighboring cells. This function does nothing
@@ -1201,8 +1166,6 @@ namespace internal
         {
           return n_dofs_before_identification;
         }
-
-
 
         template <int dim, int spacedim>
         static unsigned int
@@ -1293,11 +1256,8 @@ namespace internal
           renumber_dofs(
             new_dof_indices, IndexSet(0), dof_handler, check_validity);
 
-
           return next_free_dof;
         }
-
-
 
         /**
          * Distribute degrees of freedom on all cells, or on cells with the
@@ -1344,10 +1304,7 @@ namespace internal
           return next_free_dof;
         }
 
-
-
         /* -------------- distribute_mg_dofs functionality ------------- */
-
 
         /**
          * Distribute multilevel dofs on the given cell, with new dofs starting
@@ -1421,8 +1378,6 @@ namespace internal
           return next_free_dof;
         }
 
-
-
         template <int dim, int spacedim>
         static types::global_dof_index
         distribute_mg_dofs_on_cell(
@@ -1461,20 +1416,16 @@ namespace internal
                     line->set_mg_dof_index(cell->level(), d, next_free_dof++);
               }
 
-
           // dofs of quad
           if(cell->get_fe().dofs_per_quad > 0)
             for(unsigned int d = 0; d < cell->get_fe().dofs_per_quad; ++d)
               cell->set_mg_dof_index(cell->level(), d, next_free_dof++);
-
 
           // note that this cell has been processed
           cell->set_user_flag();
 
           return next_free_dof;
         }
-
-
 
         template <int dim, int spacedim>
         static types::global_dof_index
@@ -1530,20 +1481,16 @@ namespace internal
                     quad->set_mg_dof_index(cell->level(), d, next_free_dof++);
               }
 
-
           // dofs of cell
           if(cell->get_fe().dofs_per_hex > 0)
             for(unsigned int d = 0; d < cell->get_fe().dofs_per_hex; ++d)
               cell->set_mg_dof_index(cell->level(), d, next_free_dof++);
-
 
           // note that this cell has been processed
           cell->set_user_flag();
 
           return next_free_dof;
         }
-
-
 
         // same for the hp::DoFHandler
         template <int spacedim>
@@ -1560,8 +1507,6 @@ namespace internal
           return 0;
         }
 
-
-
         template <int spacedim>
         static types::global_dof_index
         distribute_mg_dofs_on_cell(
@@ -1576,8 +1521,6 @@ namespace internal
           return 0;
         }
 
-
-
         template <int spacedim>
         static types::global_dof_index
         distribute_mg_dofs_on_cell(
@@ -1591,8 +1534,6 @@ namespace internal
           (void) next_free_dof;
           return 0;
         }
-
-
 
         template <class DoFHandlerType>
         static types::global_dof_index
@@ -1637,10 +1578,7 @@ namespace internal
           return next_free_dof;
         }
 
-
-
         /* --------------------- renumber_dofs functionality ---------------- */
-
 
         /**
          * The part of the renumber_dofs() functionality that is dimension
@@ -1681,8 +1619,6 @@ namespace internal
                      ExcInternalError());
         }
 
-
-
         /**
          * The part of the renumber_dofs() functionality that is dimension
          * independent because it renumbers the DoF indices on cell interiors
@@ -1709,8 +1645,6 @@ namespace internal
                         new_numbers[indices.index_within_set(*i)]);
         }
 
-
-
         /**
          * The part of the renumber_dofs() functionality that operates on faces.
          * This part is dimension dependent and so needs to be implemented in
@@ -1727,8 +1661,6 @@ namespace internal
         {
           // nothing to do in 1d since there are no separate faces
         }
-
-
 
         template <int spacedim>
         static void
@@ -1747,8 +1679,6 @@ namespace internal
                       new_numbers[*i] :
                       new_numbers[indices.index_within_set(*i)]);
         }
-
-
 
         template <int spacedim>
         static void
@@ -1777,8 +1707,6 @@ namespace internal
                       new_numbers[*i] :
                       new_numbers[indices.index_within_set(*i)]);
         }
-
-
 
         template <int dim, int spacedim>
         static void
@@ -1850,8 +1778,6 @@ namespace internal
             }
         }
 
-
-
         template <int dim, int spacedim>
         static void
         renumber_cell_dofs(
@@ -1886,8 +1812,6 @@ namespace internal
               }
         }
 
-
-
         template <int spacedim>
         static void
         renumber_face_dofs(
@@ -1898,8 +1822,6 @@ namespace internal
           // nothing to do in 1d since there are no separate faces -- we've already
           // taken care of this when dealing with the vertices
         }
-
-
 
         template <int spacedim>
         static void
@@ -1971,8 +1893,6 @@ namespace internal
               .load_user_flags_line(saved_line_user_flags);
           }
         }
-
-
 
         template <int spacedim>
         static void
@@ -2103,8 +2023,6 @@ namespace internal
           }
         }
 
-
-
         /**
          * Implementation of DoFHandler::renumber_dofs()
          *
@@ -2143,8 +2061,6 @@ namespace internal
           // update the cache used for cell dof indices
           update_all_active_cell_dof_indices_caches(dof_handler);
         }
-
-
 
         /* --------------------- renumber_mg_dofs functionality ---------------- */
 
@@ -2196,8 +2112,6 @@ namespace internal
                 }
         }
 
-
-
         /**
          * The part of the renumber_dofs() functionality that is dimension
          * independent because it renumbers the DoF indices on cell interiors
@@ -2230,8 +2144,6 @@ namespace internal
             }
         }
 
-
-
         /**
          * The part of the renumber_mg_dofs() functionality that operates on faces.
          * This part is dimension dependent and so needs to be implemented in
@@ -2250,8 +2162,6 @@ namespace internal
         {
           // nothing to do in 1d because there are no separate faces
         }
-
-
 
         template <int spacedim>
         static void
@@ -2317,8 +2227,6 @@ namespace internal
                 .load_user_flags(user_flags);
             }
         }
-
-
 
         template <int spacedim>
         static void
@@ -2424,8 +2332,6 @@ namespace internal
             }
         }
 
-
-
         template <int dim, int spacedim>
         static void
         renumber_mg_dofs(
@@ -2456,8 +2362,6 @@ namespace internal
           tasks.join_all();
         }
 
-
-
         template <int dim, int spacedim>
         static void
         renumber_mg_dofs(
@@ -2471,18 +2375,12 @@ namespace internal
         }
       };
 
-
-
       /* --------------------- class Sequential ---------------- */
-
-
 
       template <class DoFHandlerType>
       Sequential<DoFHandlerType>::Sequential(DoFHandlerType& dof_handler)
         : dof_handler(&dof_handler)
       {}
-
-
 
       template <class DoFHandlerType>
       NumberCache
@@ -2494,8 +2392,6 @@ namespace internal
         // return a sequential, complete index set
         return NumberCache(n_dofs);
       }
-
-
 
       template <class DoFHandlerType>
       std::vector<NumberCache>
@@ -2532,8 +2428,6 @@ namespace internal
         return number_caches;
       }
 
-
-
       template <class DoFHandlerType>
       NumberCache
       Sequential<DoFHandlerType>::renumber_dofs(
@@ -2554,8 +2448,6 @@ namespace internal
           *std::max_element(new_numbers.begin(), new_numbers.end()) + 1);
       }
 
-
-
       template <class DoFHandlerType>
       NumberCache
       Sequential<DoFHandlerType>::renumber_mg_dofs(
@@ -2569,17 +2461,13 @@ namespace internal
         return NumberCache(new_numbers.size());
       }
 
-
       /* --------------------- class ParallelShared ---------------- */
-
 
       template <class DoFHandlerType>
       ParallelShared<DoFHandlerType>::ParallelShared(
         DoFHandlerType& dof_handler)
         : dof_handler(&dof_handler)
       {}
-
-
 
       namespace
       {
@@ -2645,7 +2533,6 @@ namespace internal
 
           return subdomain_association;
         }
-
 
         /**
          * level subdomain association. Similar to the above function only
@@ -2713,8 +2600,6 @@ namespace internal
           return level_subdomain_association;
         }
       } // namespace
-
-
 
       template <class DoFHandlerType>
       NumberCache
@@ -2880,8 +2765,6 @@ namespace internal
           locally_owned_dofs_per_processor,
           this->dof_handler->get_triangulation().locally_owned_subdomain());
       }
-
-
 
       template <class DoFHandlerType>
       std::vector<NumberCache>
@@ -3064,8 +2947,6 @@ namespace internal
         return number_caches;
       }
 
-
-
       template <class DoFHandlerType>
       NumberCache
       ParallelShared<DoFHandlerType>::renumber_dofs(
@@ -3228,8 +3109,6 @@ namespace internal
 #endif
       }
 
-
-
       template <class DoFHandlerType>
       NumberCache
       ParallelShared<DoFHandlerType>::renumber_mg_dofs(
@@ -3241,8 +3120,6 @@ namespace internal
 
         return NumberCache();
       }
-
-
 
       /* --------------------- class ParallelDistributed ---------------- */
 
@@ -3272,7 +3149,6 @@ namespace internal
           std::vector<typename dealii::internal::p4est::types<dim>::quadrant>
                                                        quadrants;
           std::vector<dealii::types::global_dof_index> dof_numbers_and_indices;
-
 
           /**
            * Write the data of this object to a stream for the purpose of
@@ -3326,7 +3202,6 @@ namespace internal
 
           BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-
           /**
            * Pack the data that corresponds to this object into a buffer in
            * the form of a vector of chars and return it.
@@ -3362,7 +3237,6 @@ namespace internal
             return buffer;
           }
 
-
           /**
            * Given a buffer in the form of an array of chars, unpack it and
            * restore the current object to the state that it was when
@@ -3394,8 +3268,6 @@ namespace internal
           }
         };
 
-
-
         template <int dim, int spacedim>
         void
         get_mg_dofindices_recursively(
@@ -3414,7 +3286,6 @@ namespace internal
               Assert(dealii_cell->level_subdomain_id()
                        == tria.locally_owned_subdomain(),
                      ExcInternalError());
-
 
               std::vector<dealii::types::global_dof_index> local_dof_indices(
                 dealii_cell->get_fe().dofs_per_cell);
@@ -3449,7 +3320,6 @@ namespace internal
               cell_data_transfer_buffer);
         }
 
-
         template <int dim, int spacedim>
         void
         find_marked_mg_ghost_cells_recursively(
@@ -3470,7 +3340,6 @@ namespace internal
                 p4est_child[GeometryInfo<dim>::max_children_per_cell];
               internal::p4est::init_quadrant_children<dim>(p4est_cell,
                                                            p4est_child);
-
 
               for(unsigned int c = 0;
                   c < GeometryInfo<dim>::max_children_per_cell;
@@ -3493,7 +3362,6 @@ namespace internal
                 .quadrants.push_back(p4est_cell);
             }
         }
-
 
         template <int dim, int spacedim>
         void
@@ -3563,8 +3431,6 @@ namespace internal
             set_mg_dofindices_recursively<dim, spacedim>(
               tria, p4est_child[c], dealii_cell->child(c), quadrant, dofs);
         }
-
-
 
         template <int dim, int spacedim, class DoFHandlerType>
         void
@@ -3776,8 +3642,6 @@ namespace internal
             }
         }
 
-
-
         template <int spacedim>
         void
         communicate_mg_ghost_cells(
@@ -3789,8 +3653,6 @@ namespace internal
           Assert(false, ExcNotImplemented());
         }
 
-
-
         template <int spacedim>
         void
         communicate_mg_ghost_cells(
@@ -3801,8 +3663,6 @@ namespace internal
         {
           Assert(false, ExcNotImplemented());
         }
-
-
 
         /**
          * A function that communicates the DoF indices from that subset of
@@ -3833,8 +3693,6 @@ namespace internal
           Assert(false, ExcNotImplemented());
         }
 
-
-
         template <int spacedim>
         void
         communicate_dof_indices_on_marked_cells(
@@ -3845,8 +3703,6 @@ namespace internal
         {
           Assert(false, ExcNotImplemented());
         }
-
-
 
         template <class DoFHandlerType>
         void
@@ -3986,7 +3842,6 @@ namespace internal
           // our internal data structures are consistent
           update_all_active_cell_dof_indices_caches(dof_handler);
 
-
           // have a barrier so that sends between two calls to this
           // function are not mixed up.
           //
@@ -4017,21 +3872,15 @@ namespace internal
 #  endif
         }
 
-
-
       } // namespace
 
 #endif // DEAL_II_WITH_P4EST
-
-
 
       template <class DoFHandlerType>
       ParallelDistributed<DoFHandlerType>::ParallelDistributed(
         DoFHandlerType& dof_handler)
         : dof_handler(&dof_handler)
       {}
-
-
 
       template <class DoFHandlerType>
       NumberCache
@@ -4052,7 +3901,6 @@ namespace internal
 
         const unsigned int n_cpus
           = Utilities::MPI::n_mpi_processes(triangulation->get_communicator());
-
 
         /*
            The following algorithm has a number of stages that are all documented
@@ -4106,7 +3954,6 @@ namespace internal
                     renumbering[local_dof_index] = numbers::invalid_dof_index;
               }
         }
-
 
         // make the remaining indices consecutive
         dealii::types::global_dof_index n_locally_owned_dofs = 0;
@@ -4220,8 +4067,6 @@ namespace internal
             else if(cell->is_ghost())
               cell->set_user_flag();
 
-
-
           // Send and receive cells. After this, only the local cells
           // are marked, that received new data. This has to be
           // communicated in a second communication step.
@@ -4290,8 +4135,6 @@ namespace internal
 #endif   // DEAL_II_WITH_P4EST
       }
 
-
-
       template <class DoFHandlerType>
       std::vector<NumberCache>
       ParallelDistributed<DoFHandlerType>::distribute_mg_dofs() const
@@ -4316,7 +4159,6 @@ namespace internal
           ExcMessage("Multigrid DoFs can only be distributed on a parallel "
                      "Triangulation if the flag construct_multigrid_hierarchy "
                      "is set in the constructor."));
-
 
         const unsigned int n_cpus
           = Utilities::MPI::n_mpi_processes(triangulation->get_communicator());
@@ -4475,7 +4317,6 @@ namespace internal
             number_caches.emplace_back(level_number_cache);
           }
 
-
         //* communicate ghost DoFs
         // We mark all ghost cells by setting the user_flag and then request
         // these cells from the corresponding owners. As this information
@@ -4545,8 +4386,6 @@ namespace internal
           triangulation->load_user_flags(user_flags);
         }
 
-
-
 #  ifdef DEBUG
         // check that we are really done
         {
@@ -4576,7 +4415,6 @@ namespace internal
 #endif // DEAL_II_WITH_P4EST
       }
 
-
       template <class DoFHandlerType>
       NumberCache
       ParallelDistributed<DoFHandlerType>::renumber_dofs(
@@ -4599,7 +4437,6 @@ namespace internal
             const_cast<dealii::Triangulation<dim, spacedim>*>(
               &dof_handler->get_triangulation())));
         Assert(triangulation != nullptr, ExcInternalError());
-
 
         // First figure out the new set of locally owned DoF indices.
         // If we own no DoFs, we still need to go through this function,
@@ -4658,7 +4495,6 @@ namespace internal
               }
         }
 
-
         // renumber. Skip when there is nothing to do because we own no DoF.
         if(dof_handler->locally_owned_dofs().n_elements() > 0)
           Implementation::renumber_dofs(new_numbers,
@@ -4685,7 +4521,6 @@ namespace internal
           const std::map<unsigned int, std::set<dealii::types::subdomain_id>>
             vertices_with_ghost_neighbors
             = triangulation->compute_vertices_with_ghost_neighbors();
-
 
           // Send and receive cells. After this, only the local cells
           // are marked, that received new data. This has to be
@@ -4809,8 +4644,6 @@ namespace internal
 #endif
       }
 
-
-
       template <class DoFHandlerType>
       NumberCache
       ParallelDistributed<DoFHandlerType>::renumber_mg_dofs(
@@ -4921,10 +4754,7 @@ namespace internal
   }   // namespace DoFHandlerImplementation
 } // namespace internal
 
-
-
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "dof_handler_policy.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

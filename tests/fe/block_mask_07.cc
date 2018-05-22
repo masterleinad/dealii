@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the BlockMask class
 //
 // here: BlockMask::first_selected_block
 
-
 #include "../tests.h"
 #include <deal.II/fe/block_mask.h>
-
-
 
 void
 test()
@@ -63,7 +58,6 @@ test()
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main()

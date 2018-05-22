@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // See documentation of ThetaTimestepping for documentation of this example
 
 #include <deal.II/base/logstream.h>
@@ -28,7 +27,6 @@
 using namespace dealii;
 using namespace Algorithms;
 
-
 class Explicit : public OperatorBase
 {
 public:
@@ -40,7 +38,6 @@ private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
   FullMatrix<double>                               m;
 };
-
 
 class Implicit : public OperatorBase
 {
@@ -83,12 +80,10 @@ main()
   solver(outdata, indata);
 }
 
-
 Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
-
 
 void
 Explicit::operator()(AnyData& out, const AnyData& in)
@@ -106,12 +101,10 @@ Explicit::operator()(AnyData& out, const AnyData& in)
           *in.read_ptr<Vector<double>>("Previous iterate"));
 }
 
-
 Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
-
 
 void
 Implicit::operator()(AnyData& out, const AnyData& in)

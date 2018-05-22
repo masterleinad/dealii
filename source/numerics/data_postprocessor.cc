@@ -17,8 +17,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 // -------------------------- DataPostprocessor ---------------------------
 
 template <int dim>
@@ -30,8 +28,6 @@ DataPostprocessor<dim>::evaluate_scalar_field(
   AssertThrow(false, ExcPureFunctionCalled());
 }
 
-
-
 template <int dim>
 void
 DataPostprocessor<dim>::evaluate_vector_field(
@@ -40,8 +36,6 @@ DataPostprocessor<dim>::evaluate_vector_field(
 {
   AssertThrow(false, ExcPureFunctionCalled());
 }
-
-
 
 template <int dim>
 std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -53,7 +47,6 @@ DataPostprocessor<dim>::get_data_component_interpretation() const
     get_names().size(), DataComponentInterpretation::component_is_scalar);
 }
 
-
 // -------------------------- DataPostprocessorScalar ---------------------------
 
 template <int dim>
@@ -63,16 +56,12 @@ DataPostprocessorScalar<dim>::DataPostprocessorScalar(
   : name(name), update_flags(update_flags)
 {}
 
-
-
 template <int dim>
 std::vector<std::string>
 DataPostprocessorScalar<dim>::get_names() const
 {
   return std::vector<std::string>(1, name);
 }
-
-
 
 template <int dim>
 std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -82,15 +71,12 @@ DataPostprocessorScalar<dim>::get_data_component_interpretation() const
     1, DataComponentInterpretation::component_is_scalar);
 }
 
-
 template <int dim>
 UpdateFlags
 DataPostprocessorScalar<dim>::get_needed_update_flags() const
 {
   return update_flags;
 }
-
-
 
 // -------------------------- DataPostprocessorVector ---------------------------
 
@@ -101,16 +87,12 @@ DataPostprocessorVector<dim>::DataPostprocessorVector(
   : name(name), update_flags(update_flags)
 {}
 
-
-
 template <int dim>
 std::vector<std::string>
 DataPostprocessorVector<dim>::get_names() const
 {
   return std::vector<std::string>(dim, name);
 }
-
-
 
 template <int dim>
 std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -120,15 +102,12 @@ DataPostprocessorVector<dim>::get_data_component_interpretation() const
     dim, DataComponentInterpretation::component_is_part_of_vector);
 }
 
-
 template <int dim>
 UpdateFlags
 DataPostprocessorVector<dim>::get_needed_update_flags() const
 {
   return update_flags;
 }
-
-
 
 // -------------------------- DataPostprocessorTensor ---------------------------
 
@@ -138,8 +117,6 @@ DataPostprocessorTensor<dim>::DataPostprocessorTensor(
   const UpdateFlags  update_flags)
   : name(name), update_flags(update_flags)
 {}
-
-
 
 template <int dim>
 std::vector<std::string>
@@ -156,8 +133,6 @@ DataPostprocessorTensor<dim>::get_names() const
   return names;
 }
 
-
-
 template <int dim>
 std::vector<DataComponentInterpretation::DataComponentInterpretation>
 DataPostprocessorTensor<dim>::get_data_component_interpretation() const
@@ -166,7 +141,6 @@ DataPostprocessorTensor<dim>::get_data_component_interpretation() const
     dim * dim, DataComponentInterpretation::component_is_scalar);
 }
 
-
 template <int dim>
 UpdateFlags
 DataPostprocessorTensor<dim>::get_needed_update_flags() const
@@ -174,10 +148,7 @@ DataPostprocessorTensor<dim>::get_needed_update_flags() const
   return update_flags;
 }
 
-
-
 // explicit instantiation
 #include "data_postprocessor.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

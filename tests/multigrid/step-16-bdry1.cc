@@ -85,12 +85,10 @@ public:
        MeshWorker::IntegrationInfo<dim>& info2) const;
 };
 
-
 template <int dim>
 LaplaceMatrix<dim>::LaplaceMatrix()
   : MeshWorker::LocalIntegrator<dim>(true, false, false)
 {}
-
 
 template <int dim>
 void
@@ -100,7 +98,6 @@ LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
   AssertDimension(dinfo.n_matrices(), 1);
   Laplace::cell_matrix(dinfo.matrix(0, false).matrix, info.fe_values(0));
 }
-
 
 template <int dim>
 void
@@ -112,7 +109,6 @@ LaplaceMatrix<dim>::boundary(
   //  Laplace::nitsche_matrix(dinfo.matrix(0,false).matrix, info.fe_values(0),
   //          Laplace::compute_penalty(dinfo, dinfo, deg, deg));
 }
-
 
 template <int dim>
 void
@@ -172,7 +168,6 @@ private:
   MGConstrainedDoFs                   mg_constrained_dofs;
 };
 
-
 template <int dim>
 class Coefficient : public Function<dim>
 {
@@ -189,8 +184,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -200,8 +193,6 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   //  else
   return 1;
 }
-
-
 
 template <int dim>
 void
@@ -220,7 +211,6 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     values[i] = Coefficient<dim>::value(points[i]);
 }
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
   : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
@@ -229,7 +219,6 @@ LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     degree(degree),
     matrix_integrator()
 {}
-
 
 template <int dim>
 void
@@ -291,7 +280,6 @@ LaplaceProblem<dim>::setup_system()
     }
 }
 
-
 template <int dim>
 void
 LaplaceProblem<dim>::assemble_system()
@@ -345,7 +333,6 @@ LaplaceProblem<dim>::assemble_system()
         cell_matrix, cell_rhs, local_dof_indices, system_matrix, system_rhs);
     }
 }
-
 
 template <int dim>
 void
@@ -475,13 +462,11 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
                   cell_matrix(i, j) = 0;
                 }
 
-
           empty_constraints.distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_interface_in[cell->level()]);
         }
     }
 }
-
 
 template <int dim>
 void
@@ -531,7 +516,6 @@ LaplaceProblem<dim>::solve(bool use_mw)
           << " CG iterations needed to obtain convergence." << std::endl;
 }
 
-
 template <int dim>
 void
 LaplaceProblem<dim>::refine_grid(const std::string& reftype)
@@ -567,8 +551,6 @@ LaplaceProblem<dim>::refine_grid(const std::string& reftype)
     triangulation.execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -585,7 +567,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   std::ofstream output(filename.str().c_str());
   data_out.write_vtk(output);
 }
-
 
 template <int dim>
 void
@@ -606,7 +587,6 @@ LaplaceProblem<dim>::run()
         }
       else
         refine_grid("center");
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
@@ -631,7 +611,6 @@ LaplaceProblem<dim>::run()
       // output_results (cycle);
     }
 }
-
 
 int
 main()

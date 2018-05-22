@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // interpolation of constant function on the surface of a hyperxosphere
 
 #include "../tests.h"
@@ -39,7 +37,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim, int spacedim>
 void
@@ -73,8 +70,6 @@ test(std::string filename, unsigned int n)
           << "Linfty Norm of difference: " << real_one.linfty_norm()
           << std::endl;
 }
-
-
 
 int
 main()

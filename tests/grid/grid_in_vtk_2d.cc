@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // read a 2d file in the VTK format
 
 #include "../tests.h"
@@ -29,7 +28,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -50,7 +48,6 @@ filename_resolution()
 {
   check_file<2>(std::string(SOURCE_DIR "/grid_in_vtk_2d/mesh"), GridIn<2>::vtk);
 }
-
 
 int
 main()

@@ -16,8 +16,6 @@
 #ifndef dealii_hp_dof_handler_h
 #define dealii_hp_dof_handler_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/iterator_range.h>
@@ -77,8 +75,6 @@ namespace internal
     struct Implementation;
   }
 } // namespace internal
-
-
 
 namespace hp
 {
@@ -263,7 +259,6 @@ namespace hp
      * an invalid value.
      */
     static const unsigned int default_fe_index = numbers::invalid_unsigned_int;
-
 
     /**
      * Default Constructor.
@@ -597,7 +592,6 @@ namespace hp
 
     /*---------------------------------------*/
 
-
     /**
      * Return the global number of degrees of freedom. If the current object
      * handles all degrees of freedom itself (even if you may intend to solve
@@ -883,7 +877,6 @@ namespace hp
                       PolicyBase<dim, spacedim>>
       policy;
 
-
     /**
      * Setup policy and listeners based on the underlying Triangulation.
      */
@@ -1027,13 +1020,9 @@ namespace hp
       Implementation;
   };
 
-
-
 #ifndef DOXYGEN
 
-
   /* ----------------------- Inline functions ---------------------------------- */
-
 
   template <int dim, int spacedim>
   template <typename number>
@@ -1056,7 +1045,6 @@ namespace hp
   }
 }
 
-
 namespace internal
 {
   /**
@@ -1071,7 +1059,6 @@ namespace internal
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
                      PolicyBase<dim, spacedim>& policy);
 } // namespace internal
-
 
 namespace hp
 {
@@ -1115,8 +1102,6 @@ namespace hp
 
     ar& n_cells& policy_name;
   }
-
-
 
   template <int dim, int spacedim>
   template <class Archive>
@@ -1193,8 +1178,6 @@ namespace hp
     return number_cache.n_global_dofs;
   }
 
-
-
   template <int dim, int spacedim>
   inline types::global_dof_index
   DoFHandler<dim, spacedim>::n_dofs(const unsigned int) const
@@ -1203,16 +1186,12 @@ namespace hp
     return numbers::invalid_dof_index;
   }
 
-
-
   template <int dim, int spacedim>
   types::global_dof_index
   DoFHandler<dim, spacedim>::n_locally_owned_dofs() const
   {
     return number_cache.n_locally_owned_dofs;
   }
-
-
 
   template <int dim, int spacedim>
   const IndexSet&
@@ -1221,8 +1200,6 @@ namespace hp
     return number_cache.locally_owned_dofs;
   }
 
-
-
   template <int dim, int spacedim>
   const std::vector<types::global_dof_index>&
   DoFHandler<dim, spacedim>::n_locally_owned_dofs_per_processor() const
@@ -1230,16 +1207,12 @@ namespace hp
     return number_cache.n_locally_owned_dofs_per_processor;
   }
 
-
-
   template <int dim, int spacedim>
   const std::vector<IndexSet>&
   DoFHandler<dim, spacedim>::locally_owned_dofs_per_processor() const
   {
     return number_cache.locally_owned_dofs_per_processor;
   }
-
-
 
   template <int dim, int spacedim>
   const IndexSet&
@@ -1253,7 +1226,6 @@ namespace hp
     return mg_number_cache[0].locally_owned_dofs;
   }
 
-
   template <int dim, int spacedim>
   const std::vector<IndexSet>&
   DoFHandler<dim, spacedim>::locally_owned_mg_dofs_per_processor(
@@ -1266,8 +1238,6 @@ namespace hp
     return mg_number_cache[0].locally_owned_dofs_per_processor;
   }
 
-
-
   template <int dim, int spacedim>
   inline const hp::FECollection<dim, spacedim>&
   DoFHandler<dim, spacedim>::get_fe() const
@@ -1277,8 +1247,6 @@ namespace hp
                       "this DoFHandler"));
     return fe_collection;
   }
-
-
 
   template <int dim, int spacedim>
   inline const FiniteElement<dim, spacedim>&
@@ -1290,8 +1258,6 @@ namespace hp
     return fe_collection[number];
   }
 
-
-
   template <int dim, int spacedim>
   inline const hp::FECollection<dim, spacedim>&
   DoFHandler<dim, spacedim>::get_fe_collection() const
@@ -1301,8 +1267,6 @@ namespace hp
                       "this DoFHandler"));
     return fe_collection;
   }
-
-
 
   template <int dim, int spacedim>
   inline const Triangulation<dim, spacedim>&

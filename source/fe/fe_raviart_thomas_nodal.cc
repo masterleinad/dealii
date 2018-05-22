@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/table.h>
@@ -30,9 +29,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 FE_RaviartThomasNodal<dim>::FE_RaviartThomasNodal(const unsigned int deg)
@@ -101,8 +98,6 @@ FE_RaviartThomasNodal<dim>::FE_RaviartThomasNodal(const unsigned int deg)
       }
 }
 
-
-
 template <int dim>
 std::string
 FE_RaviartThomasNodal<dim>::get_name() const
@@ -124,7 +119,6 @@ FE_RaviartThomasNodal<dim>::get_name() const
   return namebuf.str();
 }
 
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_RaviartThomasNodal<dim>::clone() const
@@ -132,12 +126,9 @@ FE_RaviartThomasNodal<dim>::clone() const
   return std_cxx14::make_unique<FE_RaviartThomasNodal<dim>>(*this);
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary and internal functions
 //---------------------------------------------------------------------------
-
-
 
 template <int dim>
 void
@@ -210,8 +201,6 @@ FE_RaviartThomasNodal<dim>::initialize_support_points(const unsigned int deg)
   Assert(current == this->dofs_per_cell, ExcInternalError());
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_RaviartThomasNodal<dim>::get_dpo_vector(const unsigned int deg)
@@ -232,8 +221,6 @@ FE_RaviartThomasNodal<dim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <>
 std::vector<bool>
 FE_RaviartThomasNodal<1>::get_ria_vector(const unsigned int)
@@ -241,8 +228,6 @@ FE_RaviartThomasNodal<1>::get_ria_vector(const unsigned int)
   Assert(false, ExcImpossibleInDim(1));
   return std::vector<bool>();
 }
-
-
 
 template <int dim>
 std::vector<bool>
@@ -266,7 +251,6 @@ FE_RaviartThomasNodal<dim>::get_ria_vector(const unsigned int deg)
 
   return ret_val;
 }
-
 
 template <int dim>
 bool
@@ -295,8 +279,6 @@ FE_RaviartThomasNodal<dim>::has_support_on_face(
   // which is safe
   return true;
 }
-
-
 
 template <int dim>
 void
@@ -348,8 +330,6 @@ FE_RaviartThomasNodal<dim>::
   Assert(fbase == this->dofs_per_cell, ExcInternalError());
 }
 
-
-
 //TODO: There are tests that check that the following few functions don't produce assertion failures, but none that actually check whether they do the right thing. one example for such a test would be to project a function onto an hp space and make sure that the convergence order is correct with regard to the lowest used polynomial degree
 
 template <int dim>
@@ -358,7 +338,6 @@ FE_RaviartThomasNodal<dim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -380,8 +359,6 @@ FE_RaviartThomasNodal<dim>::hp_vertex_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -446,7 +423,6 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
     }
 }
 
-
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
@@ -493,7 +469,6 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
     }
 }
 
-
 template <int dim>
 FiniteElementDomination::Domination
 FE_RaviartThomasNodal<dim>::compare_for_face_domination(
@@ -529,8 +504,6 @@ FE_RaviartThomasNodal<dim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <>
 void
 FE_RaviartThomasNodal<1>::get_face_interpolation_matrix(
@@ -539,7 +512,6 @@ FE_RaviartThomasNodal<1>::get_face_interpolation_matrix(
 {
   Assert(false, ExcImpossibleInDim(1));
 }
-
 
 template <>
 void
@@ -550,8 +522,6 @@ FE_RaviartThomasNodal<1>::get_subface_interpolation_matrix(
 {
   Assert(false, ExcImpossibleInDim(1));
 }
-
-
 
 template <int dim>
 void
@@ -655,7 +625,6 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
              ExcInternalError());
     }
 }
-
 
 template <int dim>
 void
@@ -762,10 +731,7 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
     }
 }
 
-
-
 // explicit instantiations
 #include "fe_raviart_thomas_nodal.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

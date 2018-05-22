@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // read a 3d file in the VTK format
 
 #include "../tests.h"
@@ -29,7 +28,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -63,7 +61,6 @@ filename_resolution()
   check_file<3>(std::string(SOURCE_DIR "/grid_in_vtk_3d_04.vtk"),
                 GridIn<3>::vtk);
 }
-
 
 int
 main()

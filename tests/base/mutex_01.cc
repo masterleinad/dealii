@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that mutexes work correctly in MT context
 
 #include "../tests.h"
@@ -21,9 +20,7 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 Threads::Mutex mutex;
-
 
 void
 test()
@@ -34,7 +31,6 @@ test()
   mutex.acquire();
   deallog << "2" << std::endl;
 }
-
 
 int
 main()

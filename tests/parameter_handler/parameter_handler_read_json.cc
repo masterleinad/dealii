@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ParameterHandler::parse_input_from_xml
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

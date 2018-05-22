@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a BSpline surface, and test axis projection.
 
 #include "../tests.h"
@@ -51,7 +50,6 @@ main()
   TopoDS_Edge edge2 = interpolation_curve(pts);
 
   TopoDS_Face face = BRepFill::Face(edge1, edge2);
-
 
   DirectionalProjectionBoundary<1, 3> manifold(face, Point<3>(0, 1, 0));
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_faces_03 but using a Lagrange polynomial based on
 // Gauss points rather than Gauss-Lobatto points where the mass matrix is
 // diagonal
@@ -29,7 +27,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

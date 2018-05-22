@@ -16,7 +16,6 @@
 #ifndef dealii_function_h
 #define dealii_function_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function_time.h>
@@ -29,7 +28,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename number>
 class Vector;
@@ -367,7 +365,6 @@ public:
     std::vector<std::vector<SymmetricTensor<2, dim, RangeNumberType>>>& values)
     const;
 
-
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.
    * This is not exact (but will usually be close) because calculating the
@@ -376,7 +373,6 @@ public:
   std::size_t
   memory_consumption() const;
 };
-
 
 namespace Functions
 {
@@ -464,8 +460,6 @@ namespace Functions
     std::vector<RangeNumberType> function_value_vector;
   };
 
-
-
   /**
    * Provide a function which always returns zero. Obviously, also the derivatives
    * of this function are zero. Also, it returns zero on all components in case
@@ -508,8 +502,6 @@ using ConstantFunction DEAL_II_DEPRECATED
 template <int dim, typename RangeNumberType = double>
 using ZeroFunction DEAL_II_DEPRECATED
   = Functions::ZeroFunction<dim, RangeNumberType>;
-
-
 
 /**
  * This is a constant vector-valued function, in which one or more components
@@ -554,7 +546,6 @@ public:
    */
   ComponentSelectFunction(const std::pair<unsigned int, unsigned int>& selected,
                           const unsigned int n_components);
-
 
   /**
    * Substitute function value with value of a <tt>ConstantFunction@<dim,
@@ -605,8 +596,6 @@ protected:
    */
   const std::pair<unsigned int, unsigned int> selected_components;
 };
-
-
 
 /**
  * This class provides a way to convert a scalar function of the kind
@@ -714,8 +703,6 @@ private:
   const std::function<RangeNumberType(const Point<dim>&)> function_object;
 };
 
-
-
 /**
  * This class is similar to the ScalarFunctionFromFunctionObject class in that
  * it allows for the easy conversion of a function object to something that
@@ -799,7 +786,6 @@ private:
    */
   const unsigned int selected_component;
 };
-
 
 /**
  * This class is built as a means of translating the <code>Tensor<1,dim,
@@ -909,7 +895,6 @@ private:
   const unsigned int selected_component;
 };
 
-
 #ifndef DOXYGEN
 // icc 2018 complains about an undefined reference
 // if we put this in the templates.h file
@@ -919,7 +904,6 @@ private:
 template <int dim, typename RangeNumberType>
 inline Function<dim, RangeNumberType>::~Function() = default;
 #endif
-
 
 DEAL_II_NAMESPACE_CLOSE
 

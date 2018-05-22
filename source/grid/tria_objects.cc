@@ -22,8 +22,6 @@
 #include <algorithm>
 #include <functional>
 
-
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -131,7 +129,6 @@ namespace internal
         }
     }
 
-
     template <>
     template <int dim, int spacedim>
     typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator
@@ -158,7 +155,6 @@ namespace internal
       return typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator(
         &tria, level, pos);
     }
-
 
     void
     TriaObjectsHex::reserve_space(const unsigned int new_hexes)
@@ -225,7 +221,6 @@ namespace internal
         }
       next_free_single = next_free_pair = 0;
     }
-
 
     void
     TriaObjectsQuad3D::reserve_space(const unsigned int new_quads_in_pairs,
@@ -297,7 +292,6 @@ namespace internal
         }
     }
 
-
     template <>
     void
     TriaObjects<TriaObject<1>>::monitor_memory(const unsigned int) const
@@ -315,7 +309,6 @@ namespace internal
       Assert(cells.size() == user_data.size(),
              ExcMemoryInexact(cells.size(), user_data.size()));
     }
-
 
     template <>
     void
@@ -336,7 +329,6 @@ namespace internal
       Assert(cells.size() == user_data.size(),
              ExcMemoryInexact(cells.size(), user_data.size()));
     }
-
 
     void
     TriaObjectsHex::monitor_memory(const unsigned int) const
@@ -367,7 +359,6 @@ namespace internal
                               face_rotations.size()));
     }
 
-
     void
     TriaObjectsQuad3D::monitor_memory(const unsigned int) const
     {
@@ -380,7 +371,6 @@ namespace internal
                               line_orientations.size()));
       TriaObjects<TriaObject<2>>::monitor_memory(3);
     }
-
 
     template <typename G>
     void
@@ -397,7 +387,6 @@ namespace internal
       user_data_type = data_unknown;
     }
 
-
     void
     TriaObjectsHex::clear()
     {
@@ -407,14 +396,12 @@ namespace internal
       face_rotations.clear();
     }
 
-
     void
     TriaObjectsQuad3D::clear()
     {
       TriaObjects<TriaObject<2>>::clear();
       line_orientations.clear();
     }
-
 
     template <typename G>
     std::size_t
@@ -430,7 +417,6 @@ namespace internal
               + user_data.capacity() * sizeof(UserData) + sizeof(user_data));
     }
 
-
     std::size_t
     TriaObjectsHex::memory_consumption() const
     {
@@ -440,15 +426,12 @@ namespace internal
               + TriaObjects<TriaObject<3>>::memory_consumption());
     }
 
-
     std::size_t
     TriaObjectsQuad3D::memory_consumption() const
     {
       return (MemoryConsumption::memory_consumption(line_orientations)
               + this->TriaObjects<TriaObject<2>>::memory_consumption());
     }
-
-
 
     // explicit instantiations
     template class TriaObjects<TriaObject<1>>;

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This file implements a simple test procedure for the algorithm
 // which constructs the constraint matrices for FE_Q<3> elements
 // of arbitrary order. After interpolating a polynomial with the
@@ -49,7 +47,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
-
 template <int dim>
 class TestFunction : public Function<dim>
 {
@@ -64,7 +61,6 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
-
 template <int dim>
 TestFunction<dim>::TestFunction(const unsigned int p_order) : p_order(p_order)
 {
@@ -78,7 +74,6 @@ TestFunction<dim>::TestFunction(const unsigned int p_order) : p_order(p_order)
     }
 }
 
-
 template <int dim>
 double
 TestFunction<dim>::value(const Point<dim>& p,
@@ -89,7 +84,6 @@ TestFunction<dim>::value(const Point<dim>& p,
     val *= base[i].value(p(i));
   return val;
 }
-
 
 template <int dim>
 class TestFEQConstraints
@@ -126,7 +120,6 @@ TestFEQConstraints<dim>::TestFEQConstraints(unsigned int p_order,
     dof_handler(triangulation)
 {}
 
-
 // Actually this function creates with pseudo-random numbers errors,
 // which are then used to refine the grid. This should be a tough test for
 // the hanging nodes.
@@ -144,7 +137,6 @@ TestFEQConstraints<dim>::refine_grid_random()
     triangulation, estimated_error_per_cell, 0.3, 0.03);
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 void
@@ -169,7 +161,6 @@ TestFEQConstraints<dim>::make_grid_and_dofs()
                                           hanging_node_constraints);
   hanging_node_constraints.close();
 }
-
 
 template <int dim>
 void
@@ -228,7 +219,6 @@ TestFEQConstraints<dim>::test()
     deallog << "Error !" << std::endl;
 }
 
-
 template <int dim>
 void
 TestFEQConstraints<dim>::run()
@@ -236,7 +226,6 @@ TestFEQConstraints<dim>::run()
   make_grid_and_dofs();
   test();
 }
-
 
 int
 main()

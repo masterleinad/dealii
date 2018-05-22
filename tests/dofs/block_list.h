@@ -32,7 +32,6 @@
 
 using namespace dealii;
 
-
 void
 print_patches(const SparsityPattern& bl)
 {
@@ -50,7 +49,6 @@ print_patches(const SparsityPattern& bl)
       deallog << std::endl;
     }
 }
-
 
 template <class TR>
 void

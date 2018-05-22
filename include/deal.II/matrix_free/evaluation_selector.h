@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_evaluation_selector_h
 #define dealii_matrix_free_evaluation_selector_h
 
@@ -97,7 +96,6 @@ namespace
                                                     false);
     }
   };
-
 
   /**
    * This class implements the actual choice of the template specialization.
@@ -379,8 +377,6 @@ namespace
     }
   };
 
-
-
   /**
    * This is the entry point for choosing the correct runtime parameters
    * for the 'evaluate' function.
@@ -412,8 +408,6 @@ namespace
                                                  evaluate_hessians);
   }
 
-
-
   /**
    * This is the entry point for choosing the correct runtime parameters
    * for the 'integrate' function.
@@ -442,7 +436,6 @@ namespace
   }
 } // namespace
 #endif
-
 
 /**
  * This class chooses an appropriate evaluation strategy based on the
@@ -682,8 +675,6 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
     AssertThrow(false, ExcNotImplemented());
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -809,8 +800,6 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::integrate(
     AssertThrow(false, ExcNotImplemented());
 }
 
-
-
 template <int dim, int dummy, int n_components, typename Number>
 inline void
 SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate(
@@ -889,8 +878,6 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate(
                                                            evaluate_gradients,
                                                            evaluate_hessians);
 }
-
-
 
 template <int dim, int dummy, int n_components, typename Number>
 inline void

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test VectorFunctionTensorFunction
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/tensor_function.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 class X : public TensorFunction<1, dim>
@@ -32,7 +30,6 @@ public:
     return p;
   }
 };
-
 
 template <int dim>
 void
@@ -66,8 +63,6 @@ check1()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

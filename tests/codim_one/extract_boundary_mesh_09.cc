@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // A simplified version of the _08 test that uses fewer cells
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 void cylinder(Triangulation<3>& tria,
               const double      radius      = 1,
@@ -78,7 +75,6 @@ void cylinder(Triangulation<3>& tria,
                             SubCellData()); // no boundary information
 }
 
-
 void
 test()
 {
@@ -97,7 +93,6 @@ test()
   deallog << triangulation_surface.n_used_vertices() << std::endl;
   deallog << triangulation_surface.n_active_cells() << std::endl;
 }
-
 
 int
 main()

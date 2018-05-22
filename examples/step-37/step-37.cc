@@ -18,7 +18,6 @@
  * 2009-2012, updated to MPI version with parallel vectors in 2016
  */
 
-
 // First include the necessary files from the deal.II library.
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
@@ -58,11 +57,9 @@
 #include <fstream>
 #include <iostream>
 
-
 namespace Step37
 {
   using namespace dealii;
-
 
   // To be efficient, the operations performed in the matrix-free
   // implementation require knowledge of loop lengths at compile time, which
@@ -75,7 +72,6 @@ namespace Step37
   // and choose dimension 3 as standard.
   const unsigned int degree_finite_element = 2;
   const unsigned int dimension             = 3;
-
 
   // @sect3{Equation data}
 
@@ -105,8 +101,6 @@ namespace Step37
                std::vector<double>&           values,
                const unsigned int             component = 0) const override;
   };
-
-
 
   // This is the new function mentioned above: Evaluate the coefficient for
   // abstract type @p number. It might be just a usual double, but it can also
@@ -138,8 +132,6 @@ namespace Step37
     return 1. / (0.05 + 2. * p.square());
   }
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>&  p,
@@ -147,8 +139,6 @@ namespace Step37
   {
     return value<double>(p, component);
   }
-
-
 
   template <int dim>
   void
@@ -164,8 +154,6 @@ namespace Step37
     for(unsigned int i = 0; i < n_points; ++i)
       values[i] = value<double>(points[i], component);
   }
-
-
 
   // @sect3{Matrix-free implementation}
 
@@ -283,8 +271,6 @@ namespace Step37
     Table<2, VectorizedArray<number>> coefficient;
   };
 
-
-
   // This is the constructor of the @p LaplaceOperator class. All it does is
   // to call the default constructor of the base class
   // MatrixFreeOperators::Base, which in turn is based on the Subscriptor
@@ -296,8 +282,6 @@ namespace Step37
                                 LinearAlgebra::distributed::Vector<number>>()
   {}
 
-
-
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::clear()
@@ -306,8 +290,6 @@ namespace Step37
     MatrixFreeOperators::Base<dim, LinearAlgebra::distributed::Vector<number>>::
       clear();
   }
-
-
 
   // @sect4{Computation of coefficient}
 
@@ -333,8 +315,6 @@ namespace Step37
             = coefficient_function.value(phi.quadrature_point(q));
       }
   }
-
-
 
   // @sect4{Local evaluation of Laplace operator}
 
@@ -452,8 +432,6 @@ namespace Step37
       }
   }
 
-
-
   // This function implements the loop over all cells for the
   // Base::apply_add() interface. This is done with the @p cell_loop of the
   // MatrixFree class, which takes the operator() of this class with arguments
@@ -537,8 +515,6 @@ namespace Step37
     this->data->cell_loop(&LaplaceOperator::local_apply, this, dst, src);
   }
 
-
-
   // The following function implements the computation of the diagonal of the
   // operator. Computing matrix entries of a matrix-free operator evaluation
   // turns out to be more complicated than evaluating the
@@ -598,8 +574,6 @@ namespace Step37
           = 1. / inverse_diagonal.local_element(i);
       }
   }
-
-
 
   // In the local compute loop, we compute the diagonal by a loop over all
   // columns in the local matrix and putting the entry 1 in the <i>i</i>th
@@ -684,8 +658,6 @@ namespace Step37
       }
   }
 
-
-
   // @sect3{LaplaceProblem class}
 
   // This class is based on the one in step-16. However, we replaced the
@@ -751,8 +723,6 @@ namespace Step37
     ConditionalOStream time_details;
   };
 
-
-
   // When we initialize the finite element, we of course have to use the
   // degree specified at the top of the file as well (otherwise, an exception
   // will be thrown at some point, since the computational kernel defined in
@@ -786,8 +756,6 @@ namespace Step37
                    false
                      && Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
   {}
-
-
 
   // @sect4{LaplaceProblem::setup_system}
 
@@ -923,8 +891,6 @@ namespace Step37
                  << "s/" << time.wall_time() << "s" << std::endl;
   }
 
-
-
   // @sect4{LaplaceProblem::assemble_rhs}
 
   // The assemble function is very simple since all we have to do is to
@@ -960,8 +926,6 @@ namespace Step37
     time_details << "Assemble right hand side   (CPU/wall) " << time.cpu_time()
                  << "s/" << time.wall_time() << "s" << std::endl;
   }
-
-
 
   // @sect4{LaplaceProblem::solve}
 
@@ -1136,8 +1100,6 @@ namespace Step37
           << time.wall_time() << "s\n";
   }
 
-
-
   // @sect4{LaplaceProblem::output_results}
 
   // Here is the data output, which is a simplified version of step-5. We use
@@ -1182,8 +1144,6 @@ namespace Step37
       }
   }
 
-
-
   // @sect4{LaplaceProblem::run}
 
   // The function that runs the program is very similar to the one in
@@ -1226,8 +1186,6 @@ namespace Step37
       };
   }
 } // namespace Step37
-
-
 
 // @sect3{The <code>main</code> function}
 

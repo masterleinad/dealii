@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the umfpack sparse direct solver on a mass matrix
 // test of the transpose as well
 
@@ -38,7 +37,6 @@
 
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -103,7 +101,6 @@ test(bool transpose = false)
       Assert(x.l2_norm() / solution.l2_norm() < 1e-8, ExcInternalError());
     }
 }
-
 
 int
 main()

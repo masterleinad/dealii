@@ -27,8 +27,6 @@
 // adequately refined DataOutFaces produces the output for each
 // subdomain.
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/generic_linear_algebra.h>
 
@@ -48,8 +46,6 @@
 #include <deal.II/distributed/grid_refinement.h>
 #include <deal.II/distributed/tria.h>
 #include <deal.II/numerics/data_out_faces.h>
-
-
 
 int
 main(int argc, char* argv[])

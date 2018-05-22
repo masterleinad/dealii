@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as rt_bubbles_10, but we check gradients instead of values
 
 #include "../tests.h"
@@ -34,8 +33,6 @@
 
 #include <string>
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -77,8 +74,6 @@ test(const unsigned int degree)
         }
     }
 }
-
-
 
 int
 main()

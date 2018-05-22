@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // read a file in the MSH format used by the GMSH program. this
 // particular mesh has type-15 cells (nodes) with more than one
 // associated vertex. we failed to read the vertices
@@ -31,7 +30,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -55,7 +53,6 @@ filename_resolution()
 {
   check_file<2>(std::string(SOURCE_DIR "/grid_in_msh_03/mesh"), GridIn<2>::msh);
 }
-
 
 int
 main()

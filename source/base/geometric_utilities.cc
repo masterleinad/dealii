@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/geometric_utilities.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace GeometricUtilities
 {
@@ -36,7 +33,6 @@ namespace GeometricUtilities
     DeclException1(SphericalPolar,
                    double,
                    << "The polar angle <" << arg1 << "> is not in [0,Pi].");
-
 
     template <int dim>
     std::array<double, dim>

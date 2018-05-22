@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check points and weights for Gauss-Lobatto quadrature formula
 
 #include "../tests.h"
 
 #include <deal.II/base/quadrature_lib.h>
-
 
 int
 main()

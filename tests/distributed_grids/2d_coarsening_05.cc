@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Pretty much exactly like coarsening_02, except that we go to around 50,000
 // cells. this is a similar case to coarsening_03 (where we start with a
 // coarse grid of 30,000 cells, however) and that takes a ton of time at the
@@ -32,8 +30,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -49,7 +45,6 @@ test(std::ostream& /*out*/)
   tr2.refine_global(1);
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
-
 
   while(tr.n_active_cells() < 50000)
     {
@@ -91,7 +86,6 @@ test(std::ostream& /*out*/)
             intergrid_map[cell]->set_coarsen_flag();
           }
 
-
       tr.execute_coarsening_and_refinement();
       tr2.execute_coarsening_and_refinement();
 
@@ -101,7 +95,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

@@ -69,7 +69,6 @@ template <typename Range  = Vector<double>,
 LinearOperator<Range, Domain, Payload>
 null_operator(const LinearOperator<Range, Domain, Payload>&);
 
-
 /**
  * A class to store the abstract concept of a linear operator.
  *
@@ -347,7 +346,6 @@ public:
   //@}
 };
 
-
 /**
  * @name Vector space operations
  */
@@ -411,7 +409,6 @@ operator+(const LinearOperator<Range, Domain, Payload>& first_op,
     }
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -440,7 +437,6 @@ operator-(const LinearOperator<Range, Domain, Payload>& first_op,
       return first_op + (-1. * second_op);
     }
 }
-
 
 /**
  * @relatesalso LinearOperator
@@ -510,7 +506,6 @@ operator*(typename Range::value_type                    number,
     }
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -540,7 +535,6 @@ operator*(const LinearOperator<Range, Domain, Payload>& op,
 }
 
 //@}
-
 
 /**
  * @name Composition and manipulation of a LinearOperator
@@ -649,7 +643,6 @@ transpose_operator(const LinearOperator<Range, Domain, Payload>& op)
   return return_op;
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -721,7 +714,6 @@ inverse_operator(const LinearOperator<Range, Domain, Payload>& op,
 
 //@}
 
-
 /**
  * @name Creation of a LinearOperator
  */
@@ -760,7 +752,6 @@ identity_operator(const std::function<void(Range&, bool)>& reinit_vector)
   return return_op;
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -782,7 +773,6 @@ identity_operator(const LinearOperator<Range, Domain, Payload>& op)
 
   return return_op;
 }
-
 
 /**
  * @relatesalso LinearOperator
@@ -814,7 +804,6 @@ null_operator(const LinearOperator<Range, Domain, Payload>& op)
 
   return return_op;
 }
-
 
 /**
  * @relatesalso LinearOperator
@@ -859,7 +848,6 @@ mean_value_filter(const std::function<void(Range&, bool)>& reinit_vector)
   return return_op;
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -881,7 +869,6 @@ mean_value_filter(const LinearOperator<Range, Domain, Payload>& op)
 
   return return_op;
 }
-
 
 namespace internal
 {
@@ -943,7 +930,6 @@ namespace internal
       }
     };
 
-
     /**
      * A dummy class for LinearOperators that do not require any extensions to
      * facilitate the operations of the matrix.
@@ -970,7 +956,6 @@ namespace internal
       EmptyPayload(const Args&...)
       {}
 
-
       /**
        * Return a payload configured for identity operations
        */
@@ -979,7 +964,6 @@ namespace internal
       {
         return *this;
       }
-
 
       /**
        * Return a payload configured for null operations
@@ -990,7 +974,6 @@ namespace internal
         return *this;
       }
 
-
       /**
        * Return a payload configured for transpose operations
        */
@@ -999,7 +982,6 @@ namespace internal
       {
         return *this;
       }
-
 
       /**
        * Return a payload configured for inverse operations
@@ -1034,7 +1016,6 @@ namespace internal
   } // namespace LinearOperatorImplementation
 } /* namespace internal */
 
-
 namespace
 {
   // A trait class that determines whether type T provides public
@@ -1059,7 +1040,6 @@ namespace
     typedef decltype(test<T>(nullptr, nullptr)) type;
   };
 
-
   // A helper function to apply a given vmult, or Tvmult to a vector with
   // intermediate storage
   template <typename Function, typename Range, typename Domain>
@@ -1081,7 +1061,6 @@ namespace
     else
       v = *i;
   }
-
 
   // A helper class to add a reduced matrix interface to a LinearOperator
   // (typically provided by Preconditioner classes)
@@ -1145,7 +1124,6 @@ namespace
     }
   };
 
-
   // A helper class to add the full matrix interface to a LinearOperator
   template <typename Range, typename Domain, typename Payload>
   class MatrixInterfaceWithVmultAdd
@@ -1195,7 +1173,6 @@ namespace
   };
 
 } /* namespace */
-
 
 /**
  * @relatesalso LinearOperator
@@ -1263,7 +1240,6 @@ linear_operator(const Matrix& matrix)
                                                                  matrix);
 }
 
-
 /**
  * @relatesalso LinearOperator
  *
@@ -1318,8 +1294,6 @@ linear_operator(const OperatorExemplar& operator_exemplar, const Matrix& matrix)
   return return_op;
 }
 
-
-
 /**
  * @relatesalso LinearOperator
  *
@@ -1355,9 +1329,7 @@ linear_operator(const LinearOperator<Range, Domain, Payload>& operator_exemplar,
   return return_op;
 }
 
-
 //@}
-
 
 DEAL_II_NAMESPACE_CLOSE
 

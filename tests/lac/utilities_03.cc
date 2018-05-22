@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Chebyshev filter on Diagonal matrix with equidistance eigenvalues in (-1,1).
 // Example is taken from Section 2.2. in
 // Pieper et al, Journal of Computational Physics 325 (2016), 226-243
@@ -62,7 +61,6 @@ x * Cheb2(3,L(ev)) / Cheb2(3,L(aL));
 
 //#define EXTRA_OUTPUT
 
-
 #include "../tests.h"
 #include <deal.II/lac/diagonal_matrix.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -82,8 +80,6 @@ cheb2(const unsigned int d, const double x)
 
   return 2. * x * cheb2(d - 1, x) - cheb2(d - 2, x);
 }
-
-
 
 void
 check(const int          degree,
@@ -160,7 +156,6 @@ check(const int          degree,
           << " ex=" << exact(max_i) << std::endl;
 #endif
 }
-
 
 int
 main()

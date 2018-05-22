@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/dofs/dof_renumbering.h>
@@ -64,7 +62,6 @@ reinit_vector_by_blocks(
       v[level].reinit(ndofs[level][selected_block]);
     }
 }
-
 
 template <int dim>
 void
@@ -161,7 +158,6 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   transfer.copy_from_mg_add(mgdof, v, u);
   deallog << "diff " << v.l2_norm() << std::endl;
 }
-
 
 int
 main()

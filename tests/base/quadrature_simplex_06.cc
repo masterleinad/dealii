@@ -24,7 +24,6 @@
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 int
 main()
 {
@@ -70,7 +69,6 @@ main()
               }
         }
     }
-
 
   // Now output the results.
   for(unsigned int index = 0; index < 4; ++index)

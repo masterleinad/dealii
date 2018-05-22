@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check number cache for shared_tria with artificial cells and renumbering
 //
 // this test is just like the one without hp_ but uses an
@@ -36,7 +34,6 @@
 #include <deal.II/hp/dof_handler.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -145,7 +142,6 @@ test()
       Assert(all == complete_index_set(N), ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

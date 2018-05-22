@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that Table<{1,2,3},T>::reinit(TableIndices) work
 
 #include "../tests.h"
@@ -33,7 +32,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

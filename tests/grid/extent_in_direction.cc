@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test TriaAccessor::extent_in_direction
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #define PRECISION 5
-
 
 void
 create_triangulation(const unsigned int case_no, Triangulation<1>& tria)
@@ -40,7 +38,6 @@ create_triangulation(const unsigned int case_no, Triangulation<1>& tria)
         Assert(false, ExcNotImplemented());
     };
 }
-
 
 void
 create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
@@ -65,7 +62,6 @@ create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
     };
 }
 
-
 void
 create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
 {
@@ -86,7 +82,6 @@ create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
     };
 }
 
-
 template <int dim>
 void
 test()
@@ -102,7 +97,6 @@ test()
       tria.clear();
     }
 }
-
 
 int
 main()

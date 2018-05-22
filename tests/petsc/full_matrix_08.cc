@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check PETScWrappers::FullMatrix::frobenius_norm
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_full_matrix.h>
 #include <iostream>
-
 
 void
 test(PETScWrappers::FullMatrix& m)
@@ -46,8 +43,6 @@ test(PETScWrappers::FullMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

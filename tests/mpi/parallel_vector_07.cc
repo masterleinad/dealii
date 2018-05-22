@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that access to elements and ghosts works correctly
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -105,8 +103,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

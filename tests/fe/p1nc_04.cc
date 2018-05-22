@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the P1NC element on a general quadrilateral.
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 
 #include <string>
 
-
-
 template <int dim>
 Point<dim>
 bilinear(const Point<dim>& p)
@@ -44,8 +40,6 @@ bilinear(const Point<dim>& p)
 
   return q;
 }
-
-
 
 template <int dim>
 void

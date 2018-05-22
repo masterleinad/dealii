@@ -73,8 +73,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 class HardManufacturedForcing : public Function<dim>
 {
@@ -103,7 +101,6 @@ public:
                   - 80 * std::sin(6 * pi * x));
   }
 };
-
 
 // ----------------------------------------------------------------------------
 // Description of the curved geometry
@@ -237,8 +234,6 @@ protected:
   solve();
 };
 
-
-
 template <int dim>
 JxWError<dim>::JxWError(const unsigned int n_global_refines)
   : manufactured_solution(new HardManufacturedSolution<dim>()),
@@ -252,8 +247,6 @@ JxWError<dim>::JxWError(const unsigned int n_global_refines)
   boundary_manifold = cubic_roof(triangulation);
   triangulation.refine_global(n_global_refines);
 }
-
-
 
 template <int dim>
 void
@@ -275,7 +268,6 @@ JxWError<dim>::setup_dofs()
                                   /*keep_constrained_dofs=*/false);
   sparsity_pattern.copy_from(dynamic_sparsity_pattern);
 }
-
 
 template <int dim>
 void
@@ -330,8 +322,6 @@ JxWError<dim>::setup_matrices()
     }
 }
 
-
-
 template <int dim>
 double
 JxWError<dim>::solve()
@@ -368,8 +358,6 @@ JxWError<dim>::solve()
   return l2_error;
 }
 
-
-
 template <int dim>
 double
 JxWError<dim>::run()
@@ -379,8 +367,6 @@ JxWError<dim>::run()
   const double error = solve();
   return error;
 }
-
-
 
 int
 main(int argc, char** argv)

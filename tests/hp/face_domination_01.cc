@@ -15,8 +15,6 @@
 
 // A test that checks that FE_Nothing does not dominate the neighboring Q1.
 
-
-
 #include "../tests.h"
 
 #include <deal.II/dofs/dof_accessor.h>
@@ -35,7 +33,6 @@
 #include <iostream>
 #include <vector>
 
-
 const unsigned int dim = 2;
 
 void
@@ -50,7 +47,6 @@ print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
-
 
 int
 main()

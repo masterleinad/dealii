@@ -57,8 +57,6 @@ FE_NedelecSZ<dim>::shape_value(const unsigned int /*i*/,
   return 0.;
 }
 
-
-
 template <int dim>
 double
 FE_NedelecSZ<dim>::shape_value_component(const unsigned int /*i*/,
@@ -70,8 +68,6 @@ FE_NedelecSZ<dim>::shape_value_component(const unsigned int /*i*/,
   return 0.;
 }
 
-
-
 template <int dim>
 Tensor<1, dim>
 FE_NedelecSZ<dim>::shape_grad(const unsigned int /*i*/,
@@ -81,8 +77,6 @@ FE_NedelecSZ<dim>::shape_grad(const unsigned int /*i*/,
   Assert(false, typename FEE::ExcFENotPrimitive());
   return Tensor<1, dim>();
 }
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -94,8 +88,6 @@ FE_NedelecSZ<dim>::shape_grad_component(const unsigned int /*i*/,
   return Tensor<1, dim>();
 }
 
-
-
 template <int dim>
 Tensor<2, dim>
 FE_NedelecSZ<dim>::shape_grad_grad(const unsigned int /*i*/,
@@ -105,8 +97,6 @@ FE_NedelecSZ<dim>::shape_grad_grad(const unsigned int /*i*/,
   Assert(false, typename FEE::ExcFENotPrimitive());
   return Tensor<2, dim>();
 }
-
-
 
 template <int dim>
 Tensor<2, dim>
@@ -118,8 +108,6 @@ FE_NedelecSZ<dim>::shape_grad_grad_component(
   Assert(false, ExcNotImplemented());
   return Tensor<2, dim>();
 }
-
-
 
 template <int dim>
 std::unique_ptr<typename FiniteElement<dim, dim>::InternalDataBase>
@@ -177,7 +165,6 @@ FE_NedelecSZ<dim>::get_data(
 
   std::vector<Point<dim>> p_list(n_q_points);
   p_list = quadrature.get_points();
-
 
   switch(dim)
     {
@@ -809,7 +796,6 @@ FE_NedelecSZ<dim>::get_data(
                         }
                     }
 
-
                   // only need poly values and 1st derivative for update_values,
                   // but need 2nd derivative too for update_gradients.
                   const unsigned int poly_length(
@@ -1110,7 +1096,6 @@ FE_NedelecSZ<dim>::fill_edge_values(
   // Calculate edge orderings:
   std::vector<std::vector<unsigned int>> edge_order(
     lines_per_cell, std::vector<unsigned int>(vertices_per_line));
-
 
   switch(dim)
     {

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -21,9 +20,7 @@
 // check
 //   FETools::back_interpolate(6)
 
-
 std::string output_file_name = "output";
-
 
 template <int dim>
 void

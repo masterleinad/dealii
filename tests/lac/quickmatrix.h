@@ -28,7 +28,6 @@ protected:
   const unsigned int ny;
 };
 
-
 template <typename number>
 QuickMatrix<number>::QuickMatrix(unsigned int nx, unsigned int ny)
   : nx(nx), ny(ny)

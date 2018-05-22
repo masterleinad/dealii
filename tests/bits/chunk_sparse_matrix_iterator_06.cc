@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test setting some elements using a non-const chunk matrix iterator and
 // operator-=, and reading them back through the matrix itself
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -58,8 +56,6 @@ test(const unsigned int chunk_size)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

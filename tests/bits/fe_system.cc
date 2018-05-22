@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // document a hang in make_hanging_node_constraints with an
 // FE_System with 0 components.
 
@@ -29,13 +28,9 @@
 #include <deal.II/grid/tria.h>
 #include <sstream>
 
-
-
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void
@@ -63,11 +58,8 @@ test()
 
   deallog << ss.str() << std::endl;
 
-
-
   deallog << "ok" << std::endl;
 }
-
 
 int
 main()

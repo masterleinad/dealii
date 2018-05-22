@@ -16,7 +16,6 @@
 #ifndef dealii_tria_object_h
 #define dealii_tria_object_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/geometry_info.h>
@@ -75,7 +74,6 @@ namespace internal
                  const int i4,
                  const int i5);
 
-
       /**
        * Return the index of the ith face object.
        */
@@ -120,7 +118,6 @@ namespace internal
         faces[i] = -1;
     }
 
-
     template <int structdim>
     inline TriaObject<structdim>::TriaObject(const int i0, const int i1)
     {
@@ -128,7 +125,6 @@ namespace internal
       faces[0] = i0;
       faces[1] = i1;
     }
-
 
     template <int structdim>
     inline TriaObject<structdim>::TriaObject(const int i0,
@@ -142,7 +138,6 @@ namespace internal
       faces[2] = i2;
       faces[3] = i3;
     }
-
 
     template <int structdim>
     inline TriaObject<structdim>::TriaObject(const int i0,
@@ -161,7 +156,6 @@ namespace internal
       faces[5] = i5;
     }
 
-
     template <int structdim>
     inline int
     TriaObject<structdim>::face(const unsigned int i) const
@@ -170,8 +164,6 @@ namespace internal
              ExcIndexRange(i, 0, GeometryInfo<structdim>::faces_per_cell));
       return faces[i];
     }
-
-
 
     template <int structdim>
     inline void
@@ -182,15 +174,12 @@ namespace internal
       faces[i] = index;
     }
 
-
-
     template <int structdim>
     inline std::size_t
     TriaObject<structdim>::memory_consumption()
     {
       return sizeof(TriaObject<structdim>);
     }
-
 
     template <int structdim>
     template <class Archive>
@@ -200,10 +189,8 @@ namespace internal
       ar& faces;
     }
 
-
   } // namespace TriangulationImplementation
 } // namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

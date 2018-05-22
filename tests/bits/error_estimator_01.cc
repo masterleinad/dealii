@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the kelly error estimator returns the same result whether we
 // compute all indicators at once, or on different subdomains separately
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -32,8 +29,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -56,8 +51,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 Quadrature<dim - 1>&
 get_q_face(Function<dim>&)
@@ -65,7 +58,6 @@ get_q_face(Function<dim>&)
   static QGauss<dim - 1> q(4);
   return q;
 }
-
 
 template <int dim>
 void
@@ -106,8 +98,6 @@ make_mesh(Triangulation<dim>& tria)
       cell->set_subdomain_id(subdomain);
     }
 }
-
-
 
 template <int dim>
 void
@@ -191,7 +181,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

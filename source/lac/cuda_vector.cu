@@ -49,8 +49,6 @@ namespace LinearAlgebra
           }
       }
 
-
-
       struct Binop_Addition
       {
         template <typename Number>
@@ -61,8 +59,6 @@ namespace LinearAlgebra
         }
       };
 
-
-
       struct Binop_Subtraction
       {
         template <typename Number>
@@ -72,8 +68,6 @@ namespace LinearAlgebra
           return a - b;
         }
       };
-
-
 
       template <typename Number, typename Binop>
       __global__ void
@@ -91,8 +85,6 @@ namespace LinearAlgebra
               v1[idx] = Binop::operation(v1[idx], v2[idx]);
           }
       }
-
-
 
       template <typename Number>
       struct ElemSum
@@ -122,8 +114,6 @@ namespace LinearAlgebra
         }
       };
 
-
-
       template <typename Number>
       struct L1Norm
       {
@@ -151,8 +141,6 @@ namespace LinearAlgebra
           return Number();
         }
       };
-
-
 
       template <typename Number>
       struct LInfty
@@ -185,8 +173,6 @@ namespace LinearAlgebra
         }
       };
 
-
-
       template <typename Number, typename Operation>
       __device__ void
       reduce_within_warp(volatile Number*                   result_buffer,
@@ -212,8 +198,6 @@ namespace LinearAlgebra
             result_buffer[local_idx], result_buffer[local_idx + 1]);
       }
 
-
-
       template <typename Number, typename Operation>
       __device__ void
       reduce(Number*                                  result,
@@ -238,8 +222,6 @@ namespace LinearAlgebra
           Operation::atomic_op(result, result_buffer[0]);
       }
 
-
-
       template <typename Number, typename Operation>
       __global__ void
       reduction(Number*                                  result,
@@ -262,8 +244,6 @@ namespace LinearAlgebra
         reduce<Number, Operation>(
           result, result_buffer, local_idx, global_idx, N);
       }
-
-
 
       template <typename Number>
       struct DotProduct
@@ -292,8 +272,6 @@ namespace LinearAlgebra
           return Number();
         }
       };
-
-
 
       template <typename Number, typename Operation>
       __global__ void
@@ -330,8 +308,6 @@ namespace LinearAlgebra
           result, result_buffer, local_idx, global_idx, N);
       }
 
-
-
       template <typename Number>
       __global__ void
       vec_add(Number*                                  val,
@@ -348,8 +324,6 @@ namespace LinearAlgebra
               val[idx] += a;
           }
       }
-
-
 
       template <typename Number>
       __global__ void
@@ -368,8 +342,6 @@ namespace LinearAlgebra
               val[idx] += a * V_val[idx];
           }
       }
-
-
 
       template <typename Number>
       __global__ void
@@ -391,8 +363,6 @@ namespace LinearAlgebra
           }
       }
 
-
-
       template <typename Number>
       __global__ void
       sadd(const Number                             s,
@@ -412,8 +382,6 @@ namespace LinearAlgebra
           }
       }
 
-
-
       template <typename Number>
       __global__ void
       scale(Number*                                  val,
@@ -430,8 +398,6 @@ namespace LinearAlgebra
               val[idx] *= V_val[idx];
           }
       }
-
-
 
       template <typename Number>
       __global__ void
@@ -450,8 +416,6 @@ namespace LinearAlgebra
               val[idx] = a * V_val[idx];
           }
       }
-
-
 
       template <typename Number>
       __global__ void
@@ -495,13 +459,9 @@ namespace LinearAlgebra
       }
     } // namespace internal
 
-
-
     template <typename Number>
     Vector<Number>::Vector() : val(nullptr), n_elements(0)
     {}
-
-
 
     template <typename Number>
     Vector<Number>::Vector(const Vector<Number>& V) : n_elements(V.n_elements)
@@ -515,15 +475,11 @@ namespace LinearAlgebra
       AssertCuda(error_code);
     }
 
-
-
     template <typename Number>
     Vector<Number>::Vector(const size_type n) : val(nullptr), n_elements(0)
     {
       reinit(n, false);
     }
-
-
 
     template <typename Number>
     Vector<Number>::~Vector()
@@ -536,8 +492,6 @@ namespace LinearAlgebra
           n_elements = 0;
         }
     }
-
-
 
     template <typename Number>
     void
@@ -574,8 +528,6 @@ namespace LinearAlgebra
       n_elements = n;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
@@ -583,8 +535,6 @@ namespace LinearAlgebra
     {
       reinit(V.size(), omit_zeroing_entries);
     }
-
-
 
     template <typename Number>
     void
@@ -631,8 +581,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator=(const Number s)
@@ -645,8 +593,6 @@ namespace LinearAlgebra
 
       return *this;
     }
-
-
 
     template <typename Number>
     Vector<Number>&
@@ -665,8 +611,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator/=(const Number factor)
@@ -684,8 +628,6 @@ namespace LinearAlgebra
 
       return *this;
     }
-
-
 
     template <typename Number>
     Vector<Number>&
@@ -714,8 +656,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     Vector<Number>&
     Vector<Number>::operator-=(const VectorSpaceVector<Number>& V)
@@ -742,8 +682,6 @@ namespace LinearAlgebra
 
       return *this;
     }
-
-
 
     template <typename Number>
     Number Vector<Number>::operator*(const VectorSpaceVector<Number>& V) const
@@ -784,8 +722,6 @@ namespace LinearAlgebra
       return result;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::add(const Number a)
@@ -799,8 +735,6 @@ namespace LinearAlgebra
       // Check that there was no problem during the execution of the kernel
       AssertCuda(cudaDeviceSynchronize());
     }
-
-
 
     template <typename Number>
     void
@@ -827,8 +761,6 @@ namespace LinearAlgebra
       // Check that there was no problem during the execution of the kernel
       AssertCuda(cudaDeviceSynchronize());
     }
-
-
 
     template <typename Number>
     void
@@ -870,8 +802,6 @@ namespace LinearAlgebra
       AssertCuda(cudaDeviceSynchronize());
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::sadd(const Number                     s,
@@ -901,8 +831,6 @@ namespace LinearAlgebra
       AssertCuda(cudaDeviceSynchronize());
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::scale(const VectorSpaceVector<Number>& scaling_factors)
@@ -927,8 +855,6 @@ namespace LinearAlgebra
       // Check that there was no problem during the execution of the kernel
       AssertCuda(cudaDeviceSynchronize());
     }
-
-
 
     template <typename Number>
     void
@@ -957,16 +883,12 @@ namespace LinearAlgebra
       AssertCuda(cudaDeviceSynchronize());
     }
 
-
-
     template <typename Number>
     bool
     Vector<Number>::all_zero() const
     {
       return (linfty_norm() == 0) ? true : false;
     }
-
-
 
     template <typename Number>
     typename Vector<Number>::value_type
@@ -995,8 +917,6 @@ namespace LinearAlgebra
              / static_cast<typename Vector<Number>::value_type>(n_elements);
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::l1_norm() const
@@ -1023,16 +943,12 @@ namespace LinearAlgebra
       return result;
     }
 
-
-
     template <typename Number>
     typename Vector<Number>::real_type
     Vector<Number>::l2_norm() const
     {
       return std::sqrt((*this) * (*this));
     }
-
-
 
     template <typename Number>
     typename Vector<Number>::real_type
@@ -1059,8 +975,6 @@ namespace LinearAlgebra
 
       return result;
     }
-
-
 
     template <typename Number>
     Number
@@ -1103,8 +1017,6 @@ namespace LinearAlgebra
       return res;
     }
 
-
-
     template <typename Number>
     void
     Vector<Number>::print(std::ostream&      out,
@@ -1137,14 +1049,11 @@ namespace LinearAlgebra
       delete[] cpu_val;
       cpu_val = nullptr;
 
-
       AssertThrow(out, ExcIO());
       // reset output format
       out.flags(old_flags);
       out.precision(old_precision);
     }
-
-
 
     template <typename Number>
     std::size_t
@@ -1155,8 +1064,6 @@ namespace LinearAlgebra
 
       return memory;
     }
-
-
 
     // Explicit Instanationation
     template class Vector<float>;

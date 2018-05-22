@@ -140,7 +140,6 @@ private:
   initialize_support_points(const unsigned int rt_degree);
 };
 
-
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

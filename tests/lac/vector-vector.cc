@@ -13,17 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
-
-
 const unsigned int N           = 10;
 unsigned int       check_point = 0;
-
-
 
 template <typename number>
 void
@@ -36,8 +30,6 @@ print(const Vector<number>& v)
     deallog << v(i) << '\t';
   deallog << std::endl;
 }
-
-
 
 template <typename number1, typename number2>
 void
@@ -142,7 +134,6 @@ check_vectors(Vector<number1>& d1, Vector<number2>& d2)
   d1.ratio(d1, d2);
   print(d1);
 }
-
 
 int
 main()

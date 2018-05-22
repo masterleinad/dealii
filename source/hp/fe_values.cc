@@ -44,7 +44,6 @@ namespace internal
         update_flags(update_flags)
     {}
 
-
     template <int dim, int q_dim, class FEValuesType>
     FEValuesBase<dim, q_dim, FEValuesType>::FEValuesBase(
       const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
@@ -63,8 +62,6 @@ namespace internal
         update_flags(update_flags)
     {}
 
-
-
     template <int dim, int q_dim, class FEValuesType>
     FEValuesType&
     FEValuesBase<dim, q_dim, FEValuesType>::select_fe_values(
@@ -78,7 +75,6 @@ namespace internal
              ExcIndexRange(mapping_index, 0, mapping_collection->size()));
       Assert(q_index < q_collection.size(),
              ExcIndexRange(q_index, 0, q_collection.size()));
-
 
       // set the triple of indices
       // that we want to work with
@@ -102,12 +98,9 @@ namespace internal
   } // namespace hp
 } // namespace internal
 
-
-
 namespace hp
 {
   // -------------------------- FEValues -------------------------
-
 
   template <int dim, int spacedim>
   FEValues<dim, spacedim>::FEValues(
@@ -122,7 +115,6 @@ namespace hp
         update_flags)
   {}
 
-
   template <int dim, int spacedim>
   FEValues<dim, spacedim>::FEValues(
     const hp::FECollection<dim, spacedim>& fe_collection,
@@ -133,7 +125,6 @@ namespace hp
         q_collection,
         update_flags)
   {}
-
 
   template <int dim, int spacedim>
   template <typename DoFHandlerType, bool lda>
@@ -184,8 +175,6 @@ namespace hp
       .reinit(cell);
   }
 
-
-
   template <int dim, int spacedim>
   void
   FEValues<dim, spacedim>::reinit(
@@ -224,9 +213,7 @@ namespace hp
       .reinit(cell);
   }
 
-
   // -------------------------- FEFaceValues -------------------------
-
 
   template <int dim, int spacedim>
   FEFaceValues<dim, spacedim>::FEFaceValues(
@@ -242,7 +229,6 @@ namespace hp
           update_flags)
   {}
 
-
   template <int dim, int spacedim>
   FEFaceValues<dim, spacedim>::FEFaceValues(
     const hp::FECollection<dim, spacedim>& fe_collection,
@@ -254,7 +240,6 @@ namespace hp
           q_collection,
           update_flags)
   {}
-
 
   template <int dim, int spacedim>
   template <typename DoFHandlerType, bool lda>
@@ -306,8 +291,6 @@ namespace hp
       .reinit(cell, face_no);
   }
 
-
-
   template <int dim, int spacedim>
   void
   FEFaceValues<dim, spacedim>::reinit(
@@ -347,9 +330,7 @@ namespace hp
       .reinit(cell, face_no);
   }
 
-
   // -------------------------- FESubfaceValues -------------------------
-
 
   template <int dim, int spacedim>
   FESubfaceValues<dim, spacedim>::FESubfaceValues(
@@ -365,7 +346,6 @@ namespace hp
           update_flags)
   {}
 
-
   template <int dim, int spacedim>
   FESubfaceValues<dim, spacedim>::FESubfaceValues(
     const hp::FECollection<dim, spacedim>& fe_collection,
@@ -377,7 +357,6 @@ namespace hp
           q_collection,
           update_flags)
   {}
-
 
   template <int dim, int spacedim>
   template <typename DoFHandlerType, bool lda>
@@ -430,8 +409,6 @@ namespace hp
       .reinit(cell, face_no, subface_no);
   }
 
-
-
   template <int dim, int spacedim>
   void
   FESubfaceValues<dim, spacedim>::reinit(
@@ -473,9 +450,7 @@ namespace hp
   }
 } // namespace hp
 
-
 // explicit instantiations
 #include "fe_values.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

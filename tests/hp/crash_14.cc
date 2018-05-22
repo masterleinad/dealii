@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // when we have FESystem(FE_Q(k),FE_DGQ(1)) and FESystem(FE_Q(k),FE_DGQ(2)) on
 // an interface, make sure all DoFs are unified. this is also tested in a
 // slightly cleaner way by crash_15
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -31,8 +28,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -105,7 +100,6 @@ test()
             }
     }
 }
-
 
 int
 main()

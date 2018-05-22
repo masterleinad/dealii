@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check VectorTools::project for Vector<double> arguments
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -33,8 +31,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 // define a function that is zero within the square
 //   [-sqrt(2)/2,sqrt(2)/2]^d
@@ -59,7 +55,6 @@ public:
   }
 };
 
-
 template <int dim>
 void
 test()
@@ -72,7 +67,6 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   tria.set_manifold(0, boundary);
-
 
   FE_Q<dim>       fe(1);
   DoFHandler<dim> dh(tria);
@@ -144,7 +138,6 @@ test()
                 << std::endl;
   }
 
-
   // same as above, but use a projection with a QTrapez formula. this happens
   // to evaluate the function only at points where it is zero, and
   // consequently the values at the boundary should be zero
@@ -168,7 +161,6 @@ test()
                 << std::endl;
   }
 }
-
 
 int
 main()

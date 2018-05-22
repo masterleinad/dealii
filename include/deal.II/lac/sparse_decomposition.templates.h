@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_sparse_decomposition_templates_h
 #define dealii_sparse_decomposition_templates_h
-
 
 #include <algorithm>
 #include <cstring>
@@ -32,8 +30,6 @@ SparseLUDecomposition<number>::SparseLUDecomposition()
   : SparseMatrix<number>(), strengthen_diagonal(0), own_sparsity(nullptr)
 {}
 
-
-
 template <typename number>
 SparseLUDecomposition<number>::~SparseLUDecomposition()
 {
@@ -42,7 +38,6 @@ SparseLUDecomposition<number>::~SparseLUDecomposition()
   // for clarity be explicit on which function is called
   SparseLUDecomposition<number>::clear();
 }
-
 
 template <typename number>
 void
@@ -59,8 +54,6 @@ SparseLUDecomposition<number>::clear()
       own_sparsity = nullptr;
     }
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -130,8 +123,6 @@ SparseLUDecomposition<number>::initialize(
   SparseMatrix<number>::reinit(*sparsity_pattern_to_use);
 }
 
-
-
 template <typename number>
 void
 SparseLUDecomposition<number>::prebuild_lower_bound()
@@ -200,8 +191,6 @@ SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber>& matrix)
     }
 }
 
-
-
 template <typename number>
 void
 SparseLUDecomposition<number>::strengthen_diagonal_impl()
@@ -225,8 +214,6 @@ SparseLUDecomposition<number>::strengthen_diagonal_impl()
     }
 }
 
-
-
 template <typename number>
 std::size_t
 SparseLUDecomposition<number>::memory_consumption() const
@@ -234,7 +221,6 @@ SparseLUDecomposition<number>::memory_consumption() const
   return (SparseMatrix<number>::memory_consumption()
           + MemoryConsumption::memory_consumption(prebuilt_lower_bound));
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

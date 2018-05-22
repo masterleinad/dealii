@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // simplified form for step-48 test
-
 
 #include "../tests.h"
 
@@ -42,15 +40,12 @@
 
 #include <iostream>
 
-
 namespace Step48
 {
   using namespace dealii;
 
   const unsigned int dimension = 2;
   const unsigned int fe_degree = 4;
-
-
 
   template <int dim, int fe_degree>
   class SineGordonOperation
@@ -76,8 +71,6 @@ namespace Step48
       const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
       const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
-
-
 
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
@@ -109,8 +102,6 @@ namespace Step48
       else
         inv_mass_matrix.local_element(k) = 0;
   }
-
-
 
   template <int dim, int fe_degree>
   void
@@ -147,8 +138,6 @@ namespace Step48
       }
   }
 
-
-
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::apply(
@@ -160,8 +149,6 @@ namespace Step48
       &SineGordonOperation<dim, fe_degree>::local_apply, this, dst, src);
     dst.scale(inv_mass_matrix);
   }
-
-
 
   template <int dim>
   class InitialSolution : public Function<dim>
@@ -181,8 +168,6 @@ namespace Step48
   {
     return 4. * std::exp(-p.square() * 10);
   }
-
-
 
   template <int dim>
   class SineGordonProblem
@@ -220,8 +205,6 @@ namespace Step48
     const unsigned int output_timestep_skip;
   };
 
-
-
   template <int dim>
   SineGordonProblem<dim>::SineGordonProblem()
     :
@@ -236,7 +219,6 @@ namespace Step48
       cfl_number(.1 / fe_degree),
       output_timestep_skip(200)
   {}
-
 
   template <int dim>
   void
@@ -258,7 +240,6 @@ namespace Step48
     deallog << "   Number of degrees of freedom: " << dof_handler.n_dofs()
             << std::endl;
 
-
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
@@ -277,8 +258,6 @@ namespace Step48
     old_solution.reinit(solution);
     old_old_solution.reinit(solution);
   }
-
-
 
   template <int dim>
   void
@@ -302,8 +281,6 @@ namespace Step48
             << solution_norm << std::endl;
   }
 
-
-
   template <int dim>
   void
   SineGordonProblem<dim>::run()
@@ -319,7 +296,6 @@ namespace Step48
     deallog << "   Time step size: " << time_step
             << ", finest cell: " << global_min_cell_diameter << std::endl
             << std::endl;
-
 
     VectorTools::interpolate(
       dof_handler, InitialSolution<dim>(1, time), solution);
@@ -353,8 +329,6 @@ namespace Step48
             << std::endl;
   }
 } // namespace Step48
-
-
 
 int
 main(int argc, char** argv)

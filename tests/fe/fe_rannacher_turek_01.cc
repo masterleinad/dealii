@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Interfaces being tested
 #include <deal.II/base/polynomials_rannacher_turek.h>
 #include <deal.II/fe/fe_rannacher_turek.h>

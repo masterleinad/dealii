@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like the _03 test, but use the variadic constructor with the
 // promotion rule that converts individual elements into pairs of the
 // element and multiplicity one

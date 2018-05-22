@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document that SparseMatrix::operator= is broken
 // now forbidden
 
@@ -23,7 +21,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -31,7 +28,6 @@ test()
   for(unsigned int i = 0; i < m.m(); ++i)
     for(unsigned int j = 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
-
 
   m.compress(VectorOperation::insert);
 
@@ -53,7 +49,6 @@ test()
     }
   }
 }
-
 
 int
 main(int argc, char** argv)

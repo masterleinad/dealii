@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Verify that symmetric tensor operators+= and friends work with different
 // number types
 
@@ -74,7 +73,6 @@ test()
   deallog << "dim=" << 3 << std::endl;
   test_operators<3, rank, NumberType, OtherNumberType>();
 }
-
 
 int
 main()

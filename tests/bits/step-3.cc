@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-3
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -48,8 +45,6 @@
 
 std::ofstream logfile("output");
 
-
-
 class LaplaceProblem
 {
 public:
@@ -79,11 +74,8 @@ private:
   Vector<double> system_rhs;
 };
 
-
 LaplaceProblem::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
-
 
 void
 LaplaceProblem::make_grid_and_dofs()
@@ -109,8 +101,6 @@ LaplaceProblem::make_grid_and_dofs()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 void
 LaplaceProblem::assemble_system()
@@ -162,15 +152,12 @@ LaplaceProblem::assemble_system()
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 
-
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, Functions::ZeroFunction<2>(), boundary_values);
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
-
-
 
 void
 LaplaceProblem::solve()
@@ -180,8 +167,6 @@ LaplaceProblem::solve()
 
   cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 }
-
-
 
 void
 LaplaceProblem::output_results() const
@@ -194,8 +179,6 @@ LaplaceProblem::output_results() const
   data_out.write_gnuplot(deallog.get_file_stream());
 }
 
-
-
 void
 LaplaceProblem::run()
 {
@@ -204,8 +187,6 @@ LaplaceProblem::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

@@ -16,8 +16,6 @@
 #ifndef dealii_sparse_vanka_h
 #define dealii_sparse_vanka_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/multithread_info.h>
 #include <deal.II/base/smartpointer.h>
@@ -214,7 +212,6 @@ public:
     const unsigned int n_threads;
   };
 
-
   /**
    * If the default constructor is used then this function needs to be called
    * before an object of this class is used as preconditioner.
@@ -379,8 +376,6 @@ private:
   template <typename T>
   friend class SparseBlockVanka;
 };
-
-
 
 /**
  * Block version of the sparse Vanka preconditioner. This class divides the

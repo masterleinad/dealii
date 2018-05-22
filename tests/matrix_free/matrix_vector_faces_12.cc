@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation, matrix-vector products as compared to
 // the same implementation with MeshWorker. This example uses a mesh described
 // through a complicated manifold
@@ -28,7 +26,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 double
 f_x(double x_m)
@@ -96,8 +93,6 @@ gamma_x(double x_m)
     }
   return 1.0 * gamma;
 }
-
-
 
 template <int dim>
 class PeriodicHillManifold : public ChartManifold<dim>
@@ -227,7 +222,6 @@ private:
 
   const double y_FoR = h;
 };
-
 
 template <int dim, int fe_degree>
 void

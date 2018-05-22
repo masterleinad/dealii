@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a testcase by Joa, see mailing list 2007/02/24. checks that we can find a
 // point inside a cell, where the point is definitely inside the domain. this
 // testcase is a simple modification of step-6, only a few lines are added
@@ -40,7 +38,6 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 // From the following include file we
 // will import the declaration of
 // H1-conforming finite element shape
@@ -62,7 +59,6 @@
 // need the following include file
 // instead of <code>grid_in.h</code>:
 #include <deal.II/grid/grid_out.h>
-
 
 // When using locally refined grids,
 // we will get so-called <code>hanging
@@ -103,7 +99,6 @@
 // Finally, this is as in previous
 // programs:
 using namespace dealii;
-
 
 // @sect3{The <code>LaplaceProblem</code> class template}
 
@@ -162,7 +157,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
 // @sect3{Nonconstant coefficients}
 
 // The implementation of nonconstant
@@ -185,8 +179,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -196,8 +188,6 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   else
     return 1;
 }
-
-
 
 template <int dim>
 void
@@ -221,7 +211,6 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
 // @sect3{The <code>LaplaceProblem</code> class implementation}
 
 // @sect4{LaplaceProblem::LaplaceProblem}
@@ -238,7 +227,6 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation), fe(2)
 {}
-
 
 // @sect4{LaplaceProblem::~LaplaceProblem}
 
@@ -371,7 +359,6 @@ LaplaceProblem<dim>::~LaplaceProblem()
   dof_handler.clear();
 }
 
-
 // @sect4{LaplaceProblem::setup_system}
 
 // The next function is setting up
@@ -423,7 +410,6 @@ LaplaceProblem<dim>::setup_system()
 
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
-
 
   // After setting up all the degrees
   // of freedoms, here are now the
@@ -658,8 +644,6 @@ LaplaceProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 // @sect4{LaplaceProblem::solve}
 
 // We continue with gradual
@@ -704,7 +688,6 @@ LaplaceProblem<dim>::solve()
 
   hanging_node_constraints.distribute(solution);
 }
-
 
 // @sect4{LaplaceProblem::refine_grid}
 
@@ -909,7 +892,6 @@ LaplaceProblem<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
 // @sect4{LaplaceProblem::output_results}
 
 // At the end of computations on each
@@ -978,8 +960,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   GridOut grid_out;
   grid_out.write_eps(triangulation, output);
 }
-
-
 
 // @sect4{LaplaceProblem::run}
 
@@ -1052,7 +1032,6 @@ LaplaceProblem<dim>::run()
       else
         refine_grid();
 
-
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
 
@@ -1079,7 +1058,6 @@ LaplaceProblem<dim>::run()
       VectorTools::point_value(dof_handler, solution, p);
     }
 }
-
 
 // @sect3{The <code>main</code> function}
 

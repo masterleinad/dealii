@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a hyper ball, refine it, extract an iges of the boundary,
 // and create a new mesh using gmsh from that iges file.
 

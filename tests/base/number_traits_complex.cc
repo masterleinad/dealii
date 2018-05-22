@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check numbers::NumberTraits for real data types
 
 #include "../tests.h"
@@ -34,7 +33,6 @@ cleanup_type(const std::string& in)
   return ret;
 }
 
-
 template <typename number>
 void
 check(const number& x)
@@ -52,8 +50,6 @@ check(const number& x)
 
   deallog << numbers::NumberTraits<number>::abs(x) << std::endl;
 }
-
-
 
 int
 main()

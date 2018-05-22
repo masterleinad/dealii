@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that FEEvaluation can be evaluated without indices initialized (and
 // throws an exception when trying to read/write from/to vectors)
 
 #include "../tests.h"
-
 
 std::ofstream logfile("output");
 
@@ -40,13 +37,10 @@ std::ofstream logfile("output");
 
 #include <iostream>
 
-
 // forward declare this function
 template <int dim, int fe_degree>
 void
 test();
-
-
 
 template <int dim,
           int fe_degree,
@@ -93,8 +87,6 @@ public:
       }
   }
 
-
-
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -106,8 +98,6 @@ public:
 protected:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree, typename number>
 void
@@ -158,7 +148,6 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
     }
 }
 
-
 int
 main()
 {
@@ -168,7 +157,6 @@ main()
   deallog << std::setprecision(3);
   test<2, 1>();
 }
-
 
 template <int dim, int fe_degree>
 void

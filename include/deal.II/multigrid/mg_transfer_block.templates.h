@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mg_transfer_block_templates_h
 #define dealii_mg_transfer_block_templates_h
 
@@ -35,7 +34,6 @@ DEAL_II_NAMESPACE_OPEN
 // Simplify some things below
 typedef std::vector<std::pair<unsigned int, unsigned int>>::const_iterator IT;
 
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -52,8 +50,6 @@ MGTransferBlockSelect<number>::copy_from_mg(
         ++i)
       dst.block(selected_block)(i->first) = src[level](i->second);
 }
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>
@@ -72,8 +68,6 @@ MGTransferBlockSelect<number>::copy_from_mg(
       dst(i->first) = src[level](i->second);
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -90,8 +84,6 @@ MGTransferBlockSelect<number>::copy_from_mg_add(
         ++i)
       dst.block(selected_block)(i->first) += src[level](i->second);
 }
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>
@@ -110,8 +102,6 @@ MGTransferBlockSelect<number>::copy_from_mg_add(
       dst(i->first) += src[level](i->second);
 }
 
-
-
 template <typename number>
 std::size_t
 MGTransferBlockSelect<number>::memory_consumption() const
@@ -119,10 +109,7 @@ MGTransferBlockSelect<number>::memory_consumption() const
   return sizeof(int) + MGTransferBlockBase::memory_consumption();
 }
 
-
 /* --------------------- MGTransferBlock -------------- */
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>
@@ -143,8 +130,6 @@ MGTransferBlock<number>::copy_from_mg(
           dst.block(block)(i->first)
             = src[level].block(mg_block[block])(i->second);
 }
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>

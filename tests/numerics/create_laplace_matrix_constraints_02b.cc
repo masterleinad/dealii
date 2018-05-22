@@ -13,13 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as create_laplace_matrix_0[1234] but passing an additional constraint
 // matrix and comparing results without constraints (and similar to
 // create_laplace_matrix_constraints_02 but without rhs).
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -39,8 +35,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -108,8 +102,6 @@ check()
       matrix.diag_element(i) = 0;
   deallog << "Matrix error Frobenius: " << matrix.frobenius_norm() << std::endl;
 }
-
-
 
 int
 main()

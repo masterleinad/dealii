@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // generate constraints for a case where there are nodes that have a
 // constraint x[i]=0, i.e. where the right hand side is a trivial
 // linear combination of other degrees of freedom. then write this as
@@ -23,11 +21,8 @@
 // we used to get this case wrong (we simply forgot to output this
 // node).
 
-
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 void
 test()
@@ -43,7 +38,6 @@ test()
 
   cm.write_dot(deallog.get_file_stream());
 }
-
 
 int
 main()

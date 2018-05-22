@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // cell->get_interpolated_dof_values can not work properly in the hp
 // context when called on non-active cells because these do not have a
 // finite element associated with them
@@ -35,7 +34,6 @@
 
 #include <string>
 #include <vector>
-
 
 template <int dim>
 void
@@ -91,7 +89,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

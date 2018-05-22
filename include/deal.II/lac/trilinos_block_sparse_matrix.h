@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_block_sparse_matrix_h
 #define dealii_trilinos_block_sparse_matrix_h
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -37,7 +36,6 @@ DEAL_II_NAMESPACE_OPEN
 class BlockSparsityPattern;
 template <typename number>
 class BlockSparseMatrix;
-
 
 namespace TrilinosWrappers
 {
@@ -438,13 +436,9 @@ namespace TrilinosWrappers
           const std::integral_constant<bool, false>) const;
   };
 
-
-
   /*@}*/
 
   // ------------- inline and template functions -----------------
-
-
 
   inline BlockSparseMatrix&
   BlockSparseMatrix::operator=(const double d)
@@ -457,8 +451,6 @@ namespace TrilinosWrappers
 
     return *this;
   }
-
-
 
   inline bool
   BlockSparseMatrix::is_compressed() const
@@ -475,8 +467,6 @@ namespace TrilinosWrappers
     return compressed;
   }
 
-
-
   template <typename VectorType1, typename VectorType2>
   inline void
   BlockSparseMatrix::vmult(VectorType1& dst, const VectorType2& src) const
@@ -488,8 +478,6 @@ namespace TrilinosWrappers
           std::integral_constant<bool, IsBlockVector<VectorType2>::value>());
   }
 
-
-
   template <typename VectorType1, typename VectorType2>
   inline void
   BlockSparseMatrix::Tvmult(VectorType1& dst, const VectorType2& src) const
@@ -500,8 +488,6 @@ namespace TrilinosWrappers
           std::integral_constant<bool, IsBlockVector<VectorType1>::value>(),
           std::integral_constant<bool, IsBlockVector<VectorType2>::value>());
   }
-
-
 
   template <typename VectorType1, typename VectorType2>
   inline void
@@ -517,8 +503,6 @@ namespace TrilinosWrappers
       BaseClass::vmult_block_block(dst, src);
   }
 
-
-
   template <typename VectorType1, typename VectorType2>
   inline void
   BlockSparseMatrix::vmult(VectorType1&       dst,
@@ -532,8 +516,6 @@ namespace TrilinosWrappers
     else
       BaseClass::vmult_nonblock_block(dst, src);
   }
-
-
 
   template <typename VectorType1, typename VectorType2>
   inline void
@@ -549,8 +531,6 @@ namespace TrilinosWrappers
       BaseClass::vmult_block_nonblock(dst, src);
   }
 
-
-
   template <typename VectorType1, typename VectorType2>
   inline void
   BlockSparseMatrix::vmult(VectorType1&       dst,
@@ -564,8 +544,6 @@ namespace TrilinosWrappers
     else
       BaseClass::vmult_nonblock_nonblock(dst, src);
   }
-
-
 
   inline std::vector<IndexSet>
   BlockSparseMatrix::locally_owned_domain_indices() const
@@ -581,8 +559,6 @@ namespace TrilinosWrappers
     return domain_indices;
   }
 
-
-
   inline std::vector<IndexSet>
   BlockSparseMatrix::locally_owned_range_indices() const
   {
@@ -596,8 +572,6 @@ namespace TrilinosWrappers
 
     return range_indices;
   }
-
-
 
   namespace internal
   {
@@ -650,9 +624,7 @@ namespace TrilinosWrappers
     } // namespace BlockLinearOperatorImplementation
   }   /* namespace internal */
 
-
 } /* namespace TrilinosWrappers */
-
 
 DEAL_II_NAMESPACE_CLOSE
 

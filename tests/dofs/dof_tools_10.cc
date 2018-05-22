@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/fe/mapping_q.h>
@@ -22,8 +21,6 @@
 //   DoFTools::map_dofs_to_support_points (const Mapping<dim> &,
 //                   const DoFHandler<dim> &,
 //                   std::vector<Point<dim> > &)
-
-
 
 template <int dim>
 void

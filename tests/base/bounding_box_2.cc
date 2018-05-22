@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for BoundingBox<unsigned int spacedim> which tests the functions
 // volume and merge_with of the class
 
@@ -29,7 +28,6 @@ test_bounding_box()
   BoundingBox<spacedim> a;
   deallog << "Empty BoundingBox: " << std::endl;
   deallog << a.volume() << std::endl;
-
 
   std::pair<Point<spacedim>, Point<spacedim>> unit;
   for(int i = 0; i < spacedim; i++)

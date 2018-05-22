@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check for a bug reported by Luca Heltai 2006-03-07 on the mailing
 // list. the test should actually output "nan", but prints "0"
 

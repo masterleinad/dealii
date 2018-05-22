@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Compare the kelly estimator for the same square but in codimension 0 and the other in codimension 1,
    Both should return the same estimator */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -34,7 +30,6 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 template <int dim, int spacedim>
 void
 check()
@@ -47,7 +42,6 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-
 
   FE_Q<dim, spacedim>       element(QIterated<1>(QTrapez<1>(), 3));
   DoFHandler<dim, spacedim> dof(tr);
@@ -72,7 +66,6 @@ check()
     deallog << error(i) * 100 << std::endl;
 }
 
-
 int
 main()
 {
@@ -80,7 +73,6 @@ main()
   deallog << std::setprecision(2);
   deallog << std::fixed;
   deallog.attach(logfile);
-
 
   deallog.push("2d_2");
   check<2, 2>();

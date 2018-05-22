@@ -290,7 +290,6 @@ namespace MeshWorker
     AnyData data;
   };
 
-
   /**
    * Based on VectorSelector, this is the class that implements the function
    * VectorDataBase::fill() for a certain type of vector, using AnyData to
@@ -371,7 +370,6 @@ namespace MeshWorker
     memory_consumption() const;
   };
 
-
   /**
    * Based on VectorSelector, this is the class that implements the function
    * VectorDataBase::fill() for a certain type of multilevel vectors, using
@@ -411,7 +409,6 @@ namespace MeshWorker
     initialize(const MGLevelObject<VectorType>*, const std::string& name);
   };
 
-
   //----------------------------------------------------------------------//
 
   inline void
@@ -428,7 +425,6 @@ namespace MeshWorker
       hessian_selection.add(name);
   }
 
-
   //inline void
   //VectorSelector::add(const std::string& name,
   //   const unsigned int block,
@@ -438,7 +434,6 @@ namespace MeshWorker
   //  if (gradients) gradient_selection.add(name, block);
   //  if (hessians) hessian_selection.add(name, block);
   //}
-
 
   inline void
   VectorSelector::initialize(const AnyData& src)
@@ -455,13 +450,11 @@ namespace MeshWorker
             && hessian_selection.size() == 0);
   }
 
-
   inline bool
   VectorSelector::has_values() const
   {
     return value_selection.size() != 0;
   }
-
 
   inline bool
   VectorSelector::has_gradients() const
@@ -469,13 +462,11 @@ namespace MeshWorker
     return gradient_selection.size() != 0;
   }
 
-
   inline bool
   VectorSelector::has_hessians() const
   {
     return hessian_selection.size() != 0;
   }
-
 
   inline unsigned int
   VectorSelector::n_values() const
@@ -483,13 +474,11 @@ namespace MeshWorker
     return value_selection.size();
   }
 
-
   inline unsigned int
   VectorSelector::n_gradients() const
   {
     return gradient_selection.size();
   }
-
 
   inline unsigned int
   VectorSelector::n_hessians() const
@@ -497,13 +486,11 @@ namespace MeshWorker
     return hessian_selection.size();
   }
 
-
   inline unsigned int
   VectorSelector::value_index(const unsigned int i) const
   {
     return value_selection(i);
   }
-
 
   inline unsigned int
   VectorSelector::gradient_index(const unsigned int i) const
@@ -511,13 +498,11 @@ namespace MeshWorker
     return gradient_selection(i);
   }
 
-
   inline unsigned int
   VectorSelector::hessian_index(const unsigned int i) const
   {
     return hessian_selection(i);
   }
-
 
   template <class StreamType>
   inline void
@@ -526,7 +511,6 @@ namespace MeshWorker
     s << "values: " << n_values() << " gradients: " << n_gradients()
       << " hessians: " << n_hessians() << std::endl;
   }
-
 
   template <class StreamType, typename DATA>
   inline void
@@ -544,14 +528,12 @@ namespace MeshWorker
     s << std::endl;
   }
 
-
   inline std::size_t
   VectorSelector::memory_consumption() const
   {
     return sizeof(*this);
   }
 } // namespace MeshWorker
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * This class represents an array with one object for each used level of a
  * multilevel hierarchy, for example for use in the multigrid algorithms.
@@ -174,9 +173,7 @@ private:
   std::vector<std::shared_ptr<Object>> objects;
 };
 
-
 /* ------------------------------------------------------------------- */
-
 
 template <class Object>
 MGLevelObject<Object>::MGLevelObject(const unsigned int min,
@@ -186,7 +183,6 @@ MGLevelObject<Object>::MGLevelObject(const unsigned int min,
   resize(min, max);
 }
 
-
 template <class Object>
 Object& MGLevelObject<Object>::operator[](const unsigned int i)
 {
@@ -195,7 +191,6 @@ Object& MGLevelObject<Object>::operator[](const unsigned int i)
   return *objects[i - minlevel];
 }
 
-
 template <class Object>
 const Object& MGLevelObject<Object>::operator[](const unsigned int i) const
 {
@@ -203,7 +198,6 @@ const Object& MGLevelObject<Object>::operator[](const unsigned int i) const
          ExcIndexRange(i, minlevel, minlevel + objects.size()));
   return *objects[i - minlevel];
 }
-
 
 template <class Object>
 void
@@ -222,7 +216,6 @@ MGLevelObject<Object>::resize(const unsigned int new_minlevel,
     objects.push_back(std::make_shared<Object>());
 }
 
-
 template <class Object>
 MGLevelObject<Object>&
 MGLevelObject<Object>::operator=(const double d)
@@ -233,7 +226,6 @@ MGLevelObject<Object>::operator=(const double d)
   return *this;
 }
 
-
 template <class Object>
 void
 MGLevelObject<Object>::clear() // DEPRECATED
@@ -241,7 +233,6 @@ MGLevelObject<Object>::clear() // DEPRECATED
   // Avoid code duplication in deprecated call by calling replacing function
   clear_elements();
 }
-
 
 template <class Object>
 void
@@ -252,14 +243,12 @@ MGLevelObject<Object>::clear_elements()
     (*v)->clear();
 }
 
-
 template <class Object>
 unsigned int
 MGLevelObject<Object>::min_level() const
 {
   return minlevel;
 }
-
 
 template <class Object>
 unsigned int
@@ -278,7 +267,6 @@ MGLevelObject<Object>::apply(ActionFunctionObjectType action)
       action(lvl, (*this)[lvl]);
     }
 }
-
 
 template <class Object>
 std::size_t

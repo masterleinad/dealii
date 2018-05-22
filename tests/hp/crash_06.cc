@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like all the hp_constraint_*_03 tests that produced a crash at one point,
 // except that we don't refine the mesh that much
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -50,12 +47,9 @@ char logname[] = "output";
 
 #include <vector>
 
-
 template <int dim>
 void
 test();
-
-
 
 template <int dim>
 void
@@ -81,8 +75,6 @@ do_check(const Triangulation<dim>&    triangulation,
   constraints.print(deallog.get_file_stream());
 }
 
-
-
 void
 test_with_wrong_face_orientation(const hp::FECollection<3>& fe)
 {
@@ -93,8 +85,6 @@ test_with_wrong_face_orientation(const hp::FECollection<3>& fe)
 
   do_check(triangulation, fe);
 }
-
-
 
 int
 main()

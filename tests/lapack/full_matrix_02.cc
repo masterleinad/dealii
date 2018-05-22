@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // LAPACKFullMatrix::compute_lu_factorization
 // LAPACKFullMatrix::apply_lu_factorization
 
@@ -22,7 +21,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 // Fill a matrix with the values of the Hilbert matrix
 template <typename number>
@@ -34,7 +32,6 @@ hilbert(LAPACKFullMatrix<number>& M, const bool nonsymmetric)
     for(unsigned int j = 0; j < n; ++j)
       M(i, j) = 1. / (i + j + 1.) * (nonsymmetric ? ((i < j) ? -1. : 1.) : 1.);
 }
-
 
 // Multiply some vectors with the matrix and its transpose, then
 // compute and apply LU factorization and see if the results are equal
@@ -68,7 +65,6 @@ test(const unsigned int size, const bool nonsymmetric)
   deallog << v.l2_norm() << std::endl;
   deallog << y.l2_norm() << std::endl;
 }
-
 
 int
 main()

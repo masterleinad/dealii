@@ -16,7 +16,6 @@
 #ifndef dealii_vector_h
 #define dealii_vector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/index_set.h>
@@ -41,7 +40,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 #ifdef DEAL_II_WITH_PETSC
 namespace PETScWrappers
@@ -76,8 +74,6 @@ namespace parallel
     class TBBPartitioner;
   }
 } // namespace parallel
-
-
 
 /*! @addtogroup Vectors
  *@{
@@ -380,7 +376,6 @@ public:
   operator=(const PETScWrappers::VectorBase& v);
 #endif
 
-
 #ifdef DEAL_II_WITH_TRILINOS
   /**
    * Another copy operator: copy the values from a (sequential or parallel,
@@ -420,7 +415,6 @@ public:
   operator!=(const Vector<Number2>& v) const;
 
   //@}
-
 
   /**
    * @name Scalar products, norms and related operations
@@ -528,7 +522,6 @@ public:
   add_and_dot(const Number a, const Vector<Number>& V, const Vector<Number>& W);
 
   //@}
-
 
   /**
    * @name Data access
@@ -641,7 +634,6 @@ public:
                        const ForwardIterator indices_end,
                        OutputIterator        values_begin) const;
   //@}
-
 
   /**
    * @name Modification of vectors
@@ -809,7 +801,6 @@ public:
   void
   update_ghost_values() const;
   //@}
-
 
   /**
    * @name Input and output
@@ -1021,15 +1012,12 @@ private:
 /*@}*/
 /*----------------------- Inline functions ----------------------------------*/
 
-
 #ifndef DOXYGEN
-
 
 //------------------------ declarations for explicit specializations
 template <>
 Vector<int>::real_type
 Vector<int>::lp_norm(const real_type) const;
-
 
 //------------------------ inline functions
 
@@ -1043,8 +1031,6 @@ inline Vector<Number>::Vector()
   Vector<Number>::reinit(0);
 }
 
-
-
 template <typename Number>
 template <typename InputIterator>
 Vector<Number>::Vector(const InputIterator first, const InputIterator last)
@@ -1056,8 +1042,6 @@ Vector<Number>::Vector(const InputIterator first, const InputIterator last)
   std::copy(first, last, begin());
 }
 
-
-
 template <typename Number>
 inline Vector<Number>::Vector(const size_type n)
   : vec_size(0), max_vec_size(0), values(nullptr, &free)
@@ -1068,15 +1052,12 @@ inline Vector<Number>::Vector(const size_type n)
   Vector<Number>::reinit(n, false);
 }
 
-
-
 template <typename Number>
 inline typename Vector<Number>::size_type
 Vector<Number>::size() const
 {
   return vec_size;
 }
-
 
 template <typename Number>
 inline bool
@@ -1085,16 +1066,12 @@ Vector<Number>::in_local_range(const size_type) const
   return true;
 }
 
-
-
 template <typename Number>
 inline typename Vector<Number>::iterator
 Vector<Number>::begin()
 {
   return values.get();
 }
-
-
 
 template <typename Number>
 inline typename Vector<Number>::const_iterator
@@ -1103,8 +1080,6 @@ Vector<Number>::begin() const
   return values.get();
 }
 
-
-
 template <typename Number>
 inline typename Vector<Number>::iterator
 Vector<Number>::end()
@@ -1112,16 +1087,12 @@ Vector<Number>::end()
   return values.get() + vec_size;
 }
 
-
-
 template <typename Number>
 inline typename Vector<Number>::const_iterator
 Vector<Number>::end() const
 {
   return values.get() + vec_size;
 }
-
-
 
 template <typename Number>
 inline Number
@@ -1131,8 +1102,6 @@ Vector<Number>::operator()(const size_type i) const
   return values[i];
 }
 
-
-
 template <typename Number>
 inline Number&
 Vector<Number>::operator()(const size_type i)
@@ -1141,23 +1110,17 @@ Vector<Number>::operator()(const size_type i)
   return values[i];
 }
 
-
-
 template <typename Number>
 inline Number Vector<Number>::operator[](const size_type i) const
 {
   return operator()(i);
 }
 
-
-
 template <typename Number>
 inline Number& Vector<Number>::operator[](const size_type i)
 {
   return operator()(i);
 }
-
-
 
 template <typename Number>
 template <typename OtherNumber>
@@ -1168,8 +1131,6 @@ Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
   for(size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
 }
-
-
 
 template <typename Number>
 template <typename ForwardIterator, typename OutputIterator>
@@ -1186,8 +1147,6 @@ Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
     }
 }
 
-
-
 template <typename Number>
 inline Vector<Number>&
 Vector<Number>::operator/=(const Number factor)
@@ -1198,8 +1157,6 @@ Vector<Number>::operator/=(const Number factor)
   this->operator*=(Number(1.) / factor);
   return *this;
 }
-
-
 
 template <typename Number>
 template <typename OtherNumber>
@@ -1212,8 +1169,6 @@ Vector<Number>::add(const std::vector<size_type>&   indices,
   add(indices.size(), indices.data(), values.data());
 }
 
-
-
 template <typename Number>
 template <typename OtherNumber>
 inline void
@@ -1224,8 +1179,6 @@ Vector<Number>::add(const std::vector<size_type>& indices,
          ExcDimensionMismatch(indices.size(), values.size()));
   add(indices.size(), indices.data(), values.values.get());
 }
-
-
 
 template <typename Number>
 template <typename OtherNumber>
@@ -1246,8 +1199,6 @@ Vector<Number>::add(const size_type    n_indices,
     }
 }
 
-
-
 template <typename Number>
 template <typename Number2>
 inline bool
@@ -1256,20 +1207,14 @@ Vector<Number>::operator!=(const Vector<Number2>& v) const
   return !(*this == v);
 }
 
-
-
 template <typename Number>
 inline void Vector<Number>::compress(::dealii::VectorOperation::values) const
 {}
-
-
 
 template <typename Number>
 inline void
 Vector<Number>::update_ghost_values() const
 {}
-
-
 
 // Moved from vector.templates.h as an inline function by Luca Heltai
 // on 2009/04/12 to prevent strange compiling errors, after making
@@ -1283,8 +1228,6 @@ Vector<Number>::swap(Vector<Number>& v)
   std::swap(values, v.values);
 }
 
-
-
 template <typename Number>
 template <class Archive>
 inline void
@@ -1296,8 +1239,6 @@ Vector<Number>::save(Archive& ar, const unsigned int) const
   ar& vec_size& max_vec_size;
   ar&           boost::serialization::make_array(values.get(), max_vec_size);
 }
-
-
 
 template <typename Number>
 template <class Archive>
@@ -1317,11 +1258,9 @@ Vector<Number>::load(Archive& ar, const unsigned int)
 
 #endif
 
-
 /*! @addtogroup Vectors
  *@{
  */
-
 
 /**
  * Global function @p swap which overloads the default implementation of the
@@ -1337,7 +1276,6 @@ swap(Vector<Number>& u, Vector<Number>& v)
 {
   u.swap(v);
 }
-
 
 /**
  * Output operator writing a vector to a stream.
@@ -1363,7 +1301,6 @@ operator<<(LogStream& os, const Vector<number>& v)
 
 /*@}*/
 
-
 /**
  * Declare dealii::Vector< Number > as serial vector.
  *
@@ -1372,7 +1309,6 @@ operator<<(LogStream& os, const Vector<number>& v)
 template <typename Number>
 struct is_serial_vector<Vector<Number>> : std::true_type
 {};
-
 
 DEAL_II_NAMESPACE_CLOSE
 

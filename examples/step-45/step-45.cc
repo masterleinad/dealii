@@ -32,7 +32,6 @@
 // - <code>StokesProblem<dim>::run()</code>: To supply a distributed triangulation with
 //   periodicity information.
 
-
 // @cond SKIP
 #include <deal.II/base/conditional_ostream.h>
 
@@ -110,8 +109,6 @@ namespace Step45
     MappingQ<dim> mapping;
   };
 
-
-
   template <int dim>
   class BoundaryValues : public Function<dim>
   {
@@ -126,7 +123,6 @@ namespace Step45
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   BoundaryValues<dim>::value(const Point<dim>& /*p*/,
@@ -139,7 +135,6 @@ namespace Step45
     return 0;
   }
 
-
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
@@ -148,7 +143,6 @@ namespace Step45
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
-
 
   template <int dim>
   class RightHandSide : public Function<dim>
@@ -164,7 +158,6 @@ namespace Step45
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>&  p,
@@ -178,7 +171,6 @@ namespace Step45
     return 0;
   }
 
-
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
@@ -187,8 +179,6 @@ namespace Step45
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
-
-
 
   template <class MatrixType, class PreconditionerType>
   class InverseMatrix : public Subscriptor
@@ -211,8 +201,6 @@ namespace Step45
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
-
-
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
     const MatrixType&         m,
@@ -224,8 +212,6 @@ namespace Step45
       mpi_communicator(&mpi_communicator),
       tmp(locally_owned, mpi_communicator)
   {}
-
-
 
   template <class MatrixType, class PreconditionerType>
   void
@@ -241,8 +227,6 @@ namespace Step45
     cg.solve(*matrix, tmp, src, *preconditioner);
     dst = tmp;
   }
-
-
 
   template <class PreconditionerType>
   class SchurComplement : public TrilinosWrappers::SparseMatrix
@@ -266,8 +250,6 @@ namespace Step45
     mutable TrilinosWrappers::MPI::Vector tmp1, tmp2;
   };
 
-
-
   template <class PreconditionerType>
   SchurComplement<PreconditionerType>::SchurComplement(
     const TrilinosWrappers::BlockSparseMatrix& system_matrix,
@@ -281,8 +263,6 @@ namespace Step45
       tmp2(tmp1)
   {}
 
-
-
   template <class PreconditionerType>
   void
   SchurComplement<PreconditionerType>::vmult(
@@ -293,8 +273,6 @@ namespace Step45
     A_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
-
 
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int degree)
@@ -360,7 +338,6 @@ namespace Step45
 
     triangulation.refine_global(4 - dim);
   }
-
 
   // @sect3{Setting up periodicity constraints on distributed triangulations}
   template <int dim>
@@ -510,7 +487,6 @@ namespace Step45
       owned_partitioning, relevant_partitioning, mpi_communicator);
   }
 
-
   // @cond SKIP
   template <int dim>
   void
@@ -606,8 +582,6 @@ namespace Step45
     pcout << "   Computing preconditioner..." << std::endl << std::flush;
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::solve()
@@ -667,8 +641,6 @@ namespace Step45
     }
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::output_results(const unsigned int refinement_cycle) const
@@ -717,8 +689,6 @@ namespace Step45
       }
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::refine_mesh()
@@ -737,7 +707,6 @@ namespace Step45
       triangulation, estimated_error_per_cell, 0.3, 0.0);
     triangulation.execute_coarsening_and_refinement();
   }
-
 
   template <int dim>
   void
@@ -767,7 +736,6 @@ namespace Step45
       }
   }
 } // namespace Step45
-
 
 int
 main(int argc, char* argv[])

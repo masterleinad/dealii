@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that Manifold::get_normal_vector also works for a special case that
 // used to crash with another algorithm.
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>

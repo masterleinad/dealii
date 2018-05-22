@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Particle constructors, copy, and move operations.
 
 #include "../tests.h"
 #include <deal.II/particles/particle.h>
-
 
 template <int dim>
 void
@@ -67,8 +64,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

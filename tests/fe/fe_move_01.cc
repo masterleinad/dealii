@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that we can move a FE_Q<dim> object in a reasonable way.
 
 #include "../tests.h"

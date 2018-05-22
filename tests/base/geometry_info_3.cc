@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GeometryInfo::face_to_cell_vertices
 
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
-
-
 
 template <int dim>
 void
@@ -46,7 +42,6 @@ test()
                   << std::endl;
         }
 }
-
 
 int
 main()

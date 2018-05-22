@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test LinearAlgebra::distributed::Vector::operator=(TrilinosWrappers::MPI::BlockVector&)
 
 #include "../tests.h"
@@ -25,7 +23,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -113,8 +110,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -16,7 +16,6 @@
 #ifndef dealii_patterns_h
 #define dealii_patterns_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -427,7 +426,6 @@ namespace Patterns
     static const char* description_init;
   };
 
-
   /**
    * This pattern matches a list of values separated by commas (or another
    * string), each of which have to match a pattern given to the constructor.
@@ -457,7 +455,6 @@ namespace Patterns
          const unsigned int min_elements = 0,
          const unsigned int max_elements = max_int_value,
          const std::string& separator    = ",");
-
 
     /**
      * Return the internally stored separator.
@@ -553,7 +550,6 @@ namespace Patterns
      */
     static const char* description_init;
   };
-
 
   /**
    * This pattern matches a list of comma-separated values each of which
@@ -697,7 +693,6 @@ namespace Patterns
      */
     const std::string separator;
 
-
     /**
      * Separator between keys and values.
      */
@@ -708,8 +703,6 @@ namespace Patterns
      */
     static const char* description_init;
   };
-
-
 
   /**
    * This pattern matches colon-separated values of arbitrary types. Each type
@@ -779,7 +772,6 @@ namespace Patterns
      */
     Tuple(const std::vector<std::unique_ptr<PatternBase>>& patterns,
           const char*                                      separator);
-
 
     /**
      * Constructor. Creates a Tuple from more than one class derived from
@@ -879,7 +871,6 @@ namespace Patterns
      */
     static const char* description_init;
   };
-
 
   /**
    * This class is much like the Selection class, but it allows the input to
@@ -1055,7 +1046,6 @@ namespace Patterns
     static const char* description_init;
   };
 
-
   /**
    * A pattern that can be used to indicate when a parameter is intended to be
    * the name of a file. By itself, this class does not check whether the
@@ -1137,7 +1127,6 @@ namespace Patterns
     static const char* description_init;
   };
 
-
   /**
    * A pattern that can be used to indicate when a parameter is intended to be
    * the name of a directory. By itself, this class does not check whether the
@@ -1194,7 +1183,6 @@ namespace Patterns
      */
     static const char* description_init;
   };
-
 
   /**
    * Namespace for a few classes and functions that act on values and patterns,
@@ -1402,7 +1390,6 @@ namespace Patterns
   } // namespace Tools
 } // namespace Patterns
 
-
 // ---------------------- inline and template functions --------------------
 namespace Patterns
 {
@@ -1411,8 +1398,6 @@ namespace Patterns
     : // forward to the version with std::string argument
       Tuple(std::string(separator), ps...)
   {}
-
-
 
   template <class... PatternTypes>
   Tuple::Tuple(const std::string& separator, const PatternTypes&... ps)
@@ -1428,15 +1413,11 @@ namespace Patterns
       patterns.push_back(p->clone());
   }
 
-
-
   template <class... PatternTypes>
   Tuple::Tuple(const PatternTypes&... ps)
     : // forward to the version with the separator argument
       Tuple(std::string(":"), ps...)
   {}
-
-
 
   namespace Tools
   {
@@ -1716,7 +1697,6 @@ namespace Patterns
           = std_cxx14::max(RankInfo<Key>::map_rank, RankInfo<Value>::map_rank)
             + 1;
       };
-
 
       template <class... Types>
       struct RankInfo<std::tuple<Types...>>
@@ -2226,7 +2206,6 @@ namespace Patterns
     }
   } // namespace Tools
 } // namespace Patterns
-
 
 DEAL_II_NAMESPACE_CLOSE
 

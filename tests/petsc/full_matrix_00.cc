@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check initialiser (aka do_reinit). .
 //
 // PETScWrappers::FullMatrix::reinit ()

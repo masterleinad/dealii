@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: ComponentMask::represents_the_all_selected_mask
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
-
-
 
 void
 test()
@@ -43,7 +38,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

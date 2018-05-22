@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::index_within_set () for global indices which are not
 // part of a contiguous index set.
 // This test has exactly the same output as index_set_10
@@ -21,7 +20,6 @@
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -59,8 +57,6 @@ test()
         deallog << i << ' ' << i_out << std::endl;
     }
 }
-
-
 
 int
 main()

@@ -16,12 +16,10 @@
 #ifndef dealii_fe_poly_face_templates_h
 #define dealii_fe_poly_face_templates_h
 
-
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/fe/fe_poly_face.h>
 #include <deal.II/fe/fe_values.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -39,7 +37,6 @@ FE_PolyFace<PolynomialType, dim, spacedim>::FE_PolyFace(
   AssertDimension(dim, PolynomialType::dimension + 1);
 }
 
-
 template <class PolynomialType, int dim, int spacedim>
 unsigned int
 FE_PolyFace<PolynomialType, dim, spacedim>::get_degree() const
@@ -47,11 +44,9 @@ FE_PolyFace<PolynomialType, dim, spacedim>::get_degree() const
   return this->degree;
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <class PolynomialType, int dim, int spacedim>
 UpdateFlags
@@ -68,7 +63,6 @@ FE_PolyFace<PolynomialType, dim, spacedim>::requires_update_flags(
 
   return out;
 }
-
 
 //---------------------------------------------------------------------------
 // Fill data of FEValues
@@ -100,8 +94,6 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_values(
   // attempt at evaluating it there *should* yield an invalid
   // result.
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -191,7 +183,6 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_face_values(
           }
       }
 }
-
 
 template <class PolynomialType, int dim, int spacedim>
 void

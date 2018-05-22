@@ -17,7 +17,6 @@
 // to be solved are used, check whether the correct equation is solved
 // https://github.com/dealii/dealii/issues/1978
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>

@@ -110,7 +110,6 @@ test()
 
   SomeFunction<dim> func;
 
-
   for(unsigned int loop = 0; loop < 5; ++loop)
     {
       // randomly refine:
@@ -135,7 +134,6 @@ test()
       tr.execute_coarsening_and_refinement();
       deallog << "locally owned cells: " << tr.n_locally_owned_active_cells()
               << " / " << tr.n_global_active_cells() << std::endl;
-
 
       LA::MPI::Vector vec1;
       LA::MPI::Vector lr_vec1;
@@ -187,7 +185,6 @@ test()
         deallog << "Checksum: " << checksum << " " << checksum2 << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

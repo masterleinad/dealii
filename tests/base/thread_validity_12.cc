@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Make sure we can call Threads::Thread::join on objects that haven't even
 // been assigned a thread
 
@@ -24,7 +23,6 @@
 void
 execute()
 {}
-
 
 void
 test()
@@ -37,8 +35,6 @@ test()
   t.join();
   deallog << "After second join()" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/event.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -39,10 +38,8 @@ namespace Algorithms
     return result;
   }
 
-
   Event::Event() : all_true(false), flags(names.size(), false)
   {}
-
 
   void
   Event::clear()
@@ -50,7 +47,6 @@ namespace Algorithms
     all_true = false;
     std::fill(flags.begin(), flags.end(), false);
   }
-
 
   void
   Event::all()

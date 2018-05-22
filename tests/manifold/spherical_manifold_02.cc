@@ -72,8 +72,6 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
   DoFHandler<2, 3> dof_handler(triangulation);
   QGaussLobatto<2> cell_quadrature(degree + 1);
 
-
-
   const double radius = 1.0;
   Point<3>     center(0.0, 0.0, 0.0);
   GridGenerator::hyper_sphere(triangulation, center, radius);
@@ -134,7 +132,6 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
     {
       double patch_surface = 0;
       fe_values.reinit(cell);
-
 
       for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ConstraintMatrix.distribute() produces a different result when using a
 // Trilinos::Vector with ghost elements (e.g. owned vs. active), which is a
 // bug. Now distribute() throws an Exception when called with a Vector with
@@ -43,8 +41,6 @@
 #include <deal.II/fe/fe_system.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 void
@@ -132,14 +128,12 @@ test()
   */
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

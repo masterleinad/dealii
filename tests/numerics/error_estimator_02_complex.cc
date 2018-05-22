@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like the error_estimator_02 test but using a complex-valued vector
-
 
 #include "../tests.h"
 
@@ -674,7 +672,6 @@ test(const MySecondFunction<dim>& func)
   dof_handler.clear();
 }
 
-
 int
 main()
 {
@@ -716,8 +713,6 @@ main()
     MySecondFunction<2> function;
     test(function);
   }
-
-
 
   dealii::deallog << "Ok" << std::endl;
 }

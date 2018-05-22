@@ -24,8 +24,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 template <typename ForwardIterator>
 void
 DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
@@ -208,19 +206,15 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
     }
 }
 
-
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::Line::memory_consumption() const
 {
   return entries.capacity() * sizeof(size_type) + sizeof(Line);
 }
 
-
 DynamicSparsityPattern::DynamicSparsityPattern()
   : have_entries(false), rows(0), cols(0), rowset(0)
 {}
-
-
 
 DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
   : Subscriptor(), have_entries(false), rows(0), cols(0), rowset(0)
@@ -233,8 +227,6 @@ DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
            "not be used to copy-construct a non-empty sparsity pattern."));
 }
 
-
-
 DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
                                                const size_type n,
                                                const IndexSet& rowset_)
@@ -243,21 +235,17 @@ DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
   reinit(m, n, rowset_);
 }
 
-
 DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet& rowset_)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(rowset_.size(), rowset_.size(), rowset_);
 }
 
-
 DynamicSparsityPattern::DynamicSparsityPattern(const size_type n)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(n, n);
 }
-
-
 
 DynamicSparsityPattern&
 DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
@@ -275,8 +263,6 @@ DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
 
   return *this;
 }
-
-
 
 void
 DynamicSparsityPattern::reinit(const size_type m,
@@ -301,21 +287,15 @@ DynamicSparsityPattern::reinit(const size_type m,
   lines.swap(new_lines);
 }
 
-
-
 void
 DynamicSparsityPattern::compress()
 {}
-
-
 
 bool
 DynamicSparsityPattern::empty() const
 {
   return ((rows == 0) && (cols == 0));
 }
-
-
 
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::max_entries_per_row() const
@@ -331,8 +311,6 @@ DynamicSparsityPattern::max_entries_per_row() const
 
   return m;
 }
-
-
 
 bool
 DynamicSparsityPattern::exists(const size_type i, const size_type j) const
@@ -350,8 +328,6 @@ DynamicSparsityPattern::exists(const size_type i, const size_type j) const
   return std::binary_search(
     lines[rowindex].entries.begin(), lines[rowindex].entries.end(), j);
 }
-
-
 
 void
 DynamicSparsityPattern::symmetrize()
@@ -384,8 +360,6 @@ DynamicSparsityPattern::symmetrize()
     }
 }
 
-
-
 template <typename SparsityPatternTypeLeft, typename SparsityPatternTypeRight>
 void
 DynamicSparsityPattern::compute_mmult_pattern(
@@ -413,8 +387,6 @@ DynamicSparsityPattern::compute_mmult_pattern(
     }
 }
 
-
-
 void
 DynamicSparsityPattern::print(std::ostream& out) const
 {
@@ -432,8 +404,6 @@ DynamicSparsityPattern::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 void
 DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
@@ -454,11 +424,8 @@ DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
         out << *j << " " << -static_cast<signed int>(rowindex) << std::endl;
     }
 
-
   AssertThrow(out, ExcIO());
 }
-
-
 
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::bandwidth() const
@@ -480,8 +447,6 @@ DynamicSparsityPattern::bandwidth() const
   return b;
 }
 
-
-
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::n_nonzero_elements() const
 {
@@ -497,7 +462,6 @@ DynamicSparsityPattern::n_nonzero_elements() const
   return n;
 }
 
-
 DynamicSparsityPattern::size_type
 DynamicSparsityPattern::memory_consumption() const
 {
@@ -510,7 +474,6 @@ DynamicSparsityPattern::memory_consumption() const
 
   return mem;
 }
-
 
 // explicit instantiations
 template void

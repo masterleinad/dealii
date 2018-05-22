@@ -60,8 +60,6 @@ namespace Step39
 
   Functions::SlitSingularityFunction<2> exact_solution;
 
-
-
   template <int dim>
   class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
   {
@@ -79,7 +77,6 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info2) const;
   };
 
-
   template <int dim>
   void
   MatrixIntegrator<dim>::cell(
@@ -89,7 +86,6 @@ namespace Step39
     LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
                                            info.fe_values());
   }
-
 
   template <int dim>
   void
@@ -140,13 +136,11 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info2) const;
   };
 
-
   template <int dim>
   void
   RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&,
                            typename MeshWorker::IntegrationInfo<dim>&) const
   {}
-
 
   template <int dim>
   void
@@ -172,7 +166,6 @@ namespace Step39
                            * fe.JxW(k);
   }
 
-
   template <int dim>
   void
   RHSIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&,
@@ -180,7 +173,6 @@ namespace Step39
                            typename MeshWorker::IntegrationInfo<dim>&,
                            typename MeshWorker::IntegrationInfo<dim>&) const
   {}
-
 
   template <int dim>
   class Estimator : public MeshWorker::LocalIntegrator<dim>
@@ -198,7 +190,6 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info1,
          typename MeshWorker::IntegrationInfo<dim>& info2) const;
   };
-
 
   template <int dim>
   void
@@ -239,7 +230,6 @@ namespace Step39
     dinfo.value(0) = std::sqrt(dinfo.value(0));
   }
 
-
   template <int dim>
   void
   Estimator<dim>::face(MeshWorker::DoFInfo<dim>&                  dinfo1,
@@ -273,8 +263,6 @@ namespace Step39
     dinfo2.value(0) = dinfo1.value(0);
   }
 
-
-
   template <int dim>
   class ErrorIntegrator : public MeshWorker::LocalIntegrator<dim>
   {
@@ -291,7 +279,6 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info1,
          typename MeshWorker::IntegrationInfo<dim>& info2) const;
   };
-
 
   template <int dim>
   void
@@ -325,7 +312,6 @@ namespace Step39
     dinfo.value(1) = std::sqrt(dinfo.value(1));
   }
 
-
   template <int dim>
   void
   ErrorIntegrator<dim>::boundary(
@@ -350,7 +336,6 @@ namespace Step39
       }
     dinfo.value(0) = std::sqrt(dinfo.value(0));
   }
-
 
   template <int dim>
   void
@@ -379,8 +364,6 @@ namespace Step39
     dinfo1.value(0) = std::sqrt(dinfo1.value(0));
     dinfo2.value(0) = dinfo1.value(0);
   }
-
-
 
   template <int dim>
   class InteriorPenaltyProblem
@@ -430,7 +413,6 @@ namespace Step39
     MGLevelObject<SparseMatrix<double>> mg_matrix_dg_up;
   };
 
-
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
     const FiniteElement<dim>& fe)
@@ -442,7 +424,6 @@ namespace Step39
   {
     GridGenerator::hyper_cube_slit(triangulation, -1, 1);
   }
-
 
   template <int dim>
   void
@@ -491,7 +472,6 @@ namespace Step39
       }
   }
 
-
   template <int dim>
   void
   InteriorPenaltyProblem<dim>::assemble_matrix()
@@ -514,7 +494,6 @@ namespace Step39
                                            integrator,
                                            assembler);
   }
-
 
   template <int dim>
   void
@@ -539,7 +518,6 @@ namespace Step39
                                            integrator,
                                            assembler);
   }
-
 
   template <int dim>
   void
@@ -568,7 +546,6 @@ namespace Step39
 
     right_hand_side *= -1.;
   }
-
 
   template <int dim>
   void
@@ -607,7 +584,6 @@ namespace Step39
       preconditioner(dof_handler, mg, mg_transfer);
     solver.solve(matrix, solution, right_hand_side, preconditioner);
   }
-
 
   template <int dim>
   double
@@ -659,7 +635,6 @@ namespace Step39
     return estimates.block(0).l2_norm();
   }
 
-
   template <int dim>
   void
   InteriorPenaltyProblem<dim>::error()
@@ -709,7 +684,6 @@ namespace Step39
     deallog << "energy-error: " << errors.block(0).l2_norm() << std::endl;
     deallog << "L2-error:     " << errors.block(1).l2_norm() << std::endl;
   }
-
 
   template <int dim>
   void
@@ -775,8 +749,6 @@ namespace Step39
       }
   }
 } // namespace Step39
-
-
 
 int
 main()

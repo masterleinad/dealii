@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // test cell->face(0)->get_dof_indices()
 // compared to _06, we now test for an hp DoFHandler
@@ -30,8 +29,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 
-
-
 template <int spacedim>
 void
 print_dofs(const typename hp::DoFHandler<1, spacedim>::face_iterator& i,
@@ -45,8 +42,6 @@ print_dofs(const typename hp::DoFHandler<1, spacedim>::face_iterator& i,
   deallog << std::endl;
 }
 
-
-
 template <int spacedim>
 void
 print_dofs(const typename hp::DoFHandler<1, spacedim>::cell_iterator& i,
@@ -58,8 +53,6 @@ print_dofs(const typename hp::DoFHandler<1, spacedim>::cell_iterator& i,
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
-
-
 
 template <int spacedim>
 void
@@ -110,8 +103,6 @@ test()
         cell->face(1), cell->active_fe_index(), cell->get_fe().dofs_per_face);
     }
 }
-
-
 
 int
 main()

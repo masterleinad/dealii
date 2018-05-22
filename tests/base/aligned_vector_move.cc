@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for C++11 move operations on AlignedVector<unsigned int>
 
 #include "../tests.h"
 
 #include <deal.II/base/aligned_vector.h>
-
 
 void
 test()
@@ -54,7 +52,6 @@ test()
   deallog << "Size of move-assigned VEC: " << a.size() << std::endl;
   deallog << "Size of moved VEC: " << b.size() << std::endl;
 }
-
 
 int
 main()

@@ -35,7 +35,6 @@ test()
 
   GridGenerator::hyper_cube(triangulation, 2.0, 3.0);
 
-
   const QGauss<dim> quadrature(5);
 
   std::vector<Point<dim>> q_points = quadrature.get_points();
@@ -62,7 +61,6 @@ test()
     }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

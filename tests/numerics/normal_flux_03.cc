@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like normal_flux_01 but check on a hyper_sphere geometry
 
 #include "../tests.h"
@@ -28,8 +27,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -49,8 +46,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   cm.print(deallog.get_file_stream());
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -69,7 +64,6 @@ test_hyper_sphere()
       test(tr, fe);
     }
 }
-
 
 int
 main()

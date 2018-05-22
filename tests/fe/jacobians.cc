@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Show the Jacobians, inverse Jacobians, Jacobian gradients,
 // Jacobian Hessians, Jacobian Hessian gradients, and their
 // pushed forward versions on hyperball with one quadrature
@@ -31,7 +30,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -205,8 +203,6 @@ do_test(const Triangulation<dim>& tria, const Mapping<dim>& mapping)
   }
 }
 
-
-
 template <int dim>
 void
 test()
@@ -236,7 +232,6 @@ test()
     do_test(tria, mapping);
   }
 }
-
 
 int
 main()

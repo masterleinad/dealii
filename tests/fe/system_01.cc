@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // previously, the FETools::get_interpolation_matrix function would
 // compute its result itself by interpolation. now, the different
 // finite elements do that themselves, if they can. make sure the
@@ -32,8 +30,6 @@
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void
@@ -55,8 +51,6 @@ check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   deallog << std::endl;
 }
 
-
-
 #define CHECK_SYS1(sub1_1, N1_1, sub2_1, N2_1, dim) \
   {                                                 \
     FESystem<dim> fe1(sub1_1, N1_1);                \
@@ -70,7 +64,6 @@ check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     FESystem<dim> q(sub1, N1, sub2, N2, sub3, N3);    \
     check(q, q);                                      \
   }
-
 
 int
 main()

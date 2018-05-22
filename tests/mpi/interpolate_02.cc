@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like _01 but with PETSc vectors. this program hangs at the time of writing
 // in much the same way solution_transfer_01 does because one processor has no
 // cells and all the others decide that PETScWrappers::MPI::Vector::compress
 // is a no-op when of course the one who does have cells doesn't think so
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -44,7 +41,6 @@
 #include <deal.II/fe/fe_system.h>
 
 #include <sstream>
-
 
 template <int dim>
 void
@@ -71,7 +67,6 @@ test()
     deallog << dofh.n_locally_owned_dofs() << ' ' << dofh.n_dofs() << std::endl
             << norm << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

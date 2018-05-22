@@ -18,7 +18,6 @@
  *          Guido Kanschat, 2011
  */
 
-
 // @sect3{Many new include files}
 
 // These include files are already known to you. They declare the classes
@@ -150,7 +149,6 @@ private:
 Step3::Step3() : fe(1), dof_handler(triangulation)
 {}
 
-
 // @sect4{Step3::make_grid}
 
 // Now, the first thing we've got to do is to generate the triangulation on
@@ -187,7 +185,6 @@ Step3::make_grid()
 // consequently get a value of 1365 instead. On the other hand, the number of
 // cells (as opposed to the number of active cells) is not typically of much
 // interest, so there is no good reason to print it.
-
 
 // @sect4{Step3::setup_system}
 
@@ -235,7 +232,6 @@ Step3::setup_system()
 }
 
 // @sect4{Step3::assemble_system}
-
 
 // The next step is to compute the entries of the matrix and right hand side
 // that form the linear system from which we compute the solution. This is the
@@ -474,7 +470,6 @@ Step3::assemble_system()
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 
-
   // Now almost everything is set up for the solution of the discrete
   // system. However, we have not yet taken care of boundary values (in fact,
   // Laplace's equation without Dirichlet boundary values is not even uniquely
@@ -528,7 +523,6 @@ Step3::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
 // @sect4{Step3::solve}
 
 // The following function simply solves the discretized equation. As the
@@ -562,7 +556,6 @@ Step3::solve()
   // Now that the solver has done its job, the solution variable contains the
   // nodal values of the solution function.
 }
-
 
 // @sect4{Step3::output_results}
 
@@ -603,7 +596,6 @@ Step3::output_results() const
   data_out.write_gnuplot(output);
 }
 
-
 // @sect4{Step3::run}
 
 // Finally, the last function of this class is the main function which calls
@@ -620,7 +612,6 @@ Step3::run()
   solve();
   output_results();
 }
-
 
 // @sect3{The <code>main</code> function}
 

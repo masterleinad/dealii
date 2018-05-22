@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Ensure that, when executing test suite programs, the environment variable
 // OMP_NUM_THREADS is set to 2.
 
 #include "../tests.h"
-
 
 int
 main()

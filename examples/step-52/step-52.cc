@@ -52,7 +52,6 @@
 // methods.
 #include <deal.II/base/time_stepping.h>
 
-
 // The next step is like in all previous tutorial programs: We put everything
 // into a namespace of its own and then import the deal.II classes and functions
 // into it.
@@ -127,7 +126,6 @@ namespace Step52
                              const double       initial_time,
                              const double       final_time);
 
-
     unsigned int fe_degree;
 
     double diffusion_coefficient;
@@ -152,8 +150,6 @@ namespace Step52
     Vector<double> solution;
   };
 
-
-
   // We choose quadratic finite elements and we initialize the parameters.
   Diffusion::Diffusion()
     : fe_degree(2),
@@ -162,8 +158,6 @@ namespace Step52
       fe(fe_degree),
       dof_handler(triangulation)
   {}
-
-
 
   // @sect4{<code>Diffusion::setup_system</code>}
   // Now, we create the constraint matrix and the sparsity pattern. Then, we
@@ -186,8 +180,6 @@ namespace Step52
     mass_minus_tau_Jacobian.reinit(sparsity_pattern);
     solution.reinit(dof_handler.n_dofs());
   }
-
-
 
   // @sect4{<code>Diffusion::assemble_system</code>}
   // In this function, we compute $-\int D \nabla b_i \cdot \nabla b_j
@@ -212,7 +204,6 @@ namespace Step52
     FEValues<2> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients | update_JxW_values);
-
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
@@ -259,8 +250,6 @@ namespace Step52
     inverse_mass_matrix.initialize(mass_matrix);
   }
 
-
-
   // @sect4{<code>Diffusion::get_source</code>}
   //
   // In this function, the source term of the equation for a given time and a
@@ -279,8 +268,6 @@ namespace Step52
                   * (absorption_cross_section * (b * x - x * x)
                      + 2. * diffusion_coefficient));
   }
-
-
 
   // @sect4{<code>Diffusion::evaluate_diffusion</code>}
   //
@@ -308,7 +295,6 @@ namespace Step52
                           quadrature_formula,
                           update_values | update_quadrature_points
                             | update_JxW_values);
-
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
@@ -347,7 +333,6 @@ namespace Step52
     return value;
   }
 
-
   // @sect4{<code>Diffusion::id_minus_tau_J_inverse</code>}
   //
   // We compute $\left(M-\tau \frac{\partial f}{\partial y}\right)^{-1} M$. This
@@ -378,8 +363,6 @@ namespace Step52
 
     return result;
   }
-
-
 
   // @sect4{<code>Diffusion::output_results</code>}
   //
@@ -470,7 +453,6 @@ namespace Step52
     data_out.write_vtu(output);
   }
 
-
   // @sect4{<code>Diffusion::explicit_method</code>}
   //
   // This function is the driver for all the explicit methods. It calls
@@ -508,8 +490,6 @@ namespace Step52
           output_results(i + 1, method);
       }
   }
-
-
 
   // @sect4{<code>Diffusion::implicit_method</code>}
   // This function is equivalent to <code>explicit_method</code> but for implicit
@@ -550,8 +530,6 @@ namespace Step52
           output_results(i + 1, method);
       }
   }
-
-
 
   // @sect4{<code>Diffusion::embedded_explicit_method</code>}
   // This function is the driver for the embedded explicit methods. It requires
@@ -623,8 +601,6 @@ namespace Step52
     return n_steps;
   }
 
-
-
   // @sect4{<code>Diffusion::run</code>}
   //
   // The following is the main function of the program. At the top, we create
@@ -687,7 +663,6 @@ namespace Step52
               << std::endl;
     std::cout << std::endl;
 
-
     std::cout << "Implicit methods:" << std::endl;
     implicit_method(
       TimeStepping::BACKWARD_EULER, n_time_steps, initial_time, final_time);
@@ -709,7 +684,6 @@ namespace Step52
     std::cout << "SDIRK:                    error=" << solution.l2_norm()
               << std::endl;
     std::cout << std::endl;
-
 
     std::cout << "Embedded explicit methods:" << std::endl;
     n_steps = embedded_explicit_method(
@@ -743,8 +717,6 @@ namespace Step52
     std::cout << "                steps performed=" << n_steps << std::endl;
   }
 } // namespace Step52
-
-
 
 // @sect3{The <code>main()</code> function}
 //

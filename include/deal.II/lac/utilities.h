@@ -201,7 +201,6 @@ namespace Utilities
 
 } // namespace Utilities
 
-
 /*------------------------- Implementation ----------------------------*/
 
 #ifndef DOXYGEN
@@ -219,8 +218,6 @@ namespace Utilities
       std::array<NumberType, 3> res;
       return res;
     }
-
-
 
     template <typename NumberType>
     std::array<NumberType, 3>
@@ -242,8 +239,6 @@ namespace Utilities
       return csr;
     }
 
-
-
     template <typename NumberType>
     std::array<std::complex<NumberType>, 3>
     givens_rotation(const std::complex<NumberType>& /*f*/,
@@ -253,8 +248,6 @@ namespace Utilities
       std::array<NumberType, 3> res;
       return res;
     }
-
-
 
     template <typename NumberType>
     std::array<NumberType, 3>
@@ -305,8 +298,6 @@ namespace Utilities
 
       return res;
     }
-
-
 
     template <typename OperatorType, typename VectorType>
     double
@@ -398,7 +389,6 @@ namespace Utilities
       return diagonal[k - 1] + f->l2_norm();
     }
 
-
     template <typename OperatorType, typename VectorType>
     void
     chebyshev_filter(VectorType&                     x,
@@ -476,9 +466,6 @@ namespace Utilities
 
 #endif
 
-
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif

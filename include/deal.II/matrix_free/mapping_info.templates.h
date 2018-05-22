@@ -26,9 +26,7 @@
 
 #include <deal.II/matrix_free/mapping_info.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -41,8 +39,6 @@ namespace internal
       QuadratureDescriptor()
       : n_q_points(numbers::invalid_unsigned_int)
     {}
-
-
 
     template <int structdim, int spacedim, typename Number>
     void
@@ -95,8 +91,6 @@ namespace internal
         }
     }
 
-
-
     template <int structdim, int spacedim, typename Number>
     std::size_t
     MappingInfoStorage<structdim, spacedim, Number>::QuadratureDescriptor ::
@@ -109,8 +103,6 @@ namespace internal
         memory += tensor_quadrature_weights[d].memory_consumption();
       return memory;
     }
-
-
 
     template <int structdim, int spacedim, typename Number>
     std::size_t
@@ -129,8 +121,6 @@ namespace internal
              + MemoryConsumption::memory_consumption(quadrature_point_offsets)
              + MemoryConsumption::memory_consumption(quadrature_points);
     }
-
-
 
     template <int structdim, int spacedim, typename Number>
     template <typename StreamType>
@@ -187,15 +177,11 @@ namespace internal
         }
     }
 
-
-
     /* ------------------------ MappingInfo implementation ----------------- */
 
     template <int dim, typename Number>
     MappingInfo<dim, Number>::MappingInfo()
     {}
-
-
 
     template <int dim, typename Number>
     void
@@ -207,8 +193,6 @@ namespace internal
       cell_type.clear();
       face_type.clear();
     }
-
-
 
     template <int dim, typename Number>
     UpdateFlags
@@ -254,8 +238,6 @@ namespace internal
       return new_flags;
     }
 
-
-
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize(
@@ -287,8 +269,6 @@ namespace internal
         tria, cells, mapping, quad, update_flags_faces_by_cells);
     }
 
-
-
     /* ------------------------- initialization of cells ------------------- */
 
     // Anonymous namespace with implementation of extraction of values on cell
@@ -304,8 +284,6 @@ namespace internal
         else
           return tria.begin()->diameter();
       }
-
-
 
       template <int dim, typename Number>
       struct CompressedCellData
@@ -342,14 +320,10 @@ namespace internal
         const double                                           jac_size;
       };
 
-
-
       template <int dim, typename Number>
       LocalData<dim, Number>::LocalData(const double jac_size_in)
         : jac_size(jac_size_in)
       {}
-
-
 
       template <int dim, typename Number>
       void
@@ -557,8 +531,6 @@ namespace internal
         // set information for next cell
         cell_t_prev = cell_t[VectorizedArray<Number>::n_array_elements - 1];
       }
-
-
 
       template <int dim, typename Number>
       void
@@ -897,8 +869,6 @@ namespace internal
             } // end for ( cell < end_cells )
       }
 
-
-
       template <typename CONTAINER>
       void
       merge_compressed_data(const CONTAINER&           source,
@@ -920,8 +890,6 @@ namespace internal
             ++lookup;
           }
       }
-
-
 
       template <int structdim, int dim, typename Number>
       void
@@ -994,8 +962,6 @@ namespace internal
       }
 
     } // end of anonymous namespace
-
-
 
     template <int dim, typename Number>
     void
@@ -1164,8 +1130,6 @@ namespace internal
         }
     }
 
-
-
     /* ------------------------- initialization of faces ------------------- */
 
     // Anonymous namespace with implementation of extraction of values on cell
@@ -1202,8 +1166,6 @@ namespace internal
         const Number jacobian_size;
       };
 
-
-
       // We always put the derivative normal to the face in the last slot for
       // simpler unit cell gradient computations. This function reorders the
       // indices of the Jacobian appropriately.
@@ -1232,8 +1194,6 @@ namespace internal
 
         return numbers::invalid_unsigned_int;
       }
-
-
 
       template <int dim, typename Number>
       void
@@ -1647,8 +1607,6 @@ namespace internal
 
     } // end of anonymous namespace
 
-
-
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize_faces(
@@ -1864,8 +1822,6 @@ namespace internal
         }
     }
 
-
-
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize_faces_by_cells(
@@ -2080,8 +2036,6 @@ namespace internal
             }
     }
 
-
-
     template <int dim, typename Number>
     std::size_t
     MappingInfo<dim, Number>::memory_consumption() const
@@ -2093,8 +2047,6 @@ namespace internal
       memory += sizeof(*this);
       return memory;
     }
-
-
 
     template <int dim, typename Number>
     template <typename StreamType>
@@ -2117,16 +2069,12 @@ namespace internal
         }
     }
 
-
-
     /* ------------------------------------------------------------------ */
 
     template <typename Number>
     FPArrayComparator<Number>::FPArrayComparator(const Number scaling)
       : tolerance(scaling * std::numeric_limits<double>::epsilon() * 1024.)
     {}
-
-
 
     template <typename Number>
     bool
@@ -2147,8 +2095,6 @@ namespace internal
       return false;
     }
 
-
-
     template <typename Number>
     bool
     FPArrayComparator<Number>::operator()(
@@ -2164,8 +2110,6 @@ namespace internal
           return false;
       return false;
     }
-
-
 
     template <typename Number>
     template <int dim>
@@ -2189,8 +2133,6 @@ namespace internal
             return false;
       return false;
     }
-
-
 
     template <typename Number>
     template <int dim>

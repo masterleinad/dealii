@@ -16,7 +16,6 @@
 #ifndef dealii_elasticity_kinematics_h
 #define dealii_elasticity_kinematics_h
 
-
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
@@ -261,13 +260,9 @@ namespace Physics
   }   // namespace Elasticity
 } // namespace Physics
 
-
-
 #ifndef DOXYGEN
 
 // ------------------------- inline functions ------------------------
-
-
 
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
@@ -276,16 +271,12 @@ Physics::Elasticity::Kinematics::F(const Tensor<2, dim, Number>& Grad_u)
   return StandardTensors<dim>::I + Grad_u;
 }
 
-
-
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
 Physics::Elasticity::Kinematics::F_iso(const Tensor<2, dim, Number>& F)
 {
   return std::pow(determinant(F), -1.0 / dim) * F;
 }
-
-
 
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
@@ -297,8 +288,6 @@ Physics::Elasticity::Kinematics::F_vol(const Tensor<2, dim, Number>& F)
              unit_symmetric_tensor<dim>());
 }
 
-
-
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::Kinematics::C(const Tensor<2, dim, Number>& F)
@@ -306,16 +295,12 @@ Physics::Elasticity::Kinematics::C(const Tensor<2, dim, Number>& F)
   return symmetrize(transpose(F) * F);
 }
 
-
-
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::Kinematics::b(const Tensor<2, dim, Number>& F)
 {
   return symmetrize(F * transpose(F));
 }
-
-
 
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
@@ -327,8 +312,6 @@ Physics::Elasticity::Kinematics::E(const Tensor<2, dim, Number>& F)
                 StandardTensors<dim>::I));
 }
 
-
-
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::Kinematics::epsilon(const Tensor<2, dim, Number>& Grad_u)
@@ -336,8 +319,6 @@ Physics::Elasticity::Kinematics::epsilon(const Tensor<2, dim, Number>& Grad_u)
   // This is the equivalent to 0.5*symmetrize(Grad_u + transpose(Grad_u));
   return symmetrize(Grad_u);
 }
-
-
 
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
@@ -350,8 +331,6 @@ Physics::Elasticity::Kinematics::e(const Tensor<2, dim, Number>& F)
                       - transpose(F_inv) * F_inv);
 }
 
-
-
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
 Physics::Elasticity::Kinematics::l(const Tensor<2, dim, Number>& F,
@@ -360,8 +339,6 @@ Physics::Elasticity::Kinematics::l(const Tensor<2, dim, Number>& F,
   return dF_dt * invert(F);
 }
 
-
-
 template <int dim, typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::Kinematics::d(const Tensor<2, dim, Number>& F,
@@ -369,8 +346,6 @@ Physics::Elasticity::Kinematics::d(const Tensor<2, dim, Number>& F,
 {
   return symmetrize(l(F, dF_dt));
 }
-
-
 
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that we can read in and edge orient meshes in 3d with a
 // significant number of cells. this tests Mike's reorienting
 // algorithm
@@ -29,9 +27,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
-
 
 void
 test(const char* filename)
@@ -77,8 +73,6 @@ test1()
   std::ofstream gnufile("square.gnuplot");
   grid_out.write_gnuplot(tria, gnufile);
 }
-
-
 
 int
 main()

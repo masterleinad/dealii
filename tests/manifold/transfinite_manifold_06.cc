@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that transfinite interpolation manifold returns valid results on the
 // same geometry as transfinite_manifold_05 (ball inside square, curved
 // spherical surface). In an initial version, the line search in Newton for
@@ -26,7 +25,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 int
 main()

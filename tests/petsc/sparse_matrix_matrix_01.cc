@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::mmult
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -58,8 +55,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

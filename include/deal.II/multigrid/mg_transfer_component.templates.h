@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mg_transfer_component_templates_h
 #define dealii_mg_transfer_component_templates_h
 
@@ -35,8 +34,6 @@ DEAL_II_NAMESPACE_OPEN
 
 /* --------------------- MGTransferSelect -------------- */
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -49,8 +46,6 @@ MGTransferSelect<number>::copy_to_mg(
     mg_dof_handler, dst, src.block(target_component[selected_component]));
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -61,8 +56,6 @@ MGTransferSelect<number>::copy_to_mg(
 {
   do_copy_to_mg(mg_dof_handler, dst, src);
 }
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>
@@ -78,8 +71,6 @@ MGTransferSelect<number>::copy_from_mg(
   if(constraints != nullptr)
     constraints->condense(dst);
 }
-
-
 
 template <typename number>
 template <int dim, typename number2, int spacedim>
@@ -118,8 +109,6 @@ MGTransferSelect<number>::copy_from_mg(
     }
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -131,8 +120,6 @@ MGTransferSelect<number>::copy_from_mg_add(
   do_copy_from_mg_add(mg_dof_handler, dst, src);
 }
 
-
-
 template <typename number>
 template <int dim, typename number2, int spacedim>
 void
@@ -143,8 +130,6 @@ MGTransferSelect<number>::copy_from_mg_add(
 {
   do_copy_from_mg_add(mg_dof_handler, dst, src);
 }
-
-
 
 template <typename number>
 template <int dim, class OutVector, int spacedim>
@@ -177,7 +162,6 @@ MGTransferSelect<number>::do_copy_from_mg(
     }
 }
 
-
 template <typename number>
 template <int dim, class OutVector, int spacedim>
 void
@@ -209,15 +193,12 @@ MGTransferSelect<number>::do_copy_from_mg_add(
     }
 }
 
-
 template <typename number>
 std::size_t
 MGTransferSelect<number>::memory_consumption() const
 {
   return sizeof(int) + MGTransferComponentBase::memory_consumption();
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

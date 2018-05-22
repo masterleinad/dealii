@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityPattern::block_read/write
 
 #include "sparsity_pattern_common.h"

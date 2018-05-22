@@ -15,7 +15,6 @@
 
 #include <deal.II/base/graph_coloring.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace GraphColoring

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to transfinite_manifold_01 but now only setting the transfinite
 // manifold on the cells at the boundary, skipping the interior ones
 
@@ -24,7 +23,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 template <int dim, int spacedim>
 void

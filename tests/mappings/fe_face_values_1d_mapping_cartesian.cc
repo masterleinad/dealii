@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like fe_face_values_1d but testing that one can use MappingCartesian
 
 #include "../tests.h"
@@ -36,8 +35,6 @@
 #include <vector>
 
 #define PRECISION 4
-
-
 
 template <int dim>
 inline void
@@ -80,8 +77,6 @@ plot_faces(Mapping<dim>&                            mapping,
       deallog << std::endl;
     }
 }
-
-
 
 template <int dim>
 inline void
@@ -128,7 +123,6 @@ plot_subfaces(Mapping<dim>&                            mapping,
       }
 }
 
-
 template <int dim>
 void
 mapping_test()
@@ -163,8 +157,6 @@ mapping_test()
     plot_subfaces(mapping, fe_q4, cell);
   }
 }
-
-
 
 int
 main()

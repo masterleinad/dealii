@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // another test that crashed at one point
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,7 +30,6 @@
 
 #include <numeric>
 
-
 template <int dim>
 void
 test()
@@ -48,7 +44,6 @@ test()
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe);
 }
-
 
 int
 main(int argc, char* argv[])

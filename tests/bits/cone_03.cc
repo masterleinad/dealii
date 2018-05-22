@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check CylindricalManifold
 
 #include "../tests.h"
@@ -29,7 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -49,7 +46,6 @@ check<2>()
   triangulation.set_manifold(0, boundary);
 
   triangulation.refine_global(2);
-
 
   const typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active();
@@ -98,7 +94,6 @@ check<3>()
         }
     }
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Controls that the covariant matrix is calculated properly. It uses
 // a Q1 finite element to calculate the scalar product of the gradient
 // of a projected function (a monomial) with the tangential to the
@@ -43,8 +41,6 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -60,7 +56,6 @@ test(std::string filename)
   gi.read_ucd(in);
 
   const QMidpoint<dim> q_midpoint;
-
 
   // finite elements used for the
   // projection
@@ -88,8 +83,6 @@ test(std::string filename)
   deallog << "no. of help dofs " << dof_handler_help.n_dofs() << std::endl;
   deallog << "no. of help dofs per cell " << fe_help.dofs_per_cell << std::endl;
 
-
-
   //  definition of the exact function
   //  and calculation of the projected
   //  one
@@ -108,7 +101,6 @@ test(std::string filename)
   ConstraintMatrix  constraints;
   constraints.close();
   VectorTools::project(dof_handler, constraints, quad, monomial, projected_one);
-
 
   // calculate its gradient
 
@@ -179,8 +171,6 @@ test(std::string filename)
   dataout.build_patches();
   dataout.write_vtk(logfile);
 }
-
-
 
 int
 main()

@@ -17,7 +17,6 @@
  * Author: Guido Kanschat and Timo Heister
  */
 
-
 // @note: This a work in progress example of parallel geometric
 // multigrid. Some parts are still in heavy development.
 
@@ -72,7 +71,6 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
-
 #include <deal.II/lac/generic_linear_algebra.h>
 
 // #define USE_PETSC_LA PETSc is not quite supported yet
@@ -95,7 +93,6 @@ namespace LA
 namespace Step50
 {
   using namespace dealii;
-
 
   // @sect3{The <code>LaplaceProblem</code> class template}
 
@@ -152,8 +149,6 @@ namespace Step50
     MGConstrainedDoFs mg_constrained_dofs;
   };
 
-
-
   // @sect3{Nonconstant coefficients}
 
   // The implementation of nonconstant
@@ -176,8 +171,6 @@ namespace Step50
                const unsigned int             component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -187,8 +180,6 @@ namespace Step50
     else
       return 1;
   }
-
-
 
   template <int dim>
   void
@@ -207,7 +198,6 @@ namespace Step50
     for(unsigned int i = 0; i < n_points; ++i)
       values[i] = Coefficient<dim>::value(points[i]);
   }
-
 
   // @sect3{The <code>LaplaceProblem</code> class implementation}
 
@@ -247,7 +237,6 @@ namespace Step50
       mg_dof_handler(triangulation),
       degree(degree)
   {}
-
 
   // @sect4{LaplaceProblem::setup_system}
 
@@ -306,7 +295,6 @@ namespace Step50
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
 
-
     // The multigrid constraints have to be
     // initialized. They need to know about
     // the boundary values as well, so we
@@ -316,7 +304,6 @@ namespace Step50
     mg_constrained_dofs.initialize(mg_dof_handler);
     mg_constrained_dofs.make_zero_boundary_constraints(mg_dof_handler,
                                                        dirichlet_boundary_ids);
-
 
     // Now for the things that concern the
     // multigrid data structures. First, we
@@ -386,7 +373,6 @@ namespace Step50
           true);
       }
   }
-
 
   // @sect4{LaplaceProblem::assemble_system}
 
@@ -466,7 +452,6 @@ namespace Step50
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
-
 
   // @sect4{LaplaceProblem::assemble_multigrid}
 
@@ -670,7 +655,6 @@ namespace Step50
                   cell_matrix(i, j) = 0;
                 }
 
-
           empty_constraints.distribute_local_to_global(
             cell_matrix,
             local_dof_indices,
@@ -683,8 +667,6 @@ namespace Step50
         mg_interface_matrices[i].compress(VectorOperation::add);
       }
   }
-
-
 
   // @sect4{LaplaceProblem::solve}
 
@@ -795,7 +777,6 @@ namespace Step50
     PreconditionMG<dim, vector_t, MGTransferPrebuilt<vector_t>> preconditioner(
       mg_dof_handler, mg, mg_transfer);
 
-
     // With all this together, we can finally
     // get about solving the linear system in
     // the usual way:
@@ -831,8 +812,6 @@ namespace Step50
     constraints.distribute(solution);
   }
 
-
-
   // @sect4{Postprocessing}
 
   // The following two functions postprocess a solution once it is
@@ -866,8 +845,6 @@ namespace Step50
     triangulation.execute_coarsening_and_refinement();
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -877,7 +854,6 @@ namespace Step50
     LA::MPI::Vector temp_solution;
     temp_solution.reinit(locally_relevant_set, MPI_COMM_WORLD);
     temp_solution = solution;
-
 
     LA::MPI::Vector temp = solution;
     system_matrix.residual(temp, solution, system_rhs);
@@ -923,7 +899,6 @@ namespace Step50
         std::cout << "   wrote " << pvtu_master_filename << std::endl;
       }
   }
-
 
   // @sect4{LaplaceProblem::run}
 
@@ -973,7 +948,6 @@ namespace Step50
       }
   }
 } // namespace Step50
-
 
 // @sect3{The main() function}
 //

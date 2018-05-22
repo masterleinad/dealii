@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _02, but test the Hdiv seminorm. this requires a vector-valued
 // element and a function we interpolate that is vector-valued. we
 // simply extend the function from _02 by zeros
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -37,16 +34,12 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 double
 f(const Point<dim>& p)
 {
   return p[0];
 }
-
-
 
 template <int dim>
 void
@@ -68,7 +61,6 @@ test()
       fe_collection.push_back(FESystem<dim>(FE_Q<dim>(i), dim));
       q_collection.push_back(QGauss<dim>(i + 2));
     }
-
 
   hp::DoFHandler<dim> dof_handler(tria);
 
@@ -118,7 +110,6 @@ test()
     AssertThrow(diff.l2_norm() == 0, ExcInternalError());
   }
 }
-
 
 int
 main()

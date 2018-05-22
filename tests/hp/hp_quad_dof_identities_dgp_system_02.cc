@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FESystem(FE_DGP)::hp_quad_dof_identities, but with a different
 // arrangement of base elements and multiplicities than in the _01 test
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -65,8 +60,6 @@ test()
           }
       }
 }
-
-
 
 int
 main()

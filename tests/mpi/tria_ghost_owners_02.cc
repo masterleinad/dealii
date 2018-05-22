@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test Tria::ghost_owners() like tria_ghost_owners_01 but with one coarse
 // cell
 
 #include "../tests.h"
-
 
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/utilities.h>
@@ -31,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 // make sure if i is in s on proc j, j is in s on proc i
 void
@@ -69,7 +64,6 @@ test()
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(5 - dim);
-
 
   for(unsigned int ref = 0; ref <= 3; ++ref)
     {
@@ -131,7 +125,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

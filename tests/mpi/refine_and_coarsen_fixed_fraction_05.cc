@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _05 but with indicators that span several orders of magnitude
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -125,14 +121,12 @@ test()
   }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

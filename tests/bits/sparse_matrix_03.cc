@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check setting elements in a sparse matrix using set() and add()
 // intermixed. this poses PETSc some problems, since one has to flush some
 // buffer in between these two types of operations, but it shouldn't be a
@@ -22,7 +20,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 void
 test()
@@ -62,8 +59,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

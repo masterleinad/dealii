@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check PETScWrappers::MPI::Vector::operator = (const ::Vector &)
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v)
@@ -57,8 +54,6 @@ test(PETScWrappers::MPI::Vector& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

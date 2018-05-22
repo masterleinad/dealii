@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the umfpack sparse direct solver on a block mass matrix
 
 #include "../tests.h"
@@ -102,8 +101,6 @@ assemble_laplace(MatrixType&         B,
         bb(local_dof_indices[i]) += cell_rhs(i);
     }
 }
-
-
 
 template <int dim>
 void
@@ -253,7 +250,6 @@ test()
           << std::endl;
   Assert(b.l2_norm() / ubb.l2_norm() < 1e-12, ExcInternalError());
 }
-
 
 int
 main()

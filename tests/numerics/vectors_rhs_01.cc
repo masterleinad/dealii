@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::create_right_hand_side
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -38,8 +35,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -60,8 +55,6 @@ public:
     values(1) = value(p, 1);
   }
 };
-
-
 
 template <int dim>
 void
@@ -101,8 +94,6 @@ check()
   for(unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
-
-
 
 int
 main()

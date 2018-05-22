@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _02, but use the parse_input_from_string function
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

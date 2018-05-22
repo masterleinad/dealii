@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::size()
 
 #include "../tests.h"
@@ -32,7 +30,6 @@ fill(Vector<Number>& v)
 
   ++counter;
 }
-
 
 template <typename Number>
 void
@@ -71,8 +68,6 @@ test(const std::vector<unsigned int>& size_sequence)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

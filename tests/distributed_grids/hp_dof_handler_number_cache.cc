@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the dofs/dof_handler_number_cache test but this time use a
 // parallel::distributed::Triangulation object. We still use only a
 // single processor so the end result should be the same but we use
 // entirely different code paths
 //
 // like the test without the hp_ prefix, but for hp::DoFHandler
-
 
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
@@ -40,7 +37,6 @@
 
 #include <cstdlib>
 #include <fstream>
-
 
 template <int dim>
 void
@@ -109,7 +105,6 @@ test()
                   ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

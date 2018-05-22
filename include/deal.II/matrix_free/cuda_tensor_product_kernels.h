@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_cuda_tensor_product_kernels_h
 #define dealii_cuda_tensor_product_kernels_h
 
 #include <deal.II/base/config.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace CUDAWrappers
 {
@@ -41,8 +38,6 @@ namespace CUDAWrappers
       evaluate_evenodd
     };
 
-
-
     /**
      * Generic evaluator framework.
      *
@@ -55,8 +50,6 @@ namespace CUDAWrappers
               typename Number>
     struct EvaluatorTensorProduct
     {};
-
-
 
     /**
      * Internal evaluator for 1d-3d shape function using the tensor product form
@@ -130,8 +123,6 @@ namespace CUDAWrappers
       integrate_gradient(Number* u, Number* grad_u[dim]);
     };
 
-
-
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     __device__
     EvaluatorTensorProduct<evaluate_general,
@@ -140,8 +131,6 @@ namespace CUDAWrappers
                            n_q_points_1d,
                            Number>::EvaluatorTensorProduct()
     {}
-
-
 
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     template <int direction, bool dof_to_quad, bool add, bool in_place>
@@ -156,8 +145,6 @@ namespace CUDAWrappers
         global_shape_values, in, out);
     }
 
-
-
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     template <int direction, bool dof_to_quad, bool add, bool in_place>
     __device__ void
@@ -171,8 +158,6 @@ namespace CUDAWrappers
       apply<direction, dof_to_quad, add, in_place>(
         global_shape_gradients, in, out);
     }
-
-
 
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     template <int direction, bool dof_to_quad, bool add, bool in_place>
@@ -222,8 +207,6 @@ namespace CUDAWrappers
         out[destination_idx] = t;
     }
 
-
-
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     inline __device__ void
     EvaluatorTensorProduct<evaluate_general,
@@ -265,8 +248,6 @@ namespace CUDAWrappers
         }
     }
 
-
-
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     inline __device__ void
     EvaluatorTensorProduct<evaluate_general,
@@ -307,8 +288,6 @@ namespace CUDAWrappers
             }
         }
     }
-
-
 
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     inline __device__ void
@@ -365,8 +344,6 @@ namespace CUDAWrappers
             }
         }
     }
-
-
 
     template <int dim, int fe_degree, int n_q_points_1d, typename Number>
     template <bool add>

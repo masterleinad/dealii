@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check the scaling factors used during conversion between
 // Tensor and Kelvin notation
 
@@ -25,7 +24,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <deal.II/physics/notation.h>
-
 
 using namespace dealii;
 using namespace dealii::Physics;

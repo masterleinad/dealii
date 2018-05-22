@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test VectorTools::interpolate_boundary_values for codim=1
 
 #include "../tests.h"
@@ -75,8 +73,6 @@ test(std::string filename)
                           ExcInternalError());
             }
 }
-
-
 
 int
 main()

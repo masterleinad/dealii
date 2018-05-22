@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Computes a reasonably small enclosing ball on a variety of cells.
 // The design of this test and part of the blessed file are taken
 // from measure_et_al_02 test.
-
 
 #include "../tests.h"
 #include <deal.II/base/exceptions.h>
@@ -30,14 +28,12 @@
 
 #define PRECISION 5
 
-
 template <int dim>
 void
 create_triangulation(const unsigned int, Triangulation<dim>&)
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 template <>
 void
@@ -101,7 +97,6 @@ create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
         Assert(false, ExcNotImplemented());
     };
 }
-
 
 template <>
 void
@@ -171,7 +166,6 @@ create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
     };
 }
 
-
 template <int dim>
 void
 test()
@@ -199,7 +193,6 @@ test()
     }
   deallog << "PASSED!" << std::endl;
 }
-
 
 int
 main()

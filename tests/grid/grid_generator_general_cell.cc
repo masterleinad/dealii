@@ -76,7 +76,6 @@ dim_3(std::ostream& os)
   gout.write_vtk(tria, os);
 }
 
-
 int
 main()
 {

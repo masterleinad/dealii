@@ -16,7 +16,6 @@
 #ifndef dealii_table_indices_h
 #define dealii_table_indices_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -24,9 +23,7 @@
 #include <iterator>
 #include <ostream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A class representing a fixed size array of indices.
@@ -45,7 +42,6 @@ class TableIndices
 public:
   static_assert(N > 0,
                 "TableIndices objects need to represent at least one index.");
-
 
   /**
    * Default constructor. This constructor sets all indices to zero.
@@ -180,10 +176,7 @@ protected:
   std::size_t indices[N];
 };
 
-
-
 /* --------------------- Template and inline functions ---------------- */
-
 
 template <int N>
 TableIndices<N>::TableIndices()
@@ -192,8 +185,6 @@ TableIndices<N>::TableIndices()
     indices[i] = 0;
 }
 
-
-
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0)
 {
@@ -201,8 +192,6 @@ TableIndices<N>::TableIndices(const std::size_t index0)
     N == 1, "This constructor is only available for TableIndices<1> objects.");
   indices[0] = index0;
 }
-
-
 
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0,
@@ -213,8 +202,6 @@ TableIndices<N>::TableIndices(const std::size_t index0,
   indices[0] = index0;
   indices[1] = index1;
 }
-
-
 
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0,
@@ -227,8 +214,6 @@ TableIndices<N>::TableIndices(const std::size_t index0,
   indices[1] = index1;
   indices[2] = index2;
 }
-
-
 
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0,
@@ -243,8 +228,6 @@ TableIndices<N>::TableIndices(const std::size_t index0,
   indices[2] = index2;
   indices[3] = index3;
 }
-
-
 
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0,
@@ -261,8 +244,6 @@ TableIndices<N>::TableIndices(const std::size_t index0,
   indices[3] = index3;
   indices[4] = index4;
 }
-
-
 
 template <int N>
 TableIndices<N>::TableIndices(const std::size_t index0,
@@ -351,7 +332,6 @@ TableIndices<N>::TableIndices(const std::size_t index0,
     }
 }
 
-
 template <int N>
 inline std::size_t TableIndices<N>::operator[](const unsigned int i) const
 {
@@ -359,14 +339,12 @@ inline std::size_t TableIndices<N>::operator[](const unsigned int i) const
   return indices[i];
 }
 
-
 template <int N>
 inline std::size_t& TableIndices<N>::operator[](const unsigned int i)
 {
   AssertIndexRange(i, N);
   return indices[i];
 }
-
 
 template <int N>
 inline bool
@@ -378,14 +356,12 @@ TableIndices<N>::operator==(const TableIndices<N>& other) const
   return true;
 }
 
-
 template <int N>
 inline bool
 TableIndices<N>::operator!=(const TableIndices<N>& other) const
 {
   return !(*this == other);
 }
-
 
 template <int N>
 inline void
@@ -394,7 +370,6 @@ TableIndices<N>::sort()
   std::sort(std::begin(indices), std::end(indices));
 }
 
-
 template <int N>
 template <class Archive>
 inline void
@@ -402,7 +377,6 @@ TableIndices<N>::serialize(Archive& ar, const unsigned int)
 {
   ar& indices;
 }
-
 
 /**
  * Output operator for TableIndices objects; reports them in a list like this:
@@ -425,7 +399,6 @@ operator<<(std::ostream& out, const TableIndices<N>& indices)
 
   return out;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

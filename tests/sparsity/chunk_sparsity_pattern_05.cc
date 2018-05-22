@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ChunkSparsityPattern::copy constructor with offdiagonals
 
 #include "sparsity_pattern_common.h"

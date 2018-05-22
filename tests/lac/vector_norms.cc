@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // checks that the l1, l2, lp norm is computed correctly for deal.II vectors
 // (check the summation algorithm), including an accuracy test (should not
 // lose more than 1 decimal also for 200000 vector entries)
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void
@@ -65,7 +62,6 @@ check_norms()
                   ExcInternalError());
     }
 }
-
 
 template <typename number>
 void
@@ -114,7 +110,6 @@ check_complex_norms()
                   ExcInternalError());
     }
 }
-
 
 int
 main()

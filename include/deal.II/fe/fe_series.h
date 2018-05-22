@@ -16,8 +16,6 @@
 #ifndef dealii_fe_series_H
 #define dealii_fe_series_H
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/subscriptor.h>
@@ -34,13 +32,10 @@
 #include <string>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup feall */
 /*@{*/
-
 
 /**
  * This namespace offers functions to calculate expansion series of the
@@ -244,7 +239,6 @@ namespace FESeries
     std::vector<double> unrolled_coefficients;
   };
 
-
   /**
    * Calculate the @p norm of subsets of @p coefficients defined by
    * @p predicate being constant. Return the pair of vectors of predicate values
@@ -265,8 +259,6 @@ namespace FESeries
                        const std::function<std::pair<bool, unsigned int>(
                          const TableIndices<dim>&)>& predicate,
                        const VectorTools::NormType   norm);
-
-
 
   /**
    * Linear regression least-square fit of $y = k \, x + b$.
@@ -354,7 +346,6 @@ namespace
           }
   }
 
-
   template <typename T>
   double
   complex_mean_value(const T& value)
@@ -374,7 +365,6 @@ namespace
   }
 
 } // namespace
-
 
 template <int dim, typename T>
 std::pair<std::vector<unsigned int>, std::vector<double>>
@@ -432,7 +422,6 @@ FESeries::process_coefficients(
 
   return std::make_pair(predicate_values, norm_values);
 }
-
 
 #endif // DOXYGEN
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check one aspect of DataOutStack in 2+1d
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out_stack.h>
-
 
 int
 main()

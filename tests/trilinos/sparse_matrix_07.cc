@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test TrilinosWrappers::SparseMatrix::reinit with a dealii::SparseMatrix
 // with a separate sparsity pattern that is partly subset and partly superset
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)
@@ -59,7 +56,6 @@ main(int argc, char** argv)
   xsparsity.add(2, 4);
   xsparsity.add(2, 1);
   xsparsity.compress();
-
 
   // now copy everything into a Trilinos matrix
   Epetra_Map                     map(TrilinosWrappers::types::int_type(5),

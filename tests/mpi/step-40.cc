@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // A lightly adapted version of the step-40 tutorial program
 
 #include "../tests.h"
@@ -56,7 +55,6 @@ namespace Step40
 {
   using namespace dealii;
 
-
   template <int dim>
   class LaplaceProblem
   {
@@ -96,8 +94,6 @@ namespace Step40
     ConditionalOStream pcout;
   };
 
-
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
     : mpi_communicator(MPI_COMM_WORLD),
@@ -113,15 +109,11 @@ namespace Step40
             (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
   {}
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     dof_handler.clear();
   }
-
-
 
   template <int dim>
   void
@@ -158,8 +150,6 @@ namespace Step40
                          dof_handler.n_locally_owned_dofs_per_processor(),
                          Utilities::MPI::this_mpi_process(mpi_communicator));
   }
-
-
 
   template <int dim>
   void
@@ -227,8 +217,6 @@ namespace Step40
     system_rhs.compress(VectorOperation::add);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -273,16 +261,12 @@ namespace Step40
     locally_relevant_solution = completely_distributed_solution;
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::refine_grid()
   {
     triangulation.refine_global(1);
   }
-
-
 
   template <int dim>
   void
@@ -330,7 +314,6 @@ namespace Step40
   }
 } // namespace Step40
 
-
 int
 test_mpi()
 {
@@ -338,7 +321,6 @@ test_mpi()
     {
       using namespace dealii;
       using namespace Step40;
-
 
       {
         LaplaceProblem<2> laplace_problem_2d;
@@ -374,8 +356,6 @@ test_mpi()
 
   return 0;
 }
-
-
 
 int
 main(int argc, char* argv[])

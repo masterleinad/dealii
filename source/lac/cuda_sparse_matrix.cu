@@ -40,8 +40,6 @@ namespace CUDAWrappers
         val[idx] *= a;
     }
 
-
-
     void
     csrmv(cusparseHandle_t         handle,
           bool                     transpose,
@@ -78,8 +76,6 @@ namespace CUDAWrappers
                                                    y);
       AssertCusparse(error_code);
     }
-
-
 
     void
     csrmv(cusparseHandle_t         handle,
@@ -118,8 +114,6 @@ namespace CUDAWrappers
       AssertCusparse(error_code);
     }
 
-
-
     template <typename Number>
     __global__ void
     l1_norm(const typename SparseMatrix<Number>::size_type n_rows,
@@ -138,8 +132,6 @@ namespace CUDAWrappers
               &sums[column_index_dev[j]], abs(val_dev[j]));
         }
     }
-
-
 
     template <typename Number>
     __global__ void
@@ -161,8 +153,6 @@ namespace CUDAWrappers
     }
   } // namespace internal
 
-
-
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix()
     : nnz(0),
@@ -172,8 +162,6 @@ namespace CUDAWrappers
       row_ptr_dev(nullptr),
       descr(nullptr)
   {}
-
-
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix(
@@ -186,8 +174,6 @@ namespace CUDAWrappers
   {
     reinit(handle, sparse_matrix_host);
   }
-
-
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix(CUDAWrappers::SparseMatrix<Number>&& other)
@@ -209,8 +195,6 @@ namespace CUDAWrappers
     other.row_ptr_dev      = nullptr;
     other.descr            = nullptr;
   }
-
-
 
   template <typename Number>
   SparseMatrix<Number>::~SparseMatrix<Number>()
@@ -246,8 +230,6 @@ namespace CUDAWrappers
     nnz    = 0;
     n_rows = 0;
   }
-
-
 
   template <typename Number>
   void
@@ -331,8 +313,6 @@ namespace CUDAWrappers
     AssertCusparse(cusparse_error_code);
   }
 
-
-
   template <typename Number>
   SparseMatrix<Number>&
   SparseMatrix<Number>::operator*=(const Number factor)
@@ -348,8 +328,6 @@ namespace CUDAWrappers
 
     return *this;
   }
-
-
 
   template <typename Number>
   SparseMatrix<Number>&
@@ -368,8 +346,6 @@ namespace CUDAWrappers
 
     return *this;
   }
-
-
 
   template <typename Number>
   void
@@ -391,8 +367,6 @@ namespace CUDAWrappers
                     dst.get_values());
   }
 
-
-
   template <typename Number>
   void
   SparseMatrix<Number>::Tvmult(
@@ -412,8 +386,6 @@ namespace CUDAWrappers
                     false,
                     dst.get_values());
   }
-
-
 
   template <typename Number>
   void
@@ -435,8 +407,6 @@ namespace CUDAWrappers
                     dst.get_values());
   }
 
-
-
   template <typename Number>
   void
   SparseMatrix<Number>::Tvmult_add(
@@ -457,8 +427,6 @@ namespace CUDAWrappers
                     dst.get_values());
   }
 
-
-
   template <typename Number>
   Number
   SparseMatrix<Number>::matrix_norm_square(
@@ -469,8 +437,6 @@ namespace CUDAWrappers
 
     return v * tmp;
   }
-
-
 
   template <typename Number>
   Number
@@ -484,8 +450,6 @@ namespace CUDAWrappers
     return u * tmp;
   }
 
-
-
   template <typename Number>
   Number
   SparseMatrix<Number>::residual(
@@ -498,8 +462,6 @@ namespace CUDAWrappers
 
     return dst.l2_norm();
   }
-
-
 
   template <typename Number>
   Number
@@ -517,8 +479,6 @@ namespace CUDAWrappers
     return column_sums.linfty_norm();
   }
 
-
-
   template <typename Number>
   Number
   SparseMatrix<Number>::linfty_norm() const
@@ -535,8 +495,6 @@ namespace CUDAWrappers
     return row_sums.linfty_norm();
   }
 
-
-
   template <typename Number>
   Number
   SparseMatrix<Number>::frobenius_norm() const
@@ -550,16 +508,12 @@ namespace CUDAWrappers
     return matrix_values.l2_norm();
   }
 
-
-
   template <typename Number>
   std::tuple<Number*, int*, int*, cusparseMatDescr_t>
   SparseMatrix<Number>::get_cusparse_matrix() const
   {
     return std::make_tuple(val_dev, column_index_dev, row_ptr_dev, descr);
   }
-
-
 
   template class SparseMatrix<float>;
   template class SparseMatrix<double>;

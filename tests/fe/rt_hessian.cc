@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // the Hessian of the RT element was a tensor of NaN's. This doesn't make much
 // sense
 
@@ -32,8 +30,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -62,8 +58,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
          ExcInternalError());
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -73,7 +67,6 @@ test_hyper_sphere()
 
   test(tr, FE_RaviartThomas<dim>(1));
 }
-
 
 int
 main()

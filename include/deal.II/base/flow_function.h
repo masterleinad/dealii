@@ -16,7 +16,6 @@
 #ifndef dealii_flow_function_h
 #define dealii_flow_function_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/point.h>
@@ -176,7 +175,6 @@ namespace Functions
     const double Reynolds;
   };
 
-
   /**
    * Artificial divergence free function with homogeneous boundary conditions
    * on the cube [-1,1]<sup>dim</sup>.
@@ -224,7 +222,6 @@ namespace Functions
     /// The reaction parameter
     double reaction;
   };
-
 
   /**
    * A singular solution to Stokes' equations on a 2d L-shaped domain.

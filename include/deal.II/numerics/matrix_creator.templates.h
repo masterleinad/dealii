@@ -50,11 +50,9 @@
 #  include <deal.II/lac/trilinos_vector.h>
 #endif
 
-
 #include <algorithm>
 #include <cmath>
 #include <set>
-
 
 DEAL_II_NAMESPACE_OPEN
 namespace MatrixCreator
@@ -102,8 +100,6 @@ namespace MatrixCreator
       active_cell_iterator first, second;
     };
 
-
-
     template <typename DoFHandlerType>
     inline IteratorRange<DoFHandlerType>::IteratorRange(
       const active_cell_iterator& first,
@@ -111,14 +107,10 @@ namespace MatrixCreator
       : first(first), second(second)
     {}
 
-
-
     template <typename DoFHandlerType>
     inline IteratorRange<DoFHandlerType>::IteratorRange(const iterator_pair& ip)
       : first(ip.first), second(ip.second)
     {}
-
-
 
     namespace AssemblerData
     {
@@ -179,7 +171,6 @@ namespace MatrixCreator
           return *this;
         }
 
-
         const ::dealii::hp::FECollection<dim, spacedim>& fe_collection;
         const ::dealii::hp::QCollection<dim>&            quadrature_collection;
         const ::dealii::hp::MappingCollection<dim, spacedim>&
@@ -203,7 +194,6 @@ namespace MatrixCreator
         const UpdateFlags update_flags;
       };
 
-
       template <typename number>
       struct CopyData
       {
@@ -214,7 +204,6 @@ namespace MatrixCreator
         const ConstraintMatrix* constraints;
       };
     } // namespace AssemblerData
-
 
     template <int dim, int spacedim, typename CellIterator, typename number>
     void
@@ -286,7 +275,6 @@ namespace MatrixCreator
                 data.coefficient_vector_values);
             }
         }
-
 
       const std::vector<double>& JxW = fe_values.get_JxW_values();
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -416,8 +404,6 @@ namespace MatrixCreator
           }
     }
 
-
-
     template <int dim, int spacedim, typename CellIterator>
     void
     laplace_assembler(
@@ -447,7 +433,6 @@ namespace MatrixCreator
       copy_data.cell_rhs.reinit(dofs_per_cell);
       copy_data.dof_indices.resize(dofs_per_cell);
       cell->get_dof_indices(copy_data.dof_indices);
-
 
       const bool use_rhs_function = data.rhs_function != nullptr;
       if(use_rhs_function)
@@ -485,7 +470,6 @@ namespace MatrixCreator
                 data.coefficient_vector_values);
             }
         }
-
 
       const std::vector<double>& JxW = fe_values.get_JxW_values();
       double                     add_data;
@@ -611,8 +595,6 @@ namespace MatrixCreator
           }
     }
 
-
-
     template <typename number, typename MatrixType, typename VectorType>
     void
     copy_local_to_global(const AssemblerData::CopyData<number>& data,
@@ -639,8 +621,6 @@ namespace MatrixCreator
           data.cell_matrix, data.dof_indices, *matrix);
     }
 
-
-
     namespace AssemblerBoundary
     {
       struct Scratch
@@ -665,12 +645,10 @@ namespace MatrixCreator
         std::vector<Vector<number>> cell_vector;
       };
 
-
       template <typename DoFHandlerType, typename number>
       CopyData<DoFHandlerType, number>::CopyData()
         : dofs_per_cell(numbers::invalid_unsigned_int)
       {}
-
 
       template <typename DoFHandlerType, typename number>
       CopyData<DoFHandlerType, number>::CopyData(CopyData const& data)
@@ -684,7 +662,6 @@ namespace MatrixCreator
     } // namespace AssemblerBoundary
   }   // namespace internal
 } // namespace MatrixCreator
-
 
 namespace MatrixCreator
 {
@@ -743,8 +720,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(const DoFHandler<dim, spacedim>&        dof,
@@ -760,8 +735,6 @@ namespace MatrixCreator
                        coefficient,
                        constraints);
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -823,8 +796,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
@@ -847,8 +818,6 @@ namespace MatrixCreator
                        coefficient,
                        constraints);
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -901,8 +870,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(const hp::DoFHandler<dim, spacedim>&    dof,
@@ -918,8 +885,6 @@ namespace MatrixCreator
                        coefficient,
                        constraints);
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -978,8 +943,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
@@ -1002,8 +965,6 @@ namespace MatrixCreator
                        coefficient,
                        constraints);
   }
-
-
 
   namespace internal
   {
@@ -1232,7 +1193,6 @@ namespace MatrixCreator
                   }
               }
 
-
             cell->face(face)->get_dof_indices(dofs_on_face_vector);
             // for each dof on the cell, have a flag whether it is on
             // the face
@@ -1321,7 +1281,6 @@ namespace MatrixCreator
         }
     }
 
-
     template <>
     void inline create_boundary_mass_matrix_1<1, 3, float>(
       DoFHandler<1, 3>::active_cell_iterator const& /*cell*/,
@@ -1357,8 +1316,6 @@ namespace MatrixCreator
     }
 
   } // namespace internal
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -1445,8 +1402,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   namespace
   {
     template <int dim, int spacedim, typename number>
@@ -1479,7 +1434,6 @@ namespace MatrixCreator
       copy_data.dofs.resize(copy_data.dofs_per_cell);
       cell->get_dof_indices(copy_data.dofs);
 
-
       UpdateFlags update_flags
         = UpdateFlags(update_values | update_JxW_values | update_normal_vectors
                       | update_quadrature_points);
@@ -1511,7 +1465,6 @@ namespace MatrixCreator
       copy_data.dof_is_on_face.clear();
       copy_data.cell_matrix.clear();
       copy_data.cell_vector.clear();
-
 
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
@@ -1708,7 +1661,6 @@ namespace MatrixCreator
           }
     }
 
-
     template <int dim, int spacedim, typename number>
     void
     copy_hp_boundary_mass_matrix_1(
@@ -1812,8 +1764,6 @@ namespace MatrixCreator
     }
   } // namespace
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
@@ -1837,8 +1787,6 @@ namespace MatrixCreator
                                 a,
                                 component_mapping);
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -1925,8 +1873,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
@@ -1951,8 +1897,6 @@ namespace MatrixCreator
       a,
       component_mapping);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2007,8 +1951,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const DoFHandler<dim, spacedim>& dof,
@@ -2024,8 +1966,6 @@ namespace MatrixCreator
                           coefficient,
                           constraints);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2081,8 +2021,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const DoFHandler<dim, spacedim>& dof,
@@ -2102,8 +2040,6 @@ namespace MatrixCreator
                           coefficient,
                           constraints);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2155,8 +2091,6 @@ namespace MatrixCreator
       copy_data);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const hp::DoFHandler<dim, spacedim>& dof,
@@ -2173,8 +2107,6 @@ namespace MatrixCreator
       coefficient,
       constraints);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2226,8 +2158,6 @@ namespace MatrixCreator
       assembler_data,
       copy_data);
   }
-
-
 
   template <int dim, int spacedim>
   void

@@ -57,7 +57,6 @@
 
 #include <iostream>
 
-
 typedef parallel::distributed::Triangulation<2, 3>::cell_iterator cell_iterator;
 DeclException1(ExcMissingCell,
                cell_iterator,

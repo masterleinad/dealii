@@ -22,11 +22,9 @@
 
 #include <cstring>
 
-
 #ifdef DEAL_II_WITH_ARPACK
 
 DEAL_II_NAMESPACE_OPEN
-
 
 extern "C" void
 dnaupd_(int*          ido,
@@ -171,7 +169,6 @@ public:
    * Declare the type for container size.
    */
   typedef types::global_dof_index size_type;
-
 
   /**
    * An enum that lists the possible choices for which eigenvalues to compute
@@ -369,7 +366,6 @@ protected:
    */
   double sigmai;
 
-
 private:
   /**
    * Exceptions.
@@ -452,7 +448,6 @@ private:
                    " Arnoldi vectors.");
 };
 
-
 inline ArpackSolver::AdditionalData::AdditionalData(
   const unsigned int     number_of_arnoldi_vectors,
   const WhichEigenvalues eigenvalue_of_interest,
@@ -483,7 +478,6 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     }
 }
 
-
 inline ArpackSolver::ArpackSolver(SolverControl&        control,
                                   const AdditionalData& data)
   : solver_control(control),
@@ -493,16 +487,12 @@ inline ArpackSolver::ArpackSolver(SolverControl&        control,
     sigmai(0.0)
 {}
 
-
-
 inline void
 ArpackSolver::set_shift(const std::complex<double> sigma)
 {
   sigmar = sigma.real();
   sigmai = sigma.imag();
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -513,7 +503,6 @@ ArpackSolver::set_initial_vector(const VectorType& vec)
   for(size_type i = 0; i < vec.size(); ++i)
     resid[i] = vec[i];
 }
-
 
 template <typename VectorType,
           typename MatrixType1,
@@ -699,7 +688,6 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       dst.reinit(src);
                       tmp.reinit(src);
 
-
                       for(size_type i = 0; i < src.size(); ++i)
                         src(i) = workd[ipntr[0] - 1 + i];
 
@@ -872,7 +860,6 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
     }
 }
 
-
 inline SolverControl&
 ArpackSolver::control() const
 {
@@ -880,7 +867,6 @@ ArpackSolver::control() const
 }
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif
 #endif

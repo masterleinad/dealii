@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // inhomogeneous constraints with
 // ConstraintMatrix::distribute_local_to_global operating only on a vector,
@@ -95,7 +93,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p,
@@ -106,7 +103,6 @@ Coefficient<dim>::value(const Point<dim>& p,
   else
     return 1;
 }
-
 
 template <int dim>
 void
@@ -129,12 +125,9 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -161,8 +154,6 @@ LaplaceProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -215,7 +206,6 @@ LaplaceProblem<dim>::assemble_system()
                             * fe_values.JxW(q_point));
           }
 
-
       cell->get_dof_indices(local_dof_indices);
 
       // use standard function with matrix and
@@ -253,8 +243,6 @@ LaplaceProblem<dim>::solve()
   deallog << "   " << solver_control.last_step()
           << " Bicgstab iterations needed to obtain convergence." << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -300,7 +288,6 @@ LaplaceProblem<dim>::run()
       solve();
     }
 }
-
 
 int
 main()

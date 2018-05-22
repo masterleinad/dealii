@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::min() for vectors
 
 #include "../tests.h"
@@ -36,7 +34,6 @@ test()
   if(myid == 0)
     deallog << output[0] << ' ' << output[1] << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

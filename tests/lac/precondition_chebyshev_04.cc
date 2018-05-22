@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to precondition_chebyshev_02 but checking that the Chebyshev
 // initialization also works when the first vmult operation is done on a zero
 // vector
-
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/vector.h>
-
-
 
 class DiagonalMatrixManual
 {
@@ -64,7 +60,6 @@ public:
 private:
   Vector<double> diagonal;
 };
-
 
 void
 check()
@@ -125,7 +120,6 @@ check()
   out -= ref;
   deallog << " difference norm = " << out.linfty_norm() << std::endl;
 }
-
 
 int
 main()

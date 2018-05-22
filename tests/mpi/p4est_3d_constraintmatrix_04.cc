@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check whether all constraints are set on locally active set
 // Mesh: hypercube where 7 of 8 octants are refined.
 
@@ -31,7 +29,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void

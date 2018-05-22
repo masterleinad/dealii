@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in integrating functions and gradients on a hypeball mesh with
 // adaptive refinement.
@@ -39,7 +37,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
@@ -78,8 +75,6 @@ private:
   const MatrixFree<dim, Number>& data;
   mutable FEValues<dim>          fe_val;
 };
-
-
 
 template <int dim, int fe_degree, typename Number>
 void
@@ -140,8 +135,6 @@ operator()(const MatrixFree<dim, Number>& data,
       fe_eval.distribute_local_to_global(*dst[0]);
     }
 }
-
-
 
 template <int dim, int fe_degree>
 void
@@ -220,7 +213,6 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
-
 
 int
 main()

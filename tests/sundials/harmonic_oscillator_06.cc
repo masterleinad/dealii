@@ -19,7 +19,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/sundials/arkode.h>
 
-
 // Test implicit-explicit time stepper. Both setup and solve_jacobian_system.
 // Brusselator benchmark
 
@@ -87,7 +86,6 @@ main(int argc, char** argv)
     return 0;
   };
 
-
   ode.explicit_function
     = [&](double, const VectorType& y, VectorType& ydot) -> int {
     ydot[0] = a - (y[2] + 1) * y[0] + y[1] * y[0] * y[0];
@@ -95,7 +93,6 @@ main(int argc, char** argv)
     ydot[2] = -y[2] * y[0];
     return 0;
   };
-
 
   ode.setup_jacobian = [&](const int,
                            const double,

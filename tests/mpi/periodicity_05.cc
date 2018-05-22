@@ -14,7 +14,6 @@
  * ---------------------------------------------------------------------
  */
 
-
 // This testcase previously failed due to missing to update the NumberCache in
 // add_periodicity(). This resulted in ghost_owners to be wrong and not sending
 // all required messages in GridTools::exchange_cell_data_to_ghosts.
@@ -23,7 +22,6 @@
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_tools.h>
-
 
 int
 main(int argc, char* argv[])

@@ -16,7 +16,6 @@
 #ifndef dealii_la_vector_h
 #define dealii_la_vector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/index_set.h>
@@ -40,7 +39,6 @@
 #include <cstring>
 #include <iostream>
 #include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -134,7 +132,6 @@ namespace LinearAlgebra
     virtual void
     reinit(const IndexSet& locally_stored_indices,
            const bool      omit_zeroing_entries = false) override;
-
 
     /**
      * Change the dimension to that of the vector V. The elements of V are not
@@ -396,13 +393,9 @@ namespace LinearAlgebra
     : ReadWriteVector<Number>(V)
   {}
 
-
-
   template <typename Number>
   inline Vector<Number>::Vector(const size_type n) : ReadWriteVector<Number>(n)
   {}
-
-
 
   template <typename Number>
   template <typename InputIterator>
@@ -413,8 +406,6 @@ namespace LinearAlgebra
     std::copy(first, last, this->begin());
   }
 
-
-
   template <typename Number>
   inline typename Vector<Number>::size_type
   Vector<Number>::size() const
@@ -422,16 +413,12 @@ namespace LinearAlgebra
     return ReadWriteVector<Number>::size();
   }
 
-
-
   template <typename Number>
   inline dealii::IndexSet
   Vector<Number>::locally_owned_elements() const
   {
     return IndexSet(ReadWriteVector<Number>::get_stored_elements());
   }
-
-
 
   template <typename Number>
   inline void
@@ -442,8 +429,6 @@ namespace LinearAlgebra
   {
     ReadWriteVector<Number>::print(out, precision, scientific);
   }
-
-
 
   template <typename Number>
   template <typename Archive>
@@ -459,8 +444,6 @@ namespace LinearAlgebra
     ar& boost::serialization::make_array(this->values.get(), this->size());
   }
 
-
-
   template <typename Number>
   inline std::size_t
   Vector<Number>::memory_consumption() const
@@ -468,7 +451,6 @@ namespace LinearAlgebra
     return ReadWriteVector<Number>::memory_consumption();
   }
 } // end of namespace LinearAlgebra
-
 
 /**
  * Declare dealii::LinearAlgebra::Vector< Number > as serial vector.
@@ -478,7 +460,6 @@ namespace LinearAlgebra
 template <typename Number>
 struct is_serial_vector<LinearAlgebra::Vector<Number>> : std::true_type
 {};
-
 
 DEAL_II_NAMESPACE_CLOSE
 

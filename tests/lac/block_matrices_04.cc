@@ -51,7 +51,6 @@
 
 #include <deal.II/numerics/data_out.h>
 
-
 template <typename VectorType, class Matrix, class Sparsity>
 class LaplaceProblem
 {
@@ -87,7 +86,6 @@ private:
   VectorType system_rhs;
 };
 
-
 template <typename VectorType, class Matrix, class Sparsity>
 LaplaceProblem<VectorType, Matrix, Sparsity>::LaplaceProblem(
   const unsigned int n_blocks)
@@ -96,23 +94,17 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::LaplaceProblem(
   sparsity_pattern.reinit(n_blocks, n_blocks);
 }
 
-
-
 template <>
 LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
   LaplaceProblem(const unsigned int n_blocks)
   : n_blocks(n_blocks), fe(1), dof_handler(triangulation)
 {}
 
-
-
 template <>
 LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>::
   LaplaceProblem(const unsigned int n_blocks)
   : n_blocks(n_blocks), fe(1), dof_handler(triangulation)
 {}
-
-
 
 template <typename VectorType, class Matrix, class Sparsity>
 void
@@ -137,7 +129,6 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::make_grid_and_dofs()
   reinit_vectors();
 }
 
-
 template <>
 void
 LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
@@ -148,8 +139,6 @@ LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
                           dof_handler.max_couplings_between_dofs());
 }
 
-
-
 template <>
 void
 LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
@@ -158,8 +147,6 @@ LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <>
 void
@@ -171,8 +158,6 @@ LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>::
                           dof_handler.max_couplings_between_dofs());
 }
 
-
-
 template <>
 void
 LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>::
@@ -181,8 +166,6 @@ LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>::
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <>
 void
@@ -231,8 +214,6 @@ LaplaceProblem<BlockVector<double>,
     };
 }
 
-
-
 template <>
 void
 LaplaceProblem<BlockVector<double>,
@@ -273,8 +254,6 @@ LaplaceProblem<BlockVector<double>,
         AssertThrow(false, ExcNotImplemented());
     };
 }
-
-
 
 template <typename VectorType, class Matrix, class Sparsity>
 void
@@ -326,7 +305,6 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     };
 
-
   std::map<types::global_dof_index, typename VectorType::value_type>
     boundary_values;
   VectorTools::interpolate_boundary_values(
@@ -337,7 +315,6 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
-
 
 template <typename VectorType, class Matrix, class Sparsity>
 void
@@ -352,7 +329,6 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::solve()
 
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 }
-
 
 template <typename VectorType, class Matrix, class Sparsity>
 void
@@ -371,8 +347,6 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::run()
       << i << ' ' << solution(i) << std::endl;
 }
 
-
-
 int
 main()
 {
@@ -380,7 +354,6 @@ main()
   deallog << std::setprecision(2);
 
   deallog.attach(logfile);
-
 
   // vector of solution vectors
   std::vector<std::vector<double>> solutions;
@@ -463,7 +436,6 @@ main()
             Assert(false, ExcInternalError());
           };
     };
-
 
   return 0;
 }

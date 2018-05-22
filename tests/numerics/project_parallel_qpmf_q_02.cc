@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check VectorTools::project_parallel() for matrix-free quadrature data for
 // FE_Q on a mesh with hanging nodes.
 

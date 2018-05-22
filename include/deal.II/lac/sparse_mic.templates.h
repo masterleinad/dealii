@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_mic_templates_h
 #define dealii_sparse_mic_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/lac/sparse_mic.h>
 #include <deal.II/lac/vector.h>
@@ -27,8 +26,6 @@ template <typename number>
 SparseMIC<number>::SparseMIC() : diag(0), inv_diag(0), inner_sums(0)
 {}
 
-
-
 template <typename number>
 SparseMIC<number>::~SparseMIC()
 {
@@ -37,7 +34,6 @@ SparseMIC<number>::~SparseMIC()
   // for clarity be explicit on which function is called
   SparseMIC<number>::clear();
 }
-
 
 template <typename number>
 void
@@ -58,7 +54,6 @@ SparseMIC<number>::clear()
 
   SparseLUDecomposition<number>::clear();
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -118,8 +113,6 @@ SparseMIC<number>::initialize(const SparseMatrix<somenumber>& matrix,
     }
 }
 
-
-
 template <typename number>
 inline number
 SparseMIC<number>::get_rowsum(const size_type row) const
@@ -135,8 +128,6 @@ SparseMIC<number>::get_rowsum(const size_type row) const
 
   return rowsum;
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -188,7 +179,6 @@ SparseMIC<number>::vmult(Vector<somenumber>&       dst,
     }
 }
 
-
 // Exists for full compatibility with the LinearOperator class
 template <typename number>
 template <typename somenumber>
@@ -199,8 +189,6 @@ SparseMIC<number>::Tvmult(Vector<somenumber>& /*dst*/,
   AssertThrow(false, ExcNotImplemented());
 }
 
-
-
 template <typename number>
 std::size_t
 SparseMIC<number>::memory_consumption() const
@@ -210,8 +198,6 @@ SparseMIC<number>::memory_consumption() const
           + MemoryConsumption::memory_consumption(inv_diag)
           + MemoryConsumption::memory_consumption(inner_sums));
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

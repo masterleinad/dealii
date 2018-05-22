@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: test conversion from component mask to block mask does indeed
 // not work if we try to split a block
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 void
 test()
@@ -60,7 +55,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

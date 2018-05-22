@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Accessor::global_index()
 
 #include "sparsity_pattern_common.h"

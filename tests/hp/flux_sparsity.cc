@@ -37,8 +37,6 @@
 #include <iostream>
 #include <vector>
 
-
-
 template <int dim>
 void
 check()
@@ -116,8 +114,6 @@ check()
   // Print sparsity pattern
   dsp.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this BlockVector<Number>::mmult(const BlockVector<Number> &V,const FullMatrixType &matrix, s,b)
 // also for vectors of different number of blocks.
 // Triangulation and Mass operator are the same as in matrix_free/mass_operator_01.cc
@@ -35,8 +33,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -138,7 +134,6 @@ test(const unsigned int n = 5, const unsigned int m = 3)
         }
     }
 
-
   FullMatrix<number> metric(m, n);
   for(unsigned int i = 0; i < m; ++i)
     for(unsigned int j = 0; j < n; ++j)
@@ -156,7 +151,6 @@ test(const unsigned int n = 5, const unsigned int m = 3)
   const double diff_norm = left2.linfty_norm();
   deallog << "Norm of difference: " << diff_norm << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

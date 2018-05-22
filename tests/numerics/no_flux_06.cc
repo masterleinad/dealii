@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // no normal flux constraints on a hyper cube for all faces this caused
 // ExcMessage (\"Cycle in constraints detected!\")" in 3d with a higher order
 // mapping.  to make things even weirder, mappings of order <4 work.
@@ -31,8 +29,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 #include <deal.II/numerics/vector_tools.templates.h>
-
-
 
 template <int dim>
 void
@@ -60,7 +56,6 @@ test_hyper_cube()
 
   cm.print(deallog.get_file_stream());
 }
-
 
 int
 main()

@@ -32,7 +32,6 @@
 #include <set>
 #include <sstream>
 
-
 template <int dim>
 bool
 pred_left(const typename DoFHandler<dim>::active_cell_iterator& cell)
@@ -47,7 +46,6 @@ pred_right(const typename DoFHandler<dim>::active_cell_iterator& cell)
   return (cell->center()(0) > 0.51);
 }
 
-
 template <int dim>
 bool
 pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
@@ -55,8 +53,6 @@ pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
   return (cell->center()(0) < 0.49 && cell->center()(1) < 0.49)
          || (cell->center()(0) > 0.49 && cell->center()(1) > 0.49);
 }
-
-
 
 template <int dim>
 void

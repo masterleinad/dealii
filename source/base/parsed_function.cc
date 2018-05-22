@@ -29,8 +29,6 @@ namespace Functions
       function_object(n_components)
   {}
 
-
-
   template <int dim>
   void
   ParsedFunction<dim>::declare_parameters(ParameterHandler&  prm,
@@ -108,8 +106,6 @@ namespace Functions
       "defines both `pi' and `Pi' by default, but you get the idea.)");
   }
 
-
-
   template <int dim>
   void
   ParsedFunction<dim>::parse_parameters(ParameterHandler& prm)
@@ -160,8 +156,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   void
   ParsedFunction<dim>::vector_value(const Point<dim>& p,
@@ -170,16 +164,12 @@ namespace Functions
     function_object.vector_value(p, values);
   }
 
-
-
   template <int dim>
   double
   ParsedFunction<dim>::value(const Point<dim>& p, unsigned int comp) const
   {
     return function_object.value(p, comp);
   }
-
-
 
   template <int dim>
   void
@@ -188,7 +178,6 @@ namespace Functions
     function_object.set_time(newtime);
     AutoDerivativeFunction<dim>::set_time(newtime);
   }
-
 
   // Explicit instantiations
   template class ParsedFunction<1>;

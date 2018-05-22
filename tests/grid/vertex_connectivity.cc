@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::get_vertex_connectivity_of_cells for two different meshes
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 template <int dim>
 void
@@ -42,7 +39,6 @@ test()
   GridTools::get_vertex_connectivity_of_cells(tria, dsp);
   dsp.print(deallog.get_file_stream());
 }
-
 
 int
 main()

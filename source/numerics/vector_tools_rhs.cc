@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/numerics/vector_tools.templates.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace VectorTools
 {
@@ -35,8 +33,6 @@ namespace VectorTools
     Assert(false, ExcImpossibleInDim(1));
   }
 
-
-
   template <>
   void
   create_boundary_right_hand_side(const Mapping<1, 2>&,
@@ -49,8 +45,6 @@ namespace VectorTools
     Assert(false, ExcImpossibleInDim(1));
   }
 
-
-
   template <>
   void
   create_boundary_right_hand_side(const hp::MappingCollection<1, 1>&,
@@ -62,8 +56,6 @@ namespace VectorTools
   {
     Assert(false, ExcImpossibleInDim(1));
   }
-
-
 
   template <>
   void

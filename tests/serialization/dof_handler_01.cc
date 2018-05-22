@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for DoFHandler<1,dim>
 
 #include "serialization.h"
@@ -141,11 +140,9 @@ do_boundary(Triangulation<dim, spacedim>& t1)
         c1->face(f)->set_boundary_id(42);
 }
 
-
 template <int spacedim>
 void do_boundary(Triangulation<1, spacedim>&)
 {}
-
 
 template <int dim, int spacedim>
 void
@@ -177,7 +174,6 @@ test()
 
   verify(dof_1, dof_2);
 }
-
 
 int
 main()

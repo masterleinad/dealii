@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check FETools::interpolate on parallel vector
 
 #include "../tests.h"
@@ -30,7 +29,6 @@
 #include <deal.II/numerics/vector_tools.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -68,8 +66,6 @@ test()
   for(unsigned int i = 0; i < v2.local_size() + v2.n_ghost_entries(); ++i)
     Assert(v2.local_element(i) == 1., ExcInternalError());
 }
-
-
 
 int
 main(int argc, char** argv)

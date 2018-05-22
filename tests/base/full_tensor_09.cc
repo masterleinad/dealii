@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the determinant code
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
-
 
 template <int dim>
 void
@@ -38,8 +36,6 @@ test()
 
   deallog << determinant(t) << std::endl;
 }
-
-
 
 int
 main()

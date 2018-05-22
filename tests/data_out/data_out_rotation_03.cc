@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // write the data in deal.II intermediate form, read it back in, and
 // make sure that the result is the same
 
@@ -22,8 +20,6 @@
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out_rotation.h>
-
-
 
 // have a class that makes sure we can get at the patches and data set
 // names that the base class generates
@@ -63,7 +59,6 @@ public:
   }
 };
 
-
 void
 my_check_this(const DoFHandler<3>&,
               const Vector<double>&,
@@ -71,8 +66,6 @@ my_check_this(const DoFHandler<3>&,
 {
   // no checks in 3d
 }
-
-
 
 template <int dim>
 void
@@ -118,7 +111,6 @@ my_check_this(const DoFHandler<dim>& dof_handler,
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void

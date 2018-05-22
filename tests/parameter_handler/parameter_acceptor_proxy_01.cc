@@ -13,14 +13,11 @@
 //
 //-----------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/parsed_function.h>
 
 // Test proxy class
-
 
 int
 main()

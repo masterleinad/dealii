@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -60,8 +59,6 @@ private:
   const unsigned int degree;
 };
 
-
-
 template <int dim>
 parallel::distributed::Triangulation<dim>*
 make_tria()
@@ -84,8 +81,6 @@ make_tria()
   return tria;
 }
 
-
-
 template <int dim>
 DoFHandler<dim>*
 make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
@@ -95,8 +90,6 @@ make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
-
-
 
 // output some indicators for a given vector
 template <unsigned int dim, typename VectorType>
@@ -120,8 +113,6 @@ output_vector(const VectorType&      v,
   data_out.write_vtu(output);
 }
 
-
-
 template <typename VectorType>
 typename std::enable_if<!IsBlockVector<VectorType>::value, VectorType>::type
 build_ghosted(const IndexSet& owned_indices, const IndexSet& ghosted_indices)
@@ -139,8 +130,6 @@ build_ghosted(const IndexSet& owned_indices, const IndexSet& ghosted_indices)
     owned_indices_vector, ghosted_indices_vector, MPI_COMM_WORLD);
 }
 
-
-
 template <typename VectorType>
 typename std::enable_if<!IsBlockVector<VectorType>::value, VectorType>::type
 build_distributed(const IndexSet& owned_indices)
@@ -155,8 +144,6 @@ build_distributed(const IndexSet& owned_indices)
   std::vector<IndexSet> owned_indices_vector(1, owned_indices);
   return VectorType(owned_indices_vector, MPI_COMM_WORLD);
 }
-
-
 
 template <int dim, typename VectorType>
 void
@@ -287,7 +274,6 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 template <int dim, typename VectorType>
 void

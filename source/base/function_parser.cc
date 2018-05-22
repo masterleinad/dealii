@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <cmath>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/thread_management.h>
@@ -28,8 +27,6 @@
 #  include <muParser.h>
 #else
 
-
-
 namespace fparser
 {
   class FunctionParser
@@ -38,8 +35,6 @@ namespace fparser
 #endif
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 template <int dim>
 FunctionParser<dim>::FunctionParser(const unsigned int n_components,
@@ -50,14 +45,11 @@ FunctionParser<dim>::FunctionParser(const unsigned int n_components,
     n_vars(0)
 {}
 
-
-
 // We deliberately delay the definition of the default destructor
 // so that we don't need to include the definition of mu::Parser
 // in the header file.
 template <int dim>
 FunctionParser<dim>::~FunctionParser() = default;
-
 
 #ifdef DEAL_II_WITH_MUPARSER
 
@@ -112,8 +104,6 @@ FunctionParser<dim>::initialize(const std::string&              variables,
   // finally set the initialization bit
   initialized = true;
 }
-
-
 
 namespace internal
 {
@@ -234,8 +224,6 @@ namespace internal
   }
 
 } // namespace internal
-
-
 
 template <int dim>
 void
@@ -378,8 +366,6 @@ FunctionParser<dim>::init_muparser() const
     }
 }
 
-
-
 template <int dim>
 void
 FunctionParser<dim>::initialize(const std::string&                   vars,
@@ -392,8 +378,6 @@ FunctionParser<dim>::initialize(const std::string&                   vars,
              constants,
              time_dependent);
 }
-
-
 
 template <int dim>
 double
@@ -429,8 +413,6 @@ FunctionParser<dim>::value(const Point<dim>&  p,
     }
 }
 
-
-
 template <int dim>
 void
 FunctionParser<dim>::vector_value(const Point<dim>& p,
@@ -439,7 +421,6 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
   Assert(initialized == true, ExcNotInitialized());
   Assert(values.size() == this->n_components,
          ExcDimensionMismatch(values.size(), this->n_components));
-
 
   // initialize the parser if that hasn't happened yet on the current thread
   if(fp.get().size() == 0)
@@ -455,7 +436,6 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
 }
 
 #else
-
 
 template <int dim>
 void
@@ -477,8 +457,6 @@ FunctionParser<dim>::initialize(const std::string&,
   Assert(false, ExcNeedsFunctionparser());
 }
 
-
-
 template <int dim>
 double
 FunctionParser<dim>::value(const Point<dim>&, unsigned int) const
@@ -487,14 +465,12 @@ FunctionParser<dim>::value(const Point<dim>&, unsigned int) const
   return 0.;
 }
 
-
 template <int dim>
 void
 FunctionParser<dim>::vector_value(const Point<dim>&, Vector<double>&) const
 {
   Assert(false, ExcNeedsFunctionparser());
 }
-
 
 #endif
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in getting the function values, the function gradients, and the
 // function Laplacians on a hypecube mesh with adaptive refinement with
@@ -40,9 +38,7 @@
 
 #include <iostream>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim,
           int fe_degree,
@@ -236,8 +232,6 @@ private:
   mutable double                 errors[9], total[9];
 };
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -311,7 +305,6 @@ test()
         src[no](i)         = entry;
       }
 
-
   constraints[0]->distribute(src[0]);
   constraints[1]->distribute(src[1]);
   constraints[2]->distribute(src[2]);
@@ -331,7 +324,6 @@ test()
   mf.test_functions(src);
   deallog << std::endl;
 }
-
 
 int
 main()

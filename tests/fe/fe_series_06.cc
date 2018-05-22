@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Fourier expansion in 2D for a given vector of local DoF values.
 #include "../tests.h"
 #include <iostream>
@@ -70,8 +69,6 @@ test_2d()
         deallog << (i * i + j * j) << " : " << fourier_coefficients(i, j)
                 << std::endl;
 }
-
-
 
 int
 main()

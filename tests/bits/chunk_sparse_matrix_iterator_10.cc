@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test is sparse_matrix_iterator_10 for a ChunkSparseMatrix and the same
 // test as chunk_sparse_matrix_iterator_09 with postfix operator++ instead of
 // prefix
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -44,8 +41,6 @@ test(const unsigned int chunk_size)
       k++)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
-
-
 
 int
 main()

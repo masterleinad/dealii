@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGTransferBlockMatrixFree::copy_[from|to]_mg by comparison to non-block
 // MGTransferMatrixFree
 
@@ -35,7 +34,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <int dim, typename Number>
 void
@@ -198,7 +196,6 @@ check(const unsigned int fe_degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main(int argc, char** argv)

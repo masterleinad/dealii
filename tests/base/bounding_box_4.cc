@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // testing serialize function for class BoundingBox
 
 #include "../tests.h"

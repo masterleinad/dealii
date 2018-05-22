@@ -16,7 +16,6 @@
 #ifndef dealii_theta_timestepping_templates_h
 #define dealii_theta_timestepping_templates_h
 
-
 #include <deal.II/algorithms/theta_timestepping.h>
 
 #include <deal.II/base/parameter_handler.h>
@@ -38,7 +37,6 @@ namespace Algorithms
     d_implicit.step = numbers::signaling_nan<double>();
     d_implicit.time = numbers::signaling_nan<double>();
   }
-
 
   template <typename VectorType>
   void
@@ -69,7 +67,6 @@ namespace Algorithms
     adaptive = param.get_bool("Adaptive");
     param.leave_subsection();
   }
-
 
   template <typename VectorType>
   void

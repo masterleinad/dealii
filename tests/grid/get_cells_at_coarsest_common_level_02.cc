@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridTools::get_cells_at_coarsest_common_level()
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -25,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -37,7 +32,6 @@ test()
 
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
-
 
   // now extract patches and print every fifth of them
   unsigned int index = 0;
@@ -72,7 +66,6 @@ test()
 
   deallog << "OKay" << std::endl;
 }
-
 
 int
 main()

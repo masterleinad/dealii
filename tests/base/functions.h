@@ -122,7 +122,6 @@ private:
   const Function<dim>& func;
 };
 
-
 template <int dim>
 DerivativeTestFunction<dim>::DerivativeTestFunction(const Function<dim>& f,
                                                     const double         h)
@@ -131,11 +130,9 @@ DerivativeTestFunction<dim>::DerivativeTestFunction(const Function<dim>& f,
   this->set_formula(AutoDerivativeFunction<dim>::FourthOrder);
 }
 
-
 template <int dim>
 DerivativeTestFunction<dim>::~DerivativeTestFunction()
 {}
-
 
 template <int dim>
 void
@@ -146,7 +143,6 @@ DerivativeTestFunction<dim>::vector_value_list(
   func.vector_value_list(points, values);
 }
 
-
 template <int dim>
 void
 DerivativeTestFunction<dim>::vector_value(const Point<dim>& point,
@@ -154,7 +150,6 @@ DerivativeTestFunction<dim>::vector_value(const Point<dim>& point,
 {
   func.vector_value(point, value);
 }
-
 
 template <int dim>
 double
@@ -165,7 +160,6 @@ DerivativeTestFunction<dim>::value(const Point<dim>&  point,
 
   return func.value(point, comp);
 }
-
 
 // Check whether the difference quotients converge to the gradient
 template <int dim>

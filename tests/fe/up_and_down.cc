@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -34,7 +33,6 @@
 
 #define PRECISION 2
 
-
 template <int dim>
 Point<dim>
 transform(const Point<dim> p)
@@ -54,7 +52,6 @@ transform(const Point<dim> p)
         return Point<dim>();
     };
 }
-
 
 template <int dim>
 void
@@ -122,7 +119,6 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   //TODO:[WB] Why this exception with a value different from above. Output of the error should be sufficient!
   //  Assert (relative_residual < threshold*x.l2_norm(), ExcInternalError());
 }
-
 
 template <int dim>
 void
@@ -236,13 +232,10 @@ test()
         check_element(tr, *fe_list[i]);
       }
 
-
   for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
     if(fe_list[i] != nullptr)
       delete fe_list[i];
 }
-
-
 
 int
 main()

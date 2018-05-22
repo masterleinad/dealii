@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::invert() with SPD Cholesky by comparing to FullMatrix
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -57,7 +55,6 @@ test(const unsigned int size)
       AssertThrow(false, ExcInternalError());
     }
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::copy operator with offdiagonals
 
 #include "sparsity_pattern_common.h"

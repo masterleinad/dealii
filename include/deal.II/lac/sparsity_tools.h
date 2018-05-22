@@ -16,7 +16,6 @@
 #ifndef dealii_sparsity_tools_h
 #define dealii_sparsity_tools_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
@@ -32,7 +31,6 @@
 #endif
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*! @addtogroup Sparsity
  *@{
@@ -60,7 +58,6 @@ namespace SparsityTools
      */
     zoltan
   };
-
 
   /**
    * Use a partitioning algorithm to generate a partitioning of the degrees of
@@ -102,7 +99,6 @@ namespace SparsityTools
             const unsigned int         n_partitions,
             std::vector<unsigned int>& partition_indices,
             const Partitioner          partitioner = Partitioner::metis);
-
 
   /**
    * This function performs the same operation as the one above, except that
@@ -290,7 +286,6 @@ namespace SparsityTools
                               const IndexSet&              myrange);
 
 #endif
-
 
   /**
    * Exception

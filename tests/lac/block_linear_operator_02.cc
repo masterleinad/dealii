@@ -34,7 +34,6 @@
   for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
     deallog << "[block " << i << " ]  " << var.block(i);
 
-
 using namespace dealii;
 
 int
@@ -79,7 +78,6 @@ main()
   for(unsigned int i = 0; i < a.block(2, 2).m(); ++i)
     a.block(2, 2).set(i, i, 3.);
 
-
   auto op_a = block_operator(a);
 
   auto op_b0 = linear_operator(a.block(0, 0));
@@ -88,7 +86,6 @@ main()
 
   std::array<decltype(op_b0), 3> temp{{op_b0, op_b1, op_b2}};
   auto op_b = block_diagonal_operator<3, BlockVector<double>>(temp);
-
 
   {
     BlockVector<double> u;
@@ -134,7 +131,6 @@ main()
     x = 0.;
     op_x.Tvmult_add(x, u);
     PRINTME("(A-B).Tvmult_add", x);
-
 
     // Test vector reinitalization:
 

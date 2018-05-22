@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that p::s::Tria.locally_owned_subdomain() works in 1d.
 
 #include "../tests.h"
@@ -25,8 +23,6 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 int
 main(int argc, char* argv[])

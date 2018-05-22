@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check automatic differentiation
 
 #include "../tests.h"
@@ -25,7 +24,6 @@
 
 #include <string>
 #include <vector>
-
 
 template <int dim>
 void
@@ -61,7 +59,6 @@ check_derivative_order(const std::vector<Tensor<1, dim>>& gradients,
                 << "   " << reduction << std::endl;
     }
 }
-
 
 template <int dim>
 void
@@ -105,7 +102,6 @@ check_hessian_order(const std::vector<double>& values,
       }
 }
 
-
 template <int dim>
 void
 check_sine(unsigned int nquad)
@@ -147,7 +143,6 @@ check_sine(unsigned int nquad)
       deallog.pop();
     }
 }
-
 
 int
 main()

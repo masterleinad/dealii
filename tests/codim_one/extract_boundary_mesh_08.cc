@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // A test that used to fail because of mis-oriented faces
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 void
 test()
@@ -43,7 +40,6 @@ test()
   deallog << triangulation_surface.n_used_vertices() << std::endl;
   deallog << triangulation_surface.n_active_cells() << std::endl;
 }
-
 
 int
 main()

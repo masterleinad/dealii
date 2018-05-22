@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check periodic boundary faces
 
 #include "../tests.h"
@@ -24,8 +22,6 @@
 #include <deal.II/grid/grid_generator.h>
 
 #include <string>
-
-
 
 template <int dim>
 void
@@ -55,7 +51,6 @@ check()
               << periodic_faces[i].orientation << std::endl;
     }
 }
-
 
 int
 main()

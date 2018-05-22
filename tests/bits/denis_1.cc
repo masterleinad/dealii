@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check for something in
 // DerivativeApproximation::approximate_gradient. the original report
 // stated it was a bug, but it was not (see the archives), but since
@@ -22,7 +20,6 @@
 //
 // this program is a modified version of one by
 // Denis Danilov <danilovdenis@yandex.ru>,
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -35,7 +32,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/derivative_approximation.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 class F : public Function<2>
 {
@@ -51,7 +47,6 @@ public:
     return 0.5 * (1 - std::tanh((r - 0.5) / (2 * M_SQRT2 * delta)));
   }
 };
-
 
 int
 main()

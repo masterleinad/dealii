@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_elasticity_h
 #define dealii_integrators_elasticity_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -71,7 +70,6 @@ namespace LocalIntegrators
         }
     }
 
-
     /**
      * Vector-valued residual operator for linear elasticity in weak form
      *
@@ -106,7 +104,6 @@ namespace LocalIntegrators
                 }
         }
     }
-
 
     /**
      * The matrix for the weak boundary condition of Nitsche type for linear elasticity:
@@ -564,7 +561,6 @@ namespace LocalIntegrators
       const double nu1     = int_factor;
       const double nu2     = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (nu1 + nu2);
-
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {

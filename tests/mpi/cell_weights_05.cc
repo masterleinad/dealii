@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just create a 16x16 coarse mesh, and partition it
 //
 // like _03, but with a spread of weights that ensures that one
@@ -37,8 +35,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 unsigned int
@@ -70,7 +66,6 @@ test()
   // create a 16x16 or 16x16x16 mesh where each cell has size 1x1 ir 1x1x1
   GridGenerator::subdivided_hyper_cube(tr, 16, 0, 16);
 
-
   // repartition the mesh; attach different weights to all cells
   tr.signals.cell_weight.connect(
     std::bind(&cell_weight<dim>, std::placeholders::_1, std::placeholders::_2));
@@ -100,7 +95,6 @@ test()
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

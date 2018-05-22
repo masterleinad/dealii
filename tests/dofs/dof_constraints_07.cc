@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when calling DoFConstraints::set_zero on
 // block vectors. This test was written when I changed a few things in the algorithm
 
@@ -33,7 +31,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -95,8 +92,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

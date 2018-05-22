@@ -16,7 +16,6 @@
 #ifndef dealii_fe_tools_interpolate_templates_H
 #define dealii_fe_tools_interpolate_templates_H
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/std_cxx14/memory.h>
@@ -43,12 +42,10 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
 
-
 #include <deal.II/base/index_set.h>
 
 #include <iostream>
 #include <memory>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -71,8 +68,6 @@ namespace FETools
     interpolate(dof1, u1, dof2, dummy, u2);
   }
 
-
-
   template <int dim,
             int spacedim,
             template <int, int> class DoFHandlerType1,
@@ -93,7 +88,6 @@ namespace FETools
            ExcDimensionMismatch(u1.size(), dof1.n_dofs()));
     Assert(u2.size() == dof2.n_dofs(),
            ExcDimensionMismatch(u2.size(), dof2.n_dofs()));
-
 
     const IndexSet u2_elements = u2.locally_owned_elements();
 #ifdef DEBUG
@@ -175,7 +169,6 @@ namespace FETools
                        || cell1->neighbor(face)->level() == cell1->level(),
                      ExcHangingNodesNotAllowed(0));
 
-
           const unsigned int dofs_per_cell1 = cell1->get_fe().dofs_per_cell;
           const unsigned int dofs_per_cell2 = cell2->get_fe().dofs_per_cell;
           u1_local.reinit(dofs_per_cell1);
@@ -246,7 +239,6 @@ namespace FETools
               != typename OutVector::value_type(0),
             ExcInternalError());
 
-
           const typename OutVector::value_type val
             = ::dealii::internal::ElementAccess<OutVector>::get(u2, i);
           ::dealii::internal::ElementAccess<OutVector>::set(
@@ -262,8 +254,6 @@ namespace FETools
     // Apply hanging node constraints.
     constraints.distribute(u2);
   }
-
-
 
   template <int dim,
             template <int, int> class DoFHandlerType,
@@ -362,8 +352,6 @@ namespace FETools
     // if we work on a parallel vector, we have to finish the work
     u1_interpolated.compress(VectorOperation::insert);
   }
-
-
 
   namespace internal
   {
@@ -471,8 +459,6 @@ namespace FETools
     } // namespace
   }   // namespace internal
 
-
-
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   back_interpolate(const DoFHandler<dim, spacedim>& dof1,
@@ -505,8 +491,6 @@ namespace FETools
           dof1, constraints1, u1, dof2, constraints2, u1_interpolated);
       }
   }
-
-
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
@@ -583,8 +567,6 @@ namespace FETools
     u1_difference.compress(VectorOperation::insert);
   }
 
-
-
   namespace internal
   {
     namespace
@@ -631,8 +613,6 @@ namespace FETools
     } // namespace
   }   // namespace internal
 
-
-
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
@@ -656,8 +636,6 @@ namespace FETools
           dof1, constraints1, u1, dof2, constraints2, u1_difference);
       }
   }
-
-
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // A test meant to identify why GridTools::partition_triangulation
 // produces different output whether we're in 32- or 64-bit mode. it
 // turns out that when we get METIS from PETSc and PETSc's downloaded
@@ -36,7 +34,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
 #include <metis.h>
-
 
 void
 partition(const SparsityPattern& sparsity_pattern,
@@ -91,7 +88,6 @@ partition(const SparsityPattern& sparsity_pattern,
   deallog << std::endl;
   deallog << sizeof(idx_t) << std::endl;
 
-
   // Make use of METIS' error code.
   int ierr;
 
@@ -119,7 +115,6 @@ partition(const SparsityPattern& sparsity_pattern,
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test()
@@ -135,8 +130,6 @@ test()
   sp_cell_connectivity.copy_from(cell_connectivity);
   partition(sp_cell_connectivity, 5);
 }
-
-
 
 int
 main()

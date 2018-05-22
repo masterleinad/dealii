@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_mapping_info_h
 #define dealii_matrix_free_mapping_info_h
-
 
 #include <deal.II/base/aligned_vector.h>
 #include <deal.II/base/exceptions.h>
@@ -29,9 +27,7 @@
 
 #include <memory>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -65,8 +61,6 @@ namespace internal
        */
       general = 3
     };
-
-
 
     /**
      * Definition of a structure that stores all cached data related to the
@@ -276,8 +270,6 @@ namespace internal
       memory_consumption() const;
     };
 
-
-
     /**
      * The class that stores all geometry-dependent data related with cell
      * interiors for use in the matrix-free class.
@@ -425,8 +417,6 @@ namespace internal
                            = std::vector<dealii::hp::QCollection<1>>());
     };
 
-
-
     /**
      * A helper class to extract either cell or face data from mapping info
      * for use in FEEvaluationBase.
@@ -459,8 +449,6 @@ namespace internal
         return &mapping_info.face_data[quad_no];
       }
     };
-
-
 
     /**
      * A class that is used to compare floating point arrays (e.g. std::vectors,
@@ -517,8 +505,6 @@ namespace internal
       Number tolerance;
     };
 
-
-
     /* ------------------- inline functions ----------------------------- */
 
     template <int structdim, int spacedim, typename Number>
@@ -531,8 +517,6 @@ namespace internal
           return i;
       return 0;
     }
-
-
 
     template <int dim, typename Number>
     inline GeometryType

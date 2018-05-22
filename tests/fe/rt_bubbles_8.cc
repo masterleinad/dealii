@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Assemble a mass matrix for the RT_Bubbles element and try to invert it.
 
 #include "../tests.h"
@@ -34,7 +33,6 @@
 #include <vector>
 
 #define PRECISION 5
-
 
 std::ofstream logfile("output");
 
@@ -61,7 +59,6 @@ test(const unsigned int degree)
 
   Assert(fe.get_fe().n_components() == dim, ExcInternalError());
 
-
   for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
     for(unsigned int i = 0; i < dofs_per_cell; ++i)
       for(unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -87,8 +84,6 @@ test(const unsigned int degree)
     3,
     45);
 }
-
-
 
 int
 main()

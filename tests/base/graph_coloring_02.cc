@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that graph coloring works on adapted mesh with a uniform polynomial
 // order.
-
 
 #include "../tests.h"
 #include <vector>

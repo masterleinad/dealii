@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like coarsening_02, but with a complex grid
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -172,7 +168,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

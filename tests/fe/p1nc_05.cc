@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the P1NC element's gradient on a square
 
 #include "../tests.h"
@@ -27,8 +25,6 @@
 #include <deal.II/fe/fe_p1nc.h>
 
 #include <string>
-
-
 
 template <int dim>
 void

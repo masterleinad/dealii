@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 Point<dim>
@@ -39,8 +36,6 @@ Point<3> trans_func(Point<3>& p)
   return r;
 }
 
-
-
 template <int dim>
 void
 test()
@@ -52,7 +47,6 @@ test()
   tria.refine_global(1);
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-
 
   deallog << "Unchanged grid:" << std::endl;
   GridOut().write_gnuplot(tria, deallog.get_file_stream());
@@ -71,7 +65,6 @@ test()
     GridOut().write_gnuplot(tria, f);
   }
 }
-
 
 int
 main()

@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_fe_evaluation_h
 #define dealii_matrix_free_fe_evaluation_h
-
 
 #include <deal.II/base/array_view.h>
 #include <deal.II/base/config.h>
@@ -35,8 +33,6 @@
 #include <deal.II/lac/vector_operation.h>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 // forward declarations
 namespace LinearAlgebra
@@ -58,7 +54,6 @@ template <int dim,
           int n_components_ = 1,
           typename Number   = double>
 class FEEvaluation;
-
 
 /**
  * This is the base class for the FEEvaluation classes. This class is a base
@@ -1091,8 +1086,6 @@ private:
   friend class FEEvaluation;
 };
 
-
-
 /**
  * This class provides access to the data fields of the FEEvaluation classes.
  * Generic access is achieved through the base class, and specializations for
@@ -1155,8 +1148,6 @@ protected:
   FEEvaluationAccess&
   operator=(const FEEvaluationAccess& other);
 };
-
-
 
 /**
  * This class provides access to the data fields of the FEEvaluation classes.
@@ -1286,8 +1277,6 @@ protected:
   FEEvaluationAccess&
   operator=(const FEEvaluationAccess& other);
 };
-
-
 
 /**
  * This class provides access to the data fields of the FEEvaluation classes.
@@ -1443,7 +1432,6 @@ protected:
   operator=(const FEEvaluationAccess& other);
 };
 
-
 /**
  * This class provides access to the data fields of the FEEvaluation classes.
  * Partial specialization for scalar fields in 1d that defines access with
@@ -1583,8 +1571,6 @@ protected:
   FEEvaluationAccess&
   operator=(const FEEvaluationAccess& other);
 };
-
-
 
 /**
  * The class that provides all functions necessary to evaluate functions at
@@ -2501,8 +2487,6 @@ private:
                            const unsigned int first_selected_component);
 };
 
-
-
 /**
  * The class that provides all functions necessary to evaluate functions at
  * quadrature points and face integrations. The design of the class is similar
@@ -2819,8 +2803,6 @@ protected:
                               const bool gradients);
 };
 
-
-
 namespace internal
 {
   namespace MatrixFreeFunctions
@@ -2845,12 +2827,9 @@ namespace internal
   } // namespace MatrixFreeFunctions
 } // namespace internal
 
-
 /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
-
-
 
 /*----------------------- FEEvaluationBase ----------------------------------*/
 
@@ -2964,8 +2943,6 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   // in derived classes
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 template <int n_components_other>
 inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
@@ -3036,8 +3013,6 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   (void) base_element_number;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   const FEEvaluationBase<dim, n_components_, Number, is_face>& other)
@@ -3094,8 +3069,6 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
       J_value  = mapped_geometry->get_data_storage().JxW_values.begin();
     }
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationBase<dim, n_components_, Number, is_face>&
@@ -3162,8 +3135,6 @@ operator=(const FEEvaluationBase<dim, n_components_, Number, is_face>& other)
   return *this;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationBase<dim, n_components_, Number, is_face>::
   ~FEEvaluationBase()
@@ -3185,8 +3156,6 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::
     }
   scratch_data_array = nullptr;
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline void
@@ -3235,8 +3204,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::set_data_pointers()
       + (n_components_ * (dim * dim + 2 * dim + 1) * n_quadrature_points);
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline unsigned int
 FEEvaluationBase<dim, n_components_, Number, is_face>::get_cell_data_number()
@@ -3244,8 +3211,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_cell_data_number()
 {
   return get_mapping_data_index_offset();
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline unsigned int
@@ -3261,8 +3226,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::
     }
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline internal::MatrixFreeFunctions::GeometryType
 FEEvaluationBase<dim, n_components_, Number, is_face>::get_cell_type() const
@@ -3271,8 +3234,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_cell_type() const
   return cell_type;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>&
 FEEvaluationBase<dim, n_components_, Number, is_face>::get_shape_info() const
@@ -3280,8 +3241,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_shape_info() const
   Assert(data != nullptr, ExcInternalError());
   return *data;
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline void
@@ -3301,8 +3260,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::fill_JxW_values(
       JxW_values[q] = J_value[q];
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, VectorizedArray<Number>>
                              FEEvaluationBase<dim, n_components_, Number, is_face>::get_normal_vector(
@@ -3315,8 +3272,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, VectorizedArray<Number>>
   else
     return normal_vectors[q_index];
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
@@ -3334,8 +3289,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
     return J_value[q_index];
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<2, dim, VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::inverse_jacobian(
@@ -3348,8 +3301,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::inverse_jacobian(
   else
     return jacobian[q_index];
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline VectorizedArray<Number>
@@ -3377,8 +3328,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_cell_data(
     return array[cell];
 }
 
-
-
 namespace internal
 {
   // access to generic vectors that have operator ().
@@ -3388,8 +3337,6 @@ namespace internal
   {
     return vec(entry);
   }
-
-
 
   // access to distributed MPI vectors that have a local_element(uint)
   // method to access data in local index space, which is what we use in
@@ -3401,8 +3348,6 @@ namespace internal
   {
     return vec.local_element(entry);
   }
-
-
 
   // this is to make sure that the parallel partitioning in the
   // LinearAlgebra::distributed::Vector is really the same as stored in
@@ -3457,7 +3402,6 @@ namespace internal
       dealii::vectorized_load_and_transpose(
         dofs_per_cell, vec.begin(), dof_indices, dof_values);
     }
-
 
     template <typename VectorType>
     void
@@ -3648,7 +3592,6 @@ namespace internal
     {}
   };
 
-
   // A class to use the same code to read from and write to vector
   template <typename Number>
   struct VectorSetter
@@ -3813,8 +3756,6 @@ namespace internal
     }
   };
 } // namespace internal
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType, typename VectorOperation>
@@ -4226,8 +4167,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_write_operation(
     }
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType, typename VectorOperation>
 inline void
@@ -4252,8 +4191,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::
         }
     }
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType, typename VectorOperation>
@@ -4332,8 +4269,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::
       }
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType>
 inline void
@@ -4359,8 +4294,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_dof_values(
   dof_values_initialized = true;
 #  endif
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType>
@@ -4388,8 +4321,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_dof_values_plain(
 #  endif
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType>
 inline void
@@ -4414,8 +4345,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::
   internal::VectorDistributorLocalToGlobal<Number> distributor;
   read_write_operation(distributor, dst_data);
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 template <typename VectorType>
@@ -4442,8 +4371,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::set_dof_values(
   read_write_operation(setter, dst_data);
 }
 
-
-
 /*------------------------------ access to data fields ----------------------*/
 
 template <int dim, int n_components, typename Number, bool is_face>
@@ -4454,8 +4381,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::
   return data->lexicographic_numbering;
 }
 
-
-
 template <int dim, int n_components, typename Number, bool is_face>
 inline ArrayView<VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components, Number, is_face>::get_scratch_data() const
@@ -4465,16 +4390,12 @@ FEEvaluationBase<dim, n_components, Number, is_face>::get_scratch_data() const
     scratch_data_array->end() - scratch_data);
 }
 
-
-
 template <int dim, int n_components, typename Number, bool is_face>
 inline const VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_dof_values() const
 {
   return &values_dofs[0][0];
 }
-
-
 
 template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
@@ -4486,8 +4407,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_dof_values()
   return &values_dofs[0][0];
 }
 
-
-
 template <int dim, int n_components, typename Number, bool is_face>
 inline const VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_values() const
@@ -4495,8 +4414,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_values() const
   Assert(values_quad_initialized || values_quad_submitted, ExcNotInitialized());
   return &values_quad[0][0];
 }
-
-
 
 template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
@@ -4509,8 +4426,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_values()
   return &values_quad[0][0];
 }
 
-
-
 template <int dim, int n_components, typename Number, bool is_face>
 inline const VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_gradients() const
@@ -4519,8 +4434,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_gradients() const
          ExcNotInitialized());
   return &gradients_quad[0][0][0];
 }
-
-
 
 template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
@@ -4533,8 +4446,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_gradients()
   return &gradients_quad[0][0][0];
 }
 
-
-
 template <int dim, int n_components, typename Number, bool is_face>
 inline const VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_hessians() const
@@ -4542,8 +4453,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_hessians() const
   Assert(hessians_quad_initialized, ExcNotInitialized());
   return &hessians_quad[0][0][0];
 }
-
-
 
 template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
@@ -4554,8 +4463,6 @@ FEEvaluationBase<dim, n_components, Number, is_face>::begin_hessians()
 #  endif
   return &hessians_quad[0][0][0];
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
@@ -4568,8 +4475,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
     return_value[comp] = this->values_dofs[comp][dof];
   return return_value;
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
@@ -4584,8 +4489,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
     return_value[comp] = this->values_quad[comp][q_point];
   return return_value;
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE
@@ -4629,8 +4532,6 @@ inline DEAL_II_ALWAYS_INLINE
   return grad_out;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
                              FEEvaluationBase<dim, n_components_, Number, is_face>::get_normal_derivative(
@@ -4663,8 +4564,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, n_components_, VectorizedArray<Number>>
     }
   return grad_out;
 }
-
-
 
 namespace internal
 {
@@ -4717,8 +4616,6 @@ namespace internal
       }
   }
 } // namespace internal
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, Tensor<2, dim, VectorizedArray<Number>>>
@@ -4852,8 +4749,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_hessian(
     hessian_out);
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, Tensor<1, dim, VectorizedArray<Number>>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::get_hessian_diagonal(
@@ -4935,8 +4830,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_hessian_diagonal(
   return hessian_out;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::get_laplacian(
@@ -4959,8 +4852,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::get_laplacian(
   return laplacian_out;
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationBase<dim, n_components_, Number, is_face>::submit_dof_value(
@@ -4974,8 +4865,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_dof_value(
   for(unsigned int comp = 0; comp < n_components; comp++)
     this->values_dofs[comp][dof] = val_in[comp];
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5004,8 +4893,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_value(
         this->values_quad[comp][q_point] = val_in[comp] * JxW;
     }
 }
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5052,8 +4939,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_gradient(
     }
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationBase<dim, n_components_, Number, is_face>::submit_normal_derivative(
@@ -5093,8 +4978,6 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_normal_derivative(
     }
 }
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::integrate_value() const
@@ -5114,10 +4997,7 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::integrate_value() const
   return (return_value);
 }
 
-
-
 /*----------------------- FEEvaluationAccess --------------------------------*/
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
@@ -5138,8 +5018,6 @@ inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
       is_interior_face)
 {}
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 template <int n_components_other>
 inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
@@ -5159,16 +5037,12 @@ inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
       other)
 {}
 
-
-
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
   FEEvaluationAccess(
     const FEEvaluationAccess<dim, n_components_, Number, is_face>& other)
   : FEEvaluationBase<dim, n_components_, Number, is_face>(other)
 {}
-
-
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, n_components_, Number, is_face>&
@@ -5179,10 +5053,7 @@ operator=(const FEEvaluationAccess<dim, n_components_, Number, is_face>& other)
   return *this;
 }
 
-
-
 /*-------------------- FEEvaluationAccess scalar ----------------------------*/
-
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
@@ -5202,8 +5073,6 @@ inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
                                               is_interior_face)
 {}
 
-
-
 template <int dim, typename Number, bool is_face>
 template <int n_components_other>
 inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
@@ -5221,15 +5090,11 @@ inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
                                               other)
 {}
 
-
-
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
   const FEEvaluationAccess<dim, 1, Number, is_face>& other)
   : FEEvaluationBase<dim, 1, Number, is_face>(other)
 {}
-
-
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, 1, Number, is_face>&
@@ -5240,8 +5105,6 @@ operator=(const FEEvaluationAccess<dim, 1, Number, is_face>& other)
   return *this;
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              FEEvaluationAccess<dim, 1, Number, is_face>::get_dof_value(
@@ -5250,8 +5113,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   AssertIndexRange(dof, this->data->dofs_per_component_on_cell);
   return this->values_dofs[0][dof];
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
@@ -5264,8 +5125,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   return this->values_quad[0][q_point];
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              FEEvaluationAccess<dim, 1, Number, is_face>::get_normal_derivative(
@@ -5273,8 +5132,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
 {
   return BaseClass::get_normal_derivative(q_point)[0];
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, VectorizedArray<Number>>
@@ -5316,8 +5173,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, VectorizedArray<Number>>
   return grad_out;
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline Tensor<2, dim, VectorizedArray<Number>>
 FEEvaluationAccess<dim, 1, Number, is_face>::get_hessian(
@@ -5325,8 +5180,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::get_hessian(
 {
   return BaseClass::get_hessian(q_point)[0];
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline Tensor<1, dim, VectorizedArray<Number>>
@@ -5336,8 +5189,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::get_hessian_diagonal(
   return BaseClass::get_hessian_diagonal(q_point)[0];
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline VectorizedArray<Number>
 FEEvaluationAccess<dim, 1, Number, is_face>::get_laplacian(
@@ -5345,8 +5196,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::get_laplacian(
 {
   return BaseClass::get_laplacian(q_point)[0];
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline void DEAL_II_ALWAYS_INLINE
@@ -5360,8 +5209,6 @@ inline void DEAL_II_ALWAYS_INLINE
 #  endif
   this->values_dofs[0][dof] = val_in;
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline void DEAL_II_ALWAYS_INLINE
@@ -5387,8 +5234,6 @@ inline void DEAL_II_ALWAYS_INLINE
     }
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<dim, 1, Number, is_face>::submit_value(
@@ -5397,8 +5242,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::submit_value(
 {
   submit_value(val_in[0], q_point);
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5410,8 +5253,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::submit_normal_derivative(
   grad[0] = grad_in;
   BaseClass::submit_normal_derivative(grad, q_point);
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5456,8 +5297,6 @@ FEEvaluationAccess<dim, 1, Number, is_face>::submit_gradient(
     }
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline VectorizedArray<Number>
 FEEvaluationAccess<dim, 1, Number, is_face>::integrate_value() const
@@ -5465,10 +5304,7 @@ FEEvaluationAccess<dim, 1, Number, is_face>::integrate_value() const
   return BaseClass::integrate_value()[0];
 }
 
-
-
 /*----------------- FEEvaluationAccess vector-valued ------------------------*/
-
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
@@ -5488,8 +5324,6 @@ inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
                                                 is_interior_face)
 {}
 
-
-
 template <int dim, typename Number, bool is_face>
 template <int n_components_other>
 inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
@@ -5507,15 +5341,11 @@ inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
                                                 other)
 {}
 
-
-
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
   const FEEvaluationAccess<dim, dim, Number, is_face>& other)
   : FEEvaluationBase<dim, dim, Number, is_face>(other)
 {}
-
-
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, dim, Number, is_face>&
@@ -5526,8 +5356,6 @@ operator=(const FEEvaluationAccess<dim, dim, Number, is_face>& other)
   return *this;
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, VectorizedArray<Number>>
                              FEEvaluationAccess<dim, dim, Number, is_face>::get_gradient(
@@ -5535,8 +5363,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, VectorizedArray<Number>>
 {
   return BaseClass::get_gradient(q_point);
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
@@ -5576,8 +5402,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   return divergence;
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<2, dim, VectorizedArray<Number>>
                              FEEvaluationAccess<dim, dim, Number, is_face>::get_symmetric_gradient(
@@ -5611,8 +5435,6 @@ inline DEAL_II_ALWAYS_INLINE SymmetricTensor<2, dim, VectorizedArray<Number>>
   return SymmetricTensor<2, dim, VectorizedArray<Number>>(symmetrized);
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE
   Tensor<1, (dim == 2 ? 1 : dim), VectorizedArray<Number>>
@@ -5643,8 +5465,6 @@ inline DEAL_II_ALWAYS_INLINE
   return curl;
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, VectorizedArray<Number>>
                              FEEvaluationAccess<dim, dim, Number, is_face>::get_hessian_diagonal(
@@ -5652,8 +5472,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, VectorizedArray<Number>>
 {
   return BaseClass::get_hessian_diagonal(q_point);
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<3, dim, VectorizedArray<Number>>
@@ -5666,8 +5484,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<3, dim, VectorizedArray<Number>>
   return BaseClass::get_hessian(q_point);
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<dim, dim, Number, is_face>::submit_gradient(
@@ -5677,8 +5493,6 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_gradient(
   BaseClass::submit_gradient(grad_in, q_point);
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<dim, dim, Number, is_face>::submit_gradient(
@@ -5687,8 +5501,6 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_gradient(
 {
   BaseClass::submit_gradient(grad_in, q_point);
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5736,8 +5548,6 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_divergence(
         }
     }
 }
-
-
 
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -5807,8 +5617,6 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_symmetric_gradient(
     }
 }
 
-
-
 template <int dim, typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<dim, dim, Number, is_face>::submit_curl(
@@ -5841,9 +5649,7 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_curl(
   submit_gradient(grad, q_point);
 }
 
-
 /*-------------------- FEEvaluationAccess scalar for 1d ----------------------------*/
-
 
 template <typename Number, bool is_face>
 inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
@@ -5863,8 +5669,6 @@ inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
                                             is_interior_face)
 {}
 
-
-
 template <typename Number, bool is_face>
 template <int n_components_other>
 inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
@@ -5882,15 +5686,11 @@ inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
                                             other)
 {}
 
-
-
 template <typename Number, bool is_face>
 inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
   const FEEvaluationAccess<1, 1, Number, is_face>& other)
   : FEEvaluationBase<1, 1, Number, is_face>(other)
 {}
-
-
 
 template <typename Number, bool is_face>
 inline FEEvaluationAccess<1, 1, Number, is_face>&
@@ -5901,8 +5701,6 @@ operator=(const FEEvaluationAccess<1, 1, Number, is_face>& other)
   return *this;
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              FEEvaluationAccess<1, 1, Number, is_face>::get_dof_value(
@@ -5911,8 +5709,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   AssertIndexRange(dof, this->data->dofs_per_component_on_cell);
   return this->values_dofs[0][dof];
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
@@ -5924,8 +5720,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   AssertIndexRange(q_point, this->n_quadrature_points);
   return this->values_quad[0][q_point];
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, 1, VectorizedArray<Number>>
@@ -5950,8 +5744,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, 1, VectorizedArray<Number>>
   return grad_out;
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              FEEvaluationAccess<1, 1, Number, is_face>::get_normal_derivative(
@@ -5959,8 +5751,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
 {
   return BaseClass::get_normal_derivative(q_point)[0];
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<2, 1, VectorizedArray<Number>>
@@ -5970,8 +5760,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, 1, VectorizedArray<Number>>
   return BaseClass::get_hessian(q_point)[0];
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, 1, VectorizedArray<Number>>
                              FEEvaluationAccess<1, 1, Number, is_face>::get_hessian_diagonal(
@@ -5980,8 +5768,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, 1, VectorizedArray<Number>>
   return BaseClass::get_hessian_diagonal(q_point)[0];
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
                              FEEvaluationAccess<1, 1, Number, is_face>::get_laplacian(
@@ -5989,8 +5775,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
 {
   return BaseClass::get_laplacian(q_point)[0];
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void DEAL_II_ALWAYS_INLINE
@@ -6004,8 +5788,6 @@ inline DEAL_II_ALWAYS_INLINE void DEAL_II_ALWAYS_INLINE
 #  endif
   this->values_dofs[0][dof] = val_in;
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -6031,8 +5813,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_value(
     }
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<1, 1, Number, is_face>::submit_value(
@@ -6042,8 +5822,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_value(
   submit_value(val_in[0], q_point);
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<1, 1, Number, is_face>::submit_gradient(
@@ -6052,8 +5830,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_gradient(
 {
   submit_gradient(grad_in[0], q_point);
 }
-
-
 
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
@@ -6079,8 +5855,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_gradient(
   this->gradients_quad[0][0][q_point] = jac[0][0] * grad_in * JxW;
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<1, 1, Number, is_face>::submit_normal_derivative(
@@ -6092,8 +5866,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_normal_derivative(
   BaseClass::submit_normal_derivative(grad, q_point);
 }
 
-
-
 template <typename Number, bool is_face>
 inline DEAL_II_ALWAYS_INLINE void
 FEEvaluationAccess<1, 1, Number, is_face>::submit_normal_derivative(
@@ -6103,8 +5875,6 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_normal_derivative(
   BaseClass::submit_normal_derivative(grad_in, q_point);
 }
 
-
-
 template <typename Number, bool is_face>
 inline VectorizedArray<Number>
 FEEvaluationAccess<1, 1, Number, is_face>::integrate_value() const
@@ -6112,10 +5882,7 @@ FEEvaluationAccess<1, 1, Number, is_face>::integrate_value() const
   return BaseClass::integrate_value()[0];
 }
 
-
-
 /*-------------------------- FEEvaluation -----------------------------------*/
-
 
 template <int dim,
           int fe_degree,
@@ -6139,8 +5906,6 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 {
   check_template_arguments(fe_no, 0);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6166,8 +5931,6 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6190,8 +5953,6 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6216,8 +5977,6 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6233,8 +5992,6 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6248,8 +6005,6 @@ operator=(const FEEvaluation& other)
   check_template_arguments(numbers::invalid_unsigned_int, 0);
   return *this;
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6407,8 +6162,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6443,8 +6196,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6470,8 +6221,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
     cell->get_dof_indices(this->local_dof_indices);
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6489,8 +6238,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   Assert(this->mapped_geometry.get() != 0, ExcNotInitialized());
   this->mapped_geometry->reinit(cell);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6553,8 +6300,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     return quadrature_points[q];
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6573,8 +6318,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::evaluate(
            evaluate_gradients,
            evaluate_hessians);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6614,8 +6357,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::evaluate(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6636,8 +6377,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
            evaluate_hessians);
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6654,8 +6393,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
   this->dof_values_initialized = true;
 #  endif
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -6696,8 +6433,6 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6714,11 +6449,7 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   this->distribute_local_to_global(destination);
 }
 
-
-
 /*-------------------------- FEFaceEvaluation ---------------------------*/
-
-
 
 template <int dim,
           int fe_degree,
@@ -6743,8 +6474,6 @@ inline FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     n_q_points(this->data->n_q_points_face)
 {}
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6753,8 +6482,6 @@ template <int dim,
 inline FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   ~FEFaceEvaluation()
 {}
-
-
 
 template <int dim,
           int fe_degree,
@@ -6826,8 +6553,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6895,8 +6620,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -6911,8 +6634,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
 
   evaluate(this->values_dofs[0], evaluate_values, evaluate_gradients);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -7010,8 +6731,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7027,8 +6746,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
   this->dof_values_initialized = true;
 #  endif
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -7112,8 +6829,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
     template interpolate<false, false>(
       *this->data, temp1, values_array, integrate_gradients, this->face_no);
 }
-
-
 
 template <int dim,
           int fe_degree,
@@ -7303,8 +7018,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 #  endif
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7492,8 +7205,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     }
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7537,8 +7248,6 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
     }
 }
 
-
-
 template <int dim,
           int fe_degree,
           int n_q_points_1d,
@@ -7580,13 +7289,9 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     }
 }
 
-
-
 /*------------------------- end FEFaceEvaluation ------------------------- */
 
-
 #endif // ifndef DOXYGEN
-
 
 DEAL_II_NAMESPACE_CLOSE
 

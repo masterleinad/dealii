@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <algorithm>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_rannacher_turek.h>
@@ -22,9 +21,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 FE_RannacherTurek<dim>::FE_RannacherTurek(
@@ -46,8 +43,6 @@ FE_RannacherTurek<dim>::FE_RannacherTurek(
   this->initialize_support_points();
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_RannacherTurek<dim>::get_dpo_vector()
@@ -57,8 +52,6 @@ FE_RannacherTurek<dim>::get_dpo_vector()
 
   return dpo;
 }
-
-
 
 template <int dim>
 std::string
@@ -71,8 +64,6 @@ FE_RannacherTurek<dim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_RannacherTurek<dim>::clone() const
@@ -80,8 +71,6 @@ FE_RannacherTurek<dim>::clone() const
   return std_cxx14::make_unique<FE_RannacherTurek<dim>>(
     this->order, this->n_face_support_points);
 }
-
-
 
 template <int dim>
 void
@@ -103,8 +92,6 @@ FE_RannacherTurek<dim>::initialize_support_points()
         = dealii::Point<dim>(face_quadrature.point(q)(0), 1);
     }
 }
-
-
 
 template <int dim>
 void
@@ -131,8 +118,6 @@ FE_RannacherTurek<dim>::convert_generalized_support_point_values_to_dof_values(
         }
     }
 }
-
-
 
 // explicit instantiations
 #include "fe_rannacher_turek.inst"

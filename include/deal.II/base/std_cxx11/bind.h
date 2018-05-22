@@ -16,9 +16,7 @@
 #ifndef dealii_std_cxx11_bind_h
 #define dealii_std_cxx11_bind_h
 
-
 #include <deal.II/base/config.h>
-
 
 #include <functional>
 
@@ -41,7 +39,6 @@ namespace std_cxx11
   namespace placeholders = std::placeholders;
 } // namespace std_cxx11
 DEAL_II_NAMESPACE_CLOSE
-
 
 // then allow using the old namespace name instead of the new one
 DEAL_II_NAMESPACE_OPEN

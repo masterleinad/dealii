@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
 
@@ -26,7 +25,6 @@
 
 // define this as 1 to get output into a separate file for each testcase
 #define SEPARATE_FILES 0
-
 
 template <int dim, int spacedim>
 void
@@ -47,7 +45,6 @@ check(DataOutBase::TecplotFlags flags, std::ostream& out)
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_tecplot(patches, names, vectors, flags, out);
 }
-
 
 template <int dim, int spacedim>
 void

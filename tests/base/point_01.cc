@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for Point::operator()
 
 #include "../tests.h"
 #include <deal.II/base/point.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void

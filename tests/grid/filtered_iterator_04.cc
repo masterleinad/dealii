@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check filtered iterators using multiple predicate
 
 #include "../tests.h"
@@ -55,7 +54,6 @@ test()
   for(cell = tria.begin_active(); cell != endc; ++cell)
     if((cell->subdomain_id() == 0) && (cell->at_boundary()))
       cell_set.insert(cell);
-
 
   unsigned int n_filtered_cells = 0;
   for(auto filtered_cell :

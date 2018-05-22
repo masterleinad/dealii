@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_patches_h
 #define dealii_integrators_patches_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>

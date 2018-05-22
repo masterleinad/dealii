@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // an extract of hp_constraints_q_system_x_01. something still goes wrong,
 // akin to what happens in crash_15. (it turned out to be bogus index
 // computations.)
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -43,8 +40,6 @@ char logname[] = "output";
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -126,8 +121,6 @@ test()
             }
         }
 }
-
-
 
 int
 main()

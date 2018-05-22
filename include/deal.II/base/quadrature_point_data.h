@@ -155,7 +155,6 @@ private:
   std::map<CellIteratorType, std::vector<std::shared_ptr<DataType>>> map;
 };
 
-
 /**
  * An abstract class which specifies requirements for data on
  * a single quadrature point to be transferable during refinement or repartitioning.
@@ -217,7 +216,6 @@ public:
   unpack_values(const std::vector<double>& values)
     = 0;
 };
-
 
 #ifdef DEAL_II_WITH_P4EST
 namespace parallel
@@ -511,8 +509,6 @@ CellDataStorage<CellIteratorType, DataType>::initialize(
     }
 }
 
-
-
 template <typename CellIteratorType, typename DataType>
 template <typename T>
 void
@@ -525,8 +521,6 @@ CellDataStorage<CellIteratorType, DataType>::initialize(
     if(it->is_locally_owned())
       initialize<T>(it, number);
 }
-
-
 
 template <typename CellIteratorType, typename DataType>
 bool
@@ -543,8 +537,6 @@ CellDataStorage<CellIteratorType, DataType>::erase(const CellIteratorType& cell)
 
   return (map.erase(cell) == 1);
 }
-
-
 
 template <typename CellIteratorType, typename DataType>
 void
@@ -568,8 +560,6 @@ CellDataStorage<CellIteratorType, DataType>::clear()
     }
 }
 
-
-
 template <typename CellIteratorType, typename DataType>
 template <typename T>
 std::vector<std::shared_ptr<T>>
@@ -591,8 +581,6 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
     res[q] = std::dynamic_pointer_cast<T>(it->second[q]);
   return res;
 }
-
-
 
 template <typename CellIteratorType, typename DataType>
 template <typename T>
@@ -618,7 +606,6 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
 //--------------------------------------------------------------------
 //                    ContinuousQuadratureDataTransfer
 //--------------------------------------------------------------------
-
 
 /*
  * Pack cell data of type @p DataType stored using @p data_storage in @p cell
@@ -656,8 +643,6 @@ pack_cell_data(const CellIteratorType&                            cell,
     }
 }
 
-
-
 /*
  * the opposite of the pack function above.
  */
@@ -686,7 +671,6 @@ unpack_to_cell_data(const CellIteratorType&                      cell,
       qpd[q]->unpack_values(single_qp_data);
     }
 }
-
 
 #  ifdef DEAL_II_WITH_P4EST
 
@@ -724,14 +708,10 @@ namespace parallel
         *projection_fe.get(), rhs_quadrature, project_to_qp_matrix);
     }
 
-
-
     template <int dim, typename DataType>
     ContinuousQuadratureDataTransfer<dim, DataType>::
       ~ContinuousQuadratureDataTransfer()
     {}
-
-
 
     template <int dim, typename DataType>
     void
@@ -780,8 +760,6 @@ namespace parallel
           std::placeholders::_3));
     }
 
-
-
     template <int dim, typename DataType>
     void
     ContinuousQuadratureDataTransfer<dim, DataType>::interpolate()
@@ -799,8 +777,6 @@ namespace parallel
       data_storage  = nullptr;
       triangulation = nullptr;
     }
-
-
 
     template <int dim, typename DataType>
     void
@@ -821,8 +797,6 @@ namespace parallel
 
       std::memcpy(data_store, &matrix_dofs(0, 0), data_size_in_bytes);
     }
-
-
 
     template <int dim, typename DataType>
     void

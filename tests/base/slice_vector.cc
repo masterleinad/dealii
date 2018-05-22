@@ -28,7 +28,6 @@ f(const std::vector<int>& v)
   deallog << std::endl;
 }
 
-
 int
 main()
 {

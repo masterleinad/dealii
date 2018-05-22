@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_p.h>
 #include <deal.II/base/polynomials_piecewise.h>
 #include <deal.II/base/polynomials_rannacher_turek.h>
@@ -26,7 +25,6 @@
 #include <deal.II/fe/fe_values.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <>
 void
@@ -94,8 +92,6 @@ FE_Poly<TensorProductPolynomials<1>, 1, 2>::fill_fe_values(
     }
 }
 
-
-
 template <>
 void
 FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
@@ -159,7 +155,6 @@ FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
           output_data, mapping_data, quadrature.size(), k);
     }
 }
-
 
 template <>
 void
@@ -228,7 +223,6 @@ FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
     }
 }
 
-
 template <>
 void
 FE_Poly<PolynomialSpace<2>, 2, 3>::fill_fe_values(
@@ -290,7 +284,6 @@ FE_Poly<PolynomialSpace<2>, 2, 3>::fill_fe_values(
           output_data, mapping_data, quadrature.size(), k);
     }
 }
-
 
 #include "fe_poly.inst"
 

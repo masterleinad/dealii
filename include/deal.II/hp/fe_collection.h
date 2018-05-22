@@ -218,7 +218,6 @@ namespace hp
     std::size_t
     memory_consumption() const;
 
-
     /**
      * Return whether all elements in this collection implement the hanging
      * node constraints in the new way, which has to be used to make elements
@@ -458,7 +457,6 @@ namespace hp
     BlockMask
     block_mask(const ComponentMask& component_mask) const;
 
-
     /**
      * Exception
      */
@@ -471,8 +469,6 @@ namespace hp
     std::vector<std::shared_ptr<const FiniteElement<dim, spacedim>>>
       finite_elements;
   };
-
-
 
   /* --------------- inline functions ------------------- */
 
@@ -493,14 +489,12 @@ namespace hp
       push_back(*p);
   }
 
-
   template <int dim, int spacedim>
   inline unsigned int
   FECollection<dim, spacedim>::size() const
   {
     return finite_elements.size();
   }
-
 
   template <int dim, int spacedim>
   inline unsigned int
@@ -519,8 +513,6 @@ namespace hp
     return finite_elements[0]->n_components();
   }
 
-
-
   template <int dim, int spacedim>
   inline bool
   FECollection<dim, spacedim>::
@@ -537,8 +529,6 @@ namespace hp
     return true;
   }
 
-
-
   template <int dim, int spacedim>
   inline bool
   FECollection<dim, spacedim>::
@@ -546,8 +536,6 @@ namespace hp
   {
     return !(*this == fe_collection);
   }
-
-
 
   template <int dim, int spacedim>
   inline const FiniteElement<dim, spacedim>& FECollection<dim, spacedim>::
@@ -557,8 +545,6 @@ namespace hp
            ExcIndexRange(index, 0, finite_elements.size()));
     return *finite_elements[index];
   }
-
-
 
   template <int dim, int spacedim>
   unsigned int
@@ -574,8 +560,6 @@ namespace hp
     return max;
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   FECollection<dim, spacedim>::max_dofs_per_line() const
@@ -589,8 +573,6 @@ namespace hp
 
     return max;
   }
-
-
 
   template <int dim, int spacedim>
   unsigned int
@@ -606,8 +588,6 @@ namespace hp
     return max;
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   FECollection<dim, spacedim>::max_dofs_per_hex() const
@@ -621,8 +601,6 @@ namespace hp
 
     return max;
   }
-
-
 
   template <int dim, int spacedim>
   unsigned int
@@ -638,8 +616,6 @@ namespace hp
     return max;
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   FECollection<dim, spacedim>::max_dofs_per_cell() const
@@ -654,7 +630,6 @@ namespace hp
     return max;
   }
 
-
   template <int dim, int spacedim>
   bool
   FECollection<dim, spacedim>::hp_constraints_are_implemented() const
@@ -668,7 +643,6 @@ namespace hp
 
     return hp_constraints;
   }
-
 
 } // namespace hp
 

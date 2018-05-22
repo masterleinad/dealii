@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check some things about Nedelec elements, basically also that the
 // DoFRenumbering::component_wise function also works for
 // non_primitive elements, for which it did not work previously since
@@ -42,7 +40,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 template <int dim>
 class SystemTest
 {
@@ -59,7 +56,6 @@ private:
   void
   check_numbering();
 
-
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
   DoFHandler<dim>    dof_handler;
@@ -69,7 +65,6 @@ template <int dim>
 SystemTest<dim>::SystemTest()
   : fe(FE_Nedelec<dim>(0), 2, FE_Q<dim>(1), 1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -101,8 +96,6 @@ SystemTest<dim>::shape_to_components()
             << std::endl;
 }
 
-
-
 template <int dim>
 void
 SystemTest<dim>::check_numbering()
@@ -122,7 +115,6 @@ SystemTest<dim>::check_numbering()
                 << fe.system_to_base_index(i).first.second << std::endl;
       deallog << std::endl;
     };
-
 
   //Now: Componentwise reodering of the dofs
 
@@ -147,7 +139,6 @@ SystemTest<dim>::check_numbering()
     };
 }
 
-
 template <int dim>
 void
 SystemTest<dim>::run()
@@ -156,8 +147,6 @@ SystemTest<dim>::run()
   shape_to_components();
   check_numbering();
 }
-
-
 
 int
 main()

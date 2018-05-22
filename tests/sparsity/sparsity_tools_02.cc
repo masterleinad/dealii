@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // apply SparsityTools::reorder_hierarchical to a graph that consists
 // of two non-connected parts.
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
-
 
 int
 main()

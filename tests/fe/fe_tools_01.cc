@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test FETools::get_fe_by_name
 
 #include "../tests.h"
@@ -36,7 +35,6 @@ test_fe(const char* name)
           << fe->dofs_per_line << '\t' << fe->dofs_per_quad << '\t'
           << fe->dofs_per_hex << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the case where the two children on a face with a hanging node have
 // different FENothing structure. compared to _12 and _13, the situation is
 // even more wicked since in the picture below 0=FE_Q(1), 1=FE_Nothing,
@@ -42,7 +40,6 @@
 // |  |  |
 // *--9--10
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -59,8 +56,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -126,8 +121,6 @@ test()
 
   constraints.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GeometryInfo::alternating_form_at_vertices
 
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
-
-
 
 template <int dim>
 void
@@ -67,7 +63,6 @@ test()
       }
   }
 
-
   // try the same, but move squash the cell
   // in the x-direction by a factor of 10 and
   // rotate it around the z-axis (unless in
@@ -109,7 +104,6 @@ test()
       deallog << "Pinched cell: " << determinants[v] << std::endl;
   }
 
-
   // inverted cell
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
@@ -123,7 +117,6 @@ test()
       deallog << "Inverted cell: " << determinants[v] << std::endl;
   }
 }
-
 
 int
 main()

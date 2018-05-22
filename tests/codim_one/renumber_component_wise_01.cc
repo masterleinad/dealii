@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test DoFRenumbering::component_wise for codim=1
 
 #include "../tests.h"
@@ -63,8 +61,6 @@ test(std::string filename)
         deallog << "  " << x[i] << std::endl;
     }
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // parallel::distributed::Triangulation<dim>::clear forgot to
 // update the number cache. check that this is fixed now.
 
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -43,7 +39,6 @@ test()
   tr.clear();
   deallog << tr.n_global_active_cells() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

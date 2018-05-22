@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as multigrid_dg_sip but using periodic boundary conditions
 
 #include "../tests.h"
@@ -48,7 +46,6 @@
 #include <deal.II/matrix_free/matrix_free.h>
 
 std::ofstream logfile("output");
-
 
 template <int dim,
           int fe_degree,
@@ -158,7 +155,6 @@ public:
   {
     return inverse_diagonal_entries;
   }
-
 
 private:
   void
@@ -446,12 +442,9 @@ private:
       }
   }
 
-
   MatrixFree<dim, number>               data;
   parallel::distributed::Vector<number> inverse_diagonal_entries;
 };
-
-
 
 template <typename MATRIX, typename Number>
 class MGCoarseIterative
@@ -480,8 +473,6 @@ public:
 
   const MATRIX* coarse_matrix;
 };
-
-
 
 template <typename LAPLACEOPERATOR>
 class MGTransferMF
@@ -513,8 +504,6 @@ private:
   const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
-
-
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
@@ -542,7 +531,6 @@ do_test(const DoFHandler<dim>& dof)
   for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
       ++level)
     mg_matrices[level].initialize(mapping, dof, level);
-
 
   MGCoarseIterative<LevelMatrixType, number> mg_coarse;
   mg_coarse.initialize(mg_matrices[0]);
@@ -587,8 +575,6 @@ do_test(const DoFHandler<dim>& dof)
   }
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -624,8 +610,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

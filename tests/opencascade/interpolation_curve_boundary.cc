@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a Triangulation, interpolate its boundary points to a close
 // smooth BSpline, and use that as a Boundary Descriptor.
 
@@ -72,7 +71,6 @@ main()
   // We refine twice, and expect the outer points to end up on a
   // smooth curve interpolating the square vertices.
   tria.refine_global(2);
-
 
   // You can open the generated file with gmsh.
   GridOut gridout;

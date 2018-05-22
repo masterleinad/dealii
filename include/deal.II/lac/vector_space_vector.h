@@ -22,7 +22,6 @@
 
 #include <memory>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 class IndexSet;

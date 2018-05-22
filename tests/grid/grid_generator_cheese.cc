@@ -21,8 +21,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 
-
-
 void
 dim_2(std::ostream& os)
 {
@@ -53,7 +51,6 @@ dim_3(std::ostream& os)
   GridOut gout;
   gout.write_vtk(tr, os);
 }
-
 
 int
 main()

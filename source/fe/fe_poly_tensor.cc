@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/array_view.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/polynomials_abf.h>
@@ -55,8 +54,6 @@ namespace internal
         std::fill(face_sign.begin(), face_sign.end(), 1.0);
       }
 
-
-
       void
       get_face_sign_change_rt(
         const dealii::Triangulation<2>::cell_iterator& cell,
@@ -93,8 +90,6 @@ namespace internal
           }
       }
 
-
-
       void
       get_face_sign_change_rt(
         const dealii::Triangulation<3>::cell_iterator& /*cell*/,
@@ -115,8 +110,6 @@ namespace internal
         std::fill(face_sign.begin(), face_sign.end(), 1.0);
       }
 
-
-
       void
       get_face_sign_change_nedelec(
         const dealii::Triangulation<2>::cell_iterator& /*cell*/,
@@ -126,7 +119,6 @@ namespace internal
         std::fill(face_sign.begin(), face_sign.end(), 1.0);
         //TODO: think about what it would take here
       }
-
 
       void
       get_face_sign_change_nedelec(
@@ -144,8 +136,6 @@ namespace internal
     } // namespace
   }   // namespace FE_PolyTensor
 } // namespace internal
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(
@@ -171,8 +161,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(
     this->component_to_base_table[comp].first.second = comp;
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 double
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_value(
@@ -183,8 +171,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_value(
   Assert(false, (typename FiniteElement<dim, spacedim>::ExcFENotPrimitive()));
   return 0.;
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 double
@@ -218,8 +204,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_value_component(
   return s;
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad(
@@ -229,8 +213,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad(
   Assert(false, (typename FiniteElement<dim, spacedim>::ExcFENotPrimitive()));
   return Tensor<1, dim>();
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
@@ -265,8 +247,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_component(
   return s;
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_grad(
@@ -276,8 +256,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_grad(
   Assert(false, (typename FiniteElement<dim, spacedim>::ExcFENotPrimitive()));
   return Tensor<2, dim>();
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
@@ -311,7 +289,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_grad_component(
 
   return s;
 }
-
 
 //---------------------------------------------------------------------------
 // Fill data of FEValues
@@ -364,7 +341,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
   else if(mapping_type == mapping_nedelec)
     internal::FE_PolyTensor::get_face_sign_change_nedelec(
       cell, this->dofs_per_face, fe_data.sign_change);
-
 
   for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
     {
@@ -515,7 +491,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
                           += output_data.shape_values(first + n, k)
                              * mapping_data
                                  .jacobian_pushed_forward_grads[k][d][n];
-
 
                   for(unsigned int k = 0; k < n_q_points; ++k)
                     for(unsigned int d = 0; d < dim; ++d)
@@ -917,8 +892,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
         }
     }
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 void
@@ -1551,8 +1524,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_face_values(
     }
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_subface_values(
@@ -2183,8 +2154,6 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_subface_values(
     }
 }
 
-
-
 template <class PolynomialType, int dim, int spacedim>
 UpdateFlags
 FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
@@ -2280,9 +2249,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
   return out;
 }
 
-
 // explicit instantiations
 #include "fe_poly_tensor.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

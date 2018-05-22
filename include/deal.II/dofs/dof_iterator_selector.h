@@ -18,7 +18,6 @@
 
 #include <deal.II/base/config.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int, int, int>
@@ -42,7 +41,6 @@ namespace internal
   {
     template <typename DoFHandlerType, bool lda = false>
     struct Iterators;
-
 
     /**
      * Define some types for DoF handling in one dimension.
@@ -88,8 +86,6 @@ namespace internal
       typedef TriaActiveIterator<FaceAccessor> active_face_iterator;
     };
 
-
-
     /**
      * Define some types for DoF handling in two dimensions.
      *
@@ -131,8 +127,6 @@ namespace internal
       typedef line_iterator        face_iterator;
       typedef active_line_iterator active_face_iterator;
     };
-
-
 
     /**
      * Define some types for DoF handling in three dimensions.

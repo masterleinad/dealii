@@ -16,7 +16,6 @@
 #ifndef dealii_fe_update_flags_h
 #define dealii_fe_update_flags_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/point.h>
@@ -25,12 +24,10 @@
 
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int, int>
 class FiniteElement;
-
 
 /*!@addtogroup feaccess */
 /*@{*/
@@ -239,7 +236,6 @@ enum UpdateFlags
   update_volume_elements
 };
 
-
 /**
  * Output operator which outputs update flags as a set of or'd text values.
  *
@@ -293,7 +289,6 @@ operator<<(StreamType& s, const UpdateFlags u)
   return s;
 }
 
-
 /**
  * Global operator which returns an object in which all bits are set which are
  * either set in the first or the second argument. This operator exists since
@@ -310,8 +305,6 @@ operator|(const UpdateFlags f1, const UpdateFlags f2)
                                   | static_cast<unsigned int>(f2));
 }
 
-
-
 /**
  * Global operator which sets the bits from the second argument also in the
  * first one.
@@ -324,7 +317,6 @@ operator|=(UpdateFlags& f1, const UpdateFlags f2)
   f1 = f1 | f2;
   return f1;
 }
-
 
 /**
  * Global operator which returns an object in which all bits are set which are
@@ -341,7 +333,6 @@ inline UpdateFlags operator&(const UpdateFlags f1, const UpdateFlags f2)
                                   & static_cast<unsigned int>(f2));
 }
 
-
 /**
  * Global operator which clears all the bits in the first argument if they are
  * not also set in the second argument.
@@ -354,8 +345,6 @@ operator&=(UpdateFlags& f1, const UpdateFlags f2)
   f1 = f1 & f2;
   return f1;
 }
-
-
 
 /**
  * This enum definition is used for storing similarities of the current cell
@@ -390,7 +379,6 @@ namespace CellSimilarity
     invalid_next_cell
   };
 }
-
 
 namespace internal
 {
@@ -504,7 +492,6 @@ namespace internal
        */
       std::vector<Tensor<1, spacedim>> boundary_forms;
     };
-
 
     /**
      * A class that stores all of the shape function related data used in
@@ -631,10 +618,7 @@ namespace internal
   } // namespace FEValuesImplementation
 } // namespace internal
 
-
 /*@}*/
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

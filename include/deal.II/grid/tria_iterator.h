@@ -16,9 +16,7 @@
 #ifndef dealii_tria_iterator_h
 #  define dealii_tria_iterator_h
 
-
 /*----------------------------   tria-iterator.h     ---------------------------*/
-
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -42,14 +40,11 @@ class TriaIterator;
 template <typename>
 class TriaActiveIterator;
 
-
-
 // note: in non-debug mode, i.e. with optimizations, the file
 // tria_iterator.templates.h is included at the end of this file.
 // this includes a lot of templates and thus makes compilation
 // slower, but at the same time allows for more aggressive
 // inlining and thus faster code.
-
 
 /**
  * This class implements an iterator, analogous to those used in the standard
@@ -352,7 +347,6 @@ public:
    */
   Accessor* operator->();
 
-
   /**
    * In order be able to assign end-iterators for different accessors to each
    * other, we need an access function which returns the accessor regardless
@@ -477,7 +471,6 @@ public:
   void
   print(StreamType& out) const;
 
-
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
@@ -543,7 +536,6 @@ protected:
    */
   Accessor accessor;
 
-
   /**
    * Make all other iterator class templates friends of this class. This is
    * necessary for the implementation of conversion constructors.
@@ -560,7 +552,6 @@ protected:
   template <typename SomeAccessor>
   friend class TriaActiveIterator;
 };
-
 
 /**
  * This specialization of TriaRawIterator provides access only to the
@@ -733,7 +724,6 @@ public:
    */
   DeclException0(ExcAssignmentOfUnusedObject);
 };
-
 
 /**
  * This specialization of TriaIterator provides access only to the
@@ -922,24 +912,18 @@ public:
   DeclException0(ExcAssignmentOfInactiveObject);
 };
 
-
 /*----------------------- Inline functions -------------------*/
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(const Accessor& a)
   : accessor(a)
 {}
 
-
-
 template <typename Accessor>
 template <typename OtherAccessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(const OtherAccessor& a)
   : accessor(a)
 {}
-
-
 
 template <typename Accessor>
 template <typename OtherAccessor>
@@ -948,8 +932,6 @@ inline TriaRawIterator<Accessor>::TriaRawIterator(
   : accessor(i.accessor)
 {}
 
-
-
 template <typename Accessor>
 template <typename OtherAccessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(
@@ -957,16 +939,12 @@ inline TriaRawIterator<Accessor>::TriaRawIterator(
   : accessor(i.accessor)
 {}
 
-
-
 template <typename Accessor>
 template <typename OtherAccessor>
 inline TriaRawIterator<Accessor>::TriaRawIterator(
   const TriaActiveIterator<OtherAccessor>& i)
   : accessor(i.accessor)
 {}
-
-
 
 template <typename Accessor>
 inline const Accessor& TriaRawIterator<Accessor>::operator*() const
@@ -981,8 +959,6 @@ inline const Accessor& TriaRawIterator<Accessor>::operator*() const
   return accessor;
 }
 
-
-
 template <typename Accessor>
 inline Accessor& TriaRawIterator<Accessor>::operator*()
 {
@@ -996,8 +972,6 @@ inline Accessor& TriaRawIterator<Accessor>::operator*()
   return accessor;
 }
 
-
-
 template <typename Accessor>
 inline const Accessor&
 TriaRawIterator<Accessor>::access_any() const
@@ -1005,15 +979,11 @@ TriaRawIterator<Accessor>::access_any() const
   return accessor;
 }
 
-
-
 template <typename Accessor>
 inline const Accessor* TriaRawIterator<Accessor>::operator->() const
 {
   return &(this->operator*());
 }
-
-
 
 template <typename Accessor>
 inline Accessor* TriaRawIterator<Accessor>::operator->()
@@ -1021,16 +991,12 @@ inline Accessor* TriaRawIterator<Accessor>::operator->()
   return &(this->operator*());
 }
 
-
-
 template <typename Accessor>
 inline IteratorState::IteratorStates
 TriaRawIterator<Accessor>::state() const
 {
   return accessor.state();
 }
-
-
 
 template <typename Accessor>
 inline bool
@@ -1054,8 +1020,6 @@ operator<(const TriaRawIterator<Accessor>& other) const
   return ((**this) < (*other));
 }
 
-
-
 template <typename Accessor>
 inline bool
 TriaRawIterator<Accessor>::
@@ -1063,8 +1027,6 @@ operator>(const TriaRawIterator<Accessor>& other) const
 {
   return (other < *this);
 }
-
-
 
 template <typename Accessor>
 inline TriaRawIterator<Accessor>&
@@ -1076,8 +1038,6 @@ TriaRawIterator<Accessor>::operator++()
   return *this;
 }
 
-
-
 template <typename Accessor>
 inline TriaRawIterator<Accessor>&
 TriaRawIterator<Accessor>::operator--()
@@ -1087,8 +1047,6 @@ TriaRawIterator<Accessor>::operator--()
   --accessor;
   return *this;
 }
-
-
 
 template <typename Accessor>
 template <class StreamType>
@@ -1101,16 +1059,12 @@ TriaRawIterator<Accessor>::print(StreamType& out) const
     out << accessor.index();
 }
 
-
-
 template <typename Accessor>
 inline std::size_t
 TriaRawIterator<Accessor>::memory_consumption() const
 {
   return sizeof(TriaRawIterator<Accessor>);
 }
-
-
 
 template <typename Accessor>
 template <typename OtherAccessor>
@@ -1119,16 +1073,12 @@ inline TriaIterator<Accessor>::TriaIterator(
   : TriaRawIterator<Accessor>(i.accessor)
 {}
 
-
-
 template <typename Accessor>
 template <typename OtherAccessor>
 inline TriaIterator<Accessor>::TriaIterator(
   const TriaActiveIterator<OtherAccessor>& i)
   : TriaRawIterator<Accessor>(i.accessor)
 {}
-
-
 
 template <typename Accessor>
 template <typename OtherAccessor>
@@ -1172,8 +1122,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   : TriaIterator<Accessor>(i.accessor)
 {}
 
-
-
 template <typename Accessor>
 template <typename OtherAccessor>
 inline TriaActiveIterator<Accessor>::TriaActiveIterator(
@@ -1193,8 +1141,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
 #  endif
 }
 
-
-
 /**
  * Print the address to which this iterator points to @p out. The address is
  * given by the pair <tt>(level,index)</tt>, where @p index is an index
@@ -1209,8 +1155,6 @@ operator<<(std::ostream& out, const TriaRawIterator<Accessor>& i)
   i.print(out);
   return out;
 }
-
-
 
 /**
  * Print the address to which this iterator points to @p out. The address is
@@ -1227,8 +1171,6 @@ operator<<(std::ostream& out, const TriaIterator<Accessor>& i)
   return out;
 }
 
-
-
 /**
  * Print the address to which this iterator points to @p out. The address is
  * given by the pair <tt>(level,index)</tt>, where @p index is an index
@@ -1244,15 +1186,12 @@ operator<<(std::ostream& out, const TriaActiveIterator<Accessor>& i)
   return out;
 }
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 // if in optimized mode: include more templates
 #  ifndef DEBUG
 #    include "tria_iterator.templates.h"
 #  endif
-
 
 /*----------------------------   tria-iterator.h     ---------------------------*/
 #endif

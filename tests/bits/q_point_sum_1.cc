@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrating \vec x over the surface of the [-1,1] hypercube and
 // hyperball in 2d and 3d should yield zero
 
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -84,7 +80,6 @@ check(const Triangulation<dim>& tria)
   deallog << " subface integration is ok: " << std::sqrt(n2 * n2) << std::endl;
 }
 
-
 int
 main()
 {
@@ -101,7 +96,6 @@ main()
     GridGenerator::hyper_cube(coarse_grid, -1, 1);
     check(coarse_grid);
   }
-
 
   {
     Triangulation<2> coarse_grid;

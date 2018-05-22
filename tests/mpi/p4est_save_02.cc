@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // save and load a triangulation with one solution vector
 
 #include "../tests.h"
@@ -33,10 +31,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-
 #include <deal.II/fe/fe_q.h>
-
-
 
 template <int dim>
 void
@@ -151,14 +146,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

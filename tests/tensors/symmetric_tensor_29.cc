@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Tensor<1,dim> * SymmetricTensor<2,dim>
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -39,8 +37,6 @@ test()
 
   Assert(s * t == t * s, ExcInternalError());
 }
-
-
 
 int
 main()

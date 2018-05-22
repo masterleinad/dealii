@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::partition_triangulation using ZOLTAN as partitioner
 // Test 1 (metis_01.cc) of metis is used as model for this test
 
@@ -24,7 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -44,8 +41,6 @@ test()
       ++cell)
     deallog << cell << ' ' << cell->subdomain_id() << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

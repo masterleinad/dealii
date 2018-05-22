@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -23,10 +21,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
-
-
 
 // testcase=0:
 // create two cubes; translate them so that no vertices overlap
@@ -77,7 +72,6 @@ test(const int testcase)
           << "     Total number of vertices = " << tria_3.n_used_vertices()
           << std::endl;
 }
-
 
 int
 main()

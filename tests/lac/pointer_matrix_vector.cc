@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test vmult and Tvmult of PointerMatrixVector
 
 #include "../tests.h"
 #include <deal.II/lac/pointer_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 int
 main()
@@ -32,7 +30,6 @@ main()
   Vector<float>  x(5);
   Vector<float>  y(5);
   Vector<float>  z(1);
-
 
   for(unsigned int i = 0; i < u.size(); ++i)
     {

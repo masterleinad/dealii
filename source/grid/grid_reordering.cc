@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/timer.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/grid_reordering.h>
@@ -26,7 +25,6 @@
 #include <set>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace
 {
@@ -60,7 +58,6 @@ namespace
     const unsigned int v0, v1;
   };
 
-
   /**
    * A function that determines whether the edges in a mesh are
    * already consistently oriented. It does so by adding all edges
@@ -92,7 +89,6 @@ namespace
             if(edges.find(reverse_edge) != edges.end())
               return false;
 
-
             // ok, not. insert edge in correct order
             const CheapEdge correct_edge(
               c->vertices[GeometryInfo<dim>::line_to_cell_vertices(l, 0)],
@@ -104,7 +100,6 @@ namespace
     // no conflicts found, so return true
     return true;
   }
-
 
   /**
    * A structure that describes some properties of parallel edges
@@ -157,7 +152,6 @@ namespace
     {8, 9, 10}   // line 11
   };
 
-
   /**
    * A structure that store the index of a cell and, crucially, how a
    * given edge relates to this cell.
@@ -180,12 +174,9 @@ namespace
       : cell_index(cell_index), edge_within_cell(edge_within_cell)
     {}
 
-
     unsigned int cell_index;
     unsigned int edge_within_cell;
   };
-
-
 
   template <int dim>
   class AdjacentCells;
@@ -226,7 +217,6 @@ namespace
         }
     }
 
-
     /**
      * Return an iterator to the first valid cell stored as adjacent to the
      * edge represented by the current object.
@@ -236,7 +226,6 @@ namespace
     {
       return adjacent_cells;
     }
-
 
     /**
      * Return an iterator to the element past the last valid cell stored
@@ -267,8 +256,6 @@ namespace
     AdjacentCell adjacent_cells[2];
   };
 
-
-
   /**
    * A class that represents all of the cells adjacent to a given edge.
    * This class corresponds to the 3d case where each edge can have an
@@ -279,7 +266,6 @@ namespace
   template <>
   class AdjacentCells<3> : public std::vector<AdjacentCell>
   {};
-
 
   /**
    * A class that describes all of the relevant properties of an
@@ -366,8 +352,6 @@ namespace
     AdjacentCells<dim> adjacent_cells;
   };
 
-
-
   /**
    * A data structure that represents a cell with all of its vertices
    * and edges.
@@ -410,8 +394,6 @@ namespace
     unsigned int edge_indices[GeometryInfo<dim>::lines_per_cell];
   };
 
-
-
   template <int dim>
   class EdgeDeltaSet;
 
@@ -442,7 +424,6 @@ namespace
       edge_indices[0] = edge_indices[1] = numbers::invalid_unsigned_int;
     }
 
-
     /**
      * Delete the elements of the set by marking both slots as unused.
      */
@@ -469,7 +450,6 @@ namespace
         }
     }
 
-
     /**
      * Return an iterator pointing to the first element of the set.
      */
@@ -478,7 +458,6 @@ namespace
     {
       return edge_indices;
     }
-
 
     /**
      * Return an iterator pointing to the element past the last used one.
@@ -504,8 +483,6 @@ namespace
     unsigned int edge_indices[2];
   };
 
-
-
   /**
    * A class that represents by how much the set of parallel edges
    * grows in each step. In the graph orientation paper, this set is
@@ -520,8 +497,6 @@ namespace
   template <>
   class EdgeDeltaSet<3> : public std::set<unsigned int>
   {};
-
-
 
   /**
    * From a list of cells, build a sorted vector that contains all of the edges
@@ -548,8 +523,6 @@ namespace
 
     return edge_list;
   }
-
-
 
   /**
    * Build the cell list. Update the edge array to let edges know
@@ -579,8 +552,6 @@ namespace
     return cell_list;
   }
 
-
-
   /**
    * Return the index within 'cells' of the first cell that has at least one
    * edge that is not yet oriented.
@@ -599,8 +570,6 @@ namespace
 
     return numbers::invalid_unsigned_int;
   }
-
-
 
   /**
    * Given a set of cells and edges, orient all edges that are
@@ -788,7 +757,6 @@ namespace
       }
   }
 
-
   /**
    * Given data structures @p cell_list and @p edge_list, where
    * all edges are already oriented, rotate the cell with
@@ -939,7 +907,6 @@ namespace
       }
   }
 
-
   /**
    * Given a set of cells, find globally unique edge orientations
    * and then rotate cells so that the coordinate system of the cell
@@ -1001,13 +968,11 @@ namespace
       rotate_cell(cell_list, edge_list, c, cells);
   }
 
-
   // overload of the function above for 1d -- there is nothing
   // to orient in that case
   void reorient(std::vector<CellData<1>>&)
   {}
 } // namespace
-
 
 // anonymous namespace for internal helper functions
 namespace
@@ -1024,13 +989,11 @@ namespace
   void reorder_new_to_old_style(std::vector<CellData<1>>&)
   {}
 
-
   void reorder_new_to_old_style(std::vector<CellData<2>>& cells)
   {
     for(unsigned int cell = 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
-
 
   void reorder_new_to_old_style(std::vector<CellData<3>>& cells)
   {
@@ -1044,20 +1007,17 @@ namespace
       }
   }
 
-
   /**
    * And now also in the opposite direction.
    */
   void reorder_old_to_new_style(std::vector<CellData<1>>&)
   {}
 
-
   void reorder_old_to_new_style(std::vector<CellData<2>>& cells)
   {
     // just invert the permutation:
     reorder_new_to_old_style(cells);
   }
-
 
   void reorder_old_to_new_style(std::vector<CellData<3>>& cells)
   {
@@ -1072,8 +1032,6 @@ namespace
       }
   }
 } // namespace
-
-
 
 template <int dim, int spacedim>
 void
@@ -1112,8 +1070,6 @@ GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>>& cells,
     reorder_new_to_old_style(cells);
 }
 
-
-
 template <>
 void
 GridReordering<1>::invert_all_cells_of_negative_grid(
@@ -1122,8 +1078,6 @@ GridReordering<1>::invert_all_cells_of_negative_grid(
 {
   // nothing to be done in 1d
 }
-
-
 
 template <>
 void
@@ -1134,8 +1088,6 @@ GridReordering<1, 2>::invert_all_cells_of_negative_grid(
   // nothing to be done in 1d
 }
 
-
-
 template <>
 void
 GridReordering<1, 3>::invert_all_cells_of_negative_grid(
@@ -1144,7 +1096,6 @@ GridReordering<1, 3>::invert_all_cells_of_negative_grid(
 {
   // nothing to be done in 1d
 }
-
 
 template <>
 void
@@ -1205,8 +1156,6 @@ GridReordering<2>::invert_all_cells_of_negative_grid(
       + " appear to have a negative volume."));
 }
 
-
-
 template <>
 void
 GridReordering<2, 3>::invert_all_cells_of_negative_grid(
@@ -1215,8 +1164,6 @@ GridReordering<2, 3>::invert_all_cells_of_negative_grid(
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -1285,8 +1232,6 @@ GridReordering<3>::invert_all_cells_of_negative_grid(
                          "mesh properties in your mesh generator, such as "
                          "the number of cells, the mesh density, etc."));
 }
-
-
 
 /* ------------------------ explicit instantiations ------------------- */
 template class GridReordering<1, 1>;

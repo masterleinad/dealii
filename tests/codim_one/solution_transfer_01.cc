@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /*
   Bug for solution transfer using DG in surfaces
 
@@ -43,9 +41,7 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 using namespace dealii;
-
 
 int
 main()
@@ -72,7 +68,6 @@ main()
   deallog << "Old values:" << std::endl;
   for(unsigned int i = 0; i < solution.size(); i++)
     deallog << solution(i) << std::endl;
-
 
   // Do some refinement
   boundary_mesh.begin_active()->set_refine_flag();

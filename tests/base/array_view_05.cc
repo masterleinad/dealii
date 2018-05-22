@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for class ArrayView. check make_array_view for Table arguments
 
 #include "../tests.h"
 
 #include <deal.II/base/array_view.h>
-
 
 void
 test()
@@ -36,7 +34,6 @@ test()
   ArrayView<const int> a2 = make_array_view(v, 4, 7, 3); // readable view
   Assert(a2[2] == 42, ExcInternalError());
 
-
   // also check a different way of creating a readable view
   ArrayView<const int> a3
     = make_array_view(const_cast<const Table<2, int>&>(v), 4, 7, 3);
@@ -44,8 +41,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

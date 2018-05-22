@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the correctness of fe_values.shape_gradient for FE_RaviartThomas by
 // comparing the integral of all shape gradients with the flux over the
 // boundary by the divergence theorem
@@ -34,8 +33,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -148,8 +145,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 // at the time of writing this test, RaviartThomas elements did not pass
 // the hyper_ball version of the test, perhaps due to issues on the boundary.
 template <int dim>
@@ -170,7 +165,6 @@ test_hyper_cube(const double tolerance)
   FE_RaviartThomas<dim> fe(2);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

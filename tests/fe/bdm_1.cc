@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Show the shape functions of the BDM element on the unit cell
 // Plots are gnuplot compatible if lines with desired prefix are selected.
 
@@ -26,8 +24,6 @@
 #include <vector>
 
 #define PRECISION 8
-
-
 
 template <int dim>
 inline void
@@ -77,7 +73,6 @@ plot_shape_functions(const unsigned int degree)
 
   deallog.pop();
 }
-
 
 int
 main()

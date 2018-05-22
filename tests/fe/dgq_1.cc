@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // previously, the FETools::get_interpolation_matrix function would
 // compute its result itself by interpolation. now, the different
 // finite elements do that themselves, if they can. make sure the
@@ -27,8 +25,6 @@
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void
@@ -53,7 +49,6 @@ test(const unsigned int degree1, const unsigned int degree2)
 
   deallog << std::endl;
 }
-
 
 int
 main()

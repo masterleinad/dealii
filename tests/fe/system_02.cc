@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check what happens with an FE_System if we hand it 0 components
 
 #include "../tests.h"
@@ -27,8 +25,6 @@
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void

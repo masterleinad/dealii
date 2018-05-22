@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // PETSc up to at least 3.5 has a bug in which creating a ghosted vector
 // properly zeros out the locally owned elements but leaves the ghost elements
 // uninitialized.
@@ -29,7 +27,6 @@
 // didn't apply the fix in time
 //
 // reference: https://code.google.com/p/dealii/issues/detail?id=233
-
 
 #include "../tests.h"
 
@@ -74,7 +71,6 @@
 
 #include <iostream>
 
-
 void
 test()
 {
@@ -114,7 +110,6 @@ test()
       total_length
       = (inflow_cells + solid_cells_x + outflow_cells) * cell_size_x;
 
-
     std::vector<std::vector<double>> step_sizes(2);
     //----------------INFLOW ---------------
     for(unsigned int i = 0; i < inflow_cells; ++i)
@@ -151,7 +146,6 @@ test()
     tmp_rectangle.clear();
 
     //---------------------------UPPER--------
-
 
     step_sizes[1].clear();
     for(unsigned int i = 0; i < (h_cells - v_space_cells - solid_cells_y); ++i)
@@ -191,7 +185,6 @@ test()
     fluid_triangulation.copy_triangulation(tmp_tria_fluid);
   }
 
-
   fluid_triangulation.refine_global(1);
   //     ---------END GENERATING TRIA ------------
 
@@ -222,7 +215,6 @@ test()
     IndexSet locally_relevant_dofs = handler.locally_owned_dofs();
     DoFTools::extract_locally_relevant_dofs(handler, locally_relevant_dofs);
 
-
     PETScWrappers::MPI::Vector vector;
     vector.reinit(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
 
@@ -240,7 +232,6 @@ test()
                     ExcInternalError());
   }
 }
-
 
 int
 main(int argc, char* argv[])

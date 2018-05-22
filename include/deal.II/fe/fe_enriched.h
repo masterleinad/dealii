@@ -443,7 +443,6 @@ public:
     const FiniteElement<dim, spacedim>& fe_other) const override;
   //@}
 
-
   /**
    * Return enrichment functions
    */

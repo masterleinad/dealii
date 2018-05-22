@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // interpolate() can not deal with FE_Nothing in an hp setting
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -36,8 +33,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 void
 test()
@@ -56,15 +51,12 @@ test()
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
-
-
   dof_handler.distribute_dofs(fe_collection);
 
   deallog << "   Number of active cells:       "
           << triangulation.n_active_cells() << std::endl
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
-
 
   Vector<double> solution(dof_handler.n_dofs());
 
@@ -73,8 +65,6 @@ test()
 
   deallog << "l2_norm = " << solution.l2_norm() << std::endl;
 }
-
-
 
 int
 main()

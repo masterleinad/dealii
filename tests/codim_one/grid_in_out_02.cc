@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like grid_in_out but write in gnuplot format
 
 #include "../tests.h"

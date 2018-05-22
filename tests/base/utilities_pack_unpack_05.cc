@@ -13,20 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::pack/unpack on a consecutively built buffer of
 // different types, here an array of doubles and a dealii::Point object.
 // (based upon "utilities_pack_unpack_04")
-
 
 #include "../tests.h"
 
 #include <deal.II/base/point.h>
 #include <deal.II/base/utilities.h>
 
-
 using namespace dealii;
-
 
 template <int N, int dim>
 void
@@ -61,7 +57,6 @@ check(const double (&array)[N], const Point<dim>(&point))
           << (point.distance(unpacked_point) < 1e-12 ? "OK" : "Failed")
           << std::endl;
 }
-
 
 void
 test()

@@ -41,8 +41,6 @@ Manifold<dim, spacedim>::project_to_manifold(
   return Point<spacedim>();
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_intermediate_point(const Point<spacedim>& p1,
@@ -53,8 +51,6 @@ Manifold<dim, spacedim>::get_intermediate_point(const Point<spacedim>& p1,
   return project_to_manifold(make_array_view(vertices.begin(), vertices.end()),
                              w * p2 + (1 - w) * p1);
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -107,8 +103,6 @@ Manifold<dim, spacedim>::get_new_point(
   return p;
 }
 
-
-
 template <int dim, int spacedim>
 void
 Manifold<dim, spacedim>::get_new_points(
@@ -125,8 +119,6 @@ Manifold<dim, spacedim>::get_new_points(
         make_array_view(weights, row));
     }
 }
-
-
 
 template <>
 Tensor<1, 2>
@@ -147,8 +139,6 @@ Manifold<2, 2>::normal_vector(const Triangulation<2, 2>::face_iterator& face,
   const Tensor<1, spacedim> normal = cross_product_2d(tangent);
   return normal / normal.norm();
 }
-
-
 
 template <>
 Tensor<1, 3>
@@ -221,8 +211,6 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   return normal / normal.norm();
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, spacedim>
 Manifold<dim, spacedim>::normal_vector(
@@ -232,8 +220,6 @@ Manifold<dim, spacedim>::normal_vector(
   Assert(false, ExcPureFunctionCalled());
   return Tensor<1, spacedim>();
 }
-
-
 
 template <>
 void
@@ -254,8 +240,6 @@ Manifold<2, 2>::get_normals_at_vertices(
       n[i] /= n[i].norm();
     }
 }
-
-
 
 template <>
 void
@@ -285,8 +269,6 @@ Manifold<3, 3>::get_normals_at_vertices(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 Manifold<dim, spacedim>::get_normals_at_vertices(
@@ -300,8 +282,6 @@ Manifold<dim, spacedim>::get_normals_at_vertices(
     }
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_new_point_on_line(
@@ -314,8 +294,6 @@ Manifold<dim, spacedim>::get_new_point_on_line(
                     points_weights.second.end()));
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_new_point_on_quad(
@@ -327,8 +305,6 @@ Manifold<dim, spacedim>::get_new_point_on_quad(
     make_array_view(points_weights.second.begin(),
                     points_weights.second.end()));
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -348,8 +324,6 @@ Manifold<dim, spacedim>::get_new_point_on_face(
   return Point<spacedim>();
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_new_point_on_cell(
@@ -368,8 +342,6 @@ Manifold<dim, spacedim>::get_new_point_on_cell(
   return Point<spacedim>();
 }
 
-
-
 template <>
 Point<1>
 Manifold<1, 1>::get_new_point_on_face(
@@ -378,8 +350,6 @@ Manifold<1, 1>::get_new_point_on_face(
   Assert(false, ExcImpossibleInDim(1));
   return Point<1>();
 }
-
-
 
 template <>
 Point<2>
@@ -390,8 +360,6 @@ Manifold<1, 2>::get_new_point_on_face(
   return Point<2>();
 }
 
-
-
 template <>
 Point<3>
 Manifold<1, 3>::get_new_point_on_face(
@@ -400,8 +368,6 @@ Manifold<1, 3>::get_new_point_on_face(
   Assert(false, ExcImpossibleInDim(1));
   return Point<3>();
 }
-
-
 
 template <>
 Point<1>
@@ -412,8 +378,6 @@ Manifold<1, 1>::get_new_point_on_quad(
   return Point<1>();
 }
 
-
-
 template <>
 Point<2>
 Manifold<1, 2>::get_new_point_on_quad(
@@ -422,8 +386,6 @@ Manifold<1, 2>::get_new_point_on_quad(
   Assert(false, ExcImpossibleInDim(1));
   return Point<2>();
 }
-
-
 
 template <>
 Point<3>
@@ -434,8 +396,6 @@ Manifold<1, 3>::get_new_point_on_quad(
   return Point<3>();
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 Manifold<dim, spacedim>::get_new_point_on_hex(
@@ -444,8 +404,6 @@ Manifold<dim, spacedim>::get_new_point_on_hex(
   Assert(false, ExcImpossibleInDim(dim));
   return Point<spacedim>();
 }
-
-
 
 template <>
 Point<3>
@@ -458,8 +416,6 @@ Manifold<3, 3>::get_new_point_on_hex(
     make_array_view(points_weights.second.begin(),
                     points_weights.second.end()));
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, spacedim>
@@ -492,8 +448,6 @@ namespace internal
       return Tensor<1, 3>();
     }
 
-
-
     Tensor<1, 3>
     normalized_alternating_product(const Tensor<1, 3> (&basis_vectors)[2])
     {
@@ -511,8 +465,6 @@ FlatManifold<dim, spacedim>::FlatManifold(
   : periodicity(periodicity), tolerance(tolerance)
 {}
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
 FlatManifold<dim, spacedim>::clone() const
@@ -520,8 +472,6 @@ FlatManifold<dim, spacedim>::clone() const
   return std_cxx14::make_unique<FlatManifold<dim, spacedim>>(periodicity,
                                                              tolerance);
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -580,8 +530,6 @@ FlatManifold<dim, spacedim>::get_new_point(
 
   return project_to_manifold(surrounding_points, p);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -663,8 +611,6 @@ FlatManifold<dim, spacedim>::get_new_points(
     }
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 FlatManifold<dim, spacedim>::project_to_manifold(
@@ -674,16 +620,12 @@ FlatManifold<dim, spacedim>::project_to_manifold(
   return candidate;
 }
 
-
-
 template <int dim, int spacedim>
 const Tensor<1, spacedim>&
 FlatManifold<dim, spacedim>::get_periodicity() const
 {
   return periodicity;
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, spacedim>
@@ -708,8 +650,6 @@ FlatManifold<dim, spacedim>::get_tangent_vector(const Point<spacedim>& x1,
   return direction;
 }
 
-
-
 template <>
 void
 FlatManifold<1>::get_normals_at_vertices(
@@ -718,8 +658,6 @@ FlatManifold<1>::get_normals_at_vertices(
 {
   Assert(false, ExcImpossibleInDim(1));
 }
-
-
 
 template <>
 void
@@ -730,8 +668,6 @@ FlatManifold<1, 2>::get_normals_at_vertices(
   Assert(false, ExcNotImplemented());
 }
 
-
-
 template <>
 void
 FlatManifold<1, 3>::get_normals_at_vertices(
@@ -740,8 +676,6 @@ FlatManifold<1, 3>::get_normals_at_vertices(
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -756,8 +690,6 @@ FlatManifold<2>::get_normals_at_vertices(
     face_vertex_normals[vertex] = Point<2>(tangent[1], -tangent[0]);
 }
 
-
-
 template <>
 void
 FlatManifold<2, 3>::get_normals_at_vertices(
@@ -766,8 +698,6 @@ FlatManifold<2, 3>::get_normals_at_vertices(
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -793,8 +723,6 @@ FlatManifold<3>::get_normals_at_vertices(
     }
 }
 
-
-
 template <>
 Tensor<1, 1>
 FlatManifold<1, 1>::normal_vector(const Triangulation<1, 1>::face_iterator&,
@@ -803,8 +731,6 @@ FlatManifold<1, 1>::normal_vector(const Triangulation<1, 1>::face_iterator&,
   Assert(false, ExcNotImplemented());
   return Tensor<1, 1>();
 }
-
-
 
 template <>
 Tensor<1, 2>
@@ -815,8 +741,6 @@ FlatManifold<1, 2>::normal_vector(const Triangulation<1, 2>::face_iterator&,
   return Tensor<1, 2>();
 }
 
-
-
 template <>
 Tensor<1, 3>
 FlatManifold<1, 3>::normal_vector(const Triangulation<1, 3>::face_iterator&,
@@ -825,8 +749,6 @@ FlatManifold<1, 3>::normal_vector(const Triangulation<1, 3>::face_iterator&,
   Assert(false, ExcNotImplemented());
   return Tensor<1, 3>();
 }
-
-
 
 template <>
 Tensor<1, 2>
@@ -838,8 +760,6 @@ FlatManifold<2, 2>::normal_vector(
   // we can use the 'standard' implementation.
   return Manifold<2, 2>::normal_vector(face, p);
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, spacedim>
@@ -937,15 +857,12 @@ FlatManifold<dim, spacedim>::normal_vector(
   return internal::normalized_alternating_product(grad_F);
 }
 
-
 /* -------------------------- ChartManifold --------------------- */
 template <int dim, int spacedim, int chartdim>
 ChartManifold<dim, spacedim, chartdim>::ChartManifold(
   const Tensor<1, chartdim>& periodicity)
   : sub_manifold(periodicity)
 {}
-
-
 
 template <int dim, int spacedim, int chartdim>
 Point<spacedim>
@@ -959,8 +876,6 @@ ChartManifold<dim, spacedim, chartdim>::get_intermediate_point(
   return get_new_point(make_array_view(points.begin(), points.end()),
                        make_array_view(weights.begin(), weights.end()));
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 Point<spacedim>
@@ -980,8 +895,6 @@ ChartManifold<dim, spacedim, chartdim>::get_new_point(
 
   return push_forward(p_chart);
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 void
@@ -1010,8 +923,6 @@ ChartManifold<dim, spacedim, chartdim>::get_new_points(
     new_points[row] = push_forward(new_points_on_chart[row]);
 }
 
-
-
 template <int dim, int spacedim, int chartdim>
 DerivativeForm<1, chartdim, spacedim>
 ChartManifold<dim, spacedim, chartdim>::push_forward_gradient(
@@ -1022,8 +933,6 @@ ChartManifold<dim, spacedim, chartdim>::push_forward_gradient(
   Assert(false, ExcPureFunctionCalled());
   return DerivativeForm<1, chartdim, spacedim>();
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 Tensor<1, spacedim>
@@ -1054,8 +963,6 @@ ChartManifold<dim, spacedim, chartdim>::get_tangent_vector(
 
   return result;
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 const Tensor<1, chartdim>&

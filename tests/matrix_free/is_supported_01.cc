@@ -41,7 +41,6 @@
 #include <deal.II/fe/fe_tools.h>
 #include <deal.II/matrix_free/matrix_free.h>
 
-
 template <int dim, int spacedim>
 void
 print(const FiniteElement<dim, spacedim>& fe)
@@ -49,7 +48,6 @@ print(const FiniteElement<dim, spacedim>& fe)
   deallog << fe.get_name() << " supported by MatrixFree: " << std::boolalpha
           << MatrixFree<dim>::is_supported(fe) << std::endl;
 }
-
 
 int
 main()

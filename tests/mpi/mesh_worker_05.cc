@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test meshworker LoopControl
 // variation of mesh_worker_01 with more cpus and cells
 
@@ -26,9 +25,7 @@
 #include <deal.II/grid/filtered_iterator.h>
 #include <deal.II/grid/grid_generator.h>
 
-
 using namespace dealii;
-
 
 template <int dim>
 class myIntegrator : public dealii::MeshWorker::LocalIntegrator<dim>
@@ -54,14 +51,12 @@ myIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
   deallog << "C " << info.cell->id() << std::endl;
 }
 
-
 template <int dim>
 void
 myIntegrator<dim>::boundary(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   //deallog << "B cell = " << info.cell->id() << " face = " << info.face_number << std::endl;
 }
-
 
 template <int dim>
 void
@@ -74,7 +69,6 @@ myIntegrator<dim>::face(MeshWorker::DoFInfo<dim>& info1,
           << " cell2 = " << info2.cell->id() << " face2 = " << info2.face_number
           << std::endl;
 }
-
 
 class DoNothingAssembler
 {
@@ -115,7 +109,6 @@ test_simple(DoFHandler<dim>& dofs, MeshWorker::LoopControl& lctrl)
   //                ASSEMBLER &assembler,
   //                const LoopControl &lctrl)
   //
-
 
   MeshWorker::integration_loop<dim,
                                dim,
@@ -220,7 +213,6 @@ test()
   //      test_loop(dofs, lctrl);
   //    }
 }
-
 
 int
 main(int argc, char** argv)

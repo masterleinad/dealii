@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that block vector copies correctly to a serial vector
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

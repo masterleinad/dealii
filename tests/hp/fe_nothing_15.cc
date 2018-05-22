@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure we can extract shape functions from an FE_Nothing.
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -34,8 +31,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 template <int dim>
 void
@@ -56,8 +51,6 @@ test()
       deallog << "i=" << i << ", q=" << q
               << ", value=" << fe_values[nothing].value(i, q) << std::endl;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix::set_zero(Vector) for parallel distributed vectors
 
 #include "../tests.h"
@@ -22,8 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
-
-
 
 void
 test()
@@ -76,7 +72,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

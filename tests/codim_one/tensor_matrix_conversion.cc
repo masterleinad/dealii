@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a short (a few lines) description of what the program does
 
 #include "../tests.h"
@@ -25,7 +23,6 @@
 #include <deal.II/lac/full_matrix.h>
 
 std::ofstream logfile("output");
-
 
 template <typename number>
 void
@@ -56,7 +53,6 @@ void fill_tensor_2(Tensor<2, b>& T)
     for(unsigned int j = 0; j < b; j++)
       T[i][j] = i * b + j + 1;
 }
-
 
 template <int b>
 void display_tensor_2(Tensor<2, b>& T)
@@ -99,8 +95,6 @@ main()
           display_tensor_2(T2);
           T2 = 0;
         }
-
-
 
   return 0;
 }

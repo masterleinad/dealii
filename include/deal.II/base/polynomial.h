@@ -16,8 +16,6 @@
 #ifndef dealii_polynomial_h
 #define dealii_polynomial_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -281,7 +279,6 @@ namespace Polynomials
     number lagrange_weight;
   };
 
-
   /**
    * Class generates Polynomial objects representing a monomial of degree n,
    * that is, the function $x^n$.
@@ -314,7 +311,6 @@ namespace Polynomials
     static std::vector<number>
     make_vector(unsigned int n, const double coefficient);
   };
-
 
   /**
    * Lagrange polynomials with equidistant interpolation points in [0,1]. The
@@ -365,8 +361,6 @@ namespace Polynomials
                          std::vector<double>& a);
   };
 
-
-
   /**
    * Given a set of points along the real axis, this function returns all
    * Lagrange polynomials for interpolation of these points. The number of
@@ -375,8 +369,6 @@ namespace Polynomials
    */
   std::vector<Polynomial<double>>
   generate_complete_Lagrange_basis(const std::vector<Point<1>>& points);
-
-
 
   /**
    * Legendre polynomials of arbitrary degree. Constructing a Legendre
@@ -455,8 +447,6 @@ namespace Polynomials
     std::vector<double>
     compute_coefficients(const unsigned int p);
   };
-
-
 
   /**
    * Hierarchical polynomials of arbitrary degree on <tt>[0,1]</tt>.
@@ -545,8 +535,6 @@ namespace Polynomials
       recursive_coefficients;
   };
 
-
-
   /**
    * Polynomials for Hermite interpolation condition.
    *
@@ -594,8 +582,6 @@ namespace Polynomials
     static std::vector<Polynomial<double>>
     generate_complete_basis(const unsigned int p);
   };
-
-
 
   /**
    * Polynomials for a variant of Hermite polynomials with better condition
@@ -716,8 +702,6 @@ namespace Polynomials
     generate_complete_basis(const unsigned int degree);
   };
 
-
-
   /*
    * Evaluate a Jacobi polynomial $ P_n^{\alpha, \beta}(x) $ specified by the
    * parameters @p alpha, @p beta, @p n, where @p n is the degree of the
@@ -733,7 +717,6 @@ namespace Polynomials
                           const int          alpha,
                           const int          beta,
                           const Number       x);
-
 
   /**
    * Compute the roots of the Jacobi polynomials on the unit interval $[0, 1]$
@@ -754,7 +737,6 @@ namespace Polynomials
                           const int          beta);
 } // namespace Polynomials
 
-
 /** @} */
 
 /* -------------------------- inline functions --------------------- */
@@ -765,8 +747,6 @@ namespace Polynomials
   inline Polynomial<number>::Polynomial()
     : in_lagrange_product_form(false), lagrange_weight(1.)
   {}
-
-
 
   template <typename number>
   inline unsigned int
@@ -782,8 +762,6 @@ namespace Polynomials
         return coefficients.size() - 1;
       }
   }
-
-
 
   template <typename number>
   inline number
@@ -812,8 +790,6 @@ namespace Polynomials
       }
   }
 
-
-
   template <typename number>
   template <class Archive>
   inline void
@@ -826,8 +802,6 @@ namespace Polynomials
     ar& lagrange_support_points;
     ar& lagrange_weight;
   }
-
-
 
   template <typename Number>
   Number
@@ -867,8 +841,6 @@ namespace Polynomials
       }
     return p1;
   }
-
-
 
   template <typename Number>
   std::vector<Number>

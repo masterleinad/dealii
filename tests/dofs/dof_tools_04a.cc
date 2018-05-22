@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to dof_tools_04 but for a parallel::distributed::Triangulation
 // instead of a (serial) Triangulation:
 // check
@@ -36,8 +35,6 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-
-
 
 template <int dim>
 void
@@ -67,8 +64,6 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 template <int dim>
 void

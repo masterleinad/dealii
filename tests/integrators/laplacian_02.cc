@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the tangential functions in integrators/laplace.h
 // Output matrices and assert consistency of residuals
 
@@ -29,8 +28,6 @@
 #include <deal.II/fe/fe_system.h>
 
 using namespace LocalIntegrators::Laplace;
-
-
 
 template <int dim>
 void
@@ -67,8 +64,6 @@ test_boundary(const FiniteElement<dim>& fe, bool diff = false)
   deallog << fe.get_name() << ": bdry norm " << Mglobal.frobenius_norm()
           << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -122,8 +117,6 @@ test_face(const FiniteElement<dim>& fe, bool diff = false)
           << std::endl;
 }
 
-
-
 template <int dim>
 void
 test()
@@ -149,7 +142,6 @@ test()
   test_face(sys1, true);
   deallog << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // One can (accidentally) call ParameterHandler::get_int/double on parameters
 // that are really strings. There used to be a bug in these functions in that
 // they didn't throw an error when the string wasn't actually convertible to a
@@ -55,7 +53,6 @@ check()
       deallog << "get_bool() detected the mistake" << std::endl;
     }
 }
-
 
 int
 main()

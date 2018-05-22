@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that an assertion is thrown when MappingQEulerian produces a cell with
 // negative volume
 
@@ -24,7 +23,6 @@
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_q_eulerian.h>
 #include <deal.II/grid/tria.h>
-
 
 void
 test()
@@ -86,7 +84,6 @@ test()
     }
   deallog << "Integral = " << integral << std::endl;
 }
-
 
 int
 main()

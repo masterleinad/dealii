@@ -13,21 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just output a lot of information about various classes implementing
 // polynomials, to make sure that all changes we make to these classes
 // do not change the results of these classes.
-
 
 #include "../tests.h"
 
 #include <deal.II/base/polynomial_space.h>
 #include <deal.II/base/tensor_product_polynomials.h>
 
-
 using namespace Polynomials;
-
 
 template <int dim, class PolynomialType>
 void
@@ -85,7 +80,6 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
         deallog << 'P' << k << ": fourth derivatives differ " << grad4
                 << " != " << fourth[k] << std::endl;
 
-
       // finally output values,
       // gradients, etc, to make sure
       // that they are not only
@@ -120,7 +114,6 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
@@ -130,7 +123,6 @@ check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
   check_poly(x, p);
   deallog.pop();
 }
-
 
 template <int dim>
 void
@@ -142,7 +134,6 @@ check_poly(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
   check_poly(x, p);
   deallog.pop();
 }
-
 
 void
 check_dimensions(const std::vector<Polynomial<double>>& p)

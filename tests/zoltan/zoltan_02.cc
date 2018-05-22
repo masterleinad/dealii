@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GridTools::color_sparsity_pattern
-
 
 #include "../tests.h"
 #include <deal.II/lac/sparsity_tools.h>
@@ -41,7 +39,6 @@ fill_graph(DynamicSparsityPattern& graph)
   graph.add(4, 2);
   graph.add(2, 3);
 }
-
 
 int
 main(int argc, char** argv)

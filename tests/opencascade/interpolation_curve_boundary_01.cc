@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a Triangulation, interpolate its boundary points to a close
 // smooth BSpline, and use that as a Boundary Descriptor.
 

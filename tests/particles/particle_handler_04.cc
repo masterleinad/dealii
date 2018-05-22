@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like particle_handler_03, but for distributed triangulations in parallel computations
 
 #include "../tests.h"
@@ -73,8 +71,6 @@ test()
                   << std::flush << std::endl;
       }
 
-
-
     particle_handler.sort_particles_into_subdomains_and_cells();
 
     for(auto particle = particle_handler.begin();
@@ -109,8 +105,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

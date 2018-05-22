@@ -14,10 +14,8 @@
  * ---------------------------------------------------------------------
  */
 
-
 // a slightly modified version of step-6 that tests the postprocessor
 // discussed in the documentation of DataPostprocessorVector
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -48,7 +46,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_out.h>
 
-
 #include <deal.II/lac/constraint_matrix.h>
 
 #include <deal.II/grid/grid_refinement.h>
@@ -56,8 +53,6 @@
 #include <deal.II/numerics/error_estimator.h>
 
 using namespace dealii;
-
-
 
 template <int dim>
 class Step6
@@ -95,8 +90,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 double
 coefficient(const Point<dim>& p)
@@ -107,21 +100,15 @@ coefficient(const Point<dim>& p)
     return 1;
 }
 
-
-
 template <int dim>
 Step6<dim>::Step6() : dof_handler(triangulation), fe(2)
 {}
-
-
 
 template <int dim>
 Step6<dim>::~Step6()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 void
@@ -132,14 +119,11 @@ Step6<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
-
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
-
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, ZeroFunction<dim>(), constraints);
-
 
   constraints.close();
 
@@ -153,8 +137,6 @@ Step6<dim>::setup_system()
 
   system_matrix.reinit(sparsity_pattern);
 }
-
-
 
 template <int dim>
 void
@@ -208,8 +190,6 @@ Step6<dim>::assemble_system()
     }
 }
 
-
-
 template <int dim>
 void
 Step6<dim>::solve()
@@ -224,8 +204,6 @@ Step6<dim>::solve()
 
   constraints.distribute(solution);
 }
-
-
 
 template <int dim>
 void
@@ -244,7 +222,6 @@ Step6<dim>::refine_grid()
 
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 class HeatFluxPostprocessor : public DataPostprocessorVector<dim>
@@ -277,14 +254,10 @@ public:
   }
 };
 
-
-
 template <int dim>
 void
 Step6<dim>::output_results(const unsigned int cycle) const
 {}
-
-
 
 template <int dim>
 void
@@ -306,7 +279,6 @@ Step6<dim>::run()
         }
       else
         refine_grid();
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
@@ -331,8 +303,6 @@ Step6<dim>::run()
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

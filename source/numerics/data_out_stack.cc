@@ -30,7 +30,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 std::size_t
 DataOutStack<dim, spacedim, DoFHandlerType>::DataVector::memory_consumption()
@@ -39,8 +38,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::DataVector::memory_consumption()
   return (MemoryConsumption::memory_consumption(data)
           + MemoryConsumption::memory_consumption(names));
 }
-
-
 
 template <int dim, int spacedim, typename DoFHandlerType>
 void
@@ -65,7 +62,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::new_parameter_value(
     Assert(i->data.size() == 0, ExcDataNotCleared());
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::attach_dof_handler(
@@ -79,7 +75,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::attach_dof_handler(
   dof_handler = &dof;
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
@@ -90,7 +85,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
   names.push_back(name);
   declare_data_vector(names, vector_type);
 }
-
 
 template <int dim, int spacedim, typename DoFHandlerType>
 void
@@ -139,7 +133,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
     };
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 template <typename number>
 void
@@ -173,7 +166,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
 
   add_data_vector(vec, names);
 }
-
 
 template <int dim, int spacedim, typename DoFHandlerType>
 template <typename number>
@@ -247,7 +239,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
   Assert(false, ExcInternalError());
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
@@ -279,7 +270,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
       cell != dof_handler->end();
       ++cell)
     ++n_patches;
-
 
   // before we start the loop:
   // create a quadrature rule that
@@ -380,7 +370,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
             Assert(false, ExcNotImplemented());
         };
 
-
       // now fill in the data values.
       // note that the required order is
       // with highest coordinate running
@@ -434,7 +423,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
     }
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::finish_parameter_value()
@@ -452,8 +440,6 @@ DataOutStack<dim, spacedim, DoFHandlerType>::finish_parameter_value()
     i->data.reinit(0);
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType>
 std::size_t
 DataOutStack<dim, spacedim, DoFHandlerType>::memory_consumption() const
@@ -467,16 +453,12 @@ DataOutStack<dim, spacedim, DoFHandlerType>::memory_consumption() const
           + MemoryConsumption::memory_consumption(cell_data));
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType>
 const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>&
 DataOutStack<dim, spacedim, DoFHandlerType>::get_patches() const
 {
   return patches;
 }
-
-
 
 template <int dim, int spacedim, typename DoFHandlerType>
 std::vector<std::string>
@@ -497,10 +479,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::get_dataset_names() const
   return names;
 }
 
-
-
 // explicit instantiations
 #include "data_out_stack.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

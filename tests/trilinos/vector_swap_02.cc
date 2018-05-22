@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
   test that swapping two TrilinosWrapper::MPI::Vector objects
   also swaps has_ghosts and locally_owned_elements.
  */
-
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
@@ -35,7 +33,6 @@ print(TrilinosWrappers::MPI::Vector& v, unsigned int first_element)
           << " locally_owned_elements: " << std::endl;
   v.locally_owned_elements().print(deallog);
 }
-
 
 void
 test()
@@ -55,7 +52,6 @@ test()
   for(unsigned int i = my_id * 5; i < (my_id + 1) * 5; ++i)
     w(i) = 2;
 
-
   deallog << "v: ";
   print(v, my_id * 3);
   deallog << "w: ";
@@ -72,8 +68,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

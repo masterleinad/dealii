@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this program used to fail at one point in time.
 
 #include "../tests.h"

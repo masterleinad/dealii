@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for BoundingBox<unsigned int spacedim> which tests the function
 // get_neighbor_type
 

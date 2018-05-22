@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FESeries::process_coefficients()
 
 #include "../tests.h"
@@ -45,8 +44,6 @@ test2d(const VectorTools::NormType norm)
   for(unsigned int i = 0; i < res.first.size(); i++)
     deallog << res.first[i] << " : " << res.second[i] << std::endl;
 }
-
-
 
 int
 main()

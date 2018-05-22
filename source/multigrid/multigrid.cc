@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -34,29 +33,22 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 MGTransferBlockBase::MGTransferBlockBase() : n_mg_blocks(0)
 {}
-
-
 
 MGTransferBlockBase::MGTransferBlockBase(const MGConstrainedDoFs& mg_c)
   : n_mg_blocks(0), mg_constrained_dofs(&mg_c)
 {}
-
-
 
 MGTransferBlockBase::MGTransferBlockBase(const ConstraintMatrix& /*c*/,
                                          const MGConstrainedDoFs& mg_c)
   : n_mg_blocks(0), mg_constrained_dofs(&mg_c)
 {}
 
-
 template <typename number>
 MGTransferBlock<number>::MGTransferBlock()
   : memory(nullptr, typeid(*this).name())
 {}
-
 
 template <typename number>
 MGTransferBlock<number>::~MGTransferBlock()
@@ -64,7 +56,6 @@ MGTransferBlock<number>::~MGTransferBlock()
   if(memory != nullptr)
     memory = nullptr;
 }
-
 
 template <typename number>
 void
@@ -74,7 +65,6 @@ MGTransferBlock<number>::initialize(const std::vector<number>&    f,
   factors = f;
   memory  = &mem;
 }
-
 
 template <typename number>
 void
@@ -99,7 +89,6 @@ MGTransferBlock<number>::prolongate(const unsigned int         to_level,
           dst.block(this->mg_block[b]), src.block(this->mg_block[b]));
     }
 }
-
 
 template <typename number>
 void
@@ -138,8 +127,6 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
     }
 }
 
-
-
 std::size_t
 MGTransferComponentBase::memory_consumption() const
 {
@@ -163,7 +150,6 @@ MGTransferComponentBase::memory_consumption() const
   return result;
 }
 
-
 //TODO:[GK] Add all those little vectors.
 std::size_t
 MGTransferBlockBase::memory_consumption() const
@@ -186,7 +172,6 @@ MGTransferBlockBase::memory_consumption() const
   return result;
 }
 
-
 //----------------------------------------------------------------------//
 
 template <typename number>
@@ -194,13 +179,10 @@ MGTransferSelect<number>::MGTransferSelect()
   : selected_component(0), mg_selected_component(0)
 {}
 
-
 template <typename number>
 MGTransferSelect<number>::MGTransferSelect(const ConstraintMatrix& c)
   : selected_component(0), mg_selected_component(0), constraints(&c)
 {}
-
-
 
 template <typename number>
 void
@@ -217,8 +199,6 @@ MGTransferSelect<number>::prolongate(const unsigned int    to_level,
     .vmult(dst, src);
 }
 
-
-
 template <typename number>
 void
 MGTransferSelect<number>::restrict_and_add(const unsigned int    from_level,
@@ -234,22 +214,17 @@ MGTransferSelect<number>::restrict_and_add(const unsigned int    from_level,
     .Tvmult_add(dst, src);
 }
 
-
 //----------------------------------------------------------------------//
 
 template <typename number>
 MGTransferBlockSelect<number>::MGTransferBlockSelect() : selected_block(0)
 {}
 
-
-
 template <typename number>
 MGTransferBlockSelect<number>::MGTransferBlockSelect(
   const MGConstrainedDoFs& mg_c)
   : MGTransferBlockBase(mg_c), selected_block(0)
 {}
-
-
 
 template <typename number>
 MGTransferBlockSelect<number>::MGTransferBlockSelect(
@@ -257,8 +232,6 @@ MGTransferBlockSelect<number>::MGTransferBlockSelect(
   const MGConstrainedDoFs& mg_c)
   : MGTransferBlockBase(mg_c), selected_block(0)
 {}
-
-
 
 template <typename number>
 void
@@ -274,7 +247,6 @@ MGTransferBlockSelect<number>::prolongate(const unsigned int    to_level,
     .vmult(dst, src);
 }
 
-
 template <typename number>
 void
 MGTransferBlockSelect<number>::restrict_and_add(const unsigned int from_level,
@@ -289,8 +261,6 @@ MGTransferBlockSelect<number>::restrict_and_add(const unsigned int from_level,
     .Tvmult_add(dst, src);
 }
 
-
-
 // Explicit instantiations
 
 #include "multigrid.inst"
@@ -301,6 +271,5 @@ template class MGTransferSelect<float>;
 template class MGTransferSelect<double>;
 template class MGTransferBlockSelect<float>;
 template class MGTransferBlockSelect<double>;
-
 
 DEAL_II_NAMESPACE_CLOSE

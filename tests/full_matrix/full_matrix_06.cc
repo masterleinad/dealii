@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check method FullMatrix::scatter_matrix_to
 
 #include "../tests.h"
@@ -60,7 +59,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

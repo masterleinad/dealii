@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // test cell->face()->at_boundary()
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int spacedim>
 void
@@ -51,8 +47,6 @@ test()
       deallog << "Right vertex=" << cell->face(1)->at_boundary() << std::endl;
     }
 }
-
-
 
 int
 main()

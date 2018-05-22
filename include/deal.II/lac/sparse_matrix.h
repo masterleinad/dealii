@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_matrix_h
 #  define dealii_sparse_matrix_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/smartpointer.h>
 #  include <deal.II/base/subscriptor.h>
@@ -29,7 +28,6 @@
 #  endif
 
 #  include <memory>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -114,8 +112,6 @@ namespace SparseMatrixIterators
     get_matrix() const;
   };
 
-
-
   /**
    * Accessor class for constant matrices, used in the const_iterators. This
    * class builds on the accessor classes used for sparsity patterns to loop
@@ -177,7 +173,6 @@ namespace SparseMatrixIterators
     template <typename, bool>
     friend class Iterator;
   };
-
 
   /**
    * Accessor class for non-constant matrices, used in the iterators. This
@@ -312,8 +307,6 @@ namespace SparseMatrixIterators
     template <typename, bool>
     friend class Iterator;
   };
-
-
 
   /**
    * Iterator for constant and non-constant matrices.
@@ -454,7 +447,6 @@ namespace SparseMatrixIterators
 /**
  * @}
  */
-
 
 //TODO: Add multithreading to the other vmult functions.
 
@@ -1742,8 +1734,6 @@ private:
 #  ifndef DOXYGEN
 /*---------------------- Inline functions -----------------------------------*/
 
-
-
 template <typename number>
 inline typename SparseMatrix<number>::size_type
 SparseMatrix<number>::m() const
@@ -1752,7 +1742,6 @@ SparseMatrix<number>::m() const
   return cols->rows;
 }
 
-
 template <typename number>
 inline typename SparseMatrix<number>::size_type
 SparseMatrix<number>::n() const
@@ -1760,7 +1749,6 @@ SparseMatrix<number>::n() const
   Assert(cols != nullptr, ExcNotInitialized());
   return cols->cols;
 }
-
 
 // Inline the set() and add() functions, since they will be called frequently.
 template <typename number>
@@ -1785,8 +1773,6 @@ SparseMatrix<number>::set(const size_type i,
   val[index] = value;
 }
 
-
-
 template <typename number>
 template <typename number2>
 inline void
@@ -1805,8 +1791,6 @@ SparseMatrix<number>::set(const std::vector<size_type>& indices,
         &values(i, 0),
         elide_zero_values);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1829,8 +1813,6 @@ SparseMatrix<number>::set(const std::vector<size_type>& row_indices,
         elide_zero_values);
 }
 
-
-
 template <typename number>
 template <typename number2>
 inline void
@@ -1848,8 +1830,6 @@ SparseMatrix<number>::set(const size_type               row,
       values.data(),
       elide_zero_values);
 }
-
-
 
 template <typename number>
 inline void
@@ -1876,8 +1856,6 @@ SparseMatrix<number>::add(const size_type i,
   val[index] += value;
 }
 
-
-
 template <typename number>
 template <typename number2>
 inline void
@@ -1896,8 +1874,6 @@ SparseMatrix<number>::add(const std::vector<size_type>& indices,
         &values(i, 0),
         elide_zero_values);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1920,8 +1896,6 @@ SparseMatrix<number>::add(const std::vector<size_type>& row_indices,
         elide_zero_values);
 }
 
-
-
 template <typename number>
 template <typename number2>
 inline void
@@ -1940,8 +1914,6 @@ SparseMatrix<number>::add(const size_type               row,
       elide_zero_values);
 }
 
-
-
 template <typename number>
 inline SparseMatrix<number>&
 SparseMatrix<number>::operator*=(const number factor)
@@ -1957,8 +1929,6 @@ SparseMatrix<number>::operator*=(const number factor)
 
   return *this;
 }
-
-
 
 template <typename number>
 inline SparseMatrix<number>&
@@ -1979,8 +1949,6 @@ SparseMatrix<number>::operator/=(const number factor)
   return *this;
 }
 
-
-
 template <typename number>
 inline const number&
 SparseMatrix<number>::operator()(const size_type i, const size_type j) const
@@ -1991,8 +1959,6 @@ SparseMatrix<number>::operator()(const size_type i, const size_type j) const
   return val[cols->operator()(i, j)];
 }
 
-
-
 template <typename number>
 inline number&
 SparseMatrix<number>::operator()(const size_type i, const size_type j)
@@ -2002,8 +1968,6 @@ SparseMatrix<number>::operator()(const size_type i, const size_type j)
          ExcInvalidIndex(i, j));
   return val[cols->operator()(i, j)];
 }
-
-
 
 template <typename number>
 inline number
@@ -2018,8 +1982,6 @@ SparseMatrix<number>::el(const size_type i, const size_type j) const
     return 0;
 }
 
-
-
 template <typename number>
 inline number
 SparseMatrix<number>::diag_element(const size_type i) const
@@ -2033,8 +1995,6 @@ SparseMatrix<number>::diag_element(const size_type i) const
   return val[cols->rowstart[i]];
 }
 
-
-
 template <typename number>
 inline number&
 SparseMatrix<number>::diag_element(const size_type i)
@@ -2047,8 +2007,6 @@ SparseMatrix<number>::diag_element(const size_type i)
   // diagonal
   return val[cols->rowstart[i]];
 }
-
-
 
 template <typename number>
 template <typename ForwardIterator>
@@ -2074,9 +2032,7 @@ SparseMatrix<number>::copy_from(const ForwardIterator begin,
     };
 }
 
-
 //---------------------------------------------------------------------------
-
 
 namespace SparseMatrixIterators
 {
@@ -2088,23 +2044,17 @@ namespace SparseMatrixIterators
       matrix(matrix)
   {}
 
-
-
   template <typename number>
   inline Accessor<number, true>::Accessor(const MatrixType* matrix)
     : SparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern()),
       matrix(matrix)
   {}
 
-
-
   template <typename number>
   inline Accessor<number, true>::Accessor(
     const SparseMatrixIterators::Accessor<number, false>& a)
     : SparsityPatternIterators::Accessor(a), matrix(&a.get_matrix())
   {}
-
-
 
   template <typename number>
   inline number
@@ -2114,8 +2064,6 @@ namespace SparseMatrixIterators
     return matrix->val[index_within_sparsity];
   }
 
-
-
   template <typename number>
   inline const typename Accessor<number, true>::MatrixType&
   Accessor<number, true>::get_matrix() const
@@ -2123,14 +2071,11 @@ namespace SparseMatrixIterators
     return *matrix;
   }
 
-
-
   template <typename number>
   inline Accessor<number, false>::Reference::Reference(const Accessor* accessor,
                                                        const bool)
     : accessor(accessor)
   {}
-
 
   template <typename number>
   inline Accessor<number, false>::Reference::operator number() const
@@ -2139,8 +2084,6 @@ namespace SparseMatrixIterators
                      accessor->matrix->n_nonzero_elements());
     return accessor->matrix->val[accessor->index_within_sparsity];
   }
-
-
 
   template <typename number>
   inline const typename Accessor<number, false>::Reference&
@@ -2152,8 +2095,6 @@ namespace SparseMatrixIterators
     return *this;
   }
 
-
-
   template <typename number>
   inline const typename Accessor<number, false>::Reference&
   Accessor<number, false>::Reference::operator+=(const number n) const
@@ -2163,8 +2104,6 @@ namespace SparseMatrixIterators
     accessor->matrix->val[accessor->index_within_sparsity] += n;
     return *this;
   }
-
-
 
   template <typename number>
   inline const typename Accessor<number, false>::Reference&
@@ -2176,8 +2115,6 @@ namespace SparseMatrixIterators
     return *this;
   }
 
-
-
   template <typename number>
   inline const typename Accessor<number, false>::Reference&
   Accessor<number, false>::Reference::operator*=(const number n) const
@@ -2187,8 +2124,6 @@ namespace SparseMatrixIterators
     accessor->matrix->val[accessor->index_within_sparsity] *= n;
     return *this;
   }
-
-
 
   template <typename number>
   inline const typename Accessor<number, false>::Reference&
@@ -2200,8 +2135,6 @@ namespace SparseMatrixIterators
     return *this;
   }
 
-
-
   template <typename number>
   inline Accessor<number, false>::Accessor(MatrixType*       matrix,
                                            const std::size_t index)
@@ -2210,15 +2143,11 @@ namespace SparseMatrixIterators
       matrix(matrix)
   {}
 
-
-
   template <typename number>
   inline Accessor<number, false>::Accessor(MatrixType* matrix)
     : SparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern()),
       matrix(matrix)
   {}
-
-
 
   template <typename number>
   inline typename Accessor<number, false>::Reference
@@ -2227,8 +2156,6 @@ namespace SparseMatrixIterators
     return Reference(this, true);
   }
 
-
-
   template <typename number>
   inline typename Accessor<number, false>::MatrixType&
   Accessor<number, false>::get_matrix() const
@@ -2236,30 +2163,22 @@ namespace SparseMatrixIterators
     return *matrix;
   }
 
-
-
   template <typename number, bool Constness>
   inline Iterator<number, Constness>::Iterator(MatrixType*       matrix,
                                                const std::size_t index)
     : accessor(matrix, index)
   {}
 
-
-
   template <typename number, bool Constness>
   inline Iterator<number, Constness>::Iterator(MatrixType* matrix)
     : accessor(matrix)
   {}
-
-
 
   template <typename number, bool Constness>
   inline Iterator<number, Constness>::Iterator(
     const SparseMatrixIterators::Iterator<number, false>& i)
     : accessor(*i)
   {}
-
-
 
   template <typename number, bool Constness>
   inline Iterator<number, Constness>&
@@ -2268,7 +2187,6 @@ namespace SparseMatrixIterators
     accessor.advance();
     return *this;
   }
-
 
   template <typename number, bool Constness>
   inline Iterator<number, Constness>
@@ -2279,14 +2197,12 @@ namespace SparseMatrixIterators
     return iter;
   }
 
-
   template <typename number, bool Constness>
   inline const Accessor<number, Constness>& Iterator<number, Constness>::
                                             operator*() const
   {
     return accessor;
   }
-
 
   template <typename number, bool Constness>
   inline const Accessor<number, Constness>* Iterator<number, Constness>::
@@ -2295,7 +2211,6 @@ namespace SparseMatrixIterators
     return &accessor;
   }
 
-
   template <typename number, bool Constness>
   inline bool
   Iterator<number, Constness>::operator==(const Iterator& other) const
@@ -2303,14 +2218,12 @@ namespace SparseMatrixIterators
     return (accessor == other.accessor);
   }
 
-
   template <typename number, bool Constness>
   inline bool
   Iterator<number, Constness>::operator!=(const Iterator& other) const
   {
     return !(*this == other);
   }
-
 
   template <typename number, bool Constness>
   inline bool
@@ -2322,14 +2235,12 @@ namespace SparseMatrixIterators
     return (accessor < other.accessor);
   }
 
-
   template <typename number, bool Constness>
   inline bool
   Iterator<number, Constness>::operator>(const Iterator& other) const
   {
     return (other < *this);
   }
-
 
   template <typename number, bool Constness>
   inline int
@@ -2340,8 +2251,6 @@ namespace SparseMatrixIterators
 
     return (*this)->index_within_sparsity - other->index_within_sparsity;
   }
-
-
 
   template <typename number, bool Constness>
   inline Iterator<number, Constness>
@@ -2356,15 +2265,12 @@ namespace SparseMatrixIterators
 
 } // namespace SparseMatrixIterators
 
-
-
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator
 SparseMatrix<number>::begin() const
 {
   return const_iterator(this, 0);
 }
-
 
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator
@@ -2373,7 +2279,6 @@ SparseMatrix<number>::end() const
   return const_iterator(this);
 }
 
-
 template <typename number>
 inline typename SparseMatrix<number>::iterator
 SparseMatrix<number>::begin()
@@ -2381,14 +2286,12 @@ SparseMatrix<number>::begin()
   return iterator(this, 0);
 }
 
-
 template <typename number>
 inline typename SparseMatrix<number>::iterator
 SparseMatrix<number>::end()
 {
   return iterator(this, cols->rowstart[cols->rows]);
 }
-
 
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator
@@ -2399,8 +2302,6 @@ SparseMatrix<number>::begin(const size_type r) const
   return const_iterator(this, cols->rowstart[r]);
 }
 
-
-
 template <typename number>
 inline typename SparseMatrix<number>::const_iterator
 SparseMatrix<number>::end(const size_type r) const
@@ -2409,8 +2310,6 @@ SparseMatrix<number>::end(const size_type r) const
 
   return const_iterator(this, cols->rowstart[r + 1]);
 }
-
-
 
 template <typename number>
 inline typename SparseMatrix<number>::iterator
@@ -2421,8 +2320,6 @@ SparseMatrix<number>::begin(const size_type r)
   return iterator(this, cols->rowstart[r]);
 }
 
-
-
 template <typename number>
 inline typename SparseMatrix<number>::iterator
 SparseMatrix<number>::end(const size_type r)
@@ -2431,8 +2328,6 @@ SparseMatrix<number>::end(const size_type r)
 
   return iterator(this, cols->rowstart[r + 1]);
 }
-
-
 
 template <typename number>
 template <class StreamType>
@@ -2487,15 +2382,12 @@ SparseMatrix<number>::print(StreamType& out,
     out << std::endl;
 }
 
-
 template <typename number>
 inline void
 SparseMatrix<number>::prepare_add()
 {
   //nothing to do here
 }
-
-
 
 template <typename number>
 inline void
@@ -2505,7 +2397,6 @@ SparseMatrix<number>::prepare_set()
 }
 
 #  endif // DOXYGEN
-
 
 /*----------------------------   sparse_matrix.h     ---------------------------*/
 

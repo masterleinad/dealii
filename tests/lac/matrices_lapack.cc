@@ -13,17 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test LAPACKFullMatrix::copy_from
 
 #include "../tests.h"
-
 
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/lapack_full_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparse_matrix_ez.h>
-
 
 int
 main()

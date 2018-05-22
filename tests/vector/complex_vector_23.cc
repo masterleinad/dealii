@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<std::complex<double> >::operator*(Vector) on two vectors that are
 // not orthogonal
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
@@ -43,7 +40,6 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
   v.compress();
   w.compress();
 
-
   // make sure the scalar product is correct
   deallog << v * w << ' ' << w * v << ' ' << product << ' '
           << std::conj(product) << std::endl;
@@ -55,8 +51,6 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

@@ -17,7 +17,6 @@
  * Author: Abner Salgado, Texas A&M University 2009
  */
 
-
 // @sect3{Include files}
 
 // We start by including all the necessary deal.II header files and some C++
@@ -73,8 +72,6 @@
 namespace Step35
 {
   using namespace dealii;
-
-
 
   // @sect3{Run time parameters}
   //
@@ -217,8 +214,6 @@ namespace Step35
                         "the solution. ");
     }
 
-
-
     void
     Data_Storage::read_data(const char* filename)
     {
@@ -270,8 +265,6 @@ namespace Step35
     }
   } // namespace RunTimeParameters
 
-
-
   // @sect3{Equation data}
 
   // In the next namespace, we declare the initial and boundary conditions:
@@ -302,7 +295,6 @@ namespace Step35
       : Function<dim>(1, initial_time), comp(0)
     {}
 
-
     template <int dim>
     void
     MultiComponentFunction<dim>::set_component(const unsigned int d)
@@ -310,7 +302,6 @@ namespace Step35
       Assert(d < dim, ExcIndexRange(d, 0, dim));
       comp = d;
     }
-
 
     // With this class defined, we declare classes that describe the boundary
     // conditions for velocity and pressure:
@@ -330,12 +321,10 @@ namespace Step35
                  const unsigned int             component = 0) const override;
     };
 
-
     template <int dim>
     Velocity<dim>::Velocity(const double initial_time)
       : MultiComponentFunction<dim>(initial_time)
     {}
-
 
     template <int dim>
     void
@@ -350,7 +339,6 @@ namespace Step35
         values[i] = Velocity<dim>::value(points[i]);
     }
 
-
     template <int dim>
     double
     Velocity<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -364,8 +352,6 @@ namespace Step35
       else
         return 0.;
     }
-
-
 
     template <int dim>
     class Pressure : public Function<dim>
@@ -388,7 +374,6 @@ namespace Step35
       : Function<dim>(1, initial_time)
     {}
 
-
     template <int dim>
     double
     Pressure<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -409,8 +394,6 @@ namespace Step35
         values[i] = Pressure<dim>::value(points[i]);
     }
   } // namespace EquationData
-
-
 
   // @sect3{The <code>NavierStokesProjection</code> class}
 
@@ -676,8 +659,6 @@ namespace Step35
     assemble_vorticity(const bool reinit_prec);
   };
 
-
-
   // @sect4{ <code>NavierStokesProjection::NavierStokesProjection</code> }
 
   // In the constructor, we just read all the data from the
@@ -718,7 +699,6 @@ namespace Step35
     create_triangulation_and_dofs(data.n_global_refines);
     initialize();
   }
-
 
   // @sect4{ <code>NavierStokesProjection::create_triangulation_and_dofs</code> }
 
@@ -779,7 +759,6 @@ namespace Step35
               << std::endl;
   }
 
-
   // @sect4{ <code>NavierStokesProjection::initialize</code> }
 
   // This method creates the constant matrices and loads the initial data
@@ -808,7 +787,6 @@ namespace Step35
           dof_handler_velocity, Functions::ZeroFunction<dim>(), u_n[d]);
       }
   }
-
 
   // @sect4{ The <code>NavierStokesProjection::initialize_*_matrices</code> methods }
 
@@ -868,7 +846,6 @@ namespace Step35
     MatrixCreator::create_mass_matrix(
       dof_handler_pressure, quadrature_pressure, pres_Mass);
   }
-
 
   // For the gradient operator, we start by initializing the sparsity pattern
   // and compressing it.  It is important to notice here that the gradient
@@ -939,7 +916,6 @@ namespace Step35
       }
   }
 
-
   template <int dim>
   void
   NavierStokesProjection<dim>::copy_gradient_local_to_global(
@@ -951,7 +927,6 @@ namespace Step35
                               data.pres_local_dof_indices[j],
                               data.local_grad(i, j));
   }
-
 
   // @sect4{ <code>NavierStokesProjection::run</code> }
 
@@ -1010,8 +985,6 @@ namespace Step35
     output_results(n_steps);
   }
 
-
-
   template <int dim>
   void
   NavierStokesProjection<dim>::interpolate_velocity()
@@ -1022,7 +995,6 @@ namespace Step35
         u_star[d] -= u_n_minus_1[d];
       }
   }
-
 
   // @sect4{<code>NavierStokesProjection::diffusion_step</code>}
 
@@ -1104,7 +1076,6 @@ namespace Step35
           boundary_values, vel_it_matrix[d], u_n[d], force[d]);
       }
 
-
     Threads::TaskGroup<void> tasks;
     for(unsigned int d = 0; d < dim; ++d)
       {
@@ -1118,8 +1089,6 @@ namespace Step35
     tasks.join_all();
   }
 
-
-
   template <int dim>
   void
   NavierStokesProjection<dim>::diffusion_component_solve(const unsigned int d)
@@ -1129,7 +1098,6 @@ namespace Step35
                         SolverGMRES<>::AdditionalData(vel_Krylov_size));
     gmres.solve(vel_it_matrix[d], u_n[d], force[d], prec_velocity[d]);
   }
-
 
   // @sect4{ The <code>NavierStokesProjection::assemble_advection_term</code> method and related}
 
@@ -1157,8 +1125,6 @@ namespace Step35
       scratch,
       data);
   }
-
-
 
   template <int dim>
   void
@@ -1199,8 +1165,6 @@ namespace Step35
                * scratch.fe_val.JxW(q);
   }
 
-
-
   template <int dim>
   void
   NavierStokesProjection<dim>::copy_advection_local_to_global(
@@ -1212,8 +1176,6 @@ namespace Step35
                           data.local_dof_indices[j],
                           data.local_advection(i, j));
   }
-
-
 
   // @sect4{<code>NavierStokesProjection::projection_step</code>}
 
@@ -1249,7 +1211,6 @@ namespace Step35
     phi_n *= 1.5 / dt;
   }
 
-
   // @sect4{ <code>NavierStokesProjection::update_pressure</code> }
 
   // This is the pressure update step of the projection method. It implements
@@ -1278,7 +1239,6 @@ namespace Step35
           Assert(false, ExcNotImplemented());
       };
   }
-
 
   // @sect4{ <code>NavierStokesProjection::output_results</code> }
 
@@ -1379,8 +1339,6 @@ namespace Step35
     data_out.write_vtk(output);
   }
 
-
-
   // Following is the helper function that computes the vorticity by
   // projecting the term $\text{curl} u$ onto the finite element space used
   // for the components of the velocity. The function is only called whenever
@@ -1431,7 +1389,6 @@ namespace Step35
     prec_vel_mass.solve(rot_u);
   }
 } // namespace Step35
-
 
 // @sect3{ The main function }
 

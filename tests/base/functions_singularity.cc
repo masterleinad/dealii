@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check Singularity functions and SingularityGrad functions for
 
 #include "../tests.h"
@@ -68,7 +67,6 @@ check_function_consistency(const Function<dim>& f,
     }
   deallog << std::endl;
 }
-
 
 template <int dim>
 void
@@ -232,7 +230,6 @@ check_function_derivative(const Functions::FlowFunction<dim>& f,
   else
     DataOutBase::write_dx(patches, names, vectors, dxflags, out);
 }
-
 
 int
 main()

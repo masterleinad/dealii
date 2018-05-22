@@ -16,8 +16,6 @@
 #ifndef dealii_solver_gmres_h
 #define dealii_solver_gmres_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/subscriptor.h>
@@ -90,7 +88,6 @@ namespace internal
        */
       unsigned int
       size() const;
-
 
     private:
       /**
@@ -292,14 +289,12 @@ public:
       void(const internal::SolverGMRESImplementation::TmpVectors<VectorType>&)>&
       slot);
 
-
   /**
    * Connect a slot to retrieve a notification when the vectors are
    * re-orthogonalized.
    */
   boost::signals2::connection
   connect_re_orthogonalization_slot(const std::function<void(int)>& slot);
-
 
   DeclException1(ExcTooFewTmpVectors,
                  int,
@@ -431,7 +426,6 @@ protected:
    */
   FullMatrix<double> H1;
 
-
 private:
   /**
    * No copy constructor.
@@ -527,7 +521,6 @@ private:
 /*@}*/
 /* --------------------- Inline and template functions ------------------- */
 
-
 #ifndef DOXYGEN
 namespace internal
 {
@@ -539,8 +532,6 @@ namespace internal
       : mem(vmem), data(max_size)
     {}
 
-
-
     template <class VectorType>
     inline VectorType& TmpVectors<VectorType>::
                        operator[](const unsigned int i) const
@@ -550,8 +541,6 @@ namespace internal
       Assert(data[i] != nullptr, ExcNotInitialized());
       return *data[i];
     }
-
-
 
     template <class VectorType>
     inline VectorType&
@@ -567,16 +556,12 @@ namespace internal
       return *data[i];
     }
 
-
-
     template <class VectorType>
     unsigned int
     TmpVectors<VectorType>::size() const
     {
       return (data.size() > 0 ? data.size() - 1 : 0);
     }
-
-
 
     // A comparator for better printing eigenvalues
     inline bool
@@ -588,8 +573,6 @@ namespace internal
     }
   } // namespace SolverGMRESImplementation
 } // namespace internal
-
-
 
 template <class VectorType>
 inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(
@@ -607,8 +590,6 @@ inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(
                     "temporary vectors."));
 }
 
-
-
 template <class VectorType>
 SolverGMRES<VectorType>::SolverGMRES(SolverControl&            cn,
                                      VectorMemory<VectorType>& mem,
@@ -616,15 +597,11 @@ SolverGMRES<VectorType>::SolverGMRES(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <class VectorType>
 SolverGMRES<VectorType>::SolverGMRES(SolverControl&        cn,
                                      const AdditionalData& data)
   : Solver<VectorType>(cn), additional_data(data)
 {}
-
-
 
 template <class VectorType>
 inline void
@@ -650,8 +627,6 @@ SolverGMRES<VectorType>::givens_rotation(Vector<double>& h,
   b(col + 1)     = -si(col) * b(col);
   b(col) *= ci(col);
 }
-
-
 
 template <class VectorType>
 inline double
@@ -722,8 +697,6 @@ SolverGMRES<VectorType>::modified_gram_schmidt(
   return norm_vv;
 }
 
-
-
 template <class VectorType>
 inline void
 SolverGMRES<VectorType>::compute_eigs_and_cond(
@@ -772,8 +745,6 @@ SolverGMRES<VectorType>::compute_eigs_and_cond(
     }
 }
 
-
-
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
@@ -817,7 +788,6 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
   // some additional vectors, also used in the orthogonalization
   dealii::Vector<double> gamma(n_tmp_vectors), ci(n_tmp_vectors - 1),
     si(n_tmp_vectors - 1), h(n_tmp_vectors - 1);
-
 
   unsigned int dim = 0;
 
@@ -1070,8 +1040,6 @@ SolverGMRES<VectorType>::solve(const MatrixType&         A,
               SolverControl::NoConvergence(accumulated_iterations, last_res));
 }
 
-
-
 template <class VectorType>
 boost::signals2::connection
 SolverGMRES<VectorType>::connect_condition_number_slot(
@@ -1087,8 +1055,6 @@ SolverGMRES<VectorType>::connect_condition_number_slot(
       return condition_number_signal.connect(slot);
     }
 }
-
-
 
 template <class VectorType>
 boost::signals2::connection
@@ -1106,8 +1072,6 @@ SolverGMRES<VectorType>::connect_eigenvalues_slot(
     }
 }
 
-
-
 template <class VectorType>
 boost::signals2::connection
 SolverGMRES<VectorType>::connect_hessenberg_slot(
@@ -1124,8 +1088,6 @@ SolverGMRES<VectorType>::connect_hessenberg_slot(
     }
 }
 
-
-
 template <class VectorType>
 boost::signals2::connection
 SolverGMRES<VectorType>::connect_krylov_space_slot(
@@ -1135,8 +1097,6 @@ SolverGMRES<VectorType>::connect_krylov_space_slot(
   return krylov_space_signal.connect(slot);
 }
 
-
-
 template <class VectorType>
 boost::signals2::connection
 SolverGMRES<VectorType>::connect_re_orthogonalization_slot(
@@ -1144,8 +1104,6 @@ SolverGMRES<VectorType>::connect_re_orthogonalization_slot(
 {
   return re_orthogonalize_signal.connect(slot);
 }
-
-
 
 template <class VectorType>
 double
@@ -1157,7 +1115,6 @@ SolverGMRES<VectorType>::criterion()
   return 0;
 }
 
-
 //----------------------------------------------------------------------//
 
 template <class VectorType>
@@ -1167,15 +1124,11 @@ SolverFGMRES<VectorType>::SolverFGMRES(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <class VectorType>
 SolverFGMRES<VectorType>::SolverFGMRES(SolverControl&        cn,
                                        const AdditionalData& data)
   : Solver<VectorType>(cn), additional_data(data)
 {}
-
-
 
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -1233,7 +1186,6 @@ SolverFGMRES<VectorType>::solve(const MatrixType&         A,
             v(j, x).equ(1. / a, *aux);
           else
             v(j, x) = 0.;
-
 
           preconditioner.vmult(z(j, x), v[j]);
           A.vmult(*aux, z[j]);

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::add() by comparing to FullMatrix
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -51,7 +49,6 @@ test(const unsigned int size)
   const NumberType error = diff.frobenius_norm();
   deallog << "difference: " << error << std::endl;
 }
-
 
 int
 main()

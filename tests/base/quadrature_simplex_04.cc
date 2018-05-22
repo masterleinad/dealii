@@ -16,7 +16,6 @@
 // construct an anisotropic simplex quadrature, and check that we can
 // get an affine transformation out of it.
 
-
 #include "../tests.h"
 #include "simplex.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -80,7 +79,6 @@ test(int n)
       deallog << "# Size NOT OK" << std::endl;
   }
 }
-
 
 int
 main()

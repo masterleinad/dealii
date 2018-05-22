@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Wolfgang Bangerth, University of Heidelberg, 2001 */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -33,8 +29,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -55,8 +49,6 @@ print_dofs(const hp::DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 check_renumbering(hp::DoFHandler<dim>& dof)
@@ -70,7 +62,6 @@ check_renumbering(hp::DoFHandler<dim>& dof)
   DoFRenumbering::component_wise(dof, order);
   print_dofs(dof);
 }
-
 
 template <int dim>
 void
@@ -111,7 +102,6 @@ check()
   check_renumbering(dof);
   dof.clear();
 }
-
 
 int
 main()

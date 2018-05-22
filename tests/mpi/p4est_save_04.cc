@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // save and load a triangulation with a different number of cpus
 
 #include "../tests.h"
@@ -33,10 +31,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-
 #include <deal.II/fe/fe_q.h>
-
-
 
 template <int dim>
 void
@@ -93,7 +88,6 @@ test()
                   << get_real_assert_zero_imag(x(idx)) << std::endl;
         }
 
-
       x.compress(VectorOperation::insert);
       rel_x = x;
 
@@ -148,7 +142,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

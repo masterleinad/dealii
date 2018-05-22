@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that the QuadratureSelector works for a selection of
 // arguments
-
 
 #include "../tests.h"
 
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/quadrature_selector.h>
 #include <string>
-
 
 template <int dim>
 void
@@ -36,7 +32,6 @@ check(const std::string&     name,
          ExcInternalError());
   deallog << name << ' ' << order << " ok" << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Ralf Hartmann, 2005, O. Kayser-Herold, simply modified
   the mg_dof_handler.cc test for the hp::DoFHandler. */
 
@@ -25,8 +23,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 int
 main()

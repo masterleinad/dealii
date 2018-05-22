@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // The function VectorTools::compute_no_normal_flux_constraints had a
 // bug that led to an exception whenever we were computing constraints
 // for vector fields located on edges shared between two faces of a 3d
@@ -39,8 +37,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 void
 test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
@@ -56,7 +52,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   cm.print(deallog.get_file_stream());
 }
-
 
 template <int dim>
 void
@@ -77,7 +72,6 @@ test_hyper_cube()
   FESystem<dim> fe(FE_Q<dim>(2), dim);
   test(tr, fe);
 }
-
 
 int
 main()

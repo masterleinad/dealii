@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // The test is used to check the restriction_is_additive flags. The
 // face degrees of freedom of an RT_Bubbles element must be non-additive
 // as they have continuity requrements. The interior DoFs however must
@@ -23,7 +22,6 @@
 #include <deal.II/fe/fe_rt_bubbles.h>
 
 #include <string>
-
 
 std::ofstream logfile("output");
 
@@ -41,8 +39,6 @@ test(const unsigned int degree)
 
   deallog << std::endl;
 }
-
-
 
 int
 main()

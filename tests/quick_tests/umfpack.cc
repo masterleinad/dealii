@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // copy-paste from umfpack/umfpack_01 for dim==2
 // test the umfpack sparse direct solver on a mass matrix.
 // test of the transpose as well
@@ -105,7 +104,6 @@ test(bool transpose = false)
       Assert(x.l2_norm() / solution.l2_norm() < 1e-8, ExcInternalError());
     }
 }
-
 
 int
 main()

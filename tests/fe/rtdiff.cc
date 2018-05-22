@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // compare the FE_RaviartThomasNodal and FE_RaviartThomas elements
 
 // compare the shape functions and shape values after converting to the
@@ -30,7 +29,6 @@
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_cartesian.h>
 #include <deal.II/grid/grid_generator.h>
-
 
 // This function copied from FERaviartThomasNodal. nodes is the
 // element having the support points and the value of other in these
@@ -82,7 +80,6 @@ initialize_node_matrix(const FiniteElement<dim>& other,
   Assert(current == n_dofs, ExcInternalError());
 }
 
-
 template <int dim>
 void
 compare_shapes(const FiniteElement<dim>& other,
@@ -133,7 +130,6 @@ compare_shapes(const FiniteElement<dim>& other,
       deallog << std::endl;
     }
 }
-
 
 template <int dim>
 void

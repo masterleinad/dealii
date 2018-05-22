@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // take a 2d mesh and check that we can find an arbitrary point's cell
 // in it
 
@@ -25,8 +23,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check(Triangulation<2>& tria)
 {
@@ -42,7 +38,6 @@ void check(Triangulation<2>& tria)
 
   Assert(p.distance(cell->center()) < cell->diameter() / 2, ExcInternalError());
 }
-
 
 int
 main()

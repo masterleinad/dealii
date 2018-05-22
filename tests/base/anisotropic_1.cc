@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that TensorProducPolynomials and AnisotropicPolynomials
 // compute the same thing if the basis polynomials for the anisotropic
 // class happen to be the same for all coordinate directions
-
 
 #include "../tests.h"
 
 #include <deal.II/base/tensor_product_polynomials.h>
 
-
 using namespace Polynomials;
-
 
 template <int dim, class PolynomialType1, class PolynomialType2>
 void
@@ -116,7 +111,6 @@ check_poly(const Point<dim>&      x,
                 << fourth_derivative1 << " != " << fourth_derivative2
                 << std::endl;
 
-
       // finally output values, gradients, etc, to make sure that they are
       // not only consistent, but also correct.
       values1[k] *= std::pow(10., dim);
@@ -145,7 +139,6 @@ check_poly(const Point<dim>&      x,
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
@@ -157,7 +150,6 @@ check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
 
   check_poly(x, p, q);
 }
-
 
 void
 check_dimensions(const std::vector<Polynomial<double>>& p)

@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test ParameterHandler::set(., bool) which was broken, see bug #49
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

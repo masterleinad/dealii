@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -23,8 +22,6 @@
 // like fe_tools_09, but with the difference that we use the generic
 // "<dim>" marker in the finite element name, instead of the one with
 // the concrete dimension (see the documentation)
-
-
 
 template <int dim>
 std::string
@@ -42,8 +39,6 @@ modify_name(const std::string& name)
 
   return new_name;
 }
-
-
 
 template <int dim>
 void

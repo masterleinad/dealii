@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a modified version of step-27 that crashes because of circular
 // constraints. like crash_17, but only check the second cycle. there,
 // we have dofs that are constrained against itself, and we don't
@@ -22,9 +20,7 @@
 
 char logname[] = "output";
 
-
 #include "../tests.h"
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -107,8 +103,6 @@ private:
   Timer distr, condense, hang;
 };
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -119,7 +113,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -132,8 +125,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return product;
 }
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation)
 {
@@ -144,7 +135,6 @@ LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation)
       face_quadrature_collection.push_back(QGauss<dim - 1>(degree + 2));
     }
 }
-
 
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
@@ -287,7 +277,6 @@ LaplaceProblem<dim>::solve()
   hanging_node_constraints.distribute(solution);
 }
 
-
 unsigned int
 int_pow(const unsigned int x, const unsigned int n)
 {
@@ -296,7 +285,6 @@ int_pow(const unsigned int x, const unsigned int n)
     p *= x;
   return p;
 }
-
 
 template <int dim>
 void
@@ -352,7 +340,6 @@ LaplaceProblem<dim>::estimate_smoothness(
   std::vector<double> ln_k(n_fourier_modes);
   for(unsigned int i = 0; i < n_fourier_modes; ++i)
     ln_k[i] = std::log(k_vectors[i].norm());
-
 
   // assemble the matrices that do
   // the Fourier transforms for each
@@ -455,8 +442,6 @@ LaplaceProblem<dim>::estimate_smoothness(
     }
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::refine_grid()
@@ -508,8 +493,6 @@ LaplaceProblem<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -560,7 +543,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
     data_out.write_vtk(output);
   }
 }
-
 
 template <>
 void
@@ -617,8 +599,6 @@ LaplaceProblem<2>::create_coarse_grid()
   triangulation.refine_global(3);
 }
 
-
-
 template <>
 void
 LaplaceProblem<3>::create_coarse_grid()
@@ -626,8 +606,6 @@ LaplaceProblem<3>::create_coarse_grid()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 }
-
-
 
 template <int dim>
 void
@@ -641,7 +619,6 @@ LaplaceProblem<dim>::run()
         create_coarse_grid();
       else
         refine_grid();
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;

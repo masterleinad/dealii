@@ -23,8 +23,6 @@ namespace Particles
   ParticleAccessor<dim, spacedim>::ParticleAccessor() : map(nullptr), particle()
   {}
 
-
-
   template <int dim, int spacedim>
   ParticleAccessor<dim, spacedim>::ParticleAccessor(
     const std::multimap<internal::LevelInd, Particle<dim, spacedim>>& map,
@@ -36,8 +34,6 @@ namespace Particles
       particle(particle)
   {}
 
-
-
   template <int dim, int spacedim>
   void
   ParticleAccessor<dim, spacedim>::write_data(void*& data) const
@@ -46,8 +42,6 @@ namespace Particles
 
     particle->second.write_data(data);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -58,8 +52,6 @@ namespace Particles
     particle->second.set_location(new_loc);
   }
 
-
-
   template <int dim, int spacedim>
   const Point<spacedim>&
   ParticleAccessor<dim, spacedim>::get_location() const
@@ -68,8 +60,6 @@ namespace Particles
 
     return particle->second.get_location();
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -81,8 +71,6 @@ namespace Particles
     particle->second.set_reference_location(new_loc);
   }
 
-
-
   template <int dim, int spacedim>
   const Point<dim>&
   ParticleAccessor<dim, spacedim>::get_reference_location() const
@@ -92,8 +80,6 @@ namespace Particles
     return particle->second.get_reference_location();
   }
 
-
-
   template <int dim, int spacedim>
   types::particle_index
   ParticleAccessor<dim, spacedim>::get_id() const
@@ -102,8 +88,6 @@ namespace Particles
 
     return particle->second.get_id();
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -115,8 +99,6 @@ namespace Particles
     particle->second.set_property_pool(new_property_pool);
   }
 
-
-
   template <int dim, int spacedim>
   bool
   ParticleAccessor<dim, spacedim>::has_properties() const
@@ -125,8 +107,6 @@ namespace Particles
 
     return particle->second.has_properties();
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -139,8 +119,6 @@ namespace Particles
     return;
   }
 
-
-
   template <int dim, int spacedim>
   const ArrayView<const double>
   ParticleAccessor<dim, spacedim>::get_properties() const
@@ -149,8 +127,6 @@ namespace Particles
 
     return particle->second.get_properties();
   }
-
-
 
   template <int dim, int spacedim>
   typename Triangulation<dim, spacedim>::cell_iterator
@@ -164,8 +140,6 @@ namespace Particles
     return cell;
   }
 
-
-
   template <int dim, int spacedim>
   const ArrayView<double>
   ParticleAccessor<dim, spacedim>::get_properties()
@@ -174,8 +148,6 @@ namespace Particles
 
     return particle->second.get_properties();
   }
-
-
 
   template <int dim, int spacedim>
   std::size_t
@@ -186,8 +158,6 @@ namespace Particles
     return particle->second.serialized_size_in_bytes();
   }
 
-
-
   template <int dim, int spacedim>
   void
   ParticleAccessor<dim, spacedim>::next()
@@ -195,8 +165,6 @@ namespace Particles
     Assert(particle != map->end(), ExcInternalError());
     ++particle;
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -206,8 +174,6 @@ namespace Particles
     --particle;
   }
 
-
-
   template <int dim, int spacedim>
   bool
   ParticleAccessor<dim, spacedim>::
@@ -215,8 +181,6 @@ namespace Particles
   {
     return (map != other.map) || (particle != other.particle);
   }
-
-
 
   template <int dim, int spacedim>
   bool

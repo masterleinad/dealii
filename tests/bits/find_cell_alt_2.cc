@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as find_cell_alt_1, but in 3d
 
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/mapping_q.h>
-
-
 
 void check(Triangulation<3>& tria)
 {
@@ -48,7 +44,6 @@ void check(Triangulation<3>& tria)
   Assert(p.distance(cell.first->center()) < cell.first->diameter() / 2,
          ExcInternalError());
 }
-
 
 int
 main()

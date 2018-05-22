@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check scalar_product(Tensor<2,dim>,Tensor<2,dim>)
 
 #include "../tests.h"
@@ -32,7 +31,6 @@ test_constant()
           << " compare " << 4 * dim * dim << std::endl;
 }
 
-
 template <int dim>
 void
 test_equal()
@@ -49,7 +47,6 @@ test_equal()
   deallog << "Equal    dim " << dim << '\t' << scalar_product(t, t)
           << " compare " << sum << std::endl;
 }
-
 
 template <int dim>
 void
@@ -69,7 +66,6 @@ test_unequal()
   deallog << "Unequal  dim " << dim << '\t' << scalar_product(s, t)
           << " compare " << sum << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/path_search.h>
 #include <deal.II/base/utilities.h>
@@ -31,7 +30,6 @@
 #include <functional>
 #include <map>
 
-
 #ifdef DEAL_II_WITH_NETCDF
 #  include <netcdfcpp.h>
 #endif
@@ -42,9 +40,7 @@
 #  include <assimp/scene.h>       // Output data structure
 #endif
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace
 {
@@ -81,7 +77,6 @@ namespace
             }
   }
 
-
   template <int dim, int spacedim>
   void
   assign_1d_boundary_ids(const std::map<unsigned int, types::boundary_id>&,
@@ -98,15 +93,12 @@ GridIn<dim, spacedim>::GridIn()
   : tria(nullptr, typeid(*this).name()), default_format(ucd)
 {}
 
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::attach_triangulation(Triangulation<dim, spacedim>& t)
 {
   tria = &t;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -175,7 +167,6 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
     AssertThrow(
       false,
       ExcMessage("While reading VTK file, failed to find POINTS section"));
-
 
   //////////////////ignoring space between points and cells sections////////////////////
   std::string checkline;
@@ -335,7 +326,6 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
               + Utilities::int_to_string(subcelldata.boundary_lines.size())
               + ") in 2d."));
 
-
           std::string linenew;
           std::string textnew[2];
           textnew[0] = "SCALARS MaterialID double";
@@ -408,8 +398,6 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
       false,
       ExcMessage("While reading VTK file, failed to find CELLS section"));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -656,8 +644,6 @@ GridIn<dim, spacedim>::read_unv(std::istream& in)
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
 
-
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_ucd(std::istream& in,
@@ -668,7 +654,6 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
 
   // skip comments at start of file
   skip_comment_lines(in, '#');
-
 
   unsigned int n_vertices;
   unsigned int n_cells;
@@ -860,7 +845,6 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
         AssertThrow(false, ExcUnknownIdentifier(cell_type));
     };
 
-
   // check that no forbidden arrays are used
   Assert(subcelldata.check_consistency(dim), ExcInternalError());
 
@@ -956,7 +940,6 @@ GridIn<dim, spacedim>::read_abaqus(std::istream& in,
     }
 }
 
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
@@ -1000,7 +983,6 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
     ;
   skip_empty_lines(in);
 
-
   // now read vertices
   getline(in, line);
   AssertThrow(line == "Vertices", ExcInvalidDBMESHInput(line));
@@ -1041,8 +1023,6 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
 
   skip_empty_lines(in);
 
-
-
   // read cracked edges (whatever
   // that may be). we ignore them at
   // present, so just read them and
@@ -1061,7 +1041,6 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
   AssertThrow(in, ExcInvalidDBMeshFormat());
 
   skip_empty_lines(in);
-
 
   // now read cells.
   // set up array of cells
@@ -1096,7 +1075,6 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
 
   skip_empty_lines(in);
 
-
   // then there are again a whole lot
   // of fields of which I have no
   // clue what they mean. skip them
@@ -1106,7 +1084,6 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
     ;
   // ok, so we are not at the end of
   // the file, that's it, mostly
-
 
   // check that no forbidden arrays are used
   Assert(subcelldata.check_consistency(dim), ExcInternalError());
@@ -1122,16 +1099,12 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
 
-
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_xda(std::istream&)
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -1143,7 +1116,6 @@ GridIn<2>::read_xda(std::istream& in)
   std::string line;
   // skip comments at start of file
   getline(in, line);
-
 
   unsigned int n_vertices;
   unsigned int n_cells;
@@ -1177,8 +1149,6 @@ GridIn<2>::read_xda(std::istream& in)
         in >> cells[cell].vertices[i];
     };
 
-
-
   // set up array of vertices
   std::vector<Point<2>> vertices(n_vertices);
   for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
@@ -1202,8 +1172,6 @@ GridIn<2>::read_xda(std::istream& in)
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
 
-
-
 template <>
 void
 GridIn<3>::read_xda(std::istream& in)
@@ -1216,7 +1184,6 @@ GridIn<3>::read_xda(std::istream& in)
   std::string line;
   // skip comments at start of file
   getline(in, line);
-
 
   unsigned int n_vertices;
   unsigned int n_cells;
@@ -1255,8 +1222,6 @@ GridIn<3>::read_xda(std::istream& in)
         cells[cell].vertices[i] = xda_ordered_nodes[xda_to_dealII_map[i]];
     };
 
-
-
   // set up array of vertices
   std::vector<Point<3>> vertices(n_vertices);
   for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
@@ -1279,8 +1244,6 @@ GridIn<3>::read_xda(std::istream& in)
   GridReordering<3>::reorder_cells(cells);
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1452,7 +1415,6 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
           default:
             AssertThrow(false, ExcNotImplemented());
         }
-
 
       /*       `ELM-TYPE'
                defines the geometrical type of the N-th element:
@@ -1667,7 +1629,6 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
     assign_1d_boundary_ids(boundary_ids_1d, *tria);
 }
 
-
 template <>
 void
 GridIn<1>::read_netcdf(const std::string&)
@@ -1682,14 +1643,12 @@ GridIn<1, 2>::read_netcdf(const std::string&)
   AssertThrow(false, ExcImpossibleInDim(1));
 }
 
-
 template <>
 void
 GridIn<1, 3>::read_netcdf(const std::string&)
 {
   AssertThrow(false, ExcImpossibleInDim(1));
 }
-
 
 template <>
 void
@@ -1945,7 +1904,6 @@ GridIn<2>::read_netcdf(const std::string& filename)
 #endif
 }
 
-
 template <>
 void
 GridIn<3>::read_netcdf(const std::string& filename)
@@ -2125,7 +2083,6 @@ GridIn<3>::read_netcdf(const std::string& filename)
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 #endif
 }
-
 
 template <int dim, int spacedim>
 void
@@ -2353,8 +2310,6 @@ GridIn<dim, spacedim>::parse_tecplot_header(
           "Tecplot file does not contain a complete and consistent set of parameters"));
     }
 }
-
-
 
 template <>
 void
@@ -2593,16 +2548,12 @@ GridIn<2>::read_tecplot(std::istream& in)
   tria->create_triangulation_compatibility(vertices, cells, subcelldata);
 }
 
-
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_tecplot(std::istream&)
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2760,7 +2711,6 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
 #endif
 }
 
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::skip_empty_lines(std::istream& in)
@@ -2791,8 +2741,6 @@ GridIn<dim, spacedim>::skip_empty_lines(std::istream& in)
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
@@ -2807,7 +2755,6 @@ GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
     while(in.get() != '\n')
       ;
 
-
   // put back first character of
   // first non-comment line
   if(in)
@@ -2816,8 +2763,6 @@ GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
   // at last: skip additional empty lines, if present
   skip_empty_lines(in);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2828,8 +2773,6 @@ GridIn<dim, spacedim>::debug_output_grid(
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -2882,15 +2825,12 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
       out << std::endl;
     };
 
-
   out << std::endl
       << "set nokey" << std::endl
       << "pl [" << min_x << ':' << max_x << "][" << min_y << ':' << max_y
       << "] " << min_y << std::endl
       << "pause -1" << std::endl;
 }
-
-
 
 template <>
 void
@@ -2963,8 +2903,6 @@ GridIn<3>::debug_output_grid(const std::vector<CellData<3>>& cells,
     };
 }
 
-
-
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read(const std::string& filename, Format format)
@@ -2996,7 +2934,6 @@ GridIn<dim, spacedim>::read(const std::string& filename, Format format)
   else
     read(in, format);
 }
-
 
 template <int dim, int spacedim>
 void
@@ -3059,8 +2996,6 @@ GridIn<dim, spacedim>::read(std::istream& in, Format format)
   Assert(false, ExcInternalError());
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 GridIn<dim, spacedim>::default_suffix(const Format format)
@@ -3090,8 +3025,6 @@ GridIn<dim, spacedim>::default_suffix(const Format format)
         return ".unknown_format";
     }
 }
-
-
 
 template <int dim, int spacedim>
 typename GridIn<dim, spacedim>::Format
@@ -3147,8 +3080,6 @@ GridIn<dim, spacedim>::parse_format(const std::string& format_name)
   // return something weird
   return Format(Default);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -3695,7 +3626,6 @@ namespace
       }
   }
 } // namespace
-
 
 //explicit instantiations
 #include "grid_in.inst"

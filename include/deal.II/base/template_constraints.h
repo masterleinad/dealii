@@ -16,7 +16,6 @@
 #ifndef dealii_template_constraints_h
 #define dealii_template_constraints_h
 
-
 #include <deal.II/base/complex_overloads.h>
 #include <deal.II/base/config.h>
 
@@ -32,7 +31,6 @@ namespace internal
     // helper struct for is_base_of_all and all_same_as
     template <bool... Values>
     struct BoolStorage;
-
 
     /**
      * A helper class whose `value` member is true or false depending on
@@ -61,8 +59,6 @@ struct is_base_of_all
     std::is_base_of<Base, Derived>::value...>::value;
 };
 
-
-
 /**
  * This struct is a generalization of std::is_same to template
  * parameter packs and tests if all of the types in the `Types...`
@@ -76,8 +72,6 @@ struct all_same_as
     std::is_same<Type, Types>::value...>::value;
 };
 
-
-
 /*
  * A generalization of `std::enable_if` that only works if
  * <i>all</i> of the given boolean template parameters are
@@ -88,11 +82,8 @@ struct enable_if_all
   : std::enable_if<internal::TemplateConstraints::all_true<Values...>::value>
 {};
 
-
-
 template <bool, typename>
 struct constraint_and_return_value;
-
 
 /**
  * This specialization of the general template for the case of a <tt>true</tt>
@@ -157,8 +148,6 @@ struct DEAL_II_DEPRECATED constraint_and_return_value<true, T>
   typedef T type;
 };
 
-
-
 /**
  * A template class that simply exports its template argument as a local
  * typedef. This class, while at first appearing useless, makes sense in the
@@ -216,8 +205,6 @@ struct identity
   typedef T type;
 };
 
-
-
 /**
  * A class to perform comparisons of arbitrary pointers for equality. In some
  * circumstances, one would like to make sure that two arguments to a function
@@ -249,7 +236,6 @@ struct PointerComparison
     return (p1 == p2);
   }
 
-
   /**
    * Comparison function for pointers of different types. The C++ language
    * does not allow comparing these pointers using <tt>operator==</tt>.
@@ -263,8 +249,6 @@ struct PointerComparison
     return false;
   }
 };
-
-
 
 namespace internal
 {
@@ -332,7 +316,6 @@ namespace internal
   struct DEAL_II_DEPRECATED int2type
   {};
 
-
   /**
    * The equivalent of the int2type class for boolean arguments.
    *
@@ -344,8 +327,6 @@ namespace internal
   struct DEAL_II_DEPRECATED bool2type
   {};
 } // namespace internal
-
-
 
 /**
  * A type that can be used to determine whether two types are equal. It allows
@@ -370,8 +351,6 @@ template <typename T, typename U>
 struct DEAL_II_DEPRECATED types_are_equal : std::is_same<T, U>
 {};
 
-
-
 namespace internal
 {
   /**
@@ -393,8 +372,6 @@ namespace internal
   };
 
 } // namespace internal
-
-
 
 /**
  * A class with a local typedef that represents the type that results from the
@@ -497,8 +474,6 @@ namespace internal
 
 } // namespace internal
 
-
-
 /**
  * This class provides a local typedef @p type that is equal to the template
  * argument but only if the template argument corresponds to a scalar type
@@ -553,7 +528,6 @@ namespace internal
 template <typename T>
 struct EnableIfScalar;
 
-
 template <>
 struct EnableIfScalar<double>
 {
@@ -589,7 +563,6 @@ struct EnableIfScalar<std::complex<T>>
 {
   typedef std::complex<T> type;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

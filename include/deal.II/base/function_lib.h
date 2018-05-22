@@ -16,7 +16,6 @@
 #ifndef dealii_function_lib_h
 #define dealii_function_lib_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/point.h>
@@ -77,8 +76,6 @@ namespace Functions
                    const unsigned int             component = 0) const override;
   };
 
-
-
   /**
    * The function <tt>xy</tt> in 2d and 3d, not implemented in 1d. This
    * function serves as an example for a vanishing Laplacian.
@@ -131,8 +128,6 @@ namespace Functions
                    std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
   };
-
-
 
   /**
    * d-quadratic pillow on the unit hypercube.
@@ -207,8 +202,6 @@ namespace Functions
     const double offset;
   };
 
-
-
   /**
    * Cosine-shaped pillow function. This is another function with zero
    * boundary values on $[-1,1]^d$. In the interior it is the product of
@@ -273,8 +266,6 @@ namespace Functions
                  const unsigned int component = 0) const override;
   };
 
-
-
   /**
    * Gradient of the cosine-shaped pillow function.
    *
@@ -324,8 +315,6 @@ namespace Functions
     virtual double
     laplacian(const Point<dim>& p, const unsigned int component) const override;
   };
-
-
 
   /**
    * Product of exponential functions in each coordinate direction.
@@ -382,8 +371,6 @@ namespace Functions
                    const unsigned int             component = 0) const override;
   };
 
-
-
   /**
    * Harmonic singularity on the L-shaped domain in 2D.
    *
@@ -433,8 +420,6 @@ namespace Functions
                    std::vector<double>&         values,
                    const unsigned int           component = 0) const override;
   };
-
-
 
   /**
    * Gradient of the harmonic singularity on the L-shaped domain in 2D.
@@ -486,8 +471,6 @@ namespace Functions
                    const unsigned int           component) const override;
   };
 
-
-
   /**
    * Singularity on the slit domain in 2D and 3D.
    *
@@ -534,7 +517,6 @@ namespace Functions
                    const unsigned int             component = 0) const override;
   };
 
-
   /**
    * Singularity on the slit domain with one Neumann boundary in 2D.
    *
@@ -579,8 +561,6 @@ namespace Functions
                    std::vector<double>&         values,
                    const unsigned int           component = 0) const override;
   };
-
-
 
   /**
    * A jump in x-direction transported into some direction.
@@ -687,8 +667,6 @@ namespace Functions
     double cosine;
   };
 
-
-
   /**
    * Given a wavenumber vector generate a cosine function. The wavenumber
    * coefficient is given as a $d$-dimensional point $k$ in Fourier space, and
@@ -741,8 +719,6 @@ namespace Functions
      */
     const Tensor<1, dim> fourier_coefficients;
   };
-
-
 
   /**
    * Given a wavenumber vector generate a sine function. The wavenumber
@@ -797,7 +773,6 @@ namespace Functions
     const Tensor<1, dim> fourier_coefficients;
   };
 
-
   /**
    * Given a sequence of wavenumber vectors and weights generate a sum of sine
    * functions. Each wavenumber coefficient is given as a $d$-dimensional
@@ -849,8 +824,6 @@ namespace Functions
     const std::vector<Point<dim>> fourier_coefficients;
     const std::vector<double>     weights;
   };
-
-
 
   /**
    * Given a sequence of wavenumber vectors and weights generate a sum of
@@ -904,7 +877,6 @@ namespace Functions
     const std::vector<Point<dim>> fourier_coefficients;
     const std::vector<double>     weights;
   };
-
 
   /**
    * Base function for cut-off function. This class stores the center and the
@@ -966,8 +938,6 @@ namespace Functions
     const unsigned int selected;
   };
 
-
-
   /**
    * Cut-off function in L-infinity for an arbitrary ball.  This function is
    * the characteristic function of a ball around <tt>center</tt> with a
@@ -1015,7 +985,6 @@ namespace Functions
                       std::vector<Vector<double>>&   values) const override;
   };
 
-
   /**
    * Cut-off function for an arbitrary ball. This function is a cone with
    * support in a ball of certain <tt>radius</tt> around <tt>center</tt>. The
@@ -1062,7 +1031,6 @@ namespace Functions
     vector_value_list(const std::vector<Point<dim>>& points,
                       std::vector<Vector<double>>&   values) const override;
   };
-
 
   /**
    * Cut-off function for an arbitrary ball. This is the traditional cut-off
@@ -1118,8 +1086,6 @@ namespace Functions
     gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
   };
-
-
 
   /**
    * A class that represents a function object for a monomial. Monomials are
@@ -1183,8 +1149,6 @@ namespace Functions
      */
     const Tensor<1, dim> exponents;
   };
-
-
 
   /**
    * A scalar function that computes its values by (bi-, tri-)linear
@@ -1285,7 +1249,6 @@ namespace Functions
     const Table<dim, double> data_values;
   };
 
-
   /**
    * A scalar function that computes its values by (bi-, tri-)linear
    * interpolation from a set of point data that are arranged on a uniformly
@@ -1374,7 +1337,6 @@ namespace Functions
     const Table<dim, double> data_values;
   };
 
-
   /**
    * A class that represents a function object for a polynomial. A polynomial
    * is composed by the summation of multiple monomials. If the polynomial has
@@ -1409,7 +1371,6 @@ namespace Functions
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
 
-
     /**
      * Function values at multiple points.
      */
@@ -1436,8 +1397,6 @@ namespace Functions
      */
     const std::vector<double> coefficients;
   };
-
-
 
 } // namespace Functions
 DEAL_II_NAMESPACE_CLOSE

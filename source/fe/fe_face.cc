@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_face.h>
 #include <deal.II/fe/fe_nothing.h>
@@ -25,7 +24,6 @@
 #include <sstream>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -113,16 +111,12 @@ FE_FaceQ<dim, spacedim>::FE_FaceQ(const unsigned int degree)
       }
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_FaceQ<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_FaceQ<dim, spacedim>>(this->degree);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -138,8 +132,6 @@ FE_FaceQ<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_FaceQ<dim, spacedim>::get_face_interpolation_matrix(
@@ -149,8 +141,6 @@ FE_FaceQ<dim, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -239,8 +229,6 @@ FE_FaceQ<dim, spacedim>::get_subface_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_FaceQ<dim, spacedim>::has_support_on_face(
@@ -249,8 +237,6 @@ FE_FaceQ<dim, spacedim>::has_support_on_face(
 {
   return (face_index == (shape_index / this->dofs_per_face));
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -263,16 +249,12 @@ FE_FaceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_FaceQ<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -282,8 +264,6 @@ FE_FaceQ<dim, spacedim>::hp_vertex_dof_identities(
   // this element is always discontinuous at vertices
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -352,8 +332,6 @@ FE_FaceQ<dim, spacedim>::hp_line_dof_identities(
         }
     }
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -430,8 +408,6 @@ FE_FaceQ<dim, spacedim>::hp_quad_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_FaceQ<dim, spacedim>::compare_for_face_domination(
@@ -465,8 +441,6 @@ FE_FaceQ<dim, spacedim>::compare_for_face_domination(
   Assert(false, ExcNotImplemented());
   return FiniteElementDomination::neither_element_dominates;
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -518,16 +492,12 @@ FE_FaceQ<1, spacedim>::FE_FaceQ(const unsigned int degree)
   this->unit_support_points[1] = Point<1>(1.);
 }
 
-
-
 template <int spacedim>
 std::unique_ptr<FiniteElement<1, spacedim>>
 FE_FaceQ<1, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_FaceQ<1, spacedim>>(this->degree);
 }
-
-
 
 template <int spacedim>
 std::string
@@ -543,8 +513,6 @@ FE_FaceQ<1, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::get_face_interpolation_matrix(
@@ -554,8 +522,6 @@ FE_FaceQ<1, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
-
 
 template <int spacedim>
 void
@@ -573,8 +539,6 @@ FE_FaceQ<1, spacedim>::get_subface_interpolation_matrix(
   interpolation_matrix(0, 0) = 1.;
 }
 
-
-
 template <int spacedim>
 bool
 FE_FaceQ<1, spacedim>::has_support_on_face(const unsigned int shape_index,
@@ -584,8 +548,6 @@ FE_FaceQ<1, spacedim>::has_support_on_face(const unsigned int shape_index,
   return (face_index == shape_index);
 }
 
-
-
 template <int spacedim>
 std::vector<unsigned int>
 FE_FaceQ<1, spacedim>::get_dpo_vector(const unsigned int)
@@ -594,8 +556,6 @@ FE_FaceQ<1, spacedim>::get_dpo_vector(const unsigned int)
   dpo[0] = 1;
   return dpo;
 }
-
-
 
 template <int spacedim>
 bool
@@ -614,8 +574,6 @@ FE_FaceQ<1, spacedim>::hp_vertex_dof_identities(
     1, std::make_pair(0U, 0U));
 }
 
-
-
 template <int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_FaceQ<1, spacedim>::hp_line_dof_identities(
@@ -624,8 +582,6 @@ FE_FaceQ<1, spacedim>::hp_line_dof_identities(
   // this element is continuous only for the highest dimensional bounding object
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
-
 
 template <int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -636,8 +592,6 @@ FE_FaceQ<1, spacedim>::hp_quad_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
-
 template <int spacedim>
 FiniteElementDomination::Domination
 FE_FaceQ<1, spacedim>::compare_for_face_domination(
@@ -645,8 +599,6 @@ FE_FaceQ<1, spacedim>::compare_for_face_domination(
 {
   return FiniteElementDomination::no_requirements;
 }
-
-
 
 template <int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -658,8 +610,6 @@ FE_FaceQ<1, spacedim>::get_constant_modes() const
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
 }
-
-
 
 template <int spacedim>
 UpdateFlags
@@ -675,7 +625,6 @@ FE_FaceQ<1, spacedim>::requires_update_flags(const UpdateFlags flags) const
 
   return out;
 }
-
 
 template <int spacedim>
 void
@@ -694,8 +643,6 @@ FE_FaceQ<1, spacedim>::fill_fe_values(
 {
   // Do nothing, since we do not have values in the interior
 }
-
-
 
 template <int spacedim>
 void
@@ -721,7 +668,6 @@ FE_FaceQ<1, spacedim>::fill_fe_face_values(
     }
 }
 
-
 template <int spacedim>
 void
 FE_FaceQ<1, spacedim>::fill_fe_subface_values(
@@ -741,8 +687,6 @@ FE_FaceQ<1, spacedim>::fill_fe_subface_values(
   Assert(false, ExcMessage("There are no sub-face values to fill in 1D!"));
 }
 
-
-
 // --------------------------------------- FE_FaceP --------------------------
 
 template <int dim, int spacedim>
@@ -757,16 +701,12 @@ FE_FaceP<dim, spacedim>::FE_FaceP(const unsigned int degree)
       std::vector<bool>(1, true))
 {}
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_FaceP<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_FaceP<dim, spacedim>>(this->degree);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -782,8 +722,6 @@ FE_FaceP<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_FaceP<dim, spacedim>::has_support_on_face(
@@ -792,8 +730,6 @@ FE_FaceP<dim, spacedim>::has_support_on_face(
 {
   return (face_index == (shape_index / this->dofs_per_face));
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -809,16 +745,12 @@ FE_FaceP<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_FaceP<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -854,8 +786,6 @@ FE_FaceP<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
@@ -865,8 +795,6 @@ FE_FaceP<dim, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -925,7 +853,6 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
       Vector<double>      v_in(face_quadrature.size());
       Vector<double>      v_out(source_fe->dofs_per_face);
 
-
       // compute the interpolation matrix by evaluating on the fine side and
       // then solving the least squares problem
       for(unsigned int i = 0; i < this->dofs_per_face; ++i)
@@ -970,8 +897,6 @@ FE_FaceP<dim, spacedim>::get_subface_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_FaceP<dim, spacedim>::get_constant_modes() const
@@ -983,14 +908,10 @@ FE_FaceP<dim, spacedim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
-
-
 template <int spacedim>
 FE_FaceP<1, spacedim>::FE_FaceP(const unsigned int degree)
   : FE_FaceQ<1, spacedim>(degree)
 {}
-
-
 
 template <int spacedim>
 std::string
@@ -1006,10 +927,7 @@ FE_FaceP<1, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 // explicit instantiations
 #include "fe_face.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

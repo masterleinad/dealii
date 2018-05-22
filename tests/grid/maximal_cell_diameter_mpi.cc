@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
-
 
 template <int dim>
 void
@@ -63,7 +60,6 @@ test1()
         };
     };
 }
-
 
 int
 main(int argc, char* argv[])

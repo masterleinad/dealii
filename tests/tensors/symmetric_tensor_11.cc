@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test deviator_tensor and make sure it yields the same result as calling
 // deviator()
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -49,8 +47,6 @@ test()
     for(unsigned int j = 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << t[i][j] << std::endl;
 }
-
-
 
 int
 main()

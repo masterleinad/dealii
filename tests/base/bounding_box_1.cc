@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for BoundingBox<unsigned int spacedim> which test basic stuff:
 // creation in various dimensions and checking for points inside
 

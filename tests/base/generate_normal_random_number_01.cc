@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::generate_random_normal_number. this function is
 // supposed to be thread-safe, so check that a standard measure of
 // normality holds for the numbers produced on different threads
@@ -21,7 +20,6 @@
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
-
 
 std::pair<double, double>
 test()
@@ -46,8 +44,6 @@ test()
   return std::make_pair(mean, stddev);
 }
 
-
-
 int
 main()
 {
@@ -64,7 +60,6 @@ main()
   tg[1].join();
   tg[2].join();
   tg[3].join();
-
 
   // the random number generator is thread-local, so we should get the
   // same result every time

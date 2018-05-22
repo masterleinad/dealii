@@ -13,19 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the class that generates derivatives of function objects by
 // finite differencing
-
 
 #include "../tests.h"
 #include <deal.II/base/auto_derivative_function.h>
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/point.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 class AutoSinExp : public AutoDerivativeFunction<dim>
@@ -47,13 +42,9 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& values) const;
 };
 
-
-
 template <int dim>
 AutoSinExp<dim>::AutoSinExp() : AutoDerivativeFunction<dim>(1e-6, 2)
 {}
-
-
 
 template <int dim>
 double
@@ -61,7 +52,6 @@ AutoSinExp<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   return std::sin(2 * p(0)) * std::exp(3 * p(1));
 }
-
 
 template <int dim>
 void
@@ -92,8 +82,6 @@ public:
                   typename std::vector<Tensor<1, dim>>& gradients) const;
 };
 
-
-
 template <int dim>
 Tensor<1, dim>
 ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
@@ -103,7 +91,6 @@ ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
   grad[1] = 3 * std::sin(2 * p(0)) * std::exp(3 * p(1));
   return grad;
 }
-
 
 template <int dim>
 void
@@ -117,7 +104,6 @@ ExactSinExp<dim>::vector_gradient(
   gradients[0].clear();
   gradients[1] = gradient(p);
 }
-
 
 int
 main()
@@ -133,7 +119,6 @@ main()
   std::vector<Point<dim>> ps(1, p);
 
   Tensor<1, dim> u_grad = exact_function.gradient(p);
-
 
   AutoDerivativeFunction<dim>::DifferenceFormula formula;
   const double                                   h_base = 0.1;

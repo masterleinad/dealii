@@ -15,7 +15,6 @@
 
 const double eps = 1e-10;
 
-
 using namespace dealii;
 
 template <int dim>
@@ -60,7 +59,6 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   dof_handler.clear();
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -69,7 +67,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

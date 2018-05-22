@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same test as assemble_matrix_parallel_02, but calling compress() several
 // times on test matrix
 
@@ -53,7 +51,6 @@
 std::ofstream logfile("output");
 
 using namespace dealii;
-
 
 namespace Assembly
 {
@@ -153,8 +150,6 @@ private:
     graph;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -165,7 +160,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -178,7 +172,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
   return sum;
 }
 
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -189,7 +182,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -202,7 +194,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return product;
 }
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : triangulation(MPI_COMM_WORLD),
@@ -211,14 +202,11 @@ LaplaceProblem<dim>::LaplaceProblem()
     quadrature(fe.degree + 1)
 {}
 
-
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 std::vector<types::global_dof_index>
@@ -290,8 +278,6 @@ LaplaceProblem<dim>::setup_system()
   }
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::local_assemble(
@@ -334,8 +320,6 @@ LaplaceProblem<dim>::local_assemble(
   cell->get_dof_indices(data.local_dof_indices);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data& data)
@@ -353,8 +337,6 @@ LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data& data)
                                            test_matrix,
                                            test_rhs);
 }
-
-
 
 template <int dim>
 void
@@ -379,8 +361,6 @@ LaplaceProblem<dim>::assemble_reference()
   reference_matrix.compress(VectorOperation::add);
   reference_rhs.compress(VectorOperation::add);
 }
-
-
 
 template <int dim>
 void
@@ -416,8 +396,6 @@ LaplaceProblem<dim>::assemble_test()
   deallog << "error in vector: " << test_rhs.l2_norm() << std::endl;
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::postprocess()
@@ -430,8 +408,6 @@ LaplaceProblem<dim>::postprocess()
     triangulation, estimated_error_per_cell, 0.3, 0.03);
   triangulation.execute_coarsening_and_refinement();
 }
-
-
 
 template <int dim>
 void
@@ -455,8 +431,6 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
-
-
 
 int
 main(int argc, char** argv)

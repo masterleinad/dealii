@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Compute the area of a square where one boundary is deformed by a
 // cylindrical manifold.
 
@@ -103,7 +102,6 @@ test()
               << std::endl;
     }
 }
-
 
 int
 main()

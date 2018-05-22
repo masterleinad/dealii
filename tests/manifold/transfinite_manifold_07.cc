@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // This test verifies that we can use transfinite interpolation on 2D cells
 // that have large aspect ratios: if the initial guess of a chart point is not
 // accurate enough then we will fail to calculate the weighted average in

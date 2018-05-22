@@ -444,8 +444,6 @@ private:
                    const InternalData&    fedata) const;
 };
 
-
-
 /*@}*/
 
 DEAL_II_NAMESPACE_CLOSE

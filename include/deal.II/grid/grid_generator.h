@@ -16,7 +16,6 @@
 #ifndef dealii_grid_generator_h
 #define dealii_grid_generator_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function.h>
@@ -788,7 +787,6 @@ namespace GridGenerator
                    const unsigned int  n_cells  = 0,
                    const bool          colorize = false);
 
-
   /**
    * Produce a domain that is the intersection between a hyper-shell with
    * given inner and outer radius, i.e. the space between two circles in two
@@ -848,8 +846,6 @@ namespace GridGenerator
                  const double        outer_radius,
                  const unsigned int  n_radial_cells = 0,
                  const unsigned int  n_axial_cells  = 0);
-
-
 
   /**
    * Produce the volume or surface mesh of a torus. The axis of the torus is
@@ -1103,7 +1099,6 @@ namespace GridGenerator
                         const std::vector<double>& slice_coordinates,
                         Triangulation<3, 3>&       result);
 
-
   /**
    * Given an input triangulation @p in_tria, this function makes a new flat
    * triangulation @p out_tria which contains a single level with all active
@@ -1251,12 +1246,10 @@ namespace GridGenerator
 
   ///@}
 
-
   /**
    * @name Exceptions
    */
   ///@{
-
 
   /**
    * Exception
@@ -1284,8 +1277,6 @@ namespace GridGenerator
                    " cause all cells to have negative measure.");
   ///@}
 } // namespace GridGenerator
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

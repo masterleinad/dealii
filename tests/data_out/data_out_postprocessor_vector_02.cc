@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tests DataPostprocessor: access the cell we are currently working
 // on for a vector finite element
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -35,10 +33,7 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/data_postprocessor.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 class MyPostprocessor : public DataPostprocessorVector<dim>
@@ -69,8 +64,6 @@ public:
       }
   }
 };
-
-
 
 template <int dim>
 void
@@ -110,7 +103,6 @@ test()
   data_out.build_patches();
   data_out.write_gnuplot(logfile);
 }
-
 
 int
 main()

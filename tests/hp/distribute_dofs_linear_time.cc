@@ -146,8 +146,6 @@ public:
   setup_dofs();
 };
 
-
-
 template <int dim>
 QuadraticTimeCircle<dim>::QuadraticTimeCircle(
   const unsigned int n_global_refines)
@@ -171,8 +169,6 @@ QuadraticTimeCircle<dim>::QuadraticTimeCircle(
   finite_elements.push_back(FE_Q<dim>(1));
 }
 
-
-
 template <int dim>
 void
 QuadraticTimeCircle<dim>::setup_dofs()
@@ -192,16 +188,12 @@ QuadraticTimeCircle<dim>::setup_dofs()
   deallog << "Number of DoFs: " << dof_handler.n_dofs() << std::endl;
 }
 
-
-
 template <int dim>
 void
 QuadraticTimeCircle<dim>::run()
 {
   setup_dofs();
 }
-
-
 
 int
 main(int argc, char** argv)

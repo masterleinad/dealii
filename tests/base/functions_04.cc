@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Plot flow functions in library and check their consistency
 
 #include "../tests.h"
@@ -192,7 +191,6 @@ check_function(const Functions::FlowFunction<dim>& f,
   else
     DataOutBase::write_dx(patches, names, vectors, dxflags, out);
 }
-
 
 int
 main()

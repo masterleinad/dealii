@@ -13,16 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::swap_col and FullMatrix::swap_row for nonsymmetric
 // matrices; there used to be a bug in the implementation
 
-
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

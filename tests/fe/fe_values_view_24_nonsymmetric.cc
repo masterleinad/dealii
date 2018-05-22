@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // output value of divergence field for Tensor extractors
 // for a simple mesh with linear elements.
 
@@ -29,8 +27,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -66,8 +62,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -81,7 +75,6 @@ test_hyper_sphere()
   FESystem<dim> fe(FE_Q<dim>(1), Tensor<2, dim>::n_independent_components);
   test(tr, fe);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_occ_manifold_lib_h
 #define dealii_occ_manifold_lib_h
 
@@ -94,7 +93,6 @@ namespace OpenCASCADE
     project_to_manifold(
       const ArrayView<const Point<spacedim>>& surrounding_points,
       const Point<spacedim>&                  candidate) const override;
-
 
   protected:
     /**
@@ -183,7 +181,6 @@ namespace OpenCASCADE
      */
     const double tolerance;
   };
-
 
   /**
    * A Manifold object based on OpenCASCADE TopoDS_Shape where new points are
@@ -424,7 +421,6 @@ namespace OpenCASCADE
 /*@}*/
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif // DEAL_II_WITH_OPENCASCADE
 #endif // dealii_occ_manifold_lib_h

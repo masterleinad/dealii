@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test TrilinosWrappers::SparseMatrix::reinit with a dealii::SparseMatrix
 // and where we copy all values
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

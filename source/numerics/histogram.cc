@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename number>
 bool
 Histogram::logarithmic_less(const number n1, const number n2)
@@ -30,21 +29,15 @@ Histogram::logarithmic_less(const number n1, const number n2)
           || ((n2 < n1) && (n1 > 0) && (n2 <= 0)));
 }
 
-
-
 Histogram::Interval::Interval(const double left_point, const double right_point)
   : left_point(left_point), right_point(right_point), content(0)
 {}
-
-
 
 std::size_t
 Histogram::Interval::memory_consumption() const
 {
   return sizeof(*this);
 }
-
-
 
 template <typename number>
 void
@@ -131,7 +124,6 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
   if(max_value <= min_value)
     max_value = min_value + 1;
 
-
   // now set up the intervals based on
   // the min and max values
   intervals.clear();
@@ -176,7 +168,6 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
   for(unsigned int i = 1; i < values.size(); ++i)
     intervals.push_back(intervals[0]);
 
-
   // finally fill the intervals
   for(unsigned int i = 0; i < values.size(); ++i)
     for(typename Vector<number>::const_iterator p = values[i].begin();
@@ -198,8 +189,6 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
       };
 }
 
-
-
 template <typename number>
 void
 Histogram::evaluate(const Vector<number>& values,
@@ -210,8 +199,6 @@ Histogram::evaluate(const Vector<number>& values,
   evaluate(
     values_list, std::vector<double>(1, 0.), n_intervals, interval_spacing);
 }
-
-
 
 void
 Histogram::write_gnuplot(std::ostream& out) const
@@ -267,15 +254,11 @@ Histogram::write_gnuplot(std::ostream& out) const
   AssertThrow(out, ExcIO());
 }
 
-
-
 std::string
 Histogram::get_interval_spacing_names()
 {
   return "linear|logarithmic";
 }
-
-
 
 Histogram::IntervalSpacing
 Histogram::parse_interval_spacing(const std::string& name)
@@ -292,16 +275,12 @@ Histogram::parse_interval_spacing(const std::string& name)
     };
 }
 
-
-
 std::size_t
 Histogram::memory_consumption() const
 {
   return (MemoryConsumption::memory_consumption(intervals)
           + MemoryConsumption::memory_consumption(y_values));
 }
-
-
 
 // explicit instantiations for float
 template void
@@ -313,7 +292,6 @@ template void
 Histogram::evaluate<float>(const Vector<float>&  values,
                            const unsigned int    n_intervals,
                            const IntervalSpacing interval_spacing);
-
 
 // explicit instantiations for double
 template void

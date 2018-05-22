@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Utilities::get_integer_at_position
 
 #include "../tests.h"
@@ -22,8 +21,6 @@
 #include <deal.II/base/utilities.h>
 
 using namespace dealii;
-
-
 
 void
 test()
@@ -48,8 +45,6 @@ test()
       number = number * 10 + i;
     }
 }
-
-
 
 int
 main()

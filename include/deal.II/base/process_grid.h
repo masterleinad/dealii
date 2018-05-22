@@ -24,11 +24,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // Forward declaration of class ScaLAPACKMatrix for ProcessGrid
 template <typename NumberType>
 class ScaLAPACKMatrix;
-
 
 namespace Utilities
 {
@@ -203,15 +201,11 @@ namespace Utilities
       return n_process_rows;
     }
 
-
-
     inline unsigned int
     ProcessGrid::get_process_grid_columns() const
     {
       return n_process_columns;
     }
-
-
 
     inline bool
     ProcessGrid::is_process_active() const
@@ -219,13 +213,11 @@ namespace Utilities
       return mpi_process_is_active;
     }
 
-
 #  endif // ifndef DOXYGEN
 
   } // end of namespace MPI
 
 } // end of namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

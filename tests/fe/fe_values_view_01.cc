@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the FEValues views and extractor classes. these tests use a primitive
 // finite element and scalar extractors
 
@@ -30,8 +28,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -79,8 +75,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -99,7 +93,6 @@ test_hyper_sphere()
                    dim);
   test(tr, fe);
 }
-
 
 int
 main()

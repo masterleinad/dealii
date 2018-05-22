@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
 #include <iostream>
@@ -56,8 +54,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

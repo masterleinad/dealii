@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Quadrature
 
 #include "serialization.h"
@@ -53,7 +52,6 @@ test()
 
   verify(q1, q3);
 }
-
 
 int
 main()

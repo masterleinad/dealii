@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // compare collective adding of elements in a trilinos matrix using
 // TrilinosWrappers::BlockSparseMatrix::add() and a FullMatrix<double> with
 // setting the same elements on an element-by-element level. Use the entries
@@ -26,7 +24,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/trilinos_block_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test()
@@ -130,8 +127,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

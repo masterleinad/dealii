@@ -48,7 +48,6 @@
 
 using namespace dealii;
 
-
 template <class PRECONDITIONER,
           typename MatrixType,
           typename VectorType,
@@ -387,7 +386,6 @@ main()
     }
 #endif
     deallog.pop();
-
 
     deallog << "SparseMatrix OK" << std::endl;
   }

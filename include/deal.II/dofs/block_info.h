@@ -34,7 +34,6 @@ namespace hp
   class DoFHandler;
 }
 
-
 /**
  * @brief A small class collecting the different BlockIndices involved in
  * global, multilevel and local computations.
@@ -213,8 +212,6 @@ private:
   std::vector<types::global_dof_index> local_renumbering;
 };
 
-
-
 //----------------------------------------------------------------------//
 
 inline const BlockIndices&
@@ -223,13 +220,11 @@ BlockInfo::global() const
   return bi_global;
 }
 
-
 inline const BlockIndices&
 BlockInfo::local() const
 {
   return bi_local;
 }
-
 
 inline const BlockIndices&
 BlockInfo::level(const unsigned int l) const
@@ -238,14 +233,12 @@ BlockInfo::level(const unsigned int l) const
   return levels[l];
 }
 
-
 inline types::global_dof_index
 BlockInfo::renumber(const unsigned int i) const
 {
   AssertIndexRange(i, static_cast<unsigned int>(local_renumbering.size()));
   return local_renumbering[i];
 }
-
 
 inline unsigned int
 BlockInfo::base_element(const unsigned int i) const
@@ -255,14 +248,11 @@ BlockInfo::base_element(const unsigned int i) const
   return base_elements[i];
 }
 
-
 inline unsigned int
 BlockInfo::n_base_elements() const
 {
   return base_elements.size();
 }
-
-
 
 template <class OS>
 inline void
@@ -296,7 +286,6 @@ BlockInfo::print(OS& os) const
     }
 }
 
-
 inline std::size_t
 BlockInfo::memory_consumption() const
 {
@@ -305,7 +294,6 @@ BlockInfo::memory_consumption() const
           + MemoryConsumption::memory_consumption(bi_local)
           + MemoryConsumption::memory_consumption(base_elements));
 }
-
 
 template <class Archive>
 void
@@ -317,7 +305,6 @@ BlockInfo::serialize(Archive& ar, const unsigned int /*version*/)
   ar& base_elements;
   ar& local_renumbering;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

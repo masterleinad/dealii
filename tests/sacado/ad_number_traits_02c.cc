@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that all of the Sacado number traits return the correct information
 // Sacado::Rad::ADvar
 

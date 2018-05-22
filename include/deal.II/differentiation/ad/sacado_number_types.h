@@ -19,9 +19,7 @@
 #include <deal.II/base/config.h>
 #include <type_traits>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace Differentiation
 {
@@ -38,7 +36,6 @@ namespace Differentiation
     struct is_sacado_number : std::false_type
     {};
 
-
     /**
      * A struct to indicate whether a given @p NumberType is a supported Sacado::Fad
      * number or not. By default, numbers are not considered to have the necessary
@@ -49,7 +46,6 @@ namespace Differentiation
     template <typename NumberType, typename = void>
     struct is_sacado_dfad_number : std::false_type
     {};
-
 
     /**
      * A struct to indicate whether a given @p NumberType is a supported Sacado::Rad
@@ -65,10 +61,7 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-
 DEAL_II_NAMESPACE_CLOSE
-
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -94,7 +87,6 @@ DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace Differentiation
 {
   namespace AD
@@ -114,14 +106,10 @@ namespace Differentiation
 
     } // namespace internal
 
-
-
   } // namespace AD
 } // namespace Differentiation
 
-
 /* --------------------------- inline and template functions and specializations ------------------------- */
-
 
 #  ifndef DOXYGEN
 
@@ -147,7 +135,6 @@ namespace Differentiation
       // Reverse-mode auto-differentiable types:
       // https://github.com/trilinos/Trilinos/blob/master/packages/sacado/src/Sacado_trad.hpp
 
-
       /**
        * Specialization for Sacado::Fad numbers
        */
@@ -167,7 +154,6 @@ namespace Differentiation
           = 1
             + SacadoNumberInfo<derivative_type>::n_supported_derivative_levels;
       };
-
 
       /**
        * Specialization for Sacado::Rad numbers
@@ -189,7 +175,6 @@ namespace Differentiation
             + SacadoNumberInfo<derivative_type>::n_supported_derivative_levels;
       };
 
-
       /**
        * Specialization for floating point numbers.
        *
@@ -204,7 +189,6 @@ namespace Differentiation
       {
         static const unsigned int n_supported_derivative_levels = 0;
       };
-
 
       /**
        * A specialization for the information struct for Sacado dynamic forward
@@ -225,7 +209,6 @@ namespace Differentiation
           = SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 
-
       /**
        * A specialization for the information struct for nested Sacado dynamic
        * forward auto-differentiable numbers.
@@ -244,7 +227,6 @@ namespace Differentiation
         static const unsigned int n_supported_derivative_levels
           = SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
-
 
       /**
        * A specialization for the information struct for Sacado dynamic reverse
@@ -265,7 +247,6 @@ namespace Differentiation
           = SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 
-
       /**
        * A specialization for the information struct for Sacado dynamic nested
        * reverse-forward auto-differentiable numbers.
@@ -284,7 +265,6 @@ namespace Differentiation
         static const unsigned int n_supported_derivative_levels
           = SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
-
 
       /**
        * Specialization of the marking strategy for Sacado::Fad::DFad
@@ -329,7 +309,6 @@ namespace Differentiation
           out = func;
         }
       };
-
 
       /**
        * Specialization of the marking strategy for Sacado::Rad::ADvar
@@ -380,7 +359,6 @@ namespace Differentiation
         }
       };
 
-
       /**
        * A struct to help extract certain information associated with
        * Sacado dynamic reverse auto-differentiable numbers. The @p NumberType
@@ -409,7 +387,6 @@ namespace Differentiation
           return ExtractData<value_type>::value(x.val());
         }
 
-
         /**
          * Extract the number of directional derivatives.
          */
@@ -418,7 +395,6 @@ namespace Differentiation
         {
           return x.size();
         }
-
 
         /**
          * Extract the directional derivative in the specified @p direction.
@@ -433,7 +409,6 @@ namespace Differentiation
             return x.dx(direction);
         }
       };
-
 
       /**
        * A struct to help extract certain information associated with
@@ -463,7 +438,6 @@ namespace Differentiation
           return ExtractData<value_type>::value(x.val());
         }
 
-
         /**
          * Extract the number of directional derivatives.
          */
@@ -475,7 +449,6 @@ namespace Differentiation
           // only return one directional derivative.
           return 1;
         }
-
 
         /**
          * Extract the directional derivative in the specified @p direction.
@@ -494,9 +467,7 @@ namespace Differentiation
 
     } // namespace internal
 
-
     /* -------------- NumberTypes::sacado_dfad -------------- */
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -513,7 +484,6 @@ namespace Differentiation
       : NumberTraits<typename ADNumberType::scalar_type,
                      NumberTypes::sacado_dfad>
     {};
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -533,7 +503,6 @@ namespace Differentiation
           NumberTypes::sacado_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) Sacado number type.
@@ -544,7 +513,6 @@ namespace Differentiation
           typename ADNumberTraits<Sacado::Fad::DFad<float>>::scalar_type,
           NumberTypes::sacado_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -558,7 +526,6 @@ namespace Differentiation
                      NumberTypes::sacado_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) Sacado number type.
@@ -569,7 +536,6 @@ namespace Differentiation
           typename ADNumberTraits<Sacado::Fad::DFad<double>>::scalar_type,
           NumberTypes::sacado_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -583,9 +549,7 @@ namespace Differentiation
                      NumberTypes::sacado_dfad>
     {};
 
-
     /* -------------- NumberTypes::sacado_rad -------------- */
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -604,7 +568,6 @@ namespace Differentiation
                      NumberTypes::sacado_rad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) Sacado number type.
@@ -615,7 +578,6 @@ namespace Differentiation
           typename ADNumberTraits<Sacado::Rad::ADvar<float>>::scalar_type,
           NumberTypes::sacado_rad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -628,9 +590,7 @@ namespace Differentiation
           NumberTypes::sacado_rad>
     {};
 
-
 #    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -650,7 +610,6 @@ namespace Differentiation
           NumberTypes::sacado_rad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) complex Sacado number type.
@@ -662,7 +621,6 @@ namespace Differentiation
                        std::complex<Sacado::Rad::ADvar<float>>>::scalar_type,
                      NumberTypes::sacado_rad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -676,9 +634,7 @@ namespace Differentiation
                      NumberTypes::sacado_rad>
     {};
 
-
 #    endif
-
 
     /* -------------- NumberTypes::sacado_dfad_dfad -------------- */
 
@@ -700,7 +656,6 @@ namespace Differentiation
                      NumberTypes::sacado_dfad_dfad>
     {};
 
-
     /**
      * Specialization of the general ADNumberTraits class that
      * provides relevant information for auto-differentiable numbers.
@@ -720,7 +675,6 @@ namespace Differentiation
           NumberTypes::sacado_dfad_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) nested Sacado number type.
@@ -732,7 +686,6 @@ namespace Differentiation
                        Sacado::Fad::DFad<float>>>::scalar_type,
                      NumberTypes::sacado_dfad_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -747,7 +700,6 @@ namespace Differentiation
                      NumberTypes::sacado_dfad_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) nested Sacado number type.
@@ -759,7 +711,6 @@ namespace Differentiation
                        Sacado::Fad::DFad<double>>>::scalar_type,
                      NumberTypes::sacado_dfad_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -773,7 +724,6 @@ namespace Differentiation
                        Sacado::Fad::DFad<double>>>>::scalar_type,
                      NumberTypes::sacado_dfad_dfad>
     {};
-
 
     /* -------------- NumberTypes::sacado_rad_dfad -------------- */
 
@@ -795,7 +745,6 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) nested Sacado number type.
@@ -807,7 +756,6 @@ namespace Differentiation
                        Sacado::Fad::DFad<float>>>::scalar_type,
                      NumberTypes::sacado_rad_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -821,9 +769,7 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
-
 #    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
-
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -845,7 +791,6 @@ namespace Differentiation
           NumberTypes::sacado_rad_dfad>
     {};
 
-
     /**
      * Specialization of the NumberTraits struct for
      * the (otherwise disabled) nested complex Sacado number type.
@@ -858,7 +803,6 @@ namespace Differentiation
                        Sacado::Fad::DFad<float>>>>::scalar_type,
                      NumberTypes::sacado_rad_dfad>
     {};
-
 
     /**
      * Specialization of the NumberTraits struct for
@@ -873,12 +817,9 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
-
 #    endif
 
-
     /* -------------- Additional type traits -------------- */
-
 
     template <typename NumberType>
     struct is_sacado_dfad_number<
@@ -890,7 +831,6 @@ namespace Differentiation
              == NumberTypes::sacado_dfad_dfad>::type> : std::true_type
     {};
 
-
     template <typename NumberType>
     struct is_sacado_rad_number<
       NumberType,
@@ -900,7 +840,6 @@ namespace Differentiation
         || ADNumberTraits<typename std::decay<NumberType>::type>::type_code
              == NumberTypes::sacado_rad_dfad>::type> : std::true_type
     {};
-
 
     template <typename NumberType>
     struct is_sacado_number<
@@ -915,10 +854,7 @@ namespace Differentiation
 
 #  endif // DOXYGEN
 
-
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif // DEAL_II_WITH_TRILINOS
 

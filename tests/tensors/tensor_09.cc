@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check generic contract variants tha allow to specify the indices which
 // will be contracted.
 
@@ -45,7 +44,6 @@ main()
   rank4[1] = 3 * rank3;
   rank4[2] = 2 * rank3;
 
-
   // rank3 * rank1 over all possible indices:
   {
     Tensor<2, 3, int> result;
@@ -62,7 +60,6 @@ main()
     contract(result, rank3, 3, rank1);
     deallog << result << std::endl << std::endl;
   }
-
 
   // rank2 * rank2 over all possible indices:
   {
@@ -84,7 +81,6 @@ main()
     contract(result, rank2, 2, rank2, 2);
     deallog << result << std::endl << std::endl;
   }
-
 
   // rank3 * rank2 over all possible indices:
   {
@@ -114,7 +110,6 @@ main()
     contract(result, rank3, 3, rank2, 2);
     deallog << result << std::endl << std::endl;
   }
-
 
   // rank4 ** rank2, double contraction:
   {

@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Tensor<0,dim>
 
 #include "../tests.h"
 #include "serialization.h"
 #include <deal.II/base/tensor.h>
-
 
 void
 test()
@@ -32,7 +30,6 @@ test()
 
   verify(t1, t2);
 }
-
 
 int
 main()

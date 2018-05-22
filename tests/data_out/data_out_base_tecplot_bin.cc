@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
 
@@ -44,7 +43,6 @@ check(DataOutBase::TecplotFlags flags, std::ostream& out)
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_tecplot_binary(patches, names, vectors, flags, out);
 }
-
 
 template <int dim, int spacedim>
 void

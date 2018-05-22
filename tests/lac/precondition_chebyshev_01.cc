@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests PreconditionChebyshev::vmult and PreconditionChebyshev::Tvmult
-
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/vector.h>
-
-
 
 class FullMatrixModified : public FullMatrix<double>
 {
@@ -37,7 +33,6 @@ public:
     return this->operator()(i, j);
   }
 };
-
 
 void
 check()
@@ -92,7 +87,6 @@ check()
     deallog << out(i) << " ";
   deallog << std::endl;
 }
-
 
 int
 main()

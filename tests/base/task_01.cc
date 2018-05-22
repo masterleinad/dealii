@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a simple test for task based programming: just create a task and wait for
 // its completion. the task sleeps for a bit to make sure that the waiting
 // code works alright
@@ -23,14 +22,12 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 void
 test()
 {
   sleep(3);
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

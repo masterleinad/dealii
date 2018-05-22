@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::reciprocal_condition_number() by comparing estimated
 // value to 1 / ( ||A||_1 * ||A^{-1}||_1 )
 
@@ -24,7 +23,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -47,7 +45,6 @@ test(const unsigned int size)
 
   deallog << 1. / (l1 * inv_l1) << " " << rcond << std::endl;
 }
-
 
 int
 main()

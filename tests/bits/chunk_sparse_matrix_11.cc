@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // set a few elements in a chunk sparse matrix, read them via its iterator
 // class and print them to the log file
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -58,8 +55,6 @@ test(const unsigned int chunk_size)
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

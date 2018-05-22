@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test Tria::(level_)ghost_owners()
 
 #include "../tests.h"
-
 
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/utilities.h>
@@ -30,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 // make sure if i is in s on proc j, j is in s on proc i
 void
@@ -55,7 +50,6 @@ mpi_check(const std::set<types::subdomain_id>& s)
   MPI_Barrier(MPI_COMM_WORLD);
 }
 
-
 template <int dim>
 void
 test()
@@ -75,7 +69,6 @@ test()
     p[i] = 1;
   GridGenerator::subdivided_hyper_rectangle(tr, sub, Point<dim>(), p);
   tr.refine_global(2);
-
 
   for(unsigned int ref = 0; ref <= 3; ++ref)
     {
@@ -137,7 +130,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

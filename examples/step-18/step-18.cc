@@ -18,7 +18,6 @@
  * Timo Heister, 2013
  */
 
-
 // First the usual list of header files that have already been used in
 // previous example programs:
 #include <deal.II/base/conditional_ostream.h>
@@ -104,7 +103,6 @@ namespace Step18
     SymmetricTensor<2, dim> old_stress;
   };
 
-
   // @sect3{The stress-strain tensor}
 
   // Next, we define the linear relationship between the stress and the strain
@@ -143,8 +141,6 @@ namespace Step18
   // In the present program, however, we assume that the material is
   // completely elastic and linear, and a constant stress-strain tensor is
   // sufficient for our present purposes.
-
-
 
   // @sect3{Auxiliary functions}
 
@@ -217,7 +213,6 @@ namespace Step18
     return tmp;
   }
 
-
   // The second function does something very similar (and therefore is given
   // the same name): compute the symmetric strain tensor from the gradient of
   // a vector-valued field. If you already have a solution field, the
@@ -254,7 +249,6 @@ namespace Step18
     return strain;
   }
 
-
   // Finally, below we will need a function that computes the rotation matrix
   // induced by a displacement at a given point. In fact, of course, the
   // displacement at a single point only has a direction and a magnitude, it
@@ -290,7 +284,6 @@ namespace Step18
     // required to move from the local to the global coordinate system.
     return Physics::Transformations::Rotations::rotation_matrix_2d(-angle);
   }
-
 
   // The 3d case is a little more contrived:
   Tensor<2, 3>
@@ -332,8 +325,6 @@ namespace Step18
     return Physics::Transformations::Rotations::rotation_matrix_3d(axis,
                                                                    -angle);
   }
-
-
 
   // @sect3{The <code>TopLevel</code> class}
 
@@ -461,7 +452,6 @@ namespace Step18
     // for these pointers, and application programs can set and read the
     // pointers for each of these objects.
 
-
     // Further: we need the objects of linear systems to be solved,
     // i.e. matrix, right hand side vector, and the solution vector. Since we
     // anticipate solving big problems, we use the same types as in step-17,
@@ -538,7 +528,6 @@ namespace Step18
     static const SymmetricTensor<4, dim> stress_strain_tensor;
   };
 
-
   // @sect3{The <code>BodyForce</code> class}
 
   // Before we go on to the main functionality of this program, we have to
@@ -582,11 +571,9 @@ namespace Step18
                       std::vector<Vector<double>>&   value_list) const override;
   };
 
-
   template <int dim>
   BodyForce<dim>::BodyForce() : Function<dim>(dim)
   {}
-
 
   template <int dim>
   inline void
@@ -602,8 +589,6 @@ namespace Step18
     values(dim - 1) = -rho * g;
   }
 
-
-
   template <int dim>
   void
   BodyForce<dim>::vector_value_list(
@@ -618,8 +603,6 @@ namespace Step18
     for(unsigned int p = 0; p < n_points; ++p)
       BodyForce<dim>::vector_value(points[p], value_list[p]);
   }
-
-
 
   // @sect3{The <code>IncrementalBoundaryValue</code> class}
 
@@ -668,7 +651,6 @@ namespace Step18
     const double present_timestep;
   };
 
-
   template <int dim>
   IncrementalBoundaryValues<dim>::IncrementalBoundaryValues(
     const double present_time,
@@ -678,7 +660,6 @@ namespace Step18
       present_time(present_time),
       present_timestep(present_timestep)
   {}
-
 
   template <int dim>
   void
@@ -690,8 +671,6 @@ namespace Step18
     values    = 0;
     values(2) = -present_timestep * velocity;
   }
-
-
 
   template <int dim>
   void
@@ -708,8 +687,6 @@ namespace Step18
       IncrementalBoundaryValues<dim>::vector_value(points[p], value_list[p]);
   }
 
-
-
   // @sect3{Implementation of the <code>TopLevel</code> class}
 
   // Now for the implementation of the main class. First, we initialize the
@@ -719,8 +696,6 @@ namespace Step18
   const SymmetricTensor<4, dim> TopLevel<dim>::stress_strain_tensor
     = get_stress_strain_tensor<dim>(/*lambda = */ 9.695e10,
                                     /*mu     = */ 7.617e10);
-
-
 
   // @sect4{The public interface}
 
@@ -746,15 +721,11 @@ namespace Step18
       n_local_cells(numbers::invalid_unsigned_int)
   {}
 
-
-
   template <int dim>
   TopLevel<dim>::~TopLevel()
   {
     dof_handler.clear();
   }
-
-
 
   // The last of the public functions is the one that directs all the work,
   // <code>run()</code>. It initializes the variables that describe where in
@@ -771,7 +742,6 @@ namespace Step18
     while(present_time < end_time)
       do_timestep();
   }
-
 
   // @sect4{TopLevel::create_coarse_grid}
 
@@ -823,8 +793,6 @@ namespace Step18
     // present processor.
     setup_quadrature_point_history();
   }
-
-
 
   // @sect4{TopLevel::setup_system}
 
@@ -946,8 +914,6 @@ namespace Step18
     incremental_displacement.reinit(dof_handler.n_dofs());
   }
 
-
-
   // @sect4{TopLevel::assemble_system}
 
   // Again, assembling the system matrix and right hand side follows the same
@@ -1019,7 +985,6 @@ namespace Step18
                                         * eps_phi_j * fe_values.JxW(q_point));
                 }
 
-
           // Then also assemble the local right hand side contributions. For
           // this, we need to access the prior stress value in this quadrature
           // point. To get it, we use the user pointer of this cell that
@@ -1068,7 +1033,6 @@ namespace Step18
     // Now compress the vector and the system matrix:
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
-
 
     // The last step is to again fix up boundary values, just as we already
     // did in previous programs. A slight complication is that the
@@ -1123,8 +1087,6 @@ namespace Step18
     incremental_displacement = tmp;
   }
 
-
-
   // @sect4{TopLevel::solve_timestep}
 
   // The next function is the one that controls what all has to happen within
@@ -1147,8 +1109,6 @@ namespace Step18
     update_quadrature_point_history();
     pcout << std::endl;
   }
-
-
 
   // @sect4{TopLevel::solve_linear_problem}
 
@@ -1189,8 +1149,6 @@ namespace Step18
 
     return solver_control.last_step();
   }
-
-
 
   // @sect4{TopLevel::output_results}
 
@@ -1235,7 +1193,6 @@ namespace Step18
       }
 
     data_out.add_data_vector(incremental_displacement, solution_names);
-
 
     // The next thing is that we wanted to output something like the average
     // norm of the stresses that we have stored in each cell. This may seem
@@ -1298,7 +1255,6 @@ namespace Step18
     // all these solution and other data vectors:
     data_out.build_patches();
 
-
     // Let us determine the name of the file we will want to write it to. We
     // compose it of the prefix <code>solution-</code>, followed by the time
     // step number, and finally the processor id (encoded as a three digit
@@ -1360,8 +1316,6 @@ namespace Step18
         DataOutBase::write_pvd_record(pvd_output, times_and_names);
       }
   }
-
-
 
   // @sect4{TopLevel::do_initial_timestep}
 
@@ -1426,8 +1380,6 @@ namespace Step18
     pcout << std::endl;
   }
 
-
-
   // @sect4{TopLevel::do_timestep}
 
   // Subsequent timesteps are simpler, and probably do not require any more
@@ -1446,7 +1398,6 @@ namespace Step18
         present_time = end_time;
       }
 
-
     solve_timestep();
 
     move_mesh();
@@ -1454,7 +1405,6 @@ namespace Step18
 
     pcout << std::endl;
   }
-
 
   // @sect4{TopLevel::refine_initial_grid}
 
@@ -1502,8 +1452,6 @@ namespace Step18
     // on those cells that we have determined to be ours:
     setup_quadrature_point_history();
   }
-
-
 
   // @sect4{TopLevel::move_mesh}
 
@@ -1618,7 +1566,6 @@ namespace Step18
           }
   }
 
-
   // @sect4{TopLevel::setup_quadrature_point_history}
 
   // At the beginning of our computations, we needed to set up initial values
@@ -1704,8 +1651,6 @@ namespace Step18
     Assert(history_index == quadrature_point_history.size(),
            ExcInternalError());
   }
-
-
 
   // @sect4{TopLevel::update_quadrature_point_history}
 
@@ -1845,7 +1790,6 @@ namespace Step18
   // actual work, and makes sure that we catch all exceptions that propagate
   // up to this point:
 } // namespace Step18
-
 
 int
 main(int argc, char** argv)

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the FEFieldFunction class
 
 #include "../tests.h"
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 class F : public Function<dim>
@@ -68,8 +65,6 @@ test()
 
   dh.distribute_dofs(fe);
   deallog << "Ndofs :" << dh.n_dofs() << std::endl;
-
-
 
   Vector<double> v1(dh.n_dofs()), v2(dh.n_dofs());
 

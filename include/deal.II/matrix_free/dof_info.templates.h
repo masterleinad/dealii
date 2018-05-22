@@ -16,7 +16,6 @@
 #ifndef dealii_matrix_free_dof_info_templates_h
 #define dealii_matrix_free_dof_info_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/multithread_info.h>
 #include <deal.II/base/parallel.h>
@@ -74,7 +73,6 @@ namespace internal
         constraints;
     };
 
-
     template <typename Number>
     ConstraintValues<Number>::ConstraintValues()
       : constraints(FPArrayComparator<double>(1.))
@@ -130,16 +128,12 @@ namespace internal
       return static_cast<unsigned short>(insert_position);
     }
 
-
-
     // ----------------- actual DoFInfo functions -----------------------------
 
     DoFInfo::DoFInfo()
     {
       clear();
     }
-
-
 
     void
     DoFInfo::clear()
@@ -164,8 +158,6 @@ namespace internal
       max_fe_index = 0;
       fe_index_conversion.clear();
     }
-
-
 
     void
     DoFInfo ::read_dof_indices(
@@ -341,8 +333,6 @@ namespace internal
         }
     }
 
-
-
     void
     DoFInfo ::assign_ghosts(const std::vector<unsigned int>& boundary_cells)
     {
@@ -459,8 +449,6 @@ namespace internal
         = const_cast<Utilities::MPI::Partitioner*>(vector_partitioner.get());
       vec_part->set_ghost_indices(ghost_indices);
     }
-
-
 
     void
     DoFInfo ::reorder_cells(
@@ -667,8 +655,6 @@ namespace internal
       compute_cell_index_compression(irregular_cells);
     }
 
-
-
     void
     DoFInfo::compute_cell_index_compression(
       const std::vector<unsigned char>& irregular_cells)
@@ -819,8 +805,6 @@ namespace internal
         }
     }
 
-
-
     template <int length>
     void
     DoFInfo::compute_face_index_compression(
@@ -891,8 +875,6 @@ namespace internal
                              faces[face].cells_exterior);
         }
     }
-
-
 
     template <int length>
     void
@@ -985,8 +967,6 @@ namespace internal
         }
     }
 
-
-
     namespace
     {
       // rudimentary version of a vector that keeps entries always ordered
@@ -1004,7 +984,6 @@ namespace internal
           if(size > 0)
             this->std::vector<types::global_dof_index>::reserve(size);
         }
-
 
         // insert a given entry. dat is a pointer within this vector (the user
         // needs to make sure that it really stays there)
@@ -1033,8 +1012,6 @@ namespace internal
             ++dat;
         }
       };
-
-
 
       // We construct the connectivity graph in parallel. we use one lock for
       // 256 degrees of freedom to keep the number of locks down to a
@@ -1151,8 +1128,6 @@ namespace internal
       }
     } // namespace
 
-
-
     void
     DoFInfo::make_connectivity_graph(
       const TaskInfo&                  task_info,
@@ -1203,7 +1178,6 @@ namespace internal
                                    20);
       connectivity_dof.compress();
 
-
       // Invert renumbering for use in fill_connectivity.
       std::vector<unsigned int> reverse_numbering(task_info.n_active_cells);
       reverse_numbering = Utilities::invert_permutation(renumbering);
@@ -1223,8 +1197,6 @@ namespace internal
                                              std::ref(connectivity)),
                                    20);
     }
-
-
 
     void
     DoFInfo ::compute_dof_renumbering(
@@ -1281,8 +1253,6 @@ namespace internal
       AssertDimension(counter, renumbering.size());
     }
 
-
-
     std::size_t
     DoFInfo::memory_consumption() const
     {
@@ -1296,8 +1266,6 @@ namespace internal
       memory += MemoryConsumption::memory_consumption(*vector_partitioner);
       return memory;
     }
-
-
 
     template <typename StreamType>
     void
@@ -1322,8 +1290,6 @@ namespace internal
       task_info.print_memory_statistics(
         out, MemoryConsumption::memory_consumption(*vector_partitioner));
     }
-
-
 
     template <typename Number>
     void
@@ -1369,7 +1335,6 @@ namespace internal
           out << std::endl;
         }
     }
-
 
   } // end of namespace MatrixFreeFunctions
 } // end of namespace internal

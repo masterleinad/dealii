@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::partition_triangulation. generate some output
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void
@@ -51,7 +48,6 @@ test()
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
-
 
   // subdivide into 5 subdomains
   GridTools::partition_triangulation(5, triangulation);
@@ -81,8 +77,6 @@ test()
   for(unsigned int i = 0; i < assoc.size(); ++i)
     deallog << i << ' ' << assoc[i] << std::endl;
 }
-
-
 
 int
 main()

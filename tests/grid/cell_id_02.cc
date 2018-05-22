@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check CellId
 
 #include "../tests.h"
@@ -37,7 +35,6 @@ check(TRIA& tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
-
   for(; cell != endc; ++cell)
     {
       std::ostringstream outb;
@@ -49,7 +46,6 @@ check(TRIA& tr)
               << " " << tmp << std::endl;
     }
 
-
   CellId empty;
 
   Assert(tr.begin()->id() != tr.begin_active()->id(), ExcInternalError());
@@ -58,7 +54,6 @@ check(TRIA& tr)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,7 +13,6 @@
 //
 //------------------  interpolate_functions_common.h  ------------------------
 
-
 // this is a template for getting the function values and comparing them with
 // an analytical function for different meshes
 
@@ -37,7 +36,6 @@
 #include <fstream>
 #include <iostream>
 
-
 // forward declare this function. will be implemented in .cc files
 template <int dim, int fe_degree>
 void
@@ -45,8 +43,6 @@ test();
 
 template <int dim>
 class CompareFunction;
-
-
 
 template <int dim,
           int fe_degree,
@@ -221,8 +217,6 @@ public:
       }
   }
 
-
-
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -293,8 +287,6 @@ protected:
     boundary_times;
 };
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
@@ -327,7 +319,6 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   MatrixFreeTest<dim, fe_degree, fe_degree + 1, number> mf(mf_data);
   mf.test_functions(interpolated);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of matrix free matrix-vector products for two
 // vectors on the same DoFHandler. Similar to matrix_vector_12 but using
 // the std::vector<VectorType*> interface.
@@ -40,7 +38,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
 
 template <int dim, int fe_degree, typename Number>
 void
@@ -69,8 +66,6 @@ helmholtz_operator(
       fe_eval.distribute_local_to_global(dst);
     }
 }
-
-
 
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
@@ -101,8 +96,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -197,7 +190,6 @@ test()
   out_ptr[1] = &out[1];
   mf.vmult(out_ptr, in_ptr);
 
-
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
@@ -264,7 +256,6 @@ test()
     }
   deallog << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

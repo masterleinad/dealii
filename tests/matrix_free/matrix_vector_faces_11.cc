@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_10 but using integrate_scatter in
 // matrix_vector_faces_common.h to zero the vector rather than doing it
 // outside.
@@ -31,8 +29,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
-
 
 template <int dim, int fe_degree_>
 void
@@ -98,7 +94,6 @@ test()
       const double entry  = Testing::rand() / (double) RAND_MAX;
       in.local_element(i) = entry;
     }
-
 
   MatrixFreeTest<dim,
                  fe_degree,

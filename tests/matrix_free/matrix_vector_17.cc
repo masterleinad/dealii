@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test is similar to matrix_vector_06, but implements the operations for
 // FE_QDG0 instead of FE_Q (where there is an additional discontinuous degree
 // of freedom and different routines need to be used). The data is still not
@@ -27,8 +25,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

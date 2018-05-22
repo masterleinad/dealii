@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Just output the constraint matrices of the FE_Q element. Test
 // introduced when we started to compute them on the fly, rather than
 // precomputing them for a number of elements and storing them in a
@@ -27,8 +25,6 @@
 #include <string>
 
 #define PRECISION 2
-
-
 
 template <int dim>
 void
@@ -47,8 +43,6 @@ test(const FE_Q<dim>& fe_q)
 
   deallog << std::endl;
 }
-
-
 
 int
 main()

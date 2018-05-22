@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_parallel_block_vector_h
 #define dealii_trilinos_parallel_block_vector_h
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -46,7 +45,6 @@ namespace TrilinosWrappers
     class BlockVector;
   }
   class BlockSparseMatrix;
-
 
   namespace MPI
   {
@@ -211,7 +209,6 @@ namespace TrilinosWrappers
              const MPI_Comm&              communicator    = MPI_COMM_WORLD,
              const bool                   vector_writable = false);
 
-
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
        * applies as for the other reinit() function.
@@ -308,8 +305,6 @@ namespace TrilinosWrappers
       DeclException0(ExcNonMatchingBlockVectors);
     };
 
-
-
     /*----------------------- Inline functions ----------------------------------*/
     inline BlockVector::BlockVector(
       const std::vector<IndexSet>& parallel_partitioning,
@@ -317,8 +312,6 @@ namespace TrilinosWrappers
     {
       reinit(parallel_partitioning, communicator, false);
     }
-
-
 
     inline BlockVector::BlockVector(
       const std::vector<IndexSet>& parallel_partitioning,
@@ -330,14 +323,10 @@ namespace TrilinosWrappers
         parallel_partitioning, ghost_values, communicator, vector_writable);
     }
 
-
-
     inline BlockVector::BlockVector(const size_type num_blocks)
     {
       reinit(num_blocks);
     }
-
-
 
     inline BlockVector::BlockVector(const BlockVector& v)
       : dealii::BlockVectorBase<MPI::Vector>()
@@ -349,16 +338,12 @@ namespace TrilinosWrappers
         this->components[i] = v.components[i];
     }
 
-
-
     inline BlockVector::BlockVector(BlockVector&& v) noexcept
     {
       // initialize a minimal, valid object and swap
       reinit(0);
       swap(v);
     }
-
-
 
     template <typename Number>
     BlockVector&
@@ -380,8 +365,6 @@ namespace TrilinosWrappers
       return *this;
     }
 
-
-
     inline bool
     BlockVector::has_ghost_elements() const
     {
@@ -393,8 +376,6 @@ namespace TrilinosWrappers
       return ghosted;
     }
 
-
-
     inline void
     BlockVector::swap(BlockVector& v)
     {
@@ -402,8 +383,6 @@ namespace TrilinosWrappers
 
       dealii::swap(this->block_indices, v.block_indices);
     }
-
-
 
     /**
      * Global function which overloads the default implementation of the C++
@@ -424,7 +403,6 @@ namespace TrilinosWrappers
 } /* namespace TrilinosWrappers */
 
 /*@}*/
-
 
 namespace internal
 {
@@ -466,7 +444,6 @@ namespace internal
 
   } // namespace LinearOperatorImplementation
 } /* namespace internal */
-
 
 /**
  * Declare dealii::TrilinosWrappers::MPI::BlockVector as distributed vector.

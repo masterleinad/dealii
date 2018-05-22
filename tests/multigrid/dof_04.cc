@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFAccessor::get_mg_dof_indices on meshes that are not in standard
 // orientation by comparing to DoFAccessor::get_dof_indices
 
@@ -23,7 +22,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void

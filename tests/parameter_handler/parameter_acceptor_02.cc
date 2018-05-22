@@ -48,7 +48,6 @@ private:
   bool        d = true;
 };
 
-
 int
 main()
 {

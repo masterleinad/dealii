@@ -16,7 +16,6 @@
 #ifndef dealii_tensor_product_polynomials_const_h
 #define dealii_tensor_product_polynomials_const_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -28,7 +27,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * @addtogroup Polynomials
@@ -154,7 +152,6 @@ public:
 
 /** @} */
 
-
 /* ---------------- template and inline functions ---------- */
 
 #ifndef DOXYGEN
@@ -170,16 +167,12 @@ inline TensorProductPolynomialsConst<dim>::TensorProductPolynomialsConst(
   this->index_map_inverse.push_back(this->n_tensor_pols);
 }
 
-
-
 template <int dim>
 inline unsigned int
 TensorProductPolynomialsConst<dim>::n() const
 {
   return this->n_tensor_pols + 1;
 }
-
-
 
 template <>
 inline unsigned int
@@ -206,7 +199,6 @@ TensorProductPolynomialsConst<dim>::compute_derivative(
     // this is for the constant function
     return Tensor<order, dim>();
 }
-
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

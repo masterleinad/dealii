@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a simple coarse grid in 3d. here, we test
 // that refining a mesh actually works
 
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -42,7 +38,6 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "2");
 }
-
 
 int
 main(int argc, char* argv[])

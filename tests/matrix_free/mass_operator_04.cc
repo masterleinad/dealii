@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test MassOperator initialized on a MatrixFree object with several
 // components by comparing to another one that only has a single component
 
@@ -32,8 +30,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim>
 void
@@ -109,7 +105,6 @@ test()
 
   deallog << "Error in component 1: " << out.linfty_norm() << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

@@ -230,8 +230,6 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
         }
     }
 
-
-
   if(output_computed_pts != computed_pts)
     {
       deallog << "ERROR: the number of points is different from expected: "

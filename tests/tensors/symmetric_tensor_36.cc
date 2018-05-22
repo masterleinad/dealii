@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check the tensor copy constructors for different number types
 
 #include "../tests.h"

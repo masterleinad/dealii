@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // write the data in deal.II intermediate form, read it back in, and
 // make sure that the result is the same
 
@@ -22,8 +20,6 @@
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
-
-
 
 // have a class that makes sure we can get at the patches and data set
 // names that the base class generates
@@ -62,7 +58,6 @@ public:
     return DataOutReader<dim>::get_dataset_names();
   }
 };
-
 
 template <int dim>
 void

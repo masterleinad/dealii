@@ -29,7 +29,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup fe */
 /*@{*/
 
@@ -224,8 +223,6 @@ private:
    */
   Table<3, double> interior_weights;
 
-
-
   /**
    * These are the factors multiplied to a function in the
    * #generalized_face_support_points when computing the integration. They are
@@ -241,7 +238,6 @@ private:
    */
   Table<3, double> interior_weights_abf;
 
-
   /**
    * Allow access from other dimensions.
    */
@@ -249,10 +245,7 @@ private:
   friend class FE_ABF;
 };
 
-
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

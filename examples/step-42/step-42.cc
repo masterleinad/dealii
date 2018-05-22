@@ -169,14 +169,12 @@ namespace Step42
                                      / 3.0))
   {}
 
-
   template <int dim>
   void
   ConstitutiveLaw<dim>::set_sigma_0(double sigma_zero)
   {
     sigma_0 = sigma_zero;
   }
-
 
   // @sect4{ConstitutiveLaw::get_stress_strain_tensor}
 
@@ -223,7 +221,6 @@ namespace Step42
 
     return (deviator_stress_tensor_norm > sigma_0);
   }
-
 
   // @sect4{ConstitutiveLaw::get_linearized_stress_strain_tensors}
 
@@ -296,7 +293,6 @@ namespace Step42
     BoundaryForce<dim>::BoundaryForce() : Function<dim>(dim)
     {}
 
-
     template <int dim>
     double
     BoundaryForce<dim>::value(const Point<dim>&, const unsigned int) const
@@ -313,8 +309,6 @@ namespace Step42
         values(c) = BoundaryForce<dim>::value(p, c);
     }
 
-
-
     template <int dim>
     class BoundaryValues : public Function<dim>
     {
@@ -329,11 +323,9 @@ namespace Step42
       vector_value(const Point<dim>& p, Vector<double>& values) const override;
     };
 
-
     template <int dim>
     BoundaryValues<dim>::BoundaryValues() : Function<dim>(dim)
     {}
-
 
     template <int dim>
     double
@@ -350,7 +342,6 @@ namespace Step42
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = BoundaryValues<dim>::value(p, c);
     }
-
 
     // @sect4{The <code>SphereObstacle</code> class}
 
@@ -380,12 +371,10 @@ namespace Step42
       const double z_surface;
     };
 
-
     template <int dim>
     SphereObstacle<dim>::SphereObstacle(const double z_surface)
       : Function<dim>(dim), z_surface(z_surface)
     {}
-
 
     template <int dim>
     double
@@ -409,7 +398,6 @@ namespace Step42
       Assert(false, ExcNotImplemented());
       return 1e9; // an unreasonable value; ignored in debug mode because of the preceding Assert
     }
-
 
     template <int dim>
     void
@@ -554,13 +542,11 @@ namespace Step42
       double                z_surface;
     };
 
-
     template <int dim>
     ChineseObstacle<dim>::ChineseObstacle(const std::string& filename,
                                           const double       z_surface)
       : Function<dim>(dim), input_obstacle(filename), z_surface(z_surface)
     {}
-
 
     template <int dim>
     double
@@ -710,7 +696,6 @@ namespace Step42
     IndexSet      active_set;
     Vector<float> fraction_of_plastic_q_points_per_cell;
 
-
     // The next block of variables corresponds to the solution
     // and the linear systems we need to form. In particular, this
     // includes the Newton matrix and right hand side; the vector
@@ -765,7 +750,6 @@ namespace Step42
     const unsigned int n_refinement_cycles;
     unsigned int       current_refinement_cycle;
   };
-
 
   // @sect3{Implementation of the <code>PlasticityContactProblem</code> class}
 
@@ -826,7 +810,6 @@ namespace Step42
                       Patterns::Selection("box|half sphere"),
                       "Select the shape of the domain: 'box' or 'half sphere'");
   }
-
 
   // @sect4{The <code>PlasticityContactProblem</code> constructor}
 
@@ -898,8 +881,6 @@ namespace Step42
     pcout << "    transfer solution " << (transfer_solution ? "true" : "false")
           << std::endl;
   }
-
-
 
   // @sect4{PlasticityContactProblem::make_grid}
 
@@ -997,8 +978,6 @@ namespace Step42
     triangulation.refine_global(n_initial_global_refinements);
   }
 
-
-
   // @sect4{PlasticityContactProblem::setup_system}
 
   // The next piece in the puzzle is to set up the DoFHandler, resize
@@ -1074,7 +1053,6 @@ namespace Step42
       sp.compress();
       newton_matrix.reinit(sp);
 
-
       TrilinosWrappers::SparseMatrix& mass_matrix = newton_matrix;
 
       assemble_mass_matrix_diagonal(mass_matrix);
@@ -1088,7 +1066,6 @@ namespace Step42
       mass_matrix = 0;
     }
   }
-
 
   // @sect4{PlasticityContactProblem::compute_dirichlet_constraints}
 
@@ -1145,8 +1122,6 @@ namespace Step42
 
     constraints_dirichlet_and_hanging_nodes.close();
   }
-
-
 
   // @sect4{PlasticityContactProblem::assemble_mass_matrix_diagonal}
 
@@ -1217,7 +1192,6 @@ namespace Step42
     mass_matrix.compress(VectorOperation::add);
   }
 
-
   // @sect4{PlasticityContactProblem::update_solution_and_constraints}
 
   // The following function is the first function we call in each Newton
@@ -1252,7 +1226,6 @@ namespace Step42
     TrilinosWrappers::MPI::Vector diag_mass_matrix_vector_relevant(
       locally_relevant_dofs, mpi_communicator);
     diag_mass_matrix_vector_relevant = diag_mass_matrix_vector;
-
 
     all_constraints.reinit(locally_relevant_dofs);
     active_set.clear();
@@ -1366,7 +1339,6 @@ namespace Step42
                                  mpi_communicator)
           << std::endl;
   }
-
 
   // @sect4{PlasticityContactProblem::assemble_newton_system}
 
@@ -1512,8 +1484,6 @@ namespace Step42
     newton_rhs.compress(VectorOperation::add);
   }
 
-
-
   // @sect4{PlasticityContactProblem::compute_nonlinear_residual}
 
   // The following function computes the nonlinear residual of the equation
@@ -1648,8 +1618,6 @@ namespace Step42
     newton_rhs_uncondensed.compress(VectorOperation::add);
   }
 
-
-
   // @sect4{PlasticityContactProblem::solve_newton_system}
 
   // The last piece before we can discuss the actual Newton iteration
@@ -1734,7 +1702,6 @@ namespace Step42
 
     solution = distributed_solution;
   }
-
 
   // @sect4{PlasticityContactProblem::solve_newton}
 
@@ -1894,7 +1861,6 @@ namespace Step42
 
         previous_residual_norm = residual_norm;
 
-
         // The final step is to check for convergence. If the active set
         // has not changed across all processors and the residual is
         // less than a threshold of $10^{-10}$, then we terminate
@@ -1973,7 +1939,6 @@ namespace Step42
       }
   }
 
-
   // @sect4{PlasticityContactProblem::move_mesh}
 
   // The remaining three functions before we get to <code>run()</code>
@@ -2015,8 +1980,6 @@ namespace Step42
             }
   }
 
-
-
   // @sect4{PlasticityContactProblem::output_results}
 
   // Next is the function we use to actually generate graphical output. The
@@ -2057,7 +2020,6 @@ namespace Step42
     TrilinosWrappers::MPI::Vector lambda(locally_relevant_dofs,
                                          mpi_communicator);
     lambda = distributed_lambda;
-
 
     DataOut<dim> data_out;
 
@@ -2130,7 +2092,6 @@ namespace Step42
     move_mesh(tmp);
   }
 
-
   // @sect4{PlasticityContactProblem::output_contact_force}
 
   // This last auxiliary function computes the contact force by
@@ -2201,7 +2162,6 @@ namespace Step42
 
     pcout << "Contact force = " << contact_force << std::endl;
   }
-
 
   // @sect4{PlasticityContactProblem::run}
 

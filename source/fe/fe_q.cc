@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/vector.h>
@@ -23,7 +22,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -47,8 +45,6 @@ namespace internal
   }   // namespace FE_Q
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)
   : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
@@ -64,8 +60,6 @@ FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)
   this->initialize(internal::FE_Q::get_QGaussLobatto_points(degree));
 }
 
-
-
 template <int dim, int spacedim>
 FE_Q<dim, spacedim>::FE_Q(const Quadrature<1>& points)
   : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
@@ -79,8 +73,6 @@ FE_Q<dim, spacedim>::FE_Q(const Quadrature<1>& points)
 {
   this->initialize(points.get_points());
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -138,8 +130,6 @@ FE_Q<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_Q<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
@@ -159,15 +149,12 @@ FE_Q<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Q<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Q<dim, spacedim>>(*this);
 }
-
 
 // explicit instantiations
 #include "fe_q.inst"

@@ -23,9 +23,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 static const char* unknown_subscriber = "unknown subscriber";
-
 
 Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
 {
@@ -33,12 +31,8 @@ Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
   (void) unknown_subscriber;
 }
 
-
-
 Subscriptor::Subscriptor(const Subscriptor&) : counter(0), object_info(nullptr)
 {}
-
-
 
 Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept
   : counter(0), object_info(subscriptor.object_info)
@@ -46,14 +40,11 @@ Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept
   subscriptor.check_no_subscribers();
 }
 
-
-
 Subscriptor::~Subscriptor()
 {
   check_no_subscribers();
   object_info = nullptr;
 }
-
 
 void
 Subscriptor::check_no_subscribers() const noexcept
@@ -119,8 +110,6 @@ Subscriptor::check_no_subscribers() const noexcept
 #endif
 }
 
-
-
 Subscriptor&
 Subscriptor::operator=(const Subscriptor& s)
 {
@@ -128,8 +117,6 @@ Subscriptor::operator=(const Subscriptor& s)
   object_info = s.object_info;
   return *this;
 }
-
-
 
 Subscriptor&
 Subscriptor::operator=(Subscriptor&& s) noexcept
@@ -139,8 +126,6 @@ Subscriptor::operator=(Subscriptor&& s) noexcept
   object_info = s.object_info;
   return *this;
 }
-
-
 
 void
 Subscriptor::subscribe(const char* id) const
@@ -168,7 +153,6 @@ Subscriptor::subscribe(const char* id) const
   (void) id;
 #endif
 }
-
 
 void
 Subscriptor::unsubscribe(const char* id) const
@@ -198,15 +182,11 @@ Subscriptor::unsubscribe(const char* id) const
 #endif
 }
 
-
-
 unsigned int
 Subscriptor::n_subscriptions() const
 {
   return counter;
 }
-
-
 
 void
 Subscriptor::list_subscribers() const

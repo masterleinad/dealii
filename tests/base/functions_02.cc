@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check methods of the Q1WedgeFunction
 // 1-dim does not exist
 // 2-dim Q1WedgeFunction = xy
@@ -29,7 +28,6 @@
 
 #include <string>
 #include <vector>
-
 
 template <int dim>
 void

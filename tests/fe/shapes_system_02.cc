@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a simplified version of shapes_system.cc
 
 #include "../tests.h"
@@ -40,7 +39,6 @@ plot_FE_System_shape_functions()
   FESystem<dim> p4(p3, 2, FESystem<dim>(p3, 3), 1, p3, 1);
   test_compute_functions(m, p4, "System_2");
 }
-
 
 int
 main()

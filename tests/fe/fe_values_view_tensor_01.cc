@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a complete testcase by Denis Davydov for FEValuesExtractors::Tensor
 
 #include "../tests.h"
@@ -40,7 +38,6 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 using namespace dealii;
 
 template <int dim>
@@ -60,7 +57,6 @@ private:
   const unsigned int degree;
   const unsigned int n_stress_components; // components of stress
   const unsigned int n_gamma_components;  // scalar plastic multiplier
-
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -167,7 +163,6 @@ MixedElastoPlasticity<dim>::assemble_system()
 
   std::vector<unsigned int> local_dof_indices(dofs_per_cell);
 
-
   const FEValuesExtractors::Tensor<2> stress_extr(0); //rank2
   const FEValuesExtractors::Scalar    gamma_extr(n_stress_components);
 
@@ -178,7 +173,6 @@ MixedElastoPlasticity<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-
 
   std::vector<Tensor<1, dim>> div_values(n_q_points);
   std::vector<Tensor<2, dim>> stress_values(n_q_points);
@@ -231,7 +225,6 @@ check()
 
   deallog << "Analysis complete" << std::endl;
 }
-
 
 int
 main()

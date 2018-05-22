@@ -16,7 +16,6 @@
 #ifndef dealii_precondition_block_h
 #define dealii_precondition_block_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/smartpointer.h>
@@ -30,7 +29,6 @@ DEAL_II_NAMESPACE_OPEN
 /*! @addtogroup Preconditioners
  *@{
  */
-
 
 /**
  * Base class for actual block preconditioners. This class assumes the
@@ -145,7 +143,6 @@ public:
      */
     double threshold;
   };
-
 
   /**
    * Constructor.
@@ -294,7 +291,6 @@ public:
                 const Vector<number2>& src,
                 const bool             transpose_diagonal) const;
 
-
   /**
    * Return the size of the blocks.
    */
@@ -359,8 +355,6 @@ protected:
    */
   std::vector<size_type> inverse_permutation;
 };
-
-
 
 /**
  * Block Jacobi preconditioning. See PreconditionBlock for requirements on the
@@ -601,7 +595,6 @@ public:
   const_iterator
   end(const size_type r) const;
 
-
 private:
   /**
    * Actual implementation of the preconditioner.
@@ -616,8 +609,6 @@ private:
   friend class Accessor;
   friend class const_iterator;
 };
-
-
 
 /**
  * Block SOR preconditioning. This class satisfies the
@@ -797,7 +788,6 @@ protected:
            const bool adding) const;
 };
 
-
 /**
  * Block SSOR preconditioning. This class satisfies the
  * @ref ConceptRelaxationType "relaxation concept".
@@ -910,7 +900,6 @@ PreconditionBlock<MatrixType, inverse_type>::empty() const
   return A->empty();
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline inverse_type
 PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
@@ -958,7 +947,6 @@ inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   Assert(a_block < matrix->size(), ExcIndexRange(a_block, 0, matrix->size()));
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline typename PreconditionBlockJacobi<MatrixType, inverse_type>::size_type
 PreconditionBlockJacobi<MatrixType,
@@ -968,7 +956,6 @@ PreconditionBlockJacobi<MatrixType,
 
   return bs * a_block + b_iterator->row();
 }
-
 
 template <typename MatrixType, typename inverse_type>
 inline typename PreconditionBlockJacobi<MatrixType, inverse_type>::size_type
@@ -980,7 +967,6 @@ PreconditionBlockJacobi<MatrixType,
   return bs * a_block + b_iterator->column();
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline inverse_type
 PreconditionBlockJacobi<MatrixType,
@@ -991,7 +977,6 @@ PreconditionBlockJacobi<MatrixType,
   return b_iterator->value();
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   const_iterator(
@@ -999,7 +984,6 @@ inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
     const size_type                                          row)
   : accessor(matrix, row)
 {}
-
 
 template <typename MatrixType, typename inverse_type>
 inline
@@ -1024,7 +1008,6 @@ inline
   return *this;
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
   const_iterator::Accessor&
@@ -1034,7 +1017,6 @@ inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
   return accessor;
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
   const_iterator::Accessor*
@@ -1043,7 +1025,6 @@ inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
 {
   return &accessor;
 }
-
 
 template <typename MatrixType, typename inverse_type>
 inline bool
@@ -1061,7 +1042,6 @@ operator==(const const_iterator& other) const
           && accessor.column() == other.accessor.column());
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline bool
 PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
@@ -1069,7 +1049,6 @@ operator!=(const const_iterator& other) const
 {
   return !(*this == other);
 }
-
 
 template <typename MatrixType, typename inverse_type>
 inline bool
@@ -1081,7 +1060,6 @@ operator<(const const_iterator& other) const
               && accessor.column() < other.accessor.column()));
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline
   typename PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator
@@ -1090,7 +1068,6 @@ inline
   return const_iterator(this, 0);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 inline
   typename PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator
@@ -1098,7 +1075,6 @@ inline
 {
   return const_iterator(this, this->size() * this->block_size());
 }
-
 
 template <typename MatrixType, typename inverse_type>
 inline
@@ -1109,8 +1085,6 @@ inline
   Assert(r < this->A->m(), ExcIndexRange(r, 0, this->A->m()));
   return const_iterator(this, r);
 }
-
-
 
 template <typename MatrixType, typename inverse_type>
 inline

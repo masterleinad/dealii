@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::hyper_cube_with_hole
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -36,7 +32,6 @@ test(std::ostream& out)
   radii.push_back(.2);
   radii.push_back(.3);
   radii.push_back(.4);
-
 
   std::vector<double> radiiext;
   radiiext.push_back(.3);
@@ -96,7 +91,6 @@ test(std::ostream& out)
           out << "               ====================" << std::endl;
         }
 }
-
 
 int
 main()

@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test escaping of underscores in ParameterHandler::print_parameters(LaTeX)
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_polynomial_space_h
 #define dealii_polynomial_space_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -249,7 +248,6 @@ private:
   std::vector<unsigned int> index_map_inverse;
 };
 
-
 /* -------------- declaration of explicit specializations --- */
 
 template <>
@@ -261,8 +259,6 @@ PolynomialSpace<2>::compute_index(const unsigned int n) const;
 template <>
 std::array<unsigned int, 3>
 PolynomialSpace<3>::compute_index(const unsigned int n) const;
-
-
 
 /* -------------- inline and template functions ------------- */
 
@@ -285,7 +281,6 @@ PolynomialSpace<dim>::PolynomialSpace(const std::vector<Pol>& pols)
     }
 }
 
-
 template <int dim>
 inline unsigned int
 PolynomialSpace<dim>::n() const
@@ -293,15 +288,12 @@ PolynomialSpace<dim>::n() const
   return n_pols;
 }
 
-
-
 template <int dim>
 inline unsigned int
 PolynomialSpace<dim>::degree() const
 {
   return polynomials.size();
 }
-
 
 template <int dim>
 template <class StreamType>
@@ -441,7 +433,6 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         }
     }
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

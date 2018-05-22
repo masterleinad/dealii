@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // create a parallel DoFHandler and output data using the parallel vtk output
 // (uses MPI IO)
 
@@ -34,8 +32,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
 
-
-
 template <int dim>
 void
 test()
@@ -52,7 +48,6 @@ test()
 
   static const FE_Q<dim> fe(2);
   dofh.distribute_dofs(fe);
-
 
   TrilinosWrappers::MPI::Vector x;
   x.reinit(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
@@ -80,7 +75,6 @@ test()
     }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

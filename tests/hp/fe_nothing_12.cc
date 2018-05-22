@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the case where the two children on a face with a hanging node
 // have different FENothing structure:
 
@@ -24,7 +22,6 @@
 // |  0  *--*--*
 // |     | 0| 0|
 // *-----*--*--*
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -42,8 +39,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -106,8 +101,6 @@ test()
       }
   }
 }
-
-
 
 int
 main()

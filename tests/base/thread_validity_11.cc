@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // It looks like we can't call std::thread::join() twice -- the second call
 // produces a std::system_error exception, and this can in fact be verified
 // because std::thread::joinable() returns false after the first call to
@@ -27,7 +26,6 @@ void
 execute()
 {}
 
-
 void
 test()
 {
@@ -38,8 +36,6 @@ test()
   t.join();
   deallog << "After second join()" << std::endl;
 }
-
-
 
 int
 main()

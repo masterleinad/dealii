@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // build a mass matrix for the BDM element and try to invert it. like the rt_8
 // test, except that we use a library function to build the mass matrix
 
@@ -37,7 +36,6 @@
 #include <vector>
 
 #define PRECISION 2
-
 
 std::ofstream logfile("output");
 
@@ -83,7 +81,6 @@ test(const unsigned int degree)
     3,
     45);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check and illustrate the serialization process for ParticleHandler
 
 #include "serialization.h"
@@ -75,8 +74,6 @@ create_regular_particle_distribution(
       }
 }
 
-
-
 template <int dim, int spacedim>
 void
 test()
@@ -135,7 +132,6 @@ test()
     deallog << "In between particle id " << particle->get_id() << " is in cell "
             << particle->get_surrounding_cell(tr) << std::endl;
 
-
   // TODO: Move this into the Particle handler class. Unfortunately, there are some
   // interactions with the SolutionTransfer class that prevent us from doing this at the moment.
   // When doing this, check that transferring a solution and particles during the same refinement
@@ -165,7 +161,6 @@ test()
 
   deallog << "OK" << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

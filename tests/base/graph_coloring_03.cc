@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that graph coloring works on hp-mesh.
-
 
 #include "../tests.h"
 #include <vector>

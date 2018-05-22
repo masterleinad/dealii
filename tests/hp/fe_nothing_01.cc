@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing works as intended: we used to abort in the
 // computation of face domination relationships
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -32,8 +29,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim>
 void
@@ -78,8 +73,6 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 }
-
-
 
 int
 main()

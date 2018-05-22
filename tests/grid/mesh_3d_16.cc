@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like normals_1, but with the type of cells we have in the mesh_3d_*
 // tests: integrating the normals over the surface of any cell
 // (distorted or not) should yield a zero vector. (To prove this, use
@@ -32,8 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check(Triangulation<3>& tria)
 {
@@ -84,7 +80,6 @@ void check(Triangulation<3>& tria)
               << std::endl;
     }
 }
-
 
 int
 main()

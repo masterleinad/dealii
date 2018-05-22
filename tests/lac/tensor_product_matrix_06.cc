@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to tensor_product_matrix_03.cc except testing with
 // different mass and laplace matrices for each tensor direction, respectively.
 
@@ -22,7 +21,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/tensor_product_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim, int size>
 void
@@ -111,7 +109,6 @@ do_test()
   deallog << "Verification of inverse: " << (norm < 5e-3 ? 0. : norm)
           << std::endl;
 }
-
 
 int
 main()

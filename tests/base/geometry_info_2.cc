@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // output all integer values and functions of GeometryInfo
 
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
-
 
 template <int dim>
 void
@@ -101,7 +98,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

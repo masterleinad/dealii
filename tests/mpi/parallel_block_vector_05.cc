@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this BlockVector<Number>::scalar_product().
 // Triangulation and Mass operator are the same as in matrix_free/mass_operator_01.cc
 
@@ -34,8 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -179,7 +175,6 @@ test(const unsigned int n_blocks = 5)
     deallog << "Norm of difference: " << diff_norm2 << std::endl;
   }
 }
-
 
 int
 main(int argc, char** argv)

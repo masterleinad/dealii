@@ -18,7 +18,6 @@
  *          Wolfgang Bangerth, Texas A&M University, 2010
  */
 
-
 // @sect3{Include files}
 
 // Again, the first few include files are already known, so we won't comment
@@ -112,12 +111,10 @@ namespace Step16
          MeshWorker::IntegrationInfo<dim>& info) const override;
   };
 
-
   template <int dim>
   LaplaceIntegrator<dim>::LaplaceIntegrator()
     : MeshWorker::LocalIntegrator<dim>(true, false, false)
   {}
-
 
   // Next the actual integrator on each cell. We solve a Poisson problem with a
   // coefficient one in the right half plane and one tenth in the left
@@ -167,7 +164,6 @@ namespace Step16
           dinfo.vector(0).block(0), info.fe_values(0), rhs);
       }
   }
-
 
   // @sect3{The <code>LaplaceProblem</code> class template}
 
@@ -233,7 +229,6 @@ namespace Step16
     MGConstrainedDoFs                   mg_constrained_dofs;
   };
 
-
   // @sect3{The <code>LaplaceProblem</code> class implementation}
 
   // Just one short remark about the constructor of the Triangulation:
@@ -256,8 +251,6 @@ namespace Step16
       dof_handler(triangulation),
       degree(degree)
   {}
-
-
 
   // @sect4{LaplaceProblem::setup_system}
 
@@ -308,7 +301,6 @@ namespace Step16
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                        dirichlet_boundary_ids);
 
-
     // Now for the things that concern the multigrid data structures. First,
     // we resize the multilevel objects to hold matrices and sparsity
     // patterns for every level. The coarse level is zero (this is mandatory
@@ -356,7 +348,6 @@ namespace Step16
         mg_interface_out[level].reinit(mg_sparsity_patterns[level]);
       }
   }
-
 
   // @sect4{LaplaceProblem::assemble_system}
 
@@ -420,7 +411,6 @@ namespace Step16
         system_matrix.set(i, i, 1.);
   }
 
-
   // @sect4{LaplaceProblem::assemble_multigrid}
 
   // The next function is the one that builds the linear operators (matrices)
@@ -467,8 +457,6 @@ namespace Step16
             mg_matrices[level].set(i, i, 1.);
       }
   }
-
-
 
   // @sect4{LaplaceProblem::solve}
 
@@ -569,8 +557,6 @@ namespace Step16
     constraints.distribute(solution);
   }
 
-
-
   // @sect4{Postprocessing}
 
   // The following two functions postprocess a solution once it is
@@ -596,8 +582,6 @@ namespace Step16
     triangulation.execute_coarsening_and_refinement();
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -611,7 +595,6 @@ namespace Step16
     std::ofstream output("solution-" + std::to_string(cycle) + ".vtk");
     data_out.write_vtk(output);
   }
-
 
   // @sect4{LaplaceProblem::run}
 
@@ -648,7 +631,6 @@ namespace Step16
       }
   }
 } // namespace Step16
-
 
 // @sect3{The main() function}
 //

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test value, gradient and Hessian of a Functions::Spherical
 // for the case of Px orbital
 // (sqrt(3/4pi) sin(phi) cos(theta) == sqrt(3/pi)*x/r)
@@ -42,8 +41,6 @@ ddf2: (subst(srule2,expand(ddf)));
 #include "../tests.h"
 #include <deal.II/base/function_spherical.h>
 #include <deal.II/base/geometric_utilities.h>
-
-
 
 template <int dim>
 class RefFunc : public Function<dim>
@@ -99,7 +96,6 @@ public:
     const double y3 = y2 * y;
     const double r3 = r * r * r;
 
-
     SymmetricTensor<2, dim> res;
     res[0][0] = (3. * x * z2) / r3 + (3 * x * y2) / r3 + (2. * x3) / r3;
     res[1][1] = (x * z2) / r3 + x3 / r3;
@@ -114,7 +110,6 @@ public:
 private:
   const Point<dim> origin;
 };
-
 
 // same as above but using Functions::Spherical
 template <int dim>
@@ -198,7 +193,6 @@ check()
           const Tensor<1, dim> g2 = func2.gradient(p);
           const Tensor<1, dim> gd = g1 - g2;
           AssertThrow(gd.norm() <= g1.norm() * 1e-10, ExcInternalError());
-
 
           // check hessian:
           const SymmetricTensor<2, dim> h1 = func.hessian(p);

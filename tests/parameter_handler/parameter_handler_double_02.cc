@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test ParameterHandler::Double::create()
 
 #include "../tests.h"
@@ -32,7 +30,6 @@ test(const std::string& desc)
     }
   deallog << c->description() << std::endl;
 }
-
 
 int
 main()

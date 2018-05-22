@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that we treat FE_Q elements correctly if face_flip==true ||
 // face_rotation==true. for p>=3, we need to revert the order of dofs somehow
 // between the two sides of the face. The same applies for lines in non-standard
 // orientation. this test is derived from deal.II/project_q_03
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -43,11 +40,9 @@ char logname[] = "output";
 
 #include <vector>
 
-
 template <int dim>
 void
 test();
-
 
 template <int dim>
 class F : public Function<dim>
@@ -68,7 +63,6 @@ public:
     return val;
   }
 
-
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
@@ -85,13 +79,10 @@ private:
   const unsigned int q;
 };
 
-
-
 DeclException1(ExcFailedProjection,
                double,
                << "The projection was supposed to exactly represent the "
                << "original function, but the relative residual is " << arg1);
-
 
 template <int dim>
 void
@@ -142,8 +133,6 @@ do_project(const Triangulation<dim>& triangulation,
     }
 }
 
-
-
 // test with a 3d grid that has cells with face_rotation==false ||
 // face_flip==false and hanging nodes. maybe it triggers all sorts of
 // assumptions that may be hidden in places
@@ -188,8 +177,6 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
       }
 }
 
-
-
 int
 main()
 {
@@ -200,8 +187,6 @@ main()
 
   test<3>();
 }
-
-
 
 template <int dim>
 void

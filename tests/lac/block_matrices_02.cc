@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // the versions of BlockMatrixBase::set/add that take a pointer to a set of
 // values were not thread safe, even if they were writing into disjoint sets
 // of elements. this test verifies that the set() function is now indeed
@@ -29,8 +28,6 @@
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
-
-
 
 void
 do_set(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
@@ -51,7 +48,6 @@ do_set(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
 
   bsm.set(0, 5, col_indices, values, false);
 }
-
 
 void
 test()
@@ -87,8 +83,6 @@ test()
   bsm.print_formatted(deallog.get_file_stream());
 }
 
-
-
 int
 main()
 {
@@ -122,7 +116,6 @@ main()
       // abort
       return 3;
     };
-
 
   return 0;
 }

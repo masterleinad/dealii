@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_epetra_vector_h
 #define dealii_trilinos_epetra_vector_h
 
-
 #include <deal.II/base/config.h>
 
 #if defined(DEAL_II_WITH_TRILINOS) && defined(DEAL_II_WITH_MPI)
@@ -372,7 +371,6 @@ namespace LinearAlgebra
       std::shared_ptr<const CommunicationPattern> epetra_comm_pattern;
     };
 
-
     inline bool
     Vector::has_ghost_elements() const
     {
@@ -380,7 +378,6 @@ namespace LinearAlgebra
     }
   } // namespace EpetraWrappers
 } // namespace LinearAlgebra
-
 
 /**
  * Declare dealii::LinearAlgebra::EpetraWrappers::Vector as distributed vector.

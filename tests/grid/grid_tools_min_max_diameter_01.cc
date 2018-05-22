@@ -42,7 +42,6 @@
 
 #define PRECISION 2
 
-
 template <int dim, int spacedim>
 void
 test(const unsigned int degree)

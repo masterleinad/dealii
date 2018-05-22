@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for TableHandler
 
 #include "serialization.h"
@@ -35,13 +34,11 @@ namespace dealii
   }
 } // namespace dealii
 
-
 void
 test()
 {
   TableHandler t1, t2;
   std::string  keys[4] = {"key1", "key2", "key3", "key4"};
-
 
   for(unsigned int i = 0; i < 10; ++i)
     {
@@ -54,7 +51,6 @@ test()
 
   verify(t1, t2);
 }
-
 
 int
 main()

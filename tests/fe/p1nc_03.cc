@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the P1NC element on a parallelogram
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 
 #include <string>
 
-
-
 template <int dim>
 Point<dim>
 affine(const Point<dim>& p)
@@ -44,8 +40,6 @@ affine(const Point<dim>& p)
 
   return q;
 }
-
-
 
 template <int dim>
 void

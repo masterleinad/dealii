@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -22,8 +20,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -62,7 +58,6 @@ test()
       ++cell_pair)
     deallog << cell_pair->first << ' ' << cell_pair->second << std::endl;
 }
-
 
 int
 main()

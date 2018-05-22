@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // VectorTools::interpolate_boundary_values still had bugs in 1d after
 // switching to a scheme where we can assign boundary indicators also in 1d
 
@@ -35,8 +33,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -67,7 +63,6 @@ test()
       ++p)
     deallog << p->first << ' ' << p->second << std::endl;
 }
-
 
 int
 main()

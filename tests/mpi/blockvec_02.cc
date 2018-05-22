@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test constructor/reinit of BlockVector with IndexSets and the conversion
 // to a Vector
 
@@ -61,8 +59,6 @@ test()
   deallog << "size: " << v.size() << std::endl;
   v.locally_owned_elements().print(deallog.get_file_stream());
 }
-
-
 
 int
 main(int argc, char** argv)

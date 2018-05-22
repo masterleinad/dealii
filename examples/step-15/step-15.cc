@@ -17,7 +17,6 @@
  * Author: Sven Wetterauer, University of Heidelberg, 2012
  */
 
-
 // @sect3{Include files}
 
 // The first few files have already been covered in previous examples and will
@@ -54,7 +53,6 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <fstream>
 #include <iostream>
 
@@ -70,7 +68,6 @@
 namespace Step15
 {
   using namespace dealii;
-
 
   // @sect3{The <code>MinimalSurfaceProblem</code> class template}
 
@@ -155,7 +152,6 @@ namespace Step15
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
   template <int dim>
   double
   BoundaryValues<dim>::value(const Point<dim>& p,
@@ -175,8 +171,6 @@ namespace Step15
   MinimalSurfaceProblem<dim>::MinimalSurfaceProblem()
     : dof_handler(triangulation), fe(2)
   {}
-
-
 
   template <int dim>
   MinimalSurfaceProblem<dim>::~MinimalSurfaceProblem()
@@ -210,7 +204,6 @@ namespace Step15
                                                 hanging_node_constraints);
         hanging_node_constraints.close();
       }
-
 
     // The remaining parts of the function are the same as in step-6.
 
@@ -345,8 +338,6 @@ namespace Step15
       boundary_values, system_matrix, newton_update, system_rhs);
   }
 
-
-
   // @sect4{MinimalSurfaceProblem::solve}
 
   // The solve function is the same as always. At the end of the solution
@@ -370,7 +361,6 @@ namespace Step15
     const double alpha = determine_step_length();
     present_solution.add(alpha, newton_update);
   }
-
 
   // @sect4{MinimalSurfaceProblem::refine_mesh}
 
@@ -461,8 +451,6 @@ namespace Step15
     setup_system(false);
   }
 
-
-
   // @sect4{MinimalSurfaceProblem::set_boundary_values}
 
   // The next function ensures that the solution vector's entries respect the
@@ -485,7 +473,6 @@ namespace Step15
         ++p)
       present_solution(p->first) = p->second;
   }
-
 
   // @sect4{MinimalSurfaceProblem::compute_residual}
 
@@ -543,7 +530,6 @@ namespace Step15
         // the residual:
         fe_values.get_function_gradients(evaluation_point, gradients);
 
-
         for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const double coeff
@@ -588,8 +574,6 @@ namespace Step15
     return residual.l2_norm();
   }
 
-
-
   // @sect4{MinimalSurfaceProblem::determine_step_length}
 
   // As discussed in the introduction, Newton's method frequently does not
@@ -609,8 +593,6 @@ namespace Step15
   {
     return 0.1;
   }
-
-
 
   // @sect4{MinimalSurfaceProblem::run}
 

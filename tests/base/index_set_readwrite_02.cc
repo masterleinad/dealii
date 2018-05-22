@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::block_read() and block_write()
 
 #include "../tests.h"
 #include <stdlib.h>
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -41,7 +39,6 @@ test()
 
   Assert(is1 == is2, ExcInternalError());
 
-
   IndexSet is3(11);
   is3.add_range(3, 5);
   std::ifstream in2("a.idxset");
@@ -53,8 +50,6 @@ test()
 
   std::remove("a.idxset");
 }
-
-
 
 int
 main()

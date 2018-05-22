@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of a deal.II sparse
 // matrix. The mesh uses a hypershell mesh with hanging nodes and constraints
@@ -50,8 +48,6 @@ std::ofstream logfile("output");
 #include <complex>
 #include <fstream>
 #include <iostream>
-
-
 
 template <int dim, int degree_p, typename VectorType>
 class MatrixFreeTest
@@ -106,7 +102,6 @@ public:
       }
   }
 
-
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
@@ -118,8 +113,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -235,7 +228,6 @@ test()
       }
   }
 
-
   solution.reinit(2);
   for(unsigned int d = 0; d < 2; ++d)
     solution.block(d).reinit(dofs_per_block[d]);
@@ -288,8 +280,6 @@ test()
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

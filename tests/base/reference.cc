@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that SmartPointers preserve constness etc of the objects they
 // point to, through assignment of SmartPointers to each other and
 // other tests.
-
 
 #include "../tests.h"
 #include <deal.II/base/smartpointer.h>
@@ -56,7 +53,6 @@ public:
   }
 };
 
-
 int
 main()
 {
@@ -72,7 +68,6 @@ main()
   //  SmartPointer<Test,Test>       t=&b;    // this one should not work
   SmartPointer<Test, Test>       t(const_cast<Test*>(&b), "Test T");
   SmartPointer<const Test, Test> u(&b, "const Test");
-
 
   deallog << "a ";
   a.f(); // should print "mutable", since #a# is not const

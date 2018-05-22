@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // similar to parallel_sparse_vector_03.cc, but make sure
 // compress(insert) zeroes out ghosts in Release mode
 
@@ -45,7 +44,6 @@ check(const unsigned int                                myid,
       AssertThrow(v(6) == 66., ExcInternalError());
     }
 }
-
 
 void
 test()
@@ -102,8 +100,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

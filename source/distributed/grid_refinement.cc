@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
@@ -34,9 +33,7 @@
 #  include <limits>
 #  include <numeric>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace
 {
@@ -49,8 +46,6 @@ namespace
              std::numeric_limits<number>::min();
   }
 
-
-
   template <typename number>
   inline number
   min_element(const dealii::Vector<number>& criteria)
@@ -59,7 +54,6 @@ namespace
              (*std::min_element(criteria.begin(), criteria.end())) :
              std::numeric_limits<number>::max();
   }
-
 
   /**
    * Compute the global max and min of the criteria vector. These are returned
@@ -91,8 +85,6 @@ namespace
     return std::make_pair(result[0], -result[1]);
   }
 
-
-
   /**
    * Compute the global sum over the elements of the vectors passed to this
    * function on all processors. This number is returned only on the processor
@@ -121,8 +113,6 @@ namespace
 
     return result;
   }
-
-
 
   /**
    * Given a vector of refinement criteria for all cells of a mesh (locally
@@ -154,7 +144,6 @@ namespace
            ExcInternalError());
   }
 
-
   // we compute refinement thresholds by bisection of the interval spanned by
   // the smallest and largest error indicator. this leads to a small problem:
   // if, for example, we want to coarsen zero per cent of the cells, then we
@@ -180,8 +169,6 @@ namespace
       interesting_range[1]
         += 0.01 * (interesting_range[1] - interesting_range[0]);
   }
-
-
 
   /**
    * Given a vector of criteria and bottom and top thresholds for coarsening and
@@ -210,8 +197,6 @@ namespace
           cell->clear_coarsen_flag();
         }
   }
-
-
 
   namespace RefineAndCoarsenFixedNumber
   {
@@ -299,8 +284,6 @@ namespace
       return -1;
     }
   } // namespace RefineAndCoarsenFixedNumber
-
-
 
   namespace RefineAndCoarsenFixedFraction
   {
@@ -411,8 +394,6 @@ namespace
   } // namespace RefineAndCoarsenFixedFraction
 } // namespace
 
-
-
 namespace parallel
 {
   namespace distributed
@@ -461,7 +442,6 @@ namespace parallel
           = compute_global_min_and_max_at_root(locally_owned_indicators,
                                                mpi_communicator);
 
-
         double top_threshold, bottom_threshold;
         top_threshold = RefineAndCoarsenFixedNumber::compute_threshold(
           locally_owned_indicators,
@@ -489,7 +469,6 @@ namespace parallel
         // now refine the mesh
         mark_cells(tria, criteria, top_threshold, bottom_threshold);
       }
-
 
       template <int dim, typename Number, int spacedim>
       void
@@ -554,7 +533,6 @@ namespace parallel
     } // namespace GridRefinement
   }   // namespace distributed
 } // namespace parallel
-
 
 // explicit instantiations
 #  include "grid_refinement.inst"

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Like _11 but with block vectors. For reasons lost to history,
 // SparseDirectUMFPACK could handle block sparse matrices but not block
 // vectors in its solve() and vmult() functions. This was later
@@ -39,7 +38,6 @@
 
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void
@@ -117,7 +115,6 @@ test()
       B.set(i->row(), i->column(), i->value());
   }
 
-
   // for a number of different solution
   // vectors, make up a matching rhs vector
   // and check what the UMFPACK solver finds
@@ -149,7 +146,6 @@ test()
       Assert(x.l2_norm() / solution.l2_norm() < 1e-8, ExcInternalError());
     }
 }
-
 
 int
 main()

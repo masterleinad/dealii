@@ -13,23 +13,19 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test functions in namespace WorkStream
 
 #include "../tests.h"
 
 #include <deal.II/base/work_stream.h>
 
-
 struct ScratchData
 {};
-
 
 struct CopyData
 {
   unsigned int computed;
 };
-
 
 struct X
 {
@@ -48,7 +44,6 @@ struct X
   }
 };
 
-
 void
 test()
 {
@@ -60,8 +55,6 @@ test()
   WorkStream::run(
     v.begin(), v.end(), x, &X::worker, &X::copier, ScratchData(), CopyData());
 }
-
-
 
 int
 main()

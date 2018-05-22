@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix.distribute() for a distributed mesh
 // with Trilinos; manual check of the graphical output...
 // Mesh: shell with random refinement
@@ -48,8 +46,6 @@ const double R0 = 0.5; //6371000.-2890000.;
 const double R1 = 1.0; //6371000.-  35000.;
 const double T0 = 1.0;
 const double T1 = 2.0;
-
-
 
 template <int dim>
 class FilteredDataOut : public DataOut<dim>
@@ -102,8 +98,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& value) const;
 };
 
-
-
 template <int dim>
 double
 TemperatureInitialValues<dim>::value(const Point<dim>& p,
@@ -111,7 +105,6 @@ TemperatureInitialValues<dim>::value(const Point<dim>& p,
 {
   return p(0) * T1 + p(1) * (T0 - T1); //simple
 }
-
 
 template <int dim>
 void
@@ -122,16 +115,13 @@ TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
     values(c) = TemperatureInitialValues<dim>::value(p, c);
 }
 
-
 template <int dim>
 void
 test()
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
-
   //  GridGenerator::hyper_cube(tr);
-
 
   GridGenerator::hyper_shell(tr, Point<dim>(), R0, R1, 12, true);
   tr.reset_all_manifolds();
@@ -218,13 +208,10 @@ test()
               }
         }
 
-
-
       parallel::distributed::SolutionTransfer<dim,
                                               TrilinosWrappers::MPI::Vector>
         trans(dofh);
       tr.prepare_coarsening_and_refinement();
-
 
       trans.prepare_for_coarsening_and_refinement(x_rel);
 
@@ -264,7 +251,6 @@ test()
       x_rel = x;
     }
 
-
   TrilinosWrappers::MPI::Vector x_ref;
   x_ref.reinit(owned_set, MPI_COMM_WORLD);
 
@@ -298,14 +284,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

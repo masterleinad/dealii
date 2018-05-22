@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just create a 16x16 coarse mesh, refine it once, and partition it
 //
 // this test does not use any cell weights, but the following ones will
@@ -27,8 +25,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -56,7 +52,6 @@ test()
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

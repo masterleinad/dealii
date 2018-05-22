@@ -184,7 +184,6 @@ namespace Step17
     PETScWrappers::MPI::Vector system_rhs;
   };
 
-
   // @sect3{Right hand side values}
 
   // The following is taken from step-8 without change:
@@ -202,11 +201,9 @@ namespace Step17
                       std::vector<Vector<double>>&   value_list) const override;
   };
 
-
   template <int dim>
   RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
   {}
-
 
   template <int dim>
   inline void
@@ -232,8 +229,6 @@ namespace Step17
       values(1) = 0;
   }
 
-
-
   template <int dim>
   void
   RightHandSide<dim>::vector_value_list(
@@ -248,8 +243,6 @@ namespace Step17
     for(unsigned int p = 0; p < n_points; ++p)
       RightHandSide<dim>::vector_value(points[p], value_list[p]);
   }
-
-
 
   // @sect3{The <code>ElasticProblem</code> class implementation}
 
@@ -279,8 +272,6 @@ namespace Step17
       fe(FE_Q<dim>(1), dim)
   {}
 
-
-
   // @sect4{ElasticProblem::~ElasticProblem}
 
   // The destructor is exactly as in step-8.
@@ -289,7 +280,6 @@ namespace Step17
   {
     dof_handler.clear();
   }
-
 
   // @sect4{ElasticProblem::setup_system}
 
@@ -413,8 +403,6 @@ namespace Step17
     system_rhs.reinit(locally_owned_dofs, mpi_communicator);
   }
 
-
-
   // @sect4{ElasticProblem::assemble_system}
 
   // We now assemble the matrix and right hand side of the
@@ -488,7 +476,6 @@ namespace Step17
 
     RightHandSide<dim>          right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
-
 
     // The next thing is the loop over all elements. Note that we do
     // not have to do <i>all</i> the work on every process: our job
@@ -617,8 +604,6 @@ namespace Step17
       boundary_values, system_matrix, solution, system_rhs, false);
   }
 
-
-
   // @sect4{ElasticProblem::solve}
 
   // Having assembled the linear system, we next need to solve
@@ -715,7 +700,6 @@ namespace Step17
 
     return solver_control.last_step();
   }
-
 
   // @sect4{ElasticProblem::refine_grid}
 
@@ -831,7 +815,6 @@ namespace Step17
         distributed_all_errors(i) = local_error_per_cell(i);
     distributed_all_errors.compress(VectorOperation::insert);
 
-
     // So now we have this distributed vector that contains the
     // refinement indicators for all cells. To use it, we need to
     // obtain a local copy and then use it to mark cells for
@@ -845,7 +828,6 @@ namespace Step17
       triangulation, localized_all_errors, 0.3, 0.03);
     triangulation.execute_coarsening_and_refinement();
   }
-
 
   // @sect4{ElasticProblem::output_results}
 
@@ -984,7 +966,6 @@ namespace Step17
       }
   }
 
-
   // @sect4{ElasticProblem::run}
 
   // Lastly, here is the driver function. It is almost completely
@@ -1032,7 +1013,6 @@ namespace Step17
       }
   }
 } // namespace Step17
-
 
 // @sect3{The <code>main</code> function}
 

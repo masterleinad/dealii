@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -25,8 +24,6 @@
 //                      SparsityPattern       &,
 //                          ...)
 // with the subdomain argument
-
-
 
 template <int dim>
 void

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::MPI::sum() for sparse matrix
 
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/base/mpi.h>
 #include <deal.II/lac/sparse_matrix.h>
-
-
 
 void
 test()
@@ -74,7 +71,6 @@ test()
 
   deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

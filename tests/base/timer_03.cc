@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/timer.h>
 
@@ -66,7 +64,6 @@ burn(unsigned int n)
         }
     }
 }
-
 
 int
 main()

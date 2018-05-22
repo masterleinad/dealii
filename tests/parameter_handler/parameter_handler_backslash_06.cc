@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Test that ParameterHandler will ignore whitespace characters following a
  * '\' character when joining lines.
@@ -21,7 +20,6 @@
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

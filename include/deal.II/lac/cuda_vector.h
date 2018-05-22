@@ -304,8 +304,6 @@ namespace LinearAlgebra
       size_type n_elements;
     };
 
-
-
     // ------------------------------ Inline functions -----------------------------
     template <typename Number>
     inline Number*
@@ -314,15 +312,12 @@ namespace LinearAlgebra
       return val;
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::size_type
     Vector<Number>::size() const
     {
       return n_elements;
     }
-
 
     template <typename Number>
     inline IndexSet

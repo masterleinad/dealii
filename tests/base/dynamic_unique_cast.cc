@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test dynamic_unique_cast
 
 #include "../tests.h"
@@ -27,7 +26,6 @@ public:
 
 class D : public B
 {};
-
 
 void
 test()
@@ -53,7 +51,6 @@ test()
   deallog << "OK" << std::endl;
 }
 
-
 void
 invalid_test()
 {
@@ -70,8 +67,6 @@ invalid_test()
       deallog << "OK" << std::endl;
     }
 }
-
-
 
 int
 main()

@@ -16,9 +16,7 @@
 #ifndef dealii_fe_system_h
 #  define dealii_fe_system_h
 
-
 /*----------------------------   fe_system.h     ---------------------------*/
-
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/thread_management.h>
@@ -30,12 +28,10 @@
 #  include <utility>
 #  include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 class FE_Enriched;
-
 
 /**
  * This class provides an interface to group several elements together into
@@ -882,7 +878,6 @@ public:
   get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                                 FullMatrix<double>& matrix) const override;
 
-
   /**
    * Return the matrix interpolating from a face of one element to the
    * subface of the neighboring element.  The size of the matrix is then
@@ -1230,8 +1225,6 @@ namespace
       });
   }
 
-
-
   template <int dim, int spacedim>
   std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>
   promote_to_fe_pair(const FiniteElement<dim, spacedim>& fe)
@@ -1239,8 +1232,6 @@ namespace
     return std::make_pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
                           unsigned int>(std::move(fe.clone()), 1u);
   }
-
-
 
   template <int dim, int spacedim>
   auto
@@ -1256,8 +1247,6 @@ namespace
   }
 } // namespace
 
-
-
 // We are just forwarding/delegating to the constructor taking a std::initializer_list.
 // If we decide to remove the deprecated constructors, we might just use the variadic
 // constructor with a suitable static_assert instead of the std::enable_if.
@@ -1267,8 +1256,6 @@ FESystem<dim, spacedim>::FESystem(FEPairs&&... fe_pairs)
   : FESystem<dim, spacedim>(
       {promote_to_fe_pair<dim, spacedim>(std::forward<FEPairs>(fe_pairs))...})
 {}
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 
 #include <deal.II/base/function.h>
@@ -128,8 +127,6 @@ namespace Step50
                const unsigned int             component = 0) const;
   };
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -139,8 +136,6 @@ namespace Step50
     else
       return 1;
   }
-
-
 
   template <int dim>
   void
@@ -170,7 +165,6 @@ namespace Step50
       degree(degree)
   {}
 
-
   template <int dim>
   void
   LaplaceProblem<dim>::setup_system()
@@ -183,7 +177,6 @@ namespace Step50
     for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
       deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
     deallog << std::endl;
-
 
     //solution.reinit (mg_dof_handler.n_dofs());
     //system_rhs.reinit (mg_dof_handler.n_dofs());
@@ -472,7 +465,6 @@ namespace Step50
           triangulation.refine_global(1);
         //refine_grid ();
 
-
         deallog << "   Number of active cells:       "
                 << triangulation.n_global_active_cells() << std::endl;
 
@@ -496,7 +488,6 @@ namespace Step50
       }
   }
 } // namespace Step50
-
 
 // @sect3{The main() function}
 //

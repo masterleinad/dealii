@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test SparsityPattern::iterator
 
 #include "../tests.h"
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -37,8 +34,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

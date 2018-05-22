@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the correctness of the 1d evaluation functions used in FEEvaluation,
 // path evaluate_general, when using same array for in and out
 
@@ -22,7 +20,6 @@
 #include <iostream>
 
 #include <deal.II/matrix_free/tensor_product_kernels.h>
-
 
 template <int M, int N, int type>
 void
@@ -60,7 +57,6 @@ test()
   for(unsigned int i = 0; i < M; ++i)
     deallog << x[i] - y_ref[i] << " ";
   deallog << std::endl;
-
 
   for(unsigned int i = 0; i < M; ++i)
     x[i] = random_value<double>();

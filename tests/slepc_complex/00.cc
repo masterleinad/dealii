@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just check initialising SLEPc can be done and that it initialises
 // PETSc in the way we expect, ie. *a* PETSc object exist. This is an
 // approximate copy of slepc/00.cc..
@@ -23,7 +21,6 @@
 #include <deal.II/base/numbers.h>
 #include <deal.II/lac/slepc_solver.h>
 #include <iostream>
-
 
 std::ofstream logfile("output");
 
@@ -50,7 +47,6 @@ main(int argc, char** argv)
         logfile << "   pi+1i:           " << pi_1i << std::endl
                 << "   two:             " << two << std::endl
                 << "   two times pi+1i: " << two * pi_1i << std::endl;
-
 
         logfile << "Finalizing SLEPc (PETSc): " << std::flush;
       }

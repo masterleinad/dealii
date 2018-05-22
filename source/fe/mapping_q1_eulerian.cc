@@ -30,11 +30,9 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
 
-
 #include <array>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, class VectorType, int spacedim>
 MappingQ1Eulerian<dim, VectorType, spacedim>::MappingQ1Eulerian(
@@ -44,8 +42,6 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::MappingQ1Eulerian(
     euler_transform_vectors(&euler_transform_vectors),
     shiftmap_dof_handler(&shiftmap_dof_handler)
 {}
-
-
 
 template <int dim, class VectorType, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
@@ -95,8 +91,6 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::get_vertices(
   return vertices;
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 std::vector<Point<spacedim>>
 MappingQ1Eulerian<dim, VectorType, spacedim>::compute_mapping_support_points(
@@ -112,8 +106,6 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::compute_mapping_support_points(
   return a;
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingQ1Eulerian<dim, VectorType, spacedim>::clone() const
@@ -121,8 +113,6 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::clone() const
   return std_cxx14::make_unique<MappingQ1Eulerian<dim, VectorType, spacedim>>(
     *this);
 }
-
-
 
 template <int dim, class VectorType, int spacedim>
 CellSimilarity::Similarity
@@ -149,10 +139,7 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::fill_fe_values(
   return CellSimilarity::invalid_next_cell;
 }
 
-
-
 // explicit instantiations
 #include "mapping_q1_eulerian.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

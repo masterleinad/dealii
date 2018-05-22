@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // plot PolynomialsBDM on the reference cell
 
 #include "../tests.h"

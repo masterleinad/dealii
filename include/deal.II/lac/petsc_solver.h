@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_solver_h
 #  define dealii_petsc_solver_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_PETSC
@@ -48,7 +47,6 @@ namespace PETScWrappers
   class MatrixBase;
   class VectorBase;
   class PreconditionerBase;
-
 
   /**
    * Base class for solver classes using the PETSc solvers. Since solvers in
@@ -136,7 +134,6 @@ namespace PETScWrappers
           const VectorBase&         b,
           const PreconditionerBase& preconditioner);
 
-
     /**
      * Resets the contained preconditioner and solver object. See class
      * description for more details.
@@ -144,14 +141,12 @@ namespace PETScWrappers
     virtual void
     reset();
 
-
     /**
      * Sets a prefix name for the solver object. Useful when customizing the
      * PETSc KSP object with command-line options.
      */
     void
     set_prefix(const std::string& prefix);
-
 
     /**
      * Access to object that controls convergence.
@@ -254,8 +249,6 @@ namespace PETScWrappers
 #    endif
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc Richardson
    * solver.
@@ -316,8 +309,6 @@ namespace PETScWrappers
     set_solver_type(KSP& ksp) const override;
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc Chebyshev (or,
    * prior version 3.3, Chebychev) solver.
@@ -368,8 +359,6 @@ namespace PETScWrappers
     set_solver_type(KSP& ksp) const override;
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc CG solver.
    *
@@ -419,8 +408,6 @@ namespace PETScWrappers
     set_solver_type(KSP& ksp) const override;
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc BiCG solver.
    *
@@ -469,8 +456,6 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
-
-
 
   /**
    * An implementation of the solver interface using the PETSc GMRES solver.
@@ -537,8 +522,6 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
-
-
 
   /**
    * An implementation of the solver interface using the PETSc BiCGStab
@@ -640,8 +623,6 @@ namespace PETScWrappers
     set_solver_type(KSP& ksp) const override;
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc TFQMR solver.
    *
@@ -690,8 +671,6 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
-
-
 
   /**
    * An implementation of the solver interface using the PETSc TFQMR-2 solver
@@ -747,8 +726,6 @@ namespace PETScWrappers
     set_solver_type(KSP& ksp) const override;
   };
 
-
-
   /**
    * An implementation of the solver interface using the PETSc CR solver.
    *
@@ -797,8 +774,6 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
-
-
 
   /**
    * An implementation of the solver interface using the PETSc Least Squares
@@ -849,7 +824,6 @@ namespace PETScWrappers
     virtual void
     set_solver_type(KSP& ksp) const override;
   };
-
 
   /**
    * An implementation of the solver interface using the PETSc PREONLY solver.

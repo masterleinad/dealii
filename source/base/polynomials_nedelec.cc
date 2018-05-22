@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim>
 PolynomialsNedelec<dim>::PolynomialsNedelec(const unsigned int k)
   : my_degree(k),
@@ -43,7 +42,6 @@ PolynomialsNedelec<dim>::create_polynomials(const unsigned int k)
 
   return pols;
 }
-
 
 // Compute the values, gradients
 // and double gradients of the
@@ -1725,7 +1723,6 @@ PolynomialsNedelec<dim>::compute(
     }
 }
 
-
 template <int dim>
 unsigned int
 PolynomialsNedelec<dim>::compute_n_pols(unsigned int k)
@@ -1749,10 +1746,8 @@ PolynomialsNedelec<dim>::compute_n_pols(unsigned int k)
     }
 }
 
-
 template class PolynomialsNedelec<1>;
 template class PolynomialsNedelec<2>;
 template class PolynomialsNedelec<3>;
-
 
 DEAL_II_NAMESPACE_CLOSE

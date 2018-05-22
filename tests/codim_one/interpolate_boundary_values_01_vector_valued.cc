@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test VectorTools::interpolate_boundary_values for codim=1. like
 // _01_vector_valued, but for vector-valued functions
 
@@ -44,7 +42,6 @@ public:
     return p[component];
   }
 };
-
 
 template <int dim, int spacedim>
 void
@@ -89,8 +86,6 @@ test(std::string filename)
                      ExcInternalError());
             }
 }
-
-
 
 int
 main()

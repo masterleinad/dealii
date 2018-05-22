@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SparsityPattern::copy_from crashed when the number of rows or columns
 // was zero
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <list>
 #include <set>
-
 
 int
 main()

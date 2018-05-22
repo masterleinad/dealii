@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_faces_03 (general mesh, various cell types, hanging
 // nodes), but using more quadrature points than fe_degree+1.
 

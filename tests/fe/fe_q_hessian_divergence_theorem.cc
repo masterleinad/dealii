@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the correctness of fe_values.shape_hessian for FE_Q by comparing
 // the integral of all shape hessian with the flux of the gradient over the
 // boundary by the divergence theorem
@@ -34,8 +33,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -150,8 +147,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_ball(const double tolerance)
@@ -167,7 +162,6 @@ test_hyper_ball(const double tolerance)
   FE_Q<dim> fe(2);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

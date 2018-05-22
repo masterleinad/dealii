@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the FEFieldFunction class. This class was not thread-safe at one point
 // because it keeps a cache on the side that was invalidated when different
 // threads kept pouncing on it. Patrick Sodre wrote a fix for that that's

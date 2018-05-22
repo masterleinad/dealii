@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityPattern::copy_from(DynamicSparsityPattern)
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -37,8 +34,6 @@ test()
     for(unsigned int j = 0; j < sp.row_length(i); ++j)
       deallog << i << ' ' << j << ' ' << sp.column_number(i, j) << std::endl;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // add test for ExcNotImplemented() error in compute_no_normal_flux_constraints.
 // reported by Keith Galvin, mailing list, 2013/10/13. Simplified.
 // note that the cylinder boundary is not even the problem here!
@@ -65,7 +63,6 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 template <int dim>
 void
 run()
@@ -102,7 +99,6 @@ run()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

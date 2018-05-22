@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check Tensor<1,dim,std::complex<double>>::operator*(Tensor<1,dim,std::complex<double> >)
 // These tests are simple enough to do by hand.
 
@@ -34,7 +33,6 @@ test_tensor_01()
 
   deallog << "dim = " << dim << ": " << res << std::endl;
 }
-
 
 template <int dim>
 void

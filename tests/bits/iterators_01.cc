@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that all the iterator types are defined.
 
 #include "../tests.h"

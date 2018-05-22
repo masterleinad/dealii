@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that AlignedVector::fill() does correctly call the destructor and
 // constructor on a complicated class
 

@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/algorithms/any_data.h>
-
 
 double d1 = 17.;
 
@@ -31,7 +28,6 @@ fill(AnyData& data)
   data.add<const double*>(&d1, "cd* 17.");
   d1 = 18.;
 }
-
 
 void
 extract(const AnyData& data)

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Like rt_10, but check gradients instead of values
 
 #include "../tests.h"
@@ -36,7 +35,6 @@
 #include <vector>
 
 #define PRECISION 8
-
 
 std::ofstream logfile("output");
 
@@ -76,7 +74,6 @@ test(const unsigned int degree)
         }
     }
 }
-
 
 int
 main()

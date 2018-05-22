@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a version of hp_hanging_node_02 that crashed at the time
 // of writing the time
 
@@ -33,9 +31,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -53,8 +49,6 @@ test()
   fe.push_back(fe_2);
   fe.push_back(fe_3);
   fe.push_back(fe_4);
-
-
 
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(2);
@@ -94,7 +88,6 @@ test()
 
   hanging_node_constraints.close();
 }
-
 
 int
 main()

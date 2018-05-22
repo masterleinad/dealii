@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/fe/fe_nothing.h>
 
@@ -29,8 +28,6 @@ namespace internal
     }
   } // namespace FE_Nothing
 } // namespace internal
-
-
 
 template <int dim, int spacedim>
 FE_Nothing<dim, spacedim>::FE_Nothing(const unsigned int n_components,
@@ -51,15 +48,12 @@ FE_Nothing<dim, spacedim>::FE_Nothing(const unsigned int n_components,
   // element here has no degrees of freedom
 }
 
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Nothing<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Nothing<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -79,16 +73,12 @@ FE_Nothing<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 UpdateFlags
 FE_Nothing<dim, spacedim>::requires_update_flags(const UpdateFlags flags) const
 {
   return flags;
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -99,8 +89,6 @@ FE_Nothing<dim, spacedim>::shape_value(const unsigned int /*i*/,
   Assert(false, ExcMessage(internal::FE_Nothing::zero_dof_message));
   return 0;
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
@@ -117,8 +105,6 @@ FE_Nothing<dim, spacedim>::get_data(
   return std_cxx14::make_unique<
     typename FiniteElement<dim, spacedim>::InternalDataBase>();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -138,8 +124,6 @@ FE_Nothing<dim, spacedim>::fill_fe_values(
   // leave data fields empty
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_Nothing<dim, spacedim>::fill_fe_face_values(
@@ -157,8 +141,6 @@ FE_Nothing<dim, spacedim>::fill_fe_face_values(
 {
   // leave data fields empty
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -179,16 +161,12 @@ FE_Nothing<dim, spacedim>::fill_fe_subface_values(
   // leave data fields empty
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_Nothing<dim, spacedim>::is_dominating() const
 {
   return dominate;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -209,8 +187,6 @@ operator==(const FiniteElement<dim, spacedim>& f) const
   else
     return false;
 }
-
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -234,7 +210,6 @@ FE_Nothing<dim, spacedim>::compare_for_face_domination(
     }
 }
 
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Nothing<dim, spacedim>::hp_vertex_dof_identities(
@@ -246,7 +221,6 @@ FE_Nothing<dim, spacedim>::hp_vertex_dof_identities(
   // recorded
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -260,7 +234,6 @@ FE_Nothing<dim, spacedim>::hp_line_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Nothing<dim, spacedim>::hp_quad_dof_identities(
@@ -273,15 +246,12 @@ FE_Nothing<dim, spacedim>::hp_quad_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
 template <int dim, int spacedim>
 bool
 FE_Nothing<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -299,8 +269,6 @@ FE_Nothing<dim, spacedim>::get_interpolation_matrix(
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_Nothing<dim, spacedim>::get_face_interpolation_matrix(
@@ -316,7 +284,6 @@ FE_Nothing<dim, spacedim>::get_face_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.m(), 0));
 }
-
 
 template <int dim, int spacedim>
 void
@@ -335,10 +302,7 @@ FE_Nothing<dim, spacedim>::get_subface_interpolation_matrix(
          ExcDimensionMismatch(interpolation_matrix.m(), 0));
 }
 
-
-
 // explicit instantiations
 #include "fe_nothing.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DoFTools::make_zero_boundary_constraints by comparing
 // apply_boundary_values with a zero function to
 // make_zero_boundary_constraints
@@ -35,7 +33,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void

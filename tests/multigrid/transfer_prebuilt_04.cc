@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Deadlock reported by Kronbichler (github
 // https://github.com/dealii/dealii/issues/2051) with 3 processes
 // in MGTransferPrebuilt
-
 
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
@@ -28,7 +26,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer_matrix_free.h>
-
 
 template <int dim>
 void

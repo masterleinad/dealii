@@ -16,12 +16,10 @@
 #ifndef dealii_dof_info_templates_h
 #define dealii_dof_info_templates_h
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/meshworker/dof_info.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace MeshWorker
 {
@@ -36,8 +34,6 @@ namespace MeshWorker
     for(unsigned int i = 0; i < indices_by_block.size(); ++i)
       indices_by_block[i].resize(info.local().block_size(i));
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -55,7 +51,6 @@ namespace MeshWorker
       indices[this->block_info->renumber(i)] = indices_org[i];
   }
 } // namespace MeshWorker
-
 
 DEAL_II_NAMESPACE_CLOSE
 

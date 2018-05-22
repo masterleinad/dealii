@@ -16,7 +16,6 @@
 // test FEValuesBase::get_function_values()
 // when used with complex vector;
 
-
 #include "../tests.h"
 
 #include <deal.II/base/conditional_ostream.h>
@@ -69,10 +68,8 @@ test()
       Triangulation<dim>::smoothing_on_refinement
       | Triangulation<dim>::smoothing_on_coarsening));
 
-
   GridGenerator::hyper_cube(tria, -1, 0);
   tria.refine_global(2);
-
 
   const unsigned int poly_degree = 1;
   FE_Q<dim>          fe(poly_degree);
@@ -162,7 +159,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

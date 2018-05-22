@@ -29,8 +29,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 #ifdef DEAL_II_WITH_TRILINOS
 
 // the 64-bit path uses a few different names, so put that into a separate
@@ -90,8 +88,6 @@ IndexSet::IndexSet(const Epetra_Map& map)
 
 #endif // ifdef DEAL_II_WITH_TRILINOS
 
-
-
 void
 IndexSet::add_range(const size_type begin, const size_type end)
 {
@@ -117,8 +113,6 @@ IndexSet::add_range(const size_type begin, const size_type end)
       is_compressed = false;
     }
 }
-
-
 
 void
 IndexSet::do_compress() const
@@ -183,8 +177,6 @@ IndexSet::do_compress() const
   Assert(next_index == n_elements(), ExcInternalError());
 }
 
-
-
 IndexSet IndexSet::operator&(const IndexSet& is) const
 {
   Assert(size() == is.size(), ExcDimensionMismatch(size(), is.size()));
@@ -229,8 +221,6 @@ IndexSet IndexSet::operator&(const IndexSet& is) const
   return result;
 }
 
-
-
 IndexSet
 IndexSet::get_view(const size_type begin, const size_type end) const
 {
@@ -258,15 +248,12 @@ IndexSet::get_view(const size_type begin, const size_type end) const
   return result;
 }
 
-
-
 void
 IndexSet::subtract_set(const IndexSet& other)
 {
   compress();
   other.compress();
   is_compressed = false;
-
 
   // we save new ranges to be added to our IndexSet in an temporary vector and
   // add all of them in one go at the end.
@@ -330,8 +317,6 @@ IndexSet::subtract_set(const IndexSet& other)
   compress();
 }
 
-
-
 IndexSet::size_type
 IndexSet::pop_back()
 {
@@ -347,8 +332,6 @@ IndexSet::pop_back()
 
   return index;
 }
-
-
 
 IndexSet::size_type
 IndexSet::pop_front()
@@ -369,8 +352,6 @@ IndexSet::pop_front()
 
   return index;
 }
-
-
 
 void
 IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
@@ -424,8 +405,6 @@ IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
   compress();
 }
 
-
-
 void
 IndexSet::write(std::ostream& out) const
 {
@@ -438,8 +417,6 @@ IndexSet::write(std::ostream& out) const
       out << r->begin << " " << r->end << std::endl;
     }
 }
-
-
 
 void
 IndexSet::read(std::istream& in)
@@ -461,7 +438,6 @@ IndexSet::read(std::istream& in)
       add_range(b, e);
     }
 }
-
 
 void
 IndexSet::block_write(std::ostream& out) const
@@ -495,8 +471,6 @@ IndexSet::block_read(std::istream& in)
   do_compress(); // needed so that largest_range can be recomputed
 }
 
-
-
 void
 IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 {
@@ -512,8 +486,6 @@ IndexSet::fill_index_vector(std::vector<size_type>& indices) const
 
   Assert(indices.size() == n_elements(), ExcInternalError());
 }
-
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -584,8 +556,6 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
 }
 #endif
 
-
-
 bool
 IndexSet::is_ascending_and_one_to_one(const MPI_Comm& communicator) const
 {
@@ -647,8 +617,6 @@ IndexSet::is_ascending_and_one_to_one(const MPI_Comm& communicator) const
 #endif //DEAL_II_WITH_MPI
 }
 
-
-
 std::size_t
 IndexSet::memory_consumption() const
 {
@@ -657,7 +625,5 @@ IndexSet::memory_consumption() const
           + MemoryConsumption::memory_consumption(index_space_size)
           + sizeof(compress_mutex));
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE

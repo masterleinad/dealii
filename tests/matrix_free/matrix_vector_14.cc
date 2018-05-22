@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test is similar to matrix_vector_07, but implements the operations for
 // FE_DGP instead of FE_DGQ (where there is no complete tensor product and
 // different routines need to be used). The data is still not very useful
@@ -24,12 +22,9 @@
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp.h>
 
-
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

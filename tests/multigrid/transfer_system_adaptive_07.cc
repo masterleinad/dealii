@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test like _05 but with a TransferSelect that selects the first two vector
 // components as the first block
 
@@ -50,7 +49,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
     }
 }
 
-
 template <typename Transfer>
 void
 make_matrix(const Transfer&     transfer,
@@ -69,8 +67,6 @@ make_matrix(const Transfer&     transfer,
     }
 }
 
-
-
 void
 print_matrix(const FullMatrix<double>& m)
 {
@@ -81,7 +77,6 @@ print_matrix(const FullMatrix<double>& m)
       deallog << std::endl;
     }
 }
-
 
 template <int dim>
 void
@@ -109,8 +104,6 @@ refine_mesh(Triangulation<dim>& triangulation)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 }
-
-
 
 template <int dim>
 void
@@ -164,7 +157,6 @@ check(const FiniteElement<dim>& fe)
   make_matrix(transfer, 1, prolong_0_1);
   print_matrix(prolong_0_1);
 }
-
 
 int
 main()

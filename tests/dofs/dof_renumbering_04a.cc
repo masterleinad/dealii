@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // an extract of the _04 test that produced different (integer)
 // results on different machines, inexplicably
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -32,8 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -52,8 +48,6 @@ print_dofs(const DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 check()
@@ -71,7 +65,6 @@ check()
   for(unsigned int i = 0; i < new_dofs.size(); ++i)
     deallog << new_dofs[i] << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/vectorization.h>
@@ -33,7 +32,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim, typename Number>
 MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree()
   : fe_degree(0),
@@ -41,8 +39,6 @@ MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree()
     n_components(0),
     n_child_cell_dofs(0)
 {}
-
-
 
 template <int dim, typename Number>
 MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree(
@@ -55,8 +51,6 @@ MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree(
   this->mg_constrained_dofs = &mg_c;
 }
 
-
-
 template <int dim, typename Number>
 void
 MGTransferMatrixFree<dim, Number>::initialize_constraints(
@@ -64,8 +58,6 @@ MGTransferMatrixFree<dim, Number>::initialize_constraints(
 {
   this->mg_constrained_dofs = &mg_c;
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -85,7 +77,6 @@ MGTransferMatrixFree<dim, Number>::clear()
   evaluation_data.clear();
   weights_on_refined.clear();
 }
-
 
 template <int dim, typename Number>
 void
@@ -145,8 +136,6 @@ MGTransferMatrixFree<dim, Number>::build(const DoFHandler<dim, dim>& mg_dof)
 
   evaluation_data.resize(n_child_cell_dofs);
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -223,8 +212,6 @@ MGTransferMatrixFree<dim, Number>::prolongate(
   dst.copy_locally_owned_data_from(this->ghosted_level_vector[to_level]);
 }
 
-
-
 template <int dim, typename Number>
 void
 MGTransferMatrixFree<dim, Number>::restrict_and_add(
@@ -298,8 +285,6 @@ MGTransferMatrixFree<dim, Number>::restrict_and_add(
   dst += this->ghosted_level_vector[from_level - 1];
 }
 
-
-
 namespace
 {
   template <int dim, int degree, typename Number>
@@ -332,8 +317,6 @@ namespace
           }
   }
 } // namespace
-
-
 
 template <int dim, typename Number>
 template <int degree>
@@ -447,8 +430,6 @@ MGTransferMatrixFree<dim, Number>::do_prolongate_add(
         }
     }
 }
-
-
 
 template <int dim, typename Number>
 template <int degree>
@@ -571,8 +552,6 @@ MGTransferMatrixFree<dim, Number>::do_restrict_add(
     }
 }
 
-
-
 template <int dim, typename Number>
 std::size_t
 MGTransferMatrixFree<dim, Number>::memory_consumption() const
@@ -589,8 +568,6 @@ MGTransferMatrixFree<dim, Number>::memory_consumption() const
   return memory;
 }
 
-
-
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
   const MGConstrainedDoFs& mg_c)
@@ -598,8 +575,6 @@ MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
 {
   matrix_free_transfer_vector.emplace_back(mg_c);
 }
-
-
 
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
@@ -609,8 +584,6 @@ MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
   for(unsigned int i = 0; i < mg_c.size(); ++i)
     matrix_free_transfer_vector.emplace_back(mg_c[i]);
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -625,8 +598,6 @@ MGTransferBlockMatrixFree<dim, Number>::initialize_constraints(
 
   matrix_free_transfer_vector[0].initialize_constraints(mg_c);
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -644,16 +615,12 @@ MGTransferBlockMatrixFree<dim, Number>::initialize_constraints(
     matrix_free_transfer_vector[i].initialize_constraints(mg_c[i]);
 }
 
-
-
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::clear()
 {
   matrix_free_transfer_vector.clear();
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -664,8 +631,6 @@ MGTransferBlockMatrixFree<dim, Number>::build(
   matrix_free_transfer_vector[0].build(mg_dof);
 }
 
-
-
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::build(
@@ -675,8 +640,6 @@ MGTransferBlockMatrixFree<dim, Number>::build(
   for(unsigned int i = 0; i < mg_dof.size(); ++i)
     matrix_free_transfer_vector[i].build(*mg_dof[i]);
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -699,8 +662,6 @@ MGTransferBlockMatrixFree<dim, Number>::prolongate(
     }
 }
 
-
-
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::restrict_and_add(
@@ -722,8 +683,6 @@ MGTransferBlockMatrixFree<dim, Number>::restrict_and_add(
     }
 }
 
-
-
 template <int dim, typename Number>
 std::size_t
 MGTransferBlockMatrixFree<dim, Number>::memory_consumption() const
@@ -734,10 +693,7 @@ MGTransferBlockMatrixFree<dim, Number>::memory_consumption() const
   return total_memory_consumption;
 }
 
-
-
 // explicit instantiation
 #include "mg_transfer_matrix_free.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

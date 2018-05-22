@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
@@ -43,7 +42,6 @@ main()
       prm.declare_entry(
         "Function_2", "d", Patterns::List(Patterns::Selection("d|e|f")));
       prm.leave_subsection();
-
 
       // We need a local path for the file to get consistent output messages.
       const int chdir_return_code = chdir(SOURCE_DIR);

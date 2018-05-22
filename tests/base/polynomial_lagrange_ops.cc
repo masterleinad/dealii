@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests operations similar to polynomial_lagrange_order when the polynomial
 // is modified
 
@@ -22,9 +21,7 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 void
 check_scale(const std::vector<Polynomial<double>>& p)
@@ -46,8 +43,6 @@ check_scale(const std::vector<Polynomial<double>>& p)
     }
   deallog << std::endl;
 }
-
-
 
 void
 check_shift(const std::vector<Polynomial<double>>& p)
@@ -74,8 +69,6 @@ check_shift(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_mult_scalar(const std::vector<Polynomial<double>>& p)
 {
@@ -96,8 +89,6 @@ check_mult_scalar(const std::vector<Polynomial<double>>& p)
     }
   deallog << std::endl;
 }
-
-
 
 void
 check_mult(const std::vector<Polynomial<double>>& p)
@@ -122,8 +113,6 @@ check_mult(const std::vector<Polynomial<double>>& p)
     }
   deallog << std::endl;
 }
-
-
 
 void
 check_expand(const std::vector<Polynomial<double>>& p)
@@ -157,8 +146,6 @@ check_expand(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_mult_expand(const std::vector<Polynomial<double>>& p)
 {
@@ -187,8 +174,6 @@ check_mult_expand(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_lge(unsigned int n)
 {
@@ -204,8 +189,6 @@ check_lge(unsigned int n)
   deallog << std::endl;
 }
 
-
-
 void
 check_poly(const Quadrature<1>& q)
 {
@@ -220,8 +203,6 @@ check_poly(const Quadrature<1>& q)
   check_mult_expand(p);
   deallog << std::endl;
 }
-
-
 
 int
 main()

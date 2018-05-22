@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_vector_tools_templates_h
 #define dealii_vector_tools_templates_h
 
@@ -206,7 +205,6 @@ namespace VectorTools
         } /*switch*/
     }
 
-
     // A small helper function that iteratively applies above transform
     // function to a vector function_values recursing over a given finite
     // element decomposing it into base elements:
@@ -251,7 +249,6 @@ namespace VectorTools
           return (offset + fe.n_components());
         }
     }
-
 
     // Internal implementation of interpolate that takes a generic functor
     // function such that function(cell) is of type
@@ -514,8 +511,6 @@ namespace VectorTools
 
   } // namespace
 
-
-
   template <int dim,
             int spacedim,
             typename VectorType,
@@ -544,8 +539,6 @@ namespace VectorTools
     interpolate(mapping, dof_handler, function_map, vec, component_mask);
   }
 
-
-
   template <int dim,
             int spacedim,
             typename VectorType,
@@ -563,8 +556,6 @@ namespace VectorTools
                 vec,
                 component_mask);
   }
-
-
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
@@ -627,7 +618,6 @@ namespace VectorTools
       }
   }
 
-
   template <int dim,
             int spacedim,
             typename VectorType,
@@ -657,7 +647,6 @@ namespace VectorTools
 
     interpolate(mapping, dof_handler, function_map, vec, component_mask);
   }
-
 
   namespace internal
   {
@@ -719,8 +708,6 @@ namespace VectorTools
     }
   } // namespace internal
 
-
-
   template <int dim,
             int spacedim,
             typename VectorType,
@@ -743,8 +730,6 @@ namespace VectorTools
 
     interpolate_to_different_mesh(intergridmap, u1, dummy, u2);
   }
-
-
 
   template <int dim,
             int spacedim,
@@ -786,7 +771,6 @@ namespace VectorTools
       return true;
     }
   } // namespace internal
-
 
   template <int dim,
             int spacedim,
@@ -868,7 +852,6 @@ namespace VectorTools
     constraints.distribute(u2);
   }
 
-
   namespace
   {
     /**
@@ -920,8 +903,6 @@ namespace VectorTools
         }
     }
 
-
-
     /**
      * Return whether the boundary values try to constrain a degree of freedom
      * that is already constrained to something else
@@ -944,8 +925,6 @@ namespace VectorTools
 
       return true;
     }
-
-
 
     template <typename number>
     void
@@ -974,8 +953,6 @@ namespace VectorTools
     {
       Assert(false, ExcNotImplemented());
     }
-
-
 
     /**
      * Generic implementation of the project() function
@@ -1073,8 +1050,6 @@ namespace VectorTools
         ::dealii::internal::ElementAccess<VectorType>::set(
           vec(i), i, vec_result);
     }
-
-
 
     /*
      * MatrixFree implementation of project() for an arbitrary number of
@@ -1181,8 +1156,6 @@ namespace VectorTools
       constraints.distribute(work_result);
     }
 
-
-
     /**
      * Helper interface. After figuring out the number of components in
      * project_matrix_free_component, we determine the degree of the
@@ -1255,8 +1228,6 @@ namespace VectorTools
                                                 project_to_boundary_first);
         }
     }
-
-
 
     // Helper interface for the matrix-free implementation of project().
     // Used to determine the number of components.
@@ -1331,8 +1302,6 @@ namespace VectorTools
         }
     }
 
-
-
     /**
      * Helper interface for the matrix-free implementation of project(): avoid
      * instantiating the other helper functions for more than one VectorType
@@ -1373,8 +1342,6 @@ namespace VectorTools
           work_result(*it), *it, vec_result);
       vec_result.compress(VectorOperation::insert);
     }
-
-
 
     /**
      * Specialization of project() for the case dim==spacedim.
@@ -1433,8 +1400,6 @@ namespace VectorTools
                      project_to_boundary_first);
         }
     }
-
-
 
     template <int dim, typename VectorType, int spacedim, int fe_degree>
     void
@@ -1546,8 +1511,6 @@ namespace VectorTools
       vec_result.compress(VectorOperation::insert);
     }
 
-
-
     template <int dim,
               typename VectorType,
               int spacedim,
@@ -1640,8 +1603,6 @@ namespace VectorTools
     }
   } // namespace
 
-
-
   template <int dim, typename VectorType, int spacedim>
   void
   project(const Mapping<dim, spacedim>&    mapping,
@@ -1672,8 +1633,6 @@ namespace VectorTools
             mapping, dof, constraints, quadrature, func, vec_result);
       }
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1714,8 +1673,6 @@ namespace VectorTools
         matrix_free, constraints, func, vec_result, fe_component);
   }
 
-
-
   template <int dim, typename VectorType>
   void
   project(std::shared_ptr<
@@ -1734,8 +1691,6 @@ namespace VectorTools
             vec_result,
             fe_component);
   }
-
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -1788,8 +1743,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, typename VectorType, int spacedim>
   void
   project(const DoFHandler<dim, spacedim>& dof,
@@ -1817,8 +1770,6 @@ namespace VectorTools
             project_to_boundary_first);
 #endif
   }
-
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -1848,7 +1799,6 @@ namespace VectorTools
                project_to_boundary_first);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   void
   project(const hp::DoFHandler<dim, spacedim>& dof,
@@ -1870,8 +1820,6 @@ namespace VectorTools
             q_boundary,
             project_to_boundary_first);
   }
-
-
 
   template <int dim, int spacedim, typename VectorType>
   void
@@ -1988,8 +1936,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, int spacedim, typename VectorType>
   void
   create_right_hand_side(
@@ -2006,8 +1952,6 @@ namespace VectorTools
                            rhs_vector,
                            constraints);
   }
-
-
 
   template <int dim, int spacedim, typename VectorType>
   void
@@ -2141,8 +2085,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, int spacedim, typename VectorType>
   void
   create_right_hand_side(
@@ -2160,8 +2102,6 @@ namespace VectorTools
       rhs_vector,
       constraints);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2198,8 +2138,6 @@ namespace VectorTools
       rhs_vector(local_dof_indices[i]) = fe_values.shape_value(i, 0);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_point_source_vector(const DoFHandler<dim, spacedim>& dof_handler,
@@ -2209,7 +2147,6 @@ namespace VectorTools
     create_point_source_vector(
       StaticMappingQ1<dim, spacedim>::mapping, dof_handler, p, rhs_vector);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -2249,8 +2186,6 @@ namespace VectorTools
       rhs_vector(local_dof_indices[i]) = fe_values.shape_value(i, 0);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_point_source_vector(const hp::DoFHandler<dim, spacedim>& dof_handler,
@@ -2260,8 +2195,6 @@ namespace VectorTools
     create_point_source_vector(
       hp::StaticMappingQ1<dim>::mapping_collection, dof_handler, p, rhs_vector);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2302,8 +2235,6 @@ namespace VectorTools
         = orientation * fe_values[vec].value(i, 0);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_point_source_vector(const DoFHandler<dim, spacedim>& dof_handler,
@@ -2317,7 +2248,6 @@ namespace VectorTools
                                orientation,
                                rhs_vector);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -2361,8 +2291,6 @@ namespace VectorTools
         = orientation * fe_values[vec].value(i, 0);
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_point_source_vector(const hp::DoFHandler<dim, spacedim>& dof_handler,
@@ -2376,8 +2304,6 @@ namespace VectorTools
                                orientation,
                                rhs_vector);
   }
-
-
 
   template <int dim, int spacedim, typename VectorType>
   void
@@ -2506,8 +2432,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side(
@@ -2524,8 +2448,6 @@ namespace VectorTools
                                     rhs_vector,
                                     boundary_ids);
   }
-
-
 
   template <int dim, int spacedim, typename VectorType>
   void
@@ -2666,8 +2588,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side(
@@ -2685,8 +2605,6 @@ namespace VectorTools
       rhs_vector,
       boundary_ids);
   }
-
-
 
   // ----------- interpolate_boundary_values for std::map --------------------
 
@@ -2712,7 +2630,6 @@ namespace VectorTools
                    "zero or equal to the number of components in the finite "
                    "element."));
 
-
       // if for whatever reason we were passed an empty map, return
       // immediately
       if(function_map.size() == 0)
@@ -2731,7 +2648,6 @@ namespace VectorTools
           ++i)
         Assert(n_components == i->second->n_components,
                ExcDimensionMismatch(n_components, i->second->n_components));
-
 
       // interpolate boundary values in 1d. in higher dimensions, we
       // use FEValues to figure out what to do on faces, but in 1d
@@ -3020,8 +2936,6 @@ namespace VectorTools
     } // end of interpolate_boundary_values
   }   // namespace
 
-
-
   template <int dim,
             int spacedim,
             template <int, int> class DoFHandlerType,
@@ -3038,8 +2952,6 @@ namespace VectorTools
     do_interpolate_boundary_values(
       mapping, dof, function_map, boundary_values, component_mask_);
   }
-
-
 
   template <int dim,
             int spacedim,
@@ -3061,7 +2973,6 @@ namespace VectorTools
       mapping, dof, function_map, boundary_values, component_mask);
   }
 
-
   template <int dim, int spacedim, typename number>
   void
   interpolate_boundary_values(
@@ -3075,8 +2986,6 @@ namespace VectorTools
     do_interpolate_boundary_values(
       mapping, dof, function_map, boundary_values, component_mask_);
   }
-
-
 
   template <int dim,
             int spacedim,
@@ -3098,8 +3007,6 @@ namespace VectorTools
                                 component_mask);
   }
 
-
-
   template <int dim,
             int spacedim,
             template <int, int> class DoFHandlerType,
@@ -3119,11 +3026,7 @@ namespace VectorTools
                                 component_mask);
   }
 
-
-
   // ----------- interpolate_boundary_values for ConstraintMatrix --------------
-
-
 
   template <int dim,
             int spacedim,
@@ -3156,8 +3059,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim,
             int spacedim,
             template <int, int> class DoFHandlerType,
@@ -3177,8 +3078,6 @@ namespace VectorTools
     interpolate_boundary_values(
       mapping, dof, function_map, constraints, component_mask);
   }
-
-
 
   template <int dim,
             int spacedim,
@@ -3200,8 +3099,6 @@ namespace VectorTools
                                 component_mask);
   }
 
-
-
   template <int dim,
             int spacedim,
             template <int, int> class DoFHandlerType,
@@ -3221,10 +3118,7 @@ namespace VectorTools
                                 component_mask);
   }
 
-
-
   // -------- implementation for project_boundary_values with std::map --------
-
 
   namespace
   {
@@ -3281,8 +3175,6 @@ namespace VectorTools
       return std::numeric_limits<number>::min();
     }
 
-
-
     template <typename number>
     void
     invert_mass_matrix(
@@ -3311,8 +3203,6 @@ namespace VectorTools
       filtered_preconditioner.apply_constraints(boundary_projection, true);
       filtered_preconditioner.clear();
     }
-
-
 
     template <typename number>
     void
@@ -3350,7 +3240,6 @@ namespace VectorTools
       solve_for_one_component(true);
       solve_for_one_component(false);
     }
-
 
     template <int dim,
               int spacedim,
@@ -3421,8 +3310,6 @@ namespace VectorTools
       SparsityPattern sparsity;
       sparsity.copy_from(dsp);
 
-
-
       // note: for three or more dimensions, there
       // may be constrained nodes on the boundary
       // in this case the boundary mass matrix has
@@ -3469,12 +3356,10 @@ namespace VectorTools
         }
       sparsity.compress();
 
-
       // make mass matrix and right hand side
       SparseMatrix<typename numbers::NumberTraits<number>::real_type>
                      mass_matrix(sparsity);
       Vector<number> rhs(sparsity.n_rows());
-
 
       MatrixCreator::create_boundary_mass_matrix(
         mapping,
@@ -3576,8 +3461,6 @@ namespace VectorTools
       mapping, dof, boundary_functions, q, boundary_values, component_mapping);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   project_boundary_values(
@@ -3596,8 +3479,6 @@ namespace VectorTools
                             component_mapping);
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   project_boundary_values(
@@ -3612,8 +3493,6 @@ namespace VectorTools
     do_project_boundary_values(
       mapping, dof, boundary_functions, q, boundary_values, component_mapping);
   }
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -3634,10 +3513,7 @@ namespace VectorTools
       component_mapping);
   }
 
-
   // ----- implementation for project_boundary_values with ConstraintMatrix -----
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -3667,8 +3543,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim, int spacedim, typename number>
   void
   project_boundary_values(
@@ -3687,8 +3561,6 @@ namespace VectorTools
                             component_mapping);
   }
 
-
-
   namespace internal
   {
     /**
@@ -3705,7 +3577,6 @@ namespace VectorTools
         for(unsigned int i = 0; i < dim; ++i)
           dof_indices[i] = numbers::invalid_dof_index;
       }
-
 
       bool
       operator<(const VectorDoFTuple<dim>& other) const
@@ -3735,7 +3606,6 @@ namespace VectorTools
       }
     };
 
-
     template <int dim>
     std::ostream&
     operator<<(std::ostream& out, const VectorDoFTuple<dim>& vdt)
@@ -3744,8 +3614,6 @@ namespace VectorTools
         out << vdt.dof_indices[d] << (d < dim - 1 ? " " : "");
       return out;
     }
-
-
 
     /**
      * Add the constraint $\vec n \cdot \vec u = inhom$ to the list of
@@ -3984,7 +3852,6 @@ namespace VectorTools
         }
     }
 
-
     /**
      * Add the constraint $(\vec u-\vec u_\Gamma) \| \vec t$ to the list of
      * constraints. In 2d, this is a single constraint, in 3d these are two
@@ -4049,8 +3916,6 @@ namespace VectorTools
                                               inhomogeneity);
             }
     }
-
-
 
     /**
      * Given a vector, compute a set of dim-1 vectors that are orthogonal to
@@ -4151,7 +4016,6 @@ namespace VectorTools
         }
     }
   } // namespace internal
-
 
   namespace internals
   {
@@ -4820,8 +4684,6 @@ namespace VectorTools
     }
   } // namespace internals
 
-
-
   template <int dim>
   void
 
@@ -5069,8 +4931,6 @@ namespace VectorTools
       }
   }
 
-
-
   template <int dim>
   void
 
@@ -5269,7 +5129,6 @@ namespace VectorTools
                           dof_values,
                           dofs_processed);
 
-
                       face_dof_indices.resize(dofs_per_face);
                       cell->face(face)->get_dof_indices(
                         face_dof_indices, cell->active_fe_index());
@@ -5295,7 +5154,6 @@ namespace VectorTools
           Assert(false, ExcNotImplemented());
       }
   }
-
 
   namespace internals
   {
@@ -5539,7 +5397,6 @@ namespace VectorTools
           dofs_processed[associated_edge_dof_to_face_dof[i]] = true;
         }
     }
-
 
     template <int dim, typename cell_iterator>
     void
@@ -5968,7 +5825,6 @@ namespace VectorTools
               face_matrix_inv.invert(face_matrix);
               face_matrix_inv.vmult(face_solution, face_rhs);
 
-
               // Store computed DoFs:
               for(unsigned int associated_face_dof = 0;
                   associated_face_dof < associated_face_dofs;
@@ -6300,7 +6156,6 @@ namespace VectorTools
 
   } // namespace internals
 
-
   template <int dim>
   void
   project_boundary_values_curl_conforming_l2(
@@ -6345,8 +6200,6 @@ namespace VectorTools
       constraints,
       mapping_collection);
   }
-
-
 
   namespace internals
   {
@@ -6547,7 +6400,6 @@ namespace VectorTools
     }
   } // namespace internals
 
-
   template <int dim>
   void
   project_boundary_values_div_conforming(
@@ -6747,7 +6599,6 @@ namespace VectorTools
       }
   }
 
-
   template <int dim>
   void
   project_boundary_values_div_conforming(
@@ -6917,8 +6768,6 @@ namespace VectorTools
           Assert(false, ExcNotImplemented());
       }
   }
-
-
 
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
@@ -7182,7 +7031,6 @@ namespace VectorTools
           std::cout << "   " << q->second.first << " from cell "
                     << q->second.second << std::endl;
 #endif
-
 
         // now compute the reverse mapping: for each of the cells that
         // contributed to the current set of vector dofs, add up the normal
@@ -7507,8 +7355,6 @@ namespace VectorTools
       }
   }
 
-
-
   namespace
   {
     template <int dim>
@@ -7525,8 +7371,6 @@ namespace VectorTools
       }
     };
   } // namespace
-
-
 
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
@@ -7762,8 +7606,6 @@ namespace VectorTools
                     no_normal_flux_constraints.n_constraints());
   }
 
-
-
   namespace internal
   {
     template <int dim, int spacedim, typename Number>
@@ -7796,7 +7638,6 @@ namespace VectorTools
 
       dealii::hp::FEValues<dim, spacedim> x_fe_values;
     };
-
 
     template <int dim, int spacedim, typename Number>
     IDScratchData<dim, spacedim, Number>::IDScratchData(
@@ -7865,7 +7706,6 @@ namespace VectorTools
       }
     } // namespace
 
-
     // avoid compiling inner function for many vector types when we always
     // really do the same thing by putting the main work into this helper
     // function
@@ -7902,7 +7742,6 @@ namespace VectorTools
           for(unsigned int k = 0; k < n_q_points; ++k)
             data.weight_vectors[k] = 1.;
         }
-
 
       if(update_flags & update_values)
         {
@@ -8155,8 +7994,6 @@ namespace VectorTools
       return diff;
     }
 
-
-
     template <int dim,
               class InVector,
               class OutVector,
@@ -8282,8 +8119,6 @@ namespace VectorTools
 
   } // namespace internal
 
-
-
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   integrate_difference(const Mapping<dim, spacedim>&    mapping,
@@ -8308,7 +8143,6 @@ namespace VectorTools
       exponent);
   }
 
-
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   integrate_difference(const DoFHandler<dim, spacedim>& dof,
@@ -8331,8 +8165,6 @@ namespace VectorTools
       weight,
       exponent);
   }
-
-
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
@@ -8358,7 +8190,6 @@ namespace VectorTools
       weight,
       exponent);
   }
-
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
@@ -8498,7 +8329,6 @@ namespace VectorTools
                      point);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   void
   point_difference(
@@ -8547,7 +8377,6 @@ namespace VectorTools
       difference(i) -= u_value[0](i);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   void
   point_value(const DoFHandler<dim, spacedim>&         dof,
@@ -8558,7 +8387,6 @@ namespace VectorTools
     point_value(
       StaticMappingQ1<dim, spacedim>::mapping, dof, fe_function, point, value);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8574,7 +8402,6 @@ namespace VectorTools
                 value);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
   point_value(const DoFHandler<dim, spacedim>& dof,
@@ -8584,7 +8411,6 @@ namespace VectorTools
     return point_value(
       StaticMappingQ1<dim, spacedim>::mapping, dof, fe_function, point);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
@@ -8597,7 +8423,6 @@ namespace VectorTools
                        fe_function,
                        point);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8639,7 +8464,6 @@ namespace VectorTools
 
     value = u_value[0];
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8685,7 +8509,6 @@ namespace VectorTools
     value = u_value[0];
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
   point_value(const Mapping<dim, spacedim>&    mapping,
@@ -8702,7 +8525,6 @@ namespace VectorTools
 
     return value(0);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
@@ -8721,8 +8543,6 @@ namespace VectorTools
     return value(0);
   }
 
-
-
   template <int dim, typename VectorType, int spacedim>
   void
   point_gradient(
@@ -8738,7 +8558,6 @@ namespace VectorTools
                    point,
                    gradients);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8756,7 +8575,6 @@ namespace VectorTools
                    gradients);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   Tensor<1, spacedim, typename VectorType::value_type>
   point_gradient(const DoFHandler<dim, spacedim>& dof,
@@ -8766,7 +8584,6 @@ namespace VectorTools
     return point_gradient(
       StaticMappingQ1<dim, spacedim>::mapping, dof, fe_function, point);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   Tensor<1, spacedim, typename VectorType::value_type>
@@ -8780,7 +8597,6 @@ namespace VectorTools
       fe_function,
       point);
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8824,7 +8640,6 @@ namespace VectorTools
 
     gradient = u_gradient[0];
   }
-
 
   template <int dim, typename VectorType, int spacedim>
   void
@@ -8870,7 +8685,6 @@ namespace VectorTools
     gradient = u_gradient[0];
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   Tensor<1, spacedim, typename VectorType::value_type>
   point_gradient(const Mapping<dim, spacedim>&    mapping,
@@ -8887,8 +8701,6 @@ namespace VectorTools
 
     return gradient[0];
   }
-
-
 
   template <int dim, typename VectorType, int spacedim>
   Tensor<1, spacedim, typename VectorType::value_type>
@@ -8949,8 +8761,6 @@ namespace VectorTools
         }
     }
 
-
-
     template <typename VectorType>
     typename std::enable_if<dealii::is_serial_vector<VectorType>::value
                             == false>::type
@@ -8963,7 +8773,6 @@ namespace VectorTools
       v.add(-v.mean_value());
     }
   } // namespace
-
 
   template <typename VectorType>
   void
@@ -8981,8 +8790,6 @@ namespace VectorTools
       n = r;
     }
 
-
-
     template <typename Type>
     void
     set_possibly_complex_number(const double&       r,
@@ -8992,7 +8799,6 @@ namespace VectorTools
       n = std::complex<Type>(r, i);
     }
   } // namespace
-
 
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
@@ -9064,7 +8870,6 @@ namespace VectorTools
     return (mean / area);
   }
 
-
   template <int dim, typename VectorType, int spacedim>
   typename VectorType::value_type
   compute_mean_value(const DoFHandler<dim, spacedim>& dof,
@@ -9075,7 +8880,6 @@ namespace VectorTools
     return compute_mean_value(
       StaticMappingQ1<dim, spacedim>::mapping, dof, quadrature, v, component);
   }
-
 
   template <int dim,
             int spacedim,
@@ -9108,7 +8912,6 @@ namespace VectorTools
       size == spacedim,
       ExcMessage(
         "The Component Mask you provided is invalid. It has to select exactly spacedim entries."));
-
 
     if(fe.has_support_points())
       {

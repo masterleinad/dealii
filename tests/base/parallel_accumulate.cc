@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test parallel::accumulate_from_subranges
 
 #include "../tests.h"
 
 #include <deal.II/base/parallel.h>
-
 
 int
 sum(const int begin, const int end)
@@ -29,7 +27,6 @@ sum(const int begin, const int end)
     s += i;
   return s;
 }
-
 
 int
 main()

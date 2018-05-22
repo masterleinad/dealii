@@ -16,7 +16,6 @@
 #ifndef dealii_solver_minres_h
 #define dealii_solver_minres_h
 
-
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
@@ -155,14 +154,10 @@ SolverMinRes<VectorType>::SolverMinRes(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), res2(numbers::signaling_nan<double>())
 {}
 
-
-
 template <class VectorType>
 SolverMinRes<VectorType>::SolverMinRes(SolverControl& cn, const AdditionalData&)
   : Solver<VectorType>(cn), res2(numbers::signaling_nan<double>())
 {}
-
-
 
 template <class VectorType>
 double
@@ -171,7 +166,6 @@ SolverMinRes<VectorType>::criterion()
   return res2;
 }
 
-
 template <class VectorType>
 void
 SolverMinRes<VectorType>::print_vectors(const unsigned int,
@@ -179,8 +173,6 @@ SolverMinRes<VectorType>::print_vectors(const unsigned int,
                                         const VectorType&,
                                         const VectorType&) const
 {}
-
-
 
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -234,7 +226,6 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
   // The iteration step.
   unsigned int j = 1;
 
-
   // Start of the solution process
   A.vmult(*m[0], x);
   *u[1] = b;
@@ -252,7 +243,6 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
   r0   = std::sqrt(delta[1]);
   r_l2 = r0;
-
 
   u[0]->reinit(b);
   delta[0] = 1.;

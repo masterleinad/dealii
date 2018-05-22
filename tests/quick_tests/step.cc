@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // copied from bits/step-11 with slight modifications to make it run faster
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -45,7 +42,6 @@
 #include <algorithm>
 
 using namespace dealii;
-
 
 template <int dim>
 class LaplaceProblem
@@ -80,8 +76,6 @@ private:
   double last_error;
 };
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
   : fe(1),
@@ -92,8 +86,6 @@ LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
   deallog << "Using mapping with degree " << mapping_degree << ":" << std::endl
           << "============================" << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -125,8 +117,6 @@ LaplaceProblem<dim>::setup_system()
   sparsity_pattern.copy_from(csp);
   system_matrix.reinit(sparsity_pattern);
 }
-
-
 
 template <int dim>
 void
@@ -175,8 +165,6 @@ LaplaceProblem<dim>::assemble_and_solve()
   last_error = std::fabs(norm - std::sqrt(3.14159265358 / 2));
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -189,8 +177,6 @@ LaplaceProblem<dim>::solve()
 
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 }
-
-
 
 template <int dim>
 void
@@ -209,15 +195,11 @@ LaplaceProblem<dim>::run()
 
   AssertThrow(last_error < 1e-3, ExcMessage("solution is not converging"));
 
-
-
   output_table.set_precision("|u|_1", 6);
   output_table.set_precision("error", 6);
   output_table.write_text(std::cout);
   deallog << std::endl;
 }
-
-
 
 int
 main()

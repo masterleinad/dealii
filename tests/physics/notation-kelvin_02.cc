@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that Kelvin notation works as expected. The following properties
 // should hold:
 // - B = C:A  --> kelvin(B) = kelvin(C)*kelvin(A)
@@ -27,7 +26,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <deal.II/physics/notation.h>
-
 
 using namespace dealii;
 using namespace dealii::Physics;

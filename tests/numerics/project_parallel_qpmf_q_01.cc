@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check VectorTools::project_parallel() for matrix-free quadrature data for
 // FE_Q on a mesh without hanging nodes.
-
 
 #include "../tests.h"
 #include "project_parallel_qpmf_common.h"

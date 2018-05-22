@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that distributed_mg_dofs works correctly on non-standard oriented
 // meshes when used in parallel
 
@@ -23,7 +22,6 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>
-
 
 template <int dim>
 void

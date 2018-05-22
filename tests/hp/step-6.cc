@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-6
-
 
 #include "../tests.h"
 
@@ -45,14 +42,11 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_out.h>
 
-
 #include <deal.II/lac/constraint_matrix.h>
 
 #include <deal.II/grid/grid_refinement.h>
 
 #include <deal.II/numerics/error_estimator.h>
-
-
 
 template <int dim>
 class LaplaceProblem
@@ -90,8 +84,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 class Coefficient : public Function<dim>
 {
@@ -108,8 +100,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -119,8 +109,6 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   else
     return 1;
 }
-
-
 
 template <int dim>
 void
@@ -144,22 +132,16 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : dof_handler(triangulation), fe(FE_Q<dim>(2))
 {}
-
-
 
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 void
@@ -175,7 +157,6 @@ LaplaceProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
-
   hanging_node_constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler,
                                           hanging_node_constraints);
@@ -188,7 +169,6 @@ LaplaceProblem<dim>::setup_system()
 
   system_matrix.reinit(sparsity_pattern);
 }
-
 
 template <int dim>
 void
@@ -261,8 +241,6 @@ LaplaceProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -277,8 +255,6 @@ LaplaceProblem<dim>::solve()
 
   hanging_node_constraints.distribute(solution);
 }
-
-
 
 template <int dim>
 void
@@ -298,8 +274,6 @@ LaplaceProblem<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -316,8 +290,6 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   GridOut grid_out;
   grid_out.write_eps(triangulation, deallog.get_file_stream());
 }
-
-
 
 template <int dim>
 void
@@ -338,7 +310,6 @@ LaplaceProblem<dim>::run()
         }
       else
         refine_grid();
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
@@ -365,8 +336,6 @@ LaplaceProblem<dim>::run()
 
   data_out.write_eps(deallog.get_file_stream());
 }
-
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_tria_manifold_h
 #define dealii_tria_manifold_h
 
-
 /*----------------------------   manifold.h     ---------------------------*/
 
 #include <deal.II/base/array_view.h>
@@ -332,7 +331,6 @@ public:
                 "The dimension <dim> of a Manifold must be less than or "
                 "equal to the space dimension <spacedim> in which it lives.");
 
-
   /**
    * Type keeping information about the normals at the vertices of a face of a
    * cell. Thus, there are <tt>GeometryInfo<dim>::vertices_per_face</tt>
@@ -346,7 +344,6 @@ public:
    */
   typedef Tensor<1, spacedim>
     FaceVertexNormals[GeometryInfo<dim>::vertices_per_face];
-
 
   /**
    * Destructor. Does nothing here, but needs to be declared virtual to make
@@ -408,7 +405,6 @@ public:
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
                 const ArrayView<const double>&          weights) const;
-
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -511,7 +507,6 @@ public:
   get_new_point_on_hex(
     const typename Triangulation<dim, spacedim>::hex_iterator& hex) const;
 
-
   /**
    * Backward compatibility interface. Depending on <tt>dim=2</tt> or
    * <tt>dim=3</tt> this function calls the get_new_point_on_line or the
@@ -521,7 +516,6 @@ public:
   Point<spacedim>
   get_new_point_on_face(
     const typename Triangulation<dim, spacedim>::face_iterator& face) const;
-
 
   /**
    * Backward compatibility interface.  Depending on <tt>dim=1</tt>,
@@ -657,7 +651,6 @@ public:
   /// @}
 };
 
-
 /**
  * Specialization of Manifold<dim,spacedim>, which represent a possibly
  * periodic Euclidean space of dimension @p dim embedded in the Euclidean
@@ -733,7 +726,6 @@ public:
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
                 const ArrayView<const double>&          weights) const override;
-
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -848,7 +840,6 @@ private:
    */
   const double tolerance;
 };
-
 
 /**
  * This class describes mappings that can be expressed in terms of charts.
@@ -1128,7 +1119,6 @@ private:
   const FlatManifold<chartdim, chartdim> sub_manifold;
 };
 
-
 /* -------------- declaration of explicit specializations ------------- */
 
 #ifndef DOXYGEN
@@ -1143,12 +1133,10 @@ Point<2>
 Manifold<1, 2>::get_new_point_on_face(
   const Triangulation<1, 2>::face_iterator&) const;
 
-
 template <>
 Point<3>
 Manifold<1, 3>::get_new_point_on_face(
   const Triangulation<1, 3>::face_iterator&) const;
-
 
 template <>
 Point<1>
@@ -1160,12 +1148,10 @@ Point<2>
 Manifold<1, 2>::get_new_point_on_quad(
   const Triangulation<1, 2>::quad_iterator&) const;
 
-
 template <>
 Point<3>
 Manifold<1, 3>::get_new_point_on_quad(
   const Triangulation<1, 3>::quad_iterator&) const;
-
 
 template <>
 Point<3>
@@ -1191,8 +1177,6 @@ namespace Manifolds
                           points_and_weights.second.end()));
   }
 
-
-
   template <typename MeshIteratorType>
   std::pair<std::array<Point<MeshIteratorType::AccessorType::space_dimension>,
                        n_default_points_per_cell<MeshIteratorType>()>,
@@ -1208,7 +1192,6 @@ namespace Manifolds
     std::pair<std::array<Point<spacedim>, points_per_cell>,
               std::array<double, points_per_cell>>
       points_weights;
-
 
     // note that the exact weights are chosen such as to minimize the
     // distortion of the four new quads from the optimal shape; their

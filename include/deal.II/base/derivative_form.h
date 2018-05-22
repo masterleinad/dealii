@@ -154,19 +154,15 @@ private:
   DerivativeForm<1, dim, spacedim, Number>
   times_T_t(const Tensor<2, dim, Number>& T) const;
 
-
   /**
    * Array of tensors holding the subelements.
    */
   Tensor<order, dim, Number> tensor[spacedim];
 };
 
-
 /*--------------------------- Inline functions -----------------------------*/
 
 #ifndef DOXYGEN
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm()
@@ -175,8 +171,6 @@ inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm()
   // the default constructor of the subobjects, which initialize them
   // selves. therefore, the tensor array  is set to zero this way
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm(
@@ -188,8 +182,6 @@ inline DerivativeForm<order, dim, spacedim, Number>::DerivativeForm(
     for(unsigned int j = 0; j < dim; ++j)
       (*this)[j] = T[j];
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>&
@@ -204,8 +196,6 @@ operator=(const Tensor<order + 1, dim, Number>& ta)
   return *this;
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>&
 DerivativeForm<order, dim, spacedim, Number>::
@@ -219,8 +209,6 @@ operator=(const Tensor<1, dim, Number>& T)
   return *this;
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline Tensor<order, dim, Number>&
   DerivativeForm<order, dim, spacedim, Number>::operator[](const unsigned int i)
@@ -229,8 +217,6 @@ inline Tensor<order, dim, Number>&
 
   return tensor[i];
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline const Tensor<order, dim, Number>&
@@ -242,8 +228,6 @@ inline const Tensor<order, dim, Number>&
   return tensor[i];
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>::
 operator Tensor<1, dim, Number>() const
@@ -253,8 +237,6 @@ operator Tensor<1, dim, Number>() const
 
   return (*this)[0];
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<order, dim, spacedim, Number>::
@@ -271,8 +253,6 @@ operator Tensor<order + 1, dim, Number>() const
   return t;
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<1, spacedim, dim, Number>
 DerivativeForm<order, dim, spacedim, Number>::transpose() const
@@ -286,8 +266,6 @@ DerivativeForm<order, dim, spacedim, Number>::transpose() const
 
   return tt;
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<1, dim, spacedim, Number>
@@ -303,8 +281,6 @@ DerivativeForm<order, dim, spacedim, Number>::times_T_t(
   return dest;
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 DerivativeForm<order, dim, spacedim, Number>::norm() const
@@ -314,8 +290,6 @@ DerivativeForm<order, dim, spacedim, Number>::norm() const
     sum_of_squares += tensor[i].norm_square();
   return std::sqrt(sum_of_squares);
 }
-
-
 
 template <int order, int dim, int spacedim, typename Number>
 inline Number
@@ -341,8 +315,6 @@ DerivativeForm<order, dim, spacedim, Number>::determinant() const
     }
 }
 
-
-
 template <int order, int dim, int spacedim, typename Number>
 inline DerivativeForm<1, dim, spacedim, Number>
 DerivativeForm<order, dim, spacedim, Number>::covariant_form() const
@@ -365,7 +337,6 @@ DerivativeForm<order, dim, spacedim, Number>::covariant_form() const
     }
 }
 
-
 template <int order, int dim, int spacedim, typename Number>
 inline std::size_t
 DerivativeForm<order, dim, spacedim, Number>::memory_consumption()
@@ -374,8 +345,6 @@ DerivativeForm<order, dim, spacedim, Number>::memory_consumption()
 }
 
 #endif // DOXYGEN
-
-
 
 /**
  * One of the uses of DerivativeForm is to apply it as a transformation. This
@@ -395,8 +364,6 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number>& DF,
     dest[i] = DF[i] * T;
   return dest;
 }
-
-
 
 /**
  * Similar to previous apply_transformation. It computes $T*DF^{T}$.
@@ -436,7 +403,6 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number>& DF1,
   return dest;
 }
 
-
 /**
  * Transpose of a rectangular DerivativeForm DF, mostly for compatibility
  * reasons.
@@ -452,7 +418,6 @@ transpose(const DerivativeForm<1, dim, spacedim, Number>& DF)
   tt = DF.transpose();
   return tt;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

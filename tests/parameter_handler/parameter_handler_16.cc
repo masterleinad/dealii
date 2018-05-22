@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler could not deal with missing endline at end of file
 // or can it?
 // http://code.google.com/p/dealii/issues/detail?id=126
@@ -35,8 +33,6 @@ test()
   foo.declare_entry("val2", "2.0", dealii::Patterns::Double(), "");
 
   foo.parse_input(SOURCE_DIR "/parameter_handler_16.prm");
-
-
 
   foo.enter_subsection("bar");
   deallog << foo.get("val") << std::endl;

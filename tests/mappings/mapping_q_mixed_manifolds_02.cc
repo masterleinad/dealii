@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Evaluates the area of a complex geometry when mixing different manifolds on
 // the surfaces than the rest of the cell. The mesh uses two layers of
 // cylinders that finally are changed into a square on the outside of the
@@ -48,7 +47,6 @@ const double Y_0 = 0.0;
 const double Y_C = 0.2; // center
 
 const unsigned int MANIFOLD_ID = 1;
-
 
 void create_triangulation(Triangulation<2>& tria)
 {
@@ -242,7 +240,6 @@ test()
               << std::endl;
     }
 }
-
 
 int
 main()

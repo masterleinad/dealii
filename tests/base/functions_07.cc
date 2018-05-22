@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // synthesize the laplacian_list function out of repeated calls to
 // laplacian
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 class F : public Function<dim>
@@ -33,7 +31,6 @@ public:
     return p.norm();
   }
 };
-
 
 template <int dim>
 void
@@ -57,8 +54,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

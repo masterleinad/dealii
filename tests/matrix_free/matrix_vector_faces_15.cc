@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_13 but for advection operator rather than
 // Poisson
 
@@ -30,7 +28,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree_>
 void

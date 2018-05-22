@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test VectorizedArray::streaming_store
 
 #include "../tests.h"
@@ -43,8 +42,6 @@ test()
     AssertThrow(stored[i] == i, ExcInternalError());
   deallog << "streaming store OK" << std::endl;
 }
-
-
 
 int
 main()

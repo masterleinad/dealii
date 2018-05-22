@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that FEValuesViews::get_function_*_from_local_dof_values
 // works with different number types.
 

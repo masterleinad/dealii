@@ -16,10 +16,8 @@
 #ifndef dealii_mesh_worker_assemble_flags_h
 #define dealii_mesh_worker_assemble_flags_h
 
-
 #include <deal.II/base/config.h>
 #include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -104,7 +102,6 @@ namespace MeshWorker
     work_on_boundary = assemble_boundary_faces,
   };
 
-
   /**
    * Output operator which outputs assemble flags as a set of or'd text values.
    *
@@ -132,7 +129,6 @@ namespace MeshWorker
     return s;
   }
 
-
   /**
    * Global operator which returns an object in which all bits are set which are
    * either set in the first or the second argument. This operator exists since
@@ -149,8 +145,6 @@ namespace MeshWorker
                                       | static_cast<unsigned int>(f2));
   }
 
-
-
   /**
    * Global operator which sets the bits from the second argument also in the
    * first one.
@@ -163,7 +157,6 @@ namespace MeshWorker
     f1 = f1 | f2;
     return f1;
   }
-
 
   /**
    * Global operator which returns an object in which all bits are set which are
@@ -179,7 +172,6 @@ namespace MeshWorker
     return static_cast<AssembleFlags>(static_cast<unsigned int>(f1)
                                       & static_cast<unsigned int>(f2));
   }
-
 
   /**
    * Global operator which clears all the bits in the first argument if they are

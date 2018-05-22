@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // expression from step-48 that was computed in a wrong way for gcc-4.6.3 with
 // vectorization
-
 
 #include "../tests.h"
 
 #include <deal.II/base/vectorization.h>
 #include <deal.II/lac/vector.h>
-
 
 struct Evaluation
 {
@@ -48,7 +45,6 @@ struct Evaluation
   VectorizedArray<double> values[1];
 };
 
-
 void
 initialize(Evaluation& eval)
 {
@@ -60,7 +56,6 @@ initialize(Evaluation& eval)
   eval.general_weight[0] = 0.2313342 * eval.cartesian_weight;
   eval.jac_weight[0]     = random_value<double>();
 }
-
 
 void
 test()
@@ -96,7 +91,6 @@ test()
                   - (2. * vec[v] - ol[v] - weight[v] * std::sin(vec[v])));
   deallog << "error: " << error << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

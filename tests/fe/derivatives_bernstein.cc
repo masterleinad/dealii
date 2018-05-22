@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -74,8 +73,6 @@ plot_derivatives(Mapping<dim>&       mapping,
   deallog.pop();
 }
 
-
-
 template <int dim>
 void
 plot_FE_Bernstein_shape_functions()
@@ -93,8 +90,6 @@ plot_FE_Bernstein_shape_functions()
   FE_Bernstein<dim> b4(4);
   plot_derivatives(m, b4, "B4");
 }
-
-
 
 int
 main()
@@ -116,7 +111,6 @@ main()
   deallog.push("3d");
   //  plot_FE_Bernstein_shape_functions<3>();
   deallog.pop();
-
 
   // FESystem test.
   MappingQGeneric<2> m(1);

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TrilinosWrappers::MPI::Vector::operator = (TrilinosScalar) with setting to a
 // nonzero value
 
@@ -23,7 +21,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::MPI::Vector& v)
@@ -42,8 +39,6 @@ test(TrilinosWrappers::MPI::Vector& v)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -51,7 +46,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

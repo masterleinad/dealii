@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // compute double contraction between two rank-4 tensors
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -61,8 +59,6 @@ test()
                         ExcInternalError());
           }
 }
-
-
 
 int
 main()

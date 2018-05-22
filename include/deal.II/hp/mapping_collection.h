@@ -119,7 +119,6 @@ namespace hp
     std::vector<std::shared_ptr<const Mapping<dim, spacedim>>> mappings;
   };
 
-
   /**
    * Many places in the library by default use (bi-,tri-)linear mappings
    * unless users explicitly provide a different mapping to use. In these
@@ -146,7 +145,6 @@ namespace hp
     static MappingCollection<dim, spacedim> mapping_collection;
   };
 
-
   /* --------------- inline functions ------------------- */
 
   template <int dim, int spacedim>
@@ -155,8 +153,6 @@ namespace hp
   {
     return mappings.size();
   }
-
-
 
   template <int dim, int spacedim>
   inline const Mapping<dim, spacedim>& MappingCollection<dim, spacedim>::
@@ -167,7 +163,6 @@ namespace hp
   }
 
 } // namespace hp
-
 
 DEAL_II_NAMESPACE_CLOSE
 

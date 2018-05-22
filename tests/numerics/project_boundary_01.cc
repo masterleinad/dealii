@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Purpose: check projection of boundary values for really small functions,
    otherwise similar to boundaries.cc. */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -36,8 +32,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -70,7 +64,6 @@ private:
   double scaling;
 };
 
-
 template <int dim>
 const Quadrature<dim - 1>&
 boundary_q(const DoFHandler<dim>&)
@@ -79,14 +72,12 @@ boundary_q(const DoFHandler<dim>&)
   return q;
 }
 
-
 const Quadrature<0>&
 boundary_q(const DoFHandler<1>&)
 {
   static const Quadrature<0>* q = nullptr;
   return *q;
 }
-
 
 void
 write_map(const std::map<types::global_dof_index, double>& bv)
@@ -100,8 +91,6 @@ write_map(const std::map<types::global_dof_index, double>& bv)
                                           -10000)
             << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -126,7 +115,6 @@ check()
   tr.refine_global(1);
 
   MappingQ<dim> mapping(3);
-
 
   // list of finite elements for which we want check, and associated list of
   // boundary value functions
@@ -182,7 +170,6 @@ check()
       delete function_list[i];
     };
 }
-
 
 int
 main()

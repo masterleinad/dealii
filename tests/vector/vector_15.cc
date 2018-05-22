@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::operator() in set/add-mode alternatingly, but
 // writing to the same elements
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v)
@@ -49,8 +46,6 @@ test(Vector<double>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

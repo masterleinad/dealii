@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // solves a 2D Poisson equation with FE_DGQ elements and periodic boundary conditions
 
 #include "../tests.h"
@@ -36,8 +34,6 @@
 #include <deal.II/meshworker/loop.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
@@ -98,7 +94,6 @@ MatrixIntegrator<dim>::face(
     LocalIntegrators::Laplace::compute_penalty(dinfo1, dinfo2, deg, deg));
 }
 
-
 template <int dim>
 class Step4
 {
@@ -119,7 +114,6 @@ private:
   void
   check_periodicity(const unsigned int cycle) const;
 
-
   Triangulation<dim> triangulation;
   FE_DGQ<dim>        fe;
   DoFHandler<dim>    dof_handler;
@@ -131,12 +125,9 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -159,8 +150,6 @@ Step4<dim>::make_grid()
   triangulation.add_periodicity(periodic_faces);
   triangulation.refine_global(1);
 }
-
-
 
 template <int dim>
 void
@@ -197,8 +186,6 @@ Step4<dim>::setup_system()
     system_rhs(i) = 0.01 * i - 0.000001 * i * i;
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::solve()
@@ -212,8 +199,6 @@ Step4<dim>::solve()
 
   solver.solve(system_matrix, solution, system_rhs, preconditioner);
 }
-
-
 
 template <int dim>
 void
@@ -230,8 +215,6 @@ Step4<dim>::output_results(const unsigned int cycle) const
   std::ofstream output((filename + ".vtk").c_str());
   data_out.write_vtk(output);
 }
-
-
 
 template <int dim>
 void
@@ -282,8 +265,6 @@ Step4<2>::check_periodicity(const unsigned int cycle) const
   AssertThrow(all_passed, ExcInternalError());
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::run()
@@ -303,7 +284,6 @@ Step4<dim>::run()
       deallog.pop();
     }
 }
-
 
 int
 main(int argc, char** argv)

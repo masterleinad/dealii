@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests setup of Trilinos sparsity patterns when some processors do not have
 // any cells.
 
@@ -60,8 +58,6 @@ namespace Step22
     std::vector<IndexSet> relevant_partitioning;
   };
 
-
-
   template <int dim>
   StokesProblem<dim>::StokesProblem (const unsigned int degree)
     :
@@ -73,8 +69,6 @@ namespace Step22
         FE_Q<dim>(degree), 1),
     dof_handler (triangulation)
   {}
-
-
 
   template <int dim>
   void
@@ -124,8 +118,6 @@ namespace Step22
     }
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::run()
@@ -141,12 +133,9 @@ namespace Step22
     triangulation.set_manifold(1, boundary);
     setup_dofs();
 
-
     deallog << "OK" << std::endl;
   }
 } // namespace Step22
-
-
 
 int
 main(int argc, char* argv[])

@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test problem in distribute_sparsity_pattern (block version)
 // now Trilinos and PETSc produce the same block matrix
-
 
 #define USE_PETSC_LA
 
@@ -52,7 +49,6 @@ test()
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
-
   parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD,
     typename Triangulation<dim>::MeshSmoothing(
@@ -63,7 +59,6 @@ test()
   triangulation.refine_global(2);
 
   const FESystem<dim> stokes_fe(FE_Q<dim>(1), 1, FE_DGP<dim>(0), 1);
-
 
   DoFHandler<dim>           stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
@@ -100,7 +95,6 @@ test()
   //boundary conditions ?
   cm.close();
 
-
   BlockDynamicSparsityPattern sp(stokes_relevant_partitioning);
 
   Table<2, DoFTools::Coupling> coupling(1 + 1, 1 + 1);
@@ -122,14 +116,12 @@ test()
     MPI_COMM_WORLD,
     stokes_relevant_set);
 
-
   sp.compress();
 
   typename LA::MPI::BlockSparseMatrix stokes_matrix;
   stokes_matrix.reinit(stokes_partitioning, sp, MPI_COMM_WORLD);
 
   stokes_matrix.print(deallog.get_file_stream());
-
 
   // done
   if(myid == 0)
@@ -148,7 +140,6 @@ test_LA_Trilinos()
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
-
   parallel::distributed::Triangulation<dim> triangulation(
     MPI_COMM_WORLD,
     typename Triangulation<dim>::MeshSmoothing(
@@ -159,7 +150,6 @@ test_LA_Trilinos()
   triangulation.refine_global(2);
 
   const FESystem<dim> stokes_fe(FE_Q<dim>(1), 1, FE_DGP<dim>(0), 1);
-
 
   DoFHandler<dim>           stokes_dof_handler(triangulation);
   std::vector<unsigned int> stokes_sub_blocks(1 + 1, 0);
@@ -198,7 +188,6 @@ test_LA_Trilinos()
     //typename LA::MPI::CompressedBlockSparsityPattern
     sp(stokes_partitioning, MPI_COMM_WORLD);
 
-
   Table<2, DoFTools::Coupling> coupling(1 + 1, 1 + 1);
 
   coupling[0][0] = DoFTools::always;
@@ -222,12 +211,10 @@ test_LA_Trilinos()
 
   stokes_matrix.print(deallog.get_file_stream());
 
-
   // done
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

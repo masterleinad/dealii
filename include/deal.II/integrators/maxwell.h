@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_maxwell_h
 #define dealii_integrators_maxwell_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -490,10 +489,8 @@ namespace LocalIntegrators
         }
     }
 
-
   } // namespace Maxwell
 } // namespace LocalIntegrators
-
 
 DEAL_II_NAMESPACE_CLOSE
 

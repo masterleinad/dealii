@@ -16,7 +16,6 @@
 #ifndef dealii_tria_levels_h
 #define dealii_tria_levels_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/point.h>
 #include <deal.II/grid/tria_object.h>
@@ -71,7 +70,6 @@ namespace internal
        * coarsened.
        */
       std::vector<bool> coarsen_flags;
-
 
       /**
        * An integer that, for every active cell, stores the how many-th active
@@ -153,7 +151,6 @@ namespace internal
        */
       TriaObjects<TriaObject<dim>> cells;
 
-
       /**
        * Reserve enough space to accommodate @p total_cells cells on this
        * level. Since there are no @p used flags on this level, you have to
@@ -232,7 +229,6 @@ namespace internal
 
       TriaObjectsHex cells;
 
-
       void
       reserve_space(const unsigned int total_cells,
                     const unsigned int dimension,
@@ -260,8 +256,6 @@ namespace internal
                      << ", which is not as expected.");
     };
 
-
-
     template <int dim>
     template <class Archive>
     void
@@ -280,8 +274,6 @@ namespace internal
       ar& direction_flags;
       ar& cells;
     }
-
-
 
     template <class Archive>
     void
@@ -303,8 +295,6 @@ namespace internal
 
   } // namespace TriangulationImplementation
 } // namespace internal
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

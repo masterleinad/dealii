@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::min() for arrays
 
 #include "../tests.h"
@@ -35,7 +33,6 @@ test()
   if(myid == 0)
     deallog << minima[0] << ' ' << minima[1] << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

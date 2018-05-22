@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_vanka_templates_h
 #define dealii_sparse_vanka_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/thread_management.h>
 #include <deal.II/lac/full_matrix.h>
@@ -61,7 +60,6 @@ SparseVanka<number>::SparseVanka(const SparseMatrix<number>& M,
     compute_inverses();
 }
 
-
 template <typename number>
 SparseVanka<number>::~SparseVanka()
 {
@@ -75,7 +73,6 @@ SparseVanka<number>::~SparseVanka()
         delete p;
     }
 }
-
 
 template <typename number>
 void
@@ -163,7 +160,6 @@ SparseVanka<number>::compute_inverses()
 #endif
 }
 
-
 template <typename number>
 void
 SparseVanka<number>::compute_inverses(const size_type begin,
@@ -180,8 +176,6 @@ SparseVanka<number>::compute_inverses(const size_type begin,
     if((*selected)[row] == true)
       compute_inverse(row, local_indices);
 }
-
-
 
 template <typename number>
 void
@@ -213,7 +207,6 @@ SparseVanka<number>::compute_inverse(const size_type         row,
   inverses[row]->gauss_jordan();
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -229,7 +222,6 @@ SparseVanka<number>::vmult(Vector<number2>&       dst,
   // that actually does the work
   apply_preconditioner(dst, src);
 }
-
 
 template <typename number>
 template <typename number2>
@@ -248,7 +240,6 @@ SparseVanka<number>::apply_preconditioner(
   // pattern of the matrix, since this
   // will be used quite often
   const SparsityPattern& structure = matrix->get_sparsity_pattern();
-
 
   // store whether we shall work on
   // the whole matrix, or only on
@@ -392,8 +383,6 @@ SparseVanka<number>::apply_preconditioner(
       }
 }
 
-
-
 template <typename number>
 std::size_t
 SparseVanka<number>::memory_consumption() const
@@ -406,7 +395,6 @@ SparseVanka<number>::memory_consumption() const
   return mem;
 }
 
-
 template <typename number>
 SparseVanka<number>::AdditionalData::AdditionalData(
   const std::vector<bool>& selected,
@@ -415,9 +403,7 @@ SparseVanka<number>::AdditionalData::AdditionalData(
   : selected(selected), conserve_mem(conserve_mem), n_threads(n_threads)
 {}
 
-
 //---------------------------------------------------------------------------
-
 
 template <typename number>
 SparseBlockVanka<number>::SparseBlockVanka(
@@ -433,7 +419,6 @@ SparseBlockVanka<number>::SparseBlockVanka(
 {
   compute_dof_masks(M, selected, blocking_strategy);
 }
-
 
 template <typename number>
 void
@@ -596,8 +581,6 @@ SparseBlockVanka<number>::compute_dof_masks(
     };
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -649,8 +632,6 @@ SparseBlockVanka<number>::vmult(Vector<number2>&       dst,
     }
 }
 
-
-
 template <typename number>
 std::size_t
 SparseBlockVanka<number>::memory_consumption() const
@@ -660,8 +641,6 @@ SparseBlockVanka<number>::memory_consumption() const
     mem += MemoryConsumption::memory_consumption(dof_masks[i]);
   return mem;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

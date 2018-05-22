@@ -33,8 +33,6 @@ FunctionDerivative<dim>::FunctionDerivative(const Function<dim>& f,
   set_formula();
 }
 
-
-
 template <int dim>
 FunctionDerivative<dim>::FunctionDerivative(const Function<dim>&           f,
                                             const std::vector<Point<dim>>& dir,
@@ -48,8 +46,6 @@ FunctionDerivative<dim>::FunctionDerivative(const Function<dim>&           f,
     incr[i] = h * dir[i];
   set_formula();
 }
-
-
 
 template <int dim>
 void
@@ -73,8 +69,6 @@ FunctionDerivative<dim>::set_formula(
   formula = form;
 }
 
-
-
 template <int dim>
 void
 FunctionDerivative<dim>::set_h(const double new_h)
@@ -83,8 +77,6 @@ FunctionDerivative<dim>::set_h(const double new_h)
     incr[i] *= new_h / h;
   h = new_h;
 }
-
-
 
 template <int dim>
 double
@@ -114,8 +106,6 @@ FunctionDerivative<dim>::value(const Point<dim>&  p,
     }
   return 0.;
 }
-
-
 
 template <int dim>
 void
@@ -156,8 +146,6 @@ FunctionDerivative<dim>::vector_value(const Point<dim>& p,
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim>
 void
@@ -223,8 +211,6 @@ FunctionDerivative<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
-
 template <int dim>
 std::size_t
 FunctionDerivative<dim>::memory_consumption() const
@@ -233,8 +219,6 @@ FunctionDerivative<dim>::memory_consumption() const
   // use sizeof operator
   return sizeof(*this);
 }
-
-
 
 // explicit instantiations
 template class FunctionDerivative<1>;

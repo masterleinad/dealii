@@ -15,7 +15,6 @@
 
 // Make sure both sides of a face know which of the two elements dominates
 
-
 #include "../tests.h"
 
 #include <deal.II/dofs/dof_accessor.h>
@@ -24,8 +23,6 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 class MixedFECollection
@@ -95,8 +92,6 @@ MixedFECollection<dim>::run()
           << "   Number of vertices: " << triangulation.n_vertices()
           << std::endl;
 }
-
-
 
 int
 main()

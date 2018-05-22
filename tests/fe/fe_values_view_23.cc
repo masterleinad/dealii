@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // there was a bug in getting the divergence of shape functions for the
 // SymmetricTensor extractors. test that it is fixed by comparing with
 // get_function_divergences
@@ -30,8 +28,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -76,8 +72,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -92,7 +86,6 @@ test_hyper_sphere()
                    SymmetricTensor<2, dim>::n_independent_components);
   test(tr, fe);
 }
-
 
 int
 main()

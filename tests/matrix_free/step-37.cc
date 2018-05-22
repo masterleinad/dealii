@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for correctness of step-37 (without output and only small sizes)
-
 
 #include "../tests.h"
 
@@ -49,14 +47,11 @@
 
 #include <sstream>
 
-
 namespace Step37
 {
   using namespace dealii;
 
   const unsigned int degree_finite_element = 2;
-
-
 
   template <int dim>
   class Coefficient : public Function<dim>
@@ -78,8 +73,6 @@ namespace Step37
                const unsigned int             component = 0) const;
   };
 
-
-
   template <int dim>
   template <typename number>
   number
@@ -89,8 +82,6 @@ namespace Step37
     return 1. / (0.05 + 2. * p.square());
   }
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>&  p,
@@ -98,8 +89,6 @@ namespace Step37
   {
     return value<double>(p, component);
   }
-
-
 
   template <int dim>
   void
@@ -115,8 +104,6 @@ namespace Step37
     for(unsigned int i = 0; i < n_points; ++i)
       values[i] = value<double>(points[i], component);
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   class LaplaceOperator : public Subscriptor
@@ -168,13 +155,9 @@ namespace Step37
     bool           diagonal_is_available;
   };
 
-
-
   template <int dim, int fe_degree, typename number>
   LaplaceOperator<dim, fe_degree, number>::LaplaceOperator() : Subscriptor()
   {}
-
-
 
   template <int dim, int fe_degree, typename number>
   unsigned int
@@ -183,16 +166,12 @@ namespace Step37
     return data.get_vector_partitioner()->size();
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   unsigned int
   LaplaceOperator<dim, fe_degree, number>::n() const
   {
     return data.get_vector_partitioner()->size();
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -202,8 +181,6 @@ namespace Step37
     diagonal_is_available = false;
     diagonal_values.reinit(0);
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -223,8 +200,6 @@ namespace Step37
     evaluate_coefficient(Coefficient<dim>());
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::evaluate_coefficient(
@@ -241,8 +216,6 @@ namespace Step37
             = coefficient_function.value(phi.quadrature_point(q));
       }
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -268,8 +241,6 @@ namespace Step37
       }
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult(
@@ -279,8 +250,6 @@ namespace Step37
     dst = 0;
     vmult_add(dst, src);
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -292,8 +261,6 @@ namespace Step37
     vmult_add(dst, src);
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult_add(
@@ -302,8 +269,6 @@ namespace Step37
   {
     vmult_add(dst, src);
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -319,8 +284,6 @@ namespace Step37
       dst(constrained_dofs[i]) += src(constrained_dofs[i]);
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   number
   LaplaceOperator<dim, fe_degree, number>::el(const unsigned int row,
@@ -330,8 +293,6 @@ namespace Step37
     Assert(diagonal_is_available == true, ExcNotInitialized());
     return diagonal_values(row);
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -349,8 +310,6 @@ namespace Step37
 
     diagonal_is_available = true;
   }
-
-
 
   template <int dim>
   class LaplaceProblem
@@ -390,16 +349,12 @@ namespace Step37
     Vector<double> system_rhs;
   };
 
-
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
     : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
       fe(degree_finite_element),
       dof_handler(triangulation)
   {}
-
-
 
   template <int dim>
   void
@@ -448,8 +403,6 @@ namespace Step37
     coarse_matrix.reinit(dof_handler.n_dofs(0), dof_handler.n_dofs(0));
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_system()
@@ -482,8 +435,6 @@ namespace Step37
       }
     constraints.condense(system_rhs);
   }
-
-
 
   template <int dim>
   void
@@ -556,8 +507,6 @@ namespace Step37
       mg_matrices[level].set_diagonal(diagonals[level]);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -591,8 +540,6 @@ namespace Step37
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::run()
@@ -616,8 +563,6 @@ namespace Step37
   }
 } // namespace Step37
 
-
-
 int
 main()
 {
@@ -636,7 +581,6 @@ main()
     laplace_problem.run();
     deallog.pop();
   }
-
 
   return 0;
 }

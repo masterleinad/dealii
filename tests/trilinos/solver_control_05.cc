@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that we can reuse a Trilinos solver in a LinearOperator
 // This tests differs from solver_control_04 in that here we have a diagonal
 // matrix, i.e. one that will converge in 1 step.
-
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
@@ -40,7 +38,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   {
     unsigned int dim = 10;

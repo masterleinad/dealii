@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the creation of no-flux boundary conditions for a finite
 // element that consists of more than dim components and where
 // therefore we have to pick the vector components from somewhere in
 // the middle
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -31,8 +29,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -55,7 +51,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       cm.print(deallog.get_file_stream());
     }
 }
-
 
 template <int dim>
 void
@@ -80,7 +75,6 @@ test_hyper_cube()
       test(tr, fe);
     }
 }
-
 
 int
 main()

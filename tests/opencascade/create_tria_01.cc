@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read the file side.iges, attach it to a projector,
 // create a single-cell Triangulation, and refine it with the new
 // projector.
@@ -40,7 +39,6 @@
 #include <gp_Ax2.hxx>
 #include <gp_Dir.hxx>
 #include <gp_Pnt.hxx>
-
 
 using namespace OpenCASCADE;
 

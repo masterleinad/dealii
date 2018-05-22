@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the FEValues views and extractor classes. this test is for
 // get_function_hessians for vector components and a non-primitive element
 
@@ -34,7 +32,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 class VectorFunction : public Function<dim>
@@ -167,8 +164,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -179,12 +174,10 @@ test_hyper_sphere()
   static const SphericalManifold<dim> boundary;
   tr.set_manifold(0, boundary);
 
-
   const unsigned int order = 3;
 
   test(tr, FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), order)), dim));
 }
-
 
 int
 main()

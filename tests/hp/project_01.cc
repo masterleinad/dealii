@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check VectorTools::project for Vector<double> arguments and hp
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -32,8 +30,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 // define the multi-linear function x or x*y or x*y*z that we will
 // subsequently project onto the ansatz space
 template <int dim>
@@ -49,7 +45,6 @@ public:
     return s;
   }
 };
-
 
 template <int dim>
 void
@@ -95,7 +90,6 @@ test()
                 << std::endl;
       }
 }
-
 
 int
 main()

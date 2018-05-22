@@ -18,15 +18,12 @@
 
 #include <deal.II/base/config.h>
 
-
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A namespace in which the deal.II linear algebra classes are typedef'ed to
@@ -44,9 +41,7 @@ namespace LinearAlgebraDealII
   typedef PreconditionSSOR<SparseMatrix> PreconditionSSOR;
 } // namespace LinearAlgebraDealII
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #ifdef DEAL_II_WITH_PETSC
 
@@ -131,7 +126,6 @@ namespace LinearAlgebraPETSc
 } // namespace LinearAlgebraPETSc
 DEAL_II_NAMESPACE_CLOSE
 
-
 #endif // DEAL_II_WITH_PETSC
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -213,16 +207,12 @@ namespace LinearAlgebraTrilinos
      */
     typedef TrilinosWrappers::PreconditionSSOR PreconditionSSOR;
 
-
   } // namespace MPI
 
 } // namespace LinearAlgebraTrilinos
 
 DEAL_II_NAMESPACE_CLOSE
 
-
 #endif // DEAL_II_WITH_TRILINOS
-
-
 
 #endif

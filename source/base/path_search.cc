@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/path_search.h>
 #include <deal.II/base/utilities.h>
@@ -23,7 +22,6 @@
 #include <iostream>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 std::map<std::string, std::vector<std::string>> PathSearch::path_lists;
 std::map<std::string, std::vector<std::string>> PathSearch::suffix_lists;
@@ -82,7 +80,6 @@ PathSearch::get_path_list(const std::string& cls)
   return path_lists.find(cls)->second;
 }
 
-
 std::vector<std::string>&
 PathSearch::get_suffix_list(const std::string& cls)
 {
@@ -99,14 +96,12 @@ PathSearch::get_suffix_list(const std::string& cls)
   return suffix_lists.find(cls)->second;
 }
 
-
 PathSearch::PathSearch(const std::string& cls, const unsigned int debug)
   : cls(cls),
     my_path_list(get_path_list(cls)),
     my_suffix_list(get_suffix_list(cls)),
     debug(debug)
 {}
-
 
 std::string
 PathSearch::find(const std::string& filename,
@@ -193,7 +188,6 @@ PathSearch::find(const std::string& filename, const char* open_mode)
   return std::string("");
 }
 
-
 void
 PathSearch::add_class(const std::string& cls)
 {
@@ -208,7 +202,6 @@ PathSearch::add_class(const std::string& cls)
   path_lists.insert(map_type(cls, v));
   suffix_lists.insert(map_type(cls, v));
 }
-
 
 void
 PathSearch::add_path(const std::string& path, Position pos)
@@ -227,7 +220,6 @@ PathSearch::add_path(const std::string& path, Position pos)
     }
 }
 
-
 void
 PathSearch::add_suffix(const std::string& suffix, Position pos)
 {
@@ -244,7 +236,5 @@ PathSearch::add_suffix(const std::string& suffix, Position pos)
       my_suffix_list.insert(i, suffix);
     }
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE

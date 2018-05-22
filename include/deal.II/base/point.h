@@ -16,7 +16,6 @@
 #ifndef dealii_point_h
 #define dealii_point_h
 
-
 #include <cmath>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -282,14 +281,10 @@ template <int dim, typename Number>
 inline Point<dim, Number>::Point()
 {}
 
-
-
 template <int dim, typename Number>
 inline Point<dim, Number>::Point(const Tensor<1, dim, Number>& t)
   : Tensor<1, dim, Number>(t)
 {}
-
-
 
 template <int dim, typename Number>
 inline Point<dim, Number>::Point(const Number x)
@@ -314,8 +309,6 @@ inline Point<dim, Number>::Point(const Number x)
     }
 }
 
-
-
 template <int dim, typename Number>
 inline Point<dim, Number>::Point(const Number x, const Number y)
 {
@@ -332,8 +325,6 @@ inline Point<dim, Number>::Point(const Number x, const Number y)
   this->values[0]                = x;
   this->values[y_index]          = y;
 }
-
-
 
 template <int dim, typename Number>
 inline Point<dim, Number>::Point(const Number x, const Number y, const Number z)
@@ -355,7 +346,6 @@ inline Point<dim, Number>::Point(const Number x, const Number y, const Number z)
   this->values[z_index]          = z;
 }
 
-
 template <int dim, typename Number>
 inline Point<dim, Number>
 Point<dim, Number>::unit_vector(unsigned int i)
@@ -365,7 +355,6 @@ Point<dim, Number>::unit_vector(unsigned int i)
   return p;
 }
 
-
 template <int dim, typename Number>
 inline Number
 Point<dim, Number>::operator()(const unsigned int index) const
@@ -374,8 +363,6 @@ Point<dim, Number>::operator()(const unsigned int index) const
   return this->values[index];
 }
 
-
-
 template <int dim, typename Number>
 inline Number&
 Point<dim, Number>::operator()(const unsigned int index)
@@ -383,8 +370,6 @@ Point<dim, Number>::operator()(const unsigned int index)
   AssertIndexRange((int) index, dim);
   return this->values[index];
 }
-
-
 
 template <int dim, typename Number>
 inline Point<dim, Number>
@@ -395,16 +380,12 @@ Point<dim, Number>::operator+(const Tensor<1, dim, Number>& p) const
   return tmp;
 }
 
-
-
 template <int dim, typename Number>
 inline Tensor<1, dim, Number>
 Point<dim, Number>::operator-(const Point<dim, Number>& p) const
 {
   return (Tensor<1, dim, Number>(*this) -= p);
 }
-
-
 
 template <int dim, typename Number>
 inline Point<dim, Number>
@@ -415,8 +396,6 @@ Point<dim, Number>::operator-(const Tensor<1, dim, Number>& p) const
   return tmp;
 }
 
-
-
 template <int dim, typename Number>
 inline Point<dim, Number>
 Point<dim, Number>::operator-() const
@@ -426,8 +405,6 @@ Point<dim, Number>::operator-() const
     result.values[i] = -this->values[i];
   return result;
 }
-
-
 
 template <int dim, typename Number>
 template <typename OtherNumber>
@@ -443,8 +420,6 @@ inline Point<
   return tmp;
 }
 
-
-
 template <int dim, typename Number>
 template <typename OtherNumber>
 inline Point<
@@ -459,8 +434,6 @@ Point<dim, Number>::operator/(const OtherNumber factor) const
   return tmp;
 }
 
-
-
 template <int dim, typename Number>
 inline Number Point<dim, Number>::
               operator*(const Tensor<1, dim, Number>& p) const
@@ -471,7 +444,6 @@ inline Number Point<dim, Number>::
   return res;
 }
 
-
 template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 Point<dim, Number>::square() const
@@ -479,16 +451,12 @@ Point<dim, Number>::square() const
   return this->norm_square();
 }
 
-
-
 template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 Point<dim, Number>::distance(const Point<dim, Number>& p) const
 {
   return std::sqrt(distance_square(p));
 }
-
-
 
 template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
@@ -504,8 +472,6 @@ Point<dim, Number>::distance_square(const Point<dim, Number>& p) const
   return sum;
 }
 
-
-
 template <int dim, typename Number>
 template <class Archive>
 inline void
@@ -518,9 +484,7 @@ Point<dim, Number>::serialize(Archive& ar, const unsigned int)
 
 #endif // DOXYGEN
 
-
 /*------------------------------- Global functions: Point ---------------------------*/
-
 
 /**
  * Global operator scaling a point vector by a scalar.
@@ -538,8 +502,6 @@ operator*(const OtherNumber factor, const Point<dim, Number>& p)
   return p * factor;
 }
 
-
-
 /**
  * Output operator for points. Print the elements consecutively, with a space
  * in between.
@@ -556,8 +518,6 @@ operator<<(std::ostream& out, const Point<dim, Number>& p)
   return out;
 }
 
-
-
 /**
  * Input operator for points. Inputs the elements consecutively.
  * @relatesalso Point
@@ -571,7 +531,6 @@ operator>>(std::istream& in, Point<dim, Number>& p)
 
   return in;
 }
-
 
 #ifndef DOXYGEN
 

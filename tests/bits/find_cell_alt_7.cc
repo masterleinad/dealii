@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Use a circular domain with boundary mappings, and determine cell for points
 // close to the boundary
 
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/mapping_q.h>
-
-
 
 void check(Triangulation<2>& tria)
 {
@@ -57,7 +53,6 @@ void check(Triangulation<2>& tria)
       Assert(pp.distance(p) < 5.e-12, ExcInternalError());
     }
 }
-
 
 int
 main()

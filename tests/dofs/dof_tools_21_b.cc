@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -42,7 +41,6 @@ using namespace dealii;
 //                                 bool, bool, bool)
 // for correct behaviour on non standard oriented meshes.
 //
-
 
 /*
  * Generate a grid consisting of two disjoint cells, colorize the two
@@ -107,7 +105,6 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
   triangulation.refine_global(0);
 }
 
-
 /* The 3D case */
 void generate_grid(Triangulation<3>& triangulation, int orientation)
 {
@@ -155,7 +152,6 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
   cells[0].material_id = 0;
   cells[1].material_id = 0;
 
-
   triangulation.create_triangulation(vertices, cells, SubCellData());
 
   Triangulation<3>::cell_iterator cell_1 = triangulation.begin();
@@ -176,7 +172,6 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
 
   triangulation.refine_global(0);
 }
-
 
 /*
  * Print out all face DoFs and support points as well as the actual
@@ -257,14 +252,12 @@ print_matching(DoFHandler<dim>& dof_handler,
     }
   deallog << std::endl;
 
-
   std::bitset<3> orientation;
   if(not GridTools::orthogonal_equality(
        orientation, face_1, face_2, dim == 2 ? 1 : 2, dealii::Tensor<1, dim>()))
     std::cerr << " not match! oh noze!! " << std::endl;
   deallog << "Orientation: " << orientation[0] << orientation[1]
           << orientation[2] << std::endl;
-
 
   DoFTools::make_periodicity_constraints(face_1,
                                          face_2,
@@ -289,8 +282,6 @@ print_matching(DoFHandler<dim>& dof_handler,
   constraint_matrix_reverse.print(deallog.get_file_stream());
   constraint_matrix_reverse.close();
 }
-
-
 
 int
 main()
@@ -331,7 +322,6 @@ main()
       print_matching(dof_handler);
     }
 
-
   deallog << "Test for 3D, Q1, correct subface iteration:" << std::endl
           << std::endl;
 
@@ -349,7 +339,6 @@ main()
       dof_handler.initialize(triangulation, fe);
       print_matching(dof_handler);
     }
-
 
   deallog << "Test for 3D, Taylor-Hood with Component-Mask on v:" << std::endl
           << std::endl;

@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test, whether differential operators produce a cochain complex on
 // the standard Hilbert space sequence
 
 #include "../test_grids.h"
 #include "../tests.h"
-
 
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
@@ -69,7 +67,6 @@ cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
                               info.fe_values(de),
                               info.fe_values(de + 1));
 
-
   ++de;
   L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
   Maxwell::curl_curl_matrix(dinfo.matrix(dm++, false).matrix,
@@ -92,8 +89,6 @@ cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
   ++de;
   L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
 }
-
-
 
 template <int dim>
 void
@@ -282,7 +277,6 @@ run2d(unsigned int degree)
   deallog.pop();
 }
 
-
 void
 run3d(unsigned int degree)
 {
@@ -321,7 +315,6 @@ run3d(unsigned int degree)
     }
   deallog.pop();
 }
-
 
 int
 main()

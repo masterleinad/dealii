@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::subdivided_hyper_rectangle with vector of step
 // sizes.
 
@@ -23,8 +21,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -65,7 +61,6 @@ test(std::ostream& out)
         go.write_gnuplot(tr, out);
     }
 
-
   // non-uniformly subdivided mesh
   if(true)
     {
@@ -84,7 +79,6 @@ test(std::ostream& out)
         go.write_gnuplot(tr, out);
     }
 }
-
 
 int
 main()

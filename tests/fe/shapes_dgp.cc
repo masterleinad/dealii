@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_dgp.h>
@@ -21,7 +20,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -62,7 +60,6 @@ plot_FE_DGP_shape_functions()
   //    FE_DGP<dim> p10(10);
   //    plot_shape_functions(m, p10, "DGP10");
 }
-
 
 int
 main()

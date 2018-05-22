@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ************************************************
 // A test program for the PointValueHistory class
 // Currently this only tests a finite element system
 // with 3 components, on a hyper cube and with Vectors.
 // The testing is done in two dimensions.
 // ************************************************
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -44,10 +40,7 @@
 
 #include <deal.II/numerics/point_value_history.h>
 
-
 using namespace dealii;
-
-
 
 template <int dim>
 class TestPointValueHistory
@@ -64,16 +57,12 @@ private:
   PointValueHistory<dim> test_copy;
 };
 
-
-
 template <int dim>
 TestPointValueHistory<dim>::TestPointValueHistory()
   : finite_element(FE_Q<dim>(1 + 1), dim, FE_Q<dim>(1), 1),
 
     dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -265,8 +254,6 @@ TestPointValueHistory<dim>::run()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

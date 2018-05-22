@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check eigenvalue capabilities of SolverCG
 
 #include "../testmatrix.h"
@@ -45,7 +44,6 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
     }
   deallog << std::endl;
 }
-
 
 template <typename SolverType,
           typename MatrixType,
@@ -111,7 +109,6 @@ main()
                                    true);
   cg.connect_eigenvalues_slot(std::bind(
     output_eigenvalues<double>, std::placeholders::_1, "Final Eigenvalues: "));
-
 
   for(unsigned int size = 4; size <= 30; size *= 3)
     {

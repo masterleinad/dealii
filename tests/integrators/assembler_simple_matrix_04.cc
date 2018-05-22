@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /**
  * @file Test integration with Assembler::MatrixSimple and
  * compare local block version to monolithic
@@ -56,7 +55,6 @@ fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
           }
     }
 }
-
 
 template <int dim>
 void

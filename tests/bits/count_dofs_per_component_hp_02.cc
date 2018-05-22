@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -33,7 +32,6 @@
 //
 // in contrast to the _01 test also check that this works if the element
 // collection has more than one element
-
 
 using namespace std;
 

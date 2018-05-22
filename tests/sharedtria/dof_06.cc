@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // distribute dofs on a shared triangulation. Tests the change
 // from coin_flip to smallest proc index method of distribution
 // along partition interface
@@ -34,7 +33,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void

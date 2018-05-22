@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-4
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -44,8 +40,6 @@ std::ofstream logfile("output");
 #include <deal.II/numerics/data_out.h>
 
 #include "../tests.h"
-
-
 
 template <int dim>
 class LaplaceProblem
@@ -76,8 +70,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -89,8 +81,6 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -101,8 +91,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
-
-
 
 template <int dim>
 double
@@ -116,7 +104,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return return_value;
 }
 
-
 template <int dim>
 double
 BoundaryValues<dim>::value(const Point<dim>& p,
@@ -125,13 +112,9 @@ BoundaryValues<dim>::value(const Point<dim>& p,
   return p.square();
 }
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -161,8 +144,6 @@ LaplaceProblem<dim>::make_grid_and_dofs()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -222,15 +203,12 @@ LaplaceProblem<dim>::assemble_system()
         }
     }
 
-
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, BoundaryValues<dim>(), boundary_values);
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
-
-
 
 template <int dim>
 void
@@ -243,8 +221,6 @@ LaplaceProblem<dim>::solve()
   deallog << "   " << solver_control.last_step()
           << " CG iterations needed to obtain convergence." << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -260,8 +236,6 @@ LaplaceProblem<dim>::output_results() const
   data_out.write_gmv(deallog.get_file_stream());
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -273,8 +247,6 @@ LaplaceProblem<dim>::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

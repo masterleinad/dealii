@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_p.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -30,7 +29,6 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <iostream>
 #include <sstream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -94,8 +92,6 @@ FE_BDM<dim>::FE_BDM(const unsigned int deg)
       }
 }
 
-
-
 template <int dim>
 std::string
 FE_BDM<dim>::get_name() const
@@ -117,15 +113,12 @@ FE_BDM<dim>::get_name() const
   return namebuf.str();
 }
 
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_BDM<dim>::clone() const
 {
   return std_cxx14::make_unique<FE_BDM<dim>>(*this);
 }
-
-
 
 template <int dim>
 void
@@ -203,8 +196,6 @@ FE_BDM<dim>::convert_generalized_support_point_values_to_dof_values(
   Assert(dbase == this->dofs_per_cell, ExcInternalError());
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_BDM<dim>::get_dpo_vector(const unsigned int deg)
@@ -226,8 +217,6 @@ FE_BDM<dim>::get_dpo_vector(const unsigned int deg)
 
   return dpo;
 }
-
-
 
 template <int dim>
 std::vector<bool>
@@ -259,7 +248,6 @@ FE_BDM<dim>::get_ria_vector(const unsigned int deg)
 
   return ret_val;
 }
-
 
 namespace internal
 {
@@ -314,7 +302,6 @@ namespace internal
     } // namespace
   }   // namespace FE_BDM
 } // namespace internal
-
 
 template <int dim>
 void
@@ -378,8 +365,6 @@ FE_BDM<dim>::initialize_support_points(const unsigned int deg)
   internal::FE_BDM::initialize_test_values(
     test_values_cell, cell_points, deg - 2);
 }
-
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "fe_bdm.inst"

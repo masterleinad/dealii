@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _05, but with graph coloring
 
 #include "../tests.h"
@@ -21,19 +20,15 @@
 #include <deal.II/base/work_stream.h>
 #include <deal.II/lac/vector.h>
 
-
 Vector<double> result(100);
-
 
 struct ScratchData
 {};
-
 
 struct CopyData
 {
   unsigned int computed;
 };
-
 
 void
 worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
@@ -49,7 +44,6 @@ copier(const CopyData& ad)
     result((ad.computed + j) % result.size()) += ad.computed;
 }
 
-
 // the function that computes conflicts
 std::vector<types::global_dof_index>
 conflictor(const std::vector<unsigned int>::iterator& i)
@@ -61,8 +55,6 @@ conflictor(const std::vector<unsigned int>::iterator& i)
 
   return conflicts;
 }
-
-
 
 void
 test()
@@ -91,7 +83,6 @@ test()
         comp((ad_computed + j) % result.size()) += ad_computed;
     }
 
-
   // and compare
   for(unsigned int i = 0; i < result.size(); ++i)
     AssertThrow(result(i) == comp(i), ExcInternalError());
@@ -99,8 +90,6 @@ test()
   for(unsigned int i = 0; i < result.size(); ++i)
     deallog << result(i) << std::endl;
 }
-
-
 
 int
 main()

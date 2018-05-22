@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // continuous projection of a function on the surface of a hypersphere
 
 #include "../tests.h"
@@ -41,9 +39,7 @@
 
 #include <string>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim, int spacedim>
 void
@@ -77,8 +73,6 @@ test(std::string filename, unsigned int n)
   dataout.build_patches();
   dataout.write_vtk(logfile);
 }
-
-
 
 int
 main()

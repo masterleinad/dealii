@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
@@ -61,7 +59,6 @@ public:
     return f;
   };
 };
-
 
 template <int dim>
 void
@@ -149,7 +146,6 @@ transfer(std::ostream& out)
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> q_soltrans(
     q_dof_handler);
 
-
   // test b): do some coarsening and
   // refinement
   q_soltrans.clear();
@@ -216,7 +212,6 @@ transfer(std::ostream& out)
             << std::endl;
   }
 }
-
 
 int
 main()

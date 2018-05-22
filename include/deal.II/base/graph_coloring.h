@@ -17,7 +17,6 @@
 #ifndef dealii_graph_coloring_h
 #  define dealii_graph_coloring_h
 
-
 #  include <boost/unordered_map.hpp>
 #  include <boost/unordered_set.hpp>
 #  include <deal.II/base/config.h>
@@ -27,7 +26,6 @@
 #  include <functional>
 #  include <set>
 #  include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -72,7 +70,6 @@ namespace GraphColoring
       // no conflict found!
       return false;
     }
-
 
     /**
      * Create a partitioning of the given range of iterators using a
@@ -192,8 +189,6 @@ namespace GraphColoring
       return zones;
     }
 
-
-
     /**
      * This function uses DSATUR (Degree SATURation) to color the elements of
      * a set. DSATUR works as follows: -# Arrange the vertices by decreasing
@@ -305,8 +300,6 @@ namespace GraphColoring
             }
         }
     }
-
-
 
     /**
      * Given a partition-coloring graph, i.e., a set of zones (partitions)
@@ -449,7 +442,6 @@ namespace GraphColoring
     }
   } // namespace internal
 
-
   /**
    * Create a partitioning of the given range of iterators so that iterators
    * that point to conflicting objects will be placed into different
@@ -576,7 +568,6 @@ namespace GraphColoring
 } // namespace GraphColoring
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 //----------------------------   graph_coloring.h     ---------------------------
 // end of #ifndef dealii_graph_coloring_h

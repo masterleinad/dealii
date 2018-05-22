@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that add_data_vector and type_automatic work correctly and confirm
 // that the Assert is triggered that checks, when we have dof_data and
 // cell_data with the same length.
-
 
 #include "../tests.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -32,8 +30,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -53,7 +49,6 @@ test()
   renumbering[3] = 0;
 
   dof_handler.renumber_dofs(renumbering);
-
 
   Vector<double> v_node(dof_handler.n_dofs());
   Vector<double> v_cell(dof_handler.n_dofs());
@@ -86,7 +81,6 @@ test()
     data_out.write_vtk(deallog.get_file_stream());
   }
 
-
   //error if both
   deallog << "*** should fail:" << std::endl;
   try
@@ -114,7 +108,6 @@ test()
     data_out.write_vtk(deallog.get_file_stream());
   }
 }
-
 
 int
 main()

@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, Texas A&M University, 2013
  */
 
-
 // The program starts with the usual include files, all of which you should
 // have seen before by now:
 #include <deal.II/base/function.h>
@@ -51,13 +50,11 @@
 #include <fstream>
 #include <iostream>
 
-
 // Then the usual placing of all content of this program into a namespace and
 // the importation of the deal.II namespace into the one we will work in:
 namespace Step26
 {
   using namespace dealii;
-
 
   // @sect3{The <code>HeatEquation</code> class}
   //
@@ -117,8 +114,6 @@ namespace Step26
     const double theta;
   };
 
-
-
   // @sect3{Equation data}
 
   // In the following classes and functions, we implement the various pieces
@@ -140,8 +135,6 @@ namespace Step26
   private:
     const double period;
   };
-
-
 
   template <int dim>
   double
@@ -174,8 +167,6 @@ namespace Step26
       return 0;
   }
 
-
-
   template <int dim>
   class BoundaryValues : public Function<dim>
   {
@@ -183,8 +174,6 @@ namespace Step26
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
-
-
 
   template <int dim>
   double
@@ -195,8 +184,6 @@ namespace Step26
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
-
-
 
   // @sect3{The <code>HeatEquation</code> implementation}
   //
@@ -215,8 +202,6 @@ namespace Step26
       timestep_number(0),
       theta(0.5)
   {}
-
-
 
   // @sect4{<code>HeatEquation::setup_system</code>}
   //
@@ -269,7 +254,6 @@ namespace Step26
     system_rhs.reinit(dof_handler.n_dofs());
   }
 
-
   // @sect4{<code>HeatEquation::solve_time_step</code>}
   //
   // The next function is the one that solves the actual linear system
@@ -292,8 +276,6 @@ namespace Step26
               << std::endl;
   }
 
-
-
   // @sect4{<code>HeatEquation::output_results</code>}
   //
   // Neither is there anything new in generating graphical output:
@@ -313,7 +295,6 @@ namespace Step26
     std::ofstream output(filename);
     data_out.write_vtk(output);
   }
-
 
   // @sect4{<code>HeatEquation::refine_mesh</code>}
   //
@@ -413,8 +394,6 @@ namespace Step26
     constraints.distribute(solution);
   }
 
-
-
   // @sect4{<code>HeatEquation::run</code>}
   //
   // This is the main driver of the program, where we loop over all
@@ -464,7 +443,6 @@ namespace Step26
 
     tmp.reinit(solution.size());
     forcing_terms.reinit(solution.size());
-
 
     VectorTools::interpolate(
       dof_handler, Functions::ZeroFunction<dim>(), old_solution);
@@ -644,7 +622,6 @@ namespace Step26
 // and state that there may be occasions where they can help avoid
 // code duplication and awkward control flow. This may be one of these
 // places.
-
 
 // @sect3{The <code>main</code> function}
 //

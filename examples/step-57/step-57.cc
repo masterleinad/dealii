@@ -66,7 +66,6 @@
 // And the one for ILU preconditioner:
 #include <deal.II/lac/sparse_ilu.h>
 
-
 #include <fstream>
 #include <iostream>
 
@@ -191,7 +190,6 @@ namespace Step57
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
-
 
   // @sect3{BlockSchurPreconditioner for Navier Stokes equations}
   //
@@ -841,7 +839,6 @@ namespace Step57
         f << std::endl;
       }
   }
-
 
   // @sect4{StationaryNavierStokes::run}
   // This is the last step of this program. In this part, we generate the grid and run

@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing works as intended
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -35,8 +32,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim>
 void
@@ -57,7 +52,6 @@ test()
 
   fe_collection.push_back(
     FESystem<dim>(FE_Nothing<dim>(dim), 1, FE_Nothing<dim>(), 1));
-
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
@@ -88,8 +82,6 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 }
-
-
 
 int
 main()

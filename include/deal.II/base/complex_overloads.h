@@ -44,7 +44,6 @@ operator*(const std::complex<T>& left, const std::complex<U>& right)
   return static_cast<result_type>(left) * static_cast<result_type>(right);
 }
 
-
 /**
  * Provide an <tt>operator*</tt> for a scalar multiplication of a complex
  * floating point type with a different real floating point type. Annoyingly,
@@ -61,7 +60,6 @@ operator*(const std::complex<T>& left, const U& right)
   typedef typename ProductType<std::complex<T>, U>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
 }
-
 
 /**
  * Provide an <tt>operator*</tt> for a scalar multiplication of a real

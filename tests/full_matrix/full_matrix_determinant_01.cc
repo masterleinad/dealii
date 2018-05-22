@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that the determinant for a FullMatrix of
 // size greater than 3 is correct.
 
@@ -21,9 +20,7 @@
 #include "full_matrix_common.h"
 #include <sstream>
 
-
 using namespace dealii;
-
 
 template <typename number>
 void

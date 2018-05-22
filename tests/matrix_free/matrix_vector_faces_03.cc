@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation, matrix-vector products as compared to
 // the same implementation with MeshWorker. This example uses a general mesh
 // with various cell types and hanging nodes
@@ -28,7 +26,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

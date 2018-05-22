@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_15 except FE_DGQArbitraryNodes rather than
 // FE_DGQ
 
@@ -30,7 +28,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

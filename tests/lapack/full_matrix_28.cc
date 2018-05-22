@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::rank1_update() for rank1 update of a Cholesky factorization
 
 /* MWE in Octave:
@@ -53,7 +52,6 @@ R1 =
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -97,7 +95,6 @@ test()
   deallog << "Cholesky updated:" << std::endl;
   A.print_formatted(deallog.get_file_stream(), 5);
 }
-
 
 int
 main()

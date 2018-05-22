@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-2
 
 #include "../tests.h"
@@ -32,10 +30,7 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/sparse_matrix.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void make_grid(Triangulation<2>& triangulation)
 {
@@ -74,7 +69,6 @@ void make_grid(Triangulation<2>& triangulation)
     }
 }
 
-
 void distribute_dofs(DoFHandler<2>& dof_handler)
 {
   static const FE_Q<2> finite_element(1);
@@ -89,8 +83,6 @@ void distribute_dofs(DoFHandler<2>& dof_handler)
   sparsity_pattern.print_gnuplot(deallog.get_file_stream());
 }
 
-
-
 void renumber_dofs(DoFHandler<2>& dof_handler)
 {
   DoFRenumbering::Cuthill_McKee(dof_handler);
@@ -101,8 +93,6 @@ void renumber_dofs(DoFHandler<2>& dof_handler)
 
   sparsity_pattern.print_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

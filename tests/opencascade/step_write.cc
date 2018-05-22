@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read a file in iges format, and write it out again in the same
 // format.
 
@@ -46,7 +45,6 @@ main()
       else
         out << line << std::endl;
     }
-
 
   in.close();
   out.close();

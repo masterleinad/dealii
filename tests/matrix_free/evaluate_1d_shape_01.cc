@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the correctness of the 1d evaluation functions used in FEEvaluation,
 // path evaluate_symmetric
 
@@ -22,7 +20,6 @@
 #include <iostream>
 
 #include <deal.II/matrix_free/fe_evaluation.h>
-
 
 template <int M, int N, int type, bool add>
 void
@@ -76,7 +73,6 @@ test()
   for(unsigned int i = 0; i < M; ++i)
     deallog << y[i] - y_ref[i] << " ";
   deallog << std::endl;
-
 
   for(unsigned int i = 0; i < M; ++i)
     y[i] = random_value<double>();

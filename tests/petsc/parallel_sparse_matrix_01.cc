@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // PETScWrappers::MPI::SparseMatrix::reinit(DynamicSparsityPattern) should
 // create a matrix that, when filled with elements that match the sparsity
 // pattern, doesn't require any more memory allocation any more. This is
@@ -30,7 +28,6 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/petsc_parallel_sparse_matrix.h>
 
-
 unsigned int
 get_n_mpi_processes()
 {
@@ -40,8 +37,6 @@ get_n_mpi_processes()
   return n_jobs;
 }
 
-
-
 unsigned int
 get_this_mpi_process()
 {
@@ -50,7 +45,6 @@ get_this_mpi_process()
 
   return rank;
 }
-
 
 void
 test()
@@ -95,8 +89,6 @@ test()
   //           csp.add (start_row[bi] + i,
   //                    start_row[bj] + (i+2*k) % local_rows_per_process[bj]);
 
-
-
   // now create a matrix with this sparsity
   // pattern
   PETScWrappers::MPI::SparseMatrix m;
@@ -117,8 +109,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

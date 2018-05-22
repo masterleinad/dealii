@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the functions in integrators/divergence.h
 // Output matrices and assert consistency of residuals
 
@@ -28,7 +27,6 @@
 #include <deal.II/fe/fe_system.h>
 
 using namespace LocalIntegrators::Divergence;
-
 
 template <int dim>
 void
@@ -48,7 +46,6 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   FullMatrix<double> Mg(nv, ns);
   gradient_matrix(Mg, fes, fev);
   Mg.print(deallog, 16, 8);
-
 
   Vector<double>                           u(nv), v(ns), w(ns);
   std::vector<std::vector<Tensor<1, dim>>> ugrad(
@@ -96,7 +93,6 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
@@ -135,7 +131,6 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test_face(const FEValuesBase<dim>& fev1,
@@ -168,7 +163,6 @@ test_face(const FEValuesBase<dim>& fev1,
   deallog << "M21" << std::endl;
   M21.print(deallog, 16, 8);
 }
-
 
 template <int dim>
 void
@@ -219,7 +213,6 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
   test_face(fev1, fev2, fes1, fes2);
 }
 
-
 template <int dim>
 void
 test(Triangulation<dim>& tr)
@@ -233,7 +226,6 @@ test(Triangulation<dim>& tr)
   test_fe(tr, n1, q1);
   test_fe(tr, s1, q1);
 }
-
 
 int
 main()

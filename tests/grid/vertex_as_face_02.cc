@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // test vertex_index
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int spacedim>
 void
@@ -51,8 +47,6 @@ test()
       deallog << "Right vertex=" << cell->face(1)->vertex_index(0) << std::endl;
     }
 }
-
-
 
 int
 main()

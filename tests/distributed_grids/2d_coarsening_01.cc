@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a simple coarse grid in 2d. here, we test
 // that coarsening a mesh actually works
 
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -44,7 +40,6 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "2");
 }
-
 
 int
 main(int argc, char* argv[])

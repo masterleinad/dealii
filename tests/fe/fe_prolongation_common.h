@@ -60,7 +60,6 @@ print_formatted(const FullMatrix<number>& A,
     };
 }
 
-
 template <int dim>
 inline void
 check_prolongation(FiniteElement<dim>& fe, const char* name)
@@ -76,7 +75,6 @@ check_prolongation(FiniteElement<dim>& fe, const char* name)
         print_formatted(fe.get_prolongation_matrix(i), 8, 8);
     }
 }
-
 
 #define CHECK_ALL(EL, deg, dim)       \
   {                                   \

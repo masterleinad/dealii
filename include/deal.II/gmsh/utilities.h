@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_gmsh_parameters_h
 #define dealii_gmsh_parameters_h
 

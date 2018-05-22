@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GriOut::write_vtk() with subdomain ids
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 template <int dim>
 void
@@ -95,7 +92,6 @@ test()
     deallog << "my levels: " << tr.n_levels()
             << "<= global levels:" << tr.n_global_levels() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

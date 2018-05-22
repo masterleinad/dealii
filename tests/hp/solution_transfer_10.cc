@@ -56,8 +56,6 @@ main()
   hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
   hp::DoFHandler<2>::active_cell_iterator endc = dof_handler.end();
 
-
-
   /*
    * -----------
    * |  0 |  0 |
@@ -80,7 +78,6 @@ main()
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
 
-
   /* Set refine flags:
    * -----------
    * |    |  R |
@@ -88,7 +85,6 @@ main()
    * |  R |    |
    * -----------
    */
-
 
   cell = dof_handler.begin_active();
   cell->set_refine_flag();

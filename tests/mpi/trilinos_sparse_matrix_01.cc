@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test if Add() and Insert work correctly in Trilinos in parallel
 // it turns out Trilinos always adds
 
@@ -27,7 +25,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -108,12 +105,9 @@ test()
       deallog << "A(0,0)=" << A(0, 0) << std::endl;
     }
 
-
   if(my_id == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

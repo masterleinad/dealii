@@ -18,7 +18,6 @@
 
 #include <deal.II/base/tensor.h>
 
-
 /* --------- Deprecated non-member functions operating on tensors. ---------- */
 
 DEAL_II_NAMESPACE_OPEN
@@ -39,7 +38,6 @@ DeclException1(
   << "You have requested contraction of tensors over index " << arg1
   << ", but this is not possible for tensors of the current type.");
 
-
 /**
  * Double contract two tensors of rank 2, thus computing the Frobenius inner
  * product <tt>sum<sub>i,j</sub> src1[i][j]*src2[i][j]</tt>.
@@ -52,7 +50,6 @@ template <int dim, typename Number>
 DEAL_II_DEPRECATED inline Number
 double_contract(const Tensor<2, dim, Number>& src1,
                 const Tensor<2, dim, Number>& src2);
-
 
 /**
  * Contract the last two indices of <tt>src1</tt> with the two indices
@@ -143,7 +140,6 @@ DEAL_II_DEPRECATED inline typename ProductType<Number, OtherNumber>::type
 contract(const Tensor<1, dim, Number>&      src1,
          const Tensor<1, dim, OtherNumber>& src2);
 
-
 /**
  * The cross product of one vector in 2d. This is just a rotation by 90
  * degrees.
@@ -209,7 +205,6 @@ DEAL_II_DEPRECATED inline void outer_product(Tensor<1, dim, Number>&      dst,
 template <int rank, typename Number>
 DEAL_II_DEPRECATED inline Number
 determinant(const Tensor<rank, 1, Number>& t);
-
 
 /**
  * @deprecated Do not use this function, evaluate the value manually.

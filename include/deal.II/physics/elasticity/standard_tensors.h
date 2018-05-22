@@ -16,7 +16,6 @@
 #ifndef dealii_elasticity_standard_tensors_h
 #define dealii_elasticity_standard_tensors_h
 
-
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
@@ -276,12 +275,9 @@ namespace Physics
   } // namespace Elasticity
 } // namespace Physics
 
-
-
 #ifndef DOXYGEN
 
 // ------------------------- inline functions ------------------------
-
 
 template <int dim>
 template <typename Number>
@@ -307,8 +303,6 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P(
   return Dev_P;
 }
 
-
-
 template <int dim>
 template <typename Number>
 inline SymmetricTensor<4, dim, Number>
@@ -333,8 +327,6 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P_T(
   return Dev_P_T;
 }
 
-
-
 template <int dim>
 template <typename Number>
 inline SymmetricTensor<2, dim, Number>
@@ -343,8 +335,6 @@ Physics::Elasticity::StandardTensors<dim>::ddet_F_dC(
 {
   return Number(0.5) * determinant(F) * symmetrize(invert(transpose(F) * F));
 }
-
-
 
 template <int dim>
 template <typename Number>

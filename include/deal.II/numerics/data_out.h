@@ -16,8 +16,6 @@
 #ifndef dealii_data_out_h
 #define dealii_data_out_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/numerics/data_out_dof_data.h>
 
@@ -54,8 +52,6 @@ namespace internal
     };
   } // namespace DataOutImplementation
 } // namespace internal
-
-
 
 /**
  * This class is the main class to provide output of data described by finite
@@ -355,8 +351,6 @@ private:
                   const unsigned int                  n_subdivisions,
                   const CurvedCellRegion              curved_cell_region);
 };
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix. No hanging nodes and no other
@@ -48,8 +46,6 @@ std::ofstream logfile("output");
 
 #include <complex>
 #include <iostream>
-
-
 
 template <int dim, int degree_p, typename VectorType>
 class MatrixFreeTest
@@ -102,7 +98,6 @@ public:
       }
   }
 
-
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
@@ -116,8 +111,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -304,8 +297,6 @@ test()
           << error / relative << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test interior mapping of flat manifold, where the
 // flat manifold is implemented as a ChartManifold with identity
 // pull-back and push-forward
@@ -23,7 +22,6 @@
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_values.h>
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
@@ -36,7 +34,6 @@
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/mapping_q.h>
 
-
 template <int dim, int spacedim>
 class MyFlatManifold : public ChartManifold<dim, spacedim, spacedim + 1>
 {
@@ -47,7 +44,6 @@ public:
     return std::unique_ptr<Manifold<dim, spacedim>>(new MyFlatManifold());
   }
 
-
   virtual Point<spacedim + 1>
   pull_back(const Point<spacedim>& space_point) const override
   {
@@ -56,7 +52,6 @@ public:
       p[d] = space_point[d];
     return p;
   }
-
 
   virtual Point<spacedim>
   push_forward(const Point<spacedim + 1>& chart_point) const override
@@ -76,7 +71,6 @@ public:
     return x;
   }
 };
-
 
 // Helper function
 template <int dim, int spacedim>
@@ -144,7 +138,6 @@ main()
 
   test<2, 2>(2, MappingQ<2>(4, false));
   test<2, 2>(2, MappingQ<2>(4, true));
-
 
   return 0;
 }

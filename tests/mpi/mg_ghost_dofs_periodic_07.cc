@@ -35,8 +35,6 @@
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_q.h>
 
-
-
 template <int dim>
 void
 test()
@@ -81,8 +79,6 @@ test()
   dof_handler.distribute_mg_dofs(fe2);
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

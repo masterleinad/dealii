@@ -26,7 +26,6 @@
 
 #  include <nanoflann.hpp>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -92,7 +91,6 @@ public:
   KDTree(const unsigned int&            max_leaf_size = 10,
          const std::vector<Point<dim>>& pts = std::vector<Point<dim>>());
 
-
   /**
    * Adaptor class used internally by nanoflann. This class stores a reference
    * to the vector of points, and generates some helper functions for
@@ -105,13 +103,11 @@ public:
      */
     typedef double coord_t;
 
-
     /**
      * Reference to the vector of points from which we want to compute
      * the distance.
      */
     const std::vector<Point<dim>>& points;
-
 
     /**
      * The constructor needs the vector of points from which we want to build
@@ -119,13 +115,11 @@ public:
      */
     PointCloudAdaptor(const std::vector<Point<dim>>& _points);
 
-
     /**
      * Return number of points in the data set (required by nanoflann).
      */
     size_t
     kdtree_get_point_count() const;
-
 
     /**
      * Return the L2 distance between points
@@ -135,13 +129,11 @@ public:
                     const size_t   idx_p2,
                     const size_t   size) const;
 
-
     /**
      * Return the d-th component of the idx-th point in the class.
      */
     coord_t
     kdtree_get_pt(const size_t idx, const int d) const;
-
 
     /**
      * Optional bounding-box computation: return false to default to a
@@ -155,7 +147,6 @@ public:
     kdtree_get_bbox(BBOX&) const;
   };
 
-
   /**
    * A typedef for the actual KDTree object.
    */
@@ -165,7 +156,6 @@ public:
     dim,
     unsigned int>
     NanoFlannKDTree;
-
 
   /**
    * Store a reference to the passed points. After you called this
@@ -188,19 +178,16 @@ public:
   void
   set_points(const std::vector<Point<dim>>& pts);
 
-
   /**
    * A const accessor to the @p i'th one among the underlying points.
    */
   const Point<dim>& operator[](const unsigned int i) const;
-
 
   /**
    * The number of points currently stored by this class.
    */
   unsigned int
   size() const;
-
 
   /**
    * Fill and return a vector with the indices and the distance of the points
@@ -237,19 +224,16 @@ private:
    */
   const unsigned int max_leaf_size;
 
-
   /**
    * A point cloud adaptor, to be filled when set points is called.
    */
   std::unique_ptr<PointCloudAdaptor> adaptor;
-
 
   /**
    * The actual kdtree.
    */
   std::unique_ptr<NanoFlannKDTree> kdtree;
 };
-
 
 //------------ inline functions -------------
 #  ifndef DOXYGEN
@@ -264,8 +248,6 @@ KDTree<dim>::size() const
     return 0;
 }
 
-
-
 template <int dim>
 inline const Point<dim>& KDTree<dim>::operator[](const unsigned int i) const
 {
@@ -273,15 +255,11 @@ inline const Point<dim>& KDTree<dim>::operator[](const unsigned int i) const
   return adaptor->points[i];
 }
 
-
-
 template <int dim>
 KDTree<dim>::PointCloudAdaptor::PointCloudAdaptor(
   const std::vector<Point<dim>>& _points)
   : points(_points)
 {}
-
-
 
 template <int dim>
 inline size_t
@@ -289,8 +267,6 @@ KDTree<dim>::PointCloudAdaptor::kdtree_get_point_count() const
 {
   return points.size();
 }
-
-
 
 template <int dim>
 inline double
@@ -300,8 +276,6 @@ KDTree<dim>::PointCloudAdaptor::kdtree_get_pt(const size_t idx, int d) const
   return points[idx][d];
 }
 
-
-
 template <int dim>
 template <class BBOX>
 inline bool
@@ -309,8 +283,6 @@ KDTree<dim>::PointCloudAdaptor::kdtree_get_bbox(BBOX&) const
 {
   return false;
 }
-
-
 
 template <int dim>
 inline double

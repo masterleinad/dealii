@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the Patterns::List pattern. this particular test failed at
 // one point in time with an assertion due to a pretty stupid bug.
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

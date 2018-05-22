@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // adapted from a testcase by Roger Young, sent to the mailing list
 // 2007-03-02, that illustrates that bicgstab can't handle early
 // success
@@ -25,7 +24,6 @@
 #include <deal.II/lac/sparse_ilu.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 int
 main()
@@ -65,7 +63,6 @@ main()
   Vector<double> rhs(4);
   rhs(0) = rhs(2) = 0;
   rhs(1) = rhs(3) = 0.0975;
-
 
   SparseILU<double>::AdditionalData data;
   data.use_this_sparsity = &sparsity_pattern;

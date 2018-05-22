@@ -20,8 +20,6 @@
 
 #include <fstream>
 
-
-
 template <typename Number>
 void
 test()
@@ -37,7 +35,6 @@ test()
     deallog << "NOT OK!" << std::endl;
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

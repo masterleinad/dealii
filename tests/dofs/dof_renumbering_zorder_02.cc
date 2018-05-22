@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that DoFRenumbering::hierarchical works in the most simple case.
 // checked by hand.
 
@@ -33,7 +32,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
 
 template <int dim, class stream>
 void
@@ -69,8 +67,6 @@ print_dofs(const DoFHandler<dim>& dof, stream& out)
     }
 }
 
-
-
 template <int dim>
 void
 check()
@@ -103,7 +99,6 @@ check()
 
   DoFRenumbering::hierarchical(dof);
   print_dofs(dof, o3);
-
 
   // doing renumbering twice does not change the result?!
   if(o2.str() == o3.str())

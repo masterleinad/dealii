@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that the SparseMIC applied with infinite fill-in
 // generates the exact inverse matrix
 
@@ -34,7 +32,6 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-
   for(unsigned int size = 4; size <= 16; size *= 2)
     {
       unsigned int dim = (size - 1) * (size - 1);
@@ -51,7 +48,6 @@ main()
       structure.compress();
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
-
 
       for(unsigned int test = 0; test < 2; ++test)
         {
@@ -110,7 +106,6 @@ main()
               A.vmult(tmp2, tmp1);
               tmp2 -= v;
               const double right_residual = tmp2.l2_norm() / v.l2_norm();
-
 
               deallog << "Relative residual with test vector " << i << ":  "
                       << " left=" << left_residual

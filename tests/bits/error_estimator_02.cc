@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same as error_estimator_02, but check for material_id instead of
 // subdomain_id
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -32,8 +29,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -56,8 +51,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 Quadrature<dim - 1>&
 get_q_face(Function<dim>&)
@@ -65,7 +58,6 @@ get_q_face(Function<dim>&)
   static QGauss<dim - 1> q(4);
   return q;
 }
-
 
 template <int dim>
 void
@@ -106,8 +98,6 @@ make_mesh(Triangulation<dim>& tria)
       cell->set_material_id(material);
     }
 }
-
-
 
 template <int dim>
 void
@@ -193,7 +183,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test is similar to matrix_vector_06, but implements the operations on
 // the fly from an FEValues implementation instead of data cached in
 // MatrixFree.
@@ -36,10 +34,7 @@
 
 #include <deal.II/lac/vector.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim,
           int fe_degree,
@@ -87,8 +82,6 @@ private:
   const ConstraintMatrix& constraints;
 };
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>&  dof,
@@ -117,7 +110,6 @@ do_test(const DoFHandler<dim>&  dof,
     }
 
   mf.vmult(out_dist, in_dist);
-
 
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u)
   SparsityPattern sparsity;
@@ -172,8 +164,6 @@ do_test(const DoFHandler<dim>&  dof,
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -218,8 +208,6 @@ test()
       deallog.pop();
     }
 }
-
-
 
 int
 main()

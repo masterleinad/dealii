@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // there was a bug in the RT element that Oliver Kayser-Herold fixed in
 // January 2005. Check this
 
@@ -29,7 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -51,7 +48,6 @@ test(const unsigned int degree, const unsigned int q_order)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

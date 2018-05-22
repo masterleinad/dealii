@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // pad columns if we don't fill them in each iteration. also fill them below
 // the last element if we create output
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -24,7 +22,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()

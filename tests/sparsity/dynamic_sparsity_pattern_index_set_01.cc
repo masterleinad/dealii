@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern with an IndexSet that stores
 // a contiguous range
 

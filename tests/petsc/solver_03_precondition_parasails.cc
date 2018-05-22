@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc CG solver
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -26,7 +24,6 @@
 #include <deal.II/lac/vector_memory.h>
 #include <iostream>
 #include <typeinfo>
-
 
 int
 main(int argc, char** argv)

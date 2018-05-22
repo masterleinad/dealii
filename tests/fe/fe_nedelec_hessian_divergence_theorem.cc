@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Observe how the values of the shape functions change as we make a
 // cell smaller and smaller. Evaluate the values with FEFaceValues, to
 // make sure the values scale as in rt_10 where we used FEValues
@@ -39,8 +38,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -150,8 +147,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_ball(const double tolerance)
@@ -167,7 +162,6 @@ test_hyper_ball(const double tolerance)
   FE_Nedelec<dim> fe(1);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

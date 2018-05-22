@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // TrilinosWrappers::SparseMatrix::el() and operator() had problems
 // looking up indices in rectangular matrices because they
 // accidentally used the row instead of the column map. verify that
@@ -27,7 +25,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

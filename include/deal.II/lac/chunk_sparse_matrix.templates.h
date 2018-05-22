@@ -16,13 +16,11 @@
 #ifndef dealii_chunk_sparse_matrix_templates_h
 #define dealii_chunk_sparse_matrix_templates_h
 
-
 #include <deal.II/base/parallel.h>
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/lac/chunk_sparse_matrix.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 #include <algorithm>
 #include <cmath>
@@ -36,7 +34,6 @@
 #include <deal.II/base/thread_management.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -78,8 +75,6 @@ namespace internal
         }
     }
 
-
-
     /**
      * Like the previous function, but subtract. We need this for computing
      * the residual.
@@ -106,7 +101,6 @@ namespace internal
         }
     }
 
-
     /**
      * Add the result of multiplying the transpose of a chunk of size
      * chunk_size times chunk_size by a source vector fragment of size
@@ -131,7 +125,6 @@ namespace internal
           dst[i] += sum;
         }
     }
-
 
     /**
      * Produce the result of the matrix scalar product $u^TMv$ for an
@@ -163,8 +156,6 @@ namespace internal
 
       return result;
     }
-
-
 
     /**
      * Perform a vmult_add using the ChunkSparseMatrix data structures, but
@@ -268,14 +259,10 @@ namespace internal
   } // namespace ChunkSparseMatrixImplementation
 } // namespace internal
 
-
-
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix()
   : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
 {}
-
-
 
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparseMatrix& m)
@@ -288,8 +275,6 @@ ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparseMatrix& m)
                "copy-construct a non-empty matrix. Use the "
                "ChunkSparseMatrix::copy_from() function for that purpose."));
 }
-
-
 
 template <typename number>
 ChunkSparseMatrix<number>&
@@ -306,8 +291,6 @@ ChunkSparseMatrix<number>::operator=(const ChunkSparseMatrix<number>& m)
   return *this;
 }
 
-
-
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c)
   : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
@@ -317,8 +300,6 @@ ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c)
   // for clarity be explicit on which function is called
   ChunkSparseMatrix<number>::reinit(c);
 }
-
-
 
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c,
@@ -337,15 +318,11 @@ ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c,
     this->set(i, i, 1.);
 }
 
-
-
 template <typename number>
 ChunkSparseMatrix<number>::~ChunkSparseMatrix()
 {
   cols = nullptr;
 }
-
-
 
 namespace internal
 {
@@ -359,8 +336,6 @@ namespace internal
     }
   } // namespace ChunkSparseMatrixImplementation
 } // namespace internal
-
-
 
 template <typename number>
 ChunkSparseMatrix<number>&
@@ -402,8 +377,6 @@ ChunkSparseMatrix<number>::operator=(const double d)
   return *this;
 }
 
-
-
 template <typename number>
 ChunkSparseMatrix<number>&
 ChunkSparseMatrix<number>::operator=(const IdentityMatrix& id)
@@ -420,8 +393,6 @@ ChunkSparseMatrix<number>::operator=(const IdentityMatrix& id)
 
   return *this;
 }
-
-
 
 template <typename number>
 void
@@ -453,8 +424,6 @@ ChunkSparseMatrix<number>::reinit(const ChunkSparsityPattern& sparsity)
   this->operator=(0.);
 }
 
-
-
 template <typename number>
 void
 ChunkSparseMatrix<number>::clear()
@@ -463,8 +432,6 @@ ChunkSparseMatrix<number>::clear()
   val.reset();
   max_len = 0;
 }
-
-
 
 template <typename number>
 bool
@@ -476,8 +443,6 @@ ChunkSparseMatrix<number>::empty() const
     return cols->empty();
 }
 
-
-
 template <typename number>
 typename ChunkSparseMatrix<number>::size_type
 ChunkSparseMatrix<number>::n_nonzero_elements() const
@@ -485,8 +450,6 @@ ChunkSparseMatrix<number>::n_nonzero_elements() const
   Assert(cols != nullptr, ExcNotInitialized());
   return cols->n_nonzero_elements();
 }
-
-
 
 template <typename number>
 typename ChunkSparseMatrix<number>::size_type
@@ -505,8 +468,6 @@ ChunkSparseMatrix<number>::n_actually_nonzero_elements() const
     std::bind(std::not_equal_to<double>(), std::placeholders::_1, 0));
 }
 
-
-
 template <typename number>
 void
 ChunkSparseMatrix<number>::symmetrize()
@@ -516,8 +477,6 @@ ChunkSparseMatrix<number>::symmetrize()
 
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -540,8 +499,6 @@ ChunkSparseMatrix<number>::copy_from(
   return *this;
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -556,8 +513,6 @@ ChunkSparseMatrix<number>::copy_from(const FullMatrix<somenumber>& matrix)
       if(matrix(row, col) != 0)
         set(row, col, matrix(row, col));
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -580,8 +535,6 @@ ChunkSparseMatrix<number>::add(const number                         factor,
   while(val_ptr != end_ptr)
     *val_ptr++ += factor * *matrix_ptr++;
 }
-
-
 
 template <typename number>
 void
@@ -638,8 +591,6 @@ ChunkSparseMatrix<number>::extract_row_copy(const size_type row,
     }
 }
 
-
-
 template <typename number>
 template <class OutVector, class InVector>
 void
@@ -657,8 +608,6 @@ ChunkSparseMatrix<number>::vmult(OutVector& dst, const InVector& src) const
   dst = 0;
   vmult_add(dst, src);
 }
-
-
 
 template <typename number>
 template <class OutVector, class InVector>
@@ -684,8 +633,6 @@ ChunkSparseMatrix<number>::Tvmult(OutVector& dst, const InVector& src) const
   dst = 0;
   Tvmult_add(dst, src);
 }
-
-
 
 template <typename number>
 template <class OutVector, class InVector>
@@ -715,7 +662,6 @@ ChunkSparseMatrix<number>::vmult_add(OutVector& dst, const InVector& src) const
         / cols->chunk_size
       + 1);
 }
-
 
 template <typename number>
 template <class OutVector, class InVector>
@@ -805,7 +751,6 @@ ChunkSparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
     }
 }
 
-
 template <typename number>
 template <typename somenumber>
 somenumber
@@ -862,7 +807,6 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
           val_ptr += cols->chunk_size * cols->chunk_size;
         }
 
-
       v_ptr += cols->chunk_size;
     }
 
@@ -901,8 +845,6 @@ ChunkSparseMatrix<number>::matrix_norm_square(const Vector<somenumber>& v) const
 
   return result;
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -960,7 +902,6 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
           val_ptr += cols->chunk_size * cols->chunk_size;
         }
 
-
       u_ptr += cols->chunk_size;
     }
 
@@ -1000,8 +941,6 @@ ChunkSparseMatrix<number>::matrix_scalar_product(
   return result;
 }
 
-
-
 template <typename number>
 typename ChunkSparseMatrix<number>::real_type
 ChunkSparseMatrix<number>::l1_norm() const
@@ -1030,8 +969,6 @@ ChunkSparseMatrix<number>::l1_norm() const
 
   return column_sums.linfty_norm();
 }
-
-
 
 template <typename number>
 typename ChunkSparseMatrix<number>::real_type
@@ -1066,8 +1003,6 @@ ChunkSparseMatrix<number>::linfty_norm() const
   return row_sums.linfty_norm();
 }
 
-
-
 template <typename number>
 typename ChunkSparseMatrix<number>::real_type
 ChunkSparseMatrix<number>::frobenius_norm() const
@@ -1082,8 +1017,6 @@ ChunkSparseMatrix<number>::frobenius_norm() const
 
   return std::sqrt(norm_sqr);
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1149,7 +1082,6 @@ ChunkSparseMatrix<number>::residual(Vector<somenumber>&       dst,
           val_ptr += cols->chunk_size * cols->chunk_size;
         }
 
-
       dst_ptr += cols->chunk_size;
     }
 
@@ -1185,15 +1117,12 @@ ChunkSparseMatrix<number>::residual(Vector<somenumber>&       dst,
           val_ptr += cols->chunk_size * cols->chunk_size;
         }
 
-
       dst_ptr += cols->chunk_size;
     }
 
   // finally compute the norm
   return dst.l2_norm();
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1214,8 +1143,6 @@ ChunkSparseMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
 
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1239,7 +1166,6 @@ ChunkSparseMatrix<number>::precondition_SSOR(Vector<somenumber>&       dst,
   Assert(false, ExcNotImplemented());
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1252,11 +1178,9 @@ ChunkSparseMatrix<number>::precondition_SOR(Vector<somenumber>&       dst,
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
 
-
   dst = src;
   SOR(dst, om);
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1270,11 +1194,9 @@ ChunkSparseMatrix<number>::precondition_TSOR(Vector<somenumber>&       dst,
   Assert(m() == n(),
          ExcMessage("This operation is only valid on square matrices."));
 
-
   dst = src;
   TSOR(dst, om);
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1292,7 +1214,6 @@ ChunkSparseMatrix<number>::SOR(Vector<somenumber>& dst,
   Assert(false, ExcNotImplemented());
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1308,7 +1229,6 @@ ChunkSparseMatrix<number>::TSOR(Vector<somenumber>& dst,
 
   Assert(false, ExcNotImplemented());
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -1336,7 +1256,6 @@ ChunkSparseMatrix<number>::PSOR(
   Assert(false, ExcNotImplemented());
 }
 
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1363,8 +1282,6 @@ ChunkSparseMatrix<number>::TPSOR(
   Assert(false, ExcNotImplemented());
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1384,8 +1301,6 @@ ChunkSparseMatrix<number>::SOR_step(Vector<somenumber>&       v,
 
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1407,8 +1322,6 @@ ChunkSparseMatrix<number>::TSOR_step(Vector<somenumber>&       v,
   Assert(false, ExcNotImplemented());
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1419,8 +1332,6 @@ ChunkSparseMatrix<number>::SSOR_step(Vector<somenumber>&       v,
   SOR_step(v, b, om);
   TSOR_step(v, b, om);
 }
-
-
 
 template <typename number>
 template <typename somenumber>
@@ -1439,8 +1350,6 @@ ChunkSparseMatrix<number>::SSOR(Vector<somenumber>& dst,
   Assert(false, ExcNotImplemented());
 }
 
-
-
 template <typename number>
 void
 ChunkSparseMatrix<number>::print(std::ostream& out) const
@@ -1454,7 +1363,6 @@ ChunkSparseMatrix<number>::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
 
 template <typename number>
 void
@@ -1507,8 +1415,6 @@ ChunkSparseMatrix<number>::print_formatted(std::ostream&      out,
   out.flags(old_flags);
 }
 
-
-
 template <typename number>
 void
 ChunkSparseMatrix<number>::print_pattern(std::ostream& out,
@@ -1548,8 +1454,6 @@ ChunkSparseMatrix<number>::print_pattern(std::ostream& out,
   AssertThrow(out, ExcIO());
 }
 
-
-
 template <typename number>
 void
 ChunkSparseMatrix<number>::block_write(std::ostream& out) const
@@ -1566,8 +1470,6 @@ ChunkSparseMatrix<number>::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 template <typename number>
 void
@@ -1598,15 +1500,12 @@ ChunkSparseMatrix<number>::block_read(std::istream& in)
   AssertThrow(c == ']', ExcIO());
 }
 
-
-
 template <typename number>
 std::size_t
 ChunkSparseMatrix<number>::memory_consumption() const
 {
   return sizeof(*this) + max_len * sizeof(number);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

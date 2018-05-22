@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing can be called with interpolate_boundary_values
 // with vector elements in the hp context with each element active
 // only in a subdomain
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -36,8 +33,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -74,8 +69,6 @@ test()
       ++p)
     deallog << p->first << ' ' << p->second << std::endl;
 }
-
-
 
 int
 main()

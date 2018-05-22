@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GridTools::transform with the mesh used in the "Possibilities for
 // extensions" section of step-38. The test exists because the function
 // originally did not allow application to meshes that were already refined.
-
 
 #include "../tests.h"
 
@@ -26,7 +24,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 Point<dim>
@@ -43,7 +40,6 @@ warp(const Point<dim>& p)
   return q;
 }
 
-
 template <int dim, int spacedim>
 void
 save_mesh(const Triangulation<dim, spacedim>& tria)
@@ -51,7 +47,6 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   GridOut grid_out;
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
-
 
 int
 main()

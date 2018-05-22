@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test mesh_loop in parallel for GMG level cells
 
 #include "../tests.h"
@@ -61,7 +59,6 @@ test()
   DoFHandler<dim> dofh(tria);
   dofh.distribute_dofs(fe);
   dofh.distribute_mg_dofs(fe);
-
 
   ScratchData scratch;
   CopyData    copy;
@@ -123,7 +120,6 @@ test()
             << " n_own_cells: " << data.n_own_cells
             << " n_ghost_cells: " << data.n_ghost_cells << std::endl;
   };
-
 
   {
     MPILogInitAll log;
@@ -230,7 +226,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

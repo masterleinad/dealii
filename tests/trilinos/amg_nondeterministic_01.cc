@@ -18,7 +18,6 @@
 
 #include "../tests.h"
 
-
 #include <Epetra_CrsGraph.h>
 #include <Epetra_FECrsMatrix.h>
 #include <Epetra_FEVector.h>
@@ -498,7 +497,6 @@ double matv[]
      -4.8176e+24,  4.27831e+23,  -3.46969e+24, -3.48067e+24, 9.31819e+23,
      2.03753e+25,  2.03753e+25};
 
-
 void
 check(Epetra_FECrsMatrix&     mat,
       Teuchos::ParameterList& parameter_list,
@@ -584,8 +582,6 @@ run()
     check(mat, parameter_list, x1, x2, b);
   }
 }
-
-
 
 int
 main(int argc, char** argv)

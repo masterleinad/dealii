@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/block_sparse_matrix_ez.h>
@@ -24,8 +22,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 
 #include <algorithm>
-
-
 
 void
 test()
@@ -51,8 +47,6 @@ test()
   deallog << IsBlockMatrix<BlockSparsityPattern>::value << ' '
           << IsBlockMatrix<BlockDynamicSparsityPattern>::value << std::endl;
 }
-
-
 
 int
 main()
@@ -87,7 +81,6 @@ main()
       // abort
       return 3;
     };
-
 
   return 0;
 }

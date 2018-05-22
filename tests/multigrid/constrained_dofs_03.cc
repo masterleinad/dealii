@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check mg constrained dofs for primitive and non-primitive FiniteElements
 
 #include "../tests.h"

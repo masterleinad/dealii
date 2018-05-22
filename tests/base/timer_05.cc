@@ -65,7 +65,6 @@ assert_min_max_avg_valid(const Utilities::MPI::MinMaxAvg& data)
               ExcInternalError());
 }
 
-
 void
 test_timer(Timer& t)
 {
@@ -102,8 +101,6 @@ test_timer(Timer& t)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

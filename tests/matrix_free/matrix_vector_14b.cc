@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as matrix_vector_14, but using more quadrature points than the FE
 // degree would suggest
 
@@ -24,8 +22,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

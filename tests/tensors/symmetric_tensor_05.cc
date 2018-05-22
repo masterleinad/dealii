@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure the tensor t_ijkl=delta_ik delta_jl + delta_il delta_jk
 // actually maps a rank-2 tensor onto twice itself
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -70,8 +68,6 @@ test()
 
   AssertThrow(a == b / 4, ExcInternalError());
 }
-
-
 
 int
 main()

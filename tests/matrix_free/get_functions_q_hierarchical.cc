@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in getting the function values, the function gradients, and the
 // function Laplacians on a hyperball mesh for FE_Q_Hierarchical elements
@@ -30,8 +28,6 @@
 std::ofstream logfile("output");
 
 #include "get_functions_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

@@ -30,8 +30,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 template <int dim, int spacedim>
 FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree)
   : FE_PolyFace<TensorProductPolynomials<dim - 1>, dim, spacedim>(
@@ -66,16 +64,12 @@ FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree)
   this->interface_constraints = fe_q.constraints();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_TraceQ<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_TraceQ<dim, spacedim>>(this->degree);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -91,8 +85,6 @@ FE_TraceQ<dim, spacedim>::get_name() const
 
   return namebuf.str();
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -112,8 +104,6 @@ FE_TraceQ<dim, spacedim>::has_support_on_face(
   // sure that we only access the trace dofs.
   return fe_q.has_support_on_face(shape_index, face_index);
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -146,7 +136,6 @@ FE_TraceQ<dim, spacedim>::
     }
 }
 
-
 template <int dim, int spacedim>
 std::vector<unsigned int>
 FE_TraceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
@@ -163,15 +152,12 @@ FE_TraceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_TraceQ<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return fe_q.hp_constraints_are_implemented();
 }
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -207,8 +193,6 @@ FE_TraceQ<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_TraceQ<dim, spacedim>::get_face_interpolation_matrix(
@@ -218,8 +202,6 @@ FE_TraceQ<dim, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -253,14 +235,10 @@ FE_TraceQ<dim, spacedim>::get_subface_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int spacedim>
 FE_TraceQ<1, spacedim>::FE_TraceQ(const unsigned int degree)
   : FE_FaceQ<1, spacedim>(degree)
 {}
-
-
 
 template <int spacedim>
 std::string
@@ -276,10 +254,7 @@ FE_TraceQ<1, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 // explicit instantiations
 #include "fe_trace.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

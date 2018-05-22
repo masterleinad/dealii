@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2000
  */
 
-
 // @sect3{Include files}
 
 // The first few files have already been covered in previous examples and will
@@ -58,7 +57,6 @@
 // <code>grid_in.h</code>:
 #include <deal.II/grid/grid_out.h>
 
-
 // When using locally refined grids, we will get so-called <code>hanging
 // nodes</code>. However, the standard finite element methods assumes that the
 // discrete solution spaces be continuous, so we need to make sure that the
@@ -81,7 +79,6 @@
 
 // Finally, this is as in previous programs:
 using namespace dealii;
-
 
 // @sect3{The <code>Step6</code> class template}
 
@@ -118,7 +115,6 @@ private:
   FE_Q<dim>       fe;
   DoFHandler<dim> dof_handler;
 
-
   // This is the new variable in the main class. We need an object which holds
   // a list of constraints to hold the hanging nodes and the boundary
   // conditions.
@@ -134,7 +130,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
 // @sect3{Nonconstant coefficients}
 
 // The implementation of nonconstant coefficients is copied verbatim from
@@ -149,8 +144,6 @@ coefficient(const Point<dim>& p)
     return 1;
 }
 
-
-
 // @sect3{The <code>Step6</code> class implementation}
 
 // @sect4{Step6::Step6}
@@ -162,7 +155,6 @@ coefficient(const Point<dim>& p)
 template <int dim>
 Step6<dim>::Step6() : fe(2), dof_handler(triangulation)
 {}
-
 
 // @sect4{Step6::~Step6}
 
@@ -227,7 +219,6 @@ Step6<dim>::~Step6()
   system_matrix.clear();
 }
 
-
 // @sect4{Step6::setup_system}
 
 // The next function sets up all the variables that describe the linear
@@ -260,7 +251,6 @@ Step6<dim>::setup_system()
   // the current set of constraints from the last system and then compute new ones:
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
-
 
   // Now we are ready to interpolate the boundary values with indicator 0 (the
   // whole boundary) and store the resulting constraints in our
@@ -306,7 +296,6 @@ Step6<dim>::setup_system()
   // We may now, finally, initialize the sparse matrix:
   system_matrix.reinit(sparsity_pattern);
 }
-
 
 // @sect4{Step6::assemble_system}
 
@@ -399,7 +388,6 @@ Step6<dim>::assemble_system()
   // function.
 }
 
-
 // @sect4{Step6::solve}
 
 // We continue with gradual improvements. The function that solves the linear
@@ -430,7 +418,6 @@ Step6<dim>::solve()
 
   constraints.distribute(solution);
 }
-
 
 // @sect4{Step6::refine_grid}
 
@@ -540,7 +527,6 @@ Step6<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
 // @sect4{Step6::output_results}
 
 // At the end of computations on each grid, and just before we continue the
@@ -576,7 +562,6 @@ Step6<dim>::output_results(const unsigned int cycle) const
     data_out.write_vtk(output);
   }
 }
-
 
 // @sect4{Step6::run}
 
@@ -620,7 +605,6 @@ Step6<dim>::run()
       else
         refine_grid();
 
-
       std::cout << "   Number of active cells:       "
                 << triangulation.n_active_cells() << std::endl;
 
@@ -634,7 +618,6 @@ Step6<dim>::run()
       output_results(cycle);
     }
 }
-
 
 // @sect3{The <code>main</code> function}
 

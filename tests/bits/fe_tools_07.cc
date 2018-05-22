@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 
 // check
 //   FETools::interpolation_difference(6)
-
-
 
 template <int dim>
 void

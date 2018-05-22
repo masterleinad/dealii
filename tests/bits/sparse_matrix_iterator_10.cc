@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test, extracted from dof_constraints_09 and sparse_matrix_iterator_10,
 // used to fail with aborts. this test is equivalent to
 // sparse_matrix_iterator_09, except that we use the postfix operator++
@@ -23,7 +21,6 @@
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -43,8 +40,6 @@ test()
   for(SparseMatrix<double>::const_iterator k = A.begin(); k != A.end(); k++)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
-
-
 
 int
 main()

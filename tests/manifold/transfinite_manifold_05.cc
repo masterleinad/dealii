@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that transfinite interpolation manifold works properly for creating a
 // particular point on a somewhat more complicated geometry. We used to
 // restrict the search too much in an initial version of the manifold
@@ -24,7 +23,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 int
 main()

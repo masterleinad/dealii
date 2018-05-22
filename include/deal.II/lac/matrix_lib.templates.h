@@ -32,8 +32,6 @@ MeanValueFilter::filter(Vector<number>& v) const
     v(i) -= mean;
 }
 
-
-
 template <typename number>
 void
 MeanValueFilter::vmult(Vector<number>& dst, const Vector<number>& src) const
@@ -46,8 +44,6 @@ MeanValueFilter::vmult(Vector<number>& dst, const Vector<number>& src) const
   for(size_type i = 0; i < dst.size(); ++i)
     dst(i) = src(i) - mean;
 }
-
-
 
 template <typename number>
 void
@@ -62,8 +58,6 @@ MeanValueFilter::vmult_add(Vector<number>& dst, const Vector<number>& src) const
     dst(i) += src(i) - mean;
 }
 
-
-
 template <typename number>
 void
 MeanValueFilter::filter(BlockVector<number>& v) const
@@ -74,8 +68,6 @@ MeanValueFilter::filter(BlockVector<number>& v) const
     if(i == component)
       vmult(v.block(i), v.block(i));
 }
-
-
 
 template <typename number>
 void
@@ -94,8 +86,6 @@ MeanValueFilter::vmult(BlockVector<number>&       dst,
       dst.block(i) = src.block(i);
 }
 
-
-
 template <typename number>
 void
 MeanValueFilter::vmult_add(BlockVector<number>&       dst,
@@ -112,7 +102,6 @@ MeanValueFilter::vmult_add(BlockVector<number>&       dst,
     else
       dst.block(i) += src.block(i);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -16,7 +16,6 @@
 #ifndef dealii_polynomials_rt_bubbles_h
 #define dealii_polynomials_rt_bubbles_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -159,16 +158,12 @@ private:
   unsigned int n_pols;
 };
 
-
-
 template <int dim>
 inline unsigned int
 PolynomialsRT_Bubbles<dim>::n() const
 {
   return n_pols;
 }
-
-
 
 template <int dim>
 inline unsigned int
@@ -177,15 +172,12 @@ PolynomialsRT_Bubbles<dim>::degree() const
   return my_degree;
 }
 
-
-
 template <int dim>
 inline std::string
 PolynomialsRT_Bubbles<dim>::name() const
 {
   return "RT_bubbles";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the function map_boundary_to_manifold_ids for edges in 3d
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>

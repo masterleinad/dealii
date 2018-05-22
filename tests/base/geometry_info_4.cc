@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GeometryInfo::d_linear_shape_function
 
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
-
-
 
 template <int dim>
 void
@@ -66,7 +62,6 @@ test()
     deallog << "Sum of shape functions: " << s << std::endl;
   }
 }
-
 
 int
 main()

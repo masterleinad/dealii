@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // use signals to monitor solutions converging
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 
-
 SolverControl::State
 monitor_norm(const unsigned int    iteration,
              const double          check_value,
@@ -42,7 +39,6 @@ monitor_norm(const unsigned int    iteration,
   return SolverControl::success;
 }
 
-
 SolverControl::State
 monitor_mean(const unsigned int    iteration,
              const double          check_value,
@@ -51,8 +47,6 @@ monitor_mean(const unsigned int    iteration,
   deallog << "   Mean=" << current_iterate.mean_value() << std::endl;
   return SolverControl::success;
 }
-
-
 
 template <typename SolverType,
           typename MatrixType,

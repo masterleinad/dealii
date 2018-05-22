@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the output of Testing::rand(). The period of the implemented algorithm
 // is approximately 31*(2^31 - 1) = 66,571,993,057. Take a reasonable subset of
 // this for testing. We only print every 100,000th value to keep

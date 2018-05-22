@@ -16,7 +16,6 @@
 #ifndef dealii_swappable_vector_h
 #  define dealii_swappable_vector_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/thread_management.h>
 #  include <deal.II/lac/vector.h>
@@ -129,7 +128,6 @@ public:
    */
   void
   alert();
-
 
   /**
    * Remove the file to which the data has been stored the last time. After

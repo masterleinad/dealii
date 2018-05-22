@@ -13,20 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GeometryInfo::cell_to_child and back
 
 #include "../tests.h"
 #include <deal.II/base/geometry_info.h>
-
 
 double
 rand_2()
 {
   return random_value<double>() * 4 - 2.;
 }
-
 
 template <int dim>
 void
@@ -47,7 +43,6 @@ test()
         }
       deallog << " )" << std::endl;
     }
-
 
   Point<dim> p;
 
@@ -90,7 +85,6 @@ test()
         }
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Test the general behavior of the multigrid cycles without any
  * numerics. Therefore, all transfer operators are void and we use the
@@ -27,7 +26,6 @@
 #include <deal.II/multigrid/mg_base.h>
 #include <deal.II/multigrid/mg_matrix.h>
 #include <deal.II/multigrid/multigrid.h>
-
 
 #define N 3
 typedef Vector<double> VectorType;

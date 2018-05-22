@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing block matrices. This test was
 // written when I changed a few things in the algorithm. By simply looping
 // over all entries of the sparse matrix, we also check that things went right
@@ -34,7 +32,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.h>
-
 
 template <int dim>
 void
@@ -114,8 +111,6 @@ test()
     deallog << i->block_row() << ' ' << i->block_column() << ' ' << i->row()
             << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
-
-
 
 int
 main()

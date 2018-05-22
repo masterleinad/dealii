@@ -66,7 +66,6 @@ test()
 
   QGauss<dim> quad(3); // Quadrature for coupling
 
-
   SparsityPattern sparsity;
   {
     DynamicSparsityPattern dsp(space_dh.n_dofs(), dh.n_dofs());
@@ -103,8 +102,6 @@ test()
 
   deallog << "Error on constants: " << ones.l2_norm() << std::endl;
 }
-
-
 
 int
 main()

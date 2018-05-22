@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Given the number of refinements and the number of random points
  * it benchmarks the time needed to run the function FCT
@@ -32,7 +31,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim, int spacedim>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that indeed Triangulation::create_triangulation throws an
 // exception if we have distorted cells
 
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 // create a (i) pinched cell (where two vertices coincide), or (ii)
 // twisted cell (where two vertices are swapped)
@@ -54,7 +50,6 @@ check(const unsigned int testcase)
       default:
         Assert(false, ExcNotImplemented());
     }
-
 
   std::vector<CellData<dim>> cells;
   {
@@ -82,7 +77,6 @@ check(const unsigned int testcase)
 
   Assert(flag == true, ExcInternalError());
 }
-
 
 int
 main()

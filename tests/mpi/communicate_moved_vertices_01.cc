@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test Triangulation::communicate_locally_moved_vertices()
 
 #include "../tests.h"
@@ -27,8 +25,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -98,11 +94,9 @@ test()
         }
     }
 
-
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

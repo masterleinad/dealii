@@ -116,7 +116,6 @@ namespace internal
        */
       std::vector<bool> user_flags;
 
-
       /**
        * We use this union to store boundary and material data. Because only
        * one out of these two is actually needed here, we use an union.
@@ -128,7 +127,6 @@ namespace internal
           types::boundary_id boundary_id;
           types::material_id material_id;
         };
-
 
         /**
          * Default constructor.
@@ -247,7 +245,6 @@ namespace internal
        */
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
-
 
       /**
        * Access to user pointers.
@@ -395,7 +392,6 @@ namespace internal
         data_index
       };
 
-
       /**
        * Pointer which is not used by the library but may be accessed and set
        * by the user to handle data local to a line/quad/etc.
@@ -428,7 +424,6 @@ namespace internal
        */
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
-
 
       /**
        * For edges, we enforce a standard convention that opposite
@@ -503,7 +498,6 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
     /**
      * For quadrilaterals in 3D the data of TriaObjects needs to be extended,
      * as we can obtain faces (quads) with lines in non-standard-orientation,
@@ -522,7 +516,6 @@ namespace internal
        */
       bool
       face_orientation(const unsigned int cell, const unsigned int face) const;
-
 
       /**
        * In effect, this field has <code>4*n_quads</code> elements, being the
@@ -573,14 +566,11 @@ namespace internal
 
     //----------------------------------------------------------------------//
 
-
     template <typename G>
     inline TriaObjects<G>::BoundaryOrMaterialId::BoundaryOrMaterialId()
     {
       material_id = numbers::invalid_material_id;
     }
-
-
 
     template <typename G>
     std::size_t
@@ -588,8 +578,6 @@ namespace internal
     {
       return sizeof(BoundaryOrMaterialId);
     }
-
-
 
     template <typename G>
     template <class Archive>
@@ -612,7 +600,6 @@ namespace internal
         ar& boundary_id;
     }
 
-
     template <typename G>
     inline bool
     TriaObjects<G>::face_orientation(const unsigned int,
@@ -620,7 +607,6 @@ namespace internal
     {
       return true;
     }
-
 
     template <typename G>
     inline void*&
@@ -634,7 +620,6 @@ namespace internal
       return user_data[i].p;
     }
 
-
     template <typename G>
     inline const void*
     TriaObjects<G>::user_pointer(const unsigned int i) const
@@ -646,7 +631,6 @@ namespace internal
       Assert(i < user_data.size(), ExcIndexRange(i, 0, user_data.size()));
       return user_data[i].p;
     }
-
 
     template <typename G>
     inline unsigned int&
@@ -660,7 +644,6 @@ namespace internal
       return user_data[i].i;
     }
 
-
     template <typename G>
     inline void
     TriaObjects<G>::clear_user_data(const unsigned int i)
@@ -669,7 +652,6 @@ namespace internal
       user_data[i].i = 0;
     }
 
-
     template <typename G>
     inline TriaObjects<G>::TriaObjects()
       : next_free_single(numbers::invalid_unsigned_int),
@@ -677,7 +659,6 @@ namespace internal
         reverse_order_next_free_single(false),
         user_data_type(data_unknown)
     {}
-
 
     template <typename G>
     inline unsigned int
@@ -691,7 +672,6 @@ namespace internal
       return user_data[i].i;
     }
 
-
     template <typename G>
     inline void
     TriaObjects<G>::clear_user_data()
@@ -701,14 +681,12 @@ namespace internal
         user_data[i].p = nullptr;
     }
 
-
     template <typename G>
     inline void
     TriaObjects<G>::clear_user_flags()
     {
       user_flags.assign(user_flags.size(), false);
     }
-
 
     template <typename G>
     template <class Archive>
@@ -718,8 +696,6 @@ namespace internal
       // serialize this as an integer
       ar& i;
     }
-
-
 
     template <typename G>
     template <class Archive>
@@ -736,7 +712,6 @@ namespace internal
       ar& user_data& user_data_type;
     }
 
-
     template <class Archive>
     void
     TriaObjectsHex::serialize(Archive& ar, const unsigned int version)
@@ -746,7 +721,6 @@ namespace internal
       ar& face_orientations& face_flips& face_rotations;
     }
 
-
     template <class Archive>
     void
     TriaObjectsQuad3D::serialize(Archive& ar, const unsigned int version)
@@ -755,7 +729,6 @@ namespace internal
 
       ar& line_orientations;
     }
-
 
     //----------------------------------------------------------------------//
 
@@ -781,7 +754,6 @@ namespace internal
     {
       return line_orientations[cell * GeometryInfo<2>::faces_per_cell + face];
     }
-
 
     //----------------------------------------------------------------------//
 
@@ -835,8 +807,6 @@ namespace internal
         dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, 0, pos);
     }
 
-
-
     template <class G>
     template <int dim, int spacedim>
     dealii::TriaRawIterator<dealii::TriaAccessor<G::dimension, dim, spacedim>>
@@ -865,8 +835,6 @@ namespace internal
         dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, 0, pos);
     }
 
-
-
     // declaration of explicit specializations
 
     template <>
@@ -875,8 +843,6 @@ namespace internal
 
   } // namespace TriangulationImplementation
 } // namespace internal
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

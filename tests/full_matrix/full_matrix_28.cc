@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::Tadd
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to the _3 test: a mesh where 8 2d cells meet at one
 // point. we then extrude this mesh into the z-direction
 //
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 void check(Triangulation<3>& tria)
 {
   for(unsigned i = 0; i < tria.n_vertices(); i++)
@@ -47,7 +43,6 @@ void check(Triangulation<3>& tria)
         deallog << "   " << cells[c] << std::endl;
     }
 }
-
 
 int
 main()

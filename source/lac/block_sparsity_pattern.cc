@@ -13,20 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/vector_slice.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <class SparsityPatternBase>
 BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase()
   : rows(0), columns(0)
 {}
-
-
 
 template <class SparsityPatternBase>
 BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase(
@@ -36,8 +32,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase(
 {
   reinit(n_block_rows, n_block_columns);
 }
-
-
 
 template <class SparsityPatternBase>
 BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase(
@@ -52,8 +46,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::BlockSparsityPatternBase(
            "not be used to copy-construct a non-empty sparsity pattern."));
 }
 
-
-
 template <class SparsityPatternBase>
 BlockSparsityPatternBase<SparsityPatternBase>::~BlockSparsityPatternBase()
 {
@@ -65,8 +57,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::~BlockSparsityPatternBase()
   catch(...)
     {}
 }
-
-
 
 template <class SparsityPatternBase>
 void
@@ -100,7 +90,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::reinit(
       }
 }
 
-
 template <class SparsityPatternBase>
 BlockSparsityPatternBase<SparsityPatternBase>&
 BlockSparsityPatternBase<SparsityPatternBase>::
@@ -117,8 +106,6 @@ operator=(const BlockSparsityPatternBase<SparsityPatternBase>& bsp)
 
   return *this;
 }
-
-
 
 template <class SparsityPatternBase>
 void
@@ -143,7 +130,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::collect_sizes()
   // indices with this array
   row_indices.reinit(row_sizes);
 
-
   // then do the same with the columns
   for(size_type c = 0; c < columns; ++c)
     col_sizes[c] = sub_objects[0][c]->n_cols();
@@ -157,8 +143,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::collect_sizes()
   column_indices.reinit(col_sizes);
 }
 
-
-
 template <class SparsityPatternBase>
 void
 BlockSparsityPatternBase<SparsityPatternBase>::compress()
@@ -167,8 +151,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::compress()
     for(size_type j = 0; j < columns; ++j)
       sub_objects[i][j]->compress();
 }
-
-
 
 template <class SparsityPatternBase>
 bool
@@ -180,8 +162,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::empty() const
         return false;
   return true;
 }
-
-
 
 template <class SparsityPatternBase>
 typename BlockSparsityPatternBase<SparsityPatternBase>::size_type
@@ -200,8 +180,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::max_entries_per_row() const
   return max_entries;
 }
 
-
-
 template <class SparsityPatternBase>
 typename BlockSparsityPatternBase<SparsityPatternBase>::size_type
 BlockSparsityPatternBase<SparsityPatternBase>::n_rows() const
@@ -213,8 +191,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::n_rows() const
     count += sub_objects[r][0]->n_rows();
   return count;
 }
-
-
 
 template <class SparsityPatternBase>
 typename BlockSparsityPatternBase<SparsityPatternBase>::size_type
@@ -228,8 +204,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::n_cols() const
   return count;
 }
 
-
-
 template <class SparsityPatternBase>
 typename BlockSparsityPatternBase<SparsityPatternBase>::size_type
 BlockSparsityPatternBase<SparsityPatternBase>::n_nonzero_elements() const
@@ -240,8 +214,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::n_nonzero_elements() const
       count += sub_objects[i][j]->n_nonzero_elements();
   return count;
 }
-
-
 
 template <class SparsityPatternBase>
 void
@@ -267,7 +239,6 @@ BlockSparsityPatternBase<SparsityPatternBase>::print(std::ostream& out) const
       k += block(ib, 0).n_rows();
     }
 }
-
 
 template <>
 void
@@ -296,7 +267,6 @@ BlockSparsityPatternBase<DynamicSparsityPattern>::print(std::ostream& out) const
     }
 }
 
-
 template <class SparsityPatternBase>
 void
 BlockSparsityPatternBase<SparsityPatternBase>::print_gnuplot(
@@ -322,13 +292,10 @@ BlockSparsityPatternBase<SparsityPatternBase>::print_gnuplot(
     }
 }
 
-
-
 BlockSparsityPattern::BlockSparsityPattern(const size_type n_rows,
                                            const size_type n_columns)
   : BlockSparsityPatternBase<SparsityPattern>(n_rows, n_columns)
 {}
-
 
 void
 BlockSparsityPattern::reinit(
@@ -361,7 +328,6 @@ BlockSparsityPattern::reinit(
   Assert(this->column_indices == cols, ExcInternalError());
 }
 
-
 bool
 BlockSparsityPattern::is_compressed() const
 {
@@ -371,7 +337,6 @@ BlockSparsityPattern::is_compressed() const
         return false;
   return true;
 }
-
 
 std::size_t
 BlockSparsityPattern::memory_consumption() const
@@ -388,8 +353,6 @@ BlockSparsityPattern::memory_consumption() const
 
   return mem;
 }
-
-
 
 void
 BlockSparsityPattern::copy_from(const BlockDynamicSparsityPattern& dsp)
@@ -408,15 +371,11 @@ BlockSparsityPattern::copy_from(const BlockDynamicSparsityPattern& dsp)
   collect_sizes();
 }
 
-
-
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const size_type n_rows,
   const size_type n_columns)
   : BlockSparsityPatternBase<DynamicSparsityPattern>(n_rows, n_columns)
 {}
-
-
 
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const std::vector<size_type>& row_indices,
@@ -430,7 +389,6 @@ BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   this->collect_sizes();
 }
 
-
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const std::vector<IndexSet>& partitioning)
   : BlockSparsityPatternBase<DynamicSparsityPattern>(partitioning.size(),
@@ -443,14 +401,12 @@ BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   this->collect_sizes();
 }
 
-
 BlockDynamicSparsityPattern::BlockDynamicSparsityPattern(
   const BlockIndices& row_indices,
   const BlockIndices& col_indices)
 {
   reinit(row_indices, col_indices);
 }
-
 
 void
 BlockDynamicSparsityPattern::reinit(
@@ -490,7 +446,6 @@ BlockDynamicSparsityPattern::reinit(const BlockIndices& row_indices,
   this->collect_sizes();
 }
 
-
 #ifdef DEAL_II_WITH_TRILINOS
 namespace TrilinosWrappers
 {
@@ -498,8 +453,6 @@ namespace TrilinosWrappers
                                              const size_type n_columns)
     : dealii::BlockSparsityPatternBase<SparsityPattern>(n_rows, n_columns)
   {}
-
-
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<size_type>& row_indices,
@@ -513,8 +466,6 @@ namespace TrilinosWrappers
     this->collect_sizes();
   }
 
-
-
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<Epetra_Map>& parallel_partitioning)
     : BlockSparsityPatternBase<SparsityPattern>(parallel_partitioning.size(),
@@ -526,8 +477,6 @@ namespace TrilinosWrappers
                                  parallel_partitioning[j]);
     this->collect_sizes();
   }
-
-
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<IndexSet>& parallel_partitioning,
@@ -541,8 +490,6 @@ namespace TrilinosWrappers
           parallel_partitioning[i], parallel_partitioning[j], communicator);
     this->collect_sizes();
   }
-
-
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<IndexSet>& row_parallel_partitioning,
@@ -562,8 +509,6 @@ namespace TrilinosWrappers
     this->collect_sizes();
   }
 
-
-
   void
   BlockSparsityPattern::reinit(const std::vector<size_type>& row_block_sizes,
                                const std::vector<size_type>& col_block_sizes)
@@ -575,8 +520,6 @@ namespace TrilinosWrappers
         this->block(i, j).reinit(row_block_sizes[i], col_block_sizes[j]);
     this->collect_sizes();
   }
-
-
 
   void
   BlockSparsityPattern::reinit(
@@ -591,8 +534,6 @@ namespace TrilinosWrappers
     this->collect_sizes();
   }
 
-
-
   void
   BlockSparsityPattern::reinit(
     const std::vector<IndexSet>& parallel_partitioning,
@@ -606,8 +547,6 @@ namespace TrilinosWrappers
           parallel_partitioning[i], parallel_partitioning[j], communicator);
     this->collect_sizes();
   }
-
-
 
   void
   BlockSparsityPattern::reinit(
@@ -624,8 +563,6 @@ namespace TrilinosWrappers
                                  communicator);
     this->collect_sizes();
   }
-
-
 
   void
   BlockSparsityPattern::reinit(

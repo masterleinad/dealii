@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check BlockSparseMatrix::vmult, Tvmult with deal.II block vector
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 #include <deal.II/lac/trilinos_block_sparse_matrix.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(const unsigned int size_1, const unsigned int size_2)
@@ -86,8 +83,6 @@ test(const unsigned int size_1, const unsigned int size_2)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -95,7 +90,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

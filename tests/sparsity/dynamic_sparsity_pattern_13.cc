@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::print_gnuplot
 
 #include "sparsity_pattern_common.h"

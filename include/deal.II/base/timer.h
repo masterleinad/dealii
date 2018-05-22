@@ -417,8 +417,6 @@ private:
   Utilities::MPI::MinMaxAvg accumulated_wall_time_data;
 };
 
-
-
 //TODO: The following class is not thread-safe
 /**
  * This class can be used to generate formatted output from time measurements
@@ -852,7 +850,6 @@ private:
    */
   OutputType output_type;
 
-
   /**
    * A timer object for the overall run time. If we are using MPI, this timer
    * also accumulates over all MPI processes.
@@ -907,10 +904,7 @@ private:
   Threads::Mutex mutex;
 };
 
-
-
 /* ---------------- inline functions ----------------- */
-
 
 inline void
 Timer::restart()
@@ -919,15 +913,11 @@ Timer::restart()
   start();
 }
 
-
-
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_data() const
 {
   return last_lap_wall_time_data;
 }
-
-
 
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_last_lap_wall_time_data() const
@@ -935,15 +925,11 @@ Timer::get_last_lap_wall_time_data() const
   return last_lap_wall_time_data;
 }
 
-
-
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_total_data() const
 {
   return accumulated_wall_time_data;
 }
-
-
 
 inline const Utilities::MPI::MinMaxAvg&
 Timer::get_accumulated_wall_time_data() const
@@ -951,16 +937,12 @@ Timer::get_accumulated_wall_time_data() const
   return accumulated_wall_time_data;
 }
 
-
-
 template <class StreamType>
 inline void
 Timer::print_data(StreamType& stream) const
 {
   print_last_lap_wall_time_data(stream);
 }
-
-
 
 template <class StreamType>
 inline void
@@ -972,16 +954,12 @@ Timer::print_last_lap_wall_time_data(StreamType& stream) const
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
 }
 
-
-
 template <class StreamType>
 inline void
 Timer::print_total_data(StreamType& stream) const
 {
   print_accumulated_wall_time_data(stream);
 }
-
-
 
 template <class StreamType>
 inline void
@@ -993,15 +971,11 @@ Timer::print_accumulated_wall_time_data(StreamType& stream) const
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
 }
 
-
-
 inline void
 TimerOutput::enter_section(const std::string& section_name)
 {
   enter_subsection(section_name);
 }
-
-
 
 inline void
 TimerOutput::exit_section(const std::string& section_name)
@@ -1016,8 +990,6 @@ inline TimerOutput::Scope::Scope(dealii::TimerOutput& timer_,
   timer.enter_section(section_name);
 }
 
-
-
 inline void
 TimerOutput::Scope::stop()
 {
@@ -1027,7 +999,6 @@ TimerOutput::Scope::stop()
 
   timer.exit_section(section_name);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

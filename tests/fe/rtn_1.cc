@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // FE_RaviartThomasNodal
 // Show the shape functions in support points
 
@@ -26,8 +25,6 @@
 
 #include <string>
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -76,7 +73,6 @@ check_support_points(const FiniteElement<dim>& fe)
     }
   deallog << std::endl;
 }
-
 
 template <int dim>
 void
@@ -132,7 +128,6 @@ check_face_support_points(const FiniteElement<dim>& fe)
       deallog << std::endl;
     }
 }
-
 
 int
 main()

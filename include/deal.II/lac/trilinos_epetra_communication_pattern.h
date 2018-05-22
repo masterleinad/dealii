@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_epetra_communication_pattern_h
 #define dealii_trilinos_epetra_communication_pattern_h
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_TRILINOS

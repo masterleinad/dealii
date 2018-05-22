@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the invariants of tensors using the Cayley-Hamilton theorem,
 // see http://en.wikipedia.org/wiki/Invariants_of_tensors
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -58,7 +56,6 @@ check()
       AssertThrow(R.norm() < 1e-10, ExcInternalError());
     }
 }
-
 
 int
 main()

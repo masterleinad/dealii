@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests eigenvalues of FullMatrix
 
 #include "../tests.h"
@@ -43,8 +42,6 @@ const double left[] = {
   0.0,
   -0.5,
   3.5};
-
-
 
 int
 main()

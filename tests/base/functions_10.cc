@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test InterpolatedTensorProductGridData
 
 #include "../tests.h"
@@ -53,7 +52,6 @@ fill(const std::array<std::vector<double>, 3>& coordinates)
           = coordinates[0][i] * coordinates[1][j] * coordinates[2][k];
   return data;
 }
-
 
 template <int dim>
 void
@@ -120,8 +118,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

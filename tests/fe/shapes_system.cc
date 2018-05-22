@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_dgp.h>
@@ -83,7 +82,6 @@ plot_FE_System_shape_functions()
         };
     };
 }
-
 
 int
 main()

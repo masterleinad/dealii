@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that computation of hp constraints works for DGQ elements correctly
 
 char logname[] = "output";
 
-
 #include "../hp/hp_constraints_common.h"
-
 
 template <int dim>
 void

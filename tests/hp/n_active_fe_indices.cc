@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // record the output of n_active_fe_indices for cells, faces, and
 // edges, as well as fe_index_is_active
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -28,8 +25,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -51,11 +46,9 @@ check_cells(const hp::DoFHandler<dim>& dof_handler)
     }
 }
 
-
 void
 check_faces(const hp::DoFHandler<1>&)
 {}
-
 
 template <int dim>
 void
@@ -79,16 +72,13 @@ check_faces(const hp::DoFHandler<dim>& dof_handler)
       }
 }
 
-
 void
 check_edges(const hp::DoFHandler<1>&)
 {}
 
-
 void
 check_edges(const hp::DoFHandler<2>&)
 {}
-
 
 template <int dim>
 void
@@ -113,8 +103,6 @@ check_edges(const hp::DoFHandler<dim>& dof_handler)
                ExcInternalError());
       }
 }
-
-
 
 template <int dim>
 void
@@ -147,7 +135,6 @@ test()
   check_faces(dof_handler);
   check_edges(dof_handler);
 }
-
 
 int
 main()

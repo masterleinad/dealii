@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc CG solver with the PreconditionBoomerAMG
 // preconditioner. allow the preconditioner to exploit symmetry of the
 // matrix
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -28,7 +26,6 @@
 #include <deal.II/lac/vector_memory.h>
 #include <iostream>
 #include <typeinfo>
-
 
 int
 main(int argc, char** argv)

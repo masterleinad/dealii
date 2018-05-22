@@ -23,7 +23,6 @@
 
 #define PRECISION 8
 
-
 template <int dim>
 void
 plot_FE_TraceQ_shape_functions()
@@ -49,7 +48,6 @@ plot_FE_TraceQ_shape_functions()
   plot_face_shape_functions(m, sys11, "System1-1", update_values);
   plot_face_shape_functions(m, sys22, "System2-2", update_values);
 }
-
 
 int
 main()

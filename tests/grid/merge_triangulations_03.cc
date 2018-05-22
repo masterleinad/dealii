@@ -19,7 +19,6 @@
 // Test by Bamdad Hosseini <bamdad.hosseini@gmail.com> (see mail to mailing
 // list on 6/20/2014)
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/grid_generator.h>
@@ -34,7 +33,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -113,7 +111,6 @@ mesh_info(const Triangulation<dim>& tria, const std::string& filename)
   }
 }
 
-
 void
 test()
 {
@@ -156,7 +153,6 @@ test()
   GridGenerator::merge_triangulations(flat_ball, shell, tria_out);
   mesh_info(tria_out, "tria_out.eps");
 }
-
 
 int
 main()

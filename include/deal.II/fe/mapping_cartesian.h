@@ -16,13 +16,11 @@
 #ifndef dealii_mapping_cartesian_h
 #define dealii_mapping_cartesian_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/table.h>
 #include <deal.II/fe/mapping.h>
 
 #include <cmath>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -137,7 +135,6 @@ public:
    * @}
    */
 
-
 private:
   /**
    * @name Interface with FEValues
@@ -238,8 +235,6 @@ private:
   /**
    * @}
    */
-
-
 
   /**
    * Do the computation for the <tt>fill_*</tt> functions.

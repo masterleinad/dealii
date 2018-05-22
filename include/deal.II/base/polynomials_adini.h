@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_polynomials_adini_h
 #define dealii_polynomials_adini_h
 
@@ -129,8 +128,6 @@ private:
    */
   Table<2, double> dxy;
 };
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

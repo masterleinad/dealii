@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_helper_functions_h
 #define dealii_matrix_free_helper_functions_h
-
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/index_set.h>
@@ -26,6 +24,5 @@
 #include <deal.II/base/vectorization.h>
 
 #include <deal.II/matrix_free/task_info.h>
-
 
 #endif

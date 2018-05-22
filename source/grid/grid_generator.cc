@@ -31,7 +31,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace GridGenerator
 {
   namespace
@@ -55,7 +54,6 @@ namespace GridGenerator
                                     Point<3>(0, 0, -1),
                                     Point<3>(0, 0, 1)};
 
-
     /**
      * Perform the action specified by the @p colorize flag of the
      * hyper_rectangle() function of this class.
@@ -76,8 +74,6 @@ namespace GridGenerator
         }
     }
 
-
-
     template <int spacedim>
     void colorize_subdivided_hyper_rectangle(Triangulation<1, spacedim>& tria,
                                              const Point<spacedim>&,
@@ -93,8 +89,6 @@ namespace GridGenerator
       // boundary indicators are set to
       // 0 (left) and 1 (right) by default.
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -152,7 +146,6 @@ namespace GridGenerator
         }
     }
 
-
     /**
      * Assign boundary number zero to the inner shell boundary and 1 to the
      * outer.
@@ -176,7 +169,6 @@ namespace GridGenerator
           cell->face(2)->set_all_boundary_ids(1);
         }
     }
-
 
     /**
      * Assign boundary number zero to the inner shell boundary and 1 to the
@@ -257,8 +249,6 @@ namespace GridGenerator
       else
         Assert(false, ExcNotImplemented());
     }
-
-
 
     /**
      * Assign boundary number zero the inner shell boundary, one to the outer
@@ -349,7 +339,6 @@ namespace GridGenerator
 
   } // namespace
 
-
   template <int dim, int spacedim>
   void
   hyper_rectangle(Triangulation<dim, spacedim>& tria,
@@ -412,7 +401,6 @@ namespace GridGenerator
     if(colorize)
       colorize_hyper_rectangle(tria);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -544,7 +532,6 @@ namespace GridGenerator
     tria.create_triangulation(points, cells, SubCellData());
   }
 
-
   void moebius(Triangulation<3>&  tria,
                const unsigned int n_cells,
                const unsigned int n_rotations,
@@ -559,7 +546,6 @@ namespace GridGenerator
            ExcMessage("Outer and inner radius must be positive."));
     Assert(R > r,
            ExcMessage("Outer radius must be greater than inner radius."));
-
 
     std::vector<Point<dim>> vertices(4 * n_cells);
     double beta_step  = n_rotations * numbers::PI / 2.0 / n_cells;
@@ -605,8 +591,6 @@ namespace GridGenerator
     GridReordering<dim>::invert_all_cells_of_negative_grid(vertices, cells);
     tria.create_triangulation_compatibility(vertices, cells, SubCellData());
   }
-
-
 
   template <>
   void torus<2, 3>(Triangulation<2, 3>& tria, const double R, const double r)
@@ -767,8 +751,6 @@ namespace GridGenerator
     tria.set_manifold(0, TorusManifold<3>(R, r));
   }
 
-
-
   template <int dim>
   void
   general_cell(Triangulation<dim>&            tria,
@@ -793,8 +775,6 @@ namespace GridGenerator
       ExcMessage("The volume of the cell is not greater than zero. "
                  "This could be due to the wrong ordering of the vertices."));
   }
-
-
 
   template <>
   void parallelogram(Triangulation<3>&,
@@ -826,8 +806,6 @@ namespace GridGenerator
     subdivided_parallelepiped<2, 2>(
       tria, origin, edges, subdivisions, colorize);
   }
-
-
 
   template <int dim>
   void
@@ -1130,7 +1108,6 @@ namespace GridGenerator
       }
   }
 
-
   template <int dim, int spacedim>
   void
   subdivided_hyper_cube(Triangulation<dim, spacedim>& tria,
@@ -1152,8 +1129,6 @@ namespace GridGenerator
     std::vector<unsigned int> reps(dim, repetitions);
     subdivided_hyper_rectangle(tria, reps, p0, p1);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1306,8 +1281,6 @@ namespace GridGenerator
       }
   }
 
-
-
   template <int dim>
   void
   subdivided_hyper_rectangle(Triangulation<dim>&                     tria,
@@ -1345,7 +1318,6 @@ namespace GridGenerator
                           + " must be equal to the distance of the two given "
                             "points in this coordinate direction."));
       }
-
 
     // then generate the necessary
     // points
@@ -1525,8 +1497,6 @@ namespace GridGenerator
       }
   }
 
-
-
   template <>
   void
     subdivided_hyper_rectangle(Triangulation<1>&                       tria,
@@ -1583,7 +1553,6 @@ namespace GridGenerator
     if(colorize)
       Assert(false, ExcNotImplemented());
   }
-
 
   template <>
   void
@@ -1677,7 +1646,6 @@ namespace GridGenerator
           }
       }
   }
-
 
   template <>
   void
@@ -1982,15 +1950,12 @@ namespace GridGenerator
     tria.create_triangulation(points, cells, SubCellData());
   }
 
-
   template <>
   void
     hyper_cube_slit(Triangulation<1>&, const double, const double, const bool)
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   template <>
   void enclosed_hyper_cube(Triangulation<1>&,
@@ -2002,15 +1967,11 @@ namespace GridGenerator
     Assert(false, ExcNotImplemented());
   }
 
-
-
   template <>
   void hyper_L(Triangulation<1>&, const double, const double, const bool)
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   template <>
   void hyper_ball(Triangulation<1>&, const Point<1>&, const double, const bool)
@@ -2018,15 +1979,11 @@ namespace GridGenerator
     Assert(false, ExcNotImplemented());
   }
 
-
-
   template <>
   void cylinder(Triangulation<1>&, const double, const double)
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   template <>
   void
@@ -2034,8 +1991,6 @@ namespace GridGenerator
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   template <>
   void hyper_shell(Triangulation<1>&,
@@ -2048,7 +2003,6 @@ namespace GridGenerator
     Assert(false, ExcNotImplemented());
   }
 
-
   template <>
   void cylinder_shell(Triangulation<1>&,
                       const double,
@@ -2060,20 +2014,17 @@ namespace GridGenerator
     Assert(false, ExcNotImplemented());
   }
 
-
   template <>
   void quarter_hyper_ball(Triangulation<1>&, const Point<1>&, const double)
   {
     Assert(false, ExcNotImplemented());
   }
 
-
   template <>
   void half_hyper_ball(Triangulation<1>&, const Point<1>&, const double)
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   template <>
   void half_hyper_shell(Triangulation<1>&,
@@ -2139,8 +2090,6 @@ namespace GridGenerator
                               SubCellData()); // no boundary information
   }
 
-
-
   // Implementation for 2D only
   template <>
   void hyper_cube_slit(Triangulation<2>& tria,
@@ -2182,8 +2131,6 @@ namespace GridGenerator
       }
   }
 
-
-
   template <>
   void truncated_cone(Triangulation<2>& triangulation,
                       const double      radius_0,
@@ -2220,8 +2167,6 @@ namespace GridGenerator
     for(unsigned int i = 2; i < 4; ++i)
       cell->face(i)->set_boundary_id(0);
   }
-
-
 
   // Implementation for 2D only
   template <>
@@ -2273,8 +2218,6 @@ namespace GridGenerator
       }
   }
 
-
-
   // Implementation for 2D only
   template <>
   void hyper_ball(Triangulation<2>& tria,
@@ -2318,8 +2261,6 @@ namespace GridGenerator
     if(internal_manifolds)
       tria.set_manifold(1, SphericalManifold<2>(p));
   }
-
-
 
   template <>
   void hyper_shell(Triangulation<2>&  tria,
@@ -2388,7 +2329,6 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<2>(center));
   }
 
-
   // Implementation for 2D only
   template <>
   void cylinder(Triangulation<2>& tria,
@@ -2420,8 +2360,6 @@ namespace GridGenerator
       }
   }
 
-
-
   // Implementation for 2D only
   template <>
   void cylinder_shell(Triangulation<2>&,
@@ -2433,7 +2371,6 @@ namespace GridGenerator
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   template <>
   void quarter_hyper_ball(Triangulation<2>& tria,
@@ -2497,7 +2434,6 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<2>(p));
   }
 
-
   template <>
   void half_hyper_ball(Triangulation<2>& tria,
                        const Point<2>&   p,
@@ -2559,8 +2495,6 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<2>(p));
   }
 
-
-
   // Implementation for 2D only
   template <>
   void half_hyper_shell(Triangulation<2>&  tria,
@@ -2614,7 +2548,6 @@ namespace GridGenerator
         vertices[i + N + 1] += center;
       }
 
-
     std::vector<CellData<2>> cells(N, CellData<2>());
 
     for(unsigned int i = 0; i < N; ++i)
@@ -2643,7 +2576,6 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<2>(center));
   }
-
 
   template <>
   void quarter_hyper_shell(Triangulation<2>&  tria,
@@ -2695,7 +2627,6 @@ namespace GridGenerator
         vertices[i + N + 1] += center;
       }
 
-
     std::vector<CellData<2>> cells(N, CellData<2>());
 
     for(unsigned int i = 0; i < N; ++i)
@@ -2725,8 +2656,6 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<2>(center));
   }
-
-
 
   // Implementation for 3D only
   template <>
@@ -2773,8 +2702,6 @@ namespace GridGenerator
         cell->face(0)->set_boundary_id(2);
       }
   }
-
-
 
   // Implementation for 3D only
   template <>
@@ -2826,8 +2753,6 @@ namespace GridGenerator
                               cells,
                               SubCellData()); // no boundary information
   }
-
-
 
   template <>
   void truncated_cone(Triangulation<3>& triangulation,
@@ -2915,7 +2840,6 @@ namespace GridGenerator
     triangulation.set_manifold(0, CylindricalManifold<3>());
   }
 
-
   // Implementation for 3D only
   template <>
   void hyper_L(Triangulation<3>& tria,
@@ -2984,8 +2908,6 @@ namespace GridGenerator
       }
   }
 
-
-
   // Implementation for 3D only
   template <>
   void hyper_ball(Triangulation<3>& tria,
@@ -3053,8 +2975,6 @@ namespace GridGenerator
       tria.set_manifold(1, SphericalManifold<3>(p));
   }
 
-
-
   template <int spacedim>
   void hyper_sphere(Triangulation<spacedim - 1, spacedim>& tria,
                     const Point<spacedim>&                 p,
@@ -3068,8 +2988,6 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<spacedim - 1, spacedim>(p));
   }
-
-
 
   // Implementation for 3D only
   template <>
@@ -3195,7 +3113,6 @@ namespace GridGenerator
     tria.set_manifold(0, CylindricalManifold<3>());
   }
 
-
   template <>
   void quarter_hyper_ball(Triangulation<3>& tria,
                           const Point<3>&   center,
@@ -3284,7 +3201,6 @@ namespace GridGenerator
       }
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
-
 
   // Implementation for 3D only
   template <>
@@ -3389,7 +3305,6 @@ namespace GridGenerator
       }
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
-
 
   template <>
   void hyper_shell(Triangulation<3>&  tria,
@@ -3515,8 +3430,6 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<3>(p));
   }
 
-
-
   // Implementation for 3D only
   template <>
   void half_hyper_shell(Triangulation<3>&  tria,
@@ -3622,7 +3535,6 @@ namespace GridGenerator
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
 
-
   // Implementation for 3D only
   template <>
   void quarter_hyper_shell(Triangulation<3>&  tria,
@@ -3688,7 +3600,6 @@ namespace GridGenerator
     tria.set_all_manifold_ids(0);
     tria.set_manifold(0, SphericalManifold<3>(center));
   }
-
 
   // Implementation for 3D only
   template <>
@@ -3773,8 +3684,6 @@ namespace GridGenerator
     tria.set_manifold(0, CylindricalManifold<3>(2));
   }
 
-
-
   template <int dim, int spacedim>
   void
   merge_triangulations(const Triangulation<dim, spacedim>& triangulation_1,
@@ -3835,7 +3744,6 @@ namespace GridGenerator
     result.clear();
     result.create_triangulation(vertices, cells, subcell_data);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -3899,8 +3807,6 @@ namespace GridGenerator
       }
   }
 
-
-
   template <int dim, int spacedim>
   void
   create_triangulation_with_removed_cells(
@@ -3948,8 +3854,6 @@ namespace GridGenerator
     result.clear();
     result.create_triangulation(vertices, cells, subcell_data);
   }
-
-
 
   void
   extrude_triangulation(const Triangulation<2, 2>& input,
@@ -4107,7 +4011,6 @@ namespace GridGenerator
     result.create_triangulation(points, cells, s);
   }
 
-
   template <>
   void hyper_cube_with_cylindrical_hole(Triangulation<1>&,
                                         const double,
@@ -4118,8 +4021,6 @@ namespace GridGenerator
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   template <>
   void hyper_cube_with_cylindrical_hole(Triangulation<2>& triangulation,
@@ -4222,8 +4123,6 @@ namespace GridGenerator
       }
     triangulation.set_manifold(0, PolarManifold<2>(center));
   }
-
-
 
   template <>
   void hyper_cube_with_cylindrical_hole(Triangulation<3>&  triangulation,
@@ -4440,8 +4339,6 @@ namespace GridGenerator
     out_tria.create_triangulation(v, cells, subcelldata);
   }
 
-
-
   template <template <int, int> class MeshType, int dim, int spacedim>
 #ifndef _MSC_VER
   std::map<typename MeshType<dim - 1, spacedim>::cell_iterator,
@@ -4474,7 +4371,6 @@ namespace GridGenerator
     // from only level(0) cells of volume_mesh
     std::vector<typename MeshType<dim, spacedim>::face_iterator>
       mapping; // temporary map for level==0
-
 
     std::vector<bool> touched(volume_mesh.get_triangulation().n_vertices(),
                               false);
@@ -4586,7 +4482,6 @@ namespace GridGenerator
 
                     subcell_data.boundary_lines.push_back(edge);
                   }
-
 
               cells.push_back(c_data);
               mapping.push_back(face);

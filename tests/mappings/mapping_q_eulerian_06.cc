@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // computes points in real space for 1D Eulerian mapping where middle points
 // are moved
 

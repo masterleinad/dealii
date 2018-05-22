@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_manifold_h
 #define dealii_mapping_manifold_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/qprojector.h>
@@ -33,10 +32,8 @@ DEAL_II_NAMESPACE_OPEN
 template <int, int>
 class MappingQ;
 
-
 /*!@addtogroup mapping */
 /*@{*/
-
 
 /**
  * This class implements the functionality for Manifold conforming
@@ -195,7 +192,6 @@ public:
                     const Quadrature<dim>& quadrature,
                     const unsigned int     n_original_q_points);
 
-
     /**
      * Compute the weights associated to the Manifold object, that
      * need to be passed when computing the location of the quadrature
@@ -238,7 +234,6 @@ public:
      */
     Quadrature<dim> quad;
 
-
     /**
      * Values of quadrature weights for manifold quadrature
      * formulas.
@@ -258,7 +253,6 @@ public:
      * Computed once.
      */
     std::vector<std::vector<double>> cell_manifold_quadrature_weights;
-
 
     /**
      * A vector of weights for use in Manifold::get_new_point(). For
@@ -332,7 +326,6 @@ public:
     mutable SmartPointer<const Manifold<dim, spacedim>> manifold;
   };
 
-
   // documentation can be found in Mapping::requires_update_flags()
   virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
@@ -387,8 +380,6 @@ public:
    */
 };
 
-
-
 /*@}*/
 
 /*----------------------------------------------------------------------*/
@@ -405,7 +396,6 @@ MappingManifold<dim, spacedim>::InternalData::store_vertices(
     vertices[i] = cell->vertex(i);
   this->cell = cell;
 }
-
 
 template <int dim, int spacedim>
 inline void
@@ -424,8 +414,6 @@ MappingManifold<dim, spacedim>::InternalData::
     }
 }
 
-
-
 template <int dim, int spacedim>
 inline bool
 MappingManifold<dim, spacedim>::preserves_vertex_locations() const
@@ -436,7 +424,6 @@ MappingManifold<dim, spacedim>::preserves_vertex_locations() const
 #endif // DOXYGEN
 
 /* -------------- declaration of explicit specializations ------------- */
-
 
 DEAL_II_NAMESPACE_CLOSE
 

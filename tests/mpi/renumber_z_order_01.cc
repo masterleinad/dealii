@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that DofRenumbering::hierarchical() gives the same DoFs independent of
 // the number of processors. We do this by constructing a vector where each
 // element depends on the location and the index. We output the l2_norm() of
 // that vector and hope the output is that same.
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -39,7 +36,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <boost/concept_check.hpp>
-
 
 template <int dim>
 void
@@ -119,14 +115,12 @@ test()
     deallog << "Norm: " << norm << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

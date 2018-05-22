@@ -18,7 +18,6 @@
  *          Denis Davydov, University of Erlangen-Nuremberg, 2016.
  */
 
-
 // @sect3{Include files}
 
 // The first few files have already been covered in previous examples and will
@@ -61,12 +60,10 @@
 #include <fstream>
 #include <iostream>
 
-
 // Finally, this is as in previous programs:
 namespace Step27
 {
   using namespace dealii;
-
 
   // @sect3{The main class}
 
@@ -134,8 +131,6 @@ namespace Step27
     const unsigned int max_degree;
   };
 
-
-
   // @sect3{Equation data}
   //
   // Next, let us define the right hand side function for this problem. It is
@@ -151,7 +146,6 @@ namespace Step27
     value(const Point<dim>& p, const unsigned int component) const override;
   };
 
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>& p,
@@ -162,8 +156,6 @@ namespace Step27
       product *= (p[d] + 1);
     return product;
   }
-
-
 
   // @sect3{Implementation of the main class}
 
@@ -250,7 +242,6 @@ namespace Step27
     resize(fourier_coefficients, N);
   }
 
-
   // @sect4{LaplaceProblem::~LaplaceProblem}
 
   // The destructor is unchanged from what we already did in step-6:
@@ -259,7 +250,6 @@ namespace Step27
   {
     dof_handler.clear();
   }
-
 
   // @sect4{LaplaceProblem::setup_system}
   //
@@ -288,8 +278,6 @@ namespace Step27
 
     system_matrix.reinit(sparsity_pattern);
   }
-
-
 
   // @sect4{LaplaceProblem::assemble_system}
 
@@ -376,8 +364,6 @@ namespace Step27
       }
   }
 
-
-
   // @sect4{LaplaceProblem::solve}
 
   // The function solving the linear system is entirely unchanged from
@@ -398,8 +384,6 @@ namespace Step27
 
     constraints.distribute(solution);
   }
-
-
 
   // @sect4{LaplaceProblem::postprocess}
 
@@ -425,7 +409,6 @@ namespace Step27
                                        typename FunctionMap<dim>::type(),
                                        solution,
                                        estimated_error_per_cell);
-
 
     Vector<float> smoothness_indicators(triangulation.n_active_cells());
     estimate_smoothness(smoothness_indicators);
@@ -552,7 +535,6 @@ namespace Step27
     }
   }
 
-
   // @sect4{LaplaceProblem::create_coarse_grid}
 
   // The following function is used when creating the initial grid. It is a
@@ -618,8 +600,6 @@ namespace Step27
     triangulation.refine_global(3);
   }
 
-
-
   // @sect4{LaplaceProblem::run}
 
   // This function implements the logic of the program, as did the respective
@@ -656,7 +636,6 @@ namespace Step27
         postprocess(cycle);
       }
   }
-
 
   // @sect4{LaplaceProblem::estimate_smoothness}
 
@@ -697,7 +676,6 @@ namespace Step27
     // we set up the object of this class in the constructor, what we are left
     // to do here is apply this class to calculate coefficients and then
     // perform linear regression to fit their decay slope.
-
 
     // First thing to do is to loop over all cells and do our work there, i.e. to
     // locally do the Fourier transform and estimate the decay coefficient. We
@@ -772,7 +750,6 @@ namespace Step27
       }
   }
 } // namespace Step27
-
 
 // @sect3{The main function}
 

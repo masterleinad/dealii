@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the parallel partitioner with an additional index set to describe a
 // larger set for which the partitioner provides us with some renumbering
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -117,8 +115,6 @@ test()
             << x.ghost_indices_within_larger_ghost_set()[i].second << ") ";
   deallog << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

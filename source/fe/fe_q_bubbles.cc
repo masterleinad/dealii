@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -29,14 +28,12 @@
 
 #include <deal.II/grid/grid_generator.h>
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <memory>
 #include <sstream>
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -177,7 +174,6 @@ namespace internal
   }   // namespace FE_Q_Bubbles
 } // namespace internal
 
-
 template <int dim, int spacedim>
 FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
   : FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
@@ -215,8 +211,6 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
     }
 }
 
-
-
 template <int dim, int spacedim>
 FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points)
   : FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
@@ -252,8 +246,6 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points)
       FETools::compute_projection_matrices(*this, this->restriction);
     }
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -331,16 +323,12 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Q_Bubbles<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Q_Bubbles<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -369,8 +357,6 @@ FE_Q_Bubbles<dim, spacedim>::
   for(unsigned int i = 0; i < n_bubbles; ++i)
     nodal_values[nodal_values.size() - i - 1] = 0.;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -406,8 +392,6 @@ FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<bool>
 FE_Q_Bubbles<dim, spacedim>::get_riaf_vector(const unsigned int q_deg)
@@ -416,8 +400,6 @@ FE_Q_Bubbles<dim, spacedim>::get_riaf_vector(const unsigned int q_deg)
   const unsigned int n_bubbles   = (q_deg <= 1 ? 1 : dim);
   return std::vector<bool>(n_cont_dofs + n_bubbles, true);
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -432,8 +414,6 @@ FE_Q_Bubbles<dim, spacedim>::get_dpo_vector(const unsigned int q_deg)
   return dpo;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_Q_Bubbles<dim, spacedim>::has_support_on_face(
@@ -447,8 +427,6 @@ FE_Q_Bubbles<dim, spacedim>::has_support_on_face(
     return FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>::
       has_support_on_face(shape_index, face_index);
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -471,8 +449,6 @@ FE_Q_Bubbles<dim, spacedim>::get_prolongation_matrix(
   // finally return the matrix
   return this->prolongation[refinement_case - 1][child];
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&

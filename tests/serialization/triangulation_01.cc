@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Triangulation<1,dim>
 
 #include "serialization.h"
@@ -118,7 +117,6 @@ namespace dealii
   }
 } // namespace dealii
 
-
 template <int dim, int spacedim>
 void
 do_boundary(Triangulation<dim, spacedim>& t1)
@@ -133,11 +131,9 @@ do_boundary(Triangulation<dim, spacedim>& t1)
         }
 }
 
-
 template <int spacedim>
 void do_boundary(Triangulation<1, spacedim>&)
 {}
-
 
 template <int dim, int spacedim>
 void
@@ -158,7 +154,6 @@ test()
 
   verify(tria_1, tria_2);
 }
-
 
 int
 main()

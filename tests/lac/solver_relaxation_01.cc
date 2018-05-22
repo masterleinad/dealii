@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Compare preconditioned Richardson with relaxation. All output diffs
 // should be zero.
 

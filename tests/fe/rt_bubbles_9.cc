@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a mass matrix for the RT_Bubbles element and try to invert it.
 // Same as the rt_bubbles_5 test except we use a library function to
 // create the mass matrix
@@ -38,7 +37,6 @@
 #include <vector>
 
 #define PRECISION 5
-
 
 std::ofstream logfile("output");
 
@@ -84,8 +82,6 @@ test(const unsigned int degree)
     3,
     45);
 }
-
-
 
 int
 main()

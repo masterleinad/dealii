@@ -34,7 +34,6 @@
   for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
     deallog << "[block " << i << " ]  " << var.block(i);
 
-
 using namespace dealii;
 
 int
@@ -100,7 +99,6 @@ main()
   for(unsigned int i = 0; i < a.block(0, 1).n(); ++i)
     a.block(1, 0).set(i, i, 1.);
 
-
   auto op_a = linear_operator<BlockVector<double>>(a);
 
   auto op_b00 = linear_operator(a.block(0, 0));
@@ -164,7 +162,6 @@ main()
   x = 0.;
   op_x.Tvmult_add(x, u);
   PRINTME("Tvmult_add", x);
-
 
   // Test vector reinitalization:
 

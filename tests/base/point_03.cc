@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for Point::distance_square() for VectorizedArray numbers
 
 #include "../tests.h"
 #include <deal.II/base/point.h>
 #include <deal.II/base/vectorization.h>
-
 
 template <int dim, typename number>
 void

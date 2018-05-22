@@ -15,7 +15,6 @@
 
 // like grid_transform, but use a spatially variable coefficient
 
-
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/grid/grid_generator.h>
@@ -24,8 +23,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 class Coefficient : public Function<dim>
@@ -37,7 +34,6 @@ public:
     return (p[0] > 0 ? 10 : 1);
   }
 };
-
 
 int
 main()

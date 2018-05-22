@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like _07 but with all same fe indices. This triggered yet another place
 // where we had the same kind of error.
 
 #include "../tests.h"
 #include <iostream>
 #include <sstream>
-
 
 #include <deal.II/grid/tria.h>
 
@@ -43,7 +40,6 @@
 
 using namespace dealii;
 
-
 template <int dim>
 void
 test()
@@ -62,7 +58,6 @@ test()
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
-
 
   // set refine flag for the only cell we have, then do the refinement
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> solution_trans(
@@ -88,7 +83,6 @@ test()
   // we are good if we made it to here
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

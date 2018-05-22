@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that setting the kernel size in RelaxationBlock actually works. This
 // test uses SVD-based smoothing so it can only be run with LAPACK.
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -36,7 +34,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
-
 
 template <int dim>
 void
@@ -92,7 +89,6 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
     }
 }
 
-
 template <int dim>
 void
 check()
@@ -147,8 +143,6 @@ check()
     smoother.log_statistics();
   }
 }
-
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_manifold_lib_h
 #define dealii_manifold_lib_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/function_parser.h>
@@ -121,8 +120,6 @@ private:
   static Tensor<1, spacedim>
   get_periodicity();
 };
-
-
 
 /**
  * Manifold description for a spherical space coordinate system.
@@ -458,8 +455,6 @@ private:
   double tolerance;
 };
 
-
-
 /**
  * Manifold description derived from ChartManifold, based on explicit
  * Function<spacedim> and Function<chartdim> objects describing the
@@ -634,8 +629,6 @@ private:
   const double finite_difference_step;
 };
 
-
-
 /**
  * Manifold description for the surface of a Torus in three dimensions. The
  * Torus is assumed to be in the x-z plane. The reference coordinate system
@@ -691,8 +684,6 @@ public:
 private:
   double r, R;
 };
-
-
 
 /**
  * A mapping class that extends curved boundary descriptions into the interior

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _01 but on adaptively refined grid
 
 //TODO:[GK] Add checks for RT again!
@@ -52,7 +51,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
     }
 }
 
-
 template <int dim>
 void
 refine_mesh(Triangulation<dim>& triangulation)
@@ -79,7 +77,6 @@ refine_mesh(Triangulation<dim>& triangulation)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 void
@@ -162,7 +159,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer.copy_from_mg_add(mgdof, v, u);
   deallog << "diff " << v.l2_norm() << std::endl;
 }
-
 
 int
 main()

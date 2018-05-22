@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::diag_add
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

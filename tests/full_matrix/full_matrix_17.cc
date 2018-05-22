@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::frobenius_norm
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

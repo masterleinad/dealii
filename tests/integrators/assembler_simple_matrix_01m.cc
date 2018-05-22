@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /**
  * @file Test initialization of Assembler::MatrixSimple and
  * DoFInfo with multiple matrices

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the various index conversion methods
 
 #include "../tests.h"
@@ -25,8 +24,6 @@
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void
@@ -111,8 +108,6 @@ check_fe(const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 check()
@@ -135,7 +130,6 @@ check()
   check_fe(FESystem<dim>(rt1, 2, q2, 1, co, 2));
   check_fe(FESystem<dim>(rt2, 1, q2, 1));
 }
-
 
 int
 main()

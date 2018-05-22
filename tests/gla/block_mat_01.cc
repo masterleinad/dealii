@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test LA::MPI::BlockSparseMatrix
 
 #include "../tests.h"
@@ -53,7 +51,6 @@ test()
   if(myid == 1)
     block2.add_range(2, 5);
 
-
   std::vector<IndexSet> partitioning;
   partitioning.push_back(block1);
   partitioning.push_back(block2);
@@ -86,8 +83,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

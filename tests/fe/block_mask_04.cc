@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the BlockMask class
 //
 // here: test BlockMask::size()
 
-
 #include "../tests.h"
 #include <deal.II/fe/block_mask.h>
-
-
 
 void
 test()
@@ -33,7 +28,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

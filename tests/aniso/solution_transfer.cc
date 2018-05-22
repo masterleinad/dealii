@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
@@ -35,7 +33,6 @@
 #include <iostream>
 #include <vector>
 
-
 template <int dim>
 class MyFunction : public Function<dim>
 {
@@ -51,7 +48,6 @@ public:
     return ret_value;
   };
 };
-
 
 template <int dim>
 void
@@ -125,7 +121,6 @@ transfer(std::ostream& out)
           << std::endl;
   data_out.write_gnuplot(out);
 }
-
 
 int
 main()

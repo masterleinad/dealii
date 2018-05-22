@@ -16,7 +16,6 @@
 #ifndef dealii_block_vector_h
 #define dealii_block_vector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/lac/block_indices.h>
@@ -29,7 +28,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 #ifdef DEAL_II_WITH_TRILINOS
 namespace TrilinosWrappers
 {
@@ -40,11 +38,9 @@ namespace TrilinosWrappers
 } // namespace TrilinosWrappers
 #endif
 
-
 /*! @addtogroup Vectors
  *@{
  */
-
 
 /**
  * An implementation of block vectors based on deal.II vectors. While the base
@@ -107,7 +103,6 @@ public:
    * copied from @p v.
    */
   BlockVector(const BlockVector<Number>& V);
-
 
   /**
    * Move constructor. Creates a new vector by stealing the internal data of
@@ -366,8 +361,6 @@ public:
 #ifndef DOXYGEN
 /*----------------------- Inline functions ----------------------------------*/
 
-
-
 template <typename Number>
 template <typename InputIterator>
 BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
@@ -390,8 +383,6 @@ BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
   Assert(start == end, ExcIteratorRangeDoesNotMatchVectorSize());
 }
 
-
-
 template <typename Number>
 inline BlockVector<Number>&
 BlockVector<Number>::operator=(const value_type s)
@@ -402,8 +393,6 @@ BlockVector<Number>::operator=(const value_type s)
   return *this;
 }
 
-
-
 template <typename Number>
 inline BlockVector<Number>&
 BlockVector<Number>::operator=(const BlockVector<Number>& v)
@@ -413,8 +402,6 @@ BlockVector<Number>::operator=(const BlockVector<Number>& v)
   return *this;
 }
 
-
-
 template <typename Number>
 inline BlockVector<Number>&
 BlockVector<Number>::operator=(const Vector<Number>& v)
@@ -422,8 +409,6 @@ BlockVector<Number>::operator=(const Vector<Number>& v)
   BaseClass::operator=(v);
   return *this;
 }
-
-
 
 template <typename Number>
 template <typename Number2>
@@ -443,8 +428,6 @@ BlockVector<Number>::compress(::dealii::VectorOperation::values operation)
     this->components[i].compress(operation);
 }
 
-
-
 template <typename Number>
 template <class BlockVector2>
 void
@@ -454,7 +437,6 @@ BlockVector<Number>::scale(const BlockVector2& v)
 }
 
 #endif // DOXYGEN
-
 
 /**
  * Global function which overloads the default implementation of the C++
@@ -470,7 +452,6 @@ swap(BlockVector<Number>& u, BlockVector<Number>& v)
 {
   u.swap(v);
 }
-
 
 namespace internal
 {
@@ -508,7 +489,6 @@ namespace internal
 
   } // namespace LinearOperatorImplementation
 } /* namespace internal */
-
 
 /**
  * Declare dealii::BlockVector< Number > as serial vector.

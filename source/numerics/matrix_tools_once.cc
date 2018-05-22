@@ -50,7 +50,6 @@
 #include <algorithm>
 #include <cmath>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace MatrixTools
@@ -155,7 +154,6 @@ namespace MatrixTools
     right_hand_side.compress(VectorOperation::insert);
   }
 
-
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, PetscScalar>& boundary_values,
@@ -233,8 +231,6 @@ namespace MatrixTools
   }
 
 #endif
-
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -342,8 +338,6 @@ namespace MatrixTools
         right_hand_side.compress(VectorOperation::insert);
       }
 
-
-
       template <typename TrilinosMatrix, typename TrilinosBlockVector>
       void
       apply_block_boundary_values(
@@ -429,8 +423,6 @@ namespace MatrixTools
     } // namespace TrilinosWrappers
   }   // namespace internal
 
-
-
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, TrilinosScalar>& boundary_values,
@@ -444,8 +436,6 @@ namespace MatrixTools
     internal::TrilinosWrappers::apply_boundary_values(
       boundary_values, matrix, solution, right_hand_side, eliminate_columns);
   }
-
-
 
   void
   apply_boundary_values(

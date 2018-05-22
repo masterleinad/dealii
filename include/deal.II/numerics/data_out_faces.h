@@ -16,7 +16,6 @@
 #ifndef dealii_data_out_faces_h
 #define dealii_data_out_faces_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/numerics/data_out.h>
 
@@ -24,7 +23,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -52,7 +50,6 @@ namespace internal
     };
   } // namespace DataOutFacesImplementation
 } // namespace internal
-
 
 /**
  * This class generates output from faces of a triangulation. It might be used
@@ -194,7 +191,6 @@ public:
    */
   typedef typename std::pair<cell_iterator, unsigned int> FaceDescriptor;
 
-
   /**
    * Return the first face which we want output for. The default
    * implementation returns the first face of an active cell or the first such
@@ -240,7 +236,6 @@ private:
                                                         data,
     DataOutBase::Patch<dimension - 1, space_dimension>& patch);
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

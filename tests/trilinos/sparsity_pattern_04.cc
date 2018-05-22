@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the move constructor of the sparsity pattern and check the sparsity
 // pattern whose data have been stolen can be reinitialized
 

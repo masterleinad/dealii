@@ -354,8 +354,6 @@ SparseLUDecomposition<number>::get_strengthen_diagonal(
   return strengthen_diagonal;
 }
 
-
-
 template <typename number>
 inline bool
 SparseLUDecomposition<number>::empty() const
@@ -363,14 +361,12 @@ SparseLUDecomposition<number>::empty() const
   return SparseMatrix<number>::empty();
 }
 
-
 template <typename number>
 inline typename SparseLUDecomposition<number>::size_type
 SparseLUDecomposition<number>::m() const
 {
   return SparseMatrix<number>::m();
 }
-
 
 template <typename number>
 inline typename SparseLUDecomposition<number>::size_type
@@ -413,7 +409,6 @@ SparseLUDecomposition<number>::Tvmult_add(OutVector&      dst,
 
 //---------------------------------------------------------------------------
 
-
 template <typename number>
 SparseLUDecomposition<number>::AdditionalData::AdditionalData(
   const double           strengthen_diag,
@@ -425,7 +420,6 @@ SparseLUDecomposition<number>::AdditionalData::AdditionalData(
     use_previous_sparsity(use_prev_sparsity),
     use_this_sparsity(use_this_spars)
 {}
-
 
 #endif // DOXYGEN
 

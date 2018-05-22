@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-11
-
 
 #include "../tests.h"
 
@@ -49,7 +46,6 @@ std::ofstream logfile("output");
 #include <algorithm>
 #include <iostream>
 
-
 template <int dim>
 class LaplaceProblem
 {
@@ -81,8 +77,6 @@ private:
   TableHandler output_table;
 };
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
   : fe(FE_Q<dim>(1)),
@@ -92,8 +86,6 @@ LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
   deallog << "Using mapping with degree " << mapping_degree << ":" << std::endl
           << "============================" << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -125,8 +117,6 @@ LaplaceProblem<dim>::setup_system()
   sparsity_pattern.copy_from(csp);
   system_matrix.reinit(sparsity_pattern);
 }
-
-
 
 template <int dim>
 void
@@ -180,8 +170,6 @@ LaplaceProblem<dim>::assemble_and_solve()
                          std::fabs(norm - std::sqrt(3.14159265358 / 2)));
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -194,8 +182,6 @@ LaplaceProblem<dim>::solve()
 
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 }
-
-
 
 template <int dim>
 void
@@ -217,8 +203,6 @@ LaplaceProblem<dim>::run()
   output_table.write_text(deallog.get_file_stream());
   deallog << std::endl;
 }
-
-
 
 int
 main()

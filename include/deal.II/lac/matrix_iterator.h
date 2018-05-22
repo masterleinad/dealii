@@ -16,7 +16,6 @@
 #ifndef dealii_matrix_iterator_h
 #define dealii_matrix_iterator_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -124,7 +123,6 @@ private:
   friend class MatrixIterator;
 };
 
-
 //----------------------------------------------------------------------//
 
 template <class ACCESSOR>
@@ -134,14 +132,12 @@ inline MatrixIterator<ACCESSOR>::MatrixIterator(MatrixType*     matrix,
   : accessor(matrix, r, i)
 {}
 
-
 template <class ACCESSOR>
 template <class OtherAccessor>
 inline MatrixIterator<ACCESSOR>::MatrixIterator(
   const MatrixIterator<OtherAccessor>& other)
   : accessor(other.accessor)
 {}
-
 
 template <class ACCESSOR>
 inline MatrixIterator<ACCESSOR>&
@@ -150,7 +146,6 @@ MatrixIterator<ACCESSOR>::operator++()
   accessor.advance();
   return *this;
 }
-
 
 template <class ACCESSOR>
 inline MatrixIterator<ACCESSOR>
@@ -161,20 +156,17 @@ MatrixIterator<ACCESSOR>::operator++(int)
   return iter;
 }
 
-
 template <class ACCESSOR>
 inline const ACCESSOR& MatrixIterator<ACCESSOR>::operator*() const
 {
   return accessor;
 }
 
-
 template <class ACCESSOR>
 inline const ACCESSOR* MatrixIterator<ACCESSOR>::operator->() const
 {
   return &accessor;
 }
-
 
 template <class ACCESSOR>
 inline bool
@@ -183,14 +175,12 @@ MatrixIterator<ACCESSOR>::operator==(const MatrixIterator& other) const
   return (accessor == other.accessor);
 }
 
-
 template <class ACCESSOR>
 inline bool
 MatrixIterator<ACCESSOR>::operator!=(const MatrixIterator& other) const
 {
   return !(*this == other);
 }
-
 
 template <class ACCESSOR>
 inline bool
@@ -201,7 +191,6 @@ MatrixIterator<ACCESSOR>::operator<(const MatrixIterator& other) const
 
   return (accessor < other.accessor);
 }
-
 
 template <class ACCESSOR>
 inline bool

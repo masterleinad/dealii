@@ -16,16 +16,13 @@
 #ifndef dealii_qprojector_h
 #define dealii_qprojector_h
 
-
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/quadrature.h>
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup Quadrature */
 /*@{*/
-
 
 /**
  * This class is a helper class to facilitate the usage of quadrature formulae
@@ -320,10 +317,7 @@ private:
 
 /*@}*/
 
-
 // -------------------  inline and template functions ----------------
-
-
 
 template <int dim>
 inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor(
@@ -331,13 +325,10 @@ inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor(
   : dataset_offset(dataset_offset)
 {}
 
-
 template <int dim>
 inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor()
   : dataset_offset(numbers::invalid_unsigned_int)
 {}
-
-
 
 template <int dim>
 typename QProjector<dim>::DataSetDescriptor
@@ -346,19 +337,15 @@ QProjector<dim>::DataSetDescriptor::cell()
   return 0;
 }
 
-
-
 template <int dim>
 inline QProjector<dim>::DataSetDescriptor::operator unsigned int() const
 {
   return dataset_offset;
 }
 
-
 /* -------------- declaration of explicit specializations ------------- */
 
 #ifndef DOXYGEN
-
 
 template <>
 void
@@ -379,7 +366,6 @@ QProjector<3>::project_to_face(const Quadrature<2>&   quadrature,
 template <>
 Quadrature<1>
 QProjector<1>::project_to_all_faces(const Quadrature<0>& quadrature);
-
 
 template <>
 void
@@ -410,7 +396,6 @@ QProjector<1>::project_to_all_subfaces(const Quadrature<0>& quadrature);
 template <>
 QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
                         const unsigned int   n_copies);
-
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

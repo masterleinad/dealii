@@ -15,7 +15,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test curl related functions in integrators/maxwell.h
 
 #include "../tests.h"

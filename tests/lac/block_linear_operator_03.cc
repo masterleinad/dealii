@@ -42,7 +42,6 @@ main()
 
   auto op_a = LinearOperator<>();
 
-
   {
     std::array<decltype(op_a), 2>                a{{op_a, op_a}};
     std::array<std::array<decltype(op_a), 2>, 2> temp{{a, a}};

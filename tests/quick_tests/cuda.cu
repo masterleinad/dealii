@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <array>
 #include <deal.II/base/exceptions.h>
 #include <iostream>

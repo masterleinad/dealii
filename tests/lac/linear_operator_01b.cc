@@ -71,8 +71,6 @@ main()
     const auto lo_A_t_inv
       = inverse_operator(lo_A_t, solver_A_2, preconditioner_A_2);
 
-
-
     deallog << "Normal and inverse multiplication operations" << std::endl;
 
     const Vector<double> x1  = lo_A * b;

@@ -33,8 +33,6 @@
 #include <iostream>
 #include <vector>
 
-
-
 template <int dim>
 void
 check()
@@ -142,8 +140,6 @@ check()
     dsp.print(deallog.get_file_stream());
   }
 }
-
-
 
 int
 main()

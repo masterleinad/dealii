@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test transpose operations of vectorized array using the array+offset method
 // (otherwise the same as vectorization_05)
 
@@ -21,7 +20,6 @@
 #include <limits>
 
 #include <deal.II/base/vectorization.h>
-
 
 template <typename Number, int n_numbers>
 void
@@ -88,8 +86,6 @@ test()
         deallog << std::endl;
       }
 }
-
-
 
 int
 main()

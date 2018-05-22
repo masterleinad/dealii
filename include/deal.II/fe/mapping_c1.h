@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_c1_h
 #define dealii_mapping_c1_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/fe/mapping_q.h>
 
@@ -123,7 +122,6 @@ void
 MappingC1<2>::MappingC1Generic::add_quad_support_points(
   const Triangulation<2>::cell_iterator&,
   std::vector<Point<2>>&) const;
-
 
 #endif // DOXYGEN
 

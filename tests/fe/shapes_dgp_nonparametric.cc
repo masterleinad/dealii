@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_dgp_nonparametric.h>
@@ -21,7 +20,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -49,7 +47,6 @@ plot_FE_DGPNonparametric_shape_functions()
   //    plot_shape_functions(m, p4, "DGPNonparametric4");
   //    plot_face_shape_functions(m, p4, "DGPNonparametric4");
 }
-
 
 int
 main()

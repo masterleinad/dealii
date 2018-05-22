@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::replace_in_string
 
 #include "../tests.h"
@@ -34,7 +33,6 @@ check(const std::string in,
     }
 }
 
-
 void
 test()
 {
@@ -50,7 +48,6 @@ test()
   check("small SMALL", "LL", "ll", "small SMAll");
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

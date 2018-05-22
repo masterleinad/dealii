@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::fixed_power
 
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
-
 
 template <int dim>
 void
@@ -31,8 +29,6 @@ test()
   deallog << Utilities::fixed_power<dim>(-2.5) << std::endl;
   deallog << std::endl;
 }
-
-
 
 int
 main()

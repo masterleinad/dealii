@@ -44,7 +44,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 
-
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -199,7 +198,6 @@ namespace internal
       resize(const unsigned int active_fe_index);
     };
 
-
     template <typename DoFHandlerType, typename number>
     template <class FE>
     ParallelData<DoFHandlerType, number>::ParallelData(
@@ -257,8 +255,6 @@ namespace internal
         coefficients(coefficients)
     {}
 
-
-
     template <typename DoFHandlerType, typename number>
     void
     ParallelData<DoFHandlerType, number>::resize(
@@ -290,8 +286,6 @@ namespace internal
       for(unsigned int qp = 0; qp < n_q_points; ++qp)
         coefficient_values[qp].reinit(n_components);
     }
-
-
 
     /**
      * Copy data from the local_face_integrals map of a single ParallelData
@@ -327,7 +321,6 @@ namespace internal
           face_integrals[p->first] = p->second;
         }
     }
-
 
     /**
      * Actually do the computation based on the evaluated gradients in
@@ -415,7 +408,6 @@ namespace internal
             }
         }
 
-
       if(face->at_boundary() == true)
         // neumann boundary face. compute difference between normal derivative
         // and boundary function
@@ -456,8 +448,6 @@ namespace internal
                       -= g[point](component);
             }
         }
-
-
 
       // now phi contains the following:
       // - for an internal face, phi=[a du/dn]
@@ -528,7 +518,6 @@ namespace internal
             }
         }
     }
-
 
     /**
      * A factor to scale the integral for the regular face.
@@ -683,8 +672,6 @@ namespace internal
         }
     }
 
-
-
     /**
      * Actually do the computation on a face which has no hanging nodes (it is
      * regular), i.e. either on the other side there is nirvana (face is at
@@ -716,7 +703,6 @@ namespace internal
 
       const typename DoFHandlerType::face_iterator face = cell->face(face_no);
       const unsigned int n_solution_vectors             = solutions.size();
-
 
       // initialize data of the restriction
       // of this cell to the present face
@@ -783,8 +769,6 @@ namespace internal
       for(unsigned int i = 0; i < local_face_integrals[face].size(); i++)
         local_face_integrals[face][i] *= factor;
     }
-
-
 
     /**
      * The same applies as for the function above, except that integration is
@@ -907,7 +891,6 @@ namespace internal
       local_face_integrals[face] = sum;
     }
 
-
     /**
      * Computate the error on the faces of a single cell.
      *
@@ -1024,7 +1007,6 @@ namespace internal
           // size:
           parallel_data.resize(cell->active_fe_index());
 
-
           // then do the actual integration
           if(face->has_children() == false)
             // if the face is a regular one, i.e.  either on the other side
@@ -1055,8 +1037,6 @@ namespace internal
     }
   } // namespace
 } // namespace internal
-
-
 
 // the following function is still independent of dimension, but it
 // calls dimension dependent functions
@@ -1095,7 +1075,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            strategy);
 }
 
-
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -1126,7 +1105,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            material_id,
            strategy);
 }
-
 
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -1163,7 +1141,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            strategy);
 }
 
-
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -1194,8 +1171,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            material_id,
            strategy);
 }
-
-
 
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -1370,8 +1345,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
       }
 }
 
-
-
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -1405,7 +1378,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            strategy);
 }
 
-
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -1436,8 +1408,6 @@ KellyErrorEstimator<dim, spacedim>::estimate(
            material_id,
            strategy);
 }
-
-
 
 template <int dim, int spacedim>
 template <typename InputVector, typename DoFHandlerType>

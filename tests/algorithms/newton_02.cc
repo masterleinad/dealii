@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/algorithms/newton.h>
 #include <deal.II/algorithms/operator.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 // verify that all debug vectors have the correct size
 
@@ -82,7 +80,6 @@ public:
   }
 };
 
-
 template <int dim>
 void
 test()
@@ -113,7 +110,6 @@ test()
   newton.debug_vectors = true;
   newton(out_data, in_data);
 }
-
 
 int
 main()

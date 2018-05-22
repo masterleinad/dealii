@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DataOut for complex vectors, using the path for cell data (as
 // opposed to DoF data)
 
@@ -34,8 +33,6 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-
-
 
 template <int dim>
 void
@@ -62,8 +59,6 @@ check()
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

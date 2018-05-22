@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check FullMatrix::print_formatted on NaN entry
 
 #include "../tests.h"
 
 #include <deal.II/lac/full_matrix.h>
-
 
 int
 main()

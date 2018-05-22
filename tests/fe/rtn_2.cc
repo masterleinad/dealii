@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // rt(2) had some problems with shape functions (tested in rt_7.cc). because
 // it is so simple, just run the same test for the RT-Nodal element as well
 
@@ -32,8 +31,6 @@
 #include <vector>
 
 #define PRECISION 8
-
-
 
 template <int dim>
 void
@@ -68,7 +65,6 @@ plot_shape_functions(const unsigned int degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main()

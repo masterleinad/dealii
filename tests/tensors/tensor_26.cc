@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check   Tensor<rank,dim,std::complex<double> > operator * (const Tensor<rank,dim>     &t,
 //                                                            const std::complex<double>  factor)
 // and
@@ -23,7 +22,6 @@
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
-
 
 template <int dim>
 void
@@ -51,7 +49,6 @@ test_tensor()
   deallog << "dim = " << dim << std::endl
           << left << " : " << right << std::endl;
 }
-
 
 int
 main()

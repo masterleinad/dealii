@@ -31,17 +31,14 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 //TODO: Update documentation
 //TODO: Unify code for dimensions
-
 
 //TODO: build_some_patches isn't going to work if first_cell/next_cell
 //don't iterate over all cells and if cell data is requested. in that
 //case, we need to calculate cell_number as in the DataOut class
 
 // Not implemented for 3D
-
 
 namespace internal
 {
@@ -69,8 +66,6 @@ namespace internal
         n_patches_per_circle(n_patches_per_circle)
     {}
 
-
-
     /**
      * In a WorkStream context, use this function to append the patch computed
      * by the parallel stage to the array of patches.
@@ -89,8 +84,6 @@ namespace internal
     }
   } // namespace DataOutRotationImplementation
 } // namespace internal
-
-
 
 template <int dim, typename DoFHandlerType>
 void
@@ -445,8 +438,6 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
     }
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 void
 DataOutRotation<dim, DoFHandlerType>::build_patches(
@@ -499,7 +490,6 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   this->patches.clear();
   this->patches.reserve(all_cells.size() * n_patches_per_circle);
 
-
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
   for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
     if(this->dof_data[dataset]->postprocessor)
@@ -543,15 +533,12 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
     new_patches);
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 typename DataOutRotation<dim, DoFHandlerType>::cell_iterator
 DataOutRotation<dim, DoFHandlerType>::first_cell()
 {
   return this->triangulation->begin_active();
 }
-
 
 template <int dim, typename DoFHandlerType>
 typename DataOutRotation<dim, DoFHandlerType>::cell_iterator
@@ -567,10 +554,7 @@ DataOutRotation<dim, DoFHandlerType>::next_cell(const cell_iterator& cell)
   return active_cell;
 }
 
-
-
 // explicit instantiations
 #include "data_out_rotation.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

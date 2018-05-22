@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/table.h>
 #include <deal.II/base/tensor_product_polynomials_bubbles.h>
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 /* ------------------- TensorProductPolynomialsBubbles -------------- */
-
 
 template <int dim>
 double
@@ -52,8 +48,6 @@ TensorProductPolynomialsBubbles<dim>::compute_value(const unsigned int i,
   return value;
 }
 
-
-
 template <>
 double
 TensorProductPolynomialsBubbles<0>::compute_value(const unsigned int,
@@ -62,7 +56,6 @@ TensorProductPolynomialsBubbles<0>::compute_value(const unsigned int,
   Assert(false, ExcNotImplemented());
   return 0.;
 }
-
 
 template <int dim>
 Tensor<1, dim>
@@ -108,8 +101,6 @@ TensorProductPolynomialsBubbles<dim>::compute_grad(const unsigned int i,
 
   return grad;
 }
-
-
 
 template <int dim>
 Tensor<2, dim>
@@ -290,7 +281,6 @@ TensorProductPolynomialsBubbles<dim>::compute(
         fourth_derivatives.push_back(compute_derivative<4>(i, p));
     }
 }
-
 
 /* ------------------- explicit instantiations -------------- */
 template class TensorProductPolynomialsBubbles<1>;

@@ -14,8 +14,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check SparsityPattern::copy_from(FullMatrix). The peer review of
 // the original patch uncovered a case where we would segfault with
 // empty matrices. Cover this in a testcase as well.
@@ -23,7 +21,6 @@
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test(const unsigned int M, const unsigned int N)
@@ -42,8 +39,6 @@ test(const unsigned int M, const unsigned int N)
 
   deallog << sp.n_nonzero_elements() << std::endl;
 }
-
-
 
 int
 main()

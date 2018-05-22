@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // see if we can detach from threads. before r18272 we used to have a
 // bug where detached threads would write their return value into
 // released memory. this test releases memory, allocates it again,
@@ -25,10 +24,8 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 Threads::Mutex          mutex;
 static std::atomic<int> spin_lock(0);
-
 
 int
 worker()
@@ -44,8 +41,6 @@ worker()
   mutex.release();
   return 42;
 }
-
-
 
 int
 main()

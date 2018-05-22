@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::trim. Note that deallog does not like being given '\n's in
 // the middle of strings, so the output file is almost empty.
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
-
 
 using namespace dealii;
 
@@ -28,8 +26,6 @@ check(const std::string& input, const std::string& expected)
 {
   AssertThrow(Utilities::trim(input) == expected, ExcInternalError());
 }
-
-
 
 void
 test()
@@ -47,7 +43,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

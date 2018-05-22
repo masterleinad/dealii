@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as create_mass_matrix_0[1234] but passing an additional constraint
 // matrix and comparing results without constraints
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -41,8 +37,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -137,8 +131,6 @@ check()
   rhs -= rhs_ref;
   deallog << "RHS vector error l2: " << rhs.l2_norm() << std::endl;
 }
-
-
 
 int
 main()

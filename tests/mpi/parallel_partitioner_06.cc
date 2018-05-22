@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for the Partitioner with a smaller ghost index set within a larger one
 // regarding the export_to_ghosted_array() calls
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -168,8 +166,6 @@ test()
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

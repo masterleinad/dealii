@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that handling of ghost elements in parallel distributed vectors works
 // appropriately when creating a vector from a non-ghosted source vector using
 // the assignment operator
@@ -24,7 +23,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -93,8 +91,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

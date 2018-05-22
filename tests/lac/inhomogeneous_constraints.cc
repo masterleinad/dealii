@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // inhomogeneous constraints. The program is a modification of the step-27
 // tutorial program with hp elements and the constraints arising in that
@@ -106,8 +104,6 @@ private:
   const unsigned int max_degree;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -118,7 +114,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -131,7 +126,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
   return sum;
 }
 
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -143,7 +137,6 @@ public:
   value(const Point<dim>& p, const unsigned int component) const;
 };
 
-
 template <int dim>
 double
 RightHandSide<dim>::value(const Point<dim>& p,
@@ -154,7 +147,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
     product *= (p[d] + 1);
   return product;
 }
-
 
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
@@ -176,13 +168,11 @@ LaplaceProblem<dim>::LaplaceProblem()
       }
 }
 
-
 template <int dim>
 LaplaceProblem<dim>::~LaplaceProblem()
 {
   dof_handler.clear();
 }
-
 
 template <int dim>
 void
@@ -235,8 +225,6 @@ LaplaceProblem<dim>::setup_system()
   test_matrix.reinit(sparsity_pattern);
 }
 
-
-
 // test whether we are equal with the
 // standard matrix and right hand side
 template <int dim>
@@ -279,8 +267,6 @@ LaplaceProblem<dim>::test_equality()
 
   Assert(test_rhs.l2_norm() < 1e-14, ExcInternalError());
 }
-
-
 
 template <int dim>
 void
@@ -355,8 +341,6 @@ LaplaceProblem<dim>::assemble_reference()
           << reference_matrix.n_actually_nonzero_elements(1e-10) << std::endl;
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::assemble_test_1()
@@ -426,8 +410,6 @@ LaplaceProblem<dim>::assemble_test_1()
   test_equality();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::assemble_test_2()
@@ -493,8 +475,6 @@ LaplaceProblem<dim>::assemble_test_2()
   test_equality();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -518,7 +498,6 @@ LaplaceProblem<dim>::solve()
   Assert(solution_test.l2_norm() < 1e-8, ExcInternalError());
 }
 
-
 template <int dim>
 void
 LaplaceProblem<dim>::postprocess()
@@ -531,7 +510,6 @@ LaplaceProblem<dim>::postprocess()
     triangulation, estimated_error_per_cell, 0.3, 0.03);
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <>
 void
@@ -588,7 +566,6 @@ LaplaceProblem<2>::create_coarse_grid()
   triangulation.refine_global(2);
 }
 
-
 template <>
 void
 LaplaceProblem<3>::create_coarse_grid()
@@ -596,8 +573,6 @@ LaplaceProblem<3>::create_coarse_grid()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 }
-
-
 
 template <int dim>
 void
@@ -630,7 +605,6 @@ LaplaceProblem<dim>::run()
         postprocess();
     }
 }
-
 
 // this function is copied verbatim from
 // step-27
@@ -759,7 +733,6 @@ LaplaceProblem<dim>::estimate_smoothness(
       smoothness_indicators(index) = mu - 1. * dim / 2;
     }
 }
-
 
 int
 main()

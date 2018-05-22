@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridTools::exchange_cell_data_to_ghosts this time with a DoFHandler
 
 #include "../tests.h"
@@ -38,7 +37,6 @@ test()
   parallel::distributed::Triangulation<dim> tria(mpi_communicator);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
-
 
   FE_Q<dim>       fe(1);
   DoFHandler<dim> dofhandler(tria);
@@ -69,7 +67,6 @@ test()
   for(auto& it : output)
     deallog << it << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

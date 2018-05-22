@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // RT(2) had some problems with shape functions...
 
 #include "../tests.h"
@@ -31,8 +30,6 @@
 #include <vector>
 
 #define PRECISION 8
-
-
 
 template <int dim>
 void
@@ -69,7 +66,6 @@ plot_shape_functions(const unsigned int degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main()
