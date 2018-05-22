@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the kelly error estimator uses correct normals on surfaces
 // with kinks by interpolating a function that is inside the FE space
 // and should produce zero errors.
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -34,8 +31,6 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 // function is x^2+2xy
 template <int dim>
@@ -57,7 +52,6 @@ public:
     values(0) = value(p, 0);
   }
 };
-
 
 // normal derivative of function above is 0 except for x=1, y=1 with n=(0,1,0)
 template <int dim>
@@ -86,8 +80,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 Quadrature<dim - 1>&
 get_q_face()
@@ -95,8 +87,6 @@ get_q_face()
   static QGauss<dim - 1> q(4);
   return q;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -117,8 +107,6 @@ make_mesh(Triangulation<dim, spacedim>& tria)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -168,7 +156,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

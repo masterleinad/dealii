@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference for complex-valued vectors. This test is
 // like integrate_difference_01, but multiplies the real-valued
 // function by (1/sqrt(2)+1/sqrt(2)i) and stores everything using complex data types
@@ -33,7 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 using namespace dealii;
-
 
 // x+y(+z), x^2+y^2 (, z+xy) times (1+i)/sqrt(2)
 // div = (1+2y (+1)) times (1+i)/sqrt(2)
@@ -60,8 +58,6 @@ public:
       return numbers::signaling_nan<double>();
   }
 };
-
-
 
 template <int dim>
 void
@@ -110,7 +106,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_06 but without setting a template parameter on the
 // polynomial degree, which requires to read it as a run time parameter in a
 // separate code path in FEEvaluation

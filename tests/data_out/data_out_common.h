@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework for the various dof_tools_*.cc tests
 
 #include "../tests.h"
@@ -36,7 +35,6 @@
 #include <iomanip>
 #include <string>
 
-
 // forward declaration of the function that must be provided in the
 // .cc files
 template <int dim>
@@ -44,8 +42,6 @@ void
 check_this(const DoFHandler<dim>& dof_handler,
            const Vector<double>&  v_node,
            const Vector<double>&  v_cell);
-
-
 
 // take a vector, and make a block vector out of it
 void
@@ -58,8 +54,6 @@ make_block_vector(const Vector<double>& in, BlockVector<double>& out)
   out.reinit(block_sizes);
   std::copy(in.begin(), in.end(), out.begin());
 }
-
-
 
 template <int dim>
 void
@@ -91,8 +85,6 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   check_this(dof_handler, v_node, v_cell);
 }
 
-
-
 #define CHECK(EL, deg, dim) \
   {                         \
     FE_##EL<dim> EL(deg);   \
@@ -105,7 +97,6 @@ check(const FiniteElement<dim>& fe, const std::string& name)
     CHECK(EL, deg, 2);     \
     CHECK(EL, deg, 3);     \
   }
-
 
 int
 main()

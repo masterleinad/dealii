@@ -13,17 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test WorkStream with empty functions
 
 #include "../tests.h"
 
 #include <deal.II/base/work_stream.h>
 
-
 struct ScratchData
 {};
-
 
 void
 foo(const std::vector<unsigned int>::iterator, ScratchData&, unsigned int&)
@@ -58,8 +55,6 @@ test()
                   ScratchData(),
                   0U);
 }
-
-
 
 int
 main()

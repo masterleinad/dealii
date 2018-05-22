@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Try to merge two empty ConstraintMatrix objects initialized with IndexSets
 // that don't match.
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 void
 merge_check()
@@ -54,8 +50,6 @@ merge_check()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

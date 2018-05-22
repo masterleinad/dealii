@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that thread local storage works as advertised
 
 #include "../tests.h"
@@ -21,7 +20,6 @@
 
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
-
 
 struct X
 {
@@ -57,7 +55,6 @@ execute(int i)
   // thread lives longer than the TLS object
   sleep(5);
 }
-
 
 void
 test()
@@ -98,8 +95,6 @@ test()
   // now make sure the threads all finish
   tg.join_all();
 }
-
-
 
 int
 main()

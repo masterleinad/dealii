@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Show the shape functions of the Raviart-Thomas element on the unit cell
 // Plots are gnuplot compatible if lines with desired prefix are selected.
 
@@ -22,7 +20,6 @@
 #include <deal.II/fe/fe_raviart_thomas.h>
 
 #define PRECISION 2
-
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
@@ -53,8 +50,6 @@
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
-
-
 
 /*
  * Check the value of the derivative field.
@@ -126,7 +121,6 @@ void EvaluateDerivative(DoFHandler<2>* dof_handler, Vector<double>& solution)
   deallog << "L2-Err=" << pow(err_l2, 0.5)
           << ", Hdiv-Err=" << pow(err_hdiv, 0.5) << std::endl;
 }
-
 
 template <int dim>
 void
@@ -325,7 +319,6 @@ create_mass_matrix(const Mapping<dim>&        mapping,
     }
 }
 
-
 template <int dim>
 void
 create_right_hand_side(const Mapping<dim>&    mapping,
@@ -415,8 +408,6 @@ create_right_hand_side(const Mapping<dim>&    mapping,
     }
 }
 
-
-
 //
 // This function replaces the deal.II implementation of the projection.
 // The purpose is to have more freedom in assembling the matrix.
@@ -505,7 +496,6 @@ project(const Mapping<dim>&     mapping,
         */
     }
 
-
   // set up mass matrix and right hand side
   vec.reinit(dof.n_dofs());
   SparsityPattern sparsity(
@@ -539,7 +529,6 @@ project(const Mapping<dim>&     mapping,
   // distribute solution
   constraints.distribute(vec);
 }
-
 
 int create_alternate_unitsquare(Triangulation<2>& tria)
 {
@@ -581,8 +570,6 @@ int create_alternate_unitsquare(Triangulation<2>& tria)
   return (0);
 }
 
-
-
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -592,7 +579,6 @@ main(int /*argc*/, char** /*argv*/)
   logfile << std::setprecision(PRECISION);
   logfile << std::fixed;
   deallog.attach(logfile);
-
 
   Triangulation<2> tria_test;
 
@@ -606,7 +592,6 @@ main(int /*argc*/, char** /*argv*/)
       for(unsigned int v = 0; v < 4; ++v)
         deallog << "    " << cell->vertex(v) << std::endl;
     }
-
 
   //   tria_test.refine_global (1);
   //   GridTools::distort_random (0.25, tria_test);

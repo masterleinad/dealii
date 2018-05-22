@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Shows the shape functions implemented and computes the area of cells.
 
 #include "../tests.h"
@@ -37,7 +36,6 @@
 #include <vector>
 
 #define PRECISION 9
-
 
 template <int dim>
 inline void
@@ -75,8 +73,6 @@ plot_transformation(Mapping<dim>&                            mapping,
     }
   deallog.pop();
 }
-
-
 
 template <int dim>
 inline void
@@ -121,8 +117,6 @@ plot_faces(Mapping<dim>&                            mapping,
     }
   deallog.pop();
 }
-
-
 
 template <int dim>
 inline void
@@ -170,8 +164,6 @@ plot_subfaces(Mapping<dim>&                            mapping,
   deallog.pop();
 }
 
-
-
 template <>
 inline void plot_faces(Mapping<1>&,
                        FiniteElement<1>&,
@@ -179,16 +171,12 @@ inline void plot_faces(Mapping<1>&,
                        const std::string&)
 {}
 
-
-
 template <>
 inline void plot_subfaces(Mapping<1>&,
                           FiniteElement<1>&,
                           DoFHandler<1>::cell_iterator&,
                           const std::string&)
 {}
-
-
 
 template <int dim>
 inline void
@@ -207,7 +195,6 @@ compute_area(Mapping<dim>&                            mapping,
   deallog << "  area=" << area << std::endl;
 }
 
-
 template <int dim>
 void
 create_triangulations(std::vector<Triangulation<dim>*>&,
@@ -217,11 +204,8 @@ create_triangulations(std::vector<Triangulation<dim>*>&,
   Assert(false, ExcNotImplemented());
 }
 
-
-
 std::vector<std::vector<unsigned int>> show;
 unsigned int                           mapping_size;
-
 
 template <>
 void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
@@ -237,8 +221,6 @@ void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
   show[0][1] = 1;
   show[0][4] = 1;
 }
-
-
 
 template <>
 void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
@@ -351,8 +333,6 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
     }
 }
 
-
-
 template <>
 void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
                            std::vector<Manifold<3>*>&      boundary_ptr,
@@ -419,7 +399,6 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
       show[3][4] = 1;
     }
 }
-
 
 template <int dim>
 void
@@ -504,7 +483,6 @@ mapping_test()
                 plot_subfaces(*mapping_ptr[j], fe_q4, cell, ost.str());
               }
 
-
             // Test for transform_*_to_*_cell
             if(true)
               {
@@ -533,7 +511,6 @@ mapping_test()
           }
     }
 
-
   // delete all triangulations and
   // boundary objects
   for(unsigned int i = 0; i < tria_ptr.size(); ++i)
@@ -544,8 +521,6 @@ mapping_test()
     if(boundary_ptr[i] != nullptr)
       delete boundary_ptr[i];
 }
-
-
 
 int
 main()
@@ -559,12 +534,10 @@ main()
   // -----------------------
   mapping_test<1>();
 
-
   // -----------------------
   // Tests for dim=2
   // -----------------------
   mapping_test<2>();
-
 
   // -----------------------
   // Tests for dim=3

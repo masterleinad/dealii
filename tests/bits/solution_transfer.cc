@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
@@ -36,7 +34,6 @@
 #include <iostream>
 #include <vector>
 
-
 template <int dim>
 class MyFunction : public Function<dim>
 {
@@ -54,7 +51,6 @@ public:
     return f;
   };
 };
-
 
 template <int dim>
 void
@@ -125,7 +121,6 @@ transfer(std::ostream& out)
   dgq_solution.reinit(dgq_dof_handler.n_dofs());
   dgq_solution = tmp_dgq;
 
-
   q_data_out.clear_data_vectors();
   q_data_out.add_data_vector(q_solution, "solution");
   q_data_out.build_patches();
@@ -182,7 +177,6 @@ transfer(std::ostream& out)
     << std::endl;
   dgq_data_out.write_gnuplot(out);
 }
-
 
 int
 main()

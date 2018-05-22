@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -46,7 +45,6 @@ main()
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.set_all_manifold_ids_on_boundary(0);
   tria.set_manifold(0, circle);
-
 
   // refine it more or less
   // arbitrarily
@@ -116,7 +114,6 @@ main()
               deallog << "Q3 normal vector " << i << ": "
                       << q3_values.normal_vector(i) << std::endl;
             };
-
 
           // some numerical checks for correctness
           for(unsigned int i = 0; i < 2; ++i)

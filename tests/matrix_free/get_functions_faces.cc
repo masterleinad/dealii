@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation in a very simple form
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 std::ofstream logfile("output");
-
-
 
 template <int dim, int fe_degree, typename number>
 class MatrixFreeTest
@@ -87,8 +83,6 @@ private:
   const MatrixFree<dim, number>& data;
 };
 
-
-
 template <int dim>
 class BoundaryFunction : public Function<dim>
 {
@@ -100,8 +94,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 Point<dim>
 grid_transform(const Point<dim>& in)
@@ -111,8 +103,6 @@ grid_transform(const Point<dim>& in)
     out[d] = in[d] + 0.75 * d * in[0];
   return out;
 }
-
-
 
 template <int dim, int fe_degree>
 void
@@ -145,7 +135,6 @@ test()
   VectorTools::interpolate(dof, BoundaryFunction<dim>(), in);
   mf.action(in);
 }
-
 
 int
 main()

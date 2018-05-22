@@ -13,18 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // Triangulation::get_boundary_ids()
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int spacedim>
 void
@@ -39,8 +35,6 @@ test()
   for(unsigned int i = 0; i < boundary_ids.size(); ++i)
     deallog << (int) boundary_ids[i] << std::endl;
 }
-
-
 
 int
 main()

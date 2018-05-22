@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check if p4est does limit_level_difference_at_vertices in one 2d tree
 // and in different trees
 // test1 divides the lower-right cell of a square three times
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -63,7 +59,6 @@ test(std::ostream& /*out*/)
     deallog << "cells test2: " << tr.n_active_cells() << std::endl;
   }
 }
-
 
 int
 main(int argc, char* argv[])

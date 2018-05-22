@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  Code for testing the function
  GridGenerator::extract_boundary_mesh (...).
@@ -35,7 +34,6 @@
 #include <deal.II/grid/tria.h>
 
 using namespace std;
-
 
 template <int s_dim, int spacedim>
 bool
@@ -97,13 +95,11 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
 
-
 int
 main()
 {
   ofstream logfile("output");
   deallog.attach(logfile);
-
 
   {
     // Extract the boundary of a hyper-sphere
@@ -129,7 +125,6 @@ main()
       Assert(false, ExcInternalError());
     save_mesh(boundary_mesh);
   }
-
 
   return 0;
 }

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_evaluation_kernels_h
 #define dealii_matrix_free_evaluation_kernels_h
 
@@ -23,10 +22,7 @@
 #include <deal.II/matrix_free/shape_info.h>
 #include <deal.II/matrix_free/tensor_product_kernels.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace internal
 {
@@ -79,8 +75,6 @@ namespace internal
     static const EvaluatorVariant variant = evaluate_evenodd;
   };
 
-
-
   /**
    * This struct performs the evaluation of function values, gradients and
    * Hessians for tensor-product finite elements. The operation is used for
@@ -128,8 +122,6 @@ namespace internal
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
   };
-
-
 
   template <MatrixFreeFunctions::ElementType type,
             int                              dim,
@@ -398,8 +390,6 @@ namespace internal
       }
   }
 
-
-
   template <MatrixFreeFunctions::ElementType type,
             int                              dim,
             int                              fe_degree,
@@ -624,8 +614,6 @@ namespace internal
                         Utilities::fixed_power<dim>(shape_info.fe_degree + 1));
       }
   }
-
-
 
   /**
    * This struct implements the change between two different bases. This is an
@@ -961,8 +949,6 @@ namespace internal
     }
   };
 
-
-
   /**
    * This struct performs the evaluation of function values, gradients and
    * Hessians for tensor-product finite elements. This a specialization for
@@ -1001,8 +987,6 @@ namespace internal
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
   };
-
-
 
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
@@ -1073,8 +1057,6 @@ namespace internal
       }
   }
 
-
-
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
   FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>::integrate(
@@ -1129,8 +1111,6 @@ namespace internal
       }
   }
 
-
-
   /**
    * This struct performs the evaluation of function values, gradients and
    * Hessians for tensor-product finite elements. This a specialization for
@@ -1171,8 +1151,6 @@ namespace internal
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
   };
-
-
 
   template <int dim,
             int fe_degree,
@@ -1235,8 +1213,6 @@ namespace internal
       }
   }
 
-
-
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1297,8 +1273,6 @@ namespace internal
         values_dofs += shape_info.dofs_per_component_on_cell;
       }
   }
-
-
 
   template <bool symmetric_evaluate,
             int  dim,
@@ -1627,8 +1601,6 @@ namespace internal
     }
   };
 
-
-
   template <int dim, int fe_degree, int n_components, typename Number>
   struct FEFaceNormalEvaluationImpl
   {
@@ -1690,7 +1662,6 @@ namespace internal
     }
   };
 } // end of namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

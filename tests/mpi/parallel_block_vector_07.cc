@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this BlockVector<Number>::multivector_inner_product_with_metric().
 // Triangulation and Mass operator are the same as in matrix_free/mass_operator_01.cc
 
@@ -34,8 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -141,7 +137,6 @@ test(const unsigned int n_blocks = 5)
   const double diff_norm = std::abs(res - res2);
   deallog << "Norm of difference: " << diff_norm << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

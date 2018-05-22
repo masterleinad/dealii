@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test by Jennifer Worthen -- we get an error of the following kind:
 // --------------------------------------------------------
 // An error occurred in line <304> of file <.../constraint_matrix.cc> in function
@@ -26,8 +24,6 @@
 // Additional Information:
 // Cycle in constraints detected!
 // --------------------------------------------------------
-
-
 
 #include "../tests.h"
 
@@ -43,7 +39,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
                                     const Point<3>&   center,
@@ -199,7 +194,6 @@ void sixty_deg_hyper_shell(Triangulation<3>& tria,
   colorize_sixty_deg_hyper_shell(tria, center, inner_radius, outer_radius);
 }
 
-
 template <int dim>
 void
 run()
@@ -247,7 +241,6 @@ run()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

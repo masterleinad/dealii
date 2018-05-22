@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_P4EST
@@ -57,8 +56,6 @@ namespace parallel
           "parallel::distributed::SolutionTransfer requires a parallel::distributed::Triangulation object."));
     }
 
-
-
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
     SolutionTransfer<dim, VectorType, DoFHandlerType>::
@@ -68,8 +65,6 @@ namespace parallel
       input_vectors = all_in;
       register_data_attach(get_data_size() * input_vectors.size());
     }
-
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -99,8 +94,6 @@ namespace parallel
           std::placeholders::_3));
     }
 
-
-
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
     SolutionTransfer<dim, VectorType, DoFHandlerType>::
@@ -109,8 +102,6 @@ namespace parallel
       std::vector<const VectorType*> all_in(1, &in);
       prepare_for_coarsening_and_refinement(all_in);
     }
-
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -121,8 +112,6 @@ namespace parallel
       prepare_serialization(all_in);
     }
 
-
-
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
     SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_serialization(
@@ -130,8 +119,6 @@ namespace parallel
     {
       prepare_for_coarsening_and_refinement(all_in);
     }
-
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -141,8 +128,6 @@ namespace parallel
       std::vector<VectorType*> all_in(1, &in);
       deserialize(all_in);
     }
-
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -156,7 +141,6 @@ namespace parallel
 
       interpolate(all_in);
     }
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -187,7 +171,6 @@ namespace parallel
           std::placeholders::_3,
           std::ref(all_out)));
 
-
       for(typename std::vector<VectorType*>::iterator it = all_out.begin();
           it != all_out.end();
           ++it)
@@ -195,8 +178,6 @@ namespace parallel
 
       input_vectors.clear();
     }
-
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -207,8 +188,6 @@ namespace parallel
       interpolate(all_out);
     }
 
-
-
     template <int dim, typename VectorType, typename DoFHandlerType>
     unsigned int
     SolutionTransfer<dim, VectorType, DoFHandlerType>::get_data_size() const
@@ -216,7 +195,6 @@ namespace parallel
       return sizeof(typename VectorType::value_type)
              * DoFTools::max_dofs_per_cell(*dof_handler);
     }
-
 
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
@@ -248,7 +226,6 @@ namespace parallel
         }
     }
 
-
     template <int dim, typename VectorType, typename DoFHandlerType>
     void
     SolutionTransfer<dim, VectorType, DoFHandlerType>::unpack_callback(
@@ -279,10 +256,8 @@ namespace parallel
         }
     }
 
-
   } // namespace distributed
 } // namespace parallel
-
 
 // explicit instantiations
 #  include "solution_transfer.inst"

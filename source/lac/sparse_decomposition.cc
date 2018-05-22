@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/sparse_decomposition.templates.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template class SparseLUDecomposition<double>;
 template void
@@ -31,7 +29,6 @@ template void
 SparseLUDecomposition<double>::copy_from<double>(const SparseMatrix<double>&);
 template void
 SparseLUDecomposition<double>::copy_from<float>(const SparseMatrix<float>&);
-
 
 template class SparseLUDecomposition<float>;
 template void

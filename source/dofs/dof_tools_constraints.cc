@@ -45,8 +45,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 namespace DoFTools
 {
   namespace internal
@@ -142,8 +140,6 @@ namespace DoFTools
         // (at least as far as they have already been collected)
         return true;
       }
-
-
 
       /**
        * When restricting, on a face, the degrees of freedom of fe1 to the
@@ -297,8 +293,6 @@ namespace DoFTools
           master_dof_mask[*i] = true;
       }
 
-
-
       /**
        * Make sure that the mask exists that determines which dofs will be
        * the masters on refined faces where an fe1 and a fe2 meet.
@@ -319,8 +313,6 @@ namespace DoFTools
               fe1, fe2, face_interpolation_matrix, *master_dof_mask);
           }
       }
-
-
 
       /**
        * Make sure that the given @p face_interpolation_matrix pointer
@@ -343,8 +335,6 @@ namespace DoFTools
           }
       }
 
-
-
       /**
        * Same, but for subface interpolation matrices.
        */
@@ -363,8 +353,6 @@ namespace DoFTools
             fe1.get_subface_interpolation_matrix(fe2, subface, *matrix);
           }
       }
-
-
 
       /**
        * Given the face interpolation matrix between two elements, split it
@@ -425,7 +413,6 @@ namespace DoFTools
           }
       }
 
-
       // a template that can determine statically whether a given
       // DoFHandler class supports different finite element elements
       template <typename>
@@ -434,13 +421,11 @@ namespace DoFTools
         static const bool value = true;
       };
 
-
       template <int dim, int spacedim>
       struct DoFHandlerSupportsDifferentFEs<dealii::DoFHandler<dim, spacedim>>
       {
         static const bool value = false;
       };
-
 
       /**
        * A function that returns how many different finite elements a dof
@@ -455,15 +440,12 @@ namespace DoFTools
         return dof_handler.get_fe_collection().size();
       }
 
-
       template <typename DoFHandlerType>
       unsigned int
       n_finite_elements(const DoFHandlerType&)
       {
         return 1;
       }
-
-
 
       /**
        * Copy constraints into a constraint matrix object.
@@ -498,7 +480,6 @@ namespace DoFTools
         for(unsigned int col = 0; col != n_master_dofs; ++col)
           Assert(master_dofs[col] != numbers::invalid_dof_index,
                  ExcInternalError());
-
 
         for(unsigned int row = 0; row != n_slave_dofs; ++row)
           if(constraints.is_constrained(slave_dofs[row]) == false)
@@ -546,16 +527,12 @@ namespace DoFTools
 
     } // namespace
 
-
-
     void
     make_hp_hanging_node_constraints(const dealii::DoFHandler<1>&,
                                      ConstraintMatrix&)
     {
       // nothing to do for regular dof handlers in 1d
     }
-
-
 
     void
     make_oldstyle_hanging_node_constraints(const dealii::DoFHandler<1>&,
@@ -564,7 +541,6 @@ namespace DoFTools
     {
       // nothing to do for regular dof handlers in 1d
     }
-
 
     void
     make_hp_hanging_node_constraints(
@@ -576,8 +552,6 @@ namespace DoFTools
 
       //TODO[WB]: think about what to do here...
     }
-
-
 
     void
     make_oldstyle_hanging_node_constraints(
@@ -591,15 +565,12 @@ namespace DoFTools
       //TODO[WB]: think about what to do here...
     }
 
-
     void
     make_hp_hanging_node_constraints(const dealii::DoFHandler<1, 2>&,
                                      ConstraintMatrix&)
     {
       // nothing to do for regular dof handlers in 1d
     }
-
-
 
     void
     make_oldstyle_hanging_node_constraints(const dealii::DoFHandler<1, 2>&,
@@ -608,7 +579,6 @@ namespace DoFTools
     {
       // nothing to do for regular dof handlers in 1d
     }
-
 
     void
     make_hp_hanging_node_constraints(const dealii::DoFHandler<1, 3>&,
@@ -625,7 +595,6 @@ namespace DoFTools
       // nothing to do for regular dof handlers in 1d
     }
 
-
     //   currently not used but may be in the future:
 
     //     void
@@ -636,8 +605,6 @@ namespace DoFTools
     //                                     // dof handlers in 1d
     //     }
 
-
-
     //     void
     //     make_oldstyle_hanging_node_constraints (const dealii::DoFHandler<1,2> &,
     //                                          ConstraintMatrix    &,
@@ -646,7 +613,6 @@ namespace DoFTools
     //                                     // nothing to do for regular
     //                                     // dof handlers in 1d
     //     }
-
 
     //     void
     //     make_oldstyle_hanging_node_constraints (const dealii::hp::DoFHandler<1,2> &/*dof_handler*/,
@@ -661,8 +627,6 @@ namespace DoFTools
     // //TODO[WB]: think about what to do here...
     //     }
     //#endif
-
-
 
     template <typename DoFHandlerType>
     void
@@ -810,8 +774,6 @@ namespace DoFTools
               }
         }
     }
-
-
 
     template <typename DoFHandlerType>
     void
@@ -1053,8 +1015,6 @@ namespace DoFTools
         }
     }
 
-
-
     template <typename DoFHandlerType>
     void
     make_hp_hanging_node_constraints(const DoFHandlerType& dof_handler,
@@ -1068,7 +1028,6 @@ namespace DoFTools
       const unsigned int dim = DoFHandlerType::dimension;
 
       const unsigned int spacedim = DoFHandlerType::space_dimension;
-
 
       // a matrix to be used for constraints below. declared here and
       // simply resized down below to avoid permanent re-allocation of
@@ -1424,8 +1383,6 @@ namespace DoFTools
                                            slave_dofs,
                                            constraint_matrix,
                                            constraints);
-
-
 
                         // next we have to deal with the subfaces. do as
                         // discussed in the hp paper
@@ -1798,8 +1755,6 @@ namespace DoFTools
     }
   } // namespace internal
 
-
-
   template <typename DoFHandlerType>
   void
   make_hanging_node_constraints(const DoFHandlerType& dof_handler,
@@ -1817,8 +1772,6 @@ namespace DoFTools
         constraints,
         std::integral_constant<int, DoFHandlerType::dimension>());
   }
-
-
 
   namespace
   {
@@ -2245,7 +2198,6 @@ namespace DoFTools
         }
     }
 
-
     // Internally used in make_periodicity_constraints.
     //
     // Build up a (possibly rotated) interpolation matrix that is used in
@@ -2343,9 +2295,7 @@ namespace DoFTools
 
   } /*namespace*/
 
-
   // Low level interface:
-
 
   template <typename FaceIterator>
   void
@@ -2577,8 +2527,6 @@ namespace DoFTools
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   make_periodicity_constraints(
@@ -2621,9 +2569,7 @@ namespace DoFTools
       }
   }
 
-
   // High level interface variants:
-
 
   template <typename DoFHandlerType>
   void
@@ -2655,8 +2601,6 @@ namespace DoFTools
       matched_faces, constraint_matrix, component_mask);
   }
 
-
-
   template <typename DoFHandlerType>
   void
   make_periodicity_constraints(const DoFHandlerType&     dof_handler,
@@ -2687,15 +2631,12 @@ namespace DoFTools
       matched_faces, constraint_matrix, component_mask);
   }
 
-
-
   namespace internal
   {
     namespace Assembler
     {
       struct Scratch
       {};
-
 
       template <int dim, int spacedim>
       struct CopyData
@@ -2808,8 +2749,6 @@ namespace DoFTools
             }
       }
 
-
-
       /**
        * This is a function that is called by the _2 function and that
        * operates on one cell only. It is worked in parallel if
@@ -2884,8 +2823,6 @@ namespace DoFTools
             }
       }
 
-
-
       /**
        * This is a helper function that is used in the computation of
        * intergrid constraints. See the function for a thorough description
@@ -2937,7 +2874,6 @@ namespace DoFTools
                 // Nothing bad happened: the user used serial Triangulation
               }
 
-
             IndexSet locally_relevant_dofs;
             DoFTools::extract_locally_relevant_dofs(
               coarse_to_fine_grid_map.get_destination_grid(),
@@ -2981,8 +2917,6 @@ namespace DoFTools
 #endif
       }
 
-
-
       /**
        * This is a helper function that is used in the computation of
        * integrid constraints. See the function for a thorough description
@@ -3020,7 +2954,6 @@ namespace DoFTools
                 coarse_fe.component_to_base_index(coarse_component).first)
               .dofs_per_cell;
 
-
         // Try to find out whether the grids stem from the same coarse
         // grid. This is a rather crude test, but better than nothing
         Assert(coarse_grid.get_triangulation().n_cells(0)
@@ -3032,7 +2965,6 @@ namespace DoFTools
                ExcGridsDontMatch());
         Assert(&coarse_to_fine_grid_map.get_destination_grid() == &fine_grid,
                ExcGridsDontMatch());
-
 
         // check whether component numbers are valid
         AssertIndexRange(coarse_component, coarse_fe.n_components());
@@ -3075,8 +3007,6 @@ namespace DoFTools
          * be welcome!
          */
 
-
-
         // set up vectors of cell-local data; each vector represents one
         // degree of freedom of the coarse-grid variable in the fine-grid
         // element
@@ -3097,7 +3027,6 @@ namespace DoFTools
                 parameter_dofs[local_coarse_dof](fine_dof) = 1.;
                 break;
               };
-
 
         // find out how many DoFs there are on the grids belonging to the
         // components we want to match
@@ -3128,7 +3057,6 @@ namespace DoFTools
             n_parameters_on_fine_grid = std::count(
               dof_is_interesting.begin(), dof_is_interesting.end(), true);
           };
-
 
         // set up the weights mapping
         weights.clear();
@@ -3167,7 +3095,6 @@ namespace DoFTools
                    ExcInternalError());
           };
 
-
         // for each cell on the parameter grid: find out which degrees of
         // freedom on the fine grid correspond in which way to the degrees
         // of freedom on the parameter grid
@@ -3181,7 +3108,6 @@ namespace DoFTools
                                     parameter_dofs,
                                     weight_mapping,
                                     weights);
-
 
         // ok, now we have all weights for each dof on the fine grid. if in
         // debug mode lets see if everything went smooth, i.e. each dof has
@@ -3209,15 +3135,11 @@ namespace DoFTools
           };
 #endif
 
-
         return n_parameters_on_fine_grid;
       }
 
-
     } // namespace
   }   // namespace internal
-
-
 
   template <int dim, int spacedim>
   void
@@ -3271,7 +3193,6 @@ namespace DoFTools
     // global numbers of dofs
     const types::global_dof_index n_coarse_dofs = coarse_grid.n_dofs(),
                                   n_fine_dofs   = fine_grid.n_dofs();
-
 
     // get an array in which we store which dof on the coarse grid is a
     // parameter and which is not
@@ -3333,8 +3254,6 @@ namespace DoFTools
           Assert(weights[parameter_dof].size() == 0, ExcInternalError());
         };
 
-
-
     // note for people that want to optimize this function: the largest
     // part of the computing time is spent in the following, rather
     // innocent block of code. basically, it must be the
@@ -3379,7 +3298,6 @@ namespace DoFTools
               continue;
           }
 
-
           // otherwise enter all constraints
           constraints.add_line(global_dof);
 
@@ -3396,8 +3314,6 @@ namespace DoFTools
           constraints.add_entries(global_dof, constraint_line);
         };
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -3494,8 +3410,6 @@ namespace DoFTools
       };
   }
 
-
-
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
   make_zero_boundary_constraints(const DoFHandlerType<dim, spacedim>& dof,
@@ -3581,8 +3495,6 @@ namespace DoFTools
         }
   }
 
-
-
   template <int dim, int spacedim, template <int, int> class DoFHandlerType>
   void
   make_zero_boundary_constraints(const DoFHandlerType<dim, spacedim>& dof,
@@ -3595,15 +3507,10 @@ namespace DoFTools
                                    component_mask);
   }
 
-
 } // end of namespace DoFTools
-
-
 
 // explicit instantiations
 
 #include "dof_tools_constraints.inst"
-
-
 
 DEAL_II_NAMESPACE_CLOSE

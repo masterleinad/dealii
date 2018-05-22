@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a test for WorkStream where we really do write conflicting entries
 // into a global vector
 
@@ -22,19 +21,15 @@
 #include <deal.II/base/work_stream.h>
 #include <deal.II/lac/vector.h>
 
-
 Vector<double> result(100);
-
 
 struct ScratchData
 {};
-
 
 struct CopyData
 {
   unsigned int computed;
 };
-
 
 void
 worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
@@ -49,8 +44,6 @@ copier(const CopyData& ad)
   for(unsigned int j = 0; j < 5; ++j)
     result((ad.computed + j) % result.size()) += ad.computed;
 }
-
-
 
 void
 test()
@@ -71,7 +64,6 @@ test()
         comp((ad_computed + j) % result.size()) += ad_computed;
     }
 
-
   // and compare
   for(unsigned int i = 0; i < result.size(); ++i)
     AssertThrow(result(i) == comp(i), ExcInternalError());
@@ -79,8 +71,6 @@ test()
   for(unsigned int i = 0; i < result.size(); ++i)
     deallog << result(i) << std::endl;
 }
-
-
 
 int
 main()

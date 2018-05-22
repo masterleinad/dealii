@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <algorithm>
 #include <deal.II/lac/block_vector.h>
@@ -34,7 +32,6 @@ operator==(const BlockVector<number>& v1, const BlockVector<number>& v2)
       return false;
   return true;
 }
-
 
 void
 test()
@@ -115,7 +112,6 @@ test()
       deallog << "Check 3: true" << std::endl;
     };
 
-
   // Check 4: same, but this time
   // with const iterators
   if(true)
@@ -181,7 +177,6 @@ test()
         std::bind(std::multiplies<double>(), std::placeholders::_1, 2.0));
       v2 *= 1. / 2;
       deallog << "Check 7: " << (v1 == v2 ? "true" : "false") << std::endl;
-
 
       // check operators +/-, +=/-=
       deallog << "Check 8: "
@@ -318,8 +313,6 @@ test()
     };
 }
 
-
-
 int
 main()
 {
@@ -358,7 +351,6 @@ main()
       // abort
       return 3;
     };
-
 
   return 0;
 }

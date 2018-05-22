@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // extracted from count_dofs_per_block that crashed at one point
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,7 +30,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -80,7 +76,6 @@ test()
       triangulation.execute_coarsening_and_refinement();
     }
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check setting elements in a petsc matrix using set() and add()
 // intermixed. this poses PETSc some problems, since one has to flush some
 // buffer in between these two types of operations
@@ -26,7 +24,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test(TrilinosWrappers::SparseMatrix& m)
@@ -67,8 +64,6 @@ test(TrilinosWrappers::SparseMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

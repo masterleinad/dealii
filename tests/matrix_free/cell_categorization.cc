@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Tests the categorization of cells for vectorization
-
 
 #include "../tests.h"
 #include "create_mesh.h"
@@ -114,7 +111,6 @@ test()
               << mf_data.get_cell_category(i) << std::endl;
   deallog << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

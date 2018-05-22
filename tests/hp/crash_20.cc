@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // if the mesh is generated after the hp::DoFHandler is attached to the
 // triangulation object, then we can't set active fe indices -- which is
 // somewhat tragic since we have to assign active fe indices before we can
@@ -26,7 +24,6 @@
 // mesh, then refine the mesh, everything is ok again. the solution is to also
 // listen to the creation of triangulations.
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/fe/fe_dgq.h>
@@ -36,8 +33,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -54,7 +49,6 @@ test()
       ++cell)
     cell->set_active_fe_index(0);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This program tests the functionality of the function parser
 // wrapper with respect to the ability to deal with units.
 // because units are deprecated and muparser can not deal with this,
@@ -26,13 +24,10 @@
 #include <deal.II/lac/vector.h>
 #include <map>
 
-
 int
 main()
 {
   initlog();
-
-
 
   std::vector<std::string>      function(1);
   std::map<std::string, double> constants;
@@ -83,8 +78,6 @@ main()
           << "[" << point << "]"
           << " is "
           << "[" << fp2.value(point) << "]" << std::endl;
-
-
 
   //same as above but the function is
   //a string, not a vector

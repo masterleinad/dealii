@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check for ghosts on parallel vector: similar to parallel_vector_03, but
 // setting where one ghost is zero and should not have an effect on vector
 // entries
@@ -25,7 +24,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -34,7 +32,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor owns 2 indices and all
   // are ghosting element 1 (the second)
@@ -91,8 +88,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

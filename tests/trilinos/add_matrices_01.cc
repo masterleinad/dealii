@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test SparseMatrix::add(factor, SparseMatrix) based on different sparsity
 // pattern (and where the sparsity pattern of the calling matrix is more
 // inclusive which is necessary for the operation to succeed)
@@ -25,7 +23,6 @@
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
 
-
 void
 test()
 {
@@ -34,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor owns 3 indices
   IndexSet local_owned(numproc * 3);
@@ -91,8 +87,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

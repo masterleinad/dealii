@@ -22,7 +22,6 @@
 #include <iostream>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace
@@ -31,25 +30,18 @@ namespace
   Threads::Mutex write_lock;
 } // namespace
 
-
 // The standard log object of deal.II:
 LogStream deallog;
-
-
 
 LogStream::Prefix::Prefix(const std::string& text) : stream(&deallog)
 {
   stream->push(text);
 }
 
-
-
 LogStream::Prefix::Prefix(const std::string& text, LogStream& s) : stream(&s)
 {
   stream->push(text);
 }
-
-
 
 LogStream::Prefix::~Prefix()
 {
@@ -67,8 +59,6 @@ LogStream::Prefix::~Prefix()
     }
 }
 
-
-
 LogStream::LogStream()
   : std_out(&std::cout),
     file(nullptr),
@@ -79,8 +69,6 @@ LogStream::LogStream()
 {
   get_prefixes().push("DEAL:");
 }
-
-
 
 LogStream::~LogStream()
 {
@@ -117,7 +105,6 @@ LogStream::~LogStream()
   }
 }
 
-
 LogStream&
 LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
 {
@@ -125,7 +112,6 @@ LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
 
   // Print to the internal stringstream:
   stream << p;
-
 
   // This is a bloody hack until LogStream got reimplemented as a proper
   // child of std::streambuf (or similar).
@@ -208,7 +194,6 @@ LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
   return *this;
 }
 
-
 void
 LogStream::attach(std::ostream& o, const bool print_job_id)
 {
@@ -219,7 +204,6 @@ LogStream::attach(std::ostream& o, const bool print_job_id)
     o << dealjobid();
 }
 
-
 void
 LogStream::detach()
 {
@@ -227,14 +211,11 @@ LogStream::detach()
   file = nullptr;
 }
 
-
 std::ostream&
 LogStream::get_console()
 {
   return *std_out;
 }
-
-
 
 std::ostringstream&
 LogStream::get_stream()
@@ -257,8 +238,6 @@ LogStream::get_stream()
   return *outstreams.get();
 }
 
-
-
 std::ostream&
 LogStream::get_file_stream()
 {
@@ -268,15 +247,11 @@ LogStream::get_file_stream()
   return *file;
 }
 
-
-
 bool
 LogStream::has_file() const
 {
   return (file != nullptr);
 }
-
-
 
 const std::string&
 LogStream::get_prefix() const
@@ -288,8 +263,6 @@ LogStream::get_prefix() const
   else
     return empty_string;
 }
-
-
 
 void
 LogStream::push(const std::string& text)
@@ -303,8 +276,6 @@ LogStream::push(const std::string& text)
   get_prefixes().push(pre);
 }
 
-
-
 void
 LogStream::pop()
 {
@@ -312,15 +283,11 @@ LogStream::pop()
     get_prefixes().pop();
 }
 
-
-
 std::ios::fmtflags
 LogStream::flags(const std::ios::fmtflags f)
 {
   return get_stream().flags(f);
 }
-
-
 
 std::streamsize
 LogStream::precision(const std::streamsize prec)
@@ -328,15 +295,11 @@ LogStream::precision(const std::streamsize prec)
   return get_stream().precision(prec);
 }
 
-
-
 std::streamsize
 LogStream::width(const std::streamsize wide)
 {
   return get_stream().width(wide);
 }
-
-
 
 unsigned int
 LogStream::depth_console(const unsigned int n)
@@ -347,8 +310,6 @@ LogStream::depth_console(const unsigned int n)
   return h;
 }
 
-
-
 unsigned int
 LogStream::depth_file(const unsigned int n)
 {
@@ -358,8 +319,6 @@ LogStream::depth_file(const unsigned int n)
   return h;
 }
 
-
-
 bool
 LogStream::log_thread_id(const bool flag)
 {
@@ -368,8 +327,6 @@ LogStream::log_thread_id(const bool flag)
   print_thread_id              = flag;
   return h;
 }
-
-
 
 std::stack<std::string>&
 LogStream::get_prefixes() const
@@ -403,8 +360,6 @@ LogStream::get_prefixes() const
   return prefixes.get();
 #endif
 }
-
-
 
 void
 LogStream::print_line_head()

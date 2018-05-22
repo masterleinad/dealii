@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SolutionTransfer wanted to compute interpolation matrices between
 // all pairs of elements used on a mesh in the hp case. unfortunately,
 // not all pairs are actually supported, e.g. between FE_Nothing and
@@ -38,7 +36,6 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <iostream>
 #include <vector>
-
 
 template <int dim>
 void
@@ -88,7 +85,6 @@ transfer(std::ostream& out)
   solution.reinit(dof_handler.n_dofs());
   soltrans.interpolate(old_solution, solution);
 }
-
 
 int
 main()

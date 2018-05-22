@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like particle_handler_04, but tests the exchange of ghost particles.
 
 #include "../tests.h"
@@ -79,8 +77,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

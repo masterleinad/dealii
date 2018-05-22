@@ -20,7 +20,6 @@
 #include <deal.II/grid/tria_object.h>
 #include <deal.II/grid/tria_objects.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -55,8 +54,6 @@ namespace internal
        */
       TriaFaces() = delete;
     };
-
-
 
     /**
      * Faces only have a meaning in <tt>dim@>=1</tt>. In <tt>dim=1</tt> they
@@ -149,14 +146,10 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
-
     template <class Archive>
     void
     TriaFaces<1>::serialize(Archive&, const unsigned int)
     {}
-
-
 
     template <class Archive>
     void
@@ -164,8 +157,6 @@ namespace internal
     {
       ar& lines;
     }
-
-
 
     template <class Archive>
     void

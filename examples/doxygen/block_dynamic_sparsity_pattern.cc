@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // See documentation of BlockDynamicSparsityPattern for documentation of this example
 
 #include <deal.II/dofs/dof_handler.h>

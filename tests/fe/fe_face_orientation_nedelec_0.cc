@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test FE_Nedelec<3> for meshes with faces with non-standard orientation.
 
 #include "../tests.h"

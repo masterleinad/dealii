@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing works as intended
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -34,8 +31,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 // Create a mesh with hanging
 // nodes and FEQ/FENothing interfaces
@@ -120,12 +115,10 @@ test()
     dof_handler.distribute_dofs(fe_collection);
   }
 
-
   deallog << "   Number of active cells:       "
           << triangulation.n_active_cells() << std::endl
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
-
 
   // .... test constraint handling
 
@@ -138,8 +131,6 @@ test()
   deallog << "   Number of constraints:        " << constraints.n_constraints()
           << std::endl;
 }
-
-
 
 int
 main()

@@ -17,7 +17,6 @@
 #  define dealii_multithread_info_h
 //---------------------------------------------------------------------------
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
 #  include <deal.II/base/types.h>
@@ -133,8 +132,6 @@ private:
    */
   static const unsigned int n_cpus;
 };
-
-
 
 //---------------------------------------------------------------------------
 DEAL_II_NAMESPACE_CLOSE

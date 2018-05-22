@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a slightly more complex case than the _1 test: a mesh where 8 2d
 // cells meet at one point. using this point as the pivot we must get
 // all 8 cells back
@@ -26,8 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check(Triangulation<2>& tria)
 {
@@ -43,7 +39,6 @@ void check(Triangulation<2>& tria)
         deallog << "   " << cells[c] << std::endl;
     }
 }
-
 
 int
 main()

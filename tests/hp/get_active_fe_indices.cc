@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // distribute different finite elements randomly across the domain, then use
 // DoFTools::get_active_fe_indices()
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -29,8 +26,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -64,7 +59,6 @@ test()
   for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
     deallog << active_fe_indices[i] << std::endl;
 }
-
 
 int
 main()

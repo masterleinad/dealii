@@ -32,9 +32,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /* -------------- Sacado::Fad::DFad (Differentiation::AD::NumberTypes::[sacado_fad/sacado_fad_fad]) -------------- */
-
 
 namespace internal
 {
@@ -80,7 +78,6 @@ namespace internal
     typedef Sacado::Fad::DFad<typename ProductType<T, U>::type> type;
   };
 
-
   // Sacado::Fad::Dfad expression templates
   // We demote the result of the expression template operations
   // to a Sacado::Fad::Dfad itself. This is the only way to retain
@@ -114,7 +111,6 @@ namespace internal
 
 } // namespace internal
 
-
 template <typename T>
 struct EnableIfScalar<Sacado::Fad::DFad<T>>
 {
@@ -127,9 +123,7 @@ struct EnableIfScalar<Sacado::Fad::Expr<T>>
   typedef typename Sacado::Fad::Expr<T>::value_type type;
 };
 
-
 /* -------------- Sacado::Rad::ADvar (Differentiation::AD::NumberTypes::[sacado_rad/sacado_rad_fad]) -------------- */
-
 
 namespace internal
 {
@@ -235,20 +229,17 @@ namespace internal
 
 } // namespace internal
 
-
 template <typename T>
 struct EnableIfScalar<Sacado::Rad::ADvar<T>>
 {
   typedef Sacado::Rad::ADvar<T> type;
 };
 
-
 template <typename T>
 struct EnableIfScalar<Sacado::Rad::ADvari<T>>
 {
   typedef Sacado::Rad::ADvari<T> type;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

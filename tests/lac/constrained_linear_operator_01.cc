@@ -88,11 +88,9 @@ private:
   Vector<double> system_rhs_lo;
 };
 
-
 template <int dim>
 Step6<dim>::Step6() : fe(2), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -119,7 +117,6 @@ Step6<dim>::setup_system()
   system_matrix.reinit(sparsity_pattern);
   system_matrix_lo.reinit(sparsity_pattern);
 }
-
 
 template <int dim>
 void
@@ -170,7 +167,6 @@ Step6<dim>::assemble_system()
     }
 }
 
-
 template <int dim>
 void
 Step6<dim>::solve()
@@ -199,7 +195,6 @@ Step6<dim>::solve()
   constraints.distribute(solution_lo);
 }
 
-
 template <int dim>
 void
 Step6<dim>::refine_grid()
@@ -217,7 +212,6 @@ Step6<dim>::refine_grid()
 
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 void
@@ -244,7 +238,6 @@ Step6<dim>::run()
         deallog << "ERROR! Output does not match!" << std::endl;
     }
 }
-
 
 int
 main()

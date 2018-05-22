@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::create_triangulation_with_removed_cells
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
 
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
@@ -36,8 +33,6 @@
 #include <deal.II/grid/grid_tools.h>
 
 #include <deal.II/grid/manifold_lib.h>
-
-
 
 template <int dim, int spacedim>
 void
@@ -56,7 +51,6 @@ test(std::ostream& out)
   GridOut go;
   go.write_gnuplot(triangulation, out);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the particle sort within the particle handler class in serial models.
 
 #include "../tests.h"
@@ -97,8 +95,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

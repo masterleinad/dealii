@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test whether the various assember classes put the right data in the
 // right place.
 
@@ -38,7 +37,6 @@
 #include <functional>
 
 using namespace dealii;
-
 
 // Define a class that fills all available entries in the info objects
 // with recognizable numbers.
@@ -82,7 +80,6 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     }
 }
 
-
 template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
@@ -102,7 +99,6 @@ Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
             }
     }
 }
-
 
 template <int dim>
 void
@@ -129,7 +125,6 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
             }
     }
 }
-
 
 template <int dim>
 void
@@ -191,7 +186,6 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
   matrix.print(deallog.get_file_stream());
 }
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -219,8 +213,6 @@ test(const FiniteElement<dim>& fe)
 
   DoFHandler<dim> dofs(tr);
   dofs.distribute_dofs(fe);
-
-
 
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   if(numprocs == 1) // renumber DoFs
@@ -292,7 +284,6 @@ test(const FiniteElement<dim>& fe)
         }
     }
 
-
   dofs.initialize_local_block_info();
   deallog << "DoFHandler " << dofs.n_dofs() << std::endl;
 
@@ -300,7 +291,6 @@ test(const FiniteElement<dim>& fe)
   deallog << "now with jump terms" << std::endl;
   test_simple(dofs, true);
 }
-
 
 int
 main(int argc, char** argv)

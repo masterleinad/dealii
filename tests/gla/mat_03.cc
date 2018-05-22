@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in assembling a LA::MPI::SparseMatrix
 // this was due to handing a wrong IndexSet to the ConstraintMatrix
 
@@ -99,13 +97,10 @@ test()
 
   matrix.print(deallog.get_file_stream());
 
-
   // done
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

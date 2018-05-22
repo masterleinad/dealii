@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the results of FECollection::n_blocks()
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -55,8 +50,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

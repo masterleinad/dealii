@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // TrilinosWrappers::SparseMatrix::print got column indices wrong
 
 #include "../tests.h"
@@ -24,7 +22,6 @@
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -144,8 +141,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

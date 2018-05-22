@@ -18,7 +18,6 @@
  *         Timo Heister, University of Goettingen, 2009, 2010
  */
 
-
 // @sect3{Include files}
 //
 // Most of the include files we need for this program have already been
@@ -191,7 +190,6 @@ namespace Step40
     TimerOutput        computing_timer;
   };
 
-
   // @sect3{The <code>LaplaceProblem</code> class implementation}
 
   // @sect4{Constructors and destructors}
@@ -221,14 +219,11 @@ namespace Step40
                       TimerOutput::wall_times)
   {}
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     dof_handler.clear();
   }
-
 
   // @sect4{LaplaceProblem::setup_system}
 
@@ -339,8 +334,6 @@ namespace Step40
       locally_owned_dofs, locally_owned_dofs, dsp, mpi_communicator);
   }
 
-
-
   // @sect4{LaplaceProblem::assemble_system}
 
   // The function that then assembles the linear system is comparatively
@@ -439,8 +432,6 @@ namespace Step40
     system_rhs.compress(VectorOperation::add);
   }
 
-
-
   // @sect4{LaplaceProblem::solve}
 
   // Even though solving linear systems on potentially tens of thousands of
@@ -509,8 +500,6 @@ namespace Step40
     locally_relevant_solution = completely_distributed_solution;
   }
 
-
-
   // @sect4{LaplaceProblem::refine_grid}
 
   // The function that estimates the error and refines the grid is again
@@ -541,8 +530,6 @@ namespace Step40
       triangulation, estimated_error_per_cell, 0.3, 0.03);
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   // @sect4{LaplaceProblem::output_results}
 
@@ -627,8 +614,6 @@ namespace Step40
       }
   }
 
-
-
   // @sect4{LaplaceProblem::run}
 
   // The function that controls the overall behavior of the program is again
@@ -694,8 +679,6 @@ namespace Step40
       }
   }
 } // namespace Step40
-
-
 
 // @sect4{main()}
 

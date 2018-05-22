@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FECollection objects are copyable without running into
 // troubles when the copy is destroyed earlier than the original
 // object
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -41,8 +36,6 @@ test()
     hp::FECollection<dim> copy(fe_collection);
   }
 }
-
-
 
 int
 main()

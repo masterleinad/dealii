@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check setting elements in a sparse matrix using ChunkSparseMatrix::set(). make
 // sure they are correct, and make sure that for the nonexisting entries
 // ChunkSparseMatrix::el() returns zero and operator() throws an exception
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -81,8 +78,6 @@ test(const unsigned int chunk_size)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

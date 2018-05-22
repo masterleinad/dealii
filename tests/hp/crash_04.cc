@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // trigger a problem in DerivativeApproximation with memory handling
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgq.h>
@@ -26,8 +23,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/derivative_approximation.h>
-
-
 
 template <int dim>
 void
@@ -46,8 +41,6 @@ test()
   Vector<float>  e(tria.n_active_cells());
   DerivativeApproximation::approximate_gradient(dof_handler, v, e);
 }
-
-
 
 int
 main()

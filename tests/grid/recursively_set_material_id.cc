@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // TriaAccessor::recursively_set_material_id had a bug in that it only
 // set the material_id for two of its children, not all
 
@@ -22,8 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -90,7 +86,6 @@ test()
         }
     }
 }
-
 
 int
 main()

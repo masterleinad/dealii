@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // extension of matrix_vector_faces_14 (renumbering of degrees of freedom to
 // better vectorized access, gather_evaluate and integrate_scatter) to the
 // vector-valued case in form of multiple components with different vector
@@ -33,8 +31,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
-
 
 template <int dim, int fe_degree_>
 void

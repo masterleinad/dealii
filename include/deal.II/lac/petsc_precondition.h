@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_precondition_h
 #  define dealii_petsc_precondition_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_PETSC
@@ -26,15 +25,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 namespace PETScWrappers
 {
   // forward declarations
   class MatrixBase;
   class VectorBase;
   class SolverBase;
-
 
   /**
    * Base class for preconditioner classes using the PETSc functionality. The
@@ -78,7 +74,6 @@ namespace PETScWrappers
     void
     vmult(VectorBase& dst, const VectorBase& src) const;
 
-
     /**
      * Give access to the underlying PETSc object.
      */
@@ -117,8 +112,6 @@ namespace PETScWrappers
     friend class SolverBase;
   };
 
-
-
   /**
    * A class that implements the interface to use the PETSc Jacobi
    * preconditioner.
@@ -145,7 +138,6 @@ namespace PETScWrappers
      * object.
      */
     PreconditionJacobi() = default;
-
 
     /**
      * Constructor. Take the matrix which is used to form the preconditioner,
@@ -187,8 +179,6 @@ namespace PETScWrappers
     void
     initialize();
   };
-
-
 
   /**
    * A class that implements the interface to use the PETSc Block Jacobi
@@ -246,7 +236,6 @@ namespace PETScWrappers
                             const AdditionalData& additional_data
                             = AdditionalData());
 
-
     /**
      * Initialize the preconditioner object and calculate all data that is
      * necessary for applying it in a solver. This function is automatically
@@ -271,8 +260,6 @@ namespace PETScWrappers
     void
     initialize();
   };
-
-
 
   /**
    * A class that implements the interface to use the PETSc SOR
@@ -333,8 +320,6 @@ namespace PETScWrappers
     AdditionalData additional_data;
   };
 
-
-
   /**
    * A class that implements the interface to use the PETSc SSOR
    * preconditioner.
@@ -393,8 +378,6 @@ namespace PETScWrappers
      */
     AdditionalData additional_data;
   };
-
-
 
   /**
    * A class that implements the interface to use the PETSc Eisenstat
@@ -459,8 +442,6 @@ namespace PETScWrappers
     AdditionalData additional_data;
   };
 
-
-
   /**
    * A class that implements the interface to use the PETSc Incomplete
    * Cholesky preconditioner.
@@ -520,8 +501,6 @@ namespace PETScWrappers
     AdditionalData additional_data;
   };
 
-
-
   /**
    * A class that implements the interface to use the PETSc ILU
    * preconditioner.
@@ -580,8 +559,6 @@ namespace PETScWrappers
      */
     AdditionalData additional_data;
   };
-
-
 
   /**
    * A class that implements the interface to use the PETSc LU preconditioner
@@ -663,8 +640,6 @@ namespace PETScWrappers
      */
     AdditionalData additional_data;
   };
-
-
 
   /**
    * A class that implements the interface to use the BoomerAMG algebraic
@@ -760,7 +735,6 @@ namespace PETScWrappers
                           const AdditionalData& additional_data
                           = AdditionalData());
 
-
     /**
      * Initialize the preconditioner object and calculate all data that is
      * necessary for applying it in a solver. This function is automatically
@@ -785,8 +759,6 @@ namespace PETScWrappers
     void
     initialize();
   };
-
-
 
   /**
    * A class that implements the interface to use the ParaSails sparse
@@ -878,8 +850,6 @@ namespace PETScWrappers
       bool output_details;
     };
 
-
-
     /**
      * Empty Constructor. You need to call initialize() before using this
      * object.
@@ -910,8 +880,6 @@ namespace PETScWrappers
      */
     AdditionalData additional_data;
   };
-
-
 
   /**
    * A class that implements a non-preconditioned method.
@@ -962,10 +930,7 @@ namespace PETScWrappers
   };
 } // namespace PETScWrappers
 
-
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #  endif // DEAL_II_WITH_PETSC
 

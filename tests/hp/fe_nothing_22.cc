@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test FE_Nothing::operator==()
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -34,8 +31,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 void
 test()
@@ -48,8 +43,6 @@ test()
   deallog << (FE_Nothing<dim>(1, true) == FE_Nothing<dim>(2, true))
           << std::endl;
 }
-
-
 
 int
 main()

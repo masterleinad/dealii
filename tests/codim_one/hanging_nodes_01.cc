@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we crash when building hanging nodes. however, as elucidated by the
 // _02 testcase, the reason is actually somewhere entirely different:
 // upon refinement of one cell, we forget who the neighbors of another
@@ -31,7 +29,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/lac/constraint_matrix.h>
-
 
 int
 main()

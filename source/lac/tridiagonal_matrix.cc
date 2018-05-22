@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/lapack_templates.h>
 #include <deal.II/lac/tridiagonal_matrix.h>
 #include <deal.II/lac/vector.h>
@@ -31,8 +30,6 @@ TridiagonalMatrix<number>::TridiagonalMatrix(size_type size, bool symmetric)
     state(matrix)
 {}
 
-
-
 template <typename number>
 void
 TridiagonalMatrix<number>::reinit(size_type size, bool symmetric)
@@ -43,8 +40,6 @@ TridiagonalMatrix<number>::reinit(size_type size, bool symmetric)
   left.resize(symmetric ? 0 : size);
   state = matrix;
 }
-
-
 
 template <typename number>
 bool
@@ -71,8 +66,6 @@ TridiagonalMatrix<number>::all_zero() const
       return false;
   return true;
 }
-
-
 
 template <typename number>
 void
@@ -127,7 +120,6 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
     }
 }
 
-
 template <typename number>
 void
 TridiagonalMatrix<number>::vmult_add(Vector<number>&       w,
@@ -135,8 +127,6 @@ TridiagonalMatrix<number>::vmult_add(Vector<number>&       w,
 {
   vmult(w, v, true);
 }
-
-
 
 template <typename number>
 void
@@ -181,8 +171,6 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
     }
 }
 
-
-
 template <typename number>
 void
 TridiagonalMatrix<number>::Tvmult_add(Vector<number>&       w,
@@ -190,8 +178,6 @@ TridiagonalMatrix<number>::Tvmult_add(Vector<number>&       w,
 {
   Tvmult(w, v, true);
 }
-
-
 
 template <typename number>
 number
@@ -218,16 +204,12 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
   return result;
 }
 
-
-
 template <typename number>
 number
 TridiagonalMatrix<number>::matrix_norm_square(const Vector<number>& v) const
 {
   return matrix_scalar_product(v, v);
 }
-
-
 
 template <typename number>
 void
@@ -248,8 +230,6 @@ TridiagonalMatrix<number>::compute_eigenvalues()
 #endif
 }
 
-
-
 template <typename number>
 number
 TridiagonalMatrix<number>::eigenvalue(const size_type i) const
@@ -258,7 +238,6 @@ TridiagonalMatrix<number>::eigenvalue(const size_type i) const
   Assert(i < n(), ExcIndexRange(i, 0, n()));
   return diagonal[i];
 }
-
 
 /*
 template <typename number>

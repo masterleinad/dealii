@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the Patterns::Map pattern
 
 #include "../tests.h"
@@ -47,7 +45,6 @@ check(const char* p)
               << std::endl;
     }
 }
-
 
 int
 main()

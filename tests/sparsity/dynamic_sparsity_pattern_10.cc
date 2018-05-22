@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::matrix_position
 
 #include "sparsity_pattern_common.h"

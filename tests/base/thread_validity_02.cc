@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that objects that can't be copied aren't copied when passed to a new
 // thread by reference
 //
 // test here with a constant object to which no non-const reference can be
 // bound
-
 
 #include "../tests.h"
 
@@ -37,14 +35,12 @@ private:
   operator=(const X&);
 };
 
-
 void
 execute(const X& x)
 {
   AssertThrow(x.i == 42, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
 
 void
 test()
@@ -53,8 +49,6 @@ test()
   Threads::Thread<void> t = Threads::new_thread(&execute, x);
   t.join();
 }
-
-
 
 int
 main()

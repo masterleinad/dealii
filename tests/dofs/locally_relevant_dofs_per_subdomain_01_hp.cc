@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test DoFTools::locally_relevant_dofs_per_subdomain
 // using a refined shared triangulation
 //
@@ -35,7 +34,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/data_out.h>
 
-
 template <int dim, int spacedim>
 void
 write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
@@ -56,8 +54,6 @@ write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
     data_out.write_vtu(output);
   }
 }
-
-
 
 template <int dim>
 void
@@ -90,7 +86,6 @@ test()
     .print(deallog);
   deallog << "\n" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

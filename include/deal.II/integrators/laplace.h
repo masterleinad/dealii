@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_laplace_h
 #define dealii_integrators_laplace_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -111,7 +110,6 @@ namespace LocalIntegrators
         }
     }
 
-
     /**
      * Vector-valued Laplacian residual operator in weak form
      *
@@ -144,7 +142,6 @@ namespace LocalIntegrators
               }
         }
     }
-
 
     /**
      * Weak boundary condition of Nitsche type for the Laplacian, namely on
@@ -636,7 +633,6 @@ namespace LocalIntegrators
         }
     }
 
-
     /**
      * Vector-valued residual term for the symmetric interior penalty method:
      * @f[
@@ -677,7 +673,6 @@ namespace LocalIntegrators
       const double nue     = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (nui + nue);
 
-
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
@@ -715,8 +710,6 @@ namespace LocalIntegrators
               }
         }
     }
-
-
 
     /**
      * Auxiliary function computing the penalty parameter for interior penalty
@@ -759,7 +752,6 @@ namespace LocalIntegrators
     }
   } // namespace Laplace
 } // namespace LocalIntegrators
-
 
 DEAL_II_NAMESPACE_CLOSE
 

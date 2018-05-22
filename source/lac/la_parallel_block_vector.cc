@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // disable instantiation for MSVC for now because of a compiler bug,
 // see https://github.com/dealii/dealii/issues/2875
 #ifndef DEAL_II_MSVC

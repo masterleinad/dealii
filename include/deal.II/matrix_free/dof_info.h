@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_dof_info_h
 #define dealii_matrix_free_dof_info_h
-
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/partitioner.h>
@@ -29,7 +27,6 @@
 
 #include <array>
 #include <memory>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -513,11 +510,9 @@ namespace internal
       std::vector<unsigned int> vector_zero_range_list;
     };
 
-
     /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
-
 
     inline unsigned int
     DoFInfo::fe_index_from_degree(const unsigned int first_selected_component,

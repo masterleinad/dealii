@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Just output the restriction matrices of the RT element
 
 #include "../tests.h"
@@ -23,8 +21,6 @@
 #include <string>
 
 #define PRECISION 8
-
-
 
 template <int dim>
 void
@@ -48,7 +44,6 @@ test(const unsigned int degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main()

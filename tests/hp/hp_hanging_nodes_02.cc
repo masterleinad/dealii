@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // compute hanging node constraints (before and after the processing
 // we do in ConstraintMatrix::close()) for some grids with and without
 // random distribution of FEs
@@ -50,7 +48,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -102,7 +99,6 @@ run(bool random_p, unsigned int* indx)
         }
     }
 
-
   dof_handler.distribute_dofs(fe);
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
@@ -120,8 +116,6 @@ run(bool random_p, unsigned int* indx)
   hanging_node_constraints.print(deallog.get_file_stream());
 }
 
-
-
 template <int dim>
 void
 run_test(unsigned int* indx)
@@ -129,8 +123,6 @@ run_test(unsigned int* indx)
   run<dim>(true, indx);
   run<dim>(false, indx);
 }
-
-
 
 int
 main()
@@ -140,7 +132,6 @@ main()
   deallog.attach(logfile);
 
   unsigned int index[] = {1, 2, 3, 4, 5, 6, 7};
-
 
   deallog << "Testing Order 1" << std::endl;
   run_test<2>(&(index[0]));

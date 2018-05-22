@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test gather and scatter operations of vectorized array
 
 #include "../tests.h"
@@ -21,7 +20,6 @@
 
 #include <deal.II/base/vectorization.h>
 #include <deal.II/lac/vector.h>
-
 
 template <typename Number>
 void
@@ -112,8 +110,6 @@ test()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

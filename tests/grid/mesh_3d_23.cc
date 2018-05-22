@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like mesh_3d_22, but further reduced: when creating output with
 // DataOut using a MappingQ(3) on a mesh with flipped cells, we get
 // bogus output at the interior face.
@@ -48,7 +46,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
 
 int
 main()

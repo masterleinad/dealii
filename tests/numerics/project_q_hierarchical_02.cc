@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::project works for QHierarchical elements correctly
 
 #include "project_common.h"
-
 
 template <int dim>
 void

@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ReductionControl
 // This test is adapted from tests/trilinos/solver_03.cc
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -60,14 +58,12 @@ check_solve(SolverControl&      solver_control,
   Assert(success == expected_result, ExcMessage("Incorrect result."));
 }
 
-
 int
 main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   logfile.precision(4);
   deallog.attach(logfile);
-
 
   {
     const unsigned int size = 32;

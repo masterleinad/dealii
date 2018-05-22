@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::sum() for tensor objects
 
 #include "../tests.h"
@@ -92,7 +90,6 @@ test()
   if(myid == 0)
     deallog << "Symmetric tensor: " << result_symmetric << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

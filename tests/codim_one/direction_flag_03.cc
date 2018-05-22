@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // there are no direction flags if dim==spacedim. make sure we always
 // get back true in that case
 
@@ -26,7 +25,6 @@
 #include <deal.II/grid/tria.h>
 
 using namespace std;
-
 
 template <int dim>
 void
@@ -44,8 +42,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

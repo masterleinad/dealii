@@ -23,8 +23,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
 
-
-
 template <int dim>
 void
 test()
@@ -56,7 +54,6 @@ test()
 
   data_out.write_vtk(deallog.get_file_stream());
 }
-
 
 int
 main()

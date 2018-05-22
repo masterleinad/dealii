@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test output of supercolumns
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -23,7 +21,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()

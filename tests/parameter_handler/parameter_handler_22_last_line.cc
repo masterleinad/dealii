@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that setting last_line parameter does indeed terminate parsing.
 
 #include "../tests.h"
@@ -34,7 +32,6 @@ check(const char* p, std::string last_line)
   deallog << "var_1=" << prm.get("var_1") << std::endl
           << "var_2=" << prm.get("var_2") << std::endl;
 }
-
 
 int
 main()

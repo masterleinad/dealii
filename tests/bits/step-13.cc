@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a un-hp-ified version of hp/step-13
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -51,8 +47,6 @@ std::ofstream logfile("output");
 #include <list>
 #include <sstream>
 
-
-
 namespace Evaluation
 {
   template <int dim>
@@ -72,12 +66,9 @@ namespace Evaluation
     unsigned int refinement_cycle;
   };
 
-
   template <int dim>
   EvaluationBase<dim>::~EvaluationBase()
   {}
-
-
 
   template <int dim>
   void
@@ -85,8 +76,6 @@ namespace Evaluation
   {
     refinement_cycle = step;
   }
-
-
 
   template <int dim>
   class PointValueEvaluation : public EvaluationBase<dim>
@@ -109,15 +98,12 @@ namespace Evaluation
     TableHandler&    results_table;
   };
 
-
   template <int dim>
   PointValueEvaluation<dim>::PointValueEvaluation(
     const Point<dim>& evaluation_point,
     TableHandler&     results_table)
     : evaluation_point(evaluation_point), results_table(results_table)
   {}
-
-
 
   template <int dim>
   void
@@ -149,8 +135,6 @@ namespace Evaluation
     results_table.add_value("u(x_0)", point_value);
   }
 
-
-
   template <int dim>
   class SolutionOutput : public EvaluationBase<dim>
   {
@@ -167,14 +151,12 @@ namespace Evaluation
     const DataOutBase::OutputFormat output_format;
   };
 
-
   template <int dim>
   SolutionOutput<dim>::SolutionOutput(
     const std::string&              output_name_base,
     const DataOutBase::OutputFormat output_format)
     : output_name_base(output_name_base), output_format(output_format)
   {}
-
 
   template <int dim>
   void
@@ -195,11 +177,7 @@ namespace Evaluation
     //    data_out.write (deallog.get_file_stream(), output_format);
   }
 
-
-
 } // namespace Evaluation
-
-
 
 namespace LaplaceSolver
 {
@@ -225,17 +203,13 @@ namespace LaplaceSolver
     const SmartPointer<Triangulation<dim>> triangulation;
   };
 
-
   template <int dim>
   Base<dim>::Base(Triangulation<dim>& coarse_grid) : triangulation(&coarse_grid)
   {}
 
-
   template <int dim>
   Base<dim>::~Base()
   {}
-
-
 
   template <int dim>
   class Solver : public virtual Base<dim>
@@ -291,8 +265,6 @@ namespace LaplaceSolver
       Threads::Mutex&                                       mutex) const;
   };
 
-
-
   template <int dim>
   Solver<dim>::Solver(Triangulation<dim>&       triangulation,
                       const FiniteElement<dim>& fe,
@@ -305,13 +277,11 @@ namespace LaplaceSolver
       boundary_values(&boundary_values)
   {}
 
-
   template <int dim>
   Solver<dim>::~Solver()
   {
     dof_handler.clear();
   }
-
 
   template <int dim>
   void
@@ -325,7 +295,6 @@ namespace LaplaceSolver
     linear_system.solve(solution);
   }
 
-
   template <int dim>
   void
   Solver<dim>::postprocess(
@@ -334,14 +303,12 @@ namespace LaplaceSolver
     postprocessor(dof_handler, solution);
   }
 
-
   template <int dim>
   unsigned int
   Solver<dim>::n_dofs() const
   {
     return dof_handler.n_dofs();
   }
-
 
   template <int dim>
   void
@@ -371,14 +338,12 @@ namespace LaplaceSolver
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, *boundary_values, boundary_value_map);
 
-
     threads.join_all();
     linear_system.hanging_node_constraints.condense(linear_system.matrix);
 
     MatrixTools::apply_boundary_values(
       boundary_value_map, linear_system.matrix, solution, linear_system.rhs);
   }
-
 
   template <int dim>
   void
@@ -413,7 +378,6 @@ namespace LaplaceSolver
                                     * fe_values.shape_grad(j, q_point)
                                     * fe_values.JxW(q_point));
 
-
         cell->get_dof_indices(local_dof_indices);
 
         Threads::Mutex::ScopedLock lock(mutex);
@@ -423,7 +387,6 @@ namespace LaplaceSolver
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       };
   }
-
 
   template <int dim>
   Solver<dim>::LinearSystem::LinearSystem(const DoFHandler<dim>& dof_handler)
@@ -450,8 +413,6 @@ namespace LaplaceSolver
     rhs.reinit(dof_handler.n_dofs());
   }
 
-
-
   template <int dim>
   void
   Solver<dim>::LinearSystem::solve(Vector<double>& solution) const
@@ -466,8 +427,6 @@ namespace LaplaceSolver
 
     hanging_node_constraints.distribute(solution);
   }
-
-
 
   template <int dim>
   class PrimalSolver : public Solver<dim>
@@ -485,7 +444,6 @@ namespace LaplaceSolver
     assemble_rhs(Vector<double>& rhs) const;
   };
 
-
   template <int dim>
   PrimalSolver<dim>::PrimalSolver(Triangulation<dim>&       triangulation,
                                   const FiniteElement<dim>& fe,
@@ -496,8 +454,6 @@ namespace LaplaceSolver
       Solver<dim>(triangulation, fe, quadrature, boundary_values),
       rhs_function(&rhs_function)
   {}
-
-
 
   template <int dim>
   void
@@ -535,8 +491,6 @@ namespace LaplaceSolver
       };
   }
 
-
-
   template <int dim>
   class RefinementGlobal : public PrimalSolver<dim>
   {
@@ -550,8 +504,6 @@ namespace LaplaceSolver
     virtual void
     refine_grid();
   };
-
-
 
   template <int dim>
   RefinementGlobal<dim>::RefinementGlobal(Triangulation<dim>&       coarse_grid,
@@ -567,16 +519,12 @@ namespace LaplaceSolver
                         boundary_values)
   {}
 
-
-
   template <int dim>
   void
   RefinementGlobal<dim>::refine_grid()
   {
     this->triangulation->refine_global(1);
   }
-
-
 
   template <int dim>
   class RefinementKelly : public PrimalSolver<dim>
@@ -592,8 +540,6 @@ namespace LaplaceSolver
     refine_grid();
   };
 
-
-
   template <int dim>
   RefinementKelly<dim>::RefinementKelly(Triangulation<dim>&       coarse_grid,
                                         const FiniteElement<dim>& fe,
@@ -607,8 +553,6 @@ namespace LaplaceSolver
                         rhs_function,
                         boundary_values)
   {}
-
-
 
   template <int dim>
   void
@@ -628,8 +572,6 @@ namespace LaplaceSolver
 
 } // namespace LaplaceSolver
 
-
-
 template <int dim>
 class Solution : public Function<dim>
 {
@@ -640,7 +582,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -654,8 +595,6 @@ Solution<dim>::value(const Point<dim>& p,
   return exponential;
 }
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -666,7 +605,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -692,8 +630,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return -u * (t1 + t2 + t3);
 }
 
-
-
 template <int dim>
 void
 run_simulation(
@@ -717,7 +653,6 @@ run_simulation(
           solver.postprocess(**i);
         };
 
-
       if(solver.n_dofs() < 2000)
         solver.refine_grid();
       else
@@ -726,8 +661,6 @@ run_simulation(
 
   deallog << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -774,8 +707,6 @@ solve_problem(const std::string& solver_name)
 
   deallog << std::endl;
 }
-
-
 
 int
 main()

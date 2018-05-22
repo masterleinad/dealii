@@ -82,7 +82,6 @@ test()
   auto space_locally_owned_dofs = space_dh.locally_owned_dofs();
   auto locally_owned_dofs       = dh.locally_owned_dofs();
 
-
   deallog << "Dofs      : " << dh.n_dofs() << std::endl
           << "Space dofs: " << space_dh.n_dofs() << std::endl;
 
@@ -91,7 +90,6 @@ test()
   deallog << "Local space dofs: " << space_locally_owned_dofs.n_elements()
           << std::endl;
   QGauss<dim> quad(3); // Quadrature for coupling
-
 
   TrilinosWrappers::SparsityPattern sparsity(
     space_locally_owned_dofs, locally_owned_dofs, comm);
@@ -158,8 +156,6 @@ test()
 
   deallog << "Error on squares: " << projected_squares.l2_norm() << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

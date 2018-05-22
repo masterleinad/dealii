@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Arpack by calculating eigenvalues of Laplace matrix.
 
 #include "../tests.h"
@@ -110,7 +109,6 @@ test()
       }
   }
 }
-
 
 int
 main()

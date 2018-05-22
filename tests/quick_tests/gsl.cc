@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test GSL by running CSpline. Copy-paste of /base/functions_cspline
 // take example from https://www.gnu.org/software/gsl/manual/html_node/Interpolation-Example-programs.html
 

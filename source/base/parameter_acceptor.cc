@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // Static empty class list
 std::vector<SmartPointer<ParameterAcceptor>> ParameterAcceptor::class_list;
 // Static parameter handler
@@ -35,7 +34,6 @@ ParameterAcceptor::ParameterAcceptor(const std::string& name)
   class_list.push_back(pt);
 }
 
-
 ParameterAcceptor::~ParameterAcceptor()
 {
   class_list[acceptor_id] = nullptr;
@@ -47,7 +45,6 @@ ParameterAcceptor::get_section_name() const
   return (section_name != "" ? section_name :
                                boost::core::demangle(typeid(*this).name()));
 }
-
 
 void
 ParameterAcceptor::initialize(
@@ -134,8 +131,6 @@ ParameterAcceptor::initialize(
   parse_all_parameters(prm);
 }
 
-
-
 void
 ParameterAcceptor::initialize(std::istream& input_stream, ParameterHandler& prm)
 
@@ -153,19 +148,13 @@ ParameterAcceptor::clear()
   prm.clear();
 }
 
-
-
 void
 ParameterAcceptor::declare_parameters(ParameterHandler&)
 {}
 
-
-
 void
 ParameterAcceptor::parse_parameters(ParameterHandler&)
 {}
-
-
 
 void
 ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
@@ -192,7 +181,6 @@ ParameterAcceptor::declare_all_parameters(ParameterHandler& prm)
         class_list[i]->leave_my_subsection(prm);
       }
 }
-
 
 std::vector<std::string>
 ParameterAcceptor::get_section_path() const
@@ -255,7 +243,5 @@ ParameterAcceptor::leave_my_subsection(ParameterHandler& prm
       prm.leave_subsection();
     }
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE

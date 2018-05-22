@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this file didn't compile at one point in time due to the private
 // inheritance of SparseMatrix by SparseLUDecomposition, and the
 // associated lack of accessibility of the Subscriptor functions to
@@ -21,12 +20,9 @@
 //
 // it was fixed around 2003-05-22
 
-
 #include "../tests.h"
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/lac/sparse_ilu.h>
-
-
 
 int
 main()

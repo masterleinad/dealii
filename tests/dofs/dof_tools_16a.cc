@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -24,8 +23,6 @@
 //                                   const typename FunctionMap<dim>::type &
 //                                   const std::vector<unsigned int> &
 //                               SparsityPattern       &);
-
-
 
 template <int dim>
 void

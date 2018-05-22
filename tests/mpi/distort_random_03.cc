@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GridTools::distort_random for parallel::shared::Triangulation
-
 
 #include "../tests.h"
 #include <deal.II/distributed/shared_tria.h>
@@ -24,8 +22,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/data_out.h>
-
-
 
 template <int dim>
 void
@@ -52,8 +48,6 @@ test1(const bool keep_boundary)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

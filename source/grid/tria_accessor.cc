@@ -73,8 +73,6 @@ namespace
     return subface_no + first_child_has_children;
   }
 
-
-
   // given the number of face's child
   // (subface_no) and grandchild
   // (subsubface_no), return the number of the
@@ -125,14 +123,12 @@ namespace
                                 [first_child_has_children];
   }
 
-
   template <int dim, int spacedim>
   Point<spacedim>
   barycenter(const TriaAccessor<1, dim, spacedim>& accessor)
   {
     return (accessor.vertex(1) + accessor.vertex(0)) / 2.;
   }
-
 
   Point<2>
   barycenter(const TriaAccessor<2, 2, 2>& accessor)
@@ -210,8 +206,6 @@ namespace
 
     return Point<2>(t27 * t37 / 3, t63 * t37 / 3);
   }
-
-
 
   Point<3>
   barycenter(const TriaAccessor<3, 3, 3>& accessor)
@@ -1227,8 +1221,6 @@ namespace
     return Point<3>(unknown0, unknown1, unknown2);
   }
 
-
-
   template <int structdim, int dim, int spacedim>
   Point<spacedim>
   barycenter(const TriaAccessor<structdim, dim, spacedim>&)
@@ -1239,8 +1231,6 @@ namespace
     return Point<spacedim>();
   }
 
-
-
   template <int dim, int spacedim>
   double
   measure(const TriaAccessor<1, dim, spacedim>& accessor)
@@ -1249,8 +1239,6 @@ namespace
     // mappings
     return (accessor.vertex(1) - accessor.vertex(0)).norm();
   }
-
-
 
   double
   measure(const TriaAccessor<2, 2, 2>& accessor)
@@ -1302,7 +1290,6 @@ namespace
            / 2;
   }
 
-
   double
   measure(const TriaAccessor<3, 3, 3>& accessor)
   {
@@ -1313,7 +1300,6 @@ namespace
     return GridTools::cell_measure<3>(
       accessor.get_triangulation().get_vertices(), vertex_indices);
   }
-
 
   // a 2d face in 3d space
   double
@@ -1353,8 +1339,6 @@ namespace
     return 0.5 * twice_area.norm();
   }
 
-
-
   template <int structdim, int dim, int spacedim>
   double
   measure(const TriaAccessor<structdim, dim, spacedim>&)
@@ -1364,7 +1348,6 @@ namespace
     Assert(false, ExcNotImplemented());
     return std::numeric_limits<double>::quiet_NaN();
   }
-
 
   template <int dim, int spacedim>
   Point<spacedim>
@@ -1413,8 +1396,6 @@ namespace
   }
 } // namespace
 
-
-
 /*------------------------ Static variables: TriaAccessorBase ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
@@ -1427,7 +1408,6 @@ template <int structdim, int dim, int spacedim>
 const unsigned int
   TriaAccessorBase<structdim, dim, spacedim>::structure_dimension;
 
-
 /*------------------------ Functions: TriaAccessor ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
@@ -1439,8 +1419,6 @@ TriaAccessor<structdim, dim, spacedim>::set(
   this->objects().cells[this->present_index] = object;
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 Point<spacedim>
 TriaAccessor<structdim, dim, spacedim>::barycenter() const
@@ -1450,8 +1428,6 @@ TriaAccessor<structdim, dim, spacedim>::barycenter() const
   return dealii::barycenter(*this);
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 double
 TriaAccessor<structdim, dim, spacedim>::measure() const
@@ -1460,8 +1436,6 @@ TriaAccessor<structdim, dim, spacedim>::measure() const
   // namespace above
   return dealii::measure(*this);
 }
-
-
 
 template <int structdim, int dim, int spacedim>
 BoundingBox<spacedim>
@@ -1483,8 +1457,6 @@ TriaAccessor<structdim, dim, spacedim>::bounding_box() const
   return BoundingBox<spacedim>(boundary_points);
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 double
 TriaAccessor<structdim, dim, spacedim>::extent_in_direction(
@@ -1493,8 +1465,6 @@ TriaAccessor<structdim, dim, spacedim>::extent_in_direction(
   Assert(false, ExcNotImplemented());
   return std::numeric_limits<double>::signaling_NaN();
 }
-
-
 
 template <>
 double
@@ -1506,7 +1476,6 @@ TriaAccessor<1, 1, 1>::extent_in_direction(const unsigned int axis) const
   return this->diameter();
 }
 
-
 template <>
 double
 TriaAccessor<1, 1, 2>::extent_in_direction(const unsigned int axis) const
@@ -1516,7 +1485,6 @@ TriaAccessor<1, 1, 2>::extent_in_direction(const unsigned int axis) const
 
   return this->diameter();
 }
-
 
 template <>
 double
@@ -1546,7 +1514,6 @@ TriaAccessor<2, 2, 3>::extent_in_direction(const unsigned int axis) const
                   this->line(lines[axis][1])->diameter());
 }
 
-
 template <>
 double
 TriaAccessor<3, 3, 3>::extent_in_direction(const unsigned int axis) const
@@ -1566,7 +1533,6 @@ TriaAccessor<3, 3, 3>::extent_in_direction(const unsigned int axis) const
   return std::max(std::max(lengths[0], lengths[1]),
                   std::max(lengths[2], lengths[3]));
 }
-
 
 // Recursively set manifold ids on hex iterators.
 template <>
@@ -1591,7 +1557,6 @@ TriaAccessor<3, 3, 3>::set_all_manifold_ids(
     this->line(i)->set_manifold_id(manifold_ind);
 }
 
-
 template <int structdim, int dim, int spacedim>
 Point<spacedim>
 TriaAccessor<structdim, dim, spacedim>::intermediate_point(
@@ -1610,7 +1575,6 @@ TriaAccessor<structdim, dim, spacedim>::intermediate_point(
   return this->get_manifold().get_new_point(
     make_array_view(p.begin(), p.end()), make_array_view(w.begin(), w.end()));
 }
-
 
 namespace
 {
@@ -1641,7 +1605,6 @@ namespace
     static const double Kb[GeometryInfo<dim>::vertices_per_cell];
   };
 
-
   /*
     Octave code:
     M=[0 1; 1 1];
@@ -1655,7 +1618,6 @@ namespace
   template <>
   const double TransformR2UAffine<1>::Kb[GeometryInfo<1>::vertices_per_cell]
     = {1.000000, 0.000000};
-
 
   /*
     Octave code:
@@ -1680,7 +1642,6 @@ namespace
   const double TransformR2UAffine<2>::Kb[GeometryInfo<2>::vertices_per_cell]
     = {0.750000, 0.250000, 0.250000, -0.250000};
 
-
   template <>
   const double TransformR2UAffine<3>::KA[GeometryInfo<3>::vertices_per_cell][3]
     = {{-0.250000, -0.250000, -0.250000},
@@ -1694,7 +1655,6 @@ namespace
 
   };
 
-
   template <>
   const double TransformR2UAffine<3>::Kb[GeometryInfo<3>::vertices_per_cell]
     = {0.500000,
@@ -1706,7 +1666,6 @@ namespace
        0.000000,
        -0.250000};
 } // namespace
-
 
 template <int structdim, int dim, int spacedim>
 Point<structdim>
@@ -1735,7 +1694,6 @@ TriaAccessor<structdim, dim, spacedim>::real_to_unit_cell_affine_approximation(
   return Point<structdim>(apply_transformation(A_inv, b));
 }
 
-
 template <int structdim, int dim, int spacedim>
 Point<spacedim>
 TriaAccessor<structdim, dim, spacedim>::center(
@@ -1755,10 +1713,7 @@ TriaAccessor<structdim, dim, spacedim>::center(
     return get_new_point_on_object(*this, use_interpolation);
 }
 
-
 /*------------------------ Functions: CellAccessor<1> -----------------------*/
-
-
 
 template <>
 bool
@@ -1767,11 +1722,7 @@ CellAccessor<1>::point_inside(const Point<1>& p) const
   return (this->vertex(0)[0] <= p[0]) && (p[0] <= this->vertex(1)[0]);
 }
 
-
-
 /*------------------------ Functions: CellAccessor<2> -----------------------*/
-
-
 
 template <>
 bool
@@ -1829,11 +1780,7 @@ CellAccessor<2>::point_inside(const Point<2>& p) const
   return true;
 }
 
-
-
 /*------------------------ Functions: CellAccessor<3> -----------------------*/
-
-
 
 template <>
 bool
@@ -1885,8 +1832,6 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
     }
 }
 
-
-
 /*------------------------ Functions: CellAccessor<dim,spacedim> -----------------------*/
 
 // For codim>0 we proceed as follows:
@@ -1906,15 +1851,12 @@ CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_>& p) const
   return GeometryInfo<dim_>::is_inside_unit_cell(p_unit);
 }
 
-
-
 template <>
 bool
 CellAccessor<1, 2>::point_inside(const Point<2>& p) const
 {
   return point_inside_codim<1, 2>(p);
 }
-
 
 template <>
 bool
@@ -1923,15 +1865,12 @@ CellAccessor<1, 3>::point_inside(const Point<3>& p) const
   return point_inside_codim<1, 3>(p);
 }
 
-
 template <>
 bool
 CellAccessor<2, 3>::point_inside(const Point<3>& p) const
 {
   return point_inside_codim<2, 3>(p);
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -1953,8 +1892,6 @@ CellAccessor<dim, spacedim>::at_boundary() const
     }
 }
 
-
-
 template <int dim, int spacedim>
 types::material_id
 CellAccessor<dim, spacedim>::material_id() const
@@ -1964,8 +1901,6 @@ CellAccessor<dim, spacedim>::material_id() const
     ->cells.boundary_or_material_id[this->present_index]
     .material_id;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1981,8 +1916,6 @@ CellAccessor<dim, spacedim>::set_material_id(
     = mat_id;
 }
 
-
-
 template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::recursively_set_material_id(
@@ -1994,8 +1927,6 @@ CellAccessor<dim, spacedim>::recursively_set_material_id(
     for(unsigned int c = 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_material_id(mat_id);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2009,7 +1940,6 @@ CellAccessor<dim, spacedim>::set_subdomain_id(
     = new_subdomain_id;
 }
 
-
 template <int dim, int spacedim>
 types::subdomain_id
 CellAccessor<dim, spacedim>::level_subdomain_id() const
@@ -2018,8 +1948,6 @@ CellAccessor<dim, spacedim>::level_subdomain_id() const
   return this->tria->levels[this->present_level]
     ->level_subdomain_ids[this->present_index];
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2032,7 +1960,6 @@ CellAccessor<dim, spacedim>::set_level_subdomain_id(
     = new_level_subdomain_id;
 }
 
-
 template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::direction_flag() const
@@ -2044,8 +1971,6 @@ CellAccessor<dim, spacedim>::direction_flag() const
     return this->tria->levels[this->present_level]
       ->direction_flags[this->present_index];
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2063,8 +1988,6 @@ CellAccessor<dim, spacedim>::set_direction_flag(
                       "can not be set to anything else."));
 }
 
-
-
 template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::set_active_cell_index(
@@ -2077,8 +2000,6 @@ CellAccessor<dim, spacedim>::set_active_cell_index(
     = active_cell_index;
 }
 
-
-
 template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::set_parent(const unsigned int parent_index)
@@ -2088,8 +2009,6 @@ CellAccessor<dim, spacedim>::set_parent(const unsigned int parent_index)
   this->tria->levels[this->present_level]->parents[this->present_index / 2]
     = parent_index;
 }
-
-
 
 template <int dim, int spacedim>
 int
@@ -2104,8 +2023,6 @@ CellAccessor<dim, spacedim>::parent_index() const
     ->parents[this->present_index / 2];
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 CellAccessor<dim, spacedim>::active_cell_index() const
@@ -2115,8 +2032,6 @@ CellAccessor<dim, spacedim>::active_cell_index() const
   return this->tria->levels[this->present_level]
     ->active_cell_indices[this->present_index];
 }
-
-
 
 template <int dim, int spacedim>
 TriaIterator<CellAccessor<dim, spacedim>>
@@ -2130,7 +2045,6 @@ CellAccessor<dim, spacedim>::parent() const
   return q;
 }
 
-
 template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::recursively_set_subdomain_id(
@@ -2142,8 +2056,6 @@ CellAccessor<dim, spacedim>::recursively_set_subdomain_id(
   else
     set_subdomain_id(new_subdomain_id);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2176,8 +2088,6 @@ CellAccessor<dim, spacedim>::set_neighbor(
         = -1;
     };
 }
-
-
 
 template <int dim, int spacedim>
 CellId
@@ -2215,8 +2125,6 @@ CellAccessor<dim, spacedim>::id() const
 
   return CellId(coarse_index, n_child_indices, &(id[0]));
 }
-
-
 
 template <int dim, int spacedim>
 unsigned int
@@ -2282,8 +2190,6 @@ CellAccessor<dim, spacedim>::neighbor_of_neighbor_internal(
     }
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 CellAccessor<dim, spacedim>::neighbor_of_neighbor(
@@ -2296,8 +2202,6 @@ CellAccessor<dim, spacedim>::neighbor_of_neighbor(
   return n2;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::neighbor_is_coarser(
@@ -2306,8 +2210,6 @@ CellAccessor<dim, spacedim>::neighbor_is_coarser(
   return neighbor_of_neighbor_internal(neighbor)
          == numbers::invalid_unsigned_int;
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<unsigned int, unsigned int>
@@ -2485,8 +2387,6 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
     }
 }
 
-
-
 template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::has_periodic_neighbor(
@@ -2524,8 +2424,6 @@ CellAccessor<dim, spacedim>::has_periodic_neighbor(
   return false;
 }
 
-
-
 template <int dim, int spacedim>
 TriaIterator<CellAccessor<dim, spacedim>>
 CellAccessor<dim, spacedim>::periodic_neighbor(const unsigned int i_face) const
@@ -2554,8 +2452,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor(const unsigned int i_face) const
   return my_face_pair->second.first.first;
 }
 
-
-
 template <int dim, int spacedim>
 TriaIterator<CellAccessor<dim, spacedim>>
 CellAccessor<dim, spacedim>::neighbor_or_periodic_neighbor(
@@ -2570,8 +2466,6 @@ CellAccessor<dim, spacedim>::neighbor_or_periodic_neighbor(
   // we can't come here
   return this->neighbor(i_face);
 }
-
-
 
 template <int dim, int spacedim>
 TriaIterator<CellAccessor<dim, spacedim>>
@@ -2626,8 +2520,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_child_on_subface(
     nb_parent_face_it->refinement_case());
   return parent_nb_it->child(sub_neighbor_num);
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<unsigned int, unsigned int>
@@ -2694,8 +2586,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
                                                numbers::invalid_unsigned_int);
 }
 
-
-
 template <int dim, int spacedim>
 int
 CellAccessor<dim, spacedim>::periodic_neighbor_index(
@@ -2703,8 +2593,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_index(
 {
   return periodic_neighbor(i_face)->index();
 }
-
-
 
 template <int dim, int spacedim>
 int
@@ -2714,8 +2602,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_level(
   return periodic_neighbor(i_face)->level();
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 CellAccessor<dim, spacedim>::periodic_neighbor_of_periodic_neighbor(
@@ -2723,8 +2609,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_periodic_neighbor(
 {
   return periodic_neighbor_face_no(i_face);
 }
-
-
 
 template <int dim, int spacedim>
 unsigned int
@@ -2756,8 +2640,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_face_no(
          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   return my_face_pair->second.first.second;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -2816,8 +2698,6 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser(
   return my_level > neighbor_level;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::at_boundary(const unsigned int i) const
@@ -2828,8 +2708,6 @@ CellAccessor<dim, spacedim>::at_boundary(const unsigned int i) const
 
   return (neighbor_index(i) == -1);
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -2846,8 +2724,6 @@ CellAccessor<dim, spacedim>::has_boundary_lines() const
       return false;
     }
 }
-
-
 
 template <int dim, int spacedim>
 TriaIterator<CellAccessor<dim, spacedim>>
@@ -2894,7 +2770,6 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
 
           return sub_neighbor;
         }
-
 
       case 3:
         {
@@ -2965,7 +2840,6 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           const TriaIterator<CellAccessor<dim, spacedim>> neighbor
             = this->neighbor(face);
 
-
           const RefinementCase<dim - 1> mother_face_ref_case
             = mother_face->refinement_case();
           if(mother_face_ref_case
@@ -3020,7 +2894,6 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                   std::pair<unsigned int, unsigned int> indices
                     = neighbor_of_coarser_neighbor(face);
                   neighbor_neighbor = indices.first;
-
 
                   // we have to translate our
                   // subface_index according to the
@@ -3233,8 +3106,6 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
         return TriaIterator<CellAccessor<dim, spacedim>>();
     }
 }
-
-
 
 // explicit instantiations
 #include "tria_accessor.inst"

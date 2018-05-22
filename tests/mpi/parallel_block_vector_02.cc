@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check ghost handling on parallel block vectors
 
 #include "../tests.h"
@@ -24,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -33,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor from processor 1 to 8 owns 2 indices (the other processors
   // do not own any dof), and all processors are ghosting element 1
@@ -129,7 +126,6 @@ test()
   x.update_ghost_values();
   Assert(x.has_ghost_elements() == true, ExcInternalError());
 
-
   // add something to entry 1 on all processors
   w(1) += myid + 1;
   w.compress(VectorOperation::add);
@@ -153,8 +149,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

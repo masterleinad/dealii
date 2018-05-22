@@ -30,8 +30,6 @@
 #include <fstream>
 #include <iostream>
 
-
-
 template <typename FullMatrix>
 void
 create_spd(FullMatrix& A)
@@ -55,8 +53,6 @@ create_spd(FullMatrix& A)
           }
       }
 }
-
-
 
 template <typename NumberType>
 void
@@ -112,8 +108,6 @@ test(const unsigned int size, const unsigned int block_size)
   else
     pcout << "Ok" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test construction, indexing, and conversion of SymmetricTensor<2,dim>
 // from/to Tensor<2,dim> with dim > 3
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -40,8 +38,6 @@ test()
       deallog << (i + 1) * (j + 1) << " " << (int) s[i][j] << " "
               << (int) t[i][j] << " " << (int) u[i][j] << std::endl;
 }
-
-
 
 int
 main()

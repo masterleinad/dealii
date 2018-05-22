@@ -17,7 +17,6 @@
  * Author: Katharina Kormann, Martin Kronbichler, Uppsala University, 2011-2012
  */
 
-
 // The necessary files from the deal.II library.
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/function.h>
@@ -46,7 +45,6 @@
 #include <iomanip>
 #include <iostream>
 
-
 namespace Step48
 {
   using namespace dealii;
@@ -60,7 +58,6 @@ namespace Step48
   // Sine-Gordon operator. Therefore, it needs to be a compile-time constant.
   const unsigned int dimension = 2;
   const unsigned int fe_degree = 4;
-
 
   // @sect3{SineGordonOperation}
 
@@ -100,8 +97,6 @@ namespace Step48
       const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
       const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
-
-
 
   // @sect4{SineGordonOperation::SineGordonOperation}
 
@@ -146,8 +141,6 @@ namespace Step48
       else
         inv_mass_matrix.local_element(k) = 0;
   }
-
-
 
   // @sect4{SineGordonOperation::local_apply}
 
@@ -218,8 +211,6 @@ namespace Step48
       }
   }
 
-
-
   //@sect4{SineGordonOperation::apply}
 
   // This function performs the time stepping routine based on the cell-local
@@ -241,7 +232,6 @@ namespace Step48
       &SineGordonOperation<dim, fe_degree>::local_apply, this, dst, src);
     dst.scale(inv_mass_matrix);
   }
-
 
   //@sect3{Equation data}
 
@@ -276,8 +266,6 @@ namespace Step48
       result *= -4. * std::atan(factor / std::cosh(m * p[d] + c1));
     return result;
   }
-
-
 
   // @sect3{SineGordonProblem class}
 
@@ -322,7 +310,6 @@ namespace Step48
     const double       cfl_number;
     const unsigned int output_timestep_skip;
   };
-
 
   //@sect4{SineGordonProblem::SineGordonProblem}
 
@@ -402,7 +389,6 @@ namespace Step48
     pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
-
     // We generate hanging node constraints for ensuring continuity of the
     // solution. As in step-40, we need to equip the constraint matrix with
     // the IndexSet of locally relevant degrees of freedom to avoid it to
@@ -434,8 +420,6 @@ namespace Step48
     old_solution.reinit(solution);
     old_old_solution.reinit(solution);
   }
-
-
 
   //@sect4{SineGordonProblem::output_results}
 
@@ -511,7 +495,6 @@ namespace Step48
         data_out.write_pvtu_record(master_output, filenames);
       }
   }
-
 
   // @sect4{SineGordonProblem::run}
 
@@ -619,8 +602,6 @@ namespace Step48
           << "s on computations." << std::endl;
   }
 } // namespace Step48
-
-
 
 // @sect3{The <code>main</code> function}
 

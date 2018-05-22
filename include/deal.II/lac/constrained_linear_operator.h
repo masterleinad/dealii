@@ -20,15 +20,12 @@
 #include <deal.II/lac/linear_operator.h>
 #include <deal.II/lac/packaged_operation.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * @name Indirectly applying constraints to LinearOperator
  */
 //@{
-
 
 /**
  * This function takes a ConstraintMatrix @p constraint_matrix and an operator
@@ -143,7 +140,6 @@ distribute_constraints_linear_operator(
   return return_op;
 }
 
-
 /**
  * Given a ConstraintMatrix @p constraint_matrix and an operator exemplar @p
  * exemplar, return a LinearOperator that is the projection to the subspace of
@@ -208,7 +204,6 @@ project_to_constrained_linear_operator(
   return return_op;
 }
 
-
 /**
  * Given a ConstraintMatrix object @p constraint_matrix and a LinearOperator
  * @p linop, this function creates a LinearOperator object consisting of the
@@ -258,7 +253,6 @@ constrained_linear_operator(const ConstraintMatrix& constraint_matrix,
     = project_to_constrained_linear_operator(constraint_matrix, linop);
   return Ct * linop * C + Id_c;
 }
-
 
 /**
  * Given a ConstraintMatrix object @p constraint_matrix, a LinearOperator @p

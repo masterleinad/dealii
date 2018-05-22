@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the MINRES solver using the PETSc matrix and vector classes
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -32,7 +30,6 @@
 #include <deal.II/lac/vector_memory.h>
 #include <iostream>
 #include <typeinfo>
-
 
 int
 main(int argc, char** argv)

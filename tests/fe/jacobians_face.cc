@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Show the Jacobians and inverse Jacobians of FEFaceValues and
 // FESubfaceValues on a hyperball mesh with one quadrature point
 
@@ -383,7 +382,6 @@ test()
     deallog << std::endl;
   }
 }
-
 
 int
 main()

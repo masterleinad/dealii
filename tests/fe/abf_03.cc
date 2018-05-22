@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that convert_generalized_support_point_values_to_dof_values
 // gives the correct when asking for we the nodal values for a
 // function in the FE_ABF<dim(degree) ansatz space.
@@ -22,8 +20,6 @@
 #include "../tests.h"
 #include <deal.II/fe/fe_abf.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <unsigned int dim>
 void

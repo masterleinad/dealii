@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_constraint_matrix_h
 #define dealii_constraint_matrix_h
 
@@ -31,7 +30,6 @@
 #include <set>
 #include <utility>
 #include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -52,7 +50,6 @@ namespace internals
 {
   class GlobalRowsFromLocal;
 }
-
 
 //TODO[WB]: We should have a function of the kind
 //   ConstraintMatrix::add_constraint (const size_type constrained_dof,
@@ -453,7 +450,6 @@ public:
    * @}
    */
 
-
   /**
    * @name Querying constraints
    * @{
@@ -605,7 +601,6 @@ public:
    * @name Eliminating constraints from linear systems after their creation
    * @{
    */
-
 
   /**
    * Condense a sparsity pattern. The name of the function mimics the name of
@@ -1174,8 +1169,6 @@ public:
    * @}
    */
 
-
-
   /**
    * This class represents one line of a constraint matrix.
    */
@@ -1244,18 +1237,15 @@ public:
     }
   };
 
-
   /**
    * Typedef for the iterator type that is used in the LineRange container.
    */
   typedef std::vector<ConstraintLine>::const_iterator const_iterator;
 
-
   /**
    * Typedef for the return type used by get_lines().
    */
   typedef boost::iterator_range<const_iterator> LineRange;
-
 
   /**
    * Return a range object containing (const) iterators to all line entries
@@ -1267,7 +1257,6 @@ public:
    */
   const LineRange
   get_lines() const;
-
 
   /**
    * Check if the current object is consistent on all processors
@@ -1301,7 +1290,6 @@ public:
                             const IndexSet&              locally_active_dofs,
                             const MPI_Comm               mpi_communicator,
                             const bool                   verbose = false) const;
-
 
   /**
    * Exception
@@ -1578,8 +1566,6 @@ private:
                        const FullMatrix<MatrixScalar>& local_matrix) const;
 };
 
-
-
 /* ---------------- template and inline functions ----------------- */
 
 inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints)
@@ -1591,8 +1577,6 @@ inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints)
   local_lines.compress();
 }
 
-
-
 inline ConstraintMatrix::ConstraintMatrix(
   const ConstraintMatrix& constraint_matrix)
   : Subscriptor(),
@@ -1601,7 +1585,6 @@ inline ConstraintMatrix::ConstraintMatrix(
     local_lines(constraint_matrix.local_lines),
     sorted(constraint_matrix.sorted)
 {}
-
 
 inline void
 ConstraintMatrix::add_line(const size_type line)
@@ -1631,8 +1614,6 @@ ConstraintMatrix::add_line(const size_type line)
   lines.back().inhomogeneity = 0.;
   lines_cache[line_index]    = lines.size() - 1;
 }
-
-
 
 inline void
 ConstraintMatrix::add_entry(const size_type line,
@@ -1674,8 +1655,6 @@ ConstraintMatrix::add_entry(const size_type line,
   line_ptr->entries.emplace_back(column, value);
 }
 
-
-
 inline void
 ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
 {
@@ -1688,15 +1667,11 @@ ConstraintMatrix::set_inhomogeneity(const size_type line, const double value)
   line_ptr->inhomogeneity  = value;
 }
 
-
-
 inline types::global_dof_index
 ConstraintMatrix::n_constraints() const
 {
   return lines.size();
 }
-
-
 
 inline bool
 ConstraintMatrix::is_constrained(const size_type index) const
@@ -1705,8 +1680,6 @@ ConstraintMatrix::is_constrained(const size_type index) const
   return ((line_index < lines_cache.size())
           && (lines_cache[line_index] != numbers::invalid_size_type));
 }
-
-
 
 inline bool
 ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
@@ -1724,8 +1697,6 @@ ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
     }
 }
 
-
-
 inline const std::vector<std::pair<types::global_dof_index, double>>*
 ConstraintMatrix::get_constraint_entries(const size_type line) const
 {
@@ -1738,8 +1709,6 @@ ConstraintMatrix::get_constraint_entries(const size_type line) const
   else
     return &lines[lines_cache[line_index]].entries;
 }
-
-
 
 inline double
 ConstraintMatrix::get_inhomogeneity(const size_type line) const
@@ -1754,8 +1723,6 @@ ConstraintMatrix::get_inhomogeneity(const size_type line) const
     return lines[lines_cache[line_index]].inhomogeneity;
 }
 
-
-
 inline types::global_dof_index
 ConstraintMatrix::calculate_line_index(const size_type line) const
 {
@@ -1768,23 +1735,17 @@ ConstraintMatrix::calculate_line_index(const size_type line) const
   return local_lines.index_within_set(line);
 }
 
-
-
 inline bool
 ConstraintMatrix::can_store_line(size_type line_index) const
 {
   return !local_lines.size() || local_lines.is_element(line_index);
 }
 
-
-
 inline const IndexSet&
 ConstraintMatrix::get_local_lines() const
 {
   return local_lines;
 }
-
-
 
 template <class VectorType>
 inline void
@@ -1805,7 +1766,6 @@ ConstraintMatrix::distribute_local_to_global(const size_type index,
           += value * position.entries[j].second;
     }
 }
-
 
 template <typename ForwardIteratorVec,
           typename ForwardIteratorInd,
@@ -1837,7 +1797,6 @@ ConstraintMatrix::distribute_local_to_global(
     }
 }
 
-
 template <class InVector, class OutVector>
 inline void
 ConstraintMatrix::distribute_local_to_global(
@@ -1852,8 +1811,6 @@ ConstraintMatrix::distribute_local_to_global(
                              local_dof_indices.begin(),
                              global_vector);
 }
-
-
 
 template <typename ForwardIteratorVec,
           typename ForwardIteratorInd,
@@ -1882,7 +1839,6 @@ ConstraintMatrix::get_dof_values(const VectorType&  global_vector,
         }
     }
 }
-
 
 template <typename MatrixType>
 class BlockMatrixBase;
@@ -1965,11 +1921,9 @@ public:
        == sizeof(yes_type));
 };
 
-
 // instantiation of the static member
 template <typename MatrixType>
 const bool IsBlockMatrix<MatrixType>::value;
-
 
 template <typename MatrixType>
 inline void
@@ -1990,8 +1944,6 @@ ConstraintMatrix::distribute_local_to_global(
     false,
     std::integral_constant<bool, IsBlockMatrix<MatrixType>::value>());
 }
-
-
 
 template <typename MatrixType, typename VectorType>
 inline void
@@ -2015,8 +1967,6 @@ ConstraintMatrix::distribute_local_to_global(
     std::integral_constant<bool, IsBlockMatrix<MatrixType>::value>());
 }
 
-
-
 template <typename SparsityPatternType>
 inline void
 ConstraintMatrix::add_entries_local_to_global(
@@ -2034,7 +1984,6 @@ ConstraintMatrix::add_entries_local_to_global(
     dof_mask,
     std::integral_constant<bool, IsBlockMatrix<SparsityPatternType>::value>());
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

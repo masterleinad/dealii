@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // PETScWrappers: document bug with PETSc SparseMatrix and clear_rows()
 // until now, also the PETSc-internal SparsityPattern removes the
 // rows that are emptied with clear_rows(). This results in errors
@@ -28,7 +26,6 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 
 //#include <mpi.h>
-
 
 void
 test()
@@ -79,7 +76,6 @@ test()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

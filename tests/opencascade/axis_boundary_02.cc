@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the class DirectionalProjectionBoundary
 
 #include "../tests.h"

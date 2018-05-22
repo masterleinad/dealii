@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the basic member variables of FEEvaluation
 
 #include "../tests.h"
@@ -26,7 +24,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
-
 
 template <typename FEEval>
 void
@@ -51,8 +48,6 @@ print_info(const FEEval& eval)
   deallog << "FEEvaluation::dofs_per_cell: " << eval.dofs_per_cell << std::endl;
   deallog << "FEEvaluation::n_q_points: " << eval.n_q_points << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -94,8 +89,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

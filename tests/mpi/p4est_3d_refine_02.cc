@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // refine a 3d shell once (currently a bug):
 //[t500u:16597] [17] /scratch/p4est-0.3.1.55//DEBUG/lib/libsc.so.0(sc_abort_verbosef+0) [0x2afcc77b943b]
 //[t500u:16597] [18] /scratch/p4est-0.3.1.55//DEBUG/lib/libp4est.so.0(p8est_quadrant_parent+0x5d) [0x2afcc7548d4b]
@@ -70,14 +68,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

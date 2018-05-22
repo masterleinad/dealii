@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a problem uncovered by Baerbel Janssen in that
 // DoFTools::make_flux_sparsity_pattern aborted in 1d with adaptively refined
 // meshes and hp DoFHandlers. this actually uncovered all sorts of other
@@ -22,7 +20,6 @@
 // of them was fixed. this test cumulatively makes sure everything is ok
 
 // while there, also test the same code in 2d (3d appears to take too long)
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -45,7 +42,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 namespace Step
 {
@@ -77,8 +73,6 @@ namespace Step
     SparseMatrix<double> system_matrix;
   };
 
-
-
   template <int dim>
   Problem<dim>::Problem() : dof_handler(triangulation)
   {
@@ -90,7 +84,6 @@ namespace Step
         face_quadrature_collection.push_back(QGauss<dim - 1>(degree + 1));
       }
   }
-
 
   template <int dim>
   Problem<dim>::~Problem()
@@ -107,7 +100,6 @@ namespace Step
     constraints.clear();
     constraints.close();
 
-
     DynamicSparsityPattern csp(dof_handler.n_dofs(), dof_handler.n_dofs());
     DoFTools::make_flux_sparsity_pattern(dof_handler, csp, constraints, false);
     sparsity_pattern.copy_from(csp);
@@ -122,7 +114,6 @@ namespace Step
     deallog << "nnz=" << sparsity_pattern.n_nonzero_elements() << std::endl;
   }
 
-
   template <int dim>
   void
   Problem<dim>::refine_mesh()
@@ -131,7 +122,6 @@ namespace Step
     triangulation.execute_coarsening_and_refinement();
   }
 } // namespace Step
-
 
 template <int dim>
 void
@@ -149,7 +139,6 @@ test()
       problem.refine_mesh();
     }
 }
-
 
 int
 main()

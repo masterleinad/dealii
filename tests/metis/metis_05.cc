@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::partition_triangulation with cell weighting.
 // generate output in VTK format.
 // This test is based off of metis_03.cc.
@@ -33,7 +31,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void
@@ -73,7 +70,6 @@ test(const bool with_weighting, const bool write_to_vtk = false)
         }
     }
 
-
   // subdivide into 5 subdomains
   GridTools::partition_triangulation(5, cell_weighting, triangulation);
 
@@ -112,8 +108,6 @@ test(const bool with_weighting, const bool write_to_vtk = false)
       data_out.write_vtk(outfile);
     }
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Tensor<1,dim>
 
 #include "../tests.h"
@@ -22,8 +21,6 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <deal.II/base/tensor.h>
 #include <sstream>
-
-
 
 void
 test()
@@ -39,7 +36,6 @@ test()
 
   verify(t1, t2);
 }
-
 
 int
 main()

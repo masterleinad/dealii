@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFTools::count_dofs_per_component
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,7 +30,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -67,7 +63,6 @@ test()
                 << " global dofs" << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

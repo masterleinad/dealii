@@ -17,7 +17,6 @@
 
 #include "../tests.h"
 
-
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>

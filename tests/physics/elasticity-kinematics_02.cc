@@ -22,7 +22,6 @@
 #include <deal.II/physics/elasticity/kinematics.h>
 #include <deal.II/physics/elasticity/standard_tensors.h>
 
-
 using namespace dealii;
 using namespace dealii::Physics;
 using namespace dealii::Physics::Elasticity;

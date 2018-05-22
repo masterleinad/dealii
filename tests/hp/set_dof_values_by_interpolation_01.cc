@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // cell->set_dof_values_by_interpolation can not work properly in the hp
 // context when called on non-active cells because these do not have a
 // finite element associated with them
@@ -33,8 +32,6 @@
 #include <vector>
 
 #define PRECISION 2
-
-
 
 template <int dim>
 void
@@ -93,7 +90,6 @@ test()
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main()

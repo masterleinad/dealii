@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the function VectorTools::create_point_source_vector.
-
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -26,8 +22,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -51,8 +45,6 @@ check()
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << vector(i) << std::endl;
 }
-
-
 
 int
 main()

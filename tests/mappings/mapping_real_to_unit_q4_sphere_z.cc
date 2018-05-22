@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // something like the original of mapping_real_to_unit_q4_sphere: we
 // wanted to know whether a point is inside or outside, but got an
 // exception before r25651
@@ -26,7 +24,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 void
 test_real_to_unit_cell()
@@ -79,7 +76,6 @@ test_real_to_unit_cell()
          ExcInternalError());
   deallog << "Point is outside!" << std::endl;
 }
-
 
 int
 main()

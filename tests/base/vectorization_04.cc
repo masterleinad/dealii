@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for VectorizedArray::load and VectorizedArray::store
 
 #include "../tests.h"
@@ -58,8 +57,6 @@ test()
     }
   deallog << "store OK" << std::endl;
 }
-
-
 
 int
 main()

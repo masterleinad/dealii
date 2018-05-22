@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Verify that FE_ABF(r) returns that its polynomial degree is r+2, not r+1.
 
 #include "../tests.h"
 #include <deal.II/fe/fe_abf.h>
-
-
 
 int
 main()

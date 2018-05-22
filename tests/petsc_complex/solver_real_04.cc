@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc BiCG solver
 
 // Note: This is (almost) a clone of the tests/petsc/solver_03.cc
@@ -53,7 +52,6 @@ check_solve(SOLVER&             solver,
   deallog << "Solver stopped after " << solver.control().last_step()
           << " iterations" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

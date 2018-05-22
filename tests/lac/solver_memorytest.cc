@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test all solver with a start value that is already a solution (i.e. 0
 // iterations). This caused a memory leak in FGMRES. In the same situation
 // test GMRES without using the default residual, which caused a double
 // memory freeing (see issue #886).
-
 
 #include "../testmatrix.h"
 #include "../tests.h"

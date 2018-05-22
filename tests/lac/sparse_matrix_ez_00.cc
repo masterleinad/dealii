@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test SparseMatrixEZ class's behavior on inserting zero entry and the
 // elide_zero_values flag.
 

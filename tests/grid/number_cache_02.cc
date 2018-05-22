@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that we correctly compute the number of lines, quads, hexes, etc and
 // store them in the number cache of the Triangulation class. use the meshes
 // from grid_in (2d) and grid_in_3d (3d) for this
@@ -29,10 +27,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -70,7 +65,6 @@ output(const Triangulation<dim>& tria)
         }
     }
 }
-
 
 template <int dim>
 void
@@ -111,7 +105,6 @@ test(const char* filename)
 
   output(tria);
 }
-
 
 int
 main()

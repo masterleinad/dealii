@@ -45,12 +45,9 @@ namespace LinearAlgebra
   }
 } // namespace LinearAlgebra
 
-
-
 /*! @addtogroup Preconditioners
  *@{
  */
-
 
 /**
  * No preconditioning.  This class helps you, if you want to use a linear
@@ -176,8 +173,6 @@ private:
    */
   size_type n_columns;
 };
-
-
 
 /**
  * Preconditioning with Richardson's method. This preconditioner just scales
@@ -313,8 +308,6 @@ private:
   size_type n_columns;
 };
 
-
-
 /**
  * Preconditioner using a matrix-builtin function.  This class forms a
  * preconditioner suitable for the LAC solver classes. Since many
@@ -392,8 +385,6 @@ private:
   const function_ptr precondition;
 };
 
-
-
 /**
  * Base class for other preconditioners. Here, only some common features
  * Jacobi, SOR and SSOR preconditioners are implemented. For preconditioning,
@@ -469,8 +460,6 @@ protected:
   double relaxation;
 };
 
-
-
 /**
  * Jacobi preconditioner using matrix built-in function.  The
  * <tt>MatrixType</tt> class used is required to have a function
@@ -537,7 +526,6 @@ public:
   void
   Tstep(VectorType& x, const VectorType& rhs) const;
 };
-
 
 /**
  * SOR preconditioner using matrix built-in function.
@@ -624,8 +612,6 @@ public:
   Tstep(VectorType& x, const VectorType& rhs) const;
 };
 
-
-
 /**
  * SSOR preconditioner using matrix built-in function.  The
  * <tt>MatrixType</tt> class used is required to have a function
@@ -673,7 +659,6 @@ public:
    */
   typedef PreconditionRelaxation<MatrixType> BaseClass;
 
-
   /**
    * Initialize matrix and relaxation parameter. The matrix is just stored in
    * the preconditioner object. The relaxation parameter should be larger than
@@ -699,7 +684,6 @@ public:
   void
   Tvmult(VectorType&, const VectorType&) const;
 
-
   /**
    * Perform one step of the preconditioned Richardson iteration
    */
@@ -721,7 +705,6 @@ private:
    */
   std::vector<std::size_t> pos_right_of_diagonal;
 };
-
 
 /**
  * Permuted SOR preconditioner using matrix built-in function.  The
@@ -857,8 +840,6 @@ private:
    */
   const std::vector<size_type>* inverse_permutation;
 };
-
-
 
 /**
  * Preconditioning with a Chebyshev polynomial for symmetric positive definite
@@ -1050,7 +1031,6 @@ public:
     std::shared_ptr<PreconditionerType> preconditioner;
   };
 
-
   PreconditionChebyshev();
 
   /**
@@ -1193,8 +1173,6 @@ private:
   estimate_eigenvalues(const VectorType& src) const;
 };
 
-
-
 /*@}*/
 /* ---------------------------------- Inline functions ------------------- */
 
@@ -1212,15 +1190,12 @@ PreconditionIdentity::initialize(const MatrixType& matrix,
   n_columns = matrix.n();
 }
 
-
 template <class VectorType>
 inline void
 PreconditionIdentity::vmult(VectorType& dst, const VectorType& src) const
 {
   dst = src;
 }
-
-
 
 template <class VectorType>
 inline void
@@ -1235,8 +1210,6 @@ PreconditionIdentity::vmult_add(VectorType& dst, const VectorType& src) const
 {
   dst += src;
 }
-
-
 
 template <class VectorType>
 inline void
@@ -1266,7 +1239,6 @@ inline PreconditionRichardson::AdditionalData::AdditionalData(
   : relaxation(relaxation)
 {}
 
-
 inline PreconditionRichardson::PreconditionRichardson()
   : relaxation(0), n_rows(0), n_columns(0)
 {
@@ -1274,16 +1246,12 @@ inline PreconditionRichardson::PreconditionRichardson()
   relaxation = add_data.relaxation;
 }
 
-
-
 inline void
 PreconditionRichardson::initialize(
   const PreconditionRichardson::AdditionalData& parameters)
 {
   relaxation = parameters.relaxation;
 }
-
-
 
 template <typename MatrixType>
 inline void
@@ -1296,8 +1264,6 @@ PreconditionRichardson::initialize(
   n_columns  = matrix.n();
 }
 
-
-
 template <class VectorType>
 inline void
 PreconditionRichardson::vmult(VectorType& dst, const VectorType& src) const
@@ -1308,8 +1274,6 @@ PreconditionRichardson::vmult(VectorType& dst, const VectorType& src) const
 
   dst.equ(relaxation, src);
 }
-
-
 
 template <class VectorType>
 inline void
@@ -1332,8 +1296,6 @@ PreconditionRichardson::vmult_add(VectorType& dst, const VectorType& src) const
 
   dst.add(relaxation, src);
 }
-
-
 
 template <class VectorType>
 inline void
@@ -1370,7 +1332,6 @@ PreconditionRelaxation<MatrixType>::initialize(const MatrixType&     rA,
   A          = &rA;
   relaxation = parameters.relaxation;
 }
-
 
 template <typename MatrixType>
 inline void
@@ -1412,8 +1373,6 @@ PreconditionJacobi<MatrixType>::vmult(VectorType&       dst,
   this->A->precondition_Jacobi(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1428,8 +1387,6 @@ PreconditionJacobi<MatrixType>::Tvmult(VectorType&       dst,
   Assert(this->A != nullptr, ExcNotInitialized());
   this->A->precondition_Jacobi(dst, src, this->relaxation);
 }
-
-
 
 template <typename MatrixType>
 template <class VectorType>
@@ -1446,8 +1403,6 @@ PreconditionJacobi<MatrixType>::step(VectorType&       dst,
   this->A->Jacobi_step(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1461,8 +1416,6 @@ PreconditionJacobi<MatrixType>::Tstep(VectorType&       dst,
 
   step(dst, src);
 }
-
-
 
 //---------------------------------------------------------------------------
 
@@ -1479,8 +1432,6 @@ PreconditionSOR<MatrixType>::vmult(VectorType& dst, const VectorType& src) const
   this->A->precondition_SOR(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1495,8 +1446,6 @@ PreconditionSOR<MatrixType>::Tvmult(VectorType&       dst,
   this->A->precondition_TSOR(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1510,8 +1459,6 @@ PreconditionSOR<MatrixType>::step(VectorType& dst, const VectorType& src) const
   this->A->SOR_step(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1524,8 +1471,6 @@ PreconditionSOR<MatrixType>::Tstep(VectorType& dst, const VectorType& src) const
   Assert(this->A != nullptr, ExcNotInitialized());
   this->A->TSOR_step(dst, src, this->relaxation);
 }
-
-
 
 //---------------------------------------------------------------------------
 
@@ -1565,7 +1510,6 @@ PreconditionSSOR<MatrixType>::initialize(
     }
 }
 
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1580,8 +1524,6 @@ PreconditionSSOR<MatrixType>::vmult(VectorType&       dst,
   Assert(this->A != nullptr, ExcNotInitialized());
   this->A->precondition_SSOR(dst, src, this->relaxation, pos_right_of_diagonal);
 }
-
-
 
 template <typename MatrixType>
 template <class VectorType>
@@ -1598,8 +1540,6 @@ PreconditionSSOR<MatrixType>::Tvmult(VectorType&       dst,
   this->A->precondition_SSOR(dst, src, this->relaxation, pos_right_of_diagonal);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1614,8 +1554,6 @@ PreconditionSSOR<MatrixType>::step(VectorType& dst, const VectorType& src) const
   this->A->SSOR_step(dst, src, this->relaxation);
 }
 
-
-
 template <typename MatrixType>
 template <class VectorType>
 inline void
@@ -1629,8 +1567,6 @@ PreconditionSSOR<MatrixType>::Tstep(VectorType&       dst,
 
   step(dst, src);
 }
-
-
 
 //---------------------------------------------------------------------------
 
@@ -1647,7 +1583,6 @@ PreconditionPSOR<MatrixType>::initialize(
   PreconditionRelaxation<MatrixType>::initialize(rA, parameters);
 }
 
-
 template <typename MatrixType>
 inline void
 PreconditionPSOR<MatrixType>::initialize(const MatrixType&     A,
@@ -1658,7 +1593,6 @@ PreconditionPSOR<MatrixType>::initialize(const MatrixType&     A,
              additional_data.inverse_permutation,
              additional_data.parameters);
 }
-
 
 template <typename MatrixType>
 template <typename VectorType>
@@ -1675,8 +1609,6 @@ PreconditionPSOR<MatrixType>::vmult(VectorType&       dst,
   dst = src;
   this->A->PSOR(dst, *permutation, *inverse_permutation, this->relaxation);
 }
-
-
 
 template <typename MatrixType>
 template <class VectorType>
@@ -1704,9 +1636,7 @@ PreconditionPSOR<MatrixType>::AdditionalData::AdditionalData(
     parameters(parameters)
 {}
 
-
 //---------------------------------------------------------------------------
-
 
 template <typename MatrixType, class VectorType>
 PreconditionUseMatrix<MatrixType, VectorType>::PreconditionUseMatrix(
@@ -1714,8 +1644,6 @@ PreconditionUseMatrix<MatrixType, VectorType>::PreconditionUseMatrix(
   const function_ptr method)
   : matrix(M), precondition(method)
 {}
-
-
 
 template <typename MatrixType, class VectorType>
 void
@@ -1733,8 +1661,6 @@ inline PreconditionRelaxation<MatrixType>::AdditionalData::AdditionalData(
   const double relaxation)
   : relaxation(relaxation)
 {}
-
-
 
 //---------------------------------------------------------------------------
 
@@ -2039,8 +1965,6 @@ namespace internal
   } // namespace PreconditionChebyshevImplementation
 } // namespace internal
 
-
-
 // avoid warning about deprecated variable nonzero_starting
 
 template <typename MatrixType, class VectorType, typename PreconditionerType>
@@ -2059,8 +1983,6 @@ inline PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
     max_eigenvalue(max_eigenvalue)
 {}
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   PreconditionChebyshev()
@@ -2070,7 +1992,6 @@ inline PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
     std::is_same<size_type, typename VectorType::size_type>::value,
     "PreconditionChebyshev and VectorType must have the same size_type.");
 }
-
 
 // avoid warning about deprecated variable AdditionalData::matrix_diagonal_inverse
 
@@ -2086,8 +2007,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::initialize(
     matrix, data.preconditioner, data.matrix_diagonal_inverse);
   eigenvalues_are_initialized = false;
 }
-
-
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
@@ -2105,8 +2024,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::clear()
   }
   data.preconditioner.reset();
 }
-
-
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
@@ -2227,8 +2144,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
     = true;
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
@@ -2259,8 +2174,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
     }
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
@@ -2286,8 +2199,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
     }
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::vmult(
@@ -2312,8 +2223,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::vmult(
   do_chebyshev_loop(dst, src);
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tvmult(
@@ -2337,8 +2246,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tvmult(
 
   do_transpose_chebyshev_loop(dst, src);
 }
-
-
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
@@ -2365,8 +2272,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::step(
   do_chebyshev_loop(dst, src);
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline void
 PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tstep(
@@ -2392,8 +2297,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tstep(
   do_transpose_chebyshev_loop(dst, src);
 }
 
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline typename PreconditionChebyshev<MatrixType,
                                       VectorType,
@@ -2403,8 +2306,6 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::m() const
   Assert(matrix_ptr != nullptr, ExcNotInitialized());
   return matrix_ptr->m();
 }
-
-
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
 inline typename PreconditionChebyshev<MatrixType,

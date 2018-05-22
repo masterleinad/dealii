@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test outer_product
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -66,8 +64,6 @@ test()
         deallog << i << ' ' << j << ' ' << x[i][j] << std::endl;
   }
 }
-
-
 
 int
 main()

@@ -24,9 +24,7 @@
 #include <deal.II/lac/solver_control.h>
 #include <deal.II/lac/vector_operation.h>
 
-
 #include <cstring>
-
 
 #ifdef DEAL_II_ARPACK_WITH_PARPACK
 
@@ -473,7 +471,6 @@ protected:
    */
   int ncv;
 
-
   /**
    * The leading dimension of the array v
    */
@@ -631,8 +628,6 @@ private:
                  << " Arnoldi vectors.");
 };
 
-
-
 template <typename VectorType>
 std::size_t
 PArpackSolver<VectorType>::memory_consumption() const
@@ -645,8 +640,6 @@ PArpackSolver<VectorType>::memory_consumption() const
          + MemoryConsumption::memory_consumption(types::global_dof_index())
              * local_indices.size();
 }
-
-
 
 template <typename VectorType>
 PArpackSolver<VectorType>::AdditionalData::AdditionalData(
@@ -683,8 +676,6 @@ PArpackSolver<VectorType>::AdditionalData::AdditionalData(
          ExcMessage("Currently, only modes 1, 2 and 3 are supported."));
 }
 
-
-
 template <typename VectorType>
 PArpackSolver<VectorType>::PArpackSolver(SolverControl&        control,
                                          const MPI_Comm&       mpi_communicator,
@@ -704,8 +695,6 @@ PArpackSolver<VectorType>::PArpackSolver(SolverControl&        control,
     sigmai(0.0)
 {}
 
-
-
 template <typename VectorType>
 void
 PArpackSolver<VectorType>::set_shift(const std::complex<double> sigma)
@@ -713,8 +702,6 @@ PArpackSolver<VectorType>::set_shift(const std::complex<double> sigma)
   sigmar = sigma.real();
   sigmai = sigma.imag();
 }
-
-
 
 template <typename VectorType>
 void
@@ -726,8 +713,6 @@ PArpackSolver<VectorType>::set_initial_vector(const VectorType& vec)
   vec.extract_subvector_to(
     local_indices.begin(), local_indices.end(), resid.data());
 }
-
-
 
 template <typename VectorType>
 void
@@ -767,8 +752,6 @@ PArpackSolver<VectorType>::internal_reinit(const IndexSet& locally_owned_dofs)
   select.resize(ncv, 0);
 }
 
-
-
 template <typename VectorType>
 void
 PArpackSolver<VectorType>::reinit(const IndexSet& locally_owned_dofs)
@@ -780,8 +763,6 @@ PArpackSolver<VectorType>::reinit(const IndexSet& locally_owned_dofs)
   dst.reinit(locally_owned_dofs, mpi_communicator);
   tmp.reinit(locally_owned_dofs, mpi_communicator);
 }
-
-
 
 template <typename VectorType>
 void
@@ -795,8 +776,6 @@ PArpackSolver<VectorType>::reinit(const VectorType& distributed_vector)
   tmp.reinit(distributed_vector);
 }
 
-
-
 template <typename VectorType>
 void
 PArpackSolver<VectorType>::reinit(const IndexSet& locally_owned_dofs,
@@ -809,8 +788,6 @@ PArpackSolver<VectorType>::reinit(const IndexSet& locally_owned_dofs,
   dst.reinit(partitioning, mpi_communicator);
   tmp.reinit(partitioning, mpi_communicator);
 }
-
-
 
 template <typename VectorType>
 template <typename MatrixType1, typename MatrixType2, typename INVERSE>
@@ -827,8 +804,6 @@ PArpackSolver<VectorType>::solve(const MatrixType1&                 A,
     eigenvectors_ptr[i] = &eigenvectors[i];
   solve(A, B, inverse, eigenvalues, eigenvectors_ptr, n_eigenvalues);
 }
-
-
 
 template <typename VectorType>
 template <typename MatrixType1, typename MatrixType2, typename INVERSE>
@@ -853,7 +828,6 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
 
   Assert(n_eigenvalues <= eigenvalues.size(),
          PArpackExcInvalidEigenvalueSize(n_eigenvalues, eigenvalues.size()));
-
 
   // use eigenvectors to get the problem size so that it is possible to
   // employ LinearOperator for mass_matrix.
@@ -1196,8 +1170,6 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   }
 }
 
-
-
 template <typename VectorType>
 SolverControl&
 PArpackSolver<VectorType>::control() const
@@ -1206,7 +1178,6 @@ PArpackSolver<VectorType>::control() const
 }
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif
 #endif

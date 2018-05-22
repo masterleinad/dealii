@@ -25,7 +25,6 @@
 // https://github.com/trilinos/Trilinos/blob/master/packages/sacado/example/trad_dfad_example.cpp
 // https://github.com/trilinos/Trilinos/blob/master/packages/sacado/example/tradvec_example.cpp
 
-
 #include "../tests.h"
 
 #include <Sacado.hpp>

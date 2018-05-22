@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Table<1. int>
 
 #include "serialization.h"
@@ -40,7 +39,6 @@ test()
 
   verify(t1, t3);
 }
-
 
 int
 main()

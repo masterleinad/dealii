@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 const bool errors = false;
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -39,7 +37,6 @@ const bool errors = false;
 #include <deal.II/lac/vector_memory.h>
 #include <string>
 #include <vector>
-
 
 template <int dim>
 void
@@ -216,7 +213,6 @@ loop()
   for(unsigned int e = 0; e < elements.size(); ++e)
     delete elements[e];
 }
-
 
 int
 main()

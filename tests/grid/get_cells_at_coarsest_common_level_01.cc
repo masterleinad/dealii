@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridTools::get_cells_at_coarsest_common_level()
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -25,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -97,7 +92,6 @@ test()
         }
     }
 }
-
 
 int
 main()

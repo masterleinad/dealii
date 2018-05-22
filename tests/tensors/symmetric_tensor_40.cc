@@ -112,7 +112,6 @@ test_dim_3(const double e1,
   Assert(e1 >= e2, ExcMessage("Input eigenvalue ordering is not correct."));
   Assert(e2 >= e3, ExcMessage("Input eigenvalue ordering is not correct."));
 
-
   const SymmetricTensor<2, dim> T = e1 * symmetrize(outer_product(v1, v1))
                                     + e2 * symmetrize(outer_product(v2, v2))
                                     + e3 * symmetrize(outer_product(v3, v3));

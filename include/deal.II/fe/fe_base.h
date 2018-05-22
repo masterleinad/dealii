@@ -116,7 +116,6 @@ namespace FiniteElementDomination
     no_requirements
   };
 
-
   /**
    * A generalization of the binary <code>and</code> operator to a comparison
    * relationship. The way this works is pretty much as when you would want to
@@ -137,7 +136,6 @@ namespace FiniteElementDomination
    */
   inline Domination operator&(const Domination d1, const Domination d2);
 } // namespace FiniteElementDomination
-
 
 /**
  * A class that declares a number of scalar constant variables that describe
@@ -462,10 +460,7 @@ public:
   operator==(const FiniteElementData&) const;
 };
 
-
-
 // --------- inline and template functions ---------------
-
 
 #ifndef DOXYGEN
 
@@ -516,15 +511,12 @@ namespace FiniteElementDomination
   }
 } // namespace FiniteElementDomination
 
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_dofs_per_vertex() const
 {
   return dofs_per_vertex;
 }
-
-
 
 template <int dim>
 inline unsigned int
@@ -533,16 +525,12 @@ FiniteElementData<dim>::n_dofs_per_line() const
   return dofs_per_line;
 }
 
-
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_dofs_per_quad() const
 {
   return dofs_per_quad;
 }
-
-
 
 template <int dim>
 inline unsigned int
@@ -551,8 +539,6 @@ FiniteElementData<dim>::n_dofs_per_hex() const
   return dofs_per_hex;
 }
 
-
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_dofs_per_face() const
@@ -560,16 +546,12 @@ FiniteElementData<dim>::n_dofs_per_face() const
   return dofs_per_face;
 }
 
-
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_dofs_per_cell() const
 {
   return dofs_per_cell;
 }
-
-
 
 template <int dim>
 template <int structdim>
@@ -592,16 +574,12 @@ FiniteElementData<dim>::n_dofs_per_object() const
   return numbers::invalid_unsigned_int;
 }
 
-
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_components() const
 {
   return components;
 }
-
-
 
 template <int dim>
 inline const BlockIndices&
@@ -610,16 +588,12 @@ FiniteElementData<dim>::block_indices() const
   return block_indices_data;
 }
 
-
-
 template <int dim>
 inline unsigned int
 FiniteElementData<dim>::n_blocks() const
 {
   return block_indices_data.size();
 }
-
-
 
 template <int dim>
 inline unsigned int
@@ -628,7 +602,6 @@ FiniteElementData<dim>::tensor_degree() const
   return degree;
 }
 
-
 template <int dim>
 inline bool
 FiniteElementData<dim>::conforms(const Conformity space) const
@@ -636,9 +609,7 @@ FiniteElementData<dim>::conforms(const Conformity space) const
   return ((space & conforming_space) == space);
 }
 
-
 #endif // DOXYGEN
-
 
 DEAL_II_NAMESPACE_CLOSE
 

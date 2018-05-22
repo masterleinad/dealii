@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/fe_dgp_monomial.h>
 #include <deal.II/fe/fe_tools.h>
 
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -77,7 +75,6 @@ namespace internal
                                       {1, 0, 1},
                                       {0, 1, 1}};
 
-
       template <int dim>
       void
       generate_unit_points(const unsigned int, std::vector<Point<dim>>&);
@@ -124,8 +121,6 @@ namespace internal
   }   // namespace FE_DGPMonomial
 } // namespace internal
 
-
-
 template <int dim>
 FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)
   : FE_Poly<PolynomialsP<dim>, dim>(
@@ -157,8 +152,6 @@ FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)
   FETools::compute_projection_matrices(*this, this->restriction);
 }
 
-
-
 template <int dim>
 std::string
 FE_DGPMonomial<dim>::get_name() const
@@ -176,16 +169,12 @@ FE_DGPMonomial<dim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_DGPMonomial<dim>::clone() const
 {
   return std_cxx14::make_unique<FE_DGPMonomial<dim>>(*this);
 }
-
-
 
 //TODO: Remove this function and use the one in FETools, if needed
 template <int dim>
@@ -241,8 +230,6 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
     }
 }
 
-
-
 template <int dim>
 void
 FE_DGPMonomial<dim>::initialize_restriction()
@@ -250,11 +237,9 @@ FE_DGPMonomial<dim>::initialize_restriction()
   Assert(false, ExcNotImplemented());
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <int dim>
 std::vector<unsigned int>
@@ -269,7 +254,6 @@ FE_DGPMonomial<dim>::get_dpo_vector(const unsigned int deg)
     }
   return dpo;
 }
-
 
 template <int dim>
 void
@@ -294,8 +278,6 @@ FE_DGPMonomial<dim>::get_face_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
-
-
 
 template <int dim>
 void
@@ -322,16 +304,12 @@ FE_DGPMonomial<dim>::get_subface_interpolation_matrix(
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
 
-
-
 template <int dim>
 bool
 FE_DGPMonomial<dim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -349,8 +327,6 @@ FE_DGPMonomial<dim>::hp_vertex_dof_identities(
     }
 }
 
-
-
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGPMonomial<dim>::hp_line_dof_identities(
@@ -366,8 +342,6 @@ FE_DGPMonomial<dim>::hp_line_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -385,8 +359,6 @@ FE_DGPMonomial<dim>::hp_quad_dof_identities(
     }
 }
 
-
-
 template <int dim>
 FiniteElementDomination::Domination
 FE_DGPMonomial<dim>::compare_for_face_domination(
@@ -403,8 +375,6 @@ FE_DGPMonomial<dim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <>
 bool
 FE_DGPMonomial<1>::has_support_on_face(const unsigned int,
@@ -412,8 +382,6 @@ FE_DGPMonomial<1>::has_support_on_face(const unsigned int,
 {
   return face_index == 1 || (face_index == 0 && this->degree == 0);
 }
-
-
 
 template <>
 bool
@@ -434,8 +402,6 @@ FE_DGPMonomial<2>::has_support_on_face(const unsigned int shape_index,
     }
   return support_on_face;
 }
-
-
 
 template <>
 bool
@@ -458,8 +424,6 @@ FE_DGPMonomial<3>::has_support_on_face(const unsigned int shape_index,
   return support_on_face;
 }
 
-
-
 template <int dim>
 std::size_t
 FE_DGPMonomial<dim>::memory_consumption() const
@@ -468,10 +432,7 @@ FE_DGPMonomial<dim>::memory_consumption() const
   return 0;
 }
 
-
-
 // explicit instantiations
 #include "fe_dgp_monomial.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

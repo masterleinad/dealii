@@ -160,7 +160,6 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
   deallog << "Closed" << std::endl;
 }
 
-
 template <int dim>
 void
 run(const FiniteElement<dim>& fe)
@@ -176,7 +175,6 @@ run(const FiniteElement<dim>& fe)
   dof_handler.distribute_dofs(fe);
   setup_constraints(dof_handler);
 }
-
 
 int
 main()

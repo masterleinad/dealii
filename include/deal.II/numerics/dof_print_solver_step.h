@@ -28,7 +28,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * Print intermediate solutions in solvers.  This is derived from a solver
  * class provided as template argument.  It implements the @p print_vector
@@ -86,7 +85,6 @@ private:
   const std::string basename;
 };
 
-
 /* ----------------------- template functions --------------- */
 
 template <int dim, typename SolverType, class VectorType>
@@ -97,7 +95,6 @@ DoFPrintSolverStep<dim, SolverType, VectorType>::DoFPrintSolverStep(
   const std::string&        basename)
   : SolverType(control, mem), out(data_out), basename(basename)
 {}
-
 
 template <int dim, typename SolverType, class VectorType>
 void

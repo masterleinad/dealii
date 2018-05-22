@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // the same as laplace_operator_01, but tests heterogeneous Laplace operator.
 
 #include "../tests.h"
@@ -35,7 +33,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
 
 template <int dim>
 class F : public Function<dim>
@@ -70,12 +67,9 @@ public:
     return res;
   }
 
-
 private:
   const unsigned int q;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -189,7 +183,6 @@ test()
 
   mf.vmult(out, in);
 
-
   // assemble trilinos sparse matrix with
   // (v, u) for reference
   TrilinosWrappers::SparseMatrix sparse_matrix;
@@ -250,7 +243,6 @@ test()
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

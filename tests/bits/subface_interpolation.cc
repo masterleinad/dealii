@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 
 // check
 //   FE::subface_interpolation
-
-
 
 template <int dim>
 void

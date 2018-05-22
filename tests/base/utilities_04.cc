@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test functions in namespace Utilities
 
 #include "../tests.h"
@@ -35,7 +34,6 @@ split_string(const std::string& text, const char delim = '|')
   return result;
 }
 
-
 void
 test_function(const std::string& original_text,
               const unsigned int width,
@@ -47,7 +45,6 @@ test_function(const std::string& original_text,
 
   std::vector<std::string> should_be_vec = split_string(result);
 
-
   Assert(res_vec.size() == should_be_vec.size(), ExcInternalError());
   for(unsigned int i = 0; i < res_vec.size(); ++i)
     {
@@ -57,7 +54,6 @@ test_function(const std::string& original_text,
       Assert(res_vec[i] == should_be_vec[i], ExcInternalError());
     }
 }
-
 
 void
 test()
@@ -76,11 +72,8 @@ test()
                 ' ',
                 "combining|whitespace|and new|line");
 
-
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

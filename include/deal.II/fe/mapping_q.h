@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_q_h
 #define dealii_mapping_q_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/fe/mapping_q_generic.h>
 
@@ -199,7 +198,6 @@ public:
   virtual std::unique_ptr<Mapping<dim, spacedim>>
   clone() const override;
 
-
   /**
    * @name Interface with FEValues
    * @{
@@ -233,7 +231,6 @@ protected:
      * Constructor.
      */
     InternalData();
-
 
     /**
      * Return an estimate (in bytes) or the memory consumption of this object.

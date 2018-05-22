@@ -13,18 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can create tasks both via lambdas and via std::bind
 // expressions. this obviously requires C++11
 //
 // like the _12 test, but using lambda captures
 
-
 #include "../tests.h"
 #include <unistd.h>
 
 #include <deal.II/base/thread_management.h>
-
 
 // return a double, to make sure we correctly identify the return type
 // of the expressions used in new_task(...)
@@ -37,8 +34,6 @@ test(int i)
 
   return 3.141;
 }
-
-
 
 int
 main()

@@ -42,7 +42,6 @@
   deallog << name << ": [block 0] " << var.block(0) << "  [block 1] " \
           << var.block(1) << std::endl;
 
-
 using namespace dealii;
 
 int

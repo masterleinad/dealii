@@ -65,7 +65,6 @@ test()
     }
 }
 
-
 int
 main()
 {

@@ -25,13 +25,10 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int rank, int dim, typename Number>
 TensorFunction<rank, dim, Number>::TensorFunction(const Number initial_time)
   : FunctionTime<Number>(initial_time)
 {}
-
-
 
 template <int rank, int dim, typename Number>
 typename TensorFunction<rank, dim, Number>::value_type
@@ -40,7 +37,6 @@ TensorFunction<rank, dim, Number>::value(const Point<dim>&) const
   Assert(false, ExcPureFunctionCalled());
   return Tensor<rank, dim, Number>();
 }
-
 
 template <int rank, int dim, typename Number>
 void
@@ -55,7 +51,6 @@ TensorFunction<rank, dim, Number>::value_list(
     values[i] = this->value(points[i]);
 }
 
-
 template <int rank, int dim, typename Number>
 typename TensorFunction<rank, dim, Number>::gradient_type
 TensorFunction<rank, dim, Number>::gradient(const Point<dim>&) const
@@ -63,7 +58,6 @@ TensorFunction<rank, dim, Number>::gradient(const Point<dim>&) const
   Assert(false, ExcPureFunctionCalled());
   return Tensor<rank + 1, dim, Number>();
 }
-
 
 template <int rank, int dim, typename Number>
 void
@@ -78,16 +72,12 @@ TensorFunction<rank, dim, Number>::gradient_list(
     gradients[i] = gradient(points[i]);
 }
 
-
-
 template <int rank, int dim, typename Number>
 ConstantTensorFunction<rank, dim, Number>::ConstantTensorFunction(
   const Tensor<rank, dim, Number>& value,
   const Number                     initial_time)
   : TensorFunction<rank, dim, Number>(initial_time), _value(value)
 {}
-
-
 
 template <int rank, int dim, typename Number>
 typename TensorFunction<rank, dim, Number>::value_type
@@ -96,7 +86,6 @@ ConstantTensorFunction<rank, dim, Number>::value(
 {
   return _value;
 }
-
 
 template <int rank, int dim, typename Number>
 void
@@ -113,7 +102,6 @@ ConstantTensorFunction<rank, dim, Number>::value_list(
     values[i] = _value;
 }
 
-
 template <int rank, int dim, typename Number>
 typename TensorFunction<rank, dim, Number>::gradient_type
 ConstantTensorFunction<rank, dim, Number>::gradient(const Point<dim>&) const
@@ -122,7 +110,6 @@ ConstantTensorFunction<rank, dim, Number>::gradient(const Point<dim>&) const
 
   return zero;
 }
-
 
 template <int rank, int dim, typename Number>
 void
@@ -141,8 +128,6 @@ ConstantTensorFunction<rank, dim, Number>::gradient_list(
     gradients[i] = zero;
 }
 
-
-
 template <int rank, int dim, typename Number>
 ZeroTensorFunction<rank, dim, Number>::ZeroTensorFunction(
   const Number initial_time)
@@ -150,7 +135,6 @@ ZeroTensorFunction<rank, dim, Number>::ZeroTensorFunction(
       dealii::Tensor<rank, dim, Number>(),
       initial_time)
 {}
-
 
 DEAL_II_NAMESPACE_CLOSE
 

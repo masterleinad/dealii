@@ -28,7 +28,6 @@
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <deal.II/lac/trilinos_vector.h>
 
-
 using namespace dealii;
 
 template <typename VECTOR>
@@ -41,7 +40,6 @@ print(const VECTOR& vec)
     }
   deallog << std::endl;
 }
-
 
 template <class PRECONDITIONER,
           class MATRIX,

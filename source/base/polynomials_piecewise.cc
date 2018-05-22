@@ -15,10 +15,7 @@
 
 #include <deal.II/base/polynomials_piecewise.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace Polynomials
 {
@@ -37,8 +34,6 @@ namespace Polynomials
     AssertIndexRange(interval, n_intervals);
   }
 
-
-
   template <typename number>
   void
   PiecewisePolynomial<number>::value(const number         x,
@@ -48,8 +43,6 @@ namespace Polynomials
 
     value(x, values.size() - 1, values.data());
   }
-
-
 
   template <typename number>
   void
@@ -115,8 +108,6 @@ namespace Polynomials
     for(unsigned int j = 1; j <= n_derivatives; j += 2)
       values[j] *= derivative_change_sign;
   }
-
-
 
   std::vector<PiecewisePolynomial<double>>
   generate_complete_Lagrange_basis_on_subdivisions(

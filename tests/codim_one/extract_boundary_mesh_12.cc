@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _11, but using a different way of copying manifold ids
 
 #include "../tests.h"
@@ -23,8 +22,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
-
 
 void
 test()
@@ -57,7 +54,6 @@ test()
   deallog << triangulation_surface.n_used_vertices() << std::endl;
   deallog << triangulation_surface.n_active_cells() << std::endl;
 }
-
 
 int
 main()

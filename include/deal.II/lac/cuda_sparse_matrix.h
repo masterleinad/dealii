@@ -311,8 +311,6 @@ namespace CUDAWrappers
     cusparseMatDescr_t descr;
   };
 
-
-
   template <typename Number>
   inline unsigned int
   SparseMatrix<Number>::m() const
@@ -320,16 +318,12 @@ namespace CUDAWrappers
     return n_rows;
   }
 
-
-
   template <typename Number>
   inline unsigned int
   SparseMatrix<Number>::n() const
   {
     return n_cols;
   }
-
-
 
   template <typename Number>
   inline std::size_t

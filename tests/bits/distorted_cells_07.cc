@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that the mapping throws an exception for the test case in distorted_cells_01.cc
 
 #include "../tests.h"
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 // create a (i) pinched cell (where two vertices coincide), or (ii)
 // twisted cell (where two vertices are swapped)
@@ -49,7 +45,6 @@ check(const unsigned int testcase)
       default:
         Assert(false, ExcNotImplemented());
     }
-
 
   std::vector<CellData<dim>> cells;
   {
@@ -87,7 +82,6 @@ check(const unsigned int testcase)
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main()

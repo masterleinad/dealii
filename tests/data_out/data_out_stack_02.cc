@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // slight variation of data_out_stack_01, but calling add_data_vector with a
 // vector second argument. on most systems this doesn't make a difference, but
 // on some it failed linking in the past due to non-existence of weak symbols
@@ -22,8 +21,6 @@
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out_stack.h>
-
-
 
 template <int dim>
 void
@@ -35,8 +32,6 @@ check_this(const DoFHandler<dim>&, const Vector<double>&, const Vector<double>&)
   // output for 2d+time is not
   // presently implemented
 }
-
-
 
 template <>
 void
@@ -51,7 +46,6 @@ check_this<1>(const DoFHandler<1>&  dof_handler,
                                      DataOutStack<dim>::dof_vector);
   data_out_stack.declare_data_vector("cell_data",
                                      DataOutStack<dim>::cell_vector);
-
 
   data_out_stack.new_parameter_value(1., 1.);
   data_out_stack.attach_dof_handler(dof_handler);

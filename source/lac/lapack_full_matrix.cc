@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/lapack_full_matrix.h>
@@ -36,18 +35,15 @@ LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type n)
   : TransposeTable<number>(n, n), state(matrix), property(general)
 {}
 
-
 template <typename number>
 LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type m, const size_type n)
   : TransposeTable<number>(m, n), state(matrix), property(general)
 {}
 
-
 template <typename number>
 LAPACKFullMatrix<number>::LAPACKFullMatrix(const LAPACKFullMatrix& M)
   : TransposeTable<number>(M), state(matrix), property(general)
 {}
-
 
 template <typename number>
 LAPACKFullMatrix<number>&
@@ -59,8 +55,6 @@ LAPACKFullMatrix<number>::operator=(const LAPACKFullMatrix<number>& M)
   return *this;
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::reinit(const size_type n)
@@ -68,8 +62,6 @@ LAPACKFullMatrix<number>::reinit(const size_type n)
   this->TransposeTable<number>::reinit(n, n);
   state = LAPACKSupport::matrix;
 }
-
-
 
 template <typename number>
 void
@@ -82,8 +74,6 @@ LAPACKFullMatrix<number>::grow_or_shrink(const size_type n)
     for(size_type j = 0; j < s; ++j)
       (*this)(i, j) = copy(i, j);
 }
-
-
 
 template <typename number>
 void
@@ -110,8 +100,6 @@ LAPACKFullMatrix<number>::remove_row_and_column(const size_type row,
     }
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::reinit(const size_type m, const size_type n)
@@ -119,7 +107,6 @@ LAPACKFullMatrix<number>::reinit(const size_type m, const size_type n)
   this->TransposeTable<number>::reinit(m, n);
   state = LAPACKSupport::matrix;
 }
-
 
 template <typename number>
 template <typename number2>
@@ -137,7 +124,6 @@ LAPACKFullMatrix<number>::operator=(const FullMatrix<number2>& M)
   return *this;
 }
 
-
 template <typename number>
 template <typename number2>
 LAPACKFullMatrix<number>&
@@ -154,7 +140,6 @@ LAPACKFullMatrix<number>::operator=(const SparseMatrix<number2>& M)
   return *this;
 }
 
-
 template <typename number>
 LAPACKFullMatrix<number>&
 LAPACKFullMatrix<number>::operator=(const number d)
@@ -168,7 +153,6 @@ LAPACKFullMatrix<number>::operator=(const number d)
   state = LAPACKSupport::matrix;
   return *this;
 }
-
 
 template <typename number>
 LAPACKFullMatrix<number>&
@@ -196,7 +180,6 @@ LAPACKFullMatrix<number>::operator*=(const number factor)
 
   return *this;
 }
-
 
 template <typename number>
 LAPACKFullMatrix<number>&
@@ -227,8 +210,6 @@ LAPACKFullMatrix<number>::operator/=(const number factor)
   return *this;
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::add(const number a, const LAPACKFullMatrix<number>& A)
@@ -252,8 +233,6 @@ LAPACKFullMatrix<number>::add(const number a, const LAPACKFullMatrix<number>& A)
 
   axpy(&n, &a, values_A, &inc, values, &inc);
 }
-
-
 
 namespace
 {
@@ -341,7 +320,6 @@ namespace
       }
   }
 
-
   template <typename number>
   void
   cholesky_rank1(LAPACKFullMatrix<std::complex<number>>& /*A*/,
@@ -351,8 +329,6 @@ namespace
     AssertThrow(false, ExcNotImplemented());
   }
 } // namespace
-
-
 
 template <typename number>
 void
@@ -391,8 +367,6 @@ LAPACKFullMatrix<number>::rank1_update(const number a, const Vector<number>& v)
   else
     AssertThrow(false, ExcState(state));
 }
-
-
 
 template <typename number>
 void
@@ -527,7 +501,6 @@ LAPACKFullMatrix<number>::vmult(Vector<number>&       w,
     }
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
@@ -564,7 +537,6 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
 
       return;
     }
-
 
   switch(state)
     {
@@ -664,7 +636,6 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
     }
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::vmult_add(Vector<number>&       w,
@@ -673,7 +644,6 @@ LAPACKFullMatrix<number>::vmult_add(Vector<number>&       w,
   vmult(w, v, true);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::Tvmult_add(Vector<number>&       w,
@@ -681,7 +651,6 @@ LAPACKFullMatrix<number>::Tvmult_add(Vector<number>&       w,
 {
   Tvmult(w, v, true);
 }
-
 
 template <typename number>
 void
@@ -716,7 +685,6 @@ LAPACKFullMatrix<number>::mmult(LAPACKFullMatrix<number>&       C,
        &mm);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::mmult(FullMatrix<number>&             C,
@@ -750,8 +718,6 @@ LAPACKFullMatrix<number>::mmult(FullMatrix<number>&             C,
        &C(0, 0),
        &nn);
 }
-
-
 
 template <typename number>
 void
@@ -813,8 +779,6 @@ LAPACKFullMatrix<number>::Tmmult(LAPACKFullMatrix<number>&       C,
        &mm);
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::scale_rows(const Vector<number>& V)
@@ -829,8 +793,6 @@ LAPACKFullMatrix<number>::scale_rows(const Vector<number>& V)
     for(types::blas_int i = 0; i < kk; ++i)
       A(i, j) *= V(i);
 }
-
-
 
 template <typename number>
 void
@@ -888,7 +850,6 @@ LAPACKFullMatrix<number>::Tmmult(LAPACKFullMatrix<number>&       C,
     }
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::Tmmult(FullMatrix<number>&             C,
@@ -922,7 +883,6 @@ LAPACKFullMatrix<number>::Tmmult(FullMatrix<number>&             C,
        &C(0, 0),
        &nn);
 }
-
 
 template <typename number>
 void
@@ -980,8 +940,6 @@ LAPACKFullMatrix<number>::mTmult(LAPACKFullMatrix<number>&       C,
     }
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::mTmult(FullMatrix<number>&             C,
@@ -1016,7 +974,6 @@ LAPACKFullMatrix<number>::mTmult(FullMatrix<number>&             C,
        &nn);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::TmTmult(LAPACKFullMatrix<number>&       C,
@@ -1049,7 +1006,6 @@ LAPACKFullMatrix<number>::TmTmult(LAPACKFullMatrix<number>&       C,
        &C.values[0],
        &mm);
 }
-
 
 template <typename number>
 void
@@ -1085,7 +1041,6 @@ LAPACKFullMatrix<number>::TmTmult(FullMatrix<number>&             C,
        &nn);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_lu_factorization()
@@ -1108,16 +1063,12 @@ LAPACKFullMatrix<number>::compute_lu_factorization()
   AssertThrow(info == 0, LACExceptions::ExcSingular());
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::set_property(const Property p)
 {
   property = p;
 }
-
-
 
 template <typename number>
 number
@@ -1127,8 +1078,6 @@ LAPACKFullMatrix<number>::l1_norm() const
   return norm(type);
 }
 
-
-
 template <typename number>
 number
 LAPACKFullMatrix<number>::linfty_norm() const
@@ -1137,8 +1086,6 @@ LAPACKFullMatrix<number>::linfty_norm() const
   return norm(type);
 }
 
-
-
 template <typename number>
 number
 LAPACKFullMatrix<number>::frobenius_norm() const
@@ -1146,8 +1093,6 @@ LAPACKFullMatrix<number>::frobenius_norm() const
   const char type('F');
   return norm(type);
 }
-
-
 
 template <typename number>
 number
@@ -1180,8 +1125,6 @@ LAPACKFullMatrix<number>::norm(const char type) const
     }
 }
 
-
-
 template <typename number>
 number
 LAPACKFullMatrix<number>::trace() const
@@ -1197,8 +1140,6 @@ LAPACKFullMatrix<number>::trace() const
 
   return tr;
 }
-
-
 
 template <typename number>
 void
@@ -1224,8 +1165,6 @@ LAPACKFullMatrix<number>::compute_cholesky_factorization()
   state = cholesky;
   AssertThrow(info == 0, LACExceptions::ExcSingular());
 }
-
-
 
 template <typename number>
 number
@@ -1257,8 +1196,6 @@ LAPACKFullMatrix<number>::reciprocal_condition_number(const number a_norm) const
 
   return rcond;
 }
-
-
 
 template <typename number>
 number
@@ -1295,8 +1232,6 @@ LAPACKFullMatrix<number>::reciprocal_condition_number() const
 
   return rcond;
 }
-
-
 
 template <typename number>
 void
@@ -1364,7 +1299,6 @@ LAPACKFullMatrix<number>::compute_svd()
   state = LAPACKSupport::svd;
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_inverse_svd(const double threshold)
@@ -1385,8 +1319,6 @@ LAPACKFullMatrix<number>::compute_inverse_svd(const double threshold)
   state = LAPACKSupport::inverse_svd;
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_inverse_svd_with_kernel(
@@ -1404,8 +1336,6 @@ LAPACKFullMatrix<number>::compute_inverse_svd_with_kernel(
     wr[i] = 0.;
   state = LAPACKSupport::inverse_svd;
 }
-
-
 
 template <typename number>
 void
@@ -1447,8 +1377,6 @@ LAPACKFullMatrix<number>::invert()
   state = inverse_matrix;
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::solve(Vector<number>& v, const bool transposed) const
@@ -1489,8 +1417,6 @@ LAPACKFullMatrix<number>::solve(Vector<number>& v, const bool transposed) const
 
   Assert(info == 0, ExcInternalError());
 }
-
-
 
 template <typename number>
 void
@@ -1545,8 +1471,6 @@ LAPACKFullMatrix<number>::solve(LAPACKFullMatrix<number>& B,
   Assert(info == 0, ExcInternalError());
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::apply_lu_factorization(Vector<number>& v,
@@ -1555,8 +1479,6 @@ LAPACKFullMatrix<number>::apply_lu_factorization(Vector<number>& v,
   solve(v, transposed);
 }
 
-
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::apply_lu_factorization(LAPACKFullMatrix<number>& B,
@@ -1564,8 +1486,6 @@ LAPACKFullMatrix<number>::apply_lu_factorization(LAPACKFullMatrix<number>& B,
 {
   solve(B, transposed);
 }
-
-
 
 template <typename number>
 number
@@ -1596,7 +1516,6 @@ LAPACKFullMatrix<number>::determinant() const
       *= (ipiv[i] == types::blas_int(i + 1) ? this->el(i, i) : -this->el(i, i));
   return det;
 }
-
 
 template <typename number>
 void
@@ -1679,7 +1598,6 @@ LAPACKFullMatrix<number>::compute_eigenvalues(const bool right, const bool left)
   state = LAPACKSupport::State(LAPACKSupport::eigenvalues | unusable);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_eigenvalues_symmetric(
@@ -1706,7 +1624,6 @@ LAPACKFullMatrix<number>::compute_eigenvalues_symmetric(
   const types::blas_int* const dummy(&one);
   std::vector<types::blas_int> iwork(static_cast<size_type>(5 * nn));
   std::vector<types::blas_int> ifail(static_cast<size_type>(nn));
-
 
   /*
    * The LAPACK routine xSYEVX requires a sufficiently large work array; the
@@ -1790,7 +1707,6 @@ LAPACKFullMatrix<number>::compute_eigenvalues_symmetric(
   state = LAPACKSupport::State(unusable);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
@@ -1822,7 +1738,6 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
   const types::blas_int* const dummy(&one);
   iwork.resize(static_cast<size_type>(5 * nn));
   std::vector<types::blas_int> ifail(static_cast<size_type>(nn));
-
 
   /*
    * The LAPACK routine xSYGVX requires a sufficiently large work array; the
@@ -1915,7 +1830,6 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
   state = LAPACKSupport::State(unusable);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
@@ -2007,7 +1921,6 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
   state = LAPACKSupport::State(LAPACKSupport::eigenvalues | unusable);
 }
 
-
 template <typename number>
 void
 LAPACKFullMatrix<number>::print_formatted(std::ostream&      out,
@@ -2066,7 +1979,6 @@ LAPACKFullMatrix<number>::print_formatted(std::ostream&      out,
   out.precision(old_precision);
 }
 
-
 //----------------------------------------------------------------------//
 
 template <typename number>
@@ -2077,7 +1989,6 @@ PreconditionLU<number>::initialize(const LAPACKFullMatrix<number>& M)
   mem    = nullptr;
 }
 
-
 template <typename number>
 void
 PreconditionLU<number>::initialize(const LAPACKFullMatrix<number>& M,
@@ -2086,7 +1997,6 @@ PreconditionLU<number>::initialize(const LAPACKFullMatrix<number>& M,
   matrix = &M;
   mem    = &V;
 }
-
 
 template <typename number>
 void
@@ -2097,7 +2007,6 @@ PreconditionLU<number>::vmult(Vector<number>&       dst,
   matrix->apply_lu_factorization(dst, false);
 }
 
-
 template <typename number>
 void
 PreconditionLU<number>::Tvmult(Vector<number>&       dst,
@@ -2106,7 +2015,6 @@ PreconditionLU<number>::Tvmult(Vector<number>&       dst,
   dst = src;
   matrix->apply_lu_factorization(dst, true);
 }
-
 
 template <typename number>
 void
@@ -2120,7 +2028,6 @@ PreconditionLU<number>::vmult(BlockVector<number>&       dst,
   dst = *aux;
 }
 
-
 template <typename number>
 void
 PreconditionLU<number>::Tvmult(BlockVector<number>&       dst,
@@ -2133,9 +2040,6 @@ PreconditionLU<number>::Tvmult(BlockVector<number>&       dst,
   dst = *aux;
 }
 
-
-
 #include "lapack_full_matrix.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -16,8 +16,6 @@
 #ifndef dealii_data_out_dof_data_h
 #define dealii_data_out_dof_data_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/data_out_base.h>
 #include <deal.II/base/smartpointer.h>
@@ -146,7 +144,6 @@ namespace Exceptions
   } // namespace DataOutImplementation
 } // namespace Exceptions
 
-
 namespace internal
 {
   namespace DataOutImplementation
@@ -178,7 +175,6 @@ namespace internal
       real_part,
       imaginary_part
     };
-
 
     /**
      * For each vector that has been added through the add_data_vector()
@@ -360,7 +356,6 @@ namespace internal
       unsigned int n_output_variables;
     };
 
-
     /**
      * A data structure that holds all data needed in one thread when building
      * patches in parallel. These data structures are created globally rather
@@ -427,7 +422,6 @@ namespace internal
     };
   } // namespace DataOutImplementation
 } // namespace internal
-
 
 //TODO: Most of the documentation of DataOut_DoFData applies to DataOut.
 
@@ -775,7 +769,6 @@ public:
       data_component_interpretation
     = std::vector<DataComponentInterpretation::DataComponentInterpretation>());
 
-
   /**
    * This function is an abbreviation of the function above with only a scalar
    * @p dof_handler given and a single data name.
@@ -996,8 +989,6 @@ private:
     const bool deduce_output_names);
 };
 
-
-
 // -------------------- template and inline functions ------------------------
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
@@ -1016,8 +1007,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
     dofs, vec, names, type, data_component_interpretation, true);
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
 void
@@ -1033,8 +1022,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
   add_data_vector_internal(
     dofs, vec, names, type, data_component_interpretation, false);
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
@@ -1055,8 +1042,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
                            true);
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
 void
@@ -1075,8 +1060,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
                            false);
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
 void
@@ -1088,8 +1071,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
          Exceptions::DataOutImplementation::ExcNoDoFHandlerSelected());
   add_data_vector(*dofs, vec, data_postprocessor);
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename DoFHandlerType2>
@@ -1167,7 +1148,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
       if(patches[i].neighbors[n] != Patch::no_neighbor)
         patches[i].neighbors[n] += old_n_patches;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

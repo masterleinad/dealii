@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc Richardson solver
 
 // Note: This is (almost) a clone of the tests/petsc/solver_01.cc

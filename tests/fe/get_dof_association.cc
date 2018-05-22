@@ -15,13 +15,11 @@
 
 // test FiniteElement::get_dof_association() with a couple of elements
 
-
 #include "../tests.h"
 #include <iostream>
 
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_q.h>
-
 
 template <int dim>
 void

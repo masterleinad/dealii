@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure a tensor similar to the elasticity tensor for the
 // isotropic case works as expected by comparing with a full tensor
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
-
 
 template <int dim>
 void
@@ -72,8 +70,6 @@ test()
         AssertThrow(bs[i][j] == ba[i][j], ExcInternalError());
       }
 }
-
-
 
 int
 main()

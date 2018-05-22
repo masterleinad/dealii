@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //Test to check if the actual fe_index is used in SolutionTransfer
 
 #include "../tests.h"
@@ -32,7 +31,6 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <iostream>
 #include <vector>
-
 
 template <int dim>
 void
@@ -75,7 +73,6 @@ transfer(std::ostream& out)
   solution.reinit(dof_handler.n_dofs());
   soltrans.refine_interpolate(old_solution, solution);
 }
-
 
 int
 main()

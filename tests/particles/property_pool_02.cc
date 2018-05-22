@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test a property pool that allocates more than one property per chunk
 
 #include "../tests.h"
 #include <deal.II/particles/property_pool.h>
 #include <fstream>
 #include <iomanip>
-
 
 void
 test()
@@ -37,7 +34,6 @@ test()
     pool.get_properties(handle)[1] = 2.5;
     pool.get_properties(handle)[2] = 2.7;
 
-
     deallog << "Pool properties:";
 
     for(unsigned int i = 0; i < pool.get_properties(handle).size(); ++i)
@@ -50,8 +46,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_vector_operations_internal_h
 #define dealii_vector_operations_internal_h
 
@@ -40,7 +39,6 @@ namespace internal
       return t >= 0;
     }
 
-
     template <typename T>
     bool
     is_non_negative(const std::complex<T>&)
@@ -49,7 +47,6 @@ namespace internal
 
       return false;
     }
-
 
     template <typename T>
     void
@@ -60,8 +57,6 @@ namespace internal
       else
         std::printf(" %5.2f", double(t));
     }
-
-
 
     template <typename T>
     void
@@ -101,8 +96,6 @@ namespace internal
              ExcMessage("Can't convert a vector of complex numbers "
                         "into a vector of reals/doubles"));
     }
-
-
 
 #ifdef DEAL_II_WITH_THREADS
     /**
@@ -194,7 +187,6 @@ namespace internal
       (void) partitioner;
 #endif
     }
-
 
     // Define the functors necessary to use SIMD with TBB. we also include the
     // simple copy and set operations
@@ -686,8 +678,6 @@ namespace internal
       Number* b_val;
     };
 
-
-
     // All sums over all the vector entries (l2-norm, inner product, etc.) are
     // performed with the same code, using a templated operation defined
     // here. There are always two versions defined, a standard one that covers
@@ -885,8 +875,6 @@ namespace internal
       Number        a;
     };
 
-
-
     // this is the main working loop for all vector sums using the templated
     // operation above. it accumulates the sums using a block-wise summation
     // algorithm with post-update. this blocked algorithm has been proposed in
@@ -920,7 +908,6 @@ namespace internal
 
     // The code returns the result as the last argument in order to make
     // spawning tasks simpler and use automatic template deduction.
-
 
     /**
      * The minimum number of chunks (each of size 32) to divide the range
@@ -1055,7 +1042,6 @@ namespace internal
         }
     }
 
-
     // this is the inner working routine for the accumulation loops
     // below. This is the standard case where the loop bounds are known. We
     // pulled this function out of the regular accumulate routine because we
@@ -1090,8 +1076,6 @@ namespace internal
           outer_results[i] = r0 + r2;
         }
     }
-
-
 
     // this is the inner working routine for the accumulation loops
     // below. This is the specialized case where the loop bounds are known and
@@ -1161,8 +1145,6 @@ namespace internal
           n_chunks = start_irreg + VectorizedArray<Number>::n_array_elements;
         }
     }
-
-
 
 #ifdef DEAL_II_WITH_THREADS
     /**
@@ -1274,8 +1256,6 @@ namespace internal
       mutable ResultType* array_ptr;
     };
 #endif
-
-
 
     /**
      * This is the general caller for parallel reduction operations that work in

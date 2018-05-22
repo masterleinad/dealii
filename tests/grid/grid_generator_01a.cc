@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that refinement of the flat surfaces of a GridGenerator::half_hyper_ball
 // works correctly using SphericalManifold as boundary description.
 
@@ -24,8 +22,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -64,7 +60,6 @@ test(std::ostream& out)
     go.write(tr, out, format);
   }
 }
-
 
 int
 main()

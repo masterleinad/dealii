@@ -38,7 +38,6 @@
 #include <set>
 #include <sstream>
 
-
 std::string
 output_name(const unsigned int subdomain)
 {
@@ -59,8 +58,6 @@ pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
   return (cell->center()(0) < 0.49 && cell->center()(1) < 0.49)
          || (cell->center()(0) > 0.49 && cell->center()(1) > 0.49);
 }
-
-
 
 template <int dim>
 void
@@ -305,7 +302,6 @@ test()
 
   if(dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Ok" << std::endl;
-
 
   dh.clear();
 }

@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/grid/tria_faces.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -30,13 +28,11 @@ namespace internal
       return 0;
     }
 
-
     std::size_t
     TriaFaces<2>::memory_consumption() const
     {
       return MemoryConsumption::memory_consumption(lines);
     }
-
 
     std::size_t
     TriaFaces<3>::memory_consumption() const

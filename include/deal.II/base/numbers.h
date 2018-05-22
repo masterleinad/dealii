@@ -16,7 +16,6 @@
 #ifndef dealii_numbers_h
 #define dealii_numbers_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/types.h>
 
@@ -282,8 +281,6 @@ namespace numbers
   value_is_less_than_or_equal_to(const Number1& value_1,
                                  const Number2& value_2);
 
-
-
   /**
    * Return whether @p value_1 is greater than that of @p value_2.
    *
@@ -366,7 +363,6 @@ namespace numbers
     abs(const number& x);
   };
 
-
   /**
    * Specialization of the general NumberTraits class that provides the
    * relevant information if the underlying data type is std::complex<T>.
@@ -406,7 +402,6 @@ namespace numbers
     static real_type
     abs_square(const std::complex<number>& x);
 
-
     /**
      * Return the absolute value of a complex number.
      */
@@ -428,8 +423,6 @@ namespace numbers
     return std::isfinite(x);
   }
 
-
-
   inline bool
   is_finite(const std::complex<double>& x)
   {
@@ -437,8 +430,6 @@ namespace numbers
     // by testing real and imaginary part
     return (is_finite(x.real()) && is_finite(x.imag()));
   }
-
-
 
   inline bool
   is_finite(const std::complex<float>& x)
@@ -448,15 +439,12 @@ namespace numbers
     return (is_finite(x.real()) && is_finite(x.imag()));
   }
 
-
-
   inline bool
   is_finite(const std::complex<long double>& x)
   {
     // Same for std::complex<long double>
     return (is_finite(x.real()) && is_finite(x.imag()));
   }
-
 
   template <typename number>
   DEAL_II_CUDA_HOST_DEV const number&
@@ -465,16 +453,12 @@ namespace numbers
     return x;
   }
 
-
-
   template <typename number>
   DEAL_II_CUDA_HOST_DEV typename NumberTraits<number>::real_type
   NumberTraits<number>::abs_square(const number& x)
   {
     return x * x;
   }
-
-
 
   template <typename number>
   typename NumberTraits<number>::real_type
@@ -483,8 +467,6 @@ namespace numbers
     return std::abs(x);
   }
 
-
-
   template <typename number>
   std::complex<number>
   NumberTraits<std::complex<number>>::conjugate(const std::complex<number>& x)
@@ -492,16 +474,12 @@ namespace numbers
     return std::conj(x);
   }
 
-
-
   template <typename number>
   typename NumberTraits<std::complex<number>>::real_type
   NumberTraits<std::complex<number>>::abs(const std::complex<number>& x)
   {
     return std::abs(x);
   }
-
-
 
   template <typename number>
   typename NumberTraits<std::complex<number>>::real_type
@@ -511,7 +489,6 @@ namespace numbers
   }
 
 } // namespace numbers
-
 
 // Forward declarations
 namespace Differentiation
@@ -530,7 +507,6 @@ namespace Differentiation
     struct is_ad_number;
   } // namespace AD
 } // namespace Differentiation
-
 
 namespace internal
 {
@@ -677,7 +653,6 @@ namespace numbers
   bool
   values_are_equal(const adouble& value_1, const adouble& value_2);
 
-
   /**
    * Return whether two numbers are equal to one another. For intricate data
    * types (e.g. some automatically differentiable numbers), this function
@@ -696,7 +671,6 @@ namespace numbers
     return values_are_equal(value_1,
                             internal::NumberType<adouble>::value(value_2));
   }
-
 
   /**
    * Return whether two numbers are equal to one another. For intricate data
@@ -731,7 +705,6 @@ namespace numbers
   bool
   value_is_less_than(const adouble& value_1, const adouble& value_2);
 
-
   /**
    * Return whether @p value_1 is less than that of @p value_2.
    *
@@ -751,7 +724,6 @@ namespace numbers
     return value_is_less_than(value_1,
                               internal::NumberType<adouble>::value(value_2));
   }
-
 
   /**
    * Return whether @p value_1 is less than that of @p value_2.
@@ -775,14 +747,12 @@ namespace numbers
 
 #endif
 
-
   template <typename Number1, typename Number2>
   inline bool
   values_are_equal(const Number1& value_1, const Number2& value_2)
   {
     return (value_1 == internal::NumberType<Number1>::value(value_2));
   }
-
 
   template <typename Number1, typename Number2>
   inline bool
@@ -791,7 +761,6 @@ namespace numbers
     return !(values_are_equal(value_1, value_2));
   }
 
-
   template <typename Number>
   inline bool
   value_is_zero(const Number& value)
@@ -799,14 +768,12 @@ namespace numbers
     return values_are_equal(value, 0.0);
   }
 
-
   template <typename Number1, typename Number2>
   inline bool
   value_is_less_than(const Number1& value_1, const Number2& value_2)
   {
     return (value_1 < internal::NumberType<Number1>::value(value_2));
   }
-
 
   template <typename Number1, typename Number2>
   inline bool
@@ -816,14 +783,12 @@ namespace numbers
             || values_are_equal(value_1, value_2));
   }
 
-
   template <typename Number1, typename Number2>
   bool
   value_is_greater_than(const Number1& value_1, const Number2& value_2)
   {
     return !(value_is_less_than_or_equal_to(value_1, value_2));
   }
-
 
   template <typename Number1, typename Number2>
   inline bool

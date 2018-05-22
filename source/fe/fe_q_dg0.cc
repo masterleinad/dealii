@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -22,13 +21,11 @@
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q_dg0.h>
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, int spacedim>
 FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const unsigned int degree)
@@ -55,8 +52,6 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const unsigned int degree)
   this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
 }
-
-
 
 template <int dim, int spacedim>
 FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1>& points)
@@ -85,8 +80,6 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1>& points)
   this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -165,16 +158,12 @@ FE_Q_DG0<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Q_DG0<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Q_DG0<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -202,8 +191,6 @@ FE_Q_DG0<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   nodal_dofs[nodal_dofs.size() - 1] = 0.;
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_Q_DG0<dim, spacedim>::get_interpolation_matrix(
@@ -228,8 +215,6 @@ FE_Q_DG0<dim, spacedim>::get_interpolation_matrix(
     get_interpolation_matrix(x_source_fe, interpolation_matrix);
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<bool>
 FE_Q_DG0<dim, spacedim>::get_riaf_vector(const unsigned int deg)
@@ -238,8 +223,6 @@ FE_Q_DG0<dim, spacedim>::get_riaf_vector(const unsigned int deg)
   riaf[riaf.size() - 1] = true;
   return riaf;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -252,8 +235,6 @@ FE_Q_DG0<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   dpo[dim]++; //we need an additional DG0-node for a dim-dimensional object
   return dpo;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -268,8 +249,6 @@ FE_Q_DG0<dim, spacedim>::has_support_on_face(
     return FE_Q_Base<TensorProductPolynomialsConst<dim>, dim, spacedim>::
       has_support_on_face(shape_index, face_index);
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -287,8 +266,6 @@ FE_Q_DG0<dim, spacedim>::get_constant_modes() const
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(2, 0));
 }
-
-
 
 // explicit instantiations
 #include "fe_q_dg0.inst"

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check correct behavior of sadd of Trilinos vectors
 // if they have different Epetra maps
 
@@ -79,8 +77,6 @@ test()
   for(unsigned int i = local_begin; i < local_end; ++i)
     Assert(ghosted(i) == 3, ExcInternalError());
 }
-
-
 
 int
 main(int argc, char** argv)

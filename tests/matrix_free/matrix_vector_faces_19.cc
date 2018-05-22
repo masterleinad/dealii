@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_13 (integrate_scatter, renumbered degrees of
 // freedom) but testing a vmult_add operation
 
@@ -30,7 +28,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree_>
 void
@@ -104,7 +101,6 @@ test()
       const double entry  = Testing::rand() / (double) RAND_MAX;
       in.local_element(i) = entry;
     }
-
 
   MatrixFreeTest<dim,
                  fe_degree,

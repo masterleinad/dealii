@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::vmult
 
 #include "../tests.h"
@@ -52,8 +50,6 @@ test(Vector<double>& v, Vector<double>& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

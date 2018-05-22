@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup fe */
 /*@{*/
 
@@ -594,8 +593,6 @@ public:
     const std::vector<Vector<double>>& support_point_values,
     std::vector<double>&               nodal_values) const override;
 };
-
-
 
 /*@}*/
 

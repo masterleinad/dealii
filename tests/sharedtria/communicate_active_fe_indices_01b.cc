@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that processors correctly communicate active_fe_index
 // information from their own locally owned cells to the ghosts on
 // other processors
 // This is the same as communicate_active_fe_indices_01 but using
 // METIS as partitioner.
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -36,7 +33,6 @@
 #include <deal.II/hp/dof_handler.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -86,7 +82,6 @@ test()
       Assert(cell->is_locally_owned() || cell->is_ghost(), ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

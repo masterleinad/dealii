@@ -21,7 +21,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 CellId::CellId()
   : coarse_cell_id(numbers::invalid_unsigned_int),
     n_child_indices(numbers::invalid_unsigned_int)
@@ -33,8 +32,6 @@ CellId::CellId()
     child_indices[i] = std::numeric_limits<char>::max();
 }
 
-
-
 CellId::CellId(const unsigned int               coarse_cell_id,
                const std::vector<std::uint8_t>& id)
   : coarse_cell_id(coarse_cell_id), n_child_indices(id.size())
@@ -42,8 +39,6 @@ CellId::CellId(const unsigned int               coarse_cell_id,
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
   std::copy(id.begin(), id.end(), child_indices.begin());
 }
-
-
 
 CellId::CellId(const unsigned int  coarse_cell_id,
                const unsigned int  n_child_indices,
@@ -53,8 +48,6 @@ CellId::CellId(const unsigned int  coarse_cell_id,
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
   memcpy(&(child_indices[0]), id, n_child_indices);
 }
-
-
 
 CellId::CellId(const CellId::binary_type& binary_representation)
 {
@@ -92,8 +85,6 @@ CellId::CellId(const CellId::binary_type& binary_representation)
       ++binary_entry;
     }
 }
-
-
 
 template <int dim>
 CellId::binary_type
@@ -139,8 +130,6 @@ CellId::to_binary() const
   return binary_representation;
 }
 
-
-
 std::string
 CellId::to_string() const
 {
@@ -148,8 +137,6 @@ CellId::to_string() const
   ss << *this;
   return ss.str();
 }
-
-
 
 template <int dim, int spacedim>
 typename Triangulation<dim, spacedim>::cell_iterator

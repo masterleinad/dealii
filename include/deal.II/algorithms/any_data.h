@@ -217,13 +217,11 @@ private:
   std::vector<std::string> names;
 };
 
-
 unsigned int inline AnyData::size() const
 {
   AssertDimension(data.size(), names.size());
   return data.size();
 }
-
 
 template <typename type>
 inline type
@@ -235,7 +233,6 @@ AnyData::entry(const unsigned int i)
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
-
 
 template <typename type>
 inline const type
@@ -250,7 +247,6 @@ AnyData::entry(const unsigned int i) const
   return *p;
 }
 
-
 template <typename type>
 inline const type
 AnyData::read(const unsigned int i) const
@@ -263,7 +259,6 @@ AnyData::read(const unsigned int i) const
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
-
 
 template <typename type>
 inline const type*
@@ -278,7 +273,6 @@ AnyData::read_ptr(const unsigned int i) const
   return *p;
 }
 
-
 template <typename type>
 inline const type*
 AnyData::try_read_ptr(const unsigned int i) const
@@ -292,7 +286,6 @@ AnyData::try_read_ptr(const unsigned int i) const
   return *p;
 }
 
-
 template <typename type>
 inline const type*
 AnyData::try_read(const unsigned int i) const
@@ -304,14 +297,12 @@ AnyData::try_read(const unsigned int i) const
   return p;
 }
 
-
 inline const std::string&
 AnyData::name(const unsigned int i) const
 {
   AssertIndexRange(i, size());
   return names[i];
 }
-
 
 inline unsigned int
 AnyData::try_find(const std::string& n) const
@@ -325,7 +316,6 @@ AnyData::try_find(const std::string& n) const
   return it - names.begin();
 }
 
-
 inline unsigned int
 AnyData::find(const std::string& n) const
 {
@@ -335,14 +325,12 @@ AnyData::find(const std::string& n) const
   return i;
 }
 
-
 template <typename type>
 inline bool
 AnyData::is_type(const unsigned int i) const
 {
   return data[i].type() == typeid(type);
 }
-
 
 template <typename type>
 inline type
@@ -353,7 +341,6 @@ AnyData::entry(const std::string& n)
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
-
 
 template <typename type>
 inline const type
@@ -366,7 +353,6 @@ AnyData::entry(const std::string& n) const
   return *p;
 }
 
-
 template <typename type>
 inline const type
 AnyData::read(const std::string& n) const
@@ -376,7 +362,6 @@ AnyData::read(const std::string& n) const
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
-
 
 template <typename type>
 inline const type*
@@ -391,7 +376,6 @@ AnyData::read_ptr(const std::string& n) const
   return *p;
 }
 
-
 template <typename type>
 inline const type*
 AnyData::try_read_ptr(const std::string& n) const
@@ -405,7 +389,6 @@ AnyData::try_read_ptr(const std::string& n) const
     p = boost::any_cast<const type*>(&data[i]);
   return *p;
 }
-
 
 template <typename type>
 inline const type*
@@ -424,7 +407,6 @@ AnyData::try_read(const std::string& n) const
   return p;
 }
 
-
 template <typename type>
 inline void
 AnyData::add(type ent, const std::string& n)
@@ -433,7 +415,6 @@ AnyData::add(type ent, const std::string& n)
   data.push_back(e);
   names.push_back(n);
 }
-
 
 inline void
 AnyData::merge(const AnyData& other)
@@ -445,7 +426,6 @@ AnyData::merge(const AnyData& other)
     }
 }
 
-
 template <class StreamType>
 inline void
 AnyData::list(StreamType& os) const
@@ -456,10 +436,7 @@ AnyData::list(StreamType& os) const
     }
 }
 
-
 //----------------------------------------------------------------------//
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _04 but with indicators and a mesh that matches step-32
 
 #include "../tests.h"
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 namespace EquationData
 {
@@ -70,8 +66,6 @@ test()
   double min_indicator
     = *std::min_element(indicators.begin(), indicators.end()),
     max_indicator = *std::max_element(indicators.begin(), indicators.end());
-
-
 
   // use one strategy to compute
   // thresholds and obtain those
@@ -139,14 +133,12 @@ test()
   }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

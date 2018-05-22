@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test TensorProductManifold
 
 #include "../tests.h"
 
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tensor_product_manifold.h>
-
 
 void
 test1()
@@ -70,15 +68,12 @@ test1()
     }
 }
 
-
-
 int
 main()
 {
   initlog();
 
   test1();
-
 
   return 0;
 }

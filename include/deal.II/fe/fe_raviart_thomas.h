@@ -202,8 +202,6 @@ private:
   friend class FE_RaviartThomas;
 };
 
-
-
 /**
  * The Raviart-Thomas elements with node functionals defined as point values
  * in Gauss points.
@@ -333,7 +331,6 @@ private:
   void
   initialize_support_points(const unsigned int rt_degree);
 };
-
 
 /*@}*/
 

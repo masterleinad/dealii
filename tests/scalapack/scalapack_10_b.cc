@@ -30,7 +30,6 @@
 #include <fstream>
 #include <iostream>
 
-
 template <typename NumberType>
 void
 test(const std::pair<unsigned int, unsigned int>& size,
@@ -72,8 +71,6 @@ test(const std::pair<unsigned int, unsigned int>& size,
   AssertThrow(copy.frobenius_norm() < 1e-12, ExcInternalError());
   std::remove(filename.c_str());
 }
-
-
 
 int
 main(int argc, char** argv)

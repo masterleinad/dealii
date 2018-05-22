@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as hp/boundary_matrices, but with different FE objects. Tests
 // the boundary mass matrces for vector-valued (non-primiteve) hp
 // FE objects.
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -43,8 +40,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 
-
-
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -65,8 +60,6 @@ public:
       values(i) = value(p, i);
   }
 };
-
-
 
 template <int dim>
 void
@@ -146,8 +139,6 @@ check()
   // Write out matrix
   matrix.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

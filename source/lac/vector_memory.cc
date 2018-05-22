@@ -26,7 +26,6 @@
 
 #include <deal.II/lac/vector_memory.templates.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 #include "vector_memory.inst"

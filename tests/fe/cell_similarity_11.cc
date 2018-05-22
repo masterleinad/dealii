@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // since early 2009, the FEValues objects try to be more efficient by only
 // recomputing things like gradients of shape functions if the cell on which
 // we are is not a translation of the previous one. in this series of tests we
@@ -39,8 +37,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 
-
-
 template <int dim>
 void
 test(const Triangulation<dim>& tr)
@@ -50,7 +46,6 @@ test(const Triangulation<dim>& tr)
 
   MappingQ<dim> mapping(2);
   deallog << "Mapping=MappingQ2" << std::endl;
-
 
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -93,8 +88,6 @@ test(const Triangulation<dim>& tr)
     }
 }
 
-
-
 void
 test()
 {
@@ -119,7 +112,6 @@ test()
 
   test<dim>(tr);
 }
-
 
 int
 main()

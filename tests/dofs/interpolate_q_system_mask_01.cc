@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::interpolate with a component mask works for
 // FE_System(FE_Q(p)) elements correctly on a uniformly refined mesh for
 // functions of degree q
@@ -39,7 +37,6 @@
 
 #include <vector>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -63,8 +60,6 @@ private:
   const unsigned int q;
   const double       adj;
 };
-
-
 
 template <int dim>
 void
@@ -140,8 +135,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

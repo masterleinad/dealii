@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check SparseMatrix::Tmmult. this function has a default argument
 // that could previously not be instantiated because it was in a
 // non-deduced context but that should not be possible to omit
@@ -25,7 +24,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
-
 
 void
 test(const unsigned int n)
@@ -74,7 +72,6 @@ test(const unsigned int n)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

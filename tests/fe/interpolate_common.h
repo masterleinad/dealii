@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -79,9 +78,7 @@ vector_difference(const FiniteElement<dim>& fe,
   return result;
 }
 
-
 // Local implementation for any dimension
-
 
 template <int dim, int degree, int COMP = 1>
 class Q1WedgeFunction : public Function<dim>

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Oliver found an example, where sparse_matrix_iterator->value=0 didn't work,
 // because the iterator->value expects a double on the right hand side, not an
 // integer. If the right hand side is zero, it can also be converted to a
@@ -23,7 +21,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include <deal.II/base/numbers.h>
 #include <deal.II/fe/fe_series.h>
 
@@ -25,7 +23,6 @@
 #ifdef DEAL_II_WITH_GSL
 #  include <gsl/gsl_sf_legendre.h>
 #endif
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -63,7 +60,6 @@ namespace FESeries
             k_vectors(i, j, k)[0] = 2. * numbers::PI * k;
           }
   }
-
 
   template <int dim>
   Fourier<dim>::Fourier(const unsigned int           N,
@@ -120,7 +116,6 @@ namespace FESeries
       }
     return sum;
   }
-
 
   template <>
   void
@@ -187,7 +182,6 @@ namespace FESeries
     }
   }
 
-
   /*-------------- Legendre -------------------------------*/
   DeclException2(ExcLegendre,
                  int,
@@ -237,7 +231,6 @@ namespace FESeries
     return res;
   }
 
-
   template <int dim>
   Legendre<dim>::Legendre(const unsigned int           size_in_each_direction,
                           const hp::FECollection<dim>& fe_collection,
@@ -272,7 +265,6 @@ namespace FESeries
 
     legendre_coefficients.fill(unrolled_coefficients.begin());
   }
-
 
   template <int dim>
   double
@@ -310,8 +302,6 @@ namespace FESeries
             (*fe_collection)[fe], (*q_collection)[fe], TableIndices<1>(k), j);
     }
   }
-
-
 
   template <>
   void
@@ -401,10 +391,7 @@ namespace FESeries
     return std::make_pair(X(1), X(0));
   }
 
-
 } // end of namespace FESeries
-
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 template class FESeries::Fourier<1>;
@@ -413,7 +400,5 @@ template class FESeries::Fourier<3>;
 template class FESeries::Legendre<1>;
 template class FESeries::Legendre<2>;
 template class FESeries::Legendre<3>;
-
-
 
 DEAL_II_NAMESPACE_CLOSE

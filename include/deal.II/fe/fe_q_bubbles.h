@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_fe_q_bubbles_h
 #define dealii_fe_q_bubbles_h
 
@@ -22,7 +21,6 @@
 #include <deal.II/fe/fe_q_base.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup fe */
 /*@{*/
@@ -173,10 +171,7 @@ private:
   const unsigned int n_bubbles;
 };
 
-
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

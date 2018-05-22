@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test vertex_to_cell_map for 3D problem with hanging nodes.
 
 #include "../tests.h"

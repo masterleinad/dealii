@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_TRILINOS

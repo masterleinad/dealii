@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a test where a degree of freedom was constrained multiple times,
 // but with different weights. see the hp paper for more on this
 
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -41,8 +38,6 @@ char logname[] = "output";
 
 #include <vector>
 
-
-
 int
 main()
 {
@@ -50,7 +45,6 @@ main()
   logfile.precision(3);
 
   deallog.attach(logfile);
-
 
   // create a mesh like this (viewed
   // from top):

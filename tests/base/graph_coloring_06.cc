@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Output the sizes of colors
-
 
 #include "../tests.h"
 #include <set>

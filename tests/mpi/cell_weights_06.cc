@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just create a 16x16 coarse mesh, and partition it
 //
 // like _05, but create the 16x16 mesh by starting with an 8x8 mesh
@@ -34,8 +32,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 unsigned int n_global_active_cells;
 
@@ -99,7 +95,6 @@ test()
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

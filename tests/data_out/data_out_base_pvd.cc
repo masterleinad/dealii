@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // write the pvd master record for parallel visualization through the
 // vtu file format
 
@@ -24,7 +23,6 @@
 #include <vector>
 
 #include "patches.h"
-
 
 template <int dim, int spacedim>
 void
@@ -39,8 +37,6 @@ check(std::ostream& out)
 
   DataOutBase::write_pvd_record(out, names);
 }
-
-
 
 int
 main()

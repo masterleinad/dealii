@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a simple grid in 3d. here, we
 // check that if we refine a square once, and then one of the children
 // once again, that we get 15 cells
@@ -33,8 +31,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -65,7 +61,6 @@ test(std::ostream& /*out*/)
       Assert(tr.n_active_cells() == 15, ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

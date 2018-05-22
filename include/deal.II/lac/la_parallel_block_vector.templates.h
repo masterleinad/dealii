@@ -16,14 +16,12 @@
 #ifndef dealii_parallel_block_vector_templates_h
 #define dealii_parallel_block_vector_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/lapack_support.h>
 #include <deal.II/lac/petsc_parallel_block_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/vector.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -43,14 +41,11 @@ namespace LinearAlgebra
       reinit(n_blocks, block_size);
     }
 
-
-
     template <typename Number>
     BlockVector<Number>::BlockVector(const std::vector<size_type>& n)
     {
       reinit(n, false);
     }
-
 
     template <typename Number>
     BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
@@ -68,7 +63,6 @@ namespace LinearAlgebra
         this->block(i).reinit(local_ranges[i], ghost_indices[i], communicator);
     }
 
-
     template <typename Number>
     BlockVector<Number>::BlockVector(const std::vector<IndexSet>& local_ranges,
                                      const MPI_Comm               communicator)
@@ -84,8 +78,6 @@ namespace LinearAlgebra
         this->block(i).reinit(local_ranges[i], communicator);
     }
 
-
-
     template <typename Number>
     BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
       : BlockVectorBase<Vector<Number>>()
@@ -97,8 +89,6 @@ namespace LinearAlgebra
         this->components[i] = v.components[i];
     }
 
-
-
     template <typename Number>
     template <typename OtherNumber>
     BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
@@ -106,8 +96,6 @@ namespace LinearAlgebra
       reinit(v, true);
       *this = v;
     }
-
-
 
     template <typename Number>
     void
@@ -118,7 +106,6 @@ namespace LinearAlgebra
       std::vector<size_type> n(n_bl, bl_sz);
       reinit(n, omit_zeroing_entries);
     }
-
 
     template <typename Number>
     void
@@ -132,8 +119,6 @@ namespace LinearAlgebra
       for(size_type i = 0; i < this->n_blocks(); ++i)
         this->components[i].reinit(n[i], omit_zeroing_entries);
     }
-
-
 
     template <typename Number>
     template <typename Number2>
@@ -149,8 +134,6 @@ namespace LinearAlgebra
         this->block(i).reinit(v.block(i), omit_zeroing_entries);
     }
 
-
-
     template <typename Number>
     BlockVector<Number>&
     BlockVector<Number>::operator=(const value_type s)
@@ -160,8 +143,6 @@ namespace LinearAlgebra
       BaseClass::operator=(s);
       return *this;
     }
-
-
 
     template <typename Number>
     BlockVector<Number>&
@@ -182,8 +163,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     BlockVector<Number>&
     BlockVector<Number>::operator=(const Vector<Number>& v)
@@ -191,8 +170,6 @@ namespace LinearAlgebra
       BaseClass::operator=(v);
       return *this;
     }
-
-
 
     template <typename Number>
     template <typename Number2>
@@ -203,8 +180,6 @@ namespace LinearAlgebra
       BaseClass::operator=(v);
       return *this;
     }
-
-
 
 #ifdef DEAL_II_WITH_PETSC
 
@@ -222,8 +197,6 @@ namespace LinearAlgebra
 
 #endif
 
-
-
 #ifdef DEAL_II_WITH_TRILINOS
 
     template <typename Number>
@@ -239,8 +212,6 @@ namespace LinearAlgebra
     }
 
 #endif
-
-
 
     template <typename Number>
     void
@@ -267,8 +238,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::update_ghost_values() const
@@ -292,8 +261,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::zero_out_ghosts() const
@@ -301,8 +268,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).zero_out_ghosts();
     }
-
-
 
     template <typename Number>
     bool
@@ -314,8 +279,6 @@ namespace LinearAlgebra
           has_ghost_elements = true;
       return has_ghost_elements;
     }
-
-
 
     template <typename Number>
     void
@@ -329,7 +292,6 @@ namespace LinearAlgebra
       reinit(down_V, omit_zeroing_entries);
     }
 
-
     template <typename Number>
     BlockVector<Number>&
     BlockVector<Number>::operator*=(const Number factor)
@@ -339,8 +301,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     BlockVector<Number>&
     BlockVector<Number>::operator/=(const Number factor)
@@ -348,8 +308,6 @@ namespace LinearAlgebra
       operator*=(static_cast<Number>(1.) / factor);
       return *this;
     }
-
-
 
     template <typename Number>
     void
@@ -364,8 +322,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).scale(v.block(block));
     }
-
-
 
     template <typename Number>
     void
@@ -382,8 +338,6 @@ namespace LinearAlgebra
         this->block(block).equ(a, v.block(block));
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::equ(const Number               a,
@@ -396,8 +350,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).equ(a, v.block(block), b, w.block(block));
     }
-
-
 
     template <typename Number>
     BlockVector<Number>&
@@ -415,8 +367,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     BlockVector<Number>&
     BlockVector<Number>::operator-=(const VectorSpaceVector<Number>& vv)
@@ -433,8 +383,6 @@ namespace LinearAlgebra
       return *this;
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::add(const Number a)
@@ -442,8 +390,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).add(a);
     }
-
-
 
     template <typename Number>
     void
@@ -459,8 +405,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).add(a, v.block(block));
     }
-
-
 
     template <typename Number>
     void
@@ -485,8 +429,6 @@ namespace LinearAlgebra
         this->block(block).add(a, v.block(block), b, w.block(block));
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::sadd(const Number                     x,
@@ -503,8 +445,6 @@ namespace LinearAlgebra
         this->block(block).sadd(x, a, v.block(block));
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::sadd(const Number x, const BlockVector<Number>& v)
@@ -513,8 +453,6 @@ namespace LinearAlgebra
       for(unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).sadd(x, v.block(block));
     }
-
-
 
     template <typename Number>
     void
@@ -530,8 +468,6 @@ namespace LinearAlgebra
         this->block(block).sadd(x, a, v.block(block), b, w.block(block));
     }
 
-
-
     template <typename Number>
     template <typename OtherNumber>
     void
@@ -542,8 +478,6 @@ namespace LinearAlgebra
         (*this)(indices[i]) += values[i];
     }
 
-
-
     template <typename Number>
     void
     BlockVector<Number>::add(const std::vector<size_type>& indices,
@@ -552,8 +486,6 @@ namespace LinearAlgebra
       for(size_type i = 0; i < indices.size(); ++i)
         (*this)(indices[i]) += values[i];
     }
-
-
 
     template <typename Number>
     bool
@@ -577,8 +509,6 @@ namespace LinearAlgebra
       else
         return local_result;
     }
-
-
 
     template <typename Number>
     Number BlockVector<Number>::
@@ -604,8 +534,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     inline Number
     BlockVector<Number>::mean_value() const
@@ -625,8 +553,6 @@ namespace LinearAlgebra
         return local_result / (real_type) this->size();
     }
 
-
-
     template <typename Number>
     inline typename BlockVector<Number>::real_type
     BlockVector<Number>::l1_norm() const
@@ -643,8 +569,6 @@ namespace LinearAlgebra
       else
         return local_result;
     }
-
-
 
     template <typename Number>
     inline typename BlockVector<Number>::real_type
@@ -663,16 +587,12 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     inline typename BlockVector<Number>::real_type
     BlockVector<Number>::l2_norm() const
     {
       return std::sqrt(norm_sqr());
     }
-
-
 
     template <typename Number>
     inline typename BlockVector<Number>::real_type
@@ -693,8 +613,6 @@ namespace LinearAlgebra
         return std::pow(local_result, static_cast<real_type>(1.0 / p));
     }
 
-
-
     template <typename Number>
     inline typename BlockVector<Number>::real_type
     BlockVector<Number>::linfty_norm() const
@@ -712,8 +630,6 @@ namespace LinearAlgebra
       else
         return local_result;
     }
-
-
 
     template <typename Number>
     inline Number
@@ -747,8 +663,6 @@ namespace LinearAlgebra
         return local_result;
     }
 
-
-
     template <typename Number>
     inline void
     BlockVector<Number>::swap(BlockVector<Number>& v)
@@ -761,16 +675,12 @@ namespace LinearAlgebra
       dealii::swap(this->block_indices, v.block_indices);
     }
 
-
-
     template <typename Number>
     typename BlockVector<Number>::size_type
     BlockVector<Number>::size() const
     {
       return this->block_indices.total_size();
     }
-
-
 
     template <typename Number>
     inline void
@@ -780,8 +690,6 @@ namespace LinearAlgebra
     {
       AssertThrow(false, ExcNotImplemented());
     }
-
-
 
     template <typename Number>
     IndexSet
@@ -813,8 +721,6 @@ namespace LinearAlgebra
         this->block(b).print(out, precision, scientific, across);
     }
 
-
-
     template <typename Number>
     std::size_t
     BlockVector<Number>::memory_consumption() const
@@ -822,8 +728,6 @@ namespace LinearAlgebra
       return (MemoryConsumption::memory_consumption(this->block_indices)
               + MemoryConsumption::memory_consumption(this->components));
     }
-
-
 
     namespace
     {
@@ -842,8 +746,6 @@ namespace LinearAlgebra
           matrix.set_property(LAPACKSupport::general);
       }
     } // namespace
-
-
 
     template <typename Number>
     template <typename FullMatrixType>
@@ -892,8 +794,6 @@ namespace LinearAlgebra
         matrix, this->block(0).get_mpi_communicator(), matrix);
     }
 
-
-
     template <typename Number>
     template <typename FullMatrixType>
     Number
@@ -941,8 +841,6 @@ namespace LinearAlgebra
       return Utilities::MPI::sum(res, this->block(0).get_mpi_communicator());
     }
 
-
-
     template <typename Number>
     template <typename FullMatrixType>
     void
@@ -986,8 +884,6 @@ namespace LinearAlgebra
           V.update_ghost_values();
         }
     }
-
-
 
   } // end of namespace distributed
 

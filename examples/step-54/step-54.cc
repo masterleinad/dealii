@@ -15,7 +15,6 @@
  *  Authors: Andrea Mola, Luca Heltai, 2014
  */
 
-
 // @sect3{Include files}
 
 // We start with including a bunch of files that we will use in the
@@ -39,7 +38,6 @@
 #include <deal.II/opencascade/boundary_lib.h>
 #include <deal.II/opencascade/utilities.h>
 
-
 // Finally, a few C++ standard header files
 #include <cmath>
 #include <fstream>
@@ -50,8 +48,6 @@
 namespace Step54
 {
   using namespace dealii;
-
-
 
   // @sect3{The TriangulationOnCAD class}
 
@@ -75,13 +71,11 @@ namespace Step54
       NormalToMeshProjection = 2
     };
 
-
     TriangulationOnCAD(const std::string&   initial_mesh_filename,
                        const std::string&   cad_file_name,
                        const std::string&   output_filename,
                        const ProjectionType surface_projection_kind
                        = NormalProjection);
-
 
     ~TriangulationOnCAD();
 
@@ -107,7 +101,6 @@ namespace Step54
     const ProjectionType surface_projection_kind;
   };
 
-
   // @sect4{TriangulationOnCAD::TriangulationOnCAD}
 
   // The constructor of the TriangulationOnCAD class is very simple.
@@ -130,10 +123,7 @@ namespace Step54
   TriangulationOnCAD::~TriangulationOnCAD()
   {}
 
-
-
   // @sect4{TriangulationOnCAD::read_domain}
-
 
   // The following function represents the core of this program.  In
   // this function we import the CAD shape upon which we want to
@@ -334,7 +324,6 @@ namespace Step54
       }
   }
 
-
   // @sect4{TriangulationOnCAD::refine_mesh}
 
   // This function globally refines the mesh. In other tutorials, it
@@ -354,8 +343,6 @@ namespace Step54
     tria.refine_global(1);
   }
 
-
-
   // @sect4{TriangulationOnCAD::output_results}
 
   // Outputting the results of our computations is a rather mechanical
@@ -370,7 +357,6 @@ namespace Step54
     GridOut       grid_out;
     grid_out.write_vtk(tria, logfile);
   }
-
 
   // @sect4{TriangulationOnCAD::run}
 
@@ -389,7 +375,6 @@ namespace Step54
       }
   }
 } // namespace Step54
-
 
 // @sect3{The main() function}
 

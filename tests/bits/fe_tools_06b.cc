@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/lac/la_parallel_vector.h>
@@ -22,9 +21,7 @@
 // check
 //   FETools::back_interpolate(6) with parallel vector
 
-
 std::string output_file_name = "output";
-
 
 template <int dim>
 void

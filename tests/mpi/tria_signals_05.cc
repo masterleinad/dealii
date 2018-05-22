@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/grid_generator.h>
@@ -80,7 +79,6 @@ private:
   int                                 n_active_cells;
   const Triangulation<dim, spacedim>& tria;
 };
-
 
 template <int dim, int spacedim>
 void

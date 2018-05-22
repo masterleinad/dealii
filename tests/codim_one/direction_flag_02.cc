@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test direction flags in a 2d mesh embedded in 3d
 
 #include "../tests.h"
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria.h>
 
 using namespace std;
-
 
 void
 test()
@@ -59,8 +57,6 @@ test()
               << (cell->direction_flag() ? "true" : "false") << std::endl;
     }
 }
-
-
 
 int
 main()

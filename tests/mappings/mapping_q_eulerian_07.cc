@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that MappingQEulerian works in parallel.
 //
 // this is a variant of _02
@@ -53,10 +52,7 @@
 #include <iostream>
 #include <vector>
 
-
-
 using namespace dealii;
-
 
 template <int dim>
 class Displacement : public Function<dim>
@@ -78,7 +74,6 @@ public:
       v(i) = p[i] * p[0] / 2;
   }
 };
-
 
 template <int dim>
 void
@@ -126,8 +121,6 @@ test()
   data_out.build_patches(euler, 1, DataOut<dim>::curved_inner_cells);
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main(int argc, char* argv[])

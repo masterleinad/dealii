@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check TriaAccessor::real_to_unit_cell_affine_approximation
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim, int spacedim>
 void
@@ -55,8 +53,6 @@ do_test(const Triangulation<dim, spacedim>& tria, const Point<spacedim>& p)
     }
 }
 
-
-
 template <int dim>
 void
 test1()
@@ -71,8 +67,6 @@ test1()
   do_test(tria, p);
 }
 
-
-
 template <int dim>
 void
 test2()
@@ -85,8 +79,6 @@ test2()
 
   do_test(tria, p);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -112,7 +104,6 @@ test3()
 
   do_test(triangulation, p);
 }
-
 
 int
 main()

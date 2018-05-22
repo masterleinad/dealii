@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests whether FEEvaluationBase::read_dof_values and
 // FEEvaluationBase::read_dof_values_plain get the same data on a vector where
 // constraints are distributed
@@ -40,7 +38,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim,
           int fe_degree,
@@ -80,8 +77,6 @@ public:
       }
   }
 
-
-
   void
   test_functions(const Vector<Number>& src) const
   {
@@ -103,8 +98,6 @@ protected:
   const MatrixFree<dim, Number>& data;
   mutable double                 error, total;
 };
-
-
 
 template <int dim, int fe_degree, typename number>
 void
@@ -176,7 +169,6 @@ test()
 
   do_test<dim, fe_degree, double>(dof, constraints);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing compressed sparsity patterns by
 // printing all nonzero entries
 
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 template <int dim>
 void
@@ -73,8 +70,6 @@ test()
       if(sparsity.exists(i, j))
         deallog << i << ' ' << j << std::endl;
 }
-
-
 
 int
 main()

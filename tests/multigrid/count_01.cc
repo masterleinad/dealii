@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGTools::count_dofs_per_component
 
 #include "../tests.h"
@@ -81,7 +80,6 @@ check_fe(FiniteElement<dim>& fe)
   MGTools::count_dofs_per_component(mgdof, count, true, target);
   log_vector(count);
 }
-
 
 template <int dim>
 void

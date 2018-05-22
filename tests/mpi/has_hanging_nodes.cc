@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test has_hanging_nodes() in sequential and parallel triangulations
 
 #include "../tests.h"
@@ -59,7 +57,6 @@
 
 #include <deal.II/lac/sparsity_tools.h>
 
-
 #include <iostream>
 
 using namespace dealii;
@@ -79,11 +76,9 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
   ConditionalOStream pcout(
     std::cout, (Utilities::MPI::this_mpi_process(mpi_communicator) == 0));
 
-
   parallel::distributed::Triangulation<dim> tria_distrib(mpi_communicator);
 
   Triangulation<dim> tria_sequential;
-
 
   {
     Triangulation<dim> triangulation1;
@@ -122,9 +117,7 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
               }
         }
 
-
       tria_sequential.begin_active()->set_refine_flag();
-
 
       tria_distrib.prepare_coarsening_and_refinement();
       tria_distrib.execute_coarsening_and_refinement();
@@ -137,7 +130,6 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
           << " distrib=" << tria_distrib.has_hanging_nodes()
           << "; shared=" << tria_sequential.has_hanging_nodes() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

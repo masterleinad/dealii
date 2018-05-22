@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This test used to fail after upgrading to petsc 2.2.1
-
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_vector.h>
 
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -35,8 +31,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

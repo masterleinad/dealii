@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ConstraintMatrix::shift for a ConstraintMatrix object
 // initialized with an IndexSet object
 

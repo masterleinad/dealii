@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler could not deal with missing endline at end of file
 // or can it?
 // http://code.google.com/p/dealii/issues/detail?id=126

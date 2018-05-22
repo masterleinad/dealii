@@ -26,7 +26,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   // The pull_back function fails regularly in the compute_chart_points
@@ -107,8 +106,6 @@ namespace internal
   }
 } // namespace internal
 
-
-
 // ============================================================
 // PolarManifold
 // ============================================================
@@ -120,16 +117,12 @@ PolarManifold<dim, spacedim>::PolarManifold(const Point<spacedim> center)
     center(center)
 {}
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
 PolarManifold<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<PolarManifold<dim, spacedim>>(center);
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, spacedim>
@@ -144,8 +137,6 @@ PolarManifold<dim, spacedim>::get_periodicity()
   periodicity[spacedim - 1] = 2 * numbers::PI;
   return periodicity;
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -178,8 +169,6 @@ PolarManifold<dim, spacedim>::push_forward(
       }
   return p + center;
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -217,8 +206,6 @@ PolarManifold<dim, spacedim>::pull_back(
     }
   return p;
 }
-
-
 
 template <int dim, int spacedim>
 DerivativeForm<1, spacedim, spacedim>
@@ -266,8 +253,6 @@ PolarManifold<dim, spacedim>::push_forward_gradient(
   return DX;
 }
 
-
-
 // ============================================================
 // SphericalManifold
 // ============================================================
@@ -278,16 +263,12 @@ SphericalManifold<dim, spacedim>::SphericalManifold(
   : center(center), polar_manifold(center)
 {}
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
 SphericalManifold<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<SphericalManifold<dim, spacedim>>(center);
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -353,8 +334,6 @@ SphericalManifold<dim, spacedim>::get_intermediate_point(
   return Point<spacedim>(center + (w * r2 + (1.0 - w) * r1) * P);
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, spacedim>
 SphericalManifold<dim, spacedim>::get_tangent_vector(
@@ -404,8 +383,6 @@ SphericalManifold<dim, spacedim>::get_tangent_vector(
   return (r2 - r1) * e1 + r1 * gamma * n;
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, spacedim>
 SphericalManifold<dim, spacedim>::normal_vector(
@@ -442,8 +419,6 @@ SphericalManifold<dim, spacedim>::normal_vector(
   return Manifold<dim, spacedim>::normal_vector(face, p);
 }
 
-
-
 template <>
 void
 SphericalManifold<1, 1>::get_normals_at_vertices(
@@ -453,8 +428,6 @@ SphericalManifold<1, 1>::get_normals_at_vertices(
   Assert(false, ExcImpossibleInDim(1));
 }
 
-
-
 template <>
 void
 SphericalManifold<1, 2>::get_normals_at_vertices(
@@ -463,8 +436,6 @@ SphericalManifold<1, 2>::get_normals_at_vertices(
 {
   Assert(false, ExcImpossibleInDim(1));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -502,8 +473,6 @@ SphericalManifold<dim, spacedim>::get_normals_at_vertices(
     Manifold<dim, spacedim>::get_normals_at_vertices(face, face_vertex_normals);
 }
 
-
-
 template <int dim, int spacedim>
 void
 SphericalManifold<dim, spacedim>::get_new_points(
@@ -519,8 +488,6 @@ SphericalManifold<dim, spacedim>::get_new_points(
   return;
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 SphericalManifold<dim, spacedim>::get_new_point(
@@ -535,8 +502,6 @@ SphericalManifold<dim, spacedim>::get_new_point(
 
   return new_point;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -742,8 +707,6 @@ SphericalManifold<dim, spacedim>::get_new_points(
       }
 }
 
-
-
 template <int dim, int spacedim>
 std::pair<double, Tensor<1, spacedim>>
 SphericalManifold<dim, spacedim>::guess_new_point(
@@ -777,7 +740,6 @@ SphericalManifold<dim, spacedim>::guess_new_point(
 
   return std::make_pair(rho, candidate);
 }
-
 
 namespace
 {
@@ -911,8 +873,6 @@ namespace
   }
 } // namespace
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 SphericalManifold<dim, spacedim>::get_new_point(
@@ -925,8 +885,6 @@ SphericalManifold<dim, spacedim>::get_new_point(
   return Point<spacedim>();
 }
 
-
-
 template <>
 Point<3>
 SphericalManifold<1, 3>::get_new_point(
@@ -937,8 +895,6 @@ SphericalManifold<1, 3>::get_new_point(
 {
   return do_get_new_point(directions, distances, weights, candidate_point);
 }
-
-
 
 template <>
 Point<3>
@@ -951,8 +907,6 @@ SphericalManifold<2, 3>::get_new_point(
   return do_get_new_point(directions, distances, weights, candidate_point);
 }
 
-
-
 template <>
 Point<3>
 SphericalManifold<3, 3>::get_new_point(
@@ -963,8 +917,6 @@ SphericalManifold<3, 3>::get_new_point(
 {
   return do_get_new_point(directions, distances, weights, candidate_point);
 }
-
-
 
 // ============================================================
 // CylindricalManifold
@@ -981,8 +933,6 @@ CylindricalManifold<dim, spacedim>::CylindricalManifold(const unsigned int axis,
   Assert(spacedim == 3,
          ExcMessage("CylindricalManifold can only be used for spacedim==3!"));
 }
-
-
 
 template <int dim, int spacedim>
 CylindricalManifold<dim, spacedim>::CylindricalManifold(
@@ -1001,8 +951,6 @@ CylindricalManifold<dim, spacedim>::CylindricalManifold(
          ExcMessage("CylindricalManifold can only be used for spacedim==3!"));
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
 CylindricalManifold<dim, spacedim>::clone() const
@@ -1010,8 +958,6 @@ CylindricalManifold<dim, spacedim>::clone() const
   return std_cxx14::make_unique<CylindricalManifold<dim, spacedim>>(
     direction, point_on_axis, tolerance);
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -1040,8 +986,6 @@ CylindricalManifold<dim, spacedim>::get_new_point(
                                                           weights);
 }
 
-
-
 template <int dim, int spacedim>
 Point<3>
 CylindricalManifold<dim, spacedim>::pull_back(
@@ -1066,8 +1010,6 @@ CylindricalManifold<dim, spacedim>::pull_back(
   return Point<3>(p_diff.norm(), phi, lambda);
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 CylindricalManifold<dim, spacedim>::push_forward(
@@ -1090,8 +1032,6 @@ CylindricalManifold<dim, spacedim>::push_forward(
   // Finally, put everything together.
   return point_on_axis + direction * chart_point(2) + intermediate;
 }
-
-
 
 template <int dim, int spacedim>
 DerivativeForm<1, 3, spacedim>
@@ -1132,8 +1072,6 @@ CylindricalManifold<dim, spacedim>::push_forward_gradient(
   return derivatives;
 }
 
-
-
 // ============================================================
 // FunctionManifold
 // ============================================================
@@ -1153,8 +1091,6 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
   AssertDimension(push_forward_function.n_components, spacedim);
   AssertDimension(pull_back_function.n_components, chartdim);
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
@@ -1184,8 +1120,6 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
   pull_back_function    = pb;
 }
 
-
-
 template <int dim, int spacedim, int chartdim>
 FunctionManifold<dim, spacedim, chartdim>::~FunctionManifold()
 {
@@ -1200,8 +1134,6 @@ FunctionManifold<dim, spacedim, chartdim>::~FunctionManifold()
       delete pb;
     }
 }
-
-
 
 template <int dim, int spacedim, int chartdim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -1237,8 +1169,6 @@ FunctionManifold<dim, spacedim, chartdim>::clone() const
       tolerance);
 }
 
-
-
 template <int dim, int spacedim, int chartdim>
 Point<spacedim>
 FunctionManifold<dim, spacedim, chartdim>::push_forward(
@@ -1265,8 +1195,6 @@ FunctionManifold<dim, spacedim, chartdim>::push_forward(
   return result;
 }
 
-
-
 template <int dim, int spacedim, int chartdim>
 DerivativeForm<1, chartdim, spacedim>
 FunctionManifold<dim, spacedim, chartdim>::push_forward_gradient(
@@ -1282,8 +1210,6 @@ FunctionManifold<dim, spacedim, chartdim>::push_forward_gradient(
   return DF;
 }
 
-
-
 template <int dim, int spacedim, int chartdim>
 Point<chartdim>
 FunctionManifold<dim, spacedim, chartdim>::pull_back(
@@ -1296,8 +1222,6 @@ FunctionManifold<dim, spacedim, chartdim>::pull_back(
     result[i] = pb[i];
   return result;
 }
-
-
 
 // ============================================================
 // TorusManifold
@@ -1317,8 +1241,6 @@ TorusManifold<dim>::pull_back(const Point<3>& p) const
   return Point<3>(phi, theta, w);
 }
 
-
-
 template <int dim>
 Point<3>
 TorusManifold<dim>::push_forward(const Point<3>& chart_point) const
@@ -1332,8 +1254,6 @@ TorusManifold<dim>::push_forward(const Point<3>& chart_point) const
                   sin(phi) * R + r * w * cos(theta) * sin(phi));
 }
 
-
-
 template <int dim>
 TorusManifold<dim>::TorusManifold(const double R, const double r)
   : ChartManifold<dim, 3, 3>(Point<3>(2 * numbers::PI, 2 * numbers::PI, 0.0)),
@@ -1346,16 +1266,12 @@ TorusManifold<dim>::TorusManifold(const double R, const double r)
   Assert(r > 0.0, ExcMessage("inner radius must be positive."));
 }
 
-
-
 template <int dim>
 std::unique_ptr<Manifold<dim, 3>>
 TorusManifold<dim>::clone() const
 {
   return std_cxx14::make_unique<TorusManifold<dim>>(R, r);
 }
-
-
 
 template <int dim>
 DerivativeForm<1, 3, 3>
@@ -1382,8 +1298,6 @@ TorusManifold<dim>::push_forward_gradient(const Point<3>& chart_point) const
   return DX;
 }
 
-
-
 // ============================================================
 // TransfiniteInterpolationManifold
 // ============================================================
@@ -1395,8 +1309,6 @@ TransfiniteInterpolationManifold<dim,
   AssertThrow(dim > 1, ExcNotImplemented());
 }
 
-
-
 template <int dim, int spacedim>
 TransfiniteInterpolationManifold<dim,
                                  spacedim>::~TransfiniteInterpolationManifold()
@@ -1404,8 +1316,6 @@ TransfiniteInterpolationManifold<dim,
   if(clear_signal.connected())
     clear_signal.disconnect();
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<Manifold<dim, spacedim>>
@@ -1416,8 +1326,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::clone() const
     ptr->initialize(*triangulation);
   return std::unique_ptr<Manifold<dim, spacedim>>(ptr);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1452,8 +1360,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::initialize(
       coarse_cell_is_flat[cell->index()] = cell_is_flat;
     }
 }
-
-
 
 namespace
 {
@@ -1769,8 +1675,6 @@ namespace
   }
 } // namespace
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 TransfiniteInterpolationManifold<dim, spacedim>::push_forward(
@@ -1788,8 +1692,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::push_forward(
   return compute_transfinite_interpolation(
     *cell, chart_point, coarse_cell_is_flat[cell->index()]);
 }
-
-
 
 template <int dim, int spacedim>
 DerivativeForm<1, dim, spacedim>
@@ -1816,8 +1718,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::push_forward_gradient(
     }
   return grad;
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim>
@@ -1945,8 +1845,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
   return outside;
 }
 
-
-
 template <int dim, int spacedim>
 std::array<unsigned int, 20>
 TransfiniteInterpolationManifold<dim, spacedim>::
@@ -2028,8 +1926,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::
 
   return cells;
 }
-
-
 
 template <int dim, int spacedim>
 typename Triangulation<dim, spacedim>::cell_iterator
@@ -2256,8 +2152,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
   return typename Triangulation<dim, spacedim>::cell_iterator();
 }
 
-
-
 template <int dim, int spacedim>
 Point<spacedim>
 TransfiniteInterpolationManifold<dim, spacedim>::get_new_point(
@@ -2275,8 +2169,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::get_new_point(
 
   return push_forward(cell, p_chart);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2304,8 +2196,6 @@ TransfiniteInterpolationManifold<dim, spacedim>::get_new_points(
   for(unsigned int row = 0; row < weights.size(0); ++row)
     new_points[row] = push_forward(cell, new_points_on_chart[row]);
 }
-
-
 
 // explicit instantiations
 #include "manifold_lib.inst"

@@ -17,7 +17,6 @@
  * Author: Ivan Christov, Wolfgang Bangerth, Texas A&M University, 2006
  */
 
-
 // @sect3{Include files and global variables}
 
 // For an explanation of the include files, the reader should refer to the
@@ -53,12 +52,10 @@
 #include <fstream>
 #include <iostream>
 
-
 // The last step is as in all previous programs:
 namespace Step25
 {
   using namespace dealii;
-
 
   // @sect3{The <code>SineGordonProblem</code> class template}
 
@@ -140,7 +137,6 @@ namespace Step25
 
     const unsigned int output_timestep_skip;
   };
-
 
   // @sect3{Initial conditions}
 
@@ -244,8 +240,6 @@ namespace Step25
   {
     return ExactSolution<dim>(1, this->get_time()).value(p, component);
   }
-
-
 
   // @sect3{Implementation of the <code>SineGordonProblem</code> class}
 
@@ -527,8 +521,6 @@ namespace Step25
                           local_nl_matrix(i, j));
       }
   }
-
-
 
   // @sect4{SineGordonProblem::solve}
 

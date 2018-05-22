@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test consistency of assemblers MatrixSimple with and without local blocks
 
 #include "../tests.h"
@@ -30,7 +29,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/multigrid/mg_tools.h>
-
 
 using namespace dealii;
 
@@ -56,7 +54,6 @@ public:
              MeshWorker::IntegrationInfo<dim>& info2);
 };
 
-
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
@@ -72,7 +69,6 @@ MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
                              + fe.system_to_block_index(j).first;
       }
 }
-
 
 template <int dim>
 void
@@ -96,7 +92,6 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
       }
 }
 
-
 template <int dim>
 void
 MatrixIntegrator<dim>::block_cell(MeshWorker::DoFInfo<dim>& dinfo,
@@ -113,7 +108,6 @@ MatrixIntegrator<dim>::block_cell(MeshWorker::DoFInfo<dim>& dinfo,
           }
     }
 }
-
 
 template <int dim>
 void
@@ -143,7 +137,6 @@ MatrixIntegrator<dim>::block_face(MeshWorker::DoFInfo<dim>& dinfo1,
           }
     }
 }
-
 
 template <int dim>
 void
@@ -180,7 +173,6 @@ assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
     assembler);
 }
 
-
 template <int dim>
 void
 assemble(const DoFHandler<dim>&              dof_handler,
@@ -216,7 +208,6 @@ assemble(const DoFHandler<dim>&              dof_handler,
     &MatrixIntegrator<dim>::face,
     assembler);
 }
-
 
 template <int dim>
 void
@@ -280,7 +271,6 @@ test_simple(DoFHandler<dim>& mgdofs)
     }
 }
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -314,7 +304,6 @@ test(const FiniteElement<dim>& fe)
 
   test_simple(dofs);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests LAPACKFullMatrix::Tmmult with additional vector
 // (similar to _09)
 
@@ -73,7 +72,6 @@ test(const unsigned int m,
     for(unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
-
 
   deallog << "OK non-symmetric adding" << std::endl;
 

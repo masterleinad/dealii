@@ -16,7 +16,6 @@
 #ifndef dealii_vector_view_h
 #define dealii_vector_view_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/subscriptor.h>
@@ -25,7 +24,6 @@
 #include <cstdio>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*! @addtogroup Vectors
  *@{
@@ -229,8 +227,6 @@ public:
   swap(Vector<Number>& v) override;
 };
 
-
-
 /*@}*/
 /*----------------------- Inline functions ----------------------------------*/
 
@@ -246,8 +242,6 @@ inline VectorView<Number>::VectorView(const size_type new_size, Number* ptr)
   this->values.reset(ptr);
 }
 
-
-
 template <typename Number>
 inline VectorView<Number>::VectorView(const size_type new_size,
                                       const Number*   ptr)
@@ -256,8 +250,6 @@ inline VectorView<Number>::VectorView(const size_type new_size,
   this->max_vec_size = new_size;
   this->values.reset(const_cast<Number*>(ptr));
 }
-
-
 
 template <typename Number>
 inline VectorView<Number>::~VectorView()
@@ -271,7 +263,6 @@ inline VectorView<Number>::~VectorView()
   this->values.release();
 }
 
-
 template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type N, const bool omit_zeroing_entries)
@@ -281,7 +272,6 @@ VectorView<Number>::reinit(const size_type N, const bool omit_zeroing_entries)
   if(omit_zeroing_entries == false)
     Vector<Number>::operator=(static_cast<Number>(0));
 }
-
 
 template <typename Number>
 inline void
@@ -294,7 +284,6 @@ VectorView<Number>::reinit(const size_type new_size, Number* ptr)
   this->values.reset(ptr);
 }
 
-
 template <typename Number>
 inline void
 VectorView<Number>::reinit(const size_type new_size, const Number* ptr)
@@ -305,7 +294,6 @@ VectorView<Number>::reinit(const size_type new_size, const Number* ptr)
   this->values.release();
   this->values.reset(const_cast<Number*>(ptr));
 }
-
 
 template <typename Number>
 inline void

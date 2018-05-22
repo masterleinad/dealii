@@ -88,7 +88,6 @@ namespace PETScWrappers
           return value;
         }
 
-
       // first verify that the requested
       // element is actually locally
       // available
@@ -121,8 +120,6 @@ namespace PETScWrappers
                       "the thread limit to 1 in MPI_InitFinalize()."));
   }
 
-
-
   VectorBase::VectorBase(const VectorBase& v)
     : Subscriptor(),
       ghosted(v.ghosted),
@@ -141,8 +138,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   VectorBase::VectorBase(const Vec& v)
     : Subscriptor(),
       vector(v),
@@ -155,8 +150,6 @@ namespace PETScWrappers
                       "the thread limit to 1 in MPI_InitFinalize()."));
   }
 
-
-
   VectorBase::~VectorBase()
   {
     if(obtained_ownership)
@@ -166,8 +159,6 @@ namespace PETScWrappers
         (void) ierr;
       }
   }
-
-
 
   void
   VectorBase::clear()
@@ -183,8 +174,6 @@ namespace PETScWrappers
     last_action        = ::dealii::VectorOperation::unknown;
     obtained_ownership = true;
   }
-
-
 
   VectorBase&
   VectorBase::operator=(const PetscScalar s)
@@ -212,8 +201,6 @@ namespace PETScWrappers
     return *this;
   }
 
-
-
   bool
   VectorBase::operator==(const VectorBase& v) const
   {
@@ -225,8 +212,6 @@ namespace PETScWrappers
 
     return (flag == PETSC_TRUE);
   }
-
-
 
   bool
   VectorBase::operator!=(const VectorBase& v) const
@@ -240,8 +225,6 @@ namespace PETScWrappers
     return (flag == PETSC_FALSE);
   }
 
-
-
   VectorBase::size_type
   VectorBase::size() const
   {
@@ -252,8 +235,6 @@ namespace PETScWrappers
     return sz;
   }
 
-
-
   VectorBase::size_type
   VectorBase::local_size() const
   {
@@ -263,8 +244,6 @@ namespace PETScWrappers
 
     return sz;
   }
-
-
 
   std::pair<VectorBase::size_type, VectorBase::size_type>
   VectorBase::local_range() const
@@ -277,8 +256,6 @@ namespace PETScWrappers
     return std::make_pair(begin, end);
   }
 
-
-
   void
   VectorBase::set(const std::vector<size_type>&   indices,
                   const std::vector<PetscScalar>& values)
@@ -287,8 +264,6 @@ namespace PETScWrappers
            ExcMessage("Function called with arguments of different sizes"));
     do_set_add_operation(indices.size(), indices.data(), values.data(), false);
   }
-
-
 
   void
   VectorBase::add(const std::vector<size_type>&   indices,
@@ -299,8 +274,6 @@ namespace PETScWrappers
     do_set_add_operation(indices.size(), indices.data(), values.data(), true);
   }
 
-
-
   void
   VectorBase::add(const std::vector<size_type>&        indices,
                   const ::dealii::Vector<PetscScalar>& values)
@@ -310,8 +283,6 @@ namespace PETScWrappers
     do_set_add_operation(indices.size(), indices.data(), values.begin(), true);
   }
 
-
-
   void
   VectorBase::add(const size_type    n_elements,
                   const size_type*   indices,
@@ -319,8 +290,6 @@ namespace PETScWrappers
   {
     do_set_add_operation(n_elements, indices, values, true);
   }
-
-
 
   PetscScalar VectorBase::operator*(const VectorBase& vec) const
   {
@@ -341,8 +310,6 @@ namespace PETScWrappers
     return result;
   }
 
-
-
   PetscScalar
   VectorBase::add_and_dot(const PetscScalar a,
                           const VectorBase& V,
@@ -351,8 +318,6 @@ namespace PETScWrappers
     this->add(a, V);
     return *this * W;
   }
-
-
 
   void
   VectorBase::compress(const VectorOperation::values operation)
@@ -413,16 +378,12 @@ namespace PETScWrappers
     last_action = ::dealii::VectorOperation::unknown;
   }
 
-
-
   VectorBase::real_type
   VectorBase::norm_sqr() const
   {
     const real_type d = l2_norm();
     return d * d;
   }
-
-
 
   PetscScalar
   VectorBase::mean_value() const
@@ -474,7 +435,6 @@ namespace PETScWrappers
     return mean;
   }
 
-
   VectorBase::real_type
   VectorBase::l1_norm() const
   {
@@ -486,8 +446,6 @@ namespace PETScWrappers
     return d;
   }
 
-
-
   VectorBase::real_type
   VectorBase::l2_norm() const
   {
@@ -498,8 +456,6 @@ namespace PETScWrappers
 
     return d;
   }
-
-
 
   VectorBase::real_type
   VectorBase::lp_norm(const real_type p) const
@@ -541,8 +497,6 @@ namespace PETScWrappers
     return norm;
   }
 
-
-
   VectorBase::real_type
   VectorBase::linfty_norm() const
   {
@@ -553,8 +507,6 @@ namespace PETScWrappers
 
     return d;
   }
-
-
 
   VectorBase::real_type
   VectorBase::min() const
@@ -568,7 +520,6 @@ namespace PETScWrappers
     return d;
   }
 
-
   VectorBase::real_type
   VectorBase::max() const
   {
@@ -580,8 +531,6 @@ namespace PETScWrappers
 
     return d;
   }
-
-
 
   bool
   VectorBase::all_zero() const
@@ -612,7 +561,6 @@ namespace PETScWrappers
     return flag;
   }
 
-
   namespace internal
   {
     template <typename T>
@@ -621,8 +569,6 @@ namespace PETScWrappers
     {
       return t >= 0;
     }
-
-
 
     template <typename T>
     bool
@@ -633,8 +579,6 @@ namespace PETScWrappers
                         "whether it is non-negative.")) return true;
     }
   } // namespace internal
-
-
 
   bool
   VectorBase::is_non_negative() const
@@ -665,8 +609,6 @@ namespace PETScWrappers
     return flag;
   }
 
-
-
   VectorBase&
   VectorBase::operator*=(const PetscScalar a)
   {
@@ -678,8 +620,6 @@ namespace PETScWrappers
 
     return *this;
   }
-
-
 
   VectorBase&
   VectorBase::operator/=(const PetscScalar a)
@@ -696,8 +636,6 @@ namespace PETScWrappers
     return *this;
   }
 
-
-
   VectorBase&
   VectorBase::operator+=(const VectorBase& v)
   {
@@ -707,8 +645,6 @@ namespace PETScWrappers
 
     return *this;
   }
-
-
 
   VectorBase&
   VectorBase::operator-=(const VectorBase& v)
@@ -720,8 +656,6 @@ namespace PETScWrappers
     return *this;
   }
 
-
-
   void
   VectorBase::add(const PetscScalar s)
   {
@@ -732,8 +666,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   void
   VectorBase::add(const PetscScalar a, const VectorBase& v)
   {
@@ -743,8 +675,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = VecAXPY(vector, a, v);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   VectorBase::add(const PetscScalar a,
@@ -763,8 +693,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   void
   VectorBase::sadd(const PetscScalar s, const VectorBase& v)
   {
@@ -774,8 +702,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = VecAYPX(vector, s, v);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   VectorBase::sadd(const PetscScalar s,
@@ -793,8 +719,6 @@ namespace PETScWrappers
     add(a, v);
   }
 
-
-
   void
   VectorBase::scale(const VectorBase& factors)
   {
@@ -802,8 +726,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = VecPointwiseMult(vector, factors, vector);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   VectorBase::equ(const PetscScalar a, const VectorBase& v)
@@ -822,8 +744,6 @@ namespace PETScWrappers
     *this *= a;
   }
 
-
-
   void
   VectorBase::ratio(const VectorBase& a, const VectorBase& b)
   {
@@ -831,8 +751,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = VecPointwiseDivide(vector, a, b);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   VectorBase::write_ascii(const PetscViewerFormat format)
@@ -848,8 +766,6 @@ namespace PETScWrappers
     ierr = VecView(vector, PETSC_VIEWER_STDOUT_WORLD);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   VectorBase::print(std::ostream&      out,
@@ -896,8 +812,6 @@ namespace PETScWrappers
     AssertThrow(out, ExcIO());
   }
 
-
-
   void
   VectorBase::swap(VectorBase& v)
   {
@@ -905,13 +819,10 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   VectorBase::operator const Vec&() const
   {
     return vector;
   }
-
 
   std::size_t
   VectorBase::memory_consumption() const
@@ -932,8 +843,6 @@ namespace PETScWrappers
     //TODO[TH]: size of constant memory for PETSc?
     return mem;
   }
-
-
 
   void
   VectorBase::do_set_add_operation(const size_type    n_elements,

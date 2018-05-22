@@ -16,14 +16,11 @@
 #ifndef dealii_iterator_range_h
 #define dealii_iterator_range_h
 
-
 #include <deal.II/base/config.h>
 
 #include <iterator>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A class that is used to denote a collection of iterators that can be
@@ -192,7 +189,6 @@ public:
     BaseIterator element_of_iterator_collection;
   };
 
-
   /**
    * Typedef for the iterator type represent by this class.
    */
@@ -235,9 +231,7 @@ private:
   const iterator it_end;
 };
 
-
 // ------------------- template member functions
-
 
 template <typename Iterator>
 inline IteratorRange<Iterator>::IteratorOverIterators::IteratorOverIterators(
@@ -245,16 +239,12 @@ inline IteratorRange<Iterator>::IteratorOverIterators::IteratorOverIterators(
   : element_of_iterator_collection(iterator)
 {}
 
-
-
 template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators::BaseIterator
   IteratorRange<Iterator>::IteratorOverIterators::operator*() const
 {
   return element_of_iterator_collection;
 }
-
-
 
 template <typename Iterator>
 inline const typename IteratorRange<
@@ -264,8 +254,6 @@ inline const typename IteratorRange<
   return &element_of_iterator_collection;
 }
 
-
-
 template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators&
 IteratorRange<Iterator>::IteratorOverIterators::operator++()
@@ -273,8 +261,6 @@ IteratorRange<Iterator>::IteratorOverIterators::operator++()
   ++element_of_iterator_collection;
   return *this;
 }
-
-
 
 template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators
@@ -285,8 +271,6 @@ IteratorRange<Iterator>::IteratorOverIterators::operator++(int)
   return *old_value;
 }
 
-
-
 template <typename Iterator>
 inline bool
 IteratorRange<Iterator>::IteratorOverIterators::
@@ -295,19 +279,15 @@ operator!=(const IteratorOverIterators& i_o_i)
   return element_of_iterator_collection != i_o_i.element_of_iterator_collection;
 }
 
-
 template <typename Iterator>
 inline IteratorRange<Iterator>::IteratorRange() : it_begin(), it_end()
 {}
-
-
 
 template <typename Iterator>
 inline IteratorRange<Iterator>::IteratorRange(const iterator b,
                                               const iterator e)
   : it_begin(b), it_end(e)
 {}
-
 
 template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators
@@ -316,14 +296,12 @@ IteratorRange<Iterator>::begin()
   return IteratorOverIterators(it_begin);
 }
 
-
 template <typename Iterator>
 inline typename IteratorRange<Iterator>::IteratorOverIterators
 IteratorRange<Iterator>::end()
 {
   return IteratorOverIterators(it_end);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

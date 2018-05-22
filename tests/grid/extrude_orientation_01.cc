@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::extrude. 2d meshes are always correctly
 // edge-oriented, and so if we stack them one on top of the other, we
 // should also get a 3d mesh for which both edge and face orientations
@@ -29,8 +27,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 void
 test(std::ostream& out)
@@ -70,7 +66,6 @@ test(std::ostream& out)
                 << std::endl;
     }
 }
-
 
 int
 main()

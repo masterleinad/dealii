@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ************************************************
 // A test program for the PointValueHistory class
 // Currently this only tests a finite element system
 // with 3 components, on a hyper cube and with Vectors.
 // The testing is done in two dimensions.
 // ************************************************
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -48,9 +44,7 @@
 
 #include <deal.II/numerics/point_value_history.h>
 
-
 using namespace dealii;
-
 
 template <int dim>
 class Postprocess : public DataPostprocessor<dim>
@@ -92,7 +86,6 @@ Postprocess<dim>::n_output_variables() const
   return 2;
 }
 
-
 template <int dim>
 void
 Postprocess<dim>::evaluate_scalar_field(
@@ -115,8 +108,6 @@ Postprocess<dim>::evaluate_scalar_field(
     }
 }
 
-
-
 template <int dim>
 class TestPointValueHistory
 {
@@ -136,14 +127,10 @@ private:
   std::vector<Point<dim>> postprocessor_locations;
 };
 
-
-
 template <int dim>
 TestPointValueHistory<dim>::TestPointValueHistory()
   : finite_element(2), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -379,8 +366,6 @@ TestPointValueHistory<dim>::output_results(unsigned int   step,
   std::ofstream output(filename.str().c_str());
   data_out.write_gnuplot(output);
 }
-
-
 
 int
 main()

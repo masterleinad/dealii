@@ -43,7 +43,6 @@
 
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
@@ -127,7 +126,6 @@ public:
     solver.solve(matrix, dst, src, preconditioner);
   }
 
-
 private:
   mutable dealii::PETScWrappers::SolverGMRES solver;
   const dealii::PETScWrappers::MatrixBase&   matrix;
@@ -145,7 +143,6 @@ test()
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
     = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
-
 
   dealii::Triangulation<dim> triangulation;
   dealii::DoFHandler<dim>    dof_handler(triangulation);
@@ -230,7 +227,6 @@ test()
   for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
-
 
   // ready for assembly
   stiffness_matrix = 0;
@@ -388,11 +384,9 @@ test()
     }
   }
 
-
   dof_handler.clear();
   dealii::deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

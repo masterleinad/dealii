@@ -17,7 +17,6 @@
  * Author: Yaqi Wang, Texas A&M University, 2009, 2010
  */
 
-
 // @sect3{Include files}
 
 // We start with a bunch of include files that have already been explained in
@@ -91,7 +90,6 @@
 namespace Step28
 {
   using namespace dealii;
-
 
   // @sect3{Material data}
 
@@ -197,7 +195,6 @@ namespace Step28
                     sigma_s[m][group_1][group_2] = 0.0;
               }
 
-
             diffusion[5][1] = 0.2;
 
             sigma_r[4][0] = 0.026;
@@ -244,14 +241,12 @@ namespace Step28
             break;
           }
 
-
         default:
           Assert(
             false,
             ExcMessage("Presently, only data for 2 groups is implemented"));
       }
   }
-
 
   // Next are the functions that return the coefficient values for given
   // materials and energy groups. All they do is to make sure that the given
@@ -268,8 +263,6 @@ namespace Step28
     return diffusion[material_id][group];
   }
 
-
-
   double
   MaterialData::get_removal_XS(const unsigned int group,
                                const unsigned int material_id) const
@@ -281,7 +274,6 @@ namespace Step28
     return sigma_r[material_id][group];
   }
 
-
   double
   MaterialData::get_fission_XS(const unsigned int group,
                                const unsigned int material_id) const
@@ -292,8 +284,6 @@ namespace Step28
 
     return nu_sigma_f[material_id][group];
   }
-
-
 
   double
   MaterialData::get_scattering_XS(const unsigned int group_1,
@@ -308,8 +298,6 @@ namespace Step28
     return sigma_s[material_id][group_1][group_2];
   }
 
-
-
   double
   MaterialData::get_fission_spectrum(const unsigned int group,
                                      const unsigned int material_id) const
@@ -320,7 +308,6 @@ namespace Step28
 
     return chi[material_id][group];
   }
-
 
   // The function computing the fission distribution cross section is slightly
   // different, since it computes its value as the product of two other
@@ -335,8 +322,6 @@ namespace Step28
     return (get_fission_spectrum(group_1, material_id)
             * get_fission_XS(group_2, material_id));
   }
-
-
 
   // @sect3{The <code>EnergyGroup</code> class}
 
@@ -491,7 +476,6 @@ namespace Step28
     Vector<double> solution;
     Vector<double> solution_old;
 
-
     // @sect5{Private data members}
     //
     // The rest of the data members are private. Compared to all the previous
@@ -521,7 +505,6 @@ namespace Step28
     std::map<types::global_dof_index, double> boundary_values;
     ConstraintMatrix                          hanging_node_constraints;
 
-
     // @sect5{Private member functions}
     //
     // There is one private member function in this class. It recursively
@@ -541,7 +524,6 @@ namespace Step28
       const typename DoFHandler<dim>::cell_iterator& cell_g_prime,
       const FullMatrix<double>                       prolongation_matrix);
   };
-
 
   // @sect4{Implementation of the <code>EnergyGroup</code> class}
 
@@ -564,8 +546,6 @@ namespace Step28
     dof_handler.distribute_dofs(fe);
   }
 
-
-
   template <int dim>
   unsigned int
   EnergyGroup<dim>::n_active_cells() const
@@ -573,16 +553,12 @@ namespace Step28
     return triangulation.n_active_cells();
   }
 
-
-
   template <int dim>
   unsigned int
   EnergyGroup<dim>::n_dofs() const
   {
     return dof_handler.n_dofs();
   }
-
-
 
   // @sect5{<code>EnergyGroup::setup_linear_system</code>}
   //
@@ -625,7 +601,6 @@ namespace Step28
         solution     = solution_old;
       }
 
-
     // At the end of this function, we update the list of boundary nodes and
     // their values, by first clearing this list and the re-interpolating
     // boundary values (remember that this function is called after first
@@ -658,8 +633,6 @@ namespace Step28
                                                Functions::ZeroFunction<dim>(),
                                                boundary_values);
   }
-
-
 
   // @sect5{<code>EnergyGroup::assemble_system_matrix</code>}
   //
@@ -730,8 +703,6 @@ namespace Step28
     hanging_node_constraints.condense(system_matrix);
   }
 
-
-
   // @sect5{<code>EnergyGroup::assemble_ingroup_rhs</code>}
   //
   // As explained in the documentation of the <code>EnergyGroup</code> class,
@@ -800,8 +771,6 @@ namespace Step28
       }
   }
 
-
-
   // @sect5{<code>EnergyGroup::assemble_cross_group_rhs</code>}
   //
   // The more interesting function for assembling the right hand side vector
@@ -842,8 +811,6 @@ namespace Step28
           g_prime, cell_iter->first, cell_iter->second, unit_matrix);
       }
   }
-
-
 
   // @sect5{<code>EnergyGroup::assemble_cross_group_rhs_recursive</code>}
   //
@@ -991,7 +958,6 @@ namespace Step28
         }
   }
 
-
   // @sect5{<code>EnergyGroup::get_fission_source</code>}
   //
   // In the (inverse) power iteration, we use the integrated fission source to
@@ -1031,7 +997,6 @@ namespace Step28
     return fission_source;
   }
 
-
   // @sect5{<code>EnergyGroup::solve</code>}
   //
   // Next a function that solves the linear system assembled before. Things
@@ -1058,8 +1023,6 @@ namespace Step28
     hanging_node_constraints.distribute(solution);
   }
 
-
-
   // @sect5{<code>EnergyGroup::estimate_errors</code>}
   //
   // Mesh refinement is split into two functions. The first estimates the
@@ -1078,8 +1041,6 @@ namespace Step28
                                        error_indicators);
     error_indicators /= solution.linfty_norm();
   }
-
-
 
   // @sect5{<code>EnergyGroup::refine_grid</code>}
   //
@@ -1128,7 +1089,6 @@ namespace Step28
     solution_old = solution;
   }
 
-
   // @sect5{<code>EnergyGroup::output_results</code>}
   //
   // The last function of this class outputs meshes and solutions after each
@@ -1155,8 +1115,6 @@ namespace Step28
     std::ofstream output(filename);
     data_out.write_vtu(output);
   }
-
-
 
   // @sect3{The <code>NeutronDiffusionProblem</code> class template}
 
@@ -1205,8 +1163,6 @@ namespace Step28
       double convergence_tolerance;
     };
 
-
-
     NeutronDiffusionProblem(const Parameters& parameters);
     ~NeutronDiffusionProblem();
 
@@ -1228,7 +1184,6 @@ namespace Step28
 
     double
     get_total_fission_source() const;
-
 
     // @sect5{Private member variables}
 
@@ -1256,7 +1211,6 @@ namespace Step28
     std::vector<EnergyGroup<dim>*> energy_groups;
   };
 
-
   // @sect4{Implementation of the <code>NeutronDiffusionProblem::Parameters</code> class}
 
   // Before going on to the implementation of the outer class, we have to
@@ -1271,8 +1225,6 @@ namespace Step28
       fe_degree(2),
       convergence_tolerance(1e-12)
   {}
-
-
 
   template <int dim>
   void
@@ -1299,8 +1251,6 @@ namespace Step28
       "below this tolerance");
   }
 
-
-
   template <int dim>
   void
   NeutronDiffusionProblem<dim>::Parameters::get_parameters(
@@ -1311,8 +1261,6 @@ namespace Step28
     fe_degree             = prm.get_integer("Finite element degree");
     convergence_tolerance = prm.get_double("Power iteration tolerance");
   }
-
-
 
   // @sect4{Implementation of the <code>NeutronDiffusionProblem</code> class}
 
@@ -1326,8 +1274,6 @@ namespace Step28
       fe(parameters.fe_degree),
       k_eff(std::numeric_limits<double>::quiet_NaN())
   {}
-
-
 
   template <int dim>
   NeutronDiffusionProblem<dim>::~NeutronDiffusionProblem()
@@ -1381,7 +1327,6 @@ namespace Step28
     Triangulation<dim> coarse_grid;
     GridGenerator::subdivided_hyper_rectangle(
       coarse_grid, n_subdivisions, bottom_left, upper_right, true);
-
 
     // The second part of the function deals with material numbers of pin
     // cells of each type of assembly. Here, we define four different types of
@@ -1523,7 +1468,6 @@ namespace Step28
         = new EnergyGroup<dim>(group, material_data, coarse_grid, fe);
   }
 
-
   // @sect5{<code>NeutronDiffusionProblem::get_total_fission_source</code>}
   //
   // In the eigenvalue computation, we need to calculate total fission neutron
@@ -1560,8 +1504,6 @@ namespace Step28
 
     return fission_source;
   }
-
-
 
   // @sect5{<code>NeutronDiffusionProblem::refine_grid</code>}
   //
@@ -1606,7 +1548,6 @@ namespace Step28
       threads.join_all();
     }
   }
-
 
   // @sect5{<code>NeutronDiffusionProblem::run</code>}
   //
@@ -1657,7 +1598,6 @@ namespace Step28
               energy_groups[group]->solution *= k_eff;
           }
 
-
         std::cout << "   Numbers of active cells:       ";
         for(unsigned int group = 0; group < parameters.n_groups; ++group)
           std::cout << energy_groups[group]->n_active_cells() << ' ';
@@ -1666,7 +1606,6 @@ namespace Step28
         for(unsigned int group = 0; group < parameters.n_groups; ++group)
           std::cout << energy_groups[group]->n_dofs() << ' ';
         std::cout << std::endl << std::endl;
-
 
         Threads::ThreadGroup<> threads;
         for(unsigned int group = 0; group < parameters.n_groups; ++group)
@@ -1721,13 +1660,10 @@ namespace Step28
                   << ",  k_eff=" << k_eff << ", time=" << timer.cpu_time()
                   << std::endl;
 
-
         std::cout << std::endl << std::endl;
       }
   }
 } // namespace Step28
-
-
 
 // @sect3{The <code>main()</code> function}
 //
@@ -1759,7 +1695,6 @@ main(int argc, char** argv)
       else
         filename = argv[1];
 
-
       const unsigned int dim = 2;
 
       ParameterHandler parameter_handler;
@@ -1770,7 +1705,6 @@ main(int argc, char** argv)
       parameter_handler.parse_input(filename);
 
       parameters.get_parameters(parameter_handler);
-
 
       NeutronDiffusionProblem<dim> neutron_diffusion_problem(parameters);
       neutron_diffusion_problem.run();

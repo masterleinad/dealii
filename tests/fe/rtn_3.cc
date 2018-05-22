@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // output the number of dofs per cell for the RTN element; that seemed wrong
 // in the past. compare it also with the number of dofs per cell of the RT
 // element
@@ -25,8 +24,6 @@
 #include <vector>
 
 #define PRECISION 8
-
-
 
 template <int dim>
 void
@@ -45,7 +42,6 @@ test()
         }
     }
 }
-
 
 int
 main()

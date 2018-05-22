@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -25,8 +24,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 /**
  * A vector-valued polynomial for testing RT elements.
@@ -46,11 +43,9 @@ private:
   unsigned int degree;
 };
 
-
 template <int dim>
 TestFunction<dim>::TestFunction(unsigned int p) : Function<dim>(dim), degree(p)
 {}
-
 
 template <int dim>
 void
@@ -81,8 +76,6 @@ TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
         }
     }
 }
-
-
 
 template <int dim>
 double
@@ -122,7 +115,6 @@ integrate_error(const DoFHandler<dim>& dof,
     }
   return result;
 }
-
 
 template <int dim>
 void
@@ -168,7 +160,6 @@ test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   deallog << err << std::endl;
 }
 
-
 template <int dim>
 void
 test_hyper_cube(const FiniteElement<dim>& fe)
@@ -178,7 +169,6 @@ test_hyper_cube(const FiniteElement<dim>& fe)
   tr.refine_global(2);
   test_projection(tr, fe);
 }
-
 
 int
 main()

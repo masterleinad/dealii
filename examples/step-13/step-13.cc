@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2001, 2002
  */
 
-
 // As in all programs, we start with a list of include files from the library,
 // and as usual they are in the standard order which is <code>base</code> --
 // <code>lac</code> -- <code>grid</code> -- <code>dofs</code> --
@@ -132,14 +131,11 @@ namespace Step13
       unsigned int refinement_cycle;
     };
 
-
     // After the declaration has been discussed above, the implementation is
     // rather straightforward:
     template <int dim>
     EvaluationBase<dim>::~EvaluationBase()
     {}
-
-
 
     template <int dim>
     void
@@ -147,7 +143,6 @@ namespace Step13
     {
       refinement_cycle = step;
     }
-
 
     // @sect4{%Point evaluation}
 
@@ -197,7 +192,6 @@ namespace Step13
       TableHandler&    results_table;
     };
 
-
     // As for the definition, the constructor is trivial, just taking data and
     // storing it in object-local ones:
     template <int dim>
@@ -206,8 +200,6 @@ namespace Step13
       TableHandler&     results_table)
       : evaluation_point(evaluation_point), results_table(results_table)
     {}
-
-
 
     // Now for the function that is mainly of interest in this class, the
     // computation of the point value:
@@ -315,8 +307,6 @@ namespace Step13
       results_table.add_value("u(x_0)", point_value);
     }
 
-
-
     // @sect4{Generating output}
 
     // A different, maybe slightly odd kind of <code>evaluation</code> of a
@@ -383,14 +373,12 @@ namespace Step13
       const DataOutBase::OutputFormat output_format;
     };
 
-
     template <int dim>
     SolutionOutput<dim>::SolutionOutput(
       const std::string&              output_name_base,
       const DataOutBase::OutputFormat output_format)
       : output_name_base(output_name_base), output_format(output_format)
     {}
-
 
     // Following the description above, the function generating the actual output
     // is now relatively straightforward. The only particularly interesting
@@ -425,8 +413,6 @@ namespace Step13
       data_out.write(out, output_format);
     }
 
-
-
     // @sect4{Other evaluations}
 
     // In practical applications, one would add here a list of other possible
@@ -434,7 +420,6 @@ namespace Step13
     // in. For this example, that much shall be sufficient, so we close the
     // namespace.
   } // namespace Evaluation
-
 
   // @sect3{The Laplace solver classes}
 
@@ -529,7 +514,6 @@ namespace Step13
       const SmartPointer<Triangulation<dim>> triangulation;
     };
 
-
     // The implementation of the only two non-abstract functions is then
     // rather boring:
     template <int dim>
@@ -537,11 +521,9 @@ namespace Step13
       : triangulation(&coarse_grid)
     {}
 
-
     template <int dim>
     Base<dim>::~Base()
     {}
-
 
     // @sect4{A general solver class}
 
@@ -639,7 +621,6 @@ namespace Step13
         Vector<double>       rhs;
       };
 
-
       // Finally, there is a set of functions which will be used to
       // assemble the actual system matrix. The main function of this
       // group, <code>assemble_linear_system()</code> computes the
@@ -677,8 +658,6 @@ namespace Step13
                            LinearSystem&           linear_system) const;
     };
 
-
-
     // Now here comes the constructor of the class. It does not do much except
     // store pointers to the objects given, and generate
     // <code>DoFHandler</code> object initialized with the given pointer to a
@@ -697,7 +676,6 @@ namespace Step13
         boundary_values(&boundary_values)
     {}
 
-
     // The destructor is simple, it only clears the information stored in the
     // DoF handler object to release the memory.
     template <int dim>
@@ -705,7 +683,6 @@ namespace Step13
     {
       dof_handler.clear();
     }
-
 
     // The next function is the one which delegates the main work in solving
     // the problem: it sets up the DoF handler object with the finite element
@@ -725,7 +702,6 @@ namespace Step13
       linear_system.solve(solution);
     }
 
-
     // As stated above, the <code>postprocess</code> function takes an
     // evaluation object, and applies it to the computed solution. This
     // function may be called multiply, once for each evaluation of the
@@ -738,7 +714,6 @@ namespace Step13
       postprocessor(dof_handler, solution);
     }
 
-
     // The <code>n_dofs</code> function should be self-explanatory:
     template <int dim>
     unsigned int
@@ -746,7 +721,6 @@ namespace Step13
     {
       return dof_handler.n_dofs();
     }
-
 
     // The following function assembles matrix and right hand side of
     // the linear system to be solved in each step. We will do things
@@ -919,7 +893,6 @@ namespace Step13
         boundary_value_map, linear_system.matrix, solution, linear_system.rhs);
     }
 
-
     // The second half of this set of functions deals with the local
     // assembly on each cell and copying local contributions into the
     // global matrix object. This works in exactly the same way as
@@ -931,7 +904,6 @@ namespace Step13
       : fe_values(fe, quadrature, update_gradients | update_JxW_values)
     {}
 
-
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
       const AssemblyScratchData& scratch_data)
@@ -939,7 +911,6 @@ namespace Step13
                   scratch_data.fe_values.get_quadrature(),
                   update_gradients | update_JxW_values)
     {}
-
 
     template <int dim>
     void
@@ -968,8 +939,6 @@ namespace Step13
       cell->get_dof_indices(copy_data.local_dof_indices);
     }
 
-
-
     template <int dim>
     void
     Solver<dim>::copy_local_to_global(const AssemblyCopyData& copy_data,
@@ -981,7 +950,6 @@ namespace Step13
                                    copy_data.local_dof_indices[j],
                                    copy_data.cell_matrix(i, j));
     }
-
 
     // Now for the functions that implement actions in the linear system
     // class. First, the constructor initializes all data elements to their
@@ -1028,8 +996,6 @@ namespace Step13
       DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
       DoFTools::make_sparsity_pattern(dof_handler, dsp);
 
-
-
       // Wait for the side task to be done before going further
       side_task.join();
 
@@ -1037,13 +1003,10 @@ namespace Step13
       hanging_node_constraints.condense(dsp);
       sparsity_pattern.copy_from(dsp);
 
-
       // Finally initialize the matrix and right hand side vector
       matrix.reinit(sparsity_pattern);
       rhs.reinit(dof_handler.n_dofs());
     }
-
-
 
     // The second function of this class simply solves the linear system by a
     // preconditioned conjugate gradient method. This has been extensively
@@ -1062,8 +1025,6 @@ namespace Step13
 
       hanging_node_constraints.distribute(solution);
     }
-
-
 
     // @sect4{A primal solver}
 
@@ -1100,7 +1061,6 @@ namespace Step13
       assemble_rhs(Vector<double>& rhs) const override;
     };
 
-
     // The constructor of this class basically does what it is announced to do
     // above...
     template <int dim>
@@ -1113,8 +1073,6 @@ namespace Step13
         Solver<dim>(triangulation, fe, quadrature, boundary_values),
         rhs_function(&rhs_function)
     {}
-
-
 
     // ... as does the <code>assemble_rhs</code> function. Since this is
     // explained in several of the previous example programs, we leave it at
@@ -1156,7 +1114,6 @@ namespace Step13
         };
     }
 
-
     // @sect4{Global refinement}
 
     // By now, all functions of the abstract base class except for the
@@ -1190,8 +1147,6 @@ namespace Step13
       refine_grid() override;
     };
 
-
-
     template <int dim>
     RefinementGlobal<dim>::RefinementGlobal(
       Triangulation<dim>&       coarse_grid,
@@ -1207,15 +1162,12 @@ namespace Step13
                           boundary_values)
     {}
 
-
-
     template <int dim>
     void
     RefinementGlobal<dim>::refine_grid()
     {
       this->triangulation->refine_global(1);
     }
-
 
     // @sect4{Local refinement by the Kelly error indicator}
 
@@ -1242,8 +1194,6 @@ namespace Step13
       refine_grid() override;
     };
 
-
-
     template <int dim>
     RefinementKelly<dim>::RefinementKelly(Triangulation<dim>&       coarse_grid,
                                           const FiniteElement<dim>& fe,
@@ -1257,8 +1207,6 @@ namespace Step13
                           rhs_function,
                           boundary_values)
     {}
-
-
 
     template <int dim>
     void
@@ -1277,8 +1225,6 @@ namespace Step13
     }
 
   } // namespace LaplaceSolver
-
-
 
   // @sect3{Equation data}
 
@@ -1311,7 +1257,6 @@ namespace Step13
     value(const Point<dim>& p, const unsigned int component) const override;
   };
 
-
   template <int dim>
   double
   Solution<dim>::value(const Point<dim>& p,
@@ -1324,8 +1269,6 @@ namespace Step13
     return exponential;
   }
 
-
-
   template <int dim>
   class RightHandSide : public Function<dim>
   {
@@ -1336,7 +1279,6 @@ namespace Step13
     virtual double
     value(const Point<dim>& p, const unsigned int component) const override;
   };
-
 
   template <int dim>
   double
@@ -1361,8 +1303,6 @@ namespace Step13
 
     return -u * (t1 + t2 + t3);
   }
-
-
 
   // @sect3{The driver routines}
 
@@ -1411,7 +1351,6 @@ namespace Step13
             solver.postprocess(**i);
           };
 
-
         // Now check whether more iterations are required, or whether the loop
         // shall be ended:
         if(solver.n_dofs() < 20000)
@@ -1423,8 +1362,6 @@ namespace Step13
     // Finally end the line in which we displayed status reports:
     std::cout << std::endl;
   }
-
-
 
   // The final function is one which takes the name of a solver (presently
   // "kelly" and "global" are allowed), creates a solver object out of it
@@ -1498,8 +1435,6 @@ namespace Step13
     std::cout << std::endl;
   }
 } // namespace Step13
-
-
 
 // There is not much to say about the main function. It follows the same
 // pattern as in all previous examples, with attempts to catch thrown

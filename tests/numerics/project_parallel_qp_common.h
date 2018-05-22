@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework to check whether an element of polynomial order p can
 // represent functions of order q for projection from quadrature points.
 
@@ -42,7 +41,6 @@
 #include <deal.II/lac/generic_linear_algebra.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
-
 
 #include <fstream>
 #include <vector>
@@ -80,7 +78,6 @@ public:
     return res;
   }
 
-
 private:
   const unsigned int q;
 };
@@ -89,7 +86,6 @@ struct QData
 {
   double density;
 };
-
 
 template <typename VectorType, int dim>
 void
@@ -210,8 +206,6 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
     }
 }
 
-
-
 // check the given element of polynomial order p. the last parameter, if
 // given, denotes a gap in convergence order; for example, the Nedelec element
 // of polynomial degree p has normal components of degree p-1 and therefore
@@ -226,8 +220,6 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 
   do_project<VectorType>(triangulation, fe, p);
 }
-
-
 
 // same test as above, but this time with a mesh that has hanging nodes
 template <typename VectorType, int dim>

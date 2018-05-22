@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check FEFaceValues::shape_value()
 
 #include "../tests.h"
@@ -70,7 +69,6 @@ public:
   }
 };
 
-
 template <int dim>
 void
 test2()
@@ -114,7 +112,6 @@ test2()
 
   dof_handler.clear();
 }
-
 
 int
 main(int argc, char** argv)

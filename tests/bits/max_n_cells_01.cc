@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the max_n_cells argument to GridRefinement::refine_and_coarsen_fixed_number
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -25,8 +23,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -50,8 +46,6 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that iterators can be copied. when you just copy the
 // iterator itself, everything is alright: the copy operator of the
 // iterator calls Accessor::copy_from.
@@ -23,7 +22,6 @@
 // likely not what the author intended since it does not copy the
 // cell2 into the cell1, only the accessor. furthermore, the operator=
 // was wrongly implemented, so it was removed in the process
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -35,8 +33,6 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 template <int dim>
 void
@@ -61,8 +57,6 @@ test()
   Assert(cell->face(0) == face, ExcInternalError());
   Assert(!(cell->face(0) != face), ExcInternalError());
 }
-
-
 
 int
 main()

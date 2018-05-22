@@ -40,7 +40,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace MGTools
 {
   // specializations for 1D
@@ -54,8 +53,6 @@ namespace MGTools
     Assert(false, ExcNotImplemented());
   }
 
-
-
   template <>
   void
   compute_row_length_vector(const DoFHandler<1, 1>&,
@@ -67,8 +64,6 @@ namespace MGTools
     Assert(false, ExcNotImplemented());
   }
 
-
-
   template <>
   void
   compute_row_length_vector(const DoFHandler<1, 2>&,
@@ -78,7 +73,6 @@ namespace MGTools
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   template <>
   void
@@ -90,8 +84,6 @@ namespace MGTools
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   // Template for 2D and 3D. For 1D see specialization above
   template <int dim, int spacedim>
@@ -274,7 +266,6 @@ namespace MGTools
       }
     user_flags_triangulation.load_user_flags(old_flags);
   }
-
 
   // This is the template for 2D and 3D. See version for 1D above
   template <int dim, int spacedim>
@@ -562,8 +553,6 @@ namespace MGTools
     user_flags_triangulation.load_user_flags(old_flags);
   }
 
-
-
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_sparsity_pattern(const DoFHandlerType& dof,
@@ -595,8 +584,6 @@ namespace MGTools
               sparsity.add(dofs_on_this_cell[i], dofs_on_this_cell[j]);
         }
   }
-
-
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
@@ -673,8 +660,6 @@ namespace MGTools
       }
   }
 
-
-
   template <int dim, typename SparsityPatternType, int spacedim>
   void
   make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim>& dof,
@@ -743,8 +728,6 @@ namespace MGTools
           }
       }
   }
-
-
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
@@ -932,8 +915,6 @@ namespace MGTools
       .load_user_flags(user_flags);
   }
 
-
-
   template <int dim, typename SparsityPatternType, int spacedim>
   void
   make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim>&    dof,
@@ -1026,8 +1007,6 @@ namespace MGTools
       }
   }
 
-
-
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_interface_sparsity_pattern(const DoFHandlerType&    dof,
@@ -1058,8 +1037,6 @@ namespace MGTools
                 sparsity.add(dofs_on_this_cell[i], dofs_on_this_cell[j]);
         }
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1161,8 +1138,6 @@ namespace MGTools
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   count_dofs_per_block(
@@ -1244,8 +1219,6 @@ namespace MGTools
       }
   }
 
-
-
   template <int dim, int spacedim>
   void
   make_boundary_list(
@@ -1272,7 +1245,6 @@ namespace MGTools
                                  boundary_indexset[i].end());
   }
 
-
   template <int dim, int spacedim>
   void
   make_boundary_list(const DoFHandler<dim, spacedim>&       dof,
@@ -1293,8 +1265,6 @@ namespace MGTools
 
     make_boundary_list(dof, boundary_ids, boundary_indices, component_mask);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1449,7 +1419,6 @@ namespace MGTools
       }
   }
 
-
   template <int dim, int spacedim>
   void
   extract_non_interface_dofs(
@@ -1473,7 +1442,6 @@ namespace MGTools
 
     typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
                                             endc = mg_dof_handler.end();
-
 
     for(; cell != endc; ++cell)
       {
@@ -1527,7 +1495,6 @@ namespace MGTools
             non_interface_dofs[level].insert(local_dof_indices[i]);
       }
   }
-
 
   template <int dim, int spacedim>
   void
@@ -1624,8 +1591,6 @@ namespace MGTools
       }
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   max_level_for_coarse_mesh(const Triangulation<dim, spacedim>& tria)
@@ -1658,7 +1623,6 @@ namespace MGTools
     return global_min;
   }
 } // namespace MGTools
-
 
 // explicit instantiations
 #include "mg_tools.inst"

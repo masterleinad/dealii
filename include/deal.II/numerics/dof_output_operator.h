@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_dof_output_operator_h
 #define dealii_dof_output_operator_h
 
@@ -77,7 +76,6 @@ namespace Algorithms
     dof = &dof_handler;
   }
 } // namespace Algorithms
-
 
 DEAL_II_NAMESPACE_CLOSE
 

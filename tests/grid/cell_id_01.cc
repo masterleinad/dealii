@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check CellId
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/grid_refinement.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <class TRIA>
 void
@@ -45,7 +41,6 @@ check(TRIA& tr)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

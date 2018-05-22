@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check functions MGTools::make_interface_sparsity_pattern()
 // and MGConstrainedDoFs::is_interface_matrix_entry()
 
@@ -118,8 +117,6 @@ test()
       dsp.print(deallog.get_file_stream());
     }
 }
-
-
 
 int
 main(int argc, char* argv[])

@@ -449,7 +449,6 @@ public:
   virtual std::size_t
   memory_consumption() const override;
 
-
   /**
    * Return a list of constant modes of the element. For this element, the
    * first entry is true, all other are false.

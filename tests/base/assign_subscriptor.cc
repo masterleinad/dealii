@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that Subscriptor objects need to be empty before assigning.
-
 
 #include "../tests.h"
 #include <deal.II/base/smartpointer.h>

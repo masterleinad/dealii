@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the creation of normal flux boundary conditions for a finite
 // element that consists of only a single set of vector components
 // (i.e. it has dim components). Similar as the no-flux test in no_flux_01.cc
@@ -30,8 +28,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -55,7 +51,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
 template <int dim>
 void
 test_hyper_cube()
@@ -74,7 +69,6 @@ test_hyper_cube()
       test(tr, fe);
     }
 }
-
 
 int
 main()

@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests step-51 (without output, without ChunkSparseMatrix, without
 // adaptivity) in 1d and 2d
 
-
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/function.h>
@@ -48,8 +44,6 @@ std::ofstream logfile("output");
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 namespace Step51
 {
   using namespace dealii;
@@ -63,12 +57,10 @@ namespace Step51
     static const double       width;
   };
 
-
   template <>
   const Point<1>
     SolutionBase<1>::source_centers[SolutionBase<1>::n_source_centers]
     = {Point<1>(-1.0 / 3.0), Point<1>(0.0), Point<1>(+1.0 / 3.0)};
-
 
   template <>
   const Point<2>
@@ -85,7 +77,6 @@ namespace Step51
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 5.;
 
-
   template <int dim>
   class Solution : public Function<dim>, protected SolutionBase<dim>
   {
@@ -99,8 +90,6 @@ namespace Step51
     virtual Tensor<1, dim>
     gradient(const Point<dim>& p, const unsigned int component = 0) const;
   };
-
-
 
   template <int dim>
   double
@@ -118,8 +107,6 @@ namespace Step51
            / Utilities::fixed_power<dim>(std::sqrt(2. * numbers::PI)
                                          * this->width);
   }
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -141,8 +128,6 @@ namespace Step51
            / Utilities::fixed_power<dim>(std::sqrt(2 * numbers::PI)
                                          * this->width);
   }
-
-
 
   template <int dim>
   class SolutionAndGradient : public Function<dim>, protected SolutionBase<dim>
@@ -168,8 +153,6 @@ namespace Step51
     v[dim] = solution.value(p);
   }
 
-
-
   template <int dim>
   class ConvectionVelocity : public TensorFunction<1, dim>
   {
@@ -180,8 +163,6 @@ namespace Step51
     virtual Tensor<1, dim>
     value(const Point<dim>& p) const;
   };
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -208,8 +189,6 @@ namespace Step51
     return convection;
   }
 
-
-
   template <int dim>
   class RightHandSide : public Function<dim>, protected SolutionBase<dim>
   {
@@ -223,7 +202,6 @@ namespace Step51
   private:
     const ConvectionVelocity<dim> convection_velocity;
   };
-
 
   template <int dim>
   double
@@ -247,7 +225,6 @@ namespace Step51
            / Utilities::fixed_power<dim>(std::sqrt(2 * numbers::PI)
                                          * this->width);
   }
-
 
   template <int dim>
   class HDG
@@ -291,7 +268,6 @@ namespace Step51
       PostProcessScratchData&                               scratch,
       unsigned int&                                         empty_data);
 
-
     Triangulation<dim> triangulation;
 
     FESystem<dim>   fe_local;
@@ -315,7 +291,6 @@ namespace Step51
     ConvergenceTable convergence_table;
   };
 
-
   template <int dim>
   HDG<dim>::HDG(const unsigned int degree)
     : fe_local(FE_DGQ<dim>(degree), dim + 1),
@@ -325,8 +300,6 @@ namespace Step51
       fe_u_post(degree + 1),
       dof_handler_u_post(triangulation)
   {}
-
-
 
   template <int dim>
   void
@@ -361,8 +334,6 @@ namespace Step51
     system_matrix.reinit(sparsity_pattern);
   }
 
-
-
   template <int dim>
   struct HDG<dim>::PerTaskData
   {
@@ -379,8 +350,6 @@ namespace Step51
         trace_reconstruct(trace_reconstruct)
     {}
   };
-
-
 
   template <int dim>
   struct HDG<dim>::ScratchData
@@ -485,8 +454,6 @@ namespace Step51
     {}
   };
 
-
-
   template <int dim>
   struct HDG<dim>::PostProcessScratchData
   {
@@ -529,8 +496,6 @@ namespace Step51
     {}
   };
 
-
-
   template <int dim>
   void
   HDG<dim>::assemble_system(const bool trace_reconstruct)
@@ -564,8 +529,6 @@ namespace Step51
                     scratch,
                     task_data);
   }
-
-
 
   template <int dim>
   void
@@ -777,8 +740,6 @@ namespace Step51
       }
   }
 
-
-
   template <int dim>
   void
   HDG<dim>::copy_local_to_global(const PerTaskData& data)
@@ -790,8 +751,6 @@ namespace Step51
                                              system_matrix,
                                              system_rhs);
   }
-
-
 
   template <int dim>
   void
@@ -813,8 +772,6 @@ namespace Step51
 
     assemble_system(true);
   }
-
-
 
   template <int dim>
   void
@@ -879,8 +836,6 @@ namespace Step51
     convergence_table.add_value("val L2-post", post_error);
   }
 
-
-
   template <int dim>
   void
   HDG<dim>::postprocess_one_cell(
@@ -943,16 +898,12 @@ namespace Step51
     cell->distribute_local_to_global(scratch.cell_sol, solution_u_post);
   }
 
-
-
   template <int dim>
   void
   HDG<dim>::output_results(const unsigned int cycle)
   {
     // not included in test
   }
-
-
 
   template <int dim>
   void
@@ -973,8 +924,6 @@ namespace Step51
             if((std::fabs(cell->face(face)->center()(d) - (1)) < 1e-12))
               cell->face(face)->set_boundary_id(1);
   }
-
-
 
   template <int dim>
   void
@@ -1001,8 +950,6 @@ namespace Step51
   }
 
 } // end of namespace Step51
-
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_full_matrix_h
 #define dealii_full_matrix_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/table.h>
@@ -30,18 +29,15 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // forward declarations
 template <typename number>
 class Vector;
 template <typename number>
 class LAPACKFullMatrix;
 
-
 /*! @addtogroup Matrix1
  *@{
  */
-
 
 /**
  * Implementation of a classical rectangular scheme of numbers. The data type
@@ -77,7 +73,6 @@ public:
    */
   typedef number value_type;
 
-
   /**
    * Declare a type that has holds real-valued numbers with the same precision
    * as the template argument to this class. If the template argument of this
@@ -88,7 +83,6 @@ public:
    * This typedef is used to represent the return type of norms.
    */
   typedef typename numbers::NumberTraits<number>::real_type real_type;
-
 
   class const_iterator;
 
@@ -295,7 +289,6 @@ public:
   FullMatrix<number>&
   operator=(const LAPACKFullMatrix<number2>&);
 
-
   /**
    * Assignment from different matrix classes. This assignment operator uses
    * iterators of the typename MatrixType. Therefore, sparse matrices are
@@ -400,7 +393,6 @@ public:
        const size_type            dst_offset_j = 0,
        const size_type            src_offset_i = 0,
        const size_type            src_offset_j = 0);
-
 
   /**
    * Make function of base class available.
@@ -1201,8 +1193,6 @@ public:
 #ifndef DOXYGEN
 /*-------------------------Inline functions -------------------------------*/
 
-
-
 template <typename number>
 inline typename FullMatrix<number>::size_type
 FullMatrix<number>::m() const
@@ -1210,16 +1200,12 @@ FullMatrix<number>::m() const
   return this->n_rows();
 }
 
-
-
 template <typename number>
 inline typename FullMatrix<number>::size_type
 FullMatrix<number>::n() const
 {
   return this->n_cols();
 }
-
-
 
 template <typename number>
 FullMatrix<number>&
@@ -1234,8 +1220,6 @@ FullMatrix<number>::operator=(const number d)
   return *this;
 }
 
-
-
 template <typename number>
 template <typename number2>
 inline void
@@ -1243,8 +1227,6 @@ FullMatrix<number>::fill(const number2* src)
 {
   Table<2, number>::fill(src);
 }
-
-
 
 template <typename number>
 template <typename MatrixType>
@@ -1266,8 +1248,6 @@ FullMatrix<number>::copy_from(const MatrixType& M)
     }
 }
 
-
-
 template <typename number>
 template <typename MatrixType>
 void
@@ -1288,8 +1268,6 @@ FullMatrix<number>::copy_transposed(const MatrixType& M)
     }
 }
 
-
-
 template <typename number>
 template <typename MatrixType, typename index_type>
 inline void
@@ -1309,8 +1287,6 @@ FullMatrix<number>::extract_submatrix_from(
       (*this)(sub_row, sub_col)
         = matrix.el(row_index_set[sub_row], column_index_set[sub_col]);
 }
-
-
 
 template <typename number>
 template <typename MatrixType, typename index_type>
@@ -1333,7 +1309,6 @@ FullMatrix<number>::scatter_matrix_to(
                  (*this)(sub_row, sub_col));
 }
 
-
 template <typename number>
 inline void
 FullMatrix<number>::set(const size_type i,
@@ -1342,8 +1317,6 @@ FullMatrix<number>::set(const size_type i,
 {
   (*this)(i, j) = value;
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1354,7 +1327,6 @@ FullMatrix<number>::vmult_add(Vector<number2>&       w,
   vmult(w, v, true);
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1364,9 +1336,7 @@ FullMatrix<number>::Tvmult_add(Vector<number2>&       w,
   Tvmult(w, v, true);
 }
 
-
 //---------------------------------------------------------------------------
-
 
 template <typename number>
 inline FullMatrix<number>::Accessor::Accessor(const FullMatrix<number>* matrix,
@@ -1375,7 +1345,6 @@ inline FullMatrix<number>::Accessor::Accessor(const FullMatrix<number>* matrix,
   : matrix(matrix), a_row(r), a_col(c)
 {}
 
-
 template <typename number>
 inline typename FullMatrix<number>::size_type
 FullMatrix<number>::Accessor::row() const
@@ -1383,14 +1352,12 @@ FullMatrix<number>::Accessor::row() const
   return a_row;
 }
 
-
 template <typename number>
 inline typename FullMatrix<number>::size_type
 FullMatrix<number>::Accessor::column() const
 {
   return a_col;
 }
-
 
 template <typename number>
 inline number
@@ -1400,7 +1367,6 @@ FullMatrix<number>::Accessor::value() const
   return matrix->el(a_row, a_col);
 }
 
-
 template <typename number>
 inline FullMatrix<number>::const_iterator::const_iterator(
   const FullMatrix<number>* matrix,
@@ -1408,7 +1374,6 @@ inline FullMatrix<number>::const_iterator::const_iterator(
   const size_type           c)
   : accessor(matrix, r, c)
 {}
-
 
 template <typename number>
 inline typename FullMatrix<number>::const_iterator&
@@ -1425,7 +1390,6 @@ FullMatrix<number>::const_iterator::operator++()
   return *this;
 }
 
-
 template <typename number>
 inline typename FullMatrix<number>::const_iterator
 FullMatrix<number>::const_iterator::operator++(int)
@@ -1436,7 +1400,6 @@ FullMatrix<number>::const_iterator::operator++(int)
   return current;
 }
 
-
 template <typename number>
 inline const typename FullMatrix<number>::Accessor&
   FullMatrix<number>::const_iterator::operator*() const
@@ -1444,14 +1407,12 @@ inline const typename FullMatrix<number>::Accessor&
   return accessor;
 }
 
-
 template <typename number>
 inline const typename FullMatrix<number>::Accessor*
   FullMatrix<number>::const_iterator::operator->() const
 {
   return &accessor;
 }
-
 
 template <typename number>
 inline bool
@@ -1462,7 +1423,6 @@ operator==(const const_iterator& other) const
           && accessor.column() == other.accessor.column());
 }
 
-
 template <typename number>
 inline bool
 FullMatrix<number>::const_iterator::
@@ -1470,7 +1430,6 @@ operator!=(const const_iterator& other) const
 {
   return !(*this == other);
 }
-
 
 template <typename number>
 inline bool
@@ -1481,14 +1440,12 @@ FullMatrix<number>::const_iterator::operator<(const const_iterator& other) const
               && accessor.column() < other.accessor.column()));
 }
 
-
 template <typename number>
 inline bool
 FullMatrix<number>::const_iterator::operator>(const const_iterator& other) const
 {
   return (other < *this);
 }
-
 
 template <typename number>
 inline typename FullMatrix<number>::const_iterator
@@ -1497,14 +1454,12 @@ FullMatrix<number>::begin() const
   return const_iterator(this, 0, 0);
 }
 
-
 template <typename number>
 inline typename FullMatrix<number>::const_iterator
 FullMatrix<number>::end() const
 {
   return const_iterator(this, m(), 0);
 }
-
 
 template <typename number>
 inline typename FullMatrix<number>::const_iterator
@@ -1514,8 +1469,6 @@ FullMatrix<number>::begin(const size_type r) const
   return const_iterator(this, r, 0);
 }
 
-
-
 template <typename number>
 inline typename FullMatrix<number>::const_iterator
 FullMatrix<number>::end(const size_type r) const
@@ -1523,8 +1476,6 @@ FullMatrix<number>::end(const size_type r) const
   AssertIndexRange(r, m());
   return const_iterator(this, r + 1, 0);
 }
-
-
 
 template <typename number>
 inline void
@@ -1535,8 +1486,6 @@ FullMatrix<number>::add(const size_type r, const size_type c, const number v)
 
   this->operator()(r, c) += v;
 }
-
-
 
 template <typename number>
 template <typename number2, typename index_type>
@@ -1555,7 +1504,6 @@ FullMatrix<number>::add(const size_type   row,
       this->operator()(row, col_indices[col]) += values[col];
     }
 }
-
 
 template <typename number>
 template <class StreamType>
@@ -1585,7 +1533,6 @@ FullMatrix<number>::print(StreamType&        s,
   s.precision(old_precision);
   s.width(old_width);
 }
-
 
 #endif // DOXYGEN
 

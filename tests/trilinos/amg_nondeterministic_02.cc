@@ -26,8 +26,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 
-
-
 unsigned int mati[]
   = {0,   1,   2,   3,   3,   3,   3,   3,   3,   3,   3,   3,   3,   3,   3,
      3,   3,   3,   3,   3,   3,   3,   3,   3,   3,   4,   4,   4,   4,   4,
@@ -496,7 +494,6 @@ double matv[]
      -4.8176e+24,  4.27831e+23,  -3.46969e+24, -3.48067e+24, 9.31819e+23,
      2.03753e+25,  2.03753e+25};
 
-
 void
 run()
 {
@@ -513,7 +510,6 @@ run()
     owned.add_range(dim / 2, dim);
   if(numproc == 1)
     owned.add_range(0, dim);
-
 
   TrilinosWrappers::SparsityPattern sp(owned);
 
@@ -534,7 +530,6 @@ run()
 
   for(unsigned int i = 0; i < dim; ++i)
     mat.set(i, i, 1.0);
-
 
   for(unsigned int i = 0; i < n; ++i)
     {
@@ -596,8 +591,6 @@ run()
         }
     }
 }
-
-
 
 int
 main(int argc, char** argv)

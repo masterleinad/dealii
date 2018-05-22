@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check mg constrained dofs in parallel
 
 #include "../tests.h"
@@ -125,8 +124,6 @@ check_fe(FiniteElement<dim>& fe)
     mg_constrained_dofs_ref.initialize(dofhref, dirichlet_boundary);
   }
 
-
-
   MGConstrainedDoFs mg_constrained_dofs;
 
   typename FunctionMap<dim>::type dirichlet_boundary;
@@ -168,7 +165,6 @@ check_fe(FiniteElement<dim>& fe)
               << std::endl;
     }
 }
-
 
 template <int dim>
 void

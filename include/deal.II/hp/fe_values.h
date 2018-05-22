@@ -31,8 +31,6 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int spacedim>
 class FiniteElement;
 
-
-
 namespace internal
 {
   namespace hp
@@ -182,7 +180,6 @@ namespace internal
 
 } // namespace internal
 
-
 namespace hp
 {
   /**
@@ -257,7 +254,6 @@ namespace hp
       const dealii::hp::QCollection<dim>&                 q_collection,
       const UpdateFlags                                   update_flags);
 
-
     /**
      * Constructor. This constructor is equivalent to the other one except
      * that it makes the object use a $Q_1$ mapping (i.e., an object of type
@@ -272,7 +268,6 @@ namespace hp
     FEValues(const hp::FECollection<dim, spacedim>& fe_collection,
              const hp::QCollection<dim>&            q_collection,
              const UpdateFlags                      update_flags);
-
 
     /**
      * Reinitialize the object for the given cell.
@@ -347,8 +342,6 @@ namespace hp
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
   };
 
-
-
   /**
    * This is the equivalent of the hp::FEValues class but for face
    * integrations, i.e. it is to hp::FEValues what ::FEFaceValues is to
@@ -392,7 +385,6 @@ namespace hp
                  const hp::FECollection<dim, spacedim>&      fe_collection,
                  const hp::QCollection<dim - 1>&             q_collection,
                  const UpdateFlags                           update_flags);
-
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -484,8 +476,6 @@ namespace hp
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
   };
 
-
-
   /**
    * This class implements for subfaces what hp::FEFaceValues does for faces.
    * See there for further documentation.
@@ -513,7 +503,6 @@ namespace hp
       const hp::FECollection<dim, spacedim>&      fe_collection,
       const hp::QCollection<dim - 1>&             q_collection,
       const UpdateFlags                           update_flags);
-
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -599,7 +588,6 @@ namespace hp
 
 } // namespace hp
 
-
 // -------------- inline and template functions --------------
 
 namespace internal
@@ -613,16 +601,12 @@ namespace internal
       return *fe_values_table(present_fe_values_index);
     }
 
-
-
     template <int dim, int q_dim, class FEValuesType>
     inline const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
     FEValuesBase<dim, q_dim, FEValuesType>::get_fe_collection() const
     {
       return *fe_collection;
     }
-
-
 
     template <int dim, int q_dim, class FEValuesType>
     inline const dealii::hp::MappingCollection<dim,
@@ -632,16 +616,12 @@ namespace internal
       return *mapping_collection;
     }
 
-
-
     template <int dim, int q_dim, class FEValuesType>
     inline const dealii::hp::QCollection<q_dim>&
     FEValuesBase<dim, q_dim, FEValuesType>::get_quadrature_collection() const
     {
       return q_collection;
     }
-
-
 
     template <int dim, int q_dim, class FEValuesType>
     inline dealii::UpdateFlags

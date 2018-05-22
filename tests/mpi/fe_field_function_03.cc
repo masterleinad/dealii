@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test regression in FEFieldFunction that doesn't throw VectorTools::ExcPointNotAvailableHere()
 
 /*
@@ -47,8 +45,6 @@ Additional information:
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class LinearFunction : public Function<dim>
 {
@@ -59,7 +55,6 @@ public:
     return p[0] + 2;
   }
 };
-
 
 template <int dim>
 void
@@ -198,7 +193,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

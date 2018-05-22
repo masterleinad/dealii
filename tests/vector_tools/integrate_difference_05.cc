@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference with Hdiv_seminorm. Specifically this test
 // deals with the case when the ComponentSelectFunction is used and
 // the components selected for the Hdiv seminorm computations are not
@@ -31,7 +30,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 using namespace dealii;
 
@@ -72,7 +70,6 @@ public:
       }
   }
 };
-
 
 template <int dim>
 void
@@ -124,7 +121,6 @@ test(VectorTools::NormType norm, double value)
          ExcMessage("Error in integrate_difference, second components"));
 }
 
-
 template <int dim>
 void
 test()
@@ -146,7 +142,6 @@ test()
   test<dim>(VectorTools::Hdiv_seminorm, true_value);
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

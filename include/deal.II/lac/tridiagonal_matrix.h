@@ -29,11 +29,9 @@ DEAL_II_NAMESPACE_OPEN
 template <typename number>
 class Vector;
 
-
 /*! @addtogroup Matrix1
  *@{
  */
-
 
 /**
  * A quadratic tridiagonal matrix. That is, a matrix where all entries are
@@ -71,7 +69,6 @@ public:
    */
   void
   reinit(size_type n, bool symmetric = false);
-
 
   //@}
 
@@ -275,15 +272,12 @@ TridiagonalMatrix<number>::m() const
   return diagonal.size();
 }
 
-
-
 template <typename number>
 types::global_dof_index
 TridiagonalMatrix<number>::n() const
 {
   return diagonal.size();
 }
-
 
 template <typename number>
 inline number
@@ -311,7 +305,6 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j) const
   return 0;
 }
 
-
 template <typename number>
 inline number&
 TridiagonalMatrix<number>::operator()(size_type i, size_type j)
@@ -338,7 +331,6 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j)
   return diagonal[0];
 }
 
-
 template <typename number>
 template <class OutputStream>
 void
@@ -361,7 +353,6 @@ TridiagonalMatrix<number>::print(OutputStream&      s,
       s << std::endl;
     }
 }
-
 
 #endif // DOXYGEN
 

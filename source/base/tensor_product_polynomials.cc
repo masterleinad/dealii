@@ -23,10 +23,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 /* ------------------- TensorProductPolynomials -------------- */
-
 
 namespace internal
 {
@@ -74,8 +71,6 @@ namespace internal
   } // namespace
 } // namespace internal
 
-
-
 template <int dim, typename PolynomialType>
 inline void
 TensorProductPolynomials<dim, PolynomialType>::compute_index(
@@ -87,8 +82,6 @@ TensorProductPolynomials<dim, PolynomialType>::compute_index(
   internal::compute_tensor_index(
     index_map[i], polynomials.size(), polynomials.size(), indices);
 }
-
-
 
 template <int dim, typename PolynomialType>
 void
@@ -106,8 +99,6 @@ TensorProductPolynomials<dim, PolynomialType>::output_indices(
     }
 }
 
-
-
 template <int dim, typename PolynomialType>
 void
 TensorProductPolynomials<dim, PolynomialType>::set_numbering(
@@ -121,8 +112,6 @@ TensorProductPolynomials<dim, PolynomialType>::set_numbering(
     index_map_inverse[index_map[i]] = i;
 }
 
-
-
 template <>
 double
 TensorProductPolynomials<0, Polynomials::Polynomial<double>>::compute_value(
@@ -132,8 +121,6 @@ TensorProductPolynomials<0, Polynomials::Polynomial<double>>::compute_value(
   Assert(false, ExcNotImplemented());
   return 0;
 }
-
-
 
 template <int dim, typename PolynomialType>
 double
@@ -152,8 +139,6 @@ TensorProductPolynomials<dim, PolynomialType>::compute_value(
 
   return value;
 }
-
-
 
 template <int dim, typename PolynomialType>
 Tensor<1, dim>
@@ -189,8 +174,6 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad(
 
   return grad;
 }
-
-
 
 template <int dim, typename PolynomialType>
 Tensor<2, dim>
@@ -234,8 +217,6 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad_grad(
 
   return grad_grad;
 }
-
-
 
 template <int dim, typename PolynomialType>
 void
@@ -399,10 +380,7 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
           }
 }
 
-
-
 /* ------------------- AnisotropicPolynomials -------------- */
-
 
 template <int dim>
 AnisotropicPolynomials<dim>::AnisotropicPolynomials(
@@ -415,8 +393,6 @@ AnisotropicPolynomials<dim>::AnisotropicPolynomials(
            ExcMessage("The number of polynomials must be larger than zero "
                       "for all coordinate directions."));
 }
-
-
 
 template <int dim>
 void
@@ -438,8 +414,6 @@ AnisotropicPolynomials<dim>::compute_index(const unsigned int i,
       i, polynomials[0].size(), polynomials[1].size(), indices);
 }
 
-
-
 template <int dim>
 double
 AnisotropicPolynomials<dim>::compute_value(const unsigned int i,
@@ -454,7 +428,6 @@ AnisotropicPolynomials<dim>::compute_value(const unsigned int i,
 
   return value;
 }
-
 
 template <int dim>
 Tensor<1, dim>
@@ -482,7 +455,6 @@ AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
 
   return grad;
 }
-
 
 template <int dim>
 Tensor<2, dim>
@@ -517,8 +489,6 @@ AnisotropicPolynomials<dim>::compute_grad_grad(const unsigned int i,
 
   return grad_grad;
 }
-
-
 
 template <int dim>
 void
@@ -668,15 +638,12 @@ AnisotropicPolynomials<dim>::compute(
     }
 }
 
-
-
 template <int dim>
 unsigned int
 AnisotropicPolynomials<dim>::n() const
 {
   return n_tensor_pols;
 }
-
 
 template <int dim>
 unsigned int
@@ -688,8 +655,6 @@ AnisotropicPolynomials<dim>::get_n_tensor_pols(
     y *= pols[d].size();
   return y;
 }
-
-
 
 /* ------------------- explicit instantiations -------------- */
 template class TensorProductPolynomials<1, Polynomials::Polynomial<double>>;

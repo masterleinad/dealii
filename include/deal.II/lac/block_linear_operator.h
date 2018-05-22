@@ -21,7 +21,6 @@
 
 #include <deal.II/lac/linear_operator.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 // Forward declarations:
@@ -124,8 +123,6 @@ block_back_substitution(
   const BlockLinearOperator<Domain, Range, BlockPayload>&);
 
 // end of workaround
-
-
 
 /**
  * A class to store the concept of a block linear operator.
@@ -345,8 +342,6 @@ public:
   std::function<BlockType(unsigned int, unsigned int)> block;
 };
 
-
-
 namespace internal
 {
   namespace BlockLinearOperatorImplementation
@@ -477,7 +472,6 @@ namespace internal
       };
     }
 
-
     /**
      * A dummy class for BlockLinearOperators that do not require any
      * extensions to facilitate the operations of the block matrix or its
@@ -515,8 +509,6 @@ namespace internal
 
   } // namespace BlockLinearOperatorImplementation
 } /*namespace internal*/
-
-
 
 /**
  * @name Creation of a BlockLinearOperator
@@ -569,8 +561,6 @@ block_operator(const BlockMatrixType& block_matrix)
     populate_linear_operator_functions(return_op);
   return return_op;
 }
-
-
 
 /**
  * @relatesalso BlockLinearOperator
@@ -637,8 +627,6 @@ block_operator(
   return return_op;
 }
 
-
-
 /**
  * @relatesalso BlockLinearOperator
  *
@@ -692,8 +680,6 @@ block_diagonal_operator(const BlockMatrixType& block_matrix)
     populate_linear_operator_functions(return_op);
   return return_op;
 }
-
-
 
 /**
  * @relatesalso BlockLinearOperator
@@ -750,8 +736,6 @@ block_diagonal_operator(
   return block_operator<m, m, Range, Domain>(new_ops);
 }
 
-
-
 /**
  * @relatesalso BlockLinearOperator
  *
@@ -779,8 +763,6 @@ block_diagonal_operator(
 
   return block_diagonal_operator(new_ops);
 }
-
-
 
 //@}
 /**
@@ -900,8 +882,6 @@ block_forward_substitution(
 
   return return_op;
 }
-
-
 
 /**
  * @relatesalso LinearOperator

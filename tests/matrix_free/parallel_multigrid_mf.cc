@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same test as parallel_multigrid but using matrix-free transfer operations
 // (and including single-precision multigrid preconditioning)
 
@@ -41,7 +40,6 @@
 
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
-
 
 template <int dim,
           int fe_degree,
@@ -192,7 +190,6 @@ public:
     return inverse_diagonal_entries;
   }
 
-
 private:
   void
   local_apply(const MatrixFree<dim, number>&                    data,
@@ -267,8 +264,6 @@ private:
   LinearAlgebra::distributed::Vector<number> inverse_diagonal_entries;
 };
 
-
-
 template <int dim, typename MatrixType>
 class MGTransferPrebuiltMF
   : public MGTransferMatrixFree<dim, typename MatrixType::value_type>
@@ -302,8 +297,6 @@ private:
   const MGLevelObject<MatrixType>& laplace_operator;
 };
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -331,8 +324,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -422,8 +413,6 @@ do_test(const DoFHandler<dim>& dof)
   }
 }
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 test()
@@ -446,8 +435,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, number>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for arithmetic operations on VectorizedArray
 
 #include "../tests.h"
 #include <limits>
 
 #include <deal.II/base/vectorization.h>
-
 
 template <typename Number>
 void
@@ -71,7 +69,6 @@ test()
   d = c;
   for(unsigned int i = 0; i < n_vectors; ++i)
     AssertThrow(d[i] == i, ExcInternalError());
-
 
   deallog << "OK" << std::endl << "Square root: ";
   d = std::sqrt(c);
@@ -127,8 +124,6 @@ test()
                 ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

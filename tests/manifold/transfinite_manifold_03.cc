@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to transfinite_manifold_01 but now applying a MappingQGeneric and
 // computing some areas
 
@@ -27,7 +26,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 template <int dim, int spacedim>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that refine_and_coarsen_fixed_fraction behaves correctly
 // if all the indicators are the same. This was fixed in 28858.
 
@@ -28,8 +26,6 @@
 #include <deal.II/grid/grid_refinement.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -46,7 +42,6 @@ check()
 
   deallog << "n_active_cells: " << tria.n_active_cells() << std::endl;
 
-
   GridRefinement::refine_and_coarsen_fixed_fraction(
     tria, estimated_error_per_cell, 0.25, 0);
   tria.execute_coarsening_and_refinement();
@@ -55,7 +50,6 @@ check()
 
   deallog << "OK for " << dim << "d" << std::endl;
 }
-
 
 int
 main()

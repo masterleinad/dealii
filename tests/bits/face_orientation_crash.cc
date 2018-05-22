@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // trip up the new code handling hanging node constraints with a face in 3d
 // that has face_orientation==false
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -34,8 +31,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -79,7 +74,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

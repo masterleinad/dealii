@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check SymmetricTensor<2,dim>::component_to_unrolled_index and the
 // other way round
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -37,7 +35,6 @@ check()
         ExcInternalError());
     }
 }
-
 
 int
 main()

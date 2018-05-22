@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 1999
  */
 
-
 // The first few includes are just like in the previous program, so do not
 // require additional comments:
 #include <deal.II/grid/grid_generator.h>
@@ -209,7 +208,6 @@ void distribute_dofs(DoFHandler<2>& dof_handler)
   // sparsity pattern.
 }
 
-
 // @sect3{Renumbering of DoFs}
 
 // In the sparsity pattern produced above, the nonzero entries extended quite
@@ -267,7 +265,6 @@ void renumber_dofs(DoFHandler<2>& dof_handler)
 // degrees of freedom from the inflow boundary along streamlines to the
 // outflow boundary. Not surprisingly, <code>DoFRenumbering</code> also has
 // algorithms for this.
-
 
 // @sect3{The main function}
 

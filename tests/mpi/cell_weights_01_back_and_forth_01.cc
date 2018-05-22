@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just create a 16x16 coarse mesh, refine it once, and partition it
 //
 // like _01, but first partition it with one sets of weights, and then
@@ -29,8 +27,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 unsigned int current_cell_weight;
 
@@ -51,7 +47,6 @@ cell_weight_2(
 {
   return 1;
 }
-
 
 template <int dim>
 void
@@ -82,14 +77,12 @@ test()
     &cell_weight_2<dim>, std::placeholders::_1, std::placeholders::_2));
   tr.repartition();
 
-
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     for(unsigned int p = 0; p < numproc; ++p)
       deallog << "processor " << p << ": "
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

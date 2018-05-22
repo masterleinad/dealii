@@ -18,7 +18,6 @@
  * in parallel with non-zero BC and zero body load.
  */
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -60,15 +59,12 @@
 #include <fstream>
 #include <iostream>
 
-
 namespace Step37
 {
   using namespace dealii;
 
-
   const unsigned int degree_finite_element = 2;
   const unsigned int dimension             = 3;
-
 
   template <int dim>
   class LaplaceProblem
@@ -137,8 +133,6 @@ namespace Step37
     ConditionalOStream pcout;
   };
 
-
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
     :
@@ -158,16 +152,12 @@ namespace Step37
       pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
   {}
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     mapping.reset();
     dof_euler.clear();
   }
-
-
 
   template <int dim>
   void
@@ -278,8 +268,6 @@ namespace Step37
       }
   }
 
-
-
   template <int dim>
   class PotentialBCFunction : public Function<dim>
   {
@@ -304,8 +292,6 @@ namespace Step37
     const double     charge;
     const Point<dim> x0;
   };
-
-
 
   template <int dim>
   void
@@ -361,8 +347,6 @@ namespace Step37
       }
     system_rhs.compress(VectorOperation::add);
   }
-
-
 
   template <int dim>
   void
@@ -425,7 +409,6 @@ namespace Step37
                    MGTransferMatrixFree<dim, float>>
       preconditioner(dof_handler, mg, mg_transfer);
 
-
     SolverControl solver_control(500, 1e-12 * system_rhs.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double>> cg(solver_control);
 
@@ -441,8 +424,6 @@ namespace Step37
           << std::endl
           << "Linfty=" << linfty << std::endl;
   }
-
-
 
   template <int dim>
   void
@@ -510,8 +491,6 @@ namespace Step37
       }
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::run()
@@ -559,8 +538,6 @@ namespace Step37
       };
   }
 } // namespace Step37
-
-
 
 int
 main(int argc, char* argv[])

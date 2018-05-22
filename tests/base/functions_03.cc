@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Checking the PillowFunction
 
 #include "../tests.h"
@@ -24,8 +23,6 @@
 
 #include <string>
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -63,7 +60,6 @@ check_value_list(const Function<dim>& f)
   deallog << " value_list checked" << std::endl;
 }
 
-
 template <int dim>
 void
 check_gradient(const Function<dim>& f)
@@ -100,7 +96,6 @@ check_gradient_list(const Function<dim>& f)
   deallog << " gradient_list checked" << std::endl;
 }
 
-
 template <int dim>
 void
 check_laplacian(const Function<dim>& f)
@@ -112,7 +107,6 @@ check_laplacian(const Function<dim>& f)
   deallog << f.laplacian(p) << std::endl;
   deallog << " laplacians checked" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -137,7 +131,6 @@ check_laplacian_list(const Function<dim>& f)
 
   deallog << " laplacian_list checked" << std::endl;
 }
-
 
 int
 main()

@@ -24,7 +24,6 @@
 #include <set>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
@@ -141,7 +140,6 @@ namespace MGTools
     const unsigned int                  level,
     const Table<2, DoFTools::Coupling>& flux_mask);
 
-
   /**
    * Create sparsity pattern for interface_in/out matrices used in a multigrid computation.
    * These matrices contain an entry representing the coupling of degrees of
@@ -153,7 +151,6 @@ namespace MGTools
                                   const MGConstrainedDoFs& mg_constrained_dofs,
                                   SparsityPatternType&     sparsity,
                                   const unsigned int       level);
-
 
   /**
    * Count the dofs block-wise on each level.
@@ -247,7 +244,6 @@ namespace MGTools
   void
   extract_inner_interface_dofs(const DoFHandler<dim, spacedim>& mg_dof_handler,
                                std::vector<IndexSet>&           interface_dofs);
-
 
   template <int dim, int spacedim>
   void

@@ -18,7 +18,6 @@
   from creating threads.
  */
 
-
 #include <deal.II/base/multithread_info.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/tria.h>
@@ -77,7 +76,6 @@ get_num_thread_env()
 
   return -1;
 }
-
 
 int
 main()

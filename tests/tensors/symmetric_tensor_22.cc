@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check operator<< for SymmetricTensor<2,dim> and SymmetricTensor<4,dim>
 
 #include "../tests.h"

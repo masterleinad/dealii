@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of parallel
 // matrix free matrix-vector products for hp elements by comparing to the
 // serial version
@@ -29,8 +27,6 @@ std::ofstream logfile("output");
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim, typename Number>
 class MatrixFreeTestHP
@@ -74,8 +70,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, typename number>
 void
@@ -199,7 +193,6 @@ do_test(const unsigned int parallel_option)
       deallog.pop();
     }
 }
-
 
 template <int dim, int fe_degree>
 void

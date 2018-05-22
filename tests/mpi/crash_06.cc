@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test different elements for hanging_node constraints. This extends crash_05.cc
 // to make sure stuff is working.
 
@@ -36,7 +34,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -91,7 +88,6 @@ testit()
       test<dim>(*fes[i]);
     }
 }
-
 
 int
 main(int argc, char* argv[])

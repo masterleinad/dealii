@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like the _02 test but use a non-primitive element (and don't build the rhs,
 // which isn't supported for non-primitive elements in create_mass_matrix)
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -36,8 +32,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
-
-
 
 template <int dim>
 void
@@ -110,8 +104,6 @@ check()
       ++p)
     deallog << p->value() * 100 << std::endl;
 }
-
-
 
 int
 main()

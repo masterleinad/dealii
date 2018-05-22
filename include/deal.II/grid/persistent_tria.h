@@ -16,7 +16,6 @@
 #ifndef dealii_persistent_tria_h
 #define dealii_persistent_tria_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/grid/tria.h>
@@ -267,7 +266,6 @@ private:
    */
   std::vector<std::vector<bool>> coarsen_flags;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

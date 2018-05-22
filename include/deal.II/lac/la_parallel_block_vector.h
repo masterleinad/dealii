@@ -16,7 +16,6 @@
 #ifndef dealii_la_parallel_block_vector_h
 #define dealii_la_parallel_block_vector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/lac/block_indices.h>
@@ -29,7 +28,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 #ifdef DEAL_II_WITH_PETSC
 namespace PETScWrappers
@@ -58,7 +56,6 @@ namespace LinearAlgebra
     /*! @addtogroup Vectors
      *@{
      */
-
 
     /**
      * An implementation of block vectors based on distributed deal.II
@@ -708,7 +705,6 @@ namespace LinearAlgebra
 
 } // end of namespace LinearAlgebra
 
-
 /**
  * Global function which overloads the default implementation of the C++
  * standard library which uses a temporary object. The function simply
@@ -725,7 +721,6 @@ swap(LinearAlgebra::distributed::BlockVector<Number>& u,
   u.swap(v);
 }
 
-
 /**
  * Declare dealii::LinearAlgebra::BlockVector< Number > as distributed vector.
  *
@@ -735,7 +730,6 @@ template <typename Number>
 struct is_serial_vector<LinearAlgebra::distributed::BlockVector<Number>>
   : std::false_type
 {};
-
 
 DEAL_II_NAMESPACE_CLOSE
 

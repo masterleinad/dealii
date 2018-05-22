@@ -13,19 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_face_info_h
 #define dealii_matrix_free_face_info_h
-
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/table.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace internal
 {
@@ -114,8 +109,6 @@ namespace internal
         return sizeof(*this);
       }
     };
-
-
 
     /**
      * A data structure that holds the connectivity between the faces and the

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check a solver on a matrix obtained from the me-tomography
 // application. this test was originally meant to figure out why direct
 // solvers ma27 and ma47 don't work on this problem, until I realized that
@@ -27,7 +25,6 @@
 #include <deal.II/lac/solver_bicgstab.h>
 #include <deal.II/lac/sparse_direct.h>
 #include <deal.II/lac/vector_memory.h>
-
 
 struct Entry
 {
@@ -3284,8 +3281,6 @@ test()
     Assert(tmp.l2_norm() < tolerance, ExcInternalError());
   }
 }
-
-
 
 int
 main()

@@ -31,7 +31,6 @@ namespace PETScWrappers
       return *this;
     }
 
-
     void
     BlockSparseMatrix::reinit(const size_type n_block_rows,
                               const size_type n_block_columns)
@@ -64,7 +63,6 @@ namespace PETScWrappers
     {
       Assert(rows.size() == bdsp.n_block_rows(), ExcMessage("invalid size"));
       Assert(cols.size() == bdsp.n_block_cols(), ExcMessage("invalid size"));
-
 
       clear();
       this->sub_objects.reinit(bdsp.n_block_rows(), bdsp.n_block_cols());
@@ -103,8 +101,6 @@ namespace PETScWrappers
       reinit(sizes, sizes, bdsp, com);
     }
 
-
-
     void
     BlockSparseMatrix::collect_sizes()
     {
@@ -141,8 +137,6 @@ namespace PETScWrappers
 
   } // namespace MPI
 } // namespace PETScWrappers
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

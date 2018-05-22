@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * Filter a range out of any object having a random access <tt>operator[]
  * (unsigned int)</tt> and a function <tt>size() const</tt>.
@@ -132,7 +131,6 @@ private:
   const unsigned int length;
 };
 
-
 /**
  * Helper function for creating temporary objects without typing template
  * arguments.
@@ -147,8 +145,6 @@ make_slice(VectorType& v)
   const VectorSlice<const VectorType> r(v);
   return r;
 }
-
-
 
 /**
  * Helper function for creating temporary objects without typing template
@@ -165,15 +161,12 @@ make_slice(VectorType& v, const unsigned int start, const unsigned int length)
   return r;
 }
 
-
-
 //---------------------------------------------------------------------------
 
 template <typename VectorType>
 inline VectorSlice<VectorType>::VectorSlice(VectorType& v)
   : v(v), start(0), length(v.size())
 {}
-
 
 template <typename VectorType>
 inline VectorSlice<VectorType>::VectorSlice(VectorType&  v,
@@ -185,7 +178,6 @@ inline VectorSlice<VectorType>::VectorSlice(VectorType&  v,
          ExcIndexRange(length, 0, v.size() - start + 1));
 }
 
-
 template <typename VectorType>
 inline unsigned int
 VectorSlice<VectorType>::size() const
@@ -193,13 +185,11 @@ VectorSlice<VectorType>::size() const
   return length;
 }
 
-
 template <typename VectorType>
 VectorSlice<VectorType>::operator ArrayView<typename VectorType::value_type*>()
 {
   return ArrayView<typename VectorType::value_type*>(&v[start], length);
 }
-
 
 template <typename VectorType>
 VectorSlice<VectorType>::
@@ -207,7 +197,6 @@ operator ArrayView<const typename VectorType::value_type*>() const
 {
   return ArrayView<const typename VectorType::value_type*>(&v[start], length);
 }
-
 
 template <typename VectorType>
 inline typename VectorType::reference VectorSlice<VectorType>::
@@ -218,7 +207,6 @@ inline typename VectorType::reference VectorSlice<VectorType>::
   return v[start + i];
 }
 
-
 template <typename VectorType>
 inline typename VectorType::const_reference VectorSlice<VectorType>::
                                             operator[](unsigned int i) const
@@ -228,14 +216,12 @@ inline typename VectorType::const_reference VectorSlice<VectorType>::
   return v[start + i];
 }
 
-
 template <typename VectorType>
 inline typename VectorType::const_iterator
 VectorSlice<VectorType>::begin() const
 {
   return v.begin() + start;
 }
-
 
 template <typename VectorType>
 inline typename VectorType::iterator
@@ -244,14 +230,12 @@ VectorSlice<VectorType>::begin()
   return v.begin() + start;
 }
 
-
 template <typename VectorType>
 inline typename VectorType::const_iterator
 VectorSlice<VectorType>::end() const
 {
   return v.begin() + start + length;
 }
-
 
 template <typename VectorType>
 inline typename VectorType::iterator

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  Code for testing the function
  GridGenerator::extract_boundary_mesh (...).
@@ -33,7 +32,6 @@
 #include <deal.II/grid/tria.h>
 
 using namespace std;
-
 
 template <int s_dim, int spacedim>
 void
@@ -71,7 +69,6 @@ test_vertices_orientation(
                  ExcInternalError());
         }
 
-
       for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
@@ -90,13 +87,11 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
 
-
 int
 main()
 {
   ofstream logfile("output");
   deallog.attach(logfile);
-
 
   {
     // Extract the boundary of a hyper-sphere
@@ -131,11 +126,9 @@ main()
     deallog << boundary_mesh.n_active_cells() << std::endl;
     save_mesh(boundary_mesh);
 
-
     test_vertices_orientation(boundary_mesh, surface_to_volume_mapping);
     save_mesh(boundary_mesh);
   }
-
 
   return 0;
 }

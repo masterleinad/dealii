@@ -284,8 +284,6 @@ namespace Step56
     return 0;
   }
 
-
-
   // @sect3{ASPECT BlockSchurPreconditioner}
 
   // In the following, we will implement a preconditioner that expands
@@ -349,8 +347,6 @@ namespace Step56
       preconditioner_S(preconditioner_S),
       do_solve_A(do_solve_A)
   {}
-
-
 
   template <class PreconditionerAType, class PreconditionerSType>
   void
@@ -452,8 +448,6 @@ namespace Step56
     TimerOutput computing_timer;
   };
 
-
-
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int pressure_degree,
                                     SolverType::type   solver_type)
@@ -468,8 +462,6 @@ namespace Step56
       velocity_dof_handler(triangulation),
       computing_timer(std::cout, TimerOutput::never, TimerOutput::wall_times)
   {}
-
-
 
   // @sect4{StokesProblem::setup_dofs}
 
@@ -598,7 +590,6 @@ namespace Step56
     solution.reinit(dofs_per_block);
     system_rhs.reinit(dofs_per_block);
   }
-
 
   // @sect4{StokesProblem::assemble_system}
 
@@ -959,7 +950,6 @@ namespace Step56
       << std::endl;
   }
 
-
   // @sect4{StokesProblem::process_solution}
 
   // This function computes the L2 and H1 errors of the solution. For this,
@@ -1023,7 +1013,6 @@ namespace Step56
               << "   Velocity H1 Error: " << Velocity_H1_error << std::endl;
   }
 
-
   // @sect4{StokesProblem::output_results}
 
   // This function generates graphical output like it is done in step-22.
@@ -1053,8 +1042,6 @@ namespace Step56
     data_out.write_vtk(output);
   }
 
-
-
   // @sect4{StokesProblem::run}
 
   // The last step in the Stokes class is, as usual, the function that
@@ -1073,7 +1060,6 @@ namespace Step56
       std::cout << "Now running with Multigrid" << std::endl;
     else
       std::cout << "Now running with UMFPACK" << std::endl;
-
 
     for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
         ++refinement_cycle)

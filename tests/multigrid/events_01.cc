@@ -62,7 +62,6 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/multigrid.h>
 
-
 #include <deal.II/lac/generic_linear_algebra.h>
 
 namespace LA
@@ -110,7 +109,6 @@ namespace Step50
     FE_Q<dim>                                 fe;
     DoFHandler<dim>                           mg_dof_handler;
 
-
     matrix_t system_matrix;
 
     IndexSet locally_relevant_set;
@@ -128,7 +126,6 @@ namespace Step50
     MGConstrainedDoFs mg_constrained_dofs;
   };
 
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     : triangulation(MPI_COMM_WORLD,
@@ -139,7 +136,6 @@ namespace Step50
       mg_dof_handler(triangulation),
       degree(degree)
   {}
-
 
   template <int dim>
   void
@@ -168,7 +164,6 @@ namespace Step50
     DoFTools::make_sparsity_pattern(mg_dof_handler, dsp, constraints);
     system_matrix.reinit(
       mg_dof_handler.locally_owned_dofs(), dsp, MPI_COMM_WORLD, true);
-
 
     mg_constrained_dofs.clear();
     mg_constrained_dofs.initialize(mg_dof_handler, dirichlet_boundary);
@@ -200,7 +195,6 @@ namespace Step50
           true);
       }
   }
-
 
   template <int dim>
   void
@@ -255,7 +249,6 @@ namespace Step50
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
-
 
   template <int dim>
   void
@@ -317,7 +310,6 @@ namespace Step50
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
-
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = 0; j < dofs_per_cell; ++j)
               if(
@@ -344,7 +336,6 @@ namespace Step50
                 {
                   cell_matrix(i, j) = 0;
                 }
-
 
           empty_constraints.distribute_local_to_global(
             cell_matrix,
@@ -466,8 +457,6 @@ namespace Step50
     deallog << "check residual: " << residual << std::endl;
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -512,13 +501,10 @@ namespace Step50
     triangulation.execute_coarsening_and_refinement();
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   {}
-
 
   template <int dim>
   void
@@ -559,7 +545,6 @@ namespace Step50
       }
   }
 } // namespace Step50
-
 
 int
 main(int argc, char* argv[])

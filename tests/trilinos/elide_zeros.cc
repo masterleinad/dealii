@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Test that Trilinos matrices correctly elide zeros when the zero entry does
  * not exist in the current process' sparsity pattern.
@@ -132,8 +131,6 @@ namespace LinearAdvectionTest
     TrilinosWrappers::SparseMatrix system_matrix;
   };
 
-
-
   template <int dim>
   AdvectionProblem<dim>::AdvectionProblem()
     : n_mpi_processes(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)),
@@ -183,8 +180,6 @@ namespace LinearAdvectionTest
                          MPI_COMM_WORLD);
   }
 
-
-
   template <int dim>
   void
   AdvectionProblem<dim>::calculate_flux_terms(
@@ -210,7 +205,6 @@ namespace LinearAdvectionTest
     system_matrix.add(neighbor_dofs, neighbor_to_neighbor_flux, true);
     deallog << "OK" << std::endl;
   }
-
 
   template <int dim>
   void
@@ -312,7 +306,6 @@ namespace LinearAdvectionTest
 
     system_matrix.compress(VectorOperation::add);
   }
-
 
   template <int dim>
   void

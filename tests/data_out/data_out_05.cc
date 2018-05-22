@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like the _01 test, except that we declare output component fields
 // as vectors if possible. since VTK is the only format that currently
 // supports this, use it as the only output format. (deal.II
@@ -27,8 +26,6 @@
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
-
-
 
 template <int dim>
 void

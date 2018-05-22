@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Compare overlapping block Jacobi relaxation with different
 // permutations of the blocks. All output diffs should be zero.
 
@@ -26,7 +25,6 @@
 
 #include "../testmatrix.h"
 #include "../tests.h"
-
 
 template <typename SolverType,
           typename MatrixType,

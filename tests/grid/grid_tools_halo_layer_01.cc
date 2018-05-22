@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -42,7 +40,6 @@ write_mat_id_to_file(const Triangulation<dim>& tria)
     }
   deallog << std::endl;
 }
-
 
 template <int dim>
 void
@@ -110,7 +107,6 @@ test()
     GridOut().write_vtk(tria, f);
   }
 }
-
 
 int
 main()

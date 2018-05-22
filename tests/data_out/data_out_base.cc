@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
 
@@ -72,14 +71,12 @@ struct PatchInfo
                       [GeometryInfo<dim>::faces_per_cell];
 };
 
-
 template <>
 double PatchInfo<1>::vertices[2][3] = {{0, 0, 0}, {3, 6, 9}};
 
 template <>
 double PatchInfo<2>::vertices[4][3]
   = {{0, 0, 0}, {3, 0, 3}, {3, 0, 3}, {3, 3, 6}};
-
 
 template <>
 double PatchInfo<3>::vertices[8][3] = {{0, 0, 0},
@@ -91,17 +88,12 @@ double PatchInfo<3>::vertices[8][3] = {{0, 0, 0},
                                        {0, 3, 3},
                                        {3, 3, 3}};
 
-
 template <>
 int PatchInfo<1>::neighbors[2][2] = {{-1, 1}, {0, -1}};
-
-
 
 template <>
 int PatchInfo<2>::neighbors[4][4]
   = {{-1, 1, 2, -1}, {-1, -1, 3, 0}, {0, 3, -1, -1}, {1, -1, -1, 2}};
-
-
 
 template <>
 int PatchInfo<3>::neighbors[8][6] = {{-1, -1, -1, -1, -1, -1},
@@ -113,15 +105,12 @@ int PatchInfo<3>::neighbors[8][6] = {{-1, -1, -1, -1, -1, -1},
                                      {-1, -1, -1, -1, -1, -1},
                                      {-1, -1, -1, -1, -1, -1}};
 
-
 template <>
 double PatchInfo<1>::offsets[2][3] = {{0, 0, 0}, {3, 0, 0}};
-
 
 template <>
 double PatchInfo<2>::offsets[4][3]
   = {{0, 0, 0}, {3, 0, 0}, {0, 3, 0}, {3, 3, 0}};
-
 
 template <>
 double PatchInfo<3>::offsets[8][3] = {{0, 0, 0},
@@ -132,8 +121,6 @@ double PatchInfo<3>::offsets[8][3] = {{0, 0, 0},
                                       {3, 0, 3},
                                       {0, 3, 3},
                                       {3, 3, 3}};
-
-
 
 template <int dim, int spacedim>
 void
@@ -171,7 +158,6 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
     }
 }
 
-
 template <int dim, int spacedim>
 void
 test(std::ostream& out)
@@ -180,7 +166,6 @@ test(std::ostream& out)
   create_patches(patches);
   write_patches(patches, out);
 }
-
 
 int
 main()

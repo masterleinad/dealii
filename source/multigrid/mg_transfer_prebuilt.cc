@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 
@@ -39,15 +38,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename VectorType>
 MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
   const MGConstrainedDoFs& mg_c)
 {
   this->mg_constrained_dofs = &mg_c;
 }
-
-
 
 template <typename VectorType>
 MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
@@ -57,8 +53,6 @@ MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
   this->mg_constrained_dofs = &mg_c;
 }
 
-
-
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::initialize_constraints(
@@ -66,8 +60,6 @@ MGTransferPrebuilt<VectorType>::initialize_constraints(
 {
   this->mg_constrained_dofs = &mg_c;
 }
-
-
 
 template <typename VectorType>
 void
@@ -78,8 +70,6 @@ MGTransferPrebuilt<VectorType>::initialize_constraints(
   initialize_constraints(mg_c);
 }
 
-
-
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::clear()
@@ -89,8 +79,6 @@ MGTransferPrebuilt<VectorType>::clear()
   prolongation_sparsities.resize(0);
   interface_dofs.resize(0);
 }
-
-
 
 template <typename VectorType>
 void
@@ -104,8 +92,6 @@ MGTransferPrebuilt<VectorType>::prolongate(const unsigned int to_level,
   prolongation_matrices[to_level - 1]->vmult(dst, src);
 }
 
-
-
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::restrict_and_add(const unsigned int from_level,
@@ -118,7 +104,6 @@ MGTransferPrebuilt<VectorType>::restrict_and_add(const unsigned int from_level,
 
   prolongation_matrices[from_level - 1]->Tvmult_add(dst, src);
 }
-
 
 namespace
 {
@@ -317,8 +302,6 @@ MGTransferPrebuilt<VectorType>::build_matrices(
   this->fill_and_communicate_copy_indices(mg_dof);
 }
 
-
-
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::print_matrices(std::ostream& os) const
@@ -330,8 +313,6 @@ MGTransferPrebuilt<VectorType>::print_matrices(std::ostream& os) const
       os << std::endl;
     }
 }
-
-
 
 template <typename VectorType>
 std::size_t
@@ -345,9 +326,7 @@ MGTransferPrebuilt<VectorType>::memory_consumption() const
   return result;
 }
 
-
 // explicit instantiation
 #include "mg_transfer_prebuilt.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

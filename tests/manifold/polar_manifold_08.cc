@@ -22,7 +22,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/manifold_lib.h>
 
-
 int
 main()
 {
@@ -40,7 +39,6 @@ main()
 
   points.push_back(Point<2>(0.0, 0.0));
   points.push_back(Point<2>(1.0, 0.0));
-
 
   // And the weights
   std::vector<double> weights(2);

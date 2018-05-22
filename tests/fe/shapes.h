@@ -106,8 +106,6 @@ plot_shape_functions(Mapping<dim>&       mapping,
   deallog.pop();
 }
 
-
-
 template <int dim>
 inline void
 plot_face_shape_functions(Mapping<dim>&       mapping,
@@ -311,15 +309,12 @@ plot_face_shape_functions(Mapping<dim>&       mapping,
   deallog.pop();
 }
 
-
 template <>
 void plot_face_shape_functions(Mapping<1>&,
                                FiniteElement<1>&,
                                const char*,
                                UpdateFlags)
 {}
-
-
 
 // given an FEValues object for a cell that is equal to the unit cell,
 // check that the values and gradients that the FEValues object
@@ -415,8 +410,6 @@ check_values_and_derivatives(const FiniteElement<dim>& fe,
                    ExcInternalError());
       }
 }
-
-
 
 template <int dim>
 void

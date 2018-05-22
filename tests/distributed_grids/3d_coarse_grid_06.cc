@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a 3d mesh. this is for a rather
 // complex 3d grid
 
@@ -26,7 +24,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -40,7 +37,6 @@ test(std::ostream& /*out*/)
 
   deallog << "Checksum: " << tr.get_checksum() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

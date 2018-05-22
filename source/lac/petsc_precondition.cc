@@ -56,7 +56,6 @@ namespace PETScWrappers
       }
   }
 
-
   void
   PreconditionerBase::vmult(VectorBase& dst, const VectorBase& src) const
   {
@@ -65,7 +64,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = PCApply(pc, src, dst);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
 
   void
   PreconditionerBase::create_pc()
@@ -93,19 +91,16 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   const PC&
   PreconditionerBase::get_pc() const
   {
     return pc;
   }
 
-
   PreconditionerBase::operator Mat() const
   {
     return matrix;
   }
-
 
   /* ----------------- PreconditionJacobi -------------------- */
   PreconditionJacobi::PreconditionJacobi(const MPI_Comm        comm,
@@ -118,8 +113,6 @@ namespace PETScWrappers
 
     initialize();
   }
-
-
 
   PreconditionJacobi::PreconditionJacobi(const MatrixBase&     matrix,
                                          const AdditionalData& additional_data)
@@ -155,7 +148,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionBlockJacobi -------------------- */
   PreconditionBlockJacobi::PreconditionBlockJacobi(
     const MPI_Comm        comm,
@@ -168,8 +160,6 @@ namespace PETScWrappers
 
     initialize();
   }
-
-
 
   PreconditionBlockJacobi::PreconditionBlockJacobi(
     const MatrixBase&     matrix,
@@ -188,7 +178,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   void
   PreconditionBlockJacobi::initialize(const MatrixBase&     matrix_,
                                       const AdditionalData& additional_data_)
@@ -205,21 +194,17 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionSOR -------------------- */
 
   PreconditionSOR::AdditionalData::AdditionalData(const double omega)
     : omega(omega)
   {}
 
-
-
   PreconditionSOR::PreconditionSOR(const MatrixBase&     matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionSOR::initialize(const MatrixBase&     matrix_,
@@ -246,21 +231,17 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionSSOR -------------------- */
 
   PreconditionSSOR::AdditionalData::AdditionalData(const double omega)
     : omega(omega)
   {}
 
-
-
   PreconditionSSOR::PreconditionSSOR(const MatrixBase&     matrix,
                                      const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionSSOR::initialize(const MatrixBase&     matrix_,
@@ -291,14 +272,11 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionEisenstat -------------------- */
 
   PreconditionEisenstat::AdditionalData::AdditionalData(const double omega)
     : omega(omega)
   {}
-
-
 
   PreconditionEisenstat::PreconditionEisenstat(
     const MatrixBase&     matrix,
@@ -306,7 +284,6 @@ namespace PETScWrappers
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionEisenstat::initialize(const MatrixBase&     matrix_,
@@ -333,22 +310,17 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionICC -------------------- */
-
 
   PreconditionICC::AdditionalData::AdditionalData(const unsigned int levels)
     : levels(levels)
   {}
-
-
 
   PreconditionICC::PreconditionICC(const MatrixBase&     matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionICC::initialize(const MatrixBase&     matrix_,
@@ -375,21 +347,17 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionILU -------------------- */
 
   PreconditionILU::AdditionalData::AdditionalData(const unsigned int levels)
     : levels(levels)
   {}
 
-
-
   PreconditionILU::PreconditionILU(const MatrixBase&     matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionILU::initialize(const MatrixBase&     matrix_,
@@ -416,7 +384,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionBoomerAMG -------------------- */
 
   PreconditionBoomerAMG::AdditionalData::AdditionalData(
@@ -431,8 +398,6 @@ namespace PETScWrappers
       aggressive_coarsening_num_levels(aggressive_coarsening_num_levels),
       output_details(output_details)
   {}
-
-
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
     const MPI_Comm        comm,
@@ -452,7 +417,6 @@ namespace PETScWrappers
                       "the hypre package necessary for this preconditioner."));
 #  endif
   }
-
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
     const MatrixBase&     matrix,
@@ -539,7 +503,6 @@ namespace PETScWrappers
 #  endif
   }
 
-
   /* ----------------- PreconditionParaSails -------------------- */
 
   PreconditionParaSails::AdditionalData::AdditionalData(
@@ -555,15 +518,12 @@ namespace PETScWrappers
       output_details(output_details)
   {}
 
-
-
   PreconditionParaSails::PreconditionParaSails(
     const MatrixBase&     matrix,
     const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionParaSails::initialize(const MatrixBase&     matrix_,
@@ -649,7 +609,6 @@ namespace PETScWrappers
 #  endif
   }
 
-
   /* ----------------- PreconditionNone ------------------------- */
 
   PreconditionNone::PreconditionNone(const MatrixBase&     matrix,
@@ -657,7 +616,6 @@ namespace PETScWrappers
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionNone::initialize(const MatrixBase&     matrix_,
@@ -680,7 +638,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
   /* ----------------- PreconditionLU -------------------- */
 
   PreconditionLU::AdditionalData::AdditionalData(const double pivoting,
@@ -689,14 +646,11 @@ namespace PETScWrappers
     : pivoting(pivoting), zero_pivot(zero_pivot), damping(damping)
   {}
 
-
-
   PreconditionLU::PreconditionLU(const MatrixBase&     matrix,
                                  const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
-
 
   void
   PreconditionLU::initialize(const MatrixBase&     matrix_,

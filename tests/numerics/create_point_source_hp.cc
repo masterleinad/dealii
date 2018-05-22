@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the function VectorTools::create_point_source_vector for hp.
-
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
@@ -27,8 +23,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -56,8 +50,6 @@ check()
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << vector(i) << std::endl;
 }
-
-
 
 int
 main()

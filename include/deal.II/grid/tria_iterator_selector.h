@@ -16,7 +16,6 @@
 #ifndef dealii_tria_iterator_selector_h
 #define dealii_tria_iterator_selector_h
 
-
 #include <deal.II/base/config.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -97,8 +96,6 @@ namespace internal
         active_hex_iterator;
     };
 
-
-
     /**
      * This class implements some types which differ between the dimensions.
      * These are the declarations for the 2D case only. See the
@@ -157,7 +154,6 @@ namespace internal
       typedef TriaActiveIterator<dealii::InvalidAccessor<3, 2, spacedim>>
         active_hex_iterator;
     };
-
 
     /**
      * This class implements some types which differ between the dimensions.

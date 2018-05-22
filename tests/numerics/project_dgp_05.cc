@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::project works for DGP elements correctly
 
 // note that for mapped DGP(k) spaces, P(k) is not in the range of the
@@ -23,7 +21,6 @@
 // call below
 
 #include "project_common.h"
-
 
 template <int dim>
 void

@@ -13,7 +13,6 @@
 //
 //-----------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_acceptor.h>
 #include <deal.II/base/utilities.h>
@@ -43,7 +42,6 @@ public:
 private:
   Point<dim> p;
 };
-
 
 int
 main()

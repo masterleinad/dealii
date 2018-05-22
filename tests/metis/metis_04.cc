@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::partition_triangulation with too many subdomains
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void
@@ -61,8 +58,6 @@ test()
     }
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

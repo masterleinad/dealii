@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that DataOut and MappingQ1Eulerian agree on how to output a
 // displaced mesh. This seems to have always worked (unless
 // MappingQEulerian, which is tested in mapping_q_eulerian_01) but it
@@ -54,7 +53,6 @@
 
 using namespace dealii;
 
-
 template <int dim>
 class Displacement : public Function<dim>
 {
@@ -75,7 +73,6 @@ public:
       v(i) = p[i];
   }
 };
-
 
 template <int dim>
 void
@@ -104,8 +101,6 @@ test()
   data_out.build_patches(euler, 1, DataOut<dim>::curved_inner_cells);
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

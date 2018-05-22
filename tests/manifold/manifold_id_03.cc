@@ -21,7 +21,6 @@
 
 #include "../tests.h"
 
-
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -42,7 +41,6 @@ test(unsigned int ref = 1)
   Point<spacedim> center;
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
-
 
   tria.begin_active()->set_manifold_id(1);
 

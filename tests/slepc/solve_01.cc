@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the SLEPc solvers with GHEP
 // the unit tests is a mirror of
 // SLEPc-3.6.1/src/eps/examples/tests/test1.c
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -78,7 +76,6 @@ check_solve(SolverType&               solver,
     }
   deallog << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

@@ -46,7 +46,6 @@
 #include <set>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace GridTools
@@ -125,8 +124,6 @@ namespace GridTools
     return best_vertex;
   }
 
-
-
   template <int dim, template <int, int> class MeshType, int spacedim>
   unsigned int
   find_closest_vertex(const Mapping<dim, spacedim>&  mapping,
@@ -184,8 +181,6 @@ namespace GridTools
 
     return find_closest_vertex(vertices, p);
   }
-
-
 
   template <int dim, template <int, int> class MeshType, int spacedim>
 #ifndef _MSC_VER
@@ -329,8 +324,6 @@ namespace GridTools
       adjacent_cells.begin(), adjacent_cells.end());
   }
 
-
-
   namespace
   {
     template <int dim, template <int, int> class MeshType, int spacedim>
@@ -418,7 +411,6 @@ namespace GridTools
              StaticMappingQ1<dim, spacedim>::mapping, mesh, p, marked_vertices)
       .first;
   }
-
 
   template <int dim, template <int, int> class MeshType, int spacedim>
 #ifndef _MSC_VER
@@ -547,8 +539,6 @@ namespace GridTools
     return best_cell;
   }
 
-
-
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_active_cell_halo_layer(
@@ -591,8 +581,6 @@ namespace GridTools
 
     return active_halo_layer;
   }
-
-
 
   template <class MeshType>
   std::vector<typename MeshType::cell_iterator>
@@ -639,7 +627,6 @@ namespace GridTools
     return level_halo_layer;
   }
 
-
   namespace
   {
     template <class MeshType>
@@ -677,8 +664,6 @@ namespace GridTools
     }
   } // namespace
 
-
-
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_ghost_cell_halo_layer(const MeshType& mesh)
@@ -698,8 +683,6 @@ namespace GridTools
 
     return active_halo_layer;
   }
-
-
 
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
@@ -850,8 +833,6 @@ namespace GridTools
     return active_cell_layer_within_distance;
   }
 
-
-
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_ghost_cell_layer_within_distance(const MeshType& mesh,
@@ -884,8 +865,6 @@ namespace GridTools
 
     return ghost_cell_layer_within_distance;
   }
-
-
 
   template <class MeshType>
   std::pair<Point<MeshType::space_dimension>, Point<MeshType::space_dimension>>
@@ -937,8 +916,6 @@ namespace GridTools
 
     return std::make_pair(minp, maxp);
   }
-
-
 
   template <typename MeshType>
   std::list<std::pair<typename MeshType::cell_iterator,
@@ -1027,8 +1004,6 @@ namespace GridTools
     return cell_list;
   }
 
-
-
   template <int dim, int spacedim>
   bool
   have_same_coarse_mesh(const Triangulation<dim, spacedim>& mesh_1,
@@ -1057,8 +1032,6 @@ namespace GridTools
     return true;
   }
 
-
-
   template <typename MeshType>
   bool
   have_same_coarse_mesh(const MeshType& mesh_1, const MeshType& mesh_2)
@@ -1066,8 +1039,6 @@ namespace GridTools
     return have_same_coarse_mesh(mesh_1.get_triangulation(),
                                  mesh_2.get_triangulation());
   }
-
-
 
   template <int dim, int spacedim>
   std::pair<typename hp::DoFHandler<dim, spacedim>::active_cell_iterator,
@@ -1100,7 +1071,6 @@ namespace GridTools
         // max. deviation of 1e-10
         double best_distance = 1e-10;
         int    best_level    = -1;
-
 
         // Find closest vertex and determine
         // all adjacent cells
@@ -1139,7 +1109,6 @@ namespace GridTools
                     const Point<dim> p_cell
                       = mapping[(*cell)->active_fe_index()]
                           .transform_real_to_unit_cell(*cell, p);
-
 
                     // calculate the infinity norm of
                     // the distance vector to the unit cell.
@@ -1200,7 +1169,6 @@ namespace GridTools
     return best_cell;
   }
 
-
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   get_patch_around_cell(const typename MeshType::active_cell_iterator& cell)
@@ -1248,8 +1216,6 @@ namespace GridTools
     return patch;
   }
 
-
-
   template <class Container>
   std::vector<typename Container::cell_iterator>
   get_cells_at_coarsest_common_level(
@@ -1290,8 +1256,6 @@ namespace GridTools
     return std::vector<typename Container::cell_iterator>(uniform_cells.begin(),
                                                           uniform_cells.end());
   }
-
-
 
   template <class Container>
   void
@@ -1476,7 +1440,6 @@ namespace GridTools
       }
     while(refinement_necessary);
 
-
     // Last assertion check to make sure we have the right cells and centers
     // in the map, and hence the correct vertices of the triangulation
     for(typename Triangulation<Container::dimension,
@@ -1498,7 +1461,6 @@ namespace GridTools
           }
       }
 
-
     typename std::map<
       typename Triangulation<Container::dimension,
                              Container::space_dimension>::cell_iterator,
@@ -1510,8 +1472,6 @@ namespace GridTools
     for(; map_tmp_it != map_tmp_end; ++map_tmp_it)
       patch_to_global_tria_map[map_tmp_it->first] = map_tmp_it->second;
   }
-
-
 
   template <class DoFHandlerType>
   std::map<types::global_dof_index,
@@ -1540,7 +1500,6 @@ namespace GridTools
     // to maintain const of dof_handler.
     std::vector<bool> user_flags;
 
-
     // in 3d, we need pointers from active lines to the
     // active parent lines, so we construct it as needed.
     std::map<typename DoFHandlerType::active_line_iterator,
@@ -1554,7 +1513,6 @@ namespace GridTools
                                          DoFHandlerType::space_dimension>&>(
           dof_handler.get_triangulation())
           .clear_user_flags();
-
 
         typename DoFHandlerType::active_cell_iterator cell
           = dof_handler.begin_active(),
@@ -1583,7 +1541,6 @@ namespace GridTools
               }
           }
       }
-
 
     // We loop through all cells and add cell to the
     // map for the dofs that it immediately touches
@@ -1719,7 +1676,6 @@ namespace GridTools
                   }
               }
 
-
             // If 3d, take care of dofs on lines in the
             // same pattern as faces above. That is, if
             // a cell's line has children, distribute
@@ -1801,7 +1757,6 @@ namespace GridTools
               }     // if DoFHandlerType::dimension == 3
           }         // if cell->is_locally_owned()
       }             // for cells
-
 
     if(DoFHandlerType::dimension == 3)
       {
@@ -1895,8 +1850,6 @@ namespace GridTools
                 ExcMessage("Unmatched faces on periodic boundaries"));
   }
 
-
-
   template <typename MeshType>
   void
   collect_periodic_faces(
@@ -1977,8 +1930,6 @@ namespace GridTools
 #endif
   }
 
-
-
   template <typename MeshType>
   void
   collect_periodic_faces(
@@ -2040,8 +1991,6 @@ namespace GridTools
       pairs1, pairs2, direction, matched_pairs, offset, matrix);
   }
 
-
-
   /*
    * Internally used in orthogonal_equality
    *
@@ -2087,7 +2036,6 @@ namespace GridTools
 
     return true;
   }
-
 
   /*
    * Internally used in orthogonal_equality
@@ -2186,8 +2134,6 @@ namespace GridTools
     }
   };
 
-
-
   template <typename FaceIterator>
   inline bool orthogonal_equality(
     std::bitset<3>&                                               orientation,
@@ -2236,8 +2182,6 @@ namespace GridTools
     return face2_vertices.empty();
   }
 
-
-
   template <typename FaceIterator>
   inline bool
   orthogonal_equality(
@@ -2252,12 +2196,8 @@ namespace GridTools
     return orthogonal_equality(dummy, face1, face2, direction, offset, matrix);
   }
 
-
-
 } // namespace GridTools
 
-
 #include "grid_tools_dof_handlers.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

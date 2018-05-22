@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Small test to analyse the equivalence from both sides of a face of
 // the normal component for the Raviart-Thomas element
 //
@@ -23,7 +22,6 @@
 // normals using FEFaceValue, where FEFaceValue by accident uses the
 // *face* mapping, not the *cell* mapping to compute the Piola
 // transform (leading to a missing power of h in the determinant)
-
 
 #include "../tests.h"
 
@@ -47,7 +45,6 @@
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
-
 
 void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
 {
@@ -123,7 +120,6 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
     }
 }
 
-
 int
 main()
 {
@@ -154,7 +150,6 @@ main()
   // on uniform mesh:
   deallog << "Uniform mesh test" << std::endl;
   evaluate_normal(dof_handler, solution);
-
 
   // Then test same on distorted mesh
   GridTools::distort_random(0.05, tria_test);

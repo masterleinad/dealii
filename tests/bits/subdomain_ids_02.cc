@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFTools::get_subdomain_association
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -30,9 +28,7 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -91,7 +87,6 @@ test()
   for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     AssertThrow(subdomain_association[i] < (1 << dim), ExcInternalError());
 }
-
 
 int
 main()

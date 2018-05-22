@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like refinement_02, but with a complex grid
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -72,7 +68,6 @@ test(std::ostream& /*out*/)
   }
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
-
 
   for(unsigned int i = 0; i < 1; ++i)
     {
@@ -130,7 +125,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

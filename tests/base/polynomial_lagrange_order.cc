@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to polyomial_lagrange, but test Lagrange interpolation for high
 // order with tighter tolerances, in particular the effect of stability of the
 // polynomial evaluation at random points
@@ -23,9 +22,7 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 void
 check_interpolation(const std::vector<Polynomial<double>>& p,
@@ -55,8 +52,6 @@ check_interpolation(const std::vector<Polynomial<double>>& p,
     }
 }
 
-
-
 void
 check_constant(const std::vector<Polynomial<double>>& p)
 {
@@ -79,8 +74,6 @@ check_constant(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_poly(const Quadrature<1>& q)
 {
@@ -91,8 +84,6 @@ check_poly(const Quadrature<1>& q)
   check_constant(p);
   deallog << std::endl;
 }
-
-
 
 void
 check_lge(unsigned int n)
@@ -108,8 +99,6 @@ check_lge(unsigned int n)
   check_constant(p);
   deallog << std::endl;
 }
-
-
 
 int
 main()

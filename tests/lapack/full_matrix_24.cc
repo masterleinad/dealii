@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::solve() for triangular matrices
 
 /* MWE for size=3 in Octave:
@@ -42,7 +41,6 @@ ans =
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -76,7 +74,6 @@ test()
   M.solve(y, true);
   y.print(deallog.get_file_stream(), 6, false);
 }
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_matrix_ez_h
 #  define dealii_sparse_matrix_ez_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/smartpointer.h>
 #  include <deal.II/base/subscriptor.h>
@@ -918,18 +917,14 @@ inline SparseMatrixEZ<number>::Entry::Entry(const size_type column,
   : column(column), value(value)
 {}
 
-
-
 template <typename number>
 inline SparseMatrixEZ<number>::Entry::Entry() : column(invalid), value(0)
 {}
-
 
 template <typename number>
 inline SparseMatrixEZ<number>::RowInfo::RowInfo(const size_type start)
   : start(start), length(0), diagonal(invalid_diagonal)
 {}
-
 
 //---------------------------------------------------------------------------
 template <typename number>
@@ -940,14 +935,12 @@ inline SparseMatrixEZ<number>::const_iterator::Accessor::Accessor(
   : matrix(matrix), a_row(r), a_index(i)
 {}
 
-
 template <typename number>
 inline typename SparseMatrixEZ<number>::size_type
 SparseMatrixEZ<number>::const_iterator::Accessor::row() const
 {
   return a_row;
 }
-
 
 template <typename number>
 inline typename SparseMatrixEZ<number>::size_type
@@ -956,7 +949,6 @@ SparseMatrixEZ<number>::const_iterator::Accessor::column() const
   return matrix->data[matrix->row_info[a_row].start + a_index].column;
 }
 
-
 template <typename number>
 inline unsigned short
 SparseMatrixEZ<number>::const_iterator::Accessor::index() const
@@ -964,15 +956,12 @@ SparseMatrixEZ<number>::const_iterator::Accessor::index() const
   return a_index;
 }
 
-
-
 template <typename number>
 inline number
 SparseMatrixEZ<number>::const_iterator::Accessor::value() const
 {
   return matrix->data[matrix->row_info[a_row].start + a_index].value;
 }
-
 
 template <typename number>
 inline SparseMatrixEZ<number>::const_iterator::const_iterator(
@@ -1007,7 +996,6 @@ inline SparseMatrixEZ<number>::const_iterator::const_iterator(
     }
 }
 
-
 template <typename number>
 inline typename SparseMatrixEZ<number>::const_iterator&
 SparseMatrixEZ<number>::const_iterator::operator++()
@@ -1034,7 +1022,6 @@ SparseMatrixEZ<number>::const_iterator::operator++()
   return *this;
 }
 
-
 template <typename number>
 inline const typename SparseMatrixEZ<number>::const_iterator::Accessor&
   SparseMatrixEZ<number>::const_iterator::operator*() const
@@ -1042,14 +1029,12 @@ inline const typename SparseMatrixEZ<number>::const_iterator::Accessor&
   return accessor;
 }
 
-
 template <typename number>
 inline const typename SparseMatrixEZ<number>::const_iterator::Accessor*
   SparseMatrixEZ<number>::const_iterator::operator->() const
 {
   return &accessor;
 }
-
 
 template <typename number>
 inline bool
@@ -1060,7 +1045,6 @@ operator==(const const_iterator& other) const
           && accessor.index() == other.accessor.index());
 }
 
-
 template <typename number>
 inline bool
 SparseMatrixEZ<number>::const_iterator::
@@ -1068,7 +1052,6 @@ operator!=(const const_iterator& other) const
 {
   return !(*this == other);
 }
-
 
 template <typename number>
 inline bool
@@ -1080,7 +1063,6 @@ operator<(const const_iterator& other) const
               && accessor.index() < other.accessor.index()));
 }
 
-
 //---------------------------------------------------------------------------
 template <typename number>
 inline typename SparseMatrixEZ<number>::size_type
@@ -1089,14 +1071,12 @@ SparseMatrixEZ<number>::m() const
   return row_info.size();
 }
 
-
 template <typename number>
 inline typename SparseMatrixEZ<number>::size_type
 SparseMatrixEZ<number>::n() const
 {
   return n_columns;
 }
-
 
 template <typename number>
 inline typename SparseMatrixEZ<number>::Entry*
@@ -1118,8 +1098,6 @@ SparseMatrixEZ<number>::locate(const size_type row, const size_type col)
   return nullptr;
 }
 
-
-
 template <typename number>
 inline const typename SparseMatrixEZ<number>::Entry*
 SparseMatrixEZ<number>::locate(const size_type row, const size_type col) const
@@ -1127,7 +1105,6 @@ SparseMatrixEZ<number>::locate(const size_type row, const size_type col) const
   SparseMatrixEZ<number>* t = const_cast<SparseMatrixEZ<number>*>(this);
   return t->locate(row, col);
 }
-
 
 template <typename number>
 inline typename SparseMatrixEZ<number>::Entry*
@@ -1224,8 +1201,6 @@ SparseMatrixEZ<number>::allocate(const size_type row, const size_type col)
   return entry;
 }
 
-
-
 template <typename number>
 inline void
 SparseMatrixEZ<number>::set(const size_type i,
@@ -1251,8 +1226,6 @@ SparseMatrixEZ<number>::set(const size_type i,
     }
 }
 
-
-
 template <typename number>
 inline void
 SparseMatrixEZ<number>::add(const size_type i,
@@ -1272,7 +1245,6 @@ SparseMatrixEZ<number>::add(const size_type i,
   entry->value += value;
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1286,8 +1258,6 @@ SparseMatrixEZ<number>::add(const std::vector<size_type>& indices,
       if((full_matrix(i, j) != 0) || (elide_zero_values == false))
         add(indices[i], indices[j], full_matrix(i, j));
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1304,8 +1274,6 @@ SparseMatrixEZ<number>::add(const std::vector<size_type>& row_indices,
         add(row_indices[i], col_indices[j], full_matrix(i, j));
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -1319,8 +1287,6 @@ SparseMatrixEZ<number>::add(const size_type               row,
     if((values[j] != 0) || (elide_zero_values == false))
       add(row, col_indices[j], values[j]);
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1338,8 +1304,6 @@ SparseMatrixEZ<number>::add(const size_type  row,
       add(row, col_indices[j], values[j]);
 }
 
-
-
 template <typename number>
 inline number
 SparseMatrixEZ<number>::el(const size_type i, const size_type j) const
@@ -1349,8 +1313,6 @@ SparseMatrixEZ<number>::el(const size_type i, const size_type j) const
     return entry->value;
   return 0.;
 }
-
-
 
 template <typename number>
 inline number
@@ -1362,7 +1324,6 @@ SparseMatrixEZ<number>::operator()(const size_type i, const size_type j) const
   Assert(false, ExcInvalidEntry(i, j));
   return 0.;
 }
-
 
 template <typename number>
 inline typename SparseMatrixEZ<number>::const_iterator
@@ -1444,8 +1405,6 @@ SparseMatrixEZ<number>::add(const number factor, const MatrixType& M)
           add(row, entry->column(), factor * entry->value());
     }
 }
-
-
 
 template <typename number>
 template <typename MatrixTypeA, typename MatrixTypeB>
@@ -1560,7 +1519,6 @@ SparseMatrixEZ<number>::conjugate_add(const MatrixTypeA& A,
     }
 }
 
-
 template <typename number>
 template <class StreamType>
 inline void
@@ -1585,7 +1543,6 @@ SparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
               << used_by_line[i] << std::endl;
     }
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

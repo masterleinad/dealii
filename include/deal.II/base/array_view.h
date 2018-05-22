@@ -28,7 +28,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * A class that represents a window of memory locations of type @p ElementType
  * and presents it as if it was an array that can be accessed via an
@@ -255,11 +254,7 @@ private:
   friend class ArrayView<const ElementType>;
 };
 
-
-
 //---------------------------------------------------------------------------
-
-
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(value_type*       starting_element,
@@ -267,15 +262,11 @@ inline ArrayView<ElementType>::ArrayView(value_type*       starting_element,
   : starting_element(starting_element), n_elements(n_elements)
 {}
 
-
-
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
   const ArrayView<typename std::remove_cv<value_type>::type>& view)
   : starting_element(view.starting_element), n_elements(view.n_elements)
 {}
-
-
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
@@ -299,16 +290,12 @@ inline ArrayView<ElementType>::ArrayView(
                 "std::vector.");
 }
 
-
-
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
   std::vector<typename std::remove_cv<value_type>::type>& vector)
   : // use delegating constructor
     ArrayView(vector.data(), vector.size())
 {}
-
-
 
 template <typename ElementType>
 inline bool
@@ -319,8 +306,6 @@ operator==(const ArrayView<const value_type>& other_view) const
          && (other_view.size() == n_elements);
 }
 
-
-
 template <typename ElementType>
 inline bool
 ArrayView<ElementType>::operator==(
@@ -330,8 +315,6 @@ ArrayView<ElementType>::operator==(
          && (other_view.size() == n_elements);
 }
 
-
-
 template <typename ElementType>
 inline bool
 ArrayView<ElementType>::
@@ -339,8 +322,6 @@ operator!=(const ArrayView<const value_type>& other_view) const
 {
   return !(*this == other_view);
 }
-
-
 
 template <typename ElementType>
 inline typename ArrayView<ElementType>::value_type*
@@ -352,8 +333,6 @@ ArrayView<ElementType>::data() const noexcept
     return starting_element;
 }
 
-
-
 template <typename ElementType>
 inline bool
 ArrayView<ElementType>::operator!=(
@@ -361,8 +340,6 @@ ArrayView<ElementType>::operator!=(
 {
   return !(*this == other_view);
 }
-
-
 
 template <typename ElementType>
 inline std::size_t
@@ -378,16 +355,12 @@ ArrayView<ElementType>::begin() const
   return starting_element;
 }
 
-
-
 template <typename ElementType>
 inline typename ArrayView<ElementType>::iterator
 ArrayView<ElementType>::end() const
 {
   return starting_element + n_elements;
 }
-
-
 
 template <typename ElementType>
 inline typename ArrayView<ElementType>::const_iterator
@@ -396,16 +369,12 @@ ArrayView<ElementType>::cbegin() const
   return starting_element;
 }
 
-
-
 template <typename ElementType>
 inline typename ArrayView<ElementType>::const_iterator
 ArrayView<ElementType>::cend() const
 {
   return starting_element + n_elements;
 }
-
-
 
 template <typename ElementType>
 inline typename ArrayView<ElementType>::value_type& ArrayView<ElementType>::
@@ -415,8 +384,6 @@ inline typename ArrayView<ElementType>::value_type& ArrayView<ElementType>::
 
   return *(starting_element + i);
 }
-
-
 
 #ifndef DOXYGEN
 namespace internal
@@ -440,7 +407,6 @@ namespace internal
       return true;
     }
 
-
     /**
      * Return whether the objects one gets by dereferencing the
      * iterators within the given iterator range form a contiguous
@@ -460,8 +426,6 @@ namespace internal
   } // namespace ArrayViewHelper
 } // namespace internal
 #endif
-
-
 
 /**
  * Create an ArrayView that takes a pair of iterators as arguments. The type
@@ -499,8 +463,6 @@ make_array_view(const Iterator begin, const Iterator end)
     std::addressof(*begin), end - begin);
 }
 
-
-
 /**
  * Create a view from a pair of pointers. <code>ElementType</code> may be
  * const-qualified.
@@ -520,8 +482,6 @@ make_array_view(ElementType* const begin, ElementType* const end)
   return ArrayView<ElementType>(begin, end - begin);
 }
 
-
-
 /**
  * Create a view from an ArrayView itself.
  *
@@ -539,8 +499,6 @@ make_array_view(const ArrayView<Number>& array_view)
   return make_array_view(array_view.cbegin(), array_view.cend());
 }
 
-
-
 /**
  * Create a view from an ArrayView itself.
  *
@@ -557,8 +515,6 @@ make_array_view(ArrayView<Number>& array_view)
 {
   return make_array_view(array_view.begin(), array_view.end());
 }
-
-
 
 /**
  * Create a view to an entire Tensor object. This is equivalent to initializing
@@ -583,8 +539,6 @@ make_array_view(const Tensor<rank, dim, Number>& tensor)
   return make_array_view(tensor.begin_raw(), tensor.end_raw());
 }
 
-
-
 /**
  * Create a view to an entire Tensor object. This is equivalent to initializing
  * an ArrayView object with a pointer to the first element and the size of the
@@ -608,8 +562,6 @@ make_array_view(Tensor<rank, dim, Number>& tensor)
   return make_array_view(tensor.begin_raw(), tensor.end_raw());
 }
 
-
-
 /**
  * Create a view to an entire SymmetricTensor object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element and the
@@ -632,8 +584,6 @@ make_array_view(const SymmetricTensor<rank, dim, Number>& tensor)
 {
   return make_array_view(tensor.begin_raw(), tensor.end_raw());
 }
-
-
 
 /**
  * Create a view to an entire SymmetricTensor object. This is equivalent to
@@ -659,8 +609,6 @@ make_array_view(SymmetricTensor<rank, dim, Number>& tensor)
   return make_array_view(tensor.begin_raw(), tensor.end_raw());
 }
 
-
-
 /**
  * Create a view to an entire C-style array. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element and
@@ -679,8 +627,6 @@ inline ArrayView<ElementType> make_array_view(ElementType (&array)[N])
 {
   return ArrayView<ElementType>(array, N);
 }
-
-
 
 /**
  * Create a view to an entire Vector object. This is equivalent to
@@ -703,8 +649,6 @@ make_array_view(Vector<ElementType>& vector)
   return ArrayView<ElementType>(vector.begin(), vector.size());
 }
 
-
-
 /**
  * Create a view to an entire Vector object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element and
@@ -725,8 +669,6 @@ make_array_view(const Vector<ElementType>& vector)
 {
   return ArrayView<const ElementType>(vector.begin(), vector.size());
 }
-
-
 
 /**
  * Create a view to an entire std::vector object. This is equivalent to
@@ -749,8 +691,6 @@ make_array_view(std::vector<ElementType>& vector)
   return ArrayView<ElementType>(vector.data(), vector.size());
 }
 
-
-
 /**
  * Create a view to an entire std::vector object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element and
@@ -771,8 +711,6 @@ make_array_view(const std::vector<ElementType>& vector)
 {
   return ArrayView<const ElementType>(vector.data(), vector.size());
 }
-
-
 
 /**
  * Create a view to a part of a std::vector object. This is equivalent to
@@ -806,8 +744,6 @@ make_array_view(std::vector<ElementType>& vector,
   return ArrayView<ElementType>(&vector[starting_index], size_of_view);
 }
 
-
-
 /**
  * Create a view to a part of a std::vector object. This is equivalent to
  * initializing the ArrayView object with a pointer to the @p starting_index-
@@ -840,8 +776,6 @@ make_array_view(const std::vector<ElementType>& vector,
   return ArrayView<const ElementType>(&vector[starting_index], size_of_view);
 }
 
-
-
 /**
  * Create a view to an entire row of a Table<2> object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element of the
@@ -867,8 +801,6 @@ inline ArrayView<ElementType>
   return ArrayView<ElementType>(&table[row][0], table.size()[1]);
 }
 
-
-
 /**
  * Create a view to an entire Table<2> object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element of the
@@ -890,8 +822,6 @@ inline ArrayView<ElementType> make_array_view(Table<2, ElementType>& table)
 {
   return ArrayView<ElementType>(&table[0][0], table.n_elements());
 }
-
-
 
 /**
  * Create a view to an entire Table<2> object. This is equivalent to
@@ -915,7 +845,6 @@ make_array_view(const Table<2, ElementType>& table)
 {
   return ArrayView<const ElementType>(&table[0][0], table.n_elements());
 }
-
 
 /**
  * Create a view to an entire LAPACKFullMatrix object. This is equivalent to
@@ -941,8 +870,6 @@ make_array_view(LAPACKFullMatrix<ElementType>& matrix)
   return ArrayView<ElementType>(&matrix(0, 0), matrix.n_elements());
 }
 
-
-
 /**
  * Create a view to an entire LAPACKFullMatrix object. This is equivalent to
  * initializing an ArrayView object with a pointer to the first element of the
@@ -965,8 +892,6 @@ make_array_view(const LAPACKFullMatrix<ElementType>& matrix)
 {
   return ArrayView<const ElementType>(&matrix(0, 0), matrix.n_elements());
 }
-
-
 
 /**
  * Create a view to an entire row of a Table<2> object. This is equivalent to
@@ -992,8 +917,6 @@ make_array_view(const Table<2, ElementType>&                    table,
   AssertIndexRange(row, table.size()[0]);
   return ArrayView<const ElementType>(&table[row][0], table.size()[1]);
 }
-
-
 
 /**
  * Create a view to (a part of) a row of a Table<2> object.
@@ -1030,8 +953,6 @@ inline ArrayView<ElementType> make_array_view(
   return ArrayView<ElementType>(&table[row][starting_column], size_of_view);
 }
 
-
-
 /**
  * Create a view to (a part of) a row of a Table<2> object.
  *
@@ -1067,8 +988,6 @@ make_array_view(const Table<2, ElementType>&                    table,
   return ArrayView<const ElementType>(&table[row][starting_column],
                                       size_of_view);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

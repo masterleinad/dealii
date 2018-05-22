@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as find_cell_2_1, but in 3d
 
 #include "../tests.h"
@@ -24,8 +22,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check(Triangulation<3>& tria)
 {
@@ -41,7 +37,6 @@ void check(Triangulation<3>& tria)
 
   Assert(p.distance(cell->center()) < cell->diameter() / 2, ExcInternalError());
 }
-
 
 int
 main()

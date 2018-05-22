@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that is_contiguous works correctly for pointers
 
 #include "../tests.h"
@@ -35,7 +34,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // I managed to break solver selector once by making some variables in the
 // AdditionalData structures of the solvers const. This test simply
 // instantiates that class, to make sure it still compiles

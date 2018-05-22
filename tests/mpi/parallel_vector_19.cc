@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // use same partition as in parallel_vector_06 to check the version of the
 // add() method that takes a std::vector of indices and a std::vector of
 // values.
@@ -25,7 +24,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -34,7 +32,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor from processor 1 to 8
   // owns 2 indices (the other processors do
@@ -73,8 +70,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

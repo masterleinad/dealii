@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/block_sparsity_pattern.h>
@@ -23,8 +22,6 @@
 //   make_sparsity_pattern (const DoFHandler<dim> &,
 //                          std::vector<std::vector<bool> > &,
 //                      BlockDynamicSparsityPattern  &);
-
-
 
 template <int dim>
 void

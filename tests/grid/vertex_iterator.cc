@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test TriaAccessor<0,dim,spacedim>
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void
 test()
@@ -57,8 +53,6 @@ test()
         deallog << std::endl;
       }
 }
-
-
 
 int
 main()

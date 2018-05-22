@@ -13,21 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Snippet to demonstrate some properties of the deal.II implementation of
  * the RT spaces.
  */
 
-
-
 #include "../tests.h"
 
 #define PRECISION 2
 
-
 std::ofstream logfile("output");
-
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -59,8 +54,6 @@ std::ofstream logfile("output");
 #include <deal.II/fe/mapping_q1_eulerian.h>
 #include <deal.II/grid/grid_tools.h>
 
-
-
 template <int dim>
 class TestMap1 : public Function<dim>
 {
@@ -78,8 +71,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestMap1<dim>::value(const Point<dim>& /*p*/,
@@ -87,7 +78,6 @@ TestMap1<dim>::value(const Point<dim>& /*p*/,
 {
   return (1);
 }
-
 
 template <int dim>
 void
@@ -125,8 +115,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -143,7 +131,6 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
     return rad * (cos(phi + phi_p) - cos(phi_p));
 }
 
-
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
@@ -155,9 +142,7 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
-
 
 template <int dim>
 class TestDef2 : public Function<dim>
@@ -180,7 +165,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -193,7 +177,6 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
     return scale * y;
 }
 
-
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
@@ -205,10 +188,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
 // testDef3 implements parallelograms ...
-
 
 template <int dim>
 class TestDef3 : public Function<dim>
@@ -231,7 +212,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -244,7 +224,6 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
     return 0;
 }
 
-
 template <int dim>
 void
 TestDef3<dim>::vector_value(const Point<dim>& p,
@@ -255,8 +234,6 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
-
 
 /*
  * Integrate the function value over the element.
@@ -301,7 +278,6 @@ double EvaluateArea(Mapping<2>&     mapping,
 
   return (result_v);
 }
-
 
 int
 main(int /*argc*/, char** /*argv*/)
@@ -431,7 +407,6 @@ main(int /*argc*/, char** /*argv*/)
               EvaluateArea(*mapping_euler, dof_handler_def, solution_q));
       deallog << buf;
     }
-
 
   // Try parallelograms
   for(double scale = -1.0; scale < 1.0; scale += 0.25)

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This program tests the functionality of the function parser
 // wrapper.
 

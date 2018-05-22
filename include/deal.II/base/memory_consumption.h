@@ -16,7 +16,6 @@
 #ifndef dealii_memory_consumption_h
 #define dealii_memory_consumption_h
 
-
 #include <deal.II/base/config.h>
 
 #include <array>
@@ -30,11 +29,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // forward declaration
 template <typename T>
 class VectorizedArray;
-
 
 /**
  * This namespace provides functions helping to determine the amount of memory
@@ -262,8 +259,6 @@ namespace MemoryConsumption
   memory_consumption(const std::unique_ptr<T>&);
 } // namespace MemoryConsumption
 
-
-
 // now comes the implementation of these functions
 
 namespace MemoryConsumption
@@ -275,8 +270,6 @@ namespace MemoryConsumption
   {
     return sizeof(T);
   }
-
-
 
   inline std::size_t
   memory_consumption(const char* string)
@@ -291,16 +284,12 @@ namespace MemoryConsumption
       }
   }
 
-
-
   template <typename T>
   inline std::size_t
   memory_consumption(const std::complex<T>&)
   {
     return sizeof(std::complex<T>);
   }
-
-
 
   template <typename T>
   inline std::size_t
@@ -309,15 +298,11 @@ namespace MemoryConsumption
     return sizeof(VectorizedArray<T>);
   }
 
-
-
   inline std::size_t
   memory_consumption(const std::string& s)
   {
     return sizeof(s) + s.length();
   }
-
-
 
   template <typename T>
   std::size_t
@@ -340,8 +325,6 @@ namespace MemoryConsumption
       }
   }
 
-
-
   template <typename T, std::size_t N>
   std::size_t
   memory_consumption(const std::array<T, N>& v)
@@ -360,8 +343,6 @@ namespace MemoryConsumption
       }
   }
 
-
-
   template <typename T, int N>
   std::size_t
   memory_consumption(const T (&v)[N])
@@ -372,15 +353,11 @@ namespace MemoryConsumption
     return mem;
   }
 
-
-
   inline std::size_t
   memory_consumption(const std::vector<bool>& v)
   {
     return v.capacity() / 8 + sizeof(v);
   }
-
-
 
   template <typename A, typename B>
   inline std::size_t
@@ -389,16 +366,12 @@ namespace MemoryConsumption
     return (memory_consumption(p.first) + memory_consumption(p.second));
   }
 
-
-
   template <typename T>
   inline std::size_t
   memory_consumption(const T* const)
   {
     return sizeof(T*);
   }
-
-
 
   template <typename T>
   inline std::size_t
@@ -407,16 +380,12 @@ namespace MemoryConsumption
     return sizeof(std::shared_ptr<T>);
   }
 
-
-
   template <typename T>
   inline std::size_t
   memory_consumption(const std::unique_ptr<T>&)
   {
     return sizeof(std::unique_ptr<T>);
   }
-
-
 
   template <typename T>
   inline typename std::enable_if<!(std::is_fundamental<T>::value

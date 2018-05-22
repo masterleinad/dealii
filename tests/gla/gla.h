@@ -89,13 +89,11 @@ public:
         return 0;
       }
 
-
       const Vector&
       operator=(const double number)
       {
         return *this;
       }
-
 
       const Vector&
       operator*=(const double factor)

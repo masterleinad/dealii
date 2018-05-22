@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DataOut for complex vectors
 //
 // like the test without _mixed, but output both a real-valued and a
@@ -35,8 +34,6 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-
-
 
 template <int dim>
 void
@@ -68,8 +65,6 @@ check()
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

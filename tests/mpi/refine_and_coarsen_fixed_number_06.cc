@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in parallel::distributed::GridRefinement
 // ::refine_and_coarsen_fixed_number() and fixed_fraction() with one CPU with
 // 0 cells:
@@ -60,7 +58,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

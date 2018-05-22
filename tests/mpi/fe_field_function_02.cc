@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test FEFieldFunction for parallel computations. Specifically, we should be able
 // to evaluate it in owned or ghost cells.
 
@@ -41,8 +39,6 @@
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class LinearFunction : public Function<dim>
 {
@@ -53,7 +49,6 @@ public:
     return p[0] + 2;
   }
 };
-
 
 template <int dim>
 void
@@ -159,7 +154,6 @@ test()
 
   tr.reset_manifold(99);
 }
-
 
 int
 main(int argc, char* argv[])

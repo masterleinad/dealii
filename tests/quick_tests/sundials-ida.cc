@@ -20,7 +20,6 @@
 
 using namespace dealii;
 
-
 /**
  * Solve the Harmonic oscillator problem.
  *
@@ -62,7 +61,6 @@ public:
     diff[1] = 1.0;
 
     time_stepper.reinit_vector = [&](Vector<double>& v) { v.reinit(2); };
-
 
     typedef Vector<double> VectorType;
 
@@ -108,7 +106,6 @@ public:
     time_stepper.solver_should_restart
       = [](const double, VectorType&, VectorType&) -> bool { return false; };
 
-
     time_stepper.differential_components
       = [&]() -> IndexSet { return complete_index_set(2); };
   }
@@ -130,7 +127,6 @@ private:
   FullMatrix<double> Jinv;
   double             kappa;
 };
-
 
 int
 main(int argc, char** argv)

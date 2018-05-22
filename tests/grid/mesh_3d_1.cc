@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // the real reason why coarsening_3d failed: take three cells to form an
 // L, and we end up with an external face between two of them, which
 // however has edges that are shared by the two cells. this creates a
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 int
 main()

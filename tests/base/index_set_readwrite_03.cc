@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // document a bug in IndexSet::block_read() and block_write(),
 // because largest_range was not serialized/reset.
 
@@ -21,7 +20,6 @@
 #include <stdlib.h>
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -47,8 +45,6 @@ test()
 
   std::remove("a.idxset");
 }
-
-
 
 int
 main()

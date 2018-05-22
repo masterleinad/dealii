@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // turns out that cylinder_shell_01 wasn't enough: measure just takes the
 // positive value it computes. we need to ask a FEValues object for the JxW
 // values to get the sign of the Jacobian
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 int
 main()

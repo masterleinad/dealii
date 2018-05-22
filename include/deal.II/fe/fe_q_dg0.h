@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_fe_q_dg0_h
 #define dealii_fe_q_dg0_h
 
@@ -22,7 +21,6 @@
 #include <deal.II/fe/fe_q_base.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup fe */
 /*@{*/
@@ -279,7 +277,6 @@ public:
   get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                            FullMatrix<double>& matrix) const override;
 
-
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
@@ -318,10 +315,7 @@ private:
   get_dpo_vector(const unsigned int degree);
 };
 
-
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // inhomogeneous constraints on a nonsymmetric matrix that comes from a
 // discretization of the first derivative, based on block matrices instead
@@ -86,8 +84,6 @@ private:
   BlockVector<double> test_rhs;
 };
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -98,7 +94,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component) const;
 };
-
 
 template <int dim>
 double
@@ -111,19 +106,16 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return product;
 }
 
-
 template <int dim>
 AdvectionProblem<dim>::AdvectionProblem()
   : dof_handler(triangulation), fe(FE_Q<dim>(2), 2)
 {}
-
 
 template <int dim>
 AdvectionProblem<dim>::~AdvectionProblem()
 {
   dof_handler.clear();
 }
-
 
 template <int dim>
 void
@@ -176,8 +168,6 @@ AdvectionProblem<dim>::setup_system()
   reference_rhs.collect_sizes();
   test_rhs.reinit(reference_rhs);
 }
-
-
 
 // test whether we are equal with the
 // standard matrix and right hand side
@@ -247,8 +237,6 @@ AdvectionProblem<dim>::test_equality()
 
   Assert(test_rhs.l2_norm() < 1e-14, ExcInternalError());
 }
-
-
 
 template <int dim>
 void
@@ -327,15 +315,12 @@ AdvectionProblem<dim>::assemble_reference()
     boundary_values, reference_matrix, test_rhs, reference_rhs);
 }
 
-
-
 template <int dim>
 void
 AdvectionProblem<dim>::assemble_test_1()
 {
   test_matrix = 0;
   test_rhs    = 0;
-
 
   QGauss<dim>   quadrature_formula(3);
   FEValues<dim> fe_values(fe,
@@ -400,8 +385,6 @@ AdvectionProblem<dim>::assemble_test_1()
 
   test_equality();
 }
-
-
 
 template <int dim>
 void
@@ -470,7 +453,6 @@ AdvectionProblem<dim>::assemble_test_2()
   test_equality();
 }
 
-
 template <int dim>
 void
 AdvectionProblem<dim>::run()
@@ -514,8 +496,6 @@ AdvectionProblem<dim>::run()
   assemble_test_1();
   assemble_test_2();
 }
-
-
 
 int
 main()

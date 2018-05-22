@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check the results of MGTransferPrebuilt with Dirichlet boundary conditions
 
 //TODO:[GK] Add checks for RT again!
@@ -55,7 +54,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
       v[level].reinit(n);
     }
 }
-
 
 template <int dim>
 void
@@ -273,7 +271,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer_renumbered.copy_from_mg(mgdof_renumbered, u, v);
   print_diff(mgdof_renumbered, mgdof, u, diff);
 }
-
 
 int
 main()

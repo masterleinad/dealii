@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test, if the grid is written correctly in dx format. the vertices have to be
 // renumbered after coarsening, as the dx format uses an implicit vertex
 // numbering.
@@ -28,10 +27,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -53,7 +49,6 @@ test()
   tria.execute_coarsening_and_refinement();
   grid_out.write_dx(tria, logfile);
 }
-
 
 int
 main()

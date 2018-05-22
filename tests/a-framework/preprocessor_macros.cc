@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the testsuite framework.
 
 // This test checks whether the cmake configuration correctly exports

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the creation, simplest usage, and destruction of a property pool
 
 #include "../tests.h"
 #include <deal.II/particles/property_pool.h>
 #include <fstream>
 #include <iomanip>
-
 
 void
 test()
@@ -42,8 +39,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

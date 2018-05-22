@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Test cached version of find active cell around point
  */
@@ -31,7 +30,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim, int spacedim>
 void

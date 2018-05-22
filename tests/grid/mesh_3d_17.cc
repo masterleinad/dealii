@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we used to have an abort in an assertion in
 // TriaCellAccessor::neighbor_child_on_subface. it turned out that the
 // assertion was wrong. make sure it works now.
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
-
-
 void check(Triangulation<3>& tria)
 {
   deallog << "Coarse cell 0 vertices:" << std::endl;
@@ -42,7 +38,6 @@ void check(Triangulation<3>& tria)
   for(unsigned int i = 0; i < 8; ++i)
     deallog << ' ' << (++tria.begin_active())->vertex_index(i);
   deallog << std::endl;
-
 
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
@@ -96,7 +91,6 @@ void check(Triangulation<3>& tria)
                     << (neighbor->face_orientation(nb_of_nb) ? "true" : "false")
                     << std::endl;
 
-
             deallog << "  checking subfaces:" << std::endl;
             for(unsigned int subface_no = 0;
                 subface_no < GeometryInfo<dim>::max_children_per_face;
@@ -114,7 +108,6 @@ void check(Triangulation<3>& tria)
           }
       }
 }
-
 
 int
 main()

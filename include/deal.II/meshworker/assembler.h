@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_assembler_h
 #define dealii_mesh_worker_assembler_h
 
@@ -25,7 +24,6 @@
 #include <deal.II/meshworker/functional.h>
 #include <deal.II/meshworker/simple.h>
 #include <deal.II/multigrid/mg_constrained_dofs.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -128,7 +126,6 @@ namespace MeshWorker
       void
       initialize_info(DOFINFO& info, bool face) const;
 
-
       /**
        * Assemble the local residuals into the global residuals.
        */
@@ -170,7 +167,6 @@ namespace MeshWorker
                    ResidualLocalBlocksToGlobalBlocks<VectorType>>
         constraints;
     };
-
 
     /**
      * A helper class assembling local matrices into global matrices.
@@ -232,7 +228,6 @@ namespace MeshWorker
       template <class DOFINFO>
       void
       initialize_info(DOFINFO& info, bool face) const;
-
 
       /**
        * Assemble the local matrices into the global matrices.
@@ -367,7 +362,6 @@ namespace MeshWorker
       template <class DOFINFO>
       void
       initialize_info(DOFINFO& info, bool face) const;
-
 
       /**
        * Assemble the local matrices into the global matrices.
@@ -506,7 +500,6 @@ namespace MeshWorker
                    MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>>
         mg_constrained_dofs;
 
-
       /**
        * The smallest positive number that will be entered into the global
        * matrix. All smaller absolute values will be treated as zero and will
@@ -534,7 +527,6 @@ namespace MeshWorker
     {
       constraints = &c;
     }
-
 
     template <typename VectorType>
     template <class DOFINFO>
@@ -575,7 +567,6 @@ namespace MeshWorker
         constraints->distribute_local_to_global(local, dof, global);
     }
 
-
     template <typename VectorType>
     template <class DOFINFO>
     inline void
@@ -585,7 +576,6 @@ namespace MeshWorker
         assemble(
           *(residuals.entry<VectorType>(i)), info.vector(i), info.indices);
     }
-
 
     template <typename VectorType>
     template <class DOFINFO>
@@ -603,7 +593,6 @@ namespace MeshWorker
         }
     }
 
-
     //----------------------------------------------------------------------//
 
     template <typename MatrixType, typename number>
@@ -611,7 +600,6 @@ namespace MeshWorker
       MatrixLocalBlocksToGlobalBlocks(double threshold)
       : threshold(threshold)
     {}
-
 
     template <typename MatrixType, typename number>
     inline void
@@ -623,8 +611,6 @@ namespace MeshWorker
       matrices   = &m;
     }
 
-
-
     template <typename MatrixType, typename number>
     inline void
     MatrixLocalBlocksToGlobalBlocks<MatrixType, number>::initialize(
@@ -632,8 +618,6 @@ namespace MeshWorker
     {
       constraints = &c;
     }
-
-
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>
@@ -644,8 +628,6 @@ namespace MeshWorker
     {
       info.initialize_matrices(*matrices, face);
     }
-
-
 
     template <typename MatrixType, typename number>
     inline void
@@ -697,7 +679,6 @@ namespace MeshWorker
         }
     }
 
-
     template <typename MatrixType, typename number>
     template <class DOFINFO>
     inline void
@@ -719,7 +700,6 @@ namespace MeshWorker
                    info.indices);
         }
     }
-
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>
@@ -762,7 +742,6 @@ namespace MeshWorker
         }
     }
 
-
     // ----------------------------------------------------------------------//
 
     template <typename MatrixType, typename number>
@@ -770,7 +749,6 @@ namespace MeshWorker
       MGMatrixLocalBlocksToGlobalBlocks(double threshold)
       : threshold(threshold)
     {}
-
 
     template <typename MatrixType, typename number>
     inline void
@@ -783,7 +761,6 @@ namespace MeshWorker
       matrices = &m;
     }
 
-
     template <typename MatrixType, typename number>
     inline void
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::initialize(
@@ -791,7 +768,6 @@ namespace MeshWorker
     {
       mg_constrained_dofs = &mg_c;
     }
-
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>
@@ -803,8 +779,6 @@ namespace MeshWorker
       info.initialize_matrices(*matrices, face);
     }
 
-
-
     template <typename MatrixType, typename number>
     inline void
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::initialize_edge_flux(
@@ -815,7 +789,6 @@ namespace MeshWorker
       flux_down = down;
     }
 
-
     template <typename MatrixType, typename number>
     inline void
     MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::
@@ -824,7 +797,6 @@ namespace MeshWorker
       interface_in  = in;
       interface_out = out;
     }
-
 
     template <typename MatrixType, typename number>
     inline void
@@ -913,7 +885,6 @@ namespace MeshWorker
                 }
             }
     }
-
 
     template <typename MatrixType, typename number>
     inline void
@@ -1254,7 +1225,6 @@ namespace MeshWorker
             }
     }
 
-
     template <typename MatrixType, typename number>
     template <class DOFINFO>
     inline void
@@ -1318,7 +1288,6 @@ namespace MeshWorker
             }
         }
     }
-
 
     template <typename MatrixType, typename number>
     template <class DOFINFO>

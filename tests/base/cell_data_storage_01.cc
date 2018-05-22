@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check CellDataStorage initialize(cell,number), initialize(start,end,number) and get_data() functions.
-
 
 #include "../tests.h"
 
@@ -32,7 +29,6 @@
 #include <deal.II/grid/tria_accessor.h>
 
 #include <deal.II/base/quadrature_point_data.h>
-
 
 using namespace dealii;
 
@@ -68,7 +64,6 @@ DeclException3(ExcWrongValue,
                double,
                double,
                << arg1 << " != " << arg2 << " with delta = " << arg3);
-
 
 /**
  * Loop over quadrature points and check that value is the same as given by the function.
@@ -152,7 +147,6 @@ test()
 
   deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

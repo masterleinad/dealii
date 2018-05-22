@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the implementation of theh constexpr min/max functions
 // in case deal.II is compiled with C++14 support, we only test
 // the STL.
-
 
 #include "../tests.h"
 #include <deal.II/base/std_cxx14/algorithm.h>
@@ -27,7 +25,6 @@ comp(const int& a, const int& b)
 {
   return b < a;
 }
-
 
 int
 main()

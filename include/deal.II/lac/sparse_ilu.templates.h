@@ -16,8 +16,6 @@
 #ifndef dealii_sparse_ilu_templates_h
 #  define dealii_sparse_ilu_templates_h
 
-
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/lac/sparse_ilu.h>
 #  include <deal.II/lac/vector.h>
@@ -25,9 +23,7 @@
 #  include <algorithm>
 #  include <cmath>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename number>
 template <typename somenumber>
@@ -130,8 +126,6 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
     }
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -212,7 +206,6 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
       dst(row) = dst_row * this->diag_element(row);
     }
 }
-
 
 template <typename number>
 template <typename somenumber>
@@ -296,15 +289,12 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
     }
 }
 
-
 template <typename number>
 std::size_t
 SparseILU<number>::memory_consumption() const
 {
   return SparseLUDecomposition<number>::memory_consumption();
 }
-
-
 
 /*----------------------------   sparse_ilu.templates.h     ---------------------------*/
 

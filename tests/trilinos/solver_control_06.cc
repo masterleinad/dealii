@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Tests passing of settings in TrilinosWrappers::SolverBase::AdditionalData
 
 #include "../tests.h"
@@ -484,7 +482,6 @@ Test_Solver_Output::refine_grid()
     triangulation, estimated_error_per_cell, 0.3, 0.03);
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 int
 main(int argc, char* argv[])

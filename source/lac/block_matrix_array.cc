@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/block_matrix_array.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
@@ -22,7 +21,6 @@
 #include <deal.II/lac/petsc_parallel_block_vector.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry& e)
@@ -36,8 +34,6 @@ BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry& e)
   e2.matrix = nullptr;
 }
 
-
-
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::Entry::~Entry()
 {
@@ -45,13 +41,10 @@ BlockMatrixArray<number, BlockVectorType>::Entry::~Entry()
     delete matrix;
 }
 
-
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::BlockMatrixArray()
   : block_rows(0), block_cols(0)
 {}
-
-
 
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::BlockMatrixArray(
@@ -59,7 +52,6 @@ BlockMatrixArray<number, BlockVectorType>::BlockMatrixArray(
   const unsigned int n_block_cols)
   : block_rows(n_block_rows), block_cols(n_block_cols)
 {}
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -70,8 +62,6 @@ BlockMatrixArray<number, BlockVectorType>::initialize(
   block_rows = n_block_rows;
   block_cols = n_block_cols;
 }
-
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -84,15 +74,12 @@ BlockMatrixArray<number, BlockVectorType>::reinit(
   block_cols = n_block_cols;
 }
 
-
-
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::clear()
 {
   entries.clear();
 }
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -124,8 +111,6 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
     }
 }
 
-
-
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult(
@@ -135,8 +120,6 @@ BlockMatrixArray<number, BlockVectorType>::vmult(
   dst = 0.;
   vmult_add(dst, src);
 }
-
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -168,8 +151,6 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
     }
 }
 
-
-
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::Tvmult(
@@ -179,8 +160,6 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult(
   dst = 0.;
   Tvmult_add(dst, src);
 }
-
-
 
 template <typename number, typename BlockVectorType>
 number
@@ -221,8 +200,6 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
   return result;
 }
 
-
-
 template <typename number, typename BlockVectorType>
 number
 BlockMatrixArray<number, BlockVectorType>::matrix_norm_square(
@@ -231,16 +208,12 @@ BlockMatrixArray<number, BlockVectorType>::matrix_norm_square(
   return matrix_scalar_product(u, u);
 }
 
-
-
 template <typename number, typename BlockVectorType>
 unsigned int
 BlockMatrixArray<number, BlockVectorType>::n_block_rows() const
 {
   return block_rows;
 }
-
-
 
 template <typename number, typename BlockVectorType>
 unsigned int
@@ -249,15 +222,12 @@ BlockMatrixArray<number, BlockVectorType>::n_block_cols() const
   return block_cols;
 }
 
-
-
 //---------------------------------------------------------------------------
 
 template <typename number, typename BlockVectorType>
 BlockTrianglePrecondition<number, BlockVectorType>::BlockTrianglePrecondition()
   : BlockMatrixArray<number, BlockVectorType>(), backward(false)
 {}
-
 
 template <typename number, typename BlockVectorType>
 BlockTrianglePrecondition<number, BlockVectorType>::BlockTrianglePrecondition(
@@ -266,14 +236,12 @@ BlockTrianglePrecondition<number, BlockVectorType>::BlockTrianglePrecondition(
     backward(false)
 {}
 
-
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::reinit(const unsigned int n)
 {
   BlockMatrixArray<number, BlockVectorType>::reinit(n, n);
 }
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -360,8 +328,6 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
     }
 }
 
-
-
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
@@ -378,8 +344,6 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
   vmult(aux, src);
   dst += aux;
 }
-
-
 
 template <typename number, typename BlockVectorType>
 void
@@ -414,7 +378,6 @@ BlockTrianglePrecondition<number, BlockVectorType>::Tvmult(
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 template <typename number, typename BlockVectorType>
 void

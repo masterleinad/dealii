@@ -33,7 +33,6 @@ test()
   AssertThrow(a.l1_norm() == 0., ExcMessage("reinit did not zero the entry"));
 }
 
-
 int
 main(int argc, char** argv)
 {

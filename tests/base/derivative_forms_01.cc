@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "Sacado.hpp"
 #include <deal.II/base/derivative_form.h>

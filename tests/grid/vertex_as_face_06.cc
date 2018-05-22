@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that we can do things like cell->face() in 1d as well. here:
 // test cell->face(0)->get_dof_indices()
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -28,8 +26,6 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 template <int spacedim>
 void
@@ -69,8 +65,6 @@ test()
         deallog << "Right vertex=" << dof_indices[i] << std::endl;
     }
 }
-
-
 
 int
 main()

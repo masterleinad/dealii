@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // deal.II includes
 #include "../tests.h"
 #include <deal.II/base/numbers.h>
@@ -25,7 +24,6 @@
 #include <complex>
 
 // test read/write element access using unsigned int and double.
-
 
 // sparse matrix elements
 void

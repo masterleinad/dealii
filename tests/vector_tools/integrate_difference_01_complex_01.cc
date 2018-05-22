@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference for complex-valued vectors. This test is
 // like integrate_difference_01, using a real-valued function but
 // using complex data types
@@ -33,7 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 using namespace dealii;
-
 
 // x+y(+z), x^2+y^2 (, z+xy)
 // div = 1+2y (+1)
@@ -57,8 +55,6 @@ public:
       return numbers::signaling_nan<double>();
   }
 };
-
-
 
 template <int dim>
 void
@@ -107,7 +103,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

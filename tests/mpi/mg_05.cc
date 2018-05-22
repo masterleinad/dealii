@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simplify test to show bug: missing level dofs:
 /*
 An error occurred in line <126> of file <mg_05.cc> in function
@@ -43,7 +41,6 @@ Additional Information:
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 template <int dim>
 void
@@ -148,7 +145,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

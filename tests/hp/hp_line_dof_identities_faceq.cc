@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FE_FaceQ::hp_line_dof_identities
-
 
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
@@ -25,7 +22,6 @@
 #include <deal.II/hp/fe_collection.h>
 
 #include <fstream>
-
 
 template <int dim>
 void
@@ -57,8 +53,6 @@ test()
           }
       }
 }
-
-
 
 int
 main()

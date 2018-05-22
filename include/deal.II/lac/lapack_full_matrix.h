@@ -16,7 +16,6 @@
 #ifndef dealii_lapack_full_matrix_h
 #define dealii_lapack_full_matrix_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/base/table.h>
@@ -39,7 +38,6 @@ template <typename number>
 class FullMatrix;
 template <typename number>
 class SparseMatrix;
-
 
 /**
  * A variant of FullMatrix using LAPACK functions wherever possible. In order
@@ -73,12 +71,10 @@ public:
    */
   explicit LAPACKFullMatrix(const size_type size = 0);
 
-
   /**
    * Constructor. Initialize the matrix as a rectangular matrix $\rm{rows} \times \rm{cols}$.
    */
   LAPACKFullMatrix(const size_type rows, const size_type cols);
-
 
   /**
    * Copy constructor. This constructor does a deep copy of the matrix.
@@ -291,7 +287,6 @@ public:
        const number      factor       = 1.,
        const bool        transpose    = false);
 
-
   /**
    * Matrix-vector-multiplication.
    *
@@ -387,7 +382,6 @@ public:
    */
   void
   Tvmult_add(Vector<number>& w, const Vector<number>& v) const;
-
 
   /**
    * Matrix-matrix-multiplication.
@@ -931,8 +925,6 @@ private:
   mutable Threads::Mutex mutex;
 };
 
-
-
 /**
  * A preconditioner based on the LU-factorization of LAPACKFullMatrix.
  *
@@ -972,7 +964,6 @@ LAPACKFullMatrix<number>::set(const size_type i,
   (*this)(i, j) = value;
 }
 
-
 template <typename number>
 inline typename LAPACKFullMatrix<number>::size_type
 LAPACKFullMatrix<number>::m() const
@@ -1009,8 +1000,6 @@ LAPACKFullMatrix<number>::copy_from(const MatrixType& M)
   state = LAPACKSupport::matrix;
 }
 
-
-
 template <typename number>
 template <typename MatrixType>
 inline void
@@ -1044,7 +1033,6 @@ LAPACKFullMatrix<number>::fill(const MatrixType& M,
   state = LAPACKSupport::matrix;
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1057,7 +1045,6 @@ LAPACKFullMatrix<number>::vmult(Vector<number2>&,
                     "matching Vector<double> vector type."));
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1068,7 +1055,6 @@ LAPACKFullMatrix<number>::vmult_add(Vector<number2>&,
          ExcMessage("LAPACKFullMatrix<number>::vmult_add must be called with a "
                     "matching Vector<double> vector type."));
 }
-
 
 template <typename number>
 template <typename number2>
@@ -1082,7 +1068,6 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number2>&,
                     "matching Vector<double> vector type."));
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1094,7 +1079,6 @@ LAPACKFullMatrix<number>::Tvmult_add(Vector<number2>&,
     ExcMessage("LAPACKFullMatrix<number>::Tvmult_add must be called with a "
                "matching Vector<double> vector type."));
 }
-
 
 template <typename number>
 inline std::complex<number>
@@ -1108,7 +1092,6 @@ LAPACKFullMatrix<number>::eigenvalue(const size_type i) const
   return std::complex<number>(wr[i], wi[i]);
 }
 
-
 template <typename number>
 inline number
 LAPACKFullMatrix<number>::singular_value(const size_type i) const
@@ -1119,8 +1102,6 @@ LAPACKFullMatrix<number>::singular_value(const size_type i) const
 
   return wr[i];
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

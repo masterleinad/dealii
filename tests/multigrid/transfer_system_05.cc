@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _04, but checks the copy_to_mg and copy_from_mg of MGTransferSelect
 
 #include "../tests.h"
@@ -33,7 +32,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <int dim>
 void
@@ -57,7 +55,6 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   DoFRenumbering::component_wise(mg_dof_handler, block_component);
   for(unsigned int level = 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
-
 
   MGTransferSelect<double> transfer;
 
@@ -97,7 +94,6 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
     v[l].reinit(mg_dofs_per_block[l][2]);
 
-
   transfer.copy_to_mg(mg_dof_handler, v, u);
   for(unsigned int l = 0; l < tr.n_levels(); ++l)
     {
@@ -121,7 +117,6 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     deallog << ' ' << (int) u(i);
   deallog << std::endl;
 }
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_multigrid_h
 #define dealii_multigrid_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/base/smartpointer.h>
@@ -401,7 +400,6 @@ private:
    */
   MGLevelObject<VectorType> defect2;
 
-
   /**
    * The matrix for each level.
    */
@@ -468,7 +466,6 @@ private:
   template <int dim, class OtherVectorType, class TRANSFER>
   friend class PreconditionMG;
 };
-
 
 /**
  * Multi-level preconditioner. Here, we collect all information needed for
@@ -627,7 +624,6 @@ private:
 #ifndef DOXYGEN
 /* --------------------------- inline functions --------------------- */
 
-
 template <typename VectorType>
 template <int dim>
 Multigrid<VectorType>::Multigrid(const DoFHandler<dim>&          mg_dof_handler,
@@ -660,8 +656,6 @@ Multigrid<VectorType>::Multigrid(const DoFHandler<dim>&          mg_dof_handler,
   reinit(minlevel, maxlevel);
 }
 
-
-
 template <typename VectorType>
 Multigrid<VectorType>::Multigrid(const MGMatrixBase<VectorType>&     matrix,
                                  const MGCoarseGridBase<VectorType>& coarse,
@@ -690,16 +684,12 @@ Multigrid<VectorType>::Multigrid(const MGMatrixBase<VectorType>&     matrix,
   reinit(min_level, maxlevel);
 }
 
-
-
 template <typename VectorType>
 inline unsigned int
 Multigrid<VectorType>::get_maxlevel() const
 {
   return maxlevel;
 }
-
-
 
 template <typename VectorType>
 inline unsigned int
@@ -708,9 +698,7 @@ Multigrid<VectorType>::get_minlevel() const
   return minlevel;
 }
 
-
 /* --------------------------- inline functions --------------------- */
-
 
 namespace internal
 {
@@ -894,7 +882,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::vmult(
                                                 0);
 }
 
-
 template <int dim, typename VectorType, class TRANSFER>
 IndexSet
 PreconditionMG<dim, VectorType, TRANSFER>::locally_owned_range_indices(
@@ -904,7 +891,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::locally_owned_range_indices(
   return dof_handler_vector[block]->locally_owned_dofs();
 }
 
-
 template <int dim, typename VectorType, class TRANSFER>
 IndexSet
 PreconditionMG<dim, VectorType, TRANSFER>::locally_owned_domain_indices(
@@ -913,8 +899,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::locally_owned_domain_indices(
   AssertIndexRange(block, dof_handler_vector.size());
   return dof_handler_vector[block]->locally_owned_dofs();
 }
-
-
 
 template <int dim, typename VectorType, class TRANSFER>
 MPI_Comm
@@ -929,8 +913,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::get_mpi_communicator() const
   return ptria->get_communicator();
 }
 
-
-
 template <int dim, typename VectorType, class TRANSFER>
 boost::signals2::connection
 PreconditionMG<dim, VectorType, TRANSFER>::connect_transfer_to_mg(
@@ -939,8 +921,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::connect_transfer_to_mg(
   return this->signals.transfer_to_mg.connect(slot);
 }
 
-
-
 template <int dim, typename VectorType, class TRANSFER>
 boost::signals2::connection
 PreconditionMG<dim, VectorType, TRANSFER>::connect_transfer_to_global(
@@ -948,8 +928,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::connect_transfer_to_global(
 {
   return this->signals.transfer_to_global.connect(slot);
 }
-
-
 
 template <int dim, typename VectorType, class TRANSFER>
 template <class OtherVectorType>
@@ -968,7 +946,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::vmult_add(
                                                     0);
 }
 
-
 template <int dim, typename VectorType, class TRANSFER>
 template <class OtherVectorType>
 void
@@ -977,7 +954,6 @@ PreconditionMG<dim, VectorType, TRANSFER>::Tvmult(OtherVectorType&,
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 template <int dim, typename VectorType, class TRANSFER>
 template <class OtherVectorType>

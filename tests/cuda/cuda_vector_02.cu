@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/cuda_vector.h>
@@ -100,7 +99,6 @@ test()
   const double val = a.add_and_dot(2., a, b);
   AssertThrow(val == 1059300., ExcMessage("Problem in add_and_dot"));
 }
-
 
 int
 main(int argc, char** argv)

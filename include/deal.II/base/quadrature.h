@@ -16,7 +16,6 @@
 #ifndef dealii_quadrature_h
 #define dealii_quadrature_h
 
-
 #include <array>
 #include <deal.II/base/config.h>
 #include <deal.II/base/point.h>
@@ -287,7 +286,6 @@ protected:
   std::unique_ptr<std::array<Quadrature<1>, dim>> tensor_basis;
 };
 
-
 /**
  * Quadrature formula implementing anisotropic distributions of quadrature
  * points on the reference cell. To this end, the tensor product of
@@ -320,7 +318,6 @@ public:
                const Quadrature<1>& qy,
                const Quadrature<1>& qz);
 };
-
 
 /**
  * Quadrature formula constructed by iteration of another quadrature formula
@@ -365,14 +362,11 @@ public:
                    "as the basis for iteration.");
 };
 
-
-
 /*@}*/
 
 #ifndef DOXYGEN
 
 // -------------------  inline and template functions ----------------
-
 
 template <int dim>
 inline unsigned int
@@ -380,7 +374,6 @@ Quadrature<dim>::size() const
 {
   return weights.size();
 }
-
 
 template <int dim>
 inline const Point<dim>&
@@ -390,8 +383,6 @@ Quadrature<dim>::point(const unsigned int i) const
   return quadrature_points[i];
 }
 
-
-
 template <int dim>
 double
 Quadrature<dim>::weight(const unsigned int i) const
@@ -400,16 +391,12 @@ Quadrature<dim>::weight(const unsigned int i) const
   return weights[i];
 }
 
-
-
 template <int dim>
 inline const std::vector<Point<dim>>&
 Quadrature<dim>::get_points() const
 {
   return quadrature_points;
 }
-
-
 
 template <int dim>
 inline const std::vector<double>&
@@ -418,16 +405,12 @@ Quadrature<dim>::get_weights() const
   return weights;
 }
 
-
-
 template <int dim>
 inline bool
 Quadrature<dim>::is_tensor_product() const
 {
   return is_tensor_product_flag;
 }
-
-
 
 template <int dim>
 template <class Archive>
@@ -440,8 +423,6 @@ Quadrature<dim>::serialize(Archive& ar, const unsigned int)
 
   ar& quadrature_points& weights;
 }
-
-
 
 /* -------------- declaration of explicit specializations ------------- */
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _26, but for non-primitive elements. the bug was in code only
 // relevant to non-primitive elements
 
@@ -30,14 +28,11 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
 
-
-
 Tensor<1, 1>
 curl(const Tensor<2, 2>& grads)
 {
   return Point<1>(grads[1][0] - grads[0][1]);
 }
-
 
 Tensor<1, 3>
 curl(const Tensor<2, 3>& grads)
@@ -46,8 +41,6 @@ curl(const Tensor<2, 3>& grads)
                   grads[0][2] - grads[2][0],
                   grads[1][0] - grads[0][1]);
 }
-
-
 
 template <int dim>
 void
@@ -87,8 +80,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_cube()
@@ -99,7 +90,6 @@ test_hyper_cube()
   FESystem<dim> fe(FE_Nedelec<dim>(1), 2);
   test(tr, fe);
 }
-
 
 int
 main()

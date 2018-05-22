@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // DataOut::build_patches appeared to have a problem when outputting
 // data using MappingFEField in combination with high subdivisions
 // and/or high degree. This turned out to be related to multiple
@@ -99,7 +97,6 @@ test(const unsigned int refs,
   data_out_scal.write_vtu(file_scal);
   data_out_scal.write_vtk(deallog.get_file_stream());
 
-
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
     data_component_interpretation(
       spacedim, DataComponentInterpretation::component_is_part_of_vector);
@@ -123,7 +120,6 @@ test(const unsigned int refs,
 
   data_out_euler.write_vtu(file_euler);
   data_out_euler.write_vtk(deallog.get_file_stream());
-
 
   triangulation.reset_manifold(0);
 }

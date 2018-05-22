@@ -41,7 +41,6 @@ inline RelaxationBlock<MatrixType, InverseNumberType, VectorType>::
     temp_ghost_vector(temp_ghost_vector)
 {}
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline std::size_t
 RelaxationBlock<MatrixType, InverseNumberType, VectorType>::AdditionalData::
@@ -53,7 +52,6 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::AdditionalData::
     result += MemoryConsumption::memory_consumption(order[i]);
   return result;
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
@@ -78,7 +76,6 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::initialize(
     invert_diagblocks();
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
 RelaxationBlock<MatrixType, InverseNumberType, VectorType>::clear()
@@ -87,7 +84,6 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::clear()
   additional_data = nullptr;
   PreconditionBlockBase<InverseNumberType>::clear();
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
@@ -112,7 +108,6 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::invert_diagblocks()
     }
   this->inverses_computed(true);
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
@@ -289,7 +284,6 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::do_step(
   dst.compress(dealii::VectorOperation::add);
 }
 
-
 //----------------------------------------------------------------------//
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
@@ -305,7 +299,6 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::step(
   this->do_step(dst, *aux, src, false);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tstep(
@@ -318,7 +311,6 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tstep(
   *aux = dst;
   this->do_step(dst, *aux, src, true);
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
@@ -333,7 +325,6 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::vmult(
   this->do_step(dst, *aux, src, false);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tvmult(
@@ -347,7 +338,6 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tvmult(
   this->do_step(dst, *aux, src, true);
 }
 
-
 //----------------------------------------------------------------------//
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
@@ -359,7 +349,6 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::step(
   this->do_step(dst, dst, src, false);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
@@ -368,7 +357,6 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
 {
   this->do_step(dst, dst, src, true);
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
@@ -380,7 +368,6 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::vmult(
   this->do_step(dst, dst, src, false);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
@@ -390,7 +377,6 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
   dst = 0;
   this->do_step(dst, dst, src, true);
 }
-
 
 //----------------------------------------------------------------------//
 
@@ -404,7 +390,6 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::step(
   this->do_step(dst, dst, src, true);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
@@ -414,7 +399,6 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
   this->do_step(dst, dst, src, true);
   this->do_step(dst, dst, src, false);
 }
-
 
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
@@ -427,7 +411,6 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::vmult(
   this->do_step(dst, dst, src, true);
 }
 
-
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
@@ -439,9 +422,6 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
   this->do_step(dst, dst, src, false);
 }
 
-
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif

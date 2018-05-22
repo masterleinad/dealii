@@ -17,7 +17,6 @@
  * Authors: Katharina Kormann, Martin Kronbichler, 2018
  */
 
-
 // The include files are essentially the same as in step-37, with the
 // exception of the finite element class FE_DGQHermite instead of FE_Q. All
 // functionality for matrix-free computations on face integrals is already
@@ -56,7 +55,6 @@
 
 #include <fstream>
 #include <iostream>
-
 
 namespace Step59
 {
@@ -127,8 +125,6 @@ namespace Step59
     }
   };
 
-
-
   template <int dim>
   class RightHandSide : public Function<dim>
   {
@@ -146,8 +142,6 @@ namespace Step59
       return dim * arg * arg * val;
     }
   };
-
-
 
   // @sect3{Matrix-free implementation}
 
@@ -229,8 +223,6 @@ namespace Step59
     std::shared_ptr<const MatrixFree<dim, number>> data;
   };
 
-
-
   // The `%PreconditionBlockJacobi` class defines our custom preconditioner for
   // this problem. As opposed to step-37 which was based on the matrix
   // diagonal, we here compute an approximate inversion of the diagonal blocks
@@ -271,8 +263,6 @@ namespace Step59
       cell_matrices;
   };
 
-
-
   // This free-standing function is used in both the `LaplaceOperator` and
   // `%PreconditionBlockJacobi` classes to adjust the ghost range. This function
   // is necessary because some of the vectors that the `vmult()` functions are
@@ -309,8 +299,6 @@ namespace Step59
       .copy_locally_owned_data_from(copy_vec);
   }
 
-
-
   // The next five functions to clear and initialize the `LaplaceOperator`
   // class, to return the shared pointer holding the MatrixFree data
   // container, as well as the correct initialization of the vector and
@@ -323,8 +311,6 @@ namespace Step59
     data.reset();
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::initialize(
@@ -333,16 +319,12 @@ namespace Step59
     this->data = data;
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   std::shared_ptr<const MatrixFree<dim, number>>
   LaplaceOperator<dim, fe_degree, number>::get_matrix_free() const
   {
     return data;
   }
-
-
 
   template <int dim, int fe_degree, typename number>
   void
@@ -352,8 +334,6 @@ namespace Step59
     data->initialize_dof_vector(vec);
   }
 
-
-
   template <int dim, int fe_degree, typename number>
   types::global_dof_index
   LaplaceOperator<dim, fe_degree, number>::m() const
@@ -361,8 +341,6 @@ namespace Step59
     Assert(data.get() != nullptr, ExcNotInitialized());
     return data->get_dof_handler().n_dofs();
   }
-
-
 
   // This function implements the action of the LaplaceOperator on a vector
   // `src` and stores the result in the vector `dst`. When compared to
@@ -470,8 +448,6 @@ namespace Step59
                MatrixFree<dim, number>::DataAccessOnFaces::gradients);
   }
 
-
-
   // Since the Laplacian is symmetric, the `Tvmult()` (needed by the multigrid
   // smoother interfaces) operation is simply forwarded to the `vmult()` case.
 
@@ -483,8 +459,6 @@ namespace Step59
   {
     vmult(dst, src);
   }
-
-
 
   // The cell operation is very similar to step-37. We do not use a
   // coefficient here, though. The second difference is that we replaced the
@@ -516,8 +490,6 @@ namespace Step59
         phi.integrate_scatter(false, true, dst);
       }
   }
-
-
 
   // The face operation implements the terms of the interior penalty method in
   // analogy to step-39, as explained in the introduction. We need two
@@ -656,8 +628,6 @@ namespace Step59
       }
   }
 
-
-
   // The boundary face function follows by and large the interior face
   // function. The only difference is the fact that we do not have a separate
   // FEFaceEvaluation object that provides us with exterior values $u^+$, but
@@ -730,8 +700,6 @@ namespace Step59
         phi_inner.integrate_scatter(true, true, dst);
       }
   }
-
-
 
   // Next we turn to the preconditioner initialization. As explained in the
   // introduction, we want to construct an (approximate) inverse of the cell
@@ -885,8 +853,6 @@ namespace Step59
       }
   }
 
-
-
   // The vmult function for the approximate block-Jacobi preconditioner is
   // very simple in the DG context: We simply need to read the values of the
   // current cell batch, apply the inverse for the given entry in the array of
@@ -921,8 +887,6 @@ namespace Step59
         phi.set_dof_values(dst);
       }
   }
-
-
 
   // The definition of the LaplaceProblem class is very similar to
   // step-37. One difference is the fact that we add the element degree as a
@@ -973,8 +937,6 @@ namespace Step59
     ConditionalOStream time_details;
   };
 
-
-
   template <int dim, int fe_degree>
   LaplaceProblem<dim, fe_degree>::LaplaceProblem()
     :
@@ -994,8 +956,6 @@ namespace Step59
                    false
                      && Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
   {}
-
-
 
   // The setup function differs in two aspects from step-37. The first is that
   // we do not need to interpolate any constraints for the discontinuous
@@ -1088,8 +1048,6 @@ namespace Step59
     time_details << "Setup matrix-free levels      " << time.wall_time() << " s"
                  << std::endl;
   }
-
-
 
   // The computation of the right hand side is a bit more complicated than in
   // step-37. The cell term now consists of the negative Laplacian of the
@@ -1227,8 +1185,6 @@ namespace Step59
                  << " s\n";
   }
 
-
-
   // The `solve()` function is copied almost verbatim from step-37. We set up
   // the same multigrid ingredients, namely the level transfer, a smoother,
   // and a coarse grid solver. The only difference is the fact that we do not
@@ -1308,8 +1264,6 @@ namespace Step59
           << time.wall_time() << " s" << std::endl;
   }
 
-
-
   // Since we have solved a problem with analytic solution, we want to verify
   // the correctness of our implementation by computing the L2 error of the
   // numerical result against the analytic solution.
@@ -1330,8 +1284,6 @@ namespace Step59
                Utilities::MPI::sum(error_per_cell.norm_sqr(), MPI_COMM_WORLD))
           << std::endl;
   }
-
-
 
   // The `run()` function sets up the initial grid and then runs the multigrid
   // program in the usual way. As a domain, we choose a rectangle with
@@ -1389,8 +1341,6 @@ namespace Step59
       };
   }
 } // namespace Step59
-
-
 
 // There is nothing unexpected in the `main()` function. We call `MPI_Init()`
 // through the `MPI_InitFinalize` class, pass on the two parameters on the

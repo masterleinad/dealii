@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that DataOut without DoFHandler works correctly
 
 #include "../tests.h"
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
-
-
 
 template <int dim>
 void

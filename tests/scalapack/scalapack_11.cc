@@ -29,7 +29,6 @@
 #include <fstream>
 #include <iostream>
 
-
 template <typename NumberType>
 void
 test(const unsigned int block_size_i, const unsigned int block_size_j)
@@ -87,8 +86,6 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         -= full(offset_A.first + i, offset_A.second + j);
   AssertThrow(dest.frobenius_norm() < 1e-12, ExcInternalError());
 }
-
-
 
 int
 main(int argc, char** argv)

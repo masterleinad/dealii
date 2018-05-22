@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
 // this particular test checks the call path to
 // internal::extract_dofs_by_component from
 // DoFTools::count_dofs_per_component with argument only_once=true
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -34,8 +31,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -62,7 +57,6 @@ check()
   for(unsigned int d = 0; d < count.size(); ++d)
     deallog << count[d] << std::endl;
 }
-
 
 int
 main()

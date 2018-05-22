@@ -15,7 +15,6 @@
 
 #include <deal.II/numerics/matrix_creator.templates.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 // explicit instantiations

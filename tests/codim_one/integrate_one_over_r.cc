@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrates the function *f(x,y)/R, where f(x,y) is a power of x and
 // y on the set [0,1]x[0,1]. dim = 2 only.
 
@@ -24,7 +22,6 @@
 // all include files needed for the program
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/quadrature_lib.h>
-
 
 #include <string>
 

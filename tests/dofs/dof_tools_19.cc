@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/base/function.h>
@@ -37,8 +36,6 @@
 // VectorTools::project instantiated QGauss<0>(6) when in 1d, and b)
 // because VectorTools::project wasn't implemented at all in 1d. It
 // required fixing both bugs to get to the actual point of this test.
-
-
 
 template <int dim>
 void

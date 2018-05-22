@@ -26,8 +26,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 // have a lock that guarantees that at most one thread is changing and
 // accessing the @p{coefficients} arrays of classes implementing
 // polynomials with tables. make this lock local to this file.
@@ -41,19 +39,14 @@ namespace
   Threads::Mutex coefficients_lock;
 }
 
-
-
 namespace Polynomials
 {
   // -------------------- class Polynomial ---------------- //
-
 
   template <typename number>
   Polynomial<number>::Polynomial(const std::vector<number>& a)
     : coefficients(a), in_lagrange_product_form(false), lagrange_weight(1.)
   {}
-
-
 
   template <typename number>
   Polynomial<number>::Polynomial(const unsigned int n)
@@ -61,8 +54,6 @@ namespace Polynomials
       in_lagrange_product_form(false),
       lagrange_weight(1.)
   {}
-
-
 
   template <typename number>
   Polynomial<number>::Polynomial(const std::vector<Point<1>>& supp,
@@ -90,8 +81,6 @@ namespace Polynomials
     lagrange_weight = static_cast<number>(1.) / tmp_lagrange_weight;
   }
 
-
-
   template <typename number>
   void
   Polynomial<number>::value(const number x, std::vector<number>& values) const
@@ -100,8 +89,6 @@ namespace Polynomials
 
     value(x, values.size() - 1, values.data());
   }
-
-
 
   template <typename number>
   void
@@ -234,8 +221,6 @@ namespace Polynomials
       values[j] = 0;
   }
 
-
-
   template <typename number>
   void
   Polynomial<number>::transform_into_standard_form()
@@ -271,8 +256,6 @@ namespace Polynomials
     lagrange_weight          = 1.;
   }
 
-
-
   template <typename number>
   void
   Polynomial<number>::scale(std::vector<number>& coefficients,
@@ -287,8 +270,6 @@ namespace Polynomials
         f *= factor;
       }
   }
-
-
 
   template <typename number>
   void
@@ -313,8 +294,6 @@ namespace Polynomials
       scale(coefficients, factor);
   }
 
-
-
   template <typename number>
   void
   Polynomial<number>::multiply(std::vector<number>& coefficients,
@@ -325,8 +304,6 @@ namespace Polynomials
         ++c)
       *c *= factor;
   }
-
-
 
   template <typename number>
   Polynomial<number>&
@@ -343,8 +320,6 @@ namespace Polynomials
       }
     return *this;
   }
-
-
 
   template <typename number>
   Polynomial<number>&
@@ -391,8 +366,6 @@ namespace Polynomials
     return *this;
   }
 
-
-
   template <typename number>
   Polynomial<number>&
   Polynomial<number>::operator+=(const Polynomial<number>& p)
@@ -433,8 +406,6 @@ namespace Polynomials
     return *this;
   }
 
-
-
   template <typename number>
   Polynomial<number>&
   Polynomial<number>::operator-=(const Polynomial<number>& p)
@@ -469,8 +440,6 @@ namespace Polynomials
     return *this;
   }
 
-
-
   template <typename number>
   bool
   Polynomial<number>::operator==(const Polynomial<number>& p) const
@@ -498,8 +467,6 @@ namespace Polynomials
     else
       return (p.coefficients == coefficients);
   }
-
-
 
   template <typename number>
   template <typename number2>
@@ -561,8 +528,6 @@ namespace Polynomials
     coefficients.assign(new_coefficients.begin(), new_coefficients.end());
   }
 
-
-
   template <typename number>
   template <typename number2>
   void
@@ -580,8 +545,6 @@ namespace Polynomials
       // do the shift in any case
       shift(coefficients, offset);
   }
-
-
 
   template <typename number>
   Polynomial<number>
@@ -610,8 +573,6 @@ namespace Polynomials
     return Polynomial<number>(newcoefficients);
   }
 
-
-
   template <typename number>
   Polynomial<number>
   Polynomial<number>::primitive() const
@@ -637,8 +598,6 @@ namespace Polynomials
     return Polynomial<number>(newcoefficients);
   }
 
-
-
   template <typename number>
   void
   Polynomial<number>::print(std::ostream& out) const
@@ -657,8 +616,6 @@ namespace Polynomials
         }
   }
 
-
-
   // ------------------ class Monomial -------------------------- //
 
   template <typename number>
@@ -670,14 +627,10 @@ namespace Polynomials
     return result;
   }
 
-
-
   template <typename number>
   Monomial<number>::Monomial(unsigned int n, double coefficient)
     : Polynomial<number>(make_vector(n, coefficient))
   {}
-
-
 
   template <typename number>
   std::vector<Polynomial<number>>
@@ -689,8 +642,6 @@ namespace Polynomials
       v.push_back(Monomial<number>(i));
     return v;
   }
-
-
 
   // ------------------ class LagrangeEquidistant --------------- //
 
@@ -709,8 +660,6 @@ namespace Polynomials
       }
     } // namespace LagrangeEquidistantImplementation
   }   // namespace internal
-
-
 
   LagrangeEquidistant::LagrangeEquidistant(const unsigned int n,
                                            const unsigned int support_point)
@@ -732,8 +681,6 @@ namespace Polynomials
         compute_coefficients(n, support_point, this->coefficients);
       }
   }
-
-
 
   void
   LagrangeEquidistant::compute_coefficients(const unsigned int   n,
@@ -792,8 +739,6 @@ namespace Polynomials
       a[i] = x[support_point * n_functions + i];
   }
 
-
-
   std::vector<Polynomial<double>>
   LagrangeEquidistant::generate_complete_basis(const unsigned int degree)
   {
@@ -812,10 +757,7 @@ namespace Polynomials
       }
   }
 
-
-
   //----------------------------------------------------------------------//
-
 
   std::vector<Polynomial<double>>
   generate_complete_Lagrange_basis(const std::vector<Point<1>>& points)
@@ -828,11 +770,7 @@ namespace Polynomials
     return p;
   }
 
-
-
   // ------------------ class Legendre --------------- //
-
-
 
   Legendre::Legendre(const unsigned int k) : Polynomial<double>(0)
   {
@@ -857,8 +795,6 @@ namespace Polynomials
     this->lagrange_weight = std::sqrt(double(2 * k + 1)) / prod;
   }
 
-
-
   std::vector<Polynomial<double>>
   Legendre::generate_complete_basis(const unsigned int degree)
   {
@@ -869,10 +805,7 @@ namespace Polynomials
     return v;
   }
 
-
-
   // ------------------ class Lobatto -------------------- //
-
 
   Lobatto::Lobatto(const unsigned int p)
     : Polynomial<double>(compute_coefficients(p))
@@ -975,23 +908,16 @@ namespace Polynomials
     return basis;
   }
 
-
-
   // ------------------ class Hierarchical --------------- //
-
 
   // Reserve space for polynomials up to degree 19. Should be sufficient
   // for the start.
   std::vector<std::unique_ptr<const std::vector<double>>>
     Hierarchical::recursive_coefficients(20);
 
-
-
   Hierarchical::Hierarchical(const unsigned int k)
     : Polynomial<double>(get_coefficients(k))
   {}
-
-
 
   void
   Hierarchical::compute_coefficients(const unsigned int k_)
@@ -1130,8 +1056,6 @@ namespace Polynomials
       };
   }
 
-
-
   const std::vector<double>&
   Hierarchical::get_coefficients(const unsigned int k)
   {
@@ -1145,8 +1069,6 @@ namespace Polynomials
     Threads::Mutex::ScopedLock lock(coefficients_lock);
     return *recursive_coefficients[k];
   }
-
-
 
   std::vector<Polynomial<double>>
   Hierarchical::generate_complete_basis(const unsigned int degree)
@@ -1172,8 +1094,6 @@ namespace Polynomials
         return v;
       }
   }
-
-
 
   // ------------------ HermiteInterpolation --------------- //
 
@@ -1227,7 +1147,6 @@ namespace Polynomials
       }
   }
 
-
   std::vector<Polynomial<double>>
   HermiteInterpolation::generate_complete_basis(const unsigned int n)
   {
@@ -1241,7 +1160,6 @@ namespace Polynomials
 
     return basis;
   }
-
 
   // ------------------ HermiteLikeInterpolation --------------- //
   namespace
@@ -1291,8 +1209,6 @@ namespace Polynomials
                  * integral_right;
     }
   } // namespace
-
-
 
   HermiteLikeInterpolation::HermiteLikeInterpolation(const unsigned int degree,
                                                      const unsigned int index)
@@ -1518,8 +1434,6 @@ namespace Polynomials
           }
       }
   }
-
-
 
   std::vector<Polynomial<double>>
   HermiteLikeInterpolation::generate_complete_basis(const unsigned int degree)

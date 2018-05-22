@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/vector.h>
 
 // check
 //   DoFTools::distribute_cell_to_dof_vector
-
-
 
 template <int dim>
 void
@@ -44,7 +41,6 @@ check_this(const DoFHandler<dim>& dof_handler)
   for(unsigned int i = 0; i < dof_data.size(); i += 3)
     deallog << dof_data(i) << " ";
   deallog << std::endl;
-
 
   // distribute to last component. note that
   // there will still be data left from the

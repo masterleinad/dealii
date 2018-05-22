@@ -15,12 +15,10 @@
 
 // Check the functor interface
 
-
 #include "../tests.h"
 #include <deal.II/base/index_set.h>
 #include <deal.II/lac/read_write_vector.h>
 #include <deal.II/lac/read_write_vector.templates.h>
-
 
 struct Functor
 {

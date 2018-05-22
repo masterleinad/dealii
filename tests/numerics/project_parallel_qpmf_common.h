@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework to check whether an element of polynomial order p can
 // represent functions of order q for projection from quadrature points of
 // matrix-free approach.
@@ -41,7 +40,6 @@
 
 #include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/matrix_free/matrix_free.h>
-
 
 #include <fstream>
 #include <vector>
@@ -82,11 +80,9 @@ public:
     return res;
   }
 
-
 private:
   const unsigned int q;
 };
-
 
 /**
  * A general function to perform projection of polynomial function of degrees [0,p]
@@ -220,8 +216,6 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
     }
 }
 
-
-
 // check the given element of polynomial order p. the last parameter, if
 // given, denotes a gap in convergence order; for example, the Nedelec element
 // of polynomial degree p has normal components of degree p-1 and therefore
@@ -236,8 +230,6 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 
   do_project<fe_degree, n_q_points_1d, dim>(triangulation, {{&fe}}, p);
 }
-
-
 
 // same test as above, but this time with a mesh that has hanging nodes
 template <int fe_degree, int n_q_points_1d, int dim>
@@ -254,7 +246,6 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 
   do_project<fe_degree, n_q_points_1d, dim>(triangulation, {{&fe}}, p);
 }
-
 
 // same as above but for multiple fes
 template <int fe_degree, int n_q_points_1d, int dim>

@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_abf.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <iomanip>
 #include <iostream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace
 {
@@ -55,8 +51,6 @@ PolynomialsABF<dim>::PolynomialsABF(const unsigned int k)
   // multiply by 'dim'
   Assert(dim * polynomial_space.n() == compute_n_pols(k), ExcInternalError());
 }
-
-
 
 template <int dim>
 void
@@ -150,7 +144,6 @@ PolynomialsABF<dim>::compute(
     }
 }
 
-
 template <int dim>
 unsigned int
 PolynomialsABF<dim>::compute_n_pols(const unsigned int k)
@@ -178,10 +171,8 @@ PolynomialsABF<dim>::compute_n_pols(const unsigned int k)
   return 0;
 }
 
-
 template class PolynomialsABF<1>;
 template class PolynomialsABF<2>;
 template class PolynomialsABF<3>;
-
 
 DEAL_II_NAMESPACE_CLOSE

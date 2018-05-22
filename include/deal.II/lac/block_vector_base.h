@@ -16,7 +16,6 @@
 #ifndef dealii_block_vector_base_h
 #define dealii_block_vector_base_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/memory_consumption.h>
@@ -34,14 +33,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*! @addtogroup Vectors
  *@{
  */
 
 template <typename>
 class BlockVectorBase;
-
 
 /**
  * A class that can be used to determine whether a given type is a block
@@ -98,12 +95,9 @@ public:
        == sizeof(yes_type));
 };
 
-
 // instantiation of the static member
 template <typename VectorType>
 const bool IsBlockVector<VectorType>::value;
-
-
 
 namespace internal
 {
@@ -121,8 +115,6 @@ namespace internal
     template <class BlockVectorType, bool Constness>
     struct Types
     {};
-
-
 
     /**
      * Declaration of a specialized template of a structure which is used to
@@ -156,8 +148,6 @@ namespace internal
        */
       typedef typename Vector::reference dereference_type;
     };
-
-
 
     /**
      * Declaration of a specialized template of a structure which is used to
@@ -193,7 +183,6 @@ namespace internal
        */
       typedef value_type dereference_type;
     };
-
 
     /**
      * General random-access iterator class for block vectors. Since we do not
@@ -266,7 +255,6 @@ namespace internal
        * (via <code>static_assert</code>).
        */
       Iterator(const Iterator<BlockVectorType, !Constness>& c);
-
 
       /**
        * Copy constructor from an iterator with the same constness.
@@ -472,7 +460,6 @@ namespace internal
       void
       move_backward();
 
-
       /**
        * Mark all other instances of this template as friends.
        */
@@ -481,7 +468,6 @@ namespace internal
     };
   } // namespace BlockVectorIterators
 } // namespace internal
-
 
 /**
  * A vector composed of several blocks each representing a vector of its own.
@@ -901,7 +887,6 @@ public:
   BlockVectorBase&
   operator-=(const BlockVectorBase& V);
 
-
   /**
    * A collective add operation: This function adds a whole set of values
    * stored in @p values to the vector components specified by @p indices.
@@ -1057,11 +1042,9 @@ protected:
   friend class BlockVectorBase;
 };
 
-
 /*@}*/
 
 /*----------------------- Inline functions ----------------------------------*/
-
 
 #ifndef DOXYGEN
 namespace internal
@@ -1078,8 +1061,6 @@ namespace internal
         next_break_forward(c.next_break_forward),
         next_break_backward(c.next_break_backward)
     {}
-
-
 
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>::Iterator(
@@ -1099,8 +1080,6 @@ namespace internal
                     "does not make sense.");
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>::Iterator(
       BlockVector&    parent,
@@ -1117,8 +1096,6 @@ namespace internal
         next_break_backward(next_break_backward)
     {}
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator=(const Iterator& c)
@@ -1133,16 +1110,12 @@ namespace internal
       return *this;
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline typename Iterator<BlockVectorType, Constness>::dereference_type
       Iterator<BlockVectorType, Constness>::operator*() const
     {
       return parent->block(current_block)(index_within_block);
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     inline typename Iterator<BlockVectorType, Constness>::dereference_type
@@ -1168,8 +1141,6 @@ namespace internal
       return (*parent)(global_index + d);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator++()
@@ -1177,8 +1148,6 @@ namespace internal
       move_forward();
       return *this;
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>
@@ -1189,8 +1158,6 @@ namespace internal
       return old_value;
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator--()
@@ -1198,8 +1165,6 @@ namespace internal
       move_backward();
       return *this;
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>
@@ -1209,8 +1174,6 @@ namespace internal
       move_backward();
       return old_value;
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
@@ -1223,8 +1186,6 @@ namespace internal
       return (global_index == i.global_index);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
     inline bool
@@ -1235,8 +1196,6 @@ namespace internal
 
       return (global_index != i.global_index);
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
@@ -1249,8 +1208,6 @@ namespace internal
       return (global_index < i.global_index);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
     inline bool
@@ -1261,8 +1218,6 @@ namespace internal
 
       return (global_index <= i.global_index);
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
@@ -1275,8 +1230,6 @@ namespace internal
       return (global_index > i.global_index);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
     inline bool
@@ -1287,8 +1240,6 @@ namespace internal
 
       return (global_index >= i.global_index);
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     template <bool OtherConstness>
@@ -1301,8 +1252,6 @@ namespace internal
       return (static_cast<signed int>(global_index)
               - static_cast<signed int>(i.global_index));
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>
@@ -1329,8 +1278,6 @@ namespace internal
         return Iterator(*parent, global_index + d);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>
     Iterator<BlockVectorType, Constness>::
@@ -1356,8 +1303,6 @@ namespace internal
         return Iterator(*parent, global_index - d);
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator+=(const difference_type& d)
@@ -1382,8 +1327,6 @@ namespace internal
       return *this;
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     inline Iterator<BlockVectorType, Constness>&
     Iterator<BlockVectorType, Constness>::operator-=(const difference_type& d)
@@ -1407,7 +1350,6 @@ namespace internal
 
       return *this;
     }
-
 
     template <class BlockVectorType, bool Constness>
     Iterator<BlockVectorType, Constness>::Iterator(BlockVector&    parent,
@@ -1445,8 +1387,6 @@ namespace internal
         };
     }
 
-
-
     template <class BlockVectorType, bool Constness>
     void
     Iterator<BlockVectorType, Constness>::move_forward()
@@ -1478,8 +1418,6 @@ namespace internal
 
       ++global_index;
     }
-
-
 
     template <class BlockVectorType, bool Constness>
     void
@@ -1516,12 +1454,9 @@ namespace internal
       --global_index;
     }
 
-
   } // namespace BlockVectorIterators
 
 } //namespace internal
-
-
 
 template <class VectorType>
 inline std::size_t
@@ -1529,8 +1464,6 @@ BlockVectorBase<VectorType>::size() const
 {
   return block_indices.total_size();
 }
-
-
 
 template <class VectorType>
 inline IndexSet
@@ -1551,15 +1484,12 @@ BlockVectorBase<VectorType>::locally_owned_elements() const
   return is;
 }
 
-
-
 template <class VectorType>
 inline unsigned int
 BlockVectorBase<VectorType>::n_blocks() const
 {
   return block_indices.size();
 }
-
 
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::BlockType&
@@ -1570,8 +1500,6 @@ BlockVectorBase<VectorType>::block(const unsigned int i)
   return components[i];
 }
 
-
-
 template <class VectorType>
 inline const typename BlockVectorBase<VectorType>::BlockType&
 BlockVectorBase<VectorType>::block(const unsigned int i) const
@@ -1581,15 +1509,12 @@ BlockVectorBase<VectorType>::block(const unsigned int i) const
   return components[i];
 }
 
-
-
 template <class VectorType>
 inline const BlockIndices&
 BlockVectorBase<VectorType>::get_block_indices() const
 {
   return block_indices;
 }
-
 
 template <class VectorType>
 inline void
@@ -1603,8 +1528,6 @@ BlockVectorBase<VectorType>::collect_sizes()
   block_indices.reinit(sizes);
 }
 
-
-
 template <class VectorType>
 inline void
 BlockVectorBase<VectorType>::compress(
@@ -1614,16 +1537,12 @@ BlockVectorBase<VectorType>::compress(
     block(i).compress(operation);
 }
 
-
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::iterator
 BlockVectorBase<VectorType>::begin()
 {
   return iterator(*this, 0U);
 }
-
-
 
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::const_iterator
@@ -1632,7 +1551,6 @@ BlockVectorBase<VectorType>::begin() const
   return const_iterator(*this, 0U);
 }
 
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::iterator
 BlockVectorBase<VectorType>::end()
@@ -1640,15 +1558,12 @@ BlockVectorBase<VectorType>::end()
   return iterator(*this, size());
 }
 
-
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::const_iterator
 BlockVectorBase<VectorType>::end() const
 {
   return const_iterator(*this, size());
 }
-
 
 template <class VectorType>
 inline bool
@@ -1659,7 +1574,6 @@ BlockVectorBase<VectorType>::in_local_range(const size_type global_index) const
 
   return components[local_index.first].in_local_range(global_index);
 }
-
 
 template <class VectorType>
 bool
@@ -1672,8 +1586,6 @@ BlockVectorBase<VectorType>::all_zero() const
   return true;
 }
 
-
-
 template <class VectorType>
 bool
 BlockVectorBase<VectorType>::is_non_negative() const
@@ -1684,8 +1596,6 @@ BlockVectorBase<VectorType>::is_non_negative() const
 
   return true;
 }
-
-
 
 template <class VectorType>
 typename BlockVectorBase<VectorType>::value_type BlockVectorBase<VectorType>::
@@ -1701,7 +1611,6 @@ typename BlockVectorBase<VectorType>::value_type BlockVectorBase<VectorType>::
   return sum;
 }
 
-
 template <class VectorType>
 typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::norm_sqr() const
@@ -1712,8 +1621,6 @@ BlockVectorBase<VectorType>::norm_sqr() const
 
   return sum;
 }
-
-
 
 template <class VectorType>
 typename BlockVectorBase<VectorType>::value_type
@@ -1729,8 +1636,6 @@ BlockVectorBase<VectorType>::mean_value() const
   return sum / (typename numbers::NumberTraits<value_type>::real_type(size()));
 }
 
-
-
 template <class VectorType>
 typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::l1_norm() const
@@ -1742,16 +1647,12 @@ BlockVectorBase<VectorType>::l1_norm() const
   return sum;
 }
 
-
-
 template <class VectorType>
 typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::l2_norm() const
 {
   return std::sqrt(norm_sqr());
 }
-
-
 
 template <class VectorType>
 typename BlockVectorBase<VectorType>::real_type
@@ -1766,8 +1667,6 @@ BlockVectorBase<VectorType>::linfty_norm() const
     }
   return sum;
 }
-
-
 
 template <class VectorType>
 typename BlockVectorBase<VectorType>::value_type
@@ -1786,8 +1685,6 @@ BlockVectorBase<VectorType>::add_and_dot(
   return sum;
 }
 
-
-
 template <class VectorType>
 BlockVectorBase<VectorType>&
 BlockVectorBase<VectorType>::operator+=(const BlockVectorBase<VectorType>& v)
@@ -1803,8 +1700,6 @@ BlockVectorBase<VectorType>::operator+=(const BlockVectorBase<VectorType>& v)
   return *this;
 }
 
-
-
 template <class VectorType>
 BlockVectorBase<VectorType>&
 BlockVectorBase<VectorType>::operator-=(const BlockVectorBase<VectorType>& v)
@@ -1819,8 +1714,6 @@ BlockVectorBase<VectorType>::operator-=(const BlockVectorBase<VectorType>& v)
   return *this;
 }
 
-
-
 template <class VectorType>
 template <typename Number>
 inline void
@@ -1831,8 +1724,6 @@ BlockVectorBase<VectorType>::add(const std::vector<size_type>& indices,
          ExcDimensionMismatch(indices.size(), values.size()));
   add(indices.size(), indices.data(), values.data());
 }
-
-
 
 template <class VectorType>
 template <typename Number>
@@ -1847,8 +1738,6 @@ BlockVectorBase<VectorType>::add(const std::vector<size_type>& indices,
     (*this)(indices[i]) += values(i);
 }
 
-
-
 template <class VectorType>
 template <typename Number>
 inline void
@@ -1859,8 +1748,6 @@ BlockVectorBase<VectorType>::add(const size_type  n_indices,
   for(size_type i = 0; i < n_indices; ++i)
     (*this)(indices[i]) += values[i];
 }
-
-
 
 template <class VectorType>
 void
@@ -1873,8 +1760,6 @@ BlockVectorBase<VectorType>::add(const value_type a)
       components[i].add(a);
     }
 }
-
-
 
 template <class VectorType>
 void
@@ -1892,8 +1777,6 @@ BlockVectorBase<VectorType>::add(const value_type                   a,
     }
 }
 
-
-
 template <class VectorType>
 void
 BlockVectorBase<VectorType>::add(const value_type                   a,
@@ -1909,14 +1792,11 @@ BlockVectorBase<VectorType>::add(const value_type                   a,
   Assert(n_blocks() == w.n_blocks(),
          ExcDimensionMismatch(n_blocks(), w.n_blocks()));
 
-
   for(size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].add(a, v.components[i], b, w.components[i]);
     }
 }
-
-
 
 template <class VectorType>
 void
@@ -1933,8 +1813,6 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
       components[i].sadd(x, v.components[i]);
     }
 }
-
-
 
 template <class VectorType>
 void
@@ -1953,8 +1831,6 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
       components[i].sadd(x, a, v.components[i]);
     }
 }
-
-
 
 template <class VectorType>
 void
@@ -1978,8 +1854,6 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
       components[i].sadd(x, a, v.components[i], b, w.components[i]);
     }
 }
-
-
 
 template <class VectorType>
 void
@@ -2010,8 +1884,6 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
     }
 }
 
-
-
 template <class VectorType>
 template <class BlockVector2>
 void
@@ -2022,8 +1894,6 @@ BlockVectorBase<VectorType>::scale(const BlockVector2& v)
   for(size_type i = 0; i < n_blocks(); ++i)
     components[i].scale(v.block(i));
 }
-
-
 
 template <class VectorType>
 void
@@ -2046,8 +1916,6 @@ BlockVectorBase<VectorType>::equ(const value_type                   a,
     }
 }
 
-
-
 template <class VectorType>
 std::size_t
 BlockVectorBase<VectorType>::memory_consumption() const
@@ -2055,8 +1923,6 @@ BlockVectorBase<VectorType>::memory_consumption() const
   return (MemoryConsumption::memory_consumption(this->block_indices)
           + MemoryConsumption::memory_consumption(this->components));
 }
-
-
 
 template <class VectorType>
 template <class BlockVector2>
@@ -2072,8 +1938,6 @@ BlockVectorBase<VectorType>::equ(const value_type a, const BlockVector2& v)
     components[i].equ(a, v.components[i]);
 }
 
-
-
 template <class VectorType>
 void
 BlockVectorBase<VectorType>::update_ghost_values() const
@@ -2081,8 +1945,6 @@ BlockVectorBase<VectorType>::update_ghost_values() const
   for(size_type i = 0; i < n_blocks(); ++i)
     block(i).update_ghost_values();
 }
-
-
 
 template <class VectorType>
 BlockVectorBase<VectorType>&
@@ -2096,7 +1958,6 @@ BlockVectorBase<VectorType>::operator=(const value_type s)
   return *this;
 }
 
-
 template <class VectorType>
 BlockVectorBase<VectorType>&
 BlockVectorBase<VectorType>::operator=(const BlockVectorBase<VectorType>& v)
@@ -2108,7 +1969,6 @@ BlockVectorBase<VectorType>::operator=(const BlockVectorBase<VectorType>& v)
 
   return *this;
 }
-
 
 template <class VectorType>
 template <class VectorType2>
@@ -2123,8 +1983,6 @@ BlockVectorBase<VectorType>::operator=(const BlockVectorBase<VectorType2>& v)
   return *this;
 }
 
-
-
 template <class VectorType>
 BlockVectorBase<VectorType>&
 BlockVectorBase<VectorType>::operator=(const VectorType& v)
@@ -2138,8 +1996,6 @@ BlockVectorBase<VectorType>::operator=(const VectorType& v)
 
   return *this;
 }
-
-
 
 template <class VectorType>
 template <class VectorType2>
@@ -2156,8 +2012,6 @@ operator==(const BlockVectorBase<VectorType2>& v) const
   return true;
 }
 
-
-
 template <class VectorType>
 inline BlockVectorBase<VectorType>&
 BlockVectorBase<VectorType>::operator*=(const value_type factor)
@@ -2169,8 +2023,6 @@ BlockVectorBase<VectorType>::operator*=(const value_type factor)
 
   return *this;
 }
-
-
 
 template <class VectorType>
 inline BlockVectorBase<VectorType>&
@@ -2185,7 +2037,6 @@ BlockVectorBase<VectorType>::operator/=(const value_type factor)
   return *this;
 }
 
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::value_type
 BlockVectorBase<VectorType>::operator()(const size_type i) const
@@ -2194,8 +2045,6 @@ BlockVectorBase<VectorType>::operator()(const size_type i) const
     = block_indices.global_to_local(i);
   return components[local_index.first](local_index.second);
 }
-
-
 
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::reference
@@ -2206,8 +2055,6 @@ BlockVectorBase<VectorType>::operator()(const size_type i)
   return components[local_index.first](local_index.second);
 }
 
-
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::value_type
   BlockVectorBase<VectorType>::operator[](const size_type i) const
@@ -2215,16 +2062,12 @@ inline typename BlockVectorBase<VectorType>::value_type
   return operator()(i);
 }
 
-
-
 template <class VectorType>
 inline typename BlockVectorBase<VectorType>::reference
   BlockVectorBase<VectorType>::operator[](const size_type i)
 {
   return operator()(i);
 }
-
-
 
 template <typename VectorType>
 template <typename OtherNumber>
@@ -2236,8 +2079,6 @@ BlockVectorBase<VectorType>::extract_subvector_to(
   for(size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
 }
-
-
 
 template <typename VectorType>
 template <typename ForwardIterator, typename OutputIterator>

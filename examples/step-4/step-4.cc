@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 1999
  */
 
-
 // @sect3{Include files}
 
 // The first few (many?) include files have already been used in the previous
@@ -97,7 +96,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
 // @sect3{Right hand side and boundary values}
 
 // In the following, we declare two more classes denoting the right hand side
@@ -147,8 +145,6 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const override;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -159,8 +155,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const override;
 };
-
-
 
 // For this example, we choose as right hand side function to function
 // $4(x^4+y^4)$ in 2D, or $4(x^4+y^4+z^4)$ in 3D. We could write this
@@ -194,7 +188,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return 1.; //return_value;
 }
 
-
 // As boundary values, we choose $x^2+y^2$ in 2D, and $x^2+y^2+z^2$ in 3D. This
 // happens to be equal to the square of the vector from the origin to the
 // point at which we would like to evaluate the function, irrespective of the
@@ -206,8 +199,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 {
   return p.square();
 }
-
-
 
 // @sect3{Implementation of the <code>Step4</code> class}
 
@@ -232,7 +223,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 // template, but they are not convertible into each other, for example, and
 // share no code (both instantiations are compiled completely independently).
 
-
 // @sect4{Step4::Step4}
 
 // After this introduction, here is the constructor of the <code>Step4</code>
@@ -242,7 +232,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
 {}
-
 
 // @sect4{Step4::make_grid}
 
@@ -293,7 +282,6 @@ Step4<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
 
 // @sect4{Step4::assemble_system}
 
@@ -415,7 +403,6 @@ Step4<dim>::assemble_system()
         }
     }
 
-
   // As the final step in this function, we wanted to have non-homogeneous
   // boundary values in this example, unlike the one before. This is a simple
   // task, we only have to replace the Functions::ZeroFunction used there by an object of
@@ -427,7 +414,6 @@ Step4<dim>::assemble_system()
   MatrixTools::apply_boundary_values(
     boundary_values, system_matrix, solution, system_rhs);
 }
-
 
 // @sect4{Step4::solve}
 
@@ -447,7 +433,6 @@ Step4<dim>::solve()
   std::cout << "   " << solver_control.last_step()
             << " CG iterations needed to obtain convergence." << std::endl;
 }
-
 
 // @sect4{Step4::output_results}
 
@@ -482,8 +467,6 @@ Step4<dim>::output_results() const
   data_out.write_vtk(output);
 }
 
-
-
 // @sect4{Step4::run}
 
 // This is the function which has the top-level control over everything. Apart
@@ -502,7 +485,6 @@ Step4<dim>::run()
   solve();
   output_results();
 }
-
 
 // @sect3{The <code>main</code> function}
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/lac/block_sparsity_pattern.h>
@@ -46,7 +44,6 @@ test()
     deallog << i << '\t' << i3.global_to_local(i).first << '\t'
             << i3.global_to_local(i).second << std::endl;
   deallog.pop();
-
 
   i3.reinit(ivector);
 
@@ -128,8 +125,6 @@ test()
   deallog.pop();
   deallog.pop();
 }
-
-
 
 int
 main()

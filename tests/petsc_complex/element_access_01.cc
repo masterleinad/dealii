@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // deal.II includes
 #include "../tests.h"
 #include <deal.II/lac/petsc_sparse_matrix.h>
@@ -73,7 +72,6 @@ main(int argc, char** argv)
         m.print(logfile);
       }
     }
-
 
   catch(std::exception& exc)
     {

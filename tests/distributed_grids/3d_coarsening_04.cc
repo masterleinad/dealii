@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like coarsening_03, but with a much more complex grid
 
 #include "../tests.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -58,7 +54,6 @@ test(std::ostream& /*out*/)
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
   deallog << " Number of cells: " << tr.n_active_cells() << ' '
           << tr2.n_active_cells() << std::endl;
-
 
   for(unsigned int i = 0; i < 2; ++i)
     {
@@ -110,7 +105,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

@@ -24,7 +24,6 @@
 
 #include <limits>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace numbers
@@ -48,7 +47,6 @@ namespace numbers
       template <typename T>
       struct NaNInitializer;
 
-
       /**
        * A specialization of the general NaNInitializer class that provides a
        * function that returns a @p float value equal to the invalid signaling
@@ -64,7 +62,6 @@ namespace numbers
         }
       };
 
-
       /**
        * A specialization of the general NaNInitializer class that provides a
        * function that returns a @p double value equal to the invalid
@@ -79,7 +76,6 @@ namespace numbers
           return std::numeric_limits<double>::signaling_NaN();
         }
       };
-
 
       /**
        * A specialization of the general NaNInitializer class that provides a
@@ -100,8 +96,6 @@ namespace numbers
           return nan_tensor;
         }
       };
-
-
 
       /**
        * A specialization of the general NaNInitializer class that provides a
@@ -125,8 +119,6 @@ namespace numbers
         }
       };
 
-
-
       /**
        * A specialization of the general NaNInitializer class that provides a
        * function that returns a Tensor<rank,dim> value whose components are
@@ -146,8 +138,6 @@ namespace numbers
           return nan_point;
         }
       };
-
-
 
       /**
        * A specialization of the general NaNInitializer class that provides a
@@ -172,8 +162,6 @@ namespace numbers
         }
       };
 
-
-
       /**
        * A specialization of the general NaNInitializer class that provides a
        * function that returns a DerivativeForm<order,dim,spacedim> value
@@ -196,8 +184,6 @@ namespace numbers
       };
     } // namespace SignalingNaN
   }   // namespace internal
-
-
 
   /**
    * Provide an object of type @p T filled with a signaling NaN that will
@@ -233,7 +219,6 @@ namespace numbers
     return internal::SignalingNaN::NaNInitializer<T>::invalid_element();
   }
 } // namespace numbers
-
 
 DEAL_II_NAMESPACE_CLOSE
 

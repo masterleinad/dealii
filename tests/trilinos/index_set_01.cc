@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that make_trilinos_map always uses the same constructor all the
 // processor. If we don't the code will hang like reported on the mailing list
 // by Nicola Giuliani.
@@ -23,8 +21,6 @@
 #include <deal.II/base/index_set.h>
 #include <deal.II/base/utilities.h>
 #include <iostream>
-
-
 
 void
 test()
@@ -50,8 +46,6 @@ test()
   my_set.compress();
   my_set.make_trilinos_map(MPI_COMM_WORLD, false);
 }
-
-
 
 int
 main(int argc, char** argv)

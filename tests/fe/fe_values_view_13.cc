@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the FEValues views and extractor classes. this test is for
 // get_function_hessians for vector components and a primitive element
 
@@ -30,8 +28,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -81,8 +77,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -101,7 +95,6 @@ test_hyper_sphere()
                    dim);
   test(tr, fe);
 }
-
 
 int
 main()

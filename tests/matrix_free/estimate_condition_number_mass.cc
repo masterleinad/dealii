@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function computes condition number estimates for the mass matrix at
 // different polynomial degrees. The mesh uses a hypercube mesh with no
 // hanging nodes and no other constraints
@@ -35,7 +33,6 @@ std::ofstream logfile("output");
 #include <deal.II/lac/solver_cg.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 void
 output_double_number(double input, const std::string& text)
@@ -67,8 +64,6 @@ mass_operator(const MatrixFree<dim, Number>&               data,
     }
 }
 
-
-
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
 {
@@ -92,8 +87,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -144,7 +137,6 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
     {}
   deallog << std::endl;
 }
-
 
 int
 main()

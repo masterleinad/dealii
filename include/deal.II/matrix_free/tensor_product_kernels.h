@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_tensor_product_kernels_h
 #define dealii_matrix_free_tensor_product_kernels_h
 
@@ -21,10 +20,7 @@
 #include <deal.II/base/config.h>
 #include <deal.II/base/utilities.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace internal
 {
@@ -64,8 +60,6 @@ namespace internal
     evaluate_symmetric_hierarchical
   };
 
-
-
   /**
    * Generic evaluator framework that valuates the given shape data in general
    * dimensions using the tensor product form. Depending on the particular
@@ -94,8 +88,6 @@ namespace internal
             typename Number2 = Number>
   struct EvaluatorTensorProduct
   {};
-
-
 
   /**
    * Internal evaluator for shape function in arbitrary dimension using the
@@ -289,8 +281,6 @@ namespace internal
     const Number2* shape_hessians;
   };
 
-
-
   template <int dim,
             int n_rows,
             int n_columns,
@@ -368,8 +358,6 @@ namespace internal
           }
       }
   }
-
-
 
   template <int dim,
             int n_rows,
@@ -507,8 +495,6 @@ namespace internal
       }
   }
 
-
-
   /**
    * Internal evaluator for shape function using the tensor product form
    * of the basis functions. The same as the other templated class but
@@ -641,8 +627,6 @@ namespace internal
     const unsigned int n_columns;
   };
 
-
-
   template <int dim, typename Number, typename Number2>
   template <int direction, bool contract_over_rows, bool add, bool one_line>
   inline void
@@ -714,8 +698,6 @@ namespace internal
           }
       }
   }
-
-
 
   template <int dim, typename Number, typename Number2>
   template <int  face_direction,
@@ -842,8 +824,6 @@ namespace internal
       }
   }
 
-
-
   /**
    * Internal evaluator for 1d-3d shape function using the tensor product form
    * of the basis functions. This class specializes the general application of
@@ -922,8 +902,6 @@ namespace internal
     const Number2* shape_gradients;
     const Number2* shape_hessians;
   };
-
-
 
   // In this case, the 1D shape values read (sorted lexicographically, rows
   // run over 1D dofs, columns over quadrature points):
@@ -1112,8 +1090,6 @@ namespace internal
       }
   }
 
-
-
   // For the specialized loop used for the gradient computation in
   // here, the 1D shape values read (sorted lexicographically, rows
   // run over 1D dofs, columns over quadrature points):
@@ -1264,8 +1240,6 @@ namespace internal
       }
   }
 
-
-
   // evaluates the given shape data in 1d-3d using the tensor product
   // form assuming the symmetries of unit cell shape hessians for
   // finite elements in FEEvaluation
@@ -1413,8 +1387,6 @@ namespace internal
         out += stride * (nn - 1);
       }
   }
-
-
 
   /**
    * Internal evaluator for 1d-3d shape function using the tensor product form
@@ -1602,8 +1574,6 @@ namespace internal
     const Number2* shape_gradients;
     const Number2* shape_hessians;
   };
-
-
 
   template <int dim,
             int n_rows,
@@ -1802,8 +1772,6 @@ namespace internal
       }
   }
 
-
-
   /**
    * Internal evaluator for 1d-3d shape function using the tensor product form
    * of the basis functions.
@@ -1976,8 +1944,6 @@ namespace internal
     const Number2* shape_gradients;
     const Number2* shape_hessians;
   };
-
-
 
   template <int dim,
             int n_rows,
@@ -2178,7 +2144,6 @@ namespace internal
   }
 
 } // end of namespace internal
-
 
 DEAL_II_NAMESPACE_CLOSE
 

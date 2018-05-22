@@ -101,8 +101,6 @@ namespace Step22
     ConditionalOStream pcout;
   };
 
-
-
   template <int dim>
   class BoundaryValues : public Function<dim>
   {
@@ -116,7 +114,6 @@ namespace Step22
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const;
   };
-
 
   template <int dim>
   double
@@ -133,7 +130,6 @@ namespace Step22
            / (p[0] * p[0] + p[1] * p[1]);
   }
 
-
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
@@ -142,8 +138,6 @@ namespace Step22
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
-
-
 
   template <int dim>
   class RightHandSide : public Function<dim>
@@ -159,7 +153,6 @@ namespace Step22
     vector_value(const Point<dim>& p, Vector<double>& value) const;
   };
 
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -167,7 +160,6 @@ namespace Step22
   {
     return 0;
   }
-
 
   template <int dim>
   void
@@ -177,8 +169,6 @@ namespace Step22
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
-
-
 
   template <class Matrix, class Preconditioner>
   class InverseMatrix : public Preconditioner
@@ -201,7 +191,6 @@ namespace Step22
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
-
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
     const Matrix&         m,
@@ -213,8 +202,6 @@ namespace Step22
       mpi_communicator(&mpi_communicator),
       tmp(locally_owned, mpi_communicator)
   {}
-
-
 
   template <class Matrix, class Preconditioner>
   void
@@ -231,8 +218,6 @@ namespace Step22
     cg.solve(*matrix, tmp, src, *preconditioner);
     dst = tmp;
   }
-
-
 
   template <class Preconditioner>
   class SchurComplement : public TrilinosWrappers::SparseMatrix
@@ -257,8 +242,6 @@ namespace Step22
     mutable TrilinosWrappers::MPI::Vector tmp1, tmp2;
   };
 
-
-
   template <class Preconditioner>
   SchurComplement<Preconditioner>::SchurComplement(
     const TrilinosWrappers::BlockSparseMatrix& system_matrix,
@@ -273,7 +256,6 @@ namespace Step22
       tmp2(tmp1)
   {}
 
-
   template <class Preconditioner>
   void
   SchurComplement<Preconditioner>::vmult(
@@ -284,8 +266,6 @@ namespace Step22
     A_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
-
 
   template <int dim>
   StokesProblem<dim>::StokesProblem (const unsigned int degree)
@@ -306,8 +286,6 @@ namespace Step22
            (Utilities::MPI::this_mpi_process(mpi_communicator)
             == 0))
   {}
-
-
 
   template <int dim>
   void
@@ -412,8 +390,6 @@ namespace Step22
       owned_partitioning, relevant_partitioning, mpi_communicator);
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::assemble_system()
@@ -489,7 +465,6 @@ namespace Step22
                 }
             }
 
-
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
@@ -507,8 +482,6 @@ namespace Step22
 
     pcout << "   Computing preconditioner..." << std::endl << std::flush;
   }
-
-
 
   template <int dim>
   void
@@ -650,7 +623,6 @@ namespace Step22
       }
   }
 
-
   template <int dim>
   void
   StokesProblem<dim>::output_results(const unsigned int refinement_cycle) const
@@ -703,8 +675,6 @@ namespace Step22
       }
   }
 
-
-
   template <int dim>
   void
   StokesProblem<dim>::refine_mesh()
@@ -723,8 +693,6 @@ namespace Step22
       triangulation, estimated_error_per_cell, 0.3, 0.0);
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   template <int dim>
   void
@@ -755,7 +723,6 @@ namespace Step22
     triangulation.add_periodicity(periodicity_vector);
 #endif
 
-
     triangulation.set_manifold(0, boundary);
     triangulation.set_manifold(1, boundary);
 
@@ -784,8 +751,6 @@ namespace Step22
       }
   }
 } // namespace Step22
-
-
 
 int
 main(int argc, char* argv[])

@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 //
 // check collect_periodic_faces(b_id) for correct return values
 //
-
 
 #include "../tests.h"
 
@@ -29,7 +26,6 @@
 std::ofstream logfile("output");
 
 using namespace dealii;
-
 
 /*
  * Generate a grid consisting of two disjoint cells, colorize the two
@@ -90,7 +86,6 @@ void generate_grid(Triangulation<2>& triangulation)
   triangulation.refine_global(1);
 }
 
-
 /* The 3D case */
 void generate_grid(Triangulation<3>& triangulation)
 {
@@ -130,7 +125,6 @@ void generate_grid(Triangulation<3>& triangulation)
   cells[0].material_id = 0;
   cells[1].material_id = 0;
 
-
   triangulation.create_triangulation(vertices, cells, SubCellData());
 
   Triangulation<3>::cell_iterator cell_1 = triangulation.begin();
@@ -151,8 +145,6 @@ void generate_grid(Triangulation<3>& triangulation)
 
   triangulation.refine_global(1);
 }
-
-
 
 /*
  * Print out the face vertices as well as the orientation of a match:
@@ -206,7 +198,6 @@ main()
                 it->orientation);
 
   deallog << "Test for 3D: Hypercube" << std::endl << std::endl;
-
 
   // Generate a triangulation and match:
   Triangulation<3> triangulation3;

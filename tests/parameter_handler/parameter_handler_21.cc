@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the Patterns::MultipleSelection
 
 #include "../tests.h"
@@ -59,7 +57,6 @@ test()
   check(
     "", "double  spaces|input 2", "set v = double  spaces  ,  double  spaces");
 }
-
 
 int
 main()

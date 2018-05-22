@@ -14,10 +14,8 @@
  * ---------------------------------------------------------------------
  */
 
-
 // a slightly modified version of step-8 that tests the postprocessor
 // discussed in the documentation of DataPostprocessorTensor
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -54,7 +52,6 @@ namespace Step8
 {
   using namespace dealii;
 
-
   template <int dim>
   class ElasticProblem
   {
@@ -90,8 +87,6 @@ namespace Step8
     Vector<double> system_rhs;
   };
 
-
-
   template <int dim>
   void
   right_hand_side(const std::vector<Point<dim>>& points,
@@ -120,22 +115,16 @@ namespace Step8
       }
   }
 
-
-
   template <int dim>
   ElasticProblem<dim>::ElasticProblem()
     : dof_handler(triangulation), fe(FE_Q<dim>(1), dim)
   {}
-
-
 
   template <int dim>
   ElasticProblem<dim>::~ElasticProblem()
   {
     dof_handler.clear();
   }
-
-
 
   template <int dim>
   void
@@ -159,8 +148,6 @@ namespace Step8
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
-
 
   template <int dim>
   void
@@ -263,8 +250,6 @@ namespace Step8
       boundary_values, system_matrix, solution, system_rhs);
   }
 
-
-
   template <int dim>
   void
   ElasticProblem<dim>::solve()
@@ -279,8 +264,6 @@ namespace Step8
 
     hanging_node_constraints.distribute(solution);
   }
-
-
 
   template <int dim>
   void
@@ -299,8 +282,6 @@ namespace Step8
 
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   template <int dim>
   class StrainPostprocessor : public DataPostprocessorTensor<dim>
@@ -334,8 +315,6 @@ namespace Step8
     }
   };
 
-
-
   template <int dim>
   void
   ElasticProblem<dim>::output_results(const unsigned int cycle) const
@@ -349,8 +328,6 @@ namespace Step8
     DataOut<dim> data_out;
     data_out.attach_dof_handler(dof_handler);
 
-
-
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
       data_component_interpretation(
         dim, DataComponentInterpretation::component_is_part_of_vector);
@@ -362,8 +339,6 @@ namespace Step8
     data_out.build_patches();
     data_out.write_gnuplot(deallog.get_file_stream());
   }
-
-
 
   template <int dim>
   void
@@ -395,7 +370,6 @@ namespace Step8
       }
   }
 } // namespace Step8
-
 
 int
 main()

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // compute the tensor C*unit_symmetric_tensor -- I needed this tensor for an
 // application, so thought I'd make a test out of it
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
-
 
 template <int dim>
 void
@@ -61,8 +59,6 @@ test()
       < 1e-14 * t_times_1.norm(),
     ExcInternalError());
 }
-
-
 
 int
 main()

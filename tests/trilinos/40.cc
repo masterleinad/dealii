@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TrilinosWrappers::MPI::Vector::add(s,V,s,V)
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::MPI::Vector& v,
@@ -53,8 +50,6 @@ test(TrilinosWrappers::MPI::Vector& v,
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -62,7 +57,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

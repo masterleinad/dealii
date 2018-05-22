@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // take a 2d mesh, provide a marked vertex such that the point is
 // outside of active cells adjacent to the marked vertex
 // and check that the function throws an exception
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 void check(Triangulation<2>& tria)
 {
@@ -86,7 +83,6 @@ void check(Triangulation<2>& tria)
       Assert(false, ExcInternalError());
     }
 }
-
 
 int
 main()

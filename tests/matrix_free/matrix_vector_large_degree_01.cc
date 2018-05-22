@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FEEvaluation can correctly handle large polynomial degrees of 20
 // in 3D. The old implementation of FEEvaluation that allocated all data
 // needed by the kernel on the stack ran into stack overflows in that case
@@ -36,7 +34,6 @@ std::ofstream logfile("output");
 #include <deal.II/grid/tria.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim, int fe_degree>
 void
@@ -94,8 +91,6 @@ test()
     deallog << "Result norm: " << out.l2_norm() << std::endl;
   }
 }
-
-
 
 int
 main()

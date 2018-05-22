@@ -15,7 +15,6 @@
 // Test that calling hp::DoFhandler::distribute_dofs again with the same
 // hp::FECollection doesn't recreate the copy.
 
-
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>

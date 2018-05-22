@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/hp/fe_collection.h>
 
@@ -103,16 +102,12 @@ namespace hp
     return numbers::invalid_unsigned_int;
   }
 
-
-
   template <int dim, int spacedim>
   FECollection<dim, spacedim>::FECollection(
     const FiniteElement<dim, spacedim>& fe)
   {
     push_back(fe);
   }
-
-
 
   template <int dim, int spacedim>
   FECollection<dim, spacedim>::FECollection(
@@ -124,8 +119,6 @@ namespace hp
     for(unsigned int i = 0; i < fes.size(); ++i)
       push_back(*fes[i]);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -144,8 +137,6 @@ namespace hp
 
     finite_elements.push_back(new_fe.clone());
   }
-
-
 
   template <int dim, int spacedim>
   ComponentMask
@@ -166,7 +157,6 @@ namespace hp
     return mask;
   }
 
-
   template <int dim, int spacedim>
   ComponentMask
   FECollection<dim, spacedim>::component_mask(
@@ -185,7 +175,6 @@ namespace hp
 
     return mask;
   }
-
 
   template <int dim, int spacedim>
   ComponentMask
@@ -206,7 +195,6 @@ namespace hp
     return mask;
   }
 
-
   template <int dim, int spacedim>
   ComponentMask
   FECollection<dim, spacedim>::component_mask(const BlockMask& block_mask) const
@@ -226,7 +214,6 @@ namespace hp
 
     return mask;
   }
-
 
   template <int dim, int spacedim>
   BlockMask
@@ -249,7 +236,6 @@ namespace hp
     return mask;
   }
 
-
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
@@ -270,7 +256,6 @@ namespace hp
 
     return mask;
   }
-
 
   template <int dim, int spacedim>
   BlockMask
@@ -293,8 +278,6 @@ namespace hp
     return mask;
   }
 
-
-
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
@@ -316,8 +299,6 @@ namespace hp
     return mask;
   }
 
-
-
   template <int dim, int spacedim>
   unsigned int
   FECollection<dim, spacedim>::n_blocks() const
@@ -333,8 +314,6 @@ namespace hp
     return nb;
   }
 
-
-
   template <int dim, int spacedim>
   std::size_t
   FECollection<dim, spacedim>::memory_consumption() const
@@ -349,10 +328,7 @@ namespace hp
   }
 } // namespace hp
 
-
-
 // explicit instantiations
 #include "fe_collection.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

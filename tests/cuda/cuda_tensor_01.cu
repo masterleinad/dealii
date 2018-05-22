@@ -31,7 +31,6 @@ test_cpu()
     for(unsigned int j = 0; j < dim; ++j)
       t[i][j] = a[i][j];
 
-
   deallog.push("values");
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)

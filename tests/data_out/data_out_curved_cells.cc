@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test output of curved cells at the boundary and in the inner of the domain,
 // where the last one is only relevant for mappings of type MappingQEulerian
 
@@ -50,7 +49,6 @@
 #include <vector>
 using namespace dealii;
 
-
 // this is copied from GridGenerator
 void
 laplace_solve(const SparseMatrix<double>&           S,
@@ -73,7 +71,6 @@ laplace_solve(const SparseMatrix<double>&           S,
   SF.apply_constraints(f, true);
   solver.solve(SF, u, f, PF);
 }
-
 
 // create a rinf grid and compute a MappingQEuler to represent the inner
 // boundary
@@ -240,8 +237,6 @@ curved_grid(std::ofstream& out)
   data_out.build_patches(euler, 5, DataOut<2>::curved_inner_cells);
   data_out.write_gnuplot(out);
 }
-
-
 
 int
 main()

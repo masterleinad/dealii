@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_integrated_legendre_sz.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -21,8 +20,6 @@ DEAL_II_NAMESPACE_OPEN
 IntegratedLegendreSZ::IntegratedLegendreSZ(const unsigned int k)
   : Polynomials::Polynomial<double>(get_coefficients(k))
 {}
-
-
 
 const std::vector<double>
 IntegratedLegendreSZ::get_coefficients(const unsigned int k)
@@ -69,8 +66,6 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
   return coefficients;
 }
 
-
-
 std::vector<Polynomials::Polynomial<double>>
 IntegratedLegendreSZ::generate_complete_basis(const unsigned int degree)
 {
@@ -82,7 +77,5 @@ IntegratedLegendreSZ::generate_complete_basis(const unsigned int degree)
     }
   return v;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE

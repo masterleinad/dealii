@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // take a disconnected 2d mesh and check that we can find an arbitrary point's cell
 // in it. We consider a special triangulation, where the point p does not lie
 // in a cell adjacent to the vertex with minimal distance to p. The test should
@@ -27,7 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 void create_coarse_grid(Triangulation<2>& coarse_grid)
 {
@@ -63,7 +60,6 @@ void create_coarse_grid(Triangulation<2>& coarse_grid)
   coarse_grid.create_triangulation(vertices, cells, SubCellData());
 }
 
-
 void check(Triangulation<2>& tria)
 {
   Point<2> p(0.99, 1. / 2.);
@@ -79,7 +75,6 @@ void check(Triangulation<2>& tria)
   AssertThrow(p.distance(cell->center()) < cell->diameter() / 2,
               ExcInternalError());
 }
-
 
 int
 main()

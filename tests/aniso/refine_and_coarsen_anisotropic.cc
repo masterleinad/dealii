@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // simply perform some random refinement and coarsening operations. if we do
 // this for several cycles chances are high, that any error in the refinement
 // and coarsening procedure will show up in an Assert at one place or
@@ -45,7 +44,6 @@ bool single_file = true;
 // is reached first terminates the loop
 const unsigned int max_cycle = 200;
 const unsigned int max_cells = 50000;
-
 
 template <int dim>
 void
@@ -115,8 +113,6 @@ test_isotropic(int type, std::ostream* logfile)
         break;
     }
 }
-
-
 
 int
 main()

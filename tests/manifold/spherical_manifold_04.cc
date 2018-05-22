@@ -86,7 +86,6 @@ test(const double R)
   dof_handler.clear();
 }
 
-
 using namespace dealii;
 
 int

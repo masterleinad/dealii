@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/point.h>
 #include <deal.II/base/tensor.h>
@@ -60,7 +58,6 @@ check_1d_parallelepiped_by_comparison(bool log)
           << "not OK... coarse grids are different but they should be the same";
     }
 }
-
 
 // Here is the implementation in 2d:
 void

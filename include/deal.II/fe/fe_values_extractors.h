@@ -16,11 +16,9 @@
 #ifndef dealii_fe_values_extractors_h
 #define dealii_fe_values_extractors_h
 
-
 #include <deal.II/base/config.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A namespace in which we declare "extractors", i.e. classes that when used
@@ -73,7 +71,6 @@ namespace FEValuesExtractors
     Scalar(const unsigned int component);
   };
 
-
   /**
    * Extractor for a vector of <code>spacedim</code> components of a vector-
    * valued element. The value of <code>spacedim</code> is defined by the
@@ -123,7 +120,6 @@ namespace FEValuesExtractors
     Vector(const unsigned int first_vector_component);
   };
 
-
   /**
    * Extractor for a symmetric tensor of a rank specified by the template
    * argument. For a second order symmetric tensor, this represents a
@@ -165,7 +161,6 @@ namespace FEValuesExtractors
      */
     SymmetricTensor(const unsigned int first_tensor_component);
   };
-
 
   /**
    * Extractor for a general tensor of a given rank specified by
@@ -210,7 +205,6 @@ namespace FEValuesExtractors
   };
 } // namespace FEValuesExtractors
 
-
 /*------------------------ Inline functions: namespace FEValuesExtractors --------*/
 
 namespace FEValuesExtractors
@@ -218,28 +212,21 @@ namespace FEValuesExtractors
   inline Scalar::Scalar() : component(numbers::invalid_unsigned_int)
   {}
 
-
-
   inline Scalar::Scalar(const unsigned int component) : component(component)
   {}
-
-
 
   inline Vector::Vector()
     : first_vector_component(numbers::invalid_unsigned_int)
   {}
 
-
   inline Vector::Vector(const unsigned int first_vector_component)
     : first_vector_component(first_vector_component)
   {}
-
 
   template <int rank>
   inline SymmetricTensor<rank>::SymmetricTensor()
     : first_tensor_component(numbers::invalid_unsigned_int)
   {}
-
 
   template <int rank>
   inline SymmetricTensor<rank>::SymmetricTensor(
@@ -247,20 +234,16 @@ namespace FEValuesExtractors
     : first_tensor_component(first_tensor_component)
   {}
 
-
   template <int rank>
   inline Tensor<rank>::Tensor()
     : first_tensor_component(numbers::invalid_unsigned_int)
   {}
-
 
   template <int rank>
   inline Tensor<rank>::Tensor(const unsigned int first_tensor_component)
     : first_tensor_component(first_tensor_component)
   {}
 } // namespace FEValuesExtractors
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check copy constructor Vector<std::complex<double> >::Vector(Vector) for same template
 // argument
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v)
@@ -44,8 +41,6 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

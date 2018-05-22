@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // MappingQ::clone forgot to copy the flag that describes whether to
 // also use curved geometries in interior cells. This could lead to
 // wrong output in DataOut, which puts the mapping into a
@@ -38,8 +36,6 @@
 #include <deal.II/fe/mapping_q.h>
 
 #include <deal.II/numerics/data_out.h>
-
-
 
 int
 main()

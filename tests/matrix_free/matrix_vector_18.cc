@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this tests matrix-free matrix-vector products in 1D (otherwise similar as
 // the other matrix-vector tests)
 
-
 #include "../tests.h"
-
 
 #include <deal.II/base/utilities.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -38,8 +35,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim,
           int fe_degree,
@@ -96,8 +91,6 @@ private:
   }
 };
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>&  dof,
@@ -145,7 +138,6 @@ do_test(const DoFHandler<dim>&  dof,
     }
 
   mf.vmult(out_dist, in_dist);
-
 
   // assemble sparse matrix with (\nabla v, \nabla u + 3.2221 * \nabla^2 u * ones) + (v, 10 * u)
   SparsityPattern sparsity;
@@ -207,8 +199,6 @@ do_test(const DoFHandler<dim>&  dof,
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -238,8 +228,6 @@ test()
 
   do_test<dim, fe_degree, double>(dof, constraints);
 }
-
-
 
 int
 main()

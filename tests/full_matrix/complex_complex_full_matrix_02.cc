@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check running over const iterators. like the full_matrix_* tests, but use
 // complex-valued matrices and vectors; this time we actually store complex values
 // in them
 
-
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 template <typename number>
 void

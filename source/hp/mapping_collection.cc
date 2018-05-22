@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/hp/mapping_collection.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace hp
 {
@@ -29,8 +27,6 @@ namespace hp
     mappings.push_back(
       std::shared_ptr<const Mapping<dim, spacedim>>(mapping.clone()));
   }
-
-
 
   template <int dim, int spacedim>
   MappingCollection<dim, spacedim>::MappingCollection(
@@ -50,16 +46,12 @@ namespace hp
       mappings(mapping_collection.mappings)
   {}
 
-
-
   template <int dim, int spacedim>
   std::size_t
   MappingCollection<dim, spacedim>::memory_consumption() const
   {
     return (sizeof(*this) + MemoryConsumption::memory_consumption(mappings));
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -71,7 +63,6 @@ namespace hp
   }
 
   //---------------------------------------------------------------------------
-
 
   namespace
   {
@@ -100,10 +91,7 @@ namespace hp
 
 } // namespace hp
 
-
-
 // explicit instantiations
 #include "mapping_collection.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

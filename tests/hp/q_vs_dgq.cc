@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test by Korosh Taebi: check that we can gave Q(p) and DGQ(r) in the same
 // mesh
-
 
 #include "../tests.h"
 
@@ -26,7 +23,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/hp/dof_handler.h>
-
 
 namespace Step27
 {
@@ -89,8 +85,6 @@ namespace Step27
             << std::endl;
   }
 } // namespace Step27
-
-
 
 int
 main()

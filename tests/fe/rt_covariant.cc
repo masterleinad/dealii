@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // computing the Hessian of the RT element without computing values failed
 // because some field wasn't properly initialized
 
@@ -32,8 +30,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -53,8 +49,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   deallog << "OK" << std::endl;
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -64,7 +58,6 @@ test_hyper_sphere()
 
   test(tr, FE_RaviartThomas<dim>(1));
 }
-
 
 int
 main()

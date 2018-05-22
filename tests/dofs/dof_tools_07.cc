@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
 // check
 //   DoFTools::count_dofs_per_component
-
-
 
 template <int dim>
 void

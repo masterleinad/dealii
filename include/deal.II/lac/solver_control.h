@@ -16,7 +16,6 @@
 #ifndef dealii_solver_control_h
 #define dealii_solver_control_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/subscriptor.h>
 
@@ -78,8 +77,6 @@ public:
     failure
   };
 
-
-
   /**
    * Class to be thrown upon failing convergence of an iterative solver, when
    * either the number of iterations exceeds the limit or the residual fails
@@ -131,8 +128,6 @@ public:
      */
     const double last_residual;
   };
-
-
 
   /**
    * Constructor. The parameters @p n and @p tol are the maximum number of
@@ -406,7 +401,6 @@ protected:
   std::vector<double> history_data;
 };
 
-
 /**
  * Specialization of @p SolverControl which returns @p success if either the
  * specified tolerance is achieved or if the initial residual (or whatever
@@ -551,7 +545,6 @@ public:
   check(const unsigned int step, const double check_value) override;
 };
 
-
 /**
  * Specialization of @p SolverControl which returns SolverControl::State::success if
  * and only if a certain positive number of consecutive iterations satisfy the
@@ -630,8 +623,6 @@ SolverControl::max_steps() const
   return maxsteps;
 }
 
-
-
 inline unsigned int
 SolverControl::set_max_steps(const unsigned int newval)
 {
@@ -640,16 +631,12 @@ SolverControl::set_max_steps(const unsigned int newval)
   return old;
 }
 
-
-
 inline void
 SolverControl::set_failure_criterion(const double rel_failure_residual)
 {
   relative_failure_residual = rel_failure_residual;
   check_failure             = true;
 }
-
-
 
 inline void
 SolverControl::clear_failure_criterion()
@@ -659,15 +646,11 @@ SolverControl::clear_failure_criterion()
   check_failure             = false;
 }
 
-
-
 inline double
 SolverControl::tolerance() const
 {
   return tol;
 }
-
-
 
 inline double
 SolverControl::set_tolerance(const double t)
@@ -677,14 +660,11 @@ SolverControl::set_tolerance(const double t)
   return old;
 }
 
-
 inline void
 SolverControl::log_history(const bool newval)
 {
   m_log_history = newval;
 }
-
-
 
 inline bool
 SolverControl::log_history() const
@@ -692,13 +672,11 @@ SolverControl::log_history() const
   return m_log_history;
 }
 
-
 inline void
 SolverControl::log_result(const bool newval)
 {
   m_log_result = newval;
 }
-
 
 inline bool
 SolverControl::log_result() const
@@ -706,13 +684,11 @@ SolverControl::log_result() const
   return m_log_result;
 }
 
-
 inline double
 ReductionControl::reduction() const
 {
   return reduce;
 }
-
 
 inline double
 ReductionControl::set_reduction(const double t)

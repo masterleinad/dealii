@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Lagrange polynomial based on Gauss-Lobatto support
 // points
 
@@ -41,7 +40,6 @@ test()
 
   verify(p1, p2);
 }
-
 
 int
 main()

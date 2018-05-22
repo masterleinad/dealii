@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::matrix_scalar_product
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
@@ -61,8 +58,6 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

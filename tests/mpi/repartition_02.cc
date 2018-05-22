@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test manual repartitioning and transferring data
 
 #include "../tests.h"
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -130,8 +126,6 @@ test()
 
       //tr.write_mesh_vtk("a");
 
-
-
       deallog << "* repartition:" << std::endl;
 
       offset = tr.register_data_attach(sizeof(int), pack_function<dim>);
@@ -153,7 +147,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

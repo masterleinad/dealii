@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // verify the distortion in cells of a hyper shell with 6 cells upon
 // refinement
 
@@ -30,7 +28,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -86,7 +83,6 @@ check(double r1, double r2, unsigned int n)
   grid_out.set_flags(flags);
   grid_out.write_dx(tria, logfile);
 }
-
 
 int
 main()

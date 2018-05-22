@@ -32,8 +32,6 @@ AutoDerivativeFunction<dim>::AutoDerivativeFunction(
   set_formula();
 }
 
-
-
 template <int dim>
 void
 AutoDerivativeFunction<dim>::set_formula(const DifferenceFormula form)
@@ -55,7 +53,6 @@ AutoDerivativeFunction<dim>::set_formula(const DifferenceFormula form)
   formula = form;
 }
 
-
 template <int dim>
 void
 AutoDerivativeFunction<dim>::set_h(const double hh)
@@ -64,7 +61,6 @@ AutoDerivativeFunction<dim>::set_h(const double hh)
   for(unsigned int i = 0; i < dim; ++i)
     ht[i][i] = h;
 }
-
 
 template <int dim>
 Tensor<1, dim>
@@ -116,7 +112,6 @@ AutoDerivativeFunction<dim>::gradient(const Point<dim>&  p,
     }
   return grad;
 }
-
 
 template <int dim>
 void
@@ -194,7 +189,6 @@ AutoDerivativeFunction<dim>::vector_gradient(
     }
 }
 
-
 template <int dim>
 void
 AutoDerivativeFunction<dim>::gradient_list(
@@ -256,8 +250,6 @@ AutoDerivativeFunction<dim>::gradient_list(
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim>
 void
@@ -327,7 +319,6 @@ AutoDerivativeFunction<dim>::vector_gradient_list(
     }
 }
 
-
 template <int dim>
 typename AutoDerivativeFunction<dim>::DifferenceFormula
 AutoDerivativeFunction<dim>::get_formula_of_order(const unsigned int ord)
@@ -347,7 +338,6 @@ AutoDerivativeFunction<dim>::get_formula_of_order(const unsigned int ord)
     }
   return Euler;
 }
-
 
 template class AutoDerivativeFunction<1>;
 template class AutoDerivativeFunction<2>;

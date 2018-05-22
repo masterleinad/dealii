@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
-
 
 int
 main()

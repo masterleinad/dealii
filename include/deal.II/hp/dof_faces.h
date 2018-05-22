@@ -16,7 +16,6 @@
 #ifndef dealii_hp_dof_faces_h
 #define dealii_hp_dof_faces_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/hp/fe_collection.h>
 
@@ -205,8 +204,6 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
-
     /**
      * These classes are similar to the internal::hp::DoFLevel classes. We
      * here store information that is associated with faces, rather than
@@ -236,7 +233,6 @@ namespace internal
      */
     template <int dim>
     class DoFIndicesOnFaces;
-
 
     /**
      * Store the indices of degrees of freedom on faces in 1D. As these would
@@ -334,13 +330,11 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
     // --------------------- inline and template functions ------------------
     template <class Archive>
     void
     DoFIndicesOnFaces<1>::serialize(Archive&, const unsigned int)
     {}
-
 
     template <class Archive>
     void
@@ -348,7 +342,6 @@ namespace internal
     {
       ar& lines;
     }
-
 
     template <class Archive>
     void
@@ -414,8 +407,6 @@ namespace internal
         }
     }
 
-
-
     template <int structdim>
     template <int dim, int spacedim>
     inline void
@@ -476,8 +467,6 @@ namespace internal
         }
     }
 
-
-
     template <int structdim>
     template <int dim, int spacedim>
     inline unsigned int
@@ -519,8 +508,6 @@ namespace internal
             }
         }
     }
-
-
 
     template <int structdim>
     template <int dim, int spacedim>
@@ -574,8 +561,6 @@ namespace internal
                      + 1;
         }
     }
-
-
 
     template <int structdim>
     template <int dim, int spacedim>
@@ -639,7 +624,6 @@ namespace internal
       ar& dofs;
       ar& dof_offsets;
     }
-
 
   } // namespace hp
 

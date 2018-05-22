@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests grow_or_shrink() of square and rectangle LAPACKFullMatrix
 
 #include "../tests.h"
 #include <deal.II/lac/lapack_full_matrix.h>
 
 #include <iostream>
-
 
 void
 test(const unsigned int size)
@@ -60,7 +58,6 @@ test(const unsigned int size)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

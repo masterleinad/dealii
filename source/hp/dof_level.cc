@@ -153,8 +153,6 @@ namespace internal
       dof_offsets.swap(new_dof_offsets);
     }
 
-
-
     template <int dim, int spacedim>
     void
     DoFLevel::uncompress_data(
@@ -237,8 +235,6 @@ namespace internal
       dof_offsets.swap(new_dof_offsets);
     }
 
-
-
     std::size_t
     DoFLevel::memory_consumption() const
     {
@@ -249,8 +245,6 @@ namespace internal
               + MemoryConsumption::memory_consumption(cell_dof_indices_cache));
     }
 
-
-
     void
     DoFLevel::normalize_active_fe_indices()
     {
@@ -259,8 +253,6 @@ namespace internal
           active_fe_indices[i]
             = get_toggled_compression_state(active_fe_indices[i]);
     }
-
-
 
     // explicit instantiations
     template void

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // just output a lot of information about various classes implementing
 // 1d-polynomials, to make sure that all changes we make to these classes
 // do not change the results of these classes.
@@ -24,9 +23,7 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 double
 scalar_product(const Polynomial<double>& p1, const Polynomial<double>& p2)
@@ -44,7 +41,6 @@ scalar_product(const Polynomial<double>& p1, const Polynomial<double>& p2)
     }
   return sum;
 }
-
 
 void
 polynomial_arithmetic()
@@ -90,7 +86,6 @@ polynomial_arithmetic()
     }
 }
 
-
 int
 main()
 {
@@ -108,12 +103,10 @@ main()
       p.push_back(Legendre(i));
     }
 
-
   for(unsigned int i = 0; i < p.size(); ++i)
     for(unsigned int j = 0; j <= i; ++j)
       deallog << 'P' << i << " * P" << j << " = " << scalar_product(p[i], p[j])
               << std::endl;
-
 
   deallog << "LagrangeEquidistant" << std::endl;
 

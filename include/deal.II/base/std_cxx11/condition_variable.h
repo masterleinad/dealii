@@ -16,7 +16,6 @@
 #ifndef dealii_std_cxx11_condition_variable_h
 #define dealii_std_cxx11_condition_variable_h
 
-
 #include <deal.II/base/config.h>
 
 #include <condition_variable>

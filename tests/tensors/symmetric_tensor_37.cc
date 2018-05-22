@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check the contract3 function involving SymmetricTensors
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
-
 
 // Although not strictly required, in this test it is expected that T1 or T3
 // (or both) are a symmetric tensor

@@ -16,7 +16,6 @@
 #ifndef dealii_precondition_selector_h
 #define dealii_precondition_selector_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <string>
@@ -27,7 +26,6 @@ template <class number>
 class Vector;
 template <class number>
 class SparseMatrix;
-
 
 /*! @addtogroup Preconditioners
  *@{
@@ -167,7 +165,6 @@ public:
    * @{
    */
 
-
   /**
    * Exception.
    */
@@ -197,14 +194,12 @@ private:
 /*@}*/
 /* --------------------- Inline and template functions ------------------- */
 
-
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::PreconditionSelector(
   const std::string&                     preconditioning,
   const typename VectorType::value_type& omega)
   : preconditioning(preconditioning), omega(omega)
 {}
-
 
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::~PreconditionSelector()
@@ -213,14 +208,12 @@ PreconditionSelector<MatrixType, VectorType>::~PreconditionSelector()
   A = nullptr;
 }
 
-
 template <typename MatrixType, typename VectorType>
 void
 PreconditionSelector<MatrixType, VectorType>::use_matrix(const MatrixType& M)
 {
   A = &M;
 }
-
 
 template <typename MatrixType, typename VectorType>
 inline typename PreconditionSelector<MatrixType, VectorType>::size_type
@@ -230,7 +223,6 @@ PreconditionSelector<MatrixType, VectorType>::m() const
   return A->m();
 }
 
-
 template <typename MatrixType, typename VectorType>
 inline typename PreconditionSelector<MatrixType, VectorType>::size_type
 PreconditionSelector<MatrixType, VectorType>::n() const
@@ -238,8 +230,6 @@ PreconditionSelector<MatrixType, VectorType>::n() const
   Assert(A != nullptr, ExcNoMatrixGivenToUse());
   return A->n();
 }
-
-
 
 template <typename MatrixType, typename VectorType>
 void
@@ -270,7 +260,6 @@ PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
         Assert(false, ExcNotImplemented());
     }
 }
-
 
 template <typename MatrixType, typename VectorType>
 void
@@ -303,14 +292,12 @@ PreconditionSelector<MatrixType, VectorType>::Tvmult(
     }
 }
 
-
 template <typename MatrixType, typename VectorType>
 std::string
 PreconditionSelector<MatrixType, VectorType>::get_precondition_names()
 {
   return "none|jacobi|sor|ssor";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

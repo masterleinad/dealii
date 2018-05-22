@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Copy from boundary ids to manifold ids
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
@@ -46,7 +44,6 @@ print_info(Triangulation<dim, spacedim>& tria)
                 << std::endl;
     }
 }
-
 
 // Helper function
 template <int dim, int spacedim>

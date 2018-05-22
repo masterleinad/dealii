@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/parameter_handler.h>
@@ -36,14 +35,11 @@
 #include <limits>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 ParameterHandler::ParameterHandler()
   : entries(new boost::property_tree::ptree())
 {}
-
 
 namespace
 {
@@ -96,8 +92,6 @@ namespace
 
     return u;
   }
-
-
 
   std::string
   demangle(const std::string& s)
@@ -240,7 +234,6 @@ namespace
     return static_cast<bool>(p.get_optional<std::string>("value"));
   }
 
-
   /**
    * Return whether a given node is a alias node (as opposed
    * to being a subsection or parameter node)
@@ -251,8 +244,6 @@ namespace
     return static_cast<bool>(p.get_optional<std::string>("alias"));
   }
 } // namespace
-
-
 
 std::string
 ParameterHandler::collate_path_string(
@@ -272,14 +263,11 @@ ParameterHandler::collate_path_string(
     return "";
 }
 
-
 std::string
 ParameterHandler::get_current_path() const
 {
   return collate_path_string(subsection_path);
 }
-
-
 
 std::string
 ParameterHandler::get_current_full_path(const std::string& name) const
@@ -292,8 +280,6 @@ ParameterHandler::get_current_full_path(const std::string& name) const
 
   return path;
 }
-
-
 
 void
 ParameterHandler::parse_input(std::istream&      input,
@@ -342,7 +328,6 @@ ParameterHandler::parse_input(std::istream&      input,
         throw;
       }
   };
-
 
   while(std::getline(input, input_line))
     {
@@ -423,8 +408,6 @@ ParameterHandler::parse_input(std::istream&      input,
     }
 }
 
-
-
 void
 ParameterHandler::parse_input(const std::string& filename,
                               const std::string& last_line)
@@ -436,8 +419,6 @@ ParameterHandler::parse_input(const std::string& filename,
   parse_input(file_stream, filename, last_line);
 }
 
-
-
 void
 ParameterHandler::parse_input_from_string(const char*        s,
                                           const std::string& last_line)
@@ -445,8 +426,6 @@ ParameterHandler::parse_input_from_string(const char*        s,
   std::istringstream input_stream(s);
   parse_input(input_stream, "input string", last_line);
 }
-
-
 
 namespace
 {
@@ -523,8 +502,6 @@ namespace
   }
 } // namespace
 
-
-
 void
 ParameterHandler::parse_input_from_xml(std::istream& in)
 {
@@ -578,7 +555,6 @@ ParameterHandler::parse_input_from_xml(std::istream& in)
   read_xml_recursively(my_entries, "", path_separator, patterns, *entries);
 }
 
-
 void
 ParameterHandler::parse_input_from_json(std::istream& in)
 {
@@ -594,15 +570,11 @@ ParameterHandler::parse_input_from_json(std::istream& in)
   read_xml_recursively(node_tree, "", path_separator, patterns, *entries);
 }
 
-
-
 void
 ParameterHandler::clear()
 {
   entries = std_cxx14::make_unique<boost::property_tree::ptree>();
 }
-
-
 
 void
 ParameterHandler::declare_entry(const std::string&           entry,
@@ -640,8 +612,6 @@ ParameterHandler::declare_entry(const std::string&           entry,
     ExcValueDoesNotMatchPattern(default_value, pattern.description()));
 }
 
-
-
 void
 ParameterHandler::add_action(
   const std::string&                             entry,
@@ -669,14 +639,11 @@ ParameterHandler::add_action(
     entries->put(get_current_full_path(entry) + path_separator + "actions",
                  Utilities::int_to_string(actions.size() - 1));
 
-
   // as documented, run the action on the default value at the very end
   const std::string default_value = entries->get<std::string>(
     get_current_full_path(entry) + path_separator + "default_value");
   action(default_value);
 }
-
-
 
 void
 ParameterHandler::declare_alias(const std::string& existing_entry_name,
@@ -698,7 +665,6 @@ ParameterHandler::declare_alias(const std::string& existing_entry_name,
                + "> that references an entry <" + existing_entry_name
                + ">, but the latter does not seem to be a "
                  "parameter declaration."));
-
 
   // now also make sure that if the alias has already been
   // declared, that it is also an alias and refers to the same
@@ -737,8 +703,6 @@ ParameterHandler::declare_alias(const std::string& existing_entry_name,
                (alias_is_deprecated ? "true" : "false"));
 }
 
-
-
 void
 ParameterHandler::enter_subsection(const std::string& subsection)
 {
@@ -751,8 +715,6 @@ ParameterHandler::enter_subsection(const std::string& subsection)
   subsection_path.push_back(subsection);
 }
 
-
-
 void
 ParameterHandler::leave_subsection()
 {
@@ -763,8 +725,6 @@ ParameterHandler::leave_subsection()
   if(subsection_path.size() > 0)
     subsection_path.pop_back();
 }
-
-
 
 std::string
 ParameterHandler::get(const std::string& entry_string) const
@@ -780,8 +740,6 @@ ParameterHandler::get(const std::string& entry_string) const
       return "";
     }
 }
-
-
 
 long int
 ParameterHandler::get_integer(const std::string& entry_string) const
@@ -799,8 +757,6 @@ ParameterHandler::get_integer(const std::string& entry_string) const
       return 0;
     }
 }
-
-
 
 double
 ParameterHandler::get_double(const std::string& entry_string) const
@@ -820,8 +776,6 @@ ParameterHandler::get_double(const std::string& entry_string) const
     }
 }
 
-
-
 bool
 ParameterHandler::get_bool(const std::string& entry_string) const
 {
@@ -836,8 +790,6 @@ ParameterHandler::get_bool(const std::string& entry_string) const
   else
     return false;
 }
-
-
 
 void
 ParameterHandler::set(const std::string& entry_string,
@@ -883,14 +835,12 @@ ParameterHandler::set(const std::string& entry_string,
     AssertThrow(false, ExcEntryUndeclared(entry_string));
 }
 
-
 void
 ParameterHandler::set(const std::string& entry_string, const char* new_value)
 {
   // simply forward
   set(entry_string, std::string(new_value));
 }
-
 
 void
 ParameterHandler::set(const std::string& entry_string, const double& new_value)
@@ -904,8 +854,6 @@ ParameterHandler::set(const std::string& entry_string, const double& new_value)
   set(entry_string, s.str());
 }
 
-
-
 void
 ParameterHandler::set(const std::string& entry_string,
                       const long int&    new_value)
@@ -918,8 +866,6 @@ ParameterHandler::set(const std::string& entry_string,
   set(entry_string, s.str());
 }
 
-
-
 void
 ParameterHandler::set(const std::string& entry_string, const bool& new_value)
 {
@@ -927,8 +873,6 @@ ParameterHandler::set(const std::string& entry_string, const bool& new_value)
   // actually sets the value as a string
   set(entry_string, (new_value ? "true" : "false"));
 }
-
-
 
 std::ostream&
 ParameterHandler::print_parameters(std::ostream&     out,
@@ -1006,8 +950,6 @@ ParameterHandler::print_parameters(std::ostream&     out,
   return out;
 }
 
-
-
 void
 ParameterHandler::recursively_print_parameters(
   const std::vector<std::string>& target_subsection_path,
@@ -1084,8 +1026,6 @@ ParameterHandler::recursively_print_parameters(
                       out << std::setw(overall_indent_level * 2) << ""
                           << "# " << doc_lines[i] << '\n';
                   }
-
-
 
                 // print name and value of this entry
                 out << std::setw(overall_indent_level * 2) << ""
@@ -1322,7 +1262,6 @@ ParameterHandler::recursively_print_parameters(
         Assert(false, ExcNotImplemented());
     }
 
-
   // if there was text before and there are sections to come, put two
   // newlines between the last entry and the first subsection
   {
@@ -1431,8 +1370,6 @@ ParameterHandler::recursively_print_parameters(
       }
 }
 
-
-
 // Print a section in the desired style. The styles are separated into
 // several verbosity classes depending on the higher bits.
 //
@@ -1530,7 +1467,6 @@ ParameterHandler::print_parameters_section(
               longest_value = std::max(
                 longest_value, p->second.get<std::string>("value").length());
 
-
           // print entries one by one. make sure they are sorted by using
           // the appropriate iterators
           bool first_entry = true;
@@ -1564,8 +1500,6 @@ ParameterHandler::print_parameters_section(
                       out << std::setw(overall_indent_level * 2) << ""
                           << "# " << doc_lines[i] << std::endl;
                   }
-
-
 
                 // print name and value of this entry
                 out << std::setw(overall_indent_level * 2) << ""
@@ -1778,7 +1712,6 @@ ParameterHandler::print_parameters_section(
         Assert(false, ExcNotImplemented());
     }
 
-
   // if there was text before and there are sections to come, put two
   // newlines between the last entry and the first subsection
   if(style != XML)
@@ -1906,8 +1839,6 @@ ParameterHandler::print_parameters_section(
     }
 }
 
-
-
 void
 ParameterHandler::log_parameters(LogStream& out)
 {
@@ -1917,8 +1848,6 @@ ParameterHandler::log_parameters(LogStream& out)
 
   out.pop();
 }
-
-
 
 void
 ParameterHandler::log_parameters_section(LogStream& out)
@@ -1954,8 +1883,6 @@ ParameterHandler::log_parameters_section(LogStream& out)
         out.pop();
       }
 }
-
-
 
 void
 ParameterHandler::scan_line(std::string        line,
@@ -2152,16 +2079,12 @@ ParameterHandler::scan_line(std::string        line,
     }
 }
 
-
-
 std::size_t
 ParameterHandler::memory_consumption() const
 {
   //TODO: add to this an estimate of the memory in the property_tree
   return (MemoryConsumption::memory_consumption(subsection_path));
 }
-
-
 
 bool
 ParameterHandler::operator==(const ParameterHandler& prm2) const
@@ -2186,12 +2109,8 @@ ParameterHandler::operator==(const ParameterHandler& prm2) const
   return (o1.str() == o2.str());
 }
 
-
-
 MultipleParameterLoop::MultipleParameterLoop() : n_branches(0)
 {}
-
-
 
 void
 MultipleParameterLoop::parse_input(std::istream&      input,
@@ -2207,8 +2126,6 @@ MultipleParameterLoop::parse_input(std::istream&      input,
   init_branches();
 }
 
-
-
 void
 MultipleParameterLoop::loop(MultipleParameterLoop::UserClass& uc)
 {
@@ -2220,8 +2137,6 @@ MultipleParameterLoop::loop(MultipleParameterLoop::UserClass& uc)
       uc.run(*this);
     };
 }
-
-
 
 void
 MultipleParameterLoop::init_branches()
@@ -2253,7 +2168,6 @@ MultipleParameterLoop::init_branches()
                   << "        " << n_branches
                   << " variant runs that will be performed." << std::endl;
 
-
   // do a first run on filling the values to
   // check for the conformance with the regexp
   // (later on, this will be lost in the whole
@@ -2261,8 +2175,6 @@ MultipleParameterLoop::init_branches()
   for(unsigned int i = 0; i < n_branches; ++i)
     fill_entry_values(i);
 }
-
-
 
 void
 MultipleParameterLoop::init_branches_current_section()
@@ -2301,8 +2213,6 @@ MultipleParameterLoop::init_branches_current_section()
         leave_subsection();
       }
 }
-
-
 
 void
 MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
@@ -2350,8 +2260,6 @@ MultipleParameterLoop::fill_entry_values(const unsigned int run_no)
     }
 }
 
-
-
 std::size_t
 MultipleParameterLoop::memory_consumption() const
 {
@@ -2362,8 +2270,6 @@ MultipleParameterLoop::memory_consumption() const
   return mem;
 }
 
-
-
 MultipleParameterLoop::Entry::Entry(const std::vector<std::string>& ssp,
                                     const std::string&              Name,
                                     const std::string&              Value)
@@ -2372,8 +2278,6 @@ MultipleParameterLoop::Entry::Entry(const std::vector<std::string>& ssp,
     entry_value(Value),
     type(Entry::array)
 {}
-
-
 
 void
 MultipleParameterLoop::Entry::split_different_values()
@@ -2424,7 +2328,6 @@ MultipleParameterLoop::Entry::split_different_values()
   else
     type = Entry::variant;
 }
-
 
 std::size_t
 MultipleParameterLoop::Entry::memory_consumption() const

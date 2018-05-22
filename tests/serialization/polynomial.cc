@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Polynomial
 
 #include "serialization.h"
 #include <boost/serialization/vector.hpp>
 #include <deal.II/base/polynomial.h>
-
 
 void
 test()
@@ -40,7 +38,6 @@ test()
 
   verify(p1, p3);
 }
-
 
 int
 main()

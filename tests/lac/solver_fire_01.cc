@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test to verify correctness of SolverFIRE::solve()
 // The objective function is f(x,y) = x^2 + y^2.
-
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
@@ -26,9 +23,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
 
-
 using vector_t = typename dealii::Vector<double>;
-
 
 double
 compute(vector_t& G, const vector_t& X)
@@ -40,8 +35,6 @@ compute(vector_t& G, const vector_t& X)
 
   return X.norm_sqr();
 }
-
-
 
 void
 check_value(const double x, const double y, const double tol)

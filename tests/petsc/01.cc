@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check setting elements in a petsc matrix using
 // PETScWrappers::SparseMatrix::set()
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test(PETScWrappers::SparseMatrix& m)
@@ -50,8 +47,6 @@ test(PETScWrappers::SparseMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

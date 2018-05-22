@@ -16,7 +16,6 @@
 #ifndef dealii_fe_poly_h
 #define dealii_fe_poly_h
 
-
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/fe/fe.h>
@@ -227,7 +226,6 @@ protected:
    * NOTE: The following function has its definition inlined into the class declaration
    * because we otherwise run into a compiler error with MS Visual Studio.
    */
-
 
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>

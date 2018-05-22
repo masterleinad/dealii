@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests LAPACKFullMatrix::operator*= and operator/=
 
 #include "../tests.h"
 #include <deal.II/lac/lapack_full_matrix.h>
 
 #include <iostream>
-
-
 
 void
 test(const bool is_singular)

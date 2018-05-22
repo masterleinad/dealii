@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the make_array_view functions that create ArrayViews from iterators
 
 #include "../tests.h"
@@ -137,8 +136,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

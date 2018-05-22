@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that the flat manifold does what it should. This time on faces, where the
 // flat manifold is implemented as a ChartManifold with identity
 // pull-back and push-forward
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim, int spacedim>
 class MyFlatManifold : public ChartManifold<dim, spacedim, spacedim>
@@ -63,8 +59,6 @@ public:
     return x;
   }
 };
-
-
 
 // Helper function
 template <int dim, int spacedim>

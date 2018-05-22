@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in the new ConstraintMatrix::distribute():
 /*
 --------------------------------------------------------
@@ -44,8 +42,6 @@ While distributing the constraint for DoF 41, it turns out that one of the proce
 #include <deal.II/numerics/vector_tools.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 void
@@ -114,14 +110,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

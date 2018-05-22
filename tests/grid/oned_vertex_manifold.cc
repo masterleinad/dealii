@@ -27,7 +27,6 @@ main()
 
   SphericalManifold<1> spherical_manifold;
 
-
   constexpr types::manifold_id spherical_manifold_id = 42;
 
   Triangulation<1> triangulation;

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -30,7 +29,6 @@
 //   DoFTools::
 //   map_dofs_to_support_points(...);
 // for the hp case
-
 
 using namespace std;
 

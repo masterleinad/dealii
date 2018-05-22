@@ -19,7 +19,6 @@
  *          Wolfgang Bangerth, Texas A&M University, 2012
  */
 
-
 // @sect3{Include files}
 
 // As usual, at the beginning we include all the header files we need in
@@ -55,7 +54,6 @@
 #include <fstream>
 #include <iostream>
 #include <list>
-
 
 namespace Step41
 {
@@ -113,7 +111,6 @@ namespace Step41
     TrilinosWrappers::MPI::Vector contact_force;
   };
 
-
   // @sect3{Right hand side, boundary values, and the obstacle}
 
   // In the following, we define classes that describe the right hand side
@@ -146,8 +143,6 @@ namespace Step41
     return -10;
   }
 
-
-
   template <int dim>
   class BoundaryValues : public Function<dim>
   {
@@ -169,8 +164,6 @@ namespace Step41
 
     return 0;
   }
-
-
 
   // We describe the obstacle function by a cascaded barrier (think: stair
   // steps):
@@ -202,10 +195,7 @@ namespace Step41
       return -0.8;
   }
 
-
-
   // @sect3{Implementation of the <code>ObstacleProblem</code> class}
-
 
   // @sect4{ObstacleProblem::ObstacleProblem}
 
@@ -214,7 +204,6 @@ namespace Step41
   template <int dim>
   ObstacleProblem<dim>::ObstacleProblem() : fe(1), dof_handler(triangulation)
   {}
-
 
   // @sect4{ObstacleProblem::make_grid}
 
@@ -233,7 +222,6 @@ namespace Step41
               << "Total number of cells: " << triangulation.n_cells()
               << std::endl;
   }
-
 
   // @sect4{ObstacleProblem::setup_system}
 
@@ -280,7 +268,6 @@ namespace Step41
     for(unsigned int j = 0; j < solution.size(); j++)
       diagonal_of_mass_matrix(j) = mass_matrix.diag_element(j);
   }
-
 
   // @sect4{ObstacleProblem::assemble_system}
 
@@ -348,8 +335,6 @@ namespace Step41
       }
   }
 
-
-
   // @sect4{ObstacleProblem::assemble_mass_matrix_diagonal}
 
   // The next function is used in the computation of the diagonal mass matrix
@@ -410,7 +395,6 @@ namespace Step41
           cell_matrix, local_dof_indices, mass_matrix);
       }
   }
-
 
   // @sect4{ObstacleProblem::update_solution_and_constraints}
 
@@ -575,7 +559,6 @@ namespace Step41
               << std::endl;
   }
 
-
   // @sect4{ObstacleProblem::output_results}
 
   // We use the vtk-format for the output.  The file contains the displacement
@@ -603,8 +586,6 @@ namespace Step41
                              + Utilities::int_to_string(iteration, 3) + ".vtk");
     data_out.write_vtk(output_vtk);
   }
-
-
 
   // @sect4{ObstacleProblem::run}
 
@@ -657,7 +638,6 @@ namespace Step41
       }
   }
 } // namespace Step41
-
 
 // @sect3{The <code>main</code> function}
 

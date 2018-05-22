@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework to check hp constraints for fe without support points
 
 #include "../tests.h"
@@ -50,12 +49,9 @@
 #include <fstream>
 #include <vector>
 
-
 template <int dim>
 void
 test();
-
-
 
 template <int dim>
 void
@@ -81,8 +77,6 @@ do_check(const Triangulation<dim>&    triangulation,
   constraints.print(deallog.get_file_stream());
 }
 
-
-
 // check on a uniformly refined mesh
 template <int dim>
 void
@@ -94,8 +88,6 @@ test_no_hanging_nodes(const hp::FECollection<dim>& fe)
 
   do_check(triangulation, fe);
 }
-
-
 
 // same test as above, but this time with a mesh that has hanging nodes
 template <int dim>
@@ -111,7 +103,6 @@ test_with_hanging_nodes(const hp::FECollection<dim>& fe)
 
   do_check(triangulation, fe);
 }
-
 
 // like the previous function, but refine the mesh a number of times randomly
 // (a quarter of all cells is refined in each step)
@@ -137,8 +128,6 @@ test_with_hanging_nodes_random(const hp::FECollection<dim>& fe)
   do_check(triangulation, fe);
 }
 
-
-
 template <int dim>
 void
 test_with_hanging_nodes_random_aniso(const hp::FECollection<dim>& fe)
@@ -161,8 +150,6 @@ test_with_hanging_nodes_random_aniso(const hp::FECollection<dim>& fe)
 
   do_check(triangulation, fe);
 }
-
-
 
 // test with a 3d grid that has cells with face_orientation==false and hanging
 // nodes. this trips up all sorts of pieces of code, for example there was a
@@ -194,8 +181,6 @@ test_with_wrong_face_orientation(const hp::FECollection<dim>& fe)
       do_check(triangulation, fe);
     }
 }
-
-
 
 // test with a 2d mesh that forms a square but subdivides it into 3
 // elements. this tests the case of the sign_change thingy in
@@ -244,8 +229,6 @@ test_with_2d_deformed_mesh(const hp::FECollection<dim>& fe)
 
   do_check(triangulation, fe);
 }
-
-
 
 // same as test_with_2d_deformed_mesh, but refine each element in turn. this
 // makes sure we also check the sign_change thingy for refined cells
@@ -313,8 +296,6 @@ test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
     }
 }
 
-
-
 // test that interpolating a suitable polynomial onto a refined mesh (which
 // should yield zero error) and then applying constraints still yields zero
 // error. we do so with every pair of finite elements given
@@ -349,7 +330,6 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
     }
 
   hp::DoFHandler<dim> dof_handler(triangulation);
-
 
   // for every pair of finite elements,
   // assign them to each of the two sides of the domain
@@ -451,7 +431,6 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
       }
 }
 
-
 template <int dim>
 void
 test_interpolation(const hp::FECollection<dim>&     fe,
@@ -460,8 +439,6 @@ test_interpolation(const hp::FECollection<dim>&     fe,
   test_interpolation_base(fe, polynomial_degrees, false);
   test_interpolation_base(fe, polynomial_degrees, true);
 }
-
-
 
 int
 main()

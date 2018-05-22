@@ -21,7 +21,6 @@
 // A related example that is shipped with Trilinos can be found at
 // https://github.com/trilinos/Trilinos/blob/master/packages/sacado/example/dfad_dfad_example.cpp
 
-
 #include "../tests.h"
 
 #include <Sacado.hpp>

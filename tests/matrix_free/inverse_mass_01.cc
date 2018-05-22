@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Tests CellwiseInverseMassMatrix on DG elements by comparing its action on a
 // random vector to a CG solver
 
@@ -34,10 +32,7 @@
 
 #include <deal.II/matrix_free/operators.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim,
           int fe_degree,
@@ -122,8 +117,6 @@ private:
   const MatrixFree<dim, Number>& data;
 };
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
@@ -170,8 +163,6 @@ do_test(const DoFHandler<dim>& dof)
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -211,8 +202,6 @@ test()
       deallog.pop();
     }
 }
-
-
 
 int
 main()

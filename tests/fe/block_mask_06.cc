@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the BlockMask class
 //
 // here: BlockMask::n_selected_blocks
 
-
 #include "../tests.h"
 #include <deal.II/fe/block_mask.h>
-
-
 
 void
 test()
@@ -36,7 +31,6 @@ test()
   // test for an empty mask
   Assert(BlockMask().n_selected_blocks(12) == 12, ExcInternalError());
   Assert(BlockMask().n_selected_blocks(13) == 13, ExcInternalError());
-
 
   deallog << "OK" << std::endl;
 
@@ -52,7 +46,6 @@ test()
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main()

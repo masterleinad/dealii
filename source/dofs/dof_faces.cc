@@ -19,7 +19,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   namespace DoFHandlerImplementation
@@ -30,13 +29,11 @@ namespace internal
       return 0;
     }
 
-
     std::size_t
     DoFFaces<2>::memory_consumption() const
     {
       return MemoryConsumption::memory_consumption(lines);
     }
-
 
     std::size_t
     DoFFaces<3>::memory_consumption() const

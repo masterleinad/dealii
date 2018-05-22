@@ -55,7 +55,6 @@ fails(const FiniteElement<dim>& fe, const ComponentMask& m)
     }
 }
 
-
 template <int dim>
 void
 check()
@@ -165,8 +164,6 @@ check()
     works(outer_outer, mask_single(2 * (dim + 2), dim));
   }
 }
-
-
 
 int
 main()

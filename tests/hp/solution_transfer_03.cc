@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SolutionTransfer got into trouble when interpolating between an old and a
 // new mesh where some cells are set to use FENothing, see bug #83
 // (https://code.google.com/p/dealii/issues/detail?id=83)
@@ -41,8 +39,6 @@
 
 #include <deal.II/numerics/data_out.h>
 
-
-
 int
 main()
 {
@@ -51,7 +47,6 @@ main()
   Triangulation<2> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
-
 
   hp::FECollection<2> fe_collection;
   fe_collection.push_back(FE_Q<2>(1));
@@ -63,7 +58,6 @@ main()
   hp::DoFHandler<2>::active_cell_iterator cell;
   hp::DoFHandler<2>::active_cell_iterator endc = dof_handler.end();
 
-
   cell = dof_handler.begin_active();
   cell->set_active_fe_index(1);
   cell++;
@@ -73,13 +67,11 @@ main()
   cell++;
   cell->set_active_fe_index(0);
 
-
   dof_handler.distribute_dofs(fe_collection);
 
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
-
 
   // Save output
   DataOut<2, hp::DoFHandler<2>> data_out;
@@ -87,7 +79,6 @@ main()
   data_out.add_data_vector(solution, "Solution");
   data_out.build_patches();
   data_out.write_vtu(deallog.get_file_stream());
-
 
   // Interpoalte solution
   SolutionTransfer<2, Vector<double>, hp::DoFHandler<2>> solultion_trans(
@@ -105,7 +96,6 @@ main()
 
   Vector<double> new_solution(dof_handler.n_dofs());
   solultion_trans.interpolate(solution, new_solution);
-
 
   // Save output
   DataOut<2, hp::DoFHandler<2>> data_out2;

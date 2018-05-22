@@ -49,8 +49,6 @@ class Table<5, T>;
 template <typename T>
 class Table<6, T>;
 
-
-
 namespace internal
 {
   /**
@@ -117,7 +115,6 @@ namespace internal
       typedef typename AlignedVector<T>::reference       reference;
       typedef typename AlignedVector<T>::const_reference const_reference;
     };
-
 
     /**
      * @internal Class that acts as accessor to subobjects of tables of type
@@ -232,8 +229,6 @@ namespace internal
 #endif
     };
 
-
-
     /**
      * @internal Accessor class for tables. This is the specialization for the
      * last index, which actually allows access to the elements of the table,
@@ -297,7 +292,6 @@ namespace internal
        */
       Accessor(const Accessor& a);
 
-
       /**
        * Index operator. Performs a range check.
        */
@@ -347,8 +341,6 @@ namespace internal
   } // namespace TableBaseAccessors
 
 } // namespace internal
-
-
 
 /**
  * General class holding an array of objects of templated type in multiple
@@ -426,7 +418,6 @@ public:
    * Integer type used to count the number of elements in this container.
    */
   typedef typename AlignedVector<T>::size_type size_type;
-
 
   /**
    * Default constructor. Set all dimensions to zero.
@@ -691,7 +682,6 @@ protected:
   friend class TableBase;
 };
 
-
 /**
  * A class representing a table with arbitrary but fixed number of indices.
  * This general template implements some additional functions over those
@@ -708,7 +698,6 @@ protected:
 template <int N, typename T>
 class Table : public TableBase<N, T>
 {};
-
 
 /**
  * A class representing a one-dimensional table, i.e. a vector-like class.
@@ -825,8 +814,6 @@ public:
   operator()(const TableIndices<1>& indices) const;
 };
 
-
-
 /**
  * A class representing a two-dimensional table, i.e. a matrix of objects (not
  * necessarily only numbers).
@@ -942,7 +929,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const size_type i, const size_type j) const;
 
-
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -965,7 +951,6 @@ public:
    */
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<2>& indices) const;
-
 
   /**
    * Number of rows. This function really makes only sense since we have a
@@ -1012,8 +997,6 @@ protected:
   typename AlignedVector<T>::const_reference
   el(const size_type i, const size_type j) const;
 };
-
-
 
 /**
  * A class representing a three-dimensional table of objects (not necessarily
@@ -1120,7 +1103,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const size_type i, const size_type j, const size_type k) const;
 
-
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -1144,8 +1126,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<3>& indices) const;
 };
-
-
 
 /**
  * A class representing a four-dimensional table of objects (not necessarily
@@ -1211,7 +1191,6 @@ public:
              const size_type k,
              const size_type l) const;
 
-
   /**
    * Direct access to one element of the table by specifying all indices at
    * the same time. Range checks are performed.
@@ -1239,8 +1218,6 @@ public:
   operator()(const TableIndices<4>& indices) const;
 };
 
-
-
 /**
  * A class representing a five-dimensional table of objects (not necessarily
  * only numbers).
@@ -1259,7 +1236,6 @@ public:
    * Integer type used to count the number of elements in this container.
    */
   typedef typename TableBase<5, T>::size_type size_type;
-
 
   /**
    * Default constructor. Set all dimensions to zero.
@@ -1335,8 +1311,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<5>& indices) const;
 };
-
-
 
 /**
  * A class representing a six-dimensional table of objects (not necessarily
@@ -1434,7 +1408,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<6>& indices) const;
 };
-
 
 /**
  * A class representing a seven-dimensional table of objects (not necessarily
@@ -1535,8 +1508,6 @@ public:
   typename AlignedVector<T>::const_reference
   operator()(const TableIndices<7>& indices) const;
 };
-
-
 
 /**
  * A namespace for iterators for TransposeTable. TransposeTable is unique in
@@ -1743,7 +1714,6 @@ namespace TransposeTableIterators
   };
 } // namespace TransposeTableIterators
 
-
 /**
  * A class representing a transpose two-dimensional table, i.e. a matrix of
  * objects (not necessarily only numbers) in column first numbering (FORTRAN
@@ -1913,8 +1883,6 @@ protected:
   friend class TransposeTableIterators::Accessor<T, false>;
 };
 
-
-
 /* --------------------- Template and inline functions ---------------- */
 
 #ifndef DOXYGEN
@@ -1924,8 +1892,6 @@ TableBase<N, T>::TableBase(const TableIndices<N>& sizes)
 {
   reinit(sizes);
 }
-
-
 
 template <int N, typename T>
 template <typename InputIterator>
@@ -1937,16 +1903,12 @@ TableBase<N, T>::TableBase(const TableIndices<N>& sizes,
   fill(entries, C_style_indexing);
 }
 
-
-
 template <int N, typename T>
 TableBase<N, T>::TableBase(const TableBase<N, T>& src) : Subscriptor()
 {
   reinit(src.table_size, true);
   values = src.values;
 }
-
-
 
 template <int N, typename T>
 template <typename T2>
@@ -1957,8 +1919,6 @@ TableBase<N, T>::TableBase(const TableBase<N, T2>& src)
     std::copy(src.values.begin(), src.values.end(), values.begin());
 }
 
-
-
 template <int N, typename T>
 TableBase<N, T>::TableBase(TableBase<N, T>&& src) noexcept
   : Subscriptor(std::move(src)),
@@ -1967,8 +1927,6 @@ TableBase<N, T>::TableBase(TableBase<N, T>&& src) noexcept
 {
   src.table_size = TableIndices<N>();
 }
-
-
 
 template <int N, typename T>
 template <class Archive>
@@ -1980,8 +1938,6 @@ TableBase<N, T>::serialize(Archive& ar, const unsigned int)
   ar& values& table_size;
 }
 
-
-
 namespace internal
 {
   namespace TableBaseAccessors
@@ -1992,14 +1948,10 @@ namespace internal
       : table(table), data(data)
     {}
 
-
-
     template <int N, typename T, bool C, unsigned int P>
     inline Accessor<N, T, C, P>::Accessor(const Accessor& a)
       : table(a.table), data(a.data)
     {}
-
-
 
     template <int N, typename T, bool C, unsigned int P>
     inline Accessor<N, T, C, P - 1> Accessor<N, T, C, P>::
@@ -2025,22 +1977,16 @@ namespace internal
         }
     }
 
-
-
     template <int N, typename T, bool C>
     inline Accessor<N, T, C, 1>::Accessor(const TableType& table,
                                           const iterator   data)
       : table(table), data(data)
     {}
 
-
-
     template <int N, typename T, bool C>
     inline Accessor<N, T, C, 1>::Accessor(const Accessor& a)
       : table(a.table), data(a.data)
     {}
-
-
 
     template <int N, typename T, bool C>
     inline typename Accessor<N, T, C, 1>::reference Accessor<N, T, C, 1>::
@@ -2050,8 +1996,6 @@ namespace internal
       return *(data + i);
     }
 
-
-
     template <int N, typename T, bool C>
     inline typename Accessor<N, T, C, 1>::size_type
     Accessor<N, T, C, 1>::size() const
@@ -2059,16 +2003,12 @@ namespace internal
       return table.size()[N - 1];
     }
 
-
-
     template <int N, typename T, bool C>
     inline typename Accessor<N, T, C, 1>::iterator
     Accessor<N, T, C, 1>::begin() const
     {
       return data;
     }
-
-
 
     template <int N, typename T, bool C>
     inline typename Accessor<N, T, C, 1>::iterator
@@ -2078,8 +2018,6 @@ namespace internal
     }
   } // namespace TableBaseAccessors
 } // namespace internal
-
-
 
 template <int N, typename T>
 inline TableBase<N, T>&
@@ -2091,8 +2029,6 @@ TableBase<N, T>::operator=(const TableBase<N, T>& m)
 
   return *this;
 }
-
-
 
 template <int N, typename T>
 template <typename T2>
@@ -2107,8 +2043,6 @@ TableBase<N, T>::operator=(const TableBase<N, T2>& m)
   return *this;
 }
 
-
-
 template <int N, typename T>
 inline TableBase<N, T>&
 TableBase<N, T>::operator=(TableBase<N, T>&& m) noexcept
@@ -2121,16 +2055,12 @@ TableBase<N, T>::operator=(TableBase<N, T>&& m) noexcept
   return *this;
 }
 
-
-
 template <int N, typename T>
 inline bool
 TableBase<N, T>::operator==(const TableBase<N, T>& T2) const
 {
   return (values == T2.values);
 }
-
-
 
 template <int N, typename T>
 inline void
@@ -2141,8 +2071,6 @@ TableBase<N, T>::reset_values()
     values.fill(T());
 }
 
-
-
 template <int N, typename T>
 inline void
 TableBase<N, T>::fill(const T& value)
@@ -2150,8 +2078,6 @@ TableBase<N, T>::fill(const T& value)
   if(n_elements() != 0)
     values.fill(value);
 }
-
-
 
 template <int N, typename T>
 inline void
@@ -2195,16 +2121,12 @@ TableBase<N, T>::reinit(const TableIndices<N>& new_sizes,
     values.resize_fast(new_size);
 }
 
-
-
 template <int N, typename T>
 inline const TableIndices<N>&
 TableBase<N, T>::size() const
 {
   return table_size;
 }
-
-
 
 template <int N, typename T>
 inline typename TableBase<N, T>::size_type
@@ -2213,8 +2135,6 @@ TableBase<N, T>::size(const unsigned int i) const
   Assert(i < N, ExcIndexRange(i, 0, N));
   return table_size[i];
 }
-
-
 
 template <int N, typename T>
 inline typename TableBase<N, T>::size_type
@@ -2226,16 +2146,12 @@ TableBase<N, T>::n_elements() const
   return s;
 }
 
-
-
 template <int N, typename T>
 inline bool
 TableBase<N, T>::empty() const
 {
   return (n_elements() == 0);
 }
-
-
 
 namespace internal
 {
@@ -2250,7 +2166,6 @@ namespace internal
         table(TableIndices<1>(i)) = *entries++;
     }
 
-
     template <typename InputIterator, typename T>
     void
     fill_Fortran_style(InputIterator entries, TableBase<2, T>& table)
@@ -2260,7 +2175,6 @@ namespace internal
         for(size_type i = 0; i < table.size()[0]; ++i)
           table(TableIndices<2>(i, j)) = *entries++;
     }
-
 
     template <typename InputIterator, typename T>
     void
@@ -2273,7 +2187,6 @@ namespace internal
             table(TableIndices<3>(i, j, k)) = *entries++;
     }
 
-
     template <typename InputIterator, typename T, int N>
     void
     fill_Fortran_style(InputIterator, TableBase<N, T>&)
@@ -2282,7 +2195,6 @@ namespace internal
     }
   } // namespace TableImplementation
 } // namespace internal
-
 
 template <int N, typename T>
 template <typename InputIterator>
@@ -2300,8 +2212,6 @@ TableBase<N, T>::fill(InputIterator entries, const bool C_style_indexing)
     internal::TableImplementation::fill_Fortran_style(entries, *this);
 }
 
-
-
 template <int N, typename T>
 inline void
 TableBase<N, T>::swap(TableBase<N, T>& v)
@@ -2310,16 +2220,12 @@ TableBase<N, T>::swap(TableBase<N, T>& v)
   std::swap(table_size, v.table_size);
 }
 
-
-
 template <int N, typename T>
 inline std::size_t
 TableBase<N, T>::memory_consumption() const
 {
   return sizeof(*this) + MemoryConsumption::memory_consumption(values);
 }
-
-
 
 template <int N, typename T>
 inline typename TableBase<N, T>::size_type
@@ -2350,8 +2256,6 @@ TableBase<N, T>::position(const TableIndices<N>& indices) const
     }
 }
 
-
-
 template <int N, typename T>
 inline typename AlignedVector<T>::const_reference
 TableBase<N, T>::operator()(const TableIndices<N>& indices) const
@@ -2360,8 +2264,6 @@ TableBase<N, T>::operator()(const TableIndices<N>& indices) const
     AssertIndexRange(indices[n], table_size[n]);
   return el(indices);
 }
-
-
 
 template <int N, typename T>
 inline typename AlignedVector<T>::reference
@@ -2372,16 +2274,12 @@ TableBase<N, T>::operator()(const TableIndices<N>& indices)
   return el(indices);
 }
 
-
-
 template <int N, typename T>
 inline typename AlignedVector<T>::const_reference
 TableBase<N, T>::el(const TableIndices<N>& indices) const
 {
   return values[position(indices)];
 }
-
-
 
 template <int N, typename T>
 inline typename AlignedVector<T>::reference
@@ -2391,14 +2289,10 @@ TableBase<N, T>::el(const TableIndices<N>& indices)
   return values[position(indices)];
 }
 
-
-
 template <typename T>
 inline Table<1, T>::Table(const size_type size)
   : TableBase<1, T>(TableIndices<1>(size))
 {}
-
-
 
 template <typename T>
 template <typename InputIterator>
@@ -2408,8 +2302,6 @@ inline Table<1, T>::Table(const size_type size,
   : TableBase<1, T>(TableIndices<1>(size), entries, C_style_indexing)
 {}
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference Table<1, T>::
                                                   operator[](const size_type i) const
@@ -2417,8 +2309,6 @@ inline typename AlignedVector<T>::const_reference Table<1, T>::
   AssertIndexRange(i, this->table_size[0]);
   return this->values[i];
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference Table<1, T>::
@@ -2428,8 +2318,6 @@ inline typename AlignedVector<T>::reference Table<1, T>::
   return this->values[i];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<1, T>::operator()(const size_type i) const
@@ -2437,8 +2325,6 @@ Table<1, T>::operator()(const size_type i) const
   AssertIndexRange(i, this->table_size[0]);
   return this->values[i];
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2448,16 +2334,12 @@ Table<1, T>::operator()(const size_type i)
   return this->values[i];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<1, T>::operator()(const TableIndices<1>& indices) const
 {
   return TableBase<1, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2466,17 +2348,12 @@ Table<1, T>::operator()(const TableIndices<1>& indices)
   return TableBase<1, T>::operator()(indices);
 }
 
-
 //---------------------------------------------------------------------------
-
-
 
 template <typename T>
 inline Table<2, T>::Table(const size_type size1, const size_type size2)
   : TableBase<2, T>(TableIndices<2>(size1, size2))
 {}
-
-
 
 template <typename T>
 template <typename InputIterator>
@@ -2486,8 +2363,6 @@ inline Table<2, T>::Table(const size_type size1,
                           const bool      C_style_indexing)
   : TableBase<2, T>(TableIndices<2>(size1, size2), entries, C_style_indexing)
 {}
-
-
 
 template <typename T>
 inline void
@@ -2499,8 +2374,6 @@ Table<2, T>::reinit(const size_type size1,
                                 omit_default_initialization);
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<2, T, true, 1>
   Table<2, T>::operator[](const size_type i) const
@@ -2509,8 +2382,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<2, T, true, 1>
   return dealii::internal::TableBaseAccessors::Accessor<2, T, true, 1>(
     *this, this->values.begin() + size_type(i) * n_cols());
 }
-
-
 
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<2, T, false, 1>
@@ -2521,8 +2392,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<2, T, false, 1>
     *this, this->values.begin() + size_type(i) * n_cols());
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<2, T>::operator()(const size_type i, const size_type j) const
@@ -2531,8 +2400,6 @@ Table<2, T>::operator()(const size_type i, const size_type j) const
   AssertIndexRange(j, this->table_size[1]);
   return this->values[size_type(i) * this->table_size[1] + j];
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2543,16 +2410,12 @@ Table<2, T>::operator()(const size_type i, const size_type j)
   return this->values[size_type(i) * this->table_size[1] + j];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<2, T>::operator()(const TableIndices<2>& indices) const
 {
   return TableBase<2, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2561,16 +2424,12 @@ Table<2, T>::operator()(const TableIndices<2>& indices)
   return TableBase<2, T>::operator()(indices);
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<2, T>::el(const size_type i, const size_type j) const
 {
   return this->values[size_type(i) * this->table_size[1] + j];
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2579,8 +2438,6 @@ Table<2, T>::el(const size_type i, const size_type j)
   return this->values[size_type(i) * this->table_size[1] + j];
 }
 
-
-
 template <typename T>
 inline typename Table<2, T>::size_type
 Table<2, T>::n_rows() const
@@ -2588,16 +2445,12 @@ Table<2, T>::n_rows() const
   return this->table_size[0];
 }
 
-
-
 template <typename T>
 inline typename Table<2, T>::size_type
 Table<2, T>::n_cols() const
 {
   return this->table_size[1];
 }
-
-
 
 //---------------------------------------------------------------------------
 namespace TransposeTableIterators
@@ -2608,23 +2461,17 @@ namespace TransposeTableIterators
       linear_index(std::numeric_limits<decltype(linear_index)>::max())
   {}
 
-
-
   template <typename T, bool Constness>
   inline AccessorBase<T, Constness>::AccessorBase(
     const container_pointer_type table)
     : container(table), linear_index(container->values.size())
   {}
 
-
-
   template <typename T, bool Constness>
   inline AccessorBase<T, Constness>::AccessorBase(
     const AccessorBase<T, false>& a)
     : container(a.container), linear_index(a.linear_index)
   {}
-
-
 
   template <typename T, bool Constness>
   inline AccessorBase<T, Constness>::AccessorBase(
@@ -2637,8 +2484,6 @@ namespace TransposeTableIterators
                       "not the end iterator."));
   }
 
-
-
   template <typename T, bool Constness>
   inline const T&
   AccessorBase<T, Constness>::value() const
@@ -2647,8 +2492,6 @@ namespace TransposeTableIterators
            ExcMessage("The current iterator points outside of the table."));
     return this->container->values[linear_index];
   }
-
-
 
   template <typename T, bool Constness>
   inline typename AccessorBase<T, Constness>::size_type
@@ -2662,8 +2505,6 @@ namespace TransposeTableIterators
     return row_n;
   }
 
-
-
   template <typename T, bool Constness>
   inline typename AccessorBase<T, Constness>::size_type
   AccessorBase<T, Constness>::AccessorBase::column() const
@@ -2676,7 +2517,6 @@ namespace TransposeTableIterators
     return column_n;
   }
 
-
   template <typename T>
   inline const Accessor<T, false>&
   Accessor<T, false>::operator=(const T& t) const
@@ -2687,8 +2527,6 @@ namespace TransposeTableIterators
     this->container->values[this->linear_index] = t;
     return *this;
   }
-
-
 
   template <typename T>
   inline const Accessor<T, false>&
@@ -2701,8 +2539,6 @@ namespace TransposeTableIterators
     return *this;
   }
 
-
-
   template <typename T>
   inline T&
   Accessor<T, false>::value() const
@@ -2713,14 +2549,10 @@ namespace TransposeTableIterators
     return this->container->values[this->linear_index];
   }
 
-
-
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const Accessor<T, Constness>& a)
     : LinearIndexIterator<Iterator<T, Constness>, Accessor<T, Constness>>(a)
   {}
-
-
 
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table)
@@ -2728,14 +2560,10 @@ namespace TransposeTableIterators
         Accessor<T, Constness>(table))
   {}
 
-
-
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const Iterator<T, false>& i)
     : LinearIndexIterator<Iterator<T, Constness>, Accessor<T, Constness>>(*i)
   {}
-
-
 
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table,
@@ -2743,8 +2571,6 @@ namespace TransposeTableIterators
                                    const size_type              col_n)
     : Iterator(table, table->n_rows() * col_n + row_n)
   {}
-
-
 
   template <typename T, bool Constness>
   Iterator<T, Constness>::Iterator(const container_pointer_type table,
@@ -2754,16 +2580,12 @@ namespace TransposeTableIterators
   {}
 } // namespace TransposeTableIterators
 
-
-
 //---------------------------------------------------------------------------
 template <typename T>
 inline TransposeTable<T>::TransposeTable(const size_type size1,
                                          const size_type size2)
   : TableBase<2, T>(TableIndices<2>(size2, size1))
 {}
-
-
 
 template <typename T>
 inline void
@@ -2775,8 +2597,6 @@ TransposeTable<T>::reinit(const size_type size1,
                                 omit_default_initialization);
 }
 
-
-
 template <typename T>
 inline typename TransposeTable<T>::const_reference
 TransposeTable<T>::operator()(const size_type i, const size_type j) const
@@ -2785,8 +2605,6 @@ TransposeTable<T>::operator()(const size_type i, const size_type j) const
   AssertIndexRange(j, this->table_size[0]);
   return this->values[size_type(j) * this->table_size[1] + i];
 }
-
-
 
 template <typename T>
 inline typename TransposeTable<T>::reference
@@ -2797,16 +2615,12 @@ TransposeTable<T>::operator()(const size_type i, const size_type j)
   return this->values[size_type(j) * this->table_size[1] + i];
 }
 
-
-
 template <typename T>
 inline typename TransposeTable<T>::const_reference
 TransposeTable<T>::el(const size_type i, const size_type j) const
 {
   return this->values[size_type(j) * this->table_size[1] + i];
 }
-
-
 
 template <typename T>
 inline typename TransposeTable<T>::reference
@@ -2815,16 +2629,12 @@ TransposeTable<T>::el(const size_type i, const size_type j)
   return this->values[size_type(j) * this->table_size[1] + i];
 }
 
-
-
 template <typename T>
 inline typename TransposeTable<T>::size_type
 TransposeTable<T>::n_rows() const
 {
   return this->table_size[1];
 }
-
-
 
 template <typename T>
 inline typename TransposeTable<T>::size_type
@@ -2833,16 +2643,12 @@ TransposeTable<T>::n_cols() const
   return this->table_size[0];
 }
 
-
-
 template <typename T>
 inline typename TransposeTable<T>::iterator
 TransposeTable<T>::begin()
 {
   return typename TransposeTable<T>::iterator(this, 0, 0);
 }
-
-
 
 template <typename T>
 inline typename TransposeTable<T>::const_iterator
@@ -2851,16 +2657,12 @@ TransposeTable<T>::begin() const
   return typename TransposeTable<T>::const_iterator(this, 0, 0);
 }
 
-
-
 template <typename T>
 inline typename TransposeTable<T>::iterator
 TransposeTable<T>::end()
 {
   return typename TransposeTable<T>::iterator(this);
 }
-
-
 
 template <typename T>
 inline typename TransposeTable<T>::const_iterator
@@ -2870,16 +2672,12 @@ TransposeTable<T>::end() const
 }
 //---------------------------------------------------------------------------
 
-
-
 template <typename T>
 inline Table<3, T>::Table(const size_type size1,
                           const size_type size2,
                           const size_type size3)
   : TableBase<3, T>(TableIndices<3>(size1, size2, size3))
 {}
-
-
 
 template <typename T>
 template <typename InputIterator>
@@ -2893,8 +2691,6 @@ inline Table<3, T>::Table(const size_type size1,
                     C_style_indexing)
 {}
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<3, T, true, 2>
   Table<3, T>::operator[](const size_type i) const
@@ -2906,8 +2702,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<3, T, true, 2>
     *this, this->values.begin() + i * subobject_size));
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<3, T, false, 2>
   Table<3, T>::operator[](const size_type i)
@@ -2918,8 +2712,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<3, T, false, 2>
   return (dealii::internal::TableBaseAccessors::Accessor<3, T, false, 2>(
     *this, this->values.begin() + i * subobject_size));
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference
@@ -2934,8 +2726,6 @@ operator()(const size_type i, const size_type j, const size_type k) const
              + k];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<3, T>::operator()(const size_type i, const size_type j, const size_type k)
@@ -2948,16 +2738,12 @@ Table<3, T>::operator()(const size_type i, const size_type j, const size_type k)
              + k];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<3, T>::operator()(const TableIndices<3>& indices) const
 {
   return TableBase<3, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -2966,8 +2752,6 @@ Table<3, T>::operator()(const TableIndices<3>& indices)
   return TableBase<3, T>::operator()(indices);
 }
 
-
-
 template <typename T>
 inline Table<4, T>::Table(const size_type size1,
                           const size_type size2,
@@ -2975,8 +2759,6 @@ inline Table<4, T>::Table(const size_type size1,
                           const size_type size4)
   : TableBase<4, T>(TableIndices<4>(size1, size2, size3, size4))
 {}
-
-
 
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<4, T, true, 3>
@@ -2989,8 +2771,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<4, T, true, 3>
     *this, this->values.begin() + i * subobject_size));
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<4, T, false, 3>
   Table<4, T>::operator[](const size_type i)
@@ -3001,8 +2781,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<4, T, false, 3>
   return (dealii::internal::TableBaseAccessors::Accessor<4, T, false, 3>(
     *this, this->values.begin() + i * subobject_size));
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference
@@ -3022,8 +2800,6 @@ Table<4, T>::operator()(const size_type i,
              + l];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<4, T>::operator()(const size_type i,
@@ -3042,8 +2818,6 @@ Table<4, T>::operator()(const size_type i,
              + l];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<4, T>::operator()(const TableIndices<4>& indices) const
@@ -3051,16 +2825,12 @@ Table<4, T>::operator()(const TableIndices<4>& indices) const
   return TableBase<4, T>::operator()(indices);
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<4, T>::operator()(const TableIndices<4>& indices)
 {
   return TableBase<4, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline Table<5, T>::Table(const size_type size1,
@@ -3070,8 +2840,6 @@ inline Table<5, T>::Table(const size_type size1,
                           const size_type size5)
   : TableBase<5, T>(TableIndices<5>(size1, size2, size3, size4, size5))
 {}
-
-
 
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<5, T, true, 4>
@@ -3085,8 +2853,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<5, T, true, 4>
     *this, this->values.begin() + i * subobject_size));
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<5, T, false, 4>
   Table<5, T>::operator[](const size_type i)
@@ -3098,8 +2864,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<5, T, false, 4>
   return (dealii::internal::TableBaseAccessors::Accessor<5, T, false, 4>(
     *this, this->values.begin() + i * subobject_size));
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference
@@ -3123,8 +2887,6 @@ Table<5, T>::operator()(const size_type i,
              + m];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<5, T>::operator()(const size_type i,
@@ -3147,8 +2909,6 @@ Table<5, T>::operator()(const size_type i,
              + m];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<5, T>::operator()(const TableIndices<5>& indices) const
@@ -3156,16 +2916,12 @@ Table<5, T>::operator()(const TableIndices<5>& indices) const
   return TableBase<5, T>::operator()(indices);
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<5, T>::operator()(const TableIndices<5>& indices)
 {
   return TableBase<5, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline Table<6, T>::Table(const size_type size1,
@@ -3187,8 +2943,6 @@ inline Table<6, T>::Table(const size_type size1,
   TableBase<6, T>::reinit(table_indices);
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<6, T, true, 5>
   Table<6, T>::operator[](const size_type i) const
@@ -3201,8 +2955,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<6, T, true, 5>
     *this, this->values.begin() + i * subobject_size));
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<6, T, false, 5>
   Table<6, T>::operator[](const size_type i)
@@ -3214,8 +2966,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<6, T, false, 5>
   return (dealii::internal::TableBaseAccessors::Accessor<6, T, false, 5>(
     *this, this->values.begin() + i * subobject_size));
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference
@@ -3243,8 +2993,6 @@ Table<6, T>::operator()(const size_type i,
              + n];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<6, T>::operator()(const size_type i,
@@ -3271,8 +3019,6 @@ Table<6, T>::operator()(const size_type i,
              + n];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<6, T>::operator()(const TableIndices<6>& indices) const
@@ -3280,16 +3026,12 @@ Table<6, T>::operator()(const TableIndices<6>& indices) const
   return TableBase<6, T>::operator()(indices);
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<6, T>::operator()(const TableIndices<6>& indices)
 {
   return TableBase<6, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline Table<7, T>::Table(const size_type size1,
@@ -3313,8 +3055,6 @@ inline Table<7, T>::Table(const size_type size1,
   TableBase<7, T>::reinit(table_indices);
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<7, T, true, 6>
   Table<7, T>::operator[](const size_type i) const
@@ -3327,8 +3067,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<7, T, true, 6>
     *this, this->values.begin() + i * subobject_size));
 }
 
-
-
 template <typename T>
 inline dealii::internal::TableBaseAccessors::Accessor<7, T, false, 6>
   Table<7, T>::operator[](const size_type i)
@@ -3340,8 +3078,6 @@ inline dealii::internal::TableBaseAccessors::Accessor<7, T, false, 6>
   return (dealii::internal::TableBaseAccessors::Accessor<7, T, false, 6>(
     *this, this->values.begin() + i * subobject_size));
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::const_reference
@@ -3373,8 +3109,6 @@ Table<7, T>::operator()(const size_type i,
              + o];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::reference
 Table<7, T>::operator()(const size_type i,
@@ -3405,16 +3139,12 @@ Table<7, T>::operator()(const size_type i,
              + o];
 }
 
-
-
 template <typename T>
 inline typename AlignedVector<T>::const_reference
 Table<7, T>::operator()(const TableIndices<7>& indices) const
 {
   return TableBase<7, T>::operator()(indices);
 }
-
-
 
 template <typename T>
 inline typename AlignedVector<T>::reference
@@ -3423,10 +3153,7 @@ Table<7, T>::operator()(const TableIndices<7>& indices)
   return TableBase<7, T>::operator()(indices);
 }
 
-
 #endif // DOXYGEN
-
-
 
 /**
  * Global function @p swap which overloads the default implementation of the

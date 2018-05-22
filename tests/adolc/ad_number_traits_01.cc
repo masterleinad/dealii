@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that all of the Adol-C number traits combinations are constructible
 
 #include "../tests.h"

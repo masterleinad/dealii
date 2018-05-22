@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Output a field constant in time
 
 #include "../tests.h"
@@ -24,8 +23,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <deal.II/numerics/data_out_stack.h>
-
-
 
 template <int dim>
 void
@@ -58,8 +55,6 @@ run()
 
   data_out_stack.write_dx(deallog.get_file_stream());
 }
-
-
 
 int
 main()

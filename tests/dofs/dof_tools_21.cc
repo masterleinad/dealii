@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_periodic.h"
 #include <deal.II/base/function_lib.h>
@@ -37,8 +36,6 @@
 // periodic functions and store the resulting L2 difference
 // between the projected and unprojected function.
 // This should reveal any errors in the constraint_matrix:
-
-
 
 template <int dim>
 void

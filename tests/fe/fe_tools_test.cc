@@ -17,7 +17,6 @@
  * Author: Ralf Hartmann, University of Heidelberg, 1999
  */
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -53,15 +52,12 @@ public:
   value(const Point<2>& p, const unsigned int component) const;
 };
 
-
 double
 TestFunction::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component == 0, ExcInternalError());
   return std::sin(pi * p(0)) * std::cos(pi * p(1));
 }
-
-
 
 void make_grid(Triangulation<2>& triangulation)
 {
@@ -87,7 +83,6 @@ void make_grid(Triangulation<2>& triangulation)
       triangulation.execute_coarsening_and_refinement();
     };
 }
-
 
 template <int dim>
 void
@@ -188,8 +183,6 @@ test(const Triangulation<dim>& tria,
   //  data_out.write_gnuplot(file2);
   //  file2.close();
 }
-
-
 
 int
 main()

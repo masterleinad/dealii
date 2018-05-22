@@ -16,7 +16,6 @@
 #ifndef dealii_function_parser_h
 #define dealii_function_parser_h
 
-
 #include <deal.II/base/auto_derivative_function.h>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -34,10 +33,8 @@ namespace mu
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename>
 class Vector;
-
 
 /**
  * This class implements a function object that gets its value by parsing a
@@ -390,7 +387,6 @@ private:
   unsigned int n_vars;
 };
 
-
 template <int dim>
 std::string
 FunctionParser<dim>::default_variable_names()
@@ -408,8 +404,6 @@ FunctionParser<dim>::default_variable_names()
     }
   return "";
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

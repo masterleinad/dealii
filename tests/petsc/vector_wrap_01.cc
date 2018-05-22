@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the constructor PETScWrappers::VectorBase(const Vec &) that takes an
 // existing PETSc vector.
 
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
@@ -40,7 +37,6 @@ test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

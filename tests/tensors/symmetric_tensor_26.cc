@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test multiplication with a Tensor<1,dim>
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -37,7 +35,6 @@ check()
   deallog << "x = " << x << std::endl;
   deallog << "S*x = " << S * x << std::endl;
 }
-
 
 int
 main()

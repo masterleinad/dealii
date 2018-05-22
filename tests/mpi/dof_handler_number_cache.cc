@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the same test in deal.II but this time use a
 // parallel::distributed::Triangulation object. We still use only a
 // single processor so the end result should be the same but we use
 // entirely different code paths
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -35,7 +32,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -128,7 +124,6 @@ test()
       AssertThrow(all == really_all, ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

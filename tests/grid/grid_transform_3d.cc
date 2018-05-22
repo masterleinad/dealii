@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a test to check GridTransform in 3d. Produces a simplified version of the
 // mesh used in Wolfgang's 2006 NIH proposal
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -25,8 +23,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 int
 main()
@@ -73,7 +69,6 @@ main()
     grid_out.write_vtk(tria, out);
   }
 
-
   Triangulation<dim>::face_iterator face;
   for(cell = tria.begin_active(); cell != endc; ++cell)
     for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
@@ -107,7 +102,6 @@ main()
   }
 
   GridTools::laplace_transform<dim>(new_points, tria, nullptr, true);
-
 
   GridOut       grid_out;
   std::ofstream out("output");

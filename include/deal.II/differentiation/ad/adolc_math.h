@@ -26,7 +26,6 @@
 #  include <adolc/adouble.h> // Taped double
 #  include <adolc/adtl.h>    // Tapeless double
 
-
 #  ifndef DOXYGEN
 
 /**

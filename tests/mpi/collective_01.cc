@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::min_max_avg()
 
 #include "../tests.h"
@@ -74,7 +72,6 @@ test()
   if(myid == 0)
     deallog << "done" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

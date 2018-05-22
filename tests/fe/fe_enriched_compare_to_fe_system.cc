@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FE_Enriched class by comparing with FE_System for a single enrichment
 // function.
 
@@ -268,13 +267,10 @@ test(const FiniteElement<dim>&  fe1,
         }
     }
 
-
   deallog << "Ok" << std::endl;
   dof_handler_enriched.clear();
   dof_handler_system.clear();
 }
-
-
 
 int
 main(int argc, char** argv)
@@ -284,7 +280,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

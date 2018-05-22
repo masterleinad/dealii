@@ -29,9 +29,7 @@
 
 #include <deal.II/dofs/dof_handler.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup mg */
 /*@{*/
@@ -262,7 +260,6 @@ private:
                   const LinearAlgebra::distributed::Vector<Number>& src) const;
 };
 
-
 /**
  * Implementation of the MGTransferBase interface for which the transfer
  * operations is implemented in a matrix-free way based on the interpolation
@@ -456,13 +453,10 @@ private:
   const bool same_for_all;
 };
 
-
 /*@}*/
-
 
 //------------------------ templated functions -------------------------
 #ifndef DOXYGEN
-
 
 template <int dim, typename Number>
 template <typename Number2, int spacedim>
@@ -557,8 +551,6 @@ MGTransferMatrixFree<dim, Number>::interpolate_to_mg(
       dst[level - 1].update_ghost_values();
     }
 }
-
-
 
 template <int dim, typename Number>
 template <typename Number2, int spacedim>
@@ -705,10 +697,7 @@ MGTransferBlockMatrixFree<dim, Number>::copy_from_mg(
     }
 }
 
-
-
 #endif // DOXYGEN
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to parallel_multigrid.cc but using MatrixFreeOperators::LaplaceOperator
 // class
 
@@ -45,8 +43,6 @@
 
 std::ofstream logfile("output");
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -74,7 +70,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
 
 using namespace dealii::MatrixFreeOperators;
 
@@ -135,7 +130,6 @@ do_test(const DoFHandler<dim>& dof)
 
   fine_matrix.initialize(fine_level_data);
   fine_matrix.compute_diagonal();
-
 
   LinearAlgebra::distributed::Vector<number> in, sol;
   fine_matrix.initialize_dof_vector(in);
@@ -235,8 +229,6 @@ do_test(const DoFHandler<dim>& dof)
     mg_matrices[level].clear();
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -259,8 +251,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

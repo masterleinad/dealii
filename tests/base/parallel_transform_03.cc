@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test parallel::transform
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <boost/lambda/lambda.hpp>
 #include <deal.II/base/parallel.h>
 #include <deal.II/lac/vector.h>
-
-
 
 int
 main()

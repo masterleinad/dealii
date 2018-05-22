@@ -25,7 +25,6 @@
 
 #include <iostream>
 
-
 void
 dim_2(std::ostream& os)
 {
@@ -43,7 +42,6 @@ dim_2(std::ostream& os)
   tr.set_manifold(1, boundary);
 
   tr.refine_global(2);
-
 
   GridOut gout;
   gout.write_vtk(tr, os);
@@ -70,7 +68,6 @@ dim_3(std::ostream& os)
   GridOut gout;
   gout.write_vtk(tr, os);
 }
-
 
 int
 main()

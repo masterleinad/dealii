@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check numbers::is_finite
 
 #include "../tests.h"
 
 #include <cfenv>
 #include <limits>
-
 
 template <typename T>
 void
@@ -53,7 +51,6 @@ check()
   deallog << is_finite(static_cast<T>(-1)) << std::endl;
 }
 
-
 int
 main()
 {
@@ -70,7 +67,6 @@ main()
 #if defined(DEAL_II_HAVE_FP_EXCEPTIONS)
   fedisableexcept(FE_INVALID);
 #endif
-
 
   check<double>();
   check<long double>();

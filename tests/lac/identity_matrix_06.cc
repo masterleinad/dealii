@@ -13,19 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check assignment from IdentityMatrix to FullMatrix using the syntax
 //     FullMatrix<number> M = IdentityMatrix(4);
 // this didn't work initially because the copy constructor in FullMatrix
 // was explicit; however, in hindsight, I can't see a good reason for
 // it to be explicit.
 
-
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/identity_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <typename number>
 void
@@ -64,7 +61,6 @@ check_vmult()
     deallog << ' ' << v(i);
   deallog << std::endl;
 }
-
 
 int
 main()

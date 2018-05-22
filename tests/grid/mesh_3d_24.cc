@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like mesh_3d_22, but even further reduced: take a few points on a
 // line in reference space and see where they are transformed to real
 // space using a MappingQ(3) on a cell with a flipped face. the cell
@@ -50,7 +48,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
 
 int
 main()

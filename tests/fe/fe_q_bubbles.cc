@@ -116,7 +116,6 @@ BubbleFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   return grad;
 }
 
-
 template <int dim>
 class Step3
 {
@@ -125,7 +124,6 @@ public:
 
   void
   run();
-
 
 private:
   void
@@ -157,7 +155,6 @@ Step3<dim>::Step3(FiniteElement<dim>* fe, const unsigned int degree)
   : fe(fe), dof_handler(triangulation), m_degree(degree + 1)
 {}
 
-
 template <int dim>
 void
 Step3<dim>::make_grid()
@@ -183,7 +180,6 @@ Step3<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
 
 template <int dim>
 void
@@ -242,7 +238,6 @@ Step3<dim>::assemble_system(unsigned int i)
     }
 }
 
-
 template <int dim>
 void
 Step3<dim>::solve()
@@ -252,7 +247,6 @@ Step3<dim>::solve()
 
   solver.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 }
-
 
 template <int dim>
 void
@@ -264,8 +258,6 @@ Step3<dim>::output_results(unsigned int i) const
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(solution, "solution");
   data_out.build_patches(m_degree + 1);
-
-
 
   std::ofstream output(
     (fe->get_name() + "." + Utilities::int_to_string(i, 1) + ".vtk").c_str());
@@ -305,7 +297,6 @@ Step3<dim>::output_results(unsigned int i) const
           << std::endl;
 }
 
-
 template <int dim>
 void
 Step3<dim>::run()
@@ -319,7 +310,6 @@ Step3<dim>::run()
       output_results(i);
     }
 }
-
 
 int
 main()

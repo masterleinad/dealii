@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/grid_generator.h>
@@ -81,7 +80,6 @@ private:
   const Triangulation<dim, spacedim>& tria;
 };
 
-
 template <int dim, int spacedim>
 void
 test()
@@ -102,12 +100,10 @@ test()
       dealii::Triangulation<dim, spacedim>::smoothing_on_refinement
       | dealii::Triangulation<dim, spacedim>::smoothing_on_coarsening));
 
-
   GridGenerator::hyper_cube(tria);
   SignalListener<dim, spacedim> count_cell_via_signal(tria);
 
   tria.refine_global(1);
-
 
   // The following loop is borrowed from p4est_3d_refine_01 with some modifications.
   for(int n_loop = 0;

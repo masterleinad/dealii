@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test ScalarFunctionFromFunctionObject
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
-
 
 template <int dim>
 void
@@ -37,7 +35,6 @@ check1()
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -61,7 +58,6 @@ check2()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

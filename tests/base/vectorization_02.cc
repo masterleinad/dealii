@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for AlignedVector<VectorizedArray<double> >
 
 #include "../tests.h"
@@ -103,8 +102,6 @@ test()
       AssertThrow(a[i][d] == 0., ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

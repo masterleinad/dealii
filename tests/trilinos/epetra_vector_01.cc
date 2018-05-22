@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/read_write_vector.h>
@@ -22,7 +21,6 @@
 #include <vector>
 
 // Check LinearAlgebra::EpetraWrappers::Vector assignment and import
-
 
 void
 test()
@@ -134,7 +132,6 @@ test()
                     ExcMessage("Vector c has been modified."));
     }
 
-
   a *= 2;
   read_write_3.import(a, VectorOperation::insert);
   if(rank == 0)
@@ -200,7 +197,6 @@ test()
   const double val = b * c;
   AssertThrow(val == 285., ExcMessage("Problem in operator *."));
 }
-
 
 int
 main(int argc, char** argv)

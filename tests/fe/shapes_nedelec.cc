@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_nedelec.h>
@@ -21,7 +20,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -35,7 +33,6 @@ plot_FE_Nedelec_shape_functions()
   FE_Nedelec<dim> p1(1);
   test_compute_functions(m, p1, "Nedelec1");
 }
-
 
 int
 main()

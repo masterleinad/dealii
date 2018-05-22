@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check PETScWrappers::MPI::Vector::operator = (Vector<PetscVector>)
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v)
@@ -34,7 +31,6 @@ test(PETScWrappers::MPI::Vector& v)
 
   v = w;
 
-
   // make sure we get the expected result
   for(unsigned int i = 0; i < v.size(); ++i)
     {
@@ -44,8 +40,6 @@ test(PETScWrappers::MPI::Vector& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

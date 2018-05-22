@@ -36,7 +36,6 @@
 #include <iostream>
 #include <memory>
 
-
 template <typename NumberType>
 void
 test(const unsigned int size,
@@ -159,8 +158,6 @@ test(const unsigned int size,
     << std::endl
     << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

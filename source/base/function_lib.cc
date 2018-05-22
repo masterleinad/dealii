@@ -24,7 +24,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace Functions
 {
   template <int dim>
@@ -34,7 +33,6 @@ namespace Functions
     return p.square();
   }
 
-
   template <int dim>
   void
   SquareFunction<dim>::vector_value(const Point<dim>& p,
@@ -43,7 +41,6 @@ namespace Functions
     AssertDimension(values.size(), 1);
     values(0) = p.square();
   }
-
 
   template <int dim>
   void
@@ -61,14 +58,12 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   double
   SquareFunction<dim>::laplacian(const Point<dim>&, const unsigned int) const
   {
     return 2 * dim;
   }
-
 
   template <int dim>
   void
@@ -83,15 +78,12 @@ namespace Functions
       values[i] = 2 * dim;
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   SquareFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     return p * 2.;
   }
-
 
   template <int dim>
   void
@@ -102,8 +94,6 @@ namespace Functions
     AssertDimension(values.size(), 1);
     values[0] = p * 2.;
   }
-
-
 
   template <int dim>
   void
@@ -118,9 +108,7 @@ namespace Functions
       gradients[i] = static_cast<Tensor<1, dim>>(points[i]) * 2;
   }
 
-
   //////////////////////////////////////////////////////////////////////
-
 
   template <int dim>
   double
@@ -129,8 +117,6 @@ namespace Functions
     Assert(dim >= 2, ExcInternalError());
     return p(0) * p(1);
   }
-
-
 
   template <int dim>
   void
@@ -148,7 +134,6 @@ namespace Functions
         values[i]           = p(0) * p(1);
       }
   }
-
 
   template <int dim>
   void
@@ -168,7 +153,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   double
   Q1WedgeFunction<dim>::laplacian(const Point<dim>&, const unsigned int) const
@@ -176,7 +160,6 @@ namespace Functions
     Assert(dim >= 2, ExcInternalError());
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -192,8 +175,6 @@ namespace Functions
       values[i] = 0.;
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   Q1WedgeFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
@@ -204,8 +185,6 @@ namespace Functions
     erg[1] = p(0);
     return erg;
   }
-
-
 
   template <int dim>
   void
@@ -223,7 +202,6 @@ namespace Functions
         gradients[i][1] = points[i](0);
       }
   }
-
 
   template <int dim>
   void
@@ -244,14 +222,11 @@ namespace Functions
       }
   }
 
-
   //////////////////////////////////////////////////////////////////////
-
 
   template <int dim>
   PillowFunction<dim>::PillowFunction(const double offset) : offset(offset)
   {}
-
 
   template <int dim>
   double
@@ -302,8 +277,6 @@ namespace Functions
           }
       }
   }
-
-
 
   template <int dim>
   double
@@ -425,8 +398,6 @@ namespace Functions
     : Function<dim>(n_components)
   {}
 
-
-
   template <int dim>
   double
   CosineFunction<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -460,7 +431,6 @@ namespace Functions
       values[i] = value(points[i]);
   }
 
-
   template <int dim>
   void
   CosineFunction<dim>::vector_value_list(
@@ -477,7 +447,6 @@ namespace Functions
           values[i](k) = v;
       }
   }
-
 
   template <int dim>
   double
@@ -715,7 +684,6 @@ namespace Functions
   CosineGradFunction<dim>::CosineGradFunction() : Function<dim>(dim)
   {}
 
-
   template <int dim>
   double
   CosineGradFunction<dim>::value(const Point<dim>&  p,
@@ -740,7 +708,6 @@ namespace Functions
       }
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -774,7 +741,6 @@ namespace Functions
           Assert(false, ExcNotImplemented());
       }
   }
-
 
   template <int dim>
   void
@@ -810,7 +776,6 @@ namespace Functions
           }
       }
   }
-
 
   template <int dim>
   void
@@ -852,7 +817,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   double
   CosineGradFunction<dim>::laplacian(const Point<dim>&  p,
@@ -860,7 +824,6 @@ namespace Functions
   {
     return -numbers::PI_2 * numbers::PI_2 * value(p, d);
   }
-
 
   template <int dim>
   Tensor<1, dim>
@@ -900,7 +863,6 @@ namespace Functions
       }
     return result;
   }
-
 
   template <int dim>
   void
@@ -947,7 +909,6 @@ namespace Functions
           }
       }
   }
-
 
   template <int dim>
   void
@@ -1011,7 +972,6 @@ namespace Functions
           }
       }
   }
-
 
   //////////////////////////////////////////////////////////////////////
 
@@ -1169,7 +1129,6 @@ namespace Functions
 
   //////////////////////////////////////////////////////////////////////
 
-
   double
   LSingularityFunction::value(const Point<2>& p, const unsigned int) const
   {
@@ -1184,7 +1143,6 @@ namespace Functions
 
     return std::pow(r2, 1. / 3.) * std::sin(2. / 3. * phi);
   }
-
 
   void
   LSingularityFunction::value_list(const std::vector<Point<2>>& points,
@@ -1210,7 +1168,6 @@ namespace Functions
           }
       }
   }
-
 
   void
   LSingularityFunction::vector_value_list(
@@ -1239,13 +1196,11 @@ namespace Functions
       }
   }
 
-
   double
   LSingularityFunction::laplacian(const Point<2>&, const unsigned int) const
   {
     return 0.;
   }
-
 
   void
   LSingularityFunction::laplacian_list(const std::vector<Point<2>>& points,
@@ -1258,7 +1213,6 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = 0.;
   }
-
 
   Tensor<1, 2>
   LSingularityFunction::gradient(const Point<2>& p, const unsigned int) const
@@ -1277,7 +1231,6 @@ namespace Functions
                 / r43;
     return result;
   }
-
 
   void
   LSingularityFunction::gradient_list(const std::vector<Point<2>>& points,
@@ -1303,7 +1256,6 @@ namespace Functions
             * (std::sin(2. / 3. * phi) * y - std::cos(2. / 3. * phi) * x) / r43;
       }
   }
-
 
   void
   LSingularityFunction::vector_gradient_list(
@@ -1337,7 +1289,6 @@ namespace Functions
   LSingularityGradFunction::LSingularityGradFunction() : Function<2>(2)
   {}
 
-
   double
   LSingularityGradFunction::value(const Point<2>& p, const unsigned int d) const
   {
@@ -1354,7 +1305,6 @@ namespace Functions
                           (-std::cos(2. / 3. * phi) * x)))
            / r43;
   }
-
 
   void
   LSingularityGradFunction::value_list(const std::vector<Point<2>>& points,
@@ -1379,7 +1329,6 @@ namespace Functions
                     / r43;
       }
   }
-
 
   void
   LSingularityGradFunction::vector_value_list(
@@ -1407,13 +1356,11 @@ namespace Functions
       }
   }
 
-
   double
   LSingularityGradFunction::laplacian(const Point<2>&, const unsigned int) const
   {
     return 0.;
   }
-
 
   void
   LSingularityGradFunction::laplacian_list(const std::vector<Point<2>>& points,
@@ -1427,8 +1374,6 @@ namespace Functions
       values[i] = 0.;
   }
 
-
-
   Tensor<1, 2>
   LSingularityGradFunction::gradient(const Point<2>& /*p*/,
                                      const unsigned int /*component*/) const
@@ -1436,7 +1381,6 @@ namespace Functions
     Assert(false, ExcNotImplemented());
     return Tensor<1, 2>();
   }
-
 
   void
   LSingularityGradFunction::gradient_list(
@@ -1446,7 +1390,6 @@ namespace Functions
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   void
   LSingularityGradFunction::vector_gradient_list(
@@ -1472,7 +1415,6 @@ namespace Functions
     return std::pow(r2, .25) * std::sin(.5 * phi);
   }
 
-
   template <int dim>
   void
   SlitSingularityFunction<dim>::value_list(
@@ -1494,7 +1436,6 @@ namespace Functions
         values[i] = std::pow(r2, .25) * std::sin(.5 * phi);
       }
   }
-
 
   template <int dim>
   void
@@ -1520,7 +1461,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   double
   SlitSingularityFunction<dim>::laplacian(const Point<dim>&,
@@ -1528,7 +1468,6 @@ namespace Functions
   {
     return 0.;
   }
-
 
   template <int dim>
   void
@@ -1543,7 +1482,6 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = 0.;
   }
-
 
   template <int dim>
   Tensor<1, dim>
@@ -1564,7 +1502,6 @@ namespace Functions
                 / r64;
     return result;
   }
-
 
   template <int dim>
   void
@@ -1628,7 +1565,6 @@ namespace Functions
 
   //////////////////////////////////////////////////////////////////////
 
-
   double
   SlitHyperSingularityFunction::value(const Point<2>& p,
                                       const unsigned int) const
@@ -1641,7 +1577,6 @@ namespace Functions
 
     return std::pow(r2, .125) * std::sin(.25 * phi);
   }
-
 
   void
   SlitHyperSingularityFunction::value_list(const std::vector<Point<2>>& points,
@@ -1662,7 +1597,6 @@ namespace Functions
         values[i] = std::pow(r2, .125) * std::sin(.25 * phi);
       }
   }
-
 
   void
   SlitHyperSingularityFunction::vector_value_list(
@@ -1687,14 +1621,12 @@ namespace Functions
       }
   }
 
-
   double
   SlitHyperSingularityFunction::laplacian(const Point<2>&,
                                           const unsigned int) const
   {
     return 0.;
   }
-
 
   void
   SlitHyperSingularityFunction::laplacian_list(
@@ -1709,7 +1641,6 @@ namespace Functions
       values[i] = 0.;
   }
 
-
   Tensor<1, 2>
   SlitHyperSingularityFunction::gradient(const Point<2>& p,
                                          const unsigned int) const
@@ -1718,7 +1649,6 @@ namespace Functions
     double y   = p(1);
     double phi = std::atan2(x, y) + numbers::PI;
     double r78 = std::pow(x * x + y * y, 7. / 8.);
-
 
     Tensor<1, 2> result;
     result[0] = 1. / 4.
@@ -1729,7 +1659,6 @@ namespace Functions
                 / r78;
     return result;
   }
-
 
   void
   SlitHyperSingularityFunction::gradient_list(
@@ -1756,7 +1685,6 @@ namespace Functions
             * (std::sin(1. / 4. * phi) * y - std::cos(1. / 4. * phi) * x) / r78;
       }
   }
-
 
   void
   SlitHyperSingularityFunction::vector_gradient_list(
@@ -1808,8 +1736,6 @@ namespace Functions
     cosine = std::cos(angle);
   }
 
-
-
   template <int dim>
   double
   JumpFunction<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -1817,8 +1743,6 @@ namespace Functions
     double x = steepness * (-cosine * p(0) + sine * p(1));
     return -std::atan(x);
   }
-
-
 
   template <int dim>
   void
@@ -1836,7 +1760,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   double
   JumpFunction<dim>::laplacian(const Point<dim>& p, const unsigned int) const
@@ -1845,7 +1768,6 @@ namespace Functions
     double r = 1 + x * x;
     return 2 * steepness * steepness * x / (r * r);
   }
-
 
   template <int dim>
   void
@@ -1866,8 +1788,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   JumpFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
@@ -1879,8 +1799,6 @@ namespace Functions
     erg[1] = sine * r;
     return erg;
   }
-
-
 
   template <int dim>
   void
@@ -1900,8 +1818,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   std::size_t
   JumpFunction<dim>::memory_consumption() const
@@ -1911,18 +1827,13 @@ namespace Functions
     return sizeof(*this);
   }
 
-
-
   /* ---------------------- FourierCosineFunction ----------------------- */
-
 
   template <int dim>
   FourierCosineFunction<dim>::FourierCosineFunction(
     const Tensor<1, dim>& fourier_coefficients)
     : Function<dim>(1), fourier_coefficients(fourier_coefficients)
   {}
-
-
 
   template <int dim>
   double
@@ -1934,8 +1845,6 @@ namespace Functions
     return std::cos(fourier_coefficients * p);
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   FourierCosineFunction<dim>::gradient(const Point<dim>&  p,
@@ -1945,8 +1854,6 @@ namespace Functions
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return -fourier_coefficients * std::sin(fourier_coefficients * p);
   }
-
-
 
   template <int dim>
   double
@@ -1959,19 +1866,13 @@ namespace Functions
            * (-std::cos(fourier_coefficients * p));
   }
 
-
-
   /* ---------------------- FourierSineFunction ----------------------- */
-
-
 
   template <int dim>
   FourierSineFunction<dim>::FourierSineFunction(
     const Tensor<1, dim>& fourier_coefficients)
     : Function<dim>(1), fourier_coefficients(fourier_coefficients)
   {}
-
-
 
   template <int dim>
   double
@@ -1983,8 +1884,6 @@ namespace Functions
     return std::sin(fourier_coefficients * p);
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   FourierSineFunction<dim>::gradient(const Point<dim>&  p,
@@ -1994,8 +1893,6 @@ namespace Functions
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return fourier_coefficients * std::cos(fourier_coefficients * p);
   }
-
-
 
   template <int dim>
   double
@@ -2008,11 +1905,7 @@ namespace Functions
            * (-std::sin(fourier_coefficients * p));
   }
 
-
-
   /* ---------------------- FourierSineSum ----------------------- */
-
-
 
   template <int dim>
   FourierSineSum<dim>::FourierSineSum(
@@ -2026,8 +1919,6 @@ namespace Functions
     Assert(fourier_coefficients.size() == weights.size(),
            ExcDimensionMismatch(fourier_coefficients.size(), weights.size()));
   }
-
-
 
   template <int dim>
   double
@@ -2045,8 +1936,6 @@ namespace Functions
     return sum;
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   FourierSineSum<dim>::gradient(const Point<dim>&  p,
@@ -2062,8 +1951,6 @@ namespace Functions
 
     return sum;
   }
-
-
 
   template <int dim>
   double
@@ -2082,11 +1969,7 @@ namespace Functions
     return sum;
   }
 
-
-
   /* ---------------------- FourierCosineSum ----------------------- */
-
-
 
   template <int dim>
   FourierCosineSum<dim>::FourierCosineSum(
@@ -2100,8 +1983,6 @@ namespace Functions
     Assert(fourier_coefficients.size() == weights.size(),
            ExcDimensionMismatch(fourier_coefficients.size(), weights.size()));
   }
-
-
 
   template <int dim>
   double
@@ -2119,8 +2000,6 @@ namespace Functions
     return sum;
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   FourierCosineSum<dim>::gradient(const Point<dim>&  p,
@@ -2136,8 +2015,6 @@ namespace Functions
 
     return sum;
   }
-
-
 
   template <int dim>
   double
@@ -2156,19 +2033,13 @@ namespace Functions
     return sum;
   }
 
-
-
   /* ---------------------- Monomial ----------------------- */
-
-
 
   template <int dim>
   Monomial<dim>::Monomial(const Tensor<1, dim>& exponents,
                           const unsigned int    n_components)
     : Function<dim>(n_components), exponents(exponents)
   {}
-
-
 
   template <int dim>
   double
@@ -2190,8 +2061,6 @@ namespace Functions
     return prod;
   }
 
-
-
   template <int dim>
   void
   Monomial<dim>::vector_value(const Point<dim>& p, Vector<double>& values) const
@@ -2202,8 +2071,6 @@ namespace Functions
     for(unsigned int i = 0; i < values.size(); ++i)
       values(i) = Monomial<dim>::value(p, i);
   }
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -2242,8 +2109,6 @@ namespace Functions
     return r;
   }
 
-
-
   template <int dim>
   void
   Monomial<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -2256,7 +2121,6 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = Monomial<dim>::value(points[i], component);
   }
-
 
   template <int dim>
   Bessel1<dim>::Bessel1(const unsigned int order,
@@ -2279,7 +2143,6 @@ namespace Functions
 #endif
   }
 
-
   template <int dim>
   void
   Bessel1<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -2300,7 +2163,6 @@ namespace Functions
       }
 #endif
   }
-
 
   template <int dim>
   Tensor<1, dim>
@@ -2327,8 +2189,6 @@ namespace Functions
     return result;
 #endif
   }
-
-
 
   template <int dim>
   void
@@ -2359,8 +2219,6 @@ namespace Functions
       }
 #endif
   }
-
-
 
   namespace
   {
@@ -2410,7 +2268,6 @@ namespace Functions
                   * p_unit[2]);
     }
 
-
     // Interpolate the gradient of a data value from a table where ix
     // denotes the lower left endpoint of the interval to interpolate
     // in, p_unit denotes the point in unit coordinates, and dx
@@ -2426,7 +2283,6 @@ namespace Functions
       grad[0] = (data_values[ix[0] + 1] - data_values[ix[0]]) / dx[0];
       return grad;
     }
-
 
     Tensor<1, 2>
     gradient_interpolate(const Table<2, double>& data_values,
@@ -2446,7 +2302,6 @@ namespace Functions
         = ((1 - p_unit[0]) * (u10 - u00) + p_unit[0] * (u11 - u01)) / dx[1];
       return grad;
     }
-
 
     Tensor<1, 3>
     gradient_interpolate(const Table<3, double>& data_values,
@@ -2511,8 +2366,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   TableIndices<dim>
   InterpolatedTensorProductGridData<dim>::table_index_of_point(
@@ -2548,8 +2401,6 @@ namespace Functions
     return ix;
   }
 
-
-
   template <int dim>
   double
   InterpolatedTensorProductGridData<dim>::value(
@@ -2579,8 +2430,6 @@ namespace Functions
     return interpolate(data_values, ix, p_unit);
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   InterpolatedTensorProductGridData<dim>::gradient(
@@ -2608,8 +2457,6 @@ namespace Functions
     return gradient_interpolate(data_values, ix, p_unit, dx);
   }
 
-
-
   template <int dim>
   InterpolatedUniformGridData<dim>::InterpolatedUniformGridData(
     const std::array<std::pair<double, double>, dim>& interval_endpoints,
@@ -2631,7 +2478,6 @@ namespace Functions
                ExcMessage("The data table does not have the correct size."));
       }
   }
-
 
   template <int dim>
   double
@@ -2682,8 +2528,6 @@ namespace Functions
 
   /* ---------------------- Polynomial ----------------------- */
 
-
-
   template <int dim>
   Polynomial<dim>::Polynomial(const Table<2, double>&    exponents,
                               const std::vector<double>& coefficients)
@@ -2694,8 +2538,6 @@ namespace Functions
     Assert(exponents.n_cols() == dim,
            ExcDimensionMismatch(exponents.n_cols(), dim));
   }
-
-
 
   template <int dim>
   double
@@ -2722,8 +2564,6 @@ namespace Functions
     return sum;
   }
 
-
-
   template <int dim>
   void
   Polynomial<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -2736,8 +2576,6 @@ namespace Functions
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = Polynomial<dim>::value(points[i], component);
   }
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -2783,7 +2621,6 @@ namespace Functions
       }
     return r;
   }
-
 
   // explicit instantiations
   template class SquareFunction<1>;

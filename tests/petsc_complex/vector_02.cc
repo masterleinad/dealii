@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check assignment of elements in Vector
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()

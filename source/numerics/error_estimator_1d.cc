@@ -40,7 +40,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 
-
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -48,8 +47,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -86,8 +83,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            strategy);
 }
 
-
-
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -119,8 +114,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            strategy);
 }
 
-
-
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -151,8 +144,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            material_id,
            strategy);
 }
-
-
 
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -189,7 +180,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            strategy);
 }
 
-
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -220,8 +210,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            material_id,
            strategy);
 }
-
-
 
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -254,8 +242,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
            strategy);
 }
 
-
-
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
 void
@@ -276,8 +262,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
 {
   Assert(false, ExcInternalError());
 }
-
-
 
 template <int spacedim>
 template <typename InputVector, typename DoFHandlerType>
@@ -513,7 +497,6 @@ KellyErrorEstimator<1, spacedim>::estimate(
                                             coefficient_values);
               }
 
-
             for(unsigned int s = 0; s < n_solution_vectors; ++s)
               for(unsigned int component = 0; component < n_components;
                   ++component)
@@ -541,9 +524,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
       }
 }
 
-
 // explicit instantiations
 #include "error_estimator_1d.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GridTools::diameter for codim-1 meshes
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -24,10 +21,7 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim>
 void
@@ -48,8 +42,6 @@ test1()
         }
     }
 }
-
-
 
 int
 main()

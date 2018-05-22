@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IterationNumberControl with Trilinos solver
 // This test is adapted from tests/trilinos/solver_03.cc
-
 
 #include "../testmatrix.h"
 #include "../tests.h"
@@ -29,7 +27,6 @@
 #include <iostream>
 #include <typeinfo>
 
-
 int
 main(int argc, char** argv)
 {
@@ -39,7 +36,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   {
     const unsigned int size = 32;

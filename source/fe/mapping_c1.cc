@@ -25,14 +25,10 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 template <int dim, int spacedim>
 MappingC1<dim, spacedim>::MappingC1Generic::MappingC1Generic()
   : MappingQGeneric<dim, spacedim>(3)
 {}
-
-
 
 template <int dim, int spacedim>
 MappingC1<dim, spacedim>::MappingC1() : MappingQ<dim, spacedim>(3)
@@ -48,8 +44,6 @@ MappingC1<dim, spacedim>::MappingC1() : MappingQ<dim, spacedim>(3)
     = std::make_shared<MappingC1<dim, spacedim>::MappingC1Generic>();
 }
 
-
-
 template <>
 void
 MappingC1<1>::MappingC1Generic::add_line_support_points(
@@ -60,8 +54,6 @@ MappingC1<1>::MappingC1Generic::add_line_support_points(
   (void) dim;
   Assert(dim > 1, ExcImpossibleInDim(dim));
 }
-
-
 
 template <>
 void
@@ -167,8 +159,6 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingC1<dim, spacedim>::MappingC1Generic::add_line_support_points(
@@ -177,8 +167,6 @@ MappingC1<dim, spacedim>::MappingC1Generic::add_line_support_points(
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -191,8 +179,6 @@ MappingC1<1>::MappingC1Generic::add_quad_support_points(
   Assert(dim > 2, ExcImpossibleInDim(dim));
 }
 
-
-
 template <>
 void
 MappingC1<2>::MappingC1Generic::add_quad_support_points(
@@ -204,8 +190,6 @@ MappingC1<2>::MappingC1Generic::add_quad_support_points(
   Assert(dim > 2, ExcImpossibleInDim(dim));
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingC1<dim, spacedim>::MappingC1Generic::add_quad_support_points(
@@ -215,8 +199,6 @@ MappingC1<dim, spacedim>::MappingC1Generic::add_quad_support_points(
   Assert(false, ExcNotImplemented());
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingC1<dim, spacedim>::clone() const
@@ -224,10 +206,7 @@ MappingC1<dim, spacedim>::clone() const
   return std_cxx14::make_unique<MappingC1<dim, spacedim>>();
 }
 
-
-
 // explicit instantiations
 #include "mapping_c1.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

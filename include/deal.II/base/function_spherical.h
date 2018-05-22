@@ -21,7 +21,6 @@
 #include <deal.II/base/function.h>
 #include <deal.II/base/point.h>
 
-
 #include <array>
 
 DEAL_II_NAMESPACE_OPEN

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a bspline, and write it as an IGES file.
 
 #include "../tests.h"

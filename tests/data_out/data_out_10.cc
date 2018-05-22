@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that adding time information to a .visit file works as intended
-
 
 #include "../tests.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -56,7 +52,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

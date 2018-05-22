@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::column_number. since we create quite some
 // output here, choose smaller number of rows and entries than in the other
 // tests
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 void
 test()
@@ -36,8 +33,6 @@ test()
     for(unsigned int j = 0; j < csp.row_length(i); ++j)
       deallog << i << ' ' << j << ' ' << csp.column_number(i, j) << std::endl;
 }
-
-
 
 int
 main()

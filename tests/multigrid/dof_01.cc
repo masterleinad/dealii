@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGDoFAccessor::get_mg_dof_indices
 
 #include "../tests.h"
@@ -35,7 +34,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <int dim>
 void
@@ -61,7 +59,6 @@ dofs(const DoFHandler<dim>& dof)
     }
 }
 
-
 template <int dim>
 void
 check_fe(FiniteElement<dim>& fe)
@@ -80,7 +77,6 @@ check_fe(FiniteElement<dim>& fe)
   mgdof.distribute_mg_dofs(fe);
   dofs(mgdof);
 }
-
 
 template <int dim>
 void

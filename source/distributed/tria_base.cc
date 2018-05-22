@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/utilities.h>
@@ -26,12 +25,10 @@
 #include <deal.II/lac/sparsity_tools.h>
 #include <deal.II/lac/vector_memory.h>
 
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <numeric>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -56,8 +53,6 @@ namespace parallel
 #endif
     number_cache.n_locally_owned_active_cells.resize(n_subdomains);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -85,8 +80,6 @@ namespace parallel
       }
 #endif
   }
-
-
 
   template <int dim, int spacedim>
   std::size_t
@@ -182,7 +175,6 @@ namespace parallel
         return;
       }
 
-
     {
       // find ghost owners
       for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
@@ -225,8 +217,6 @@ namespace parallel
     number_cache.n_global_levels
       = Utilities::MPI::max(this->n_levels(), this->mpi_communicator);
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -333,8 +323,6 @@ namespace parallel
     return my_subdomain;
   }
 
-
-
   template <int dim, int spacedim>
   const std::set<types::subdomain_id>&
   Triangulation<dim, spacedim>::ghost_owners() const
@@ -342,16 +330,12 @@ namespace parallel
     return number_cache.ghost_owners;
   }
 
-
-
   template <int dim, int spacedim>
   const std::set<types::subdomain_id>&
   Triangulation<dim, spacedim>::level_ghost_owners() const
   {
     return number_cache.level_ghost_owners;
   }
-
-
 
   template <int dim, int spacedim>
   std::map<unsigned int, std::set<dealii::types::subdomain_id>>
@@ -362,7 +346,6 @@ namespace parallel
     // that is currently using a p4est callback to get correct ghost neighbors
     // over periodic faces.
     Assert(this->get_periodic_face_map().size() == 0, ExcNotImplemented());
-
 
     std::vector<bool> vertex_of_own_cell(this->n_vertices(), false);
 
@@ -387,8 +370,6 @@ namespace parallel
   }
 
 } // end namespace parallel
-
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "tria_base.inst"

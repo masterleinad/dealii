@@ -16,7 +16,6 @@
 #ifndef dealii_function_bessel_h
 #define dealii_function_bessel_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/function.h>
 #include <deal.II/base/point.h>

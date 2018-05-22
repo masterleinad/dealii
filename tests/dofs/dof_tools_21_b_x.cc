@@ -45,8 +45,6 @@ std::ofstream logfile("output");
 
 using namespace dealii;
 
-
-
 /*
  * Generate a grid consisting of two disjoint cells, colorize the two
  * outermost faces. They will be matched via collect_periodic_faces
@@ -105,7 +103,6 @@ void generate_grid(Triangulation<2>& triangulation)
   face_2->set_boundary_id(43);
 }
 
-
 /*
  * Print out all face DoFs and support points as well as the actual
  * matching via make_periodicity_constraints
@@ -145,7 +142,6 @@ print_matching(DoFHandler<dim>& dof_handler)
     deallog << dofs_2[i] << " is located at " << support_points[dofs_2[i]]
             << std::endl;
 
-
   std::bitset<3> orientation;
   orientation[0] = 1;
   orientation[1] = 1;
@@ -162,8 +158,6 @@ print_matching(DoFHandler<dim>& dof_handler)
   constraint_matrix.close();
   deallog << "Matching:" << std::endl;
 }
-
-
 
 int
 main()

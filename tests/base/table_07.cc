@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that Table<N,T> works for types that can not be copy constructed
 
 #include "../tests.h"
 
 #include <deal.II/base/table.h>
-
 
 class T
 {
@@ -44,7 +42,6 @@ public:
     return *this;
   }
 };
-
 
 int
 main()

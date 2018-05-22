@@ -83,7 +83,6 @@ namespace pdd
       fe(1)
   {}
 
-
   template <int dim>
   PDDProblem<dim>::~PDDProblem()
   {
@@ -172,7 +171,6 @@ namespace pdd
     output_results();
   }
 } // namespace pdd
-
 
 int
 main(int argc, char* argv[])

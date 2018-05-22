@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // hp-refinement. Output constraints.
 
 #include "../tests.h"
@@ -77,7 +76,6 @@ public:
     return res;
   }
 };
-
 
 template <int dim>
 void
@@ -193,7 +191,6 @@ test6(const bool         do_href,
   dof_handler.clear();
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -202,7 +199,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

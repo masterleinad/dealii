@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _01, except that we use operator[] instead of operator*
 
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
-
 
 void
 test()
@@ -68,8 +65,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

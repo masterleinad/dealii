@@ -13,21 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: test conversion from component mask to block mask and back. start with
 // blocks where the _12 test starts with components, and use an element that
 // does have fewer blocks than components
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 void
 test()
@@ -53,7 +48,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Like rt_11, but for gradients (just as rt_12 is to rt_10)
 //
 // the test used to fail because of the issue with computing the
@@ -41,7 +40,6 @@
 #include <vector>
 
 #define PRECISION 2
-
 
 std::ofstream logfile("output");
 
@@ -81,7 +79,6 @@ test(const unsigned int degree)
         }
     }
 }
-
 
 int
 main()

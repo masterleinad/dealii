@@ -21,8 +21,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
-
-
 template <int dim, int spacedim>
 void
 test();
@@ -69,7 +67,6 @@ test()
   GridTools::rotate(-numbers::PI / 5.0, 2, tria);
   GridOut().write_gnuplot(tria, deallog.get_file_stream());
 }
-
 
 int
 main()

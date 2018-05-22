@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the ArrayView constructor that converts from std::vector
 
 #include "../tests.h"
 
 #include <deal.II/base/array_view.h>
-
 
 void
 test()
@@ -43,8 +41,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

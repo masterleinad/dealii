@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework for the various fe_tools_*.cc tests
 
 #include "../tests.h"
@@ -38,14 +37,11 @@
 #include <memory>
 #include <string>
 
-
 // forward declaration of the function that must be provided in the
 // .cc files
 template <int dim>
 void
 check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2);
-
-
 
 // output some indicators for a given matrix. we don't write out the
 // entire matrix since this would blow up our output files beyond
@@ -68,7 +64,6 @@ output_matrix(const FullMatrix<double>& m)
   deallog << std::endl;
 }
 
-
 // output some indicators for a given vector
 template <typename VectorType>
 void
@@ -86,8 +81,6 @@ output_vector(const VectorType& v)
   deallog << std::endl;
 }
 
-
-
 template <int dim>
 Triangulation<dim>*
 make_tria()
@@ -103,8 +96,6 @@ make_tria()
   return tria;
 }
 
-
-
 template <int dim>
 DoFHandler<dim>*
 make_dof_handler(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
@@ -113,8 +104,6 @@ make_dof_handler(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
-
-
 
 template <int dim>
 hp::DoFHandler<dim>*
@@ -125,8 +114,6 @@ make_hp_dof_handler(const Triangulation<dim>&    tria,
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
-
-
 
 template <int dim>
 void
@@ -139,8 +126,6 @@ check(const FiniteElement<dim>& fe1,
   // call main function in .cc files
   check_this(fe1, fe2);
 }
-
-
 
 #define CHECK(EL1, deg1, EL2, deg2, dim)                \
   {                                                     \
@@ -174,7 +159,6 @@ check(const FiniteElement<dim>& fe1,
     CHECK(EL1, deg1, EL2, deg2, 2);     \
     CHECK(EL1, deg1, EL2, deg2, 3);     \
   }
-
 
 int
 main()
@@ -218,7 +202,6 @@ main()
       CHECK(Nedelec, 0, Nedelec, 0, 2);
       CHECK(Nedelec, 0, Nedelec, 0, 3);
 
-
       CHECK_SYS1(FE_Q<1>(1), 3, FE_Q<1>(2), 3, 1);
       CHECK_SYS1(FE_DGQ<1>(2), 2, FE_DGQ<1>(3), 2, 1);
       CHECK_SYS1(FE_DGP<1>(3), 1, FE_DGP<1>(1), 1, 1);
@@ -230,7 +213,6 @@ main()
       CHECK_SYS1(FE_Q<3>(1), 3, FE_Q<3>(2), 3, 3);
       CHECK_SYS1(FE_DGQ<3>(2), 2, FE_DGQ<3>(3), 2, 3);
       CHECK_SYS1(FE_DGP<3>(3), 1, FE_DGP<3>(1), 1, 3);
-
 
       /*
             CHECK_SYS2(FE_Q<1>(1),  3,FE_DGQ<1>(2),2,1);

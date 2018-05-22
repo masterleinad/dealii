@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test subdivided_parallelepiped
 
 #include "../tests.h"
@@ -40,7 +39,6 @@ point(double x = 0, double y = 0, double z = 0)
     p[2] = z;
   return p;
 }
-
 
 // The simplest test case is to create a parallelepiped grid with a
 // number of subdivisions and output the result.
@@ -76,7 +74,6 @@ check(bool subdivide)
         Assert(false, ExcInternalError());
     }
 
-
   std::vector<unsigned int> subdivisions;
   if(subdivide)
     {
@@ -84,7 +81,6 @@ check(bool subdivide)
       for(unsigned int d = 0; d < dim; ++d)
         subdivisions[d] = d + 1;
     }
-
 
   bool colorize = false;
 
@@ -111,7 +107,6 @@ main()
 
   check<3, 3>(true);
   check<3, 3>(false);
-
 
   deallog << "OK" << std::endl;
 }

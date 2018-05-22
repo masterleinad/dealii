@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler could not deal with parameters named "value" as well as a
 // few other names. see the thread on the mailing starting with a post by
 // Denis Davydov on March 30, 2013
@@ -48,7 +46,6 @@ check()
   deallog << foo.get("value") << std::endl;
   foo.leave_subsection();
 }
-
 
 int
 main()

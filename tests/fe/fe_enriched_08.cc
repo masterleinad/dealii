@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check constraints on hp dofhandler with 2 neighboring cells where one
 // cell is enriched and nother is not.
 
@@ -79,7 +78,6 @@ public:
   }
 };
 
-
 template <int dim>
 void
 test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
@@ -111,7 +109,6 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
   fe_collection.push_back(FE_Enriched<dim>(FE_Q<dim>(p_feen)));
 
   dof_handler.begin_active()->set_active_fe_index(1); //POU
-
 
   dof_handler.distribute_dofs(fe_collection);
 
@@ -177,7 +174,6 @@ test2cells(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
   dof_handler.clear();
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -186,7 +182,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

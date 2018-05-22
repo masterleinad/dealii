@@ -23,7 +23,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * Derivative of a function object.  The value access functions of this class
  * return the directional derivative of a function with respect to a direction

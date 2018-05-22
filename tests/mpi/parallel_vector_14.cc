@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that handling of ghost elements in parallel distributed vectors works
 // appropriately when assigning from ghosted to non-ghosted vectors
 
@@ -24,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -33,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // processor 0 and 1 own 2 indices each, higher processors nothing, all are
   // ghosting global elements 1 and 3
@@ -121,8 +118,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

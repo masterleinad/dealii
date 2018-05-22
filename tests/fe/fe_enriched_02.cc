@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check FEValues::shape_value()
 
 #include "../tests.h"
@@ -120,7 +119,6 @@ test1()
   deallog << std::endl;
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -129,7 +127,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // read a file in the MSH format used by the GMSH program
 
 #include "../tests.h"
@@ -29,7 +28,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -50,7 +48,6 @@ filename_resolution()
 {
   check_file<2>(std::string(SOURCE_DIR "/grid_in_msh/mesh"), GridIn<2>::msh);
 }
-
 
 int
 main()

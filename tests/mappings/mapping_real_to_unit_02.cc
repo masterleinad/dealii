@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
 
   FEFieldFunction could not deal with ExcTransformationFailed from transform_real_to_unit_cell()
@@ -29,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/fe_field_function.h>
 
-
-
 template <int dim>
 void
 test2()
@@ -42,7 +39,6 @@ test2()
   triangulation.set_manifold(0, boundary_description);
   triangulation.refine_global(1);
   MappingQGeneric<dim> mapping(1);
-
 
   Point<dim> p(-0.27999999999999992, -0.62999999999999989);
 
@@ -74,7 +70,6 @@ test2()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

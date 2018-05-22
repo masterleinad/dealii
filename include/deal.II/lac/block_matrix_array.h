@@ -36,7 +36,6 @@ DEAL_II_NAMESPACE_OPEN
  *@{
  */
 
-
 /**
  * Block matrix composed of different single matrices; these matrices may even
  * be of different types.
@@ -359,7 +358,6 @@ private:
 
 /*@}*/
 
-
 /**
  * Inversion of a block-triangular matrix.
  *
@@ -444,7 +442,6 @@ public:
    */
   void
   reinit(const unsigned int n_block_rows);
-
 
   /**
    * Enter a block. This calls BlockMatrixArray::enter(). Remember that the
@@ -536,7 +533,6 @@ private:
   bool backward;
 };
 
-
 #ifndef DOXYGEN
 //---------------------------------------------------------------------------
 
@@ -557,8 +553,6 @@ inline BlockMatrixArray<number, BlockVectorType>::Entry::Entry(
                                    typeid(*this).name()))
 {}
 
-
-
 template <typename number, typename BlockVectorType>
 template <typename MatrixType>
 inline void
@@ -572,7 +566,6 @@ BlockMatrixArray<number, BlockVectorType>::enter(const MatrixType& matrix,
   Assert(col < n_block_cols(), ExcIndexRange(col, 0, n_block_cols()));
   entries.push_back(Entry(matrix, row, col, prefix, transpose));
 }
-
 
 template <typename number, typename BlockVectorType>
 template <class StreamType>
@@ -651,8 +644,6 @@ BlockTrianglePrecondition<number, BlockVectorType>::enter(
   BlockMatrixArray<number, BlockVectorType>::enter(
     matrix, row, col, prefix, transpose);
 }
-
-
 
 #endif // DOXYGEN
 

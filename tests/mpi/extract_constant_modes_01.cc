@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test DoFTools::extract_constant_modes
 
 #include "../tests.h"
@@ -33,8 +31,6 @@
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 template <int dim>
 void
@@ -93,7 +89,6 @@ test()
           }
       }
 }
-
 
 int
 main(int argc, char* argv[])

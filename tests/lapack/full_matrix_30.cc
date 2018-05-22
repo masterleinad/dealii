@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix removing row and column from a matrix
 
 #include "../tests.h"
 #include <deal.II/lac/lapack_full_matrix.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -37,7 +35,6 @@ test()
   A.remove_row_and_column(2, 7); // <-- 3x and x8 are removed
   A.print_formatted(deallog.get_file_stream(), 0, false, 2);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check LinearAlgebra::distributed::Vector::swap
 
 #include "../tests.h"
@@ -178,8 +177,6 @@ test()
   if(myid == 0)
     deallog << "Ghost values after second swap OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

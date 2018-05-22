@@ -68,7 +68,6 @@ main()
   MatrixCreator::create_laplace_matrix(mapping_q1, dof_handler, quadrature, a);
   MatrixCreator::create_mass_matrix(mapping_q1, dof_handler, quadrature, b);
 
-
   // Constructors and assignment:
 
   auto op_a = linear_operator(a);

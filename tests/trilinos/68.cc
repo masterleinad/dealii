@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TrilinosWrappers::MatrixBase::clear_row () with used second argument
 
 #include "../tests.h"
@@ -24,7 +22,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::SparseMatrix& m)
@@ -96,8 +93,6 @@ test(TrilinosWrappers::SparseMatrix& m)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -105,7 +100,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

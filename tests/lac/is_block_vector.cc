@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
 
 #include <algorithm>
 #include <iostream>
-
-
 
 void
 test()
@@ -36,8 +32,6 @@ test()
           << IsBlockVector<BlockVector<double>>::value << ' '
           << IsBlockVector<BlockVector<float>>::value << std::endl;
 }
-
-
 
 int
 main()
@@ -72,7 +66,6 @@ main()
       // abort
       return 3;
     };
-
 
   return 0;
 }

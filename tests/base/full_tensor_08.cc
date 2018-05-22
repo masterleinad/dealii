@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a stress test using repeated multiplication of tensors
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
-
-
 
 template <int dim>
 void
@@ -54,8 +51,6 @@ test()
     for(unsigned int j = 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << a[i][j] << std::endl;
 }
-
-
 
 int
 main()

@@ -232,15 +232,12 @@ private:
 
 #ifndef DOXYGEN
 
-
 template <class VectorType>
 SolverQMRS<VectorType>::IterationResult::IterationResult(
   const SolverControl::State state,
   const double               last_residual)
   : state(state), last_residual(last_residual)
 {}
-
-
 
 template <class VectorType>
 SolverQMRS<VectorType>::SolverQMRS(SolverControl&            cn,
@@ -273,7 +270,6 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
 {
   LogStream::Prefix prefix("SQMR");
 
-
   // temporary vectors, allocated trough the @p VectorMemory object at the
   // start of the actual solution process and deallocated at the end.
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
@@ -281,7 +277,6 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
   typename VectorMemory<VectorType>::Pointer Vq(this->memory);
   typename VectorMemory<VectorType>::Pointer Vt(this->memory);
   typename VectorMemory<VectorType>::Pointer Vd(this->memory);
-
 
   // resize the vectors, but do not set
   // the values since they'd be overwritten
@@ -303,7 +298,6 @@ SolverQMRS<VectorType>::solve(const MatrixType&         A,
       state = iterate(A, x, b, preconditioner, *Vr, *Vu, *Vq, *Vt, *Vd);
     }
   while(state.state == SolverControl::iterate);
-
 
   // in case of failure: throw exception
   AssertThrow(state.state == SolverControl::success,

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //check method FullMatrix::triple_product
 
 #include "../tests.h"
@@ -31,7 +30,6 @@ diff(FullMatrix<double>& M)
   else
     deallog << "oops " << err << std::endl;
 }
-
 
 void
 test(const unsigned int n, const unsigned int m)
@@ -109,7 +107,6 @@ test(const unsigned int n, const unsigned int m)
   aux4.add(-1., S2);
   diff(aux4);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // there used to be a bug in MappingCartesian, where the inverse jacobian
 // was not computed correctly. Check that all works as intended.
 
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -68,7 +64,6 @@ check(const Triangulation<dim>& tria)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that everything is ok when we have a triangulation that has
 // fewer cells than there are processors
 //
@@ -24,7 +22,6 @@
 // this test is just like the one without hp_ but uses an
 // hp::DoFHandler instead of a regular DoFHandler (but with only one
 // element). the output should be, and is, the same
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -40,7 +37,6 @@
 #include <deal.II/hp/dof_handler.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -61,7 +57,6 @@ test()
 
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
-
 
   hp::FECollection<dim> fe;
   fe.push_back(FE_Q<dim>(1));
@@ -118,7 +113,6 @@ test()
 
   Assert(all == complete_index_set(N), ExcInternalError());
 }
-
 
 int
 main(int argc, char* argv[])

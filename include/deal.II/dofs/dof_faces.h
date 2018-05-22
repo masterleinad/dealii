@@ -16,7 +16,6 @@
 #ifndef dealii_dof_faces_h
 #define dealii_dof_faces_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/dofs/dof_objects.h>
@@ -167,13 +166,10 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
-
     template <class Archive>
     void
     DoFFaces<1>::serialize(Archive&, const unsigned int)
     {}
-
 
     template <class Archive>
     void
@@ -181,7 +177,6 @@ namespace internal
     {
       ar& lines;
     }
-
 
     template <class Archive>
     void

@@ -19,7 +19,6 @@
 
 #include "../tests.h"
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/parameter_handler.h>
@@ -55,7 +54,6 @@ namespace Step36
 {
   using namespace dealii;
 
-
   template <int dim>
   class EigenvalueProblem
   {
@@ -86,14 +84,10 @@ namespace Step36
     ConstraintMatrix constraints;
   };
 
-
-
   template <int dim>
   EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file)
     : fe(1), dof_handler(triangulation)
   {}
-
-
 
   template <int dim>
   void
@@ -122,8 +116,6 @@ namespace Step36
     eigenvalues.resize(eigenfunctions.size());
   }
 
-
-
   template <int dim>
   void
   EigenvalueProblem<dim>::assemble_system()
@@ -146,7 +138,6 @@ namespace Step36
     Functions::ZeroFunction<dim> potential;
 
     std::vector<double> potential_values(n_q_points);
-
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -188,7 +179,6 @@ namespace Step36
     stiffness_matrix.compress(VectorOperation::add);
     mass_matrix.compress(VectorOperation::add);
 
-
     double min_spurious_eigenvalue = std::numeric_limits<double>::max(),
            max_spurious_eigenvalue = -std::numeric_limits<double>::max();
 
@@ -200,8 +190,6 @@ namespace Step36
           max_spurious_eigenvalue = std::max(max_spurious_eigenvalue, ev);
         }
   }
-
-
 
   template <int dim>
   std::pair<unsigned int, double>
@@ -267,8 +255,6 @@ namespace Step36
                           solver_control.last_value());
   }
 
-
-
   template <int dim>
   void
   EigenvalueProblem<dim>::output_results() const
@@ -297,7 +283,6 @@ namespace Step36
     std::ofstream output("eigenvectors.vtk");
     data_out.write_vtk(output);
   }
-
 
   bool
   my_compare(std::complex<double> a, std::complex<double> b)
@@ -332,7 +317,6 @@ main(int argc, char** argv)
       using namespace Step36;
 
       initlog();
-
 
       EigenvalueProblem<2> problem("");
       problem.run();

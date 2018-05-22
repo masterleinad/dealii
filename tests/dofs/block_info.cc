@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/block_info.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -21,7 +20,6 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -70,7 +68,6 @@ test_grid(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test_fe(const FiniteElement<dim>& fe)
@@ -80,7 +77,6 @@ test_fe(const FiniteElement<dim>& fe)
   tr.refine_global(5 - dim);
   test_grid(tr, fe);
 }
-
 
 int
 main()

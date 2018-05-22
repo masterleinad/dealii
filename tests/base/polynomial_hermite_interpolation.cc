@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 
 #include <deal.II/base/polynomial.h>
@@ -47,7 +46,6 @@ interpolation_conditions(const std::vector<Polynomial<double>>& polynomials)
       deallog << i << "\t 1:\t" << values[0] << '\t' << values[1] << std::endl;
     }
 }
-
 
 int
 main()

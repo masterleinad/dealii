@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check renumbering the degrees of freedom on the multigrid levels in
 // parallel
 
@@ -27,7 +26,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <int dim>
 void
@@ -118,7 +116,6 @@ check()
 
   print_dof_numbers(mgdof);
 }
-
 
 int
 main(int argc, char** argv)

@@ -46,7 +46,6 @@
 
 #include <deal.II/numerics/vector_tools.h>
 
-
 using namespace dealii;
 
 template <int dim>
@@ -81,7 +80,6 @@ private:
   TrilinosWrappers::MPI::Vector system_rhs_two;
 };
 
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -92,7 +90,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
-
 
 template <int dim>
 class RightHandSideTwo : public Function<dim>
@@ -105,8 +102,6 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -117,8 +112,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
-
-
 
 template <int dim>
 double
@@ -132,7 +125,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return return_value;
 }
 
-
 template <int dim>
 double
 RightHandSideTwo<dim>::value(const Point<dim>& p,
@@ -145,7 +137,6 @@ RightHandSideTwo<dim>::value(const Point<dim>& p,
   return return_value;
 }
 
-
 template <int dim>
 double
 BoundaryValues<dim>::value(const Point<dim>& p,
@@ -153,8 +144,6 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 {
   return p.square();
 }
-
-
 
 template <int dim>
 Step4<dim>::Step4()
@@ -166,7 +155,6 @@ Step4<dim>::Step4()
     dof_handler(triangulation)
 {}
 
-
 template <int dim>
 void
 Step4<dim>::make_grid()
@@ -174,8 +162,6 @@ Step4<dim>::make_grid()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(6);
 }
-
-
 
 template <int dim>
 void
@@ -193,7 +179,6 @@ Step4<dim>::setup_system()
   IndexSet locally_relevant_dofs;
 
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
-
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints, false);
@@ -214,7 +199,6 @@ Step4<dim>::setup_system()
   system_rhs_two.reinit(
     locally_owned_dofs, locally_relevant_dofs, MPI_COMM_WORLD, true);
 }
-
 
 template <int dim>
 void
@@ -285,8 +269,6 @@ Step4<dim>::assemble_system()
   system_rhs.compress(VectorOperation::add);
   system_rhs_two.compress(VectorOperation::add);
 }
-
-
 
 template <int dim>
 void
@@ -363,8 +345,6 @@ Step4<dim>::solve()
   deallog.pop();
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::run()
@@ -374,7 +354,6 @@ Step4<dim>::run()
   assemble_system();
   solve();
 }
-
 
 int
 main(int argc, char** argv)

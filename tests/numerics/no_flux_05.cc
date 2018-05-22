@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the creation of no-flux boundary conditions for a finite
 // element that consists of more than dim components and where
 // therefore we have to pick the vector components from somewhere in
@@ -23,7 +22,6 @@
 // Stokes at times. the problem here is that the DGP element does not
 // have support points, which caused problems when this test was
 // written
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -39,8 +37,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -66,7 +62,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
 template <int dim>
 void
 test_hyper_cube()
@@ -88,7 +83,6 @@ test_hyper_cube()
       test(tr, fe);
     }
 }
-
 
 int
 main()

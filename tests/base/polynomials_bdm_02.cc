@@ -84,7 +84,6 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-
   PolynomialsBDM<3> p31(1);
   PolynomialsBDM<3> p32(2);
   PolynomialsBDM<3> p33(3);

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check whether we can read a 3d grid. this test used to fail until late
 // 2003, when the necessary infrastructure was created
 
@@ -33,7 +31,6 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_cg.h>
@@ -43,12 +40,10 @@
 
 #include <deal.II/numerics/data_out.h>
 
-
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/manifold_lib.h>
 
 #include <deal.II/base/timer.h>
-
 
 template <int dim>
 class LaplaceProblem
@@ -70,12 +65,9 @@ private:
   Vector<double> system_rhs;
 };
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : fe(1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -83,22 +75,16 @@ LaplaceProblem<dim>::run()
 {
   deallog << "Solving problem in " << dim << " space dimensions." << std::endl;
 
-
-
   GridIn<dim> grid_in;
   grid_in.attach_triangulation(triangulation);
 
-
   std::ifstream input_file(SOURCE_DIR "/gerold_1.inp");
 
-
   deallog << "read ucd data file" << std::endl;
-
 
   grid_in.read_ucd(input_file);
   deallog << "ucd data file readin exe" << std::endl;
 }
-
 
 int
 main()

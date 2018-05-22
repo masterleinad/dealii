@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // trigger an error in hp::DoFHandler::create_active_fe_table
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -27,8 +24,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -54,8 +49,6 @@ test()
   tria.execute_coarsening_and_refinement();
   dof_handler.distribute_dofs(fe_collection);
 }
-
-
 
 int
 main()

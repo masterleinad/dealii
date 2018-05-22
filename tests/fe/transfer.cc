@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -30,7 +29,6 @@
 
 #include <string>
 #include <vector>
-
 
 #define TEST(dim, l, el, deg)                                        \
   {                                                                  \
@@ -70,7 +68,6 @@ print_matrix(Triangulation<dim>&       tr,
     }
   deallog << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // generate and refine a hyper shell in 3d with 96 cells.
 //
 // this mesh ran into an interesting problem (somewhat hard to find
@@ -35,7 +34,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -68,7 +66,6 @@ check(const unsigned int n)
         deallog << cell->face(f) << ' ' << (int) cell->face(f)->boundary_id()
                 << ' ' << cell->face(f)->center().norm() << std::endl;
 }
-
 
 int
 main()

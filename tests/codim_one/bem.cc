@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // calculation of the solution of laplace equation in the external
 // domain the Boundary Element Method (implemented only for 2d
 // problems).
@@ -75,7 +73,6 @@ private:
   read_grid(std::string filename);
   void
   write_grid(std::string filename);
-
 
   Triangulation<spacedim - 1, spacedim> tria;
   FE_DGQ<spacedim - 1, spacedim>        fe;
@@ -220,7 +217,6 @@ BEM<spacedim>::assemble_system()
 
       cell_rhs = 0.;
 
-
       // In order to obtain the Gram determinant it is used JxW and then it
       // is divided by the weight. Both the jacobian and the normals are
       // constant on the cell, so they are taken in the first quadrature
@@ -277,8 +273,6 @@ BEM<spacedim>::assemble_system()
                                * fe_values_i.JxW(q_point_i)
                                * fe_values_j.JxW(q_point_j);
                         }
-
-
 
                       // assembling of right hand side
                       cell_rhs(a)
@@ -429,7 +423,6 @@ BEM<spacedim>::read_grid(std::string filename)
   for(auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     cell->set_all_manifold_ids(1);
 }
-
 
 template <int spacedim>
 void

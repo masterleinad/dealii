@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // we managed to get a function as simple as IndexSet::operator== wrong -- who
 // knew?
 
@@ -21,7 +20,6 @@
 #include <stdlib.h>
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -36,8 +34,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

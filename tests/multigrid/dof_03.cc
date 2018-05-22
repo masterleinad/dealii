@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFHandler::has_level_dofs and DoFHandler::has_active_dofs
 
 #include "../tests.h"
@@ -25,8 +24,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <algorithm>
-
-
 
 template <int dim>
 void
@@ -48,7 +45,6 @@ check()
     dof.distribute_dofs(fe);
     deallog << "check " << dim << " after  distribute " << dof.has_active_dofs()
             << ' ' << dof.has_level_dofs() << std::endl;
-
 
     dof.distribute_dofs(fe);
     dof.distribute_mg_dofs(fe);

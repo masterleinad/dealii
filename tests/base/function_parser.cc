@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This program tests the functionality of the function parser
 // wrapper.
 
@@ -23,7 +21,6 @@
 #include <deal.II/base/point.h>
 #include <deal.II/lac/vector.h>
 #include <map>
-
 
 int
 main()

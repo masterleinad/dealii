@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FESystem(FE_Q,FE_DGQ)::hp_line_dof_identities. i thought this was
 // what would show what happened crash_14, but it turned out to be a wrong
 // lead. doesn't matter, keep it anyway :-)
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -62,8 +57,6 @@ test()
           }
     }
 }
-
-
 
 int
 main()

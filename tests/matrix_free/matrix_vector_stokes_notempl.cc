@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_stokes_noflux but no template parameter on the
 // polynomial degree
 
@@ -44,8 +42,6 @@ std::ofstream logfile("output");
 
 #include <complex>
 #include <iostream>
-
-
 
 template <int dim, typename VectorType>
 class MatrixFreeTest
@@ -97,7 +93,6 @@ public:
       }
   }
 
-
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
@@ -109,8 +104,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim>
 void
@@ -259,7 +252,6 @@ test(const unsigned int fe_degree)
       }
   }
 
-
   solution.reinit(2);
   for(unsigned int d = 0; d < 2; ++d)
     solution.block(d).reinit(dofs_per_block[d]);
@@ -313,8 +305,6 @@ test(const unsigned int fe_degree)
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

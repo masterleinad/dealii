@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // compares the computation of the diagonal using a face integration
 // facilities with the alternative reinit(cell_index, face_number) approach
 
@@ -100,7 +98,6 @@ public:
   {
     data.initialize_dof_vector(vector);
   }
-
 
 private:
   void
@@ -312,8 +309,6 @@ private:
   MatrixFree<dim, number> data;
 };
 
-
-
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 test()
@@ -362,8 +357,6 @@ test()
               << (double) res2.linfty_norm() << std::endl;
     }
 }
-
-
 
 int
 main(int argc, char** argv)

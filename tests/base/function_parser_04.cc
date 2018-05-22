@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // functionparser: TBB
 
 #include "../tests.h"
@@ -24,7 +22,6 @@
 #include <deal.II/base/work_stream.h>
 #include <deal.II/lac/vector.h>
 #include <map>
-
 
 FunctionParser<2> fp;
 
@@ -37,7 +34,6 @@ struct copy_data
   copy_data() : value(0)
   {}
 };
-
 
 void
 assemble(const std::vector<int>::iterator& it,
@@ -57,7 +53,6 @@ copy(int& value, const copy_data& data)
 {
   value += data.value;
 }
-
 
 void
 test2()
@@ -81,7 +76,6 @@ test2()
 
   Assert(result == v.size(), ExcMessage("uhuh!"));
 }
-
 
 int
 main()

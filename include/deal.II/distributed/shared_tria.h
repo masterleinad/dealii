@@ -16,7 +16,6 @@
 #ifndef dealii_distributed_shared_tria_h
 #define dealii_distributed_shared_tria_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/smartpointer.h>
 #include <deal.II/base/subscriptor.h>
@@ -24,7 +23,6 @@
 #include <deal.II/grid/tria.h>
 
 #include <deal.II/distributed/tria_base.h>
-
 
 #include <functional>
 #include <list>
@@ -37,13 +35,11 @@
 #  include <mpi.h>
 #endif
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace parallel
 {
 #ifdef DEAL_II_WITH_MPI
-
 
   namespace shared
   {
@@ -222,7 +218,6 @@ namespace parallel
          */
         construct_multigrid_hierarchy = 0x8,
       };
-
 
       /**
        * Constructor.
@@ -439,7 +434,6 @@ namespace parallel
       std::vector<types::subdomain_id> true_level_subdomain_ids_of_cells;
     };
   } // namespace shared
-
 
 #endif
 } // namespace parallel

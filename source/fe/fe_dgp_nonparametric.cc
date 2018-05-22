@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/quadrature.h>
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/fe/fe.h>
@@ -25,7 +24,6 @@
 
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -97,8 +95,6 @@ FE_DGPNonparametric<dim, spacedim>::FE_DGPNonparametric(
   // leave these fields empty
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 FE_DGPNonparametric<dim, spacedim>::get_name() const
@@ -117,16 +113,12 @@ FE_DGPNonparametric<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGPNonparametric<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_DGPNonparametric<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -140,8 +132,6 @@ FE_DGPNonparametric<dim, spacedim>::shape_value(const unsigned int i,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
   return 0;
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -160,8 +150,6 @@ FE_DGPNonparametric<dim, spacedim>::shape_value_component(
   return 0;
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad(const unsigned int i,
@@ -174,7 +162,6 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad(const unsigned int i,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
   return Tensor<1, dim>();
 }
-
 
 template <int dim, int spacedim>
 Tensor<1, dim>
@@ -193,8 +180,6 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_component(
   return Tensor<1, dim>();
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<2, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad_grad(const unsigned int i,
@@ -207,8 +192,6 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_grad(const unsigned int i,
               (typename FiniteElement<dim>::ExcUnitShapeValuesDoNotExist()));
   return Tensor<2, dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<2, dim>
@@ -227,11 +210,9 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_grad_component(
   return Tensor<2, dim>();
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -247,8 +228,6 @@ FE_DGPNonparametric<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <int dim, int spacedim>
 UpdateFlags
 FE_DGPNonparametric<dim, spacedim>::requires_update_flags(
@@ -261,8 +240,6 @@ FE_DGPNonparametric<dim, spacedim>::requires_update_flags(
 
   return out;
 }
-
-
 
 //---------------------------------------------------------------------------
 // Data field initialization
@@ -287,8 +264,6 @@ FE_DGPNonparametric<dim, spacedim>::get_data(
 
   return std::move(data);
 }
-
-
 
 //---------------------------------------------------------------------------
 // Fill data of FEValues
@@ -348,8 +323,6 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
       }
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
@@ -403,8 +376,6 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
             output_data.shape_hessians[k][i] = grad_grads[k];
       }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -461,8 +432,6 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
       }
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_DGPNonparametric<dim, spacedim>::get_face_interpolation_matrix(
@@ -487,8 +456,6 @@ FE_DGPNonparametric<dim, spacedim>::get_face_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -516,16 +483,12 @@ FE_DGPNonparametric<dim, spacedim>::get_subface_interpolation_matrix(
          ExcDimensionMismatch(interpolation_matrix.n(), 0));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_DGPNonparametric<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -544,8 +507,6 @@ FE_DGPNonparametric<dim, spacedim>::hp_vertex_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGPNonparametric<dim, spacedim>::hp_line_dof_identities(
@@ -562,8 +523,6 @@ FE_DGPNonparametric<dim, spacedim>::hp_line_dof_identities(
       return std::vector<std::pair<unsigned int, unsigned int>>();
     }
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -582,8 +541,6 @@ FE_DGPNonparametric<dim, spacedim>::hp_quad_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_DGPNonparametric<dim, spacedim>::compare_for_face_domination(
@@ -600,8 +557,6 @@ FE_DGPNonparametric<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_DGPNonparametric<dim, spacedim>::has_support_on_face(
@@ -611,8 +566,6 @@ FE_DGPNonparametric<dim, spacedim>::has_support_on_face(
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FE_DGPNonparametric<dim, spacedim>::memory_consumption() const
@@ -621,8 +574,6 @@ FE_DGPNonparametric<dim, spacedim>::memory_consumption() const
   return 0;
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 FE_DGPNonparametric<dim, spacedim>::get_degree() const
@@ -630,10 +581,7 @@ FE_DGPNonparametric<dim, spacedim>::get_degree() const
   return this->degree;
 }
 
-
-
 // explicit instantiations
 #include "fe_dgp_nonparametric.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

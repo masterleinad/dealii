@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the testsuite framework. this test is supposed to compile and link
 // successfully but not run
 
 #include "../tests.h"
-
 
 int
 main()

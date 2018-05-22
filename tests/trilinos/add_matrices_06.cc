@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that SparseMatrix::add(SparseMatrix) and
 // SparseMatrix::copy_from(SparseMatrix) do not destroy memory when called
 // from matrices with the same sparsity pattern and thus, structures depending
@@ -25,7 +23,6 @@
 #include <deal.II/lac/trilinos_precondition.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test(TrilinosWrappers::SparseMatrix& m)
@@ -76,8 +73,6 @@ test(TrilinosWrappers::SparseMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

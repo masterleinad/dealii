@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridReordering<3>::reorder_cells
 
 #include "../tests.h"
@@ -22,8 +20,6 @@
 #include <deal.II/grid/grid_reordering.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void my_cylinder(Triangulation<3>& tria,
                  const double      radius,
@@ -80,7 +76,6 @@ void my_cylinder(Triangulation<3>& tria,
                             SubCellData()); // no boundary information
 }
 
-
 void
 check_grid()
 {
@@ -113,7 +108,6 @@ check_grid()
         }
     }
 }
-
 
 int
 main()

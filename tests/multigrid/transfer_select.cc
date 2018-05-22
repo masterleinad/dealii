@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/dofs/dof_renumbering.h>
@@ -78,7 +76,6 @@ check_select(const FiniteElement<dim>& fe,
       deallog << std::endl;
     }
 
-
   MGTransferSelect<double> transfer;
   transfer.build_matrices(
     dof, mgdof, selected, mg_selected, target_component, mg_target_component);
@@ -110,13 +107,11 @@ check_select(const FiniteElement<dim>& fe,
   for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
     v[l].reinit(mg_ndofs[l][mg_target_component[mg_selected]]);
 
-
   transfer.copy_to_mg(mgdof, v, u);
   for(unsigned int i = 0; i < v[2].size(); ++i)
     deallog << ' ' << (int) v[2](i);
   deallog << std::endl;
 }
-
 
 int
 main()

@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 
 // check
 //   FETools::get_projection_matrix
-
-
 
 template <int dim>
 void

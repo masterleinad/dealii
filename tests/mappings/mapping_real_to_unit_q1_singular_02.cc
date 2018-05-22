@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that MappingQ1::transform_real_to_unit_cell can handle the case of a
 // point which is close to a Cartesian mesh except for roundoff, which used to
 // create divisions by zero in an earlier implementation
@@ -25,7 +23,6 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
 
 void
 test_real_to_unit_cell()
@@ -62,7 +59,6 @@ test_real_to_unit_cell()
     }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference and compute_global_error in parallel
 // see integrate_difference_02.cc for the serial version
 //
@@ -39,7 +38,6 @@
 
 using namespace dealii;
 
-
 // x+y+z, x^2+y^2, z+xy
 // div = 1+2y+1
 template <int dim>
@@ -61,8 +59,6 @@ public:
     return 0.0;
   }
 };
-
-
 
 template <int dim>
 void
@@ -158,7 +154,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

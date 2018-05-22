@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test spherical manifold on hyper shells.
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>

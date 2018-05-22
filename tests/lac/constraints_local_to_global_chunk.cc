@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // ConstraintMatrix::distribute_local_to_global for ChunkSparseMatrix by
 // comparing the results with a sparse matrix. As a test case, we use a square
@@ -110,7 +108,6 @@ test(unsigned int chunk_size)
   deallog << "Difference between chunk and sparse matrix: "
           << std::sqrt(frobenius) << std::endl;
 }
-
 
 int
 main()

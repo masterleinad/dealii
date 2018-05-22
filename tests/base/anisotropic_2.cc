@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check AnisotropicPolynomials
-
 
 #include "../tests.h"
 
 #include <deal.II/base/tensor_product_polynomials.h>
 
-
 using namespace Polynomials;
 
 typedef std::vector<Polynomial<double>> PolVector;
-
 
 void
 print_2d(const AnisotropicPolynomials<2>& aniso)
@@ -50,8 +45,6 @@ print_2d(const AnisotropicPolynomials<2>& aniso)
     }
 }
 
-
-
 template <class Pol>
 void
 check_2d()
@@ -74,7 +67,6 @@ check_2d()
     print_2d(aniso);
   }
 }
-
 
 void
 print_3d(const AnisotropicPolynomials<3>& aniso)
@@ -103,8 +95,6 @@ print_3d(const AnisotropicPolynomials<3>& aniso)
         }
     }
 }
-
-
 
 template <class Pol>
 void
@@ -138,8 +128,6 @@ check_3d()
   }
 }
 
-
-
 template <class Pol>
 void
 check()
@@ -147,8 +135,6 @@ check()
   check_2d<Pol>();
   check_3d<Pol>();
 }
-
-
 
 int
 main()

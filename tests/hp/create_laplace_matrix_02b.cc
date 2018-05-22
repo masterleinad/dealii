@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // The MatrixCreator::create_laplace_matrix function overload that also assembles
 // a right hand side vector had a bug in that the statement that assembled the
 // rhs vector was nested in the wrong loop. this was fixed by Moritz' commit
@@ -26,8 +24,6 @@
 // and _04 tests. the version without creating a right hand side vector is tested in the
 // _0[1234]a tests, and versions without computing a right hand side
 // vectors with and without coefficient in the _0[1234][bc] tests
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -48,8 +44,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
-
-
 
 template <int dim>
 void
@@ -128,8 +122,6 @@ check()
       ++p)
     deallog << p->value() * 100 << std::endl;
 }
-
-
 
 int
 main()

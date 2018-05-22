@@ -16,7 +16,6 @@
 #ifndef dealii_solver_relaxation_h
 #define dealii_solver_relaxation_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/subscriptor.h>
@@ -96,12 +95,9 @@ SolverRelaxation<VectorType>::SolverRelaxation(SolverControl& cn,
   : Solver<VectorType>(cn)
 {}
 
-
-
 template <class VectorType>
 SolverRelaxation<VectorType>::~SolverRelaxation()
 {}
-
 
 template <class VectorType>
 template <typename MatrixType, class RelaxationType>
@@ -148,7 +144,6 @@ SolverRelaxation<VectorType>::solve(const MatrixType&     A,
               SolverControl::NoConvergence(iter, r.l2_norm()));
   // otherwise exit as normal
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

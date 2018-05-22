@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::interpolate_based_on_material_id
 
 #include "../tests.h"
@@ -36,7 +34,6 @@
 
 #include <vector>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -57,8 +54,6 @@ public:
 private:
   const unsigned int q;
 };
-
-
 
 template <int dim>
 void
@@ -108,8 +103,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

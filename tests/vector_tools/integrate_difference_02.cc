@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference and compute_global_error
 
 // see http://www.wolframalpha.com/input/?i=integrate+(x%2By%2Bz)%5E3%2B(x%5E2%2By%5E2)%5E3%2B(z%2Bxy)%5E3+from+x%3D0..1,y%3D0..1,z%3D0..1
@@ -32,7 +31,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 using namespace dealii;
-
 
 // x+y+z, x^2+y^2, z+xy
 // div = 1+2y+1
@@ -55,8 +53,6 @@ public:
     return 0.0;
   }
 };
-
-
 
 template <int dim>
 void
@@ -139,7 +135,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

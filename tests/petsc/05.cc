@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check querying the number of nonzero elements in
 // PETScWrappers::SparseMatrix
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test(PETScWrappers::SparseMatrix& m)
@@ -44,8 +41,6 @@ test(PETScWrappers::SparseMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

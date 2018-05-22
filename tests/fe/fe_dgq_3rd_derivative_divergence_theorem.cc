@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check the correctness of fe_values.shape_3rd_derivative for FE_DGQ by comparing
 // the integral of all shape third derivative components with the flux of the
 // hessian over the boundary by the divergence theorem
@@ -156,8 +155,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_ball(const double tolerance)
@@ -173,7 +170,6 @@ test_hyper_ball(const double tolerance)
   FE_DGQ<dim> fe(2);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

@@ -13,20 +13,16 @@
 //
 // ---------------------------------------------------------------------
 
-
 // similar to the hyper_ball_3d test, but for the cylinder grid. here,
 // the cause for the failure was different, though: the description of
 // the cells was wrong, and they were not sent through the
 // GridReordering class which would have cured the problem.
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 int
 main()

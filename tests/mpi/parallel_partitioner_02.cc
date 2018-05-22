@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check n_import_indices on test case from parallel_partitioner_01
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/base/utilities.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -91,12 +89,9 @@ test()
       AssertDimension(v.n_import_indices(), 0);
     }
 
-
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

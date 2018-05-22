@@ -16,7 +16,6 @@
 #ifndef dealii_quadrature_lib_h
 #define dealii_quadrature_lib_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/quadrature.h>
 
@@ -45,7 +44,6 @@ public:
    */
   QGauss(const unsigned int n);
 };
-
 
 /**
  * The Gauss-Lobatto family of quadrature rules for numerical integration.
@@ -82,8 +80,6 @@ public:
   QGaussLobatto(const unsigned int n);
 };
 
-
-
 /**
  * The midpoint rule for numerical quadrature. This one-point formula is exact
  * for linear polynomials.
@@ -95,7 +91,6 @@ public:
   QMidpoint();
 };
 
-
 /**
  * The Simpson rule for numerical quadrature. This formula with 3 quadrature
  * points is exact for polynomials of degree 3.
@@ -106,8 +101,6 @@ class QSimpson : public Quadrature<dim>
 public:
   QSimpson();
 };
-
-
 
 /**
  * The trapezoidal rule for numerical quadrature. This formula with two
@@ -128,8 +121,6 @@ public:
   QTrapez();
 };
 
-
-
 /**
  * The Milne rule for numerical quadrature formula. The Milne rule is a closed
  * Newton-Cotes formula and is exact for polynomials of degree 5.
@@ -143,7 +134,6 @@ public:
   QMilne();
 };
 
-
 /**
  * The Weddle rule for numerical quadrature. The Weddle rule is a closed
  * Newton-Cotes formula and is exact for polynomials of degree 7.
@@ -156,8 +146,6 @@ class QWeddle : public Quadrature<dim>
 public:
   QWeddle();
 };
-
-
 
 /**
  * A class for Gauss quadrature with logarithmic weighting function. This
@@ -194,8 +182,6 @@ private:
   static std::vector<double>
   get_quadrature_weights(const unsigned int n);
 };
-
-
 
 /**
  * A class for Gauss quadrature with arbitrary logarithmic weighting function.
@@ -262,7 +248,6 @@ protected:
    */
   const double fraction;
 };
-
 
 /**
  * A class for Gauss quadrature with $1/R$ weighting function. This formula
@@ -373,8 +358,6 @@ private:
   static unsigned int
   quad_size(const Point<dim> singularity, const unsigned int n);
 };
-
-
 
 /**
  * Sorted Quadrature. Given an arbitrary quadrature formula, this class
@@ -500,7 +483,6 @@ public:
   /// Generate a formula with <tt>n</tt> quadrature points
   QGaussChebyshev(const unsigned int n);
 };
-
 
 /**
  * Gauss-Radau-Chebyshev quadrature rules integrate the weighted product
@@ -836,8 +818,6 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 template <>
 QTelles<1>::QTelles(const Quadrature<1>& base_quad,
                     const Point<1>&      singularity);
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

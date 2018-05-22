@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/opencascade/manifold_lib.h>
 
 #ifdef DEAL_II_WITH_OPENCASCADE
-
 
 #  include <BRepAdaptor_CompCurve.hxx>
 #  include <BRepAdaptor_Curve.hxx>
@@ -35,9 +33,7 @@
 #    include <Handle_Adaptor3d_HCurve.hxx>
 #  endif
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace OpenCASCADE
 {
@@ -65,8 +61,6 @@ namespace OpenCASCADE
       return Handle(BRepAdaptor_HCurve)(new BRepAdaptor_HCurve());
     }
 
-
-
     // Helper internal functions.
     double
     shape_length(const TopoDS_Shape& sh)
@@ -86,8 +80,6 @@ namespace OpenCASCADE
     Assert(spacedim == 3, ExcNotImplemented());
   }
 
-
-
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   NormalProjectionManifold<dim, spacedim>::clone() const
@@ -95,8 +87,6 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new NormalProjectionManifold(sh, tolerance));
   }
-
-
 
   template <int dim, int spacedim>
   Point<spacedim>
@@ -115,7 +105,6 @@ namespace OpenCASCADE
     return closest_point(sh, candidate, tolerance);
   }
 
-
   /*============================== DirectionalProjectionManifold ==============================*/
   template <int dim, int spacedim>
   DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold(
@@ -127,8 +116,6 @@ namespace OpenCASCADE
     Assert(spacedim == 3, ExcNotImplemented());
   }
 
-
-
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   DirectionalProjectionManifold<dim, spacedim>::clone() const
@@ -136,8 +123,6 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new DirectionalProjectionManifold(sh, direction, tolerance));
   }
-
-
 
   template <int dim, int spacedim>
   Point<spacedim>
@@ -155,8 +140,6 @@ namespace OpenCASCADE
 #  endif
     return line_intersection(sh, candidate, direction, tolerance);
   }
-
-
 
   /*============================== NormalToMeshProjectionManifold ==============================*/
   template <int dim, int spacedim>
@@ -179,7 +162,6 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new NormalToMeshProjectionManifold<dim, spacedim>(sh, tolerance));
   }
-
 
   template <int dim, int spacedim>
   Point<spacedim>
@@ -303,7 +285,6 @@ namespace OpenCASCADE
     return line_intersection(sh, candidate, average_normal, tolerance);
   }
 
-
   /*============================== ArclengthProjectionLineManifold ==============================*/
   template <int dim, int spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::
@@ -321,8 +302,6 @@ namespace OpenCASCADE
     Assert(spacedim >= 2, ExcImpossibleInDimSpacedim(dim, spacedim));
   }
 
-
-
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   ArclengthProjectionLineManifold<dim, spacedim>::clone() const
@@ -330,8 +309,6 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new ArclengthProjectionLineManifold(sh, tolerance));
   }
-
-
 
   template <int dim, int spacedim>
   Point<1>
@@ -350,8 +327,6 @@ namespace OpenCASCADE
       curve->GetCurve(), curve->GetCurve().FirstParameter(), t));
   }
 
-
-
   template <int dim, int spacedim>
   Point<spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::push_forward(
@@ -369,8 +344,6 @@ namespace OpenCASCADE
     : face(face), tolerance(tolerance)
   {}
 
-
-
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   NURBSPatchManifold<dim, spacedim>::clone() const
@@ -378,8 +351,6 @@ namespace OpenCASCADE
     return std::unique_ptr<Manifold<dim, spacedim>>(
       new NURBSPatchManifold<dim, spacedim>(face, tolerance));
   }
-
-
 
   template <int dim, int spacedim>
   Point<2>

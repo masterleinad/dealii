@@ -37,7 +37,6 @@
 //adjust_line_dof_index_for_line_orientation_table fields, and write tests
 //similar to bits/face_orientation_and_fe_q_*
 
-
 DEAL_II_NAMESPACE_OPEN
 
 //#define DEBUG_NEDELEC
@@ -61,7 +60,6 @@ namespace internal
     } // namespace
   }   // namespace FE_Nedelec
 } // namespace internal
-
 
 template <int dim>
 FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
@@ -193,8 +191,6 @@ FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
     }
 }
 
-
-
 template <int dim>
 std::string
 FE_Nedelec<dim>::get_name() const
@@ -212,7 +208,6 @@ FE_Nedelec<dim>::get_name() const
   return namebuf.str();
 }
 
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_Nedelec<dim>::clone() const
@@ -223,8 +218,6 @@ FE_Nedelec<dim>::clone() const
 //---------------------------------------------------------------------------
 // Auxiliary and internal functions
 //---------------------------------------------------------------------------
-
-
 
 // Set the generalized support
 // points and precompute the
@@ -238,8 +231,6 @@ FE_Nedelec<1>::initialize_support_points(const unsigned int)
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <>
 void
@@ -320,8 +311,6 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
                                     + q_point);
     }
 }
-
-
 
 template <>
 void
@@ -494,8 +483,6 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
     }
 }
 
-
-
 // Set the restriction matrices.
 template <>
 void
@@ -506,8 +493,6 @@ FE_Nedelec<1>::initialize_restriction()
   for(unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
     this->restriction[0][i].reinit(0, 0);
 }
-
-
 
 // Restriction operator
 template <int dim>
@@ -1443,7 +1428,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                            dof, quadrature_point_0, 1);
                           }
 
-                        else
+                        else if(face_quadrature_points[q_point](1) < 0.5)
                           {
                             Point<dim> quadrature_point_0(
                               i,
@@ -2098,8 +2083,6 @@ FE_Nedelec<dim>::initialize_restriction()
     }
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_Nedelec<dim>::get_dpo_vector(const unsigned int degree, bool dg)
@@ -2631,8 +2614,6 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
     }
 }
 
-
-
 template <>
 void
 FE_Nedelec<1>::get_subface_interpolation_matrix(const FiniteElement<1, 1>&,
@@ -2641,8 +2622,6 @@ FE_Nedelec<1>::get_subface_interpolation_matrix(const FiniteElement<1, 1>&,
 {
   Assert(false, ExcNotImplemented());
 }
-
-
 
 // In this function we compute the
 // subface interpolation matrix.
@@ -3223,7 +3202,6 @@ FE_Nedelec<dim>::get_restriction_matrix(
   // available and so the vector indices are shifted
   return this->restriction[refinement_case - 1][child];
 }
-
 
 // Interpolate a function, which is given by
 // its values at the generalized support
@@ -4183,8 +4161,6 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
     }
 }
 
-
-
 template <int dim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_Nedelec<dim>::get_constant_modes() const
@@ -4200,7 +4176,6 @@ FE_Nedelec<dim>::get_constant_modes() const
                                                               components);
 }
 
-
 template <int dim>
 std::size_t
 FE_Nedelec<dim>::memory_consumption() const
@@ -4209,12 +4184,9 @@ FE_Nedelec<dim>::memory_consumption() const
   return 0;
 }
 
-
 //----------------------------------------------------------------------//
-
 
 // explicit instantiations
 #include "fe_nedelec.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

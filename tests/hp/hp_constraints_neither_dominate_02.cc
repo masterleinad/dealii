@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test hp_constraints when neither_element_dominates.
 // 2D and 3D hp-refinement.
 // Check continuity across the face by evaluating the
@@ -33,7 +31,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/hp/q_collection.h>
-
 
 #include <deal.II/dofs/dof_renumbering.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -228,7 +225,6 @@ test2cells(const FiniteElement<dim>& fe_0,
 
   constraints.distribute(solution);
 
-
   // evaluate field at the interface:
   hp::FEFaceValues<dim> fe_face_values_hp(
     fe_collection, q_face_collection, update_values | update_quadrature_points);
@@ -313,7 +309,6 @@ main(int argc, char** argv)
   deallog << std::setprecision(4);
   deallog << std::fixed;
   deallog.attach(logfile);
-
 
   try
     {

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<std::complex<double> >::operator /=. the original check was that the factor
 // by which we divide must be positive. this is of course nonsensical, it
 // should have been that the factor is != 0...
@@ -22,7 +20,6 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<std::complex<double>>& v)
@@ -52,8 +49,6 @@ test(Vector<std::complex<double>>& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

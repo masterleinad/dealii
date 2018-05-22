@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_slepc_spectral_transformation_h
 #  define dealii_slepc_spectral_transformation_h
-
 
 #  include <deal.II/base/config.h>
 
@@ -136,13 +134,11 @@ namespace SLEPcWrappers
       const double shift_parameter;
     };
 
-
     /**
      * Constructor.
      */
     TransformationShift(const MPI_Comm&       mpi_communicator,
                         const AdditionalData& data = AdditionalData());
-
 
   protected:
     /**
@@ -176,7 +172,6 @@ namespace SLEPcWrappers
        */
       const double shift_parameter;
     };
-
 
     /**
      * Constructor.
@@ -224,7 +219,6 @@ namespace SLEPcWrappers
       const double shift_parameter;
     };
 
-
     /**
      * Constructor.
      */
@@ -269,7 +263,6 @@ namespace SLEPcWrappers
        */
       const double antishift_parameter;
     };
-
 
     /**
      * Constructor.

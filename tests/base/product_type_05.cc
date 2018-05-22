@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that ProductType<double,double> can be resolved. same for
 // ProductType<std::complex<double>,std::complex<double> >
 
@@ -24,8 +23,6 @@
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/base/tensor.h>
 
-
-
 template <typename T, typename U, typename CompareType>
 void
 check()
@@ -35,7 +32,6 @@ check()
   AssertThrow(typeid(typename ProductType<T, U>::type) == typeid(T() * U()),
               ExcInternalError());
 }
-
 
 int
 main()

@@ -16,7 +16,6 @@
 #ifndef dealii_data_out_dof_data_templates_h
 #define dealii_data_out_dof_data_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -51,7 +50,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -144,8 +142,6 @@ namespace internal
             dealii::Vector<double>(n_postprocessor_outputs[dataset]));
     }
 
-
-
     // implement copy constructor to create a thread's own version of
     // x_fe_values
     template <int dim, int spacedim>
@@ -213,8 +209,6 @@ namespace internal
         }
     }
 
-
-
     template <int dim, int spacedim>
     template <typename DoFHandlerType>
     void
@@ -257,8 +251,6 @@ namespace internal
         }
     }
 
-
-
     template <int dim, int spacedim>
     const FEValuesBase<dim, spacedim>&
     ParallelDataBase<dim, spacedim>::get_present_fe_values(
@@ -270,8 +262,6 @@ namespace internal
       else
         return x_fe_values[dataset]->get_present_fe_values();
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -294,8 +284,6 @@ namespace internal
           patch_values_system.solution_hessians[k].resize(n_components);
         }
     }
-
-
 
     /**
      * In a WorkStream context, use this function to append the patch computed
@@ -337,8 +325,6 @@ namespace internal
       return value;
     }
 
-
-
     /**
      * Extract the specified component of a number. This template is used
      * when the given value is a complex number
@@ -363,8 +349,6 @@ namespace internal
       return numbers::signaling_nan<double>();
     }
 
-
-
     template <int rank, int dim, typename NumberType>
     Tensor<rank, dim>
     get_component(const Tensor<rank, dim, NumberType>& value,
@@ -380,7 +364,6 @@ namespace internal
 
       return t;
     }
-
 
     template <typename DoFHandlerType>
     DataEntryBase<DoFHandlerType>::DataEntryBase(
@@ -416,8 +399,6 @@ namespace internal
                                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                             "0123456789_<>()")));
     }
-
-
 
     template <typename DoFHandlerType>
     DataEntryBase<DoFHandlerType>::DataEntryBase(
@@ -455,8 +436,6 @@ namespace internal
                                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                             "0123456789_<>()")));
     }
-
-
 
     /**
      * Class that stores a pointer to a vector of type equal to the template
@@ -601,8 +580,6 @@ namespace internal
       const VectorType* vector;
     };
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
       const DoFHandlerType*           dofs,
@@ -617,8 +594,6 @@ namespace internal
         vector(data)
     {}
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
       const DoFHandlerType* dofs,
@@ -627,7 +602,6 @@ namespace internal
         data_postprocessor)
       : DataEntryBase<DoFHandlerType>(dofs, data_postprocessor), vector(data)
     {}
-
 
     namespace
     {
@@ -639,15 +613,12 @@ namespace internal
         return internal::ElementAccess<VectorType>::get(vector, cell_number);
       }
 
-
       inline double
       get_vector_element(const IndexSet& is, const unsigned int cell_number)
       {
         return (is.is_element(cell_number) ? 1 : 0);
       }
     } // namespace
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     double
@@ -658,8 +629,6 @@ namespace internal
       return get_component(get_vector_element(*vector, cell_number),
                            extract_component);
     }
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     void
@@ -717,8 +686,6 @@ namespace internal
         }
     }
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_values(
@@ -753,8 +720,6 @@ namespace internal
             patch_values[i] = get_component(tmp[i], extract_component);
         }
     }
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     void
@@ -817,8 +782,6 @@ namespace internal
         }
     }
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_gradients(
@@ -861,8 +824,6 @@ namespace internal
             patch_gradients[i] = get_component(tmp[i], extract_component);
         }
     }
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     void
@@ -925,8 +886,6 @@ namespace internal
         }
     }
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_hessians(
@@ -969,16 +928,12 @@ namespace internal
         }
     }
 
-
-
     template <typename DoFHandlerType, typename VectorType>
     bool
     DataEntry<DoFHandlerType, VectorType>::is_complex_valued() const
     {
       return numbers::NumberTraits<typename VectorType::value_type>::is_complex;
     }
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     std::size_t
@@ -987,8 +942,6 @@ namespace internal
       return (sizeof(vector)
               + MemoryConsumption::memory_consumption(this->names));
     }
-
-
 
     template <typename DoFHandlerType, typename VectorType>
     void
@@ -1000,15 +953,11 @@ namespace internal
   } // namespace DataOutImplementation
 } // namespace internal
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::DataOut_DoFData()
   : triangulation(nullptr, typeid(*this).name()),
     dofs(nullptr, typeid(*this).name())
 {}
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::~DataOut_DoFData()
@@ -1018,8 +967,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::~DataOut_DoFData()
   // for clarity be explicit on which function is called
   DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear();
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
@@ -1038,8 +985,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::attach_dof_handler(
   dofs = SmartPointer<const DoFHandlerType>(&d, typeid(*this).name());
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
@@ -1057,8 +1002,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
                                        DoFHandlerType::space_dimension>>(
       &tria, typeid(*this).name());
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
@@ -1092,14 +1035,11 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
            dof_handler.n_dofs(),
            dof_handler.get_triangulation().n_active_cells()));
 
-
   auto new_entry = std_cxx14::make_unique<
     internal::DataOutImplementation::DataEntry<DoFHandlerType, VectorType>>(
     &dof_handler, &vec, &data_postprocessor);
   dof_data.emplace_back(std::move(new_entry));
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
@@ -1244,8 +1184,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     cell_data.emplace_back(std::move(new_entry));
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
@@ -1258,8 +1196,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   std::vector<Patch> dummy;
   patches.swap(dummy);
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
@@ -1276,8 +1212,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     dofs = nullptr;
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear()
@@ -1292,8 +1226,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear()
   std::vector<Patch> dummy;
   patches.swap(dummy);
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<std::string>
@@ -1330,8 +1262,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_dataset_names()
 
   return names;
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<std::tuple<unsigned int, unsigned int, std::string>>
@@ -1411,16 +1341,12 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   return ranges;
 }
 
-
-
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 const std::vector<dealii::DataOutBase::Patch<patch_dim, patch_space_dim>>&
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_patches() const
 {
   return patches;
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::vector<
@@ -1464,8 +1390,6 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_fes() const
     }
   return finite_elements;
 }
-
-
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 std::size_t

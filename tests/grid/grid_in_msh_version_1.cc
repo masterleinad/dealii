@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // in implementing GMSH version 2 input, we forgot reading vertices in
 // version 2 format as well. A fix by Victor Prosolin helped this
 // problem
@@ -31,7 +30,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -59,7 +57,6 @@ filename_resolution()
   check_file<2>(std::string(SOURCE_DIR "/grid_in_msh_version_1/input_v2"),
                 GridIn<2>::msh);
 }
-
 
 int
 main()

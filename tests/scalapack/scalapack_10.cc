@@ -30,7 +30,6 @@
 #include <fstream>
 #include <iostream>
 
-
 template <typename NumberType>
 void
 test(const unsigned int size, const unsigned int block_size)
@@ -75,8 +74,6 @@ test(const unsigned int size, const unsigned int block_size)
   AssertThrow(copy.frobenius_norm() < 1e-12, ExcInternalError());
   std::remove(filename.c_str());
 }
-
-
 
 int
 main(int argc, char** argv)

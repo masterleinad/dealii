@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
 // this particular test checks the call path to
 // internal::extract_dofs_by_component from DoFTools::extract_constant_modes
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -33,8 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -77,7 +72,6 @@ check()
         }
     }
 }
-
 
 int
 main()

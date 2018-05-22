@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // see what happens when creating a surface mesh and then refining it
 
 #include "../tests.h"

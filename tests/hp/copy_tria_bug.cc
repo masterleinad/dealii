@@ -27,10 +27,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 
-
 using namespace dealii;
-
-
 
 template <int dim>
 void

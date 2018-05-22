@@ -16,7 +16,6 @@
 #ifndef dealii_precondition_block_templates_h
 #define dealii_precondition_block_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/logstream.h>
@@ -27,7 +26,6 @@
 #include <deal.II/lac/vector.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename MatrixType, typename inverse_type>
 PreconditionBlock<MatrixType, inverse_type>::AdditionalData::AdditionalData(
@@ -43,8 +41,6 @@ PreconditionBlock<MatrixType, inverse_type>::AdditionalData::AdditionalData(
     threshold(0.)
 {}
 
-
-
 template <typename MatrixType, typename inverse_type>
 PreconditionBlock<MatrixType, inverse_type>::PreconditionBlock(bool store)
   : PreconditionBlockBase<inverse_type>(store),
@@ -52,8 +48,6 @@ PreconditionBlock<MatrixType, inverse_type>::PreconditionBlock(bool store)
     A(nullptr, typeid(*this).name()),
     relaxation(1.0)
 {}
-
-
 
 template <typename MatrixType, typename inverse_type>
 void
@@ -63,7 +57,6 @@ PreconditionBlock<MatrixType, inverse_type>::clear()
   blocksize = 0;
   A         = nullptr;
 }
-
 
 template <typename MatrixType, typename inverse_type>
 void
@@ -92,7 +85,6 @@ PreconditionBlock<MatrixType, inverse_type>::initialize(
         invert_diagblocks();
     }
 }
-
 
 template <typename MatrixType, typename inverse_type>
 void
@@ -210,8 +202,6 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
   this->inverses_computed(true);
 }
 
-
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -308,7 +298,6 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
     }
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -396,7 +385,6 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
           house.least_squares(x_cell, b_cell);
         }
 
-
       // distribute x_cell to dst
       for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
           ++row_cell, ++row)
@@ -404,14 +392,12 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
     }
 }
 
-
 template <typename MatrixType, typename inverse_type>
 typename PreconditionBlock<MatrixType, inverse_type>::size_type
 PreconditionBlock<MatrixType, inverse_type>::block_size() const
 {
   return blocksize;
 }
-
 
 template <typename MatrixType, typename inverse_type>
 void
@@ -503,8 +489,6 @@ PreconditionBlock<MatrixType, inverse_type>::invert_diagblocks()
   this->inverses_computed(true);
 }
 
-
-
 template <typename MatrixType, typename inverse_type>
 void
 PreconditionBlock<MatrixType, inverse_type>::set_permutation(
@@ -522,7 +506,6 @@ PreconditionBlock<MatrixType, inverse_type>::set_permutation(
   inverse_permutation = new_inverse_permutation;
 }
 
-
 template <typename MatrixType, typename inverse_type>
 std::size_t
 PreconditionBlock<MatrixType, inverse_type>::memory_consumption() const
@@ -531,10 +514,7 @@ PreconditionBlock<MatrixType, inverse_type>::memory_consumption() const
           + PreconditionBlockBase<inverse_type>::memory_consumption());
 }
 
-
-
 /*--------------------- PreconditionBlockJacobi -----------------------*/
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -612,7 +592,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::do_vmult(
   dst *= this->relaxation;
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -622,7 +601,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::vmult(
 {
   do_vmult(dst, src, false);
 }
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -634,7 +612,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::Tvmult(
   do_vmult(dst, src, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -645,7 +622,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::vmult_add(
   do_vmult(dst, src, true);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -655,7 +631,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::Tvmult_add(
 {
   do_vmult(dst, src, true);
 }
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -672,7 +647,6 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::step(
   dst = *aux;
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -688,10 +662,7 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::Tstep(
   dst = *aux;
 }
 
-
-
 /*--------------------- PreconditionBlockSOR -----------------------*/
-
 
 template <typename MatrixType, typename inverse_type>
 PreconditionBlockSOR<MatrixType, inverse_type>::PreconditionBlockSOR()
@@ -793,7 +764,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
     }
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -879,7 +849,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
           house.least_squares(x_cell, b_cell);
         }
 
-
       // distribute x_cell to dst
       for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
           ++row_cell, ++row)
@@ -887,7 +856,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
       block_end = block_start;
     }
 }
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -899,7 +867,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::vmult(
   forward(dst, src, false, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -909,7 +876,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::vmult_add(
 {
   forward(dst, src, false, true);
 }
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -921,7 +887,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::Tvmult(
   backward(dst, src, true, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -931,8 +896,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::Tvmult_add(
 {
   backward(dst, src, true, true);
 }
-
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -944,7 +907,6 @@ PreconditionBlockSOR<MatrixType, inverse_type>::step(
   this->forward_step(dst, dst, src, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -955,17 +917,13 @@ PreconditionBlockSOR<MatrixType, inverse_type>::Tstep(
   this->backward_step(dst, dst, src, true);
 }
 
-
-
 //---------------------------------------------------------------------------
-
 
 template <typename MatrixType, typename inverse_type>
 PreconditionBlockSSOR<MatrixType, inverse_type>::PreconditionBlockSSOR()
   : PreconditionBlockSOR<MatrixType, inverse_type>(true)
 
 {}
-
 
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
@@ -1033,7 +991,6 @@ PreconditionBlockSSOR<MatrixType, inverse_type>::Tvmult(
   this->forward(dst, help, true, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -1045,7 +1002,6 @@ PreconditionBlockSSOR<MatrixType, inverse_type>::step(
   this->backward_step(dst, dst, src, false);
 }
 
-
 template <typename MatrixType, typename inverse_type>
 template <typename number2>
 void
@@ -1056,8 +1012,6 @@ PreconditionBlockSSOR<MatrixType, inverse_type>::Tstep(
   this->backward_step(dst, dst, src, true);
   this->forward_step(dst, dst, src, true);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

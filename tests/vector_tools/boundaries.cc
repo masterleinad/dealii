@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Purpose: check interpolation and projection of boundary values. */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -35,8 +31,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -59,7 +53,6 @@ public:
   }
 };
 
-
 template <int dim>
 const Quadrature<dim - 1>&
 boundary_q(const DoFHandler<dim>&)
@@ -67,7 +60,6 @@ boundary_q(const DoFHandler<dim>&)
   static const QGauss<dim - 1> q(4);
   return q;
 }
-
 
 void
 write_map(const std::map<types::global_dof_index, double>& bv)
@@ -77,8 +69,6 @@ write_map(const std::map<types::global_dof_index, double>& bv)
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -108,7 +98,6 @@ check()
   // use a cubic mapping to make
   // things a little more complicated
   MappingQ<dim> mapping(3);
-
 
   // list of finite elements for
   // which we want check, and
@@ -158,7 +147,6 @@ check()
         }
     }
 
-
   // delete objects now no more needed
   for(unsigned int i = 0; i < fe_list.size(); ++i)
     {
@@ -166,7 +154,6 @@ check()
       delete function_list[i];
     }
 }
-
 
 int
 main()

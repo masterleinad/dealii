@@ -16,7 +16,6 @@
 #ifndef dealii_lapack_support_h
 #define dealii_lapack_support_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -225,7 +224,6 @@ namespace LAPACKSupport
     << "picks up an existing BLAS and LAPACK installation at "
     << "configuration time.");
 } // namespace LAPACKSupport
-
 
 DEAL_II_NAMESPACE_CLOSE
 

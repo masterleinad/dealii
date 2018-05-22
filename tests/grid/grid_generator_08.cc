@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test grid generation functions  in GridGenerator for spacedim>dim
 
 #include "../tests.h"
@@ -22,8 +20,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim, int spacedim>
 void

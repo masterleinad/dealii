@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this is reduced from hp_constraints_q_system_x_01, where we test that we
 // can deal with FESystem(FE_Q(p),FE_DGQ(q)) for different p,q. note that for
 // fixed p but varying q, neither of the two elements will dominate the other
 
 char logname[] = "output";
 
-
 #include "hp_constraints_common.h"
-
 
 template <int dim>
 void

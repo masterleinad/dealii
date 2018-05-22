@@ -37,8 +37,6 @@ namespace TrilinosWrappers
 #  endif
   {}
 
-
-
   PreconditionBase::PreconditionBase(const PreconditionBase& base)
     : Subscriptor(),
       preconditioner(base.preconditioner),
@@ -47,8 +45,6 @@ namespace TrilinosWrappers
 #  endif
       vector_distributor(new Epetra_Map(*base.vector_distributor))
   {}
-
-
 
   void
   PreconditionBase::clear()
@@ -60,7 +56,6 @@ namespace TrilinosWrappers
     vector_distributor.reset();
   }
 
-
   MPI_Comm
   PreconditionBase::get_mpi_communicator() const
   {
@@ -71,7 +66,6 @@ namespace TrilinosWrappers
 #  endif
   }
 
-
   Epetra_Operator&
   PreconditionBase::trilinos_operator() const
   {
@@ -80,13 +74,11 @@ namespace TrilinosWrappers
     return (*preconditioner);
   }
 
-
   IndexSet
   PreconditionBase::locally_owned_domain_indices() const
   {
     return IndexSet(preconditioner->OperatorDomainMap());
   }
-
 
   IndexSet
   PreconditionBase::locally_owned_range_indices() const
@@ -102,8 +94,6 @@ namespace TrilinosWrappers
     const unsigned int n_sweeps)
     : omega(omega), min_diagonal(min_diagonal), n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionJacobi::initialize(const SparseMatrix&   matrix,
@@ -142,8 +132,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* -------------------------- PreconditionSSOR -------------------------- */
 
   PreconditionSSOR::AdditionalData::AdditionalData(const double omega,
@@ -155,8 +143,6 @@ namespace TrilinosWrappers
       overlap(overlap),
       n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionSSOR::initialize(const SparseMatrix&   matrix,
@@ -195,8 +181,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* -------------------------- PreconditionSOR -------------------------- */
 
   PreconditionSOR::AdditionalData::AdditionalData(const double omega,
@@ -208,8 +192,6 @@ namespace TrilinosWrappers
       overlap(overlap),
       n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionSOR::initialize(const SparseMatrix&   matrix,
@@ -248,8 +230,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* ----------------------- PreconditionBlockJacobi ---------------------- */
 
   PreconditionBlockJacobi::AdditionalData::AdditionalData(
@@ -264,8 +244,6 @@ namespace TrilinosWrappers
       min_diagonal(min_diagonal),
       n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionBlockJacobi::initialize(const SparseMatrix&   matrix,
@@ -314,8 +292,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* ----------------------- PreconditionBlockSSOR ------------------------ */
 
   PreconditionBlockSSOR::AdditionalData::AdditionalData(
@@ -332,8 +308,6 @@ namespace TrilinosWrappers
       overlap(overlap),
       n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionBlockSSOR::initialize(const SparseMatrix&   matrix,
@@ -382,8 +356,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* ------------------------ PreconditionBlockSOR ------------------------ */
 
   PreconditionBlockSOR::AdditionalData::AdditionalData(
@@ -400,8 +372,6 @@ namespace TrilinosWrappers
       overlap(overlap),
       n_sweeps(n_sweeps)
   {}
-
-
 
   void
   PreconditionBlockSOR::initialize(const SparseMatrix&   matrix,
@@ -450,8 +420,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* -------------------------- PreconditionIC -------------------------- */
 
   PreconditionIC::AdditionalData::AdditionalData(const unsigned int ic_fill,
@@ -460,8 +428,6 @@ namespace TrilinosWrappers
                                                  const unsigned int overlap)
     : ic_fill(ic_fill), ic_atol(ic_atol), ic_rtol(ic_rtol), overlap(overlap)
   {}
-
-
 
   void
   PreconditionIC::initialize(const SparseMatrix&   matrix,
@@ -497,8 +463,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* -------------------------- PreconditionILU -------------------------- */
 
   PreconditionILU::AdditionalData::AdditionalData(const unsigned int ilu_fill,
@@ -510,8 +474,6 @@ namespace TrilinosWrappers
       ilu_rtol(ilu_rtol),
       overlap(overlap)
   {}
-
-
 
   void
   PreconditionILU::initialize(const SparseMatrix&   matrix,
@@ -548,8 +510,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* -------------------------- PreconditionILUT -------------------------- */
 
   PreconditionILUT::AdditionalData::AdditionalData(const double       ilut_drop,
@@ -563,8 +523,6 @@ namespace TrilinosWrappers
       ilut_rtol(ilut_rtol),
       overlap(overlap)
   {}
-
-
 
   void
   PreconditionILUT::initialize(const SparseMatrix&   matrix,
@@ -601,16 +559,12 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* ---------------------- PreconditionBlockDirect --------------------- */
 
   PreconditionBlockwiseDirect::AdditionalData::AdditionalData(
     const unsigned int overlap)
     : overlap(overlap)
   {}
-
-
 
   void
   PreconditionBlockwiseDirect::initialize(const SparseMatrix&   matrix,
@@ -643,8 +597,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
-
   /* ---------------------- PreconditionBlockDirect --------------------- */
 
   PreconditionChebyshev::AdditionalData::AdditionalData(
@@ -661,8 +613,6 @@ namespace TrilinosWrappers
       min_diagonal(min_diagonal),
       nonzero_starting(nonzero_starting)
   {}
-
-
 
   void
   PreconditionChebyshev::initialize(const SparseMatrix&   matrix,
@@ -702,8 +652,6 @@ namespace TrilinosWrappers
     ierr = ifpack->Compute();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
-
-
 
   /* -------------------------- PreconditionIdentity --------------------- */
 

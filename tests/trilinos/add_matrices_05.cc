@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::add(SparseMatrix) where the other matrix has either
 // more or less entries (but with reasonable entries in any case)
 
@@ -22,7 +20,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <iostream>
-
 
 void
 test(TrilinosWrappers::SparseMatrix& m)
@@ -63,8 +60,6 @@ test(TrilinosWrappers::SparseMatrix& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

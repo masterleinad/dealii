@@ -13,16 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FE_DGPNonparametric::hp_quad_dof_identities
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp_nonparametric.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -54,8 +49,6 @@ test()
           }
       }
 }
-
-
 
 int
 main()

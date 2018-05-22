@@ -16,7 +16,6 @@
 #ifndef dealii_job_identifier_h
 #define dealii_job_identifier_h
 
-
 #include <deal.II/base/config.h>
 #include <string>
 
@@ -72,9 +71,7 @@ private:
   std::string id;
 };
 
-
 /*------------------------------ Inline functions ------------------------------*/
-
 
 /**
  * Global object to identify the presently running program.

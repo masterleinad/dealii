@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //TODO: Do neighbors for dx and povray smooth triangles
 
 //////////////////////////////////////////////////////////////////////
@@ -61,7 +60,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // we need the following exception from a global function, so can't declare it
 // in the usual way inside a class
 namespace
@@ -72,7 +70,6 @@ namespace
                  << "Unexpected input: expected line\n  <" << arg1
                  << ">\nbut got\n  <" << arg2 << ">");
 }
-
 
 namespace
 {
@@ -206,7 +203,6 @@ namespace
     }
   } // namespace base64
 
-
   /**
    * Do a base64 encoding of the given data.
    *
@@ -229,7 +225,6 @@ namespace
 
     return encoded_data;
   }
-
 
   /**
    * Convert between the enum specified inside VtkFlags and the preprocessor
@@ -309,7 +304,6 @@ namespace
 #endif
 } // namespace
 
-
 // some declarations of functions and locally used classes
 namespace DataOutBase
 {
@@ -361,8 +355,6 @@ namespace DataOutBase
       return depth > e.depth;
     }
 
-
-
     /**
      * Class holding the data of one cell of a patch in two space
      * dimensions for output. It is the projection of a cell in
@@ -395,7 +387,6 @@ namespace DataOutBase
       bool
       operator<(const EpsCell2d&) const;
     };
-
 
     /**
      * This is a helper function for the write_gmv() function. There,
@@ -464,23 +455,17 @@ namespace DataOutBase
     }
   } // namespace
 
-
-
   DataOutFilter::DataOutFilter()
     : flags(false, true),
       node_dim(numbers::invalid_unsigned_int),
       vertices_per_cell(numbers::invalid_unsigned_int)
   {}
 
-
-
   DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags& flags)
     : flags(flags),
       node_dim(numbers::invalid_unsigned_int),
       vertices_per_cell(numbers::invalid_unsigned_int)
   {}
-
-
 
   template <int dim>
   void
@@ -509,16 +494,12 @@ namespace DataOutBase
     filtered_points[index] = internal_ind;
   }
 
-
-
   void
   DataOutFilter::internal_add_cell(const unsigned int cell_index,
                                    const unsigned int pt_index)
   {
     filtered_cells[cell_index] = filtered_points[pt_index];
   }
-
-
 
   void
   DataOutFilter::fill_node_data(std::vector<double>& node_data) const
@@ -533,8 +514,6 @@ namespace DataOutBase
           node_data[node_dim * it->second + d] = it->first(d);
       }
   }
-
-
 
   void
   DataOutFilter::fill_cell_data(const unsigned int         local_node_offset,
@@ -551,15 +530,11 @@ namespace DataOutBase
       }
   }
 
-
-
   std::string
   DataOutFilter::get_data_set_name(const unsigned int set_num) const
   {
     return data_set_names.at(set_num);
   }
-
-
 
   unsigned int
   DataOutFilter::get_data_set_dim(const unsigned int set_num) const
@@ -567,15 +542,11 @@ namespace DataOutBase
     return data_set_dims.at(set_num);
   }
 
-
-
   const double*
   DataOutFilter::get_data_set(const unsigned int set_num) const
   {
     return &data_sets[set_num][0];
   }
-
-
 
   unsigned int
   DataOutFilter::n_nodes() const
@@ -583,15 +554,11 @@ namespace DataOutBase
     return existing_points.size();
   }
 
-
-
   unsigned int
   DataOutFilter::n_cells() const
   {
     return filtered_cells.size() / vertices_per_cell;
   }
-
-
 
   unsigned int
   DataOutFilter::n_data_sets() const
@@ -599,19 +566,13 @@ namespace DataOutBase
     return data_set_names.size();
   }
 
-
-
   void
   DataOutFilter::flush_points()
   {}
 
-
-
   void
   DataOutFilter::flush_cells()
   {}
-
-
 
   template <int dim>
   void
@@ -642,8 +603,6 @@ namespace DataOutBase
           }
       }
   }
-
-
 
   void
   DataOutFilter::write_data_set(const std::string&      name,
@@ -679,8 +638,6 @@ namespace DataOutBase
       }
   }
 } // namespace DataOutBase
-
-
 
 //----------------------------------------------------------------------//
 //Auxiliary data
@@ -789,8 +746,6 @@ namespace
           }
       }
   }
-
-
 
   template <int dim, int spacedim>
   static void
@@ -1116,7 +1071,6 @@ namespace
                const unsigned int z_offset);
   };
 
-
   class VtuStream : public StreamBase<DataOutBase::VtkFlags>
   {
   public:
@@ -1186,13 +1140,11 @@ namespace
     std::vector<int32_t> cells;
   };
 
-
   //----------------------------------------------------------------------//
 
   DXStream::DXStream(std::ostream& out, const DataOutBase::DXFlags& f)
     : StreamBase<DataOutBase::DXFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1212,8 +1164,6 @@ namespace
         stream << '\n';
       }
   }
-
-
 
   template <int dim>
   void
@@ -1256,8 +1206,6 @@ namespace
       }
   }
 
-
-
   template <typename data>
   inline void
   DXStream::write_dataset(const unsigned int, const std::vector<data>& values)
@@ -1275,14 +1223,11 @@ namespace
       }
   }
 
-
-
   //----------------------------------------------------------------------//
 
   GmvStream::GmvStream(std::ostream& out, const DataOutBase::GmvFlags& f)
     : StreamBase<DataOutBase::GmvFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1292,8 +1237,6 @@ namespace
            ExcNotInitialized());
     stream << p(selected_component) << ' ';
   }
-
-
 
   template <int dim>
   void
@@ -1325,13 +1268,10 @@ namespace
     stream << '\n';
   }
 
-
-
   TecplotStream::TecplotStream(std::ostream&                    out,
                                const DataOutBase::TecplotFlags& f)
     : StreamBase<DataOutBase::TecplotFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1341,8 +1281,6 @@ namespace
            ExcNotInitialized());
     stream << p(selected_component) << '\n';
   }
-
-
 
   template <int dim>
   void
@@ -1371,12 +1309,9 @@ namespace
     stream << '\n';
   }
 
-
-
   UcdStream::UcdStream(std::ostream& out, const DataOutBase::UcdFlags& f)
     : StreamBase<DataOutBase::UcdFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1391,8 +1326,6 @@ namespace
       stream << "0 ";
     stream << '\n';
   }
-
-
 
   template <int dim>
   void
@@ -1433,8 +1366,6 @@ namespace
     stream << '\n';
   }
 
-
-
   template <typename data>
   inline void
   UcdStream::write_dataset(const unsigned int       index,
@@ -1446,14 +1377,11 @@ namespace
     stream << '\n';
   }
 
-
-
   //----------------------------------------------------------------------//
 
   VtkStream::VtkStream(std::ostream& out, const DataOutBase::VtkFlags& f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1466,8 +1394,6 @@ namespace
       stream << " 0";
     stream << '\n';
   }
-
-
 
   template <int dim>
   void
@@ -1494,12 +1420,9 @@ namespace
     stream << '\n';
   }
 
-
-
   VtuStream::VtuStream(std::ostream& out, const DataOutBase::VtkFlags& f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
-
 
   template <int dim>
   void
@@ -1523,7 +1446,6 @@ namespace
 #endif
   }
 
-
   void
   VtuStream::flush_points()
   {
@@ -1535,7 +1457,6 @@ namespace
     vertices.clear();
 #endif
   }
-
 
   template <int dim>
   void
@@ -1582,8 +1503,6 @@ namespace
 #endif
   }
 
-
-
   void
   VtuStream::flush_cells()
   {
@@ -1595,7 +1514,6 @@ namespace
     cells.clear();
 #endif
   }
-
 
   template <typename T>
   std::ostream&
@@ -1615,20 +1533,15 @@ namespace
   }
 } // namespace
 
-
-
 namespace DataOutBase
 {
   const unsigned int Deal_II_IntermediateFlags::format_version = 3;
 
-
   template <int dim, int spacedim>
   const unsigned int Patch<dim, spacedim>::space_dim;
 
-
   template <int dim, int spacedim>
   const unsigned int Patch<dim, spacedim>::no_neighbor;
-
 
   template <int dim, int spacedim>
   Patch<dim, spacedim>::Patch()
@@ -1642,8 +1555,6 @@ namespace DataOutBase
     Assert(dim <= spacedim, ExcIndexRange(dim, 0, spacedim));
     Assert(spacedim <= 3, ExcNotImplemented());
   }
-
-
 
   template <int dim, int spacedim>
   bool
@@ -1682,8 +1593,6 @@ namespace DataOutBase
     return true;
   }
 
-
-
   template <int dim, int spacedim>
   std::size_t
   Patch<dim, spacedim>::memory_consumption() const
@@ -1698,8 +1607,6 @@ namespace DataOutBase
             + MemoryConsumption::memory_consumption(points_are_available));
   }
 
-
-
   template <int dim, int spacedim>
   void
   Patch<dim, spacedim>::swap(Patch<dim, spacedim>& other_patch)
@@ -1712,15 +1619,11 @@ namespace DataOutBase
     std::swap(points_are_available, other_patch.points_are_available);
   }
 
-
-
   template <int spacedim>
   const unsigned int Patch<0, spacedim>::space_dim;
 
-
   template <int spacedim>
   const unsigned int Patch<0, spacedim>::no_neighbor;
-
 
   template <int spacedim>
   unsigned int Patch<0, spacedim>::neighbors[1]
@@ -1735,8 +1638,6 @@ namespace DataOutBase
   {
     Assert(spacedim <= 3, ExcNotImplemented());
   }
-
-
 
   template <int spacedim>
   bool
@@ -1770,8 +1671,6 @@ namespace DataOutBase
     return true;
   }
 
-
-
   template <int spacedim>
   std::size_t
   Patch<0, spacedim>::memory_consumption() const
@@ -1782,8 +1681,6 @@ namespace DataOutBase
             + MemoryConsumption::memory_consumption(points_are_available));
   }
 
-
-
   template <int spacedim>
   void Patch<0, spacedim>::swap(Patch<0, spacedim>& other_patch)
   {
@@ -1793,12 +1690,8 @@ namespace DataOutBase
     std::swap(points_are_available, other_patch.points_are_available);
   }
 
-
-
   UcdFlags::UcdFlags(const bool write_preamble) : write_preamble(write_preamble)
   {}
-
-
 
   GnuplotFlags::GnuplotFlags()
   {
@@ -1807,13 +1700,9 @@ namespace DataOutBase
     space_dimension_labels.emplace_back("z");
   }
 
-
-
   GnuplotFlags::GnuplotFlags(const std::vector<std::string>& labels)
     : space_dimension_labels(labels)
   {}
-
-
 
   std::size_t
   GnuplotFlags::memory_consumption() const
@@ -1821,21 +1710,17 @@ namespace DataOutBase
     return MemoryConsumption::memory_consumption(space_dimension_labels);
   }
 
-
-
   PovrayFlags::PovrayFlags(const bool smooth,
                            const bool bicubic_patch,
                            const bool external_data)
     : smooth(smooth), bicubic_patch(bicubic_patch), external_data(external_data)
   {}
 
-
   DataOutFilterFlags::DataOutFilterFlags(const bool filter_duplicate_vertices,
                                          const bool xdmf_hdf5_output)
     : filter_duplicate_vertices(filter_duplicate_vertices),
       xdmf_hdf5_output(xdmf_hdf5_output)
   {}
-
 
   void
   DataOutFilterFlags::declare_parameters(ParameterHandler& prm)
@@ -1873,16 +1758,12 @@ namespace DataOutBase
       "Whether the data will be used in an XDMF/HDF5 combination.");
   }
 
-
-
   void
   DataOutFilterFlags::parse_parameters(const ParameterHandler& prm)
   {
     filter_duplicate_vertices = prm.get_bool("Filter duplicate vertices");
     xdmf_hdf5_output          = prm.get_bool("XDMF HDF5 output");
   }
-
-
 
   DXFlags::DXFlags(const bool write_neighbors,
                    const bool int_binary,
@@ -1894,7 +1775,6 @@ namespace DataOutBase
       data_binary(data_binary),
       data_double(false)
   {}
-
 
   void
   DXFlags::declare_parameters(ParameterHandler& prm)
@@ -1925,16 +1805,12 @@ namespace DataOutBase
                       "floating point values of 32 or 64 bits length");
   }
 
-
-
   void
   DXFlags::parse_parameters(const ParameterHandler& prm)
   {
     write_neighbors = prm.get_bool("Write neighbors");
     //TODO:[GK] Read the new  parameters
   }
-
-
 
   void
   UcdFlags::declare_parameters(ParameterHandler& prm)
@@ -1948,15 +1824,11 @@ namespace DataOutBase
                       "as the creating program");
   }
 
-
-
   void
   UcdFlags::parse_parameters(const ParameterHandler& prm)
   {
     write_preamble = prm.get_bool("Write preamble");
   }
-
-
 
   SvgFlags::SvgFlags(const unsigned int height_vector,
                      const int          azimuth_angle,
@@ -1973,8 +1845,6 @@ namespace DataOutBase
       margin(margin),
       draw_colorbar(draw_colorbar)
   {}
-
-
 
   void
   PovrayFlags::declare_parameters(ParameterHandler& prm)
@@ -1996,8 +1866,6 @@ namespace DataOutBase
                       "the POVRAY input file");
   }
 
-
-
   void
   PovrayFlags::parse_parameters(const ParameterHandler& prm)
   {
@@ -2005,8 +1873,6 @@ namespace DataOutBase
     bicubic_patch = prm.get_bool("Use bicubic patches");
     external_data = prm.get_bool("Include external file");
   }
-
-
 
   EpsFlags::EpsFlags(const unsigned int  height_vector,
                      const unsigned int  color_vector,
@@ -2033,8 +1899,6 @@ namespace DataOutBase
       shade_cells(shade_cells),
       color_function(color_function)
   {}
-
-
 
   EpsFlags::RgbValues
   EpsFlags::default_color_function(const double x,
@@ -2122,8 +1986,6 @@ namespace DataOutBase
     return rgb_values;
   }
 
-
-
   EpsFlags::RgbValues
   EpsFlags::grey_scale_color_function(const double x,
                                       const double xmin,
@@ -2134,8 +1996,6 @@ namespace DataOutBase
       = (x - xmin) / (xmax - xmin);
     return rgb_values;
   }
-
-
 
   EpsFlags::RgbValues
   EpsFlags::reverse_grey_scale_color_function(const double x,
@@ -2148,8 +2008,6 @@ namespace DataOutBase
     return rgb_values;
   }
 
-
-
   bool
   EpsCell2d::operator<(const EpsCell2d& e) const
   {
@@ -2157,8 +2015,6 @@ namespace DataOutBase
     // which we sort the elements
     return depth > e.depth;
   }
-
-
 
   void
   EpsFlags::declare_parameters(ParameterHandler& prm)
@@ -2225,8 +2081,6 @@ namespace DataOutBase
       "and/or cell interiors");
   }
 
-
-
   void
   EpsFlags::parse_parameters(const ParameterHandler& prm)
   {
@@ -2258,8 +2112,6 @@ namespace DataOutBase
       Assert(false, ExcInternalError());
   }
 
-
-
   TecplotFlags::TecplotFlags(const char*  tecplot_binary_file_name,
                              const char*  zone_name,
                              const double solution_time)
@@ -2268,8 +2120,6 @@ namespace DataOutBase
       solution_time(solution_time)
   {}
 
-
-
   std::size_t
   TecplotFlags::memory_consumption() const
   {
@@ -2277,8 +2127,6 @@ namespace DataOutBase
            + MemoryConsumption::memory_consumption(tecplot_binary_file_name)
            + MemoryConsumption::memory_consumption(zone_name);
   }
-
-
 
   VtkFlags::VtkFlags(const double                         time,
                      const unsigned int                   cycle,
@@ -2289,8 +2137,6 @@ namespace DataOutBase
       print_date_and_time(print_date_and_time),
       compression_level(compression_level)
   {}
-
-
 
   OutputFormat
   parse_output_format(const std::string& format_name)
@@ -2342,15 +2188,11 @@ namespace DataOutBase
     return OutputFormat(-1);
   }
 
-
-
   std::string
   get_output_format_names()
   {
     return "none|dx|ucd|gnuplot|povray|eps|gmv|tecplot|tecplot_binary|vtk|vtu|hdf5|svg|deal.II intermediate";
   }
-
-
 
   std::string
   default_suffix(const OutputFormat output_format)
@@ -2390,7 +2232,6 @@ namespace DataOutBase
           return "";
       }
   }
-
 
   //----------------------------------------------------------------------//
 
@@ -2474,7 +2315,6 @@ namespace DataOutBase
     out.flush_cells();
   }
 
-
   template <int dim, int spacedim, class StreamType>
   void
   write_data(const std::vector<Patch<dim, spacedim>>& patches,
@@ -2525,8 +2365,6 @@ namespace DataOutBase
             }
       }
   }
-
-
 
   namespace
   {
@@ -2589,7 +2427,6 @@ namespace DataOutBase
 
       return projection_decomposition;
     }
-
 
     /**
      * Function to compute the gradient parameters for a triangle with
@@ -2820,8 +2657,6 @@ namespace DataOutBase
     }
   } // namespace
 
-
-
   template <int dim, int spacedim>
   void
   write_ucd(
@@ -2917,7 +2752,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
   template <int dim, int spacedim>
   void
   write_dx(
@@ -3001,7 +2835,6 @@ namespace DataOutBase
         write_cells(patches, dx_out);
         out << '\n';
       }
-
 
     out << "attribute \"element type\" string \"";
     if(dim == 1)
@@ -3215,8 +3048,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   template <int dim, int spacedim>
   void
   write_gnuplot(
@@ -3272,7 +3103,6 @@ namespace DataOutBase
         out << '<' << data_names[i] << "> ";
       out << '\n';
     }
-
 
     // loop over all patches
     for(typename std::vector<Patch<dim, spacedim>>::const_iterator patch
@@ -3446,8 +3276,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   template <int dim, int spacedim>
   void
   write_povray(
@@ -3498,7 +3326,6 @@ namespace DataOutBase
       // include files
       out << "#include \"colors.inc\" " << '\n'
           << "#include \"textures.inc\" " << '\n';
-
 
       // use external include file for textures,
       // camera and light
@@ -3612,7 +3439,6 @@ namespace DataOutBase
         Assert(patch->data.n_cols() == Utilities::fixed_power<dim>(n),
                ExcInvalidDatasetSize(patch->data.n_cols(), n_subdivisions + 1));
 
-
         std::vector<Point<spacedim>> ver(n * n);
 
         for(unsigned int i2 = 0; i2 < n; ++i2)
@@ -3623,7 +3449,6 @@ namespace DataOutBase
               compute_node(
                 ver[i1 * d1 + i2 * d2], &*patch, i1, i2, 0, n_subdivisions);
             }
-
 
         if(!flags.bicubic_patch)
           {
@@ -3796,8 +3621,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   template <int dim, int spacedim>
   void
   write_eps(
@@ -3810,7 +3633,6 @@ namespace DataOutBase
     // not implemented, see the documentation of the function
     AssertThrow(dim == 2, ExcNotImplemented());
   }
-
 
   template <int spacedim>
   void
@@ -3932,7 +3754,6 @@ namespace DataOutBase
                   default:
                     Assert(false, ExcNotImplemented());
                 }
-
 
               // now compute the projection of
               // the bilinear cell given by the
@@ -4081,7 +3902,6 @@ namespace DataOutBase
 
     const Point<2> offset(x_min, y_min);
 
-
     // now write preamble
     {
       out << "%!PS-Adobe-2.0 EPSF-1.2" << '\n'
@@ -4178,8 +3998,6 @@ namespace DataOutBase
 
     AssertThrow(out, ExcIO());
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -4322,8 +4140,6 @@ namespace DataOutBase
         out << '\n' << '\n';
       }
 
-
-
     // end of variable section
     out << "endvars" << '\n';
 
@@ -4337,8 +4153,6 @@ namespace DataOutBase
     // assert the stream is still ok
     AssertThrow(out, ExcIO());
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -4410,7 +4224,6 @@ namespace DataOutBase
         << '\n'
         << "#" << '\n';
 
-
       out << "Variables=";
 
       switch(spacedim)
@@ -4443,7 +4256,6 @@ namespace DataOutBase
       out << "f=feblock, n=" << n_nodes << ", e=" << n_cells
           << ", et=" << tecplot_cell_type[dim] << '\n';
     }
-
 
     // in Tecplot FEBLOCK format the vertex
     // coordinates and the data have an
@@ -4479,14 +4291,12 @@ namespace DataOutBase
     // vertices along with their
     // coordinates
 
-
     for(unsigned int d = 0; d < spacedim; ++d)
       {
         tecplot_out.selected_component = d;
         write_nodes(patches, tecplot_out);
         out << '\n';
       }
-
 
     ///////////////////////////////////////
     // data output.
@@ -4514,8 +4324,6 @@ namespace DataOutBase
     // assert the stream is still ok
     AssertThrow(out, ExcIO());
   }
-
-
 
   //---------------------------------------------------------------------------
   // Macros for handling Tecplot API data
@@ -4546,7 +4354,6 @@ namespace DataOutBase
       unsigned int n_vert;
     };
 
-
     inline TecplotMacros::TecplotMacros(const unsigned int n_nodes,
                                         const unsigned int n_vars,
                                         const unsigned int n_cells,
@@ -4557,20 +4364,14 @@ namespace DataOutBase
       connData.resize(n_cells * n_vert);
     }
 
-
-
     inline TecplotMacros::~TecplotMacros()
     {}
-
-
 
     inline float&
     TecplotMacros::nd(const unsigned int i, const unsigned int j)
     {
       return nodalData[i * n_nodes + j];
     }
-
-
 
     inline int&
     TecplotMacros::cd(const unsigned int i, const unsigned int j)
@@ -4580,11 +4381,8 @@ namespace DataOutBase
 
   } // namespace
 
-
 #endif
   //---------------------------------------------------------------------------
-
-
 
   template <int dim, int spacedim>
   void
@@ -4638,7 +4436,6 @@ namespace DataOutBase
         write_tecplot(patches, data_names, vector_data_ranges, flags, out);
         return;
       }
-
 
     AssertThrow(out, ExcIO());
 
@@ -4812,7 +4609,6 @@ namespace DataOutBase
           }
       }
 
-
     ///////////////////////////////////////
     // data output.
     //
@@ -4824,8 +4620,6 @@ namespace DataOutBase
           entry++)
         tm.nd((spacedim + data_set), entry)
           = static_cast<float>(data_vectors[data_set][entry]);
-
-
 
     /////////////////////////////////
     // now for the cells. note that
@@ -4874,7 +4668,6 @@ namespace DataOutBase
                       {
                         // note: vertex indices start with 1!
 
-
                         tm.cd(0, elem) = first_vertex_of_patch + (i1) *d1
                                          + (i2) *d2 + (i3) *d3 + 1;
                         tm.cd(1, elem) = first_vertex_of_patch + (i1 + 1) * d1
@@ -4901,12 +4694,10 @@ namespace DataOutBase
               Assert(false, ExcNotImplemented());
           }
 
-
         // finally update the number
         // of the first vertex of this patch
         first_vertex_of_patch += Utilities::fixed_power<dim>(n);
       }
-
 
     {
       int ierr = 0, num_nodes = static_cast<int>(n_nodes),
@@ -4945,8 +4736,6 @@ namespace DataOutBase
     }
 #endif
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -5219,7 +5008,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
   void
   write_vtu_header(std::ostream& out, const VtkFlags& flags)
   {
@@ -5251,8 +5039,6 @@ namespace DataOutBase
     out << '\n';
   }
 
-
-
   void
   write_vtu_footer(std::ostream& out)
   {
@@ -5260,8 +5046,6 @@ namespace DataOutBase
     out << " </UnstructuredGrid>\n";
     out << "</VTKFile>\n";
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -5279,7 +5063,6 @@ namespace DataOutBase
 
     out << std::flush;
   }
-
 
   template <int dim, int spacedim>
   void
@@ -5398,7 +5181,6 @@ namespace DataOutBase
         out << "</FieldData>\n";
     }
 
-
     VtuStream vtu_out(out, flags);
 
     const unsigned int n_data_sets = data_names.size();
@@ -5420,7 +5202,6 @@ namespace DataOutBase
 #else
     const char* ascii_or_binary = "ascii";
 #endif
-
 
     // first count the number of cells
     // and cells for later use
@@ -5515,7 +5296,6 @@ namespace DataOutBase
     out << "\n";
     out << "    </DataArray>\n";
     out << "  </Cells>\n";
-
 
     ///////////////////////////////////////
     // data output.
@@ -5660,8 +5440,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   void
   write_pvtu_record(
     std::ostream&                   out,
@@ -5761,8 +5539,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   void
   write_pvd_record(
     std::ostream&                                      out,
@@ -5798,8 +5574,6 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
   }
 
-
-
   void
   write_visit_record(std::ostream&                   out,
                      const std::vector<std::string>& piece_names)
@@ -5810,8 +5584,6 @@ namespace DataOutBase
 
     out << std::flush;
   }
-
-
 
   void
   write_visit_record(std::ostream&                                out,
@@ -5854,8 +5626,6 @@ namespace DataOutBase
 
     out << std::flush;
   }
-
-
 
   void
   write_visit_record(
@@ -5912,8 +5682,6 @@ namespace DataOutBase
     out << std::flush;
   }
 
-
-
   template <int dim, int spacedim>
   void
   write_svg(
@@ -5944,7 +5712,6 @@ namespace DataOutBase
     unsigned int margin_in_percent = 0;
     if(flags.margin)
       margin_in_percent = 5;
-
 
     // determine the bounding box in the model space
     double x_dimension, y_dimension, z_dimension;
@@ -6060,7 +5827,6 @@ namespace DataOutBase
     y_dimension = y_max - y_min;
     z_dimension = z_max - z_min;
 
-
     // set initial camera position
     Point<3> camera_position;
     Point<3> camera_direction;
@@ -6160,7 +5926,6 @@ namespace DataOutBase
     camera_position[1] -= (z_min + 2. * z_dimension)
                           * std::sin(angle_factor * flags.polar_angle)
                           * std::cos(angle_factor * flags.azimuth_angle);
-
 
     // determine the bounding box on the projection plane
     double x_min_perspective, y_min_perspective;
@@ -6432,7 +6197,6 @@ namespace DataOutBase
               }
           }
       }
-
 
     // write the svg file
     if(width == 0)
@@ -6724,7 +6488,6 @@ namespace DataOutBase
           }
       }
 
-
     // draw the colorbar
     if(flags.draw_colorbar)
       {
@@ -6892,8 +6655,6 @@ namespace DataOutBase
     out.flush();
   }
 
-
-
   template <int dim, int spacedim>
   void
   write_deal_II_intermediate(
@@ -6940,8 +6701,6 @@ namespace DataOutBase
     out.flush();
   }
 
-
-
   std::pair<unsigned int, unsigned int>
   determine_intermediate_format_dimensions(std::istream& input)
   {
@@ -6954,17 +6713,12 @@ namespace DataOutBase
   }
 } // namespace DataOutBase
 
-
-
 /* --------------------------- class DataOutInterface ---------------------- */
-
 
 template <int dim, int spacedim>
 DataOutInterface<dim, spacedim>::DataOutInterface()
   : default_subdivisions(1), default_fmt(DataOutBase::default_format)
 {}
-
-
 
 template <int dim, int spacedim>
 void
@@ -6977,8 +6731,6 @@ DataOutInterface<dim, spacedim>::write_dx(std::ostream& out) const
                         out);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_ucd(std::ostream& out) const
@@ -6989,8 +6741,6 @@ DataOutInterface<dim, spacedim>::write_ucd(std::ostream& out) const
                          ucd_flags,
                          out);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7003,8 +6753,6 @@ DataOutInterface<dim, spacedim>::write_gnuplot(std::ostream& out) const
                              out);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_povray(std::ostream& out) const
@@ -7015,8 +6763,6 @@ DataOutInterface<dim, spacedim>::write_povray(std::ostream& out) const
                             povray_flags,
                             out);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7029,8 +6775,6 @@ DataOutInterface<dim, spacedim>::write_eps(std::ostream& out) const
                          out);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_gmv(std::ostream& out) const
@@ -7041,8 +6785,6 @@ DataOutInterface<dim, spacedim>::write_gmv(std::ostream& out) const
                          gmv_flags,
                          out);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7055,8 +6797,6 @@ DataOutInterface<dim, spacedim>::write_tecplot(std::ostream& out) const
                              out);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_tecplot_binary(std::ostream& out) const
@@ -7067,8 +6807,6 @@ DataOutInterface<dim, spacedim>::write_tecplot_binary(std::ostream& out) const
                                     tecplot_flags,
                                     out);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7196,7 +6934,6 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
 #endif
 }
 
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_pvtu_record(
@@ -7206,8 +6943,6 @@ DataOutInterface<dim, spacedim>::write_pvtu_record(
   DataOutBase::write_pvtu_record(
     out, piece_names, get_dataset_names(), get_vector_data_ranges());
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7221,7 +6956,6 @@ DataOutInterface<dim, spacedim>::write_deal_II_intermediate(
                                           out);
 }
 
-
 template <int dim, int spacedim>
 XDMFEntry
 DataOutInterface<dim, spacedim>::create_xdmf_entry(
@@ -7233,8 +6967,6 @@ DataOutInterface<dim, spacedim>::create_xdmf_entry(
   return create_xdmf_entry(
     data_filter, h5_filename, h5_filename, cur_time, comm);
 }
-
-
 
 template <int dim, int spacedim>
 XDMFEntry
@@ -7352,8 +7084,6 @@ DataOutInterface<dim, spacedim>::write_xdmf_file(
       xdmf_file.close();
     }
 }
-
-
 
 /*
  * Write the data in this DataOutInterface to a DataOutFilter object.
@@ -7484,8 +7214,6 @@ DataOutBase::write_filtered_data(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_hdf5_parallel(
@@ -7495,8 +7223,6 @@ DataOutInterface<dim, spacedim>::write_hdf5_parallel(
 {
   DataOutBase::write_hdf5_parallel(get_patches(), data_filter, filename, comm);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7515,8 +7241,6 @@ DataOutInterface<dim, spacedim>::write_hdf5_parallel(
                                    comm);
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutBase::write_hdf5_parallel(
@@ -7527,8 +7251,6 @@ DataOutBase::write_hdf5_parallel(
 {
   write_hdf5_parallel(patches, data_filter, true, filename, filename, comm);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -7885,8 +7607,6 @@ DataOutBase::write_hdf5_parallel(
 #endif
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write(
@@ -7955,8 +7675,6 @@ DataOutInterface<dim, spacedim>::write(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::set_default_format(
@@ -7999,8 +7717,6 @@ DataOutInterface<dim, spacedim>::set_flags(const FlagType& flags)
     Assert(false, ExcNotImplemented());
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 DataOutInterface<dim, spacedim>::default_suffix(
@@ -8011,8 +7727,6 @@ DataOutInterface<dim, spacedim>::default_suffix(
   else
     return DataOutBase::default_suffix(output_format);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -8059,13 +7773,10 @@ DataOutInterface<dim, spacedim>::declare_parameters(ParameterHandler& prm)
   DataOutBase::VtkFlags::declare_parameters(prm);
   prm.leave_subsection();
 
-
   prm.enter_subsection("deal.II intermediate output parameters");
   DataOutBase::Deal_II_IntermediateFlags::declare_parameters(prm);
   prm.leave_subsection();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -8112,8 +7823,6 @@ DataOutInterface<dim, spacedim>::parse_parameters(ParameterHandler& prm)
   prm.leave_subsection();
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 DataOutInterface<dim, spacedim>::memory_consumption() const
@@ -8130,15 +7839,12 @@ DataOutInterface<dim, spacedim>::memory_consumption() const
           + MemoryConsumption::memory_consumption(deal_II_intermediate_flags));
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::tuple<unsigned int, unsigned int, std::string>>
 DataOutInterface<dim, spacedim>::get_vector_data_ranges() const
 {
   return std::vector<std::tuple<unsigned int, unsigned int, std::string>>();
 }
-
 
 template <int dim, int spacedim>
 void
@@ -8189,8 +7895,6 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
   }
 #endif
 }
-
-
 
 // ---------------------------------------------- DataOutReader ----------
 
@@ -8307,14 +8011,11 @@ DataOutReader<dim, spacedim>::read(std::istream& in)
   AssertThrow(in, ExcIO());
 }
 
-
-
 template <int dim, int spacedim>
 void
 DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim>& source)
 {
   typedef typename dealii::DataOutBase::Patch<dim, spacedim> Patch;
-
 
   const std::vector<Patch>& source_patches = source.get_patches();
   Assert(patches.size() != 0, DataOutBase::ExcNoPatches());
@@ -8373,16 +8074,12 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim>& source)
         patches[i].neighbors[n] += old_n_patches;
 }
 
-
-
 template <int dim, int spacedim>
 const std::vector<typename dealii::DataOutBase::Patch<dim, spacedim>>&
 DataOutReader<dim, spacedim>::get_patches() const
 {
   return patches;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::string>
@@ -8391,16 +8088,12 @@ DataOutReader<dim, spacedim>::get_dataset_names() const
   return dataset_names;
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::tuple<unsigned int, unsigned int, std::string>>
 DataOutReader<dim, spacedim>::get_vector_data_ranges() const
 {
   return vector_data_ranges;
 }
-
-
 
 // ---------------------------------------------- XDMFEntry ----------
 
@@ -8415,8 +8108,6 @@ XDMFEntry::XDMFEntry()
     space_dimension(numbers::invalid_unsigned_int)
 {}
 
-
-
 XDMFEntry::XDMFEntry(const std::string& filename,
                      const double       time,
                      const unsigned int nodes,
@@ -8424,8 +8115,6 @@ XDMFEntry::XDMFEntry(const std::string& filename,
                      const unsigned int dim)
   : XDMFEntry(filename, filename, time, nodes, cells, dim, dim)
 {}
-
-
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const std::string& solution_filename,
@@ -8435,8 +8124,6 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const unsigned int dim)
   : XDMFEntry(mesh_filename, solution_filename, time, nodes, cells, dim, dim)
 {}
-
-
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const std::string& solution_filename,
@@ -8455,16 +8142,12 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
     space_dimension(spacedim)
 {}
 
-
-
 void
 XDMFEntry::add_attribute(const std::string& attr_name,
                          const unsigned int dimension)
 {
   attribute_dims[attr_name] = dimension;
 }
-
-
 
 namespace
 {
@@ -8480,8 +8163,6 @@ namespace
     return res;
   }
 } // namespace
-
-
 
 std::string
 XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
@@ -8562,8 +8243,6 @@ XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
   return ss.str();
 }
 
-
-
 namespace DataOutBase
 {
   template <int dim, int spacedim>
@@ -8598,7 +8277,6 @@ namespace DataOutBase
     return out;
   }
 
-
   template <int dim, int spacedim>
   std::istream&
   operator>>(std::istream& in, Patch<dim, spacedim>& patch)
@@ -8625,7 +8303,6 @@ namespace DataOutBase
       Assert(header == s.str(), ExcUnexpectedInput(s.str(), header));
     }
 
-
     // then read all the data that is in this patch
     for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       in >> patch.vertices[GeometryInfo<dim>::ucd_to_deal[i]];
@@ -8649,8 +8326,6 @@ namespace DataOutBase
     return in;
   }
 } // namespace DataOutBase
-
-
 
 // explicit instantiations
 #include "data_out_base.inst"

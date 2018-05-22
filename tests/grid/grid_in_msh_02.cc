@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // in 1d, we have to read vertex information to set boundary
 // indicators
 //
 // test case by Jan Strebel
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -33,7 +31,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 void
 check_file()
@@ -57,7 +54,6 @@ check_file()
         }
     }
 }
-
 
 int
 main()

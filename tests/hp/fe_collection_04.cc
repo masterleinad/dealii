@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the results of FECollection::n_blocks(). test the case where elements
 // have the same number of components but different numbers of blocks. this
 // needs to lead to an assertion.
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -56,8 +51,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

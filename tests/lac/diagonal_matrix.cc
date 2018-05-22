@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests DiagonalMatrix
-
 
 #include "../tests.h"
 #include <deal.II/lac/diagonal_matrix.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 check()
@@ -88,7 +84,6 @@ check()
   out -= exact;
   deallog << "Error vmult set 3: " << out.linfty_norm() << std::endl;
 }
-
 
 int
 main()

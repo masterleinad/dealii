@@ -19,7 +19,6 @@
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 
-
 template <int rank, int dim>
 void
 check()
@@ -51,7 +50,6 @@ check()
           << tc.norm() << " vs " << std::sqrt(tc_conj * tc) << std::endl
           << std::endl;
 }
-
 
 int
 main()

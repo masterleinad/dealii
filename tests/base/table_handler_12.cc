@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that the flags we set for precision when printing stuff from
 // a table do not affect the precision flags set for the stream to
 // which we print
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -25,7 +23,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()

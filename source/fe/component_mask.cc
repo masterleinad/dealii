@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/component_mask.h>
 
 #include <iostream>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -41,13 +39,10 @@ operator<<(std::ostream& out, const ComponentMask& mask)
   return out;
 }
 
-
-
 std::size_t
 ComponentMask::memory_consumption() const
 {
   return sizeof(*this) + MemoryConsumption::memory_consumption(component_mask);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

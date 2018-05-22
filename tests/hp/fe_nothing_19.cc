@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a redux of fe_nothing_18
 
 #include "../tests.h"
@@ -74,7 +73,6 @@ test()
           << std::endl;
   hanging_node_constraints.print(deallog.get_file_stream());
 }
-
 
 int
 main()

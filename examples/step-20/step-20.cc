@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, Texas A&M University, 2005, 2006
  */
 
-
 // @sect3{Include files}
 
 // Since this program is only an adaptation of step-4, there is not much new
@@ -114,7 +113,6 @@ namespace Step20
     BlockVector<double> system_rhs;
   };
 
-
   // @sect3{Right hand side, boundary values, and exact solution}
 
   // Our next task is to define the right hand side of our problem (i.e., the
@@ -138,8 +136,6 @@ namespace Step20
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   class PressureBoundaryValues : public Function<dim>
   {
@@ -150,7 +146,6 @@ namespace Step20
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
-
 
   template <int dim>
   class ExactSolution : public Function<dim>
@@ -163,7 +158,6 @@ namespace Step20
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   // And then we also have to define these respective functions, of
   // course. Given our discussion in the introduction of how the solution
   // should look like, the following computations should be straightforward:
@@ -175,8 +169,6 @@ namespace Step20
     return 0;
   }
 
-
-
   template <int dim>
   double
   PressureBoundaryValues<dim>::value(const Point<dim>& p,
@@ -187,8 +179,6 @@ namespace Step20
     return -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
              - alpha * p[0] * p[0] * p[0] / 6);
   }
-
-
 
   template <int dim>
   void
@@ -206,8 +196,6 @@ namespace Step20
     values(2) = -(alpha * p[0] * p[1] * p[1] / 2 + beta * p[0]
                   - alpha * p[0] * p[0] * p[0] / 6);
   }
-
-
 
   // @sect3{The inverse permeability tensor}
 
@@ -247,7 +235,6 @@ namespace Step20
                std::vector<Tensor<2, dim>>&   values) const override;
   };
 
-
   // The implementation is less interesting. As in previous examples, we add a
   // check to the beginning of the class to make sure that the sizes of input
   // and output parameters are the same (see step-5 for a discussion of this
@@ -270,8 +257,6 @@ namespace Step20
           values[p][d][d] = 1.;
       }
   }
-
-
 
   // @sect3{MixedLaplaceProblem class implementation}
 
@@ -310,8 +295,6 @@ namespace Step20
       fe(FE_RaviartThomas<dim>(degree), 1, FE_DGQ<dim>(degree), 1),
       dof_handler(triangulation)
   {}
-
-
 
   // @sect4{MixedLaplaceProblem::make_grid_and_dofs}
 
@@ -420,7 +403,6 @@ namespace Step20
     system_rhs.block(1).reinit(n_p);
     system_rhs.collect_sizes();
   }
-
 
   // @sect4{MixedLaplaceProblem::assemble_system}
 
@@ -559,7 +541,6 @@ namespace Step20
       }
   }
 
-
   // @sect3{Linear solvers and preconditioners}
 
   // The linear solvers and preconditioners we use in this example have been
@@ -592,11 +573,9 @@ namespace Step20
     const SmartPointer<const MatrixType> matrix;
   };
 
-
   template <class MatrixType>
   InverseMatrix<MatrixType>::InverseMatrix(const MatrixType& m) : matrix(&m)
   {}
-
 
   template <class MatrixType>
   void
@@ -616,7 +595,6 @@ namespace Step20
 
     cg.solve(*matrix, dst, src, PreconditionIdentity());
   }
-
 
   // @sect4{The <code>SchurComplement</code> class}
 
@@ -655,7 +633,6 @@ namespace Step20
     mutable Vector<double> tmp1, tmp2;
   };
 
-
   SchurComplement ::SchurComplement(
     const BlockSparseMatrix<double>&           A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
@@ -665,7 +642,6 @@ namespace Step20
       tmp2(A.block(0, 0).m())
   {}
 
-
   void
   SchurComplement::vmult(Vector<double>& dst, const Vector<double>& src) const
   {
@@ -673,7 +649,6 @@ namespace Step20
     m_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
 
   // @sect4{The <code>ApproximateSchurComplement</code> class}
 
@@ -695,13 +670,10 @@ namespace Step20
     mutable Vector<double> tmp1, tmp2;
   };
 
-
-
   ApproximateSchurComplement::ApproximateSchurComplement(
     const BlockSparseMatrix<double>& A)
     : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
   {}
-
 
   void
   ApproximateSchurComplement::vmult(Vector<double>&       dst,
@@ -764,7 +736,6 @@ namespace Step20
       inverse_mass.vmult(solution.block(0), tmp);
     }
   }
-
 
   // @sect3{MixedLaplaceProblem class implementation (continued)}
 
@@ -856,7 +827,6 @@ namespace Step20
               << ",   ||e_u||_L2 = " << u_l2_error << std::endl;
   }
 
-
   // @sect4{MixedLaplace::output_results}
 
   // The last interesting function is the one in which we generate graphical
@@ -894,8 +864,6 @@ namespace Step20
     data_out.write_vtu(output);
   }
 
-
-
   // @sect4{MixedLaplace::run}
 
   // This is the final function of our main class. It's only job is to call
@@ -911,7 +879,6 @@ namespace Step20
     output_results();
   }
 } // namespace Step20
-
 
 // @sect3{The <code>main</code> function}
 

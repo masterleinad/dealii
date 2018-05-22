@@ -7,7 +7,6 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 
-
 /**
  * Finite difference matrix on uniform grid.
  * Generator for simple 5-point discretization of Laplace problem.
@@ -72,13 +71,10 @@ private:
   unsigned int ny;
 };
 
-
 // --------------- inline and template functions -----------------
 
 inline FDMatrix::FDMatrix(unsigned int nx, unsigned int ny) : nx(nx), ny(ny)
 {}
-
-
 
 template <typename SP>
 inline void
@@ -114,8 +110,6 @@ FDMatrix::five_point_structure(SP& structure) const
         }
     }
 }
-
-
 
 template <typename SP>
 inline void
@@ -171,8 +165,6 @@ FDMatrix::nine_point_structure(SP& structure) const
         }
     }
 }
-
-
 
 template <typename MatrixType>
 void
@@ -270,8 +262,6 @@ FDMatrix::five_point(MatrixType& A, bool nonsymmetric) const
         }
     }
 }
-
-
 
 template <typename MatrixType>
 inline void

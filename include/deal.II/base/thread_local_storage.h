@@ -16,20 +16,16 @@
 #ifndef dealii_thread_local_storage_h
 #  define dealii_thread_local_storage_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_THREADS
 #    include <tbb/enumerable_thread_specific.h>
 #  endif
 
-
-
 DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup threads */
 /*@{*/
-
 
 namespace Threads
 {
@@ -187,13 +183,11 @@ namespace Threads
   inline ThreadLocalStorage<T>::ThreadLocalStorage(const T& t) : data(t)
   {}
 
-
   template <typename T>
   inline ThreadLocalStorage<T>::ThreadLocalStorage(
     const ThreadLocalStorage<T>& t)
     : data(t)
   {}
-
 
   template <typename T>
   inline T&
@@ -205,7 +199,6 @@ namespace Threads
     return data;
 #  endif
   }
-
 
   template <typename T>
   inline T&
@@ -219,13 +212,11 @@ namespace Threads
 #  endif
   }
 
-
   template <typename T>
   inline ThreadLocalStorage<T>::operator T&()
   {
     return get();
   }
-
 
   template <typename T>
   inline ThreadLocalStorage<T>&
@@ -234,7 +225,6 @@ namespace Threads
     get() = t;
     return *this;
   }
-
 
   template <typename T>
   inline
@@ -247,8 +237,6 @@ namespace Threads
   {
     return data;
   }
-
-
 
   template <typename T>
   inline void
@@ -265,7 +253,6 @@ namespace Threads
 /**
  * @}
  */
-
 
 //---------------------------------------------------------------------------
 DEAL_II_NAMESPACE_CLOSE

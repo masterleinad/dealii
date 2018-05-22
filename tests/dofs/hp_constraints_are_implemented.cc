@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/vector.h>
@@ -21,8 +20,6 @@
 // check
 //   FE::hp_constraints_are_implemented
 // a bit like fe_tools_14, but works on a different set of elements
-
-
 
 template <int dim>
 void

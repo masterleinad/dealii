@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-7
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -53,8 +49,6 @@ std::ofstream logfile("output");
 #include <iostream>
 #include <typeinfo>
 
-
-
 template <int dim>
 class SolutionBase
 {
@@ -63,7 +57,6 @@ protected:
   static const Point<dim>   source_centers[n_source_centers];
   static const double       width;
 };
-
 
 template <>
 const Point<1>
@@ -77,8 +70,6 @@ const Point<2>
 
 template <int dim>
 const double SolutionBase<dim>::width = 1. / 3.;
-
-
 
 template <int dim>
 class Solution : public Function<dim>, protected SolutionBase<dim>
@@ -94,7 +85,6 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
-
 template <int dim>
 double
 Solution<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -109,7 +99,6 @@ Solution<dim>::value(const Point<dim>& p, const unsigned int) const
 
   return return_value;
 }
-
 
 template <int dim>
 Tensor<1, dim>
@@ -130,8 +119,6 @@ Solution<dim>::gradient(const Point<dim>& p, const unsigned int) const
   return return_value;
 }
 
-
-
 template <int dim>
 class RightHandSide : public Function<dim>, protected SolutionBase<dim>
 {
@@ -142,7 +129,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
-
 
 template <int dim>
 double
@@ -165,8 +151,6 @@ RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
 
   return return_value;
 }
-
-
 
 template <int dim>
 class HelmholtzProblem
@@ -216,23 +200,17 @@ private:
   ConvergenceTable convergence_table;
 };
 
-
-
 template <int dim>
 HelmholtzProblem<dim>::HelmholtzProblem(const hp::FECollection<dim>& fe,
                                         const RefinementMode refinement_mode)
   : dof_handler(triangulation), fe(&fe), refinement_mode(refinement_mode)
 {}
 
-
-
 template <int dim>
 HelmholtzProblem<dim>::~HelmholtzProblem()
 {
   dof_handler.clear();
 }
-
-
 
 template <int dim>
 void
@@ -258,8 +236,6 @@ HelmholtzProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -366,8 +342,6 @@ HelmholtzProblem<dim>::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 template <int dim>
 void
 HelmholtzProblem<dim>::solve()
@@ -382,8 +356,6 @@ HelmholtzProblem<dim>::solve()
 
   hanging_node_constraints.distribute(solution);
 }
-
-
 
 template <int dim>
 void
@@ -423,8 +395,6 @@ HelmholtzProblem<dim>::refine_grid()
         }
     }
 }
-
-
 
 template <int dim>
 void
@@ -472,8 +442,6 @@ HelmholtzProblem<dim>::process_solution(const unsigned int cycle)
   convergence_table.add_value("Linfty", Linfty_error);
 }
 
-
-
 template <int dim>
 void
 HelmholtzProblem<dim>::run()
@@ -498,7 +466,6 @@ HelmholtzProblem<dim>::run()
       else
         refine_grid();
 
-
       setup_system();
 
       assemble_system();
@@ -506,7 +473,6 @@ HelmholtzProblem<dim>::run()
 
       process_solution(cycle);
     }
-
 
   if(refinement_mode == adaptive_refinement)
     {
@@ -545,8 +511,6 @@ HelmholtzProblem<dim>::run()
       data_out.build_patches((*fe)[0].degree);
       //      data_out.write_gmv (deallog.get_file_stream());
     }
-
-
 
   convergence_table.set_precision("L2", 3);
   convergence_table.set_precision("H1", 3);
@@ -597,8 +561,6 @@ HelmholtzProblem<dim>::run()
 
   convergence_table.write_tex(deallog.get_file_stream());
 
-
-
   if(refinement_mode == global_refinement)
     {
       convergence_table.add_column_to_supercolumn("cycle", "n cells");
@@ -648,7 +610,6 @@ HelmholtzProblem<dim>::run()
       convergence_table.write_tex(deallog.get_file_stream());
     }
 }
-
 
 int
 main()
@@ -732,6 +693,5 @@ main()
 
   return 0;
 }
-
 
 template const double SolutionBase<2>::width;

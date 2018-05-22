@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of matrix_diagonal_inverse of
 // MatrixFreeOperators::MassOperator for FE_Q_Hierarchical
 // This caused problems with positivity of the lumped mass matrix
@@ -37,8 +35,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -177,7 +173,6 @@ test()
   deallog << "linfty_norm: " << diagonal.linfty_norm() << std::endl
           << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_p.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 PolynomialsP<dim>::PolynomialsP(const unsigned int p)
@@ -29,7 +27,6 @@ PolynomialsP<dim>::PolynomialsP(const unsigned int p)
   create_polynomial_ordering(index_map);
   this->set_numbering(index_map);
 }
-
 
 template <>
 void
@@ -43,7 +40,6 @@ PolynomialsP<1>::create_polynomial_ordering(
   for(unsigned int i = 0; i < this->n(); ++i)
     index_map[i] = i;
 }
-
 
 namespace
 {
@@ -75,7 +71,6 @@ PolynomialsP<2>::create_polynomial_ordering(
     index_map[i] = imap2[p][i];
 }
 
-
 namespace
 {
   const unsigned int imap3[4][20]
@@ -103,8 +98,6 @@ PolynomialsP<3>::create_polynomial_ordering(
   for(unsigned int i = 0; i < this->n(); ++i)
     index_map[i] = imap3[p][i];
 }
-
-
 
 template class PolynomialsP<1>;
 template class PolynomialsP<2>;

@@ -68,7 +68,6 @@ namespace TrilinosWrappers
     }
   } // namespace SparsityPatternIterators
 
-
   // The constructor is actually the
   // only point where we have to check
   // whether we build a serial or a
@@ -91,14 +90,11 @@ namespace TrilinosWrappers
     graph->FillComplete();
   }
 
-
   SparsityPattern::SparsityPattern(const Epetra_Map& input_map,
                                    const size_type   n_entries_per_row)
   {
     reinit(input_map, input_map, n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(
     const Epetra_Map&             input_map,
@@ -107,16 +103,12 @@ namespace TrilinosWrappers
     reinit(input_map, input_map, n_entries_per_row);
   }
 
-
-
   SparsityPattern::SparsityPattern(const Epetra_Map& input_row_map,
                                    const Epetra_Map& input_col_map,
                                    const size_type   n_entries_per_row)
   {
     reinit(input_row_map, input_col_map, n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(
     const Epetra_Map&             input_row_map,
@@ -126,16 +118,12 @@ namespace TrilinosWrappers
     reinit(input_row_map, input_col_map, n_entries_per_row);
   }
 
-
-
   SparsityPattern::SparsityPattern(const size_type m,
                                    const size_type n,
                                    const size_type n_entries_per_row)
   {
     reinit(m, n, n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(
     const size_type               m,
@@ -145,15 +133,12 @@ namespace TrilinosWrappers
     reinit(m, n, n_entries_per_row);
   }
 
-
-
   SparsityPattern::SparsityPattern(SparsityPattern&& other) noexcept
     : Subscriptor(std::move(other)),
       column_space_map(std::move(other.column_space_map)),
       graph(std::move(other.graph)),
       nonlocal_graph(std::move(other.nonlocal_graph))
   {}
-
 
   // Copy function only works if the
   // sparsity pattern is empty.
@@ -171,8 +156,6 @@ namespace TrilinosWrappers
       ExcMessage("Copy constructor only works for empty sparsity patterns."));
   }
 
-
-
   SparsityPattern::SparsityPattern(const IndexSet& parallel_partitioning,
                                    const MPI_Comm& communicator,
                                    const size_type n_entries_per_row)
@@ -182,8 +165,6 @@ namespace TrilinosWrappers
            communicator,
            n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(
     const IndexSet&               parallel_partitioning,
@@ -196,8 +177,6 @@ namespace TrilinosWrappers
            n_entries_per_row);
   }
 
-
-
   SparsityPattern::SparsityPattern(const IndexSet& row_parallel_partitioning,
                                    const IndexSet& col_parallel_partitioning,
                                    const MPI_Comm& communicator,
@@ -208,8 +187,6 @@ namespace TrilinosWrappers
            communicator,
            n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(
     const IndexSet&               row_parallel_partitioning,
@@ -222,8 +199,6 @@ namespace TrilinosWrappers
            communicator,
            n_entries_per_row);
   }
-
-
 
   SparsityPattern::SparsityPattern(const IndexSet& row_parallel_partitioning,
                                    const IndexSet& col_parallel_partitioning,
@@ -238,8 +213,6 @@ namespace TrilinosWrappers
            n_max_entries_per_row);
   }
 
-
-
   void
   SparsityPattern::reinit(const size_type m,
                           const size_type n,
@@ -251,8 +224,6 @@ namespace TrilinosWrappers
            n_entries_per_row);
   }
 
-
-
   void
   SparsityPattern::reinit(const size_type               m,
                           const size_type               n,
@@ -263,8 +234,6 @@ namespace TrilinosWrappers
            MPI_COMM_SELF,
            n_entries_per_row);
   }
-
-
 
   namespace
   {
@@ -311,8 +280,6 @@ namespace TrilinosWrappers
           Copy, row_map, col_map, n_entries_per_row, false);
     }
 
-
-
     void
     reinit_sp(const Epetra_Map&                   row_map,
               const Epetra_Map&                   col_map,
@@ -356,8 +323,6 @@ namespace TrilinosWrappers
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>(
           Copy, row_map, col_map, local_entries_per_row.data(), false);
     }
-
-
 
     template <typename SparsityPatternType>
     void
@@ -470,7 +435,6 @@ namespace TrilinosWrappers
     }
   } // namespace
 
-
   void
   SparsityPattern::reinit(const Epetra_Map& input_map,
                           const size_type   n_entries_per_row)
@@ -482,8 +446,6 @@ namespace TrilinosWrappers
               graph,
               nonlocal_graph);
   }
-
-
 
   void
   SparsityPattern::reinit(const Epetra_Map& input_row_map,
@@ -498,8 +460,6 @@ namespace TrilinosWrappers
               nonlocal_graph);
   }
 
-
-
   void
   SparsityPattern::reinit(const Epetra_Map&             input_map,
                           const std::vector<size_type>& n_entries_per_row)
@@ -511,8 +471,6 @@ namespace TrilinosWrappers
               graph,
               nonlocal_graph);
   }
-
-
 
   void
   SparsityPattern::reinit(const Epetra_Map&             input_row_map,
@@ -527,8 +485,6 @@ namespace TrilinosWrappers
               nonlocal_graph);
   }
 
-
-
   void
   SparsityPattern::reinit(const IndexSet& parallel_partitioning,
                           const MPI_Comm& communicator,
@@ -539,8 +495,6 @@ namespace TrilinosWrappers
     reinit_sp(
       map, map, n_entries_per_row, column_space_map, graph, nonlocal_graph);
   }
-
-
 
   void
   SparsityPattern::reinit(const IndexSet&               parallel_partitioning,
@@ -553,8 +507,6 @@ namespace TrilinosWrappers
       map, map, n_entries_per_row, column_space_map, graph, nonlocal_graph);
   }
 
-
-
   void
   SparsityPattern::reinit(const IndexSet& row_parallel_partitioning,
                           const IndexSet& col_parallel_partitioning,
@@ -573,8 +525,6 @@ namespace TrilinosWrappers
               nonlocal_graph);
   }
 
-
-
   void
   SparsityPattern::reinit(const IndexSet& row_parallel_partitioning,
                           const IndexSet& col_parallel_partitioning,
@@ -592,8 +542,6 @@ namespace TrilinosWrappers
               graph,
               nonlocal_graph);
   }
-
-
 
   void
   SparsityPattern::reinit(const IndexSet& row_parallel_partitioning,
@@ -637,8 +585,6 @@ namespace TrilinosWrappers
       Assert(nonlocal_partitioner.n_elements() == 0, ExcInternalError());
   }
 
-
-
   template <typename SparsityPatternType>
   void
   SparsityPattern::reinit(
@@ -661,8 +607,6 @@ namespace TrilinosWrappers
               nonlocal_graph);
   }
 
-
-
   template <typename SparsityPatternType>
   void
   SparsityPattern::reinit(
@@ -682,8 +626,6 @@ namespace TrilinosWrappers
               nonlocal_graph);
   }
 
-
-
   template <typename SparsityPatternType>
   void
   SparsityPattern::reinit(const Epetra_Map&          input_map,
@@ -698,8 +640,6 @@ namespace TrilinosWrappers
               graph,
               nonlocal_graph);
   }
-
-
 
   template <typename SparsityPatternType>
   void
@@ -719,16 +659,12 @@ namespace TrilinosWrappers
     compress();
   }
 
-
-
   SparsityPattern&
   SparsityPattern::operator=(const SparsityPattern&)
   {
     Assert(false, ExcNotImplemented());
     return *this;
   }
-
-
 
   void
   SparsityPattern::copy_from(const SparsityPattern& sp)
@@ -742,8 +678,6 @@ namespace TrilinosWrappers
     else
       nonlocal_graph.reset();
   }
-
-
 
   template <typename SparsityPatternType>
   void
@@ -759,8 +693,6 @@ namespace TrilinosWrappers
     reinit_sp(
       rows, columns, sp, false, column_space_map, graph, nonlocal_graph);
   }
-
-
 
   void
   SparsityPattern::clear()
@@ -778,8 +710,6 @@ namespace TrilinosWrappers
 
     nonlocal_graph.reset();
   }
-
-
 
   void
   SparsityPattern::compress()
@@ -820,8 +750,6 @@ namespace TrilinosWrappers
     ierr = graph->OptimizeStorage();
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
-
-
 
   bool
   SparsityPattern::exists(const size_type i, const size_type j) const
@@ -914,8 +842,6 @@ namespace TrilinosWrappers
     return true;
   }
 
-
-
   SparsityPattern::size_type
   SparsityPattern::bandwidth() const
   {
@@ -941,16 +867,12 @@ namespace TrilinosWrappers
     return static_cast<size_type>(global_b);
   }
 
-
-
   SparsityPattern::size_type
   SparsityPattern::n_rows() const
   {
     const TrilinosWrappers::types::int_type n_rows = n_global_rows(*graph);
     return n_rows;
   }
-
-
 
   SparsityPattern::size_type
   SparsityPattern::n_cols() const
@@ -964,8 +886,6 @@ namespace TrilinosWrappers
     return n_cols;
   }
 
-
-
   unsigned int
   SparsityPattern::local_size() const
   {
@@ -973,8 +893,6 @@ namespace TrilinosWrappers
 
     return n_rows;
   }
-
-
 
   std::pair<SparsityPattern::size_type, SparsityPattern::size_type>
   SparsityPattern::local_range() const
@@ -986,8 +904,6 @@ namespace TrilinosWrappers
     return std::make_pair(begin, end);
   }
 
-
-
   SparsityPattern::size_type
   SparsityPattern::n_nonzero_elements() const
   {
@@ -996,8 +912,6 @@ namespace TrilinosWrappers
     return static_cast<size_type>(nnz);
   }
 
-
-
   unsigned int
   SparsityPattern::max_entries_per_row() const
   {
@@ -1005,8 +919,6 @@ namespace TrilinosWrappers
 
     return static_cast<unsigned int>(nnz);
   }
-
-
 
   SparsityPattern::size_type
   SparsityPattern::row_length(const size_type row) const
@@ -1028,15 +940,11 @@ namespace TrilinosWrappers
     return static_cast<size_type>(ncols);
   }
 
-
-
   const Epetra_Map&
   SparsityPattern::domain_partitioner() const
   {
     return static_cast<const Epetra_Map&>(graph->DomainMap());
   }
-
-
 
   const Epetra_Map&
   SparsityPattern::range_partitioner() const
@@ -1044,15 +952,11 @@ namespace TrilinosWrappers
     return static_cast<const Epetra_Map&>(graph->RangeMap());
   }
 
-
-
   const Epetra_Map&
   SparsityPattern::row_partitioner() const
   {
     return static_cast<const Epetra_Map&>(graph->RowMap());
   }
-
-
 
   const Epetra_Map&
   SparsityPattern::col_partitioner() const
@@ -1060,15 +964,11 @@ namespace TrilinosWrappers
     return static_cast<const Epetra_Map&>(graph->ColMap());
   }
 
-
-
   const Epetra_Comm&
   SparsityPattern::trilinos_communicator() const
   {
     return graph->RangeMap().Comm();
   }
-
-
 
   MPI_Comm
   SparsityPattern::get_mpi_communicator() const
@@ -1086,15 +986,11 @@ namespace TrilinosWrappers
 #  endif
   }
 
-
-
   void
   SparsityPattern::write_ascii()
   {
     Assert(false, ExcNotImplemented());
   }
-
-
 
   // As of now, no particularly neat
   // output is generated in case of
@@ -1123,8 +1019,6 @@ namespace TrilinosWrappers
 
     AssertThrow(out, ExcIO());
   }
-
-
 
   void
   SparsityPattern::print_gnuplot(std::ostream& out) const
@@ -1164,7 +1058,6 @@ namespace TrilinosWrappers
     return 0;
   }
 
-
   // explicit instantiations
   //
   template void
@@ -1172,7 +1065,6 @@ namespace TrilinosWrappers
   template void
   SparsityPattern::copy_from(const dealii::DynamicSparsityPattern&);
 
-
   template void
   SparsityPattern::reinit(const Epetra_Map&,
                           const dealii::SparsityPattern&,
@@ -1193,7 +1085,6 @@ namespace TrilinosWrappers
                           const dealii::DynamicSparsityPattern&,
                           bool);
 
-
   template void
   SparsityPattern::reinit(const IndexSet&,
                           const dealii::SparsityPattern&,
@@ -1204,7 +1095,6 @@ namespace TrilinosWrappers
                           const dealii::DynamicSparsityPattern&,
                           const MPI_Comm&,
                           bool);
-
 
   template void
   SparsityPattern::reinit(const IndexSet&,

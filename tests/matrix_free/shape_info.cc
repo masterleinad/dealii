@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the correctness of the detection of the elements in
 // internal::MatrixFreeFunctions::ShapeInfo
 
@@ -33,7 +31,6 @@
 
 std::ofstream logfile("output");
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe, const Quadrature<1>& quad)
@@ -48,7 +45,6 @@ test(const FiniteElement<dim>& fe, const Quadrature<1>& quad)
               << std::endl;
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // TimerOutput is calling MPI functions internally when deal.II is
 // configured with MPI. This creates an error of the form:
 // *** The MPI_Allreduce() function was called before MPI_INIT was invoked.

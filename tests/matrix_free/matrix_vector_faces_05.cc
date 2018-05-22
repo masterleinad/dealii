@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests matrix-free face evaluation, matrix-vector products as compared to
 // the same implementation with MeshWorker. Same as matrix_vector_faces_01 but
 // using FE_Q instead of FE_DGQ (i.e., we do not actually have any

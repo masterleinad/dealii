@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests generalized eigenvalues of FullMatrix
 
 #include "../tests.h"
@@ -57,8 +56,6 @@ const double right[] = {4.,
                         -1.,
                         -1.,
                         7.};
-
-
 
 int
 main()

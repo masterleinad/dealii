@@ -20,7 +20,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/manifold_lib.h>
 
-
 template <int dim>
 void
 print_intermediate_point(const Manifold<dim>& manifold,
@@ -40,7 +39,6 @@ print_intermediate_point(const Manifold<dim>& manifold,
           << "get_new_point:      " << manifold.get_new_point(points, weights)
           << std::endl;
 }
-
 
 int
 main()
@@ -98,8 +96,6 @@ main()
     print_intermediate_point(cylindrical, "CylindricalManifold", p1, p2, 0.5);
     print_intermediate_point(cylindrical, "CylindricalManifold", p1, p2, 0.9);
   }
-
-
 
   return 0;
 }

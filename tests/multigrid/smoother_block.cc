@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <algorithm>
 #include <deal.II/base/mg_level_object.h>
@@ -75,13 +73,11 @@ private:
   number factor;
 };
 
-
 //----------------------------------------------------------------------//
 
 template <typename number>
 ScalingMatrix<number>::ScalingMatrix(number factor) : factor(factor)
 {}
-
 
 template <typename number>
 template <typename VectorType>
@@ -106,8 +102,6 @@ ScalingMatrix<number>::vmult_add(VectorType& dst, const VectorType& src) const
 {
   dst.add(factor, src);
 }
-
-
 
 template <typename number>
 template <typename VectorType>
@@ -205,7 +199,6 @@ check()
 
   check_smoother(A, P);
 }
-
 
 int
 main()

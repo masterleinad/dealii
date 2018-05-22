@@ -26,7 +26,6 @@
 
 #include <memory>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
@@ -1173,7 +1172,6 @@ public:
   bool
   isotropic_restriction_is_implemented() const;
 
-
   /**
    * Access the #restriction_is_additive_flags field. See the discussion about
    * restriction matrices in the general class documentation for more
@@ -1220,7 +1218,6 @@ public:
     const dealii::internal::SubfaceCase<dim>& subface_case
     = dealii::internal::SubfaceCase<dim>::case_isotropic) const;
 
-
   /**
    * Return whether this element implements its hanging node constraints in
    * the new way, which has to be used to make elements "hp compatible".  That
@@ -1245,7 +1242,6 @@ public:
   virtual bool
   hp_constraints_are_implemented() const;
 
-
   /**
    * Return the matrix interpolating from the given finite element to the
    * present one. The size of the matrix is then #dofs_per_cell times
@@ -1267,7 +1263,6 @@ public:
    * @{
    */
 
-
   /**
    * Return the matrix interpolating from a face of one element to the face
    * of the neighboring element.  The size of the matrix is then
@@ -1282,7 +1277,6 @@ public:
   virtual void
   get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                                 FullMatrix<double>& matrix) const;
-
 
   /**
    * Return the matrix interpolating from a face of one element to the
@@ -1300,7 +1294,6 @@ public:
                                    const unsigned int                  subface,
                                    FullMatrix<double>& matrix) const;
   //@}
-
 
   /**
    * @name Functions to support hp
@@ -1769,7 +1762,6 @@ public:
   std::pair<unsigned int, unsigned int>
   component_to_base_index(const unsigned int component) const;
 
-
   /**
    * Return the base element for this block and the number of the copy of the
    * base element.
@@ -2187,7 +2179,6 @@ public:
    */
   GeometryPrimitive
   get_associated_geometry_primitive(const unsigned int cell_dof_index) const;
-
 
   /**
    * Given the values of a function $f(\mathbf x)$ at the (generalized)
@@ -3047,9 +3038,7 @@ protected:
 #endif
 };
 
-
 //----------------------------------------------------------------------//
-
 
 template <int dim, int spacedim>
 inline const FiniteElement<dim, spacedim>& FiniteElement<dim, spacedim>::
@@ -3060,8 +3049,6 @@ inline const FiniteElement<dim, spacedim>& FiniteElement<dim, spacedim>::
          ExcMessage("A fe_index of zero is the only index allowed here"));
   return *this;
 }
-
-
 
 template <int dim, int spacedim>
 inline std::pair<unsigned int, unsigned int>
@@ -3076,16 +3063,12 @@ FiniteElement<dim, spacedim>::system_to_component_index(
   return system_to_component_table[index];
 }
 
-
-
 template <int dim, int spacedim>
 inline unsigned int
 FiniteElement<dim, spacedim>::n_base_elements() const
 {
   return base_to_block_indices.size();
 }
-
-
 
 template <int dim, int spacedim>
 inline unsigned int
@@ -3094,8 +3077,6 @@ FiniteElement<dim, spacedim>::element_multiplicity(
 {
   return static_cast<unsigned int>(base_to_block_indices.block_size(index));
 }
-
-
 
 template <int dim, int spacedim>
 inline unsigned int
@@ -3121,8 +3102,6 @@ FiniteElement<dim, spacedim>::component_to_system_index(
                       "shape function exists."));
   return std::distance(system_to_component_table.begin(), it);
 }
-
-
 
 template <int dim, int spacedim>
 inline std::pair<unsigned int, unsigned int>
@@ -3152,8 +3131,6 @@ FiniteElement<dim, spacedim>::face_system_to_component_index(
   return face_system_to_component_table[index];
 }
 
-
-
 template <int dim, int spacedim>
 inline std::pair<std::pair<unsigned int, unsigned int>, unsigned int>
 FiniteElement<dim, spacedim>::system_to_base_index(
@@ -3163,8 +3140,6 @@ FiniteElement<dim, spacedim>::system_to_base_index(
          ExcIndexRange(index, 0, system_to_base_table.size()));
   return system_to_base_table[index];
 }
-
-
 
 template <int dim, int spacedim>
 inline std::pair<std::pair<unsigned int, unsigned int>, unsigned int>
@@ -3176,8 +3151,6 @@ FiniteElement<dim, spacedim>::face_system_to_base_index(
   return face_system_to_base_table[index];
 }
 
-
-
 template <int dim, int spacedim>
 inline types::global_dof_index
 FiniteElement<dim, spacedim>::first_block_of_base(
@@ -3185,8 +3158,6 @@ FiniteElement<dim, spacedim>::first_block_of_base(
 {
   return base_to_block_indices.block_start(index);
 }
-
-
 
 template <int dim, int spacedim>
 inline std::pair<unsigned int, unsigned int>
@@ -3199,8 +3170,6 @@ FiniteElement<dim, spacedim>::component_to_base_index(
   return component_to_base_table[index].first;
 }
 
-
-
 template <int dim, int spacedim>
 inline std::pair<unsigned int, unsigned int>
 FiniteElement<dim, spacedim>::block_to_base_index(
@@ -3208,8 +3177,6 @@ FiniteElement<dim, spacedim>::block_to_base_index(
 {
   return base_to_block_indices.global_to_local(index);
 }
-
-
 
 template <int dim, int spacedim>
 inline std::pair<unsigned int, types::global_dof_index>
@@ -3227,8 +3194,6 @@ FiniteElement<dim, spacedim>::system_to_block_index(
     system_to_base_table[index].second);
 }
 
-
-
 template <int dim, int spacedim>
 inline bool
 FiniteElement<dim, spacedim>::restriction_is_additive(
@@ -3239,8 +3204,6 @@ FiniteElement<dim, spacedim>::restriction_is_additive(
   return restriction_is_additive_flags[index];
 }
 
-
-
 template <int dim, int spacedim>
 inline const ComponentMask&
 FiniteElement<dim, spacedim>::get_nonzero_components(const unsigned int i) const
@@ -3248,8 +3211,6 @@ FiniteElement<dim, spacedim>::get_nonzero_components(const unsigned int i) const
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
   return nonzero_components[i];
 }
-
-
 
 template <int dim, int spacedim>
 inline unsigned int
@@ -3259,16 +3220,12 @@ FiniteElement<dim, spacedim>::n_nonzero_components(const unsigned int i) const
   return n_nonzero_components_table[i];
 }
 
-
-
 template <int dim, int spacedim>
 inline bool
 FiniteElement<dim, spacedim>::is_primitive() const
 {
   return cached_primitivity;
 }
-
-
 
 template <int dim, int spacedim>
 inline bool
@@ -3291,8 +3248,6 @@ FiniteElement<dim, spacedim>::is_primitive(const unsigned int i) const
   return (is_primitive() || (n_nonzero_components_table[i] == 1));
 }
 
-
-
 template <int dim, int spacedim>
 inline GeometryPrimitive
 FiniteElement<dim, spacedim>::get_associated_geometry_primitive(
@@ -3312,8 +3267,6 @@ FiniteElement<dim, spacedim>::get_associated_geometry_primitive(
   else
     return GeometryPrimitive::hex;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

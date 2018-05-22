@@ -24,7 +24,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_tools.h>
 
-
 template <int dim>
 void
 test()
@@ -95,8 +94,6 @@ test()
           }
     }
 }
-
-
 
 int
 main(int argc, char* argv[])

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for GridTools::guess_point_owner
 
 #include "../tests.h"
@@ -186,7 +185,6 @@ main()
       deallog << "Simulating " << d << " processes" << std::endl;
       test_point_owner<2>(d);
     }
-
 
   deallog << std::endl << "Test for dimension 3" << std::endl;
   for(unsigned int d = 1; d < 17; d += 2)

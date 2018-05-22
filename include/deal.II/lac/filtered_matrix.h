@@ -16,8 +16,6 @@
 #ifndef dealii_filtered_matrix_h
 #  define dealii_filtered_matrix_h
 
-
-
 #  include <algorithm>
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/memory_consumption.h>
@@ -35,7 +33,6 @@ class FilteredMatrixBlock;
 /*! @addtogroup Matrix2
  *@{
  */
-
 
 /**
  * This class is a wrapper for linear systems of equations with simple
@@ -569,7 +566,6 @@ private:
 /*@}*/
 /*---------------------- Inline functions -----------------------------------*/
 
-
 //--------------------------------Iterators--------------------------------------//
 
 template <typename VectorType>
@@ -582,16 +578,12 @@ inline FilteredMatrix<VectorType>::Accessor::Accessor(
          ExcIndexRange(index, 0, matrix->constraints.size()));
 }
 
-
-
 template <typename VectorType>
 inline types::global_dof_index
 FilteredMatrix<VectorType>::Accessor::row() const
 {
   return matrix->constraints[index].first;
 }
-
-
 
 template <typename VectorType>
 inline types::global_dof_index
@@ -600,16 +592,12 @@ FilteredMatrix<VectorType>::Accessor::column() const
   return matrix->constraints[index].first;
 }
 
-
-
 template <typename VectorType>
 inline double
 FilteredMatrix<VectorType>::Accessor::value() const
 {
   return matrix->constraints[index].second;
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -619,16 +607,12 @@ FilteredMatrix<VectorType>::Accessor::advance()
   ++index;
 }
 
-
-
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::const_iterator::const_iterator(
   const FilteredMatrix<VectorType>* matrix,
   const size_type                   index)
   : accessor(matrix, index)
 {}
-
-
 
 template <typename VectorType>
 inline typename FilteredMatrix<VectorType>::const_iterator&
@@ -638,7 +622,6 @@ FilteredMatrix<VectorType>::const_iterator::operator++()
   return *this;
 }
 
-
 template <typename number>
 inline const typename FilteredMatrix<number>::Accessor&
   FilteredMatrix<number>::const_iterator::operator*() const
@@ -646,14 +629,12 @@ inline const typename FilteredMatrix<number>::Accessor&
   return accessor;
 }
 
-
 template <typename number>
 inline const typename FilteredMatrix<number>::Accessor*
   FilteredMatrix<number>::const_iterator::operator->() const
 {
   return &accessor;
 }
-
 
 template <typename number>
 inline bool
@@ -664,7 +645,6 @@ operator==(const const_iterator& other) const
           && accessor.matrix == other.accessor.matrix);
 }
 
-
 template <typename number>
 inline bool
 FilteredMatrix<number>::const_iterator::
@@ -672,8 +652,6 @@ operator!=(const const_iterator& other) const
 {
   return !(*this == other);
 }
-
-
 
 //------------------------------- FilteredMatrix ---------------------------------------//
 
@@ -684,14 +662,12 @@ FilteredMatrix<number>::begin() const
   return const_iterator(this, 0);
 }
 
-
 template <typename number>
 inline typename FilteredMatrix<number>::const_iterator
 FilteredMatrix<number>::end() const
 {
   return const_iterator(this, constraints.size());
 }
-
 
 template <typename VectorType>
 inline bool
@@ -700,8 +676,6 @@ operator()(const IndexValuePair& i1, const IndexValuePair& i2) const
 {
   return (i1.first < i2.first);
 }
-
-
 
 template <typename VectorType>
 template <typename MatrixType>
@@ -713,14 +687,10 @@ FilteredMatrix<VectorType>::initialize(const MatrixType& m, bool ecs)
   expect_constrained_source = ecs;
 }
 
-
-
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::FilteredMatrix()
   : expect_constrained_source(false)
 {}
-
-
 
 template <typename VectorType>
 inline FilteredMatrix<VectorType>::FilteredMatrix(const FilteredMatrix& fm)
@@ -730,8 +700,6 @@ inline FilteredMatrix<VectorType>::FilteredMatrix(const FilteredMatrix& fm)
     constraints(fm.constraints)
 {}
 
-
-
 template <typename VectorType>
 template <typename MatrixType>
 inline FilteredMatrix<VectorType>::FilteredMatrix(const MatrixType& m,
@@ -740,8 +708,6 @@ inline FilteredMatrix<VectorType>::FilteredMatrix(const MatrixType& m,
 {
   initialize(m, ecs);
 }
-
-
 
 template <typename VectorType>
 inline FilteredMatrix<VectorType>&
@@ -753,8 +719,6 @@ FilteredMatrix<VectorType>::operator=(const FilteredMatrix& fm)
   return *this;
 }
 
-
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::add_constraint(const size_type index,
@@ -763,8 +727,6 @@ FilteredMatrix<VectorType>::add_constraint(const size_type index,
   // add new constraint to end
   constraints.push_back(IndexValuePair(index, value));
 }
-
-
 
 template <typename VectorType>
 template <class ConstraintList>
@@ -785,8 +747,6 @@ FilteredMatrix<VectorType>::add_constraints(
                      PairComparison());
 }
 
-
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::clear_constraints()
@@ -796,8 +756,6 @@ FilteredMatrix<VectorType>::clear_constraints()
   constraints.swap(empty);
 }
 
-
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::clear()
@@ -805,8 +763,6 @@ FilteredMatrix<VectorType>::clear()
   clear_constraints();
   matrix.reset();
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -816,7 +772,6 @@ FilteredMatrix<VectorType>::apply_constraints(
 {
   apply_constraints(v);
 }
-
 
 template <typename VectorType>
 inline void
@@ -846,7 +801,6 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
     }
 }
 
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
@@ -858,8 +812,6 @@ FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
   for(; i != e; ++i)
     v(i->first) = 0;
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -876,8 +828,6 @@ FilteredMatrix<VectorType>::post_filter(const VectorType& in,
       out(i->first) = in(i->first);
     }
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -904,8 +854,6 @@ FilteredMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
   post_filter(src, dst);
 }
 
-
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
@@ -930,8 +878,6 @@ FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
   // finally do post-filtering
   post_filter(src, dst);
 }
-
-
 
 template <typename VectorType>
 inline void
@@ -959,8 +905,6 @@ FilteredMatrix<VectorType>::vmult_add(VectorType&       dst,
   post_filter(src, dst);
 }
 
-
-
 template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::Tvmult_add(VectorType&       dst,
@@ -987,8 +931,6 @@ FilteredMatrix<VectorType>::Tvmult_add(VectorType&       dst,
   post_filter(src, dst);
 }
 
-
-
 template <typename VectorType>
 inline std::size_t
 FilteredMatrix<VectorType>::memory_consumption() const
@@ -996,8 +938,6 @@ FilteredMatrix<VectorType>::memory_consumption() const
   return (MemoryConsumption::memory_consumption(matrix)
           + MemoryConsumption::memory_consumption(constraints));
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

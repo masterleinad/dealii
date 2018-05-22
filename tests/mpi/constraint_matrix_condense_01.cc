@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix::condense(Vector) for parallel vectors. this
 // function used to crash
 //
@@ -26,7 +24,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/lac/petsc_parallel_vector.h>
-
 
 void
 test()
@@ -75,7 +72,6 @@ test()
   constraints.condense(force);
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -94,7 +90,6 @@ main(int argc, char* argv[])
     }
   else
     test();
-
 
   return 0;
 }

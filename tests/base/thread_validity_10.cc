@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // see that we can query a thread object that has never been
 // assigned
 
@@ -22,10 +21,8 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 Threads::Mutex mutex;
 int            spin_lock = 0;
-
 
 int
 worker()
@@ -33,8 +30,6 @@ worker()
   sleep(1);
   return 42;
 }
-
-
 
 int
 main()

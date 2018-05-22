@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that ghosted vectors are read-only
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -84,8 +81,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

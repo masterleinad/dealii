@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_face.h>
 #include <deal.II/fe/fe_trace.h>
 
 // check
 //   FE_FaceQ/FaceP/TraceQ::face_interpolation
-
-
 
 void
 output_matrix(const FullMatrix<double>& m)
@@ -40,7 +37,6 @@ output_matrix(const FullMatrix<double>& m)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }
-
 
 template <int dim>
 void
@@ -95,7 +91,6 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
       {}
 }
 
-
 template <int dim>
 void
 check(const unsigned int degree1, const unsigned int degree2)
@@ -124,7 +119,6 @@ check(const unsigned int degree1, const unsigned int degree2)
     }
 }
 
-
 template <int dim>
 void
 check()
@@ -137,8 +131,6 @@ check()
   check<dim>(1, 3);
   check<dim>(2, 3);
 }
-
-
 
 int
 main()

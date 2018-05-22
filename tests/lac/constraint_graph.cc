@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // take hp/random and generate the graph of constraints
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -30,8 +27,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 template <int dim>
 void
@@ -64,7 +59,6 @@ test()
   DoFTools::make_hanging_node_constraints(dof_handler, cm);
   cm.write_dot(deallog.get_file_stream());
 }
-
 
 int
 main()

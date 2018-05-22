@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tests DataPostprocessor: create a FE field that has two components of
 // the kind cos(something) and sin(something) and then have a postprocessor
 // that computes the sum of squares. should always be equal to one
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -36,10 +34,7 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/data_postprocessor.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 class LaplaceProblem
@@ -64,13 +59,10 @@ private:
   Vector<double> solution;
 };
 
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : fe(FE_Q<dim>(1), 2), dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -84,8 +76,6 @@ LaplaceProblem<dim>::make_grid_and_dofs()
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 class SinesAndCosines : public Function<dim>
@@ -110,8 +100,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::solve()
@@ -121,7 +109,6 @@ LaplaceProblem<dim>::solve()
   // of the file
   VectorTools::interpolate(dof_handler, SinesAndCosines<dim>(), solution);
 }
-
 
 template <int dim>
 class MyPostprocessor : public DataPostprocessor<dim>
@@ -165,8 +152,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::output_results() const
@@ -179,8 +164,6 @@ LaplaceProblem<dim>::output_results() const
   data_out.write_gnuplot(logfile);
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -189,8 +172,6 @@ LaplaceProblem<dim>::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

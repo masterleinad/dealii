@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -37,7 +36,6 @@
 #include <iostream>
 
 using namespace dealii;
-
 
 template <int dim>
 class MixedElastoPlasticity
@@ -66,8 +64,6 @@ private:
   BlockVector<double>       solution;
 };
 
-
-
 template <int dim>
 MixedElastoPlasticity<dim>::MixedElastoPlasticity(const unsigned int degree)
   : degree(degree),
@@ -79,8 +75,6 @@ MixedElastoPlasticity<dim>::MixedElastoPlasticity(const unsigned int degree)
        n_gamma_components),
     dof_handler(triangulation)
 {}
-
-
 
 template <int dim>
 void
@@ -136,8 +130,6 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   solution.collect_sizes();
 }
 
-
-
 template <int dim>
 void
 MixedElastoPlasticity<dim>::assemble_system()
@@ -182,7 +174,6 @@ MixedElastoPlasticity<dim>::assemble_system()
         deallog << "\t" << i << "\t" << i_group << "\t" << i_index << "\t"
                 << i_node;
 
-
         if(i_group == 0) // if i corresponds to tensor stress
           solution(local_dof_indices[i]) = stress_value;
         else // i corresponds to scalar gamma
@@ -190,7 +181,6 @@ MixedElastoPlasticity<dim>::assemble_system()
 
         deallog << "\t" << solution(local_dof_indices[i]) << std::endl;
       }
-
 
     std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
     std::vector<SymmetricTensor<2, dim>> local_values(
@@ -225,8 +215,6 @@ MixedElastoPlasticity<dim>::assemble_system()
   }
 }
 
-
-
 template <int dim>
 void
 MixedElastoPlasticity<dim>::run()
@@ -234,8 +222,6 @@ MixedElastoPlasticity<dim>::run()
   make_grid_and_dofs();
   assemble_system();
 }
-
-
 
 int
 main()

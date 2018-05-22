@@ -20,10 +20,8 @@
 // The output is verified solely by visualizing the resulting active cells
 // within skin distance to predicate subdomain using vtk files
 
-
 // write VTK files for visual inspection
 //#define WRITE_VTK
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
@@ -55,19 +53,16 @@ write_mat_id_to_file(const Triangulation<dim>& tria)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test()
 {
   deallog << "dim = " << dim << std::endl;
 
-
   std::vector<double>
     step_sizes_i; // step sizes in i direction (similar in all directions)
   std::vector<std::vector<double>>
     step_sizes; // step sizes as input to the subdivided_hyper_rectangle
-
 
   unsigned int n_steps = 25;
   double       size    = 0.; // size of domain in i direction
@@ -149,7 +144,6 @@ test()
   }
 #endif
 }
-
 
 int
 main()

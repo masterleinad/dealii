@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh and distribute with a custom function
 // tests that the correct cells are set to artificial in multigrid
 
@@ -25,7 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -71,7 +69,6 @@ test()
       | parallel::shared::Triangulation<dim>::construct_multigrid_hierarchy));
   shared_tria.signals.post_refinement.connect(
     std::bind(&mypartition<dim>, std::ref(shared_tria)));
-
 
   GridGenerator::hyper_cube(shared_tria);
   shared_tria.refine_global(2);

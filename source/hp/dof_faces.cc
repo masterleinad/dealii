@@ -32,7 +32,6 @@ namespace internal
               + MemoryConsumption::memory_consumption(dof_offsets));
     }
 
-
     // explicit instantiations
     template std::size_t
     DoFIndicesOnFacesOrEdges<1>::memory_consumption() const;
@@ -43,7 +42,6 @@ namespace internal
     template std::size_t
     DoFIndicesOnFacesOrEdges<3>::memory_consumption() const;
 
-
     // ---------------------- DoFFaces ----------------------------
 
     std::size_t
@@ -52,15 +50,11 @@ namespace internal
       return 0;
     }
 
-
-
     std::size_t
     DoFIndicesOnFaces<2>::memory_consumption() const
     {
       return MemoryConsumption::memory_consumption(lines);
     }
-
-
 
     std::size_t
     DoFIndicesOnFaces<3>::memory_consumption() const

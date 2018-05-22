@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Create a mesh with ncpu * 5 cells, assign refinement indicators
 // between 1 and 5 to each locally owned cell and refine and coarsen
 // 20% each
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void
 test()
@@ -60,7 +56,6 @@ test()
           indicators(cell_index) = my_cell_index;
         }
   }
-
 
   parallel::distributed::GridRefinement ::refine_and_coarsen_fixed_number(
     tr, indicators, 0.2, 0.2);
@@ -110,14 +105,12 @@ test()
             << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

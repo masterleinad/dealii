@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _03, but use an alias to reference two parameters using the same name.
 // in the _with_alias_01 testcase, the alias doesn't do anything (we just
 // declare it, but the input file still references the original name) whereas
@@ -22,7 +20,6 @@
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

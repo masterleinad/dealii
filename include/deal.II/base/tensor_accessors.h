@@ -20,7 +20,6 @@
 #include <deal.II/base/table_indices.h>
 #include <deal.II/base/template_constraints.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -83,7 +82,6 @@ namespace TensorAccessors
     class Contract3;
   } // namespace internal
 
-
   /**
    * This class provides a local typedef @p value_type denoting the resulting
    * type of an access with operator[](unsigned int). More precisely, @p
@@ -124,7 +122,6 @@ namespace TensorAccessors
     typedef const T value_type;
   };
 
-
   /**
    * This class provides a local typedef @p value_type that is equal to the
    * typedef <code>value_type</code> after @p deref_steps recursive
@@ -145,7 +142,6 @@ namespace TensorAccessors
   {
     typedef T value_type;
   };
-
 
   /**
    * Provide a "tensorial view" to a reference @p t of a tensor object of rank
@@ -196,7 +192,6 @@ namespace TensorAccessors
     return internal::ReorderedIndexView<index, rank, T>(t);
   }
 
-
   /**
    * Return a reference (const or non-const) to a subobject of a tensorial
    * object @p t of type @p T, as described by an array type @p ArrayType
@@ -226,7 +221,6 @@ namespace TensorAccessors
     return internal::ExtractHelper<0, rank>::template extract<T, ArrayType>(
       t, indices);
   }
-
 
   /**
    * This function contracts two tensorial objects @p left and @p right and
@@ -289,7 +283,6 @@ namespace TensorAccessors
       template contract<T1, T2, T3>(result, left, right);
   }
 
-
   /**
    * Full contraction of three tensorial objects:
    *
@@ -332,7 +325,6 @@ namespace TensorAccessors
       template contract3<T1, T2, T3, T4>(left, middle, right);
   }
 
-
   namespace internal
   {
     // -------------------------------------------------------------------------
@@ -372,7 +364,6 @@ namespace TensorAccessors
     {
       typedef ReorderedIndexView<index, rank, T> type;
     };
-
 
     // TODO: Is there a possibility to just have the following block of
     // explanation on an internal page in doxygen? If, yes. Doxygen
@@ -560,7 +551,6 @@ namespace TensorAccessors
       const int i_;
     };
 
-
     // -------------------------------------------------------------------------
     // Implementation of helper classes for extract
     // -------------------------------------------------------------------------
@@ -593,7 +583,6 @@ namespace TensorAccessors
         return t;
       }
     };
-
 
     // -------------------------------------------------------------------------
     // Implementation of helper classes for contract
@@ -714,7 +703,6 @@ namespace TensorAccessors
         return left * right;
       }
     };
-
 
     // -------------------------------------------------------------------------
     // Implementation of helper classes for contract3

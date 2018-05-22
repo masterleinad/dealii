@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Show the Jacobians, inverse Jacobians, and Jacobian gradients of
 // FEFaceValues and FESubfaceValues on a Cartesian mesh with MappingCartesian
 // with one quadrature point
@@ -381,7 +380,6 @@ test()
     deallog << std::endl;
   }
 }
-
 
 int
 main()

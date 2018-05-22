@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that using ParameterHandler::set with a parameter that doesn't conform
 // to the specs leads to an error
 
@@ -37,7 +35,6 @@ check()
     }
   deallog << "test_1=" << prm.get("test_1") << std::endl;
 }
-
 
 int
 main()

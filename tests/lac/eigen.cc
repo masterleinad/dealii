@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/eigen.h>

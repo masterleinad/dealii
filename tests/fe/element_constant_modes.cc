@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
@@ -24,7 +23,6 @@
 #include <deal.II/fe/fe_q_iso_q1.h>
 #include <deal.II/fe/fe_system.h>
 #include <string>
-
 
 template <int dim>
 void
@@ -41,7 +39,6 @@ print_constant_modes(const FiniteElement<dim>& fe)
     }
   deallog << std::endl;
 }
-
 
 template <int dim>
 void
@@ -74,7 +71,6 @@ test<1>()
   print_constant_modes(FESystem<1>(FE_Q<1>(1), 2, FE_Q<1>(2), 1));
   print_constant_modes(FESystem<1>(FE_DGP<1>(1), 1, FE_Q_iso_Q1<1>(2), 1));
 }
-
 
 int
 main()

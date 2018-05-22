@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q_hierarchical.h>
 
@@ -24,7 +23,6 @@
 //TODO: implement the adjust_quad_dof_index_for_face_orientation_table and
 //adjust_line_dof_index_for_line_orientation_table fields, and write tests
 //similar to bits/face_orientation_and_fe_q_*
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -52,8 +50,6 @@ namespace internal
     } // namespace
   }   // namespace FE_Q_Hierarchical
 } // namespace internal
-
-
 
 template <int dim>
 FE_Q_Hierarchical<dim>::FE_Q_Hierarchical(const unsigned int degree)
@@ -112,8 +108,6 @@ FE_Q_Hierarchical<dim>::FE_Q_Hierarchical(const unsigned int degree)
   initialize_generalized_face_support_points();
 }
 
-
-
 template <int dim>
 std::string
 FE_Q_Hierarchical<dim>::get_name() const
@@ -131,16 +125,12 @@ FE_Q_Hierarchical<dim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_Q_Hierarchical<dim>::clone() const
 {
   return std_cxx14::make_unique<FE_Q_Hierarchical<dim>>(*this);
 }
-
-
 
 template <int dim>
 void
@@ -210,14 +200,12 @@ FE_Q_Hierarchical<dim>::get_prolongation_matrix(
   return this->prolongation[refinement_case - 1][child];
 }
 
-
 template <int dim>
 bool
 FE_Q_Hierarchical<dim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -366,11 +354,9 @@ FE_Q_Hierarchical<dim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <int dim>
 void
@@ -482,8 +468,6 @@ FE_Q_Hierarchical<dim>::build_dofs_cell(
             }
         }
 }
-
-
 
 template <int dim>
 void
@@ -651,8 +635,6 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
     }
 }
 
-
-
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
@@ -787,8 +769,6 @@ FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
         }
 }
 
-
-
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::initialize_generalized_support_points()
@@ -864,15 +844,12 @@ FE_Q_Hierarchical<dim>::initialize_generalized_support_points()
         };
 }
 
-
-
 template <>
 void
 FE_Q_Hierarchical<1>::initialize_generalized_face_support_points()
 {
   // no faces in 1d, so nothing to do
 }
-
 
 template <>
 void
@@ -883,7 +860,6 @@ FE_Q_Hierarchical<1>::get_face_interpolation_matrix(
   Assert(false, ExcImpossibleInDim(1));
 }
 
-
 template <>
 void
 FE_Q_Hierarchical<1>::get_subface_interpolation_matrix(
@@ -893,8 +869,6 @@ FE_Q_Hierarchical<1>::get_subface_interpolation_matrix(
 {
   Assert(false, ExcImpossibleInDim(1));
 }
-
-
 
 template <int dim>
 void
@@ -980,8 +954,6 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
         }
     }
 }
-
-
 
 template <int dim>
 void
@@ -1907,8 +1879,6 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
     }
 }
 
-
-
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::initialize_generalized_face_support_points()
@@ -1957,7 +1927,6 @@ FE_Q_Hierarchical<dim>::initialize_generalized_face_support_points()
         };
 }
 
-
 // we use same dpo_vector as FE_Q
 template <int dim>
 std::vector<unsigned int>
@@ -1968,8 +1937,6 @@ FE_Q_Hierarchical<dim>::get_dpo_vector(const unsigned int deg)
     dpo[i] = dpo[i - 1] * (deg - 1);
   return dpo;
 }
-
-
 
 template <int dim>
 std::vector<unsigned int>
@@ -2144,7 +2111,6 @@ FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
   return h2l;
 }
 
-
 template <int dim>
 std::vector<unsigned int>
 FE_Q_Hierarchical<dim>::face_fe_q_hierarchical_to_hierarchic_numbering(
@@ -2157,8 +2123,6 @@ FE_Q_Hierarchical<dim>::face_fe_q_hierarchical_to_hierarchic_numbering(
       fe_data));
 }
 
-
-
 template <>
 std::vector<unsigned int>
 FE_Q_Hierarchical<1>::face_fe_q_hierarchical_to_hierarchic_numbering(
@@ -2166,7 +2130,6 @@ FE_Q_Hierarchical<1>::face_fe_q_hierarchical_to_hierarchic_numbering(
 {
   return std::vector<unsigned int>();
 }
-
 
 template <>
 bool
@@ -2178,7 +2141,6 @@ FE_Q_Hierarchical<1>::has_support_on_face(const unsigned int shape_index,
   Assert(face_index < GeometryInfo<1>::faces_per_cell,
          ExcIndexRange(face_index, 0, GeometryInfo<1>::faces_per_cell));
 
-
   // in 1d, things are simple. since
   // there is only one degree of
   // freedom per vertex in this
@@ -2188,8 +2150,6 @@ FE_Q_Hierarchical<1>::has_support_on_face(const unsigned int shape_index,
   return (((shape_index == 0) && (face_index == 0))
           || ((shape_index == 1) && (face_index == 1)));
 }
-
-
 
 template <int dim>
 bool
@@ -2275,8 +2235,6 @@ FE_Q_Hierarchical<dim>::has_support_on_face(const unsigned int shape_index,
   Assert(false, ExcInternalError());
   return false;
 }
-
-
 
 template <int dim>
 std::vector<unsigned int>
@@ -2416,8 +2374,6 @@ FE_Q_Hierarchical<dim>::get_embedding_dofs(const unsigned int sub_degree) const
     }
 }
 
-
-
 template <int dim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_Q_Hierarchical<dim>::get_constant_modes() const
@@ -2433,8 +2389,6 @@ FE_Q_Hierarchical<dim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
-
-
 template <int dim>
 std::size_t
 FE_Q_Hierarchical<dim>::memory_consumption() const
@@ -2443,10 +2397,7 @@ FE_Q_Hierarchical<dim>::memory_consumption() const
   return 0;
 }
 
-
-
 // explicit instantiations
 #include "fe_q_hierarchical.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

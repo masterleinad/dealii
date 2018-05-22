@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that FE_Nothing works as intended
 
 // Create a mesh with hanging nodes and FEQ/FENothing interfaces in
@@ -48,7 +46,6 @@
 // Dofs 14 and 15 should be constrained, but at one time only 14 was
 // constrained
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -65,8 +62,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/hp/fe_values.h>
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 template <int dim>
 void
@@ -134,7 +129,6 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
-
   // .... test constraint handling
 
   ConstraintMatrix constraints;
@@ -172,8 +166,6 @@ test()
       }
   }
 }
-
-
 
 int
 main()

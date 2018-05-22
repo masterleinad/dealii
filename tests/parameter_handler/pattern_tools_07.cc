@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <boost/core/demangle.hpp>
 #include <deal.II/base/numbers.h>
@@ -59,7 +58,6 @@ main()
   t04.insert(t04.end(), 4);
   t05.insert(t05.end(), 5);
   t06.insert(t06.end(), 6);
-
 
   t00.insert(t00.end(), 1);
   t01.insert(t01.end(), 2);

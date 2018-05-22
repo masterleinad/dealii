@@ -23,7 +23,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * A finite element that is a tensor product polynomial on each face and
  * undefined in the interior of the cells. The basis functions on the faces
@@ -203,8 +202,6 @@ private:
   get_dpo_vector(const unsigned int deg);
 };
 
-
-
 /**
  * Specialization of FE_FaceQ for 1D. In that case, the finite element only
  * consists of one degree of freedom in each of the two faces (= vertices) of
@@ -348,7 +345,6 @@ protected:
    * because we otherwise run into a compiler error with MS Visual Studio.
    */
 
-
   virtual std::unique_ptr<typename FiniteElement<1, spacedim>::InternalDataBase>
   get_data(const UpdateFlags /*update_flags*/,
            const Mapping<1, spacedim>& /*mapping*/,
@@ -446,8 +442,6 @@ private:
   static std::vector<unsigned int>
   get_dpo_vector(const unsigned int deg);
 };
-
-
 
 /**
  * A finite element that is a Legendre element of complete polynomials on
@@ -565,8 +559,6 @@ private:
   get_dpo_vector(const unsigned int deg);
 };
 
-
-
 /**
  * FE_FaceP in 1D, i.e., with degrees of freedom on the element vertices.
  * See the documentation of the general template for more information.
@@ -586,7 +578,6 @@ public:
   std::string
   get_name() const override;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

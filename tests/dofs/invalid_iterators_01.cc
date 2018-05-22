@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that assigning one invalid iterator to another works. this
 // test is for ::DoFHandler
 
@@ -21,7 +20,6 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -37,8 +35,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

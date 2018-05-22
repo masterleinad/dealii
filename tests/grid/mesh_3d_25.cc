@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // an adaptation of the mesh_3d_22 test.  check that
 // VectorTools::interpolate works for FE_Q(p) elements correctly on a mesh
 // with a cell that has a wrong face rotation. when using a MappingQ(3), we
@@ -64,8 +62,6 @@ private:
   const unsigned int q;
 };
 
-
-
 template <int dim>
 void
 test(Triangulation<dim>& triangulation)
@@ -102,8 +98,6 @@ test(Triangulation<dim>& triangulation)
         }
     }
 }
-
-
 
 int
 main()

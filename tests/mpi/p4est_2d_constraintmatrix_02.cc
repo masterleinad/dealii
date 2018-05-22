@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix for a distributed mesh,
 // also compare with/without sparse line_cache via IndexSet.
 // Refine one corner.
@@ -49,7 +47,6 @@ test()
     {
       if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "step " << i << std::endl;
-
 
       tr.begin_active()->set_refine_flag();
       tr.execute_coarsening_and_refinement();
@@ -87,14 +84,12 @@ test()
     }
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

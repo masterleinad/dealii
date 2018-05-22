@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like _02, but verify that the elements in each partition really do
 // not conflict
-
 
 #include "../tests.h"
 #include <vector>

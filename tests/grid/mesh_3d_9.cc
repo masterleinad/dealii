@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that face orientation flags work. at one point in time we
 // mixed up the generation of edges associated with faces for the
 // non-standard case when refining the mesh. like in mesh_3d_8, but
@@ -52,7 +50,6 @@ void check_this(Triangulation<3>& tria)
   deallog << "    ok." << std::endl;
 }
 
-
 void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
@@ -73,7 +70,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

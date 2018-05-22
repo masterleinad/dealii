@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the functionality of the laplacian in the FEFieldFunction class.
 
 #include "../tests.h"

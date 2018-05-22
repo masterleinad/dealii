@@ -16,13 +16,11 @@
 #ifndef dealii_integration_info_templates_h
 #define dealii_integration_info_templates_h
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/meshworker/dof_info.h>
 #include <deal.II/meshworker/integration_info.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace MeshWorker
 {
@@ -74,15 +72,12 @@ namespace MeshWorker
       }
   }
 
-
   template <int dim, int sdim>
   void
   IntegrationInfo<dim, sdim>::clear()
   {
     fevalv.resize(0);
   }
-
-
 
   template <int dim, int sdim>
   template <typename number>
@@ -157,7 +152,6 @@ namespace MeshWorker
       }
   }
 
-
   template <int dim, int sdim>
   std::size_t
   IntegrationInfo<dim, sdim>::memory_consumption() const
@@ -180,7 +174,6 @@ namespace MeshWorker
     face_flags     = update_default;
     neighbor_flags = update_default;
   }
-
 
   template <int dim, int sdim>
   void
@@ -220,7 +213,6 @@ namespace MeshWorker
       neighbor_flags |= update_hessians;
   }
 
-
   template <int dim, int sdim>
   void
   IntegrationInfoBox<dim, sdim>::add_update_flags(const UpdateFlags flags,
@@ -238,7 +230,6 @@ namespace MeshWorker
     if(neighbor)
       neighbor_flags |= flags;
   }
-
 
   template <int dim, int sdim>
   std::size_t
@@ -272,7 +263,6 @@ namespace MeshWorker
     return mem;
   }
 } // namespace MeshWorker
-
 
 DEAL_II_NAMESPACE_CLOSE
 

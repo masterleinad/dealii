@@ -43,7 +43,6 @@ main()
   radii.push_back(1.5);
   radii.push_back(2);
 
-
   kdtree.set_points(points);
 
   std::vector<std::pair<unsigned int, double>> matches;

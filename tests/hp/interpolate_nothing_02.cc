@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _01, but with the real testcase by Krishna Garikipati
 
 #include "../tests.h"
@@ -39,7 +37,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
 
 #define DIMS 3
 #define totalDOF 4
@@ -212,7 +209,6 @@ diffusionMechanics<dim>::setup_system()
           << std::endl;
 }
 
-
 //Run
 template <int dim>
 void
@@ -248,7 +244,6 @@ diffusionMechanics<dim>::run()
 
   deallog << Un.l2_norm() << std::endl;
 }
-
 
 int
 main()

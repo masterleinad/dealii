@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this is a test opposite of thread_validity_05: if we have a function that
 // gets an argument *by value* rather than by reference, then make sure that
 // it is actually copied when passed to a new thread by reference
@@ -41,7 +40,6 @@ struct X
   int i;
 };
 
-
 void
 execute_ref(const X& x)
 {
@@ -60,7 +58,6 @@ execute_value(X x)
   deallog << "OK" << std::endl;
 }
 
-
 void
 test()
 {
@@ -75,8 +72,6 @@ test()
     t.join();
   }
 }
-
-
 
 int
 main()

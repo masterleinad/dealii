@@ -16,7 +16,6 @@
 #ifndef dealii_data_out_stack_h
 #define dealii_data_out_stack_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/data_out_base.h>
 #include <deal.II/base/smartpointer.h>
@@ -178,7 +177,6 @@ public:
   void
   declare_data_vector(const std::vector<std::string>& name,
                       const VectorType                vector_type);
-
 
   /**
    * Add a data vector for the presently set value of the parameter.
@@ -358,7 +356,6 @@ private:
   virtual const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>&
   get_patches() const override;
 
-
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
@@ -366,7 +363,6 @@ private:
   virtual std::vector<std::string>
   get_dataset_names() const override;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

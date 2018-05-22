@@ -55,13 +55,11 @@
 #include <fstream>
 #include <iostream>
 
-
 // The final part of the top matter is to open a namespace into which to put
 // everything, and then to import the dealii namespace into it.
 namespace Step53
 {
   using namespace dealii;
-
 
   // @sect3{Describing topography: AfricaTopography}
   //
@@ -97,7 +95,6 @@ namespace Step53
     get_data();
   };
 
-
   // Let us move to the implementation of the class. The interesting parts
   // of the class are the constructor and the <code>value()</code> function.
   // The former initializes the Functions::InterpolatedUniformGridData member
@@ -121,14 +118,12 @@ namespace Step53
                       Table<2, double>(380, 220, get_data().begin()))
   {}
 
-
   double
   AfricaTopography::value(const double lon, const double lat) const
   {
     return topography_data.value(
       Point<2>(-lat * 180 / numbers::PI, lon * 180 / numbers::PI));
   }
-
 
   std::array<std::pair<double, double>, 2>
   AfricaTopography::get_endpoints()
@@ -139,7 +134,6 @@ namespace Step53
     return endpoints;
   }
 
-
   std::array<unsigned int, 2>
   AfricaTopography::n_intervals()
   {
@@ -148,7 +142,6 @@ namespace Step53
     endpoints[1] = 219;
     return endpoints;
   }
-
 
   // The only other function of greater interest is the <code>get_data()</code>
   // function. It returns a temporary vector that contains all 83,600 data
@@ -205,7 +198,6 @@ namespace Step53
     return data;
   }
 
-
   // @sect3{Describing the geometry: AfricaGeometry}
   //
   // The following class is then the main one of this program. Its structure
@@ -240,10 +232,8 @@ namespace Step53
     pull_back_topo(const Point<3>& phi_theta_d) const;
   };
 
-
   const double AfricaGeometry::R           = 6378137;
   const double AfricaGeometry::ellipticity = 8.1819190842622e-2;
-
 
   // The implementation, as well, is pretty straightforward if you have
   // read the introduction. In particular, both of the pull back and
@@ -261,7 +251,6 @@ namespace Step53
     return push_forward_wgs84(push_forward_topo(chart_point));
   }
 
-
   // This function is required by the interface of the Manifold base
   // class, and allows you to clone the AfricaGeometry class. This is
   // where we use a feature that is only available in C++14, namely the
@@ -276,7 +265,6 @@ namespace Step53
   {
     return std_cxx14::make_unique<AfricaGeometry>();
   }
-
 
   // The following two functions then define the forward and inverse
   // transformations that correspond to the WGS 84 reference shape of
@@ -333,7 +321,6 @@ namespace Step53
     return phi_theta_d;
   }
 
-
   // In contrast, the topography transformations follow exactly the
   // description in the introduction. There is not consequently not
   // much to add:
@@ -356,7 +343,6 @@ namespace Step53
     const Point<3> phi_theta_d_hat(phi_theta_d[0], phi_theta_d[1], d_hat);
     return phi_theta_d_hat;
   }
-
 
   // @sect3{Creating the mesh}
   //
@@ -461,8 +447,6 @@ namespace Step53
     grid_out.write_vtu(triangulation, out);
   }
 } // namespace Step53
-
-
 
 // @sect3{The main function}
 

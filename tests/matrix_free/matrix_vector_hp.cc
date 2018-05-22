@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix for hp DoFHandler on a hyperball mesh with hanging nodes and finite
@@ -28,8 +26,6 @@ std::ofstream logfile("output");
 #include <deal.II/base/function.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_values.h>
-
-
 
 template <int dim, typename Number>
 class MatrixFreeTestHP
@@ -85,8 +81,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void

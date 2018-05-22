@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/grid_generator.h>
@@ -28,7 +26,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -44,7 +41,6 @@ test1()
   grid_out.set_flags(GridOutFlags::Ucd(true));
   grid_out.write_ucd(tria, logfile);
 }
-
 
 template <int dim>
 void
@@ -83,7 +79,6 @@ test2()
               << std::endl;
     }
 
-
   int hash  = 0;
   int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator c = tria.begin_active();
@@ -93,7 +88,6 @@ test2()
       hash += (index * i * c->vertex_index(i)) % (tria.n_active_cells() + 1);
   deallog << hash << std::endl;
 }
-
 
 template <int dim>
 void
@@ -108,7 +102,6 @@ test3()
   std::ofstream gnufile("grid_in_2d.gnuplot");
   grid_out.write_gnuplot(tria, gnufile);
 }
-
 
 template <int dim>
 void
@@ -137,7 +130,6 @@ filename_resolution()
   check_file<2>(std::string(SOURCE_DIR "/grid_in/2d"), GridIn<2>::ucd);
   check_file<2>(std::string(SOURCE_DIR "/grid_in/2d"), GridIn<2>::xda);
 }
-
 
 int
 main()

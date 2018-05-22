@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix:: norms for non-symmetric matrices
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -42,7 +40,6 @@ test(const unsigned int size)
           << "frobenius: " << (F.frobenius_norm() - M.frobenius_norm())
           << std::endl;
 }
-
 
 int
 main()

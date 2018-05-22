@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_q.h>
@@ -21,7 +20,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -67,7 +65,6 @@ plot_FE_Q_shape_functions()
   //    FE_Q<dim> q10(10);
   //    plot_shape_functions(m, q10, "Q10");
 }
-
 
 int
 main()

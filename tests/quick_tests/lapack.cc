@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests vector multiplication and eigenvalues of LAPACKFullMatrix
 // copy-paste of lapack/full_matrix_01
 

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test that the creation of a local copy of a vector does not lead
 // to a deadlock if not performed on all MPI processes
 
 #include "../tests.h"
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
-
 
 int
 main(int argc, char** argv)

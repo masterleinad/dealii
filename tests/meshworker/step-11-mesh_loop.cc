@@ -15,7 +15,6 @@
 
 // step-11 but rewritten using mesh_loop()
 
-
 #include "../tests.h"
 
 #include <deal.II/base/function.h>
@@ -104,8 +103,6 @@ namespace Step11
     TableHandler output_table;
   };
 
-
-
   // Construct such an object, by initializing the variables. Here, we use
   // linear finite elements (the argument to the <code>fe</code> variable
   // denotes the polynomial degree), and mappings of given order. Print to
@@ -117,8 +114,6 @@ namespace Step11
     deallog << "Using mapping with degree " << mapping_degree << ":\n"
             << "============================" << std::endl;
   }
-
-
 
   // The first task is to set up the variables for this problem. This includes
   // generating a valid <code>DoFHandler</code> object, as well as the
@@ -159,12 +154,9 @@ namespace Step11
     DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
     DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
 
-
     sparsity_pattern.copy_from(dsp);
     system_matrix.reinit(sparsity_pattern);
   }
-
-
 
   template <int dim>
   struct ScratchData
@@ -300,9 +292,7 @@ namespace Step11
                             | MeshWorker::assemble_boundary_faces,
                           boundary_worker);
 
-
     solve();
-
 
     // Finally, evaluate what we got as solution. As stated in the
     // introduction, we are interested in the H1 semi-norm of the
@@ -342,8 +332,6 @@ namespace Step11
                            std::fabs(norm - std::sqrt(3.14159265358 / 2)));
   }
 
-
-
   // The following function solving the linear system of equations is copied
   // from step-5 and is explained there in some detail:
   template <int dim>
@@ -360,8 +348,6 @@ namespace Step11
 
     constraints.distribute(solution);
   }
-
-
 
   // Finally the main function controlling the different steps to be
   // performed.

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
@@ -28,7 +27,6 @@
  *
  * is parsed as 'set value = value'.
  */
-
 
 int
 main()

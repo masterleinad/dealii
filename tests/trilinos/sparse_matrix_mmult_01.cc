@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TrilinosWrappers::SparseMatrix::mmult for non-square matrices
 
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
@@ -25,14 +23,12 @@
 
 using namespace dealii;
 
-
 template <typename MATRIX>
 void
 out_matrix_size(const MATRIX& M, const std::string& name)
 {
   deallog << name << " = " << M.m() << " x " << M.n() << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

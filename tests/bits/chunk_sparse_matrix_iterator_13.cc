@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test ChunkSparseMatrix::iterator::operator-
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -72,8 +69,6 @@ test(const unsigned int chunk_size)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

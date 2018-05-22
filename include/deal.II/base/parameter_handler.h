@@ -16,7 +16,6 @@
 #ifndef dealii_parameter_handler_h
 #define dealii_parameter_handler_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/patterns.h>
@@ -853,8 +852,6 @@ public:
     ShortText = 193
   };
 
-
-
   /**
    * Constructor.
    */
@@ -982,7 +979,6 @@ public:
    */
   void
   clear();
-
 
   /**
    * Declare a new entry with name <tt>entry</tt>, default and for which any
@@ -1226,7 +1222,6 @@ public:
    */
   void
   set(const std::string& entry_name, const bool& new_value);
-
 
   /**
    * Print all parameters with the given style to <tt>out</tt>.
@@ -1599,8 +1594,6 @@ private:
 
   friend class MultipleParameterLoop;
 };
-
-
 
 /**
  * The class MultipleParameterLoop offers an easy possibility to test several
@@ -2015,7 +2008,6 @@ private:
   fill_entry_values(const unsigned int run_no);
 };
 
-
 // ---------------------- inline and template functions --------------------
 template <class Archive>
 inline void
@@ -2035,7 +2027,6 @@ ParameterHandler::save(Archive& ar, const unsigned int) const
   ar& descriptions;
 }
 
-
 template <class Archive>
 inline void
 ParameterHandler::load(Archive& ar, const unsigned int)
@@ -2053,7 +2044,6 @@ ParameterHandler::load(Archive& ar, const unsigned int)
   for(unsigned int j = 0; j < descriptions.size(); ++j)
     patterns.push_back(Patterns::pattern_factory(descriptions[j]));
 }
-
 
 template <class ParameterType>
 void

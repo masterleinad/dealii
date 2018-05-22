@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _01 but for SymmetricTensor
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/template_constraints.h>
-
 
 template <typename T, typename U, typename CompareType>
 void
@@ -33,7 +31,6 @@ check()
   AssertThrow(typeid(typename ProductType<T, U>::type) == typeid(T() * U()),
               ExcInternalError());
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::subtract_mean_value() for deal.II serial vectors
 
 #include "../tests.h"
@@ -43,8 +41,6 @@ test(VectorType& v)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

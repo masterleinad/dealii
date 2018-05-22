@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test is modeled after after the nedelec_1 test, since that one failed. I
 // just wanted to check that the nedelec element that has much of the same
 // code also works. turns out, all was fine
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -49,7 +46,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // FEValues::get_function_* had a problem when using FE_Nothing
 
 #include "../tests.h"
@@ -52,7 +50,6 @@ main()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-
   hp::FECollection<2> fe_collection;
 
   fe_collection.push_back(FESystem<2>(FE_Q<2>(1), 1, FE_Q<2>(1), 1));
@@ -64,7 +61,6 @@ main()
   hp::DoFHandler<2>::active_cell_iterator cell;
   hp::DoFHandler<2>::active_cell_iterator endc = dof_handler.end();
 
-
   cell = dof_handler.begin_active();
   cell->set_active_fe_index(1);
   cell++;
@@ -74,13 +70,11 @@ main()
   cell++;
   cell->set_active_fe_index(0);
 
-
   dof_handler.distribute_dofs(fe_collection);
 
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
-
 
   SolutionTransfer<2, Vector<double>, hp::DoFHandler<2>> solultion_trans(
     dof_handler);

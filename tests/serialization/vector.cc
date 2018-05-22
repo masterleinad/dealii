@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Vector
 
 #include "serialization.h"
@@ -36,12 +35,10 @@ test()
       v2(i) = i * 1. + n * 1.;
     }
 
-
   verify(v1, v2);
 
   verify(v1, v3);
 }
-
 
 int
 main()

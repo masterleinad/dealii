@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
-
-
 
 // check GridTools::diameter
 template <int dim>
@@ -62,7 +57,6 @@ test1()
     };
 }
 
-
 // GridTools::transform
 void
 test2()
@@ -82,7 +76,6 @@ test2()
   GridTools::rotate(3.14159265258 / 4, tria);
   GridOut().write_gnuplot(tria, logfile);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test integrate_difference
 //
 // The VectorTools::integrate_difference() function allows users
@@ -40,7 +39,6 @@
 // "normal" situations, but also properly skips the NaN case outlined
 // above.
 
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -57,7 +55,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 using namespace dealii;
-
 
 template <int dim>
 void
@@ -99,8 +96,6 @@ test(VectorTools::NormType norm, double exp = 2.0)
   deallog << "computed: " << error << std::endl;
 }
 
-
-
 template <int dim>
 void
 test()
@@ -131,7 +126,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

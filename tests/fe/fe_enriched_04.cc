@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test FEValues::get_function_values()
 
 #include "../tests.h"
@@ -77,7 +76,6 @@ public:
     return res;
   }
 };
-
 
 template <int dim>
 void
@@ -188,7 +186,6 @@ plot_shape_function()
 
   dof_handler.clear();
 }
-
 
 int
 main(int argc, char** argv)

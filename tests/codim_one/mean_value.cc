@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // continuous projection of a function on the surface of a hypersphere
 
 #include "../tests.h"
@@ -37,9 +35,7 @@
 
 #include <string>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim, int spacedim>
 void
@@ -63,8 +59,6 @@ test()
   AssertThrow(std::fabs(mean) < 1e-15, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

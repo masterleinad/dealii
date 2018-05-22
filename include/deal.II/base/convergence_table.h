@@ -16,12 +16,10 @@
 #ifndef dealii_convergence_table_h
 #define dealii_convergence_table_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/table_handler.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * The ConvergenceTable class is an application to the TableHandler class and
@@ -135,7 +133,6 @@ public:
                              const RateMode     rate_mode,
                              const unsigned int dim = 2);
 
-
   /**
    * Evaluate the convergence rates of the data column
    * <tt>data_column_key</tt> due to the #RateMode.  Be sure that the value
@@ -213,7 +210,6 @@ public:
                  << "Rate column <" << arg1 << "> does already exist.");
   //@}
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

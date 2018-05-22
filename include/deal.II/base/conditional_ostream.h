@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * A class that allows printing to an output stream, e.g. @p std::cout,
  * depending on the ConditionalOStream object being active (default) or not.
@@ -143,7 +142,6 @@ private:
   bool active_flag;
 };
 
-
 // --------------------------- inline and template functions -----------
 
 template <class T>
@@ -156,7 +154,6 @@ ConditionalOStream::operator<<(const T& t) const
   return *this;
 }
 
-
 inline const ConditionalOStream&
 ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
 {
@@ -166,13 +163,11 @@ ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
   return *this;
 }
 
-
 inline std::ostream&
 ConditionalOStream::get_stream() const
 {
   return output_stream;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

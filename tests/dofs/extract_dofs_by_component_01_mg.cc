@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
 // this is a test for the MG version of this test
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -33,8 +30,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -75,7 +70,6 @@ check()
         }
     }
 }
-
 
 int
 main()

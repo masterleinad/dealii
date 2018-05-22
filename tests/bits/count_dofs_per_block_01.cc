@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // the DoFTools::count_dofs_per_{component,block} functions resized the output
 // array to fe.n_components or fe.n_blocks even if a grouping argument was
 // given. this would appear wrong and can lead to all sorts of interesting
 // behavior if not caught by an assertion early enough
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -36,8 +34,6 @@
 
 #include <string>
 
-
-
 void
 print(const std::vector<types::global_dof_index>& v)
 {
@@ -46,8 +42,6 @@ print(const std::vector<types::global_dof_index>& v)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -82,7 +76,6 @@ check()
     DoFTools::count_dofs_per_block(dof_handler, dpc);
     print(dpc);
   }
-
 
   // grouping into less groups than
   // components
@@ -124,8 +117,6 @@ check()
     print(dpc);
   }
 }
-
-
 
 int
 main()

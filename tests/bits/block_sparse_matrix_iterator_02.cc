@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // I believed that this test would trigger a bug. Alas, it doesn't, but it
 // doesn't hurt to test some anyway
 
@@ -32,7 +30,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.h>
-
 
 void
 test()
@@ -83,8 +80,6 @@ test()
   Assert(begin != end, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

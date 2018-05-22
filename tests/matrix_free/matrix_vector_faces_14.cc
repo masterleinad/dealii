@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to matrix_vector_faces_13 (renumbering of degrees of freedom to
 // better vectorized access, gather_evaluate and integrate_scatter) but on a
 // different mesh that can trigger different element types
@@ -30,8 +28,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
-
 
 template <int dim, int fe_degree_>
 void

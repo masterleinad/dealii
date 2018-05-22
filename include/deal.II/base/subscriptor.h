@@ -16,7 +16,6 @@
 #ifndef dealii_subscriptor_h
 #define dealii_subscriptor_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 

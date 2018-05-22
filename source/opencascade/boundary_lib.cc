@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/opencascade/boundary_lib.h>
 
 #ifdef DEAL_II_WITH_OPENCASCADE
@@ -30,8 +29,6 @@ namespace OpenCASCADE
       new NormalProjectionBoundary(this->sh, this->tolerance));
   }
 
-
-
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>
   DirectionalProjectionBoundary<dim, spacedim>::clone() const
@@ -40,8 +37,6 @@ namespace OpenCASCADE
       new DirectionalProjectionBoundary(
         this->sh, this->direction, this->tolerance));
   }
-
-
 
   template <int dim, int spacedim>
   std::unique_ptr<Manifold<dim, spacedim>>

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_bernstein.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
@@ -27,10 +26,7 @@
 #include <sstream>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 template <int dim, int spacedim>
 FE_Bernstein<dim, spacedim>::FE_Bernstein(const unsigned int degree)
@@ -43,8 +39,6 @@ FE_Bernstein<dim, spacedim>::FE_Bernstein(const unsigned int degree)
       std::vector<bool>(1, false))
 {}
 
-
-
 template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_interpolation_matrix(
@@ -56,8 +50,6 @@ FE_Bernstein<dim, spacedim>::get_interpolation_matrix(
     false,
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -72,8 +64,6 @@ FE_Bernstein<dim, spacedim>::get_restriction_matrix(
   return this->restriction[0][0];
 }
 
-
-
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_Bernstein<dim, spacedim>::get_prolongation_matrix(
@@ -87,8 +77,6 @@ FE_Bernstein<dim, spacedim>::get_prolongation_matrix(
   return this->prolongation[0][0];
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_face_interpolation_matrix(
@@ -99,7 +87,6 @@ FE_Bernstein<dim, spacedim>::get_face_interpolation_matrix(
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
 }
-
 
 template <int dim, int spacedim>
 void
@@ -195,15 +182,12 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
                               spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_Bernstein<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -243,7 +227,6 @@ FE_Bernstein<dim, spacedim>::hp_vertex_dof_identities(
     }
 }
 
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Bernstein<dim, spacedim>::hp_line_dof_identities(
@@ -258,7 +241,6 @@ FE_Bernstein<dim, spacedim>::hp_line_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Bernstein<dim, spacedim>::hp_quad_dof_identities(
@@ -272,7 +254,6 @@ FE_Bernstein<dim, spacedim>::hp_quad_dof_identities(
   // elements. consequently, we never have anything to say at all
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -308,7 +289,6 @@ FE_Bernstein<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
 template <int dim, int spacedim>
 std::string
 FE_Bernstein<dim, spacedim>::get_name() const
@@ -322,14 +302,12 @@ FE_Bernstein<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Bernstein<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Bernstein<dim, spacedim>>(*this);
 }
-
 
 /**
  * Only the assertion differs from the same function in FE_Q_Base!!
@@ -345,7 +323,6 @@ FE_Bernstein<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
 template <int dim, int spacedim>
 TensorProductPolynomials<dim>
 FE_Bernstein<dim, spacedim>::renumber_bases(const unsigned int deg)
@@ -358,7 +335,6 @@ FE_Bernstein<dim, spacedim>::renumber_bases(const unsigned int deg)
   tpp.set_numbering(renumber);
   return tpp;
 }
-
 
 // explicit instantiations
 #include "fe_bernstein.inst"

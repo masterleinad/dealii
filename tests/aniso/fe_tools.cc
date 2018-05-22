@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the cell matrices generated in FETools and the local renumbering vector.
 
 #include "../tests.h"
 #include <iostream>
-
 
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_dgp.h>
@@ -28,7 +26,6 @@
 #include <deal.II/fe/fe_system.h>
 
 #include <deal.II/fe/fe_tools.h>
-
 
 template <typename number>
 void
@@ -50,8 +47,6 @@ print_formatted(const FullMatrix<number>& A,
       deallog << std::endl;
     };
 }
-
-
 
 template <int dim>
 void
@@ -93,7 +88,6 @@ test_embedding(const FiniteElement<dim>& fe)
       }
 }
 
-
 template <int dim>
 void
 test_projection(const FiniteElement<dim>& fe1,
@@ -114,7 +108,6 @@ test_projection(const FiniteElement<dim>& fe1,
         P(i, j) = 0;
   P.print_formatted(out, 8, false, 5);
 }
-
 
 template <int dim>
 void
@@ -160,8 +153,6 @@ test_projection(std::ostream& out)
   test_projection(q3, q2, out);
   test_projection(q4, q3, out);
 }
-
-
 
 int
 main()

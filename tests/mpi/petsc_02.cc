@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // PETScWrappers: document bug with PETSc SparseMatrix. If only one CPU
 // does matrix-assembly, it calls compress() inside and the others don't.
 // We should implement this like in PETSc::MPI::Vector.
@@ -27,7 +25,6 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 
 //#include <mpi.h>
-
 
 void
 test()
@@ -51,13 +48,11 @@ test()
   if(myid == 0)
     mat.add(0, 0, 1.0);
 
-
   mat.compress(VectorOperation::add);
 
   if(myid == 0)
     deallog << "done" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

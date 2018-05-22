@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <boost/core/demangle.hpp>
 #include <deal.II/base/numbers.h>

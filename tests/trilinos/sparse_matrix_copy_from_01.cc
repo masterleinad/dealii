@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test SparseMatrix::copy_from from a TrilinosWrappers::SparseMatrix
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

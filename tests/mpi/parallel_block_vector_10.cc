@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as _07 but use identity matrix as a metric so the result should be the same
 // as operator*
 
@@ -34,8 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -143,7 +139,6 @@ test(const unsigned int n_blocks = 5)
   deallog << "Norm of difference: " << diff_norm << " " << diff_norm2
           << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

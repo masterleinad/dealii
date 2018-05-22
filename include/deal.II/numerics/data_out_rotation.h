@@ -16,7 +16,6 @@
 #ifndef dealii_data_out_rotation_h
 #define dealii_data_out_rotation_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/numerics/data_out_dof_data.h>
 
@@ -24,7 +23,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -55,8 +53,6 @@ namespace internal
     };
   } // namespace DataOutRotationImplementation
 } // namespace internal
-
-
 
 /**
  * This class generates output in the full domain of computations that were
@@ -214,7 +210,6 @@ private:
     std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>&
       my_patches);
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

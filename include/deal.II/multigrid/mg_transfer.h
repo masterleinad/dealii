@@ -35,9 +35,7 @@
 
 #include <memory>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -189,8 +187,6 @@ namespace internal
 /*!@addtogroup mg */
 /*@{*/
 
-
-
 /**
  * Implementation of transfer between the global vectors and the multigrid
  * levels for use in the derived class MGTransferPrebuilt and other classes.
@@ -341,8 +337,6 @@ protected:
     mg_constrained_dofs;
 };
 
-
-
 /**
  * Implementation of transfer between the global vectors and the multigrid
  * levels for use in the derived class MGTransferPrebuilt and other classes.
@@ -466,7 +460,6 @@ protected:
    */
   std::vector<std::vector<std::pair<unsigned int, unsigned int>>> copy_indices;
 
-
   /**
    * Same as above, but used to transfer solution vectors.
    */
@@ -561,8 +554,6 @@ protected:
   mutable MGLevelObject<LinearAlgebra::distributed::Vector<Number>>
     solution_ghosted_level_vector;
 };
-
-
 
 /**
  * Implementation of the MGTransferBase interface for which the transfer
@@ -719,9 +710,7 @@ private:
   std::vector<std::vector<bool>> interface_dofs;
 };
 
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

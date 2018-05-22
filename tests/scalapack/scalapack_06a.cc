@@ -19,7 +19,6 @@
 // test eigenpairs_symmetric_by_index(const std::pair<unsigned int,unsigned int> &, const bool)
 // for all eigenvalues without eigenvectors
 
-
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/multithread_info.h>
@@ -36,7 +35,6 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-
 
 template <typename NumberType>
 void
@@ -133,8 +131,6 @@ test(const unsigned int size,
   pcout << "   with respect to the given tolerance the eigenvalues coincide"
         << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

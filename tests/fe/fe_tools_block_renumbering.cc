@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the cell matrices generated in FETools and the local renumbering vector.
 
 #include "../tests.h"
 #include <iostream>
-
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
@@ -43,7 +41,6 @@ logvec(const std::vector<types::global_dof_index>& v,
   deallog << " ]" << std::endl;
 }
 
-
 template <int dim>
 void
 test_renumbering(const FiniteElement<dim>& fe)
@@ -58,7 +55,6 @@ test_renumbering(const FiniteElement<dim>& fe)
   FETools::compute_block_renumbering(fe, v, w, true);
   logvec(v, w);
 }
-
 
 template <int dim>
 void
@@ -90,7 +86,6 @@ test_renumbering()
 
   deallog.pop();
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document bug in the DerivateApproximation in parallel
 /*
  --------------------------------------------------------
@@ -45,8 +43,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 void
@@ -86,7 +82,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

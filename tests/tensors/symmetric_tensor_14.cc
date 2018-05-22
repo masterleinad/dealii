@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test identity_tensor
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -39,8 +37,6 @@ test()
     for(unsigned int j = 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << x[i][j] << std::endl;
 }
-
-
 
 int
 main()

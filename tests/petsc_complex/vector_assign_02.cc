@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this is equivalent to the petsc_parallel_vector_assign_01 test, except that we use
 // operator+= instead of operator=. This is also not exciting...
 
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
@@ -40,7 +37,6 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

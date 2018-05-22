@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Given the number of refinements and the number of random points
  * it benchmarks the time needed to run the function FCT
@@ -35,7 +34,6 @@ test()
   // The hypercube is [a,b]^spacedim
   const double a = -0.3;
   const double b = 0.7;
-
 
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation, a, b);

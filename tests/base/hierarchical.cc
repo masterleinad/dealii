@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // generate a hierarchical basis and display the values of the shape
 // functions at equidistant points. (I needed this output at one point
 // in time, so why not make it a testcase -- WB)
@@ -22,9 +21,7 @@
 
 #include <deal.II/base/polynomial.h>
 
-
 using namespace Polynomials;
-
 
 int
 main()

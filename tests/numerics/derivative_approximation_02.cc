@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -37,7 +35,6 @@
 using namespace std;
 
 const double a = 4, b = 5;
-
 
 template <int dim>
 class MyFunction : public Function<dim>
@@ -131,7 +128,6 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
         }
 }
 
-
 template <int dim>
 void
 derivatives()
@@ -217,7 +213,6 @@ derivatives()
               << endl;
     }
 }
-
 
 int
 main()

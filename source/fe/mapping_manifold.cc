@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/array_view.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/memory_consumption.h>
@@ -39,7 +38,6 @@
 #include <memory>
 #include <numeric>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
@@ -60,7 +58,6 @@ MappingManifold<dim, spacedim>::InternalData::memory_consumption() const
     + MemoryConsumption::memory_consumption(volume_elements)
     + MemoryConsumption::memory_consumption(manifold));
 }
-
 
 template <int dim, int spacedim>
 void
@@ -94,7 +91,6 @@ MappingManifold<dim, spacedim>::InternalData::initialize(
   if(this->update_each & update_volume_elements)
     volume_elements.resize(n_original_q_points);
 }
-
 
 template <int dim, int spacedim>
 void
@@ -177,14 +173,10 @@ MappingManifold<dim, spacedim>::InternalData::initialize_face(
     }
 }
 
-
-
 template <int dim, int spacedim>
 MappingManifold<dim, spacedim>::MappingManifold(
   const MappingManifold<dim, spacedim>&)
 {}
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
@@ -192,8 +184,6 @@ MappingManifold<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<MappingManifold<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim>
@@ -204,8 +194,6 @@ MappingManifold<dim, spacedim>::transform_real_to_unit_cell(
   Assert(false, ExcNotImplemented());
   return Point<dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Point<spacedim>
@@ -226,8 +214,6 @@ MappingManifold<dim, spacedim>::transform_unit_to_real_cell(
     make_array_view(weights.begin(), weights.end()));
 }
 
-
-
 // In the code below, GCC tries to instantiate MappingManifold<3,4> when
 // seeing which of the overloaded versions of
 // do_transform_real_to_unit_cell_internal() to call. This leads to bad
@@ -238,8 +224,6 @@ MappingManifold<dim, spacedim>::transform_unit_to_real_cell(
 template <>
 class MappingManifold<3, 4>
 {};
-
-
 
 template <int dim, int spacedim>
 UpdateFlags
@@ -303,8 +287,6 @@ MappingManifold<dim, spacedim>::requires_update_flags(
   return out;
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingManifold<dim, spacedim>::get_data(const UpdateFlags      update_flags,
@@ -315,8 +297,6 @@ MappingManifold<dim, spacedim>::get_data(const UpdateFlags      update_flags,
 
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -332,8 +312,6 @@ MappingManifold<dim, spacedim>::get_face_data(
   return std::move(data);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingManifold<dim, spacedim>::get_subface_data(
@@ -347,8 +325,6 @@ MappingManifold<dim, spacedim>::get_subface_data(
 
   return std::move(data);
 }
-
-
 
 namespace internal
 {
@@ -387,8 +363,6 @@ namespace internal
               }
           }
       }
-
-
 
       /**
        * Update the co- and contravariant matrices as well as their determinant, for the cell
@@ -490,8 +464,6 @@ namespace internal
   }   // namespace MappingManifoldImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 CellSimilarity::Similarity
 MappingManifold<dim, spacedim>::fill_fe_values(
@@ -536,7 +508,6 @@ MappingManifold<dim, spacedim>::fill_fe_values(
         !(update_flags & update_normal_vectors)
           || (output_data.normal_vectors.size() == n_q_points),
         ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
-
 
       for(unsigned int point = 0; point < n_q_points; ++point)
         {
@@ -613,8 +584,6 @@ MappingManifold<dim, spacedim>::fill_fe_values(
         }
     }
 
-
-
   // copy values from InternalData to vector given by reference
   if(update_flags & update_jacobians)
     {
@@ -636,8 +605,6 @@ MappingManifold<dim, spacedim>::fill_fe_values(
 
   return cell_similarity;
 }
-
-
 
 namespace internal
 {
@@ -817,7 +784,6 @@ namespace internal
           }
       }
 
-
       /**
        * Do the work of MappingManifold::fill_fe_face_values() and
        * MappingManifold::fill_fe_subface_values() in a generic way,
@@ -935,7 +901,6 @@ namespace internal
           }
       }
 
-
       template <int dim, int spacedim, int rank>
       void
       transform_gradients(
@@ -1033,8 +998,6 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-
-
 
       template <int dim, int spacedim>
       void
@@ -1204,8 +1167,6 @@ namespace internal
           }
       }
 
-
-
       template <int dim, int spacedim, int rank>
       void
       transform_differential_forms(
@@ -1247,8 +1208,6 @@ namespace internal
   }   // namespace MappingManifoldImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 void
 MappingManifold<dim, spacedim>::fill_fe_face_values(
@@ -1278,8 +1237,6 @@ MappingManifold<dim, spacedim>::fill_fe_face_values(
     data,
     output_data);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1314,8 +1271,6 @@ MappingManifold<dim, spacedim>::fill_fe_subface_values(
     output_data);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingManifold<dim, spacedim>::transform(
@@ -1328,8 +1283,6 @@ MappingManifold<dim, spacedim>::transform(
     input, mapping_type, mapping_data, output);
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingManifold<dim, spacedim>::transform(
@@ -1341,8 +1294,6 @@ MappingManifold<dim, spacedim>::transform(
   internal::MappingManifoldImplementation::transform_differential_forms(
     input, mapping_type, mapping_data, output);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1369,8 +1320,6 @@ MappingManifold<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1419,8 +1368,6 @@ MappingManifold<dim, spacedim>::transform(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingManifold<dim, spacedim>::transform(
@@ -1444,6 +1391,5 @@ MappingManifold<dim, spacedim>::transform(
 
 //--------------------------- Explicit instantiations -----------------------
 #include "mapping_manifold.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

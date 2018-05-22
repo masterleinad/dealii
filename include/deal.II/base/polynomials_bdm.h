@@ -16,7 +16,6 @@
 #ifndef dealii_polynomials_BDM_h
 #define dealii_polynomials_BDM_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -206,14 +205,12 @@ private:
   mutable std::vector<Tensor<4, dim>> p_fourth_derivatives;
 };
 
-
 template <int dim>
 inline unsigned int
 PolynomialsBDM<dim>::n() const
 {
   return n_pols;
 }
-
 
 template <int dim>
 inline unsigned int
@@ -222,14 +219,12 @@ PolynomialsBDM<dim>::degree() const
   return polynomial_space.degree() - 1;
 }
 
-
 template <int dim>
 inline std::string
 PolynomialsBDM<dim>::name() const
 {
   return "BDM";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

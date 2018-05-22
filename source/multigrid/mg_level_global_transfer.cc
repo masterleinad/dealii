@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 
@@ -37,9 +36,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /* ------------------ MGLevelGlobalTransfer<VectorType> ----------------- */
-
 
 template <typename VectorType>
 template <int dim, int spacedim>
@@ -90,8 +87,6 @@ MGLevelGlobalTransfer<VectorType>::fill_and_communicate_copy_indices(
     perform_plain_copy = my_perform_plain_copy;
 }
 
-
-
 template <typename VectorType>
 void
 MGLevelGlobalTransfer<VectorType>::clear()
@@ -104,8 +99,6 @@ MGLevelGlobalTransfer<VectorType>::clear()
   mg_constrained_dofs = nullptr;
   perform_plain_copy  = false;
 }
-
-
 
 template <typename VectorType>
 void
@@ -134,8 +127,6 @@ MGLevelGlobalTransfer<VectorType>::print_indices(std::ostream& os) const
     }
 }
 
-
-
 template <typename VectorType>
 std::size_t
 MGLevelGlobalTransfer<VectorType>::memory_consumption() const
@@ -148,8 +139,6 @@ MGLevelGlobalTransfer<VectorType>::memory_consumption() const
 
   return result;
 }
-
-
 
 /* ------------------ MGLevelGlobalTransfer<VectorType> ----------------- */
 
@@ -357,8 +346,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
     }
 }
 
-
-
 template <typename Number>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::clear()
@@ -374,8 +361,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::clear()
   perform_plain_copy            = false;
   perform_renumbered_plain_copy = false;
 }
-
-
 
 template <typename Number>
 void
@@ -405,8 +390,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
     }
 }
 
-
-
 template <typename Number>
 std::size_t
 MGLevelGlobalTransfer<
@@ -426,14 +409,11 @@ MGLevelGlobalTransfer<
   return result;
 }
 
-
-
 // explicit instantiation
 #include "mg_level_global_transfer.inst"
 
 // create an additional instantiation currently not supported by the automatic
 // template instantiation scheme
 template class MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<float>>;
-
 
 DEAL_II_NAMESPACE_CLOSE

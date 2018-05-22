@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Just output the embedding matrices of the FE_DGPMonomial
 // element. Test introduced when we started to compute them on the
 // fly, rather than precomputing them for a number of elements and
@@ -26,8 +24,6 @@
 #include <string>
 
 #define PRECISION 4
-
-
 
 template <int dim>
 void
@@ -53,7 +49,6 @@ test(const unsigned int degree)
 
   deallog << std::endl;
 }
-
 
 int
 main()

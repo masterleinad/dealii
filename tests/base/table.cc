@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check equivalence of operator[] and operator() on table objects
-
 
 #include "../tests.h"
 
@@ -95,7 +93,6 @@ main()
         AssertThrow(Td[i].end() - Td[i].begin() == 3, ExcInternalError());
     };
 
-
   // a transposed rectangular table
   if(true)
     {
@@ -124,7 +121,6 @@ main()
           deallog << std::endl;
         }
     }
-
 
   // a 1d-table
   if(true)

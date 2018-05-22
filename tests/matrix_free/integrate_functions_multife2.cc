@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // operations in integrating functions and gradients on a hypeball mesh with
 // adaptive refinement. Similar to integrate_functions_multife, but uses
@@ -43,7 +41,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
@@ -87,8 +84,6 @@ private:
   mutable FEValues<dim>          fe_val01;
   mutable FEValues<dim>          fe_val1;
 };
-
-
 
 template <int dim, int fe_degree, typename Number>
 void
@@ -229,8 +224,6 @@ operator()(const MatrixFree<dim, Number>& data,
     }
 }
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 test()
@@ -333,7 +326,6 @@ test()
   deallog << "FE 0, Quad 1; integration difference: " << diff_norm << std::endl
           << std::endl;
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like a union of the normals_* and q_point_sum_* tests: integrating
 // \vec x times the normal over the surface of any body should yield
 // the volume of this body times the space dimension
@@ -33,8 +31,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -98,7 +94,6 @@ check(const Triangulation<dim>& tria)
   deallog << " face integration: " << v1 / dim << std::endl;
   deallog << " subface integration: " << v2 / dim << std::endl;
 }
-
 
 int
 main()

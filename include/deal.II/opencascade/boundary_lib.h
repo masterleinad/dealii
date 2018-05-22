@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_occ_boundary_lib_h
 #  define dealii_occ_boundary_lib_h
 
@@ -115,7 +114,6 @@ namespace OpenCASCADE
     clone() const override;
   };
 
-
   /**
    * A Manifold object based on OpenCASCADE TopoDS_Shape where new points are
    * first computed by averaging the surrounding points in the same way as
@@ -185,7 +183,6 @@ namespace OpenCASCADE
 /*@}*/
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 #  endif // DEAL_II_WITH_OPENCASCADE
 

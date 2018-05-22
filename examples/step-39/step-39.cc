@@ -17,7 +17,6 @@
  * Author: Guido Kanschat, Texas A&M University, 2009
  */
 
-
 // The include files for the linear algebra: A regular SparseMatrix, which in
 // turn will include the necessary files for SparsityPattern and Vector
 // classes.
@@ -108,7 +107,6 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info2) const override;
   };
 
-
   // On each cell, we integrate the Dirichlet form. We use the library of
   // ready made integrals in LocalIntegrators to avoid writing these loops
   // ourselves. Similarly, we implement Nitsche boundary conditions and the
@@ -127,7 +125,6 @@ namespace Step39
     LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
                                            info.fe_values());
   }
-
 
   template <int dim>
   void
@@ -182,13 +179,11 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info2) const override;
   };
 
-
   template <int dim>
   void
   RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&,
                            typename MeshWorker::IntegrationInfo<dim>&) const
   {}
-
 
   template <int dim>
   void
@@ -214,7 +209,6 @@ namespace Step39
                            * fe.JxW(k);
   }
 
-
   template <int dim>
   void
   RHSIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&,
@@ -222,7 +216,6 @@ namespace Step39
                            typename MeshWorker::IntegrationInfo<dim>&,
                            typename MeshWorker::IntegrationInfo<dim>&) const
   {}
-
 
   // The third local integrator is responsible for the contributions to the
   // error estimate. This is the standard energy estimator due to Karakashian
@@ -243,7 +236,6 @@ namespace Step39
          typename MeshWorker::IntegrationInfo<dim>& info1,
          typename MeshWorker::IntegrationInfo<dim>& info2) const override;
   };
-
 
   // The cell contribution is the Laplacian of the discrete solution, since
   // the right hand side is zero.
@@ -288,7 +280,6 @@ namespace Step39
                         * (boundary_values[k] - uh[k]) * fe.JxW(k);
     dinfo.value(0) = std::sqrt(dinfo.value(0));
   }
-
 
   // Finally, on interior faces, the estimator consists of the jumps of the
   // solution and its normal derivative, weighted appropriately.
@@ -399,7 +390,6 @@ namespace Step39
     dinfo.value(1) = std::sqrt(dinfo.value(1));
   }
 
-
   template <int dim>
   void
   ErrorIntegrator<dim>::boundary(
@@ -424,7 +414,6 @@ namespace Step39
       }
     dinfo.value(0) = std::sqrt(dinfo.value(0));
   }
-
 
   template <int dim>
   void
@@ -453,8 +442,6 @@ namespace Step39
     dinfo1.value(0) = std::sqrt(dinfo1.value(0));
     dinfo2.value(0) = dinfo1.value(0);
   }
-
-
 
   // @sect3{The main class}
 
@@ -525,7 +512,6 @@ namespace Step39
     MGLevelObject<SparseMatrix<double>> mg_matrix_dg_up;
   };
 
-
   // The constructor simply sets up the coarse grid and the DoFHandler. The
   // FiniteElement is provided as a parameter to allow flexibility.
   template <int dim>
@@ -539,7 +525,6 @@ namespace Step39
   {
     GridGenerator::hyper_cube_slit(triangulation, -1, 1);
   }
-
 
   // In this function, we set up the dimension of the linear system and the
   // sparsity patterns for the global matrix as well as the level matrices.
@@ -611,7 +596,6 @@ namespace Step39
       }
   }
 
-
   // In this function, we assemble the global system matrix, where by global
   // we indicate that this is the matrix of the discrete system we solve and
   // it is covering the whole mesh.
@@ -664,7 +648,6 @@ namespace Step39
                                            assembler);
   }
 
-
   // Now, we do the same for the level matrices. Not too surprisingly, this
   // function looks like a twin of the previous one. Indeed, there are only
   // two minor differences.
@@ -697,7 +680,6 @@ namespace Step39
                                            integrator,
                                            assembler);
   }
-
 
   // Here we have another clone of the assemble function. The difference to
   // assembling the system matrix consists in that we assemble a vector here.
@@ -733,7 +715,6 @@ namespace Step39
 
     right_hand_side *= -1.;
   }
-
 
   // Now that we have coded all functions building the discrete linear system,
   // it is about time that we actually solve it.
@@ -797,7 +778,6 @@ namespace Step39
     // and use it to solve the system.
     solver.solve(matrix, solution, right_hand_side, preconditioner);
   }
-
 
   // Another clone of the assemble function. The big difference to the
   // previous ones is here that we also have an input vector.
@@ -934,7 +914,6 @@ namespace Step39
     deallog << "L2-error:     " << errors.block(1).l2_norm() << std::endl;
   }
 
-
   // Create graphical output. We produce the filename by collating the
   // name from its various components, including the refinement cycle
   // that we output with two digits.
@@ -1001,8 +980,6 @@ namespace Step39
       }
   }
 } // namespace Step39
-
-
 
 int
 main()

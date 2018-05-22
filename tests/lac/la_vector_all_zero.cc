@@ -18,7 +18,6 @@
 #include "../tests.h"
 #include <deal.II/lac/la_vector.h>
 
-
 template <typename Number>
 void
 check_all_zero()

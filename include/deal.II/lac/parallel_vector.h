@@ -22,9 +22,7 @@
 #include <cstring>
 #include <iomanip>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace parallel
 {
@@ -33,7 +31,6 @@ namespace parallel
     /*! @addtogroup Vectors
      *@{
      */
-
 
     /**
      * Implementation of a parallel vector class. The design of this class is

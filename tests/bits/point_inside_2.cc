@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TriaAccessor<3>::point_inside for a cell that is _not_
 // aligned with the coordinate axes
 //
@@ -26,7 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -83,7 +80,6 @@ check()
       Assert(res == expected[i], ExcInternalError());
     }
 }
-
 
 int
 main()

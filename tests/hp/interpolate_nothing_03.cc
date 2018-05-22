@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::interpolate works for FE_Nothing
 // scalar elements.
 
@@ -35,8 +33,6 @@
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -75,8 +71,6 @@ test()
     dof_handler, Functions::ConstantFunction<dim>(3.14), interpolant);
   deallog << interpolant.mean_value() << std::endl;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix for MG DoFHandler on a hyperball mesh with no hanging nodes but
@@ -28,8 +26,6 @@ std::ofstream logfile("output");
 #include <deal.II/base/function.h>
 #include <deal.II/multigrid/mg_matrix.h>
 #include <deal.II/multigrid/mg_tools.h>
-
-
 
 template <int dim, int fe_degree>
 void

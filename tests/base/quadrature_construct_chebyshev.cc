@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that the QGaussChebyshev, QGaussRadauChebyshev and QGaussLobattoChebyshev,
 // can be constructed in all dimensions. Previously, this failed since the base class
 // constructor used required the one-dimensional quadrature formula to integrate
 // constants exactly. This is not true for the classes considered here.
-
 
 #include "../tests.h"
 

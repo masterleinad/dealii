@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This is the same as constraints_merge_08 but local_lines differs for
 // the objects to be merged.
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
-
-
 
 void
 merge_check()
@@ -106,7 +102,6 @@ merge_check()
       c1.print(deallog.get_file_stream());
     };
 }
-
 
 int
 main()

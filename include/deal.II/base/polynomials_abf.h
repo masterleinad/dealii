@@ -16,7 +16,6 @@
 #ifndef dealii_polynomials_abf_h
 #define dealii_polynomials_abf_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -160,14 +159,12 @@ private:
   mutable std::vector<Tensor<4, dim>> p_fourth_derivatives;
 };
 
-
 template <int dim>
 inline unsigned int
 PolynomialsABF<dim>::n() const
 {
   return n_pols;
 }
-
 
 template <int dim>
 inline unsigned int
@@ -176,14 +173,12 @@ PolynomialsABF<dim>::degree() const
   return my_degree;
 }
 
-
 template <int dim>
 inline std::string
 PolynomialsABF<dim>::name() const
 {
   return "ABF";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

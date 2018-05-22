@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
@@ -29,7 +27,6 @@
 // accidentally correct whenever there was only one such element; this test
 // verifies the same with two non-primitive elements in one FESystem
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
@@ -41,8 +38,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -71,7 +66,6 @@ check()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

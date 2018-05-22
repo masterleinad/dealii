@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test lucky breakdown in GMRES (and others)
 
 #include "../testmatrix.h"

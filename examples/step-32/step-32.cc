@@ -19,7 +19,6 @@
  *          Timo Heister, University of Goettingen, 2008-2011
  */
 
-
 // @sect3{Include files}
 
 // The first task as usual is to include the functionality of these well-known
@@ -91,7 +90,6 @@
 #include <deal.II/distributed/grid_refinement.h>
 #include <deal.II/distributed/tria.h>
 
-
 // The next step is like in all previous tutorial programs: We put everything
 // into a namespace of its own and then import the deal.II classes and
 // functions into it:
@@ -118,13 +116,11 @@ namespace Step32
     const double specific_heat         = 1250;    /* J / K / kg */
     const double radiogenic_heating    = 7.4e-12; /* W / kg     */
 
-
     const double R0 = 6371000. - 2890000.; /* m          */
     const double R1 = 6371000. - 35000.;   /* m          */
 
     const double T0 = 4000 + 273; /* K          */
     const double T1 = 700 + 273;  /* K          */
-
 
     // The next set of definitions are for functions that encode the density
     // as a function of temperature, the gravity vector, and the initial
@@ -138,7 +134,6 @@ namespace Step32
         * (1 - expansion_coefficient * (temperature - reference_temperature)));
     }
 
-
     template <int dim>
     Tensor<1, dim>
     gravity_vector(const Point<dim>& p)
@@ -146,8 +141,6 @@ namespace Step32
       const double r = p.norm();
       return -(1.245e-6 * r + 7.714e13 / r / r) * p / r;
     }
-
-
 
     template <int dim>
     class TemperatureInitialValues : public Function<dim>
@@ -163,8 +156,6 @@ namespace Step32
       virtual void
       vector_value(const Point<dim>& p, Vector<double>& value) const override;
     };
-
-
 
     template <int dim>
     double
@@ -183,7 +174,6 @@ namespace Step32
       return T0 * (1.0 - tau) + T1 * tau;
     }
 
-
     template <int dim>
     void
     TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
@@ -192,7 +182,6 @@ namespace Step32
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureInitialValues<dim>::value(p, c);
     }
-
 
     // As mentioned in the introduction we need to rescale the pressure to
     // avoid the relative ill-conditioning of the momentum and mass
@@ -210,8 +199,6 @@ namespace Step32
     const double year_in_seconds = 60 * 60 * 24 * 365.2425;
 
   } // namespace EquationData
-
-
 
   // @sect3{Preconditioning the Stokes system}
 
@@ -296,8 +283,6 @@ namespace Step32
     };
   } // namespace LinearSolvers
 
-
-
   // @sect3{Definition of assembly data structures}
   //
   // As described in the introduction, we will use the WorkStream mechanism
@@ -354,7 +339,6 @@ namespace Step32
 
         StokesPreconditioner(const StokesPreconditioner& data);
 
-
         FEValues<dim> stokes_fe_values;
 
         std::vector<Tensor<2, dim>> grad_phi_u;
@@ -372,8 +356,6 @@ namespace Step32
           phi_p(stokes_fe.dofs_per_cell)
       {}
 
-
-
       template <int dim>
       StokesPreconditioner<dim>::StokesPreconditioner(
         const StokesPreconditioner& scratch)
@@ -384,8 +366,6 @@ namespace Step32
           grad_phi_u(scratch.grad_phi_u),
           phi_p(scratch.phi_p)
       {}
-
-
 
       // The next one is the scratch object used for the assembly of the full
       // Stokes system. Observe that we derive the StokesSystem scratch class
@@ -409,7 +389,6 @@ namespace Step32
 
         StokesSystem(const StokesSystem<dim>& data);
 
-
         FEValues<dim> temperature_fe_values;
 
         std::vector<Tensor<1, dim>>          phi_u;
@@ -418,7 +397,6 @@ namespace Step32
 
         std::vector<double> old_temperature_values;
       };
-
 
       template <int dim>
       StokesSystem<dim>::StokesSystem(
@@ -442,7 +420,6 @@ namespace Step32
           old_temperature_values(stokes_quadrature.size())
       {}
 
-
       template <int dim>
       StokesSystem<dim>::StokesSystem(const StokesSystem<dim>& scratch)
         : StokesPreconditioner<dim>(scratch),
@@ -457,7 +434,6 @@ namespace Step32
           old_temperature_values(scratch.old_temperature_values)
       {}
 
-
       // After defining the objects used in the assembly of the Stokes system,
       // we do the same for the assembly of the matrices necessary for the
       // temperature system. The general structure is very similar:
@@ -470,13 +446,11 @@ namespace Step32
 
         TemperatureMatrix(const TemperatureMatrix& data);
 
-
         FEValues<dim> temperature_fe_values;
 
         std::vector<double>         phi_T;
         std::vector<Tensor<1, dim>> grad_phi_T;
       };
-
 
       template <int dim>
       TemperatureMatrix<dim>::TemperatureMatrix(
@@ -492,7 +466,6 @@ namespace Step32
           grad_phi_T(temperature_fe.dofs_per_cell)
       {}
 
-
       template <int dim>
       TemperatureMatrix<dim>::TemperatureMatrix(
         const TemperatureMatrix& scratch)
@@ -504,7 +477,6 @@ namespace Step32
           phi_T(scratch.phi_T),
           grad_phi_T(scratch.grad_phi_T)
       {}
-
 
       // The final scratch object is used in the assembly of the right hand
       // side of the temperature system. This object is significantly larger
@@ -526,7 +498,6 @@ namespace Step32
 
         TemperatureRHS(const TemperatureRHS& data);
 
-
         FEValues<dim> temperature_fe_values;
         FEValues<dim> stokes_fe_values;
 
@@ -546,7 +517,6 @@ namespace Step32
         std::vector<double>         old_temperature_laplacians;
         std::vector<double>         old_old_temperature_laplacians;
       };
-
 
       template <int dim>
       TemperatureRHS<dim>::TemperatureRHS(
@@ -580,7 +550,6 @@ namespace Step32
           old_old_temperature_laplacians(quadrature.size())
       {}
 
-
       template <int dim>
       TemperatureRHS<dim>::TemperatureRHS(const TemperatureRHS& scratch)
         : temperature_fe_values(
@@ -608,7 +577,6 @@ namespace Step32
           old_old_temperature_laplacians(scratch.old_old_temperature_laplacians)
       {}
     } // namespace Scratch
-
 
     // The CopyData objects are even simpler than the Scratch objects as all
     // they have to do is to store the results of local computations until
@@ -645,8 +613,6 @@ namespace Step32
           local_dof_indices(data.local_dof_indices)
       {}
 
-
-
       template <int dim>
       struct StokesSystem : public StokesPreconditioner<dim>
       {
@@ -666,8 +632,6 @@ namespace Step32
       StokesSystem<dim>::StokesSystem(const StokesSystem<dim>& data)
         : StokesPreconditioner<dim>(data), local_rhs(data.local_rhs)
       {}
-
-
 
       template <int dim>
       struct TemperatureMatrix
@@ -697,8 +661,6 @@ namespace Step32
           local_dof_indices(data.local_dof_indices)
       {}
 
-
-
       template <int dim>
       struct TemperatureRHS
       {
@@ -727,8 +689,6 @@ namespace Step32
       {}
     } // namespace CopyData
   }   // namespace Assembly
-
-
 
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
   //
@@ -895,7 +855,6 @@ namespace Step32
     TrilinosWrappers::MPI::BlockVector old_stokes_solution;
     TrilinosWrappers::MPI::BlockVector stokes_rhs;
 
-
     FE_Q<dim>        temperature_fe;
     DoFHandler<dim>  temperature_dof_handler;
     ConstraintMatrix temperature_constraints;
@@ -908,7 +867,6 @@ namespace Step32
     TrilinosWrappers::MPI::Vector old_temperature_solution;
     TrilinosWrappers::MPI::Vector old_old_temperature_solution;
     TrilinosWrappers::MPI::Vector temperature_rhs;
-
 
     double       time_step;
     double       old_time_step;
@@ -951,7 +909,6 @@ namespace Step32
       const IndexSet& temperature_partitioning,
       const IndexSet& temperature_relevant_partitioning);
 
-
     // Following the @ref MTWorkStream "task-based parallelization" paradigm,
     // we split all the assembly routines into two parts: a first part that
     // can do all the calculations on a certain cell without taking care of
@@ -970,7 +927,6 @@ namespace Step32
     copy_local_to_global_stokes_preconditioner(
       const Assembly::CopyData::StokesPreconditioner<dim>& data);
 
-
     void
     local_assemble_stokes_system(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
@@ -981,7 +937,6 @@ namespace Step32
     copy_local_to_global_stokes_system(
       const Assembly::CopyData::StokesSystem<dim>& data);
 
-
     void
     local_assemble_temperature_matrix(
       const typename DoFHandler<dim>::active_cell_iterator& cell,
@@ -991,8 +946,6 @@ namespace Step32
     void
     copy_local_to_global_temperature_matrix(
       const Assembly::CopyData::TemperatureMatrix<dim>& data);
-
-
 
     void
     local_assemble_temperature_rhs(
@@ -1013,7 +966,6 @@ namespace Step32
     // visualization.
     class Postprocessor;
   };
-
 
   // @sect3{BoussinesqFlowProblem class implementation}
 
@@ -1070,8 +1022,6 @@ namespace Step32
     prm.parse_input(parameter_file);
     parse_parameters(prm);
   }
-
-
 
   // Next we have a function that declares the parameters that we expect in
   // the input file, together with their data types, default values and a
@@ -1159,8 +1109,6 @@ namespace Step32
     prm.leave_subsection();
   }
 
-
-
   // And then we need a function that reads the contents of the
   // ParameterHandler object we get by reading the input file and puts the
   // results into variables that store the values of the parameters we have
@@ -1200,8 +1148,6 @@ namespace Step32
     }
     prm.leave_subsection();
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::BoussinesqFlowProblem}
   //
@@ -1270,8 +1216,6 @@ namespace Step32
                       TimerOutput::wall_times)
   {}
 
-
-
   // @sect4{The BoussinesqFlowProblem helper functions}
   // @sect5{BoussinesqFlowProblem::get_maximal_velocity}
 
@@ -1338,7 +1282,6 @@ namespace Step32
     return Utilities::MPI::max(max_local_velocity, MPI_COMM_WORLD);
   }
 
-
   // @sect5{BoussinesqFlowProblem::get_cfl_number}
 
   // The next function does something similar, but we now compute the CFL
@@ -1384,7 +1327,6 @@ namespace Step32
 
     return Utilities::MPI::max(max_local_cfl, MPI_COMM_WORLD);
   }
-
 
   // @sect5{BoussinesqFlowProblem::get_entropy_variation}
 
@@ -1494,8 +1436,6 @@ namespace Step32
     return entropy_diff;
   }
 
-
-
   // @sect5{BoussinesqFlowProblem::get_extrapolated_temperature_range}
 
   // The next function computes the minimal and maximal value of the
@@ -1584,7 +1524,6 @@ namespace Step32
     return std::make_pair(-global_extrema[0], global_extrema[1]);
   }
 
-
   // @sect5{BoussinesqFlowProblem::compute_viscosity}
 
   // The function that calculates the viscosity is purely local and so needs
@@ -1671,8 +1610,6 @@ namespace Step32
       }
   }
 
-
-
   // @sect5{BoussinesqFlowProblem::project_temperature_field}
 
   // This function is new compared to step-31. What is does is to re-implement
@@ -1743,7 +1680,6 @@ namespace Step32
       temperature_mass_matrix.local_range().second);
     TrilinosWrappers::MPI::Vector rhs(row_temp_matrix_partitioning),
       solution(row_temp_matrix_partitioning);
-
 
     const EquationData::TemperatureInitialValues<dim> initial_temperature;
 
@@ -1817,8 +1753,6 @@ namespace Step32
     old_temperature_solution     = solution;
     old_old_temperature_solution = solution;
   }
-
-
 
   // @sect4{The BoussinesqFlowProblem setup functions}
 
@@ -1916,8 +1850,6 @@ namespace Step32
     stokes_matrix.reinit(sp);
   }
 
-
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::setup_stokes_preconditioner(
@@ -1954,7 +1886,6 @@ namespace Step32
     stokes_preconditioner_matrix.reinit(sp);
   }
 
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::setup_temperature_matrices(
@@ -1982,8 +1913,6 @@ namespace Step32
     temperature_mass_matrix.reinit(sp);
     temperature_stiffness_matrix.reinit(sp);
   }
-
-
 
   // The remainder of the setup function (after splitting out the three
   // functions above) mostly has to deal with the things we need to do for
@@ -2061,7 +1990,6 @@ namespace Step32
           << '+' << n_p << '+' << n_T << ')' << std::endl
           << std::endl;
     pcout.get_stream().imbue(s);
-
 
     // After this, we have to set up the various partitioners (of type
     // <code>IndexSet</code>, see the introduction) that describe which parts
@@ -2183,8 +2111,6 @@ namespace Step32
     rebuild_temperature_preconditioner = true;
   }
 
-
-
   // @sect4{The BoussinesqFlowProblem assembly functions}
   //
   // Following the discussion in the introduction and in the @ref threads
@@ -2258,8 +2184,6 @@ namespace Step32
       }
   }
 
-
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::copy_local_to_global_stokes_preconditioner(
@@ -2268,7 +2192,6 @@ namespace Step32
     stokes_constraints.distribute_local_to_global(
       data.local_matrix, data.local_dof_indices, stokes_preconditioner_matrix);
   }
-
 
   // Now for the function that actually puts things together, using the
   // WorkStream functions.  WorkStream::run needs a start and end iterator to
@@ -2355,8 +2278,6 @@ namespace Step32
     stokes_preconditioner_matrix.compress(VectorOperation::add);
   }
 
-
-
   // The final function in this block initiates assembly of the Stokes
   // preconditioner matrix and then in fact builds the Stokes
   // preconditioner. It is mostly the same as in the serial case. The only
@@ -2401,7 +2322,6 @@ namespace Step32
 
     pcout << std::endl;
   }
-
 
   // @sect5{Stokes system assembly}
 
@@ -2486,8 +2406,6 @@ namespace Step32
     cell->get_dof_indices(data.local_dof_indices);
   }
 
-
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::copy_local_to_global_stokes_system(
@@ -2503,8 +2421,6 @@ namespace Step32
       stokes_constraints.distribute_local_to_global(
         data.local_rhs, data.local_dof_indices, stokes_rhs);
   }
-
-
 
   template <int dim>
   void
@@ -2553,7 +2469,6 @@ namespace Step32
 
     pcout << std::endl;
   }
-
 
   // @sect5{Temperature matrix assembly}
 
@@ -2606,8 +2521,6 @@ namespace Step32
       }
   }
 
-
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::copy_local_to_global_temperature_matrix(
@@ -2620,7 +2533,6 @@ namespace Step32
       data.local_dof_indices,
       temperature_stiffness_matrix);
   }
-
 
   template <int dim>
   void
@@ -2663,7 +2575,6 @@ namespace Step32
     rebuild_temperature_matrices       = false;
     rebuild_temperature_preconditioner = true;
   }
-
 
   // @sect5{Temperature right hand side assembly}
 
@@ -2759,7 +2670,6 @@ namespace Step32
               = scratch.temperature_fe_values.shape_grad(k, q);
           }
 
-
         const double T_term_for_rhs
           = (use_bdf2_scheme ?
                (scratch.old_temperature_values[q]
@@ -2828,7 +2738,6 @@ namespace Step32
       }
   }
 
-
   template <int dim>
   void
   BoussinesqFlowProblem<dim>::copy_local_to_global_temperature_rhs(
@@ -2839,8 +2748,6 @@ namespace Step32
                                                        temperature_rhs,
                                                        data.matrix_for_bc);
   }
-
-
 
   // In the function that runs the WorkStream for actually calculating the
   // right hand side, we also generate the final matrix. As mentioned above,
@@ -2935,8 +2842,6 @@ namespace Step32
     temperature_rhs.compress(VectorOperation::add);
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::solve}
 
   // This function solves the linear systems in each time step of the
@@ -3010,7 +2915,6 @@ namespace Step32
         if(stokes_constraints.is_constrained(i))
           distributed_stokes_solution(i) = 0;
 
-
       PrimitiveVectorMemory<TrilinosWrappers::MPI::BlockVector> mem;
 
       unsigned int  n_iterations     = 0;
@@ -3068,7 +2972,6 @@ namespace Step32
             = (solver_control.last_step() + solver_control_refined.last_step());
         }
 
-
       stokes_constraints.distribute(distributed_stokes_solution);
 
       distributed_stokes_solution.block(1) *= EquationData::pressure_scaling;
@@ -3076,7 +2979,6 @@ namespace Step32
       stokes_solution = distributed_stokes_solution;
       pcout << n_iterations << " iterations." << std::endl;
     }
-
 
     // Now let's turn to the temperature part: First, we compute the time step
     // size. We found that we need smaller time steps for 3D than for 2D for
@@ -3164,7 +3066,6 @@ namespace Step32
     }
   }
 
-
   // @sect4{BoussinesqFlowProblem::output_results}
 
   // Next comes the function that generates the output. The quantities to
@@ -3205,14 +3106,12 @@ namespace Step32
     const double       minimal_pressure;
   };
 
-
   template <int dim>
   BoussinesqFlowProblem<dim>::Postprocessor::Postprocessor(
     const unsigned int partition,
     const double       minimal_pressure)
     : partition(partition), minimal_pressure(minimal_pressure)
   {}
-
 
   // Here we define the names for the variables we want to output. These are
   // the actual solution values for velocity, pressure, and temperature, as
@@ -3233,7 +3132,6 @@ namespace Step32
     return solution_names;
   }
 
-
   template <int dim>
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
   BoussinesqFlowProblem<dim>::Postprocessor::get_data_component_interpretation()
@@ -3251,14 +3149,12 @@ namespace Step32
     return interpretation;
   }
 
-
   template <int dim>
   UpdateFlags
   BoussinesqFlowProblem<dim>::Postprocessor::get_needed_update_flags() const
   {
     return update_values | update_gradients | update_q_points;
   }
-
 
   // Now we implement the function that computes the derived quantities. As we
   // also did for the output, we rescale the velocity from its SI units to
@@ -3307,7 +3203,6 @@ namespace Step32
         computed_quantities[q](dim + 3) = partition;
       }
   }
-
 
   // The <code>output_results()</code> function has a similar task to the one
   // in step-31. However, here we are going to demonstrate a different
@@ -3443,7 +3338,6 @@ namespace Step32
     std::ofstream output(filename);
     data_out.write_vtu(output);
 
-
     // At this point, all processors have written their own files to disk. We
     // could visualize them individually in Visit or Paraview, but in reality
     // we of course want to visualize the whole set of files at once. To this
@@ -3473,8 +3367,6 @@ namespace Step32
 
     out_index++;
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::refine_mesh}
 
@@ -3605,8 +3497,6 @@ namespace Step32
     }
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::run}
 
   // This is the final and controlling function in this class. It, in fact,
@@ -3734,8 +3624,6 @@ namespace Step32
       output_results();
   }
 } // namespace Step32
-
-
 
 // @sect3{The <code>main</code> function}
 

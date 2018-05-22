@@ -16,7 +16,6 @@
 #ifndef dealii_polynomials_raviart_thomas_h
 #define dealii_polynomials_raviart_thomas_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -131,16 +130,12 @@ private:
   create_polynomials(const unsigned int k);
 };
 
-
-
 template <int dim>
 inline unsigned int
 PolynomialsRaviartThomas<dim>::n() const
 {
   return n_pols;
 }
-
-
 
 template <int dim>
 inline unsigned int
@@ -149,15 +144,12 @@ PolynomialsRaviartThomas<dim>::degree() const
   return my_degree;
 }
 
-
-
 template <int dim>
 inline std::string
 PolynomialsRaviartThomas<dim>::name() const
 {
   return "RaviartThomas";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

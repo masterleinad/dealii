@@ -147,7 +147,6 @@ init_petsc_complex()
   deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char** argv)
 {

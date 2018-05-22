@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -31,9 +30,7 @@
 
 #include <algorithm>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -53,8 +50,6 @@ namespace internal
   } // namespace PointValueHistoryImplementation
 } // namespace internal
 
-
-
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
   const unsigned int n_independent_variables)
@@ -73,8 +68,6 @@ PointValueHistory<dim>::PointValueHistory(
     = std::vector<std::vector<double>>(n_indep, std::vector<double>(0));
   indep_names = std::vector<std::string>();
 }
-
-
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
@@ -98,8 +91,6 @@ PointValueHistory<dim>::PointValueHistory(
   tria_listener = dof_handler.get_triangulation().signals.any_change.connect(
     std::bind(&PointValueHistory<dim>::tria_change_listener, std::ref(*this)));
 }
-
-
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
@@ -131,8 +122,6 @@ PointValueHistory<dim>::PointValueHistory(
           &PointValueHistory<dim>::tria_change_listener, std::ref(*this)));
     }
 }
-
-
 
 template <int dim>
 PointValueHistory<dim>&
@@ -167,8 +156,6 @@ PointValueHistory<dim>::operator=(const PointValueHistory& point_value_history)
   return *this;
 }
 
-
-
 template <int dim>
 PointValueHistory<dim>::~PointValueHistory()
 {
@@ -177,8 +164,6 @@ PointValueHistory<dim>::~PointValueHistory()
       tria_listener.disconnect();
     }
 }
-
-
 
 template <int dim>
 void
@@ -267,7 +252,6 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
         }
     }
 
-
   std::vector<types::global_dof_index> local_dof_indices(
     dof_handler->get_fe().dofs_per_cell);
   std::vector<types::global_dof_index> new_solution_indices;
@@ -318,8 +302,6 @@ PointValueHistory<dim>::add_point(const Point<dim>& location)
     }
 }
 
-
-
 template <int dim>
 void
 PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
@@ -334,7 +316,6 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
   AssertThrow(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
   AssertThrow(!triangulation_changed, ExcDoFHandlerChanged());
-
 
   // Implementation assumes that support
   // points locations are dofs locations
@@ -458,8 +439,6 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
     }
 }
 
-
-
 template <int dim>
 void
 PointValueHistory<dim>::add_field_name(const std::string&   vector_name,
@@ -505,7 +484,6 @@ PointValueHistory<dim>::add_field_name(const std::string&   vector_name,
   data_store.insert(pair_data);
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::add_field_name(const std::string& vector_name,
@@ -514,7 +492,6 @@ PointValueHistory<dim>::add_field_name(const std::string& vector_name,
   std::vector<bool> temp_mask(n_components, true);
   add_field_name(vector_name, temp_mask);
 }
-
 
 template <int dim>
 void
@@ -538,7 +515,6 @@ PointValueHistory<dim>::add_component_names(
   names->second = component_names;
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::add_independent_names(
@@ -550,15 +526,12 @@ PointValueHistory<dim>::add_independent_names(
   indep_names = independent_names;
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::close()
 {
   closed = true;
 }
-
-
 
 template <int dim>
 void
@@ -578,8 +551,6 @@ PointValueHistory<dim>::clear()
 // this case start_new_dataset will call bool deap_check () which will test
 // all vector_names and return a bool. This can be called from an Assert
 // statement.
-
-
 
 template <int dim>
 template <typename VectorType>
@@ -649,8 +620,6 @@ PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
         }
     }
 }
-
-
 
 template <int dim>
 template <typename VectorType>
@@ -730,7 +699,6 @@ PointValueHistory<dim>::evaluate_field(
             StaticMappingQ1<dim>::mapping, *dof_handler, requested_location)
             .first;
 
-
       fe_values.reinit(cell);
       std::vector<Vector<double>> computed_quantities(
         1, Vector<double>(n_output_variables)); // just one point needed
@@ -749,7 +717,6 @@ PointValueHistory<dim>::evaluate_field(
                 = requested_location.distance(quadrature_points[q_point]);
             }
         }
-
 
       // The case of a scalar FE
       if(n_components == 1)
@@ -839,7 +806,6 @@ PointValueHistory<dim>::evaluate_field(
                                                    computed_quantities);
         }
 
-
       // we now have the data and need to save it
       // loop over data names
       typename std::vector<std::string>::const_iterator name
@@ -878,8 +844,6 @@ PointValueHistory<dim>::evaluate_field(
     } // end of loop over points
 }
 
-
-
 template <int dim>
 template <typename VectorType>
 void
@@ -893,8 +857,6 @@ PointValueHistory<dim>::evaluate_field(
   vector_names.push_back(vector_name);
   evaluate_field(vector_names, solution, data_postprocessor, quadrature);
 }
-
-
 
 template <int dim>
 template <typename VectorType>
@@ -967,7 +929,6 @@ PointValueHistory<dim>::evaluate_field_at_requested_location(
     }
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::start_new_dataset(double key)
@@ -980,8 +941,6 @@ PointValueHistory<dim>::start_new_dataset(double key)
 
   dataset_key.push_back(key);
 }
-
-
 
 template <int dim>
 void
@@ -1002,8 +961,6 @@ PointValueHistory<dim>::push_back_independent(
   for(unsigned int component = 0; component < n_indep; component++)
     independent_values[component].push_back(indep_values[component]);
 }
-
-
 
 template <int dim>
 void
@@ -1056,8 +1013,6 @@ PointValueHistory<dim>::write_gnuplot(
 
       to_gnuplot.close();
     }
-
-
 
   // write points to a file
   if(have_dof_handler)
@@ -1124,7 +1079,6 @@ PointValueHistory<dim>::write_gnuplot(
                 to_gnuplot << " (may be approximate)\n";
             }
           to_gnuplot << "#\n";
-
 
           // write column headings
           to_gnuplot << "# <Key> ";
@@ -1217,8 +1171,6 @@ PointValueHistory<dim>::write_gnuplot(
     }
 }
 
-
-
 template <int dim>
 Vector<double>
 PointValueHistory<dim>::mark_support_locations()
@@ -1247,7 +1199,6 @@ PointValueHistory<dim>::mark_support_locations()
   return dof_vector;
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::get_support_locations(
@@ -1270,7 +1221,6 @@ PointValueHistory<dim>::get_support_locations(
   locations = actual_points;
 }
 
-
 template <int dim>
 void
 PointValueHistory<dim>::get_points(
@@ -1278,7 +1228,6 @@ PointValueHistory<dim>::get_points(
 {
   get_support_locations(locations);
 }
-
 
 template <int dim>
 void
@@ -1330,7 +1279,6 @@ PointValueHistory<dim>::get_postprocessor_locations(
       locations.push_back(evaluation_points[selected_point]);
     }
 }
-
 
 template <int dim>
 void
@@ -1451,8 +1399,6 @@ PointValueHistory<dim>::status(std::ostream& out)
   out << "***end of status output***\n\n";
 }
 
-
-
 template <int dim>
 bool
 PointValueHistory<dim>::deep_check(const bool strict)
@@ -1520,8 +1466,6 @@ PointValueHistory<dim>::deep_check(const bool strict)
   return true;
 }
 
-
-
 template <int dim>
 void
 PointValueHistory<dim>::tria_change_listener()
@@ -1540,9 +1484,7 @@ PointValueHistory<dim>::tria_change_listener()
   triangulation_changed = true;
 }
 
-
 // explicit instantiations
 #include "point_value_history.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

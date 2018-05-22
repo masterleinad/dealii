@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-15
-
 
 #include "../tests.h"
 
@@ -51,7 +48,6 @@ std::ofstream logfile("step-15/output");
 #include <iostream>
 #include <sstream>
 
-
 template <int dim>
 inline double
 gradient_power(const Tensor<1, dim>& v, const unsigned int n)
@@ -63,8 +59,6 @@ gradient_power(const Tensor<1, dim>& v, const unsigned int n)
   return p;
 }
 
-
-
 class InitializationValues : public Function<1>
 {
 public:
@@ -75,8 +69,6 @@ public:
   value(const Point<1>& p, const unsigned int component = 0) const;
 };
 
-
-
 double
 InitializationValues::value(const Point<1>& p, const unsigned int) const
 {
@@ -84,8 +76,6 @@ InitializationValues::value(const Point<1>& p, const unsigned int) const
   const double random = random_value<double>(-1., 1.);
   return std::max(base + .1 * random, 0.);
 }
-
-
 
 template <int dim>
 class MinimizationProblem
@@ -115,7 +105,6 @@ private:
   energy(const hp::DoFHandler<dim>& dof_handler,
          const Vector<double>&      function);
 
-
   const unsigned int run_number;
 
   Triangulation<dim> triangulation;
@@ -132,13 +121,10 @@ private:
   Vector<double> residual;
 };
 
-
-
 template <int dim>
 MinimizationProblem<dim>::MinimizationProblem(const unsigned int run_number)
   : run_number(run_number), fe(FE_Q<dim>(1)), dof_handler(triangulation)
 {}
-
 
 template <>
 void
@@ -164,7 +150,6 @@ MinimizationProblem<1>::initialize_solution()
   present_solution(cell->vertex_dof_index(1, 0)) = 1;
 }
 
-
 template <int dim>
 void
 MinimizationProblem<dim>::setup_system_on_mesh()
@@ -183,8 +168,6 @@ MinimizationProblem<dim>::setup_system_on_mesh()
 
   sparsity_pattern.compress();
 }
-
-
 
 template <int dim>
 void
@@ -282,7 +265,6 @@ MinimizationProblem<dim>::assemble_step()
   MatrixTools::apply_boundary_values(boundary_values, matrix, dummy, residual);
 }
 
-
 template <int dim>
 double
 MinimizationProblem<dim>::line_search(const Vector<double>& update) const
@@ -336,8 +318,6 @@ MinimizationProblem<dim>::line_search(const Vector<double>& update) const
   return alpha;
 }
 
-
-
 template <int dim>
 void
 MinimizationProblem<dim>::do_step()
@@ -360,8 +340,6 @@ MinimizationProblem<dim>::do_step()
   present_solution.add(step_length, update);
 }
 
-
-
 template <int dim>
 void
 MinimizationProblem<dim>::output_results() const
@@ -376,8 +354,6 @@ MinimizationProblem<dim>::output_results() const
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 template <>
 void
@@ -506,8 +482,6 @@ MinimizationProblem<1>::refine_grid()
   hanging_node_constraints.distribute(present_solution);
 }
 
-
-
 template <int dim>
 double
 MinimizationProblem<dim>::energy(const hp::DoFHandler<dim>& dof_handler,
@@ -549,7 +523,6 @@ MinimizationProblem<dim>::energy(const hp::DoFHandler<dim>& dof_handler,
   return energy;
 }
 
-
 template <int dim>
 void
 MinimizationProblem<dim>::run()
@@ -583,7 +556,6 @@ MinimizationProblem<dim>::run()
 
   deallog << std::endl;
 }
-
 
 int
 main()

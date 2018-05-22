@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test constructor/reinit of BlockVector with IndexSets
 
 #include "../tests.h"
@@ -23,7 +21,6 @@
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <iostream>
 #include <vector>
-
 
 template <class BLOCKVEC>
 void
@@ -97,8 +94,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

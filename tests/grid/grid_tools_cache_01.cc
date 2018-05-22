@@ -20,7 +20,6 @@
 #include <deal.II/grid/grid_tools_cache.h>
 #include <deal.II/grid/tria.h>
 
-
 template <int dim, int spacedim>
 void
 test()
@@ -43,7 +42,6 @@ test()
       ++i;
     }
 }
-
 
 int
 main()

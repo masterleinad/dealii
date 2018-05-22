@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test distributed solution_transfer with one processor
 
 #include "../tests.h"
@@ -35,8 +33,6 @@
 #include <deal.II/base/function.h>
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 #include <deal.II/grid/grid_out.h>
 
@@ -132,7 +128,6 @@ test(std::ostream& /*out*/)
       deallog << "error: " << difference.l2_norm() << std::endl;
     }
 }
-
 
 int
 main(int argc, char* argv[])

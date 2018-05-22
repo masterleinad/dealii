@@ -24,8 +24,6 @@ DEAL_II_NAMESPACE_OPEN
 template <int spacedim, typename RangeNumberType>
 class Function;
 
-
-
 /**
  * This class declares a local typedef that denotes a mapping between a
  * boundary indicator (see

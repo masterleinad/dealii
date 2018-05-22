@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the BlockMask class
 //
 // here: BlockMask::represents_the_all_selected_mask
 
-
 #include "../tests.h"
 #include <deal.II/fe/block_mask.h>
-
-
 
 void
 test()
@@ -41,7 +36,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

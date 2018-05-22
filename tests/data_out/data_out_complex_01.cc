@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DataOut for complex vectors
 
 #include "../tests.h"
@@ -32,8 +31,6 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-
-
 
 template <int dim>
 void
@@ -60,8 +57,6 @@ check()
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 int
 main()

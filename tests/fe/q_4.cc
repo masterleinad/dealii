@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // previously, the FETools::get_interpolation_matrix function would
 // compute its result itself by interpolation. now, the different
 // finite elements do that themselves, if they can. make sure the
@@ -28,8 +26,6 @@
 #include <string>
 
 #define PRECISION 5
-
-
 
 template <int dim>
 void
@@ -50,7 +46,6 @@ test(const FE_Q<dim> fe1, const FE_Q<dim> fe2)
 
   deallog << std::endl;
 }
-
 
 int
 main()
@@ -86,7 +81,6 @@ main()
     for(unsigned int degree2 = 2; degree2 <= 4; ++degree2)
       test<3>(FE_Q<3>(QGaussLobatto<1>(degree1)),
               FE_Q<3>(QGaussLobatto<1>(degree2)));
-
 
   return 0;
 }

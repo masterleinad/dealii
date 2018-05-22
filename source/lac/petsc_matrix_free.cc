@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/petsc_matrix_free.h>
 
 #ifdef DEAL_II_WITH_PETSC
@@ -31,8 +30,6 @@ namespace PETScWrappers
     do_reinit(m, m, m, m);
   }
 
-
-
   MatrixFree::MatrixFree(const MPI_Comm&    communicator,
                          const unsigned int m,
                          const unsigned int n,
@@ -42,8 +39,6 @@ namespace PETScWrappers
   {
     do_reinit(m, n, local_rows, local_columns);
   }
-
-
 
   MatrixFree::MatrixFree(
     const MPI_Comm&                  communicator,
@@ -65,8 +60,6 @@ namespace PETScWrappers
               local_columns_per_process[this_process]);
   }
 
-
-
   MatrixFree::MatrixFree(const unsigned int m,
                          const unsigned int n,
                          const unsigned int local_rows,
@@ -75,8 +68,6 @@ namespace PETScWrappers
   {
     do_reinit(m, n, local_rows, local_columns);
   }
-
-
 
   MatrixFree::MatrixFree(
     const unsigned int               m,
@@ -97,8 +88,6 @@ namespace PETScWrappers
               local_columns_per_process[this_process]);
   }
 
-
-
   void
   MatrixFree::reinit(const MPI_Comm&    communicator,
                      const unsigned int m,
@@ -114,8 +103,6 @@ namespace PETScWrappers
 
     do_reinit(m, n, local_rows, local_columns);
   }
-
-
 
   void
   MatrixFree::reinit(const MPI_Comm&                  communicator,
@@ -140,8 +127,6 @@ namespace PETScWrappers
               local_columns_per_process[this_process]);
   }
 
-
-
   void
   MatrixFree::reinit(const unsigned int m,
                      const unsigned int n,
@@ -150,8 +135,6 @@ namespace PETScWrappers
   {
     reinit(MPI_COMM_WORLD, m, n, local_rows, local_columns);
   }
-
-
 
   void
   MatrixFree::reinit(const unsigned int               m,
@@ -168,8 +151,6 @@ namespace PETScWrappers
            this_process);
   }
 
-
-
   void
   MatrixFree::clear()
   {
@@ -179,8 +160,6 @@ namespace PETScWrappers
     const int m = 0;
     do_reinit(m, m, m, m);
   }
-
-
 
   void
   MatrixFree::vmult(Vec& dst, const Vec& src) const
@@ -192,8 +171,6 @@ namespace PETScWrappers
     // This is implemented by derived classes
     vmult(y, x);
   }
-
-
 
   int
   MatrixFree::matrix_free_mult(Mat A, Vec src, Vec dst)
@@ -211,8 +188,6 @@ namespace PETScWrappers
 
     return (0);
   }
-
-
 
   void
   MatrixFree::do_reinit(const unsigned int m,
@@ -241,7 +216,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 } // namespace PETScWrappers
-
 
 DEAL_II_NAMESPACE_CLOSE
 

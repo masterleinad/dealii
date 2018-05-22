@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Just output the constraint matrices of the FE_Q element. Test
 // introduced when we started to compute them on the fly, rather than
 // precomputing them for a number of elements and storing them in a
@@ -27,8 +25,6 @@
 
 #define PRECISION 2
 
-
-
 template <int dim>
 void
 test(const unsigned int degree)
@@ -38,7 +34,6 @@ test(const unsigned int degree)
   FE_Q<dim> fe_q(degree);
   FE_Q<dim> x(fe_q);
 }
-
 
 int
 main()

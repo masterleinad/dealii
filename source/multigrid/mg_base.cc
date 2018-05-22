@@ -23,9 +23,7 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/multigrid/mg_base.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <typename VectorType>
 void
@@ -36,7 +34,6 @@ MGSmootherBase<VectorType>::apply(const unsigned int level,
   u = typename VectorType::value_type(0.);
   smooth(level, u, rhs);
 }
-
 
 // Explicit instantiations
 

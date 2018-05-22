@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_slepc_solver_h
 #  define dealii_slepc_solver_h
 
@@ -359,7 +358,6 @@ namespace SLEPcWrappers
      */
     EPSConvergedReason reason;
 
-
     /**
      * A function that can be used in SLEPc as a callback to check on
      * convergence.
@@ -612,7 +610,6 @@ namespace SLEPcWrappers
      */
     const AdditionalData additional_data;
   };
-
 
   /**
    * An implementation of the solver interface using the SLEPc LAPACK direct

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check CellId
 
 #include "../tests.h"
@@ -38,7 +36,6 @@ void
 check(Triangulation<dim>& tr)
 {
   typename Triangulation<dim>::cell_iterator cell = tr.begin(), endc = tr.end();
-
 
   for(; cell != endc; ++cell)
     {
@@ -64,7 +61,6 @@ check(Triangulation<dim>& tr)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

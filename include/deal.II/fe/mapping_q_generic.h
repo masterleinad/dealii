@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_q_generic_h
 #define dealii_mapping_q_generic_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -35,10 +34,8 @@ DEAL_II_NAMESPACE_OPEN
 template <int, int>
 class MappingQ;
 
-
 /*!@addtogroup mapping */
 /*@{*/
-
 
 /**
  * This class implements the functionality for polynomial mappings $Q_p$ of
@@ -291,7 +288,6 @@ public:
     void
     compute_shape_function_values(const std::vector<Point<dim>>& unit_points);
 
-
     /**
      * Shape function at quadrature point. Shape functions are in tensor
      * product order, so vertices must be reordered to obtain transformation.
@@ -531,7 +527,6 @@ public:
     mutable std::vector<double> volume_elements;
   };
 
-
   // documentation can be found in Mapping::requires_update_flags()
   virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
@@ -733,8 +728,6 @@ protected:
   friend class MappingQ;
 };
 
-
-
 /*@}*/
 
 /*----------------------------------------------------------------------*/
@@ -753,8 +746,6 @@ MappingQGeneric<dim, spacedim>::InternalData::shape(
   return shape_values[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim>
 inline double&
 MappingQGeneric<dim, spacedim>::InternalData::shape(const unsigned int qpoint,
@@ -765,7 +756,6 @@ MappingQGeneric<dim, spacedim>::InternalData::shape(const unsigned int qpoint,
            qpoint * n_shape_functions + shape_nr, 0, shape_values.size()));
   return shape_values[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim>
 inline const Tensor<1, dim>&
@@ -779,8 +769,6 @@ MappingQGeneric<dim, spacedim>::InternalData::derivative(
   return shape_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim>
 inline Tensor<1, dim>&
 MappingQGeneric<dim, spacedim>::InternalData::derivative(
@@ -792,7 +780,6 @@ MappingQGeneric<dim, spacedim>::InternalData::derivative(
            qpoint * n_shape_functions + shape_nr, 0, shape_derivatives.size()));
   return shape_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim>
 inline const Tensor<2, dim>&
@@ -807,7 +794,6 @@ MappingQGeneric<dim, spacedim>::InternalData::second_derivative(
                        shape_second_derivatives.size()));
   return shape_second_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim>
 inline Tensor<2, dim>&
@@ -836,7 +822,6 @@ MappingQGeneric<dim, spacedim>::InternalData::third_derivative(
   return shape_third_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
 template <int dim, int spacedim>
 inline Tensor<3, dim>&
 MappingQGeneric<dim, spacedim>::InternalData::third_derivative(
@@ -849,7 +834,6 @@ MappingQGeneric<dim, spacedim>::InternalData::third_derivative(
                        shape_third_derivatives.size()));
   return shape_third_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim>
 inline const Tensor<4, dim>&
@@ -865,7 +849,6 @@ MappingQGeneric<dim, spacedim>::InternalData::fourth_derivative(
   return shape_fourth_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
 template <int dim, int spacedim>
 inline Tensor<4, dim>&
 MappingQGeneric<dim, spacedim>::InternalData::fourth_derivative(
@@ -880,8 +863,6 @@ MappingQGeneric<dim, spacedim>::InternalData::fourth_derivative(
   return shape_fourth_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim>
 inline bool
 MappingQGeneric<dim, spacedim>::preserves_vertex_locations() const
@@ -892,7 +873,6 @@ MappingQGeneric<dim, spacedim>::preserves_vertex_locations() const
 #endif // DOXYGEN
 
 /* -------------- declaration of explicit specializations ------------- */
-
 
 DEAL_II_NAMESPACE_CLOSE
 

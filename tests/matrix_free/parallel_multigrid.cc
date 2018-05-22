@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test running a multigrid solver on continuous FE_Q finite elements with
 // MatrixFree data structures (otherwise similar to step-37)
 
@@ -44,7 +42,6 @@
 #include <deal.II/matrix_free/matrix_free.h>
 
 std::ofstream logfile("output");
-
 
 template <int dim,
           int fe_degree,
@@ -193,7 +190,6 @@ public:
     return inverse_diagonal_entries;
   }
 
-
 private:
   void
   local_apply(const MatrixFree<dim, number>&                    data,
@@ -268,8 +264,6 @@ private:
   LinearAlgebra::distributed::Vector<number> inverse_diagonal_entries;
 };
 
-
-
 template <typename MatrixType>
 class MGTransferPrebuiltMF
   : public MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>
@@ -298,8 +292,6 @@ private:
   const MGLevelObject<MatrixType>& laplace_operator;
 };
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -327,8 +319,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -418,8 +408,6 @@ do_test(const DoFHandler<dim>& dof)
     deallog.pop();
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -442,8 +430,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

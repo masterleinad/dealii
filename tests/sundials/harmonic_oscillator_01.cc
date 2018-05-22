@@ -19,7 +19,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/sundials/ida.h>
 
-
 /**
  * Solve the Harmonic oscillator problem.
  *
@@ -69,7 +68,6 @@ public:
     typedef Vector<double> VectorType;
 
     time_stepper.reinit_vector = [&](VectorType& v) { v.reinit(2); };
-
 
     time_stepper.residual = [&](const double      t,
                                 const VectorType& y,
@@ -132,7 +130,6 @@ private:
   std::ofstream out;
 };
 
-
 int
 main(int argc, char** argv)
 {
@@ -149,7 +146,6 @@ main(int argc, char** argv)
 
   std::ifstream ifile(SOURCE_DIR "/harmonic_oscillator_01.prm");
   prm.parse_input(ifile);
-
 
   HarmonicOscillator ode(1.0, data);
   ode.run();

@@ -22,9 +22,7 @@
 #include <cstring>
 #include <iomanip>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace parallel
 {

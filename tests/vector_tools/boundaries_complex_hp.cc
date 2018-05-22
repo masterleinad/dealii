@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check interpolation of boundary values for complex-valued
 // objects and the hp case
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -35,8 +32,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim, std::complex<double>>
@@ -60,7 +55,6 @@ public:
   }
 };
 
-
 template <int dim>
 const Quadrature<dim - 1>&
 boundary_q(const hp::DoFHandler<dim>&)
@@ -68,7 +62,6 @@ boundary_q(const hp::DoFHandler<dim>&)
   static const QGauss<dim - 1> q(4);
   return q;
 }
-
 
 void
 write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
@@ -79,8 +72,6 @@ write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -112,7 +103,6 @@ check()
   MappingQ<dim>              mapping(3);
   hp::MappingCollection<dim> mappings;
   mappings.push_back(mapping);
-
 
   // list of finite elements for
   // which we want check, and
@@ -153,7 +143,6 @@ check()
       write_map(interpolated_bv);
     }
 
-
   // delete objects now no more needed
   for(unsigned int i = 0; i < fe_list.size(); ++i)
     {
@@ -161,7 +150,6 @@ check()
       delete function_list[i];
     }
 }
-
 
 int
 main()

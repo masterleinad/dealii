@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_polynomials_nedelec_h
 #define dealii_polynomials_nedelec_h
-
 
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -133,14 +131,12 @@ private:
   create_polynomials(const unsigned int k);
 };
 
-
 template <int dim>
 inline unsigned int
 PolynomialsNedelec<dim>::n() const
 {
   return n_pols;
 }
-
 
 template <int dim>
 inline unsigned int
@@ -149,14 +145,12 @@ PolynomialsNedelec<dim>::degree() const
   return my_degree;
 }
 
-
 template <int dim>
 inline std::string
 PolynomialsNedelec<dim>::name() const
 {
   return "Nedelec";
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

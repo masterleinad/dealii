@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
@@ -22,7 +20,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::SparseMatrix& m)
@@ -38,8 +35,6 @@ test(TrilinosWrappers::SparseMatrix& m)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -47,7 +42,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

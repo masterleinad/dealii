@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ThreadLocalStorage::operator T&
 
 #include "../tests.h"
 
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
-
 
 struct X
 {
@@ -40,7 +38,6 @@ struct X
   }
 };
 
-
 void
 test()
 {
@@ -50,8 +47,6 @@ test()
 
   AssertThrow(t.return_value() == 42, ExcInternalError());
 }
-
-
 
 int
 main()

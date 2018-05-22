@@ -16,8 +16,6 @@
 #ifndef dealii_grid_out_h
 #define dealii_grid_out_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/data_out_base.h>
 #include <deal.II/base/exceptions.h>
@@ -32,7 +30,6 @@ template <int dim, int spacedim>
 class Triangulation;
 template <int dim, int spacedim>
 class Mapping;
-
 
 /**
  * Within this namespace, we define several structures that are used to
@@ -152,7 +149,6 @@ namespace GridOutFlags
     parse_parameters(ParameterHandler& param);
   };
 
-
   /**
    * Flags describing the details of output in UCD format.
    *
@@ -220,7 +216,6 @@ namespace GridOutFlags
     void
     parse_parameters(ParameterHandler& param);
   };
-
 
   /**
    * Flags describing the details of output in GNUPLOT format.
@@ -373,7 +368,6 @@ namespace GridOutFlags
     parse_parameters(ParameterHandler& param);
   };
 
-
   /**
    * Flags describing the details of output for encapsulated postscript for
    * all dimensions not explicitly specialized below. Some flags that are
@@ -416,7 +410,6 @@ namespace GridOutFlags
     void
     parse_parameters(ParameterHandler& param);
   };
-
 
   /**
    * Flags specific to the output of grids in two space dimensions.
@@ -621,7 +614,6 @@ namespace GridOutFlags
     parse_parameters(ParameterHandler& param);
   };
 
-
   /**
    * Flags controlling SVG output.
    *
@@ -758,7 +750,6 @@ namespace GridOutFlags
     parse_parameters(ParameterHandler& param);
   };
 
-
   /**
    * Flags for grid output in Vtk format. These flags are the same as those
    * declared in DataOutBase::VtkFlags.
@@ -767,7 +758,6 @@ namespace GridOutFlags
    */
   struct Vtk : public DataOutBase::VtkFlags
   {};
-
 
   /**
    * Flags for grid output in Vtu format. These flags are the same as those
@@ -778,8 +768,6 @@ namespace GridOutFlags
   struct Vtu : public DataOutBase::VtkFlags
   {};
 } // namespace GridOutFlags
-
-
 
 /**
  * This class provides a means to output a triangulation to a file in
@@ -1076,7 +1064,6 @@ public:
   template <int dim, int spacedim>
   void
   write_svg(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
-
 
   /**
    * Write triangulation in MathGL script format. To interpret this file a
@@ -1461,8 +1448,6 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
-
-
   /**
    * Write the grid information about lines to @p out. Only those lines are
    * printed which are on the boundary and which have a boundary indicator not
@@ -1582,7 +1567,6 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
-
   /**
    * Write the grid information about lines to @p out. Only those lines are
    * printed which are on the boundary and which have a boundary indicator not
@@ -1634,7 +1618,6 @@ private:
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
 
-
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
@@ -1650,7 +1633,6 @@ private:
   write_ucd_lines(const Triangulation<2, 3>& tria,
                   const unsigned int         next_element_index,
                   std::ostream&              out) const;
-
 
   /**
    * This function projects a three-dimensional point (Point<3> point) onto a
@@ -1745,8 +1727,6 @@ private:
   unsigned int
   n_boundary_lines(const Triangulation<2, 3>& tria) const;
 };
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

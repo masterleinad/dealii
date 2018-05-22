@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check function MGTools::max_level_for_coarse_mesh()
 
 #include "../tests.h"
@@ -75,8 +74,6 @@ test()
   deallog << "Max possible level for coarse mesh: " << max_possible_level
           << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

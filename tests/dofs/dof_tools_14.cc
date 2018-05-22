@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/vector.h>
 
 // check
 //   DoFTools::count_boundary_dofs
-
-
 
 template <int dim>
 void

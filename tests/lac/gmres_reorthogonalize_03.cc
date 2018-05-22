@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same as gmres_reorthogonalize_01 but forces re-orthogonalization.
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_gmres.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void

@@ -48,10 +48,7 @@
 #include <memory>
 #include <numeric>
 
-
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
@@ -64,8 +61,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
     local_dof_values(fe.dofs_per_cell)
 {}
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::size_t
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
@@ -74,8 +69,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
   Assert(false, ExcNotImplemented());
   return 0;
 }
-
-
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 double&
@@ -89,7 +82,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::shape(
   return shape_values[qpoint * n_shape_functions + shape_nr];
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 const Tensor<1, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -101,8 +93,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   return shape_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 Tensor<1, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -113,7 +103,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
            qpoint * n_shape_functions + shape_nr, 0, shape_derivatives.size()));
   return shape_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 const Tensor<2, dim>&
@@ -129,8 +118,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   return shape_second_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 Tensor<2, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -144,7 +131,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   return shape_second_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 const Tensor<3, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -157,8 +143,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   return shape_third_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 Tensor<3, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -170,7 +154,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
                        shape_third_derivatives.size()));
   return shape_third_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 const Tensor<4, dim>&
@@ -186,8 +169,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   return shape_fourth_derivatives[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
 Tensor<4, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
@@ -200,8 +181,6 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
                        shape_fourth_derivatives.size()));
   return shape_fourth_derivatives[qpoint * n_shape_functions + shape_nr];
 }
-
-
 
 namespace
 {
@@ -222,8 +201,6 @@ namespace
     return quad;
   }
 } // namespace
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
@@ -251,7 +228,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
   AssertDimension(size, spacedim);
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
   const MappingFEField<dim, spacedim, VectorType, DoFHandlerType>& mapping)
@@ -263,8 +239,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
               get_vertex_quadrature<dim>(),
               update_values)
 {}
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 inline const double&
@@ -278,8 +252,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::shape(
   return shape_values[qpoint * n_shape_functions + shape_nr];
 }
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 bool
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
@@ -287,8 +259,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 {
   return false;
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
@@ -325,8 +295,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_vertices(
 
   return vertices;
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -365,7 +333,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
             = fe->shape_4th_derivative(i, unit_points[point]);
     }
 }
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 UpdateFlags
@@ -421,8 +388,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   return out;
 }
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_data(
@@ -474,7 +439,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_data(
 
   compute_shapes_virtual(q.get_points(), data);
 }
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -552,7 +516,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
     }
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 typename std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_data(
@@ -564,8 +527,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_data(
   this->compute_data(update_flags, quadrature, quadrature.size(), *data);
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -581,7 +542,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_face_data(
   return std::move(data);
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_subface_data(
@@ -595,8 +555,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_subface_data(
 
   return std::move(data);
 }
-
-
 
 namespace internal
 {
@@ -1234,7 +1192,6 @@ namespace internal
           }
       }
 
-
       /**
        * Depending on what information is called for in the update flags of the
        * @p data object, compute the various pieces of information that is
@@ -1520,7 +1477,6 @@ namespace internal
   }   // namespace MappingFEFieldImplementation
 } // namespace internal
 
-
 // Note that the CellSimilarity flag is modifiable, since MappingFEField can need to
 // recalculate data even when cells are similar.
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
@@ -1577,7 +1533,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
         !(update_flags & update_normal_vectors)
           || (output_data.normal_vectors.size() == n_q_points),
         ExcDimensionMismatch(output_data.normal_vectors.size(), n_q_points));
-
 
       if(cell_similarity != CellSimilarity::translation)
         for(unsigned int point = 0; point < n_q_points; ++point)
@@ -1750,8 +1705,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
   return updated_cell_similarity;
 }
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_face_values(
@@ -1788,7 +1741,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_face_values(
       fe_to_real,
       output_data);
 }
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -1831,7 +1783,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       fe_to_real,
       output_data);
 }
-
 
 namespace internal
 {
@@ -1904,7 +1855,6 @@ namespace internal
                 return;
               }
 
-
             //We still allow this operation as in the
             //reference cell Derivatives are Tensor
             //rather than DerivativeForm
@@ -1925,7 +1875,6 @@ namespace internal
               Assert(false, ExcNotImplemented());
           }
       }
-
 
       template <int dim,
                 int spacedim,
@@ -1978,8 +1927,6 @@ namespace internal
   }   // namespace MappingFEFieldImplementation
 } // namespace internal
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
@@ -1994,8 +1941,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
     transform_fields<dim, spacedim, 1, VectorType, DoFHandlerType>(
       input, mapping_type, mapping_data, output);
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -2012,8 +1957,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
       input, mapping_type, mapping_data, output);
 }
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
@@ -2029,8 +1972,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 
   AssertThrow(false, ExcNotImplemented());
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -2078,8 +2019,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
     }
 }
 
-
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
@@ -2095,8 +2034,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 
   AssertThrow(false, ExcNotImplemented());
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<spacedim>
@@ -2119,7 +2056,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   return do_transform_unit_to_real_cell(dynamic_cast<InternalData&>(*mdata));
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<spacedim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
@@ -2138,8 +2074,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 
   return p_real;
 }
-
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<dim>
@@ -2187,7 +2121,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     cell, p, initial_p_unit, dynamic_cast<InternalData&>(*mdata));
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<dim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
@@ -2201,7 +2134,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   (void) n_shapes;
   Assert(n_shapes != 0, ExcInternalError());
   AssertDimension(mdata.shape_derivatives.size(), n_shapes);
-
 
   // Newton iteration to solve
   // f(x)=p(x)-p=0
@@ -2299,14 +2231,12 @@ failure:
   return Point<dim>();
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 unsigned int
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_degree() const
 {
   return euler_dof_handler->get_fe().degree;
 }
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 ComponentMask
@@ -2316,7 +2246,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_component_mask()
   return this->fe_mask;
 }
 
-
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::clone() const
@@ -2324,7 +2253,6 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::clone() const
   return std_cxx14::make_unique<
     MappingFEField<dim, spacedim, VectorType, DoFHandlerType>>(*this);
 }
-
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
@@ -2352,6 +2280,5 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::update_internal_dofs(
 #  define SPLIT_INSTANTIATIONS_INDEX 0
 #endif
 #include "mapping_fe_field.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

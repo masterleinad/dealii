@@ -16,7 +16,6 @@
 #ifndef dealii_precondition_block_base_h
 #define dealii_precondition_block_base_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/memory_consumption.h>
@@ -277,7 +276,6 @@ private:
    */
   std::vector<FullMatrix<number>> var_diagonal;
 
-
   /**
    * This is true, if the field #var_diagonal is to be used.
    */
@@ -306,7 +304,6 @@ inline PreconditionBlockBase<number>::PreconditionBlockBase(bool      store,
     var_same_diagonal(false),
     var_inverses_ready(false)
 {}
-
 
 template <typename number>
 inline void
@@ -403,7 +400,6 @@ PreconditionBlockBase<number>::reinit(unsigned int n,
     }
 }
 
-
 template <typename number>
 inline unsigned int
 PreconditionBlockBase<number>::size() const
@@ -439,7 +435,6 @@ PreconditionBlockBase<number>::inverse_vmult(size_type              i,
     }
 }
 
-
 template <typename number>
 template <typename number2>
 inline void
@@ -468,7 +463,6 @@ PreconditionBlockBase<number>::inverse_Tvmult(size_type              i,
     }
 }
 
-
 template <typename number>
 inline const FullMatrix<number>&
 PreconditionBlockBase<number>::inverse(size_type i) const
@@ -481,7 +475,6 @@ PreconditionBlockBase<number>::inverse(size_type i) const
   return var_inverse_full[i];
 }
 
-
 template <typename number>
 inline const Householder<number>&
 PreconditionBlockBase<number>::inverse_householder(size_type i) const
@@ -493,7 +486,6 @@ PreconditionBlockBase<number>::inverse_householder(size_type i) const
   return var_inverse_householder[i];
 }
 
-
 template <typename number>
 inline const LAPACKFullMatrix<number>&
 PreconditionBlockBase<number>::inverse_svd(size_type i) const
@@ -504,7 +496,6 @@ PreconditionBlockBase<number>::inverse_svd(size_type i) const
   AssertIndexRange(i, var_inverse_svd.size());
   return var_inverse_svd[i];
 }
-
 
 template <typename number>
 inline const FullMatrix<number>&
@@ -518,7 +509,6 @@ PreconditionBlockBase<number>::diagonal(size_type i) const
   Assert(i < var_diagonal.size(), ExcIndexRange(i, 0, var_diagonal.size()));
   return var_diagonal[i];
 }
-
 
 template <typename number>
 inline FullMatrix<number>&
@@ -534,7 +524,6 @@ PreconditionBlockBase<number>::inverse(size_type i)
   return var_inverse_full[i];
 }
 
-
 template <typename number>
 inline Householder<number>&
 PreconditionBlockBase<number>::inverse_householder(size_type i)
@@ -547,7 +536,6 @@ PreconditionBlockBase<number>::inverse_householder(size_type i)
   AssertIndexRange(i, var_inverse_householder.size());
   return var_inverse_householder[i];
 }
-
 
 template <typename number>
 inline LAPACKFullMatrix<number>&
@@ -562,7 +550,6 @@ PreconditionBlockBase<number>::inverse_svd(size_type i)
   return var_inverse_svd[i];
 }
 
-
 template <typename number>
 inline FullMatrix<number>&
 PreconditionBlockBase<number>::diagonal(size_type i)
@@ -576,14 +563,12 @@ PreconditionBlockBase<number>::diagonal(size_type i)
   return var_diagonal[i];
 }
 
-
 template <typename number>
 inline bool
 PreconditionBlockBase<number>::same_diagonal() const
 {
   return var_same_diagonal;
 }
-
 
 template <typename number>
 inline bool
@@ -592,7 +577,6 @@ PreconditionBlockBase<number>::store_diagonals() const
   return var_store_diagonals;
 }
 
-
 template <typename number>
 inline void
 PreconditionBlockBase<number>::inverses_computed(bool x)
@@ -600,14 +584,12 @@ PreconditionBlockBase<number>::inverses_computed(bool x)
   var_inverses_ready = x;
 }
 
-
 template <typename number>
 inline bool
 PreconditionBlockBase<number>::inverses_ready() const
 {
   return var_inverses_ready;
 }
-
 
 template <typename number>
 inline void
@@ -659,7 +641,6 @@ PreconditionBlockBase<number>::log_statistics() const
     }
 }
 
-
 template <typename number>
 inline std::size_t
 PreconditionBlockBase<number>::memory_consumption() const
@@ -671,7 +652,6 @@ PreconditionBlockBase<number>::memory_consumption() const
     mem += MemoryConsumption::memory_consumption(var_diagonal[i]);
   return mem;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _01 but on adaptively refined grid
-
 
 //TODO:[GK] Add checks for RT again!
 #include "../tests.h"
@@ -53,7 +51,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
       v[level].reinit(n);
     }
 }
-
 
 template <int dim>
 void
@@ -184,7 +181,6 @@ check_simple(const FiniteElement<dim>& fe)
   refine_mesh(tr);
   refine_mesh(tr);
 
-
   DoFHandler<dim> mgdof(tr);
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
@@ -241,7 +237,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer_renumbered.copy_from_mg(mgdof_renumbered, u, v);
   print_diff(mgdof_renumbered, mgdof, u, diff);
 }
-
 
 int
 main()

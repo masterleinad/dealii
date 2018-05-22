@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // build a mass matrix for the RT element and try to invert it. like the rt_8
 // test, except that we use a library function to build the mass matrix
 
@@ -37,7 +36,6 @@
 #include <vector>
 
 #define PRECISION 8
-
 
 std::ofstream logfile("output");
 
@@ -80,7 +78,6 @@ test(const unsigned int degree)
   deallog << "Degree=" << degree << ": " << solver_control.last_step()
           << " iterations to obtain convergence." << std::endl;
 }
-
 
 int
 main()

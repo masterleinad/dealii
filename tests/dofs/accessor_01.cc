@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // We used to forget to instantiate a few static const member variables.
 // Verify that this is now fixed.
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -25,7 +23,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <class ACCESSOR>
 LogStream&
@@ -36,7 +33,6 @@ operator<<(LogStream& log, const TriaIterator<ACCESSOR>& i)
   i.print(log);
   return log;
 }
-
 
 template <typename DoFHandlerType>
 void
@@ -49,7 +45,6 @@ test_in_dim(const DoFHandlerType& d1, const DoFHandlerType& d2)
   deallog << "a " << a << std::endl << "l " << l << std::endl;
 }
 
-
 template <int dim>
 void
 init_tria(Triangulation<dim>& tr)
@@ -57,7 +52,6 @@ init_tria(Triangulation<dim>& tr)
   GridGenerator::hyper_cube(tr);
   tr.refine_global(4 - dim);
 }
-
 
 template <int dim>
 void
@@ -67,7 +61,6 @@ init_dofs(DoFHandler<dim>&          dof,
 {
   dof.initialize(tr, fe);
 }
-
 
 int
 main()

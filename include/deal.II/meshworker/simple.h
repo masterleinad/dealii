@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_simple_h
 #define dealii_mesh_worker_simple_h
 
@@ -125,7 +124,6 @@ namespace MeshWorker
       SmartPointer<const ConstraintMatrix, ResidualSimple<VectorType>>
         constraints;
     };
-
 
     /**
      * Assemble local matrices into a single global matrix or several global
@@ -247,7 +245,6 @@ namespace MeshWorker
       SmartPointer<const ConstraintMatrix, MatrixSimple<MatrixType>>
         constraints;
     };
-
 
     /**
      * Assemble local matrices into level matrices without using block
@@ -432,7 +429,6 @@ namespace MeshWorker
       const double threshold;
     };
 
-
     /**
      * Assemble a simple matrix and a simple right hand side at once. We use a
      * combination of MatrixSimple and ResidualSimple to achieve this. Cell
@@ -514,7 +510,6 @@ namespace MeshWorker
                const std::vector<types::global_dof_index>& i2);
     };
 
-
     //----------------------------------------------------------------------//
 
     template <typename VectorType>
@@ -531,12 +526,10 @@ namespace MeshWorker
       constraints = &c;
     }
 
-
     template <typename MatrixType>
     inline void
     ResidualSimple<MatrixType>::initialize_local_blocks(const BlockIndices&)
     {}
-
 
     template <typename VectorType>
     template <class DOFINFO>
@@ -545,7 +538,6 @@ namespace MeshWorker
     {
       info.initialize_vectors(residuals.size());
     }
-
 
     template <typename VectorType>
     template <class DOFINFO>
@@ -580,14 +572,12 @@ namespace MeshWorker
       assemble(info2);
     }
 
-
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
     inline MatrixSimple<MatrixType>::MatrixSimple(double threshold)
       : threshold(threshold)
     {}
-
 
     template <typename MatrixType>
     inline void
@@ -596,7 +586,6 @@ namespace MeshWorker
       matrix.resize(1);
       matrix[0] = &m;
     }
-
 
     template <typename MatrixType>
     inline void
@@ -607,14 +596,12 @@ namespace MeshWorker
         matrix[i] = &m[i];
     }
 
-
     template <typename MatrixType>
     inline void
     MatrixSimple<MatrixType>::initialize(const ConstraintMatrix& c)
     {
       constraints = &c;
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -646,8 +633,6 @@ namespace MeshWorker
         }
     }
 
-
-
     template <typename MatrixType>
     inline void
     MatrixSimple<MatrixType>::assemble(
@@ -669,7 +654,6 @@ namespace MeshWorker
       else
         constraints->distribute_local_to_global(M, i1, i2, *matrix[index]);
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -696,7 +680,6 @@ namespace MeshWorker
               }
         }
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -754,14 +737,12 @@ namespace MeshWorker
         }
     }
 
-
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
     inline MGMatrixSimple<MatrixType>::MGMatrixSimple(double threshold)
       : threshold(threshold)
     {}
-
 
     template <typename MatrixType>
     inline void
@@ -777,7 +758,6 @@ namespace MeshWorker
       mg_constrained_dofs = &c;
     }
 
-
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::initialize_fluxes(
@@ -788,7 +768,6 @@ namespace MeshWorker
       flux_down = &down;
     }
 
-
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::initialize_interfaces(
@@ -798,7 +777,6 @@ namespace MeshWorker
       interface_in  = &in;
       interface_out = &out;
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -827,7 +805,6 @@ namespace MeshWorker
         }
     }
 
-
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble(
@@ -846,7 +823,6 @@ namespace MeshWorker
           if(std::fabs(M(j, k)) >= threshold)
             G.add(i1[j], i2[k], M(j, k));
     }
-
 
     template <typename MatrixType>
     inline void
@@ -899,7 +875,6 @@ namespace MeshWorker
               }
         }
     }
-
 
     template <typename MatrixType>
     inline void
@@ -998,7 +973,6 @@ namespace MeshWorker
               }
     }
 
-
     template <typename MatrixType>
     inline void
     MGMatrixSimple<MatrixType>::assemble_out(
@@ -1026,7 +1000,6 @@ namespace MeshWorker
                   G.add(i1[j], i2[k], M(k, j));
               }
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -1084,7 +1057,6 @@ namespace MeshWorker
               }
           }
     }
-
 
     template <typename MatrixType>
     template <class DOFINFO>
@@ -1212,7 +1184,6 @@ namespace MeshWorker
       : MatrixSimple<MatrixType>(t)
     {}
 
-
     template <typename MatrixType, typename VectorType>
     inline void
     SystemSimple<MatrixType, VectorType>::initialize(MatrixType& m,
@@ -1232,7 +1203,6 @@ namespace MeshWorker
     {
       ResidualSimple<VectorType>::initialize(c);
     }
-
 
     template <typename MatrixType, typename VectorType>
     template <class DOFINFO>
@@ -1313,7 +1283,6 @@ namespace MeshWorker
         }
     }
 
-
     template <typename MatrixType, typename VectorType>
     template <class DOFINFO>
     inline void
@@ -1357,7 +1326,6 @@ namespace MeshWorker
               }
         }
     }
-
 
     template <typename MatrixType, typename VectorType>
     template <class DOFINFO>

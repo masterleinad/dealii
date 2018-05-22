@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, Texas A&M University, 2006
  */
 
-
 // @sect3{Include files}
 
 // We start with the usual assortment of include files that we've seen in so
@@ -88,7 +87,6 @@ namespace Step23
 {
   using namespace dealii;
 
-
   // @sect3{The <code>WaveEquation</code> class}
 
   // Next comes the declaration of the main class. It's public interface of
@@ -151,8 +149,6 @@ namespace Step23
     const double theta;
   };
 
-
-
   // @sect3{Equation data}
 
   // Before we go on filling in the details of the main class, let us define
@@ -175,7 +171,6 @@ namespace Step23
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
   template <int dim>
   class InitialValuesV : public Function<dim>
   {
@@ -187,8 +182,6 @@ namespace Step23
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   InitialValuesU<dim>::value(const Point<dim>& /*p*/,
@@ -199,8 +192,6 @@ namespace Step23
     return 0;
   }
 
-
-
   template <int dim>
   double
   InitialValuesV<dim>::value(const Point<dim>& /*p*/,
@@ -210,8 +201,6 @@ namespace Step23
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
-
-
 
   // Secondly, we have the right hand side forcing term. Boring as we are, we
   // choose zero here as well:
@@ -226,8 +215,6 @@ namespace Step23
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -237,8 +224,6 @@ namespace Step23
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     return 0;
   }
-
-
 
   // Finally, we have boundary values for $u$ and $v$. They are as described
   // in the introduction, one being the time derivative of the other:
@@ -253,8 +238,6 @@ namespace Step23
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   class BoundaryValuesV : public Function<dim>
   {
@@ -265,8 +248,6 @@ namespace Step23
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
-
-
 
   template <int dim>
   double
@@ -283,8 +264,6 @@ namespace Step23
       return 0;
   }
 
-
-
   template <int dim>
   double
   BoundaryValuesV<dim>::value(const Point<dim>&  p,
@@ -299,8 +278,6 @@ namespace Step23
     else
       return 0;
   }
-
-
 
   // @sect3{Implementation of the <code>WaveEquation</code> class}
 
@@ -323,7 +300,6 @@ namespace Step23
       timestep_number(1),
       theta(0.5)
   {}
-
 
   // @sect4{WaveEquation::setup_system}
 
@@ -398,7 +374,6 @@ namespace Step23
     constraints.close();
   }
 
-
   // @sect4{WaveEquation::solve_u and WaveEquation::solve_v}
 
   // The next two functions deal with solving the linear systems associated
@@ -426,7 +401,6 @@ namespace Step23
               << " CG iterations." << std::endl;
   }
 
-
   template <int dim>
   void
   WaveEquation<dim>::solve_v()
@@ -439,8 +413,6 @@ namespace Step23
     std::cout << "   v-equation: " << solver_control.last_step()
               << " CG iterations." << std::endl;
   }
-
-
 
   // @sect4{WaveEquation::output_results}
 
@@ -466,8 +438,6 @@ namespace Step23
     std::ofstream output(filename);
     data_out.write_gnuplot(output);
   }
-
-
 
   // @sect4{WaveEquation::run}
 
@@ -579,7 +549,6 @@ namespace Step23
         }
         solve_u();
 
-
         // The second step, i.e. solving for $V^n$, works similarly, except
         // that this time the matrix on the left is the mass matrix (which we
         // copy again in order to be able to apply boundary conditions, and
@@ -632,7 +601,6 @@ namespace Step23
       }
   }
 } // namespace Step23
-
 
 // @sect3{The <code>main</code> function}
 

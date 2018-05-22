@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // correctness matrix free matrix-vector products by comparing with the result
 // of a deal.II sparse matrix. Similar to matrix_vector_stokes_noflux but
 // putting all degrees of freedom into a single DoFHandler, where the
@@ -48,8 +46,6 @@ std::ofstream logfile("output");
 
 #include <complex>
 #include <iostream>
-
-
 
 template <int dim, int degree_p, typename VectorType>
 class MatrixFreeTest
@@ -103,7 +99,6 @@ public:
       }
   }
 
-
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
@@ -115,8 +110,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -276,8 +269,6 @@ test(const FESystem<dim>& fe)
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

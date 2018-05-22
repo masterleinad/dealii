@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test ConstantTensorFunction
 
 #include "../tests.h"
 #include <deal.II/base/tensor_function.h>
-
-
 
 // Fill a tensor with values:
 template <int rank, int dim>
@@ -42,8 +39,6 @@ struct FillTensor<1, dim>
       tensor[i] = 10 * base + i;
   }
 };
-
-
 
 // Print a tensor of arbitrary rank to the console:
 template <int rank, int dim>
@@ -71,8 +66,6 @@ struct PrintTensor<1, dim>
   }
 };
 
-
-
 template <int rank, int dim>
 void
 check()
@@ -86,7 +79,6 @@ check()
   ConstantTensorFunction<rank, dim> tensor_function(value);
   TensorFunction<rank, dim>*        foo = &tensor_function;
 
-
   Point<dim> point;
   for(int i = 0; i < dim; ++i)
     point(i) = i;
@@ -98,7 +90,6 @@ check()
   deallog << "->gradient:" << std::endl;
   PrintTensor<rank + 1, dim>::print_tensor(foo->gradient(point));
   deallog << std::endl;
-
 
   std::vector<Point<dim>> points;
   points.push_back(point);
@@ -126,8 +117,6 @@ check()
   PrintTensor<rank + 1, dim>::print_tensor(gradients[1]);
   deallog << std::endl;
 }
-
-
 
 int
 main()

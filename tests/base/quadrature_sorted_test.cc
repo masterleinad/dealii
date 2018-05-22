@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // sort quadratures according to weights, and verify that they
 // integrate accurately polynomial of increasing order.
 // Verify that weights are actually sorted
-
 
 #include "../tests.h"
 
@@ -96,7 +93,6 @@ check_cells(std::vector<Quadrature<dim>*>& quadratures)
       deallog << " is exact for polynomials of degree " << i - 1 << std::endl;
     }
 }
-
 
 template <int dim>
 void

@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // deviators are trace free by definition
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
 
 template <int dim>
 void
@@ -34,8 +32,6 @@ test()
   AssertThrow(trace(deviator_tensor<dim>() * t) < 1e-15 * t.norm(),
               ExcInternalError());
 }
-
-
 
 int
 main()

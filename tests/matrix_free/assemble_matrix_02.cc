@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test FEEvaluation for assembling the Stokes matrix with Q2-Q1 finite elements
 
 #include "../tests.h"
@@ -30,9 +28,7 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/matrix_free/fe_evaluation.h>
 
-
 std::ofstream logfile("output");
-
 
 const unsigned int degree_p = 1;
 
@@ -178,8 +174,6 @@ do_test(const DoFHandler<dim>& dof)
   }
 }
 
-
-
 template <int dim>
 void
 test()
@@ -206,8 +200,6 @@ test()
   dof.distribute_dofs(fe);
   do_test<dim>(dof);
 }
-
-
 
 int
 main()

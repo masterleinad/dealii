@@ -48,7 +48,6 @@ typedef int MPI_Op;
 
 DEAL_II_NAMESPACE_OPEN
 
-
 //Forward type declarations to allow MPI sums over tensorial types
 template <int rank, int dim, typename Number>
 class Tensor;
@@ -882,7 +881,6 @@ namespace Utilities
 #endif
   } // end of namespace MPI
 } // end of namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

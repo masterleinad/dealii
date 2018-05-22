@@ -16,7 +16,6 @@
 #ifndef dealii_dof_renumbering_h
 #define dealii_dof_renumbering_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -371,7 +370,6 @@ namespace DoFRenumbering
     const Tensor<1, dim> dir;
   };
 
-
   /**
    * Point based comparator for downstream directions: it returns @p true if
    * the second point is downstream of the first one with respect to the
@@ -404,8 +402,6 @@ namespace DoFRenumbering
      */
     const Tensor<1, dim> dir;
   };
-
-
 
   /**
    * A namespace for the implementation of some renumbering algorithms based
@@ -656,7 +652,6 @@ namespace DoFRenumbering
   component_wise(DoFHandlerType&                  dof_handler,
                  const std::vector<unsigned int>& target_component
                  = std::vector<unsigned int>());
-
 
   /**
    * Sort the degrees of freedom by component. It does the same thing as the
@@ -963,7 +958,6 @@ namespace DoFRenumbering
              const Tensor<1, DoFHandlerType::space_dimension>& direction,
              const bool dof_wise_renumbering = false);
 
-
   /**
    * Cell-wise downstream numbering with respect to a constant flow direction
    * on one level of a multigrid hierarchy. See the other function with the same name.
@@ -1187,8 +1181,6 @@ namespace DoFRenumbering
    * @}
    */
 
-
-
   /**
    * Exception
    *
@@ -1214,7 +1206,6 @@ namespace DoFRenumbering
    */
   DeclException0(ExcNotDGFEM);
 } // namespace DoFRenumbering
-
 
 DEAL_II_NAMESPACE_CLOSE
 

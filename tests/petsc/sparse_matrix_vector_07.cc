@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::matrix_norm_square
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v,
@@ -64,8 +61,6 @@ test(PETScWrappers::MPI::Vector& v,
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

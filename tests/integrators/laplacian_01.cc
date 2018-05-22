@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the functions in integrators/laplace.h
 // Output matrices and assert consistency of residuals
 
@@ -76,7 +75,6 @@ test_cell(const FEValuesBase<dim>& fev)
   }
 }
 
-
 template <int dim>
 void
 test_boundary(const FEValuesBase<dim>& fev)
@@ -138,7 +136,6 @@ test_boundary(const FEValuesBase<dim>& fev)
     deallog << std::endl;
   }
 }
-
 
 template <int dim>
 void
@@ -292,7 +289,6 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
   }
 }
 
-
 template <int dim>
 void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
@@ -328,7 +324,6 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
   test_face(fef1, fef2);
 }
 
-
 template <int dim>
 void
 test(Triangulation<dim>& tr)
@@ -342,7 +337,6 @@ test(Triangulation<dim>& tr)
   FE_Nedelec<dim> n1(1);
   test_fe(tr, n1);
 }
-
 
 int
 main()

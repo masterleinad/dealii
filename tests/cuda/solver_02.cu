@@ -26,7 +26,6 @@
 #include <deal.II/lac/solver_control.h>
 #include <deal.II/lac/vector.h>
 
-
 void
 test(Utilities::CUDA::Handle& cuda_handle)
 {

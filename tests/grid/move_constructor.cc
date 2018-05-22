@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -36,7 +32,6 @@ print_tria_info(const Triangulation<dim>& tria)
           << (tria.get_periodic_face_map().size() != 0) << ", "
           << manifold_0_is_flat << std::endl;
 }
-
 
 template <int dim>
 void
@@ -58,7 +53,6 @@ test_hyper_cube()
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
-
 
 template <int dim>
 void
@@ -85,7 +79,6 @@ test_hyper_shell()
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
-
 
 template <int dim>
 void
@@ -114,7 +107,6 @@ test_periodic_cube()
   print_tria_info(new_tria);
   print_tria_info(tria);
 }
-
 
 int
 main()

@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // use the version of DoFTools::make_sparsity_pattern that takes two
 // DoFHandler arguments for two DoFHandlers that are actually from different
 // meshes (though with the same base)
 //
 // like sparsity_pattern_03, but use different finite elements
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -36,8 +33,6 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
-
 
 template <int dim>
 void
@@ -57,7 +52,6 @@ check()
   if(dim == 1)
     triangulation_1.refine_global(2);
 
-
   Triangulation<dim> triangulation_2;
   if(dim == 2)
     GridGenerator::hyper_ball(triangulation_2, Point<dim>(), 1);
@@ -70,8 +64,6 @@ check()
   triangulation_2.execute_coarsening_and_refinement();
   if(dim == 1)
     triangulation_2.refine_global(2);
-
-
 
   FESystem<dim>   element_1(FE_Q<dim>(1), 2, FE_Q<dim>(2), 1);
   FESystem<dim>   element_2(FE_Q<dim>(3), 1, FE_DGQ<dim>(0), 2);
@@ -87,8 +79,6 @@ check()
 
   sparsity.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

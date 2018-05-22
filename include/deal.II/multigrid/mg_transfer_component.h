@@ -31,10 +31,7 @@
 
 #include <memory>
 
-
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, int spacedim>
 class DoFHandler;
@@ -63,7 +60,6 @@ public:
    */
   std::size_t
   memory_consumption() const;
-
 
 protected:
   /**

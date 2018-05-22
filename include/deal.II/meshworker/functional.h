@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_functional_h
 #define dealii_mesh_worker_functional_h
 
@@ -23,7 +22,6 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/meshworker/dof_info.h>
 #include <deal.II/multigrid/mg_constrained_dofs.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -169,7 +167,6 @@ namespace MeshWorker
       std::fill(results.begin(), results.end(), 0.);
     }
 
-
     template <typename number>
     template <class DOFINFO>
     inline void
@@ -177,7 +174,6 @@ namespace MeshWorker
     {
       info.initialize_numbers(results.size());
     }
-
 
     template <typename number>
     template <class DOFINFO>
@@ -187,7 +183,6 @@ namespace MeshWorker
       for(unsigned int i = 0; i < results.size(); ++i)
         results[i] += info.value(i);
     }
-
 
     template <typename number>
     template <class DOFINFO>
@@ -200,7 +195,6 @@ namespace MeshWorker
           results[i] += info2.value(i);
         }
     }
-
 
     template <typename number>
     inline number
@@ -215,8 +209,6 @@ namespace MeshWorker
     template <typename number>
     inline CellsAndFaces<number>::CellsAndFaces() : separate_faces(true)
     {}
-
-
 
     template <typename number>
     inline void
@@ -243,7 +235,6 @@ namespace MeshWorker
         results.entry<BlockVector<double>*>(0)->n_blocks());
     }
 
-
     template <typename number>
     template <class DOFINFO>
     inline void
@@ -258,7 +249,6 @@ namespace MeshWorker
       for(unsigned int i = 0; i < info.n_values(); ++i)
         v->block(i)(info.cell->user_index()) += info.value(i);
     }
-
 
     template <typename number>
     template <class DOFINFO>

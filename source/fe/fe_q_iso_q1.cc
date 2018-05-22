@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q_iso_q1.h>
@@ -24,8 +23,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 template <int dim, int spacedim>
 FE_Q_iso_Q1<dim, spacedim>::FE_Q_iso_Q1(const unsigned int subdivisions)
@@ -53,8 +50,6 @@ FE_Q_iso_Q1<dim, spacedim>::FE_Q_iso_Q1(const unsigned int subdivisions)
   this->initialize(points.get_points());
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 FE_Q_iso_Q1<dim, spacedim>::get_name() const
@@ -68,8 +63,6 @@ FE_Q_iso_Q1<dim, spacedim>::get_name() const
           << this->degree << ")";
   return namebuf.str();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -91,16 +84,12 @@ FE_Q_iso_Q1<dim, spacedim>::
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Q_iso_Q1<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_Q_iso_Q1<dim, spacedim>>(*this);
 }
-
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -142,7 +131,6 @@ FE_Q_iso_Q1<dim, spacedim>::compare_for_face_domination(
   Assert(false, ExcNotImplemented());
   return FiniteElementDomination::neither_element_dominates;
 }
-
 
 // explicit instantiations
 #include "fe_q_iso_q1.inst"

@@ -25,7 +25,6 @@ DEAL_II_NAMESPACE_OPEN
 
 /*----------------------- SolverControl ---------------------------------*/
 
-
 SolverControl::SolverControl(const unsigned int maxiter,
                              const double       tolerance,
                              const bool         m_log_history,
@@ -44,8 +43,6 @@ SolverControl::SolverControl(const unsigned int maxiter,
     m_log_result(m_log_result),
     history_data_enabled(false)
 {}
-
-
 
 SolverControl::State
 SolverControl::check(const unsigned int step, const double check_value)
@@ -99,14 +96,11 @@ SolverControl::check(const unsigned int step, const double check_value)
   return iterate;
 }
 
-
-
 SolverControl::State
 SolverControl::last_check() const
 {
   return lcheck;
 }
-
 
 double
 SolverControl::initial_value() const
@@ -114,20 +108,17 @@ SolverControl::initial_value() const
   return initial_val;
 }
 
-
 double
 SolverControl::last_value() const
 {
   return lvalue;
 }
 
-
 unsigned int
 SolverControl::last_step() const
 {
   return lstep;
 }
-
 
 unsigned int
 SolverControl::log_frequency(unsigned int f)
@@ -139,14 +130,11 @@ SolverControl::log_frequency(unsigned int f)
   return old;
 }
 
-
 void
 SolverControl::enable_history_data()
 {
   history_data_enabled = true;
 }
-
-
 
 const std::vector<double>&
 SolverControl::get_history_data() const
@@ -162,8 +150,6 @@ SolverControl::get_history_data() const
   return history_data;
 }
 
-
-
 double
 SolverControl::average_reduction() const
 {
@@ -178,8 +164,6 @@ SolverControl::average_reduction() const
   return std::pow(history_data[lstep] / history_data[0], 1. / lstep);
 }
 
-
-
 double
 SolverControl::step_reduction(unsigned int step) const
 {
@@ -191,13 +175,11 @@ SolverControl::step_reduction(unsigned int step) const
   return history_data[step] / history_data[step - 1];
 }
 
-
 double
 SolverControl::final_reduction() const
 {
   return step_reduction(lstep);
 }
-
 
 void
 SolverControl::declare_parameters(ParameterHandler& param)
@@ -208,7 +190,6 @@ SolverControl::declare_parameters(ParameterHandler& param)
   param.declare_entry("Log frequency", "1", Patterns::Integer());
   param.declare_entry("Log result", "true", Patterns::Bool());
 }
-
 
 void
 SolverControl::parse_parameters(ParameterHandler& param)
@@ -222,7 +203,6 @@ SolverControl::parse_parameters(ParameterHandler& param)
 
 /*----------------------- ReductionControl ---------------------------------*/
 
-
 ReductionControl::ReductionControl(const unsigned int n,
                                    const double       tol,
                                    const double       red,
@@ -233,7 +213,6 @@ ReductionControl::ReductionControl(const unsigned int n,
     reduced_tol(numbers::signaling_nan<double>())
 {}
 
-
 ReductionControl::ReductionControl(const SolverControl& c)
   : SolverControl(c),
     reduce(numbers::signaling_nan<double>()),
@@ -242,7 +221,6 @@ ReductionControl::ReductionControl(const SolverControl& c)
   set_reduction(0.);
 }
 
-
 ReductionControl&
 ReductionControl::operator=(const SolverControl& c)
 {
@@ -250,8 +228,6 @@ ReductionControl::operator=(const SolverControl& c)
   set_reduction(0.);
   return *this;
 }
-
-
 
 SolverControl::State
 ReductionControl::check(const unsigned int step, const double check_value)
@@ -287,15 +263,12 @@ ReductionControl::check(const unsigned int step, const double check_value)
     return SolverControl::check(step, check_value);
 }
 
-
-
 void
 ReductionControl::declare_parameters(ParameterHandler& param)
 {
   SolverControl::declare_parameters(param);
   param.declare_entry("Reduction", "1.e-2", Patterns::Double());
 }
-
 
 void
 ReductionControl::parse_parameters(ParameterHandler& param)
@@ -304,9 +277,7 @@ ReductionControl::parse_parameters(ParameterHandler& param)
   set_reduction(param.get_double("Reduction"));
 }
 
-
 /*---------------------- IterationNumberControl -----------------------------*/
-
 
 IterationNumberControl::IterationNumberControl(const unsigned int n,
                                                const double       tolerance,
@@ -314,8 +285,6 @@ IterationNumberControl::IterationNumberControl(const unsigned int n,
                                                const bool         m_log_result)
   : SolverControl(n, tolerance, m_log_history, m_log_result)
 {}
-
-
 
 SolverControl::State
 IterationNumberControl::check(const unsigned int step, const double check_value)
@@ -339,7 +308,6 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
 
 /*------------------------ ConsecutiveControl -------------------------------*/
 
-
 ConsecutiveControl::ConsecutiveControl(
   const unsigned int n,
   const double       tolerance,
@@ -354,13 +322,9 @@ ConsecutiveControl::ConsecutiveControl(
               ExcMessage("n_consecutive_iterations should be positive"));
 }
 
-
-
 ConsecutiveControl::ConsecutiveControl(const SolverControl& c)
   : SolverControl(c), n_consecutive_iterations(1), n_converged_iterations(0)
 {}
-
-
 
 ConsecutiveControl&
 ConsecutiveControl::operator=(const SolverControl& c)
@@ -370,8 +334,6 @@ ConsecutiveControl::operator=(const SolverControl& c)
   n_converged_iterations   = 0;
   return *this;
 }
-
-
 
 SolverControl::State
 ConsecutiveControl::check(const unsigned int step, const double check_value)

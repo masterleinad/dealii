@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
@@ -21,8 +20,6 @@
 //   DoFTools::map_dof_to_boundary_indices(const DoFHandler<int>     &,
 //                                         const std::set<types::boundary_id> &,
 //                                         std::vector<unsigned int> &)
-
-
 
 template <int dim>
 void

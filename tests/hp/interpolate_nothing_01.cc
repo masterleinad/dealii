@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::interpolate works for FE_Nothing
 // elements. this is another confirmation that we had previously fixed
 // a bug again reported by Krishna Garikipati but that had previously
@@ -43,7 +41,6 @@
 
 #include <vector>
 
-
 template <int dim>
 void
 test()
@@ -67,8 +64,6 @@ test()
     interpolant);
   deallog << interpolant.l2_norm() << std::endl;
 }
-
-
 
 int
 main()

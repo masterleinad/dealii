@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check TableBase::fill
-
 
 #include "../tests.h"
 
 #include <deal.II/base/table.h>
-
 
 int
 main()
@@ -51,7 +48,6 @@ main()
     deallog << std::endl;
   }
 
-
   // rank=2
   {
     deallog << "rank=2" << std::endl;
@@ -79,7 +75,6 @@ main()
         deallog << std::endl;
       }
   }
-
 
   // rank=3
   {

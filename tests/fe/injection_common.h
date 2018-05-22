@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework to check the following: if we interpolate from one finite
 // element on a cell to a richer finite element on a finer cell, then it
 // shouldn't matter whether we go to the richer FE first and then to the finer
@@ -39,12 +38,9 @@
 #include <fstream>
 #include <vector>
 
-
 template <int dim>
 void
 test();
-
-
 
 template <int dim>
 void
@@ -111,8 +107,6 @@ do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
                     ExcInternalError());
       }
 }
-
-
 
 int
 main()

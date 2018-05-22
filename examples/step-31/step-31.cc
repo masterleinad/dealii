@@ -18,7 +18,6 @@
  *          Wolfgang Bangerth, Texas A&M University 2007, 2008
  */
 
-
 // @sect3{Include files}
 
 // The first step, as always, is to include the functionality of these
@@ -72,13 +71,11 @@
 #include <limits>
 #include <memory>
 
-
 // At the end of this top-matter, we import all deal.II names into the global
 // namespace:
 namespace Step31
 {
   using namespace dealii;
-
 
   // @sect3{Equation data}
 
@@ -125,7 +122,6 @@ namespace Step31
     const double beta    = 10;
     const double density = 1;
 
-
     template <int dim>
     class TemperatureInitialValues : public Function<dim>
     {
@@ -141,7 +137,6 @@ namespace Step31
       vector_value(const Point<dim>& p, Vector<double>& value) const override;
     };
 
-
     template <int dim>
     double
     TemperatureInitialValues<dim>::value(const Point<dim>&,
@@ -149,7 +144,6 @@ namespace Step31
     {
       return 0;
     }
-
 
     template <int dim>
     void
@@ -159,7 +153,6 @@ namespace Step31
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureInitialValues<dim>::value(p, c);
     }
-
 
     template <int dim>
     class TemperatureRightHandSide : public Function<dim>
@@ -175,7 +168,6 @@ namespace Step31
       virtual void
       vector_value(const Point<dim>& p, Vector<double>& value) const override;
     };
-
 
     template <int dim>
     double
@@ -201,7 +193,6 @@ namespace Step31
                 0);
     }
 
-
     template <int dim>
     void
     TemperatureRightHandSide<dim>::vector_value(const Point<dim>& p,
@@ -211,8 +202,6 @@ namespace Step31
         values(c) = TemperatureRightHandSide<dim>::value(p, c);
     }
   } // namespace EquationData
-
-
 
   // @sect3{Linear solvers and preconditioners}
 
@@ -271,7 +260,6 @@ namespace Step31
       InverseMatrix(const MatrixType&         m,
                     const PreconditionerType& preconditioner);
 
-
       template <typename VectorType>
       void
       vmult(VectorType& dst, const VectorType& src) const;
@@ -281,15 +269,12 @@ namespace Step31
       const PreconditionerType&            preconditioner;
     };
 
-
     template <class MatrixType, class PreconditionerType>
     InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
       const MatrixType&         m,
       const PreconditionerType& preconditioner)
       : matrix(&m), preconditioner(preconditioner)
     {}
-
-
 
     template <class MatrixType, class PreconditionerType>
     template <typename VectorType>
@@ -390,8 +375,6 @@ namespace Step31
       mutable TrilinosWrappers::MPI::Vector tmp;
     };
 
-
-
     // When using a TrilinosWrappers::MPI::Vector or a
     // TrilinosWrappers::MPI::BlockVector, the Vector is initialized using an
     // IndexSet. IndexSet is used not only to resize the
@@ -413,7 +396,6 @@ namespace Step31
         a_preconditioner(Apreconditioner),
         tmp(complete_index_set(stokes_matrix->block(1, 1).m()))
     {}
-
 
     // Next is the <code>vmult</code> function. We implement the action of
     // $P^{-1}$ as described above in three successive steps.  In formulas, we
@@ -442,8 +424,6 @@ namespace Step31
       m_inverse->vmult(dst.block(1), tmp);
     }
   } // namespace LinearSolvers
-
-
 
   // @sect3{The <code>BoussinesqFlowProblem</code> class template}
 
@@ -515,7 +495,6 @@ namespace Step31
       const double                       global_T_variation,
       const double                       cell_diameter) const;
 
-
     Triangulation<dim> triangulation;
     double             global_Omega_diameter;
 
@@ -532,7 +511,6 @@ namespace Step31
     TrilinosWrappers::MPI::BlockVector old_stokes_solution;
     TrilinosWrappers::MPI::BlockVector stokes_rhs;
 
-
     const unsigned int temperature_degree;
     FE_Q<dim>          temperature_fe;
     DoFHandler<dim>    temperature_dof_handler;
@@ -547,7 +525,6 @@ namespace Step31
     TrilinosWrappers::MPI::Vector old_old_temperature_solution;
     TrilinosWrappers::MPI::Vector temperature_rhs;
 
-
     double       time_step;
     double       old_time_step;
     unsigned int timestep_number;
@@ -559,7 +536,6 @@ namespace Step31
     bool rebuild_temperature_matrices;
     bool rebuild_stokes_preconditioner;
   };
-
 
   // @sect3{BoussinesqFlowProblem class implementation}
 
@@ -594,8 +570,6 @@ namespace Step31
       rebuild_temperature_matrices(true),
       rebuild_stokes_preconditioner(true)
   {}
-
-
 
   // @sect4{BoussinesqFlowProblem::get_maximal_velocity}
 
@@ -670,8 +644,6 @@ namespace Step31
 
     return max_velocity;
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::get_extrapolated_temperature_range}
 
@@ -765,8 +737,6 @@ namespace Step31
       }
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::compute_viscosity}
 
   // The last of the tool functions computes the artificial viscosity
@@ -850,8 +820,6 @@ namespace Step31
                        std::pow(cell_diameter, alpha) * max_residual
                          / global_scaling));
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::setup_dofs}
   //
@@ -1064,8 +1032,6 @@ namespace Step31
     temperature_rhs.reinit(temperature_partitioning, MPI_COMM_WORLD);
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::assemble_stokes_preconditioner}
   //
   // This function assembles the matrix we use for preconditioning the Stokes
@@ -1145,8 +1111,6 @@ namespace Step31
           local_matrix, local_dof_indices, stokes_preconditioner_matrix);
       }
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::build_stokes_preconditioner}
   //
@@ -1238,8 +1202,6 @@ namespace Step31
 
     rebuild_stokes_preconditioner = false;
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::assemble_stokes_system}
   //
@@ -1430,8 +1392,6 @@ namespace Step31
     std::cout << std::endl;
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::assemble_temperature_matrix}
   //
   // This function assembles the matrix in the temperature equation. The
@@ -1528,8 +1488,6 @@ namespace Step31
 
     rebuild_temperature_matrices = false;
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::assemble_temperature_system}
   //
@@ -1731,8 +1689,6 @@ namespace Step31
       }
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::solve}
   //
   // This function solves the linear systems of equations. Following the
@@ -1890,8 +1846,6 @@ namespace Step31
     }
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::output_results}
   //
   // This function writes the solution to a VTK output file for visualization,
@@ -1942,8 +1896,6 @@ namespace Step31
       "solution-" + Utilities::int_to_string(timestep_number, 4) + ".vtk");
     data_out.write_vtk(output);
   }
-
-
 
   // @sect4{BoussinesqFlowProblem::refine_mesh}
   //
@@ -2071,8 +2023,6 @@ namespace Step31
     rebuild_stokes_preconditioner = true;
   }
 
-
-
   // @sect4{BoussinesqFlowProblem::run}
   //
   // This function performs all the essential steps in the Boussinesq
@@ -2097,7 +2047,6 @@ namespace Step31
   {
     const unsigned int initial_refinement     = (dim == 2 ? 4 : 2);
     const unsigned int n_pre_refinement_steps = (dim == 2 ? 4 : 3);
-
 
     GridGenerator::hyper_cube(triangulation);
     global_Omega_diameter = GridTools::diameter(triangulation);
@@ -2167,8 +2116,6 @@ namespace Step31
     while(time <= 100);
   }
 } // namespace Step31
-
-
 
 // @sect3{The <code>main</code> function}
 //

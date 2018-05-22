@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _with_alias_02 but read an input file that references both the old and
 // the new parameter
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

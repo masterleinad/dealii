@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // A further redux of the _01a test
 //
 // we distribute Q2 and Q1 dofs on a 2x1x1 mesh in 3d. this leads to
@@ -22,7 +20,6 @@
 // but it turns out that at the time of writing this test not all dof
 // were renumbered after unification, leading some to remain at values
 // above n_dofs(). tsk tsk tsk...
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -38,8 +35,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -98,7 +93,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

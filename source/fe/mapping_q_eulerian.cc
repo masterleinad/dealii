@@ -35,8 +35,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 // .... MAPPING Q EULERIAN CONSTRUCTOR
 
 template <int dim, class VectorType, int spacedim>
@@ -51,8 +49,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
               support_quadrature,
               update_values | update_quadrature_points)
 {}
-
-
 
 template <int dim, class VectorType, int spacedim>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerian(
@@ -76,8 +72,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerian(
   this->qp_mapping = std::make_shared<MappingQEulerianGeneric>(degree, *this);
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingQEulerian<dim, VectorType, spacedim>::clone() const
@@ -85,8 +79,6 @@ MappingQEulerian<dim, VectorType, spacedim>::clone() const
   return std_cxx14::make_unique<MappingQEulerian<dim, VectorType, spacedim>>(
     this->get_degree(), *euler_dof_handler, *euler_vector);
 }
-
-
 
 // .... SUPPORT QUADRATURE CONSTRUCTOR
 
@@ -117,8 +109,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
     this->quadrature_points[renumber[q]] = q_iterated.point(q);
 }
 
-
-
 // .... COMPUTE MAPPING SUPPORT POINTS
 
 template <int dim, class VectorType, int spacedim>
@@ -140,8 +130,6 @@ MappingQEulerian<dim, VectorType, spacedim>::get_vertices(
   return vertex_locations;
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
@@ -151,8 +139,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   return mapping_q_eulerian.get_vertices(cell);
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 bool
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
@@ -160,8 +146,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
 {
   return false;
 }
-
-
 
 template <int dim, class VectorType, int spacedim>
 std::vector<Point<spacedim>>
@@ -242,8 +226,6 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   return a;
 }
 
-
-
 template <int dim, class VectorType, int spacedim>
 CellSimilarity::Similarity
 MappingQEulerian<dim, VectorType, spacedim>::fill_fe_values(
@@ -268,10 +250,7 @@ MappingQEulerian<dim, VectorType, spacedim>::fill_fe_values(
   return CellSimilarity::invalid_next_cell;
 }
 
-
-
 // explicit instantiations
 #include "mapping_q_eulerian.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

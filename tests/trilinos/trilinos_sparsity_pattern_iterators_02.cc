@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Tests Trilinos sparsity iterators, specifically copy construction
 // and assignment operators
 //
@@ -23,7 +21,6 @@
 
 #include "../tests.h"
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
-
 
 void
 test()
@@ -57,7 +54,6 @@ test()
     deallog << "q[" << i << "]: " << q->row() << ' ' << q->column()
             << std::endl;
 
-
   // do the same with copy assignment
   p = sp.begin(0);
   q = p;
@@ -71,8 +67,6 @@ test()
     deallog << "q[" << i << "]: " << q->row() << ' ' << q->column()
             << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

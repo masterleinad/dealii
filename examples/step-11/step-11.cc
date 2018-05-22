@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2001
  */
 
-
 // As usual, the program starts with a rather long list of include files which
 // you are probably already used to by now:
 #include <deal.II/base/function.h>
@@ -103,8 +102,6 @@ namespace Step11
     TableHandler output_table;
   };
 
-
-
   // Construct such an object, by initializing the variables. Here, we use
   // linear finite elements (the argument to the <code>fe</code> variable
   // denotes the polynomial degree), and mappings of given order. Print to
@@ -117,8 +114,6 @@ namespace Step11
               << std::endl
               << "============================" << std::endl;
   }
-
-
 
   // The first task is to set up the variables for this problem. This includes
   // generating a valid <code>DoFHandler</code> object, as well as the
@@ -235,8 +230,6 @@ namespace Step11
     sparsity_pattern.copy_from(dsp);
     system_matrix.reinit(sparsity_pattern);
   }
-
-
 
   // The next function then assembles the linear system of equations, solves
   // it, and evaluates the solution. This then makes three actions, and we
@@ -377,8 +370,6 @@ namespace Step11
                            std::fabs(norm - std::sqrt(3.14159265358 / 2)));
   }
 
-
-
   // The following function solving the linear system of equations is copied
   // from step-5 and is explained there in some detail:
   template <int dim>
@@ -393,8 +384,6 @@ namespace Step11
 
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
   }
-
-
 
   // Finally the main function controlling the different steps to be
   // performed. Its content is rather straightforward, generating a
@@ -430,8 +419,6 @@ namespace Step11
     std::cout << std::endl;
   }
 } // namespace Step11
-
-
 
 // Finally the main function. It's structure is the same as that used in
 // several of the previous examples, so probably needs no more explanation.

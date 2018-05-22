@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check GriOut::write_mesh_per_processor_as_vtu() when level_subdomain_id
 // differs from subdomain_id for a particular cell
 
@@ -32,7 +31,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void
@@ -93,7 +91,6 @@ test()
 
   output(tr, "file1", true, false);
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test VectorTools::integrate_difference for parallel computations.
 
 #include "../tests.h"
@@ -34,8 +32,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 class LinearFunction : public Function<dim>
 {
@@ -46,7 +42,6 @@ public:
     return p[0];
   }
 };
-
 
 template <int dim>
 void
@@ -98,14 +93,12 @@ test()
   Assert(std::fabs(global - 1. / std::sqrt(3.)) < 1e-6, ExcInternalError());
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

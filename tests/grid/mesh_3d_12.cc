@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // the Kelly estimator used to fall over when presented with 3d meshes
 // with mis-oriented faces. the actual assertion where we fail is
 // again tested isolated in mesh_3d_13 (we limit the number of
@@ -37,8 +35,6 @@
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 void check_this(Triangulation<3>& tria)
 {
   FE_Q<3>       fe(1);
@@ -58,7 +54,6 @@ void check_this(Triangulation<3>& tria)
   deallog << "  " << static_cast<double>(e.linfty_norm()) << std::endl;
 }
 
-
 void check(Triangulation<3>& tria)
 {
   (++tria.begin_active())->set_refine_flag();
@@ -74,7 +69,6 @@ void check(Triangulation<3>& tria)
       check_this(tria);
     }
 }
-
 
 int
 main()

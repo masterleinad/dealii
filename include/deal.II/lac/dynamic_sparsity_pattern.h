@@ -16,7 +16,6 @@
 #ifndef dealii_dynamic_sparsity_pattern_h
 #define dealii_dynamic_sparsity_pattern_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/index_set.h>
 #include <deal.II/base/subscriptor.h>
@@ -31,11 +30,9 @@ DEAL_II_NAMESPACE_OPEN
 
 class DynamicSparsityPattern;
 
-
 /*! @addtogroup Sparsity
  *@{
  */
-
 
 /**
  * Iterators on objects of type DynamicSparsityPattern.
@@ -147,8 +144,6 @@ namespace DynamicSparsityPatternIterators
     friend class Iterator;
   };
 
-
-
   /**
    * An iterator class for walking over the elements of a sparsity pattern.
    *
@@ -251,7 +246,6 @@ namespace DynamicSparsityPatternIterators
     Accessor accessor;
   };
 } // namespace DynamicSparsityPatternIterators
-
 
 /**
  * This class acts as an intermediate form of the SparsityPattern class. From
@@ -619,7 +613,6 @@ private:
 
   IndexSet rowset;
 
-
   /**
    * Store some data for each row describing which entries of this row are
    * nonzero. Data is stored sorted in the @p entries std::vector.  The vector
@@ -657,7 +650,6 @@ private:
     memory_consumption() const;
   };
 
-
   /**
    * Actual data: store for each row the set of nonzero entries.
    */
@@ -669,7 +661,6 @@ private:
 
 /*@}*/
 /*---------------------- Inline functions -----------------------------------*/
-
 
 namespace DynamicSparsityPatternIterators
 {
@@ -708,15 +699,12 @@ namespace DynamicSparsityPatternIterators
            .entries.size()));
   }
 
-
   inline Accessor::Accessor(const DynamicSparsityPattern* sparsity_pattern)
     : sparsity_pattern(sparsity_pattern),
       current_row(numbers::invalid_size_type),
       current_entry(),
       end_of_row()
   {}
-
-
 
   inline size_type
   Accessor::row() const
@@ -726,7 +714,6 @@ namespace DynamicSparsityPatternIterators
     return current_row;
   }
 
-
   inline size_type
   Accessor::column() const
   {
@@ -734,7 +721,6 @@ namespace DynamicSparsityPatternIterators
 
     return *current_entry;
   }
-
 
   inline size_type
   Accessor::index() const
@@ -750,8 +736,6 @@ namespace DynamicSparsityPatternIterators
              .entries.begin()));
   }
 
-
-
   inline bool
   Accessor::operator==(const Accessor& other) const
   {
@@ -764,8 +748,6 @@ namespace DynamicSparsityPatternIterators
             && ((current_row == numbers::invalid_size_type)
                 || (current_entry == other.current_entry)));
   }
-
-
 
   inline bool
   Accessor::operator<(const Accessor& other) const
@@ -789,7 +771,6 @@ namespace DynamicSparsityPatternIterators
             || ((current_row == other.current_row)
                 && (current_entry < other.current_entry)));
   }
-
 
   inline void
   Accessor::advance()
@@ -817,21 +798,15 @@ namespace DynamicSparsityPatternIterators
       }
   }
 
-
-
   inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern,
                             const size_type               row,
                             const unsigned int            index_within_row)
     : accessor(sparsity_pattern, row, index_within_row)
   {}
 
-
-
   inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern)
     : accessor(sparsity_pattern)
   {}
-
-
 
   inline Iterator&
   Iterator::operator++()
@@ -839,8 +814,6 @@ namespace DynamicSparsityPatternIterators
     accessor.advance();
     return *this;
   }
-
-
 
   inline Iterator
   Iterator::operator++(int)
@@ -850,20 +823,15 @@ namespace DynamicSparsityPatternIterators
     return iter;
   }
 
-
-
   inline const Accessor& Iterator::operator*() const
   {
     return accessor;
   }
 
-
-
   inline const Accessor* Iterator::operator->() const
   {
     return &accessor;
   }
-
 
   inline bool
   Iterator::operator==(const Iterator& other) const
@@ -871,21 +839,17 @@ namespace DynamicSparsityPatternIterators
     return (accessor == other.accessor);
   }
 
-
-
   inline bool
   Iterator::operator!=(const Iterator& other) const
   {
     return !(*this == other);
   }
 
-
   inline bool
   Iterator::operator<(const Iterator& other) const
   {
     return accessor < other.accessor;
   }
-
 
   inline int
   Iterator::operator-(const Iterator& other) const
@@ -898,7 +862,6 @@ namespace DynamicSparsityPatternIterators
     return 0;
   }
 } // namespace DynamicSparsityPatternIterators
-
 
 inline void
 DynamicSparsityPattern::Line::add(const size_type j)
@@ -923,23 +886,17 @@ DynamicSparsityPattern::Line::add(const size_type j)
   entries.insert(it, j);
 }
 
-
-
 inline DynamicSparsityPattern::size_type
 DynamicSparsityPattern::n_rows() const
 {
   return rows;
 }
 
-
-
 inline types::global_dof_index
 DynamicSparsityPattern::n_cols() const
 {
   return cols;
 }
-
-
 
 inline void
 DynamicSparsityPattern::add(const size_type i, const size_type j)
@@ -956,8 +913,6 @@ DynamicSparsityPattern::add(const size_type i, const size_type j)
     = rowset.size() == 0 ? i : rowset.index_within_set(i);
   lines[rowindex].add(j);
 }
-
-
 
 template <typename ForwardIterator>
 inline void
@@ -979,8 +934,6 @@ DynamicSparsityPattern::add_entries(const size_type row,
   lines[rowindex].add_entries(begin, end, indices_are_sorted);
 }
 
-
-
 inline types::global_dof_index
 DynamicSparsityPattern::row_length(const size_type row) const
 {
@@ -997,8 +950,6 @@ DynamicSparsityPattern::row_length(const size_type row) const
   return lines[rowindex].entries.size();
 }
 
-
-
 inline types::global_dof_index
 DynamicSparsityPattern::column_number(const size_type row,
                                       const size_type index) const
@@ -1014,22 +965,17 @@ DynamicSparsityPattern::column_number(const size_type row,
   return lines[local_row].entries[index];
 }
 
-
-
 inline DynamicSparsityPattern::iterator
 DynamicSparsityPattern::begin() const
 {
   return begin(0);
 }
 
-
 inline DynamicSparsityPattern::iterator
 DynamicSparsityPattern::end() const
 {
   return iterator(this);
 }
-
-
 
 inline DynamicSparsityPattern::iterator
 DynamicSparsityPattern::begin(const size_type r) const
@@ -1087,8 +1033,6 @@ DynamicSparsityPattern::begin(const size_type r) const
     return iterator(this, row, 0);
 }
 
-
-
 inline DynamicSparsityPattern::iterator
 DynamicSparsityPattern::end(const size_type r) const
 {
@@ -1101,22 +1045,17 @@ DynamicSparsityPattern::end(const size_type r) const
     return begin(row);
 }
 
-
-
 inline const IndexSet&
 DynamicSparsityPattern::row_index_set() const
 {
   return rowset;
 }
 
-
-
 inline bool
 DynamicSparsityPattern::stores_only_added_elements()
 {
   return true;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

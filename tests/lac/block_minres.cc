@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // MinRes can't deal with block systems at the time of writing this test
-
 
 #include "../tests.h"
 #include <deal.II/lac/block_sparse_matrix.h>
@@ -25,14 +23,12 @@
 #include <deal.II/lac/solver_control.h>
 #include <deal.II/lac/solver_minres.h>
 
-
 int
 main()
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(2);
   deallog.attach(logfile);
-
 
   // assemble a 2x2 block identity
   // matrix

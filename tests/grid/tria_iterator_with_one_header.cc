@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // It used to be that if you wanted to use
 // Triangulation::active_cell_iterator in a context where that type
 // was actually used, you also had to #include
@@ -25,9 +24,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -37,7 +34,6 @@ test()
   GridGenerator::hyper_cube(tria);
   deallog << tria.begin_active()->center() << std::endl;
 }
-
 
 int
 main()

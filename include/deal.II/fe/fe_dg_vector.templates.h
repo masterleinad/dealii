@@ -16,16 +16,13 @@
 #ifndef dealii_fe_dg_vector_templates_h
 #define dealii_fe_dg_vector_templates_h
 
-
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe_dg_vector.h>
 #include <deal.II/fe/fe_tools.h>
 
 #include <deal.II/base/std_cxx14/memory.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 //TODO:[GK] deg+1 is wrong here and should be fixed after FiniteElementData was cleaned up
 
@@ -53,7 +50,6 @@ FE_DGVector<PolynomialType, dim, spacedim>::FE_DGVector(const unsigned int deg,
   FETools::compute_embedding_matrices(*this, this->prolongation, true);
 }
 
-
 template <class PolynomialType, int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGVector<PolynomialType, dim, spacedim>::clone() const
@@ -61,7 +57,6 @@ FE_DGVector<PolynomialType, dim, spacedim>::clone() const
   return std_cxx14::make_unique<FE_DGVector<PolynomialType, dim, spacedim>>(
     *this);
 }
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::string
@@ -72,7 +67,6 @@ FE_DGVector<PolynomialType, dim, spacedim>::get_name() const
           << this->degree - 1 << ")";
   return namebuf.str();
 }
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::vector<unsigned int>
@@ -85,7 +79,6 @@ FE_DGVector<PolynomialType, dim, spacedim>::get_dpo_vector(
   return dpo;
 }
 
-
 template <class PolynomialType, int dim, int spacedim>
 bool
 FE_DGVector<PolynomialType, dim, spacedim>::has_support_on_face(
@@ -94,8 +87,6 @@ FE_DGVector<PolynomialType, dim, spacedim>::has_support_on_face(
 {
   return true;
 }
-
-
 
 template <class PolynomialType, int dim, int spacedim>
 std::size_t

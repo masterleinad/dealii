@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // This tests the implementation of Utilities::to_string for different types.
 // Note that the floating point number output might be depend on the system.
 
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
-
 
 void
 test()
@@ -63,8 +61,6 @@ test()
 
   deallog << "Ok." << std::endl;
 }
-
-
 
 int
 main()

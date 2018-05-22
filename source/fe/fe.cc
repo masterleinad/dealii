@@ -30,16 +30,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*------------------------------- FiniteElement ----------------------*/
-
 
 template <int dim, int spacedim>
 FiniteElement<dim, spacedim>::InternalDataBase::InternalDataBase()
   : update_each(update_default)
 {}
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -47,8 +43,6 @@ FiniteElement<dim, spacedim>::InternalDataBase::memory_consumption() const
 {
   return sizeof(*this);
 }
-
-
 
 template <int dim, int spacedim>
 FiniteElement<dim, spacedim>::FiniteElement(
@@ -140,16 +134,12 @@ FiniteElement<dim, spacedim>::FiniteElement(
   adjust_quad_dof_index_for_face_orientation_table.fill(0);
 }
 
-
-
 template <int dim, int spacedim>
 std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>
 FiniteElement<dim, spacedim>::operator^(const unsigned int multiplicity) const
 {
   return {this->clone(), multiplicity};
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -159,8 +149,6 @@ FiniteElement<dim, spacedim>::shape_value(const unsigned int,
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return 0.;
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -172,8 +160,6 @@ FiniteElement<dim, spacedim>::shape_value_component(const unsigned int,
   return 0.;
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, dim>
 FiniteElement<dim, spacedim>::shape_grad(const unsigned int,
@@ -182,8 +168,6 @@ FiniteElement<dim, spacedim>::shape_grad(const unsigned int,
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<1, dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, dim>
@@ -195,8 +179,6 @@ FiniteElement<dim, spacedim>::shape_grad_component(const unsigned int,
   return Tensor<1, dim>();
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<2, dim>
 FiniteElement<dim, spacedim>::shape_grad_grad(const unsigned int,
@@ -205,8 +187,6 @@ FiniteElement<dim, spacedim>::shape_grad_grad(const unsigned int,
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<2, dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<2, dim>
@@ -219,8 +199,6 @@ FiniteElement<dim, spacedim>::shape_grad_grad_component(
   return Tensor<2, dim>();
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<3, dim>
 FiniteElement<dim, spacedim>::shape_3rd_derivative(const unsigned int,
@@ -229,8 +207,6 @@ FiniteElement<dim, spacedim>::shape_3rd_derivative(const unsigned int,
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<3, dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<3, dim>
@@ -243,8 +219,6 @@ FiniteElement<dim, spacedim>::shape_3rd_derivative_component(
   return Tensor<3, dim>();
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<4, dim>
 FiniteElement<dim, spacedim>::shape_4th_derivative(const unsigned int,
@@ -253,8 +227,6 @@ FiniteElement<dim, spacedim>::shape_4th_derivative(const unsigned int,
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<4, dim>();
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<4, dim>
@@ -266,7 +238,6 @@ FiniteElement<dim, spacedim>::shape_4th_derivative_component(
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<4, dim>();
 }
-
 
 template <int dim, int spacedim>
 void
@@ -297,7 +268,6 @@ FiniteElement<dim, spacedim>::reinit_restriction_and_prolongation_matrices(
     }
 }
 
-
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_restriction_matrix(
@@ -323,8 +293,6 @@ FiniteElement<dim, spacedim>::get_restriction_matrix(
          ExcProjectionVoid());
   return restriction[refinement_case - 1][child];
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -354,7 +322,6 @@ FiniteElement<dim, spacedim>::get_prolongation_matrix(
   return prolongation[refinement_case - 1][child];
 }
 
-
 //TODO:[GK] This is probably not the most efficient way of doing this.
 template <int dim, int spacedim>
 unsigned int
@@ -367,7 +334,6 @@ FiniteElement<dim, spacedim>::component_to_block_index(
   return first_block_of_base(component_to_base_table[index].first.first)
          + component_to_base_table[index].second;
 }
-
 
 template <int dim, int spacedim>
 ComponentMask
@@ -385,7 +351,6 @@ FiniteElement<dim, spacedim>::component_mask(
   mask[scalar.component] = true;
   return mask;
 }
-
 
 template <int dim, int spacedim>
 ComponentMask
@@ -407,7 +372,6 @@ FiniteElement<dim, spacedim>::component_mask(
     mask[c] = true;
   return mask;
 }
-
 
 template <int dim, int spacedim>
 ComponentMask
@@ -432,8 +396,6 @@ FiniteElement<dim, spacedim>::component_mask(
   return mask;
 }
 
-
-
 template <int dim, int spacedim>
 ComponentMask
 FiniteElement<dim, spacedim>::component_mask(const BlockMask& block_mask) const
@@ -453,8 +415,6 @@ FiniteElement<dim, spacedim>::component_mask(const BlockMask& block_mask) const
   return component_mask;
 }
 
-
-
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
@@ -464,7 +424,6 @@ FiniteElement<dim, spacedim>::block_mask(
   // process) and then convert it to a block mask
   return block_mask(component_mask(scalar));
 }
-
 
 template <int dim, int spacedim>
 BlockMask
@@ -476,7 +435,6 @@ FiniteElement<dim, spacedim>::block_mask(
   return block_mask(component_mask(vector));
 }
 
-
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
@@ -486,8 +444,6 @@ FiniteElement<dim, spacedim>::block_mask(
   // process) and then convert it to a block mask
   return block_mask(component_mask(sym_tensor));
 }
-
-
 
 template <int dim, int spacedim>
 BlockMask
@@ -535,11 +491,8 @@ FiniteElement<dim, spacedim>::block_mask(
         }
     }
 
-
   return block_mask;
 }
-
-
 
 template <int dim, int spacedim>
 unsigned int
@@ -622,8 +575,6 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
     }
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 FiniteElement<dim, spacedim>::adjust_quad_dof_index_for_face_orientation(
@@ -659,8 +610,6 @@ FiniteElement<dim, spacedim>::adjust_quad_dof_index_for_face_orientation(
              index, 4 * face_orientation + 2 * face_flip + face_rotation);
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 FiniteElement<dim, spacedim>::adjust_line_dof_index_for_line_orientation(
@@ -684,8 +633,6 @@ FiniteElement<dim, spacedim>::adjust_line_dof_index_for_line_orientation(
   else
     return index + adjust_line_dof_index_for_line_orientation_table[index];
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -713,8 +660,6 @@ FiniteElement<dim, spacedim>::prolongation_is_implemented() const
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::restriction_is_implemented() const
@@ -740,8 +685,6 @@ FiniteElement<dim, spacedim>::restriction_is_implemented() const
       }
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -769,8 +712,6 @@ FiniteElement<dim, spacedim>::isotropic_prolongation_is_implemented() const
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::isotropic_restriction_is_implemented() const
@@ -797,8 +738,6 @@ FiniteElement<dim, spacedim>::isotropic_restriction_is_implemented() const
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::constraints_are_implemented(
@@ -810,16 +749,12 @@ FiniteElement<dim, spacedim>::constraints_are_implemented(
     return false;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return false;
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -846,8 +781,6 @@ FiniteElement<dim, spacedim>::constraints(
   return interface_constraints;
 }
 
-
-
 template <int dim, int spacedim>
 TableIndices<2>
 FiniteElement<dim, spacedim>::interface_constraints_size() const
@@ -871,8 +804,6 @@ FiniteElement<dim, spacedim>::interface_constraints_size() const
                          numbers::invalid_unsigned_int);
 }
 
-
-
 template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::get_interpolation_matrix(
@@ -887,8 +818,6 @@ FiniteElement<dim, spacedim>::get_interpolation_matrix(
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::get_face_interpolation_matrix(
@@ -902,8 +831,6 @@ FiniteElement<dim, spacedim>::get_face_interpolation_matrix(
     false,
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -920,8 +847,6 @@ FiniteElement<dim, spacedim>::get_subface_interpolation_matrix(
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FiniteElement<dim, spacedim>::hp_vertex_dof_identities(
@@ -930,8 +855,6 @@ FiniteElement<dim, spacedim>::hp_vertex_dof_identities(
   Assert(false, ExcNotImplemented());
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -942,8 +865,6 @@ FiniteElement<dim, spacedim>::hp_line_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FiniteElement<dim, spacedim>::hp_quad_dof_identities(
@@ -953,8 +874,6 @@ FiniteElement<dim, spacedim>::hp_quad_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
-
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FiniteElement<dim, spacedim>::compare_for_face_domination(
@@ -963,8 +882,6 @@ FiniteElement<dim, spacedim>::compare_for_face_domination(
   Assert(false, ExcNotImplemented());
   return FiniteElementDomination::neither_element_dominates;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -979,8 +896,6 @@ operator==(const FiniteElement<dim, spacedim>& f) const
           && (interface_constraints == f.interface_constraints));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::
@@ -988,8 +903,6 @@ operator!=(const FiniteElement<dim, spacedim>& f) const
 {
   return !(*this == f);
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<Point<dim>>&
@@ -1005,16 +918,12 @@ FiniteElement<dim, spacedim>::get_unit_support_points() const
   return unit_support_points;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_support_points() const
 {
   return (unit_support_points.size() != 0);
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<Point<dim>>&
@@ -1027,16 +936,12 @@ FiniteElement<dim, spacedim>::get_generalized_support_points() const
             generalized_support_points);
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_generalized_support_points() const
 {
   return (get_generalized_support_points().size() != 0);
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim>
@@ -1048,8 +953,6 @@ FiniteElement<dim, spacedim>::unit_support_point(const unsigned int index) const
          ExcFEHasNoSupportPoints());
   return unit_support_points[index];
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<Point<dim - 1>>&
@@ -1065,16 +968,12 @@ FiniteElement<dim, spacedim>::get_unit_face_support_points() const
   return unit_face_support_points;
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_face_support_points() const
 {
   return (unit_face_support_points.size() != 0);
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<Point<dim - 1>>&
@@ -1089,16 +988,12 @@ FiniteElement<dim, spacedim>::get_generalized_face_support_points() const
             generalized_face_support_points);
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_generalized_face_support_points() const
 {
   return (generalized_face_support_points.size() != 0);
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim - 1>
@@ -1112,8 +1007,6 @@ FiniteElement<dim, spacedim>::unit_face_support_point(
   return unit_face_support_points[index];
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_support_on_face(const unsigned int,
@@ -1121,8 +1014,6 @@ FiniteElement<dim, spacedim>::has_support_on_face(const unsigned int,
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 const FiniteElement<dim, spacedim>&
@@ -1155,8 +1046,6 @@ FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask& mask) const
   return get_sub_fe(first_selected, n_selected);
 }
 
-
-
 template <int dim, int spacedim>
 const FiniteElement<dim, spacedim>&
 FiniteElement<dim, spacedim>::get_sub_fe(
@@ -1174,8 +1063,6 @@ FiniteElement<dim, spacedim>::get_sub_fe(
   return *this;
 }
 
-
-
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FiniteElement<dim, spacedim>::get_constant_modes() const
@@ -1185,8 +1072,6 @@ FiniteElement<dim, spacedim>::get_constant_modes() const
     Table<2, bool>(this->n_components(), this->dofs_per_cell),
     std::vector<unsigned int>(this->n_components()));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1203,8 +1088,6 @@ FiniteElement<dim, spacedim>::
                     "be defined and is not implemented by the element."));
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -1225,8 +1108,6 @@ FiniteElement<dim, spacedim>::memory_consumption() const
     + MemoryConsumption::memory_consumption(n_nonzero_components_table));
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<unsigned int>
 FiniteElement<dim, spacedim>::compute_n_nonzero_components(
@@ -1237,8 +1118,6 @@ FiniteElement<dim, spacedim>::compute_n_nonzero_components(
     retval[i] = nonzero_components[i].n_selected_components();
   return retval;
 }
-
-
 
 /*------------------------------- FiniteElement ----------------------*/
 
@@ -1258,8 +1137,6 @@ FiniteElement<dim, spacedim>::get_face_data(
                   output_data);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FiniteElement<dim, spacedim>::get_subface_data(
@@ -1276,8 +1153,6 @@ FiniteElement<dim, spacedim>::get_subface_data(
                   output_data);
 }
 
-
-
 template <int dim, int spacedim>
 const FiniteElement<dim, spacedim>&
 FiniteElement<dim, spacedim>::base_element(const unsigned int index) const
@@ -1290,10 +1165,7 @@ FiniteElement<dim, spacedim>::base_element(const unsigned int index) const
   return *this;
 }
 
-
-
 /*------------------------------- Explicit Instantiations -------------*/
 #include "fe.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

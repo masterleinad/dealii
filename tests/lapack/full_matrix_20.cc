@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::trace() by comparing to FullMatrix
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -39,7 +37,6 @@ test(const unsigned int size)
 
   deallog << "trace difference: " << (F.trace() - M.trace()) << std::endl;
 }
-
 
 int
 main()

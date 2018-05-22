@@ -24,7 +24,6 @@
         deallog << bar[i][j][k] << " ";   \
   deallog << std::endl;
 
-
 int
 main()
 {

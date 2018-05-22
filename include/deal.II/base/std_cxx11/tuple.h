@@ -16,7 +16,6 @@
 #ifndef dealii_std_cxx11_tuple_h
 #define dealii_std_cxx11_tuple_h
 
-
 #include <deal.II/base/config.h>
 
 #include <tuple>

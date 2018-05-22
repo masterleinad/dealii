@@ -16,7 +16,6 @@
 #ifndef dealii_identity_matrix_h
 #define dealii_identity_matrix_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/lac/exceptions.h>
 
@@ -25,7 +24,6 @@ DEAL_II_NAMESPACE_OPEN
 /*! @addtogroup Matrix1
  *@{
  */
-
 
 /**
  * Implementation of a simple class representing the identity matrix of a
@@ -132,7 +130,6 @@ public:
   void
   Tvmult(OutVectorType& out, const InVectorType& in) const;
 
-
   /**
    * Matrix-vector multiplication with the transpose matrix, with addition to
    * the output vector. For the present case, this of course amounts to simply
@@ -149,21 +146,14 @@ private:
   size_type size;
 };
 
-
-
 // ------------------------- inline and template functions -------------
 #ifndef DOXYGEN
-
 
 inline IdentityMatrix::IdentityMatrix() : size(0)
 {}
 
-
-
 inline IdentityMatrix::IdentityMatrix(const size_type n) : size(n)
 {}
-
-
 
 inline void
 IdentityMatrix::reinit(const size_type n)
@@ -171,23 +161,17 @@ IdentityMatrix::reinit(const size_type n)
   size = n;
 }
 
-
-
 inline IdentityMatrix::size_type
 IdentityMatrix::m() const
 {
   return size;
 }
 
-
-
 inline IdentityMatrix::size_type
 IdentityMatrix::n() const
 {
   return size;
 }
-
-
 
 template <typename OutVectorType, typename InVectorType>
 inline void
@@ -199,8 +183,6 @@ IdentityMatrix::vmult(OutVectorType& out, const InVectorType& in) const
   out = in;
 }
 
-
-
 template <typename OutVectorType, typename InVectorType>
 inline void
 IdentityMatrix::vmult_add(OutVectorType& out, const InVectorType& in) const
@@ -210,8 +192,6 @@ IdentityMatrix::vmult_add(OutVectorType& out, const InVectorType& in) const
 
   out += in;
 }
-
-
 
 template <typename OutVectorType, typename InVectorType>
 inline void
@@ -223,8 +203,6 @@ IdentityMatrix::Tvmult(OutVectorType& out, const InVectorType& in) const
   out = in;
 }
 
-
-
 template <typename OutVectorType, typename InVectorType>
 inline void
 IdentityMatrix::Tvmult_add(OutVectorType& out, const InVectorType& in) const
@@ -234,7 +212,6 @@ IdentityMatrix::Tvmult_add(OutVectorType& out, const InVectorType& in) const
 
   out += in;
 }
-
 
 #endif
 

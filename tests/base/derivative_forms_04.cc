@@ -15,10 +15,8 @@
 
 // exercise DerivativeForm::norm() for complex data types
 
-
 #include "../tests.h"
 #include <deal.II/base/derivative_form.h>
-
 
 template <int dim, int spacedim>
 void

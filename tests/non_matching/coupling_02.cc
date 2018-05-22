@@ -112,8 +112,6 @@ test()
   deallog << "Error on constants: " << ones.l2_norm() << std::endl;
 }
 
-
-
 int
 main()
 {

@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check the consistency of the number cache of DoFHandler for a
 // sequential object
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -31,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -100,7 +95,6 @@ test()
                   ExcInternalError());
     }
 }
-
 
 int
 main()

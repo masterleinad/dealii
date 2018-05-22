@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // merge and print a bunch of ConstrainMatrices
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 merge_check()
@@ -74,7 +69,6 @@ merge_check()
       c1.print(logfile);
     };
 }
-
 
 int
 main()

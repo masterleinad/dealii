@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test by Alexander Grayver: The FE_Nedelec did not correctly compute face
 // interpolation matrices from lower to higher order elements. In particular,
 // the matrix sometimes did not have full column rank, meaning that a nonzero
 // function on the lower-p side would be interpolated to zero on the higher-p
 // side.
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_nedelec.h>

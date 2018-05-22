@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /**
  * @file Test whether Assembler::MatrixSimple writes the local blocks
  * into the right global positions
@@ -56,7 +55,6 @@ fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
           }
     }
 }
-
 
 template <int dim>
 void

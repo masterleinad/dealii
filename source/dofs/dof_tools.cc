@@ -48,8 +48,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 namespace DoFTools
 {
   namespace internal
@@ -103,8 +101,6 @@ namespace DoFTools
           }
       }
     };
-
-
 
     // return an array that for each dof on the reference cell
     // lists the corresponding vector component.
@@ -171,7 +167,6 @@ namespace DoFTools
 
       return local_component_association;
     }
-
 
     // this internal function assigns to each dof the respective component
     // of the vector system.
@@ -241,7 +236,6 @@ namespace DoFTools
           }
     }
 
-
     // this is the function corresponding to the one above but working on
     // blocks instead of components.
     //
@@ -308,8 +302,6 @@ namespace DoFTools
           }
     }
   } // namespace internal
-
-
 
   template <typename DoFHandlerType, typename Number>
   void
@@ -395,8 +387,6 @@ namespace DoFTools
       }
   }
 
-
-
   template <int dim, int spacedim>
   void
   extract_dofs(const DoFHandler<dim, spacedim>& dof,
@@ -428,7 +418,6 @@ namespace DoFTools
         return;
       }
 
-
     // preset all values by false
     std::fill_n(selected_dofs.begin(), dof.n_locally_owned_dofs(), false);
 
@@ -441,7 +430,6 @@ namespace DoFTools
       if(component_mask[dofs_by_component[i]] == true)
         selected_dofs[i] = true;
   }
-
 
   // TODO: Unify the following two functions with the non-hp case
 
@@ -475,7 +463,6 @@ namespace DoFTools
         return;
       }
 
-
     // preset all values by false
     std::fill_n(selected_dofs.begin(), dof.n_dofs(), false);
 
@@ -489,8 +476,6 @@ namespace DoFTools
         selected_dofs[i] = true;
   }
 
-
-
   template <int dim, int spacedim>
   void
   extract_dofs(const DoFHandler<dim, spacedim>& dof,
@@ -501,8 +486,6 @@ namespace DoFTools
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
   }
 
-
-
   template <int dim, int spacedim>
   void
   extract_dofs(const hp::DoFHandler<dim, spacedim>& dof,
@@ -512,8 +495,6 @@ namespace DoFTools
     // simply forward to the function that works based on a component mask
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -569,8 +550,6 @@ namespace DoFTools
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   extract_level_dofs(const unsigned int    level,
@@ -582,8 +561,6 @@ namespace DoFTools
     extract_level_dofs(
       level, dof, dof.get_fe().component_mask(block_mask), selected_dofs);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -611,7 +588,6 @@ namespace DoFTools
     // then convert the values computed above to the binary vector
     indices.fill_binary_vector(selected_dofs);
   }
-
 
   template <typename DoFHandlerType>
   void
@@ -723,8 +699,6 @@ namespace DoFTools
               }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   extract_dofs_with_support_on_boundary(
@@ -810,8 +784,6 @@ namespace DoFTools
                   }
             }
   }
-
-
 
   template <typename DoFHandlerType>
   IndexSet
@@ -920,8 +892,6 @@ namespace DoFTools
     return support_set;
   }
 
-
-
   namespace internal
   {
     namespace
@@ -934,7 +904,6 @@ namespace DoFTools
         // there are no hanging nodes in 1d
         return IndexSet(dof_handler.n_dofs());
       }
-
 
       template <int spacedim>
       IndexSet
@@ -983,7 +952,6 @@ namespace DoFTools
         return selected_dofs;
       }
 
-
       template <int spacedim>
       IndexSet
       extract_hanging_node_dofs(
@@ -1031,8 +999,6 @@ namespace DoFTools
     } // namespace
   }   // namespace internal
 
-
-
   template <int dim, int spacedim>
   void
   extract_hanging_node_dofs(const DoFHandler<dim, spacedim>& dof_handler,
@@ -1048,16 +1014,12 @@ namespace DoFTools
       selected_dofs[index] = true;
   }
 
-
-
   template <int dim, int spacedim>
   IndexSet
   extract_hanging_node_dofs(const DoFHandler<dim, spacedim>& dof_handler)
   {
     return internal::extract_hanging_node_dofs(dof_handler);
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1090,8 +1052,6 @@ namespace DoFTools
         };
   }
 
-
-
   template <typename DoFHandlerType>
   void
   extract_locally_owned_dofs(const DoFHandlerType& dof_handler,
@@ -1101,8 +1061,6 @@ namespace DoFTools
     dof_set = dof_handler.locally_owned_dofs();
     dof_set.compress();
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1139,8 +1097,6 @@ namespace DoFTools
 
     dof_set.compress();
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1181,8 +1137,6 @@ namespace DoFTools
       std::unique(dofs_on_ghosts.begin(), dofs_on_ghosts.end()));
     dof_set.compress();
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1230,8 +1184,6 @@ namespace DoFTools
 
     dof_set.compress();
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1324,8 +1276,6 @@ namespace DoFTools
               }
         }
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -1617,8 +1567,6 @@ namespace DoFTools
            ExcInternalError());
   }
 
-
-
   template <typename DoFHandlerType>
   unsigned int
   count_dofs_with_subdomain_association(const DoFHandlerType&     dof_handler,
@@ -1631,8 +1579,6 @@ namespace DoFTools
     return std::count(
       subdomain_association.begin(), subdomain_association.end(), subdomain);
   }
-
-
 
   template <typename DoFHandlerType>
   IndexSet
@@ -1689,8 +1635,6 @@ namespace DoFTools
     return index_set;
   }
 
-
-
   template <typename DoFHandlerType>
   void
   count_dofs_with_subdomain_association(
@@ -1740,8 +1684,6 @@ namespace DoFTools
             ++n_dofs_on_subdomain[c];
       }
   }
-
-
 
   namespace internal
   {
@@ -1793,7 +1735,6 @@ namespace DoFTools
         }
     }
 
-
     template <int dim, int spacedim>
     void
     resolve_components(const hp::FECollection<dim, spacedim>& fe_collection,
@@ -1834,8 +1775,6 @@ namespace DoFTools
     }
   } // namespace internal
 
-
-
   namespace internal
   {
     namespace
@@ -1849,7 +1788,6 @@ namespace DoFTools
       {
         return fe.is_primitive();
       }
-
 
       /**
        * Return true if each element of the given element collection is primitive.
@@ -1894,7 +1832,6 @@ namespace DoFTools
       Assert(target_component.size() == n_components,
              ExcDimensionMismatch(target_component.size(), n_components));
 
-
     const unsigned int max_component
       = *std::max_element(target_component.begin(), target_component.end());
     const unsigned int n_target_components = max_component + 1;
@@ -1910,7 +1847,6 @@ namespace DoFTools
         dofs_per_component[0] = dof_handler.n_locally_owned_dofs();
         return;
       }
-
 
     // otherwise determine the number of dofs in each component separately.
     // do so in parallel
@@ -1963,8 +1899,6 @@ namespace DoFTools
 #endif
   }
 
-
-
   template <typename DoFHandlerType>
   void
   count_dofs_per_block(const DoFHandlerType&                 dof_handler,
@@ -1999,8 +1933,6 @@ namespace DoFTools
         else
           Assert(target_block.size() == fe.n_blocks(),
                  ExcDimensionMismatch(target_block.size(), fe.n_blocks()));
-
-
 
         const unsigned int max_block
           = *std::max_element(target_block.begin(), target_block.end());
@@ -2053,8 +1985,6 @@ namespace DoFTools
       }
   }
 
-
-
   template <typename DoFHandlerType>
   void
   map_dof_to_boundary_indices(const DoFHandlerType&                 dof_handler,
@@ -2094,8 +2024,6 @@ namespace DoFTools
 
     AssertDimension(next_boundary_index, dof_handler.n_boundary_dofs());
   }
-
-
 
   template <typename DoFHandlerType>
   void
@@ -2205,7 +2133,6 @@ namespace DoFTools
             }
       }
 
-
       template <typename DoFHandlerType>
       void
       map_dofs_to_support_points(
@@ -2255,7 +2182,6 @@ namespace DoFTools
       mapping_collection, dof_handler, support_points);
   }
 
-
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
@@ -2277,7 +2203,6 @@ namespace DoFTools
     internal::map_dofs_to_support_points(mapping, dof_handler, support_points);
   }
 
-
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
@@ -2294,7 +2219,6 @@ namespace DoFTools
     internal::map_dofs_to_support_points(
       mapping_collection, dof_handler, support_points);
   }
-
 
   template <int dim, int spacedim>
   void
@@ -2356,7 +2280,6 @@ namespace DoFTools
     out << std::flush;
   }
 
-
   template <int dim, int spacedim>
   void
   convert_couplings_to_blocks(const DoFHandler<dim, spacedim>& dof_handler,
@@ -2380,7 +2303,6 @@ namespace DoFTools
           }
       }
   }
-
 
   template <int dim, int spacedim>
   void
@@ -2410,8 +2332,6 @@ namespace DoFTools
           }
       }
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2456,7 +2376,6 @@ namespace DoFTools
           ++i;
         }
   }
-
 
   template <typename DoFHandlerType>
   void
@@ -2503,7 +2422,6 @@ namespace DoFTools
           }
       }
   }
-
 
   template <typename DoFHandlerType>
   void
@@ -2753,7 +2671,6 @@ namespace DoFTools
     return vertex_mapping;
   }
 
-
   template <typename DoFHandlerType>
   unsigned int
   count_dofs_on_patch(
@@ -2780,8 +2697,6 @@ namespace DoFTools
     // now return the number of DoFs (duplicates were ignored)
     return dofs_on_patch.size();
   }
-
-
 
   template <typename DoFHandlerType>
   std::vector<types::global_dof_index>
@@ -2817,15 +2732,10 @@ namespace DoFTools
                                                 dofs_on_patch.end());
   }
 
-
 } // end of namespace DoFTools
-
-
 
 // explicit instantiations
 
 #include "dof_tools.inst"
-
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -22,9 +22,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 JobIdentifier dealjobid;
-
 
 JobIdentifier::JobIdentifier()
 {
@@ -42,13 +40,11 @@ JobIdentifier::JobIdentifier()
   id += std::string(std::ctime(&t));
 }
 
-
 const std::string
 JobIdentifier::operator()() const
 {
   return id;
 }
-
 
 std::string
 JobIdentifier::base_name(const char* filename)
@@ -63,7 +59,5 @@ JobIdentifier::base_name(const char* filename)
     name.erase(pos, name.size());
   return name;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE

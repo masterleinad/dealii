@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests that the matrix-free implementation works correctly with periodic
 // boundary conditions by solving a simple linear system and outputting the
 // solution for FE_DGQ(0)
@@ -29,11 +27,9 @@
 
 std::ofstream logfile("output");
 
-
 // We want to use the matrix-vector product provided by this function (which
 // also includes a main function)
 #include "matrix_vector_faces_common.h"
-
 
 template <int dim, int fe_degree>
 void

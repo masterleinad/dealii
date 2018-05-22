@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // take a 3d mesh, take all vertices, shift them a little bit and check that
 // we correctly identify the closest vertex position
 // The result should be an increasing sequence of numbers
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 void check(Triangulation<3>& tria)
 {
   const std::vector<Point<3>>& v = tria.get_vertices();
@@ -40,7 +36,6 @@ void check(Triangulation<3>& tria)
 
   deallog << std::endl;
 }
-
 
 int
 main()

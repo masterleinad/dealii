@@ -16,7 +16,6 @@
 #ifndef dealii_dof_objects_h
 #define dealii_dof_objects_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <vector>
@@ -34,7 +33,6 @@ namespace internal
     class DoFLevel;
     template <int>
     class DoFFaces;
-
 
     /**
      * Store the indices of the degrees of freedom which are located on
@@ -157,7 +155,6 @@ namespace internal
       friend class DoFFaces;
     };
 
-
     // --------------------- template and inline functions ------------------
 
     template <int dim>
@@ -169,8 +166,6 @@ namespace internal
     {
       return 1;
     }
-
-
 
     template <int dim>
     template <int dh_dim, int spacedim>
@@ -186,8 +181,6 @@ namespace internal
                         "non-hp DoFHandlers."));
       return true;
     }
-
-
 
     template <int dim>
     template <int dh_dim, int spacedim>
@@ -217,7 +210,6 @@ namespace internal
                     * dof_handler.get_fe().template n_dofs_per_object<dim>()
                   + local_index];
     }
-
 
     template <int dim>
     template <class Archive>

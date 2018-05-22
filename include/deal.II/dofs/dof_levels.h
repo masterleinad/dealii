@@ -16,16 +16,13 @@
 #ifndef dealii_dof_levels_h
 #define dealii_dof_levels_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/dofs/dof_objects.h>
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -108,8 +105,6 @@ namespace internal
       serialize(Archive& ar, const unsigned int version);
     };
 
-
-
     template <int dim>
     inline const types::global_dof_index*
     DoFLevel<dim>::get_cell_cache_start(const unsigned int obj_index,
@@ -122,8 +117,6 @@ namespace internal
       return cell_dof_indices_cache.data() + (obj_index * dofs_per_cell);
     }
 
-
-
     template <int dim>
     inline std::size_t
     DoFLevel<dim>::memory_consumption() const
@@ -131,7 +124,6 @@ namespace internal
       return (MemoryConsumption::memory_consumption(cell_dof_indices_cache)
               + MemoryConsumption::memory_consumption(dof_object));
     }
-
 
     template <int dim>
     template <class Archive>

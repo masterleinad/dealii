@@ -404,7 +404,6 @@ public:
   initialize(std::istream&     input_stream,
              ParameterHandler& prm = ParameterAcceptor::prm);
 
-
   /**
    * Clear class list and global parameter file.
    */
@@ -534,8 +533,6 @@ protected:
   const std::string section_name;
 };
 
-
-
 /**
  * A proxy ParameterAcceptor wrapper for classes that have a static member
  * function @p declare_parameters, and a non virtual @p parse_parameters method.
@@ -614,8 +611,6 @@ public:
   parse_parameters(ParameterHandler& prm) override;
 };
 
-
-
 // Inline and template functions
 template <class ParameterType>
 void
@@ -630,8 +625,6 @@ ParameterAcceptor::add_parameter(const std::string&           entry,
   leave_my_subsection(prm);
 }
 
-
-
 template <class SourceClass>
 template <typename... Args>
 ParameterAcceptorProxy<SourceClass>::ParameterAcceptorProxy(
@@ -640,16 +633,12 @@ ParameterAcceptorProxy<SourceClass>::ParameterAcceptorProxy(
   : SourceClass(args...), ParameterAcceptor(section_name)
 {}
 
-
-
 template <class SourceClass>
 void
 ParameterAcceptorProxy<SourceClass>::declare_parameters(ParameterHandler& prm)
 {
   SourceClass::declare_parameters(prm);
 }
-
-
 
 template <class SourceClass>
 void

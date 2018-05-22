@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh and copy it
 
 #include "../tests.h"

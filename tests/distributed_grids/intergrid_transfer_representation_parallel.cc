@@ -35,7 +35,6 @@
 #include <deal.II/grid/intergrid_map.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
 
 template <int dim>

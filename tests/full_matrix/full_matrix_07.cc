@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //check method mTmult of FullMatrix, symmetric case
 
 #include "../tests.h"

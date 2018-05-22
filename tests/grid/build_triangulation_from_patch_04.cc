@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridTools::build_triangulation_from_patch () with a distorted triangulation
 // to make sure the vertices are captured properly when the patch triangulation
 // does not come from the standard deal.II refinement strategy.  This mesh
 // is not uniform and so the local_triangulations return will have additional
 // cells that are not in the desired patch but that make sure we have a valid
 // triangulation
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -30,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -51,7 +46,6 @@ test()
   // random distortion.  Thus the output is consistent
   // for the test to be run multiple times.
   GridTools::distort_random(0.1, triangulation, false);
-
 
   unsigned int index = 0;
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -93,7 +87,6 @@ test()
         }
     }
 }
-
 
 int
 main()

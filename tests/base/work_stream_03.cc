@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Moritz originally implemented thread local scratch objects for
 // WorkStream in r24748 but it led to failures in the testsuite. what
 // exactly went on was a mystery and this test is a first step in
@@ -34,7 +33,6 @@
 #include <deal.II/grid/tria.h>
 
 #include <vector>
-
 
 template <int dim>
 double
@@ -93,13 +91,11 @@ zero_subrange(const unsigned int   begin,
     dst[i] = 0;
 }
 
-
 void
 zero_element(std::vector<double>& dst, const unsigned int i)
 {
   dst[i] = 0;
 }
-
 
 template <int dim>
 void
@@ -126,13 +122,11 @@ mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
   copy_data.cell_rhs[0] = value(data.x_fe_values.quadrature_point(0));
 }
 
-
 void
 copy_local_to_global(const CopyData& data, double* sum)
 {
   *sum += data.cell_rhs[0];
 }
-
 
 void
 do_project()
@@ -168,7 +162,6 @@ do_project()
       deallog << sum << std::endl;
     }
 }
-
 
 int
 main()

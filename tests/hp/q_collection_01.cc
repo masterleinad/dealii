@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that QCollection objects are copyable without running into
 // troubles when the copy is destroyed earlier than the original
 // object
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/hp/q_collection.h>
-
-
 
 template <int dim>
 void
@@ -41,8 +36,6 @@ test()
     hp::QCollection<dim> copy(q_collection);
   }
 }
-
-
 
 int
 main()

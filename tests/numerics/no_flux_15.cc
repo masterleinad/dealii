@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Similar to no_flux_14 for a higher order element including a high-order
 // mapping. The purpose here is to test that the result of
 // Manifold::normal_vector function inside of
 // VectorTools::compute_no_normal_flux_constraints is accurate for higher
 // order mappings.
-
 
 #include "../tests.h"
 
@@ -59,8 +56,6 @@ check()
 
   cm.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

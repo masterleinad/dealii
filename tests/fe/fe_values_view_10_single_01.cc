@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _10, but with only a single non-primitive element. this test exists in
 // order to find out why at the time of writing the test the branch
 // implementing distributed meshes produced different output for the _10 test
@@ -35,8 +33,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -84,8 +80,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -99,7 +93,6 @@ test_hyper_sphere()
   FE_RaviartThomas<dim> fe(1);
   test(tr, fe);
 }
-
 
 int
 main()

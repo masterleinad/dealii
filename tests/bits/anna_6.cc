@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*  Test code to help fixing
 
 DoFTools::extract_boundary_dofs
@@ -40,8 +39,6 @@ author: Anna Schneebeli, February 2003
 
 */
 
-
-
 #include "../tests.h"
 #include <deal.II/base/function.h>
 #include <deal.II/lac/vector.h>
@@ -61,12 +58,9 @@ author: Anna Schneebeli, February 2003
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 template <int dim>
 class ImposeBC
@@ -98,7 +92,6 @@ private:
   unsigned int n_p_dofs;
 };
 
-
 // some boundary function for the scalar component
 template <int dim>
 class BoundaryFunction : public Function<dim>
@@ -110,12 +103,9 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& values) const;
 };
 
-
 template <int dim>
 BoundaryFunction<dim>::BoundaryFunction() : Function<dim>(dim + 1)
 {}
-
-
 
 template <int dim>
 inline void
@@ -129,8 +119,6 @@ BoundaryFunction<dim>::vector_value(const Point<dim>&,
   values(dim) = 1.;
 }
 
-
-
 // Construct FE with first component: Nedelec-Element,
 // second component: Q1_Element
 template <int dim>
@@ -138,14 +126,11 @@ ImposeBC<dim>::ImposeBC()
   : fe(FE_Nedelec<dim>(0), 1, FE_Q<dim>(1), 1), dof_handler(triangulation)
 {}
 
-
-
 template <int dim>
 ImposeBC<dim>::~ImposeBC()
 {
   dof_handler.clear();
 }
-
 
 template <int dim>
 void
@@ -163,7 +148,6 @@ ImposeBC<dim>::get_ready()
   n_u_dofs = dofs_per_comp[0];
   n_p_dofs = dofs_per_comp[2];
 }
-
 
 template <int dim>
 void
@@ -184,13 +168,10 @@ ImposeBC<dim>::test_extract_boundary_DoFs()
   DoFTools::extract_boundary_dofs(
     dof_handler, bc_component_select, ned_boundary_dofs, boundary_ids);
 
-
   for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     if(ned_boundary_dofs[i] == true)
       boundary_values[i] = 0.;
 }
-
-
 
 template <int dim>
 void
@@ -198,7 +179,6 @@ ImposeBC<dim>::test_interpolate_BC()
 {
   std::map<types::global_dof_index, double> boundary_values;
   std::vector<bool>                         bc_component_select(dim + 1, false);
-
 
   // impose inhomogeneous boundary condition
   // on the scalar variable
@@ -209,8 +189,6 @@ ImposeBC<dim>::test_interpolate_BC()
                                            BoundaryFunction<dim>(),
                                            boundary_values,
                                            bc_component_select);
-
-
 
   // check
   // (the pressure is assumed to be set to 1
@@ -240,8 +218,6 @@ ImposeBC<dim>::test_interpolate_BC()
   deallog << std::endl;
 }
 
-
-
 template <int dim>
 void
 ImposeBC<dim>::run()
@@ -266,7 +242,6 @@ ImposeBC<dim>::run()
   test_extract_boundary_DoFs();
   test_interpolate_BC();
 }
-
 
 int
 main()

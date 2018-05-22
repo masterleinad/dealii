@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the Patterns::List pattern with a separator different from the
 // default ','
 
@@ -34,7 +32,6 @@ check(const char* p)
 
   deallog << "test_1=" << prm.get("test_1") << std::endl;
 }
-
 
 int
 main()

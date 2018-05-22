@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 //TODO:[GK] Add checks for RT again!
 
 #include "../tests.h"
@@ -47,7 +46,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
       v[level].reinit(n);
     }
 }
-
 
 template <int dim>
 void
@@ -129,7 +127,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer.copy_from_mg_add(mgdof, v, u);
   deallog << "diff " << v.l2_norm() << std::endl;
 }
-
 
 int
 main()

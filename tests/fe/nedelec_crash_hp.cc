@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test by Alexander Grayver: The FE_Nedelec did not correctly compute face
 // interpolation matrices from lower to higher order elements. This
 // consequently led to a situation where
 // DoFTools::make_hanging_node_constraints got into trouble because it could
 // not find a master DoF for one particular slave DoF.
 
-
 char logname[] = "output";
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -43,8 +40,6 @@ char logname[] = "output";
 #include <deal.II/numerics/vector_tools.h>
 
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -98,8 +93,6 @@ test()
       }
 }
 
-
-
 int
 main()
 {
@@ -107,7 +100,6 @@ main()
   logfile.precision(7);
 
   deallog.attach(logfile);
-
 
   test<2>();
   test<3>();

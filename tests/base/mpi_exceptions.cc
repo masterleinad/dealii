@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that we can catch all MPI-1 error codes and print appropriate
 // exception messages to the screen.
 
@@ -60,7 +59,6 @@ main(int argc, char** argv)
           exc.print_info(deallog.get_file_stream());
         }
     }
-
 
   return 0;
 }

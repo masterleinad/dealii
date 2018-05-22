@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // distribute dofs and mgdofs for a parallel Triangulation
 
 #include "../tests.h"
@@ -33,7 +31,6 @@
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 template <int dim>
 void
@@ -107,7 +104,6 @@ test()
       }
   }
 }
-
 
 int
 main(int argc, char* argv[])

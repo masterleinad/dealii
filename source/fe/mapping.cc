@@ -13,12 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/fe/mapping.h>
 #include <deal.II/grid/tria.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
@@ -32,7 +30,6 @@ Mapping<dim, spacedim>::get_vertices(
     }
   return vertices;
 }
-
 
 template <int dim, int spacedim>
 Point<dim - 1>
@@ -72,13 +69,10 @@ Mapping<dim, spacedim>::project_real_point_to_unit_point_on_face(
 
 /*------------------------------ InternalDataBase ------------------------------*/
 
-
 template <int dim, int spacedim>
 Mapping<dim, spacedim>::InternalDataBase::InternalDataBase()
   : update_each(update_default)
 {}
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -87,13 +81,9 @@ Mapping<dim, spacedim>::InternalDataBase::memory_consumption() const
   return sizeof(*this);
 }
 
-
 /*------------------------------ InternalData ------------------------------*/
-
-
 
 // explicit instantiations
 #include "mapping.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

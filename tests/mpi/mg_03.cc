@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // distribute_dofs on one cpu crashes with a segmentation fault.
 /* valgrind says:
 ==7944== Invalid read of size 8
@@ -46,7 +44,6 @@
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/lac/trilinos_vector.h>
-
 
 template <int dim>
 void
@@ -107,7 +104,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

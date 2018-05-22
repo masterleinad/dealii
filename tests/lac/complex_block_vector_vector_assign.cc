@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check assignment between block vectors and regular vectors
 
 #include "../tests.h"
@@ -34,7 +33,6 @@ operator==(const Vector1& v1, const Vector2& v2)
       return false;
   return true;
 }
-
 
 void
 test()
@@ -61,8 +59,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()
@@ -102,7 +98,6 @@ main()
       // abort
       return 3;
     };
-
 
   return 0;
 }

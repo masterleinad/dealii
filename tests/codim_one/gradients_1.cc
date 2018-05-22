@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Controls that the covariant matrix is calculated properly. It uses
 // a Q1 finite element to calculate the scalar product of the gradient
 // of a projected function (a monomial) with the tangential to the
@@ -42,8 +40,6 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 std::ofstream logfile("output");
 
 template <int dim, int spacedim>
@@ -70,7 +66,6 @@ test(std::string filename, unsigned int degree = 1)
   deallog << "no. of dofs " << dof_handler.n_dofs() << std::endl;
   deallog << "no. of dofs per cell " << fe.dofs_per_cell << std::endl;
 
-
   //  definition of the exact function
   //  and calculation of the projected
   //  one
@@ -94,7 +89,6 @@ test(std::string filename, unsigned int degree = 1)
   deallog << "L2 norm of projected vector: " << projected_one.l2_norm()
           << std::endl;
 
-
   // compute the H1 difference
   Vector<float> difference_per_cell(triangulation.n_active_cells());
   VectorTools::integrate_difference(dof_handler,
@@ -106,8 +100,6 @@ test(std::string filename, unsigned int degree = 1)
 
   deallog << "H1 error: " << difference_per_cell.l2_norm() << std::endl;
 }
-
-
 
 int
 main()
@@ -126,7 +118,6 @@ main()
   test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 1);
   test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 2);
   test<2, 3>(SOURCE_DIR "/grids/sphere_1.inp", 3);
-
 
   return 0;
 }

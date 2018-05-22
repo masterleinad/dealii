@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check method FullMatrix::extract_submatrix_from
 
 #include "../tests.h"
@@ -51,7 +50,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

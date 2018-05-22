@@ -16,7 +16,6 @@
 #ifndef dealii_distributed_grid_refinement_h
 #define dealii_distributed_grid_refinement_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/distributed/tria.h>
@@ -111,7 +110,6 @@ namespace parallel
     } // namespace GridRefinement
   }   // namespace distributed
 } // namespace parallel
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -62,14 +62,11 @@ namespace TrilinosWrappers
       coarse_type(coarse_type)
   {}
 
-
   PreconditionAMG::~PreconditionAMG()
   {
     preconditioner.reset();
     trilinos_matrix.reset();
   }
-
-
 
   void
   PreconditionAMG::initialize(const SparseMatrix&   matrix,
@@ -77,8 +74,6 @@ namespace TrilinosWrappers
   {
     initialize(matrix.trilinos_matrix(), additional_data);
   }
-
-
 
   void
   PreconditionAMG::initialize(const Epetra_RowMatrix& matrix,
@@ -209,16 +204,12 @@ namespace TrilinosWrappers
       }
   }
 
-
-
   void
   PreconditionAMG::initialize(const SparseMatrix&           matrix,
                               const Teuchos::ParameterList& ml_parameters)
   {
     initialize(matrix.trilinos_matrix(), ml_parameters);
   }
-
-
 
   void
   PreconditionAMG::initialize(const Epetra_RowMatrix&       matrix,
@@ -228,8 +219,6 @@ namespace TrilinosWrappers
     preconditioner = std::make_shared<ML_Epetra::MultiLevelPreconditioner>(
       matrix, ml_parameters);
   }
-
-
 
   template <typename number>
   void
@@ -262,8 +251,6 @@ namespace TrilinosWrappers
     initialize(*trilinos_matrix, additional_data);
   }
 
-
-
   void
   PreconditionAMG::reinit()
   {
@@ -273,16 +260,12 @@ namespace TrilinosWrappers
     multilevel_operator->ReComputePreconditioner();
   }
 
-
-
   void
   PreconditionAMG::clear()
   {
     PreconditionBase::clear();
     trilinos_matrix.reset();
   }
-
-
 
   PreconditionAMG::size_type
   PreconditionAMG::memory_consumption() const
@@ -296,8 +279,6 @@ namespace TrilinosWrappers
     return memory;
   }
 
-
-
   // explicit instantiations
   template void
   PreconditionAMG::initialize(const ::dealii::SparseMatrix<double>&,
@@ -309,8 +290,6 @@ namespace TrilinosWrappers
                               const AdditionalData&,
                               const double,
                               const ::dealii::SparsityPattern*);
-
-
 
 } // namespace TrilinosWrappers
 

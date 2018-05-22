@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ChunkSparsityPattern::row_length
 
 #include "sparsity_pattern_common.h"

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure ConsecutiveControl does not allow its (re)usage when not starting
 // from 0-th iteration. This test is expected to run, but throw an error.
 
@@ -21,7 +20,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/solver_control.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
@@ -24,7 +22,6 @@
 //
 // this is a redux of the _01 test that broke on a branch at the
 // beginning
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -37,8 +34,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -66,7 +61,6 @@ check()
     deallog << dofs[d];
   deallog << std::endl;
 }
-
 
 int
 main()

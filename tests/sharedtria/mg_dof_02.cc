@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // distribute mg dofs for a shared triangulation and
 // check level_ghost_owners is set properly
 
@@ -51,7 +50,6 @@ write_dof_data(DoFHandler<dim>& dof_handler)
       for(unsigned int i = 0; i < dof_index_per_proc.size(); ++i)
         dof_index_per_proc[i].print(deallog);
 
-
       typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(lvl),
                                               endc = dof_handler.end(lvl);
       for(; cell != endc; ++cell)
@@ -71,8 +69,6 @@ write_dof_data(DoFHandler<dim>& dof_handler)
         }
     }
 }
-
-
 
 template <int dim>
 void

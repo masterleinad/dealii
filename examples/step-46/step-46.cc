@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, Texas A&M University, 2011
  */
 
-
 // @sect3{Include files}
 
 // The include files for this program are the same as for many others
@@ -60,7 +59,6 @@
 
 #include <fstream>
 #include <iostream>
-
 
 namespace Step46
 {
@@ -112,7 +110,6 @@ namespace Step46
     cell_is_in_solid_domain(
       const typename hp::DoFHandler<dim>::cell_iterator& cell);
 
-
     void
     make_grid();
     void
@@ -158,7 +155,6 @@ namespace Step46
     const double mu;
   };
 
-
   // @sect3{Boundary values and right hand side}
 
   // The following classes do as their names suggest. The boundary values for
@@ -180,7 +176,6 @@ namespace Step46
     virtual void
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
-
 
   template <int dim>
   double
@@ -204,7 +199,6 @@ namespace Step46
     return 0;
   }
 
-
   template <int dim>
   void
   StokesBoundaryValues<dim>::vector_value(const Point<dim>& p,
@@ -213,8 +207,6 @@ namespace Step46
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = StokesBoundaryValues<dim>::value(p, c);
   }
-
-
 
   template <int dim>
   class RightHandSide : public Function<dim>
@@ -230,7 +222,6 @@ namespace Step46
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -238,7 +229,6 @@ namespace Step46
   {
     return 0;
   }
-
 
   template <int dim>
   void
@@ -248,8 +238,6 @@ namespace Step46
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
-
-
 
   // @sect3{The <code>FluidStructureProblem</code> implementation}
 
@@ -292,8 +280,6 @@ namespace Step46
     fe_collection.push_back(elasticity_fe);
   }
 
-
-
   template <int dim>
   bool
   FluidStructureProblem<dim>::cell_is_in_fluid_domain(
@@ -302,7 +288,6 @@ namespace Step46
     return (cell->material_id() == fluid_domain_id);
   }
 
-
   template <int dim>
   bool
   FluidStructureProblem<dim>::cell_is_in_solid_domain(
@@ -310,7 +295,6 @@ namespace Step46
   {
     return (cell->material_id() == solid_domain_id);
   }
-
 
   // @sect4{Meshes and assigning subdomains}
 
@@ -339,7 +323,6 @@ namespace Step46
            && (cell->face(f)->center()[dim - 1] == 1))
           cell->face(f)->set_all_boundary_ids(1);
 
-
     for(typename Triangulation<dim>::active_cell_iterator cell
         = dof_handler.begin_active();
         cell != dof_handler.end();
@@ -352,7 +335,6 @@ namespace Step46
       else
         cell->set_material_id(solid_domain_id);
   }
-
 
   // The second part of this pair of functions determines which finite element
   // to use on each cell. Above we have set the material indicator for each
@@ -381,7 +363,6 @@ namespace Step46
           Assert(false, ExcNotImplemented());
       }
   }
-
 
   // @sect4{<code>FluidStructureProblem::setup_dofs</code>}
 
@@ -507,8 +488,6 @@ namespace Step46
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
-
 
   // @sect4{<code>FluidStructureProblem::assemble_system</code>}
 
@@ -822,8 +801,6 @@ namespace Step46
       }
   }
 
-
-
   // In the function that assembles the global system, we passed computing
   // interface terms to a separate function we discuss here. The key is that
   // even though we can't predict the combination of FEFaceValues and
@@ -879,7 +856,6 @@ namespace Step46
       }
   }
 
-
   // @sect4{<code>FluidStructureProblem::solve</code>}
 
   // As discussed in the introduction, we use a rather trivial solver here: we
@@ -896,8 +872,6 @@ namespace Step46
 
     constraints.distribute(solution);
   }
-
-
 
   // @sect4{<code>FluidStructureProblem::output_results</code>}
 
@@ -938,7 +912,6 @@ namespace Step46
       "solution-" + Utilities::int_to_string(refinement_cycle, 2) + ".vtk");
     data_out.write_vtk(output);
   }
-
 
   // @sect4{<code>FluidStructureProblem::refine_mesh</code>}
 
@@ -1054,8 +1027,6 @@ namespace Step46
     triangulation.execute_coarsening_and_refinement();
   }
 
-
-
   // @sect4{<code>FluidStructureProblem::run</code>}
 
   // This is, as usual, the function that controls the overall flow of
@@ -1091,8 +1062,6 @@ namespace Step46
       }
   }
 } // namespace Step46
-
-
 
 // @sect4{The <code>main()</code> function}
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 #include <deal.II/base/point.h>
@@ -44,8 +43,6 @@ main()
   std::vector<Point<1>>             va5(2, Point<1>(5.0));
   std::vector<Point<2>>             va6(2, Point<2>(6.0, 7.0));
   std::vector<Point<3>>             va7(2, Point<3>(8.0, 9.0, 10.0));
-
-
 
   ParameterHandler prm;
   prm.add_parameter("A signed integer", a0);

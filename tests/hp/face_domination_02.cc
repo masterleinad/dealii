@@ -18,7 +18,6 @@
 // shown in the _01 test, but fails at the time the test was written
 // for systems
 
-
 #include "../tests.h"
 
 #include <deal.II/dofs/dof_accessor.h>
@@ -37,7 +36,6 @@
 #include <iostream>
 #include <vector>
 
-
 const unsigned int dim = 2;
 
 void
@@ -52,7 +50,6 @@ print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
-
 
 int
 main()

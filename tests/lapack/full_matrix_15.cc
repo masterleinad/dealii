@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::compute_cholesky_factorization by comparing with FullMatrix
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -60,7 +58,6 @@ test(const unsigned int size)
       AssertThrow(false, ExcInternalError());
     }
 }
-
 
 int
 main()

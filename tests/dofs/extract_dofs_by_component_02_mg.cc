@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test internal::extract_dofs_by_component for some corner cases that
 // I was unsure about when refactoring some code in there
 //
 // this particular test checks the call path to
 // internal::extract_dofs_by_component from DoFTools::extract_dofs via
 // the BlockMask argument
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_tools.h>
@@ -34,8 +31,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -76,7 +71,6 @@ check()
         }
     }
 }
-
 
 int
 main()

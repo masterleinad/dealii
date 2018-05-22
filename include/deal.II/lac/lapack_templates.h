@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_lapack_templates_h
 #define dealii_lapack_templates_h
 
@@ -838,7 +837,6 @@ extern "C"
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /// Template wrapper for LAPACK functions dsyrk and ssyrk
 template <typename number>
 inline void
@@ -888,8 +886,6 @@ syrk(const char*            uplo,
 }
 #endif
 
-
-
 /// Template wrapper for LAPACK functions dsyr and ssyr
 template <typename number>
 inline void
@@ -929,8 +925,6 @@ syr(const char*            uplo,
 }
 #endif
 
-
-
 /// Template wrapper for LAPACK functions daxpy and saxpy
 template <typename number1, typename number2, typename number3>
 inline void
@@ -968,7 +962,6 @@ axpy(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 axpy(const types::blas_int* n,
@@ -992,7 +985,6 @@ axpy(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("saxpy"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgemv and sgemv
 template <typename number1,
@@ -1050,7 +1042,6 @@ gemv(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 gemv(const char*            trans,
@@ -1084,8 +1075,6 @@ gemv(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sgemv"));
 }
 #endif
-
-
 
 /// Template wrapper for LAPACK functions dtrmv and strmv
 template <typename number>
@@ -1130,7 +1119,6 @@ trmv(const char* /*uplo*/,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 trmv(const char*            uplo,
@@ -1158,8 +1146,6 @@ trmv(const char* /*uplo*/,
   Assert(false, LAPACKSupport::ExcMissing("dtrmv"));
 }
 #endif
-
-
 
 /// Template wrapper for LAPACK functions dgemm and sgemm
 template <typename number1,
@@ -1223,7 +1209,6 @@ gemm(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 gemm(const char*            transa,
@@ -1261,8 +1246,6 @@ gemm(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sgemm"));
 }
 #endif
-
-
 
 /// Template wrapper for potrf
 template <typename number1>
@@ -1315,8 +1298,6 @@ potrf(const char*            uplo,
   Assert(false, LAPACKSupport::ExcMissing("spotrf"));
 #endif
 }
-
-
 
 /// Template wrapper for trcon
 template <typename number>
@@ -1394,8 +1375,6 @@ trcon(const char*            norm,
   Assert(false, LAPACKSupport::ExcMissing("dtrcon"));
 #endif
 }
-
-
 
 /// Template wrapper for pocon
 template <typename number1>
@@ -1521,7 +1500,6 @@ potri(const char*            uplo,
 #endif
 }
 
-
 /// Template wrapper for lansy
 template <typename number>
 inline number
@@ -1581,8 +1559,6 @@ lansy(const char*            norm,
   return 0.;
 #endif
 }
-
-
 
 /// Template wrapper for lange
 template <typename number>
@@ -1681,7 +1657,6 @@ getrf(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 getrf(const types::blas_int* m,
@@ -1705,7 +1680,6 @@ getrf(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sgetrf"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgetrs and sgetrs
 template <typename number1, typename number2>
@@ -1753,7 +1727,6 @@ getrs(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 getrs(const char*            trans,
@@ -1783,8 +1756,6 @@ getrs(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sgetrs"));
 }
 #endif
-
-
 
 ///  Template wrapper for LAPACK functions dpotrs and spotrs
 template <typename number>
@@ -1853,8 +1824,6 @@ potrs(const char*,
 }
 #endif
 
-
-
 /// Template wrapper for LAPACK functions dgetri and sgetri
 template <typename number1, typename number2>
 inline void
@@ -1895,7 +1864,6 @@ getri(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 getri(const types::blas_int* n,
@@ -1921,7 +1889,6 @@ getri(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sgetri"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgeqrf and sgeqrf
 template <typename number1, typename number2, typename number3>
@@ -1966,7 +1933,6 @@ geqrf(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 geqrf(const types::blas_int* m,
@@ -1994,7 +1960,6 @@ geqrf(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sgeqrf"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dormqr and sormqr
 template <typename number1,
@@ -2057,7 +2022,6 @@ ormqr(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 ormqr(const char*            side,
@@ -2095,7 +2059,6 @@ ormqr(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sormqr"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dorgqr and sorgqr
 template <typename number1, typename number2, typename number3>
@@ -2143,7 +2106,6 @@ orgqr(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 orgqr(const types::blas_int* m,
@@ -2173,7 +2135,6 @@ orgqr(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sorgqr"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dtrtrs and strtrs
 template <typename number1, typename number2>
@@ -2224,7 +2185,6 @@ trtrs(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 trtrs(const char*            uplo,
@@ -2256,7 +2216,6 @@ trtrs(const char*,
   Assert(false, LAPACKSupport::ExcMissing("strtrs"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgeev and sgeev
 template <typename number1,
@@ -2337,7 +2296,6 @@ geev(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 geev(const char*            jobvl,
@@ -2390,7 +2348,6 @@ geev(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sgeev"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgeevx and sgeevx
 template <typename number1,
@@ -2511,7 +2468,6 @@ geevx(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 geevx(const char*            balanc,
@@ -2592,7 +2548,6 @@ geevx(const char*,
 }
 #endif
 
-
 /// Template wrapper for LAPACK functions dsyev and ssyev
 template <typename number1, typename number2, typename number3>
 inline void
@@ -2639,7 +2594,6 @@ syev(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 syev(const char*            jobz,
@@ -2669,7 +2623,6 @@ syev(const char*,
   Assert(false, LAPACKSupport::ExcMissing("ssyev"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dsyevx and ssyevx
 template <typename number1,
@@ -2775,7 +2728,6 @@ syevx(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 syevx(const char*            jobz,
@@ -2847,7 +2799,6 @@ syevx(const char*,
 }
 #endif
 
-
 // Template wrapper for LAPACK functions dsyevr and ssyevr
 template <typename number>
 inline void
@@ -2875,7 +2826,6 @@ syevr(const char* /*jobz*/,
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 #ifdef DEAL_II_WITH_LAPACK
 inline void
@@ -2999,7 +2949,6 @@ syevr(const char*            jobz,
 }
 #endif
 
-
 /// Template wrapper for LAPACK functions dsygv and ssygv
 template <typename number1,
           typename number2,
@@ -3058,7 +3007,6 @@ sygv(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygv(const types::blas_int* itype,
@@ -3094,7 +3042,6 @@ sygv(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("ssygv"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dsygvx and ssygvx
 template <typename number1,
@@ -3213,7 +3160,6 @@ sygvx(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 sygvx(const types::blas_int* itype,
@@ -3294,7 +3240,6 @@ sygvx(const types::blas_int*,
 }
 #endif
 
-
 /// Template wrapper for LAPACK functions dgesdd and sgesdd
 template <typename number1,
           typename number2,
@@ -3360,7 +3305,6 @@ gesdd(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 gesdd(const char*            jobz,
@@ -3400,7 +3344,6 @@ gesdd(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sgesdd"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgesvd and sgesvd
 template <typename number1,
@@ -3467,7 +3410,6 @@ gesvd(types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 gesvd(types::blas_int*       jobu,
@@ -3507,7 +3449,6 @@ gesvd(types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sgesvd"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dgelsd and sgelsd
 template <typename number1,
@@ -3574,7 +3515,6 @@ gelsd(const types::blas_int*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 gelsd(const types::blas_int* m,
@@ -3614,7 +3554,6 @@ gelsd(const types::blas_int*,
   Assert(false, LAPACKSupport::ExcMissing("sgelsd"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dstev and sstev
 template <typename number1,
@@ -3662,7 +3601,6 @@ stev(const char*,
 }
 #endif
 
-
 #ifdef DEAL_II_WITH_LAPACK
 inline void
 stev(const char*            jobz,
@@ -3690,7 +3628,6 @@ stev(const char*,
   Assert(false, LAPACKSupport::ExcMissing("sstev"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dlascl and slascl
 template <typename number>
@@ -3772,7 +3709,6 @@ lascl(const char*,
   Assert(false, LAPACKSupport::ExcMissing("slascl"));
 }
 #endif
-
 
 /// Template wrapper for LAPACK functions dlamch and slamch
 template <typename number>

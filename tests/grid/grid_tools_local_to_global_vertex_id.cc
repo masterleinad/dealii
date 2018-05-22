@@ -12,8 +12,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/cell_id.h>
@@ -23,7 +21,6 @@
 
 #include <map>
 #include <vector>
-
 
 void
 test()
@@ -45,7 +42,6 @@ test()
     }
 
   tria.execute_coarsening_and_refinement();
-
 
   std::map<unsigned int, types::global_vertex_index> local_to_global_id
     = GridTools::compute_local_to_global_vertex_index_map(tria);
@@ -100,7 +96,6 @@ test()
                     ExcMessage("Wrong global index"));
     }
 }
-
 
 int
 main(int argc, char* argv[])

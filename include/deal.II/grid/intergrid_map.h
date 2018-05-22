@@ -24,7 +24,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * This class provides a map between two grids which are derived from the same
  * coarse grid. For each cell iterator of the source map, it provides the
@@ -207,7 +206,6 @@ private:
   set_entries_to_cell(const cell_iterator& src_cell,
                       const cell_iterator& dst_cell);
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

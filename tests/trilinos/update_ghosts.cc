@@ -16,7 +16,6 @@
 
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 
-
 // Check that the block vector class support update_ghost_values. This method
 // doesn't do anything but is needed for genericity.
 

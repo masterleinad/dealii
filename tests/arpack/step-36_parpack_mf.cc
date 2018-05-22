@@ -39,7 +39,6 @@
 #include <deal.II/matrix_free/operators.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
@@ -48,7 +47,6 @@
 #include <deal.II/lac/parpack_solver.h>
 
 #include <iostream>
-
 
 const unsigned int dim = 2;
 
@@ -74,11 +72,9 @@ test()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(global_mesh_refinement_steps);
 
-
   DoFHandler<dim> dof_handler(triangulation);
   FE_Q<dim>       fe(fe_degree);
   dof_handler.distribute_dofs(fe);
-
 
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
@@ -100,7 +96,6 @@ test()
       = update_values | update_gradients | update_JxW_values;
     mf_data->reinit(dof_handler, constraints, quad, data);
   }
-
 
   std::vector<LinearAlgebra::distributed::Vector<double>> eigenfunctions;
   std::vector<double>                                     eigenvalues;
@@ -203,11 +198,9 @@ test()
     }
   }
 
-
   dof_handler.clear();
   deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

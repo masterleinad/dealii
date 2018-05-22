@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the functions of ConditionalOStream
-
 
 #include "../tests.h"
 #include <deal.II/base/conditional_ostream.h>
 #include <limits>
-
 
 int
 main()

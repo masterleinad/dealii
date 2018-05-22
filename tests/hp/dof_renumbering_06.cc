@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check DoFRenumbering::boost::minimum_degree
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -53,8 +49,6 @@ print_dofs(const hp::DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 check_renumbering(hp::DoFHandler<dim>& dof)
@@ -68,7 +62,6 @@ check_renumbering(hp::DoFHandler<dim>& dof)
   DoFRenumbering::boost::minimum_degree(dof);
   print_dofs(dof);
 }
-
 
 template <int dim>
 void
@@ -109,7 +102,6 @@ check()
   check_renumbering(dof);
   dof.clear();
 }
-
 
 int
 main()

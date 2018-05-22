@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // similar to mesh_3d_13, but check that quadrature points are
 // correct. it is thus also similar to mesh_3d_7, but checks for faces
 // and subfaces
@@ -33,8 +31,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void check_this(Triangulation<3>& tria)
 {
@@ -94,8 +90,6 @@ void check_this(Triangulation<3>& tria)
           }
 }
 
-
-
 void check(Triangulation<3>& tria)
 {
   (++tria.begin_active())->set_refine_flag();
@@ -119,7 +113,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

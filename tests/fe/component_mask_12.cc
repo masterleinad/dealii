@@ -13,19 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: test conversion from component mask to block mask and back
-
 
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
-
-
 
 void
 test()
@@ -68,7 +63,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

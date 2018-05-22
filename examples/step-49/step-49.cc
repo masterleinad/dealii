@@ -17,7 +17,6 @@
  * Author: Timo Heister, Texas A&M University, 2013
  */
 
-
 // This tutorial program is odd in the sense that, unlike for most other
 // steps, the introduction already provides most of the information on how to
 // use the various strategies to generate meshes. Consequently, there is
@@ -121,7 +120,6 @@ grid_1()
   print_mesh_info(triangulation, "grid-1.eps");
 }
 
-
 // @sect4{grid_2: Merging triangulations}
 
 // Here, we first create two triangulations and then merge them into one.  As
@@ -145,7 +143,6 @@ grid_2()
 
   print_mesh_info(triangulation, "grid-2.eps");
 }
-
 
 // @sect4{grid_3: Moving vertices}
 
@@ -209,8 +206,6 @@ grid_3()
 // vertex coordinates and moves all of the other vertices in such a way that the
 // resulting mesh has, in some sense, a small distortion.
 
-
-
 // @sect4{grid_4: Demonstrating extrude_triangulation}
 
 // This example takes the initial grid from the previous function and simply extrudes it into the third space dimension:
@@ -224,7 +219,6 @@ grid_4()
   GridGenerator::extrude_triangulation(triangulation, 3, 2.0, out);
   print_mesh_info(out, "grid-4.eps");
 }
-
 
 // @sect4{grid_5: Demonstrating GridTools::transform, part 1}
 
@@ -258,8 +252,6 @@ grid_5()
   print_mesh_info(triangulation, "grid-5.eps");
 }
 
-
-
 // @sect4{grid_6: Demonstrating GridTools::transform, part 2}
 
 // In this second example of transforming points from an original to a new
@@ -285,7 +277,6 @@ struct Grid6Func
   }
 };
 
-
 void
 grid_6()
 {
@@ -298,7 +289,6 @@ grid_6()
   GridTools::transform(Grid6Func(), triangulation);
   print_mesh_info(triangulation, "grid-6.eps");
 }
-
 
 // @sect4{grid_7: Demonstrating distort_random}
 
@@ -320,7 +310,6 @@ grid_7()
   GridTools::distort_random(0.3, triangulation, true);
   print_mesh_info(triangulation, "grid-7.eps");
 }
-
 
 // @sect3{The main function}
 

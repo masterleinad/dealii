@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check for support of std::complex<double> as Number template argument
 
 #include "../tests.h"

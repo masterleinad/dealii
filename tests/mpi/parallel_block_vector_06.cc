@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this BlockVector<Number>::scalar_product().
 // same as parallel_block_vector_05, but uses LAPACKFUllMatrix and tests
 // that internally we set it to be symmetric and so, for example, one can
@@ -37,8 +35,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -184,7 +180,6 @@ test(const unsigned int n_blocks = 5)
     deallog << "Norm of difference: " << diff_norm2 << std::endl;
   }
 }
-
 
 int
 main(int argc, char** argv)

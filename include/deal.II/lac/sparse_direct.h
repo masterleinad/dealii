@@ -16,7 +16,6 @@
 #ifndef dealii_sparse_direct_h
 #define dealii_sparse_direct_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/subscriptor.h>
@@ -93,7 +92,6 @@ public:
    */
   class AdditionalData
   {};
-
 
   /**
    * Constructor. See the documentation of this class for the meaning of the

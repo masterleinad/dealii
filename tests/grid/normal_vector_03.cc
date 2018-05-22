@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _01 but instead for random points on the face. note that the normal
 // vector on a bilinearly mapped face is also a bilinear function
-
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -28,8 +24,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void
 create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
@@ -52,8 +46,6 @@ create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
         Assert(false, ExcNotImplemented());
     };
 }
-
-
 
 int
 main()

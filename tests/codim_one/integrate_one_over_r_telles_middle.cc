@@ -46,7 +46,6 @@ main()
           << "the distance from (x,y) to [0.5,0.5]." << endl
           << endl;
 
-
   Point<2> center(0.5, 0.5);
   for(unsigned int m = 1; m < 6; ++m)
     {
@@ -59,7 +58,6 @@ main()
               << " ============================= " << endl;
       QTelles<2>        quad(4 * m, center);
       QGaussOneOverR<2> quad_2(m, center, true);
-
 
       for(unsigned int i = 0; i < 5; ++i)
         {
@@ -88,7 +86,6 @@ main()
                   approx_integral_2 += (pow(x, (double) i) * pow(y, (double) j)
                                         / R * quad_2.weight(q));
                 }
-
 
               deallog << "f(x,y) = x^" << i << " y^" << j
                       << ", Errors = " << approx_integral - exact_integral

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test mapping surfaces in higher dimensions. when we use the MappingQGeneric(1)
 // class, each 1d cell in 2d space is mapped to a straight line and so all
 // cell normals should be parallel. likewise, if the four vertices of a 2d
@@ -33,7 +31,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -71,8 +68,6 @@ test()
                 << std::endl;
     }
 }
-
-
 
 int
 main()

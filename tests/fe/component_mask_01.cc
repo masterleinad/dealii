@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: test that creating a mask that's empty is always true
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
-
-
 
 void
 test()
@@ -35,7 +30,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

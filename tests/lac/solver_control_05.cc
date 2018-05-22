@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ConsecutiveControl
-
 
 #include "../tests.h"
 #include <deal.II/base/utilities.h>
 #include <deal.II/lac/solver_control.h>
 #include <iostream>
-
 
 int
 main(int argc, char** argv)

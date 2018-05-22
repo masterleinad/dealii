@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparsityPattern::print_gnuplot
 
 #include "sparsity_pattern_common.h"

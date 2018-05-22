@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Computes diameter, extent_in_direction, and minimum_vertex_distance on a variety of cells
 
 #include "../tests.h"
@@ -24,14 +23,12 @@
 
 #define PRECISION 5
 
-
 template <int dim>
 void
 create_triangulation(const unsigned int, Triangulation<dim>&)
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 template <>
 void
@@ -63,7 +60,6 @@ create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
     };
 }
 
-
 template <>
 void
 create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
@@ -85,7 +81,6 @@ create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
         Assert(false, ExcNotImplemented());
     };
 }
-
 
 template <int dim>
 void
@@ -111,7 +106,6 @@ test()
       tria.clear();
     }
 }
-
 
 int
 main()

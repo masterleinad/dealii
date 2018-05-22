@@ -22,7 +22,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /*!@addtogroup fe */
 /*@{*/
 
@@ -61,7 +60,6 @@ public:
   virtual void
   get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                            FullMatrix<double>& matrix) const override;
-
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -358,7 +356,6 @@ private:
    */
   const unsigned int q_degree;
 };
-
 
 /*@}*/
 

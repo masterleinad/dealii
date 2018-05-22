@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that hp::DoFHandler::n_boundary_dofs() yields the correct
 // results in 1d, even if there are more than two boundary vertices
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,8 +30,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 
-
-
 template <int spacedim>
 void
 test()
@@ -49,7 +44,6 @@ test()
   Triangulation<1, spacedim> triangulation;
   GridGenerator::merge_triangulations(
     triangulation_1, triangulation_2, triangulation);
-
 
   hp::FECollection<1, spacedim> fe;
   fe.push_back(
@@ -70,7 +64,6 @@ test()
   const unsigned int N = dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
-
 
 int
 main()

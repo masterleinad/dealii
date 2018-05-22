@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -22,8 +21,6 @@
 //   DoFTools::
 //   make_flux_sparsity_pattern (const DoFHandler<dim> &,
 //                           SparsityPattern       &);
-
-
 
 template <int dim>
 void

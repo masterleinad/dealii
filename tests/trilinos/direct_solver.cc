@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests Trilinos direct solvers on a 2D Poisson equation for linear elements
 
 #include "../tests.h"
@@ -33,8 +31,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class Step4
@@ -66,7 +62,6 @@ private:
   Vector<double> system_rhs;
 };
 
-
 template <int dim>
 class RightHandSide : public Function<dim>
 {
@@ -78,8 +73,6 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
-
-
 template <int dim>
 class BoundaryValues : public Function<dim>
 {
@@ -90,8 +83,6 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const;
 };
-
-
 
 template <int dim>
 double
@@ -105,8 +96,6 @@ RightHandSide<dim>::value(const Point<dim>& p,
   return return_value;
 }
 
-
-
 template <int dim>
 double
 BoundaryValues<dim>::value(const Point<dim>& p,
@@ -115,12 +104,9 @@ BoundaryValues<dim>::value(const Point<dim>& p,
   return p.square();
 }
 
-
-
 template <int dim>
 Step4<dim>::Step4() : fe(1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -129,8 +115,6 @@ Step4<dim>::make_grid()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(6);
 }
-
-
 
 template <int dim>
 void
@@ -151,7 +135,6 @@ Step4<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 }
-
 
 template <int dim>
 void
@@ -204,8 +187,6 @@ Step4<dim>::assemble_system()
     }
   system_matrix.compress(VectorOperation::add);
 }
-
-
 
 template <int dim>
 void
@@ -283,8 +264,6 @@ Step4<dim>::solve()
   }
 }
 
-
-
 template <int dim>
 void
 Step4<dim>::run()
@@ -294,7 +273,6 @@ Step4<dim>::run()
   assemble_system();
   solve();
 }
-
 
 int
 main(int argc, char** argv)

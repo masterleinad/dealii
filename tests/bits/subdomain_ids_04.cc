@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFRenumbering::subdomain_wise
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -31,9 +29,7 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -96,7 +92,6 @@ test()
       }
   AssertThrow(present_subdomain == (1 << dim) - 1, ExcInternalError());
 }
-
 
 int
 main()

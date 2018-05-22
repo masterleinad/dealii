@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test the setting
 // parallel::distributed::Triangulation<dim>::mesh_reconstruction_after_repartitioning
 // by looking which order the cells get enumerated. With the flag, the cells
@@ -30,7 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 template <int dim>
 void
@@ -54,7 +51,6 @@ testit(parallel::distributed::Triangulation<dim>& tr)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -76,7 +72,6 @@ test(std::ostream& /*out*/)
     testit(tr);
   }
 }
-
 
 int
 main(int argc, char* argv[])

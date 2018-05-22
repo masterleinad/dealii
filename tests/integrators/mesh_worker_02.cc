@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test consistency of assemblers MatrixSimple and MGMatrixSimple
 
 #include "../tests.h"
@@ -30,9 +29,7 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/multigrid/mg_tools.h>
 
-
 using namespace dealii;
-
 
 // Use local matrices for Laplacian / interior penalty DG
 template <int dim>
@@ -50,7 +47,6 @@ public:
        MeshWorker::IntegrationInfo<dim>& info2);
 };
 
-
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
@@ -65,7 +61,6 @@ MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
         local_matrix(i, j)
           += (fe.shape_grad(i, k) * fe.shape_grad(j, k)) * fe.JxW(k);
 }
-
 
 template <int dim>
 void
@@ -90,7 +85,6 @@ MatrixIntegrator<dim>::bdry(MeshWorker::DoFInfo<dim>&         dinfo,
                   * fe.shape_value(i, k))
              * fe.JxW(k);
 }
-
 
 template <int dim>
 void
@@ -148,7 +142,6 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
         }
 }
 
-
 template <int dim>
 void
 assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
@@ -183,7 +176,6 @@ assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
     &MatrixIntegrator<dim>::face,
     assembler);
 }
-
 
 template <int dim>
 void
@@ -220,7 +212,6 @@ assemble(const DoFHandler<dim>&              dof_handler,
     &MatrixIntegrator<dim>::face,
     assembler);
 }
-
 
 template <int dim>
 void
@@ -284,7 +275,6 @@ test_simple(DoFHandler<dim>& mgdofs)
     }
 }
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -317,7 +307,6 @@ test(const FiniteElement<dim>& fe)
 
   test_simple(dofs);
 }
-
 
 int
 main()

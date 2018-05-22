@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Like hp/matrices, but only the boundary mass matrices for vector-valued
 // (non-primitive) hp objects are being tested.
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -41,8 +38,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 
-
-
 template <int dim>
 class MySquareFunction : public Function<dim>
 {
@@ -63,8 +58,6 @@ public:
       values(i) = value(p, i);
   }
 };
-
-
 
 template <int dim>
 void
@@ -125,8 +118,6 @@ check()
   // Write out matrix
   matrix.print(deallog.get_file_stream());
 }
-
-
 
 int
 main()

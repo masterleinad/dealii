@@ -37,8 +37,6 @@
 #  include <windows.h>
 #endif
 
-
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -103,8 +101,6 @@ namespace internal
   }   // namespace TimerImplementation
 } // namespace internal
 
-
-
 CPUClock::time_point
 CPUClock::now() noexcept
 {
@@ -132,16 +128,12 @@ CPUClock::now() noexcept
     internal::TimerImplementation::from_seconds<duration>(system_cpu_duration));
 }
 
-
-
 template <typename clock_type_>
 Timer::ClockMeasurements<clock_type_>::ClockMeasurements()
   : current_lap_start_time(clock_type::now()),
     accumulated_time(duration_type::zero()),
     last_lap_time(duration_type::zero())
 {}
-
-
 
 template <typename clock_type_>
 void
@@ -152,12 +144,8 @@ Timer::ClockMeasurements<clock_type_>::reset()
   last_lap_time          = duration_type::zero();
 }
 
-
-
 Timer::Timer() : Timer(MPI_COMM_SELF, /*sync_lap_times=*/false)
 {}
-
-
 
 Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_)
   : running(false),
@@ -167,8 +155,6 @@ Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_)
   reset();
   start();
 }
-
-
 
 void
 Timer::start()
@@ -184,8 +170,6 @@ Timer::start()
   wall_times.current_lap_start_time = wall_clock_type::now();
   cpu_times.current_lap_start_time  = cpu_clock_type::now();
 }
-
-
 
 double
 Timer::stop()
@@ -225,8 +209,6 @@ Timer::stop()
   return internal::TimerImplementation::to_seconds(cpu_times.accumulated_time);
 }
 
-
-
 double
 Timer::cpu_time() const
 {
@@ -245,15 +227,11 @@ Timer::cpu_time() const
     }
 }
 
-
-
 double
 Timer::last_cpu_time() const
 {
   return internal::TimerImplementation::to_seconds(cpu_times.last_lap_time);
 }
-
-
 
 double
 Timer::get_lap_time() const
@@ -261,15 +239,11 @@ Timer::get_lap_time() const
   return internal::TimerImplementation::to_seconds(wall_times.last_lap_time);
 }
 
-
-
 double
 Timer::operator()() const
 {
   return cpu_time();
 }
-
-
 
 double
 Timer::wall_time() const
@@ -285,15 +259,11 @@ Timer::wall_time() const
   return internal::TimerImplementation::to_seconds(current_elapsed_wall_time);
 }
 
-
-
 double
 Timer::last_wall_time() const
 {
   return internal::TimerImplementation::to_seconds(wall_times.last_lap_time);
 }
-
-
 
 void
 Timer::reset()
@@ -304,8 +274,6 @@ Timer::reset()
   internal::TimerImplementation::clear_timing_data(last_lap_wall_time_data);
   internal::TimerImplementation::clear_timing_data(accumulated_wall_time_data);
 }
-
-
 
 /* ---------------------------- TimerOutput -------------------------- */
 
@@ -319,8 +287,6 @@ TimerOutput::TimerOutput(std::ostream&         stream,
     mpi_communicator(MPI_COMM_SELF)
 {}
 
-
-
 TimerOutput::TimerOutput(ConditionalOStream&   stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
@@ -330,8 +296,6 @@ TimerOutput::TimerOutput(ConditionalOStream&   stream,
     output_is_enabled(true),
     mpi_communicator(MPI_COMM_SELF)
 {}
-
-
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          std::ostream&         stream,
@@ -344,8 +308,6 @@ TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
     mpi_communicator(mpi_communicator)
 {}
 
-
-
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          ConditionalOStream&   stream,
                          const OutputFrequency output_frequency,
@@ -356,8 +318,6 @@ TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
     output_is_enabled(true),
     mpi_communicator(mpi_communicator)
 {}
-
-
 
 TimerOutput::~TimerOutput()
 {
@@ -403,8 +363,6 @@ TimerOutput::~TimerOutput()
 #endif
 }
 
-
-
 void
 TimerOutput::enter_subsection(const std::string& section_name)
 {
@@ -431,7 +389,6 @@ TimerOutput::enter_subsection(const std::string& section_name)
           sections[section_name].timer = Timer(mpi_communicator, true);
         }
 
-
       sections[section_name].total_cpu_time  = 0;
       sections[section_name].total_wall_time = 0;
       sections[section_name].n_calls         = 0;
@@ -443,8 +400,6 @@ TimerOutput::enter_subsection(const std::string& section_name)
 
   active_sections.push_back(section_name);
 }
-
-
 
 void
 TimerOutput::leave_subsection(const std::string& section_name)
@@ -507,8 +462,6 @@ TimerOutput::leave_subsection(const std::string& section_name)
     active_sections.begin(), active_sections.end(), actual_section_name));
 }
 
-
-
 std::map<std::string, double>
 TimerOutput::get_summary_data(const OutputData kind) const
 {
@@ -532,8 +485,6 @@ TimerOutput::get_summary_data(const OutputData kind) const
     }
   return output;
 }
-
-
 
 void
 TimerOutput::print_summary() const
@@ -715,15 +666,11 @@ TimerOutput::print_summary() const
   out_stream.get_stream().flags(old_flags);
 }
 
-
-
 void
 TimerOutput::disable_output()
 {
   output_is_enabled = false;
 }
-
-
 
 void
 TimerOutput::enable_output()
@@ -749,6 +696,5 @@ TimerOutput::Scope::~Scope()
   catch(...)
     {}
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

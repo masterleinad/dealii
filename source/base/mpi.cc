@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/mpi.templates.h>
@@ -55,7 +54,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace Utilities
 {
   namespace MPI
@@ -71,7 +69,6 @@ namespace Utilities
       return n_jobs;
     }
 
-
     unsigned int
     this_mpi_process(const MPI_Comm& mpi_communicator)
     {
@@ -82,7 +79,6 @@ namespace Utilities
       return rank;
     }
 
-
     MPI_Comm
     duplicate_communicator(const MPI_Comm& mpi_communicator)
     {
@@ -91,8 +87,6 @@ namespace Utilities
       AssertThrowMPI(ierr);
       return new_communicator;
     }
-
-
 
     int
     create_group(const MPI_Comm&  comm,
@@ -174,8 +168,6 @@ namespace Utilities
 #  endif
     }
 
-
-
     std::vector<unsigned int>
     compute_point_to_point_communication_pattern(
       const MPI_Comm&                  mpi_comm,
@@ -192,7 +184,6 @@ namespace Utilities
             destinations[i] != myid,
             ExcMessage("There is no point in communicating with ourselves."));
         }
-
 
       // let all processors communicate the maximal number of destinations
       // they have
@@ -239,7 +230,6 @@ namespace Utilities
       return origins;
     }
 
-
     namespace
     {
       // custom MIP_Op for calculate_collective_mpi_min_max_avg
@@ -278,8 +268,6 @@ namespace Utilities
           }
       }
     } // namespace
-
-
 
     MinMaxAvg
     min_max_avg(const double my_value, const MPI_Comm& mpi_communicator)
@@ -353,22 +341,17 @@ namespace Utilities
       return 1;
     }
 
-
-
     unsigned int
     this_mpi_process(const MPI_Comm&)
     {
       return 0;
     }
 
-
     MPI_Comm
     duplicate_communicator(const MPI_Comm& mpi_communicator)
     {
       return mpi_communicator;
     }
-
-
 
     MinMaxAvg
     min_max_avg(const double my_value, const MPI_Comm&)
@@ -387,8 +370,6 @@ namespace Utilities
 
 #endif
 
-
-
     MPI_InitFinalize::MPI_InitFinalize(int&               argc,
                                        char**&            argv,
                                        const unsigned int max_num_threads)
@@ -398,7 +379,6 @@ namespace Utilities
       Assert(constructor_has_already_run == false,
              ExcMessage("You can only create a single object of this class "
                         "in a program since it initializes the MPI system."));
-
 
       int ierr = 0;
 #ifdef DEAL_II_WITH_MPI
@@ -468,7 +448,6 @@ namespace Utilities
 
       constructor_has_already_run = true;
 
-
       // Now also see how many threads we'd like to run
       if(max_num_threads != numbers::invalid_unsigned_int)
         {
@@ -521,7 +500,6 @@ namespace Utilities
               }
           Assert(nth_process_on_host > 0, ExcInternalError());
 
-
           // compute how many cores each process gets. if the number does not
           // divide evenly, then we get one more core if we are among the
           // first few processes
@@ -543,7 +521,6 @@ namespace Utilities
           MultithreadInfo::set_thread_limit(n_threads);
         }
     }
-
 
     MPI_InitFinalize::~MPI_InitFinalize()
     {
@@ -573,7 +550,6 @@ namespace Utilities
 #  endif
 #endif
 
-
       // Now deal with PETSc (with or without MPI). Only delete the vectors if
       // finalize hasn't been called yet, otherwise this will lead to errors.
 #ifdef DEAL_II_WITH_PETSC
@@ -601,7 +577,6 @@ namespace Utilities
       sc_finalize();
 #endif
 
-
       // only MPI_Finalize if we are running with MPI. We also need to do this
       // when running PETSc, because we initialize MPI ourselves before
       // calling PetscInitialize
@@ -626,8 +601,6 @@ namespace Utilities
 #endif
     }
 
-
-
     bool
     job_supports_mpi()
     {
@@ -641,8 +614,6 @@ namespace Utilities
       return false;
 #endif
     }
-
-
 
 #include "mpi.inst"
   } // end of namespace MPI

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test what happens when serializing a pointer. is a new object created when
 // loading into another pointer that is NULL? this is in fact what happens
 
@@ -57,7 +56,6 @@ private:
   unsigned int object_number;
 };
 
-
 void
 test()
 {
@@ -75,7 +73,6 @@ test()
   delete p1;
   delete p2;
 }
-
 
 int
 main()

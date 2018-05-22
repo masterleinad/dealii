@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGLevelObject::apply()
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <class T>
 void

@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_sparse_matrix_h
 #  define dealii_petsc_sparse_matrix_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_PETSC
@@ -30,7 +29,6 @@ DEAL_II_NAMESPACE_OPEN
 // forward declaration
 template <typename MatrixType>
 class BlockMatrixBase;
-
 
 namespace PETScWrappers
 {

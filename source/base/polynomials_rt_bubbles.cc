@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "deal.II/base/polynomials_rt_bubbles.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/thread_management.h>
@@ -21,7 +20,6 @@
 #include <iostream>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
@@ -35,8 +33,6 @@ PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
   for(unsigned int i = 0; i < monomials.size(); ++i)
     monomials[i] = Polynomials::Monomial<double>(i);
 }
-
-
 
 template <int dim>
 void
@@ -897,8 +893,6 @@ PolynomialsRT_Bubbles<dim>::compute(
     }
 }
 
-
-
 template <int dim>
 unsigned int
 PolynomialsRT_Bubbles<dim>::compute_n_pols(const unsigned int k)
@@ -910,10 +904,8 @@ PolynomialsRT_Bubbles<dim>::compute_n_pols(const unsigned int k)
   return 0;
 }
 
-
 template class PolynomialsRT_Bubbles<1>;
 template class PolynomialsRT_Bubbles<2>;
 template class PolynomialsRT_Bubbles<3>;
-
 
 DEAL_II_NAMESPACE_CLOSE

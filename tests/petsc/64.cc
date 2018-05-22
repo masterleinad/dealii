@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This test should be run on multiple processors. note that this test also
 // started to fail with the upgrade to petsc 2.2.1 which required a fix in
 // PETScWrappers::MatrixBase::operator=
-
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_sparse_matrix.h>
@@ -27,7 +24,6 @@
 
 #include <iostream>
 #include <vector>
-
 
 template <typename MatrixType>
 void
@@ -41,8 +37,6 @@ test(MatrixType& m)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

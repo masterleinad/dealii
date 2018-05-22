@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that is_contiguous works correctly for arrays that contain
 // signaling NaNs. In the first version of the is_contiguous() helper
 // function, we compared the *objects* pointed to, as opposed to the
@@ -42,7 +41,6 @@ test()
                 "false")
           << std::endl;
 }
-
 
 int
 main()

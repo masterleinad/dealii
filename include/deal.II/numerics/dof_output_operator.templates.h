@@ -16,7 +16,6 @@
 #ifndef dealii_dof_output_operator_templates_h
 #define dealii_dof_output_operator_templates_h
 
-
 #include <deal.II/numerics/dof_output_operator.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -31,7 +30,6 @@ namespace Algorithms
   {
     out.set_default_format(DataOutBase::gnuplot);
   }
-
 
   template <typename VectorType, int dim, int spacedim>
   void

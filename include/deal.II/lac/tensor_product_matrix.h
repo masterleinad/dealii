@@ -16,7 +16,6 @@
 #ifndef dealii_tensor_product_matrix_h
 #define dealii_tensor_product_matrix_h
 
-
 #include <deal.II/base/array_view.h>
 #include <deal.II/base/config.h>
 #include <deal.II/base/thread_management.h>
@@ -144,8 +143,6 @@ private:
    */
   mutable Threads::Mutex mutex;
 };
-
-
 
 /**
  * This is a special matrix class defined as the tensor product (or Kronecker
@@ -299,8 +296,6 @@ private:
   reinit_impl(MatrixArray&& mass_matrix, MatrixArray&& derivative_matrix);
 };
 
-
-
 /**
  * This is the template specialization for VectorizedArray<Number>
  * being the arithmetic template. For a detailed description see
@@ -379,7 +374,6 @@ private:
   reinit_impl(MatrixArray&& mass_matrix, MatrixArray&& derivative_matrix);
 };
 
-
 /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
@@ -436,7 +430,6 @@ namespace internal
   } // namespace TensorProductMatrix
 } // namespace internal
 
-
 template <int dim, typename Number, int size>
 inline unsigned int
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::m() const
@@ -447,8 +440,6 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::m() const
   return m;
 }
 
-
-
 template <int dim, typename Number, int size>
 inline unsigned int
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::n() const
@@ -458,8 +449,6 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::n() const
     n *= mass_matrix[d].n_cols();
   return n;
 }
-
-
 
 template <int dim, typename Number, int size>
 inline void
@@ -526,8 +515,6 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
   else
     AssertThrow(false, ExcNotImplemented());
 }
-
-
 
 template <int dim, typename Number, int size>
 inline void
@@ -604,7 +591,6 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
     Assert(false, ExcNotImplemented());
 }
 
-
 // ------------------------------   TensorProductMatrixSymmetricSum   ------------------------------
 
 template <int dim, typename Number, int size>
@@ -616,8 +602,6 @@ inline TensorProductMatrixSymmetricSum<dim, Number, size>::
   reinit(mass_matrix, derivative_matrix);
 }
 
-
-
 template <int dim, typename Number, int size>
 inline TensorProductMatrixSymmetricSum<dim, Number, size>::
   TensorProductMatrixSymmetricSum(
@@ -627,8 +611,6 @@ inline TensorProductMatrixSymmetricSum<dim, Number, size>::
   reinit(mass_matrix, derivative_matrix);
 }
 
-
-
 template <int dim, typename Number, int size>
 inline TensorProductMatrixSymmetricSum<dim, Number, size>::
   TensorProductMatrixSymmetricSum(const Table<2, Number>& mass_matrix,
@@ -636,8 +618,6 @@ inline TensorProductMatrixSymmetricSum<dim, Number, size>::
 {
   reinit(mass_matrix, derivative_matrix);
 }
-
-
 
 template <int dim, typename Number, int size>
 template <typename MatrixArray>
@@ -677,8 +657,6 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit_impl(
     }
 }
 
-
-
 template <int dim, typename Number, int size>
 inline void
 TensorProductMatrixSymmetricSum<dim, Number, size>::reinit(
@@ -687,8 +665,6 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit(
 {
   reinit_impl(mass_matrix, derivative_matrix);
 }
-
-
 
 template <int dim, typename Number, int size>
 inline void
@@ -713,8 +689,6 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit(
   reinit_impl(std::move(mass_copy), std::move(deriv_copy));
 }
 
-
-
 template <int dim, typename Number, int size>
 inline void
 TensorProductMatrixSymmetricSum<dim, Number, size>::reinit(
@@ -731,8 +705,6 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit(
   reinit_impl(std::move(mass_matrices), std::move(derivative_matrices));
 }
 
-
-
 // ------------------------------ vectorized spec.: TensorProductMatrixSymmetricSum   ------------------------------
 
 template <int dim, typename Number, int size>
@@ -744,8 +716,6 @@ inline TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
   reinit(mass_matrix, derivative_matrix);
 }
 
-
-
 template <int dim, typename Number, int size>
 inline TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
   TensorProductMatrixSymmetricSum(
@@ -754,8 +724,6 @@ inline TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
 {
   reinit(mass_matrix, derivative_matrix);
 }
-
-
 
 template <int dim, typename Number, int size>
 template <typename MatrixArray>
@@ -844,8 +812,6 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
     }
 }
 
-
-
 template <int dim, typename Number, int size>
 inline void
 TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::reinit(
@@ -854,8 +820,6 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::reinit(
 {
   reinit_impl(mass_matrix, derivative_matrix);
 }
-
-
 
 template <int dim, typename Number, int size>
 inline void
@@ -872,8 +836,6 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::reinit(
 
   reinit_impl(std::move(mass_matrices), std::move(derivative_matrices));
 }
-
-
 
 #endif
 

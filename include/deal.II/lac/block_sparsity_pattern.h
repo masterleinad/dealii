@@ -16,7 +16,6 @@
 #ifndef dealii_block_sparsity_pattern_h
 #define dealii_block_sparsity_pattern_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/smartpointer.h>
@@ -29,7 +28,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename number>
 class BlockSparseMatrix;
 class BlockDynamicSparsityPattern;
@@ -37,7 +35,6 @@ class BlockDynamicSparsityPattern;
 /*! @addtogroup Sparsity
  *@{
  */
-
 
 /**
  * This is the base class for block versions of the sparsity pattern and
@@ -156,7 +153,6 @@ public:
    */
   SparsityPatternType&
   block(const size_type row, const size_type column);
-
 
   /**
    * Access the block with the given coordinates. Version for constant
@@ -383,8 +379,6 @@ private:
   friend class BlockSparseMatrix;
 };
 
-
-
 /**
  * This class extends the base class to implement an array of sparsity
  * patterns that can be used by block sparse matrix objects. It only adds a
@@ -436,7 +430,6 @@ public:
          const BlockIndices&                           col_indices,
          const std::vector<std::vector<unsigned int>>& row_lengths);
 
-
   /**
    * Return whether the structure is compressed or not, i.e. whether all sub-
    * matrices are compressed.
@@ -459,8 +452,6 @@ public:
   void
   copy_from(const BlockDynamicSparsityPattern& dsp);
 };
-
-
 
 /**
  * This class extends the base class to implement an array of compressed
@@ -549,7 +540,6 @@ public:
   BlockDynamicSparsityPattern(const BlockIndices& row_indices,
                               const BlockIndices& col_indices);
 
-
   /**
    * Resize the pattern to a tensor product of matrices with dimensions
    * defined by the arguments.
@@ -592,9 +582,7 @@ public:
 
 /*@}*/
 
-
 #ifdef DEAL_II_WITH_TRILINOS
-
 
 namespace TrilinosWrappers
 {
@@ -758,8 +746,6 @@ namespace TrilinosWrappers
 
 /*---------------------- Template functions -----------------------------------*/
 
-
-
 template <typename SparsityPatternType>
 inline SparsityPatternType&
 BlockSparsityPatternBase<SparsityPatternType>::block(const size_type row,
@@ -769,8 +755,6 @@ BlockSparsityPatternBase<SparsityPatternType>::block(const size_type row,
   Assert(column < columns, ExcIndexRange(column, 0, columns));
   return *sub_objects[row][column];
 }
-
-
 
 template <typename SparsityPatternType>
 inline const SparsityPatternType&
@@ -783,8 +767,6 @@ BlockSparsityPatternBase<SparsityPatternType>::block(
   return *sub_objects[row][column];
 }
 
-
-
 template <typename SparsityPatternType>
 inline const BlockIndices&
 BlockSparsityPatternBase<SparsityPatternType>::get_row_indices() const
@@ -792,16 +774,12 @@ BlockSparsityPatternBase<SparsityPatternType>::get_row_indices() const
   return row_indices;
 }
 
-
-
 template <typename SparsityPatternType>
 inline const BlockIndices&
 BlockSparsityPatternBase<SparsityPatternType>::get_column_indices() const
 {
   return column_indices;
 }
-
-
 
 template <typename SparsityPatternType>
 inline void
@@ -817,8 +795,6 @@ BlockSparsityPatternBase<SparsityPatternType>::add(const size_type i,
   sub_objects[row_index.first][col_index.first]->add(row_index.second,
                                                      col_index.second);
 }
-
-
 
 template <typename SparsityPatternType>
 template <typename ForwardIterator>
@@ -907,8 +883,6 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
     }
 }
 
-
-
 template <typename SparsityPatternType>
 inline bool
 BlockSparsityPatternBase<SparsityPatternType>::exists(const size_type i,
@@ -923,8 +897,6 @@ BlockSparsityPatternBase<SparsityPatternType>::exists(const size_type i,
   return sub_objects[row_index.first][col_index.first]->exists(
     row_index.second, col_index.second);
 }
-
-
 
 template <typename SparsityPatternType>
 inline unsigned int
@@ -942,8 +914,6 @@ BlockSparsityPatternBase<SparsityPatternType>::row_length(
   return c;
 }
 
-
-
 template <typename SparsityPatternType>
 inline typename BlockSparsityPatternBase<SparsityPatternType>::size_type
 BlockSparsityPatternBase<SparsityPatternType>::n_block_cols() const
@@ -951,15 +921,12 @@ BlockSparsityPatternBase<SparsityPatternType>::n_block_cols() const
   return columns;
 }
 
-
-
 template <typename SparsityPatternType>
 inline typename BlockSparsityPatternBase<SparsityPatternType>::size_type
 BlockSparsityPatternBase<SparsityPatternType>::n_block_rows() const
 {
   return rows;
 }
-
 
 inline BlockDynamicSparsityPattern::size_type
 BlockDynamicSparsityPattern::column_number(const size_type    row,
@@ -989,7 +956,6 @@ BlockDynamicSparsityPattern::column_number(const size_type    row,
   return 0;
 }
 
-
 inline void
 BlockSparsityPattern::reinit(const size_type n_block_rows,
                              const size_type n_block_columns)
@@ -997,7 +963,6 @@ BlockSparsityPattern::reinit(const size_type n_block_rows,
   BlockSparsityPatternBase<SparsityPattern>::reinit(n_block_rows,
                                                     n_block_columns);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

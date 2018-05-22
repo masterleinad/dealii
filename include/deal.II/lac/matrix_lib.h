@@ -33,7 +33,6 @@ class SparseMatrix;
  *@{
  */
 
-
 /**
  * Mean value filter.  The vmult() functions of this matrix filter out mean
  * values of the vector.  If the vector is of type BlockVector, then an
@@ -111,7 +110,6 @@ public:
   void
   vmult_add(BlockVector<number>& dst, const BlockVector<number>& src) const;
 
-
   /**
    * Not implemented.
    */
@@ -133,11 +131,8 @@ private:
   const size_type component;
 };
 
-
-
 /*@}*/
 //---------------------------------------------------------------------------
-
 
 template <typename VectorType>
 inline void
@@ -146,14 +141,12 @@ MeanValueFilter::Tvmult(VectorType&, const VectorType&) const
   Assert(false, ExcNotImplemented());
 }
 
-
 template <typename VectorType>
 inline void
 MeanValueFilter::Tvmult_add(VectorType&, const VectorType&) const
 {
   Assert(false, ExcNotImplemented());
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

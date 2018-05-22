@@ -22,7 +22,6 @@
 
 #include <vector>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace parallel
@@ -188,13 +187,11 @@ namespace parallel
       void
       interpolate(VectorType& out);
 
-
       /**
        * Return the size in bytes that need to be stored per cell.
        */
       unsigned int
       get_data_size() const;
-
 
       /**
        * Prepare the serialization of the given vector. The serialization is
@@ -205,13 +202,11 @@ namespace parallel
       void
       prepare_serialization(const VectorType& in);
 
-
       /**
        * Same as the function above, only for a list of vectors.
        */
       void
       prepare_serialization(const std::vector<const VectorType*>& all_in);
-
 
       /**
        * Execute the deserialization of the given vector. This needs to be
@@ -221,7 +216,6 @@ namespace parallel
        */
       void
       deserialize(VectorType& in);
-
 
       /**
        * Same as the function above, only for a list of vectors.
@@ -276,7 +270,6 @@ namespace parallel
         const void*               data,
         std::vector<VectorType*>& all_out);
 
-
       /**
        *
        */
@@ -284,11 +277,8 @@ namespace parallel
       register_data_attach(const std::size_t size);
     };
 
-
   } // namespace distributed
 } // namespace parallel
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

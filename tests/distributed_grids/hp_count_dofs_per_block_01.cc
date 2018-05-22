@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFTools::count_dofs_per_block
 //
 // like the test without the hp_ prefix, but for hp::DoFHandler
-
 
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
@@ -39,7 +36,6 @@
 #include <cstdlib>
 #include <fstream>
 #include <numeric>
-
 
 template <int dim>
 void
@@ -111,7 +107,6 @@ test()
         }
     }
 }
-
 
 int
 main(int argc, char* argv[])

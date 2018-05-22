@@ -35,8 +35,6 @@ template <int structdim, typename DoFHandlerType, bool level_dof_access>
 const unsigned int
   DoFAccessor<structdim, DoFHandlerType, level_dof_access>::space_dimension;
 
-
-
 /*------------------------ Functions: DoFInvalidAccessor ---------------------------*/
 
 template <int structdim, int dim, int spacedim>
@@ -54,8 +52,6 @@ DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
                     "the conversion is not valid in the current context."));
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
   const DoFInvalidAccessor& i)
@@ -70,8 +66,6 @@ DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
                     "the conversion is not valid in the current context."));
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 void
 DoFInvalidAccessor<structdim, dim, spacedim>::set_dof_index(
@@ -82,11 +76,7 @@ DoFInvalidAccessor<structdim, dim, spacedim>::set_dof_index(
   Assert(false, ExcInternalError());
 }
 
-
-
 /*------------------------- Functions: DoFCellAccessor -----------------------*/
-
-
 
 template <typename DoFHandlerType, bool lda>
 void
@@ -101,8 +91,6 @@ DoFCellAccessor<DoFHandlerType, lda>::update_cell_dof_indices_cache() const
   internal::DoFCellAccessorImplementation::Implementation::
     update_cell_dof_indices_cache(*this);
 }
-
-
 
 template <typename DoFHandlerType, bool lda>
 void
@@ -119,8 +107,6 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_indices(
     *this, local_dof_indices);
 }
 
-
-
 template <typename DoFHandlerType, bool lda>
 TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>
 DoFCellAccessor<DoFHandlerType, lda>::neighbor_child_on_subface(
@@ -132,8 +118,6 @@ DoFCellAccessor<DoFHandlerType, lda>::neighbor_child_on_subface(
   return TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>(*q,
                                                             this->dof_handler);
 }
-
-
 
 template <typename DoFHandlerType, bool lda>
 TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>
@@ -148,8 +132,6 @@ DoFCellAccessor<DoFHandlerType, lda>::periodic_neighbor_child_on_subface(
                                                             this->dof_handler);
 }
 
-
-
 template <typename DoFHandlerType, bool lda>
 inline TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>
 DoFCellAccessor<DoFHandlerType, lda>::periodic_neighbor(
@@ -161,8 +143,6 @@ DoFCellAccessor<DoFHandlerType, lda>::periodic_neighbor(
                                                             this->dof_handler);
 }
 
-
-
 template <typename DoFHandlerType, bool lda>
 inline TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>
 DoFCellAccessor<DoFHandlerType, lda>::neighbor_or_periodic_neighbor(
@@ -173,8 +153,6 @@ DoFCellAccessor<DoFHandlerType, lda>::neighbor_or_periodic_neighbor(
   return TriaIterator<DoFCellAccessor<DoFHandlerType, lda>>(*q,
                                                             this->dof_handler);
 }
-
-
 
 // --------------------------------------------------------------------------
 // explicit instantiations

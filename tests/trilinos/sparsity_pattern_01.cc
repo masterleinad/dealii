@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check TrilinosWrappers::SparsityPattern::row_length
 
 #include "sparsity_pattern_common.h"

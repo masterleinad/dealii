@@ -20,7 +20,6 @@
 #include <deal.II/base/utilities.h>
 #include <deal.II/grid/manifold_lib.h>
 
-
 int
 main()
 {

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // in crash_14, we crash because we apparently don't unify all line dofs when
 // we have FESystem(FE_Q(2),FE_DGQ(i)) for a bunch of different indices i
 // coming together. note that all lines dofs are of the (always same) FE_Q
@@ -36,8 +34,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -97,7 +93,6 @@ test()
               deallog << std::endl;
             }
 
-
           // if there are multiple active fe
           // indices, make sure that all their
           // fe indices were unified
@@ -117,7 +112,6 @@ test()
               }
         }
 }
-
 
 int
 main()

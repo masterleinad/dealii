@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to grid_transform_02.cc but use coefficient function and solve
 // for displacement field.
-
 
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
@@ -26,7 +24,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 template <int dim>
 class L2_inverse : public Function<dim>
@@ -54,7 +51,6 @@ public:
 private:
   const std::vector<Point<dim>> distance_source;
 };
-
 
 int
 main()

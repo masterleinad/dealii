@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check the consistency of the number cache of DoFHandler for a sequential
 // object. Like deal.II/n_boundary_dofs but for an hp object
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -32,8 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -61,7 +56,6 @@ test()
   const unsigned int N = dof_handler.n_boundary_dofs();
   deallog << N << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // make sure we can start tasks from individual threads. this requires that a
 // task scheduler object is running on each thread we create
 
@@ -21,7 +20,6 @@
 #include <unistd.h>
 
 #include <deal.II/base/thread_management.h>
-
 
 void
 test(int i)
@@ -34,8 +32,6 @@ test(int i)
     }
   deallog << "Task " << i << " finished!" << std::endl;
 }
-
-
 
 int
 main()

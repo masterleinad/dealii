@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // set a few elements in a chunk sparse matrix and output them again. should
 // yield the same result for all chunk sizes, of course
 
 #include "../tests.h"
 #include <deal.II/lac/chunk_sparse_matrix.h>
-
 
 void
 test(const unsigned int chunk_size)
@@ -52,8 +49,6 @@ test(const unsigned int chunk_size)
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

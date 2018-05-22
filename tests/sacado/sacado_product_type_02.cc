@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ProductType with sacado
 
 #include <typeinfo>
@@ -31,14 +30,12 @@ check()
               ExcInternalError());
 }
 
-
 int
 main()
 {
   typedef Sacado::Fad::DFad<double>  Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
-
 
   // check product of scalars
   check<double, SSdouble, SSdouble>();

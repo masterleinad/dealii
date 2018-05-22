@@ -22,9 +22,7 @@
 #include <iostream>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /*---------------------------------------------------------------------*/
 
@@ -46,7 +44,6 @@ namespace internal
       }
     catch(...)
       {}
-
 
     // ... then with unsigned int...
     try
@@ -104,7 +101,6 @@ namespace internal
     return cached_value;
   }
 
-
   namespace Local
   {
     // see which type we can cast to, then use this type to create
@@ -129,7 +125,6 @@ namespace internal
     return new_entry;
   }
 
-
 } // namespace internal
 
 /* ------------------------------------------------ */
@@ -143,8 +138,6 @@ TableHandler::Column::Column(const std::string& tex_caption)
     max_length(0)
 {}
 
-
-
 TableHandler::Column::Column()
   : tex_caption(),
     tex_format("c"),
@@ -153,8 +146,6 @@ TableHandler::Column::Column()
     flag(0),
     max_length(0)
 {}
-
-
 
 void
 TableHandler::Column::pad_column_below(const unsigned int size)
@@ -175,7 +166,6 @@ TableHandler::Column::pad_column_below(const unsigned int size)
     }
 }
 
-
 void
 TableHandler::Column::invalidate_cache()
 {
@@ -192,14 +182,10 @@ TableHandler::Column::invalidate_cache()
     }
 }
 
-
 /*---------------------------------------------------------------------*/
-
 
 TableHandler::TableHandler() : auto_fill_mode(false)
 {}
-
-
 
 void
 TableHandler::declare_column(const std::string& key)
@@ -213,8 +199,6 @@ TableHandler::declare_column(const std::string& key)
   column_order.push_back(key);
 }
 
-
-
 void
 TableHandler::start_new_row()
 {
@@ -225,7 +209,6 @@ TableHandler::start_new_row()
       ++p)
     max_col_length = std::max(
       max_col_length, static_cast<unsigned int>(p->second.entries.size()));
-
 
   // then pad all columns to that length with empty strings
   for(std::map<std::string, Column>::iterator col = columns.begin();
@@ -242,14 +225,11 @@ TableHandler::start_new_row()
       }
 }
 
-
-
 void
 TableHandler::set_auto_fill_mode(const bool state)
 {
   auto_fill_mode = state;
 }
-
 
 void
 TableHandler::add_column_to_supercolumn(const std::string& key,
@@ -298,8 +278,6 @@ TableHandler::add_column_to_supercolumn(const std::string& key,
     Assert(false, ExcInternalError());
 }
 
-
-
 void
 TableHandler::set_column_order(const std::vector<std::string>& new_order)
 {
@@ -310,7 +288,6 @@ TableHandler::set_column_order(const std::vector<std::string>& new_order)
   column_order = new_order;
 }
 
-
 void
 TableHandler::set_tex_caption(const std::string& key,
                               const std::string& tex_caption)
@@ -319,23 +296,17 @@ TableHandler::set_tex_caption(const std::string& key,
   columns[key].tex_caption = tex_caption;
 }
 
-
-
 void
 TableHandler::set_tex_table_caption(const std::string& table_caption)
 {
   tex_table_caption = table_caption;
 }
 
-
-
 void
 TableHandler::set_tex_table_label(const std::string& table_label)
 {
   tex_table_label = table_label;
 }
-
-
 
 void
 TableHandler::set_tex_supercaption(const std::string& superkey,
@@ -346,8 +317,6 @@ TableHandler::set_tex_supercaption(const std::string& superkey,
   tex_supercaptions[superkey] = tex_supercaption;
 }
 
-
-
 void
 TableHandler::set_tex_format(const std::string& key,
                              const std::string& tex_format)
@@ -357,8 +326,6 @@ TableHandler::set_tex_format(const std::string& key,
          ExcUndefinedTexFormat(tex_format));
   columns[key].tex_format = tex_format;
 }
-
-
 
 void
 TableHandler::set_precision(const std::string& key,
@@ -372,7 +339,6 @@ TableHandler::set_precision(const std::string& key,
     }
 }
 
-
 void
 TableHandler::set_scientific(const std::string& key, const bool scientific)
 {
@@ -383,7 +349,6 @@ TableHandler::set_scientific(const std::string& key, const bool scientific)
       columns[key].invalidate_cache();
     }
 }
-
 
 void
 TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
@@ -586,7 +551,6 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
         Assert(false, ExcInternalError());
     }
 
-
   // finally output the data itself for
   // table_with_headers or table_with_separate_column_description:
   for(unsigned int i = 0; i < nrows; ++i)
@@ -604,7 +568,6 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
     }
   out << std::flush;
 }
-
 
 void
 TableHandler::write_tex(std::ostream& out, const bool with_header) const
@@ -747,7 +710,6 @@ TableHandler::write_tex(std::ostream& out, const bool with_header) const
     out << "\\end{document}" << std::endl;
 }
 
-
 void
 TableHandler::clear()
 {
@@ -759,7 +721,6 @@ TableHandler::clear()
   tex_table_label.clear();
   tex_table_caption.clear();
 }
-
 
 unsigned int
 TableHandler::n_rows() const
@@ -778,7 +739,6 @@ TableHandler::n_rows() const
 
   return n;
 }
-
 
 void
 TableHandler::get_selected_columns(std::vector<std::string>& sel_columns) const
@@ -812,7 +772,6 @@ TableHandler::get_selected_columns(std::vector<std::string>& sel_columns) const
     }
 }
 
-
 void
 TableHandler::clear_current_row()
 {
@@ -832,6 +791,5 @@ TableHandler::clear_current_row()
       if(p->second.entries.size() == n)
         p->second.entries.pop_back();
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/distributed/tria.h>
 #include <deal.II/grid/cell_id.h>
@@ -91,7 +89,6 @@ test()
         }
     }
 }
-
 
 int
 main(int argc, char* argv[])

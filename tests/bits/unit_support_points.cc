@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check equivalence of get_unit_support_points() and
 // unit_support_point(), as well as the case where an element does not
 // have support points
@@ -28,7 +26,6 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_trace.h>
 
-
 template <int dim>
 void
 check_cell1(const FiniteElement<dim>& fe)
@@ -38,7 +35,6 @@ check_cell1(const FiniteElement<dim>& fe)
                 ExcInternalError());
   deallog << "dim=" << dim << ", cell=ok" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -51,12 +47,9 @@ check_face1(const FiniteElement<dim>& fe)
   deallog << "dim=" << dim << ", face=ok" << std::endl;
 }
 
-
 void
 check_face1(const FiniteElement<1>&)
 {}
-
-
 
 template <int dim>
 void
@@ -65,7 +58,6 @@ check1(const FiniteElement<dim>& fe)
   check_cell1(fe);
   check_face1(fe);
 }
-
 
 template <int dim>
 void
@@ -77,7 +69,6 @@ check_cell2(const FiniteElement<dim>& fe, const unsigned int comp)
   deallog << "dim=" << dim << ", cell=ok" << std::endl;
 }
 
-
 template <int dim>
 void
 check_face2(const FiniteElement<dim>& fe, const unsigned int comp)
@@ -88,12 +79,9 @@ check_face2(const FiniteElement<dim>& fe, const unsigned int comp)
   deallog << "dim=" << dim << ", face=ok" << std::endl;
 }
 
-
 void
 check_face2(const FiniteElement<1>&, const unsigned int)
 {}
-
-
 
 template <int dim>
 void
@@ -102,8 +90,6 @@ check2(const FiniteElement<dim>& fe, const unsigned int comp)
   check_cell2(fe, comp);
   check_face2(fe, comp);
 }
-
-
 
 template <int dim>
 void
@@ -115,14 +101,10 @@ face_check()
   check2(FE_TraceQ<dim>(2), 0);
 }
 
-
-
 template <>
 void
 face_check<1>()
 {}
-
-
 
 template <int dim>
 void
@@ -138,8 +120,6 @@ check()
   check2(FESystem<dim>(FE_Q<dim>(2), 1, FE_DGP<dim>(2), 1), 0);
   face_check<dim>();
 }
-
-
 
 int
 main()

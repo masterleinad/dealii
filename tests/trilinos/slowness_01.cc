@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this is part of a whole suite of tests that checks the relative speed of
 // using Trilinos for sparse matrices as compared to the speed of our own
 // library. the tests therefore may not all actually use Trilinos, but they are
@@ -28,7 +26,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <iostream>
-
 
 void
 test()
@@ -64,7 +61,6 @@ test()
           }
       }
   sparsity.compress();
-
 
   // next build the sparse matrix itself
   SparseMatrix<double> matrix(sparsity);
@@ -105,8 +101,6 @@ test()
 
   deallog << v1 * v2 << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

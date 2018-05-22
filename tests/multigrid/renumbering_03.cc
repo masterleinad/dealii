@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Until version 1.50 of mg_dof_handler.cc, the
 // DoFHandler::distribute_dofs function in 1d and 3d could not
 // handle coarsened grids (unused vertices). Also, the
@@ -66,7 +65,6 @@ check()
       mg_dof_handler.renumber_dofs(level, new_numbers);
     }
 }
-
 
 int
 main()

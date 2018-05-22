@@ -16,7 +16,6 @@
 #ifndef dealii_table_handler_h
 #define dealii_table_handler_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -32,7 +31,6 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/variant.hpp>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -99,7 +97,6 @@ namespace internal
     const std::string&
     get_cached_string() const;
 
-
     /**
      * Return a TableEntry object that has the same data type of the stored
      * value but with a value that is default constructed for this data type.
@@ -147,7 +144,6 @@ namespace internal
     friend class dealii::TableHandler;
   };
 } // namespace internal
-
 
 /**
  * The TableHandler stores TableEntries of arbitrary value type and writes the
@@ -354,7 +350,6 @@ public:
    * Constructor.
    */
   TableHandler();
-
 
   /**
    * Declare the existence of a column in the table by giving it a name.
@@ -632,7 +627,6 @@ protected:
     load(Archive& ar, const unsigned int version);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-
     /**
      * Invalidates the string cache of all the entries and recomputes the
      * maximum length max_length.
@@ -759,13 +753,11 @@ protected:
   bool auto_fill_mode;
 };
 
-
 namespace internal
 {
   template <typename T>
   TableEntry::TableEntry(const T& t) : value(t)
   {}
-
 
   template <typename T>
   T
@@ -789,8 +781,6 @@ namespace internal
         throw;
       }
   }
-
-
 
   template <class Archive>
   void
@@ -828,8 +818,6 @@ namespace internal
     else
       Assert(false, ExcInternalError());
   }
-
-
 
   template <class Archive>
   void
@@ -890,8 +878,6 @@ namespace internal
   }
 } // namespace internal
 
-
-
 template <typename T>
 void
 TableHandler::add_value(const std::string& key, const T value)
@@ -931,16 +917,12 @@ TableHandler::add_value(const std::string& key, const T value)
                static_cast<unsigned int>(entry.get_cached_string().length()));
 }
 
-
-
 template <class Archive>
 void
 TableHandler::Column::save(Archive& ar, const unsigned int /*version*/) const
 {
   ar& entries& tex_caption& tex_format& precision& scientific& flag& max_length;
 }
-
-
 
 template <class Archive>
 void
@@ -950,7 +932,6 @@ TableHandler::Column::load(Archive& ar, const unsigned int /*version*/)
   invalidate_cache();
 }
 
-
 template <class Archive>
 void
 TableHandler::serialize(Archive& ar, const unsigned int)
@@ -958,7 +939,6 @@ TableHandler::serialize(Archive& ar, const unsigned int)
   ar& column_order& columns& supercolumns& tex_supercaptions& tex_table_caption&
     tex_table_label& auto_fill_mode;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Utilities::fixed_power on VectorizedArray, similar to utilities_02
 
 #include "../tests.h"
 
 #include <deal.II/base/utilities.h>
 #include <deal.II/base/vectorization.h>
-
 
 template <int dim>
 void
@@ -40,8 +38,6 @@ test()
   deallog << (double) v2[0] << std::endl;
   deallog << std::endl;
 }
-
-
 
 int
 main()

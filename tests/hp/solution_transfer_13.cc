@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Verify that we can run SolutionTransfer with FE_Nothing. This led
 // to an exception because at one point we try to multiply a vector by
 // an empty matrix (because FE_Nothing has no degrees of freedom)
@@ -21,9 +20,7 @@
 // Test case by Claire Bruna-Rosso based on an earlier one written by
 // K. Bzowski
 
-
 #include "../tests.h"
-
 
 #include <deal.II/grid/tria.h>
 
@@ -87,7 +84,6 @@ main()
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
 
-
   // Vector to visualize the FE of each cell
   Vector<double> FE_Type(triangulation.n_active_cells());
   unsigned int   cnt_cells(0);
@@ -107,7 +103,6 @@ main()
   data_out.build_patches();
   data_out.write_gnuplot(deallog.get_file_stream());
 
-
   /* Set refine flags:
    * -----------
    * |    |  R |
@@ -115,7 +110,6 @@ main()
    * |  R |    |
    * -----------
    */
-
 
   cell = dof_handler.begin_active();
   cell->set_refine_flag();

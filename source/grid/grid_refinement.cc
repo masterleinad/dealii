@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/block_vector_base.h>
@@ -33,7 +32,6 @@
 #include <numeric>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, typename Number, int spacedim>
 void
@@ -82,8 +80,6 @@ GridRefinement::refine(Triangulation<dim, spacedim>& tria,
         cell->set_refine_flag();
       }
 }
-
-
 
 template <int dim, typename Number, int spacedim>
 void
@@ -245,8 +241,6 @@ GridRefinement::refine_and_coarsen_fixed_number(
     }
 }
 
-
-
 template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine_and_coarsen_fixed_fraction(
@@ -323,7 +317,6 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
       }
   }
 
-
   // in some rare cases it may happen that
   // both thresholds are the same (e.g. if
   // there are many cells with the same
@@ -371,8 +364,6 @@ GridRefinement::refine_and_coarsen_fixed_fraction(
     coarsen(tria, criteria, bottom_threshold);
 }
 
-
-
 template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
@@ -419,7 +410,6 @@ GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
 
   refine(tria, criteria, criteria(cell_indices[min_arg]));
 }
-
 
 // explicit instantiations
 #include "grid_refinement.inst"

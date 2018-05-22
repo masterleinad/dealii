@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that an ArrayView to an empty array view can actually be copied
 
 #include "../tests.h"
 
 #include <deal.II/base/array_view.h>
-
 
 void
 test()
@@ -34,8 +32,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

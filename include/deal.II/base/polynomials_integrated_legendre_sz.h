@@ -22,7 +22,6 @@
 #include <deal.II/base/polynomial.h>
 #include <deal.II/base/thread_management.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /**

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test GridTools::exchange_cell_data_to_ghosts
 //
 // this test works just like the _01 test, but it skips those cells
@@ -78,7 +77,6 @@ test()
   for(auto& it : output)
     deallog << it << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

@@ -16,7 +16,6 @@
 #ifndef dealii_tensor_function_h
 #define dealii_tensor_function_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function.h>
@@ -107,8 +106,6 @@ public:
                 std::vector<gradient_type>&    gradients) const;
 };
 
-
-
 /**
  * Provide a tensor valued function which always returns a constant tensor
  * value. Obviously, all derivates of this function are zero.
@@ -155,8 +152,6 @@ private:
   const dealii::Tensor<rank, dim, Number> _value;
 };
 
-
-
 /**
  * Provide a tensor valued function which always returns zero. Obviously, all
  * derivates of this function are zero.
@@ -176,7 +171,6 @@ public:
    */
   ZeroTensorFunction(const Number initial_time = 0.0);
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

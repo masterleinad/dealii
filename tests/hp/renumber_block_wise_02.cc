@@ -13,13 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFRenumbering::block_wise. For the element used here, it
 // needs to produce the exact same numbering as that for
 // DoFRenumber::component_wise
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -36,8 +32,6 @@
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 std::vector<types::global_dof_index>
@@ -58,8 +52,6 @@ get_dofs(const hp::DoFHandler<dim>& dof)
 
   return global;
 }
-
-
 
 template <int dim>
 void
@@ -87,7 +79,6 @@ check_renumbering(hp::DoFHandler<dim>& dof)
 
   deallog << "OK" << std::endl;
 }
-
 
 template <int dim>
 void
@@ -130,7 +121,6 @@ check()
   check_renumbering(dof);
   dof.clear();
 }
-
 
 int
 main()

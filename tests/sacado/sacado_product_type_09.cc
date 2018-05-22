@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test scalar_product between tensors and symmetric tensors with Sacado
-
 
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/differentiation/ad/sacado_product_types.h>
 
 #include "../tests.h"
-
 
 int
 main()
@@ -29,7 +26,6 @@ main()
   typedef Sacado::Fad::DFad<double>  Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
-
 
   // check product with Tensor<2,dim>
   Tensor<2, 2, double>            t;

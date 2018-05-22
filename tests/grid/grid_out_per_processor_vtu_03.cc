@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GriOut::write_mesh_per_processor_as_vtu() on only one processor
 
 #include "../tests.h"
@@ -32,7 +30,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
 
-
 template <int dim>
 void
 test()
@@ -49,7 +46,6 @@ test()
 
   cat_file((std::string(filename) + ".vtu").c_str());
 }
-
 
 int
 main(int argc, char* argv[])

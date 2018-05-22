@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mapping_q_eulerian_h
 #define dealii_mapping_q_eulerian_h
 
@@ -26,12 +25,10 @@
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 template <typename>
 class Vector;
-
 
 /*!@addtogroup mapping */
 /*@{*/
@@ -174,7 +171,6 @@ protected:
                MappingQEulerian<dim, VectorType, spacedim>>
     euler_dof_handler;
 
-
 private:
   /**
    * Multigrid level at which the mapping is to be used.
@@ -230,7 +226,6 @@ private:
      */
     const MappingQEulerian<dim, VectorType, spacedim>& mapping_q_eulerian;
 
-
     /**
      * Special quadrature rule used to define the support points in the
      * reference configuration.
@@ -268,7 +263,6 @@ private:
 
 /*@}*/
 
-
 /*----------------------------------------------------------------------*/
 
 #ifndef DOXYGEN
@@ -282,8 +276,6 @@ MappingQEulerian<dim, VectorType, spacedim>::preserves_vertex_locations() const
 
 #endif // DOXYGEN
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif // dealii_mapping_q_eulerian_h

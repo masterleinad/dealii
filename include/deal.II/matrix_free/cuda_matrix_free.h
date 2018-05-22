@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_cuda_matrix_free_h
 #define dealii_cuda_matrix_free_h
 
@@ -30,7 +29,6 @@
 #  include <deal.II/fe/mapping_q1.h>
 #  include <deal.II/lac/constraint_matrix.h>
 #  include <deal.II/lac/cuda_vector.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -281,8 +279,6 @@ namespace CUDAWrappers
     friend class internal::ReinitHelper<dim, Number>;
   };
 
-
-
   // TODO find a better place to put these things
   // Structure to pass the shared memory into a general user function.
   template <int dim, typename Number>
@@ -299,8 +295,6 @@ namespace CUDAWrappers
     Number* values;
     Number* gradients[dim];
   };
-
-
 
   // This function determines the number of cells per block, possibly at compile
   // time

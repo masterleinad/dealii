@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check DoFTools::extract_subdomain_dofs
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -30,9 +28,7 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -81,7 +77,6 @@ test()
               << std::endl;
     }
 }
-
 
 int
 main()

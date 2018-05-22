@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check serialization for Triangulation<1,dim>. do the same as in the
 // _01 test but for an adaptively refined and coarsened triangulation
 
@@ -22,7 +21,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 namespace dealii
 {
@@ -120,7 +118,6 @@ namespace dealii
   }
 } // namespace dealii
 
-
 template <int dim, int spacedim>
 void
 do_boundary(Triangulation<dim, spacedim>& t1)
@@ -132,11 +129,9 @@ do_boundary(Triangulation<dim, spacedim>& t1)
         c1->face(f)->set_boundary_id(42);
 }
 
-
 template <int spacedim>
 void do_boundary(Triangulation<1, spacedim>&)
 {}
-
 
 template <int dim, int spacedim>
 void
@@ -169,7 +164,6 @@ test()
 
   verify(tria_1, tria_2);
 }
-
 
 int
 main()

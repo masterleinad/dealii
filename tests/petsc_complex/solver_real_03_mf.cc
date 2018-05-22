@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc CG solver with PETSc MatrixFree class
 
 // Note: This is (almost) a clone of the tests/petsc/solver_03_mf.cc
@@ -66,7 +65,6 @@ check_solve(SOLVER&             solver,
   deallog << "Solver stopped after " << solver.control().last_step()
           << " iterations" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

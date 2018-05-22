@@ -31,7 +31,6 @@
 #include <iostream>
 #include <memory>
 
-
 template <typename NumberType>
 void
 test(const unsigned int block_size, const NumberType tol)
@@ -125,8 +124,6 @@ test(const unsigned int block_size, const NumberType tol)
   AssertThrow(result.frobenius_norm() < tol,
               ExcMessage("solution deviates from reference"));
 }
-
-
 
 int
 main(int argc, char** argv)

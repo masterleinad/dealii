@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check TableIndices in various ways
 
 #include "../tests.h"

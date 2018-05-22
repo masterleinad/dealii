@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // write the pvtu master record for parallel visualization through the
 // vtu file format
 
@@ -24,8 +23,6 @@
 #include <vector>
 
 #include "patches.h"
-
-
 
 std::vector<DataOutBase::Patch<2, 2>> patches;
 std::vector<std::string>              names;
@@ -45,7 +42,6 @@ class DataOutX : public DataOutInterface<2, 2>
   }
 };
 
-
 template <int dim, int spacedim>
 void
 check(std::ostream& out)
@@ -62,8 +58,6 @@ check(std::ostream& out)
   DataOutX x;
   x.write_pvtu_record(out, filenames);
 }
-
-
 
 int
 main()

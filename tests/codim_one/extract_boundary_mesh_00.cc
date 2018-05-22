@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  Code for testing the function
  GridGenerator::extract_boundary_mesh (...).
@@ -22,7 +21,6 @@
 
  This test checks the whole thing for a 2d and 3d hypercube.
 */
-
 
 #include "../tests.h"
 
@@ -34,7 +32,6 @@
 
 using namespace std;
 
-
 template <int dim, int spacedim>
 void
 save_mesh(const Triangulation<dim, spacedim>& tria)
@@ -42,7 +39,6 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   GridOut grid_out;
   grid_out.write_ucd(tria, deallog.get_file_stream());
 }
-
 
 int
 main()
@@ -98,7 +94,6 @@ main()
     save_mesh(boundary_mesh);
   }
 
-
   {
     // Extract a piece of the boundary of a hyper-cube
 
@@ -125,8 +120,6 @@ main()
 
     save_mesh(boundary_mesh);
   }
-
-
 
   return 0;
 }

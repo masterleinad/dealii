@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check global reduction operations (norms, operator==, operator!=) with the
 // parallel block vector class. This is the same as parallel_vector_01 except
 // that this test uses the version of the add() method that takes a std::vector
@@ -28,7 +27,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -37,7 +35,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor from processor 1 to 8
   // owns 2 indices (the other processors do
@@ -173,8 +170,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

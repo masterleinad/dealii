@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a stress test using repeated multiplication of tensors
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
-
 
 inline double
 value(unsigned int i,
@@ -32,8 +30,6 @@ value(unsigned int i,
   return ((i == k) && (j == l) ? mu : 0) + ((i == l) && (j == k) ? mu : 0)
          + ((i == j) && (k == l) ? lambda : 0);
 }
-
-
 
 template <int dim>
 void
@@ -70,8 +66,6 @@ test()
     for(unsigned int j = 0; j < dim; ++j)
       deallog << i << ' ' << j << ' ' << a[i][j] << std::endl;
 }
-
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <iostream>
 
@@ -37,7 +35,6 @@
 
 //TODO: Find support_on_face problems for test-no. > 7
 //TODO: Check support_on_face in 3D
-
 
 template <int dim>
 void
@@ -85,12 +82,8 @@ test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 }
 
-
-
 void test_2d_3d(std::vector<FiniteElement<1>*>& fe_datas)
 {}
-
-
 
 template <int dim>
 void
@@ -150,7 +143,6 @@ test_fe_datas()
   fe_datas.push_back(new FE_FaceP<dim>(3));
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
-
   // Check vector elements in 2d and higher only
   test_2d_3d(fe_datas);
 
@@ -172,7 +164,6 @@ test_fe_datas()
       fe_datas.push_back(new FESystem<dim>(*rt1, 1, FE_DGQ<dim>(1), 1));
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
     }
-
 
   // for dim==3 the constraints are
   // only hardcoded for Q1-Q2

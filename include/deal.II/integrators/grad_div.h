@@ -16,7 +16,6 @@
 #ifndef dealii_integrators_grad_div_h
 #define dealii_integrators_grad_div_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/quadrature.h>
@@ -340,7 +339,6 @@ namespace LocalIntegrators
       const double fe      = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (fi + fe);
 
-
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx    = fe1.JxW(k);
@@ -390,6 +388,5 @@ namespace LocalIntegrators
 } // namespace LocalIntegrators
 
 DEAL_II_NAMESPACE_CLOSE
-
 
 #endif

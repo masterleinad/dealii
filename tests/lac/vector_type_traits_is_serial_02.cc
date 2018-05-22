@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check is_serial_vector type trait
 
 #include "../tests.h"
@@ -33,7 +31,6 @@ test()
           << std::endl;
 
   deallog << "OK" << std::endl << std::endl;
-
 
   // make sure that dealii::TrilinosWrappers::MPI::BlockVector > is working
   Assert(is_serial_vector<dealii::TrilinosWrappers::MPI::BlockVector>::value

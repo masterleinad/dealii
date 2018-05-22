@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like _02, but with auto fill mode set on the underlying table
 
 #include "../tests.h"
@@ -23,7 +22,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()

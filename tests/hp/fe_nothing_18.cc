@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test by Denis Davydov, see bug report 76: can't create hanging node
 // constraints for a particular combination of finite elements
 
@@ -59,7 +58,6 @@
 #include <deal.II/numerics/vector_tools.h>
 #include <iostream>
 #include <memory> //smart pointers
-
 
 template <int dim>
 class ElasticProblem
@@ -222,7 +220,6 @@ ConstrainValues<dim>::vector_value_list(
     ConstrainValues<dim>::vector_value(points[p], value_list[p]);
 }
 
-
 /* constructor*/
 template <int dim>
 ElasticProblem<dim>::ElasticProblem()
@@ -265,7 +262,6 @@ ElasticProblem<dim>::~ElasticProblem()
   dof_handler.clear();
 }
 
-
 template <int dim>
 void
 ElasticProblem<dim>::make_grid()
@@ -297,7 +293,6 @@ ElasticProblem<dim>::make_grid()
 
   //triangulation.refine_global (2); //refine twice globally before solving
 }
-
 
 template <int dim>
 void
@@ -392,8 +387,6 @@ ElasticProblem<dim>::setup_system()
   hanging_node_constraints.print(deallog.get_file_stream());
 }
 
-
-
 template <int dim>
 void
 ElasticProblem<dim>::run()
@@ -401,7 +394,6 @@ ElasticProblem<dim>::run()
   make_grid();
   setup_system();
 }
-
 
 int
 main()

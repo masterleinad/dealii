@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::interpolate works for FE_Q(p) elements correctly on
 // an adaptively refined mesh for functions of degree q
 
@@ -39,7 +37,6 @@
 
 #include <vector>
 
-
 template <int dim>
 class F : public Function<dim>
 {
@@ -60,8 +57,6 @@ public:
 private:
   const unsigned int q;
 };
-
-
 
 template <int dim>
 void
@@ -111,8 +106,6 @@ test()
         }
     }
 }
-
-
 
 int
 main()

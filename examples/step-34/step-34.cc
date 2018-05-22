@@ -17,7 +17,6 @@
  * Author: Luca Heltai, Cataldo Manigrasso, 2009
  */
 
-
 // @sect3{Include files}
 
 // The program starts with including a bunch of include files that we will use
@@ -67,7 +66,6 @@ namespace Step34
 {
   using namespace dealii;
 
-
   // @sect3{Single and double layer operator kernels}
 
   // First, let us define a bit of the boundary integral equation machinery.
@@ -96,8 +94,6 @@ namespace Step34
         }
     }
 
-
-
     template <int dim>
     Tensor<1, dim>
     double_layer(const Tensor<1, dim>& R)
@@ -115,7 +111,6 @@ namespace Step34
         }
     }
   } // namespace LaplaceKernel
-
 
   // @sect3{The BEMProblem class}
 
@@ -231,7 +226,6 @@ namespace Step34
       const typename DoFHandler<dim - 1, dim>::active_cell_iterator& cell,
       const unsigned int index) const;
 
-
     // The usual deal.II classes can be used for boundary element methods by
     // specifying the "codimension" of the problem. This is done by setting
     // the optional second template arguments to Triangulation, FiniteElement
@@ -309,7 +303,6 @@ namespace Step34
     bool extend_solution;
   };
 
-
   // @sect4{BEMProblem::BEMProblem and BEMProblem::read_parameters}
 
   // The constructor initializes the various object in much the same way as
@@ -338,7 +331,6 @@ namespace Step34
       run_in_this_dimension(true),
       extend_solution(true)
   {}
-
 
   template <int dim>
   void
@@ -423,7 +415,6 @@ namespace Step34
     }
     prm.leave_subsection();
 
-
     // In the solver section, we set all SolverControl parameters. The object
     // will then be fed to the GMRES solver in the solve_system() function.
     prm.enter_subsection("Solver");
@@ -466,7 +457,6 @@ namespace Step34
     solver_control.parse_parameters(prm);
     prm.leave_subsection();
 
-
     // Finally, here's another example of how to use parameter files in
     // dimension independent programming.  If we wanted to switch off one of
     // the two simulations, we could do this by setting the corresponding "Run
@@ -474,7 +464,6 @@ namespace Step34
     run_in_this_dimension
       = prm.get_bool("Run " + Utilities::int_to_string(dim) + "d simulation");
   }
-
 
   // @sect4{BEMProblem::read_domain}
 
@@ -536,7 +525,6 @@ namespace Step34
     tria.set_manifold(1, manifold);
   }
 
-
   // @sect4{BEMProblem::refine_and_resize}
 
   // This function globally refines the mesh, distributes degrees of freedom,
@@ -558,7 +546,6 @@ namespace Step34
     phi.reinit(n_dofs);
     alpha.reinit(n_dofs);
   }
-
 
   // @sect4{BEMProblem::assemble_system}
 
@@ -604,7 +591,6 @@ namespace Step34
     std::vector<Point<dim>> support_points(dh.n_dofs());
     DoFTools::map_dofs_to_support_points<dim - 1, dim>(
       mapping, dh, support_points);
-
 
     // After doing so, we can start the integration loop over all cells, where
     // we first initialize the FEValues object and get the values of
@@ -760,7 +746,6 @@ namespace Step34
       system_matrix(i, i) += alpha(i);
   }
 
-
   // @sect4{BEMProblem::solve_system}
 
   // The next function simply solves the linear system.
@@ -771,7 +756,6 @@ namespace Step34
     SolverGMRES<Vector<double>> solver(solver_control);
     solver.solve(system_matrix, phi, system_rhs, PreconditionIdentity());
   }
-
 
   // @sect4{BEMProblem::compute_errors}
 
@@ -815,7 +799,6 @@ namespace Step34
     convergence_table.add_value("L2(phi)", L2_error);
     convergence_table.add_value("Linfty(alpha)", alpha_error);
   }
-
 
   // Singular integration requires a careful selection of the quadrature
   // rules. In particular the deal.II library provides quadrature rules which
@@ -897,7 +880,6 @@ namespace Step34
     return quadratures[index];
   }
 
-
   template <>
   const Quadrature<1>&
   BEMProblem<2>::get_singular_quadrature(
@@ -916,8 +898,6 @@ namespace Step34
                                   true);
     return (*q_pointer);
   }
-
-
 
   // @sect4{BEMProblem::compute_exterior_solution}
 
@@ -953,7 +933,6 @@ namespace Step34
     typename DoFHandler<dim - 1, dim>::active_cell_iterator cell
       = dh.begin_active(),
       endc = dh.end();
-
 
     FEValues<dim - 1, dim> fe_v(mapping,
                                 fe,
@@ -1019,7 +998,6 @@ namespace Step34
     data_out.write_vtk(file);
   }
 
-
   // @sect4{BEMProblem::output_results}
 
   // Outputting the results of our computations is a rather mechanical
@@ -1066,7 +1044,6 @@ namespace Step34
       }
   }
 
-
   // @sect4{BEMProblem::run}
 
   // This is the main function. It should be self explanatory in its
@@ -1099,7 +1076,6 @@ namespace Step34
       compute_exterior_solution();
   }
 } // namespace Step34
-
 
 // @sect3{The main() function}
 

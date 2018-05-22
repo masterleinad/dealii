@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // See documentation of ThetaTimestepping for documentation of this example
 
 #include <deal.II/lac/full_matrix.h>
@@ -27,7 +26,6 @@
 using namespace dealii;
 using namespace Algorithms;
 
-
 class Explicit : public OperatorBase
 {
 public:
@@ -39,7 +37,6 @@ private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
   FullMatrix<double>                               m;
 };
-
 
 class Implicit : public OperatorBase
 {
@@ -90,12 +87,10 @@ main()
           << value.l2_norm() << std::endl;
 }
 
-
 Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
-
 
 void
 Explicit::operator()(AnyData& out, const AnyData& in)
@@ -114,12 +109,10 @@ Explicit::operator()(AnyData& out, const AnyData& in)
   m.vmult(*out.entry<Vector<double>*>(0), *in.read_ptr<Vector<double>>(i));
 }
 
-
 Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
-
 
 void
 Implicit::operator()(AnyData& out, const AnyData& in)

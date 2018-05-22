@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the testsuite framework. this test is supposed to run successfully
 
 #include "../tests.h"
-
 
 int
 main()

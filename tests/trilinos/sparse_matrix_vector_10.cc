@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check SparseMatrix::vmult, vmult_add with distributed deal.II vector (but
 // without using distributed things)
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(LinearAlgebra::distributed::Vector<double>& v,
@@ -65,8 +62,6 @@ test(LinearAlgebra::distributed::Vector<double>& v,
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -74,7 +69,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

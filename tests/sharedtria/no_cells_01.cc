@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that everything is ok when we have a triangulation that has
 // fewer cells than there are processors
 //
 // this test is run with sufficiently many processors so that there
 // are idle processors in 1d, 2d, and 3d
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -36,7 +33,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -112,7 +108,6 @@ test()
 
   Assert(all == complete_index_set(N), ExcInternalError());
 }
-
 
 int
 main(int argc, char* argv[])

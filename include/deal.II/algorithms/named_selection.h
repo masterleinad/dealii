@@ -42,13 +42,11 @@ public:
   void
   add(const std::string& name);
 
-
   /**
    * Create the index vector pointing into the AnyData object.
    */
   void
   initialize(const AnyData& data);
-
 
   /**
    * The number of names in this object. This function may be used whether
@@ -56,7 +54,6 @@ public:
    */
   unsigned int
   size() const;
-
 
   /**
    * Return the corresponding index in the AnyData object supplied to the last
@@ -66,7 +63,6 @@ public:
    */
   unsigned int
   operator()(unsigned int i) const;
-
 
 private:
   /**
@@ -80,20 +76,17 @@ private:
   std::vector<unsigned int> indices;
 };
 
-
 inline unsigned int
 NamedSelection::size() const
 {
   return names.size();
 }
 
-
 inline void
 NamedSelection::add(const std::string& s)
 {
   names.push_back(s);
 }
-
 
 inline unsigned int
 NamedSelection::operator()(unsigned int i) const

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check numbers::is_finite for complex arguments
 
 #include "../tests.h"
 
 #include <cfenv>
 #include <limits>
-
 
 template <typename T>
 void
@@ -131,7 +129,6 @@ check()
                  static_cast<typename numbers::NumberTraits<T>::real_type>(-1)))
           << std::endl;
 }
-
 
 int
 main()

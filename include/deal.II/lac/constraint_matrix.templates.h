@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_constraint_matrix_templates_h
 #define dealii_constraint_matrix_templates_h
-
 
 #include <deal.II/lac/constraint_matrix.h>
 
@@ -39,7 +37,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename number>
 void
 ConstraintMatrix::condense(SparseMatrix<number>& uncondensed) const
@@ -48,8 +45,6 @@ ConstraintMatrix::condense(SparseMatrix<number>& uncondensed) const
   condense(uncondensed, dummy);
 }
 
-
-
 template <typename number>
 void
 ConstraintMatrix::condense(BlockSparseMatrix<number>& uncondensed) const
@@ -57,8 +52,6 @@ ConstraintMatrix::condense(BlockSparseMatrix<number>& uncondensed) const
   BlockVector<number> dummy(0);
   condense(uncondensed, dummy);
 }
-
-
 
 template <class VectorType>
 void
@@ -108,16 +101,12 @@ ConstraintMatrix::condense(const VectorType& vec_ghosted, VectorType& vec) const
   vec.compress(VectorOperation::insert);
 }
 
-
-
 template <class VectorType>
 void
 ConstraintMatrix::condense(VectorType& vec) const
 {
   condense(vec, vec);
 }
-
-
 
 template <typename number, class VectorType>
 void
@@ -303,8 +292,6 @@ ConstraintMatrix::condense(SparseMatrix<number>& uncondensed,
         }
     }
 }
-
-
 
 template <typename number, class BlockVectorType>
 void
@@ -519,7 +506,6 @@ ConstraintMatrix::condense(BlockSparseMatrix<number>& uncondensed,
     }
 }
 
-
 //TODO: I'm sure the following could be made more elegant by using a bit of
 //introspection using static member variables of the various vector
 //classes to dispatch between the different functions, rather than using
@@ -628,7 +614,6 @@ namespace internal
         vec.compress(VectorOperation::insert);
       }
 
-
       template <class T>
       void
       set_zero_all(const std::vector<size_type>& cm, dealii::Vector<T>& vec)
@@ -647,7 +632,6 @@ namespace internal
   }   // namespace ConstraintMatrixImplementation
 } // namespace internal
 
-
 template <class VectorType>
 void
 ConstraintMatrix::set_zero(VectorType& vec) const
@@ -660,8 +644,6 @@ ConstraintMatrix::set_zero(VectorType& vec) const
   internal::ConstraintMatrixImplementation::set_zero_all(constrained_lines,
                                                          vec);
 }
-
-
 
 template <typename VectorType, typename LocalType>
 void
@@ -678,8 +660,6 @@ ConstraintMatrix::distribute_local_to_global(
                              local_matrix,
                              true);
 }
-
-
 
 template <typename VectorType, typename LocalType>
 void
@@ -786,8 +766,6 @@ ConstraintMatrix::distribute_local_to_global(
       }
 }
 
-
-
 namespace internal
 {
   namespace
@@ -854,7 +832,6 @@ namespace internal
       output.update_ghost_values();
     }
 
-
     // all other vector non-block vector types are sequential and we should
     // not have this function called at all -- so throw an exception
     template <typename Vector>
@@ -868,7 +845,6 @@ namespace internal
     {
       Assert(false, ExcMessage("We shouldn't even get here!"));
     }
-
 
     // for block vectors, simply dispatch to the individual blocks
     template <class VectorType>
@@ -900,7 +876,6 @@ namespace internal
     }
   } // namespace
 } // namespace internal
-
 
 template <class VectorType>
 void
@@ -998,8 +973,6 @@ ConstraintMatrix::distribute(VectorType& vec) const
     }
 }
 
-
-
 // Some helper definitions for the local_to_global functions.
 namespace internals
 {
@@ -1067,8 +1040,6 @@ namespace internals
       }
     return *this;
   }
-
-
 
   // this is a cache for constraints that are encountered on a local level.
   // The functionality is similar to
@@ -1149,8 +1120,6 @@ namespace internals
     std::vector<size_type> individual_size;
   };
 
-
-
   // collects all the global rows from a local contribution (cell) and their
   // origin (direct/constraint). this is basically a vector consisting of
   // "Distributing" structs using access via the DataCache. Provides some
@@ -1219,7 +1188,6 @@ namespace internals
         os << ' ' << std::setw(4) << total_row_indices[i].constraint_position;
       os << std::endl;
     }
-
 
     // return all kind of information on the constraints
 
@@ -1455,8 +1423,6 @@ namespace internals
       }
   }
 
-
-
   /**
    * Scratch data that is used during calls to distribute_local_to_global and
    * add_entries_local_to_global. In order to avoid frequent memory
@@ -1588,8 +1554,6 @@ namespace internals
     static Threads::ThreadLocalStorage<ScratchData> scratch_data;
   };
 
-
-
   // function for block matrices: Find out where in the list of local dofs
   // (sorted according to global ids) the individual blocks start. Transform
   // the global indices to block-local indices in order to be able to use
@@ -1629,8 +1593,6 @@ namespace internals
                                     .second;
   }
 
-
-
   // same as before, but for std::vector<uint> instead of
   // GlobalRowsFromLocal. Used in functions for sparsity patterns.
   template <class BlockType>
@@ -1664,8 +1626,6 @@ namespace internals
       row_indices[i]
         = block_object.get_row_indices().global_to_local(row_indices[i]).second;
   }
-
-
 
   // resolves constraints of one column at the innermost loop. goes through
   // the origin of each global entry and finds out which data we need to
@@ -1717,8 +1677,6 @@ namespace internals
       }
     return col_val;
   }
-
-
 
   // computes all entries that need to be written into global_rows[i]. Lists
   // the resulting values in val_ptr, and the corresponding column indices in
@@ -1782,8 +1740,6 @@ namespace internals
       }
   }
 
-
-
   // specialized function that can write into the row of a
   // SparseMatrix<number>.
   namespace dealiiSparseMatrix
@@ -1808,7 +1764,6 @@ namespace internals
         }
     }
   } // namespace dealiiSparseMatrix
-
 
   // similar as before, now with shortcut for deal.II sparse matrices. this
   // lets us avoid using extra arrays, and does all the operations just in
@@ -1946,8 +1901,6 @@ namespace internals
       }
   }
 
-
-
   // Same function to resolve all entries that will be added to the given
   // global row global_rows[i] as before, now for sparsity pattern
   inline void
@@ -2026,8 +1979,6 @@ namespace internals
       }
   }
 
-
-
   // to make sure that the global matrix remains invertible, we need to do
   // something with the diagonal elements. add the absolute value of the local
   // matrix, so the resulting entry will always be positive and furthermore be
@@ -2081,8 +2032,6 @@ namespace internals
       }
   }
 
-
-
   // similar function as the one above for setting matrix diagonals, but now
   // doing that for sparsity patterns when setting them up using
   // add_entries_local_to_global. In case we keep constrained entries, add all
@@ -2123,8 +2072,6 @@ namespace internals
   }
 
 } // end of namespace internals
-
-
 
 // Basic idea of setting up a list of
 // all global dofs: first find all rows and columns
@@ -2191,8 +2138,6 @@ ConstraintMatrix::make_sorted_row_list(
     }
 }
 
-
-
 // Same function as before, but now do only extract the global indices that
 // come from the local ones without storing their origin. Used for sparsity
 // pattern generation.
@@ -2244,8 +2189,6 @@ ConstraintMatrix::make_sorted_row_list(
     }
 }
 
-
-
 // Resolve the constraints from the vector and apply inhomogeneities.
 template <typename MatrixScalar, typename VectorScalar>
 inline typename ProductType<VectorScalar, MatrixScalar>::type
@@ -2288,7 +2231,6 @@ ConstraintMatrix::resolve_vector_entry(
     }
   return val;
 }
-
 
 // internal implementation for distribute_local_to_global for standard
 // (non-block) matrices
@@ -2442,8 +2384,6 @@ ConstraintMatrix::distribute_local_to_global(
                                   use_inhomogeneities_for_rhs);
 }
 
-
-
 // similar function as above, but now specialized for block matrices. See the
 // other function for additional comments.
 template <typename MatrixType, typename VectorType>
@@ -2575,8 +2515,6 @@ ConstraintMatrix::distribute_local_to_global(
                                   use_inhomogeneities_for_rhs);
 }
 
-
-
 template <typename MatrixType>
 void
 ConstraintMatrix::distribute_local_to_global(
@@ -2588,8 +2526,6 @@ ConstraintMatrix::distribute_local_to_global(
   distribute_local_to_global(
     local_matrix, row_indices, *this, col_indices, global_matrix);
 }
-
-
 
 template <typename MatrixType>
 void
@@ -2648,8 +2584,6 @@ ConstraintMatrix::distribute_local_to_global(
         global_matrix.add(row, n_values, &cols[0], &vals[0], false, true);
     }
 }
-
-
 
 template <typename SparsityPatternType>
 void
@@ -2713,7 +2647,6 @@ ConstraintMatrix::add_entries_local_to_global(
       return;
     }
 
-
   // complicated case: we need to filter out some indices. then the function
   // gets similar to the function for distributing matrix entries, see there
   // for additional comments.
@@ -2745,8 +2678,6 @@ ConstraintMatrix::add_entries_local_to_global(
                                     keep_constrained_entries,
                                     sparsity_pattern);
 }
-
-
 
 template <typename SparsityPatternType>
 void
@@ -2799,12 +2730,9 @@ ConstraintMatrix::add_entries_local_to_global(
       return;
     }
 
-
   // TODO: implement this
   Assert(false, ExcNotImplemented());
 }
-
-
 
 template <typename SparsityPatternType>
 void
@@ -2933,7 +2861,6 @@ ConstraintMatrix::add_entries_local_to_global(
                                     keep_constrained_entries,
                                     sparsity_pattern);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

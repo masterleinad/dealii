@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that we can use BOOST iostreams
 
 #include "../tests.h"
@@ -21,7 +20,6 @@
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
-
 
 void
 test()
@@ -45,8 +43,6 @@ test()
   in >> i;
   AssertThrow(!in, ExcIO());
 }
-
-
 
 int
 main()

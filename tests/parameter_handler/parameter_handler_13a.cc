@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the Patterns::Map pattern with a separator other than the default ','
 
 #include "../tests.h"
@@ -35,7 +33,6 @@ check(const char* p)
 
   deallog << "test_13=" << prm.get("test_13") << std::endl;
 }
-
 
 int
 main()

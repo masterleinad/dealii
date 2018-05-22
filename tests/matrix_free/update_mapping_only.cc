@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // correctness of matrix-free initialization when the mapping changes and the
 // indices are not updated, only the mapping info
 
@@ -23,11 +21,9 @@
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/mapping_q_eulerian.h>
 
-
 std::ofstream logfile("output");
 
 #include "get_functions_common.h"
-
 
 template <int dim, int fe_degree>
 void

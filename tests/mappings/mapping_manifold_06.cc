@@ -126,7 +126,6 @@ test()
   out << "e" << std::endl << std::endl;
 }
 
-
 int
 main()
 {

@@ -209,7 +209,6 @@ namespace LinearAlgebra
     reinit(const IndexSet& locally_stored_indices,
            const bool      omit_zeroing_entries = false);
 
-
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
     /**
@@ -415,7 +414,6 @@ namespace LinearAlgebra
     end() const;
     //@}
 
-
     /**
      * @name 2: Data-Access
      */
@@ -534,7 +532,6 @@ namespace LinearAlgebra
     Number&
     local_element(const size_type local_index);
     //@}
-
 
     /**
      * @name 3: Modification of vectors
@@ -699,7 +696,6 @@ namespace LinearAlgebra
 
   /*@}*/
 
-
   /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
@@ -714,8 +710,6 @@ namespace LinearAlgebra
     ReadWriteVector<Number>::reinit(0, true);
   }
 
-
-
   template <typename Number>
   inline ReadWriteVector<Number>::ReadWriteVector(
     const ReadWriteVector<Number>& v)
@@ -723,8 +717,6 @@ namespace LinearAlgebra
   {
     this->operator=(v);
   }
-
-
 
   template <typename Number>
   inline ReadWriteVector<Number>::ReadWriteVector(const size_type size)
@@ -735,8 +727,6 @@ namespace LinearAlgebra
     // for clarity be explicit on which function is called
     ReadWriteVector<Number>::reinit(size, false);
   }
-
-
 
   template <typename Number>
   inline ReadWriteVector<Number>::ReadWriteVector(
@@ -749,16 +739,12 @@ namespace LinearAlgebra
     ReadWriteVector<Number>::reinit(locally_stored_indices);
   }
 
-
-
   template <typename Number>
   inline typename ReadWriteVector<Number>::size_type
   ReadWriteVector<Number>::size() const
   {
     return stored_elements.size();
   }
-
-
 
   template <typename Number>
   inline typename ReadWriteVector<Number>::size_type
@@ -767,16 +753,12 @@ namespace LinearAlgebra
     return stored_elements.n_elements();
   }
 
-
-
   template <typename Number>
   inline const IndexSet&
   ReadWriteVector<Number>::get_stored_elements() const
   {
     return stored_elements;
   }
-
-
 
   template <typename Number>
   inline typename ReadWriteVector<Number>::iterator
@@ -785,16 +767,12 @@ namespace LinearAlgebra
     return values.get();
   }
 
-
-
   template <typename Number>
   inline typename ReadWriteVector<Number>::const_iterator
   ReadWriteVector<Number>::begin() const
   {
     return values.get();
   }
-
-
 
   template <typename Number>
   inline typename ReadWriteVector<Number>::iterator
@@ -803,16 +781,12 @@ namespace LinearAlgebra
     return values.get() + this->n_elements();
   }
 
-
-
   template <typename Number>
   inline typename ReadWriteVector<Number>::const_iterator
   ReadWriteVector<Number>::end() const
   {
     return values.get() + this->n_elements();
   }
-
-
 
   template <typename Number>
   inline Number
@@ -821,16 +795,12 @@ namespace LinearAlgebra
     return values[global_to_local(global_index)];
   }
 
-
-
   template <typename Number>
   inline Number&
   ReadWriteVector<Number>::operator()(const size_type global_index)
   {
     return values[global_to_local(global_index)];
   }
-
-
 
   template <typename Number>
   inline Number ReadWriteVector<Number>::
@@ -839,16 +809,12 @@ namespace LinearAlgebra
     return operator()(global_index);
   }
 
-
-
   template <typename Number>
   inline Number& ReadWriteVector<Number>::
                  operator[](const size_type global_index)
   {
     return operator()(global_index);
   }
-
-
 
   template <typename Number>
   template <typename Number2>
@@ -860,8 +826,6 @@ namespace LinearAlgebra
     for(size_type i = 0; i < indices.size(); ++i)
       extracted_values[i] = operator()(indices[i]);
   }
-
-
 
   template <typename Number>
   template <typename ForwardIterator, typename OutputIterator>
@@ -879,8 +843,6 @@ namespace LinearAlgebra
       }
   }
 
-
-
   template <typename Number>
   inline Number
   ReadWriteVector<Number>::local_element(const size_type local_index) const
@@ -889,8 +851,6 @@ namespace LinearAlgebra
 
     return values[local_index];
   }
-
-
 
   template <typename Number>
   inline Number&
@@ -901,8 +861,6 @@ namespace LinearAlgebra
     return values[local_index];
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   inline void
@@ -912,8 +870,6 @@ namespace LinearAlgebra
     AssertDimension(indices.size(), values.size());
     add(indices.size(), indices.data(), values.data());
   }
-
-
 
   template <typename Number>
   template <typename Number2>
@@ -932,8 +888,6 @@ namespace LinearAlgebra
       }
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   inline void
@@ -951,8 +905,6 @@ namespace LinearAlgebra
       }
   }
 
-
-
   template <typename Number>
   template <typename Functor>
   inline ReadWriteVector<Number>::FunctorTemplate<Functor>::FunctorTemplate(
@@ -960,8 +912,6 @@ namespace LinearAlgebra
     const Functor&           functor)
     : parent(parent), functor(functor)
   {}
-
-
 
   template <typename Number>
   template <typename Functor>
@@ -977,8 +927,6 @@ namespace LinearAlgebra
 
 } // end of namespace LinearAlgebra
 
-
-
 /**
  * Global function @p swap which overloads the default implementation of the
  * C++ standard library which uses a temporary object. The function simply
@@ -993,7 +941,6 @@ swap(LinearAlgebra::ReadWriteVector<Number>& u,
 {
   u.swap(v);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

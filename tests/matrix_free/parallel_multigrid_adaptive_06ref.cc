@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as parallel_multigrid_adaptive_02, but with Jacobi smoother.
 // The only reason for this test is to provide a reference for
 // parallel_multigrid_adaptive_06
@@ -83,8 +81,6 @@ private:
   const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
-
-
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
   : public MGCoarseGridBase<LinearAlgebra::distributed::Vector<Number>>
@@ -112,8 +108,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
@@ -173,7 +167,6 @@ do_test(const DoFHandler<dim>& dof)
 
   fine_matrix.initialize(fine_level_data);
   fine_matrix.compute_diagonal();
-
 
   LinearAlgebra::distributed::Vector<number> in, sol;
   fine_matrix.initialize_dof_vector(in);
@@ -285,8 +278,6 @@ do_test(const DoFHandler<dim>& dof)
     mg_matrices[level].clear();
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -318,8 +309,6 @@ test()
       do_test<dim, fe_degree, fe_degree + 1, double>(dof);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

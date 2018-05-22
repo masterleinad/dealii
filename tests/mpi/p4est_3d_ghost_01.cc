@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Reproduce a bug in the ghostlayer construction for a simple
 // 3d mesh.
 
@@ -27,8 +25,6 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -54,7 +50,6 @@ test()
       GridGenerator::subdivided_hyper_rectangle(tr, repetitions, p, q, false);
 
       tr.refine_global(ref);
-
 
       if(myid == 0)
         {
@@ -109,7 +104,6 @@ test()
   deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -119,7 +113,6 @@ main(int argc, char* argv[])
 
   std::cout << myid << ":" << getpid() << std::endl;
   //system("sleep 20");
-
 
   deallog.push(Utilities::int_to_string(myid));
 

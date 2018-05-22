@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that if we take an locally refined mesh, refine it globally once,
 // then coarsen it globally again, that we get the same mesh
 //
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -65,7 +61,6 @@ check()
     cell->set_coarsen_flag();
   tria.execute_coarsening_and_refinement();
 
-
   // verify that we get the same cells again
   deallog << n_cells << ' ' << tria.n_active_cells() << std::endl;
 
@@ -78,7 +73,6 @@ check()
       ++cell, ++index)
     AssertThrow(cells[index] == cell, ExcInternalError());
 }
-
 
 int
 main()

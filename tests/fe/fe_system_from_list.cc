@@ -44,8 +44,6 @@ struct MyFESystem
   }
 };
 
-
-
 template <int dim>
 class MySimulator
 {
@@ -71,7 +69,6 @@ private:
   static std::vector<unsigned int>
   create_fe_multiplicities();
 };
-
 
 template <int dim>
 std::vector<const FiniteElement<dim>*>
@@ -121,13 +118,11 @@ MySimulator<dim>::VectorElementDestroyer::get_data() const
   return data;
 }
 
-
 template <int dim>
 MySimulator<dim>::MySimulator(const unsigned int polynomial_degree)
   : fe(VectorElementDestroyer(create_fe_list(polynomial_degree)).get_data(),
        create_fe_multiplicities())
 {}
-
 
 int
 main()

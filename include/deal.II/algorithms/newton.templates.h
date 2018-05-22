@@ -16,7 +16,6 @@
 #ifndef dealii_newton_templates_h
 #define dealii_newton_templates_h
 
-
 #include <deal.II/algorithms/newton.h>
 
 #include <deal.II/base/logstream.h>
@@ -24,7 +23,6 @@
 #include <deal.II/lac/vector_memory.h>
 
 #include <iomanip>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -41,7 +39,6 @@ namespace Algorithms
       debug_vectors(false),
       debug(0)
   {}
-
 
   template <typename VectorType>
   void
@@ -83,7 +80,6 @@ namespace Algorithms
     inverse_derivative->notify(e);
   }
 
-
   template <typename VectorType>
   double
   Newton<VectorType>::threshold(const double thr)
@@ -92,7 +88,6 @@ namespace Algorithms
     assemble_threshold = thr;
     return t;
   }
-
 
   template <typename VectorType>
   void
@@ -204,7 +199,6 @@ namespace Algorithms
     // otherwise exit as normal
   }
 } // namespace Algorithms
-
 
 DEAL_II_NAMESPACE_CLOSE
 

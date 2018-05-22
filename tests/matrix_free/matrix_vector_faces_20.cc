@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // extension of matrix_vector_faces_14 (gather_evaluate and integrate_scatter)
 // to the vector-valued case in form of multiple components with different
 // vector entries but otherwise similar setup. this test differs from
@@ -32,8 +30,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_faces_common.h"
-
-
 
 template <int dim, int fe_degree_>
 void

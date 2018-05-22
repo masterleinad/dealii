@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check VectorTools::subtract_mean_value() for Trilinos vectors
 
 #include "../tests.h"

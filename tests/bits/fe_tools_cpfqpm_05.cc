@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -71,8 +70,6 @@ output_matrix(const FullMatrix<double>& m)
   deallog << std::endl;
 }
 
-
-
 template <int dim, int spacedim>
 void
 check_this(const FiniteElement<dim, spacedim>& fe,
@@ -91,7 +88,6 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   if(already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
-
 
   // test with the same quadrature formulas
   // of a degree that is high enough to
@@ -133,7 +129,6 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   AssertThrow(product.frobenius_norm() < 1e-10, ExcInternalError());
 }
 
-
 template <int dim, int spacedim>
 void
 check(const FiniteElement<dim, spacedim>& fe1,
@@ -146,8 +141,6 @@ check(const FiniteElement<dim, spacedim>& fe1,
   // call main function in .cc files
   check_this(fe1, fe2);
 }
-
-
 
 #define CHECK(EL1, deg1, EL2, deg2, dim, spacedim)      \
   {                                                     \
@@ -163,7 +156,6 @@ check(const FiniteElement<dim, spacedim>& fe1,
     CHECK(EL1, deg1, EL2, deg2, 1, 3);  \
     CHECK(EL1, deg1, EL2, deg2, 2, 3);  \
   }
-
 
 int
 main()

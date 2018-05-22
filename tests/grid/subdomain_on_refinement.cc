@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the subdomain id is inherited from mother to child
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -29,16 +27,13 @@
 
 #include <algorithm>
 
-
 std::ofstream logfile("output");
-
 
 DeclException2(ExcNumberMismatch,
                int,
                int,
                << "The numbers " << arg1 << " and " << arg2
                << " should be equal, but are not.");
-
 
 template <int dim>
 void
@@ -54,7 +49,6 @@ test()
     AssertThrow(cell->subdomain_id() == 42, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

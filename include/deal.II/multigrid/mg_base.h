@@ -26,12 +26,10 @@
 #include <deal.II/base/subscriptor.h>
 #include <deal.II/lac/vector.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /*!@addtogroup mg */
 /*@{*/
-
 
 /**
  * Multilevel matrix base. This class sets up the interface needed by
@@ -97,7 +95,6 @@ public:
   get_maxlevel() const = 0;
 };
 
-
 /**
  * Base class for coarse grid solvers.  This defines the virtual parenthesis
  * operator, being the interface used by multigrid methods. Any implementation
@@ -122,7 +119,6 @@ public:
              VectorType&        dst,
              const VectorType&  src) const = 0;
 };
-
 
 /**
  * Base class used to declare the operations needed by a concrete class
@@ -215,8 +211,6 @@ public:
                    VectorType&        dst,
                    const VectorType&  src) const = 0;
 };
-
-
 
 /**
  * Base class for multigrid smoothers. Does nothing but defining the interface

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_local_results_h
 #define dealii_mesh_worker_local_results_h
 
@@ -420,14 +419,12 @@ namespace MeshWorker
     J.resize(n);
   }
 
-
   template <typename number>
   inline void
   LocalResults<number>::initialize_vectors(const unsigned int n)
   {
     R.resize(n);
   }
-
 
   template <typename number>
   template <typename MatrixType>
@@ -453,7 +450,6 @@ namespace MeshWorker
           }
       }
   }
-
 
   template <typename number>
   template <typename MatrixType>
@@ -481,7 +477,6 @@ namespace MeshWorker
       }
   }
 
-
   template <typename number>
   inline void
   LocalResults<number>::initialize_matrices(const unsigned int n,
@@ -502,14 +497,12 @@ namespace MeshWorker
       }
   }
 
-
   template <typename number>
   inline void
   LocalResults<number>::initialize_quadrature(unsigned int np, unsigned int nv)
   {
     quadrature_data.reinit(np, nv);
   }
-
 
   template <typename number>
   inline unsigned int
@@ -518,14 +511,12 @@ namespace MeshWorker
     return J.size();
   }
 
-
   template <typename number>
   inline unsigned int
   LocalResults<number>::n_vectors() const
   {
     return R.size();
   }
-
 
   template <typename number>
   inline unsigned int
@@ -534,7 +525,6 @@ namespace MeshWorker
     return M1.size();
   }
 
-
   template <typename number>
   inline unsigned int
   LocalResults<number>::n_quadrature_points() const
@@ -542,14 +532,12 @@ namespace MeshWorker
     return quadrature_data.n_rows();
   }
 
-
   template <typename number>
   inline unsigned int
   LocalResults<number>::n_quadrature_values() const
   {
     return quadrature_data.n_cols();
   }
-
 
   template <typename number>
   inline number&
@@ -559,7 +547,6 @@ namespace MeshWorker
     return J[i];
   }
 
-
   template <typename number>
   inline BlockVector<number>&
   LocalResults<number>::vector(unsigned int i)
@@ -567,7 +554,6 @@ namespace MeshWorker
     AssertIndexRange(i, R.size());
     return R[i];
   }
-
 
   template <typename number>
   inline MatrixBlock<FullMatrix<number>>&
@@ -582,7 +568,6 @@ namespace MeshWorker
     return M1[i];
   }
 
-
   template <typename number>
   inline number&
   LocalResults<number>::quadrature_value(unsigned int k, unsigned int i)
@@ -590,14 +575,12 @@ namespace MeshWorker
     return quadrature_data(k, i);
   }
 
-
   template <typename number>
   inline Table<2, number>&
   LocalResults<number>::quadrature_values()
   {
     return quadrature_data;
   }
-
 
   template <typename number>
   inline number
@@ -607,7 +590,6 @@ namespace MeshWorker
     return J[i];
   }
 
-
   template <typename number>
   inline const BlockVector<number>&
   LocalResults<number>::vector(unsigned int i) const
@@ -615,7 +597,6 @@ namespace MeshWorker
     AssertIndexRange(i, R.size());
     return R[i];
   }
-
 
   template <typename number>
   inline const MatrixBlock<FullMatrix<number>>&
@@ -630,14 +611,12 @@ namespace MeshWorker
     return M1[i];
   }
 
-
   template <typename number>
   inline number
   LocalResults<number>::quadrature_value(unsigned int k, unsigned int i) const
   {
     return quadrature_data(k, i);
   }
-
 
   template <typename number>
   template <class StreamType>
@@ -666,7 +645,6 @@ namespace MeshWorker
   }
 
 } // namespace MeshWorker
-
 
 DEAL_II_NAMESPACE_CLOSE
 

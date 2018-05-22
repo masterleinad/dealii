@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, Texas A&M University, 2008
  */
 
-
 // @sect3{Include files}
 
 // As usual, we start by including some well-known files:
@@ -97,7 +96,6 @@ namespace Step22
   {
     typedef SparseILU<double> type;
   };
-
 
   // @sect3{The <code>StokesProblem</code> class template}
 
@@ -196,7 +194,6 @@ namespace Step22
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   BoundaryValues<dim>::value(const Point<dim>&  p,
@@ -210,7 +207,6 @@ namespace Step22
     return 0;
   }
 
-
   template <int dim>
   void
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
@@ -219,8 +215,6 @@ namespace Step22
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
-
-
 
   // We implement similar functions for the right hand side which for the
   // current example is simply zero:
@@ -238,7 +232,6 @@ namespace Step22
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   RightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -246,7 +239,6 @@ namespace Step22
   {
     return 0;
   }
-
 
   template <int dim>
   void
@@ -256,7 +248,6 @@ namespace Step22
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
-
 
   // @sect3{Linear solvers and preconditioners}
 
@@ -291,14 +282,12 @@ namespace Step22
     const SmartPointer<const PreconditionerType> preconditioner;
   };
 
-
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
     const MatrixType&         m,
     const PreconditionerType& preconditioner)
     : matrix(&m), preconditioner(&preconditioner)
   {}
-
 
   // This is the implementation of the <code>vmult</code> function.
 
@@ -323,7 +312,6 @@ namespace Step22
 
     cg.solve(*matrix, dst, src, *preconditioner);
   }
-
 
   // @sect4{The <code>SchurComplement</code> class template}
 
@@ -355,8 +343,6 @@ namespace Step22
     mutable Vector<double> tmp1, tmp2;
   };
 
-
-
   template <class PreconditionerType>
   SchurComplement<PreconditionerType>::SchurComplement(
     const BlockSparseMatrix<double>& system_matrix,
@@ -367,7 +353,6 @@ namespace Step22
       tmp2(system_matrix.block(0, 0).m())
   {}
 
-
   template <class PreconditionerType>
   void
   SchurComplement<PreconditionerType>::vmult(Vector<double>&       dst,
@@ -377,7 +362,6 @@ namespace Step22
     A_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
 
   // @sect3{StokesProblem class implementation}
 
@@ -404,7 +388,6 @@ namespace Step22
       fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
       dof_handler(triangulation)
   {}
-
 
   // @sect4{StokesProblem::setup_dofs}
 
@@ -609,7 +592,6 @@ namespace Step22
     system_rhs.collect_sizes();
   }
 
-
   // @sect4{StokesProblem::assemble_system}
 
   // The assembly process follows the discussion in step-20 and in the
@@ -780,8 +762,6 @@ namespace Step22
       typename InnerPreconditioner<dim>::type::AdditionalData());
   }
 
-
-
   // @sect4{StokesProblem::solve}
 
   // After the discussion in the introduction and the definition of the
@@ -881,7 +861,6 @@ namespace Step22
     }
   }
 
-
   // @sect4{StokesProblem::output_results}
 
   // The next function generates graphical output. In this example, we are
@@ -933,7 +912,6 @@ namespace Step22
     data_out.write_vtk(output);
   }
 
-
   // @sect4{StokesProblem::refine_mesh}
 
   // This is the last interesting function of the <code>StokesProblem</code>
@@ -963,7 +941,6 @@ namespace Step22
       triangulation, estimated_error_per_cell, 0.3, 0.0);
     triangulation.execute_coarsening_and_refinement();
   }
-
 
   // @sect4{StokesProblem::run}
 
@@ -1008,7 +985,6 @@ namespace Step22
         if(cell->face(f)->center()[dim - 1] == 0)
           cell->face(f)->set_all_boundary_ids(1);
 
-
     // We then apply an initial refinement before solving for the first
     // time. In 3D, there are going to be more degrees of freedom, so we
     // refine less there:
@@ -1039,7 +1015,6 @@ namespace Step22
       }
   }
 } // namespace Step22
-
 
 // @sect3{The <code>main</code> function}
 

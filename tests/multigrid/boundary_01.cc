@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGTools::make_boundary_list
 
 #include "../tests.h"
@@ -51,7 +50,6 @@ log_vector(const std::vector<std::set<types::global_dof_index>>& count)
     }
 }
 
-
 template <int dim>
 void
 check_fe(FiniteElement<dim>& fe)
@@ -74,7 +72,6 @@ check_fe(FiniteElement<dim>& fe)
   MGTools::make_boundary_list(mgdof, fmap, boundary_indices);
   log_vector(boundary_indices);
 }
-
 
 template <int dim>
 void

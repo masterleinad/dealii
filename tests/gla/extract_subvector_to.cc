@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the various VectorType::extract_subvector_to functions
 
 #include "../tests.h"
@@ -25,7 +23,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 template <typename VectorType>
 void
@@ -61,8 +58,6 @@ test(VectorType& vector)
     deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -90,7 +85,6 @@ main(int argc, char** argv)
       test(v);
       deallog.pop();
     }
-
 
     {
       deallog.push("deal.II");

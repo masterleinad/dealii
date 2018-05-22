@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check correct behaviour of Trilinos ghosted vectors.  The
 // test now checks that v.l2_norm() and v(idx)=... is disabled.
 
@@ -25,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -34,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // each processor owns 2 indices and all
   // are ghosting element 1 (the second)
@@ -46,7 +42,6 @@ test()
 
   TrilinosWrappers::MPI::Vector v(local_active, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v_tmp(local_relevant, MPI_COMM_WORLD);
-
 
   // set local values
   v(myid * 2)     = 1.0;
@@ -78,8 +73,6 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

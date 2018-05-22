@@ -16,7 +16,6 @@
 #ifndef dealii_block_sparse_matrix_templates_h
 #define dealii_block_sparse_matrix_templates_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/lac/block_sparse_matrix.h>
@@ -33,8 +32,6 @@ BlockSparseMatrix<number>::BlockSparseMatrix(
   BlockSparseMatrix<number>::reinit(sparsity);
 }
 
-
-
 template <typename number>
 BlockSparseMatrix<number>::~BlockSparseMatrix()
 {
@@ -48,8 +45,6 @@ BlockSparseMatrix<number>::~BlockSparseMatrix()
     {}
   sparsity_pattern = nullptr;
 }
-
-
 
 template <typename number>
 BlockSparseMatrix<number>&
@@ -71,8 +66,6 @@ BlockSparseMatrix<number>::operator=(const BlockSparseMatrix<number>& m)
   return *this;
 }
 
-
-
 template <typename number>
 void
 BlockSparseMatrix<number>::clear()
@@ -80,8 +73,6 @@ BlockSparseMatrix<number>::clear()
   BlockMatrixBase<SparseMatrix<number>>::clear();
   sparsity_pattern = nullptr;
 }
-
-
 
 template <typename number>
 void
@@ -111,8 +102,6 @@ BlockSparseMatrix<number>::reinit(const BlockSparsityPattern& sparsity)
       }
 }
 
-
-
 template <typename number>
 bool
 BlockSparseMatrix<number>::empty() const
@@ -125,8 +114,6 @@ BlockSparseMatrix<number>::empty() const
   return true;
 }
 
-
-
 template <typename number>
 typename BlockSparseMatrix<number>::size_type
 BlockSparseMatrix<number>::get_row_length(const size_type row) const
@@ -134,16 +121,12 @@ BlockSparseMatrix<number>::get_row_length(const size_type row) const
   return sparsity_pattern->row_length(row);
 }
 
-
-
 template <typename number>
 typename BlockSparseMatrix<number>::size_type
 BlockSparseMatrix<number>::n_nonzero_elements() const
 {
   return sparsity_pattern->n_nonzero_elements();
 }
-
-
 
 template <typename number>
 typename BlockSparseMatrix<number>::size_type
@@ -158,16 +141,12 @@ BlockSparseMatrix<number>::n_actually_nonzero_elements(
   return count;
 }
 
-
-
 template <typename number>
 const BlockSparsityPattern&
 BlockSparseMatrix<number>::get_sparsity_pattern() const
 {
   return *sparsity_pattern;
 }
-
-
 
 template <typename number>
 void
@@ -187,8 +166,6 @@ BlockSparseMatrix<number>::print_formatted(std::ostream&      out,
       }
 }
 
-
-
 template <typename number>
 std::size_t
 BlockSparseMatrix<number>::memory_consumption() const
@@ -201,8 +178,6 @@ BlockSparseMatrix<number>::memory_consumption() const
 
   return mem;
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

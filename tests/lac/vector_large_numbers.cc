@@ -13,12 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
-
-
 
 void
 check_large_numbers()
@@ -64,8 +60,6 @@ check_large_numbers()
               ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

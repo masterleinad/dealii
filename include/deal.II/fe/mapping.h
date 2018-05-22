@@ -16,7 +16,6 @@
 #ifndef dealii_mapping_h
 #define dealii_mapping_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/fe/fe_update_flags.h>
@@ -42,7 +41,6 @@ template <int dim, int spacedim>
 class FEFaceValues;
 template <int dim, int spacedim>
 class FESubfaceValues;
-
 
 /**
  * The transformation type used for the Mapping::transform() functions.
@@ -141,7 +139,6 @@ enum MappingType
    */
   mapping_piola_hessian
 };
-
 
 /**
  * @short Abstract base class for mapping classes.
@@ -417,7 +414,6 @@ public:
    * @}
    */
 
-
   /**
    * @name Exceptions
    * @{
@@ -427,7 +423,6 @@ public:
    * Exception
    */
   DeclException0(ExcInvalidData);
-
 
   /**
    * Computing the mapping between a real space point and a point in reference
@@ -575,7 +570,6 @@ public:
     virtual std::size_t
     memory_consumption() const;
   };
-
 
 protected:
   /**
@@ -1169,7 +1163,6 @@ public:
    * @}
    */
 
-
   /**
    * Give class @p FEValues access to the private <tt>get_...data</tt> and
    * <tt>fill_fe_...values</tt> functions.
@@ -1179,7 +1172,6 @@ public:
   friend class FEFaceValues<dim, spacedim>;
   friend class FESubfaceValues<dim, spacedim>;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

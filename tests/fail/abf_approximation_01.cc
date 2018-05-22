@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * check the projection error for a given polynomial. results should
  * be within rounding error if the polynomial is of low-enough order
@@ -22,17 +21,13 @@
  * Like rt_approximation_01, but for ABF elements
  */
 
-
-
 #include "../tests.h"
 
 #define PRECISION 2
 
-
 std::ofstream logfile("output");
 
 char buf[1000];
-
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -64,8 +59,6 @@ char buf[1000];
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
 
-
-
 template <int dim>
 class TestMap1 : public Function<dim>
 {
@@ -83,8 +76,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -100,7 +91,6 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
   return (0);
 }
 
-
 template <int dim>
 void
 TestMap1<dim>::vector_value(const Point<dim>& p,
@@ -113,8 +103,6 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
-
 
 ///-----------------------------------------------------------------------
 
@@ -139,8 +127,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -157,7 +143,6 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
     return rad * (cos(phi + phi_p) - cos(phi_p));
 }
 
-
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
@@ -169,9 +154,7 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
-
 
 template <int dim>
 class TestDef2 : public Function<dim>
@@ -194,7 +177,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -207,7 +189,6 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
     return scale * y;
 }
 
-
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
@@ -219,10 +200,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
 // testDef3 implements parallelograms ...
-
 
 template <int dim>
 class TestDef3 : public Function<dim>
@@ -245,7 +224,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -257,7 +235,6 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
   else
     return 0;
 }
-
 
 template <int dim>
 void
@@ -303,7 +280,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestPoly<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -317,7 +293,6 @@ TestPoly<dim>::value(const Point<dim>& p, const unsigned int component) const
     return polys[2].value(x) + polys[3].value(y);
 }
 
-
 template <int dim>
 void
 TestPoly<dim>::vector_value(const Point<dim>& p,
@@ -328,8 +303,6 @@ TestPoly<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
-
 
 /*
  * Check the value of the derivative field.
@@ -402,7 +375,6 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
       deallog << buf;
     }
 
-
   // Test the core functionality
   DataOut<2>* data_out = new DataOut<2>;
   data_out->attach_dof_handler(*dof_handler);
@@ -415,7 +387,6 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
 
   return (0.0);
 }
-
 
 int
 main()

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check is_serial_vector type trait for internal deal.II Vector types
 
 #include "../tests.h"
@@ -56,7 +54,6 @@ test()
           << std::endl;
 
   deallog << "OK" << std::endl << std::endl;
-
 
   // make sure that is_serial_vector< dealii::LinearAlgebra::Vector<Number> > is working
   Assert(is_serial_vector<dealii::LinearAlgebra::Vector<double>>::value == true,

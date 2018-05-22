@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Tests CellwiseInverseMassMatrix on vector DG elements, similar test as
 // inverse_mass_02 but using different coefficients on different components
 
@@ -35,10 +33,7 @@
 
 #include <deal.II/matrix_free/operators.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim,
           int fe_degree,
@@ -137,8 +132,6 @@ private:
   const MatrixFree<dim, Number>& data;
 };
 
-
-
 template <int dim, int fe_degree, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
@@ -183,8 +176,6 @@ do_test(const DoFHandler<dim>& dof)
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
 
-
-
 template <int dim, int fe_degree>
 void
 test()
@@ -218,8 +209,6 @@ test()
 
   do_test<dim, fe_degree, double>(dof);
 }
-
-
 
 int
 main()

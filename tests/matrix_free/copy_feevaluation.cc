@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same test as matrix_vector_stokes_noflux, but allocating FEEvaluation on
 // the heap (using AlignedVector) instead of allocating it on the stack. Tests
 // also copy constructors of FEEvaluation.
@@ -46,8 +44,6 @@ std::ofstream logfile("output");
 
 #include <complex>
 #include <iostream>
-
-
 
 template <int dim, int degree_p, typename VectorType>
 class MatrixFreeTest
@@ -107,7 +103,6 @@ public:
       }
   }
 
-
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
@@ -119,8 +114,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -268,7 +261,6 @@ test()
       }
   }
 
-
   solution.reinit(2);
   for(unsigned int d = 0; d < 2; ++d)
     solution.block(d).reinit(dofs_per_block[d]);
@@ -322,8 +314,6 @@ test()
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

@@ -26,7 +26,6 @@
 #    include <deal.II/lac/trilinos_sparse_matrix.h>
 #  endif
 
-
 DEAL_II_NAMESPACE_OPEN
 
 /**
@@ -187,9 +186,7 @@ private:
                       const Options&  options);
 };
 
-
 /* ---------------------- Template and inline functions ------------- */
-
 
 namespace internal
 {
@@ -209,8 +206,6 @@ namespace internal
         return matrix.el(i, j);
       }
 
-
-
       /**
        * Return the element with given indices of a block sparse matrix.
        */
@@ -223,7 +218,6 @@ namespace internal
         return matrix.el(i, j);
       }
 
-
 #  ifdef DEAL_II_WITH_TRILINOS
       /**
        * Return the element with given indices of a Trilinos sparse matrix.
@@ -235,8 +229,6 @@ namespace internal
       {
         return matrix.el(i, j);
       }
-
-
 
       /**
        * Return the element with given indices of a Trilinos block sparse
@@ -251,13 +243,11 @@ namespace internal
       }
 #  endif
 
-
 #  ifdef DEAL_II_WITH_PETSC
       // no need to do anything: PETSc matrix objects do not distinguish
       // between operator() and el(i,j), so we can safely access elements
       // through the generic function below
 #  endif
-
 
       /**
        * Return the element with given indices from any matrix type for which
@@ -275,8 +265,6 @@ namespace internal
     } // namespace
   }   // namespace MatrixOutImplementation
 } // namespace internal
-
-
 
 template <class Matrix>
 inline double
@@ -318,8 +306,6 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
   average /= n_elements;
   return average;
 }
-
-
 
 template <class Matrix>
 void
@@ -415,8 +401,6 @@ MatrixOut::build_patches(const Matrix&      matrix,
   // finally set the name
   this->name = name;
 }
-
-
 
 /*----------------------------   matrix_out.h     ---------------------------*/
 

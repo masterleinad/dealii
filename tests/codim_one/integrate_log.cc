@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrates the function ln(x-a)*f(x), where f(x) is a power of x on the interval [a,b].
 // dim=1 only.
 
@@ -35,7 +33,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
 
 #include <string>
 
@@ -67,7 +64,6 @@ test(const unsigned int n,
     feq, qlog, update_JxW_values | update_quadrature_points),
     fev_help(feq, qgauss, update_JxW_values | update_quadrature_points);
 
-
   dh.distribute_dofs(feq);
 
   double integral = 0;
@@ -83,7 +79,6 @@ test(const unsigned int n,
           integral
             += fe_values.JxW(i) * monomial.value(fe_values.quadrature_point(i));
         }
-
 
       // The quadrature formula weights are chosen in order to
       // integrate f(x)*ln[(x-a)/(b-a)] (that is, the argument of the

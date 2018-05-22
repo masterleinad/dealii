@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test DoFTools::extract_boundary_dofs for parallel DoFHandlers
 
 #include "../tests.h"
@@ -23,8 +21,6 @@
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_generator.h>
-
-
 
 template <int dim>
 void
@@ -52,14 +48,12 @@ test()
   AssertThrow(boundary_dofs.n_elements() == 0, ExcInternalError());
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

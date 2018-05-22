@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -29,14 +27,11 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 
-
-
 // 1: continuous refinement of the unit square always in the middle
 // 2: refinement of the circle at the boundary
 // 2: refinement of a wiggled area at the boundary
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 class Ball : public FlatManifold<dim>
@@ -58,7 +53,6 @@ public:
     return middle;
   }
 
-
   virtual Point<dim>
   get_new_point_on_quad(
     const typename Triangulation<dim>::quad_iterator& quad) const
@@ -76,7 +70,6 @@ public:
   }
 };
 
-
 template <int dim>
 class CurvedLine : public FlatManifold<dim>
 {
@@ -89,7 +82,6 @@ public:
   get_new_point_on_quad(
     const typename Triangulation<dim>::quad_iterator& quad) const;
 };
-
 
 template <int dim>
 Point<dim>
@@ -121,7 +113,6 @@ CurvedLine<dim>::get_new_point_on_line(
        && (line->boundary_id() == 1))
       return middle;
 
-
   double x = middle(0), y = middle(1);
 
   if(y < x)
@@ -137,8 +128,6 @@ CurvedLine<dim>::get_new_point_on_line(
 
   return middle;
 }
-
-
 
 template <int dim>
 Point<dim>
@@ -172,8 +161,6 @@ CurvedLine<dim>::get_new_point_on_quad(
   return middle;
 }
 
-
-
 template <int dim>
 class TestCases
 {
@@ -193,13 +180,9 @@ private:
   Ball<dim>           ball;
 };
 
-
-
 template <int dim>
 TestCases<dim>::TestCases() : tria(nullptr), dof(nullptr)
 {}
-
-
 
 template <int dim>
 TestCases<dim>::~TestCases()
@@ -209,8 +192,6 @@ TestCases<dim>::~TestCases()
   if(tria)
     delete tria;
 }
-
-
 
 template <int dim>
 void
@@ -226,8 +207,6 @@ TestCases<dim>::create_new()
 
   dof = new DoFHandler<dim>(*tria);
 }
-
-
 
 template <int dim>
 void
@@ -302,7 +281,6 @@ TestCases<dim>::run(const unsigned int test_case)
         }
     };
 
-
   deallog << "    Distributing degrees of freedom..." << std::endl;
   FE_Q<dim> fe(1);
   dof->distribute_dofs(fe);
@@ -312,13 +290,11 @@ TestCases<dim>::run(const unsigned int test_case)
 
   SparsityPattern sparsity(dof->n_dofs(), dof->max_couplings_between_dofs());
 
-
   DoFTools::make_sparsity_pattern(*dof, sparsity);
   int unconstrained_bandwidth = sparsity.bandwidth();
 
   deallog << "    Writing sparsity pattern..." << std::endl;
   sparsity.print_gnuplot(logfile);
-
 
   // computing constraints
   deallog << "    Computing constraints..." << std::endl;
@@ -329,7 +305,6 @@ TestCases<dim>::run(const unsigned int test_case)
 
   deallog << "    Writing condensed sparsity pattern..." << std::endl;
   sparsity.print_gnuplot(logfile);
-
 
   deallog << std::endl
           << "    Total number of cells         = " << tria->n_cells()
@@ -350,8 +325,6 @@ TestCases<dim>::run(const unsigned int test_case)
   // finite element object
   dof->clear();
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that Table<N,ComplicatedType> works properties (this really tests the
 // data type underlying the values field of Table and that
 // fill()/resize_fast() works properly).

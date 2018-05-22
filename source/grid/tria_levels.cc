@@ -18,7 +18,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   namespace TriangulationImplementation
@@ -81,7 +80,6 @@ namespace internal
         };
     }
 
-
     template <int dim>
     void
     TriaLevel<dim>::monitor_memory(const unsigned int true_dimension) const
@@ -92,7 +90,6 @@ namespace internal
       Assert(2 * true_dimension * coarsen_flags.size() == neighbors.size(),
              ExcMemoryInexact(coarsen_flags.size(), neighbors.size()));
     }
-
 
     template <int dim>
     std::size_t
@@ -170,7 +167,6 @@ namespace internal
         };
     }
 
-
     void
     TriaLevel<3>::monitor_memory(const unsigned int true_dimension) const
     {
@@ -180,7 +176,6 @@ namespace internal
       Assert(2 * true_dimension * coarsen_flags.size() == neighbors.size(),
              ExcMemoryInexact(coarsen_flags.size(), neighbors.size()));
     }
-
 
     std::size_t
     TriaLevel<3>::memory_consumption() const
@@ -196,7 +191,6 @@ namespace internal
     }
   } // namespace TriangulationImplementation
 } // namespace internal
-
 
 template class internal::TriangulationImplementation::TriaLevel<1>;
 template class internal::TriangulationImplementation::TriaLevel<2>;

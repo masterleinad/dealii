@@ -16,7 +16,6 @@
 #ifndef dealii_solver_fire_h
 #define dealii_solver_fire_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/lac/diagonal_matrix.h>
@@ -24,9 +23,7 @@
 
 #include <functional>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /*!@addtogroup Solvers */
 /*@{*/
@@ -205,8 +202,6 @@ SolverFIRE<VectorType>::AdditionalData::AdditionalData(
                          "or more of the these values are not positive."));
 }
 
-
-
 template <typename VectorType>
 SolverFIRE<VectorType>::SolverFIRE(SolverControl&            solver_control,
                                    VectorMemory<VectorType>& vector_memory,
@@ -214,21 +209,15 @@ SolverFIRE<VectorType>::SolverFIRE(SolverControl&            solver_control,
   : Solver<VectorType>(solver_control, vector_memory), additional_data(data)
 {}
 
-
-
 template <typename VectorType>
 SolverFIRE<VectorType>::SolverFIRE(SolverControl&        solver_control,
                                    const AdditionalData& data)
   : Solver<VectorType>(solver_control), additional_data(data)
 {}
 
-
-
 template <typename VectorType>
 SolverFIRE<VectorType>::~SolverFIRE()
 {}
-
-
 
 template <typename VectorType>
 template <typename PreconditionerType>
@@ -351,8 +340,6 @@ SolverFIRE<VectorType>::solve(
                 SolverControl::NoConvergence(iter, gradients * gradients));
 }
 
-
-
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
@@ -377,8 +364,6 @@ SolverFIRE<VectorType>::solve(const MatrixType&         A,
   this->solve(compute_func, x, preconditioner);
 }
 
-
-
 template <typename VectorType>
 void
 SolverFIRE<VectorType>::print_vectors(const unsigned int,
@@ -386,8 +371,6 @@ SolverFIRE<VectorType>::print_vectors(const unsigned int,
                                       const VectorType&,
                                       const VectorType&) const
 {}
-
-
 
 #endif // DOXYGEN
 

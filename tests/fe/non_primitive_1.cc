@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // assemble a matrix for the stokes equation in different ways for
 // primitive elements. the name of the program is only to indicate
 // that we use the way to assemble matrices necessary for
@@ -21,7 +20,6 @@
 // we get if we use the usual way which we can take if the FE is
 // primitive. then use a third way where we use some optimizations,
 // and compare again whether the matrices are the same
-
 
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -36,8 +34,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/sparse_matrix.h>
-
-
 
 // create the matrix in the plain old
 // way, which is valid if the finite
@@ -106,8 +102,6 @@ create_stokes_matrix_1(const DoFHandler<dim>& dof_handler,
     };
 }
 
-
-
 // create the matrix in the simple
 // way that is necessary when you
 // want to use non-primitive shape
@@ -169,15 +163,12 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                           * fe_values.JxW(q));
                 };
 
-
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
-
-
 
 // create the matrix in a way that is
 // necessary when you want to use
@@ -247,15 +238,12 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                               * fe_values.JxW(q));
                     };
 
-
       cell->get_dof_indices(local_dof_indices);
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         for(unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
-
-
 
 template <int dim>
 void
@@ -317,8 +305,6 @@ test()
                   ExcInternalError());
     };
 }
-
-
 
 int
 main()

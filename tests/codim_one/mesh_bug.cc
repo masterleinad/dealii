@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a short (a few lines) description of what the program does
 
 #include "../tests.h"
 
 // all include files you need here
-
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
@@ -29,7 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
 
 int
 main()
@@ -47,7 +43,6 @@ main()
   for(unsigned int i = 0; i < vertices.size(); ++i)
     if(vertices[i](2) > 1e-7)
       std::cout << "Error!" << std::endl;
-
 
   GridOut go;
   go.write_ucd(tria, logfile);

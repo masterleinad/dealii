@@ -16,7 +16,6 @@
 #ifndef dealii_mg_coarse_h
 #define dealii_mg_coarse_h
 
-
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/householder.h>
 #include <deal.II/lac/linear_operator.h>
@@ -76,7 +75,6 @@ private:
                MGCoarseGridApplySmoother<VectorType>>
     coarse_smooth;
 };
-
 
 /**
  * Coarse grid solver using LAC iterative methods. This is a little wrapper,
@@ -163,8 +161,6 @@ private:
   LinearOperator<VectorType> precondition;
 };
 
-
-
 /**
  * Coarse grid multigrid operator for an iterative solver.
  *
@@ -246,8 +242,6 @@ private:
                                            PreconditionerType>>
     preconditioner;
 };
-
-
 
 /**
  * Coarse grid solver by QR factorization implemented in the class
@@ -344,7 +338,6 @@ MGCoarseGridApplySmoother<VectorType>::MGCoarseGridApplySmoother(
   initialize(coarse_smooth);
 }
 
-
 template <class VectorType>
 void
 MGCoarseGridApplySmoother<VectorType>::initialize(
@@ -355,14 +348,12 @@ MGCoarseGridApplySmoother<VectorType>::initialize(
     &coarse_smooth_, typeid(*this).name());
 }
 
-
 template <class VectorType>
 void
 MGCoarseGridApplySmoother<VectorType>::clear()
 {
   coarse_smooth = nullptr;
 }
-
 
 template <class VectorType>
 void
@@ -375,12 +366,10 @@ MGCoarseGridApplySmoother<VectorType>::operator()(const unsigned int level,
 
 /* ------------------ Functions for MGCoarseGridLACIteration ------------ */
 
-
 template <typename SolverType, class VectorType>
 MGCoarseGridLACIteration<SolverType, VectorType>::MGCoarseGridLACIteration()
   : solver(0, typeid(*this).name()), matrix(0), precondition(0)
 {}
-
 
 template <typename SolverType, class VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -397,13 +386,11 @@ MGCoarseGridLACIteration<SolverType, VectorType>::MGCoarseGridLACIteration(
   precondition = linear_operator<VectorType>(matrix, p);
 }
 
-
 template <typename SolverType, class VectorType>
 MGCoarseGridLACIteration<SolverType, VectorType>::~MGCoarseGridLACIteration()
 {
   clear();
 }
-
 
 template <typename SolverType, class VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -421,7 +408,6 @@ MGCoarseGridLACIteration<SolverType, VectorType>::initialize(
   precondition = linear_operator<VectorType>(matrix, p);
 }
 
-
 template <typename SolverType, class VectorType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>::clear()
@@ -430,7 +416,6 @@ MGCoarseGridLACIteration<SolverType, VectorType>::clear()
   matrix       = LinearOperator<VectorType>();
   precondition = LinearOperator<VectorType>();
 }
-
 
 template <typename SolverType, class VectorType>
 void
@@ -443,7 +428,6 @@ operator()(const unsigned int /* level */,
   solver->solve(matrix, dst, src, precondition);
 }
 
-
 template <typename SolverType, class VectorType>
 template <typename MatrixType>
 void
@@ -455,8 +439,6 @@ MGCoarseGridLACIteration<SolverType, VectorType>::set_matrix(
   // empty LinearOperator exemplar.
   matrix = linear_operator<VectorType>(LinearOperator<VectorType>(), m);
 }
-
-
 
 /* ------------------ Functions for MGCoarseGridIterativeSolver ------------ */
 
@@ -473,8 +455,6 @@ MGCoarseGridIterativeSolver<VectorType,
     preconditioner(0, typeid(*this).name())
 {}
 
-
-
 template <class VectorType,
           class SolverType,
           class MatrixType,
@@ -490,8 +470,6 @@ MGCoarseGridIterativeSolver<VectorType,
     matrix(&matrix, typeid(*this).name()),
     preconditioner(&preconditioner, typeid(*this).name())
 {}
-
-
 
 template <class VectorType,
           class SolverType,
@@ -511,8 +489,6 @@ MGCoarseGridIterativeSolver<
   preconditioner = &preconditioner_;
 }
 
-
-
 template <class VectorType,
           class SolverType,
           class MatrixType,
@@ -527,8 +503,6 @@ MGCoarseGridIterativeSolver<VectorType,
   matrix         = 0;
   preconditioner = 0;
 }
-
-
 
 template <class VectorType,
           class SolverType,
@@ -549,8 +523,6 @@ operator()(const unsigned int /*level*/,
   solver->solve(*matrix, dst, src, *preconditioner);
 }
 
-
-
 /* ------------------ Functions for MGCoarseGridHouseholder ------------ */
 
 template <typename number, class VectorType>
@@ -561,8 +533,6 @@ MGCoarseGridHouseholder<number, VectorType>::MGCoarseGridHouseholder(
     householder.initialize(*A);
 }
 
-
-
 template <typename number, class VectorType>
 void
 MGCoarseGridHouseholder<number, VectorType>::initialize(
@@ -570,8 +540,6 @@ MGCoarseGridHouseholder<number, VectorType>::initialize(
 {
   householder.initialize(A);
 }
-
-
 
 template <typename number, class VectorType>
 void
@@ -585,8 +553,6 @@ operator()(const unsigned int /*level*/,
 
 //---------------------------------------------------------------------------
 
-
-
 template <typename number, class VectorType>
 void
 MGCoarseGridSVD<number, VectorType>::initialize(const FullMatrix<number>& A,
@@ -597,7 +563,6 @@ MGCoarseGridSVD<number, VectorType>::initialize(const FullMatrix<number>& A,
   matrix.compute_inverse_svd(threshold);
 }
 
-
 template <typename number, class VectorType>
 void
 MGCoarseGridSVD<number, VectorType>::operator()(const unsigned int /*level*/,
@@ -606,7 +571,6 @@ MGCoarseGridSVD<number, VectorType>::operator()(const unsigned int /*level*/,
 {
   matrix.vmult(dst, src);
 }
-
 
 template <typename number, class VectorType>
 void
@@ -618,7 +582,6 @@ MGCoarseGridSVD<number, VectorType>::log() const
     deallog << ' ' << matrix.singular_value(i);
   deallog << std::endl;
 }
-
 
 #endif // DOXYGEN
 

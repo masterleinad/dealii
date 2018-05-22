@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check comparators in numbers namespace
 
 #include "../tests.h"
 
 #include <deal.II/base/numbers.h>
-
 
 template <typename Number>
 void
@@ -42,8 +40,6 @@ check(const Number& a, const Number& b)
   AssertThrow((numbers::value_is_greater_than_or_equal_to(a, b)) == (a >= b),
               ExcMessage("Comparator is incorrect."));
 }
-
-
 
 int
 main()

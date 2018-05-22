@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Manifold ID. Now we test the function set_all_manifold_ids(), and verify
 // that they are correctly inherited from one cell onward. All manifold ids
 // should end up being 1.
 
 #include "../tests.h"
-
 
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>

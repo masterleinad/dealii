@@ -27,7 +27,6 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace internal
@@ -47,14 +46,11 @@ namespace internal
 } // namespace internal
 /* ----------------------- FESystem::InternalData ------------------- */
 
-
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::InternalData::InternalData(
   const unsigned int n_base_elements)
   : base_fe_datas(n_base_elements), base_fe_output_objects(n_base_elements)
 {}
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::InternalData::~InternalData()
@@ -63,7 +59,6 @@ FESystem<dim, spacedim>::InternalData::~InternalData()
   for(unsigned int i = 0; i < base_fe_datas.size(); ++i)
     base_fe_datas[i].reset();
 }
-
 
 template <int dim, int spacedim>
 typename FiniteElement<dim, spacedim>::InternalDataBase&
@@ -74,8 +69,6 @@ FESystem<dim, spacedim>::InternalData::get_fe_data(
          ExcIndexRange(base_no, 0, base_fe_datas.size()));
   return *base_fe_datas[base_no];
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -88,8 +81,6 @@ FESystem<dim, spacedim>::InternalData::set_fe_data(
   base_fe_datas[base_no] = std::move(ptr);
 }
 
-
-
 template <int dim, int spacedim>
 internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
 FESystem<dim, spacedim>::InternalData::get_fe_output_object(
@@ -100,14 +91,10 @@ FESystem<dim, spacedim>::InternalData::get_fe_output_object(
   return base_fe_output_objects[base_no];
 }
 
-
-
 /* ---------------------------------- FESystem ------------------- */
-
 
 template <int dim, int spacedim>
 const unsigned int FESystem<dim, spacedim>::invalid_face_number;
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe,
@@ -125,8 +112,6 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe,
   multiplicities.push_back(n_elements);
   initialize(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
@@ -150,8 +135,6 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
   multiplicities.push_back(n2);
   initialize(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
@@ -186,8 +169,6 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
   multiplicities.push_back(n3);
   initialize(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
@@ -237,8 +218,6 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
   multiplicities.push_back(n4);
   initialize(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
@@ -291,8 +270,6 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim>& fe1,
   initialize(fes, multiplicities);
 }
 
-
-
 template <int dim, int spacedim>
 FESystem<dim, spacedim>::FESystem(
   const std::vector<const FiniteElement<dim, spacedim>*>& fes,
@@ -308,8 +285,6 @@ FESystem<dim, spacedim>::FESystem(
 {
   initialize(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -338,8 +313,6 @@ FESystem<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FESystem<dim, spacedim>::clone() const
@@ -354,8 +327,6 @@ FESystem<dim, spacedim>::clone() const
     }
   return std_cxx14::make_unique<FESystem<dim, spacedim>>(fes, multiplicities);
 }
-
-
 
 template <int dim, int spacedim>
 const FiniteElement<dim, spacedim>&
@@ -384,8 +355,6 @@ FESystem<dim, spacedim>::get_sub_fe(
   return *this;
 }
 
-
-
 template <int dim, int spacedim>
 double
 FESystem<dim, spacedim>::shape_value(const unsigned int i,
@@ -399,8 +368,6 @@ FESystem<dim, spacedim>::shape_value(const unsigned int i,
   return (base_element(this->system_to_base_table[i].first.first)
             .shape_value(this->system_to_base_table[i].second, p));
 }
-
-
 
 template <int dim, int spacedim>
 double
@@ -437,8 +404,6 @@ FESystem<dim, spacedim>::shape_value_component(
     this->system_to_base_table[i].second, p, component_in_base));
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<1, dim>
 FESystem<dim, spacedim>::shape_grad(const unsigned int i,
@@ -452,8 +417,6 @@ FESystem<dim, spacedim>::shape_grad(const unsigned int i,
   return (base_element(this->system_to_base_table[i].first.first)
             .shape_grad(this->system_to_base_table[i].second, p));
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<1, dim>
@@ -483,8 +446,6 @@ FESystem<dim, spacedim>::shape_grad_component(
     this->system_to_base_table[i].second, p, component_in_base));
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<2, dim>
 FESystem<dim, spacedim>::shape_grad_grad(const unsigned int i,
@@ -498,8 +459,6 @@ FESystem<dim, spacedim>::shape_grad_grad(const unsigned int i,
   return (base_element(this->system_to_base_table[i].first.first)
             .shape_grad_grad(this->system_to_base_table[i].second, p));
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<2, dim>
@@ -529,8 +488,6 @@ FESystem<dim, spacedim>::shape_grad_grad_component(
     this->system_to_base_table[i].second, p, component_in_base));
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<3, dim>
 FESystem<dim, spacedim>::shape_3rd_derivative(const unsigned int i,
@@ -544,8 +501,6 @@ FESystem<dim, spacedim>::shape_3rd_derivative(const unsigned int i,
   return (base_element(this->system_to_base_table[i].first.first)
             .shape_3rd_derivative(this->system_to_base_table[i].second, p));
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<3, dim>
@@ -575,8 +530,6 @@ FESystem<dim, spacedim>::shape_3rd_derivative_component(
     this->system_to_base_table[i].second, p, component_in_base));
 }
 
-
-
 template <int dim, int spacedim>
 Tensor<4, dim>
 FESystem<dim, spacedim>::shape_4th_derivative(const unsigned int i,
@@ -590,8 +543,6 @@ FESystem<dim, spacedim>::shape_4th_derivative(const unsigned int i,
   return (base_element(this->system_to_base_table[i].first.first)
             .shape_4th_derivative(this->system_to_base_table[i].second, p));
 }
-
-
 
 template <int dim, int spacedim>
 Tensor<4, dim>
@@ -620,8 +571,6 @@ FESystem<dim, spacedim>::shape_4th_derivative_component(
   return (base_element(base).shape_4th_derivative_component(
     this->system_to_base_table[i].second, p, component_in_base));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -697,8 +646,6 @@ FESystem<dim, spacedim>::get_interpolation_matrix(
             this->system_to_base_table[i].second,
             source_fe.system_to_base_table[j].second));
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -791,8 +738,6 @@ FESystem<dim, spacedim>::get_restriction_matrix(
   return this->restriction[refinement_case - 1][child];
 }
 
-
-
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FESystem<dim, spacedim>::get_prolongation_matrix(
@@ -860,7 +805,6 @@ FESystem<dim, spacedim>::get_prolongation_matrix(
   return this->prolongation[refinement_case - 1][child];
 }
 
-
 template <int dim, int spacedim>
 unsigned int
 FESystem<dim, spacedim>::face_to_cell_index(const unsigned int face_dof_index,
@@ -898,13 +842,9 @@ FESystem<dim, spacedim>::face_to_cell_index(const unsigned int face_dof_index,
   return numbers::invalid_unsigned_int;
 }
 
-
-
 //---------------------------------------------------------------------------
 // Data field initialization
 //---------------------------------------------------------------------------
-
-
 
 template <int dim, int spacedim>
 UpdateFlags
@@ -917,8 +857,6 @@ FESystem<dim, spacedim>::requires_update_flags(const UpdateFlags flags) const
     out |= base_element(base_no).requires_update_flags(flags);
   return out;
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
@@ -1035,8 +973,6 @@ FESystem<dim, spacedim>::get_face_data(
   return std::move(data);
 }
 
-
-
 // The following function is a clone of get_data, with the exception
 // that get_subface_data of the base elements is called.
 
@@ -1096,8 +1032,6 @@ FESystem<dim, spacedim>::get_subface_data(
   return std::move(data);
 }
 
-
-
 template <int dim, int spacedim>
 void
 FESystem<dim, spacedim>::fill_fe_values(
@@ -1125,8 +1059,6 @@ FESystem<dim, spacedim>::fill_fe_values(
                mapping_data,
                output_data);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1156,8 +1088,6 @@ FESystem<dim, spacedim>::fill_fe_face_values(
                output_data);
 }
 
-
-
 template <int dim, int spacedim>
 void
 FESystem<dim, spacedim>::fill_fe_subface_values(
@@ -1186,8 +1116,6 @@ FESystem<dim, spacedim>::fill_fe_subface_values(
                mapping_data,
                output_data);
 }
-
-
 
 template <int dim, int spacedim>
 template <int dim_1>
@@ -1219,7 +1147,6 @@ FESystem<dim, spacedim>::compute_fill(
   // (fill_fe_(sub)face_values)
   Assert(dim_1 == dim || dim_1 == dim - 1, ExcInternalError());
   const UpdateFlags flags = fe_data.update_each;
-
 
   // loop over the base elements, let them compute what they need to compute,
   // and then copy what is necessary.
@@ -1275,7 +1202,6 @@ FESystem<dim, spacedim>::compute_fill(
             face_quadrature = static_cast<const Quadrature<dim - 1>*>(
               quadrature_base_pointer);
           }
-
 
         // Make sure that in the case of fill_fe_values the data is only
         // copied from base_data to data if base_data is changed. therefore
@@ -1392,7 +1318,6 @@ FESystem<dim, spacedim>::compute_fill(
             }
       }
 }
-
 
 template <int dim, int spacedim>
 void
@@ -1599,8 +1524,6 @@ FESystem<dim, spacedim>::build_interface_constraints()
       };
 }
 
-
-
 template <int dim, int spacedim>
 void
 FESystem<dim, spacedim>::initialize(
@@ -1639,7 +1562,6 @@ FESystem<dim, spacedim>::initialize(
     // wait for all of these clone operations to finish
     clone_base_elements.join_all();
   }
-
 
   {
     // If the system is not primitive, these have not been initialized by
@@ -1714,7 +1636,6 @@ FESystem<dim, spacedim>::initialize(
             this->unit_face_support_points.resize(0);
             return;
           }
-
 
       // generate unit face support points from unit support points of sub
       // elements
@@ -1860,8 +1781,6 @@ FESystem<dim, spacedim>::initialize(
   init_tasks.join_all();
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FESystem<dim, spacedim>::hp_constraints_are_implemented() const
@@ -1872,8 +1791,6 @@ FESystem<dim, spacedim>::hp_constraints_are_implemented() const
 
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -1979,8 +1896,6 @@ FESystem<dim, spacedim>::get_face_interpolation_matrix(
                                 spacedim>::ExcInterpolationNotImplemented()));
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2095,8 +2010,6 @@ FESystem<dim, spacedim>::get_subface_interpolation_matrix(
     }
 }
 
-
-
 template <int dim, int spacedim>
 template <int structdim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -2207,8 +2120,6 @@ FESystem<dim, spacedim>::hp_object_dof_identities(
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FESystem<dim, spacedim>::hp_vertex_dof_identities(
@@ -2225,8 +2136,6 @@ FESystem<dim, spacedim>::hp_line_dof_identities(
   return hp_object_dof_identities<1>(fe_other);
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FESystem<dim, spacedim>::hp_quad_dof_identities(
@@ -2234,8 +2143,6 @@ FESystem<dim, spacedim>::hp_quad_dof_identities(
 {
   return hp_object_dof_identities<2>(fe_other);
 }
-
-
 
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
@@ -2280,8 +2187,6 @@ FESystem<dim, spacedim>::compare_for_face_domination(
   return FiniteElementDomination::neither_element_dominates;
 }
 
-
-
 template <int dim, int spacedim>
 const FiniteElement<dim, spacedim>&
 FESystem<dim, spacedim>::base_element(const unsigned int index) const
@@ -2290,8 +2195,6 @@ FESystem<dim, spacedim>::base_element(const unsigned int index) const
          ExcIndexRange(index, 0, base_elements.size()));
   return *base_elements[index].first;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -2303,8 +2206,6 @@ FESystem<dim, spacedim>::has_support_on_face(
             .has_support_on_face(this->system_to_base_index(shape_index).second,
                                  face_index));
 }
-
-
 
 template <int dim, int spacedim>
 Point<dim>
@@ -2326,8 +2227,6 @@ FESystem<dim, spacedim>::unit_support_point(const unsigned int index) const
               .unit_support_point(this->system_to_base_index(index).second));
 }
 
-
-
 template <int dim, int spacedim>
 Point<dim - 1>
 FESystem<dim, spacedim>::unit_face_support_point(const unsigned int index) const
@@ -2348,8 +2247,6 @@ FESystem<dim, spacedim>::unit_face_support_point(const unsigned int index) const
               .unit_face_support_point(
                 this->face_system_to_base_index(index).second));
 }
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -2405,8 +2302,6 @@ FESystem<dim, spacedim>::get_constant_modes() const
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(constant_modes,
                                                               components);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -2512,8 +2407,6 @@ FESystem<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
     } /*for*/
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FESystem<dim, spacedim>::memory_consumption() const
@@ -2527,8 +2420,6 @@ FESystem<dim, spacedim>::memory_consumption() const
     mem += MemoryConsumption::memory_consumption(*base_elements[i].first);
   return mem;
 }
-
-
 
 // explicit instantiations
 #include "fe_system.inst"

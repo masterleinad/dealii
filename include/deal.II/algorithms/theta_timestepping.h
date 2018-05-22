@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_theta_timestepping_h
 #define dealii_theta_timestepping_h
 
@@ -305,7 +304,6 @@ namespace Algorithms
      */
     TimestepData d_implicit;
 
-
     /**
      * The operator computing the explicit part of the scheme. This will
      * receive in its input data the value at the current time with name
@@ -337,7 +335,6 @@ namespace Algorithms
       output;
   };
 
-
   template <typename VectorType>
   inline const TimestepData&
   ThetaTimestepping<VectorType>::explicit_data() const
@@ -345,14 +342,12 @@ namespace Algorithms
     return d_explicit;
   }
 
-
   template <typename VectorType>
   inline const TimestepData&
   ThetaTimestepping<VectorType>::implicit_data() const
   {
     return d_implicit;
   }
-
 
   template <typename VectorType>
   inline TimestepControl&
@@ -368,14 +363,12 @@ namespace Algorithms
     output = &out;
   }
 
-
   template <typename VectorType>
   inline double
   ThetaTimestepping<VectorType>::theta() const
   {
     return vtheta;
   }
-
 
   template <typename VectorType>
   inline double
@@ -385,7 +378,6 @@ namespace Algorithms
     vtheta           = new_theta;
     return tmp;
   }
-
 
   template <typename VectorType>
   inline double

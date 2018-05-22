@@ -18,7 +18,6 @@
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 
-
 template <int rank, int dim>
 void
 check()
@@ -42,7 +41,6 @@ check()
 
   deallog << t.norm() << ' ' << ti.norm() << ' ' << tc.norm() << std::endl;
 }
-
 
 int
 main()

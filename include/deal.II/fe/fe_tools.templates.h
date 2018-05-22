@@ -16,7 +16,6 @@
 #ifndef dealii_fe_tools_templates_H
 #define dealii_fe_tools_templates_H
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/std_cxx14/memory.h>
@@ -58,13 +57,11 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/householder.h>
 
-
 #include <deal.II/base/index_set.h>
 
 #include <cctype>
 #include <iostream>
 #include <memory>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -162,8 +159,6 @@ namespace FETools
         block_indices);
     }
 
-
-
     template <int dim, int spacedim>
     FiniteElementData<dim>
     multiply_dof_numbers(const FiniteElement<dim, spacedim>* fe1,
@@ -192,8 +187,6 @@ namespace FETools
       mult.push_back(N5);
       return multiply_dof_numbers(fes, mult);
     }
-
-
 
     template <int dim, int spacedim>
     std::vector<bool>
@@ -316,8 +309,6 @@ namespace FETools
       return retval;
     }
 
-
-
     /**
      * Take a @p FiniteElement object
      * and return an boolean vector including the @p
@@ -357,8 +348,6 @@ namespace FETools
       multiplicities.push_back(N5);
       return compute_restriction_is_additive_flags(fe_list, multiplicities);
     }
-
-
 
     template <int dim, int spacedim>
     std::vector<ComponentMask>
@@ -562,8 +551,6 @@ namespace FETools
       return xretval;
     }
 
-
-
     /**
      * Compute the non-zero vector components of a composed finite element.
      */
@@ -603,8 +590,6 @@ namespace FETools
         fe_list, multiplicities, do_tensor_product);
     }
 
-
-
     template <int dim, int spacedim>
     void
     build_cell_tables(
@@ -643,7 +628,6 @@ namespace FETools
                                               numbers::invalid_unsigned_int),
                                numbers::invalid_unsigned_int);
         }
-
 
       // Initialize index tables.  Multi-component base elements have to be
       // thought of. For non-primitive shape functions, have a special invalid
@@ -831,8 +815,6 @@ namespace FETools
           }
     }
 
-
-
     template <int dim, int spacedim>
     void
     build_face_tables(
@@ -1017,8 +999,6 @@ namespace FETools
              ExcInternalError());
     }
   } // namespace Compositing
-
-
 
   // Not implemented in the general case.
   template <class FE>
@@ -1205,8 +1185,6 @@ namespace
       = std_cxx14::make_unique<FETools::FEFactory<FE_RannacherTurek<dim>>>();
   }
 
-
-
   // This function fills a map from names to finite elements for any
   // dimension and codimension for those elements which support
   // nonzero codimension.
@@ -1266,7 +1244,6 @@ namespace
     return result;
   }
 
-
   // have a lock that guarantees that at most one thread is changing
   // and accessing the fe_name_map variable. make this lock local to
   // this file.
@@ -1303,8 +1280,6 @@ namespace
     fe_name_map = fill_default_map();
 } // namespace
 
-
-
 namespace
 {
   // forwarder function for
@@ -1328,8 +1303,6 @@ namespace
     fe2.get_interpolation_matrix(fe1, interpolation_matrix);
   }
 
-
-
   template <int dim, typename number, int spacedim>
   inline void
   gim_forwarder(const FiniteElement<dim, spacedim>& fe1,
@@ -1340,8 +1313,6 @@ namespace
     fe2.get_interpolation_matrix(fe1, tmp);
     interpolation_matrix = tmp;
   }
-
-
 
   // return how many characters
   // starting at the given position
@@ -1374,7 +1345,6 @@ namespace
     return 0;
   }
 } // namespace
-
 
 namespace FETools
 {
@@ -1415,8 +1385,6 @@ namespace FETools
                          + indices.second;
       }
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -1460,8 +1428,6 @@ namespace FETools
         renumbering[i] = start_indices[indices.first] + indices.second;
       }
   }
-
-
 
   template <int dim, typename number, int spacedim>
   void
@@ -1527,8 +1493,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim, typename number, int spacedim>
   void
   get_back_interpolation_matrix(const FiniteElement<dim, spacedim>& fe1,
@@ -1554,8 +1518,6 @@ namespace FETools
     second_matrix.mmult(interpolation_matrix, first_matrix);
   }
 
-
-
   template <int dim, typename number, int spacedim>
   void
   get_interpolation_difference_matrix(const FiniteElement<dim, spacedim>& fe1,
@@ -1578,8 +1540,6 @@ namespace FETools
     difference_matrix = IdentityMatrix(fe1.dofs_per_cell);
     difference_matrix.add(-1, interpolation_matrix);
   }
-
-
 
   template <int dim, typename number, int spacedim>
   void
@@ -1658,8 +1618,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim, int spacedim>
   FullMatrix<double>
   compute_node_matrix(const FiniteElement<dim, spacedim>& fe)
@@ -1713,8 +1671,6 @@ namespace FETools
 
     return N;
   }
-
-
 
   /*
     template <>
@@ -1804,8 +1760,6 @@ namespace FETools
       for(unsigned int j = 0; j < n; ++j)
         this_matrix(j, i) = v_fine(j);
     }
-
-
 
     template <int dim, typename number, int spacedim>
     void
@@ -1942,8 +1896,6 @@ namespace FETools
     }
   } // namespace
 
-
-
   template <int dim, typename number, int spacedim>
   void
   compute_embedding_matrices(
@@ -1969,8 +1921,6 @@ namespace FETools
 
     task_group.join_all();
   }
-
-
 
   template <int dim, typename number, int spacedim>
   void
@@ -2116,8 +2066,6 @@ namespace FETools
     Vector<number> v_coarse(nq * nd);
     Vector<number> v_fine(n);
 
-
-
     for(unsigned int cell_number = 0;
         cell_number < GeometryInfo<dim>::max_children_per_face;
         ++cell_number)
@@ -2185,8 +2133,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim, typename number, int spacedim>
   void
   compute_projection_matrices(
@@ -2242,7 +2188,6 @@ namespace FETools
       // invert mass matrix
       mass.gauss_jordan();
     }
-
 
     auto compute_one_case
       = [&fe, &q_fine, n, nd, nq](const unsigned int        ref_case,
@@ -2343,7 +2288,6 @@ namespace FETools
             }
         };
 
-
     // finally loop over all possible refinement cases
     Threads::TaskGroup<> tasks;
     unsigned int         ref_case = (isotropic_only) ?
@@ -2356,8 +2300,6 @@ namespace FETools
 
     tasks.join_all();
   }
-
-
 
   template <int dim, int spacedim>
   void
@@ -2387,7 +2329,6 @@ namespace FETools
     fe_name_map[dim][spacedim][name]
       = std::unique_ptr<const Subscriptor>(factory);
   }
-
 
   namespace internal
   {
@@ -2608,7 +2549,6 @@ namespace FETools
               }
           }
 
-
         // hm, if we have come thus far, we
         // didn't know what to do with the
         // string we got. so do as the docs
@@ -2621,8 +2561,6 @@ namespace FETools
         return nullptr;
       }
 
-
-
       template <int dim, int spacedim>
       std::unique_ptr<FiniteElement<dim, spacedim>>
       get_fe_by_name(std::string& name)
@@ -2633,16 +2571,12 @@ namespace FETools
     } // namespace
   }   // namespace internal
 
-
-
   template <int dim>
   FiniteElement<dim>*
   get_fe_from_name(const std::string& parameter_name)
   {
     return get_fe_by_name<dim, dim>(parameter_name).release();
   }
-
-
 
   template <int dim, int spacedim>
   std::unique_ptr<FiniteElement<dim, spacedim>>
@@ -2728,8 +2662,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim, int spacedim>
   void
   compute_projection_from_quadrature_points_matrix(
@@ -2769,8 +2701,6 @@ namespace FETools
     Assert(X.n() == rhs_quadrature.size(), ExcInternalError());
   }
 
-
-
   template <int dim, int spacedim>
   void
   compute_interpolation_to_quadrature_points_matrix(
@@ -2786,8 +2716,6 @@ namespace FETools
       for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         I_q(q, i) = fe.shape_value(i, quadrature.point(q));
   }
-
-
 
   template <int dim>
   void
@@ -2845,8 +2773,6 @@ namespace FETools
           }
       }
   }
-
-
 
   template <int dim>
   void
@@ -2916,8 +2842,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim, int spacedim>
   void
   compute_projection_from_face_quadrature_points_matrix(
@@ -2931,8 +2855,6 @@ namespace FETools
     Assert(fe.n_components() == 1, ExcNotImplemented());
     Assert(lhs_quadrature.size() > fe.degree,
            ExcNotGreaterThan(lhs_quadrature.size(), fe.degree));
-
-
 
     // build the matrices M and Q
     // described in the documentation
@@ -2978,8 +2900,6 @@ namespace FETools
     Assert(X.n() == rhs_quadrature.size(), ExcInternalError());
   }
 
-
-
   namespace
   {
     // Helper functions for
@@ -3014,7 +2934,6 @@ namespace FETools
                 std::end(double_dof_values.get()),
                 std::begin(dof_values));
     }
-
 
     template <int dim, int spacedim, typename number>
     static void
@@ -3073,7 +2992,6 @@ namespace FETools
                      });
     }
 
-
     template <int dim, int spacedim>
     static void
     convert_helper(const FiniteElement<dim, spacedim>& finite_element,
@@ -3085,8 +3003,6 @@ namespace FETools
     }
 
   } /* anonymous namespace */
-
-
 
   template <int dim, int spacedim, typename number>
   void
@@ -3102,8 +3018,6 @@ namespace FETools
     convert_helper<dim, spacedim>(
       finite_element, support_point_values, dof_values);
   }
-
-
 
   template <int dim>
   void
@@ -3226,7 +3140,6 @@ namespace FETools
             for(unsigned int i = 0; i < dofs_per_line; ++i)
               h2l[next_index++] = n - 1 + (i + 1) * n * n + n * (n - 1);
 
-
             // inside quads
             // face 0
             for(unsigned int i = 0; i < dofs_per_line; ++i)
@@ -3269,8 +3182,6 @@ namespace FETools
       }
   }
 
-
-
   template <int dim>
   void
   hierarchic_to_lexicographic_numbering(const FiniteElementData<dim>& fe,
@@ -3280,8 +3191,6 @@ namespace FETools
            ExcDimensionMismatch(h2l.size(), fe.dofs_per_cell));
     hierarchic_to_lexicographic_numbering<dim>(fe.dofs_per_line + 1, h2l);
   }
-
-
 
   template <int dim>
   std::vector<unsigned int>
@@ -3293,8 +3202,6 @@ namespace FETools
     return h2l;
   }
 
-
-
   template <int dim>
   void
   lexicographic_to_hierarchic_numbering(const FiniteElementData<dim>& fe,
@@ -3302,8 +3209,6 @@ namespace FETools
   {
     l2h = lexicographic_to_hierarchic_numbering(fe);
   }
-
-
 
   template <int dim>
   std::vector<unsigned int>
@@ -3314,7 +3219,6 @@ namespace FETools
   }
 
 } // end of namespace FETools
-
 
 DEAL_II_NAMESPACE_CLOSE
 

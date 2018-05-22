@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check PetscScalar
 
 #include "../tests.h"
 #include <deal.II/lac/petsc_parallel_vector.h>
-
 
 int
 main()

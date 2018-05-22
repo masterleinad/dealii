@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // calculates the surface of a sphere
 
 #include "../tests.h"
@@ -38,7 +36,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <string>
-
 
 std::ofstream logfile("output");
 
@@ -80,8 +77,6 @@ test(std::string filename)
   dataout.build_patches();
   dataout.write_vtk(logfile);
 }
-
-
 
 int
 main()

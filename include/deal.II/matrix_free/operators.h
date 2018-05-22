@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_operators_h
 #define dealii_matrix_free_operators_h
-
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/subscriptor.h>
@@ -28,9 +26,7 @@
 #include <deal.II/matrix_free/matrix_free.h>
 #include <deal.II/multigrid/mg_constrained_dofs.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace MatrixFreeOperators
 {
@@ -369,7 +365,6 @@ namespace MatrixFreeOperators
     const std::shared_ptr<DiagonalMatrix<VectorType>>&
     get_matrix_diagonal() const;
 
-
     /**
      * Apply the Jacobi preconditioner, which multiplies every element of the
      * <tt>src</tt> vector by the inverse of the respective diagonal element and
@@ -484,8 +479,6 @@ namespace MatrixFreeOperators
                                     const bool        is_row) const;
   };
 
-
-
   /**
    * Auxiliary class to provide interface vmult/Tvmult methods required in
    * adaptive geometric multgrids. @p OperatorType class should be derived
@@ -574,15 +567,12 @@ namespace MatrixFreeOperators
     void
     initialize_dof_vector(VectorType& vec) const;
 
-
   private:
     /**
      * Const pointer to the operator class.
      */
     SmartPointer<const OperatorType> mf_base_operator;
   };
-
-
 
   /**
    * This class implements the operation of the action of the inverse of a
@@ -652,8 +642,6 @@ namespace MatrixFreeOperators
     AlignedVector<VectorizedArray<Number>> inverse_shape;
   };
 
-
-
   /**
    * This class implements the operation of the action of a mass matrix.
    *
@@ -711,8 +699,6 @@ namespace MatrixFreeOperators
       const VectorType&                            src,
       const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
-
-
 
   /**
    * This class implements the operation of the action of a Laplace matrix,
@@ -861,8 +847,6 @@ namespace MatrixFreeOperators
     std::shared_ptr<Table<2, VectorizedArray<value_type>>> scalar_coefficient;
   };
 
-
-
   // ------------------------------------ inline functions ---------------------
 
   template <int dim, int fe_degree, int n_components, typename Number>
@@ -891,8 +875,6 @@ namespace MatrixFreeOperators
         inverse_shape[fe_degree / 2 * stride + q] = shapes_1d(fe_degree / 2, q);
   }
 
-
-
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
   CellwiseInverseMassMatrix<dim, fe_degree, n_components, Number>::
@@ -919,8 +901,6 @@ namespace MatrixFreeOperators
       for(unsigned int i = 0; i < dofs_per_cell; ++i, ++q)
         inverse_jxw[q] = inverse_jxw[i];
   }
-
-
 
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
@@ -984,8 +964,6 @@ namespace MatrixFreeOperators
   Base<dim, VectorType>::Base() : Subscriptor(), have_interface_matrices(false)
   {}
 
-
-
   template <int dim, typename VectorType>
   typename Base<dim, VectorType>::size_type
   Base<dim, VectorType>::m() const
@@ -996,8 +974,6 @@ namespace MatrixFreeOperators
       total_size += data->get_vector_partitioner(selected_rows[i])->size();
     return total_size;
   }
-
-
 
   template <int dim, typename VectorType>
   typename Base<dim, VectorType>::size_type
@@ -1010,8 +986,6 @@ namespace MatrixFreeOperators
     return total_size;
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::clear()
@@ -1019,8 +993,6 @@ namespace MatrixFreeOperators
     data.reset();
     inverse_diagonal_entries.reset();
   }
-
-
 
   template <int dim, typename VectorType>
   typename Base<dim, VectorType>::value_type
@@ -1034,8 +1006,6 @@ namespace MatrixFreeOperators
            ExcNotInitialized());
     return 1.0 / (*inverse_diagonal_entries)(row, row);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1058,8 +1028,6 @@ namespace MatrixFreeOperators
       }
     collect_sizes(vec);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1112,8 +1080,6 @@ namespace MatrixFreeOperators
     have_interface_matrices = false;
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::initialize(
@@ -1127,8 +1093,6 @@ namespace MatrixFreeOperators
       1, mg_constrained_dofs);
     initialize(data_, mg_constrained_dofs_vector, level, given_row_selection);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1199,8 +1163,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::set_constrained_entries_to_one(VectorType& dst) const
@@ -1216,8 +1178,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::vmult(VectorType& dst, const VectorType& src) const
@@ -1227,16 +1187,12 @@ namespace MatrixFreeOperators
     vmult_add(dst, src);
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::vmult_add(VectorType& dst, const VectorType& src) const
   {
     mult_add(dst, src, false);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1245,8 +1201,6 @@ namespace MatrixFreeOperators
   {
     mult_add(dst, src, true);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1283,8 +1237,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::preprocess_constraints(VectorType&       dst,
@@ -1310,8 +1262,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::mult_add(VectorType&       dst,
@@ -1328,8 +1278,6 @@ namespace MatrixFreeOperators
       apply_add(dst, src);
     postprocess_constraints(dst, src);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1360,8 +1308,6 @@ namespace MatrixFreeOperators
           }
       }
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1412,8 +1358,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::vmult_interface_up(VectorType&       dst,
@@ -1450,8 +1394,6 @@ namespace MatrixFreeOperators
         subblock(dst, j).local_element(edge_constrained_indices[j][i]) = 0.;
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
@@ -1460,8 +1402,6 @@ namespace MatrixFreeOperators
     dst = Number(0.);
     Tvmult_add(dst, src);
   }
-
-
 
   template <int dim, typename VectorType>
   std::size_t
@@ -1472,8 +1412,6 @@ namespace MatrixFreeOperators
              sizeof(*this);
   }
 
-
-
   template <int dim, typename VectorType>
   std::shared_ptr<
     const MatrixFree<dim, typename Base<dim, VectorType>::value_type>>
@@ -1481,8 +1419,6 @@ namespace MatrixFreeOperators
   {
     return data;
   }
-
-
 
   template <int dim, typename VectorType>
   const std::shared_ptr<DiagonalMatrix<VectorType>>&
@@ -1494,8 +1430,6 @@ namespace MatrixFreeOperators
     return inverse_diagonal_entries;
   }
 
-
-
   template <int dim, typename VectorType>
   const std::shared_ptr<DiagonalMatrix<VectorType>>&
   Base<dim, VectorType>::get_matrix_diagonal() const
@@ -1505,8 +1439,6 @@ namespace MatrixFreeOperators
     return diagonal_entries;
   }
 
-
-
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::Tapply_add(VectorType&       dst,
@@ -1514,8 +1446,6 @@ namespace MatrixFreeOperators
   {
     apply_add(dst, src);
   }
-
-
 
   template <int dim, typename VectorType>
   void
@@ -1530,16 +1460,12 @@ namespace MatrixFreeOperators
     dst *= omega;
   }
 
-
-
   //------------------------- MGInterfaceOperator ------------------------------
 
   template <typename OperatorType>
   MGInterfaceOperator<OperatorType>::MGInterfaceOperator()
     : Subscriptor(), mf_base_operator(nullptr)
   {}
-
-
 
   template <typename OperatorType>
   void
@@ -1548,16 +1474,12 @@ namespace MatrixFreeOperators
     mf_base_operator = nullptr;
   }
 
-
-
   template <typename OperatorType>
   void
   MGInterfaceOperator<OperatorType>::initialize(const OperatorType& operator_in)
   {
     mf_base_operator = &operator_in;
   }
-
-
 
   template <typename OperatorType>
   template <typename VectorType>
@@ -1577,8 +1499,6 @@ namespace MatrixFreeOperators
     mf_base_operator->vmult_interface_down(dst, src);
   }
 
-
-
   template <typename OperatorType>
   template <typename VectorType>
   void
@@ -1597,8 +1517,6 @@ namespace MatrixFreeOperators
     mf_base_operator->vmult_interface_up(dst, src);
   }
 
-
-
   template <typename OperatorType>
   template <typename VectorType>
   void
@@ -1609,8 +1527,6 @@ namespace MatrixFreeOperators
 
     mf_base_operator->initialize_dof_vector(vec);
   }
-
-
 
   //-----------------------------MassOperator----------------------------------
 
@@ -1623,8 +1539,6 @@ namespace MatrixFreeOperators
     MassOperator()
     : Base<dim, VectorType>()
   {}
-
-
 
   template <int dim,
             int fe_degree,
@@ -1660,8 +1574,6 @@ namespace MatrixFreeOperators
     diagonal_vector.update_ghost_values();
   }
 
-
-
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1674,8 +1586,6 @@ namespace MatrixFreeOperators
     Base<dim, VectorType>::data->cell_loop(
       &MassOperator::local_apply_cell, this, dst, src);
   }
-
-
 
   template <int dim,
             int fe_degree,
@@ -1705,7 +1615,6 @@ namespace MatrixFreeOperators
       }
   }
 
-
   //-----------------------------LaplaceOperator----------------------------------
 
   template <int dim,
@@ -1717,8 +1626,6 @@ namespace MatrixFreeOperators
     LaplaceOperator()
     : Base<dim, VectorType>()
   {}
-
-
 
   template <int dim,
             int fe_degree,
@@ -1732,8 +1639,6 @@ namespace MatrixFreeOperators
     Base<dim, VectorType>::clear();
     scalar_coefficient.reset();
   }
-
-
 
   template <int dim,
             int fe_degree,
@@ -1749,8 +1654,6 @@ namespace MatrixFreeOperators
   {
     scalar_coefficient = scalar_coefficient_;
   }
-
-
 
   template <int dim,
             int fe_degree,
@@ -1770,8 +1673,6 @@ namespace MatrixFreeOperators
     Assert(scalar_coefficient.get(), ExcNotInitialized());
     return scalar_coefficient;
   }
-
-
 
   template <int dim,
             int fe_degree,
@@ -1812,8 +1713,6 @@ namespace MatrixFreeOperators
     diagonal_vector.update_ghost_values();
   }
 
-
-
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1841,8 +1740,6 @@ namespace MatrixFreeOperators
       return true;
     }
   } // namespace
-
-
 
   template <int dim,
             int fe_degree,
@@ -1880,8 +1777,6 @@ namespace MatrixFreeOperators
     phi.integrate(false, true);
   }
 
-
-
   template <int dim,
             int fe_degree,
             int n_q_points_1d,
@@ -1906,7 +1801,6 @@ namespace MatrixFreeOperators
         phi.distribute_local_to_global(dst);
       }
   }
-
 
   template <int dim,
             int fe_degree,
@@ -1944,9 +1838,7 @@ namespace MatrixFreeOperators
       }
   }
 
-
 } // end of namespace MatrixFreeOperators
-
 
 DEAL_II_NAMESPACE_CLOSE
 

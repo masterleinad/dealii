@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Legendre expansion in 1D for quadratic function coming from FE.
 // Also test that our interpretation of GSL function is correct to have
 // an orthogonal basis.
@@ -74,7 +73,6 @@ LegendreFunction<dim>::value(const Point<dim>& point, const unsigned int) const
   return 1.81735e-05 * (1.0 - x) * (0.5 - x) * 2
          + 0.000901649 * x * (x - 0.5) * 2 + 1.35059e-05 * x * (1.0 - x) * 4.0;
 }
-
 
 template <int dim>
 void
@@ -138,7 +136,6 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 
   dof_handler.clear();
 }
-
 
 /**
  * Small test to first output Legendre coefficients from GSL at -1,0,1

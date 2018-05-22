@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the creation of no-flux boundary conditions for a finite
 // element that consists of only a single set of vector components
 // (i.e. it has dim components)
@@ -35,8 +33,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 // a function that shows something useful on the surface of a sphere
 template <int dim>
@@ -67,8 +63,6 @@ public:
       }
   }
 };
-
-
 
 template <int dim>
 void
@@ -113,8 +107,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   data_out.write_vtk(deallog.get_file_stream());
 }
 
-
-
 template <int dim>
 void
 test_hyper_sphere()
@@ -133,7 +125,6 @@ test_hyper_sphere()
       test(tr, fe);
     }
 }
-
 
 int
 main()

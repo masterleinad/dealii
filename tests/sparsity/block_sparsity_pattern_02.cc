@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // BlockSparsityPattern::copy_from only copied n_block_rows x
 // n_block_rows blocks, forgetting any additional columns there may
 // have been (or trying to copy columns that aren't there
 
-
 #include "../tests.h"
 #include <deal.II/lac/block_sparsity_pattern.h>
-
 
 int
 main()

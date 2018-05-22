@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // generate two cubes that are attached to each other in a way so that
 // the edges are all ok, but the normals of the common face don't
 // match up for the standard orientation of the normals. we thus have
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 int
 main()

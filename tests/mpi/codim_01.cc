@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test Tria<2,3> and DataOutput.
 
 #include "../tests.h"
@@ -93,7 +91,6 @@ test(std::ostream& /*out*/)
   }
   cat_file(name.c_str());
 }
-
 
 int
 main(int argc, char* argv[])

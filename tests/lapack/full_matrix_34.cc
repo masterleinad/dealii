@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests LAPACKFullMatrix::Tmmult with  A==B which shall use Xsyrk instead Xgemm
 
 #include "../tests.h"

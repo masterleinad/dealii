@@ -124,8 +124,6 @@ namespace Step40
             (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
   {}
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
@@ -246,7 +244,6 @@ namespace Step40
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
   }
-
 
   template <int dim>
   void
@@ -509,7 +506,6 @@ namespace Step40
 
             GridGenerator::subdivided_hyper_rectangle(
               triangulation, reps, p1, p2, true);
-
 
             std::vector<
               GridTools::PeriodicFacePair<typename parallel::distributed::

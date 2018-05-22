@@ -16,7 +16,6 @@
 #ifndef dealii_work_stream_h
 #  define dealii_work_stream_h
 
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/graph_coloring.h>
 #  include <deal.II/base/multithread_info.h>
@@ -36,8 +35,6 @@
 #  include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 /**
  * A namespace whose main template function supports running multiple threads
@@ -216,7 +213,6 @@ namespace WorkStream
             {}
           };
 
-
           /**
            * Typedef to a list of scratch data objects. The rationale for this
            * list is provided in the variables that use these lists.
@@ -288,7 +284,6 @@ namespace WorkStream
            */
           bool currently_in_use;
 
-
           /**
            * Default constructor. Initialize everything that doesn't have a
            * default constructor itself.
@@ -300,7 +295,6 @@ namespace WorkStream
               currently_in_use(false)
           {}
         };
-
 
         /**
          * Constructor. Take an iterator range, the size of a buffer that can
@@ -333,7 +327,6 @@ namespace WorkStream
               item_buffer[element].currently_in_use = false;
             }
         }
-
 
         /**
          * Create an item and return a pointer to it.
@@ -450,8 +443,6 @@ namespace WorkStream
         const unsigned int chunk_size;
       };
 
-
-
       /**
        * A class that manages calling the worker function on a number of
        * parallel threads. Note that it is, in the TBB notation, a filter that
@@ -473,7 +464,6 @@ namespace WorkStream
             worker(worker),
             copier_exist(copier_exist)
         {}
-
 
         /**
          * Work on an item.
@@ -575,12 +565,10 @@ namespace WorkStream
           if(copier_exist == false)
             current_item->currently_in_use = false;
 
-
           // then return the original pointer
           // to the now modified object
           return item;
         }
-
 
       private:
         /**
@@ -596,8 +584,6 @@ namespace WorkStream
          */
         bool copier_exist;
       };
-
-
 
       /**
        * A class that manages calling the copier function. Note that it is, in
@@ -617,7 +603,6 @@ namespace WorkStream
         Copier(const std::function<void(const CopyData&)>& copier)
           : tbb::filter(/*is_serial=*/true), copier(copier)
         {}
-
 
         /**
          * Work on a single item.
@@ -656,12 +641,10 @@ namespace WorkStream
           // mark current item as usable again
           current_item->currently_in_use = false;
 
-
           // return an invalid item since we are at the end of the
           // pipeline
           return nullptr;
         }
-
 
       private:
         /**
@@ -671,7 +654,6 @@ namespace WorkStream
       };
 
     } // namespace Implementation2
-
 
     /**
      * A namespace for the implementation of details of the WorkStream pattern
@@ -721,8 +703,6 @@ namespace WorkStream
         {}
       };
 
-
-
       /**
        * A class that manages calling the worker and copier functions. Unlike
        * the other implementations, parallel_for is used instead of a
@@ -746,7 +726,6 @@ namespace WorkStream
             sample_scratch_data(sample_scratch_data),
             sample_copy_data(sample_copy_data)
         {}
-
 
         /**
          * The function that calls the worker and the copier functions on a
@@ -874,9 +853,7 @@ namespace WorkStream
 
   } // namespace internal
 
-
 #  endif // DEAL_II_WITH_THREADS
-
 
   /**
    * This is one of two main functions of the WorkStream concept, doing work
@@ -925,7 +902,6 @@ namespace WorkStream
       const CopyData&                           sample_copy_data,
       const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
       const unsigned int chunk_size   = 8);
-
 
   /**
    * This is one of two main functions of the WorkStream concept, doing work
@@ -1073,7 +1049,6 @@ namespace WorkStream
 #  endif
   }
 
-
   // Implementation 3:
   template <typename Worker,
             typename Copier,
@@ -1151,8 +1126,6 @@ namespace WorkStream
 #  endif
   }
 
-
-
   /**
    * This is a variant of one of the two main functions of the WorkStream
    * concept, doing work as described in the introduction to this namespace.
@@ -1214,11 +1187,7 @@ namespace WorkStream
 
 } // namespace WorkStream
 
-
-
 DEAL_II_NAMESPACE_CLOSE
-
-
 
 //----------------------------   work_stream.h     ---------------------------
 // end of #ifndef dealii_work_stream_h

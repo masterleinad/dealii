@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../testmatrix.h"
 #include "../tests.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <list>
 #include <set>
-
 
 int
 main()
@@ -51,7 +48,6 @@ main()
     deallog << sp2.row_length(i) << std::endl;
   sp2.print_gnuplot(deallog.get_file_stream());
 
-
   // generate copy of sp1 with extra
   // off-diagonals, add some
   // non-symmetric elements and
@@ -66,7 +62,6 @@ main()
   for(unsigned int i = 0; i < sp3.n_rows(); ++i)
     deallog << sp3.row_length(i) << std::endl;
   sp3.print_gnuplot(deallog.get_file_stream());
-
 
   // now test the copy_from
   // function. for this copy over the
@@ -93,7 +88,6 @@ main()
         AssertThrow(p3->column() == p4->column(), ExcInternalError());
     };
 
-
   // check the matrix_position
   // function with sparsity patterns
   // sp1 through sp4. the checked
@@ -117,7 +111,6 @@ main()
                           == std::make_pair(row, col),
                         ExcInternalError());
     };
-
 
   // check block_write/block_read by
   // dumping a sparsity pattern and

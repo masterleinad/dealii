@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like data_out_base_vtu, but output time and cycle as well
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -46,7 +44,6 @@ check(DataOutBase::VtkFlags flags, std::ostream& out)
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
   DataOutBase::write_vtu(patches, names, vectors, flags, out);
 }
-
 
 template <int dim, int spacedim>
 void

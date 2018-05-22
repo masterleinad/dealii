@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // document a bug that would fill all memory if you try to create a FE_Q<dim>(0).
 
 #include "../tests.h"

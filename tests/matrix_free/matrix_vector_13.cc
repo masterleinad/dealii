@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of matrix free matrix-vector products for
 // BlockVector using two vectors on the same DoFHandler. Otherwise the same as
 // matrix_free_01/03
@@ -40,7 +38,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
 
 template <int dim, int fe_degree, typename Number>
 void
@@ -69,8 +66,6 @@ helmholtz_operator(const MatrixFree<dim, Number>&                         data,
     }
 }
 
-
-
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
 {
@@ -98,8 +93,6 @@ public:
 private:
   const MatrixFree<dim, Number>& data;
 };
-
-
 
 template <int dim, int fe_degree>
 void
@@ -191,7 +184,6 @@ test()
 
   mf.vmult(out, in);
 
-
   // assemble trilinos sparse matrix with
   // (\nabla v, \nabla u) + (v, 10 * u) for
   // reference
@@ -253,7 +245,6 @@ test()
     }
   deallog << std::endl << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

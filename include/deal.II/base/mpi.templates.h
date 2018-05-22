@@ -46,15 +46,11 @@ namespace Utilities
         return MPI_INT;
       }
 
-
-
       inline MPI_Datatype
       mpi_type_id(const long int*)
       {
         return MPI_LONG;
       }
-
-
 
       inline MPI_Datatype
       mpi_type_id(const unsigned int*)
@@ -62,15 +58,11 @@ namespace Utilities
         return MPI_UNSIGNED;
       }
 
-
-
       inline MPI_Datatype
       mpi_type_id(const unsigned long int*)
       {
         return MPI_UNSIGNED_LONG;
       }
-
-
 
       inline MPI_Datatype
       mpi_type_id(const unsigned long long int*)
@@ -78,15 +70,11 @@ namespace Utilities
         return MPI_UNSIGNED_LONG_LONG;
       }
 
-
-
       inline MPI_Datatype
       mpi_type_id(const float*)
       {
         return MPI_FLOAT;
       }
-
-
 
       inline MPI_Datatype
       mpi_type_id(const double*)
@@ -94,15 +82,11 @@ namespace Utilities
         return MPI_DOUBLE;
       }
 
-
-
       inline MPI_Datatype
       mpi_type_id(const long double*)
       {
         return MPI_LONG_DOUBLE;
       }
-
-
 
       inline MPI_Datatype
       mpi_type_id(const std::complex<float>*)
@@ -110,15 +94,12 @@ namespace Utilities
         return MPI_COMPLEX;
       }
 
-
-
       inline MPI_Datatype
       mpi_type_id(const std::complex<double>*)
       {
         return MPI_DOUBLE_COMPLEX;
       }
 #endif
-
 
       template <typename T>
       void
@@ -186,8 +167,6 @@ namespace Utilities
           }
       }
 
-
-
       template <typename T>
       void
       all_reduce(const MPI_Op&                           mpi_op,
@@ -226,8 +205,6 @@ namespace Utilities
       }
     } // namespace internal
 
-
-
     template <typename T>
     T
     sum(const T& t, const MPI_Comm& mpi_communicator)
@@ -239,8 +216,6 @@ namespace Utilities
                            ArrayView<T>(&return_value, 1));
       return return_value;
     }
-
-
 
     template <typename T, typename U>
     void
@@ -257,8 +232,6 @@ namespace Utilities
           make_array_view(sums));
     }
 
-
-
     template <typename T>
     void
     sum(const ArrayView<const T>& values,
@@ -267,8 +240,6 @@ namespace Utilities
     {
       internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
     }
-
-
 
     template <int rank, int dim, typename Number>
     Tensor<rank, dim, Number>
@@ -279,8 +250,6 @@ namespace Utilities
       sum(local, mpi_communicator, sums);
       return sums;
     }
-
-
 
     template <int rank, int dim, typename Number>
     SymmetricTensor<rank, dim, Number>
@@ -306,8 +275,6 @@ namespace Utilities
       return global;
     }
 
-
-
     template <typename Number>
     void
     sum(const SparseMatrix<Number>& local,
@@ -331,8 +298,6 @@ namespace Utilities
 #endif
     }
 
-
-
     template <typename T>
     T
     max(const T& t, const MPI_Comm& mpi_communicator)
@@ -344,8 +309,6 @@ namespace Utilities
                            ArrayView<T>(&return_value, 1));
       return return_value;
     }
-
-
 
     template <typename T, typename U>
     void
@@ -362,8 +325,6 @@ namespace Utilities
           make_array_view(maxima));
     }
 
-
-
     template <typename T>
     void
     max(const ArrayView<const T>& values,
@@ -372,8 +333,6 @@ namespace Utilities
     {
       internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
     }
-
-
 
     template <typename T>
     T
@@ -386,8 +345,6 @@ namespace Utilities
                            ArrayView<T>(&return_value, 1));
       return return_value;
     }
-
-
 
     template <typename T, typename U>
     void
@@ -404,8 +361,6 @@ namespace Utilities
           make_array_view(minima));
     }
 
-
-
     template <typename T>
     void
     min(const ArrayView<const T>& values,
@@ -416,7 +371,6 @@ namespace Utilities
     }
   } // end of namespace MPI
 } // end of namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

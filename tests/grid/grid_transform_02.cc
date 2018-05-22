@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Verify that GridTools::laplace_transform can deal with interior
 // nodes being pinned to a new location as well. The test itself
 // doesn't make much sense since it leads to a few inverted cells, but
@@ -21,7 +20,6 @@
 // happens.
 //
 // (Testcase adapted from one by Denis Davydov.)
-
 
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
@@ -31,8 +29,6 @@
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 int
 main()

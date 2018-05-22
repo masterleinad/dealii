@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // adaptation of up_and_down for RT elements
 
 #include "../tests.h"
@@ -32,7 +31,6 @@
 #include <vector>
 
 #define PRECISION 4
-
 
 template <int dim>
 Point<dim>
@@ -53,7 +51,6 @@ transform(const Point<dim> p)
         return Point<dim>();
     };
 }
-
 
 template <int dim>
 void
@@ -119,7 +116,6 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
           << " (relative residual=" << relative_residual << ")" << std::endl;
 }
 
-
 template <int dim>
 void
 test()
@@ -151,8 +147,6 @@ test()
         check_element(tr, *fe_list[i]);
       }
 }
-
-
 
 int
 main()

@@ -13,23 +13,18 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Snippet to demonstrate some properties of the deal.II implementation of
  * the RT spaces.
  */
 
-
-
 #include "../tests.h"
 
 #define PRECISION 2
 
-
 std::ofstream logfile("output");
 
 char buf[1000];
-
 
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1_eulerian.h>
@@ -61,8 +56,6 @@ char buf[1000];
 #include <deal.II/fe/mapping_q1_eulerian.h>
 #include <deal.II/grid/grid_tools.h>
 
-
-
 template <int dim>
 class TestMap1 : public Function<dim>
 {
@@ -80,8 +73,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -97,7 +88,6 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
   return (0);
 }
 
-
 template <int dim>
 void
 TestMap1<dim>::vector_value(const Point<dim>& p,
@@ -110,8 +100,6 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
-
 
 ///-----------------------------------------------------------------------
 
@@ -136,8 +124,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
-
 template <int dim>
 double
 TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -154,7 +140,6 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
     return rad * (cos(phi + phi_p) - cos(phi_p));
 }
 
-
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
@@ -166,9 +151,7 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
-
 
 template <int dim>
 class TestDef2 : public Function<dim>
@@ -191,7 +174,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -204,7 +186,6 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
     return scale * y;
 }
 
-
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
@@ -216,10 +197,8 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
     return_value(iCount) = value(p, iCount);
 }
 
-
 ///-----------------------------------------------------------------------
 // testDef3 implements parallelograms ...
-
 
 template <int dim>
 class TestDef3 : public Function<dim>
@@ -242,7 +221,6 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& return_value) const;
 };
 
-
 template <int dim>
 double
 TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
@@ -255,7 +233,6 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
     return 0;
 }
 
-
 template <int dim>
 void
 TestDef3<dim>::vector_value(const Point<dim>& p,
@@ -266,8 +243,6 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
   for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
-
-
 
 /*
  * Check the value of the derivative field.
@@ -318,7 +293,6 @@ double EvaluateDiver(Mapping<2>&     mapping,
 
   return (result);
 }
-
 
 int
 main()
@@ -437,7 +411,6 @@ main()
               EvaluateDiver(mapping_euler, dof_handler_def, solution_q));
       deallog << buf;
     }
-
 
   return (0);
 }

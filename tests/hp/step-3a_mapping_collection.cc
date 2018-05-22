@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the _3a test, but using a hp::MappingCollection for
 // VectorTools::interpolate_boundary_values(). this function existed
 // before, but was not instantiated
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -51,8 +48,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
-
 
 class LaplaceProblem
 {
@@ -89,11 +84,8 @@ private:
   Vector<double> system_rhs;
 };
 
-
 LaplaceProblem::LaplaceProblem() : dof_handler(triangulation)
 {}
-
-
 
 void
 LaplaceProblem::make_grid_and_dofs()
@@ -147,8 +139,6 @@ LaplaceProblem::make_grid_and_dofs()
   sparsity_pattern.compress();
   system_matrix.reinit(sparsity_pattern);
 }
-
-
 
 void
 LaplaceProblem::assemble_system()
@@ -219,8 +209,6 @@ LaplaceProblem::assemble_system()
     boundary_values, system_matrix, solution, system_rhs);
 }
 
-
-
 void
 LaplaceProblem::solve()
 {
@@ -234,8 +222,6 @@ LaplaceProblem::solve()
   hanging_node_constraints.distribute(solution);
 }
 
-
-
 void
 LaplaceProblem::output_results() const
 {
@@ -246,8 +232,6 @@ LaplaceProblem::output_results() const
 
   data_out.write_gnuplot(deallog.get_file_stream());
 }
-
-
 
 void
 LaplaceProblem::run()
@@ -269,8 +253,6 @@ LaplaceProblem::run()
   solve();
   output_results();
 }
-
-
 
 int
 main()

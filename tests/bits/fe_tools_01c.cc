@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // common framework for the various fe_tools_*.cc tests
 
 #include "../tests.h"
@@ -28,12 +26,10 @@
 
 #include <string>
 
-
 // check invertability of the map from
 //   DoFTools::hierarchic_to_lexicographic_numbering
 // to
 //   DoFTools::lexicographic_to_hierarchic_numbering
-
 
 template <int dim>
 void
@@ -59,8 +55,6 @@ check(const FE_Q<dim>& fe, const std::string& name)
   deallog << std::endl;
 }
 
-
-
 #define CHECK(EL, deg, dim) \
   {                         \
     FE_##EL<dim> EL(deg);   \
@@ -73,7 +67,6 @@ check(const FE_Q<dim>& fe, const std::string& name)
     CHECK(EL, deg, 2);     \
     CHECK(EL, deg, 3);     \
   }
-
 
 int
 main()

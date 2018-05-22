@@ -13,16 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the combination of simple ChartManifolds: parabolic + translation
 
 #include "../tests.h"
 
-
 // all include files you need here
 #include <deal.II/grid/composition_manifold.h>
 #include <deal.II/grid/manifold_lib.h>
-
 
 int
 main()
@@ -70,7 +67,6 @@ main()
       deallog << "P: " << ip << ", T(P, P0): " << t1 << ", T(P, P1): " << t2
               << std::endl;
     }
-
 
   return 0;
 }

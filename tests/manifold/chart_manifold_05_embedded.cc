@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test direction vector of flat manifold without periodicity, where the
 // flat manifold is implemented as a ChartManifold with identity
 // pull-back and push-forward
@@ -22,7 +21,6 @@
 
 #include "../tests.h"
 #include <deal.II/grid/manifold.h>
-
 
 template <int dim, int spacedim>
 class MyFlatManifold : public ChartManifold<dim, spacedim, spacedim>
@@ -43,7 +41,6 @@ public:
     return p;
   }
 
-
   virtual Point<spacedim>
   push_forward(const Point<spacedim>& chart_point) const override
   {
@@ -62,8 +59,6 @@ public:
     return x;
   }
 };
-
-
 
 // Helper function
 template <int dim, int spacedim>

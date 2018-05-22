@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test h-refinement with DoFHandler and print constraints.
 
 #include "../tests.h"
@@ -78,7 +77,6 @@ public:
   }
 };
 
-
 template <int dim>
 void
 test4()
@@ -142,7 +140,6 @@ test4()
   dof_handler.clear();
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -151,7 +148,6 @@ main(int argc, char** argv)
   deallog << std::fixed;
   deallog.attach(logfile);
   deallog.depth_console(0);
-
 
   try
     {

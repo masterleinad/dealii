@@ -40,16 +40,12 @@ Multigrid<VectorType>::reinit(const unsigned int min_level,
   defect.resize(minlevel, maxlevel);
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_maxlevel(const unsigned int l)
 {
   reinit(minlevel, l);
 }
-
-
 
 template <typename VectorType>
 void
@@ -59,8 +55,6 @@ Multigrid<VectorType>::set_minlevel(const unsigned int l, const bool relative)
   reinit(new_minlevel, maxlevel);
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_cycle(typename Multigrid<VectorType>::Cycle c)
@@ -68,16 +62,12 @@ Multigrid<VectorType>::set_cycle(typename Multigrid<VectorType>::Cycle c)
   cycle_type = c;
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_debug(const unsigned int d)
 {
   debug = d;
 }
-
-
 
 template <typename VectorType>
 void
@@ -88,8 +78,6 @@ Multigrid<VectorType>::set_edge_matrices(const MGMatrixBase<VectorType>& down,
   edge_in  = &up;
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_edge_flux_matrices(
@@ -99,8 +87,6 @@ Multigrid<VectorType>::set_edge_flux_matrices(
   edge_down = &down;
   edge_up   = &up;
 }
-
-
 
 template <typename VectorType>
 void
@@ -204,8 +190,6 @@ Multigrid<VectorType>::level_v_step(const unsigned int level)
   if(debug > 1)
     deallog << "V-cycle leaving  level " << level << std::endl;
 }
-
-
 
 template <typename VectorType>
 void
@@ -328,8 +312,6 @@ Multigrid<VectorType>::level_step(const unsigned int level, Cycle cycle)
     deallog << cychar << "-cycle leaving level   " << level << std::endl;
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::cycle()
@@ -357,8 +339,6 @@ Multigrid<VectorType>::cycle()
     level_step(maxlevel, cycle_type);
 }
 
-
-
 template <typename VectorType>
 void
 Multigrid<VectorType>::vcycle()
@@ -376,8 +356,6 @@ Multigrid<VectorType>::vcycle()
   level_v_step(maxlevel);
 }
 
-
-
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_coarse_solve(
@@ -385,8 +363,6 @@ Multigrid<VectorType>::connect_coarse_solve(
 {
   return this->signals.coarse_solve.connect(slot);
 }
-
-
 
 template <typename VectorType>
 boost::signals2::connection
@@ -396,8 +372,6 @@ Multigrid<VectorType>::connect_restriction(
   return this->signals.restriction.connect(slot);
 }
 
-
-
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_prolongation(
@@ -405,8 +379,6 @@ Multigrid<VectorType>::connect_prolongation(
 {
   return this->signals.prolongation.connect(slot);
 }
-
-
 
 template <typename VectorType>
 boost::signals2::connection
@@ -416,8 +388,6 @@ Multigrid<VectorType>::connect_pre_smoother_step(
   return this->signals.pre_smoother_step.connect(slot);
 }
 
-
-
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_post_smoother_step(
@@ -425,7 +395,6 @@ Multigrid<VectorType>::connect_post_smoother_step(
 {
   return this->signals.post_smoother_step.connect(slot);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SolutionTransfer locked up when a process has no locally owned
 // cells. this was fixed with r24007
 
@@ -42,7 +40,6 @@
 #include <deal.II/fe/fe_system.h>
 
 #include <sstream>
-
 
 template <int dim>
 void
@@ -77,7 +74,6 @@ test()
 
   soltrans.prepare_for_coarsening_and_refinement(solution);
 
-
   tria.execute_coarsening_and_refinement();
 
   dh.distribute_dofs(fe);
@@ -99,15 +95,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

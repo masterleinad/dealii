@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test several reinitialization options with a Trilinos sparsity pattern and
 // Trilinos sparse matrix
 
@@ -22,7 +20,6 @@
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
-
 
 void
 test()
@@ -116,7 +113,6 @@ test()
     deallog << "Matrix norm: " << matrix.frobenius_norm() << std::endl;
   }
 
-
   // now create again a pattern with writable rows
   sp.reinit(rows, columns, writable_rows, MPI_COMM_WORLD, 0u);
 
@@ -148,7 +144,6 @@ test()
 
     deallog << "Matrix norm: " << matrix.frobenius_norm() << std::endl;
   }
-
 
   // finally, initialize the Trilinos sparsity pattern from a
   // DynamicSparsityPattern
@@ -190,8 +185,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

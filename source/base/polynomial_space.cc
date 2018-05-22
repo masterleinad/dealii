@@ -19,7 +19,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim>
 unsigned int
 PolynomialSpace<dim>::compute_n_pols(const unsigned int n)
@@ -33,14 +32,12 @@ PolynomialSpace<dim>::compute_n_pols(const unsigned int n)
   return n_pols;
 }
 
-
 template <>
 unsigned int
 PolynomialSpace<0>::compute_n_pols(const unsigned int)
 {
   return 0;
 }
-
 
 template <>
 std::array<unsigned int, 1>
@@ -49,8 +46,6 @@ PolynomialSpace<1>::compute_index(const unsigned int i) const
   Assert(i < index_map.size(), ExcIndexRange(i, 0, index_map.size()));
   return {{index_map[i]}};
 }
-
-
 
 template <>
 std::array<unsigned int, 2>
@@ -75,8 +70,6 @@ PolynomialSpace<2>::compute_index(const unsigned int i) const
   Assert(false, ExcInternalError());
   return {{numbers::invalid_unsigned_int, numbers::invalid_unsigned_int}};
 }
-
-
 
 template <>
 std::array<unsigned int, 3>
@@ -106,7 +99,6 @@ PolynomialSpace<3>::compute_index(const unsigned int i) const
   return {{numbers::invalid_unsigned_int, numbers::invalid_unsigned_int}};
 }
 
-
 template <int dim>
 void
 PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int>& renumber)
@@ -118,8 +110,6 @@ PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int>& renumber)
   for(unsigned int i = 0; i < index_map.size(); ++i)
     index_map_inverse[index_map[i]] = i;
 }
-
-
 
 template <int dim>
 double
@@ -135,8 +125,6 @@ PolynomialSpace<dim>::compute_value(const unsigned int i,
     result *= polynomials[ix[d]].value(p(d));
   return result;
 }
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -161,7 +149,6 @@ PolynomialSpace<dim>::compute_grad(const unsigned int i,
     }
   return result;
 }
-
 
 template <int dim>
 Tensor<2, dim>
@@ -196,7 +183,6 @@ PolynomialSpace<dim>::compute_grad_grad(const unsigned int i,
     }
   return result;
 }
-
 
 template <int dim>
 void
@@ -394,7 +380,6 @@ PolynomialSpace<dim>::compute(
             }
     }
 }
-
 
 template class PolynomialSpace<1>;
 template class PolynomialSpace<2>;

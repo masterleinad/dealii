@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_polynomials_rannacher_turek_h
 #define dealii_polynomials_rannacher_turek_h
 
@@ -22,7 +21,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * Basis for polynomial space on the unit square used for lowest order
@@ -92,7 +90,6 @@ public:
           std::vector<Tensor<4, dim>>& fourth_derivatives) const;
 };
 
-
 namespace internal
 {
   namespace PolynomialsRannacherTurekImplementation
@@ -104,7 +101,6 @@ namespace internal
       Assert(dim == 2, ExcNotImplemented());
       return Tensor<order, dim>();
     }
-
 
     template <int order>
     inline Tensor<order, 2>
@@ -189,8 +185,6 @@ namespace internal
   } // namespace PolynomialsRannacherTurekImplementation
 } // namespace internal
 
-
-
 // template functions
 template <int dim>
 template <int order>
@@ -201,7 +195,6 @@ PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<
     order>(i, p);
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

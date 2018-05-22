@@ -16,7 +16,6 @@
 #ifndef dealii_block_sparse_matrix_ez_h
 #define dealii_block_sparse_matrix_ez_h
 
-
 //TODO: Derive BlockSparseMatrixEZ from BlockMatrixBase, like all the other block matrices as well; this would allow to instantiate a few functions with this template argument as well (in particular ConstraintMatrix::distribute_local_to_global)
 
 #include <deal.II/base/config.h>
@@ -35,7 +34,6 @@ class BlockVector;
 /*! @addtogroup Matrix1
  *@{
  */
-
 
 /**
  * A block matrix consisting of blocks of type SparseMatrixEZ.
@@ -95,7 +93,6 @@ public:
   BlockSparseMatrixEZ&
   operator=(const double d);
 
-
   /**
    * Set matrix to zero dimensions and release memory.
    */
@@ -125,7 +122,6 @@ public:
    */
   SparseMatrixEZ<Number>&
   block(const unsigned int row, const unsigned int column);
-
 
   /**
    * Access the block with the given coordinates. Version for constant
@@ -189,7 +185,6 @@ public:
   void
   add(const size_type i, const size_type j, const Number value);
 
-
   /**
    * Matrix-vector multiplication: let $dst = M*src$ with $M$ being this
    * matrix.
@@ -227,7 +222,6 @@ public:
   Tvmult_add(BlockVector<somenumber>&       dst,
              const BlockVector<somenumber>& src) const;
 
-
   /**
    * Print statistics. If @p full is @p true, prints a histogram of all
    * existing row lengths and allocated row lengths. Otherwise, just the
@@ -259,7 +253,6 @@ private:
 /*@}*/
 /*----------------------------------------------------------------------*/
 
-
 template <typename Number>
 inline unsigned int
 BlockSparseMatrixEZ<Number>::n_block_rows() const
@@ -267,16 +260,12 @@ BlockSparseMatrixEZ<Number>::n_block_rows() const
   return row_indices.size();
 }
 
-
-
 template <typename Number>
 inline unsigned int
 BlockSparseMatrixEZ<Number>::n_block_cols() const
 {
   return column_indices.size();
 }
-
-
 
 template <typename Number>
 inline SparseMatrixEZ<Number>&
@@ -289,8 +278,6 @@ BlockSparseMatrixEZ<Number>::block(const unsigned int row,
   return blocks[row][column];
 }
 
-
-
 template <typename Number>
 inline const SparseMatrixEZ<Number>&
 BlockSparseMatrixEZ<Number>::block(const unsigned int row,
@@ -302,8 +289,6 @@ BlockSparseMatrixEZ<Number>::block(const unsigned int row,
   return blocks[row][column];
 }
 
-
-
 template <typename Number>
 inline typename BlockSparseMatrixEZ<Number>::size_type
 BlockSparseMatrixEZ<Number>::m() const
@@ -311,16 +296,12 @@ BlockSparseMatrixEZ<Number>::m() const
   return row_indices.total_size();
 }
 
-
-
 template <typename Number>
 inline typename BlockSparseMatrixEZ<Number>::size_type
 BlockSparseMatrixEZ<Number>::n() const
 {
   return column_indices.total_size();
 }
-
-
 
 template <typename Number>
 inline void
@@ -337,8 +318,6 @@ BlockSparseMatrixEZ<Number>::set(const size_type i,
     .set(row_index.second, col_index.second, value);
 }
 
-
-
 template <typename Number>
 inline void
 BlockSparseMatrixEZ<Number>::add(const size_type i,
@@ -353,7 +332,6 @@ BlockSparseMatrixEZ<Number>::add(const size_type i,
   block(row_index.first, col_index.first)
     .add(row_index.second, col_index.second, value);
 }
-
 
 template <typename Number>
 template <typename somenumber>
@@ -373,8 +351,6 @@ BlockSparseMatrixEZ<Number>::vmult(BlockVector<somenumber>&       dst,
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
 
-
-
 template <typename Number>
 template <typename somenumber>
 void
@@ -390,8 +366,6 @@ BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber>&       dst,
     for(unsigned int col = 0; col < n_block_cols(); ++col)
       block(row, col).vmult_add(dst.block(row), src.block(col));
 }
-
-
 
 template <typename Number>
 template <typename somenumber>
@@ -411,8 +385,6 @@ BlockSparseMatrixEZ<Number>::Tvmult(BlockVector<somenumber>&       dst,
       block(row, col).Tvmult_add(dst.block(col), src.block(row));
 }
 
-
-
 template <typename Number>
 template <typename somenumber>
 void
@@ -429,7 +401,6 @@ BlockSparseMatrixEZ<Number>::Tvmult_add(
     for(unsigned int col = 0; col < n_block_cols(); ++col)
       block(row, col).Tvmult_add(dst.block(col), src.block(row));
 }
-
 
 template <typename number>
 template <class StreamType>
@@ -485,7 +456,6 @@ BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
             << std::endl;
       }
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

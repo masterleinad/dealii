@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -36,9 +35,7 @@
 //adjust_line_dof_index_for_line_orientation_table fields, and write tests
 //similar to bits/face_orientation_and_fe_q_*
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim>
 FE_RaviartThomas<dim>::FE_RaviartThomas(const unsigned int deg)
@@ -102,8 +99,6 @@ FE_RaviartThomas<dim>::FE_RaviartThomas(const unsigned int deg)
       }
 }
 
-
-
 template <int dim>
 std::string
 FE_RaviartThomas<dim>::get_name() const
@@ -125,7 +120,6 @@ FE_RaviartThomas<dim>::get_name() const
   return namebuf.str();
 }
 
-
 template <int dim>
 std::unique_ptr<FiniteElement<dim, dim>>
 FE_RaviartThomas<dim>::clone() const
@@ -133,11 +127,9 @@ FE_RaviartThomas<dim>::clone() const
   return std_cxx14::make_unique<FE_RaviartThomas<dim>>(*this);
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary and internal functions
 //---------------------------------------------------------------------------
-
 
 template <int dim>
 void
@@ -150,7 +142,6 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
   // compute (deg+1)^(dim-1)
   for(unsigned int d = 1; d < dim; ++d)
     n_face_points *= deg + 1;
-
 
   this->generalized_support_points.resize(
     GeometryInfo<dim>::faces_per_cell * n_face_points + n_interior_points);
@@ -231,8 +222,6 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
          ExcInternalError());
 }
 
-
-
 template <>
 void
 FE_RaviartThomas<1>::initialize_restriction()
@@ -243,8 +232,6 @@ FE_RaviartThomas<1>::initialize_restriction()
   for(unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
     this->restriction[0][i].reinit(0, 0);
 }
-
-
 
 // This function is the same Raviart-Thomas interpolation performed by
 // interpolate. Still, we cannot use interpolate, since it was written
@@ -383,8 +370,6 @@ FE_RaviartThomas<dim>::initialize_restriction()
     }
 }
 
-
-
 template <int dim>
 std::vector<unsigned int>
 FE_RaviartThomas<dim>::get_dpo_vector(const unsigned int deg)
@@ -405,8 +390,6 @@ FE_RaviartThomas<dim>::get_dpo_vector(const unsigned int deg)
   return dpo;
 }
 
-
-
 template <int dim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_RaviartThomas<dim>::get_constant_modes() const
@@ -422,12 +405,9 @@ FE_RaviartThomas<dim>::get_constant_modes() const
                                                               components);
 }
 
-
-
 //---------------------------------------------------------------------------
 // Data field initialization
 //---------------------------------------------------------------------------
-
 
 template <int dim>
 bool
@@ -471,8 +451,6 @@ FE_RaviartThomas<dim>::has_support_on_face(const unsigned int shape_index,
   return true;
 }
 
-
-
 template <int dim>
 void
 FE_RaviartThomas<dim>::convert_generalized_support_point_values_to_dof_values(
@@ -514,8 +492,6 @@ FE_RaviartThomas<dim>::convert_generalized_support_point_values_to_dof_values(
              * support_point_values[k + start_cell_points](d);
 }
 
-
-
 template <int dim>
 std::size_t
 FE_RaviartThomas<dim>::memory_consumption() const
@@ -524,10 +500,7 @@ FE_RaviartThomas<dim>::memory_consumption() const
   return 0;
 }
 
-
-
 // explicit instantiations
 #include "fe_raviart_thomas.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

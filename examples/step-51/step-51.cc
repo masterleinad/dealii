@@ -80,8 +80,6 @@
 
 #include <iostream>
 
-
-
 // We start by putting the class into its own namespace.
 namespace Step51
 {
@@ -102,12 +100,10 @@ namespace Step51
     static const double       width;
   };
 
-
   template <>
   const Point<1>
     SolutionBase<1>::source_centers[SolutionBase<1>::n_source_centers]
     = {Point<1>(-1.0 / 3.0), Point<1>(0.0), Point<1>(+1.0 / 3.0)};
-
 
   template <>
   const Point<2>
@@ -124,7 +120,6 @@ namespace Step51
   template <int dim>
   const double SolutionBase<dim>::width = 1. / 5.;
 
-
   template <int dim>
   class Solution : public Function<dim>, protected SolutionBase<dim>
   {
@@ -139,8 +134,6 @@ namespace Step51
     gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
   };
-
-
 
   template <int dim>
   double
@@ -158,8 +151,6 @@ namespace Step51
            / Utilities::fixed_power<dim>(std::sqrt(2. * numbers::PI)
                                          * this->width);
   }
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -181,8 +172,6 @@ namespace Step51
            / Utilities::fixed_power<dim>(std::sqrt(2 * numbers::PI)
                                          * this->width);
   }
-
-
 
   // This class implements a function where the scalar solution and its negative
   // gradient are collected together. This function is used when computing the
@@ -212,8 +201,6 @@ namespace Step51
     v[dim] = solution.value(p);
   }
 
-
-
   // Next comes the implementation of the convection velocity. As described in
   // the introduction, we choose a velocity field that is $(y, -x)$ in 2D and
   // $(y, -x, 1)$ in 3D. This gives a divergence-free velocity field.
@@ -227,8 +214,6 @@ namespace Step51
     virtual Tensor<1, dim>
     value(const Point<dim>& p) const override;
   };
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -255,8 +240,6 @@ namespace Step51
     return convection;
   }
 
-
-
   // The last function we implement is the right hand side for the manufactured
   // solution. It is very similar to step-7, with the exception that we now have
   // a convection term instead of the reaction term. Since the velocity field is
@@ -275,7 +258,6 @@ namespace Step51
   private:
     const ConvectionVelocity<dim> convection_velocity;
   };
-
 
   template <int dim>
   double
@@ -367,7 +349,6 @@ namespace Step51
       PostProcessScratchData&                               scratch,
       unsigned int&                                         empty_data);
 
-
     Triangulation<dim> triangulation;
 
     // The 'local' solutions are interior to each element.  These
@@ -436,8 +417,6 @@ namespace Step51
       refinement_mode(refinement_mode)
   {}
 
-
-
   // @sect4{HDG::setup_system}
   // The system for an HDG solution is setup in an analogous manner to most
   // of the other tutorial programs.  We are careful to distribute dofs with
@@ -483,8 +462,6 @@ namespace Step51
     system_matrix.reinit(sparsity_pattern);
   }
 
-
-
   // @sect4{HDG::PerTaskData}
   // Next comes the definition of the local data structures for the parallel
   // assembly. The first structure @p PerTaskData contains the local vector
@@ -517,8 +494,6 @@ namespace Step51
         trace_reconstruct(trace_reconstruct)
     {}
   };
-
-
 
   // @sect4{HDG::ScratchData}
   // @p ScratchData contains persistent data for each
@@ -632,8 +607,6 @@ namespace Step51
     {}
   };
 
-
-
   // @sect4{HDG::PostProcessScratchData}
   // @p PostProcessScratchData contains the data used by <code>WorkStream</code>
   // when post-processing the local solution $u^*$.  It is similar, but much
@@ -680,8 +653,6 @@ namespace Step51
     {}
   };
 
-
-
   // @sect4{HDG::assemble_system}
   // The @p assemble_system function is similar to <code>Step-32</code>, where
   // the quadrature formula and the update flags are set up, and then
@@ -722,8 +693,6 @@ namespace Step51
                     scratch,
                     task_data);
   }
-
-
 
   // @sect4{HDG::assemble_system_one_cell}
   // The real work of the HDG program is done by @p assemble_system_one_cell.
@@ -988,8 +957,6 @@ namespace Step51
       }
   }
 
-
-
   // @sect4{HDG::copy_local_to_global}
   // If we are in the first step of the solution, i.e. @p trace_reconstruct=false,
   // then we assemble the local matrices into the global system.
@@ -1004,8 +971,6 @@ namespace Step51
                                              system_matrix,
                                              system_rhs);
   }
-
-
 
   // @sect4{HDG::solve}
   // The skeleton solution is solved for by using a BiCGStab solver with
@@ -1033,8 +998,6 @@ namespace Step51
     // but switching @p trace_reconstruct to true.
     assemble_system(true);
   }
-
-
 
   // @sect4{HDG::postprocess}
 
@@ -1124,8 +1087,6 @@ namespace Step51
     convergence_table.add_value("val L2-post", post_error);
   }
 
-
-
   // @sect4{HDG::postprocess_one_cell}
   //
   // This is the actual work done for the postprocessing. According to the
@@ -1210,8 +1171,6 @@ namespace Step51
     scratch.cell_matrix.vmult(scratch.cell_sol, scratch.cell_rhs);
     cell->distribute_local_to_global(scratch.cell_sol, solution_u_post);
   }
-
-
 
   // @sect4{HDG::output_results}
   // We have 3 sets of results that we would like to output:  the local solution,
@@ -1391,8 +1350,6 @@ namespace Step51
         output_results(cycle);
       }
 
-
-
     convergence_table.set_precision("val L2", 3);
     convergence_table.set_scientific("val L2", true);
     convergence_table.set_precision("grad L2", 3);
@@ -1420,8 +1377,6 @@ namespace Step51
   }
 
 } // end of namespace Step51
-
-
 
 int
 main()

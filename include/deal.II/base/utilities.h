@@ -50,7 +50,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 /**
  * A namespace for utility functions that are not particularly specific to
  * finite element computing or numerical programs, but nevertheless are needed
@@ -147,14 +146,12 @@ namespace Utilities
   double
   string_to_double(const std::string& s);
 
-
   /**
    * Given a list of strings, convert it to a list of doubles. Throw an
    * assertion if that is not possible.
    */
   std::vector<double>
   string_to_double(const std::vector<std::string>& s);
-
 
   /**
    * Given a string that contains text separated by a @p delimiter, split it
@@ -201,14 +198,12 @@ namespace Utilities
   std::vector<std::string>
   split_string_list(const std::string& s, const std::string& delimiter = ",");
 
-
   /**
    * Specialization of split_string_list() for the case where the delimiter
    * is a single char.
    */
   std::vector<std::string>
   split_string_list(const std::string& s, const char delimiter);
-
 
   /**
    * Take a text, usually a documentation or something, and try to break it
@@ -286,7 +281,6 @@ namespace Utilities
    */
   double
   generate_normal_random_number(const double a, const double sigma);
-
 
   /**
    * Calculate a fixed power, provided as a template argument, of a number.
@@ -377,7 +371,6 @@ namespace Utilities
   template <typename Iterator, typename T>
   Iterator
   lower_bound(Iterator first, Iterator last, const T& val);
-
 
   /**
    * The same function as above, but taking an argument that is used to
@@ -680,7 +673,6 @@ namespace Utilities
       unsigned long int VmRSS;
     };
 
-
     /**
      * Fill the @p stats structure with information about the memory
      * consumption of this process. This is only implemented on Linux.
@@ -688,13 +680,11 @@ namespace Utilities
     void
     get_memory_stats(MemoryStats& stats);
 
-
     /**
      * Return the name of the host this process runs on.
      */
     std::string
     get_hostname();
-
 
     /**
      * Return the present time as HH:MM:SS.
@@ -726,7 +716,6 @@ namespace Utilities
     void
     posix_memalign(void** memptr, size_t alignment, size_t size);
   } // namespace System
-
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
@@ -856,9 +845,7 @@ namespace Utilities
 
 #endif
 
-
 } // namespace Utilities
-
 
 // --------------------- inline functions
 
@@ -889,16 +876,12 @@ namespace Utilities
       }
   }
 
-
-
   template <typename Iterator, typename T>
   inline Iterator
   lower_bound(Iterator first, Iterator last, const T& val)
   {
     return Utilities::lower_bound(first, last, val, std::less<T>());
   }
-
-
 
   template <typename Iterator, typename T, typename Comp>
   inline Iterator
@@ -975,8 +958,6 @@ namespace Utilities
               }
           }
 
-
-
         const unsigned int half   = len >> 1;
         const Iterator     middle = first + half;
 
@@ -994,7 +975,6 @@ namespace Utilities
           len = half;
       }
   }
-
 
   // --------------------- non-inline functions
 
@@ -1056,7 +1036,6 @@ namespace Utilities
       }
   }
 
-
   template <typename T>
   std::vector<char>
   pack(const T& object)
@@ -1065,7 +1044,6 @@ namespace Utilities
     pack<T>(object, buffer);
     return buffer;
   }
-
 
   template <typename T>
   T
@@ -1121,14 +1099,12 @@ namespace Utilities
       }
   }
 
-
   template <typename T>
   T
   unpack(const std::vector<char>& buffer)
   {
     return unpack<T>(buffer.cbegin(), buffer.cend());
   }
-
 
   template <typename T, int N>
   void
@@ -1180,7 +1156,6 @@ namespace Utilities
       }
   }
 
-
   template <typename T, int N>
   void
   unpack(const std::vector<char>& buffer, T (&unpacked_object)[N])
@@ -1189,7 +1164,6 @@ namespace Utilities
   }
 
 } // namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

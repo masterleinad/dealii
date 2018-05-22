@@ -130,8 +130,6 @@ namespace hp
     std::vector<std::shared_ptr<const Quadrature<dim>>> quadratures;
   };
 
-
-
   /* --------------- inline functions ------------------- */
 
   template <int dim>
@@ -140,8 +138,6 @@ namespace hp
   {
     return quadratures.size();
   }
-
-
 
   template <int dim>
   inline unsigned int
@@ -158,8 +154,6 @@ namespace hp
     return m;
   }
 
-
-
   template <int dim>
   inline const Quadrature<dim>& QCollection<dim>::
                                 operator[](const unsigned int index) const
@@ -169,15 +163,11 @@ namespace hp
     return *quadratures[index];
   }
 
-
-
   template <int dim>
   inline QCollection<dim>::QCollection(const Quadrature<dim>& quadrature)
   {
     quadratures.push_back(std::make_shared<const Quadrature<dim>>(quadrature));
   }
-
-
 
   template <int dim>
   inline std::size_t
@@ -185,7 +175,6 @@ namespace hp
   {
     return (sizeof(*this) + MemoryConsumption::memory_consumption(quadratures));
   }
-
 
   template <int dim>
   inline void
@@ -196,7 +185,6 @@ namespace hp
   }
 
 } // namespace hp
-
 
 DEAL_II_NAMESPACE_CLOSE
 

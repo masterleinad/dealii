@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a redux of mapping_real_to_unit_q4_sphere. one doesn't in fact need
 // the Q4 mapping, the problem already happens in the initial guess
 // generation using a Q1 mapping
@@ -26,7 +24,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
 
 void
 test_real_to_unit_cell()
@@ -88,7 +85,6 @@ test_real_to_unit_cell()
       deallog << "Point is outside!" << std::endl;
     }
 }
-
 
 int
 main()

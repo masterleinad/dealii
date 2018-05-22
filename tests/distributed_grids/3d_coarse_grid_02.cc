@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a complicated 3d grid read from file.
 //
 // the files we read here are the ones already used in deal.II/grid_in_3d
@@ -27,8 +25,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -48,7 +44,6 @@ test(const char* filename)
 
   deallog.pop();
 }
-
 
 int
 main(int argc, char* argv[])

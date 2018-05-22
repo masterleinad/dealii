@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that MappingQ1::transform_real_to_unit_cell can handle the case of a
 // singular discriminant. Previously we used to have a division by zero
 
@@ -24,7 +22,6 @@
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -55,7 +52,6 @@ test_real_to_unit_cell()
     }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

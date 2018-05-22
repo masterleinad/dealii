@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::exists. since we create quite some
 // output here, choose smaller number of rows and entries than in the other
 // tests
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 void
 test()
@@ -41,8 +38,6 @@ test()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

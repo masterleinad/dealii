@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check n_ghost_indices() and is_ghost_entry(), similar to
 // parallel_vector_09.cc test case
 
@@ -23,7 +22,6 @@
 #include <deal.II/base/utilities.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -122,8 +120,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Ralf Hartmann, 2005; the DoFHandler class had troubles
    when the triangulation had unused vertices before, make sure that
    this is now fixed. */
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 int
 main()

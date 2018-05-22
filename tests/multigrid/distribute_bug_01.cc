@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Document bug in determining level subdomain ids in certain cases. This used
 // to cause deadlocks because the list of ghost neighbors was not symmetric.
 //
@@ -47,7 +46,6 @@ print(parallel::distributed::Triangulation<dim>& tr)
                 << std::endl;
     }
 }
-
 
 template <int dim>
 void
@@ -95,7 +93,6 @@ do_test()
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs(fe);
 }
-
 
 int
 main(int argc, char** argv)

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Verify that DerivativeForm is trivially copyable.
 
 // TODO not all compilers that support enough of a subset of C++11 to compile

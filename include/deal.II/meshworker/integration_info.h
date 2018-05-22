@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_integration_info_h
 #define dealii_mesh_worker_integration_info_h
 
@@ -573,7 +572,6 @@ namespace MeshWorker
     /* @} */
   };
 
-
   //----------------------------------------------------------------------//
 
   template <int dim, int sdim>
@@ -583,7 +581,6 @@ namespace MeshWorker
       global_data(std::make_shared<VectorDataBase<dim, sdim>>()),
       n_components(numbers::invalid_unsigned_int)
   {}
-
 
   template <int dim, int sdim>
   inline IntegrationInfo<dim, sdim>::IntegrationInfo(
@@ -630,8 +627,6 @@ namespace MeshWorker
       }
   }
 
-
-
   template <int dim, int sdim>
   template <class FEVALUES>
   inline void
@@ -658,7 +653,6 @@ namespace MeshWorker
     n_components = el.n_components();
   }
 
-
   template <int dim, int spacedim>
   inline const FiniteElement<dim, spacedim>&
   IntegrationInfo<dim, spacedim>::finite_element() const
@@ -675,7 +669,6 @@ namespace MeshWorker
     return *fevalv[0];
   }
 
-
   template <int dim, int spacedim>
   inline const FEValuesBase<dim, spacedim>&
   IntegrationInfo<dim, spacedim>::fe_values(unsigned int i) const
@@ -683,7 +676,6 @@ namespace MeshWorker
     Assert(i < fevalv.size(), ExcIndexRange(i, 0, fevalv.size()));
     return *fevalv[i];
   }
-
 
   template <int dim, int spacedim>
   template <typename number>
@@ -722,8 +714,6 @@ namespace MeshWorker
       fill_local_data(info, split_fevalues);
   }
 
-
-
   //----------------------------------------------------------------------//
 
   template <int dim, int sdim>
@@ -741,7 +731,6 @@ namespace MeshWorker
       face_quadrature = QGauss<dim - 1>(fp);
   }
 
-
   template <int dim, int sdim>
   inline void
   IntegrationInfoBox<dim, sdim>::add_update_flags_all(const UpdateFlags flags)
@@ -749,14 +738,12 @@ namespace MeshWorker
     add_update_flags(flags, true, true, true, true);
   }
 
-
   template <int dim, int sdim>
   inline void
   IntegrationInfoBox<dim, sdim>::add_update_flags_cell(const UpdateFlags flags)
   {
     add_update_flags(flags, true, false, false, false);
   }
-
 
   template <int dim, int sdim>
   inline void
@@ -766,14 +753,12 @@ namespace MeshWorker
     add_update_flags(flags, false, true, false, false);
   }
 
-
   template <int dim, int sdim>
   inline void
   IntegrationInfoBox<dim, sdim>::add_update_flags_face(const UpdateFlags flags)
   {
     add_update_flags(flags, false, false, true, true);
   }
-
 
   template <int dim, int sdim>
   inline void
@@ -802,7 +787,6 @@ namespace MeshWorker
     neighbor.template initialize<FEFaceValues<dim, sdim>>(
       el, mapping, face_quadrature, neighbor_flags, block_info);
   }
-
 
   template <int dim, int sdim>
   template <typename VectorType>
@@ -883,13 +867,11 @@ namespace MeshWorker
   IntegrationInfoBox<dim, sdim>::post_cell(const DoFInfoBox<dim, DOFINFO>&)
   {}
 
-
   template <int dim, int sdim>
   template <class DOFINFO>
   void
   IntegrationInfoBox<dim, sdim>::post_faces(const DoFInfoBox<dim, DOFINFO>&)
   {}
-
 
 } // namespace MeshWorker
 

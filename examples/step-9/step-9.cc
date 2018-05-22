@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2000
  */
 
-
 // Just as in previous examples, we have to include several files of which the
 // meaning has already been discussed:
 #include <deal.II/base/function.h>
@@ -65,7 +64,6 @@
 // This is C++, as we want to write some output to disk:
 #include <fstream>
 #include <iostream>
-
 
 // The last step is as in previous programs:
 namespace Step9
@@ -152,7 +150,6 @@ namespace Step9
     void
     copy_local_to_global(const AssemblyCopyData& copy_data);
 
-
     // The following functions again are as in previous examples, as are the
     // subsequent variables.
     void
@@ -175,8 +172,6 @@ namespace Step9
     Vector<double> solution;
     Vector<double> system_rhs;
   };
-
-
 
   // @sect3{Equation data declaration}
 
@@ -246,8 +241,6 @@ namespace Step9
     // already implemented.
   };
 
-
-
   // The following two functions implement the interface described above. The
   // first simply implements the function as described in the introduction,
   // while the second uses the same trick to avoid calling a virtual function
@@ -269,8 +262,6 @@ namespace Step9
     return value;
   }
 
-
-
   template <int dim>
   void
   AdvectionField<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -282,8 +273,6 @@ namespace Step9
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = AdvectionField<dim>::value(points[i]);
   }
-
-
 
   // Besides the advection field, we need two functions describing the source
   // terms (<code>right hand side</code>) and the boundary values. First for
@@ -314,7 +303,6 @@ namespace Step9
     static const Point<dim> center_point;
   };
 
-
   template <>
   const Point<1> RightHandSide<1>::center_point = Point<1>(-0.75);
 
@@ -323,8 +311,6 @@ namespace Step9
 
   template <>
   const Point<3> RightHandSide<3>::center_point = Point<3>(-0.75, -0.75, -0.75);
-
-
 
   // The only new thing here is that we check for the value of the
   // <code>component</code> parameter. As this is a scalar function, it is
@@ -349,8 +335,6 @@ namespace Step9
               0);
   }
 
-
-
   template <int dim>
   void
   RightHandSide<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -363,8 +347,6 @@ namespace Step9
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = RightHandSide<dim>::value(points[i], component);
   }
-
-
 
   // Finally for the boundary values, which is just another class derived from
   // the <code>Function</code> base class:
@@ -384,8 +366,6 @@ namespace Step9
                const unsigned int             component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   BoundaryValues<dim>::value(const Point<dim>&  p,
@@ -400,8 +380,6 @@ namespace Step9
     return sine_term * weight;
   }
 
-
-
   template <int dim>
   void
   BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -414,8 +392,6 @@ namespace Step9
     for(unsigned int i = 0; i < points.size(); ++i)
       values[i] = BoundaryValues<dim>::value(points[i], component);
   }
-
-
 
   // @sect3{GradientEstimation class declaration}
 
@@ -525,10 +501,7 @@ namespace Step9
                   const EstimateCopyData&   copy_data);
   };
 
-
-
   // @sect3{AdvectionProblem class implementation}
-
 
   // Now for the implementation of the main class. Constructor, destructor and
   // the function <code>setup_system</code> follow the same pattern that was
@@ -537,15 +510,11 @@ namespace Step9
   AdvectionProblem<dim>::AdvectionProblem() : dof_handler(triangulation), fe(1)
   {}
 
-
-
   template <int dim>
   AdvectionProblem<dim>::~AdvectionProblem()
   {
     dof_handler.clear();
   }
-
-
 
   template <int dim>
   void
@@ -569,8 +538,6 @@ namespace Step9
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
-
 
   // In the following function, the matrix and right hand side are
   // assembled. As stated in the documentation of the main class above, it
@@ -597,7 +564,6 @@ namespace Step9
                     AssemblyScratchData(fe),
                     AssemblyCopyData());
 
-
     // After the matrix has been assembled in parallel, we still have to
     // eliminate hanging node constraints. This is something that can't be
     // done on each of the threads separately, so we have to do it now.
@@ -608,8 +574,6 @@ namespace Step9
     hanging_node_constraints.condense(system_matrix);
     hanging_node_constraints.condense(system_rhs);
   }
-
-
 
   // As already mentioned above, we need to have scratch objects for
   // the parallel computation of local contributions. These objects
@@ -639,8 +603,6 @@ namespace Step9
                        | update_JxW_values | update_normal_vectors)
   {}
 
-
-
   template <int dim>
   AdvectionProblem<dim>::AssemblyScratchData::AssemblyScratchData(
     const AssemblyScratchData& scratch_data)
@@ -653,8 +615,6 @@ namespace Step9
                      update_values | update_quadrature_points
                        | update_JxW_values | update_normal_vectors)
   {}
-
-
 
   // Now, this is the function that does the actual work. It is not very
   // different from the <code>assemble_system</code> functions of previous
@@ -727,7 +687,6 @@ namespace Step9
     std::vector<Tensor<1, dim>> advection_directions(n_q_points);
     std::vector<double>         face_boundary_values(n_face_q_points);
     std::vector<Tensor<1, dim>> face_advection_directions(n_face_q_points);
-
 
     // ... then initialize the <code>FEValues</code> object...
     scratch_data.fe_values.reinit(cell);
@@ -832,14 +791,11 @@ namespace Step9
                 }
         }
 
-
     // Now go on by transferring the local contributions to the system of
     // equations into the global objects. The first step was to obtain the
     // global indices of the degrees of freedom on this cell.
     cell->get_dof_indices(copy_data.local_dof_indices);
   }
-
-
 
   // The second function we needed to write was the one that copies
   // the local contributions the previous function has computed and
@@ -862,8 +818,6 @@ namespace Step9
       }
   }
 
-
-
   // Following is the function that solves the linear system of equations. As
   // the system is no more symmetric positive definite as in all the previous
   // examples, we can't use the Conjugate Gradients method anymore. Rather, we
@@ -884,7 +838,6 @@ namespace Step9
     hanging_node_constraints.distribute(solution);
   }
 
-
   // The following function refines the grid according to the quantity
   // described in the introduction. The respective computations are made in
   // the class <code>GradientEstimation</code>. The only difference to
@@ -904,8 +857,6 @@ namespace Step9
 
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   // Writing output to disk is done in the same way as in the previous
   // examples. Indeed, the function is identical to the one in step-6.
@@ -930,7 +881,6 @@ namespace Step9
     }
   }
 
-
   // ... as is the main loop (setup -- solve -- refine)
   template <int dim>
   void
@@ -950,7 +900,6 @@ namespace Step9
             refine_grid();
           }
 
-
         std::cout << "   Number of active cells:       "
                   << triangulation.n_active_cells() << std::endl;
 
@@ -964,8 +913,6 @@ namespace Step9
         output_results(cycle);
       }
   }
-
-
 
   // @sect3{GradientEstimation class implementation}
 
@@ -985,7 +932,6 @@ namespace Step9
       error_per_cell(error_per_cell)
   {}
 
-
   template <int dim>
   GradientEstimation::EstimateScratchData<dim>::EstimateScratchData(
     const EstimateScratchData& scratch_data)
@@ -995,7 +941,6 @@ namespace Step9
       solution(scratch_data.solution),
       error_per_cell(scratch_data.error_per_cell)
   {}
-
 
   // Next for the implementation of the <code>GradientEstimation</code>
   // class. The first function does not much except for delegating work to the
@@ -1027,7 +972,6 @@ namespace Step9
       EstimateScratchData<dim>(dof_handler.get_fe(), solution, error_per_cell),
       EstimateCopyData());
   }
-
 
   // Following now the function that actually computes the finite difference
   // approximation to the gradient. The general outline of the function is to
@@ -1086,7 +1030,6 @@ namespace Step9
     // outer products of the y-vectors.
     Tensor<2, dim> Y;
 
-
     // Then we allocate a vector to hold iterators to all active neighbors of
     // a cell. We reserve the maximal number of active neighbors in order to
     // avoid later reallocations. Note how this maximal number of active
@@ -1103,7 +1046,6 @@ namespace Step9
     // Then allocate the vector that will be the sum over the y-vectors
     // times the approximate directional derivative:
     Tensor<1, dim> projected_gradient;
-
 
     // Now before going on first compute a list of all active neighbors of
     // the present cell. We do so by first looping over all faces and see
@@ -1212,7 +1154,6 @@ namespace Step9
     scratch_data.fe_midpoint_value.get_function_values(scratch_data.solution,
                                                        this_midpoint_value);
 
-
     // Now loop over all active neighbors and collect the data we
     // need. Allocate a vector just like <code>this_midpoint_value</code>
     // which we will use to store the value of the solution in the
@@ -1303,7 +1244,6 @@ namespace Step9
          * std::sqrt(gradient.norm_square()));
   }
 } // namespace Step9
-
 
 // @sect3{Main function}
 

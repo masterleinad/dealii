@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Legendre expansion in 2D and 3D for a function given using Legendre
 // coefficients.
 #include "../tests.h"
@@ -132,8 +131,6 @@ void resize(Table<3, double>& coeff, const unsigned int N)
     size[d] = N;
   coeff.reinit(size);
 }
-
-
 
 template <int dim>
 void

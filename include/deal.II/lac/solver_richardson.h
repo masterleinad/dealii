@@ -16,7 +16,6 @@
 #ifndef dealii_solver_richardson_h
 #define dealii_solver_richardson_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/signaling_nan.h>
@@ -167,7 +166,6 @@ inline SolverRichardson<VectorType>::AdditionalData::AdditionalData(
   : omega(omega), use_preconditioned_residual(use_preconditioned_residual)
 {}
 
-
 template <class VectorType>
 SolverRichardson<VectorType>::SolverRichardson(SolverControl&            cn,
                                                VectorMemory<VectorType>& mem,
@@ -175,15 +173,11 @@ SolverRichardson<VectorType>::SolverRichardson(SolverControl&            cn,
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
-
-
 template <class VectorType>
 SolverRichardson<VectorType>::SolverRichardson(SolverControl&        cn,
                                                const AdditionalData& data)
   : Solver<VectorType>(cn), additional_data(data)
 {}
-
-
 
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
@@ -240,8 +234,6 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
   // otherwise exit as normal
 }
 
-
-
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
@@ -295,7 +287,6 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
   // otherwise exit as normal
 }
 
-
 template <class VectorType>
 void
 SolverRichardson<VectorType>::print_vectors(const unsigned int,
@@ -303,8 +294,6 @@ SolverRichardson<VectorType>::print_vectors(const unsigned int,
                                             const VectorType&,
                                             const VectorType&) const
 {}
-
-
 
 template <class VectorType>
 inline typename VectorType::value_type
@@ -316,7 +305,6 @@ SolverRichardson<VectorType>::criterion(const VectorType& r,
   else
     return d.l2_norm();
 }
-
 
 template <class VectorType>
 inline void

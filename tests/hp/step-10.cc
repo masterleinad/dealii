@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-10
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/convergence_table.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -40,8 +36,6 @@ std::ofstream logfile("output");
 #include <iostream>
 
 const long double pi = 3.141592653589793238462643;
-
-
 
 template <int dim>
 void
@@ -68,7 +62,6 @@ gnuplot_output()
           deallog << "Degree = " << degree << std::endl;
 
           const MappingQ<dim> mapping(degree);
-
 
           GridOut               grid_out;
           GridOutFlags::Gnuplot gnuplot_flags(false, 30);
@@ -146,7 +139,6 @@ compute_pi_by_area()
     };
 }
 
-
 template <int dim>
 void
 compute_pi_by_perimeter()
@@ -214,7 +206,6 @@ compute_pi_by_perimeter()
       deallog << std::endl;
     };
 }
-
 
 int
 main()

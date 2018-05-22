@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test extracted originally from coarsening_02 on the
 // branch_distributed_grids. we have a triangulation with
 // Triangulation<dim>::limit_level_difference_at_vertices set, but produce a
@@ -22,7 +20,6 @@
 //
 // the current test is the 1d version. this case is in a separate test since
 // it uses different code paths
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -33,8 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 bool
@@ -62,7 +57,6 @@ satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
         return false;
   return true;
 }
-
 
 template <int dim>
 void
@@ -120,8 +114,6 @@ test()
             deallog << std::endl;
           }
 
-
-
       triangulation.execute_coarsening_and_refinement();
 
       // verify that none of the cells
@@ -129,14 +121,12 @@ test()
       AssertThrow(satisfies_level1_at_vertex_rule(triangulation),
                   ExcInternalError());
 
-
       deallog << "Iteration " << i
               << ": cells=" << triangulation.n_active_cells() << std::endl;
     }
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

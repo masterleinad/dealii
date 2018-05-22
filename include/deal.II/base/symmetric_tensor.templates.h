@@ -16,7 +16,6 @@
 #ifndef dealii_symmetric_tensor_templates_h
 #define dealii_symmetric_tensor_templates_h
 
-
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/differentiation/ad.h>
@@ -26,16 +25,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-
 template <typename Number>
 std::array<Number, 1>
 eigenvalues(const SymmetricTensor<2, 1, Number>& T)
 {
   return {{T[0][0]}};
 }
-
-
 
 template <typename Number>
 std::array<Number, 2>
@@ -70,8 +65,6 @@ eigenvalues(const SymmetricTensor<2, 2, Number>& T)
       return eig_vals;
     }
 }
-
-
 
 template <typename Number>
 std::array<Number, 3>
@@ -139,8 +132,6 @@ eigenvalues(const SymmetricTensor<2, 3, Number>& T)
       return eig_vals;
     }
 }
-
-
 
 namespace internal
 {
@@ -228,8 +219,6 @@ namespace internal
             e[i] = A[i][i + 1];
         }
     }
-
-
 
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
@@ -366,8 +355,6 @@ namespace internal
         }
       return eig_vals_vecs;
     }
-
-
 
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
@@ -531,8 +518,6 @@ namespace internal
       return eig_vals_vecs;
     }
 
-
-
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 2, Number>>, 2>
     hybrid(const dealii::SymmetricTensor<2, 2, Number>& A)
@@ -607,8 +592,6 @@ namespace internal
 
       return eig_vals_vecs;
     }
-
-
 
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 3, Number>>, 3>
@@ -716,7 +699,6 @@ namespace internal
       return eig_vals_vecs;
     }
 
-
     template <typename Number>
     Tensor<2, 1, Number>
     dediagonalize_tensor(const dealii::SymmetricTensor<2, 1, Number>& T,
@@ -726,7 +708,6 @@ namespace internal
       AssertThrow(false, ExcNotImplemented());
       return Tensor<2, 1, Number>({{T[0][0]}});
     }
-
 
     template <typename Number>
     Tensor<2, 2, Number>
@@ -739,7 +720,6 @@ namespace internal
           rotation_angle);
       return R * T;
     }
-
 
     template <typename Number>
     Tensor<2, 3, Number>
@@ -771,7 +751,6 @@ namespace internal
       return R * T;
     }
 
-
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 1, Number>>, 1>
     perform_eigenvector_decomposition(
@@ -780,7 +759,6 @@ namespace internal
     {
       return {{std::make_pair(T[0][0], Tensor<1, 1, Number>({1.0}))}};
     }
-
 
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
@@ -808,11 +786,8 @@ namespace internal
       return std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>();
     }
 
-
   } // namespace SymmetricTensorImplementation
 } // namespace internal
-
-
 
 template <int dim, typename Number>
 std::array<std::pair<Number, Tensor<1, dim, Number>>,
@@ -988,8 +963,6 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
   return eig_vals_vecs;
 }
 
-
-
 #ifdef DEAL_II_ADOLC_WITH_ADVANCED_BRANCHING
 
 // Specializations of the above functions for taped Adol-C numbers
@@ -1027,8 +1000,6 @@ eigenvalues(const SymmetricTensor<2, 1, adouble>& /*T*/)
   return std::array<adouble, 1>();
 }
 
-
-
 template <>
 std::array<adouble, 2>
 eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
@@ -1037,8 +1008,6 @@ eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
   return std::array<adouble, 2>();
 }
 
-
-
 template <>
 std::array<adouble, 3>
 eigenvalues(const SymmetricTensor<2, 3, adouble>& /*T*/)
@@ -1046,8 +1015,6 @@ eigenvalues(const SymmetricTensor<2, 3, adouble>& /*T*/)
   AssertThrow(false, ExcADOLCAdvancedBranching());
   return std::array<adouble, 3>();
 }
-
-
 
 template <int dim>
 std::array<std::pair<adouble, Tensor<1, dim, adouble>>,
@@ -1061,8 +1028,6 @@ eigenvectors(const SymmetricTensor<2, dim, adouble>& /*T*/,
 }
 
 #endif
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

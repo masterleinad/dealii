@@ -16,7 +16,6 @@
 #ifndef dealii_tria_iterator_base_h
 #define dealii_tria_iterator_base_h
 
-
 #include <deal.II/base/config.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -42,8 +41,6 @@ namespace IteratorState
     invalid
   };
 } // namespace IteratorState
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

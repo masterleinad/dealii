@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like matrix_out_02.cc, but test for PETSc matrices
-
 
 #include "../tests.h"
 #include <deal.II/lac/matrix_out.h>

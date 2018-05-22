@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mg_transfer_templates_h
 #define dealii_mg_transfer_templates_h
 
@@ -35,7 +34,6 @@
 //#define DEBUG_OUTPUT
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace
 {
@@ -125,7 +123,6 @@ namespace
       }
   }
 
-
 #ifdef DEAL_II_WITH_TRILINOS
   /**
    * Adjust vectors on all levels to correct size.  Here, we just count the
@@ -155,10 +152,7 @@ namespace
 #endif
 } // namespace
 
-
-
 /* ------------------ MGLevelGlobalTransfer<VectorType> ----------------- */
-
 
 namespace internal
 {
@@ -194,7 +188,6 @@ namespace internal
     dst = src;
   }
 } // namespace internal
-
 
 template <typename VectorType>
 template <int dim, class InVector, int spacedim>
@@ -261,8 +254,6 @@ MGLevelGlobalTransfer<VectorType>::copy_to_mg(
 #endif
     }
 }
-
-
 
 template <typename VectorType>
 template <int dim, class OutVector, int spacedim>
@@ -335,8 +326,6 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg(
 #endif
 }
 
-
-
 template <typename VectorType>
 template <int dim, class OutVector, int spacedim>
 void
@@ -371,8 +360,6 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg_add(
   dst.compress(VectorOperation::add);
 }
 
-
-
 template <typename VectorType>
 void
 MGLevelGlobalTransfer<VectorType>::set_component_to_block_map(
@@ -380,8 +367,6 @@ MGLevelGlobalTransfer<VectorType>::set_component_to_block_map(
 {
   component_to_block_map = map;
 }
-
-
 
 /* --------- MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector> ------- */
 
@@ -395,7 +380,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
 {
   copy_to_mg(mg_dof_handler, dst, src, false);
 }
-
 
 template <typename Number>
 template <int dim, typename Number2, int spacedim>
@@ -475,8 +459,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
     }
 }
 
-
-
 template <typename Number>
 template <int dim, typename Number2, int spacedim>
 void
@@ -548,8 +530,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_from_mg(
   dst.compress(VectorOperation::insert);
 }
 
-
-
 template <typename Number>
 template <int dim, typename Number2, int spacedim>
 void
@@ -597,8 +577,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
   dst.compress(VectorOperation::add);
 }
 
-
-
 template <typename Number>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
@@ -606,7 +584,6 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
 {
   component_to_block_map = map;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

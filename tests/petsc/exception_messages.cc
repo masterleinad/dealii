@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that we can catch some standard PETSc error codes and print
 // appropriate exception messages to the screen.
 

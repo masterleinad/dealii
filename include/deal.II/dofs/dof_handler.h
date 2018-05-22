@@ -16,8 +16,6 @@
 #ifndef dealii_dof_handler_h
 #define dealii_dof_handler_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/index_set.h>
@@ -69,7 +67,6 @@ namespace internal
     struct Implementation;
   }
 } // namespace internal
-
 
 /**
  * Given a triangulation and a description of a finite element, this
@@ -300,7 +297,6 @@ public:
 
   typedef typename LevelSelector::cell_iterator level_cell_iterator;
   typedef typename LevelSelector::face_iterator level_face_iterator;
-
 
   /**
    * Make the dimension available in function templates.
@@ -644,7 +640,6 @@ public:
   active_cell_iterator
   end_active(const unsigned int level) const;
 
-
   /**
    * Iterator to the first used cell on level @p level. This returns a
    * level_cell_iterator that returns level dofs when dof_indices() is called.
@@ -799,9 +794,7 @@ public:
    * @}
    */
 
-
   /*---------------------------------------*/
-
 
   /**
    * Return the global number of degrees of freedom. If the current object
@@ -887,7 +880,6 @@ public:
    */
   const BlockInfo&
   block_info() const;
-
 
   /**
    * Return the number of degrees of freedom that belong to this process.
@@ -1068,7 +1060,6 @@ public:
                  << "You tried to do something on level " << arg1
                  << ", but this level is empty.");
 
-
 private:
   /**
    * An object containing information on the block structure.
@@ -1080,7 +1071,6 @@ private:
    */
   SmartPointer<const Triangulation<dim, spacedim>, DoFHandler<dim, spacedim>>
     tria;
-
 
   /**
    * Store a hp::FECollection object containing the (one)
@@ -1273,12 +1263,9 @@ private:
 #endif
 };
 
-
-
 #ifndef DOXYGEN
 
 /* ----------------------- Inline functions ---------------------------------- */
-
 
 template <int dim, int spacedim>
 inline bool
@@ -1287,8 +1274,6 @@ DoFHandler<dim, spacedim>::has_level_dofs() const
   return mg_number_cache.size() > 0;
 }
 
-
-
 template <int dim, int spacedim>
 inline bool
 DoFHandler<dim, spacedim>::has_active_dofs() const
@@ -1296,16 +1281,12 @@ DoFHandler<dim, spacedim>::has_active_dofs() const
   return number_cache.n_global_dofs > 0;
 }
 
-
-
 template <int dim, int spacedim>
 inline types::global_dof_index
 DoFHandler<dim, spacedim>::n_dofs() const
 {
   return number_cache.n_global_dofs;
 }
-
-
 
 template <int dim, int spacedim>
 inline types::global_dof_index
@@ -1318,8 +1299,6 @@ DoFHandler<dim, spacedim>::n_dofs(const unsigned int level) const
   return mg_number_cache[level].n_global_dofs;
 }
 
-
-
 template <int dim, int spacedim>
 unsigned int
 DoFHandler<dim, spacedim>::n_locally_owned_dofs() const
@@ -1327,16 +1306,12 @@ DoFHandler<dim, spacedim>::n_locally_owned_dofs() const
   return number_cache.n_locally_owned_dofs;
 }
 
-
-
 template <int dim, int spacedim>
 const IndexSet&
 DoFHandler<dim, spacedim>::locally_owned_dofs() const
 {
   return number_cache.locally_owned_dofs;
 }
-
-
 
 template <int dim, int spacedim>
 const IndexSet&
@@ -1351,8 +1326,6 @@ DoFHandler<dim, spacedim>::locally_owned_mg_dofs(const unsigned int level) const
   return mg_number_cache[level].locally_owned_dofs;
 }
 
-
-
 template <int dim, int spacedim>
 const std::vector<types::global_dof_index>&
 DoFHandler<dim, spacedim>::n_locally_owned_dofs_per_processor() const
@@ -1360,16 +1333,12 @@ DoFHandler<dim, spacedim>::n_locally_owned_dofs_per_processor() const
   return number_cache.n_locally_owned_dofs_per_processor;
 }
 
-
-
 template <int dim, int spacedim>
 const std::vector<IndexSet>&
 DoFHandler<dim, spacedim>::locally_owned_dofs_per_processor() const
 {
   return number_cache.locally_owned_dofs_per_processor;
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<IndexSet>&
@@ -1385,8 +1354,6 @@ DoFHandler<dim, spacedim>::locally_owned_mg_dofs_per_processor(
   return mg_number_cache[level].locally_owned_dofs_per_processor;
 }
 
-
-
 template <int dim, int spacedim>
 inline const FiniteElement<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_fe(const unsigned int index) const
@@ -1397,8 +1364,6 @@ DoFHandler<dim, spacedim>::get_fe(const unsigned int index) const
            "There is only one FiniteElement stored. The index must be zero!"));
   return get_fe_collection()[0];
 }
-
-
 
 template <int dim, int spacedim>
 inline const hp::FECollection<dim, spacedim>&
@@ -1411,8 +1376,6 @@ DoFHandler<dim, spacedim>::get_fe_collection() const
   return fe_collection;
 }
 
-
-
 template <int dim, int spacedim>
 inline const Triangulation<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_triangulation() const
@@ -1423,16 +1386,12 @@ DoFHandler<dim, spacedim>::get_triangulation() const
   return *tria;
 }
 
-
-
 template <int dim, int spacedim>
 inline const BlockInfo&
 DoFHandler<dim, spacedim>::block_info() const
 {
   return block_info_object;
 }
-
-
 
 template <int dim, int spacedim>
 template <typename number>
@@ -1454,8 +1413,6 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
   return n_boundary_dofs(boundary_ids_only);
 }
 
-
-
 namespace internal
 {
   /**
@@ -1470,8 +1427,6 @@ namespace internal
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
                      PolicyBase<dim, spacedim>& policy);
 } // namespace internal
-
-
 
 template <int dim, int spacedim>
 template <class Archive>
@@ -1507,8 +1462,6 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
 
   ar& n_cells& fe_name& policy_name;
 }
-
-
 
 template <int dim, int spacedim>
 template <class Archive>
@@ -1571,8 +1524,6 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
                + policy_name + ")."));
 }
 
-
-
 template <int dim, int spacedim>
 inline types::global_dof_index
 DoFHandler<dim, spacedim>::MGVertexDoFs::get_index(
@@ -1584,8 +1535,6 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::get_index(
          ExcInvalidLevel(level));
   return indices[dofs_per_vertex * (level - coarsest_level) + dof_number];
 }
-
-
 
 template <int dim, int spacedim>
 inline void
@@ -1599,7 +1548,6 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::set_index(
          ExcInvalidLevel(level));
   indices[dofs_per_vertex * (level - coarsest_level) + dof_number] = index;
 }
-
 
 #endif // DOXYGEN
 

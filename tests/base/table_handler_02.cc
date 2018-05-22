@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test output of tables with columns in a variety of data types
-
 
 #include "../tests.h"
 #include <deal.II/base/data_out_base.h>
@@ -23,7 +21,6 @@
 
 #include <string>
 #include <vector>
-
 
 int
 main()
@@ -37,7 +34,6 @@ main()
   // same column really have different data
   // types
   std::string keys[4] = {"key1", "key2", "key3", "key4"};
-
 
   for(unsigned int i = 0; i < 10; ++i)
     {

@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // FullMatrix::copy_from could not be compiled if we copied from a
 // sparse matrix. make sure this now works
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
-
 
 int
 main()

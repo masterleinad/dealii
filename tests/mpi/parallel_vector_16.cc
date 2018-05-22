@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // build a vector whose elements exceed the size of unsigned int in case of 64
 // bit indices. To avoid excessive memory consumption, let the vector start at
 // a number close to the maximum of unsigned int but extend past the last
@@ -25,7 +24,6 @@
 #include <deal.II/lac/la_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -85,8 +83,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

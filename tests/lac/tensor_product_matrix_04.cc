@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to tensor_product_matrix_01.cc except testing with
 // different mass and laplace matrices for each tensor direction, respectively.
 
@@ -22,7 +21,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/tensor_product_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -103,7 +101,6 @@ do_test(const unsigned int size)
   v3 -= v2;
   deallog << "Verification of inverse: " << v3.linfty_norm() << std::endl;
 }
-
 
 int
 main()

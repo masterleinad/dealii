@@ -13,7 +13,6 @@
 //
 //-----------------------------------------------------------
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/sundials/ida.h>
 
@@ -79,8 +78,6 @@ namespace SUNDIALS
       return err;
     }
 
-
-
     template <typename VectorType>
     int
     t_dae_lsetup(IDAMem   IDA_mem,
@@ -113,7 +110,6 @@ namespace SUNDIALS
 
       return err;
     }
-
 
     template <typename VectorType>
     int
@@ -177,8 +173,6 @@ namespace SUNDIALS
       }
 #  endif
   }
-
-
 
   template <typename VectorType>
   unsigned int
@@ -284,7 +278,6 @@ namespace SUNDIALS
       IDAFree(&ida_mem);
 
     ida_mem = IDACreate();
-
 
     // Free the vectors which are no longer used.
     if(yy)

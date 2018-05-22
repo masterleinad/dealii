@@ -14,8 +14,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check SparsityPattern::copy_from(FullMatrix). This function took
 // extraordinary amounts of CPU time: for a 1 x 400,000 matrix, it
 // took around 50 seconds; after the patch that fixed the quadratic
@@ -30,7 +28,6 @@
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test(const unsigned int M, const unsigned int N)
@@ -49,8 +46,6 @@ test(const unsigned int M, const unsigned int N)
 
   deallog << sp.n_nonzero_elements() << std::endl;
 }
-
-
 
 int
 main()

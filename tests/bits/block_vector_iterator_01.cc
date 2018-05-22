@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that block vector iterator allows reading and writing correctly
 
 #include "../tests.h"
 #include <deal.II/lac/block_vector.h>
-
 
 void
 test()
@@ -74,8 +71,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

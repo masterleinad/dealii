@@ -497,7 +497,6 @@ namespace LinearAlgebra
       update_ghost_values_start(const unsigned int communication_channel
                                 = 0) const;
 
-
       /**
        * For all requests that have been started in update_ghost_values_start,
        * wait for the communication to finish.
@@ -816,7 +815,6 @@ namespace LinearAlgebra
           const Vector<Number>& v);
 
       //@}
-
 
       /**
        * @name 5: Entry access and local data representation
@@ -1304,11 +1302,9 @@ namespace LinearAlgebra
     };
     /*@}*/
 
-
     /*----------------------- Inline functions ----------------------------------*/
 
 #ifndef DOXYGEN
-
 
     template <typename Number>
     inline bool
@@ -1317,8 +1313,6 @@ namespace LinearAlgebra
       return vector_is_ghosted;
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::size_type
     Vector<Number>::size() const
@@ -1326,16 +1320,12 @@ namespace LinearAlgebra
       return partitioner->size();
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::size_type
     Vector<Number>::local_size() const
     {
       return partitioner->local_size();
     }
-
-
 
     template <typename Number>
     inline std::pair<typename Vector<Number>::size_type,
@@ -1345,16 +1335,12 @@ namespace LinearAlgebra
       return partitioner->local_range();
     }
 
-
-
     template <typename Number>
     inline bool
     Vector<Number>::in_local_range(const size_type global_index) const
     {
       return partitioner->in_local_range(global_index);
     }
-
-
 
     template <typename Number>
     inline IndexSet
@@ -1368,16 +1354,12 @@ namespace LinearAlgebra
       return is;
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::size_type
     Vector<Number>::n_ghost_entries() const
     {
       return partitioner->n_ghost_indices();
     }
-
-
 
     template <typename Number>
     inline const IndexSet&
@@ -1386,16 +1368,12 @@ namespace LinearAlgebra
       return partitioner->ghost_indices();
     }
 
-
-
     template <typename Number>
     inline bool
     Vector<Number>::is_ghost_entry(const size_type global_index) const
     {
       return partitioner->is_ghost_entry(global_index);
     }
-
-
 
     template <typename Number>
     inline typename Vector<Number>::iterator
@@ -1404,16 +1382,12 @@ namespace LinearAlgebra
       return values.get();
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::const_iterator
     Vector<Number>::begin() const
     {
       return values.get();
     }
-
-
 
     template <typename Number>
     inline typename Vector<Number>::iterator
@@ -1422,16 +1396,12 @@ namespace LinearAlgebra
       return values.get() + partitioner->local_size();
     }
 
-
-
     template <typename Number>
     inline typename Vector<Number>::const_iterator
     Vector<Number>::end() const
     {
       return values.get() + partitioner->local_size();
     }
-
-
 
     template <typename Number>
     inline Number
@@ -1451,8 +1421,6 @@ namespace LinearAlgebra
                         "but it has not imported its ghost values."));
       return values[partitioner->global_to_local(global_index)];
     }
-
-
 
     template <typename Number>
     inline Number&
@@ -1474,23 +1442,17 @@ namespace LinearAlgebra
       return values[partitioner->global_to_local(global_index)];
     }
 
-
-
     template <typename Number>
     inline Number Vector<Number>::operator[](const size_type global_index) const
     {
       return operator()(global_index);
     }
 
-
-
     template <typename Number>
     inline Number& Vector<Number>::operator[](const size_type global_index)
     {
       return operator()(global_index);
     }
-
-
 
     template <typename Number>
     inline Number
@@ -1506,8 +1468,6 @@ namespace LinearAlgebra
       return values[local_index];
     }
 
-
-
     template <typename Number>
     inline Number&
     Vector<Number>::local_element(const size_type local_index)
@@ -1518,8 +1478,6 @@ namespace LinearAlgebra
       return values[local_index];
     }
 
-
-
     template <typename Number>
     template <typename OtherNumber>
     inline void
@@ -1529,8 +1487,6 @@ namespace LinearAlgebra
       for(size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
     }
-
-
 
     template <typename Number>
     template <typename ForwardIterator, typename OutputIterator>
@@ -1546,8 +1502,6 @@ namespace LinearAlgebra
           values_begin++;
         }
     }
-
-
 
     template <typename Number>
     template <typename OtherNumber>
@@ -1566,8 +1520,6 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     template <typename OtherNumber>
     inline void
@@ -1585,16 +1537,12 @@ namespace LinearAlgebra
         }
     }
 
-
-
     template <typename Number>
     inline const MPI_Comm&
     Vector<Number>::get_mpi_communicator() const
     {
       return partitioner->get_mpi_communicator();
     }
-
-
 
     template <typename Number>
     inline const std::shared_ptr<const Utilities::MPI::Partitioner>&
@@ -1607,7 +1555,6 @@ namespace LinearAlgebra
 
   } // namespace distributed
 } // namespace LinearAlgebra
-
 
 /**
  * Global function @p swap which overloads the default implementation of the
@@ -1625,7 +1572,6 @@ swap(LinearAlgebra::distributed::Vector<Number>& u,
   u.swap(v);
 }
 
-
 /**
  * Declare dealii::LinearAlgebra::Vector< Number > as distributed vector.
  *
@@ -1635,7 +1581,6 @@ template <typename Number>
 struct is_serial_vector<LinearAlgebra::distributed::Vector<Number>>
   : std::false_type
 {};
-
 
 namespace internal
 {
@@ -1677,7 +1622,6 @@ namespace internal
 
   } // namespace LinearOperatorImplementation
 } /* namespace internal */
-
 
 DEAL_II_NAMESPACE_CLOSE
 

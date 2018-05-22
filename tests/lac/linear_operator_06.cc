@@ -29,7 +29,6 @@
   for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
     deallog << "[block " << i << " ]  " << var.block(i);
 
-
 using namespace dealii;
 
 int

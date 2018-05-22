@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/constraint_matrix.h>
@@ -23,8 +22,6 @@
 //   DoFTools::
 //   make_hanging_node_constraints (const DoFHandler<dim> &,
 //                              ConstraintMatrix      &);
-
-
 
 template <int dim>
 void

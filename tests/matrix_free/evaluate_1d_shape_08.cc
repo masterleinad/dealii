@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the correctness of the 1d evaluation functions used in FEEvaluation,
 // path evaluate_evenodd, when using a double array for coefficients but
 // VectorizedArray for the input and output vector
@@ -24,7 +22,6 @@
 
 #include <deal.II/base/vectorization.h>
 #include <deal.II/matrix_free/tensor_product_kernels.h>
-
 
 template <int M, int N, int type, bool add>
 void

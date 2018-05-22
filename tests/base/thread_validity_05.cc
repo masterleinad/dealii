@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that objects that can't be copied aren't copied when passed to a new
 // thread by reference
 //
@@ -49,7 +48,6 @@ private:
   operator=(const X&);
 };
 
-
 void
 test1()
 {
@@ -57,7 +55,6 @@ test1()
   Threads::Thread<void> t = Threads::new_thread(&X::execute, x);
   t.join();
 }
-
 
 struct Y
 {
@@ -84,7 +81,6 @@ private:
   operator=(const Y&);
 };
 
-
 void
 test2()
 {
@@ -92,8 +88,6 @@ test2()
   Threads::Thread<void> t = Threads::new_thread(&Y::execute, y);
   t.join();
 }
-
-
 
 int
 main()

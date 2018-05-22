@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // On a 2D mesh of the following structure look for the cells adjacent to
 // each vertex:
 //
@@ -36,8 +34,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 void check(Triangulation<2>& tria)
 {
   for(unsigned i = 0; i < tria.n_vertices(); i++)
@@ -56,7 +52,6 @@ void check(Triangulation<2>& tria)
         }
     }
 }
-
 
 int
 main()

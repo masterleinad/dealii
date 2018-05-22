@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a test that triggers really hard to track down failures in
 // mapping_collection_01 in a really simple way
-
 
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/hp/mapping_collection.h>
-
-
 
 template <int dim>
 void
@@ -31,8 +26,6 @@ test()
 {
   hp::MappingCollection<dim> mapping_collection(MappingQ<dim>(2));
 }
-
-
 
 int
 main()

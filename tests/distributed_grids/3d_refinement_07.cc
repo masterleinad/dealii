@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like the second part of 3d_refinement_06 but use only four coarse
 // grid cells. we want to make sure that the 2:1 relationship holds
 // across an edge
-
 
 #include "../tests.h"
 #include "coarse_grid_common.h"
@@ -29,8 +26,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -55,7 +50,6 @@ test(std::ostream& /*out*/)
     Assert(tr.n_active_cells() == 88, ExcInternalError());
   }
 }
-
 
 int
 main(int argc, char* argv[])

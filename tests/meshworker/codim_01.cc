@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that the MeshWorker framework is instantiated for all dim<=spacedim
 // modified from a bug report submitted by Andrea Bonito
 
@@ -33,7 +32,6 @@
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/mapping.h>
-
 
 using namespace dealii;
 
@@ -93,7 +91,6 @@ test()
   deallog << "dim = " << dim << ", spacedim = " << spacedim << ": OK"
           << std::endl;
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // BlockSparseMatrix::clear used to forget to reset all sizes to zero
 
 #include "../tests.h"
@@ -26,8 +25,6 @@
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
-
-
 
 int
 main()

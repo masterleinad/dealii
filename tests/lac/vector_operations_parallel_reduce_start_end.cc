@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check that internal::VectorOperations::parallel_reduce works for start-end
 
 #include "../tests.h"
 #include <deal.II/base/index_set.h>
 #include <deal.II/lac/vector_operations_internal.h>
-
-
 
 template <typename Number>
 void
@@ -41,7 +38,6 @@ check()
 
       for(unsigned int i = 0; i < size; ++i)
         val[i] = random_value<double>();
-
 
       internal::VectorOperations::MeanValue<Number> mean(val);
 
@@ -71,7 +67,6 @@ check()
       free(val);
     }
 }
-
 
 int
 main()

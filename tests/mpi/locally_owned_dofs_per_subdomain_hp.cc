@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // DoFTools::locally_owned_dofs_per_subdomain wrongly sized the array
 // it returns when we have some processors that don't own any cells
 //
@@ -25,7 +24,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/fe_collection.h>
-
 
 template <int dim>
 void

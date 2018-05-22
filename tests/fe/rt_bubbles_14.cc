@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // The test is similar to rt_bubbles_11, but we now use FESubfaceValues
 
 #include "../tests.h"
@@ -34,8 +33,6 @@
 
 #include <string>
 #include <vector>
-
-
 
 template <int dim>
 void
@@ -73,8 +70,6 @@ test(const unsigned int degree)
         }
     }
 }
-
-
 
 int
 main()

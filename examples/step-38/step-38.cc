@@ -17,7 +17,6 @@
  * Authors: Andrea Bonito, Sebastian Pauletti.
  */
 
-
 // @sect3{Include files}
 
 // If you've read through step-4 and step-7, you will recognize that we have
@@ -48,7 +47,6 @@
 
 #include <fstream>
 #include <iostream>
-
 
 namespace Step38
 {
@@ -115,7 +113,6 @@ namespace Step38
     void
     compute_error() const;
 
-
     Triangulation<dim, spacedim> triangulation;
     FE_Q<dim, spacedim>          fe;
     DoFHandler<dim, spacedim>    dof_handler;
@@ -127,7 +124,6 @@ namespace Step38
     Vector<double> solution;
     Vector<double> system_rhs;
   };
-
 
   // @sect3{Equation data}
 
@@ -156,14 +152,12 @@ namespace Step38
              const unsigned int component = 0) const override;
   };
 
-
   template <>
   double
   Solution<2>::value(const Point<2>& p, const unsigned int) const
   {
     return (-2. * p(0) * p(1));
   }
-
 
   template <>
   Tensor<1, 2>
@@ -176,7 +170,6 @@ namespace Step38
     return return_value;
   }
 
-
   template <>
   double
   Solution<3>::value(const Point<3>& p, const unsigned int) const
@@ -184,7 +177,6 @@ namespace Step38
     return (std::sin(numbers::PI * p(0)) * std::cos(numbers::PI * p(1))
             * exp(p(2)));
   }
-
 
   template <>
   Tensor<1, 3>
@@ -200,8 +192,6 @@ namespace Step38
 
     return return_value;
   }
-
-
 
   template <int dim>
   class RightHandSide : public Function<dim>
@@ -221,7 +211,6 @@ namespace Step38
   {
     return (-8. * p(0) * p(1));
   }
-
 
   template <>
   double
@@ -257,7 +246,6 @@ namespace Step38
             + (hessian * normal) * normal);
   }
 
-
   // @sect3{Implementation of the <code>LaplaceBeltramiProblem</code> class}
 
   // The rest of the program is actually quite unspectacular if you know
@@ -269,7 +257,6 @@ namespace Step38
     const unsigned degree)
     : fe(degree), dof_handler(triangulation), mapping(degree)
   {}
-
 
   // @sect4{LaplaceBeltramiProblem::make_grid_and_dofs}
 
@@ -347,7 +334,6 @@ namespace Step38
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
 
   // @sect4{LaplaceBeltramiProblem::assemble_system}
 
@@ -429,8 +415,6 @@ namespace Step38
       boundary_values, system_matrix, solution, system_rhs, false);
   }
 
-
-
   // @sect4{LaplaceBeltramiProblem::solve}
 
   // The next function is the one that solves the linear system. Here, too, no
@@ -447,8 +431,6 @@ namespace Step38
 
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
   }
-
-
 
   // @sect4{LaplaceBeltramiProblem::output_result}
 
@@ -495,8 +477,6 @@ namespace Step38
     data_out.write_vtk(output);
   }
 
-
-
   // @sect4{LaplaceBeltramiProblem::compute_error}
 
   // This is the last piece of functionality: we want to compute the error in
@@ -523,8 +503,6 @@ namespace Step38
     std::cout << "H1 error = " << h1_error << std::endl;
   }
 
-
-
   // @sect4{LaplaceBeltramiProblem::run}
 
   // The last function provides the top-level logic. Its contents are
@@ -540,7 +518,6 @@ namespace Step38
     compute_error();
   }
 } // namespace Step38
-
 
 // @sect3{The main() function}
 

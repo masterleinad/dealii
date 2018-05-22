@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/grid_in.h>
@@ -23,7 +22,6 @@
 #include <string>
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void

@@ -52,7 +52,6 @@
 #  include <stdlib.h>
 #endif
 
-
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
 #    include <Epetra_MpiComm.h>
@@ -64,10 +63,7 @@
 #  include <Teuchos_RCP.hpp>
 #endif
 
-
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace Utilities
 {
@@ -82,22 +78,17 @@ namespace Utilities
                  << "Can't convert the string " << arg1
                  << " to the desired type");
 
-
   std::string
   dealii_version_string()
   {
     return DEAL_II_PACKAGE_NAME " version " DEAL_II_PACKAGE_VERSION;
   }
 
-
-
   std::string
   int_to_string(const unsigned int value, const unsigned int digits)
   {
     return to_string(value, digits);
   }
-
-
 
   template <typename number>
   std::string
@@ -117,7 +108,6 @@ namespace Utilities
       }
     return lc_string;
   }
-
 
   std::string
   replace_in_string(const std::string& input,
@@ -163,8 +153,6 @@ namespace Utilities
     return std::string(input, left, right - left + 1);
   }
 
-
-
   std::string
   dim_string(const int dim, const int spacedim)
   {
@@ -173,7 +161,6 @@ namespace Utilities
     else
       return int_to_string(dim) + "," + int_to_string(spacedim);
   }
-
 
   unsigned int
   needed_digits(const unsigned int max_number)
@@ -193,8 +180,6 @@ namespace Utilities
     AssertThrow(false, ExcInvalidNumber(max_number));
     return 0;
   }
-
-
 
   int
   string_to_int(const std::string& s_)
@@ -222,8 +207,6 @@ namespace Utilities
     return i;
   }
 
-
-
   std::vector<int>
   string_to_int(const std::vector<std::string>& s)
   {
@@ -232,8 +215,6 @@ namespace Utilities
       tmp[i] = string_to_int(s[i]);
     return tmp;
   }
-
-
 
   double
   string_to_double(const std::string& s_)
@@ -261,8 +242,6 @@ namespace Utilities
     return d;
   }
 
-
-
   std::vector<double>
   string_to_double(const std::vector<std::string>& s)
   {
@@ -271,8 +250,6 @@ namespace Utilities
       tmp[i] = string_to_double(s[i]);
     return tmp;
   }
-
-
 
   std::vector<std::string>
   split_string_list(const std::string& s, const std::string& delimiter)
@@ -318,7 +295,6 @@ namespace Utilities
     return split_list;
   }
 
-
   std::vector<std::string>
   split_string_list(const std::string& s, const char delimiter)
   {
@@ -326,7 +302,6 @@ namespace Utilities
     d[0]          = delimiter;
     return split_string_list(s, d);
   }
-
 
   std::vector<std::string>
   break_text_into_lines(const std::string& original_text,
@@ -406,8 +381,6 @@ namespace Utilities
     return lines;
   }
 
-
-
   bool
   match_at_string_start(const std::string& name, const std::string& pattern)
   {
@@ -420,8 +393,6 @@ namespace Utilities
 
     return true;
   }
-
-
 
   std::pair<int, unsigned int>
   get_integer_at_position(const std::string& name, const unsigned int position)
@@ -463,8 +434,6 @@ namespace Utilities
       return std::make_pair(-1, numbers::invalid_unsigned_int);
   }
 
-
-
   double
   generate_normal_random_number(const double a, const double sigma)
   {
@@ -482,8 +451,6 @@ namespace Utilities
                                         sigma)(random_number_generator.get());
   }
 
-
-
   std::vector<unsigned int>
   reverse_permutation(const std::vector<unsigned int>& permutation)
   {
@@ -495,8 +462,6 @@ namespace Utilities
 
     return out;
   }
-
-
 
   std::vector<unsigned int>
   invert_permutation(const std::vector<unsigned int>& permutation)
@@ -532,8 +497,6 @@ namespace Utilities
     return out;
   }
 
-
-
   std::vector<unsigned long long int>
   invert_permutation(const std::vector<unsigned long long int>& permutation)
   {
@@ -556,7 +519,6 @@ namespace Utilities
     return out;
   }
 
-
   template <typename Integer>
   std::vector<Integer>
   reverse_permutation(const std::vector<Integer>& permutation)
@@ -569,8 +531,6 @@ namespace Utilities
 
     return out;
   }
-
-
 
   template <typename Integer>
   std::vector<Integer>
@@ -594,8 +554,6 @@ namespace Utilities
 
     return out;
   }
-
-
 
   namespace System
   {
@@ -646,7 +604,6 @@ namespace Utilities
         }
     }
 
-
     void
     get_memory_stats(MemoryStats& stats)
     {
@@ -679,8 +636,6 @@ namespace Utilities
 #endif
     }
 
-
-
     std::string
     get_hostname()
     {
@@ -693,8 +648,6 @@ namespace Utilities
 #endif
       return hostname;
     }
-
-
 
     std::string
     get_time()
@@ -710,8 +663,6 @@ namespace Utilities
       return o.str();
     }
 
-
-
     std::string
     get_date()
     {
@@ -724,8 +675,6 @@ namespace Utilities
 
       return o.str();
     }
-
-
 
     void
     posix_memalign(void** memptr, size_t alignment, size_t size)
@@ -744,15 +693,12 @@ namespace Utilities
 #endif
     }
 
-
-
     bool
     job_supports_mpi()
     {
       return Utilities::MPI::job_supports_mpi();
     }
   } // namespace System
-
 
 #ifdef DEAL_II_WITH_TRILINOS
 
@@ -772,8 +718,6 @@ namespace Utilities
       return *communicator;
     }
 
-
-
     const Epetra_Comm&
     comm_self()
     {
@@ -787,8 +731,6 @@ namespace Utilities
 
       return *communicator;
     }
-
-
 
     Epetra_Comm*
     duplicate_communicator(const Epetra_Comm& communicator)
@@ -815,8 +757,6 @@ namespace Utilities
         dynamic_cast<const Epetra_SerialComm&>(communicator));
     }
 
-
-
     void
     destroy_communicator(Epetra_Comm& communicator)
     {
@@ -834,22 +774,17 @@ namespace Utilities
 #  endif
     }
 
-
-
     unsigned int
     get_n_mpi_processes(const Epetra_Comm& mpi_communicator)
     {
       return mpi_communicator.NumProc();
     }
 
-
     unsigned int
     get_this_mpi_process(const Epetra_Comm& mpi_communicator)
     {
       return (unsigned int) mpi_communicator.MyPID();
     }
-
-
 
     Epetra_Map
     duplicate_map(const Epetra_BlockMap& map, const Epetra_Comm& comm)

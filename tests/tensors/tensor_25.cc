@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check Tensor<2,dim>::operator[] (TableIndices)
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -46,7 +44,6 @@ check()
         }
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

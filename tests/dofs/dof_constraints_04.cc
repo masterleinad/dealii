@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing vectors. This test was
 // written when I changed a few things in the algorithm
 
@@ -32,7 +30,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -80,8 +77,6 @@ test()
     if(constraints.is_constrained(i))
       AssertThrow(b(i) == 0, ExcInternalError());
 }
-
-
 
 int
 main()

@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2000
  */
 
-
 // @sect3{Include files}
 
 // As usual, the first few include files are already known, so we will not
@@ -113,7 +112,6 @@ namespace Step8
     Vector<double> system_rhs;
   };
 
-
   // @sect3{Right hand side values}
 
   // Before going over to the implementation of the main class, we declare and
@@ -182,8 +180,6 @@ namespace Step8
       }
   }
 
-
-
   // @sect3{The <code>ElasticProblem</code> class implementation}
 
   // @sect4{ElasticProblem::ElasticProblem}
@@ -208,8 +204,6 @@ namespace Step8
   // several scalar finite elements of the same type into one; we will get to
   // know these possibilities in later examples.
 
-
-
   // @sect4{ElasticProblem::~ElasticProblem}
 
   // The destructor, on the other hand, is exactly as in step-6:
@@ -218,7 +212,6 @@ namespace Step8
   {
     dof_handler.clear();
   }
-
 
   // @sect4{ElasticProblem::setup_system}
 
@@ -254,7 +247,6 @@ namespace Step8
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
   }
-
 
   // @sect4{ElasticProblem::assemble_system}
 
@@ -450,8 +442,6 @@ namespace Step8
       boundary_values, system_matrix, solution, system_rhs);
   }
 
-
-
   // @sect4{ElasticProblem::solve}
 
   // The solver does not care about where the system of equations comes, as
@@ -472,7 +462,6 @@ namespace Step8
 
     hanging_node_constraints.distribute(solution);
   }
-
 
   // @sect4{ElasticProblem::refine_grid}
 
@@ -503,7 +492,6 @@ namespace Step8
 
     triangulation.execute_coarsening_and_refinement();
   }
-
 
   // @sect4{ElasticProblem::output_results}
 
@@ -572,8 +560,6 @@ namespace Step8
     std::ofstream output("solution-" + std::to_string(cycle) + ".vtk");
     data_out.write_vtk(output);
   }
-
-
 
   // @sect4{ElasticProblem::run}
 

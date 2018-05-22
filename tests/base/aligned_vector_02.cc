@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for AlignedVector<AlignedVector<unsigned int> >
 
 #include "../tests.h"
 
 #include <deal.II/base/aligned_vector.h>
-
 
 typedef AlignedVector<unsigned int> VEC;
 typedef AlignedVector<VEC>          VECVEC;
@@ -82,8 +80,6 @@ test()
   deallog << "Clear: ";
   print_vec(v);
 }
-
-
 
 int
 main()

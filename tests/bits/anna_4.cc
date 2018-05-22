@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check for an abort in VectorTools::interpolate_boundary_values.
 //
 // this program is a modified version of one by Anna Schneebeli,
@@ -45,7 +43,6 @@
 
 #include <vector>
 
-
 template <int dim>
 class VectorBoundaryValues : public Function<dim>
 {
@@ -70,8 +67,6 @@ VectorBoundaryValues<dim>::vector_value(const Point<dim>& p,
     values(i) = p(i) * p(i);
 }
 
-
-
 template <int dim>
 class FindBug
 {
@@ -92,7 +87,6 @@ private:
   Vector<double>     solution;
 };
 
-
 // Construct FESystem with
 // first component: Q1-Element,
 // second component: lowest order DG_Element
@@ -100,7 +94,6 @@ template <int dim>
 FindBug<dim>::FindBug()
   : fe(FE_Q<dim>(1), 1, FE_DGP<dim>(0), 1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -114,16 +107,13 @@ FindBug<dim>::make_grid_and_dofs()
 
   deallog << "Total number of cells: " << triangulation.n_cells() << std::endl;
 
-
   dof_handler.distribute_dofs(fe);
-
 
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
   solution.reinit(dof_handler.n_dofs());
 }
-
 
 template <int dim>
 void
@@ -152,7 +142,6 @@ FindBug<dim>::dirichlet_conditions()
   // checks that it has been
   // correctly implemented by now
 
-
   std::map<types::global_dof_index, double> dirichlet_dofs;
 
   // we declare a vector of bools,
@@ -174,14 +163,12 @@ FindBug<dim>::dirichlet_conditions()
   for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     dirichlet_dofs[i] = 1.;
 
-
   // Here comes the crucial call....
   VectorTools::interpolate_boundary_values(dof_handler,
                                            0,
                                            Functions::ZeroFunction<dim>(2),
                                            dirichlet_dofs,
                                            component_mask);
-
 
   std::vector<bool>            fixed_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
@@ -224,8 +211,6 @@ FindBug<dim>::dirichlet_conditions()
       deallog << i << " " << dirichlet_dofs[i] << std::endl;
 }
 
-
-
 template <int dim>
 void
 FindBug<dim>::run()
@@ -233,8 +218,6 @@ FindBug<dim>::run()
   make_grid_and_dofs();
   dirichlet_conditions();
 }
-
-
 
 int
 main()

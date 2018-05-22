@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // This test is similar to parallel_multigrid_adaptive_06 but we also test
 // for different polynomial degree in different blocks.
 // We expect to have the same iteration numbers as in
 // parallel_multigrid_adaptive_06 with repsect to the highest polynomial
 // degree used.
-
 
 #include "../tests.h"
 
@@ -148,7 +145,6 @@ public:
     laplace2.compute_diagonal();
   }
 
-
   virtual void
   clear()
   {
@@ -170,8 +166,6 @@ private:
                                        typename BlockVectorType::BlockType>
     laplace2;
 };
-
-
 
 template <typename MatrixType, typename Number>
 class MGCoarseIterative
@@ -200,8 +194,6 @@ public:
 
   const MatrixType* coarse_matrix;
 };
-
-
 
 template <int dim,
           int fe_degree_1,
@@ -405,8 +397,6 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
     mg_matrices[level].clear();
 }
 
-
-
 template <int dim, int fe_degree_1, int fe_degree_2>
 void
 test()
@@ -448,8 +438,6 @@ test()
       do_test<dim, fe_degree_1, fe_degree_2, n_q_points_1d, double>(dh_ptrs);
     }
 }
-
-
 
 int
 main(int argc, char** argv)

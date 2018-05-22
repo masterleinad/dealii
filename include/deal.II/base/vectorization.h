@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_vectorization_h
 #define dealii_vectorization_h
 
@@ -54,9 +53,7 @@
 #  include <emmintrin.h>
 #endif
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -89,7 +86,6 @@ namespace internal
   };
 } // namespace internal
 
-
 // Enable the EnableIfScalar type trait for VectorizedArray<Number> such
 // that it can be used as a Number type in Tensor<rank,dim,Number>, etc.
 
@@ -98,8 +94,6 @@ struct EnableIfScalar<VectorizedArray<Number>>
 {
   typedef VectorizedArray<typename EnableIfScalar<Number>::type> type;
 };
-
-
 
 /**
  * This generic class defines a unified interface to a vectorized data type.
@@ -431,8 +425,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Create a vectorized array that sets all entries in the array to the given
  * scalar.
@@ -447,8 +439,6 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   result = u;
   return result;
 }
-
-
 
 /**
  * This method loads VectorizedArray::n_array_elements data streams from the
@@ -486,8 +476,6 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
     for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements; ++v)
       out[i][v] = in[offsets[v] + i];
 }
-
-
 
 /**
  * This method stores the vectorized arrays in transposed form into the given
@@ -546,8 +534,6 @@ vectorized_transpose_and_store(const bool                     add_into,
           ++v)
         out[offsets[v] + i] = in[i][v];
 }
-
-
 
 // for safety, also check that __AVX512F__ is defined in case the user manually
 // set some conflicting compile flags which prevent compilation
@@ -834,8 +820,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for double and AVX-512.
  */
@@ -878,8 +862,6 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
           out[i][outer + v] = in[offsets[v + outer] + i];
     }
 }
-
-
 
 /**
  * Specialization for double and AVX-512.
@@ -953,8 +935,6 @@ vectorized_transpose_and_store(const bool                     add_into,
             out[offsets[v + outer] + i] = in[i][v + outer];
     }
 }
-
-
 
 /**
  * Specialization for float and AVX512.
@@ -1236,8 +1216,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for float and AVX-512.
  */
@@ -1290,8 +1268,6 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
           out[i][v + outer] = in[offsets[v + outer] + i];
     }
 }
-
-
 
 /**
  * Specialization for float and AVX-512.
@@ -1386,8 +1362,6 @@ vectorized_transpose_and_store(const bool                    add_into,
             out[offsets[v + outer] + i] = in[i][v + outer];
     }
 }
-
-
 
 #elif DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 2 && defined(__AVX__)
 
@@ -1665,8 +1639,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for double and AVX.
  */
@@ -1702,8 +1674,6 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
     for(unsigned int v = 0; v < 4; ++v)
       out[i][v] = in[offsets[v] + i];
 }
-
-
 
 /**
  * Specialization for double and AVX.
@@ -1767,8 +1737,6 @@ vectorized_transpose_and_store(const bool                     add_into,
       for(unsigned int v = 0; v < 4; ++v)
         out[offsets[v] + i] = in[i][v];
 }
-
-
 
 /**
  * Specialization for float and AVX.
@@ -2044,8 +2012,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for float and AVX.
  */
@@ -2091,8 +2057,6 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
     for(unsigned int v = 0; v < 8; ++v)
       out[i][v] = in[offsets[v] + i];
 }
-
-
 
 /**
  * Specialization for float and AVX.
@@ -2172,8 +2136,6 @@ vectorized_transpose_and_store(const bool                    add_into,
       for(unsigned int v = 0; v < 8; ++v)
         out[offsets[v] + i] = in[i][v];
 }
-
-
 
 // for safety, also check that __SSE2__ is defined in case the user manually
 // set some conflicting compile flags which prevent compilation
@@ -2441,8 +2403,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for double and SSE2.
  */
@@ -2465,8 +2425,6 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
     for(unsigned int v = 0; v < 2; ++v)
       out[i][v] = in[offsets[v] + i];
 }
-
-
 
 /**
  * Specialization for double and SSE2.
@@ -2515,8 +2473,6 @@ vectorized_transpose_and_store(const bool                     add_into,
           out[offsets[v] + i] = in[i][v];
     }
 }
-
-
 
 /**
  * Specialization for float and SSE2.
@@ -2779,8 +2735,6 @@ private:
   std::min(const VectorizedArray<Number2>&, const VectorizedArray<Number2>&);
 };
 
-
-
 /**
  * Specialization for float and SSE2.
  */
@@ -2811,8 +2765,6 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
     for(unsigned int v = 0; v < 4; ++v)
       out[i][v] = in[offsets[v] + i];
 }
-
-
 
 /**
  * Specialization for float and SSE2.
@@ -2873,10 +2825,7 @@ vectorized_transpose_and_store(const bool                    add_into,
         out[offsets[v] + i] = in[i][v];
 }
 
-
-
 #endif // if DEAL_II_COMPILER_VECTORIZATION_LEVEL > 0
-
 
 /**
  * Relational operator == for VectorizedArray
@@ -2894,7 +2843,6 @@ operator==(const VectorizedArray<Number>& lhs,
 
   return true;
 }
-
 
 /**
  * Addition of two vectorized arrays with operator +.
@@ -3214,9 +3162,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
   return VectorizedArray<Number>() - u;
 }
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 /**
  * Implementation of functions from cmath on VectorizedArray. These functions
@@ -3252,8 +3198,6 @@ namespace std
     return out;
   }
 
-
-
   /**
    * Compute the cosine of a vectorized data field. The result is returned as
    * vectorized array in the form <tt>{cos(x[0]), cos(x[1]), ...,
@@ -3274,8 +3218,6 @@ namespace std
     out.load(&values[0]);
     return out;
   }
-
-
 
   /**
    * Compute the tangent of a vectorized data field. The result is returned
@@ -3298,8 +3240,6 @@ namespace std
     return out;
   }
 
-
-
   /**
    * Compute the exponential of a vectorized data field. The result is
    * returned as vectorized array in the form <tt>{exp(x[0]), exp(x[1]), ...,
@@ -3320,8 +3260,6 @@ namespace std
     out.load(&values[0]);
     return out;
   }
-
-
 
   /**
    * Compute the natural logarithm of a vectorized data field. The result is
@@ -3344,8 +3282,6 @@ namespace std
     return out;
   }
 
-
-
   /**
    * Compute the square root of a vectorized data field. The result is
    * returned as vectorized array in the form <tt>{sqrt(x[0]), sqrt(x[1]),
@@ -3359,8 +3295,6 @@ namespace std
   {
     return x.get_sqrt();
   }
-
-
 
   /**
    * Raises the given number @p x to the power @p p for a vectorized data
@@ -3383,8 +3317,6 @@ namespace std
     return out;
   }
 
-
-
   /**
    * Compute the absolute value (modulus) of a vectorized data field. The
    * result is returned as vectorized array in the form <tt>{abs(x[0]),
@@ -3398,8 +3330,6 @@ namespace std
   {
     return x.get_abs();
   }
-
-
 
   /**
    * Compute the componentwise maximum of two vectorized data fields. The
@@ -3415,8 +3345,6 @@ namespace std
   {
     return x.get_max(y);
   }
-
-
 
   /**
    * Compute the componentwise minimum of two vectorized data fields. The

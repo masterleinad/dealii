@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that all the functionality needed for calling
 // ConstraintMatrix::distribute_local_to_global on mutiple combinations of
 // PETScWrappers objects is correctly instantiated and works.
@@ -26,7 +25,6 @@
 #include <deal.II/lac/vector.h>
 
 #include "../tests.h"
-
 
 int
 main(int argc, char** argv)

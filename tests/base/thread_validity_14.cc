@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // See that we can query a task object's return value for cases
 // where these returned objects are not copyable but only
 // movable. This is relevant, for example, when calling functions that
@@ -23,7 +22,6 @@
 #include <unistd.h>
 
 #include <deal.II/base/thread_management.h>
-
 
 class X
 {
@@ -60,19 +58,14 @@ public:
     return *this;
   }
 
-
   int value;
 };
-
-
 
 X
 foo()
 {
   return X(42);
 }
-
-
 
 int
 main()

@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like deal.II/vectors_point_source, but for hp objects. here, each hp object has only a
 // single component, so we expect exactly the same output as for the old test.
 // vectors_point_source_hp tests for different finite elements
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -39,8 +36,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -86,8 +81,6 @@ check()
   for(unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
-
-
 
 int
 main()

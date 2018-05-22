@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check inversion of rank-4 tensor
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
-
-
 
 template <int dim>
 void
@@ -61,8 +58,6 @@ check(const SymmetricTensor<4, dim>& A)
                         ExcInternalError());
           }
 }
-
-
 
 template <int dim>
 void
@@ -112,8 +107,6 @@ test()
     }
   check(A);
 }
-
-
 
 int
 main()

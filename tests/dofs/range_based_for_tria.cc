@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check range-based for loops for triangulations
 
 #include "../tests.h"
@@ -26,7 +24,6 @@
 
 #include <string>
 
-
 template <int dim>
 void
 check()
@@ -34,7 +31,6 @@ check()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-
 
   {
     // set flags on active cells
@@ -67,7 +63,6 @@ check()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

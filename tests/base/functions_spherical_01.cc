@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test value, gradient and hessian of a Functions::Spherical as
 // compared to radially symmetric function.
 
 #include "../tests.h"
 #include <deal.II/base/function_spherical.h>
 #include <deal.II/base/geometric_utilities.h>
-
 
 // reference function f(x) = exp (-Z*r)
 template <int dim>
@@ -69,7 +67,6 @@ private:
   const Point<dim> origin;
   const double     Z;
 };
-
 
 // same as above but using Functions::Spherical
 template <int dim>

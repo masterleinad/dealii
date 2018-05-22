@@ -22,7 +22,6 @@
 #include <deal.II/sundials/ida.h>
 #include <deal.II/sundials/kinsol.h>
 
-
 int
 main()
 {

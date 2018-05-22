@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check LinearAlgebra::distributed::Vector::partitioners_are_compatible and
 // partitioners_are_globally_compatible
 
@@ -24,7 +23,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test()
 {
@@ -33,7 +31,6 @@ test()
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
-
 
   // all processors own 2 elements
   IndexSet local_owned(numproc * 2);
@@ -100,8 +97,6 @@ test()
           << v5.partitioners_are_globally_compatible(*v6.get_partitioner())
           << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

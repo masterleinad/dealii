@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check some things about Nedelec elements, here that
 // DoFTools::component_select and DoFTools::count_dofs_per_component
 // works
@@ -36,7 +34,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 template <int dim>
 class SystemTest
 {
@@ -51,7 +48,6 @@ private:
   void
   check();
 
-
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
   DoFHandler<dim>    dof_handler;
@@ -61,7 +57,6 @@ template <int dim>
 SystemTest<dim>::SystemTest()
   : fe(FE_Nedelec<dim>(0), 2, FE_Q<dim>(1), 1), dof_handler(triangulation)
 {}
-
 
 template <int dim>
 void
@@ -77,7 +72,6 @@ SystemTest<dim>::make_grid_and_dofs()
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 }
-
 
 template <int dim>
 void
@@ -105,7 +99,6 @@ SystemTest<dim>::check()
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 SystemTest<dim>::run()
@@ -120,8 +113,6 @@ SystemTest<dim>::run()
   DoFRenumbering::component_wise(dof_handler);
   check();
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that the product between a tensor and an integer behaves just
 // like that of the tensor and the integer-converted-to-double
 
@@ -23,8 +22,6 @@
 
 #include <deal.II/base/template_constraints.h>
 #include <deal.II/base/tensor.h>
-
-
 
 int
 main()

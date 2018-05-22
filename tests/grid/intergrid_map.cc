@@ -30,8 +30,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 check()
@@ -77,8 +75,6 @@ check()
           // cell, since the meshes have different refinement steps.
         };
 
-
-
       // now refine grids a little,
       // but differently. this
       // produces quite random grids
@@ -105,8 +101,6 @@ check()
       tria_2.execute_coarsening_and_refinement();
     };
 }
-
-
 
 int
 main()

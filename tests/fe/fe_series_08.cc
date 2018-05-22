@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FESeries::linear_regression()
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/fe/fe_series.h>
 
 using namespace dealii;
-
 
 void
 test()
@@ -39,14 +37,11 @@ test()
       y[i] = k_in * x[i] + b_in;
     }
 
-
   std::pair<double, double> fit = FESeries::linear_regression(x, y);
 
   deallog << "exact:      " << k_in << " " << b_in << std::endl;
   deallog << "calculated: " << fit.first << " " << fit.second << std::endl;
 }
-
-
 
 int
 main()

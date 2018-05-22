@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check some basic behavior of the TransposeTable iterators
 #include "../tests.h"
 

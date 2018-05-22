@@ -16,7 +16,6 @@
 #ifndef dealii_grid_tools_h
 #  define dealii_grid_tools_h
 
-
 #  include <deal.II/base/bounding_box.h>
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/geometry_info.h>
@@ -42,7 +41,6 @@
 #    include <boost/iostreams/filtering_stream.hpp>
 #    include <boost/iostreams/stream.hpp>
 #  endif
-
 
 #  include <bitset>
 #  include <list>
@@ -353,7 +351,6 @@ namespace GridTools
   void
   shift(const Tensor<1, spacedim>&    shift_vector,
         Triangulation<dim, spacedim>& triangulation);
-
 
   /**
    * Rotate all vertices of the given two-dimensional triangulation in
@@ -902,7 +899,6 @@ namespace GridTools
                       const std::vector<bool>&       marked_vertices
                       = std::vector<bool>());
 
-
   /**
    * Find and return a vector of iterators to active cells that surround a
    * given vertex with index @p vertex_index.
@@ -937,7 +933,6 @@ namespace GridTools
 #  endif
   find_cells_adjacent_to_vertex(const MeshType<dim, spacedim>& container,
                                 const unsigned int             vertex_index);
-
 
   /**
    * Find and return an iterator to the active cell that surrounds a given
@@ -1245,7 +1240,6 @@ namespace GridTools
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
       predicate);
 
-
   /**
    * Extract and return the cell layer around a subdomain (set of
    * cells) on a specified level of the @p mesh (i.e. those cells on
@@ -1260,7 +1254,6 @@ namespace GridTools
     const std::function<bool(const typename MeshType::cell_iterator&)>&
                        predicate,
     const unsigned int level);
-
 
   /**
    * Extract and return ghost cells which are the active cell layer around all
@@ -1485,7 +1478,6 @@ namespace GridTools
     const std::vector<std::vector<BoundingBox<spacedim>>>& global_bboxes,
     const std::vector<Point<spacedim>>&                    points);
 
-
   /**
    * Return the adjacent cells of all the vertices. If a vertex is also a
    * hanging node, the associated coarse cell is also returned. The vertices
@@ -1520,7 +1512,6 @@ namespace GridTools
     const std::vector<
       std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>>&
       vertex_to_cells);
-
 
   /**
    * Return the local vertex index of cell @p cell that is closest to
@@ -1792,7 +1783,6 @@ namespace GridTools
     const Triangulation<dim, spacedim>& triangulation,
     const types::subdomain_id           subdomain);
 
-
   /**
    * For a triangulation, return a mask that represents which of its vertices
    * are "owned" by the current process in the same way as we talk about
@@ -1920,15 +1910,12 @@ namespace GridTools
                                   distorted_cells,
     Triangulation<dim, spacedim>& triangulation);
 
-
-
   /*@}*/
   /**
    * @name Extracting and creating patches of cells surrounding a single cell,
    * and creating triangulation out of them
    */
   /*@{*/
-
 
   /**
    * This function returns a list of all the active neighbor cells of the
@@ -1972,7 +1959,6 @@ namespace GridTools
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   get_patch_around_cell(const typename MeshType::active_cell_iterator& cell);
-
 
   /**
    * This function takes a vector of active cells (hereafter named @p
@@ -2122,7 +2108,6 @@ namespace GridTools
            std::vector<typename DoFHandlerType::active_cell_iterator>>
   get_dof_to_support_patch_map(DoFHandlerType& dof_handler);
 
-
   /*@}*/
 
   /**
@@ -2170,7 +2155,6 @@ namespace GridTools
      */
     FullMatrix<double> matrix;
   };
-
 
   /**
    * An orthogonal equality test for faces.
@@ -2247,7 +2231,6 @@ namespace GridTools
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
 
-
   /**
    * Same function as above, but doesn't return the actual orientation
    */
@@ -2260,7 +2243,6 @@ namespace GridTools
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset
     = Tensor<1, FaceIterator::AccessorType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
-
 
   /**
    * This function will collect periodic face pairs on the coarsest mesh level
@@ -2332,7 +2314,6 @@ namespace GridTools
     const Tensor<1, MeshType::space_dimension>& offset
     = dealii::Tensor<1, MeshType::space_dimension>(),
     const FullMatrix<double>& matrix = FullMatrix<double>());
-
 
   /**
    * This compatibility version of collect_periodic_faces() only works on
@@ -2467,7 +2448,6 @@ namespace GridTools
   void
   copy_material_to_manifold_id(Triangulation<dim, spacedim>& tria,
                                const bool compute_face_ids = false);
-
 
   /*@}*/
 
@@ -2681,12 +2661,9 @@ namespace GridTools
                  << "The given vertex with index " << arg1
                  << " is not used in the given triangulation.");
 
-
   /*@}*/
 
 } /*namespace GridTools*/
-
-
 
 /* ----------------- Template function --------------- */
 
@@ -2727,7 +2704,6 @@ namespace GridTools
             // and mark it as treated
             treated_vertices[cell->vertex_index(v)] = true;
           };
-
 
     // now fix any vertices on hanging nodes so that we don't create any holes
     if(dim == 2)
@@ -2785,8 +2761,6 @@ namespace GridTools
     triangulation.signals.mesh_movement();
   }
 
-
-
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   get_active_child_cells(const typename MeshType::cell_iterator& cell)
@@ -2809,8 +2783,6 @@ namespace GridTools
 
     return child_cells;
   }
-
-
 
   template <class MeshType>
   void
@@ -2864,8 +2836,6 @@ namespace GridTools
         }
   }
 
-
-
   namespace internal
   {
     namespace ProjectToObject
@@ -2895,8 +2865,6 @@ namespace GridTools
         : direction_0(d0), direction_1(d1)
       {}
 
-
-
       /**
        * Standard second-order approximation to the first derivative with a
        * two-point centered scheme. This is used below in a 1D Newton method.
@@ -2909,8 +2877,6 @@ namespace GridTools
       {
         return (f(center + step) - f(center - step)) / (2.0 * step);
       }
-
-
 
       /**
        * Standard second-order approximation to the second derivative with a
@@ -2925,8 +2891,6 @@ namespace GridTools
         return (f(center + step) - 2.0 * f(center) + f(center - step))
                / (step * step);
       }
-
-
 
       /**
        * Fourth order approximation of the derivative
@@ -2953,8 +2917,6 @@ namespace GridTools
                 + 16.0 / 3.0 * f(center + 0.5 * simplex_vector))
                / step;
       }
-
-
 
       /**
        * The optimization algorithm used in GridTools::project_to_object is
@@ -3090,8 +3052,6 @@ namespace GridTools
       }
     } // namespace ProjectToObject
   }   // namespace internal
-
-
 
   namespace internal
   {
@@ -3410,8 +3370,6 @@ namespace GridTools
     return projected_point;
   }
 
-
-
   template <int dim, typename T>
   template <class Archive>
   void
@@ -3432,8 +3390,6 @@ namespace GridTools
     ar& data;
   }
 
-
-
   template <int dim, typename T>
   template <class Archive>
   void
@@ -3452,8 +3408,6 @@ namespace GridTools
       }
     ar& data;
   }
-
-
 
   template <typename DataType, typename MeshType>
   void
@@ -3544,7 +3498,6 @@ namespace GridTools
                 }
             }
         }
-
 
     // 2. send our messages
     std::set<dealii::types::subdomain_id> ghost_owners   = tria->ghost_owners();

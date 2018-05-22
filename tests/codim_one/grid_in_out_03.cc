@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like grid_in_out but test persistent triangulation
 
 #include "../tests.h"

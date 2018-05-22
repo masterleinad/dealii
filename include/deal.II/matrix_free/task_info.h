@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_matrix_free_task_info_h
 #define dealii_matrix_free_task_info_h
-
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/index_set.h>
@@ -27,10 +25,7 @@
 #include <deal.II/base/vectorization.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
-
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace internal
 {
@@ -90,8 +85,6 @@ namespace internal
     boundary(const std::pair<unsigned int, unsigned int>& face_range)
       = 0;
   };
-
-
 
   namespace MatrixFreeFunctions
   {

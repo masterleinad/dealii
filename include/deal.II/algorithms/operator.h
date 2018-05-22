@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_operator_h
 #define dealii_operator_h
 
@@ -157,7 +156,6 @@ namespace Algorithms
   {
     step = s;
   }
-
 
   /**
    * Set the step number in OutputOperator by shifting an integer value.

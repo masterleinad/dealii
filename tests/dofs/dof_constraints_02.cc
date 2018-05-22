@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DoFConstraints::distribute_local_to_global for vectors
 
 #include "../tests.h"
@@ -29,7 +27,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -114,8 +111,6 @@ test()
   deallog << "|B|=" << B.l2_norm() << std::endl;
   Assert(A.l2_norm() < 1e-12 * B.l2_norm(), ExcInternalError());
 }
-
-
 
 int
 main()

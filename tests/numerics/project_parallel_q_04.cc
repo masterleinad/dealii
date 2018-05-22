@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that VectorTools::project works for Q elements correctly
 
 #include "project_parallel_common.h"
-
 
 template <int dim>
 void

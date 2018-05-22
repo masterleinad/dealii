@@ -16,8 +16,6 @@
 #ifndef dealii_dof_handler_policy_h
 #  define dealii_dof_handler_policy_h
 
-
-
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
 #  include <deal.II/base/template_constraints.h>
@@ -32,7 +30,6 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int, int>
 class DoFHandler;
-
 
 namespace internal
 {
@@ -104,7 +101,6 @@ namespace internal
           const std::vector<types::global_dof_index>& new_numbers) const = 0;
       };
 
-
       /**
        * This class implements the default policy for sequential operations,
        * i.e. for the case where all cells get degrees of freedom.
@@ -146,8 +142,6 @@ namespace internal
          */
         SmartPointer<DoFHandlerType> dof_handler;
       };
-
-
 
       /**
        * This class implements the policy for operations when we use a
@@ -208,7 +202,6 @@ namespace internal
         SmartPointer<DoFHandlerType> dof_handler;
       };
 
-
       /**
        * This class implements the policy for operations when we use a
        * parallel::distributed::Triangulation object.
@@ -254,8 +247,6 @@ namespace internal
     } // namespace Policy
   }   // namespace DoFHandlerImplementation
 } // namespace internal
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

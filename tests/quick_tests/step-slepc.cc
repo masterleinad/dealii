@@ -179,7 +179,6 @@ LaplaceEigenspectrumProblem::solve()
       }
   }
 
-
   // some output
   output_table.add_value("lambda", lambda[0]);
   output_table.add_value("error", std::fabs(2. - lambda[0]));
@@ -218,7 +217,6 @@ LaplaceEigenspectrumProblem::run()
   output_table.write_text(std::cout);
   deallog << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

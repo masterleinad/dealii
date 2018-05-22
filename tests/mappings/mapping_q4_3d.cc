@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test used to fail somewhere in the 3d parts of MappingQ for fourth
 // order mappings. it later turned out that the weird error was simply that
 // something wasn't implemented, which is now the case
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 int
 main()

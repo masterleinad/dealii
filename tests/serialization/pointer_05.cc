@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test what happens when serializing two objects that have pointers to the
 // same common object.
 //
@@ -65,7 +64,6 @@ private:
   unsigned int object_number;
 };
 
-
 struct P
 {
   C* c;
@@ -86,8 +84,6 @@ struct P
     return true;
   }
 };
-
-
 
 void
 test()
@@ -121,7 +117,6 @@ test()
     delete c;
   }
 }
-
 
 int
 main()

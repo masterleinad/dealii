@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/mpi.h>
@@ -22,7 +21,6 @@
 #include <deal.II/base/utilities.h>
 
 #include <deal.II/matrix_free/task_info.h>
-
 
 #ifdef DEAL_II_WITH_THREADS
 #  include <tbb/blocked_range.h>
@@ -35,8 +33,6 @@
 #include <set>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 /*-------------------- Implementation of the matrix-free loop --------------*/
 namespace internal
@@ -129,8 +125,6 @@ namespace internal
         const bool     is_blocked;
       };
 
-
-
       class PartitionWork : public tbb::task
       {
       public:
@@ -222,8 +216,6 @@ namespace internal
 
     } // end of namespace partition
 
-
-
     namespace color
     {
       class CellWork
@@ -257,8 +249,6 @@ namespace internal
         const TaskInfo&    task_info;
         const unsigned int partition;
       };
-
-
 
       class PartitionWork : public tbb::task
       {
@@ -300,8 +290,6 @@ namespace internal
 
     } // end of namespace color
 
-
-
     class MPICommunication : public tbb::task
     {
     public:
@@ -325,8 +313,6 @@ namespace internal
     };
 
 #endif // DEAL_II_WITH_THREADS
-
-
 
     void
     TaskInfo::loop(MFWorkerInterface& funct) const
@@ -600,14 +586,10 @@ namespace internal
       funct.vector_compress_finish();
     }
 
-
-
     TaskInfo::TaskInfo()
     {
       clear();
     }
-
-
 
     void
     TaskInfo::clear()
@@ -635,8 +617,6 @@ namespace internal
       n_procs      = 1;
     }
 
-
-
     template <typename StreamType>
     void
     TaskInfo::print_memory_statistics(StreamType&       out,
@@ -650,8 +630,6 @@ namespace internal
         out << memory_c.min << "/" << memory_c.avg << "/" << memory_c.max;
       out << " MB" << std::endl;
     }
-
-
 
     std::size_t
     TaskInfo::memory_consumption() const
@@ -667,8 +645,6 @@ namespace internal
         + MemoryConsumption::memory_consumption(partition_n_blocked_workers)
         + MemoryConsumption::memory_consumption(partition_n_workers));
     }
-
-
 
     void
     TaskInfo::collect_boundary_cells(
@@ -746,8 +722,6 @@ namespace internal
                || boundary_cells.size() == n_active_cells,
              ExcInternalError());
     }
-
-
 
     void
     TaskInfo ::create_blocks_serial(
@@ -942,8 +916,6 @@ namespace internal
       incompletely_filled_vectorization.resize(cell_partition_data.back());
     }
 
-
-
     void
     TaskInfo ::initial_setup_blocks_tasks(
       const std::vector<unsigned int>& boundary_cells,
@@ -1008,8 +980,6 @@ namespace internal
         }
     }
 
-
-
     void
     TaskInfo::guess_block_size(const unsigned int dofs_per_cell)
     {
@@ -1035,8 +1005,6 @@ namespace internal
       if(block_size > n_active_cells)
         block_size = std::max(1U, n_active_cells);
     }
-
-
 
     void
     TaskInfo::make_thread_graph_partition_color(
@@ -1174,14 +1142,11 @@ namespace internal
       }
 #endif
 
-
       update_task_info(
         partition); // Actually sets too much for partition color case
 
       AssertDimension(cell_partition_data.back(), n_macro_cells);
     }
-
-
 
     void
     TaskInfo::make_thread_graph(
@@ -1376,8 +1341,6 @@ namespace internal
       update_task_info(partition);
     }
 
-
-
     void
     TaskInfo::make_thread_graph_partition_partition(
       const std::vector<unsigned int>& cell_active_fe_index,
@@ -1399,7 +1362,6 @@ namespace internal
       // yet assigned a partition.
       std::vector<unsigned int> cell_partition(n_active_cells,
                                                numbers::invalid_unsigned_int);
-
 
       // In element j of this variable, one puts the old number of the block
       // that should be the jth block in the new numeration.
@@ -1444,8 +1406,6 @@ namespace internal
       update_task_info(partition);
     }
 
-
-
     void
     TaskInfo::make_connectivity_cells_to_blocks(
       const std::vector<unsigned char>& irregular_cells,
@@ -1485,8 +1445,6 @@ namespace internal
               }
           }
     }
-
-
 
     // Function to create partitioning on the second layer within each
     // partition. Version without preblocking.
@@ -1804,8 +1762,6 @@ namespace internal
         }
     }
 
-
-
     // Function to create coloring on the second layer within each partition. Version assumes preblocking.
     void
     TaskInfo::make_coloring_within_partitions_pre_blocked(
@@ -1881,7 +1837,6 @@ namespace internal
       AssertDimension(color_counter, n_blocks);
     }
 
-
     // Function to create partitioning on the first layer.
     void
     TaskInfo::make_partitioning(const DynamicSparsityPattern& connectivity,
@@ -1934,7 +1889,6 @@ namespace internal
 
       if(start_nonboundary > n_blocks)
         start_nonboundary = n_blocks;
-
 
       unsigned int start_up  = 0;
       bool         work      = true;
@@ -2108,7 +2062,6 @@ namespace internal
       AssertDimension(partition_size[partition], n_blocks);
     }
 
-
     void
     TaskInfo::update_task_info(const unsigned int partition)
     {
@@ -2139,8 +2092,6 @@ namespace internal
   } // namespace MatrixFreeFunctions
 } // namespace internal
 
-
-
 // explicit instantiations of template functions
 template void
 internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<std::ostream>(
@@ -2149,6 +2100,5 @@ internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<std::ostream>(
 template void
 internal::MatrixFreeFunctions::TaskInfo::print_memory_statistics<
   ConditionalOStream>(ConditionalOStream&, const std::size_t) const;
-
 
 DEAL_II_NAMESPACE_CLOSE

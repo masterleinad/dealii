@@ -61,8 +61,6 @@ namespace TrilinosWrappers
       coarse_type(coarse_type)
   {}
 
-
-
   PreconditionAMGMueLu::PreconditionAMGMueLu()
   {
 #    ifdef DEAL_II_WITH_64BIT_INDICES
@@ -72,15 +70,11 @@ namespace TrilinosWrappers
 #    endif
   }
 
-
-
   PreconditionAMGMueLu::~PreconditionAMGMueLu()
   {
     preconditioner.reset();
     trilinos_matrix.reset();
   }
-
-
 
   void
   PreconditionAMGMueLu::initialize(const SparseMatrix&   matrix,
@@ -88,8 +82,6 @@ namespace TrilinosWrappers
   {
     initialize(matrix.trilinos_matrix(), additional_data);
   }
-
-
 
   void
   PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix& matrix,
@@ -193,16 +185,12 @@ namespace TrilinosWrappers
     initialize(matrix, parameter_list);
   }
 
-
-
   void
   PreconditionAMGMueLu::initialize(const SparseMatrix&     matrix,
                                    Teuchos::ParameterList& muelu_parameters)
   {
     initialize(matrix.trilinos_matrix(), muelu_parameters);
   }
-
-
 
   void
   PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix& matrix,
@@ -242,8 +230,6 @@ namespace TrilinosWrappers
     preconditioner = std::make_shared<MueLu::EpetraOperator>(hierarchy);
   }
 
-
-
   template <typename number>
   void
   PreconditionAMGMueLu::initialize(
@@ -275,16 +261,12 @@ namespace TrilinosWrappers
     initialize(*trilinos_matrix, additional_data);
   }
 
-
-
   void
   PreconditionAMGMueLu::clear()
   {
     PreconditionBase::clear();
     trilinos_matrix.reset();
   }
-
-
 
   PreconditionAMGMueLu::size_type
   PreconditionAMGMueLu::memory_consumption() const
@@ -297,8 +279,6 @@ namespace TrilinosWrappers
       memory += trilinos_matrix->memory_consumption();
     return memory;
   }
-
-
 
   // explicit instantiations
   template void

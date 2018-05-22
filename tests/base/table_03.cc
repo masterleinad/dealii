@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check TableBase::fill using an istream_iterator
-
 
 #include "../tests.h"
 
 #include <deal.II/base/table.h>
-
 
 int
 main()

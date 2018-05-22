@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a simple example code demonstrating the usage of tensor-valued nodal unknowns
 // in deal.II
 
@@ -41,7 +39,6 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <iostream>
 
 using namespace dealii;
@@ -63,7 +60,6 @@ private:
   const unsigned int degree;
   const unsigned int n_stress_components; // components of stress
   const unsigned int n_gamma_components;  // scalar plastic multiplier
-
 
   Triangulation<dim> triangulation;
   FESystem<dim>      fe;
@@ -173,7 +169,6 @@ MixedElastoPlasticity<dim>::assemble_system()
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-
   const FEValuesExtractors::SymmetricTensor<2> stress(0);
   const FEValuesExtractors::Scalar             gamma(n_stress_components);
 
@@ -183,7 +178,6 @@ MixedElastoPlasticity<dim>::assemble_system()
 
   std::vector<Tensor<1, dim>> local_divergences(quadrature_formula.size());
   std::vector<SymmetricTensor<2, dim>> local_values(quadrature_formula.size());
-
 
   fe_values.reinit(dof_handler.begin_active());
   fe_values[stress].get_function_values(system_rhs, local_values);

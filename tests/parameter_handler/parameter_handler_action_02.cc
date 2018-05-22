@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check the ParameterHandler::add_action() function. like _01, but
 // attach a second action
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 void
 check(const char* p)
@@ -42,7 +38,6 @@ check(const char* p)
     return true;
   });
 
-
   std::ifstream in(p);
 
   deallog << "Reading parameters" << std::endl;
@@ -51,8 +46,6 @@ check(const char* p)
   deallog << "test_1=" << prm.get("test_1") << std::endl;
   deallog << "Saved parameter: " << parameter_set_by_action << std::endl;
 }
-
-
 
 int
 main()

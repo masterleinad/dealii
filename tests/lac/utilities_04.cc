@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test Givens rotations.
-
 
 #include "../tests.h"
 #include <deal.II/lac/full_matrix.h>

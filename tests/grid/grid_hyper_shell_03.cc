@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // generate and refine a hyper shell in 3d with 12 cells. The other tests of
 // this series test the other possibilities for the number of cells
 
@@ -30,7 +29,6 @@
 
 std::ofstream logfile("output");
 
-
 template <int dim>
 void
 check(double r1, double r2, unsigned int n)
@@ -45,7 +43,6 @@ check(double r1, double r2, unsigned int n)
   GridOut grid_out;
   grid_out.write_gnuplot(tria, logfile);
 }
-
 
 int
 main()

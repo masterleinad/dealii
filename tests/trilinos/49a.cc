@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like 49, but do the test for
 //  TrilinosWrappers::MPI::BlockVector
 //         ::operator = (dealii::BlockVector<TrilinosScalar>)
@@ -27,7 +25,6 @@
 #include <iostream>
 #include <vector>
 
-
 void
 test(TrilinosWrappers::MPI::BlockVector& v)
 {
@@ -39,7 +36,6 @@ test(TrilinosWrappers::MPI::BlockVector& v)
     w(i) = i;
 
   v = w;
-
 
   // make sure we get the expected result
   for(unsigned int i = 0; i < v.size(); ++i)
@@ -57,11 +53,8 @@ test(TrilinosWrappers::MPI::BlockVector& v)
       AssertThrow(v(i) == i, ExcInternalError());
     }
 
-
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)
@@ -70,7 +63,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

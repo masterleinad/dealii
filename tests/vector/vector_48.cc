@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Vector<double>::ratio
 
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <vector>
-
 
 void
 test(Vector<double>& v, Vector<double>& w, Vector<double>& x)
@@ -49,8 +46,6 @@ test(Vector<double>& v, Vector<double>& w, Vector<double>& x)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

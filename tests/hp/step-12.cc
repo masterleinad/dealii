@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a hp-ified version of step-12
-
 
 #include "../tests.h"
 std::ofstream logfile("output");
@@ -46,7 +43,6 @@ std::ofstream logfile("output");
 
 #include <iostream>
 
-
 template <int dim>
 class RHS : public Function<dim>
 {
@@ -56,7 +52,6 @@ public:
              std::vector<double>&           values,
              const unsigned int             component = 0) const;
 };
-
 
 template <int dim>
 class BoundaryValues : public Function<dim>
@@ -68,7 +63,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
 template <int dim>
 class Beta
 {
@@ -79,7 +73,6 @@ public:
   value_list(const std::vector<Point<dim>>& points,
              std::vector<Point<dim>>&       values) const;
 };
-
 
 template <int dim>
 void
@@ -93,7 +86,6 @@ RHS<dim>::value_list(const std::vector<Point<dim>>& points,
   for(unsigned int i = 0; i < values.size(); ++i)
     values[i] = 0;
 }
-
 
 template <int dim>
 void
@@ -114,7 +106,6 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
     }
 }
 
-
 template <int dim>
 void
 BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -132,7 +123,6 @@ BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
         values[i] = 0.;
     }
 }
-
 
 template <int dim>
 class DGTransportEquation
@@ -172,12 +162,10 @@ private:
   const BoundaryValues<dim> boundary_function;
 };
 
-
 template <int dim>
 DGTransportEquation<dim>::DGTransportEquation()
   : beta_function(), rhs_function(), boundary_function()
 {}
-
 
 template <int dim>
 void
@@ -214,7 +202,6 @@ DGTransportEquation<dim>::assemble_cell_term(const hp::FEValues<dim>& fe_v,
                           * JxW[point];
       }
 }
-
 
 template <int dim>
 void
@@ -260,7 +247,6 @@ DGTransportEquation<dim>::assemble_boundary_term(
                             * JxW[point];
     }
 }
-
 
 template <int dim>
 template <class X, class Y>
@@ -309,7 +295,6 @@ DGTransportEquation<dim>::assemble_face_term1(
                  * JxW[point];
     }
 }
-
 
 template <int dim>
 template <class X, class Y>
@@ -391,7 +376,6 @@ DGTransportEquation<dim>::assemble_face_term2(
     }
 }
 
-
 template <int dim>
 class DGMethod
 {
@@ -435,7 +419,6 @@ private:
   const DGTransportEquation<dim> dg;
 };
 
-
 template <int dim>
 DGMethod<dim>::DGMethod()
   : mapping(MappingQGeneric<dim>(1)),
@@ -446,13 +429,11 @@ DGMethod<dim>::DGMethod()
     dg()
 {}
 
-
 template <int dim>
 DGMethod<dim>::~DGMethod()
 {
   dof_handler.clear();
 }
-
 
 template <int dim>
 void
@@ -477,7 +458,6 @@ DGMethod<dim>::setup_system()
   solution2.reinit(dof_handler.n_dofs());
   right_hand_side.reinit(dof_handler.n_dofs());
 }
-
 
 template <int dim>
 void
@@ -552,7 +532,6 @@ DGMethod<dim>::assemble_system1()
                 {
                   const unsigned int neighbor2
                     = cell->neighbor_of_neighbor(face_no);
-
 
                   for(unsigned int subface_no = 0;
                       subface_no < face->n_children();
@@ -647,8 +626,6 @@ DGMethod<dim>::assemble_system1()
     }
 }
 
-
-
 template <int dim>
 void
 DGMethod<dim>::assemble_system2()
@@ -674,7 +651,6 @@ DGMethod<dim>::assemble_system2()
     mapping, fe, face_quadrature, face_update_flags);
   hp::FEFaceValues<dim> fe_v_face_neighbor(
     mapping, fe, face_quadrature, neighbor_face_update_flags);
-
 
   FullMatrix<double> ui_vi_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> ue_vi_matrix(dofs_per_cell, dofs_per_cell);
@@ -811,7 +787,6 @@ DGMethod<dim>::assemble_system2()
     }
 }
 
-
 template <int dim>
 void
 DGMethod<dim>::solve(Vector<double>& solution)
@@ -825,7 +800,6 @@ DGMethod<dim>::solve(Vector<double>& solution)
 
   solver.solve(system_matrix, solution, right_hand_side, preconditioner);
 }
-
 
 template <int dim>
 void
@@ -848,7 +822,6 @@ DGMethod<dim>::refine_grid()
 
   triangulation.execute_coarsening_and_refinement();
 }
-
 
 template <int dim>
 void
@@ -881,7 +854,6 @@ DGMethod<dim>::output_results(const unsigned int cycle) const
   data_out.write_gnuplot(deallog.get_file_stream());
 }
 
-
 template <int dim>
 void
 DGMethod<dim>::run()
@@ -898,7 +870,6 @@ DGMethod<dim>::run()
         }
       else
         refine_grid();
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;

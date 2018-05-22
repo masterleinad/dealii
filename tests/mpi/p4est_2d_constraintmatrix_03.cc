@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ConstraintMatrix.distribute() for a distributed mesh
 // with Trilinos
 // Mesh: shell with random refinement
@@ -44,7 +42,6 @@
 
 #include <sstream>
 
-
 template <int dim>
 void
 test()
@@ -55,7 +52,6 @@ test()
 
   const double R0 = 6371000. - 2890000.;
   const double R1 = 6371000. - 35000.;
-
 
   GridGenerator::hyper_shell(tr, Point<dim>(), R0, R1, 12, true);
   GridTools::copy_boundary_to_manifold_id(tr);
@@ -111,7 +107,6 @@ test()
   std::set<types::boundary_id> no_normal_flux_boundaries;
   no_normal_flux_boundaries.insert(1);
 
-
   VectorTools::compute_no_normal_flux_constraints(
     dofh, 0, no_normal_flux_boundaries, cm);
 
@@ -130,7 +125,6 @@ test()
   tr.reset_manifold(0);
   tr.reset_manifold(1);
 }
-
 
 int
 main(int argc, char* argv[])

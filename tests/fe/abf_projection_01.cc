@@ -13,17 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
 /*
  * Project the function [1,1] onto a deformed grid and see whether the ABF
  * elements can represent it exactly.
  */
 
-
-
 char logname[] = "output";
 #include "deformed_projection.h"
-
 
 void
 test()

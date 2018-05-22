@@ -17,7 +17,6 @@
  * Authors: Yan Li, Wolfgang Bangerth, Texas A&M University, 2006
  */
 
-
 // This program is an adaptation of step-20 and includes some technique of DG
 // methods from step-12. A good part of the program is therefore very similar
 // to step-20 and we will not comment again on these parts. Only the new stuff
@@ -70,7 +69,6 @@
 namespace Step21
 {
   using namespace dealii;
-
 
   // @sect3{The <code>TwoPhaseFlowProblem</code> class}
 
@@ -136,7 +134,6 @@ namespace Step21
     BlockVector<double> system_rhs;
   };
 
-
   // @sect3{Equation data}
 
   // @sect4{Pressure right hand side}
@@ -155,8 +152,6 @@ namespace Step21
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   PressureRightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -164,7 +159,6 @@ namespace Step21
   {
     return 0;
   }
-
 
   // @sect4{Pressure boundary values}
 
@@ -181,7 +175,6 @@ namespace Step21
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
   template <int dim>
   double
   PressureBoundaryValues<dim>::value(const Point<dim>& p,
@@ -189,7 +182,6 @@ namespace Step21
   {
     return 1 - p[0];
   }
-
 
   // @sect4{Saturation boundary values}
 
@@ -209,8 +201,6 @@ namespace Step21
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   SaturationBoundaryValues<dim>::value(const Point<dim>& p,
@@ -221,8 +211,6 @@ namespace Step21
     else
       return 0;
   }
-
-
 
   // @sect4{Initial data}
 
@@ -251,7 +239,6 @@ namespace Step21
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   InitialValues<dim>::value(const Point<dim>&  p,
@@ -260,7 +247,6 @@ namespace Step21
     return Functions::ZeroFunction<dim>(dim + 2).value(p, component);
   }
 
-
   template <int dim>
   void
   InitialValues<dim>::vector_value(const Point<dim>& p,
@@ -268,8 +254,6 @@ namespace Step21
   {
     Functions::ZeroFunction<dim>(dim + 2).vector_value(p, values);
   }
-
-
 
   // @sect3{The inverse permeability tensor}
 
@@ -299,7 +283,6 @@ namespace Step21
                  std::vector<Tensor<2, dim>>&   values) const;
     };
 
-
     template <int dim>
     void
     KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
@@ -325,7 +308,6 @@ namespace Step21
         }
     }
   } // namespace SingleCurvingCrack
-
 
   // @sect4{Random medium permeability}
 
@@ -379,12 +361,9 @@ namespace Step21
       get_centers();
     };
 
-
-
     template <int dim>
     std::vector<Point<dim>> KInverse<dim>::centers
       = KInverse<dim>::get_centers();
-
 
     template <int dim>
     std::vector<Point<dim>>
@@ -400,8 +379,6 @@ namespace Step21
 
       return centers_list;
     }
-
-
 
     template <int dim>
     void
@@ -429,8 +406,6 @@ namespace Step21
     }
   } // namespace RandomMedium
 
-
-
   // @sect3{The inverse mobility and saturation functions}
 
   // There are two more pieces of data that we need to describe, namely the
@@ -447,8 +422,6 @@ namespace Step21
   {
     return S * S / (S * S + viscosity * (1 - S) * (1 - S));
   }
-
-
 
   // @sect3{Linear solvers and preconditioners}
 
@@ -477,12 +450,9 @@ namespace Step21
     const SmartPointer<const MatrixType> matrix;
   };
 
-
   template <class MatrixType>
   InverseMatrix<MatrixType>::InverseMatrix(const MatrixType& m) : matrix(&m)
   {}
-
-
 
   template <class MatrixType>
   void
@@ -497,8 +467,6 @@ namespace Step21
 
     cg.solve(*matrix, dst, src, PreconditionIdentity());
   }
-
-
 
   class SchurComplement : public Subscriptor
   {
@@ -516,8 +484,6 @@ namespace Step21
     mutable Vector<double> tmp1, tmp2;
   };
 
-
-
   SchurComplement::SchurComplement(
     const BlockSparseMatrix<double>&           A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
@@ -527,7 +493,6 @@ namespace Step21
       tmp2(A.block(0, 0).m())
   {}
 
-
   void
   SchurComplement::vmult(Vector<double>& dst, const Vector<double>& src) const
   {
@@ -535,8 +500,6 @@ namespace Step21
     m_inverse->vmult(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
-
 
   class ApproximateSchurComplement : public Subscriptor
   {
@@ -552,12 +515,10 @@ namespace Step21
     mutable Vector<double> tmp1, tmp2;
   };
 
-
   ApproximateSchurComplement::ApproximateSchurComplement(
     const BlockSparseMatrix<double>& A)
     : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
   {}
-
 
   void
   ApproximateSchurComplement::vmult(Vector<double>&       dst,
@@ -567,8 +528,6 @@ namespace Step21
     system_matrix->block(0, 0).precondition_Jacobi(tmp2, tmp1);
     system_matrix->block(1, 0).vmult(dst, tmp2);
   }
-
-
 
   // @sect3{<code>TwoPhaseFlowProblem</code> class implementation}
 
@@ -598,8 +557,6 @@ namespace Step21
       timestep_number(1),
       viscosity(0.2)
   {}
-
-
 
   // @sect4{TwoPhaseFlowProblem::make_grid_and_dofs}
 
@@ -647,9 +604,7 @@ namespace Step21
     DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern);
     sparsity_pattern.compress();
 
-
     system_matrix.reinit(sparsity_pattern);
-
 
     solution.reinit(3);
     solution.block(0).reinit(n_u);
@@ -669,7 +624,6 @@ namespace Step21
     system_rhs.block(2).reinit(n_s);
     system_rhs.collect_sizes();
   }
-
 
   // @sect4{TwoPhaseFlowProblem::assemble_system}
 
@@ -798,7 +752,6 @@ namespace Step21
                 += (-phi_i_p * pressure_rhs_values[q]) * fe_values.JxW(q);
             }
 
-
         // Next, we also have to deal with the pressure boundary values. This,
         // again is as in step-20:
         for(unsigned int face_no = 0;
@@ -836,11 +789,9 @@ namespace Step21
       }
   }
 
-
   // So much for assembly of matrix and right hand side. Note that we do not
   // have to interpolate and apply boundary values since they have all been
   // taken care of in the weak form already.
-
 
   // @sect4{TwoPhaseFlowProblem::assemble_rhs_S}
 
@@ -962,7 +913,6 @@ namespace Step21
                     = old_solution_values_face_neighbor[q](dim + 1);
               }
 
-
             for(unsigned int q = 0; q < n_face_q_points; ++q)
               {
                 Tensor<1, dim> present_u_face;
@@ -992,8 +942,6 @@ namespace Step21
       }
   }
 
-
-
   // @sect4{TwoPhaseFlowProblem::solve}
 
   // After all these preparations, we finally solve the linear system for
@@ -1009,7 +957,6 @@ namespace Step21
     Vector<double> schur_rhs(solution.block(1).size());
     Vector<double> tmp2(solution.block(2).size());
 
-
     // First the pressure, using the pressure Schur complement of the first
     // two equations:
     {
@@ -1017,14 +964,12 @@ namespace Step21
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
       schur_rhs -= system_rhs.block(1);
 
-
       SchurComplement schur_complement(system_matrix, m_inverse);
 
       ApproximateSchurComplement approximate_schur_complement(system_matrix);
 
       InverseMatrix<ApproximateSchurComplement> preconditioner(
         approximate_schur_complement);
-
 
       SolverControl solver_control(solution.block(1).size(),
                                    1e-12 * schur_rhs.l2_norm());
@@ -1079,10 +1024,8 @@ namespace Step21
                 << " CG iterations for saturation." << std::endl;
     }
 
-
     old_solution = solution;
   }
-
 
   // @sect4{TwoPhaseFlowProblem::output_results}
 
@@ -1136,8 +1079,6 @@ namespace Step21
     data_out.write_vtk(output);
   }
 
-
-
   // @sect4{TwoPhaseFlowProblem::project_back_saturation}
 
   // In this function, we simply run over all saturation degrees of freedom
@@ -1165,7 +1106,6 @@ namespace Step21
       else if(solution.block(2)(i) > 1)
         solution.block(2)(i) = 1;
   }
-
 
   // @sect4{TwoPhaseFlowProblem::get_maximal_velocity}
 
@@ -1204,7 +1144,6 @@ namespace Step21
 
     return max_velocity;
   }
-
 
   // @sect4{TwoPhaseFlowProblem::run}
 
@@ -1269,7 +1208,6 @@ namespace Step21
     while(time <= 1.);
   }
 } // namespace Step21
-
 
 // @sect3{The <code>main</code> function}
 

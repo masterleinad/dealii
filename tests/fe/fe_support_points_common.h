@@ -39,8 +39,6 @@
 #include <string>
 #include <vector>
 
-
-
 template <int dim>
 inline void
 check_support(const FiniteElement<dim>& finel, const char* name)
@@ -102,7 +100,6 @@ check_support(const FiniteElement<dim>& finel, const char* name)
         deallog << std::setprecision(3) << qp.point(k) << std::endl;
     }
 }
-
 
 #define CHECK_ALL(EL, deg, dim)  \
   {                              \

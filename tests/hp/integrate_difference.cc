@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // call VectorTools::integrate_difference with fe's distributed in the
 // same random way as in hp/random
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -34,8 +31,6 @@
 #include <deal.II/hp/q_collection.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -57,7 +52,6 @@ test()
       fe_collection.push_back(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)));
       q_collection.push_back(QGauss<dim>(i + 2));
     }
-
 
   hp::DoFHandler<dim> dof_handler(tria);
 
@@ -92,7 +86,6 @@ test()
       deallog << "i=" << i << ", diff=" << diff.l2_norm() << std::endl;
     }
 }
-
 
 int
 main()

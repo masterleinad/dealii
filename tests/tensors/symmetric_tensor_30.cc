@@ -20,7 +20,6 @@
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/table_indices.h>
 
-
 template <int dim>
 void
 check_2()
@@ -97,7 +96,6 @@ check_4()
         }
     }
 }
-
 
 int
 main()

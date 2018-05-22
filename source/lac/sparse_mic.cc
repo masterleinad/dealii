@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/sparse_mic.templates.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 // explicit instantiations for double and float matrices
 template class SparseMIC<double>;
@@ -51,7 +49,5 @@ template void
 SparseMIC<float>::vmult<float>(Vector<float>&, const Vector<float>&) const;
 template void
 SparseMIC<float>::Tvmult<float>(Vector<float>&, const Vector<float>&) const;
-
-
 
 DEAL_II_NAMESPACE_CLOSE

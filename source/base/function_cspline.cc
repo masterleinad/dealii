@@ -49,8 +49,6 @@ namespace Functions
       cspline, interpolation_points.data(), interpolation_values.data(), n);
   }
 
-
-
   template <int dim>
   CSpline<dim>::~CSpline()
   {
@@ -59,8 +57,6 @@ namespace Functions
     acc     = nullptr;
     cspline = nullptr;
   }
-
-
 
   template <int dim>
   double
@@ -79,8 +75,6 @@ namespace Functions
 
     return gsl_spline_eval(cspline, x, acc);
   }
-
-
 
   template <int dim>
   Tensor<1, dim>
@@ -103,8 +97,6 @@ namespace Functions
     return res;
   }
 
-
-
   template <int dim>
   double
   CSpline<dim>::laplacian(const Point<dim>& p, const unsigned int) const
@@ -123,8 +115,6 @@ namespace Functions
     return gsl_spline_eval_deriv2(cspline, x, acc);
   }
 
-
-
   template <int dim>
   SymmetricTensor<2, dim>
   CSpline<dim>::hessian(const Point<dim>& p, const unsigned int) const
@@ -134,8 +124,6 @@ namespace Functions
     return res;
   }
 
-
-
   template <int dim>
   std::size_t
   CSpline<dim>::memory_consumption() const
@@ -144,7 +132,6 @@ namespace Functions
     // use sizeof operator
     return sizeof(*this) + 2 * sizeof(double) * interpolation_values.size();
   }
-
 
   // explicit instantiations
   template class CSpline<1>;

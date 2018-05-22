@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 //check method mTmult of FullMatrix on larger size than full_matrix_02 where
 //we interface to the external BLAS
 
 #include "../tests.h"
 
 #include <deal.II/lac/full_matrix.h>
-
 
 template <typename Number>
 void

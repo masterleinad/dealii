@@ -18,7 +18,6 @@
 
 #include "../tests.h"
 
-
 // all include files you need here
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -55,7 +54,6 @@ test(unsigned int ref = 1)
         deallog << "F: " << cell->face(f)
                 << ", mid: " << (int) cell->face(f)->manifold_id() << std::endl;
     }
-
 
   GridOut gridout;
   gridout.write_msh(tria, deallog.get_file_stream());

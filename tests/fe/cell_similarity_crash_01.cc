@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // The FEValues class stores a copy of the current cell so that when we move
 // on to the next cell we can compare the two for shape similarity and decide
 // which parts of the data we need to re-compute. But this runs into trouble
@@ -29,8 +27,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/grid/grid_generator.h>
-
-
 
 template <int dim>
 void
@@ -64,7 +60,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

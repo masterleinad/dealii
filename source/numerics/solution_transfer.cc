@@ -52,15 +52,11 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::SolutionTransfer(
                "use the parallel::distributed::SolutionTransfer class."));
 }
 
-
-
 template <int dim, typename VectorType, typename DoFHandlerType>
 SolutionTransfer<dim, VectorType, DoFHandlerType>::~SolutionTransfer()
 {
   clear();
 }
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -72,8 +68,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::clear()
 
   prepared_for = none;
 }
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -112,8 +106,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_for_pure_refinement()
     }
   prepared_for = pure_refinement;
 }
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -171,8 +163,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::refine_interpolate(
     }
 }
 
-
-
 namespace internal
 {
   /**
@@ -227,7 +217,6 @@ namespace internal
           }
   }
 
-
   template <int dim, int spacedim>
   void
   restriction_additive(const FiniteElement<dim, spacedim>&,
@@ -248,8 +237,6 @@ namespace internal
       }
   }
 } // namespace internal
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -391,7 +378,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
             in_size, Vector<typename VectorType::value_type>(dofs_per_cell))
             .swap(dof_values_on_cell[n_cf]);
 
-
           // store the data of each of the input vectors. get this data
           // as interpolated onto a finite element space that encompasses
           // that of all the children. note that cell->get_interpolated_dof_values
@@ -410,8 +396,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   prepared_for = coarsening_and_refinement;
 }
 
-
-
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::
@@ -420,8 +404,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
   std::vector<VectorType> all_in = std::vector<VectorType>(1, in);
   prepare_for_coarsening_and_refinement(all_in);
 }
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -544,7 +526,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                   else
                     data = &(*valuesptr)[j];
 
-
                   for(unsigned int i = 0; i < dofs_per_cell; ++i)
                     internal::ElementAccess<VectorType>::set(
                       (*data)(i), dofs[i], all_out[j]);
@@ -556,8 +537,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
         }
     }
 }
-
-
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
@@ -577,8 +556,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
   out = all_out[0];
 }
 
-
-
 template <int dim, typename VectorType, typename DoFHandlerType>
 std::size_t
 SolutionTransfer<dim, VectorType, DoFHandlerType>::memory_consumption() const
@@ -594,8 +571,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::memory_consumption() const
           + MemoryConsumption::memory_consumption(dof_values_on_cell));
 }
 
-
-
 template <int dim, typename VectorType, typename DoFHandlerType>
 std::size_t
 SolutionTransfer<dim, VectorType, DoFHandlerType>::Pointerstruct::
@@ -603,7 +578,6 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::Pointerstruct::
 {
   return sizeof(*this);
 }
-
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #define SPLIT_INSTANTIATIONS_COUNT 4

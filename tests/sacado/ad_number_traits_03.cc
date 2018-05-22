@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that all of the nested Sacado number extractors return the correct information
 
 #include "../tests.h"

@@ -7,7 +7,6 @@
 #include <deal.II/lac/vector.h>
 #include <iostream>
 
-
 /**
  * Finite difference diagonal matrix on uniform grid.
  */
@@ -50,14 +49,11 @@ private:
   unsigned int ny;
 };
 
-
 // --------------- inline and template functions -----------------
 
 inline FDDiagMatrix::FDDiagMatrix(unsigned int nx, unsigned int ny)
   : nx(nx), ny(ny)
 {}
-
-
 
 template <typename SP>
 inline void
@@ -73,7 +69,6 @@ FDDiagMatrix::diag_structure(SP& structure) const
         }
     }
 }
-
 
 template <typename MatrixType>
 inline void
@@ -108,7 +103,6 @@ FDDiagMatrix::gnuplot_print(std::ostream& s, const Vector<number>& V) const
   s << std::endl;
 }
 
-
 /**
  * Finite difference matrix for laplace operator in 1D on uniform grid.
  */
@@ -142,13 +136,10 @@ private:
   unsigned int n;
 };
 
-
 // --------------- inline and template functions -----------------
 
 inline FD1DLaplaceMatrix::FD1DLaplaceMatrix(unsigned int n) : n(n)
 {}
-
-
 
 template <typename SP>
 inline void
@@ -163,7 +154,6 @@ FD1DLaplaceMatrix::three_point_structure(SP& structure) const
         structure.add(i, i + 1);
     }
 }
-
 
 template <typename MatrixType>
 inline void

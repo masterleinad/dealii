@@ -16,7 +16,6 @@
 #ifndef dealii_tria_accessor_h
 #define dealii_tria_accessor_h
 
-
 #include <deal.II/base/bounding_box.h>
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
@@ -27,7 +26,6 @@
 #include <deal.II/grid/tria_iterator_selector.h>
 
 #include <utility>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -42,7 +40,6 @@ class TriaActiveIterator;
 
 template <int dim, int spacedim>
 class Manifold;
-
 
 namespace internal
 {
@@ -105,7 +102,6 @@ namespace internal
       };
     };
 
-
     /**
      * Implementation of a type with which to store the level of an accessor
      * object. We only need it for the case that <tt>structdim == dim</tt>.
@@ -130,7 +126,6 @@ class TriaAccessor<0, 1, spacedim>;
 // this file.  this includes a lot of templates. originally, this was
 // only done in debug mode, but led to cyclic reduction problems and
 // so is now on by default.
-
 
 /**
  * A namespace that contains exception classes used by the accessor classes.
@@ -255,7 +250,6 @@ namespace TriaAccessorExceptions
     << "You can only set the child index of an even numbered child."
     << "The number of the child given was " << arg1 << ".");
 } // namespace TriaAccessorExceptions
-
 
 /**
  * A base class for the accessor classes used by TriaRawIterator and derived
@@ -523,8 +517,6 @@ private:
   friend class TriaActiveIterator;
 };
 
-
-
 /**
  * A class that represents accessor objects to iterators that don't make sense
  * such as quad iterators in on 1d meshes.  This class can not be used to
@@ -646,8 +638,6 @@ public:
     Iterators<dim, spacedim>::quad_iterator
     quad(const unsigned int i) const;
 };
-
-
 
 /**
  * A class that provides access to objects in a triangulation such as its
@@ -1160,7 +1150,6 @@ public:
    * @}
    */
 
-
   /**
    * @name User data
    */
@@ -1575,7 +1564,6 @@ public:
    * @}
    */
 
-
 private:
   /**
    * Like set_boundary_id but without checking for internal faces or invalid ids.
@@ -1689,8 +1677,6 @@ private:
   friend struct dealii::internal::TriangulationImplementation::Implementation;
   friend struct dealii::internal::TriaAccessorImplementation::Implementation;
 };
-
-
 
 /**
  * This class is a specialization of <code>TriaAccessor<structdim, dim, spacedim></code>
@@ -1822,7 +1808,6 @@ public:
    * @}
    */
 
-
   /**
    * @name Accessing sub-objects
    */
@@ -1885,7 +1870,6 @@ public:
   /**
    * @}
    */
-
 
   /**
    * @name Geometric information about an object
@@ -2071,8 +2055,6 @@ private:
   template <typename Accessor>
   friend class TriaActiveIterator;
 };
-
-
 
 /**
  * This class is a specialization of <code>TriaAccessor<structdim, dim, spacedim></code>
@@ -2317,7 +2299,6 @@ public:
    * @}
    */
 
-
   /**
    * Return whether this point is at the boundary of the one-dimensional
    * triangulation we deal with here.
@@ -2356,7 +2337,6 @@ public:
    */
   types::manifold_id
   manifold_id() const;
-
 
   /**
    * @name Orientation of sub-objects
@@ -2553,8 +2533,6 @@ protected:
    */
   unsigned int global_vertex_index;
 };
-
-
 
 /**
  * This class allows access to a cell: a line in one dimension, a quad in two
@@ -3203,7 +3181,6 @@ public:
   set_level_subdomain_id(
     const types::subdomain_id new_level_subdomain_id) const;
 
-
   /**
    * Set the subdomain id of this cell (if it is active) or all its terminal
    * children (and grand-children, and so on, as long as they have no children
@@ -3442,7 +3419,6 @@ public:
    * @}
    */
 
-
   /**
    * @ingroup Exceptions
    */
@@ -3484,8 +3460,6 @@ protected:
   bool
   point_inside_codim(const Point<spacedim_>& p) const;
 
-
-
 private:
   /**
    * Set the active cell index of a cell. This is done at the end of
@@ -3515,11 +3489,8 @@ private:
   friend struct dealii::internal::TriangulationImplementation::Implementation;
 };
 
-
-
 /* -------------- declaration of explicit
    specializations and general templates ------------- */
-
 
 template <int structdim, int dim, int spacedim>
 template <typename OtherAccessor>
@@ -3533,8 +3504,6 @@ InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(const OtherAccessor&)
                     "the conversion is not valid in the current context."));
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
@@ -3547,8 +3516,6 @@ TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
                     "easier to write as dimension independent code but "
                     "the conversion is not valid in the current context."));
 }
-
-
 
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
@@ -3563,8 +3530,6 @@ CellAccessor<dim, spacedim>::CellAccessor(
                     "the conversion is not valid in the current context."));
 }
 
-
-
 template <int structdim, int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
@@ -3578,8 +3543,6 @@ TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
                     "the conversion is not valid in the current context."));
 }
 
-
-
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 CellAccessor<dim, spacedim>::CellAccessor(
@@ -3592,7 +3555,6 @@ CellAccessor<dim, spacedim>::CellAccessor(
                     "easier to write as dimension independent code but "
                     "the conversion is not valid in the current context."));
 }
-
 
 #ifndef DOXYGEN
 

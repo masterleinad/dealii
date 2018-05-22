@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Similar to transfer_matrix_free_08 but using a system of equations: high
 // polynomial degrees beyond 10 that are compared against a linear function
 // that gets prolongated between the mesh levels. Since the function is
@@ -31,7 +30,6 @@
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer_matrix_free.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim, typename Number>
 void
@@ -101,7 +99,6 @@ check(const FiniteElement<dim>& fe_scalar)
     transfer.restrict_and_add(level, vec[level - 1], vec[level]);
   deallog << "Norm after restriction: " << vec[0].l2_norm() << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

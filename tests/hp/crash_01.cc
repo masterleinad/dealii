@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check a crash in hp::DoFHandler<2>::reserve_space found 2/13/2006
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -27,8 +24,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -49,7 +44,6 @@ test()
       ++cell)
     cell->set_active_fe_index(0);
 }
-
 
 int
 main()

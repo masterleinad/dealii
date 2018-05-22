@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test whether Assember::CellsAndFaces adds up correctly.
 
 #include "../tests.h"
@@ -29,7 +28,6 @@
 #include <functional>
 
 using namespace dealii;
-
 
 // Define a class that fills all available entries in the info objects
 // with recognizable numbers.
@@ -58,7 +56,6 @@ public:
        CellInfo&                 info2) const;
 };
 
-
 template <int dim>
 void
 Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
@@ -66,14 +63,12 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
   info.value(0) = 1.;
 }
 
-
 template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   info.value(2) = 1.;
 }
-
 
 template <int dim>
 void
@@ -85,7 +80,6 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
   info1.value(1) = 1. / 2.;
   info2.value(1) = 1. / 2.;
 }
-
 
 template <int dim>
 void
@@ -179,7 +173,6 @@ test_mesh(DoFHandler<dim>& mgdofs)
   deallog << std::endl;
 }
 
-
 template <int dim>
 void
 test(const FiniteElement<dim>& fe)
@@ -208,7 +201,6 @@ test(const FiniteElement<dim>& fe)
   test_mesh(dofs);
   deallog.pop();
 }
-
 
 int
 main()

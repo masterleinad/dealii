@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the different FEValuesBase::get_function_values
 
 #include "../tests.h"
@@ -31,7 +30,6 @@
 #include <deal.II/dofs/dof_renumbering.h>
 
 #include <deal.II/grid/grid_generator.h>
-
 
 // Call this function with a system consisting of several copies of
 // the SAME element
@@ -93,7 +91,6 @@ test_vectors()
   FESystem<dim> q1_3(q1, 3);
   vector_values(q1_3);
 }
-
 
 int
 main()

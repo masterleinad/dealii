@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test, extracted from dof_constraints_09 and
 // trilinos_sparse_matrix_iterator_09, used to fail with aborts
 
@@ -22,7 +20,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
-
 
 void
 test()
@@ -44,8 +41,6 @@ test()
       ++k)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

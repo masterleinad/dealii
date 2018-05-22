@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
 
@@ -21,7 +20,6 @@
  * Test that the last line in a parameter file can end in a '\' with no ill
  * effect.
  */
-
 
 int
 main()

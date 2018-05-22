@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Output function values and derivatives for vector valued
 // polynomials returning Tensor<1,dim> for their values.
 
@@ -53,7 +52,6 @@ check_point(const Point<dim>& x, const PolynomialType& p)
       deallog << std::endl;
     }
 }
-
 
 template <int dim>
 void

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of
 // ConstraintMatrix::distribute_local_to_global for FullMatrix by comparing
 // the results with a sparse matrix. As a test case, we use a square mesh that
@@ -106,7 +104,6 @@ test()
   deallog << "Difference between full and sparse matrix: "
           << full.frobenius_norm() << std::endl;
 }
-
 
 int
 main()

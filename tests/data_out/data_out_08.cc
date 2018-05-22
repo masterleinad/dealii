@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this test documents two unrelated bugs in DataOut when used with a Filter (by deriving from DataOut):
 // 1. The patch index computation in data_out.cc is wrong and causes an SIGV (or an Assert after adding that):
 /*
@@ -38,7 +37,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 class FilteredDataOut : public DataOut<dim>
@@ -75,7 +73,6 @@ public:
 private:
   const unsigned int subdomain_id;
 };
-
 
 template <int dim>
 void

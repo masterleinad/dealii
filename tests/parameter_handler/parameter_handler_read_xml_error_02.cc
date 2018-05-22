@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ParameterHandler::parse_input_from_xml. try to read a file that is not
 // valid XML (the last end-tag is missing)
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

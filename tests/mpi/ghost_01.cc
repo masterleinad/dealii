@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test correct handling of ghost elements in PETScWrappers::mpi::vectors
 
 #include "../tests.h"
@@ -22,7 +20,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -69,7 +66,6 @@ test()
   Assert(get_real_assert_zero_imag(v(myid * 2 + 1)) == myid * 4.0 + 2.0,
          ExcInternalError());
 
-
   // check ghost values
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "ghost: " << get_real_assert_zero_imag(v(1)) << std::endl;
@@ -79,8 +75,6 @@ test()
   if(myid == 0)
     deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

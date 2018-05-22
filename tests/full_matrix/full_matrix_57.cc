@@ -13,15 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FullMatrix::outer_product for correct functionality
-
 
 #include "../tests.h"
 #include "full_matrix_common.h"
-
-
 
 const double ints[9] = {0, -1., 1., -2., 2., -3., 3., -4., 4.};
 
@@ -34,7 +29,6 @@ check()
 
   Vector<double>     First4(4), Second4(4), First9(9);
   FullMatrix<double> F4(4, 4), F9(9, 9);
-
 
   deallog << "Original Vector V" << std::endl;
   deallog << "=================" << std::endl;
@@ -75,7 +69,6 @@ check()
   display_matrix(F4);
   deallog << std::endl;
   deallog << std::endl;
-
 
   F4.outer_product(Second4, Second4);
 

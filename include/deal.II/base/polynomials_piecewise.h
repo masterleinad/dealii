@@ -16,8 +16,6 @@
 #ifndef dealii_polynomials_piecewise_h
 #define dealii_polynomials_piecewise_h
 
-
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -155,8 +153,6 @@ namespace Polynomials
     bool spans_two_intervals;
   };
 
-
-
   /**
    * Generates a complete Lagrange basis on a subdivision of the unit interval
    * in smaller intervals for a given degree on the subintervals and number of
@@ -168,7 +164,6 @@ namespace Polynomials
     const unsigned int base_degree);
 
 } // namespace Polynomials
-
 
 /** @} */
 
@@ -182,8 +177,6 @@ namespace Polynomials
   {
     return polynomial.degree();
   }
-
-
 
   template <typename number>
   inline number
@@ -223,8 +216,6 @@ namespace Polynomials
     else
       return polynomial.value(x);
   }
-
-
 
   template <typename number>
   template <class Archive>

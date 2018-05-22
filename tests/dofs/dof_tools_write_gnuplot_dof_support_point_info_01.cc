@@ -62,8 +62,6 @@ test()
   out << "e" << std::endl;
 }
 
-
-
 int
 main()
 {

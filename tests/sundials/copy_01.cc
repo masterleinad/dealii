@@ -49,7 +49,6 @@ main(int argc, char** argv)
   local_dofs.compress();
   AssertDimension(local_dofs.n_elements(), n_local_dofs);
 
-
   PETScWrappers::MPI::Vector vec(local_dofs, MPI_COMM_WORLD);
   for(const types::global_dof_index local_dof : local_dofs)
     {

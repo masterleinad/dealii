@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check intergrid transfer
 
 #include "../tests.h"
@@ -94,7 +93,6 @@ DoFToolsEx::transfer(const DoFHandler<dim>& source_dof,
   // handle hanging node constraints inside or outside of this function?
 }
 
-
 class TestFunction : public Function<2>
 {
 public:
@@ -112,7 +110,6 @@ main()
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
-
 
   // build test-case trias
   Triangulation<2> tria;

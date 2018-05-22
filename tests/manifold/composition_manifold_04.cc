@@ -13,17 +13,14 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Stress periodicity in CompositionManifold. Compose PolarManifold with
 // the identity, and make sure periodicity is respected.
 
 #include "../tests.h"
 
-
 // all include files you need here
 #include <deal.II/grid/composition_manifold.h>
 #include <deal.II/grid/manifold_lib.h>
-
 
 int
 main()
@@ -71,7 +68,6 @@ main()
 
   for(unsigned int v = 0; v < sp.size(); ++v)
     out << center << " " << sp[v] << std::endl;
-
 
   for(unsigned int i = 0; i < n_intermediates + 1; ++i)
     {

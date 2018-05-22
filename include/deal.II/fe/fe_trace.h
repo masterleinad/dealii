@@ -148,8 +148,6 @@ private:
   get_dpo_vector(const unsigned int deg);
 };
 
-
-
 /**
  * FE_TraceQ in 1D, i.e., with degrees of freedom on the element vertices.
  */
@@ -168,7 +166,6 @@ public:
   std::string
   get_name() const override;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

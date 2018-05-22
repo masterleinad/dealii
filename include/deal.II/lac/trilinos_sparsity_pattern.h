@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_sparsity_pattern_h
 #  define dealii_trilinos_sparsity_pattern_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_TRILINOS
@@ -29,7 +28,6 @@
 #    include <memory>
 #    include <vector>
 
-
 #    include <Epetra_FECrsGraph.h>
 #    include <Epetra_Map.h>
 #    ifdef DEAL_II_WITH_MPI
@@ -38,7 +36,6 @@
 #    else
 #      include <Epetra_SerialComm.h>
 #    endif
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -252,7 +249,6 @@ namespace TrilinosWrappers
     };
 
   } // namespace SparsityPatternIterators
-
 
   /**
    * This class implements a wrapper class to use the Trilinos distributed
@@ -956,7 +952,6 @@ namespace TrilinosWrappers
     void
     add(const size_type i, const size_type j);
 
-
     /**
      * Add several elements in one row to the sparsity pattern.
      */
@@ -1230,10 +1225,7 @@ namespace TrilinosWrappers
     friend class SparsityPatternIterators::Iterator;
   };
 
-
-
   // -------------------------- inline and template functions ----------------------
-
 
 #    ifndef DOXYGEN
 
@@ -1249,8 +1241,6 @@ namespace TrilinosWrappers
       visit_present_row();
     }
 
-
-
     inline Accessor::size_type
     Accessor::row() const
     {
@@ -1258,8 +1248,6 @@ namespace TrilinosWrappers
              ExcBeyondEndOfSparsityPattern());
       return a_row;
     }
-
-
 
     inline Accessor::size_type
     Accessor::column() const
@@ -1269,8 +1257,6 @@ namespace TrilinosWrappers
       return (*colnum_cache)[a_index];
     }
 
-
-
     inline Accessor::size_type
     Accessor::index() const
     {
@@ -1279,18 +1265,13 @@ namespace TrilinosWrappers
       return a_index;
     }
 
-
-
     inline Iterator::Iterator(const SparsityPattern* sp,
                               const size_type        row,
                               const size_type        index)
       : accessor(sp, row, index)
     {}
 
-
     inline Iterator::Iterator(const Iterator&) = default;
-
-
 
     inline Iterator&
     Iterator::operator++()
@@ -1318,8 +1299,6 @@ namespace TrilinosWrappers
       return *this;
     }
 
-
-
     inline Iterator
     Iterator::operator++(int)
     {
@@ -1328,21 +1307,15 @@ namespace TrilinosWrappers
       return old_state;
     }
 
-
-
     inline const Accessor& Iterator::operator*() const
     {
       return accessor;
     }
 
-
-
     inline const Accessor* Iterator::operator->() const
     {
       return &accessor;
     }
-
-
 
     inline bool
     Iterator::operator==(const Iterator& other) const
@@ -1351,15 +1324,11 @@ namespace TrilinosWrappers
               && accessor.a_index == other.accessor.a_index);
     }
 
-
-
     inline bool
     Iterator::operator!=(const Iterator& other) const
     {
       return !(*this == other);
     }
-
-
 
     inline bool
     Iterator::operator<(const Iterator& other) const
@@ -1371,23 +1340,17 @@ namespace TrilinosWrappers
 
   } // namespace SparsityPatternIterators
 
-
-
   inline SparsityPattern::const_iterator
   SparsityPattern::begin() const
   {
     return const_iterator(this, 0, 0);
   }
 
-
-
   inline SparsityPattern::const_iterator
   SparsityPattern::end() const
   {
     return const_iterator(this, n_rows(), 0);
   }
-
-
 
   inline SparsityPattern::const_iterator
   SparsityPattern::begin(const size_type r) const
@@ -1398,8 +1361,6 @@ namespace TrilinosWrappers
     else
       return end(r);
   }
-
-
 
   inline SparsityPattern::const_iterator
   SparsityPattern::end(const size_type r) const
@@ -1418,8 +1379,6 @@ namespace TrilinosWrappers
     return end();
   }
 
-
-
   inline bool
   SparsityPattern::in_local_range(const size_type index) const
   {
@@ -1436,15 +1395,11 @@ namespace TrilinosWrappers
             && (index < static_cast<size_type>(end)));
   }
 
-
-
   inline bool
   SparsityPattern::is_compressed() const
   {
     return graph->Filled();
   }
-
-
 
   inline bool
   SparsityPattern::empty() const
@@ -1452,15 +1407,11 @@ namespace TrilinosWrappers
     return ((n_rows() == 0) && (n_cols() == 0));
   }
 
-
-
   inline void
   SparsityPattern::add(const size_type i, const size_type j)
   {
     add_entries(i, &j, &j + 1);
   }
-
-
 
   template <typename ForwardIterator>
   inline void
@@ -1511,23 +1462,17 @@ namespace TrilinosWrappers
     AssertThrow(ierr >= 0, ExcTrilinosError(ierr));
   }
 
-
-
   inline const Epetra_FECrsGraph&
   SparsityPattern::trilinos_sparsity_pattern() const
   {
     return *graph;
   }
 
-
-
   inline IndexSet
   SparsityPattern::locally_owned_domain_indices() const
   {
     return IndexSet(static_cast<const Epetra_Map&>(graph->DomainMap()));
   }
-
-
 
   inline IndexSet
   SparsityPattern::locally_owned_range_indices() const
@@ -1538,12 +1483,9 @@ namespace TrilinosWrappers
 #    endif // DOXYGEN
 } // namespace TrilinosWrappers
 
-
 DEAL_II_NAMESPACE_CLOSE
 
-
 #  endif // DEAL_II_WITH_TRILINOS
-
 
 /*--------------------   trilinos_sparsity_pattern.h     --------------------*/
 

@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check operator* with a VectorizedArray
 
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
 #include <deal.II/base/vectorization.h>
-
 
 int
 main()

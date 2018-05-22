@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SparsityPattern::copy_from used to be of quadratic complexity for
 // DynamicSparsityPattern arguments with many empty rows. Create a big
 // sparsity pattern of 10m elements and only put an entry into the last
@@ -25,7 +23,6 @@
 #include <deal.II/lac/sparsity_pattern.h>
 #include <list>
 #include <set>
-
 
 int
 main()

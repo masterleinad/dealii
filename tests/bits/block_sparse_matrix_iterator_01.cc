@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this test, extracted from dof_constraints_09, used to fail with aborts
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/lac/block_sparsity_pattern.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.h>
-
 
 template <int dim>
 void
@@ -91,8 +88,6 @@ test()
     deallog << i->block_row() << ' ' << i->block_column() << ' ' << i->row()
             << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
-
-
 
 int
 main()

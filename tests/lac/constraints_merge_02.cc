@@ -13,18 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // merge and print a bunch of ConstrainMatrices. test the case that we
 // have inhomogeneities in the constraints
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 merge_check()
@@ -81,7 +76,6 @@ merge_check()
       c1.print(logfile);
     };
 }
-
 
 int
 main()

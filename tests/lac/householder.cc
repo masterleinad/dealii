@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests Householder class for QR-decomposition
 
 #include "../tests.h"
@@ -21,9 +20,7 @@
 #include <deal.II/lac/householder.h>
 #include <deal.II/lac/vector.h>
 
-
 const double rect[] = {4., 3., 2., 1., 5., 8., 1., -2., 11., 13., -4., -5};
-
 
 int
 main()

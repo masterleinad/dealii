@@ -16,7 +16,6 @@
 #ifndef dealii_symmetric_tensor_h
 #define dealii_symmetric_tensor_h
 
-
 #include <deal.II/base/numbers.h>
 #include <deal.II/base/table_indices.h>
 #include <deal.II/base/template_constraints.h>
@@ -63,8 +62,6 @@ template <int dim, typename Number>
 Number
 determinant(const SymmetricTensor<2, dim, Number>&);
 
-
-
 namespace internal
 {
   /**
@@ -106,8 +103,6 @@ namespace internal
         return TableIndices<2>(previous_indices[0], new_index);
     }
 
-
-
     /**
      * Create a TableIndices<4> object where the first entries up to
      * <tt>position-1</tt> are taken from previous_indices, and new_index is
@@ -148,7 +143,6 @@ namespace internal
       return TableIndices<4>();
     }
 
-
     /**
      * Typedef template magic denoting the result of a double contraction
      * between two tensors or ranks rank1 and rank2. In general, this is a
@@ -169,7 +163,6 @@ namespace internal
         type;
     };
 
-
     /**
      * Typedef template magic denoting the result of a double contraction
      * between two tensors or ranks rank1 and rank2. In general, this is a
@@ -183,8 +176,6 @@ namespace internal
     {
       typedef typename ProductType<Number, OtherNumber>::type type;
     };
-
-
 
     /**
      * Declaration of typedefs for the type of data structures which are used
@@ -220,8 +211,6 @@ namespace internal
       typedef Tensor<1, n_independent_components, Number> base_tensor_type;
     };
 
-
-
     /**
      * Specialization of StorageType for rank-4 tensors.
      */
@@ -250,8 +239,6 @@ namespace internal
        */
       typedef Tensor<2, n_rank2_components, Number> base_tensor_type;
     };
-
-
 
     /**
      * Switch type to select a tensor of rank 2 and dimension <tt>dim</tt>,
@@ -287,7 +274,6 @@ namespace internal
 
       typedef Number& reference;
     };
-
 
     /**
      * @internal
@@ -395,8 +381,6 @@ namespace internal
 #endif
     };
 
-
-
     /**
      * @internal Accessor class for SymmetricTensor. This is the
      * specialization for the last index, which actually allows access to the
@@ -486,8 +470,6 @@ namespace internal
     };
   } // namespace SymmetricTensorAccessors
 } // namespace internal
-
-
 
 /**
  * Provide a class that stores symmetric tensors of rank 2,4,... efficiently,
@@ -928,7 +910,6 @@ private:
   friend SymmetricTensor<4, dim2, Number2>
   identity_tensor();
 
-
   /**
    * Make a few helper classes friends as well.
    */
@@ -938,8 +919,6 @@ private:
   friend struct internal::SymmetricTensorImplementation::
     Inverse<4, dim, Number>;
 };
-
-
 
 // ------------------------- inline functions ------------------------
 
@@ -956,8 +935,6 @@ namespace internal
       : tensor(tensor), previous_indices(previous_indices)
     {}
 
-
-
     template <int rank_, int dim, bool constness, int P, typename Number>
     Accessor<rank_, dim, constness, P - 1, Number>
       Accessor<rank_, dim, constness, P, Number>::
@@ -966,8 +943,6 @@ namespace internal
       return Accessor<rank_, dim, constness, P - 1, Number>(
         tensor, merge(previous_indices, i, rank_ - P));
     }
-
-
 
     template <int rank_, int dim, bool constness, int P, typename Number>
     Accessor<rank_, dim, constness, P - 1, Number>
@@ -978,16 +953,12 @@ namespace internal
         tensor, merge(previous_indices, i, rank_ - P));
     }
 
-
-
     template <int rank_, int dim, bool constness, typename Number>
     Accessor<rank_, dim, constness, 1, Number>::Accessor(
       tensor_type&               tensor,
       const TableIndices<rank_>& previous_indices)
       : tensor(tensor), previous_indices(previous_indices)
     {}
-
-
 
     template <int rank_, int dim, bool constness, typename Number>
     typename Accessor<rank_, dim, constness, 1, Number>::reference
@@ -996,7 +967,6 @@ namespace internal
     {
       return tensor(merge(previous_indices, i, rank_ - 1));
     }
-
 
     template <int rank_, int dim, bool constness, typename Number>
     typename Accessor<rank_, dim, constness, 1, Number>::reference
@@ -1008,8 +978,6 @@ namespace internal
   } // namespace SymmetricTensorAccessors
 } // namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor()
 {
@@ -1018,7 +986,6 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor()
   for(unsigned int i = 0; i < base_tensor_type::dimension; ++i)
     data[i] = internal::NumberType<Number>::value(0.0);
 }
-
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
@@ -1063,8 +1030,6 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
     }
 }
 
-
-
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
@@ -1076,8 +1041,6 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
         initializer.data[i]);
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
   const Number (&array)[n_independent_components])
@@ -1087,8 +1050,6 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
   Assert(sizeof(typename base_tensor_type::array_type) == sizeof(array),
          ExcInternalError());
 }
-
-
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
@@ -1100,8 +1061,6 @@ operator=(const SymmetricTensor<rank_, dim, OtherNumber>& t)
     data[i] = t.data[i];
   return *this;
 }
-
-
 
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>&
@@ -1115,7 +1074,6 @@ SymmetricTensor<rank_, dim, Number>::operator=(const Number& d)
 
   return *this;
 }
-
 
 namespace internal
 {
@@ -1141,7 +1099,6 @@ namespace internal
       return t;
     }
 
-
     template <int dim, typename Number>
     dealii::Tensor<4, dim, Number>
     convert_to_tensor(const dealii::SymmetricTensor<4, dim, Number>& st)
@@ -1163,7 +1120,6 @@ namespace internal
       return t;
     }
 
-
     template <typename Number>
     struct Inverse<2, 1, Number>
     {
@@ -1177,7 +1133,6 @@ namespace internal
         return tmp;
       }
     };
-
 
     template <typename Number>
     struct Inverse<2, 2, Number>
@@ -1203,7 +1158,6 @@ namespace internal
         return tmp;
       }
     };
-
 
     template <typename Number>
     struct Inverse<2, 3, Number>
@@ -1247,7 +1201,6 @@ namespace internal
       }
     };
 
-
     template <typename Number>
     struct Inverse<4, 1, Number>
     {
@@ -1259,7 +1212,6 @@ namespace internal
         return tmp;
       }
     };
-
 
     template <typename Number>
     struct Inverse<4, 2, Number>
@@ -1326,7 +1278,6 @@ namespace internal
         return tmp;
       }
     };
-
 
     template <typename Number>
     struct Inverse<4, 3, Number>
@@ -1437,16 +1388,12 @@ namespace internal
   } // namespace SymmetricTensorImplementation
 } // namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>::
                              operator Tensor<rank_, dim, Number>() const
 {
   return internal::SymmetricTensorImplementation::convert_to_tensor(*this);
 }
-
-
 
 template <int rank_, int dim, typename Number>
 inline bool
@@ -1456,8 +1403,6 @@ operator==(const SymmetricTensor<rank_, dim, Number>& t) const
   return data == t.data;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline bool
 SymmetricTensor<rank_, dim, Number>::
@@ -1465,8 +1410,6 @@ operator!=(const SymmetricTensor<rank_, dim, Number>& t) const
 {
   return data != t.data;
 }
-
-
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
@@ -1478,8 +1421,6 @@ inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
   return *this;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
@@ -1490,8 +1431,6 @@ inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
   return *this;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>&
@@ -1500,8 +1439,6 @@ SymmetricTensor<rank_, dim, Number>::operator*=(const OtherNumber& d)
   data *= d;
   return *this;
 }
-
-
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
@@ -1512,8 +1449,6 @@ SymmetricTensor<rank_, dim, Number>::operator/=(const OtherNumber& d)
   return *this;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE SymmetricTensor<rank_, dim, Number>
 SymmetricTensor<rank_, dim, Number>::operator-() const
@@ -1523,16 +1458,12 @@ SymmetricTensor<rank_, dim, Number>::operator-() const
   return tmp;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE void
 SymmetricTensor<rank_, dim, Number>::clear()
 {
   data.clear();
 }
-
-
 
 template <int rank_, int dim, typename Number>
 inline std::size_t
@@ -1542,8 +1473,6 @@ SymmetricTensor<rank_, dim, Number>::memory_consumption()
   // object, no pointers
   return sizeof(SymmetricTensor<rank_, dim, Number>);
 }
-
-
 
 namespace internal
 {
@@ -1580,8 +1509,6 @@ namespace internal
       }
   }
 
-
-
   template <int dim, typename Number, typename OtherNumber = Number>
   inline typename SymmetricTensorAccessors::
     double_contraction_result<4, 2, dim, Number, OtherNumber>::type
@@ -1606,8 +1533,6 @@ namespace internal
         = perform_double_contraction<dim, Number, OtherNumber>(data[i], sdata);
     return result_type(tmp);
   }
-
-
 
   template <int dim, typename Number, typename OtherNumber = Number>
   inline typename SymmetricTensorAccessors::StorageType<
@@ -1644,8 +1569,6 @@ namespace internal
       }
     return tmp;
   }
-
-
 
   template <int dim, typename Number, typename OtherNumber = Number>
   inline typename SymmetricTensorAccessors::StorageType<
@@ -1686,8 +1609,6 @@ namespace internal
 
 } // end of namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE typename internal::SymmetricTensorAccessors::
@@ -1703,8 +1624,6 @@ inline DEAL_II_ALWAYS_INLINE typename internal::SymmetricTensorAccessors::
                                                                         s.data);
 }
 
-
-
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
 inline typename internal::SymmetricTensorAccessors::
@@ -1718,8 +1637,6 @@ inline typename internal::SymmetricTensorAccessors::
     data, s.data);
   return tmp;
 }
-
-
 
 // internal namespace to switch between the
 // access of different tensors. There used to
@@ -1774,8 +1691,6 @@ namespace internal
     return dummy_but_referenceable;
   }
 
-
-
   template <int dim, typename Number>
   inline const Number&
   symmetric_tensor_access(const TableIndices<2>& indices,
@@ -1818,8 +1733,6 @@ namespace internal
     static Number dummy_but_referenceable = Number();
     return dummy_but_referenceable;
   }
-
-
 
   template <int dim, typename Number>
   inline Number&
@@ -1924,7 +1837,6 @@ namespace internal
     return dummy;
   }
 
-
   template <int dim, typename Number>
   inline const Number&
   symmetric_tensor_access(const TableIndices<4>& indices,
@@ -2030,8 +1942,6 @@ namespace internal
 
 } // end of namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 inline Number&
 SymmetricTensor<rank_, dim, Number>::
@@ -2042,8 +1952,6 @@ operator()(const TableIndices<rank_>& indices)
   return internal::symmetric_tensor_access<dim, Number>(indices, data);
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline const Number&
 SymmetricTensor<rank_, dim, Number>::
@@ -2053,8 +1961,6 @@ operator()(const TableIndices<rank_>& indices) const
     Assert(indices[r] < dimension, ExcIndexRange(indices[r], 0, dimension));
   return internal::symmetric_tensor_access<dim, Number>(indices, data);
 }
-
-
 
 namespace internal
 {
@@ -2067,7 +1973,6 @@ namespace internal
     {
       return TableIndices<rank_>(row, numbers::invalid_unsigned_int);
     }
-
 
     template <int rank_>
     TableIndices<rank_>
@@ -2082,7 +1987,6 @@ namespace internal
   } // namespace SymmetricTensorImplementation
 } // namespace internal
 
-
 template <int rank_, int dim, typename Number>
 internal::SymmetricTensorAccessors::
   Accessor<rank_, dim, true, rank_ - 1, Number>
@@ -2096,8 +2000,6 @@ internal::SymmetricTensorAccessors::
         rank_>(row, std::integral_constant<int, rank_>()));
 }
 
-
-
 template <int rank_, int dim, typename Number>
 internal::SymmetricTensorAccessors::
   Accessor<rank_, dim, false, rank_ - 1, Number>
@@ -2110,16 +2012,12 @@ internal::SymmetricTensorAccessors::
         rank_>(row, std::integral_constant<int, rank_>()));
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline const Number& SymmetricTensor<rank_, dim, Number>::
                      operator[](const TableIndices<rank_>& indices) const
 {
   return operator()(indices);
 }
-
-
 
 template <int rank_, int dim, typename Number>
 inline Number& SymmetricTensor<rank_, dim, Number>::
@@ -2128,16 +2026,12 @@ inline Number& SymmetricTensor<rank_, dim, Number>::
   return operator()(indices);
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline Number*
 SymmetricTensor<rank_, dim, Number>::begin_raw()
 {
   return std::addressof(this->access_raw_entry(0));
 }
-
-
 
 template <int rank_, int dim, typename Number>
 inline const Number*
@@ -2146,8 +2040,6 @@ SymmetricTensor<rank_, dim, Number>::begin_raw() const
   return std::addressof(this->access_raw_entry(0));
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline Number*
 SymmetricTensor<rank_, dim, Number>::end_raw()
@@ -2155,16 +2047,12 @@ SymmetricTensor<rank_, dim, Number>::end_raw()
   return begin_raw() + n_independent_components;
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline const Number*
 SymmetricTensor<rank_, dim, Number>::end_raw() const
 {
   return begin_raw() + n_independent_components;
 }
-
-
 
 namespace internal
 {
@@ -2178,7 +2066,6 @@ namespace internal
       return index;
     }
 
-
     template <int dim, typename Number>
     dealii::TableIndices<2>
     entry_to_indices(const dealii::SymmetricTensor<4, dim, Number>&,
@@ -2191,8 +2078,6 @@ namespace internal
   } // namespace SymmetricTensorImplementation
 } // namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 inline const Number&
 SymmetricTensor<rank_, dim, Number>::access_raw_entry(
@@ -2203,8 +2088,6 @@ SymmetricTensor<rank_, dim, Number>::access_raw_entry(
                                                                         index)];
 }
 
-
-
 template <int rank_, int dim, typename Number>
 inline Number&
 SymmetricTensor<rank_, dim, Number>::access_raw_entry(const unsigned int index)
@@ -2213,8 +2096,6 @@ SymmetricTensor<rank_, dim, Number>::access_raw_entry(const unsigned int index)
   return data[internal::SymmetricTensorImplementation::entry_to_indices(*this,
                                                                         index)];
 }
-
-
 
 namespace internal
 {
@@ -2260,8 +2141,6 @@ namespace internal
       }
   }
 
-
-
   template <int dim, typename Number>
   inline typename numbers::NumberTraits<Number>::real_type
   compute_norm(const typename SymmetricTensorAccessors::
@@ -2303,16 +2182,12 @@ namespace internal
 
 } // end of namespace internal
 
-
-
 template <int rank_, int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
 SymmetricTensor<rank_, dim, Number>::norm() const
 {
   return internal::compute_norm<dim, Number>(data);
 }
-
-
 
 namespace internal
 {
@@ -2398,7 +2273,6 @@ namespace internal
   }   // namespace SymmetricTensorImplementation
 } // namespace internal
 
-
 template <int rank_, int dim, typename Number>
 inline unsigned int
 SymmetricTensor<rank_, dim, Number>::component_to_unrolled_index(
@@ -2407,8 +2281,6 @@ SymmetricTensor<rank_, dim, Number>::component_to_unrolled_index(
   return internal::SymmetricTensorImplementation::component_to_unrolled_index<
     dim>(indices);
 }
-
-
 
 namespace internal
 {
@@ -2513,8 +2385,6 @@ SymmetricTensor<rank_, dim, Number>::unrolled_to_component_indices(
     dim>(i, std::integral_constant<int, rank_>());
 }
 
-
-
 template <int rank_, int dim, typename Number>
 template <class Archive>
 inline void
@@ -2523,11 +2393,9 @@ SymmetricTensor<rank_, dim, Number>::serialize(Archive& ar, const unsigned int)
   ar& data;
 }
 
-
 #endif // DOXYGEN
 
 /* ----------------- Non-member functions operating on tensors. ------------ */
-
 
 /**
  * Addition of two symmetric tensors of equal rank. The result is another
@@ -2554,7 +2422,6 @@ operator+(const SymmetricTensor<rank_, dim, Number>&      left,
   return tmp;
 }
 
-
 /**
  * Subtraction of two symmetric tensors of equal rank. The result is another
  * SymmetricTensor that has a number type that is compatible with the
@@ -2580,7 +2447,6 @@ operator-(const SymmetricTensor<rank_, dim, Number>&      left,
   return tmp;
 }
 
-
 /**
  * Addition of a SymmetricTensor and a general Tensor of equal rank. The
  * result is a general Tensor that has a number type that is compatible with the
@@ -2595,7 +2461,6 @@ operator+(const SymmetricTensor<rank_, dim, Number>& left,
 {
   return Tensor<rank_, dim, Number>(left) + right;
 }
-
 
 /**
  * Addition of a general Tensor with a SymmetricTensor of equal rank. The
@@ -2612,7 +2477,6 @@ operator+(const Tensor<rank_, dim, Number>&               left,
   return left + Tensor<rank_, dim, OtherNumber>(right);
 }
 
-
 /**
  * Subtraction of a general Tensor from a SymmetricTensor of equal rank. The
  * result is a general Tensor that has a number type that is compatible with the
@@ -2628,7 +2492,6 @@ operator-(const SymmetricTensor<rank_, dim, Number>& left,
   return Tensor<rank_, dim, Number>(left) - right;
 }
 
-
 /**
  * Subtraction of a SymmetricTensor from a general Tensor of equal rank. The
  * result is a general Tensor that has a number type that is compatible with the
@@ -2643,8 +2506,6 @@ operator-(const Tensor<rank_, dim, Number>&               left,
 {
   return left - Tensor<rank_, dim, OtherNumber>(right);
 }
-
-
 
 /**
  * Compute the determinant of a tensor or rank 2. The determinant is also
@@ -2686,8 +2547,6 @@ determinant(const SymmetricTensor<2, dim, Number>& t)
     }
 }
 
-
-
 /**
  * Compute the determinant of a tensor or rank 2. This function therefore
  * computes the same value as the <tt>determinant()</tt> functions and is only
@@ -2703,8 +2562,6 @@ third_invariant(const SymmetricTensor<2, dim, Number>& t)
 {
   return determinant(t);
 }
-
-
 
 /**
  * Compute and return the trace of a tensor of rank 2, i.e. the sum of its
@@ -2723,7 +2580,6 @@ trace(const SymmetricTensor<2, dim, Number>& d)
   return t;
 }
 
-
 /**
  * Compute the trace of a tensor or rank 2. This function therefore computes
  * the same value as the <tt>trace()</tt> functions and is only provided for
@@ -2739,7 +2595,6 @@ first_invariant(const SymmetricTensor<2, dim, Number>& t)
 {
   return trace(t);
 }
-
 
 /**
  * Compute the second invariant of a tensor of rank 2. The second invariant of
@@ -2759,8 +2614,6 @@ second_invariant(const SymmetricTensor<2, 1, Number>&)
 {
   return internal::NumberType<Number>::value(0.0);
 }
-
-
 
 /**
  * Compute the second invariant of a tensor of rank 2. The second invariant of
@@ -2789,8 +2642,6 @@ second_invariant(const SymmetricTensor<2, 2, Number>& t)
   return t[0][0] * t[1][1] - t[0][1] * t[0][1];
 }
 
-
-
 /**
  * Compute the second invariant of a tensor of rank 2. The second invariant of
  * a tensor $\sigma$ is defined as
@@ -2808,8 +2659,6 @@ second_invariant(const SymmetricTensor<2, 3, Number>& t)
           - t[0][1] * t[0][1] - t[0][2] * t[0][2] - t[1][2] * t[1][2]);
 }
 
-
-
 /**
  * Return the eigenvalues of a symmetric 1x1 tensor of rank 2.
  * The (single) entry of the tensor is, of course, equal to the (single)
@@ -2821,8 +2670,6 @@ second_invariant(const SymmetricTensor<2, 3, Number>& t)
 template <typename Number>
 std::array<Number, 1>
 eigenvalues(const SymmetricTensor<2, 1, Number>& T);
-
-
 
 /**
  * Return the eigenvalues of a symmetric 2x2 tensor of rank 2.
@@ -2849,8 +2696,6 @@ template <typename Number>
 std::array<Number, 2>
 eigenvalues(const SymmetricTensor<2, 2, Number>& T);
 
-
-
 /**
  * Return the eigenvalues of a symmetric 3x3 tensor of rank 2.
  * The array of eigenvalues is sorted in descending order.
@@ -2873,8 +2718,6 @@ eigenvalues(const SymmetricTensor<2, 2, Number>& T);
 template <typename Number>
 std::array<Number, 3>
 eigenvalues(const SymmetricTensor<2, 3, Number>& T);
-
-
 
 namespace internal
 {
@@ -2923,8 +2766,6 @@ namespace internal
                    std::array<Number, dim>&                       d,
                    std::array<Number, dim - 1>&                   e);
 
-
-
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric tensor using the QL algorithm with implicit shifts.
@@ -2966,8 +2807,6 @@ namespace internal
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
     ql_implicit_shifts(const dealii::SymmetricTensor<2, dim, Number>& A);
-
-
 
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
@@ -3011,8 +2850,6 @@ namespace internal
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
       jacobi(dealii::SymmetricTensor<2, dim, Number> A);
 
-
-
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric 2x2 tensor using the characteristic equation to compute eigenvalues
@@ -3031,8 +2868,6 @@ namespace internal
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 2, Number>>, 2>
     hybrid(const dealii::SymmetricTensor<2, 2, Number>& A);
-
-
 
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
@@ -3092,8 +2927,6 @@ namespace internal
   } // namespace SymmetricTensorImplementation
 
 } // namespace internal
-
-
 
 // The line below is to ensure that doxygen puts the full description
 // of this global enumeration into the documentation
@@ -3156,8 +2989,6 @@ enum struct SymmetricTensorEigenvectorMethod
   jacobi
 };
 
-
-
 /**
  * Return the eigenvalues and eigenvectors of a real-valued rank-2 symmetric
  * tensor $T$. The array of matched eigenvalue and eigenvector pairs is sorted
@@ -3192,8 +3023,6 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
              const SymmetricTensorEigenvectorMethod method
              = SymmetricTensorEigenvectorMethod::ql_implicit_shifts);
 
-
-
 /**
  * Return the transpose of the given symmetric tensor. Since we are working
  * with symmetric objects, the transpose is of course the same as the original
@@ -3209,8 +3038,6 @@ transpose(const SymmetricTensor<rank_, dim, Number>& t)
 {
   return t;
 }
-
-
 
 /**
  * Compute the deviator of a symmetric tensor, which is defined as <tt>dev[s]
@@ -3234,8 +3061,6 @@ deviator(const SymmetricTensor<2, dim, Number>& t)
 
   return tmp;
 }
-
-
 
 /**
  * Return a unit symmetric tensor of rank 2, i.e., the dim-by-dim identity
@@ -3269,8 +3094,6 @@ unit_symmetric_tensor()
   return tmp;
 }
 
-
-
 /**
  * Return a unit symmetric tensor of rank 2, i.e., the dim-by-dim identity
  * matrix. This specialization of the function uses <code>double</code> as the
@@ -3285,8 +3108,6 @@ unit_symmetric_tensor()
 {
   return unit_symmetric_tensor<dim, double>();
 }
-
-
 
 /**
  * Return the tensor of rank 4 that, when multiplied by a symmetric rank 2
@@ -3327,8 +3148,6 @@ deviator_tensor()
   return tmp;
 }
 
-
-
 /**
  * Return the tensor of rank 4 that, when multiplied by a symmetric rank 2
  * tensor <tt>t</tt> returns the deviator <tt>dev t</tt>. It is the operator
@@ -3349,8 +3168,6 @@ deviator_tensor()
 {
   return deviator_tensor<dim, double>();
 }
-
-
 
 /**
  * Return the fourth-order symmetric identity tensor which maps symmetric
@@ -3398,8 +3215,6 @@ identity_tensor()
   return tmp;
 }
 
-
-
 /**
  * Return the tensor of rank 4 that, when multiplied by a symmetric rank 2
  * tensor <tt>t</tt> returns the deviator <tt>dev t</tt>. It is the operator
@@ -3428,8 +3243,6 @@ identity_tensor()
   return identity_tensor<dim, double>();
 }
 
-
-
 /**
  * Invert a symmetric rank-2 tensor.
  *
@@ -3447,8 +3260,6 @@ invert(const SymmetricTensor<2, dim, Number>& t)
   return internal::SymmetricTensorImplementation::Inverse<2, dim, Number>::
     value(t);
 }
-
-
 
 /**
  * Invert a symmetric rank-4 tensor. Since symmetric rank-4 tensors are
@@ -3468,8 +3279,6 @@ invert(const SymmetricTensor<4, dim, Number>& t)
   return internal::SymmetricTensorImplementation::Inverse<4, dim, Number>::
     value(t);
 }
-
-
 
 /**
  * Return the tensor of rank 4 that is the outer product of the two tensors
@@ -3502,8 +3311,6 @@ outer_product(const SymmetricTensor<2, dim, Number>& t1,
   return tmp;
 }
 
-
-
 /**
  * Return the symmetrized version of a full rank-2 tensor, i.e.
  * (t+transpose(t))/2, as a symmetric rank-2 tensor. This is the version for
@@ -3525,8 +3332,6 @@ symmetrize(const Tensor<2, dim, Number>& t)
   return SymmetricTensor<2, dim, Number>(array);
 }
 
-
-
 /**
  * Multiplication of a symmetric tensor of general rank with a scalar from the
  * right. This version of the operator is used if the scalar has the same data
@@ -3543,8 +3348,6 @@ operator*(const SymmetricTensor<rank_, dim, Number>& t, const Number& factor)
   return tt;
 }
 
-
-
 /**
  * Multiplication of a symmetric tensor of general rank with a scalar from the
  * left. This version of the operator is used if the scalar has the same data
@@ -3559,8 +3362,6 @@ operator*(const Number& factor, const SymmetricTensor<rank_, dim, Number>& t)
   // simply forward to the other operator
   return t * factor;
 }
-
-
 
 /**
  * Multiplication of a symmetric tensor with a scalar number from the right.
@@ -3616,8 +3417,6 @@ operator*(const SymmetricTensor<rank_, dim, Number>& t,
   return tt;
 }
 
-
-
 /**
  * Multiplication of a symmetric tensor with a scalar number from the left.
  * See the discussion with the operator with switched arguments for more
@@ -3639,8 +3438,6 @@ operator*(const Number&                                   factor,
   return (t * factor);
 }
 
-
-
 /**
  * Division of a symmetric tensor of general rank by a scalar.
  *
@@ -3661,8 +3458,6 @@ operator/(const SymmetricTensor<rank_, dim, Number>& t,
   return tt;
 }
 
-
-
 /**
  * Multiplication of a symmetric tensor of general rank with a scalar from the
  * right.
@@ -3678,8 +3473,6 @@ operator*(const SymmetricTensor<rank_, dim>& t, const double factor)
   return tt;
 }
 
-
-
 /**
  * Multiplication of a symmetric tensor of general rank with a scalar from the
  * left.
@@ -3694,8 +3487,6 @@ operator*(const double factor, const SymmetricTensor<rank_, dim>& t)
   tt *= factor;
   return tt;
 }
-
-
 
 /**
  * Division of a symmetric tensor of general rank by a scalar.
@@ -3728,7 +3519,6 @@ scalar_product(const SymmetricTensor<2, dim, Number>&      t1,
   return (t1 * t2);
 }
 
-
 /**
  * Compute the scalar product $a:b=\sum_{i,j} a_{ij}b_{ij}$ between two
  * tensors $a,b$ of rank 2. We don't use <code>operator*</code> for this
@@ -3751,7 +3541,6 @@ scalar_product(const SymmetricTensor<2, dim, Number>& t1,
   return s;
 }
 
-
 /**
  * Compute the scalar product $a:b=\sum_{i,j} a_{ij}b_{ij}$ between two
  * tensors $a,b$ of rank 2. We don't use <code>operator*</code> for this
@@ -3768,7 +3557,6 @@ scalar_product(const Tensor<2, dim, Number>&               t1,
 {
   return scalar_product(t2, t1);
 }
-
 
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
@@ -3794,8 +3582,6 @@ inline void double_contract(
   tmp[0][0] = t[0][0][0][0] * s[0][0];
 }
 
-
-
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
  * resulting in the symmetric tensor of rank 2 that is given as first argument
@@ -3819,8 +3605,6 @@ inline void double_contract(
 {
   tmp[0][0] = t[0][0][0][0] * s[0][0];
 }
-
-
 
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
@@ -3850,8 +3634,6 @@ inline void double_contract(
                   + 2 * t[i][j][0][1] * s[0][1];
 }
 
-
-
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
  * resulting in the symmetric tensor of rank 2 that is given as first argument
@@ -3880,8 +3662,6 @@ inline void double_contract(
       tmp[i][j] = s[0][0] * t[0][0][i][j] * +s[1][1] * t[1][1][i][j]
                   + 2 * s[0][1] * t[0][1][i][j];
 }
-
-
 
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
@@ -3913,8 +3693,6 @@ inline void double_contract(
                   + 2 * t[i][j][0][2] * s[0][2] + 2 * t[i][j][1][2] * s[1][2];
 }
 
-
-
 /**
  * Double contraction between a rank-4 and a rank-2 symmetric tensor,
  * resulting in the symmetric tensor of rank 2 that is given as first argument
@@ -3945,8 +3723,6 @@ inline void double_contract(
                   + 2 * s[0][2] * t[0][2][i][j] + 2 * s[1][2] * t[1][2][i][j];
 }
 
-
-
 /**
  * Multiply a symmetric rank-2 tensor (i.e., a matrix) by a rank-1 tensor
  * (i.e., a vector). The result is a rank-1 tensor (i.e., a vector).
@@ -3966,7 +3742,6 @@ operator*(const SymmetricTensor<2, dim, Number>& src1,
   return dest;
 }
 
-
 /**
  * Multiply a rank-1 tensor (i.e., a vector) by a symmetric rank-2 tensor
  * (i.e., a matrix). The result is a rank-1 tensor (i.e., a vector).
@@ -3982,8 +3757,6 @@ operator*(const Tensor<1, dim, Number>&               src1,
   // this is easy for symmetric tensors:
   return src2 * src1;
 }
-
-
 
 /**
  * The dot product (single contraction) for tensors: Return a tensor of rank
@@ -4025,8 +3798,6 @@ inline DEAL_II_ALWAYS_INLINE
   return src1 * src2;
 }
 
-
-
 /**
  * The dot product (single contraction) for tensors: Return a tensor of rank
  * $(\text{rank}_1 + \text{rank}_2 - 2)$ that is the contraction of the last
@@ -4067,8 +3838,6 @@ inline DEAL_II_ALWAYS_INLINE
   return src1 * src2;
 }
 
-
-
 /**
  * Output operator for symmetric tensors of rank 2. Print the elements
  * consecutively, with a space in between, two spaces between rank 1
@@ -4093,8 +3862,6 @@ operator<<(std::ostream& out, const SymmetricTensor<2, dim, Number>& t)
 
   return out << tt;
 }
-
-
 
 /**
  * Output operator for symmetric tensors of rank 4. Print the elements
@@ -4122,7 +3889,6 @@ operator<<(std::ostream& out, const SymmetricTensor<4, dim, Number>& t)
 
   return out << tt;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

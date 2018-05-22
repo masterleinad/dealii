@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Read a file in iges format, and write it out again in the same
 // format.
 

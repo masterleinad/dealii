@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test DynamicSparsityPattern::iterator with sparsity patterns that
 // have an associated IndexSet
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 void
 test()
@@ -45,8 +42,6 @@ test()
   deallog << i->row() << ' ' << i->column() << std::endl;
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

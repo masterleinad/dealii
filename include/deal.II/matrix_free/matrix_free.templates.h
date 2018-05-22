@@ -16,7 +16,6 @@
 #ifndef dealii_matrix_free_templates_h
 #define dealii_matrix_free_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/polynomials_piecewise.h>
@@ -40,9 +39,7 @@
 
 #include <fstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 // --------------------- MatrixFree -----------------------------------
 
@@ -51,16 +48,12 @@ MatrixFree<dim, Number>::MatrixFree()
   : Subscriptor(), indices_are_initialized(false), mapping_is_initialized(false)
 {}
 
-
-
 template <int dim, typename Number>
 MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number>& other)
   : Subscriptor()
 {
   copy_from(other);
 }
-
-
 
 template <int dim, typename Number>
 std::pair<unsigned int, unsigned int>
@@ -104,8 +97,6 @@ MatrixFree<dim, Number>::create_cell_subrange_hp_by_index(
     }
 }
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::renumber_dofs(
@@ -115,8 +106,6 @@ MatrixFree<dim, Number>::renumber_dofs(
   AssertIndexRange(vector_component, dof_info.size());
   dof_info[vector_component].compute_dof_renumbering(renumbering);
 }
-
-
 
 template <int dim, typename Number>
 const DoFHandler<dim>&
@@ -137,8 +126,6 @@ MatrixFree<dim, Number>::get_dof_handler(const unsigned int dof_index) const
       return *dof_handlers.dof_handler[numbers::invalid_unsigned_int];
     }
 }
-
-
 
 template <int dim, typename Number>
 typename DoFHandler<dim>::cell_iterator
@@ -173,8 +160,6 @@ MatrixFree<dim, Number>::get_cell_iterator(const unsigned int macro_cell_number,
     &dofh->get_triangulation(), index.first, index.second, dofh);
 }
 
-
-
 template <int dim, typename Number>
 typename hp::DoFHandler<dim>::active_cell_iterator
 MatrixFree<dim, Number>::get_hp_cell_iterator(
@@ -198,8 +183,6 @@ MatrixFree<dim, Number>::get_hp_cell_iterator(
     &dofh->get_triangulation(), index.first, index.second, dofh);
 }
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number>& v)
@@ -216,8 +199,6 @@ MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number>& v)
   indices_are_initialized   = v.indices_are_initialized;
   mapping_is_initialized    = v.mapping_is_initialized;
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -375,8 +356,6 @@ MatrixFree<dim, Number>::internal_reinit(
       mapping_is_initialized = true;
     }
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -542,7 +521,6 @@ MatrixFree<dim, Number>::internal_reinit(
     }
 }
 
-
 template <int dim, typename Number>
 template <int spacedim>
 bool
@@ -579,8 +557,6 @@ MatrixFree<dim, Number>::is_supported(const FiniteElement<dim, spacedim>& fe)
   return false;
 }
 
-
-
 namespace internal
 {
   namespace MatrixFreeFunctions
@@ -604,8 +580,6 @@ namespace internal
     }
   } // namespace MatrixFreeFunctions
 } // namespace internal
-
-
 
 template <int dim, typename Number>
 void
@@ -675,8 +649,6 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
   cell_level_index_end_local = cell_level_index.size();
 }
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::initialize_dof_handlers(
@@ -732,8 +704,6 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
   // cell_level_index_end_local to the size of cell_level_index.
   cell_level_index_end_local = cell_level_index.size();
 }
-
-
 
 template <int dim, typename Number>
 void
@@ -1711,8 +1681,6 @@ MatrixFree<dim, Number>::initialize_indices(
   indices_are_initialized = true;
 }
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::clear()
@@ -1727,8 +1695,6 @@ MatrixFree<dim, Number>::clear()
   indices_are_initialized = false;
   mapping_is_initialized  = false;
 }
-
-
 
 #ifdef DEAL_II_WITH_THREADS
 
@@ -1837,8 +1803,6 @@ namespace internal
 
 #endif
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::make_connectivity_graph_faces(
@@ -1895,8 +1859,6 @@ MatrixFree<dim, Number>::make_connectivity_graph_faces(
 #endif
 }
 
-
-
 template <int dim, typename Number>
 std::size_t
 MatrixFree<dim, Number>::memory_consumption() const
@@ -1912,8 +1874,6 @@ MatrixFree<dim, Number>::memory_consumption() const
   memory += mapping_info.memory_consumption();
   return memory;
 }
-
-
 
 template <int dim, typename Number>
 template <typename StreamType>
@@ -1951,8 +1911,6 @@ MatrixFree<dim, Number>::print_memory_consumption(StreamType& out) const
     }
 }
 
-
-
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::print(std::ostream& out) const
@@ -1965,8 +1923,6 @@ MatrixFree<dim, Number>::print(std::ostream& out) const
       out << std::endl;
     }
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Pretty much exactly like refinement_02, except that we go to around 50,000
 // cells. this is a similar case to refinement_03 (where we start with a
 // coarse grid of 30,000 cells, however) and that takes a ton of time at the
@@ -33,7 +31,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <ostream>
-
 
 template <int dim>
 void
@@ -89,7 +86,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

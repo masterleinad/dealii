@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test VectorTools::interpolate_boundary_values for codim=1. like _01
 // but for 1d triangulations
 
@@ -89,8 +87,6 @@ test()
                 }
     }
 }
-
-
 
 int
 main()

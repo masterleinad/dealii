@@ -19,12 +19,9 @@
 #include <deal.II/base/config.h>
 #include <deal.II/base/point.h>
 
-
 #include <array>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * A namespace for geometric utility functions that are not particularly specific

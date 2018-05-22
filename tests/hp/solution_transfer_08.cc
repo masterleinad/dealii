@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _07 but do it the other way around: start with a fine mesh, then
 // coarsen
 
 #include "../tests.h"
 #include <iostream>
 #include <sstream>
-
 
 #include <deal.II/grid/tria.h>
 
@@ -42,7 +39,6 @@
 #include <deal.II/numerics/data_out.h>
 
 using namespace dealii;
-
 
 template <int dim>
 void
@@ -90,7 +86,6 @@ test()
   // we are good if we made it to here
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

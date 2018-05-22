@@ -14,15 +14,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::compute_mmult_pattern(). Test if multiplication
 // with each combination of SparsityPatternTypes is possible.
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -85,8 +82,6 @@ test()
   Assert(!test_failed, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

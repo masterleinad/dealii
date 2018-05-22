@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that cell->active_cell_index() works as advertised
 
 #include "../tests.h"
@@ -25,8 +23,6 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -43,8 +39,6 @@ check(const parallel::distributed::Triangulation<dim>& tria)
   AssertThrow(index >= tria.n_locally_owned_active_cells(), ExcInternalError());
 }
 
-
-
 template <int dim>
 void
 check()
@@ -60,7 +54,6 @@ check()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK for " << dim << "d" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

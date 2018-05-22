@@ -13,16 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same as the test with number _01, but check for block vectors
-
 
 #include "../tests.h"
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out.h>
-
-
 
 template <int dim>
 void

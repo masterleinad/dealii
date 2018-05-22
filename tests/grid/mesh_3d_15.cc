@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure TriaCellAccessor::neighbor_child_on_subface does what it
 // is supposed to do. check it for dof accessors, since they simply
 // call the tria accessors, and this way we catch both cases at the
@@ -33,8 +31,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 void check_this(Triangulation<3>& tria)
 {
@@ -86,8 +82,6 @@ void check_this(Triangulation<3>& tria)
           }
 }
 
-
-
 void check(Triangulation<3>& tria)
 {
   (++tria.begin_active())->set_refine_flag();
@@ -112,7 +106,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

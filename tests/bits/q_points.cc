@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // make sure that if we loop over all quadrature points on a face and
 // over the same quadrature points on the same face of the neighboring
 // cell, that we then visit them in the same order. this test is
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void create_two_cubes(Triangulation<3>& coarse_grid)
 {
@@ -68,7 +64,6 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
   coarse_grid.create_triangulation_compatibility(
     vertices, cells, SubCellData());
 }
-
 
 void check(Triangulation<3>& tria)
 {
@@ -115,7 +110,6 @@ void check(Triangulation<3>& tria)
             }
         }
 }
-
 
 int
 main()

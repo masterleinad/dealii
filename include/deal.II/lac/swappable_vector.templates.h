@@ -16,19 +16,15 @@
 #ifndef dealii_swappable_vector_templates_h
 #define dealii_swappable_vector_templates_h
 
-
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/lac/swappable_vector.h>
 #include <fstream>
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename number>
 SwappableVector<number>::SwappableVector() : data_is_preloaded(false)
 {}
-
-
 
 template <typename number>
 SwappableVector<number>::SwappableVector(const SwappableVector<number>& v)
@@ -36,8 +32,6 @@ SwappableVector<number>::SwappableVector(const SwappableVector<number>& v)
 {
   Assert(v.filename == "", ExcInvalidCopyOperation());
 }
-
-
 
 template <typename number>
 SwappableVector<number>::~SwappableVector()
@@ -60,8 +54,6 @@ SwappableVector<number>::~SwappableVector()
     }
 }
 
-
-
 template <typename number>
 SwappableVector<number>&
 SwappableVector<number>::operator=(const SwappableVector<number>& v)
@@ -80,8 +72,6 @@ SwappableVector<number>::operator=(const SwappableVector<number>& v)
 
   return *this;
 }
-
-
 
 template <typename number>
 void
@@ -116,8 +106,6 @@ SwappableVector<number>::swap_out(const std::string& name)
   this->reinit(0);
 }
 
-
-
 template <typename number>
 void
 SwappableVector<number>::reload()
@@ -148,8 +136,6 @@ SwappableVector<number>::reload()
       lock.release();
     };
 }
-
-
 
 template <typename number>
 void
@@ -184,8 +170,6 @@ SwappableVector<number>::alert()
 #endif
 }
 
-
-
 template <typename number>
 void
 SwappableVector<number>::reload_vector(const bool set_flag)
@@ -208,8 +192,6 @@ SwappableVector<number>::reload_vector(const bool set_flag)
   lock.release();
 #endif
 }
-
-
 
 template <typename number>
 void
@@ -238,16 +220,12 @@ SwappableVector<number>::kill_file()
     };
 }
 
-
-
 template <typename number>
 const std::string&
 SwappableVector<number>::get_filename() const
 {
   return filename;
 }
-
-
 
 template <typename number>
 std::size_t
@@ -257,8 +235,6 @@ SwappableVector<number>::memory_consumption() const
           + MemoryConsumption::memory_consumption(data_is_preloaded)
           + Vector<number>::memory_consumption());
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as get_functions_variants for testing values, gradients, and
 // Laplacians individually but now on Gauss-Lobatto elements
 
@@ -35,7 +33,6 @@
 #include <iostream>
 
 std::ofstream logfile("output");
-
 
 template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
@@ -77,8 +74,6 @@ private:
   mutable double                 errors[5];
 };
 
-
-
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
@@ -118,7 +113,6 @@ operator()(const MatrixFree<dim, Number>& data,
       fe_eval5.read_dof_values(src);
       fe_eval5.evaluate(false, false, true);
 
-
       // compare values with the values that we get
       // when expanding the full
       // FEEvaluations. Those are tested in other
@@ -143,7 +137,6 @@ operator()(const MatrixFree<dim, Number>& data,
           }
     }
 }
-
 
 template <int dim, int fe_degree>
 void
@@ -183,7 +176,6 @@ test()
   mf.test_functions(solution_dist);
   deallog << std::endl;
 }
-
 
 int
 main()

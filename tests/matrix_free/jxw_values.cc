@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of JxW values returned by FEEvaluation
 // when compared to FEValues
 
@@ -30,7 +28,6 @@
 #include "create_mesh.h"
 
 std::ofstream logfile("output");
-
 
 template <int dim>
 void
@@ -96,8 +93,6 @@ test()
           << std::endl
           << std::endl;
 }
-
-
 
 int
 main()

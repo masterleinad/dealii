@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // apply SparsityTools::reorder_Cuthill_McKee to a graph that consists
 // of two or more non-connected parts. the reordering algorithm used
 // to trip over that
@@ -22,7 +20,6 @@
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/sparsity_tools.h>
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Create a NURBS with a quarter of a disc, make a Manifold out of it, create a
 // Triangulation with it, attach the manifold, and make a few refinements
 
@@ -24,7 +23,6 @@
 #include <deal.II/opencascade/utilities.h>
 
 #include <deal.II/grid/grid_out.h>
-
 
 using namespace OpenCASCADE;
 

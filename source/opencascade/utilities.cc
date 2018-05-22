@@ -25,7 +25,6 @@
 #  include <iostream>
 #  include <set>
 
-
 #  include <IGESControl_Controller.hxx>
 #  include <IGESControl_Reader.hxx>
 #  include <IGESControl_Writer.hxx>
@@ -77,7 +76,6 @@
 #  include <GCPnts_AbscissaPoint.hxx>
 #  include <ShapeAnalysis_Surface.hxx>
 
-
 #  include <algorithm>
 #  include <vector>
 
@@ -127,7 +125,6 @@ namespace OpenCASCADE
         vertices.push_back(TopoDS::Vertex(exp.Current()));
       }
   }
-
 
   void
   extract_compound_shapes(const TopoDS_Shape&            shape,
@@ -232,7 +229,6 @@ namespace OpenCASCADE
     // satisfied. The two points are equal up to tolerance
     return false;
   }
-
 
   TopoDS_Shape
   read_IGES(const std::string& filename, const double scale_factor)
@@ -339,7 +335,6 @@ namespace OpenCASCADE
 
     for(unsigned int i = 0; i < faces.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(faces[i]));
-
 
     return tolerance;
   }
@@ -497,7 +492,6 @@ namespace OpenCASCADE
         vertices->SetValue(vertex + 1, point(curve_points[vertex]));
       }
 
-
     GeomAPI_Interpolate bspline_generator(vertices, closed, tolerance);
     bspline_generator.Perform();
     Assert((bspline_generator.IsDone()),
@@ -507,8 +501,6 @@ namespace OpenCASCADE
     TopoDS_Edge out_shape             = BRepBuilderAPI_MakeEdge(bspline);
     return out_shape;
   }
-
-
 
   template <int spacedim>
   std::vector<TopoDS_Edge>
@@ -613,7 +605,6 @@ namespace OpenCASCADE
     return interpolation_curves;
   }
 
-
   template <int dim>
   std::tuple<Point<dim>, TopoDS_Shape, double, double>
   project_point_and_pull_back(const TopoDS_Shape& in_shape,
@@ -696,7 +687,6 @@ namespace OpenCASCADE
       point<dim>(Pproj), out_shape, u, v);
   }
 
-
   template <int dim>
   Point<dim>
   closest_point(const TopoDS_Shape& in_shape,
@@ -735,7 +725,6 @@ namespace OpenCASCADE
       std::get<0>(numbers) < 2,
       ExcMessage(
         "Could not find normal: the shape containing the closest point has more than 1 face."));
-
 
     TopExp_Explorer exp;
     exp.Init(out_shape, TopAbs_FACE);
@@ -796,8 +785,6 @@ namespace OpenCASCADE
     return std::tuple<Point<3>, Tensor<1, 3>, double, double>(
       point<3>(Value), normal, Min_Curvature, Max_Curvature);
   }
-
-
 
   template <int spacedim>
   void

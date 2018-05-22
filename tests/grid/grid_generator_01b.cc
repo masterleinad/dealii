@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test if refining a quarter_hyper_shell using SphericalManifold yields
 // correct results in 2d and 3d.
 
@@ -24,8 +22,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -48,7 +44,6 @@ test(std::ostream& out)
     go.write(tr, out, format);
   }
 }
-
 
 int
 main()

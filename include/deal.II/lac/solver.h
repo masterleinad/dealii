@@ -386,8 +386,6 @@ public:
                                const double       check_value,
                                const VectorType&  current_iterate)>& slot);
 
-
-
 protected:
   /**
    * A static vector memory object to be used whenever no such object has been
@@ -452,9 +450,7 @@ protected:
     iteration_status;
 };
 
-
 /*-------------------------------- Inline functions ------------------------*/
-
 
 template <class VectorType>
 inline SolverControl::State
@@ -470,7 +466,6 @@ operator()(const SolverControl::State state1,
   else
     return SolverControl::success;
 }
-
 
 template <class VectorType>
 template <typename Iterator>
@@ -491,7 +486,6 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
   return state;
 }
 
-
 template <class VectorType>
 inline Solver<VectorType>::Solver(SolverControl&            solver_control,
                                   VectorMemory<VectorType>& vector_memory)
@@ -506,8 +500,6 @@ inline Solver<VectorType>::Solver(SolverControl&            solver_control,
                     std::placeholders::_1,
                     std::placeholders::_2));
 }
-
-
 
 template <class VectorType>
 inline Solver<VectorType>::Solver(SolverControl& solver_control)
@@ -524,8 +516,6 @@ inline Solver<VectorType>::Solver(SolverControl& solver_control)
                     std::placeholders::_2));
 }
 
-
-
 template <class VectorType>
 inline boost::signals2::connection
 Solver<VectorType>::connect(
@@ -536,8 +526,6 @@ Solver<VectorType>::connect(
 {
   return iteration_status.connect(slot);
 }
-
-
 
 DEAL_II_NAMESPACE_CLOSE
 

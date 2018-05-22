@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a complicated 2d grid read from file. the
 // grid describes a cross-section of an airfoil with flaps at the front and
 // back. it has some 30,000 cells
@@ -27,8 +25,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 template <int dim>
 void
@@ -52,7 +48,6 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "1");
 }
-
 
 int
 main(int argc, char* argv[])

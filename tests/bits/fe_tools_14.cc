@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 
@@ -21,8 +20,6 @@
 //   FE::hp_constraints_are_implemented ()
 // a bit like hp_constraints_are_implemented, but with a different
 // set of elements
-
-
 
 template <int dim>
 void

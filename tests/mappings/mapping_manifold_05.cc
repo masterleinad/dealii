@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check that the Jacobian obtained through MappingManifold and
 // MappingQ1 are the same on a FlatManifold, with non-trivial cells,
 // on the faces
-
 
 #include "../tests.h"
 
@@ -100,7 +98,6 @@ test()
       deallog << "OK" << std::endl;
     }
 }
-
 
 int
 main()

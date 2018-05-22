@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // when calling PETScWrappers::MPI::Vector::operator() (), the return type is a
 // reference object, not a reference to the actual element. this leads to the
 // funny situation that an assignment like v2(i)=v1(i) isn't really what it
@@ -27,7 +25,6 @@
 #include <deal.II/lac/petsc_parallel_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
@@ -45,8 +42,6 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

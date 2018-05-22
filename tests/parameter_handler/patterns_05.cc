@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/patterns.h>
 #include <deal.II/base/point.h>
@@ -41,7 +40,6 @@ int
 main()
 {
   initlog();
-
 
   std::vector<int>          l0(2, -1);
   std::vector<unsigned int> l1(3, 2);

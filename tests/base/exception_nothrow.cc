@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test that AssertNothrow is printing what we expect.
 
 #include "../tests.h"

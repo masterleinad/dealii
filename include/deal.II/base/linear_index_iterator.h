@@ -19,7 +19,6 @@
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 /**
  * Many classes in deal.II, such as FullMatrix, TransposeTable, and
@@ -307,8 +306,6 @@ protected:
   AccessorType accessor;
 };
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -319,16 +316,12 @@ operator=(const DerivedIterator& it)
   return static_cast<DerivedIterator&>(*this);
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::operator++()
 {
   return operator+=(1);
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator
@@ -339,16 +332,12 @@ LinearIndexIterator<DerivedIterator, AccessorType>::operator++(int)
   return copy;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::operator--()
 {
   return operator+=(-1);
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator
@@ -358,8 +347,6 @@ LinearIndexIterator<DerivedIterator, AccessorType>::operator--(int)
                         operator+=(-1);
   return copy;
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator
@@ -371,8 +358,6 @@ operator+(const difference_type n) const
   return copy;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -383,8 +368,6 @@ operator-(const difference_type n) const
   return copy;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -394,8 +377,6 @@ operator+=(const difference_type n)
   return static_cast<DerivedIterator&>(*this);
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline DerivedIterator&
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -403,8 +384,6 @@ operator-=(const difference_type n)
 {
   return operator+=(-n);
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline
@@ -418,8 +397,6 @@ inline
   return this->accessor.linear_index - other.accessor.linear_index;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline typename LinearIndexIterator<DerivedIterator, AccessorType>::reference
   LinearIndexIterator<DerivedIterator, AccessorType>::operator*() const
@@ -427,16 +404,12 @@ inline typename LinearIndexIterator<DerivedIterator, AccessorType>::reference
   return accessor;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline typename LinearIndexIterator<DerivedIterator, AccessorType>::pointer
   LinearIndexIterator<DerivedIterator, AccessorType>::operator->() const
 {
   return &accessor;
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline bool
@@ -448,8 +421,6 @@ operator==(const DerivedIterator& other) const
          && accessor.linear_index == other_2.accessor.linear_index;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline bool
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -457,8 +428,6 @@ operator!=(const DerivedIterator& other) const
 {
   return !(*this == other);
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline bool
@@ -468,8 +437,6 @@ operator<=(const DerivedIterator& other) const
   return (*this == other) || (*this < other);
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline bool
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -477,8 +444,6 @@ operator>=(const DerivedIterator& other) const
 {
   return !(*this < other);
 }
-
-
 
 template <class DerivedIterator, class AccessorType>
 inline bool
@@ -491,8 +456,6 @@ operator<(const DerivedIterator& other) const
   return this->accessor.linear_index < other.accessor.linear_index;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline bool
 LinearIndexIterator<DerivedIterator, AccessorType>::
@@ -501,14 +464,11 @@ operator>(const DerivedIterator& other) const
   return other < *this;
 }
 
-
-
 template <class DerivedIterator, class AccessorType>
 inline LinearIndexIterator<DerivedIterator, AccessorType>::LinearIndexIterator(
   const AccessorType accessor)
   : accessor(accessor)
 {}
-
 
 DEAL_II_NAMESPACE_CLOSE
 

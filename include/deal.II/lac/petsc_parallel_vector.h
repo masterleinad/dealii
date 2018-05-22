@@ -16,7 +16,6 @@
 #ifndef dealii_petsc_parallel_vector_h
 #  define dealii_petsc_parallel_vector_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_PETSC
@@ -30,7 +29,6 @@
 #    include <deal.II/lac/vector_type_traits.h>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /*! @addtogroup PETScWrappers
  *@{
@@ -187,7 +185,6 @@ namespace PETScWrappers
                       const size_type n,
                       const size_type local_size);
 
-
       /**
        * Copy-constructor from deal.II vectors. Sets the dimension to that of
        * the given vector, and copies all elements.
@@ -202,7 +199,6 @@ namespace PETScWrappers
       explicit Vector(const MPI_Comm&               communicator,
                       const dealii::Vector<Number>& v,
                       const size_type               local_size);
-
 
       /**
        * Copy-constructor the values from a PETSc wrapper vector class.
@@ -396,8 +392,6 @@ namespace PETScWrappers
       virtual void
       create_vector(const size_type n, const size_type local_size);
 
-
-
       /**
        * Create a vector of global length @p n, local size @p local_size and
        * with the specified ghost indices. Note that you need to call
@@ -408,7 +402,6 @@ namespace PETScWrappers
                     const size_type local_size,
                     const IndexSet& ghostnodes);
 
-
     private:
       /**
        * Copy of the communicator object to be used for this parallel vector.
@@ -416,9 +409,7 @@ namespace PETScWrappers
       MPI_Comm communicator;
     };
 
-
     // ------------------ template and inline functions -------------
-
 
     /**
      * Global function @p swap which overloads the default implementation of
@@ -434,7 +425,6 @@ namespace PETScWrappers
       u.swap(v);
     }
 
-
 #    ifndef DOXYGEN
 
     template <typename number>
@@ -448,8 +438,6 @@ namespace PETScWrappers
       *this = v;
     }
 
-
-
     inline Vector&
     Vector::operator=(const PetscScalar s)
     {
@@ -457,8 +445,6 @@ namespace PETScWrappers
 
       return *this;
     }
-
-
 
     template <typename number>
     inline Vector&
@@ -499,8 +485,6 @@ namespace PETScWrappers
 
       return *this;
     }
-
-
 
     inline const MPI_Comm&
     Vector::get_mpi_communicator() const
@@ -553,7 +537,6 @@ namespace internal
 
 /**@}*/
 
-
 /**
  * Declare dealii::PETScWrappers::MPI::Vector as distributed vector.
  *
@@ -562,7 +545,6 @@ namespace internal
 template <>
 struct is_serial_vector<PETScWrappers::MPI::Vector> : std::false_type
 {};
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check hp::DoFHandler<2>::reserve_space for continuous elements, but
 // where we use the same element on all cells
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -28,8 +25,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -62,7 +57,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

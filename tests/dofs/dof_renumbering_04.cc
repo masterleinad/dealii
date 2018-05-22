@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check DoFRenumbering::boost::Cuthill_McKee
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -67,8 +63,6 @@ print_dofs(const DoFHandler<dim>& dof)
     }
 }
 
-
-
 template <int dim>
 void
 check_renumbering(DoFHandler<dim>& dof)
@@ -79,7 +73,6 @@ check_renumbering(DoFHandler<dim>& dof)
   DoFRenumbering::boost::Cuthill_McKee(dof);
   print_dofs(dof);
 }
-
 
 template <int dim>
 void
@@ -108,7 +101,6 @@ check()
     check_renumbering(dof);
   }
 }
-
 
 int
 main()

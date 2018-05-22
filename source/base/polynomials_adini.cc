@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_adini.h>
 
 #define ENTER_COEFFICIENTS(                                   \
@@ -31,9 +30,7 @@
   koefs(10, z) = a10;                                         \
   koefs(11, z) = a11;
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 PolynomialsAdini::PolynomialsAdini()
   : coef(12, 12), dx(12, 12), dy(12, 12), dxx(12, 12), dyy(12, 12), dxy(12, 12)
@@ -209,6 +206,5 @@ PolynomialsAdini::compute_grad_grad(const unsigned int i,
                  + dyy(11, i) * x * y * y * y;
   return tensor;
 }
-
 
 DEAL_II_NAMESPACE_CLOSE

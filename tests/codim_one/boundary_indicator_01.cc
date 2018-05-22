@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // for surfaces, we need some sort of mapping also for interior cells
 // and faces, but at the time of writing this, we can only set
 // boundary_ids of faces and edges that are truly at the
@@ -37,8 +35,6 @@
 
 using namespace std;
 
-
-
 template <int dim, int spacedim>
 void
 save_mesh(const Triangulation<dim, spacedim>& tria)
@@ -46,7 +42,6 @@ save_mesh(const Triangulation<dim, spacedim>& tria)
   GridOut grid_out;
   grid_out.write_gnuplot(tria, deallog.get_file_stream());
 }
-
 
 int
 main()
@@ -118,7 +113,6 @@ main()
 
     save_mesh(boundary_mesh);
   }
-
 
   return 0;
 }

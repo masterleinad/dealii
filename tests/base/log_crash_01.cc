@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // document crash in deallog related to missing newline
-
 
 #include "../tests.h"
 #include <limits>
-
 
 int
 main()

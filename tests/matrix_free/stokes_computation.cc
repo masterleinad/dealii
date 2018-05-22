@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for correctness of matrix free implementation for multigrid stokes
-
 
 #include "../tests.h"
 
@@ -25,7 +23,6 @@
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/utilities.h>
-
 
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/constraint_matrix.templates.h>
@@ -45,7 +42,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
 
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -69,7 +65,6 @@
 
 #include <cmath>
 #include <sstream>
-
 
 unsigned int       minlevel        = 0;
 const unsigned int velocity_degree = 2;
@@ -150,7 +145,6 @@ namespace StokesClass
       const double         A_block_tolerance;
       const double         S_block_tolerance;
     };
-
 
     template <class StokesMatrixType,
               class MassMatrixType,
@@ -277,7 +271,6 @@ namespace StokesClass
         }
     }
   } // namespace StokesSolver
-
 
   // Parameters for Sinker example
   double beta  = 10.0;
@@ -430,8 +423,6 @@ namespace StokesClass
     return;
   }
 
-
-
   template <int dim, int degree_v, typename number>
   class StokesOperator
     : public MatrixFreeOperators::
@@ -560,7 +551,6 @@ namespace StokesClass
   {
     Assert(false, ExcNotImplemented());
   }
-
 
   template <int dim, int degree_p, typename number>
   class MassMatrixOperator
@@ -738,7 +728,6 @@ namespace StokesClass
       }
   }
 
-
   template <int dim, int degree_v, typename number>
   class ABlockOperator : public MatrixFreeOperators::
                            Base<dim, LinearAlgebra::distributed::Vector<number>>
@@ -912,8 +901,6 @@ namespace StokesClass
       }
   }
 
-
-
   template <int dim>
   class StokesProblem
   {
@@ -969,8 +956,6 @@ namespace StokesClass
     Sinker<dim> sinker;
   };
 
-
-
   template <int dim>
   StokesProblem<dim>::StokesProblem()
     : degree_u(velocity_degree),
@@ -1015,7 +1000,6 @@ namespace StokesClass
     sinker.mu_min = 1.0 / std::sqrt(sinker.DR_mu);
   }
 
-
   template <int dim>
   void
   StokesProblem<dim>::make_grid(const unsigned int ref)
@@ -1023,7 +1007,6 @@ namespace StokesClass
     GridGenerator::hyper_cube(triangulation, 0, 1);
     triangulation.refine_global(ref);
   }
-
 
   template <int dim>
   void
@@ -1052,7 +1035,6 @@ namespace StokesClass
     constraints_p.reinit(locally_relevant_dofs_p);
     DoFTools::make_hanging_node_constraints(dof_handler_p, constraints_p);
     constraints_p.close();
-
 
     // Stokes matrix stuff...
     typename MatrixFree<dim, double>::AdditionalData additional_data_stokes;
@@ -1109,7 +1091,6 @@ namespace StokesClass
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler_u,
                                                        dirichlet_boundary);
 
-
     for(unsigned int level = 0; level < n_levels; ++level)
       {
         IndexSet relevant_dofs;
@@ -1152,8 +1133,6 @@ namespace StokesClass
     system_rhs.update_ghost_values();
     system_rhs.collect_sizes();
   }
-
-
 
   template <int dim>
   void
@@ -1324,7 +1303,6 @@ namespace StokesClass
       mg_matrix, mg_coarse, mg_transfer, mg_smoother, mg_smoother, 0);
     mg.set_edge_matrices(mg_interface, mg_interface);
 
-
     PreconditionMG<dim, vector_t, Transfer> prec_A(
       dof_handler_u, mg, mg_transfer);
 
@@ -1391,7 +1369,6 @@ namespace StokesClass
             << solver_control_cheap.last_value() << std::endl;
   }
 
-
   template <int dim>
   void
   StokesProblem<dim>::run()
@@ -1439,7 +1416,6 @@ namespace StokesClass
       }
   }
 } // namespace StokesClass
-
 
 int
 main(int argc, char* argv[])

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that thread local storage works as advertised. like _01 but using
 // the initialization with an exemplar
 
@@ -22,7 +21,6 @@
 
 #include <deal.II/base/thread_local_storage.h>
 #include <deal.II/base/thread_management.h>
-
 
 struct X
 {
@@ -67,7 +65,6 @@ execute(int i)
   // thread lives longer than the TLS object
   sleep(5);
 }
-
 
 void
 test()
@@ -114,8 +111,6 @@ test()
   // be destroyed, which is the exemplar
   // object local to this function
 }
-
-
 
 int
 main()

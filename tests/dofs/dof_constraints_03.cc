@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // simply check what happens when condensing matrices. This test was written
 // when I changed a few things in the algorithm. By simply looping over all
 // entries of the sparse matrix, we also check that things went right during
@@ -34,7 +32,6 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/vector.h>
-
 
 template <int dim>
 void
@@ -103,8 +100,6 @@ test()
   for(SparseMatrix<double>::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
-
-
 
 int
 main()

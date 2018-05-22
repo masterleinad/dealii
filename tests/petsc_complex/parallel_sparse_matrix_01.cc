@@ -16,7 +16,6 @@
 // test that matrix_scalar_product of a symmetric matrix
 // applied to the same vector result in a real number
 
-
 #include "../tests.h"
 
 #include <deal.II/base/conditional_ostream.h>
@@ -79,7 +78,6 @@ test(const unsigned int poly_degree = 1)
 
   PETScWrappers::MPI::Vector       vector;
   PETScWrappers::MPI::SparseMatrix mass_matrix;
-
 
   vector.reinit(locally_owned_dofs, mpi_communicator);
 
@@ -186,7 +184,6 @@ test(const unsigned int poly_degree = 1)
   deallog << "real part:      " << PetscRealPart(norm3) << std::endl;
   deallog << "imaginary part: " << PetscImaginaryPart(norm3) << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

@@ -13,19 +13,13 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test the new signal Triangulation::Signals::any_change
-
 
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
 
-
 std::ofstream logfile("output");
-
-
 
 template <int dim, int spacedim>
 void
@@ -36,7 +30,6 @@ pre_refinement_notification(const std::string&                  prefix,
           << std::endl;
 }
 
-
 template <int dim, int spacedim>
 void
 post_refinement_notification(const std::string&                  prefix,
@@ -45,7 +38,6 @@ post_refinement_notification(const std::string&                  prefix,
   deallog << prefix << ' ' << "Post-refinement: " << tria.n_active_cells()
           << std::endl;
 }
-
 
 template <int dim, int spacedim>
 void
@@ -57,7 +49,6 @@ copy_notification(const std::string&                  prefix,
           << new_tria.n_active_cells() << std::endl;
 }
 
-
 template <int dim, int spacedim>
 void
 create_notification(const std::string&                  prefix,
@@ -65,7 +56,6 @@ create_notification(const std::string&                  prefix,
 {
   deallog << prefix << ' ' << "Create: " << tria.n_active_cells() << std::endl;
 }
-
 
 template <int dim, int spacedim>
 void
@@ -75,7 +65,6 @@ any_change_notification(const std::string&                  prefix,
   deallog << prefix << ' ' << "Any change: " << tria.n_active_cells()
           << std::endl;
 }
-
 
 template <int dim>
 void
@@ -114,8 +103,6 @@ test()
        tria_2.signals.any_change.connect(std::bind(
          &any_change_notification<dim, dim>, "tria_2", std::cref(tria_2)))};
 
-
-
   // this should print the create note
   GridGenerator::hyper_cube(tria_1);
 
@@ -144,7 +131,6 @@ test()
 
   // any_change on tria_2 will signal at destruction
 }
-
 
 int
 main()

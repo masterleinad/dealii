@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -23,8 +22,6 @@
 //   make_sparsity_pattern (const DoFHandler<dim> &,
 //                          Table<2,DoFTools::Coupling> &,
 //                      SparsityPattern       &);
-
-
 
 template <int dim>
 void

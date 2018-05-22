@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/grid_generator.h>
@@ -47,7 +46,6 @@
 #include <deal.II/numerics/data_out.h>
 #include <iostream>
 
-
 // This a test for the hp capable version of the make_hanging_node_constraints
 // method. It uses a triangulation with one refined element beside an
 // unrefined element to create the constraints for this configuration.
@@ -74,8 +72,6 @@ generate_grid(Triangulation<dim>& tria)
 
   return (0);
 }
-
-
 
 template <int dim>
 void
@@ -118,7 +114,6 @@ test_constraints(hp::FECollection<dim>& fe_coll)
   // Output the constraints
   constraint_matrix.print(deallog.get_file_stream());
 }
-
 
 template <int dim>
 void

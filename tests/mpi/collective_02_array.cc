@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check Utilities::MPI::sum() for arrays
 
 #include "../tests.h"
@@ -35,7 +33,6 @@ test()
   if(myid == 0)
     deallog << sums[0] << ' ' << sums[1] << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

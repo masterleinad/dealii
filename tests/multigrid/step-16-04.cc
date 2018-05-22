@@ -99,7 +99,6 @@ private:
   MGConstrainedDoFs                   mg_constrained_dofs;
 };
 
-
 template <int dim>
 class Coefficient : public Function<dim>
 {
@@ -116,8 +115,6 @@ public:
              const unsigned int             component = 0) const;
 };
 
-
-
 template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -127,8 +124,6 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   else
     return 1;
 }
-
-
 
 template <int dim>
 void
@@ -147,8 +142,6 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
     values[i] = Coefficient<dim>::value(points[i]);
 }
 
-
-
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
   : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
@@ -157,8 +150,6 @@ LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
     degree(degree),
     min_level(2)
 {}
-
-
 
 template <int dim>
 void
@@ -210,8 +201,6 @@ LaplaceProblem<dim>::setup_system()
       mg_interface_matrices[level].reinit(mg_sparsity_patterns[level]);
     }
 }
-
-
 
 template <int dim>
 void
@@ -269,8 +258,6 @@ LaplaceProblem<dim>::assemble_system()
   for(unsigned int i = 0; i < tmp.size(); ++i)
     system_rhs(i) = tmp(i);
 }
-
-
 
 template <int dim>
 void
@@ -355,13 +342,10 @@ LaplaceProblem<dim>::assemble_multigrid()
               cell_matrix(i, j) = 0;
             }
 
-
       empty_constraints.distribute_local_to_global(
         cell_matrix, local_dof_indices, mg_interface_matrices[cell->level()]);
     }
 }
-
-
 
 template <int dim>
 void
@@ -431,8 +415,6 @@ LaplaceProblem<dim>::solve()
           << " CG iterations needed to obtain convergence." << std::endl;
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::refine_grid()
@@ -450,8 +432,6 @@ LaplaceProblem<dim>::refine_grid()
   triangulation.execute_coarsening_and_refinement();
 }
 
-
-
 template <int dim>
 void
 LaplaceProblem<dim>::run()
@@ -467,7 +447,6 @@ LaplaceProblem<dim>::run()
         }
       else
         refine_grid();
-
 
       deallog << "   Number of active cells:       "
               << triangulation.n_active_cells() << std::endl;
@@ -488,7 +467,6 @@ LaplaceProblem<dim>::run()
       solve();
     }
 }
-
 
 // @sect3{The main() function}
 //

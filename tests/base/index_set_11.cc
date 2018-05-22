@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::add_indices
 
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -43,7 +41,6 @@ test()
     deallog << i << ' ' << (index_set.is_element(i) ? "true" : "false")
             << std::endl;
 
-
   {
     const unsigned int array[] = {5};
     index_set.add_indices((const unsigned int*) array,
@@ -56,11 +53,8 @@ test()
     deallog << i << ' ' << (index_set.is_element(i) ? "true" : "false")
             << std::endl;
 
-
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

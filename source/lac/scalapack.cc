@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/scalapack.h>
 
 #ifdef DEAL_II_WITH_SCALAPACK
@@ -73,8 +72,6 @@ hdf5_type_id(const char*)
 }
 #  endif // DEAL_II_WITH_HDF5
 
-
-
 template <typename NumberType>
 ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const size_type                                           n_rows_,
@@ -97,8 +94,6 @@ ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
          property_);
 }
 
-
-
 template <typename NumberType>
 ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const size_type                                          size,
@@ -112,8 +107,6 @@ ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
                                 block_size,
                                 property)
 {}
-
-
 
 template <typename NumberType>
 void
@@ -187,8 +180,6 @@ ScaLAPACKMatrix<NumberType>::reinit(
     }
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::reinit(
@@ -200,8 +191,6 @@ ScaLAPACKMatrix<NumberType>::reinit(
   reinit(size, size, process_grid, block_size, block_size, property);
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::set_property(
@@ -210,8 +199,6 @@ ScaLAPACKMatrix<NumberType>::set_property(
   property = property_;
 }
 
-
-
 template <typename NumberType>
 LAPACKSupport::Property
 ScaLAPACKMatrix<NumberType>::get_property() const
@@ -219,16 +206,12 @@ ScaLAPACKMatrix<NumberType>::get_property() const
   return property;
 }
 
-
-
 template <typename NumberType>
 LAPACKSupport::State
 ScaLAPACKMatrix<NumberType>::get_state() const
 {
   return state;
 }
-
-
 
 template <typename NumberType>
 ScaLAPACKMatrix<NumberType>&
@@ -259,8 +242,6 @@ ScaLAPACKMatrix<NumberType>::operator=(const FullMatrix<NumberType>& matrix)
   return *this;
 }
 
-
-
 template <typename NumberType>
 unsigned int
 ScaLAPACKMatrix<NumberType>::global_row(const unsigned int loc_row) const
@@ -275,8 +256,6 @@ ScaLAPACKMatrix<NumberType>::global_row(const unsigned int loc_row) const
                   &(grid->n_process_rows))
          - 1;
 }
-
-
 
 template <typename NumberType>
 unsigned int
@@ -293,8 +272,6 @@ ScaLAPACKMatrix<NumberType>::global_column(const unsigned int loc_column) const
                   &(grid->n_process_columns))
          - 1;
 }
-
-
 
 template <typename NumberType>
 void
@@ -337,8 +314,6 @@ ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType>& matrix) const
         matrix(i, j)
           = (state == LAPACKSupport::inverse_matrix ? matrix(j, i) : 0.);
 }
-
-
 
 template <typename NumberType>
 void
@@ -399,7 +374,6 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   const bool in_context_A
     = (my_row_A >= 0 && my_row_A < n_grid_rows_A)
       && (my_column_A >= 0 && my_column_A < n_grid_columns_A);
-
 
   int n_grid_rows_B, n_grid_columns_B, my_row_B, my_column_B;
   Cblacs_gridinfo(B.grid->blacs_context,
@@ -469,8 +443,6 @@ ScaLAPACKMatrix<NumberType>::copy_to(
   //releasing the union BLACS context
   Cblacs_gridexit(union_blacs_context);
 }
-
-
 
 template <typename NumberType>
 void
@@ -594,8 +566,6 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
   dest.property = property;
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::copy_transposed(
@@ -603,8 +573,6 @@ ScaLAPACKMatrix<NumberType>::copy_transposed(
 {
   add(B, 0, 1, true);
 }
-
-
 
 template <typename NumberType>
 void
@@ -659,8 +627,6 @@ ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType>& B,
   state = LAPACKSupport::matrix;
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::add(const NumberType                   a,
@@ -669,8 +635,6 @@ ScaLAPACKMatrix<NumberType>::add(const NumberType                   a,
   add(B, 1, a, false);
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::Tadd(const NumberType                   a,
@@ -678,8 +642,6 @@ ScaLAPACKMatrix<NumberType>::Tadd(const NumberType                   a,
 {
   add(B, 1, a, true);
 }
-
-
 
 template <typename NumberType>
 void
@@ -796,8 +758,6 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
   C.state = LAPACKSupport::matrix;
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::mmult(ScaLAPACKMatrix<NumberType>&       C,
@@ -809,8 +769,6 @@ ScaLAPACKMatrix<NumberType>::mmult(ScaLAPACKMatrix<NumberType>&       C,
   else
     mult(1., B, 0, C, false, false);
 }
-
-
 
 template <typename NumberType>
 void
@@ -824,8 +782,6 @@ ScaLAPACKMatrix<NumberType>::Tmmult(ScaLAPACKMatrix<NumberType>&       C,
     mult(1., B, 0, C, true, false);
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::mTmult(ScaLAPACKMatrix<NumberType>&       C,
@@ -838,8 +794,6 @@ ScaLAPACKMatrix<NumberType>::mTmult(ScaLAPACKMatrix<NumberType>&       C,
     mult(1., B, 0, C, false, true);
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::TmTmult(ScaLAPACKMatrix<NumberType>&       C,
@@ -851,8 +805,6 @@ ScaLAPACKMatrix<NumberType>::TmTmult(ScaLAPACKMatrix<NumberType>&       C,
   else
     mult(1., B, 0, C, true, true);
 }
-
-
 
 template <typename NumberType>
 void
@@ -884,8 +836,6 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
   property = (uplo == 'L' ? LAPACKSupport::lower_triangular :
                             LAPACKSupport::upper_triangular);
 }
-
-
 
 template <typename NumberType>
 void
@@ -925,8 +875,6 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
   state    = LAPACKSupport::State::lu;
   property = LAPACKSupport::Property::general;
 }
-
-
 
 template <typename NumberType>
 void
@@ -1006,8 +954,6 @@ ScaLAPACKMatrix<NumberType>::invert()
   state = LAPACKSupport::State::inverse_matrix;
 }
 
-
-
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index(
@@ -1031,8 +977,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index(
     return eigenpairs_symmetric(compute_eigenvectors, idx);
 }
 
-
-
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value(
@@ -1049,8 +993,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value(
 
   return eigenpairs_symmetric(compute_eigenvectors, indices, value_limits);
 }
-
-
 
 template <typename NumberType>
 std::vector<NumberType>
@@ -1325,8 +1267,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
   return ev;
 }
 
-
-
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index_MRRR(
@@ -1348,8 +1288,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index_MRRR(
     return eigenpairs_symmetric_MRRR(compute_eigenvectors, idx);
 }
 
-
-
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value_MRRR(
@@ -1364,8 +1302,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value_MRRR(
 
   return eigenpairs_symmetric_MRRR(compute_eigenvectors, indices, value_limits);
 }
-
-
 
 template <typename NumberType>
 std::vector<NumberType>
@@ -1565,8 +1501,6 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
   return ev;
 }
 
-
-
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
@@ -1684,8 +1618,6 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
   return sv;
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
@@ -1774,8 +1706,6 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
   state = LAPACKSupport::State::unusable;
 }
 
-
-
 template <typename NumberType>
 unsigned int
 ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
@@ -1860,8 +1790,6 @@ ScaLAPACKMatrix<NumberType>::pseudoinverse(const NumberType ratio)
   return n_sv;
 }
 
-
-
 template <typename NumberType>
 NumberType
 ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
@@ -1921,8 +1849,6 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
   return rcond;
 }
 
-
-
 template <typename NumberType>
 NumberType
 ScaLAPACKMatrix<NumberType>::l1_norm() const
@@ -1934,8 +1860,6 @@ ScaLAPACKMatrix<NumberType>::l1_norm() const
   else
     return norm_general(type);
 }
-
-
 
 template <typename NumberType>
 NumberType
@@ -1949,8 +1873,6 @@ ScaLAPACKMatrix<NumberType>::linfty_norm() const
     return norm_general(type);
 }
 
-
-
 template <typename NumberType>
 NumberType
 ScaLAPACKMatrix<NumberType>::frobenius_norm() const
@@ -1962,8 +1884,6 @@ ScaLAPACKMatrix<NumberType>::frobenius_norm() const
   else
     return norm_general(type);
 }
-
-
 
 template <typename NumberType>
 NumberType
@@ -2021,8 +1941,6 @@ ScaLAPACKMatrix<NumberType>::norm_general(const char type) const
   grid->send_to_inactive(&res);
   return res;
 }
-
-
 
 template <typename NumberType>
 NumberType
@@ -2086,8 +2004,6 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
   grid->send_to_inactive(&res);
   return res;
 }
-
-
 
 #  ifdef DEAL_II_WITH_HDF5
 namespace internal
@@ -2157,8 +2073,6 @@ namespace internal
 } // namespace internal
 #  endif
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::save(
@@ -2198,8 +2112,6 @@ ScaLAPACKMatrix<NumberType>::save(
 #    endif
 #  endif
 }
-
-
 
 template <typename NumberType>
 void
@@ -2348,8 +2260,6 @@ ScaLAPACKMatrix<NumberType>::save_serial(
     }
 #  endif
 }
-
-
 
 template <typename NumberType>
 void
@@ -2563,8 +2473,6 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 #  endif
 }
 
-
-
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::load(const char* filename)
@@ -2583,8 +2491,6 @@ ScaLAPACKMatrix<NumberType>::load(const char* filename)
 #    endif
 #  endif
 }
-
-
 
 template <typename NumberType>
 void
@@ -2755,8 +2661,6 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
 
 #  endif // DEAL_II_WITH_HDF5
 }
-
-
 
 template <typename NumberType>
 void
@@ -2955,8 +2859,6 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 #  endif   // DEAL_II_WITH_HDF5
 }
 
-
-
 namespace internal
 {
   namespace
@@ -2998,8 +2900,6 @@ namespace internal
   } // namespace
 } // namespace internal
 
-
-
 template <typename NumberType>
 template <class InputVector>
 void
@@ -3008,8 +2908,6 @@ ScaLAPACKMatrix<NumberType>::scale_columns(const InputVector& factors)
   if(this->grid->mpi_process_is_active)
     internal::scale_columns(*this, make_array_view(factors));
 }
-
-
 
 template <typename NumberType>
 template <class InputVector>
@@ -3020,11 +2918,8 @@ ScaLAPACKMatrix<NumberType>::scale_rows(const InputVector& factors)
     internal::scale_rows(*this, make_array_view(factors));
 }
 
-
-
 // instantiations
 #  include "scalapack.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test Fourier expansion in 1D for some simple functions.
 // Below is the MWE in Maxima
 /*********************************************************
@@ -83,8 +82,6 @@ test_1d()
   for(unsigned int i = 0; i < N; i++)
     deallog << exact[i].real() << " " << exact[i].imag() << std::endl;
 }
-
-
 
 int
 main()

@@ -13,13 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "data_out_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/numerics/data_out_rotation.h>
-
-
 
 void
 my_check_this(const DoFHandler<3>&,
@@ -28,7 +25,6 @@ my_check_this(const DoFHandler<3>&,
 {
   // nothing to check in 3d
 }
-
 
 template <int dim>
 void
@@ -61,7 +57,6 @@ my_check_this(const DoFHandler<dim>& dof_handler,
       data_out_rotation.write_eps(deallog.get_file_stream());
     }
 }
-
 
 template <int dim>
 void

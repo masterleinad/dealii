@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test an issue reported by David Wells: serializing a DoFHandler object did
 // not work right out of the box without manually including additional header
 // files
@@ -31,7 +29,6 @@
 
 #include <iostream>
 #include <string>
-
 
 int
 main()

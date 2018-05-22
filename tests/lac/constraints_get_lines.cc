@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test: test the ConstraintMatrix::get_lines() range object
-
 
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
-
 
 void
 test()
@@ -58,7 +54,6 @@ test()
       deallog << " - " << line.inhomogeneity << std::endl;
     }
 }
-
 
 int
 main()

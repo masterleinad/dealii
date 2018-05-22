@@ -17,7 +17,6 @@
  * Author: Wolfgang Bangerth, University of Heidelberg, 2000
  */
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -49,7 +48,6 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/grid_out.h>
 
-
 #include <deal.II/lac/constraint_matrix.h>
 
 #include <deal.II/grid/grid_refinement.h>
@@ -59,8 +57,6 @@
 namespace Step47
 {
   using namespace dealii;
-
-
 
   double
   sign(double d)
@@ -72,7 +68,6 @@ namespace Step47
     else
       return 0;
   }
-
 
   template <int dim>
   class LaplaceProblem
@@ -126,8 +121,6 @@ namespace Step47
     Vector<double> system_rhs;
   };
 
-
-
   template <int dim>
   class Coefficient : public Function<dim>
   {
@@ -144,8 +137,6 @@ namespace Step47
                const unsigned int             component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
@@ -155,8 +146,6 @@ namespace Step47
     else
       return 1;
   }
-
-
 
   template <int dim>
   void
@@ -181,8 +170,6 @@ namespace Step47
       }
   }
 
-
-
   template <int dim>
   double
   exact_solution(const Point<dim>& p)
@@ -193,7 +180,6 @@ namespace Step47
                       1. / 4 * (1 - r * r));
   }
 
-
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation)
   {
@@ -202,15 +188,11 @@ namespace Step47
     fe_collection.push_back(FESystem<dim>(FE_Q<dim>(1), 1, FE_Q<dim>(1), 1));
   }
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     dof_handler.clear();
   }
-
-
 
   template <int dim>
   double
@@ -219,16 +201,12 @@ namespace Step47
     return p.norm() - 0.5;
   }
 
-
-
   template <int dim>
   Tensor<1, dim>
   grad_level_set(const Point<dim>& p)
   {
     return p / p.norm();
   }
-
-
 
   template <int dim>
   bool
@@ -243,8 +221,6 @@ namespace Step47
     // the cell is not intersected
     return false;
   }
-
-
 
   template <int dim>
   void
@@ -264,14 +240,12 @@ namespace Step47
     solution.reinit(dof_handler.n_dofs());
     system_rhs.reinit(dof_handler.n_dofs());
 
-
     constraints.clear();
     //TODO: fix this, it currently crashes
     // DoFTools::make_hanging_node_constraints (dof_handler, constraints);
 
     //TODO: component 1 must satisfy zero boundary conditions
     constraints.close();
-
 
     DynamicSparsityPattern dsp(dof_handler.n_dofs());
     DoFTools::make_sparsity_pattern(dof_handler, dsp);
@@ -283,13 +257,11 @@ namespace Step47
     system_matrix.reinit(sparsity_pattern);
   }
 
-
   template <int dim>
   void
   LaplaceProblem<dim>::assemble_system()
   {
     const QGauss<dim> quadrature_formula(3);
-
 
     FEValues<dim> plain_fe_values(fe_collection[0],
                                   quadrature_formula,
@@ -337,7 +309,6 @@ namespace Step47
                           * plain_fe_values.shape_grad(i, q_point)
                           * plain_fe_values.shape_grad(j, q_point)
                           * plain_fe_values.JxW(q_point));
-
 
                   cell_rhs(i) += (plain_fe_values.shape_value(i, q_point) * 1.0
                                   * plain_fe_values.JxW(q_point));
@@ -473,7 +444,6 @@ namespace Step47
         constraints.distribute_local_to_global(
           cell_matrix, cell_rhs, local_dof_indices, system_matrix, system_rhs);
       }
-
 
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
@@ -918,7 +888,6 @@ namespace Step47
               Assert(false, ExcNotImplemented());
           }
 
-
         Tensor<2, dim> jacobian;
 
         // Calculate Jacobian of transformation
@@ -945,7 +914,6 @@ namespace Step47
       }
   }
 
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -960,8 +928,6 @@ namespace Step47
 
     constraints.distribute(solution);
   }
-
-
 
   template <int dim>
   void
@@ -980,8 +946,6 @@ namespace Step47
 
     triangulation.execute_coarsening_and_refinement();
   }
-
-
 
   template <int dim>
   class Postprocessor : public DataPostprocessor<dim>
@@ -1003,7 +967,6 @@ namespace Step47
     get_needed_update_flags() const override;
   };
 
-
   template <int dim>
   std::vector<std::string>
   Postprocessor<dim>::get_names() const
@@ -1012,7 +975,6 @@ namespace Step47
     solution_names.emplace_back("error");
     return solution_names;
   }
-
 
   template <int dim>
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -1023,14 +985,12 @@ namespace Step47
     return interpretation;
   }
 
-
   template <int dim>
   UpdateFlags
   Postprocessor<dim>::get_needed_update_flags() const
   {
     return update_values | update_q_points;
   }
-
 
   template <int dim>
   void
@@ -1056,8 +1016,6 @@ namespace Step47
       }
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
@@ -1080,8 +1038,6 @@ namespace Step47
 
     data_out.write_vtk(output);
   }
-
-
 
   template <int dim>
   void
@@ -1128,8 +1084,6 @@ namespace Step47
     std::cout << "   L2 error = " << std::sqrt(l2_error_square) << std::endl;
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::run()
@@ -1148,7 +1102,6 @@ namespace Step47
           triangulation.refine_global(1);
         //      refine_grid ();
 
-
         std::cout << "   Number of active cells:       "
                   << triangulation.n_active_cells() << std::endl;
 
@@ -1164,8 +1117,6 @@ namespace Step47
       }
   }
 } // namespace Step47
-
-
 
 int
 main()

@@ -71,20 +71,14 @@ namespace PETScWrappers
     }
   } // namespace MatrixIterators
 
-
-
   MatrixBase::MatrixBase()
     : matrix(nullptr), last_action(VectorOperation::unknown)
   {}
-
-
 
   MatrixBase::~MatrixBase()
   {
     destroy_matrix(matrix);
   }
-
-
 
   void
   MatrixBase::clear()
@@ -103,8 +97,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   MatrixBase&
   MatrixBase::operator=(const value_type d)
   {
@@ -119,16 +111,12 @@ namespace PETScWrappers
     return *this;
   }
 
-
-
   void
   MatrixBase::clear_row(const size_type row, const PetscScalar new_diag_value)
   {
     std::vector<size_type> rows(1, row);
     clear_rows(rows, new_diag_value);
   }
-
-
 
   void
   MatrixBase::clear_rows(const std::vector<size_type>& rows,
@@ -157,8 +145,6 @@ namespace PETScWrappers
     ISDestroy(&index_set);
   }
 
-
-
   PetscScalar
   MatrixBase::el(const size_type i, const size_type j) const
   {
@@ -173,8 +159,6 @@ namespace PETScWrappers
     return value;
   }
 
-
-
   PetscScalar
   MatrixBase::diag_element(const size_type i) const
   {
@@ -184,8 +168,6 @@ namespace PETScWrappers
     // different than any other element
     return el(i, i);
   }
-
-
 
   void
   MatrixBase::compress(const VectorOperation::values operation)
@@ -229,8 +211,6 @@ namespace PETScWrappers
     last_action = VectorOperation::unknown;
   }
 
-
-
   MatrixBase::size_type
   MatrixBase::m() const
   {
@@ -241,8 +221,6 @@ namespace PETScWrappers
 
     return n_rows;
   }
-
-
 
   MatrixBase::size_type
   MatrixBase::n() const
@@ -255,8 +233,6 @@ namespace PETScWrappers
     return n_cols;
   }
 
-
-
   MatrixBase::size_type
   MatrixBase::local_size() const
   {
@@ -267,8 +243,6 @@ namespace PETScWrappers
 
     return n_rows;
   }
-
-
 
   std::pair<MatrixBase::size_type, MatrixBase::size_type>
   MatrixBase::local_range() const
@@ -282,8 +256,6 @@ namespace PETScWrappers
     return std::make_pair(begin, end);
   }
 
-
-
   MatrixBase::size_type
   MatrixBase::n_nonzero_elements() const
   {
@@ -293,8 +265,6 @@ namespace PETScWrappers
 
     return static_cast<size_type>(mat_info.nz_used);
   }
-
-
 
   MatrixBase::size_type
   MatrixBase::row_length(const size_type row) const
@@ -330,7 +300,6 @@ namespace PETScWrappers
     return ncols_saved;
   }
 
-
   PetscReal
   MatrixBase::l1_norm() const
   {
@@ -341,8 +310,6 @@ namespace PETScWrappers
 
     return result;
   }
-
-
 
   PetscReal
   MatrixBase::linfty_norm() const
@@ -355,8 +322,6 @@ namespace PETScWrappers
     return result;
   }
 
-
-
   PetscReal
   MatrixBase::frobenius_norm() const
   {
@@ -368,7 +333,6 @@ namespace PETScWrappers
     return result;
   }
 
-
   PetscScalar
   MatrixBase::matrix_norm_square(const VectorBase& v) const
   {
@@ -376,7 +340,6 @@ namespace PETScWrappers
     vmult(tmp, v);
     return tmp * v;
   }
-
 
   PetscScalar
   MatrixBase::matrix_scalar_product(const VectorBase& u,
@@ -386,7 +349,6 @@ namespace PETScWrappers
     vmult(tmp, v);
     return u * tmp;
   }
-
 
   PetscScalar
   MatrixBase::trace() const
@@ -399,8 +361,6 @@ namespace PETScWrappers
     return result;
   }
 
-
-
   MatrixBase&
   MatrixBase::operator*=(const PetscScalar a)
   {
@@ -409,8 +369,6 @@ namespace PETScWrappers
 
     return *this;
   }
-
-
 
   MatrixBase&
   MatrixBase::operator/=(const PetscScalar a)
@@ -422,7 +380,6 @@ namespace PETScWrappers
     return *this;
   }
 
-
   MatrixBase&
   MatrixBase::add(const PetscScalar factor, const MatrixBase& other)
   {
@@ -433,14 +390,11 @@ namespace PETScWrappers
     return *this;
   }
 
-
-
   MatrixBase&
   MatrixBase::add(const MatrixBase& other, const PetscScalar factor)
   {
     return add(factor, other);
   }
-
 
   void
   MatrixBase::vmult(VectorBase& dst, const VectorBase& src) const
@@ -451,8 +405,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   void
   MatrixBase::Tvmult(VectorBase& dst, const VectorBase& src) const
   {
@@ -461,8 +413,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = MatMultTranspose(matrix, src, dst);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
-
 
   void
   MatrixBase::vmult_add(VectorBase& dst, const VectorBase& src) const
@@ -473,8 +423,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
-
   void
   MatrixBase::Tvmult_add(VectorBase& dst, const VectorBase& src) const
   {
@@ -483,7 +431,6 @@ namespace PETScWrappers
     const PetscErrorCode ierr = MatMultTransposeAdd(matrix, src, dst, dst);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
-
 
   namespace internals
   {
@@ -588,8 +535,6 @@ namespace PETScWrappers
     return dst.l2_norm();
   }
 
-
-
   MatrixBase::operator Mat() const
   {
     return matrix;
@@ -673,8 +618,6 @@ namespace PETScWrappers
 
     AssertThrow(out, ExcIO());
   }
-
-
 
   std::size_t
   MatrixBase::memory_consumption() const

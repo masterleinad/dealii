@@ -33,8 +33,6 @@ namespace LinearAlgebra
     ReadWriteVector<Number>::reinit(size, omit_zeroing_entries);
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   void
@@ -44,8 +42,6 @@ namespace LinearAlgebra
     ReadWriteVector<Number>::reinit(in_vector, omit_zeroing_entries);
   }
 
-
-
   template <typename Number>
   void
   Vector<Number>::reinit(const IndexSet& locally_stored_indices,
@@ -54,8 +50,6 @@ namespace LinearAlgebra
     ReadWriteVector<Number>::reinit(locally_stored_indices,
                                     omit_zeroing_entries);
   }
-
-
 
   template <typename Number>
   void
@@ -74,8 +68,6 @@ namespace LinearAlgebra
 
     ReadWriteVector<Number>::reinit(down_V, omit_zeroing_entries);
   }
-
-
 
   template <typename Number>
   Vector<Number>&
@@ -96,8 +88,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   template <typename Number2>
   Vector<Number>&
@@ -115,8 +105,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   Vector<Number>&
   Vector<Number>::operator=(const Number s)
@@ -133,8 +121,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   Vector<Number>&
   Vector<Number>::operator*=(const Number factor)
@@ -149,8 +135,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   Vector<Number>&
   Vector<Number>::operator/=(const Number factor)
@@ -161,8 +145,6 @@ namespace LinearAlgebra
 
     return *this;
   }
-
-
 
   template <typename Number>
   Vector<Number>&
@@ -186,8 +168,6 @@ namespace LinearAlgebra
     return *this;
   }
 
-
-
   template <typename Number>
   Vector<Number>&
   Vector<Number>::operator-=(const VectorSpaceVector<Number>& V)
@@ -208,8 +188,6 @@ namespace LinearAlgebra
 
     return *this;
   }
-
-
 
   template <typename Number>
   Number Vector<Number>::operator*(const VectorSpaceVector<Number>& V) const
@@ -232,8 +210,6 @@ namespace LinearAlgebra
     return sum;
   }
 
-
-
   template <typename Number>
   void
   Vector<Number>::import(const ReadWriteVector<Number>&,
@@ -242,8 +218,6 @@ namespace LinearAlgebra
   {
     AssertThrow(false, ExcMessage("This function is not implemented."));
   }
-
-
 
   template <typename Number>
   inline void
@@ -256,8 +230,6 @@ namespace LinearAlgebra
     internal::VectorOperations::parallel_for(
       vector_add, 0, this->size(), this->thread_loop_partitioner);
   }
-
-
 
   template <typename Number>
   void
@@ -279,8 +251,6 @@ namespace LinearAlgebra
     internal::VectorOperations::parallel_for(
       vector_add_av, 0, this->size(), this->thread_loop_partitioner);
   }
-
-
 
   template <typename Number>
   void
@@ -315,8 +285,6 @@ namespace LinearAlgebra
       vector_add, 0, this->size(), this->thread_loop_partitioner);
   }
 
-
-
   template <typename Number>
   void
   Vector<Number>::sadd(const Number                     s,
@@ -337,8 +305,6 @@ namespace LinearAlgebra
     internal::VectorOperations::parallel_for(
       vector_sadd_xav, 0, this->size(), this->thread_loop_partitioner);
   }
-
-
 
   template <typename Number>
   void
@@ -361,8 +327,6 @@ namespace LinearAlgebra
       vector_scale, 0, this->size(), this->thread_loop_partitioner);
   }
 
-
-
   template <typename Number>
   void
   Vector<Number>::equ(const Number a, const VectorSpaceVector<Number>& V)
@@ -381,8 +345,6 @@ namespace LinearAlgebra
       vector_equ, 0, this->size(), this->thread_loop_partitioner);
   }
 
-
-
   template <typename Number>
   bool
   Vector<Number>::all_zero() const
@@ -396,8 +358,6 @@ namespace LinearAlgebra
 
     return true;
   }
-
-
 
   template <typename Number>
   typename Vector<Number>::value_type
@@ -415,8 +375,6 @@ namespace LinearAlgebra
     return sum / static_cast<real_type>(this->size());
   }
 
-
-
   template <typename Number>
   typename VectorSpaceVector<Number>::real_type
   Vector<Number>::l1_norm() const
@@ -432,8 +390,6 @@ namespace LinearAlgebra
 
     return sum;
   }
-
-
 
   template <typename Number>
   typename VectorSpaceVector<Number>::real_type
@@ -480,8 +436,6 @@ namespace LinearAlgebra
       }
   }
 
-
-
   template <typename Number>
   typename VectorSpaceVector<Number>::real_type
   Vector<Number>::linfty_norm() const
@@ -493,8 +447,6 @@ namespace LinearAlgebra
 
     return norm;
   }
-
-
 
   template <typename Number>
   Number
@@ -531,8 +483,6 @@ namespace LinearAlgebra
     return sum;
   }
 
-
-
   template <typename Number>
   void
   Vector<Number>::block_write(std::ostream& out) const
@@ -563,8 +513,6 @@ namespace LinearAlgebra
 
     AssertThrow(out, ExcIO());
   }
-
-
 
   template <typename Number>
   void

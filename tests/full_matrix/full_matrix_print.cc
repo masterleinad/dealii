@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // verify that FullMatrix::print saves the stream state around the output
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 
 const double entries[9]
   = {11.1, 12.2, 13.3, 21.456, 22.12345678901, 23, 31, 32, 33};
-
 
 int
 main()

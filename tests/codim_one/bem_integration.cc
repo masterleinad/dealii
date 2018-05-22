@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 //
-
 
 #include "../tests.h"
 
@@ -53,7 +50,6 @@
 using namespace std;
 
 ofstream logfile("output");
-
 
 template <int dim>
 class LaplaceKernelIntegration
@@ -108,7 +104,6 @@ LaplaceKernelIntegration<dim>::~LaplaceKernelIntegration()
   fe_values                  = nullptr;
   delete fp;
 }
-
 
 template <>
 void
@@ -178,7 +173,6 @@ LaplaceKernelIntegration<dim>::term_D(const Tensor<1, 3>& r,
   return integral;
 }
 
-
 double integration(Point<3> point)
 {
   Triangulation<2, 3> square;
@@ -194,8 +188,6 @@ double integration(Point<3> point)
   laplace.compute_SD_integral_on_cell(integrals, cell, point);
   return integrals[0];
 }
-
-
 
 int
 main()

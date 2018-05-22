@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/vector.h>
 
 // check
 //   FiniteElement::n_dofs_per_object
-
-
 
 template <int dim>
 void

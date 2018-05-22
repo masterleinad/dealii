@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 
 #include <deal.II/fe/fe_q.h>
@@ -29,7 +27,6 @@
 #include <deal.II/dofs/dof_handler.h>
 
 using namespace std;
-
 
 void
 test()
@@ -69,8 +66,6 @@ test()
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

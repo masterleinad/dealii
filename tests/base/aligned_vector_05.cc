@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for AlignedVector::push_back
 
 #include "../tests.h"
@@ -57,8 +56,6 @@ test()
   vec.reserve(3);
   deallog << vec[0].element() << " " << vec[1].element() << std::endl;
 }
-
-
 
 int
 main()

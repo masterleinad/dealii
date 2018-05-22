@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // on a somewhat deformed cube, verify that if we push forward a bunch
 // of points from the reference to the real cell and then call
 // MappingFEField::transform_unit_to_real_cell that we get the same point as
@@ -38,7 +36,6 @@
 
 using namespace dealii;
 
-
 template <int dim, int spacedim>
 void
 test_real_to_unit_cell()
@@ -57,7 +54,6 @@ test_real_to_unit_cell()
   // one face of the single cell
   triangulation.set_manifold(1, boundary);
   triangulation.begin_active()->face(0)->set_boundary_id(1);
-
 
   const unsigned int      n_points = 5;
   std::vector<Point<dim>> unit_points(Utilities::fixed_power<dim>(n_points));
@@ -110,7 +106,6 @@ test_real_to_unit_cell()
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = triangulation.begin_active();
 
-
   for(unsigned int i = 0; i < unit_points.size(); ++i)
     {
       // for each of the points,
@@ -127,7 +122,6 @@ test_real_to_unit_cell()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

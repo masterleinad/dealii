@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like trilinos_sparse_matrix_iterator_11, but for const_iterators
 
 #include "../tests.h"
 #include <deal.II/lac/sparsity_pattern.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
-
 
 void
 test()
@@ -53,8 +50,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

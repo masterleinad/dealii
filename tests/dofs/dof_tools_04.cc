@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
 // check
 //   DoFTools::extract_hanging_node_constraints
-
-
 
 template <int dim>
 void

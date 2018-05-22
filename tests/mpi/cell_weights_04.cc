@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just create a 16x16 coarse mesh, refine it once, and partition it
 // like _03, but with a larger spread of weights
 
@@ -26,8 +24,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 unsigned int
@@ -82,7 +78,6 @@ test()
       deallog << "processor " << p << ": " << integrated_weights[p] << " weight"
               << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

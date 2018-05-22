@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // This tests the stability of the polynomial evaluation of IntegratedLegendreSZ.
 
 #include "../tests.h"
@@ -22,9 +21,7 @@
 #include <deal.II/base/polynomials_integrated_legendre_sz.h>
 #include <deal.II/base/quadrature_lib.h>
 
-
 using namespace Polynomials;
-
 
 void
 check_at_one(const std::vector<Polynomial<double>>& p)
@@ -43,8 +40,6 @@ check_at_one(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_at_half(const std::vector<Polynomial<double>>& p)
 {
@@ -61,8 +56,6 @@ check_at_half(const std::vector<Polynomial<double>>& p)
   deallog << std::endl;
 }
 
-
-
 void
 check_poly(const unsigned int n)
 {
@@ -72,8 +65,6 @@ check_poly(const unsigned int n)
   check_at_one(p);
   check_at_half(p);
 }
-
-
 
 int
 main()

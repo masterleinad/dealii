@@ -16,7 +16,6 @@
 #ifndef dealii_trilinos_precondition_h
 #  define dealii_trilinos_precondition_h
 
-
 #  include <deal.II/base/config.h>
 
 #  ifdef DEAL_II_WITH_TRILINOS
@@ -46,7 +45,6 @@ namespace ML_Epetra
 {
   class MultiLevelPreconditioner;
 }
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -252,7 +250,6 @@ namespace TrilinosWrappers
     std::shared_ptr<Epetra_Map> vector_distributor;
   };
 
-
   /**
    * A wrapper class for a (pointwise) Jacobi preconditioner for Trilinos
    * matrices. This preconditioner works both in serial and in parallel,
@@ -322,8 +319,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for a (pointwise) SSOR preconditioner for Trilinos
@@ -418,8 +413,6 @@ namespace TrilinosWrappers
                const AdditionalData& additional_data = AdditionalData());
   };
 
-
-
   /**
    * A wrapper class for a (pointwise) SOR preconditioner for Trilinos
    * matrices. This preconditioner works both in serial and in parallel,
@@ -512,8 +505,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for a block Jacobi preconditioner for Trilinos matrices.
@@ -609,8 +600,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for a block SSOR preconditioner for Trilinos matrices. As
@@ -722,8 +711,6 @@ namespace TrilinosWrappers
                const AdditionalData& additional_data = AdditionalData());
   };
 
-
-
   /**
    * A wrapper class for a block SOR preconditioner for Trilinos matrices. As
    * opposed to PreconditionSOR where each row is treated separately, this
@@ -834,8 +821,6 @@ namespace TrilinosWrappers
                const AdditionalData& additional_data = AdditionalData());
   };
 
-
-
   /**
    * A wrapper class for an incomplete Cholesky factorization (IC)
    * preconditioner for @em symmetric Trilinos matrices. This preconditioner
@@ -944,8 +929,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for an incomplete LU factorization (ILU(k))
@@ -1057,8 +1040,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for a thresholded incomplete LU factorization (ILU-T)
@@ -1178,8 +1159,6 @@ namespace TrilinosWrappers
                const AdditionalData& additional_data = AdditionalData());
   };
 
-
-
   /**
    * A wrapper class for a sparse direct LU decomposition on parallel blocks
    * for Trilinos matrices. When run in serial, this corresponds to a direct
@@ -1212,7 +1191,6 @@ namespace TrilinosWrappers
        */
       AdditionalData(const unsigned int overlap = 0);
 
-
       /**
        * This determines how large the overlap of the local matrix portions on
        * each processor in a parallel application should be.
@@ -1228,8 +1206,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * A wrapper class for a Chebyshev preconditioner for Trilinos matrices.
@@ -1310,8 +1286,6 @@ namespace TrilinosWrappers
     initialize(const SparseMatrix&   matrix,
                const AdditionalData& additional_data = AdditionalData());
   };
-
-
 
   /**
    * This class implements an algebraic multigrid (AMG) preconditioner based
@@ -1512,7 +1486,6 @@ namespace TrilinosWrappers
      */
     ~PreconditionAMG() override;
 
-
     /**
      * Let Trilinos compute a multilevel hierarchy for the solution of a
      * linear system with the given matrix. The function uses the matrix
@@ -1618,8 +1591,6 @@ namespace TrilinosWrappers
      */
     std::shared_ptr<SparseMatrix> trilinos_matrix;
   };
-
-
 
 #    if defined(DOXYGEN) || DEAL_II_TRILINOS_VERSION_GTE(11, 14, 0)
   /**
@@ -1861,8 +1832,6 @@ namespace TrilinosWrappers
   };
 #    endif
 
-
-
   /**
    * A wrapper class for an identity preconditioner for Trilinos matrices.
    *
@@ -1939,13 +1908,9 @@ namespace TrilinosWrappers
       const override;
   };
 
-
-
   // -------------------------- inline and template functions ----------------------
 
-
 #    ifndef DOXYGEN
-
 
   inline void
   PreconditionBase::transpose()
@@ -1968,7 +1933,6 @@ namespace TrilinosWrappers
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
   }
-
 
   inline void
   PreconditionBase::vmult(MPI::Vector& dst, const MPI::Vector& src) const
@@ -1998,7 +1962,6 @@ namespace TrilinosWrappers
     preconditioner->SetUseTranspose(false);
   }
 
-
   // For the implementation of the <code>vmult</code> function with deal.II
   // data structures we note that invoking a call of the Trilinos
   // preconditioner requires us to use Epetra vectors as well. We do this by
@@ -2026,7 +1989,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
   }
 
-
   inline void
   PreconditionBase::Tvmult(dealii::Vector<double>&       dst,
                            const dealii::Vector<double>& src) const
@@ -2046,8 +2008,6 @@ namespace TrilinosWrappers
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
     preconditioner->SetUseTranspose(false);
   }
-
-
 
   inline void
   PreconditionBase::vmult(
@@ -2097,9 +2057,7 @@ namespace TrilinosWrappers
 
 } // namespace TrilinosWrappers
 
-
 /*@}*/
-
 
 DEAL_II_NAMESPACE_CLOSE
 

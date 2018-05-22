@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_mesh_worker_mesh_loop_h
 #define dealii_mesh_worker_mesh_loop_h
 

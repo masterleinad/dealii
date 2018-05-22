@@ -16,7 +16,6 @@
 #ifndef dealii_fe_tools_extrapolate_templates_H
 #define dealii_fe_tools_extrapolate_templates_H
 
-
 #include <deal.II/distributed/p4est_wrappers.h>
 #include <deal.II/distributed/tria.h>
 #include <deal.II/dofs/dof_handler.h>
@@ -106,7 +105,6 @@ namespace FETools
             p4est_cell(p4est_cell_)
         {}
       };
-
 
       // A structure holding all data
       // of cells needed from other processes
@@ -461,22 +459,16 @@ namespace FETools
       {}
     };
 
-
-
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       ExtrapolateImplementation()
       : round(0)
     {}
 
-
-
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData()
       : tree_index(0), receiver(0)
     {}
-
-
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData(
@@ -485,8 +477,6 @@ namespace FETools
     {
       dof_values.reinit(dofs_per_cell);
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -563,8 +553,6 @@ namespace FETools
             dealii_cell, p4est_cell, interpolated_values, u2);
         }
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -706,8 +694,6 @@ namespace FETools
         }
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
@@ -771,8 +757,6 @@ namespace FETools
         }
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::compute_needs(
@@ -827,8 +811,6 @@ namespace FETools
                                     new_needs);
         }
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     void
@@ -909,8 +891,6 @@ namespace FETools
         }
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
@@ -972,8 +952,6 @@ namespace FETools
         }
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
     void
@@ -1033,8 +1011,6 @@ namespace FETools
                                             new_needs);
         }
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1130,8 +1106,6 @@ namespace FETools
         }
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::send_cells(
@@ -1213,8 +1187,6 @@ namespace FETools
       std::sort(received_cells.begin(), received_cells.end());
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::add_new_need(
@@ -1242,8 +1214,6 @@ namespace FETools
       cell_data_insert(cell_data, new_needs);
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     int
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_search(
@@ -1259,8 +1229,6 @@ namespace FETools
       return (-1);
     }
 
-
-
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_insert(
@@ -1273,8 +1241,6 @@ namespace FETools
       if((bound == cells_list.end()) || (cell_data < *bound))
         cells_list.insert(bound, 1, cell_data);
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1370,8 +1336,6 @@ namespace FETools
         }
       while(ready != 0);
     }
-
-
 
     template <int dim, int spacedim, class OutVector>
     template <class InVector>
@@ -1513,7 +1477,6 @@ namespace FETools
           queue.pop();
         }
 
-
       u2.compress(VectorOperation::insert);
     }
 #endif //DEAL_II_WITH_P4EST
@@ -1577,8 +1540,6 @@ namespace FETools
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 
-
-
 #  ifdef DEAL_II_WITH_MPI
       template <int dim, int spacedim>
       void
@@ -1611,8 +1572,6 @@ namespace FETools
         const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
-
-
 
       template <class VectorType, class DH>
       void
@@ -1679,8 +1638,6 @@ namespace FETools
                       parallel_tria->get_communicator());
       }
 
-
-
       template <int dim, class InVector, class OutVector, int spacedim>
       void
       extrapolate_serial(const InVector&                  u3,
@@ -1744,8 +1701,6 @@ namespace FETools
     extrapolate(dof1, u1, dof2, dummy, u2);
   }
 
-
-
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   extrapolate(const DoFHandler<dim, spacedim>& dof1,
@@ -1773,7 +1728,6 @@ namespace FETools
         Assert(cell->has_children() || cell->is_artificial(),
                ExcGridNotRefinedAtLeastOnce());
     }
-
 
     internal::BlockType<OutVector> u3;
     internal::reinit_distributed(dof2, u3);

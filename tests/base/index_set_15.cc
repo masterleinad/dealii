@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::subtract_set
 
 #include "../tests.h"
 #include <stdlib.h>
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -47,8 +45,6 @@ test()
   is2.print(deallog);
   is3.print(deallog);
 
-
-
   for(unsigned int i = 0; i < is3.size(); ++i)
     {
       AssertThrow((is1.is_element(i) && !is2.is_element(i))
@@ -67,8 +63,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tests that GMRES builds an orthonormal basis properly for a few difficult
 // test matrices. In particular, this test monitors when re-orthogonalization
 // kicks in.
@@ -23,8 +22,6 @@
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_gmres.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <typename number>
 void

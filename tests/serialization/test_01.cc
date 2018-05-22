@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // a basic test for some serialization functionality
 
 #include "serialization.h"
@@ -56,7 +55,6 @@ private:
   unsigned int object_number;
 };
 
-
 void
 test()
 {
@@ -64,7 +62,6 @@ test()
 
   verify(p1, p2);
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // in symmetric_tensor_06 we have established that contracting with a
 // symmetric tensor by hand works as with a full tensor that is stored
 // in non-symmetric form. here make sure that we can abbreviate the contraction
@@ -21,8 +20,6 @@
 #include "../tests.h"
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
-
-
 
 template <int dim>
 void
@@ -68,14 +65,11 @@ test()
   // multiplication
   AssertThrow((as * ts) * as == as * (ts * as), ExcInternalError());
 
-
   // also test that the elasticity
   // tensor is positive definite
   deallog << as * ts * as << std::endl;
   Assert(as * ts * as > 0, ExcInternalError());
 }
-
-
 
 int
 main()

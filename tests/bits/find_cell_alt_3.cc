@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like find_cell_2, but with the strange meshes from the mesh_3d_* tests
 
 #include "../grid/mesh_3d.h"
@@ -28,8 +26,6 @@
 #include <deal.II/grid/tria_iterator.h>
 
 #include <deal.II/fe/mapping_q.h>
-
-
 
 void check(Triangulation<3>& tria)
 {
@@ -49,7 +45,6 @@ void check(Triangulation<3>& tria)
   Assert(p.distance(cell.first->center()) < cell.first->diameter() / 2,
          ExcInternalError());
 }
-
 
 int
 main()

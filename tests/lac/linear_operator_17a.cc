@@ -22,9 +22,7 @@
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/linear_operator.h>
 
-
 using namespace dealii;
-
 
 int
 main()

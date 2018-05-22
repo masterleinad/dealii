@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the general number capability of symmetric and normal tensors
 
 #include "../tests.h"
@@ -31,7 +30,6 @@ fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
       t.access_raw_entry(i) = i + 1;
     }
 }
-
 
 template <int rank, int dim, typename NumberType>
 void
@@ -73,7 +71,6 @@ print(const TensorType1<2, dim, NumberType1>& t2_1,
   deallog << t4_2 << std::endl;
 }
 
-
 template <template <int, int, typename> class TensorType1,
           template <int, int, typename> class TensorType2>
 struct AreSame : std::false_type
@@ -82,7 +79,6 @@ struct AreSame : std::false_type
 template <template <int, int, typename> class TensorType1>
 struct AreSame<TensorType1, TensorType1> : std::true_type
 {};
-
 
 template <template <int, int, typename> class TensorType1,
           typename NumberType1,
@@ -213,7 +209,6 @@ typename std::enable_if<
     && AreSame<TensorType2, SymmetricTensor>::value)>::type
 test_three()
 {}
-
 
 template <template <int, int, typename> class TensorType1,
           typename NumberType1,

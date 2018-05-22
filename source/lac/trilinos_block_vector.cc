@@ -21,7 +21,6 @@
 
 #  include <deal.II/lac/trilinos_block_sparse_matrix.h>
 
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace TrilinosWrappers
@@ -34,8 +33,6 @@ namespace TrilinosWrappers
       BaseClass::operator=(s);
       return *this;
     }
-
-
 
     BlockVector&
     BlockVector::operator=(const BlockVector& v)
@@ -56,16 +53,12 @@ namespace TrilinosWrappers
       return *this;
     }
 
-
-
     BlockVector&
     BlockVector::operator=(BlockVector&& v) noexcept
     {
       swap(v);
       return *this;
     }
-
-
 
     void
     BlockVector::reinit(const std::vector<IndexSet>& parallel_partitioning,
@@ -118,7 +111,6 @@ namespace TrilinosWrappers
       collect_sizes();
     }
 
-
     void
     BlockVector::reinit(const BlockVector& v, const bool omit_zeroing_entries)
     {
@@ -131,8 +123,6 @@ namespace TrilinosWrappers
 
       collect_sizes();
     }
-
-
 
     void
     BlockVector::reinit(const size_type num_blocks)
@@ -147,8 +137,6 @@ namespace TrilinosWrappers
 
       collect_sizes();
     }
-
-
 
     void
     BlockVector::import_nonlocal_data_for_fe(
@@ -172,8 +160,6 @@ namespace TrilinosWrappers
       collect_sizes();
     }
 
-
-
     void
     BlockVector::print(std::ostream&      out,
                        const unsigned int precision,
@@ -192,7 +178,6 @@ namespace TrilinosWrappers
 
   } /* end of namespace MPI */
 } /* end of namespace TrilinosWrappers */
-
 
 DEAL_II_NAMESPACE_CLOSE
 

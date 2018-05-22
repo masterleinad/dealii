@@ -16,7 +16,6 @@
 #ifndef dealii_mg_block_smoother_h
 #define dealii_mg_block_smoother_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/base/smartpointer.h>
@@ -170,7 +169,6 @@ inline MGSmootherBlock<MatrixType, RelaxationType, number>::MGSmootherBlock(
     mem(&this->vector_memory)
 {}
 
-
 template <typename MatrixType, class RelaxationType, typename number>
 inline void
 MGSmootherBlock<MatrixType, RelaxationType, number>::clear()
@@ -182,7 +180,6 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::clear()
       matrices[i]  = LinearOperator<BlockVector<number>>();
     }
 }
-
 
 template <typename MatrixType, class RelaxationType, typename number>
 template <class MGMatrixType, class MGRelaxationType>
@@ -208,7 +205,6 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::initialize(
     }
 }
 
-
 template <typename MatrixType, class RelaxationType, typename number>
 inline void
 MGSmootherBlock<MatrixType, RelaxationType, number>::set_reverse(
@@ -216,7 +212,6 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::set_reverse(
 {
   reverse = flag;
 }
-
 
 template <typename MatrixType, class RelaxationType, typename number>
 inline std::size_t
@@ -226,7 +221,6 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::memory_consumption() const
          + smoothers.memory_consumption()
          + this->vector_memory.memory_consumption();
 }
-
 
 template <typename MatrixType, class RelaxationType, typename number>
 inline void

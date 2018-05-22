@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework to check whether an element of polynomial order p can
 // represent functions of order q
 
@@ -48,11 +47,9 @@
 #include <fstream>
 #include <vector>
 
-
 template <int dim>
 void
 test();
-
 
 template <int dim>
 class F : public Function<dim>
@@ -73,7 +70,6 @@ public:
     return val;
   }
 
-
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
@@ -89,7 +85,6 @@ public:
 private:
   const unsigned int q;
 };
-
 
 template <int dim>
 void
@@ -140,8 +135,6 @@ do_project(const Triangulation<dim>& triangulation,
     }
 }
 
-
-
 // check the given element of polynomial order p. the last parameter, if
 // given, denotes a gap in convergence order; for example, the Nedelec element
 // of polynomial degree p has normal components of degree p-1 and therefore
@@ -159,8 +152,6 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe,
   do_project(triangulation, fe, p, order_difference);
 }
 
-
-
 // same test as above, but this time with a mesh that has hanging nodes
 template <int dim>
 void
@@ -177,8 +168,6 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe,
 
   do_project(triangulation, fe, p, order_difference);
 }
-
-
 
 // test with a 3d grid that has cells with face_orientation==false and hanging
 // nodes. this trips up all sorts of pieces of code, for example there was a
@@ -213,8 +202,6 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
       do_project(triangulation, fe, p, order_difference);
     }
 }
-
-
 
 // test with a 2d mesh that forms a square but subdivides it into 3
 // elements. this tests the case of the sign_change thingy in
@@ -265,8 +252,6 @@ test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
 
   do_project(triangulation, fe, p, order_difference);
 }
-
-
 
 // same as test_with_2d_deformed_mesh, but refine each element in turn. this
 // makes sure we also check the sign_change thingy for refined cells
@@ -335,8 +320,6 @@ test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
       do_project(triangulation, fe, p, order_difference);
     }
 }
-
-
 
 int
 main()

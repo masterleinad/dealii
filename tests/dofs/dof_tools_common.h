@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // common framework for the various dof_tools_*.cc tests
 
 #include "../tests.h"
@@ -35,14 +34,11 @@
 #include <iomanip>
 #include <string>
 
-
 // forward declaration of the function that must be provided in the
 // .cc files
 template <int dim>
 void
 check_this(const DoFHandler<dim>& dof_handler);
-
-
 
 void
 output_bool_vector(std::vector<bool>& v)
@@ -52,8 +48,6 @@ output_bool_vector(std::vector<bool>& v)
   deallog << std::endl;
 }
 
-
-
 template <int dim>
 void
 set_boundary_ids(Triangulation<dim>& tria)
@@ -62,11 +56,8 @@ set_boundary_ids(Triangulation<dim>& tria)
     tria.begin_active()->face(f)->set_boundary_id(f);
 }
 
-
 void set_boundary_ids(Triangulation<1>&)
 {}
-
-
 
 template <int dim>
 void
@@ -98,8 +89,6 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   check_this(dof_handler);
 }
 
-
-
 #define CHECK(EL, deg, dim) \
   {                         \
     FE_##EL<dim> EL(deg);   \
@@ -124,14 +113,12 @@ check(const FiniteElement<dim>& fe, const std::string& name)
     check(q, #sub1 #N1 #sub2 #N2 #sub3 #N3);          \
   }
 
-
 #define CHECK_ALL(EL, deg) \
   {                        \
     CHECK(EL, deg, 1);     \
     CHECK(EL, deg, 2);     \
     CHECK(EL, deg, 3);     \
   }
-
 
 int
 main()
@@ -181,7 +168,6 @@ main()
       CHECK_SYS1(FE_Q<3>(1), 3, 3);
       CHECK_SYS1(FE_DGQ<3>(2), 2, 3);
       CHECK_SYS1(FE_DGP<3>(3), 1, 3);
-
 
       CHECK_SYS2(FE_Q<1>(1), 3, FE_DGQ<1>(2), 2, 1);
       CHECK_SYS2(FE_DGQ<1>(2), 2, FE_DGP<1>(3), 1, 1);

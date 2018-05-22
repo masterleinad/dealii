@@ -90,7 +90,6 @@ regression_slope(const std::vector<double>& x, const std::vector<double>& y)
   return X(1);
 }
 
-
 double
 zvalue(const double x, const double y)
 {
@@ -159,7 +158,6 @@ Geometry<dim>::clone() const
   return std_cxx14::make_unique<Geometry<dim>>();
 }
 
-
 template <int dim>
 class TranscendentalManufacturedSolution : public Function<dim>
 {
@@ -170,8 +168,6 @@ public:
     return std::cos(p[0]) + 2.0 * std::sin(2 * p[1]);
   }
 };
-
-
 
 template <int dim>
 void
@@ -190,8 +186,6 @@ create_tria(Triangulation<dim>& triangulation, const Geometry<dim>& geometry)
       ++cell)
     cell->set_all_manifold_ids(0);
 }
-
-
 
 template <int dim>
 void

@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a test adapted from little programs by Markus Buerg that makes sure
 // we compute the same solution for hp and non-hp cases
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_handler.h>
@@ -50,7 +47,6 @@
 
 std::ofstream logfile("output");
 
-
 template <int dim>
 class ExactSolution : public Function<dim>
 {
@@ -70,8 +66,6 @@ ExactSolution<dim>::value(const Point<dim>& p, const unsigned int) const
 template <int dim>
 ExactSolution<dim>::ExactSolution() : Function<dim>()
 {}
-
-
 
 namespace with_hp
 {
@@ -193,7 +187,6 @@ namespace with_hp
           system_rhs(local_dof_indices[i]) += cell_rhs(i);
       }
 
-
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, exact_solution, boundary_values);
@@ -224,7 +217,6 @@ namespace with_hp
     sol = solution;
   }
 } // namespace with_hp
-
 
 namespace without_hp
 {
@@ -339,7 +331,6 @@ namespace without_hp
           system_rhs(local_dof_indices[i]) += cell_rhs(i);
       }
 
-
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, exact_solution, boundary_values);
@@ -371,7 +362,6 @@ namespace without_hp
   }
 } // namespace without_hp
 
-
 template <int dim>
 void
 test()
@@ -387,8 +377,6 @@ test()
   sol1 -= sol2;
   Assert(sol1.l2_norm() <= 1e-8 * sol2.l2_norm(), ExcInternalError());
 }
-
-
 
 int
 main()

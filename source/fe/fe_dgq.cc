@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/fe/fe.h>
@@ -21,14 +20,11 @@
 #include <deal.II/fe/fe_tools.h>
 #include <deal.II/lac/vector.h>
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <iostream>
 #include <sstream>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -47,8 +43,6 @@ namespace internal
     } // namespace
   }   // namespace FE_DGQ
 } // namespace internal
-
-
 
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)
@@ -80,8 +74,6 @@ FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)
   // note: no face support points for DG elements
 }
 
-
-
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(
   const std::vector<Polynomials::Polynomial<double>>& polynomials)
@@ -112,8 +104,6 @@ FE_DGQ<dim, spacedim>::FE_DGQ(
   // get_prolongation_matrix
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 FE_DGQ<dim, spacedim>::get_name() const
@@ -127,8 +117,6 @@ FE_DGQ<dim, spacedim>::get_name() const
           << this->degree << ")";
   return namebuf.str();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -149,8 +137,6 @@ FE_DGQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGQ<dim, spacedim>::clone() const
@@ -158,11 +144,9 @@ FE_DGQ<dim, spacedim>::clone() const
   return std_cxx14::make_unique<FE_DGQ<dim, spacedim>>(*this);
 }
 
-
 //---------------------------------------------------------------------------
 // Auxiliary functions
 //---------------------------------------------------------------------------
-
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
@@ -174,8 +158,6 @@ FE_DGQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
     dpo[dim] *= deg + 1;
   return dpo;
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -252,8 +234,6 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_interpolation_matrix(
@@ -278,7 +258,6 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
   Assert(
     interpolation_matrix.n() == source_fe.dofs_per_cell,
     ExcDimensionMismatch(interpolation_matrix.n(), source_fe.dofs_per_cell));
-
 
   // compute the interpolation
   // matrices in much the same way as
@@ -331,8 +310,6 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
@@ -356,8 +333,6 @@ FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.m(), 0));
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -383,8 +358,6 @@ FE_DGQ<dim, spacedim>::get_subface_interpolation_matrix(
   Assert(interpolation_matrix.n() == 0,
          ExcDimensionMismatch(interpolation_matrix.m(), 0));
 }
-
-
 
 template <int dim, int spacedim>
 const FullMatrix<double>&
@@ -460,8 +433,6 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
   return this->prolongation[refinement_case - 1][child];
 }
 
-
-
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_DGQ<dim, spacedim>::get_restriction_matrix(
@@ -536,16 +507,12 @@ FE_DGQ<dim, spacedim>::get_restriction_matrix(
   return this->restriction[refinement_case - 1][child];
 }
 
-
-
 template <int dim, int spacedim>
 bool
 FE_DGQ<dim, spacedim>::hp_constraints_are_implemented() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -559,8 +526,6 @@ FE_DGQ<dim, spacedim>::hp_vertex_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
-
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGQ<dim, spacedim>::hp_line_dof_identities(
@@ -572,8 +537,6 @@ FE_DGQ<dim, spacedim>::hp_line_dof_identities(
   // no face dofs on this side to begin with)
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
-
-
 
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
@@ -587,8 +550,6 @@ FE_DGQ<dim, spacedim>::hp_quad_dof_identities(
   return std::vector<std::pair<unsigned int, unsigned int>>();
 }
 
-
-
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_DGQ<dim, spacedim>::compare_for_face_domination(
@@ -599,8 +560,6 @@ FE_DGQ<dim, spacedim>::compare_for_face_domination(
   // any other kind of element
   return FiniteElementDomination::no_requirements;
 }
-
-
 
 template <int dim, int spacedim>
 bool
@@ -693,8 +652,6 @@ FE_DGQ<dim, spacedim>::has_support_on_face(const unsigned int shape_index,
   return true;
 }
 
-
-
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_DGQ<dim, spacedim>::get_constant_modes() const
@@ -705,8 +662,6 @@ FE_DGQ<dim, spacedim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FE_DGQ<dim, spacedim>::memory_consumption() const
@@ -714,8 +669,6 @@ FE_DGQ<dim, spacedim>::memory_consumption() const
   Assert(false, ExcNotImplemented());
   return 0;
 }
-
-
 
 // ------------------------------ FE_DGQArbitraryNodes -----------------------
 
@@ -729,8 +682,6 @@ FE_DGQArbitraryNodes<dim, spacedim>::FE_DGQArbitraryNodes(
          (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
   this->unit_support_points = Quadrature<dim>(points).get_points();
 }
-
-
 
 template <int dim, int spacedim>
 std::string
@@ -826,8 +777,6 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
   return namebuf.str();
 }
 
-
-
 template <int dim, int spacedim>
 void
 FE_DGQArbitraryNodes<dim, spacedim>::
@@ -848,8 +797,6 @@ FE_DGQArbitraryNodes<dim, spacedim>::
     }
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGQArbitraryNodes<dim, spacedim>::clone() const
@@ -866,8 +813,6 @@ FE_DGQArbitraryNodes<dim, spacedim>::clone() const
     pquadrature);
 }
 
-
-
 // ---------------------------------- FE_DGQLegendre -------------------------
 
 template <int dim, int spacedim>
@@ -875,8 +820,6 @@ FE_DGQLegendre<dim, spacedim>::FE_DGQLegendre(const unsigned int degree)
   : FE_DGQ<dim, spacedim>(
       Polynomials::Legendre::generate_complete_basis(degree))
 {}
-
-
 
 template <int dim, int spacedim>
 std::pair<Table<2, bool>, std::vector<unsigned int>>
@@ -890,8 +833,6 @@ FE_DGQLegendre<dim, spacedim>::get_constant_modes() const
     constant_modes, std::vector<unsigned int>(1, 0));
 }
 
-
-
 template <int dim, int spacedim>
 std::string
 FE_DGQLegendre<dim, spacedim>::get_name() const
@@ -900,16 +841,12 @@ FE_DGQLegendre<dim, spacedim>::get_name() const
          + Utilities::int_to_string(this->degree) + ")";
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGQLegendre<dim, spacedim>::clone() const
 {
   return std_cxx14::make_unique<FE_DGQLegendre<dim, spacedim>>(this->degree);
 }
-
-
 
 // ---------------------------------- FE_DGQHermite --------------------------
 
@@ -919,8 +856,6 @@ FE_DGQHermite<dim, spacedim>::FE_DGQHermite(const unsigned int degree)
       Polynomials::HermiteLikeInterpolation::generate_complete_basis(degree))
 {}
 
-
-
 template <int dim, int spacedim>
 std::string
 FE_DGQHermite<dim, spacedim>::get_name() const
@@ -929,8 +864,6 @@ FE_DGQHermite<dim, spacedim>::get_name() const
          + Utilities::int_to_string(this->degree) + ")";
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGQHermite<dim, spacedim>::clone() const
@@ -938,10 +871,7 @@ FE_DGQHermite<dim, spacedim>::clone() const
   return std_cxx14::make_unique<FE_DGQHermite<dim, spacedim>>(this->degree);
 }
 
-
-
 // explicit instantiations
 #include "fe_dgq.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

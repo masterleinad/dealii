@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this function tests the correctness of the implementation of matrix free
 // matrix-vector products by comparing with the result of deal.II sparse
 // matrix. The mesh uses a hypercube mesh with no hanging nodes, but with zero
@@ -26,7 +24,6 @@
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
 
 template <int dim, int fe_degree>
 void

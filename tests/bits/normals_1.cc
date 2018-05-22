@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrating the normals over the surface of any cell (distorted or
 // not) should yield a zero vector. (To prove this, use the divergence
 // theorem.) check that this is indeed so for the hypercube and
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -85,7 +81,6 @@ check(const Triangulation<dim>& tria)
     }
 }
 
-
 int
 main()
 {
@@ -102,7 +97,6 @@ main()
     GridGenerator::hyper_cube(coarse_grid);
     check(coarse_grid);
   }
-
 
   {
     Triangulation<2> coarse_grid;

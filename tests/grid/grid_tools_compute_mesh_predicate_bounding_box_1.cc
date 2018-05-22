@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for the function compute_mesh_predicate_bounding_box : as a predicate
 // is_locally_owned is used and, to vary the shapes, various mpi configurations
 // are used on a distributed::parallel::triangulations
-
 
 #include "../tests.h"
 #include <deal.II/base/bounding_box.h>

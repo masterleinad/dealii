@@ -18,7 +18,6 @@
  *          Wolfgang Bangerth, Texas A&M University, 2010
  */
 
-
 // @sect3{Include files}
 
 // The first step, as always, is to include the functionality of a number of
@@ -69,14 +68,12 @@
 #include <iostream>
 #include <memory>
 
-
 // At the end of this top-matter, we open a namespace for the current project
 // into which all the following material will go, and then import all deal.II
 // names into this namespace:
 namespace Step43
 {
   using namespace dealii;
-
 
   // @sect3{Pressure right hand side, pressure boundary values and saturation initial value classes}
 
@@ -93,8 +90,6 @@ namespace Step43
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   PressureRightHandSide<dim>::value(const Point<dim>& /*p*/,
@@ -102,7 +97,6 @@ namespace Step43
   {
     return 0;
   }
-
 
   template <int dim>
   class PressureBoundaryValues : public Function<dim>
@@ -115,7 +109,6 @@ namespace Step43
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
   template <int dim>
   double
   PressureBoundaryValues<dim>::value(const Point<dim>& p,
@@ -123,7 +116,6 @@ namespace Step43
   {
     return 1 - p[0];
   }
-
 
   template <int dim>
   class SaturationBoundaryValues : public Function<dim>
@@ -136,8 +128,6 @@ namespace Step43
     value(const Point<dim>& p, const unsigned int component = 0) const override;
   };
 
-
-
   template <int dim>
   double
   SaturationBoundaryValues<dim>::value(const Point<dim>& p,
@@ -148,7 +138,6 @@ namespace Step43
     else
       return 0;
   }
-
 
   template <int dim>
   class SaturationInitialValues : public Function<dim>
@@ -164,7 +153,6 @@ namespace Step43
     vector_value(const Point<dim>& p, Vector<double>& value) const override;
   };
 
-
   template <int dim>
   double
   SaturationInitialValues<dim>::value(const Point<dim>& /*p*/,
@@ -172,7 +160,6 @@ namespace Step43
   {
     return 0.2;
   }
-
 
   template <int dim>
   void
@@ -182,7 +169,6 @@ namespace Step43
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = SaturationInitialValues<dim>::value(p, c);
   }
-
 
   // @sect3{Permeability models}
 
@@ -201,7 +187,6 @@ namespace Step43
       value_list(const std::vector<Point<dim>>& points,
                  std::vector<Tensor<2, dim>>&   values) const;
     };
-
 
     template <int dim>
     void
@@ -229,7 +214,6 @@ namespace Step43
     }
   } // namespace SingleCurvingCrack
 
-
   namespace RandomMedium
   {
     template <int dim>
@@ -250,12 +234,9 @@ namespace Step43
       get_centers();
     };
 
-
-
     template <int dim>
     std::vector<Point<dim>> KInverse<dim>::centers
       = KInverse<dim>::get_centers();
-
 
     template <int dim>
     std::vector<Point<dim>>
@@ -271,8 +252,6 @@ namespace Step43
 
       return centers_list;
     }
-
-
 
     template <int dim>
     void
@@ -300,7 +279,6 @@ namespace Step43
     }
   } // namespace RandomMedium
 
-
   // @sect3{Physical quantities}
 
   // The implementations of all the physical quantities such as total mobility
@@ -318,7 +296,6 @@ namespace Step43
     return 1.0 / (1.0 / viscosity * S * S + (1 - S) * (1 - S));
   }
 
-
   double
   fractional_flow(const double S, const double viscosity)
   {
@@ -327,7 +304,6 @@ namespace Step43
 
     return S * S / (S * S + viscosity * (1 - S) * (1 - S));
   }
-
 
   double
   fractional_flow_derivative(const double S, const double viscosity)
@@ -348,7 +324,6 @@ namespace Step43
     return F_prime;
   }
 
-
   // @sect3{Helper classes for solvers and preconditioners}
 
   // In this first part we define a number of classes that we need in the
@@ -365,7 +340,6 @@ namespace Step43
       InverseMatrix(const MatrixType&         m,
                     const PreconditionerType& preconditioner);
 
-
       template <typename VectorType>
       void
       vmult(VectorType& dst, const VectorType& src) const;
@@ -375,15 +349,12 @@ namespace Step43
       const PreconditionerType&            preconditioner;
     };
 
-
     template <class MatrixType, class PreconditionerType>
     InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
       const MatrixType&         m,
       const PreconditionerType& preconditioner)
       : matrix(&m), preconditioner(preconditioner)
     {}
-
-
 
     template <class MatrixType, class PreconditionerType>
     template <typename VectorType>
@@ -432,8 +403,6 @@ namespace Step43
       mutable TrilinosWrappers::MPI::Vector tmp;
     };
 
-
-
     template <class PreconditionerTypeA, class PreconditionerTypeMp>
     BlockSchurPreconditioner<PreconditionerTypeA, PreconditionerTypeMp>::
       BlockSchurPreconditioner(
@@ -447,7 +416,6 @@ namespace Step43
         tmp(complete_index_set(darcy_matrix->block(1, 1).m()))
     {}
 
-
     template <class PreconditionerTypeA, class PreconditionerTypeMp>
     void
     BlockSchurPreconditioner<PreconditionerTypeA, PreconditionerTypeMp>::vmult(
@@ -460,7 +428,6 @@ namespace Step43
       m_inverse->vmult(dst.block(1), tmp);
     }
   } // namespace LinearSolvers
-
 
   // @sect3{The TwoPhaseFlowProblem class}
 
@@ -554,7 +521,6 @@ namespace Step43
       const double                       global_S_variation,
       const double                       cell_diameter) const;
 
-
     // This all is followed by the member variables, most of which are similar
     // to the ones in step-31, with the exception of the ones that pertain to
     // the macro time stepping for the velocity/pressure system:
@@ -579,14 +545,12 @@ namespace Step43
     TrilinosWrappers::MPI::BlockVector last_computed_darcy_solution;
     TrilinosWrappers::MPI::BlockVector second_last_computed_darcy_solution;
 
-
     const unsigned int saturation_degree;
     FE_Q<dim>          saturation_fe;
     DoFHandler<dim>    saturation_dof_handler;
     ConstraintMatrix   saturation_constraints;
 
     TrilinosWrappers::SparseMatrix saturation_matrix;
-
 
     TrilinosWrappers::MPI::Vector saturation_solution;
     TrilinosWrappers::MPI::Vector old_saturation_solution;
@@ -625,7 +589,6 @@ namespace Step43
     // SingleCurvingCrack::KInverse).
     const RandomMedium::KInverse<dim> k_inverse;
   };
-
 
   // @sect3{TwoPhaseFlowProblem<dim>::TwoPhaseFlowProblem}
 
@@ -671,7 +634,6 @@ namespace Step43
 
       rebuild_saturation_matrix(true)
   {}
-
 
   // @sect3{TwoPhaseFlowProblem<dim>::setup_dofs}
 
@@ -741,7 +703,6 @@ namespace Step43
       darcy_preconditioner_constraints.close();
     }
 
-
     std::vector<types::global_dof_index> darcy_dofs_per_block(2);
     DoFTools::count_dofs_per_block(
       darcy_dof_handler, darcy_dofs_per_block, darcy_block_component);
@@ -775,7 +736,6 @@ namespace Step43
             coupling[c][d] = DoFTools::always;
           else
             coupling[c][d] = DoFTools::none;
-
 
       DoFTools::make_sparsity_pattern(
         darcy_dof_handler, coupling, dsp, darcy_constraints, false);
@@ -811,7 +771,6 @@ namespace Step43
       darcy_preconditioner_matrix.reinit(dsp);
     }
 
-
     {
       saturation_matrix.clear();
 
@@ -819,7 +778,6 @@ namespace Step43
 
       DoFTools::make_sparsity_pattern(
         saturation_dof_handler, dsp, saturation_constraints, false);
-
 
       saturation_matrix.reinit(dsp);
     }
@@ -850,7 +808,6 @@ namespace Step43
 
     saturation_rhs.reinit(saturation_partitioning, MPI_COMM_WORLD);
   }
-
 
   // @sect3{Assembling matrices and preconditioners}
 
@@ -977,7 +934,6 @@ namespace Step43
       }
   }
 
-
   // @sect4{TwoPhaseFlowProblem<dim>::build_darcy_preconditioner}
 
   // After calling the above functions to assemble the preconditioner matrix,
@@ -1007,7 +963,6 @@ namespace Step43
     Mp_preconditioner = std::make_shared<TrilinosWrappers::PreconditionIC>();
     Mp_preconditioner->initialize(darcy_preconditioner_matrix.block(1, 1));
   }
-
 
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_darcy_system}
 
@@ -1208,7 +1163,6 @@ namespace Step43
       }
   }
 
-
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_saturation_system}
 
   // This function is to assemble the linear system for the saturation
@@ -1231,8 +1185,6 @@ namespace Step43
     saturation_rhs = 0;
     assemble_saturation_rhs();
   }
-
-
 
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_saturation_matrix}
 
@@ -1287,8 +1239,6 @@ namespace Step43
           local_matrix, local_dof_indices, saturation_matrix);
       }
   }
-
-
 
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_saturation_rhs}
 
@@ -1378,8 +1328,6 @@ namespace Step43
       }
   }
 
-
-
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_saturation_rhs_cell_term}
 
   // This function takes care of integrating the cell terms of the right hand
@@ -1459,7 +1407,6 @@ namespace Step43
       local_rhs, local_dof_indices, saturation_rhs);
   }
 
-
   // @sect4{TwoPhaseFlowProblem<dim>::assemble_saturation_rhs_boundary_term}
 
   // The next function is responsible for the boundary integral terms in the
@@ -1519,7 +1466,6 @@ namespace Step43
     saturation_constraints.distribute_local_to_global(
       local_rhs, local_dof_indices, saturation_rhs);
   }
-
 
   // @sect3{TwoPhaseFlowProblem<dim>::solve}
 
@@ -1613,7 +1559,6 @@ namespace Step43
                             second_last_computed_darcy_solution);
       }
 
-
     // With the so computed velocity vector, compute the optimal time step
     // based on the CFL criterion discussed in the introduction...
     {
@@ -1626,8 +1571,6 @@ namespace Step43
       else
         time_step = end_time - time;
     }
-
-
 
     // ...and then also update the length of the macro time steps we use while
     // we're dealing with time step sizes. In particular, this involves: (i)
@@ -1672,7 +1615,6 @@ namespace Step43
                 << " CG iterations." << std::endl;
     }
   }
-
 
   // @sect3{TwoPhaseFlowProblem<dim>::refine_mesh}
 
@@ -1756,7 +1698,6 @@ namespace Step43
       SolutionTransfer<dim, TrilinosWrappers::MPI::BlockVector> darcy_soltrans(
         darcy_dof_handler);
 
-
       triangulation.prepare_coarsening_and_refinement();
       saturation_soltrans.prepare_for_coarsening_and_refinement(x_saturation);
 
@@ -1794,8 +1735,6 @@ namespace Step43
       rebuild_saturation_matrix = true;
     }
   }
-
-
 
   // @sect3{TwoPhaseFlowProblem<dim>::output_results}
 
@@ -1887,8 +1826,6 @@ namespace Step43
     data_out.write_vtu(output);
   }
 
-
-
   // @sect3{Tool functions}
 
   // @sect4{TwoPhaseFlowProblem<dim>::determine_whether_to_solve_for_pressure_and_velocity}
@@ -1972,8 +1909,6 @@ namespace Step43
     return (max_global_aop_indicator > AOS_threshold);
   }
 
-
-
   // @sect4{TwoPhaseFlowProblem<dim>::project_back_saturation}
 
   // The next function simply makes sure that the saturation values always
@@ -1995,8 +1930,6 @@ namespace Step43
       else if(saturation_solution(i) > 1)
         saturation_solution(i) = 1;
   }
-
-
 
   // @sect4{TwoPhaseFlowProblem<dim>::get_max_u_F_prime}
   //
@@ -2053,7 +1986,6 @@ namespace Step43
 
     return max_velocity_times_dF_dS;
   }
-
 
   // @sect4{TwoPhaseFlowProblem<dim>::get_extrapolated_saturation_range}
   //
@@ -2132,8 +2064,6 @@ namespace Step43
       }
   }
 
-
-
   // @sect4{TwoPhaseFlowProblem<dim>::compute_viscosity}
   //
   // The final tool function is used to compute the artificial viscosity on a
@@ -2207,7 +2137,6 @@ namespace Step43
           std::pow(cell_diameter, alpha) * max_residual / global_scaling));
   }
 
-
   // @sect3{TwoPhaseFlowProblem<dim>::run}
 
   // This function is, besides <code>solve()</code>, the primary function of
@@ -2224,7 +2153,6 @@ namespace Step43
   {
     const unsigned int initial_refinement     = (dim == 2 ? 5 : 2);
     const unsigned int n_pre_refinement_steps = (dim == 2 ? 3 : 2);
-
 
     GridGenerator::hyper_cube(triangulation, 0, 1);
     triangulation.refine_global(initial_refinement);
@@ -2279,8 +2207,6 @@ namespace Step43
     while(time <= end_time);
   }
 } // namespace Step43
-
-
 
 // @sect3{The <code>main()</code> function}
 //

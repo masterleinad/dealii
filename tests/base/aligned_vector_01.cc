@@ -13,14 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for AlignedVector<unsigned int> which tests the basic stuff in the
 // aligned vector
 
 #include "../tests.h"
 
 #include <deal.II/base/aligned_vector.h>
-
 
 void
 test()
@@ -83,8 +81,6 @@ test()
     AssertDimension(a[i], 0);
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

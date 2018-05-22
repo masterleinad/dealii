@@ -60,7 +60,6 @@ namespace mg
     MGLevelObject<SparseMatrix<number>> matrix_out;
   };
 
-
   template <typename number>
   void
   SparseMatrixCollection<number>::resize(const unsigned int minlevel,
@@ -79,7 +78,6 @@ namespace mg
     sparsity.resize(minlevel, maxlevel);
     sparsity_edge.resize(minlevel, maxlevel);
   }
-
 
   template <typename number>
   template <typename DoFHandlerType>

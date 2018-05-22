@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 
 #include <deal.II/base/exceptions.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_memory.h>
-
 
 using namespace dealii;
 
@@ -31,7 +29,6 @@ test_leak()
   VectorType*                     v = mem.alloc();
   v->reinit(5);
 }
-
 
 template <typename VectorType>
 void
@@ -65,7 +62,6 @@ test_stat()
   v1 = mem.alloc();
   mem.free(v1);
 }
-
 
 int
 main()

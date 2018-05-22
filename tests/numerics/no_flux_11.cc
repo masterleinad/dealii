@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we were computing normal vectors through the boundary object, but the
 // boundary object doesn't know about orientation. this leads to trouble if we
 // get normal vectors pointing in opposite directions on neighboring cells
-
 
 #include "../tests.h"
 
@@ -33,8 +30,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 void
@@ -145,7 +140,6 @@ run()
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

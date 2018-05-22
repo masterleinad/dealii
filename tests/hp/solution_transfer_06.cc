@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SolutionTransfer accessed the active_fe_index of the cell from which to
 // interpolate to children, but this active_fe_index is now on an inactive
 // cell and may no longer be valid. we need to use the number previously
@@ -23,7 +21,6 @@
 #include "../tests.h"
 #include <iostream>
 #include <sstream>
-
 
 #include <deal.II/grid/tria.h>
 
@@ -45,7 +42,6 @@
 
 using namespace dealii;
 
-
 template <int dim>
 void
 test()
@@ -64,7 +60,6 @@ test()
   // Init solution
   Vector<double> solution(dof_handler.n_dofs());
   solution = 1.0;
-
 
   // set refine flag for the only cell we have, then do the refinement
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> solution_trans(
@@ -90,7 +85,6 @@ test()
   // we are good if we made it to here
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

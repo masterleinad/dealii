@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that graph coloring colors every cells.
-
 
 #include "../tests.h"
 #include <vector>
@@ -32,8 +29,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
-
-
 template <int dim>
 std::vector<types::global_dof_index>
 get_conflict_indices(const typename DoFHandler<dim>::active_cell_iterator& it)
@@ -44,7 +39,6 @@ get_conflict_indices(const typename DoFHandler<dim>::active_cell_iterator& it)
 
   return local_dof_indices;
 }
-
 
 template <int dim>
 void

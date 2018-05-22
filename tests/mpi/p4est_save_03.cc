@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // save and load a triangulation with two solution vectors
 // crashes right now
 
@@ -34,10 +32,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-
 #include <deal.II/fe/fe_q.h>
-
-
 
 template <int dim>
 void
@@ -102,7 +97,6 @@ test()
     solution = x;
     x *= 2.0;
     solution2 = x;
-
 
     soltrans.prepare_serialization(solution);
     soltrans2.prepare_serialization(solution2);
@@ -169,14 +163,12 @@ test()
     deallog << "OK" << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

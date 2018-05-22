@@ -13,20 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // same as matrix_vector_14 but without using the template on the element
 // degree
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp.h>
 
-
 std::ofstream logfile("output");
 
 #include "matrix_vector_common.h"
-
-
 
 template <int dim, int fe_degree>
 void

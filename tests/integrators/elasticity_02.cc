@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test nitsche_tangential in Elasticity
 // Output matrices and assert consistency of residuals
 
@@ -84,7 +83,6 @@ test_boundary(const FEValuesBase<dim>& fev)
   }
 }
 
-
 template <int dim>
 void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
@@ -105,8 +103,6 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test(Triangulation<dim>& tr)
@@ -125,7 +121,6 @@ test(Triangulation<dim>& tr)
   FE_RaviartThomas<dim> rt1(1);
   test_fe(tr, rt1);
 }
-
 
 int
 main()

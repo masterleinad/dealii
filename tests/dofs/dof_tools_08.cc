@@ -13,15 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 
 // check
 //   DoFTools::map_dof_to_boundary_indices(const DoFHandler<int>     &,
 //                                         std::vector<unsigned int> &)
-
-
 
 template <int dim>
 void

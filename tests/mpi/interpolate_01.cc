@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // we got an email saying that VectorTools::interpolate had trouble
 // when one involved processor had no locally owned cells and would
 // deadlock. but it turns out that it works. there's never anything
@@ -44,7 +42,6 @@
 
 #include <sstream>
 
-
 template <int dim>
 void
 test()
@@ -71,7 +68,6 @@ test()
             << norm << std::endl;
 }
 
-
 int
 main(int argc, char* argv[])
 {
@@ -85,7 +81,6 @@ main(int argc, char* argv[])
 #endif
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-
 
   deallog.push(Utilities::int_to_string(myid));
 

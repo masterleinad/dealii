@@ -18,7 +18,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // explicit instantiations for "float" PreconditionBlock
 template class PreconditionBlock<SparseMatrixEZ<float>, float>;
 
@@ -26,15 +25,12 @@ template class PreconditionBlock<SparseMatrixEZ<float>, float>;
 // because it does not make sense to have inverse block matrices with
 // higher precision than the matrix itself
 
-
 // explicit instantiations for "double" PreconditionBlock
 template class PreconditionBlock<SparseMatrixEZ<double>, float>;
 
 template class PreconditionBlock<SparseMatrixEZ<double>, double>;
 
-
 /*--------------------- PreconditionBlockJacobi -----------------------*/
-
 
 // explicit instantiations for "float" PreconditionBlock
 template class PreconditionBlockJacobi<SparseMatrixEZ<float>, float>;
@@ -144,7 +140,6 @@ PreconditionBlockJacobi<SparseMatrixEZ<double>, double>::Tvmult_add<double>(
 
 /*--------------------- PreconditionBlockGaussSeidel -----------------------*/
 
-
 // explicit instantiations for "float" PreconditionBlock
 template class PreconditionBlockSOR<SparseMatrixEZ<float>, float>;
 
@@ -165,15 +160,12 @@ PreconditionBlockSOR<SparseMatrixEZ<float>, float>::Tvmult<double>(
   Vector<double>&,
   const Vector<double>&) const;
 
-
 // the instantiation for class PreconditionBlockSOR<SparseMatrixEZ<float>, double> is skipped
 // because it does not make sense to have inverse block matrices with
 // higher precision than the matrix itself
 
-
 // explicit instantiations for "double" PreconditionBlockSOR
 template class PreconditionBlockSOR<SparseMatrixEZ<double>, float>;
-
 
 template void
 PreconditionBlockSOR<SparseMatrixEZ<double>, float>::vmult<float>(
@@ -243,9 +235,7 @@ PreconditionBlockSOR<SparseMatrixEZ<double>, double>::Tvmult_add<double>(
   Vector<double>&,
   const Vector<double>&) const;
 
-
 /*--------------------- PreconditionBlockSSOR -----------------------*/
-
 
 // explicit instantiations for "float" PreconditionBlock
 template class PreconditionBlockSSOR<SparseMatrixEZ<float>, float>;
@@ -267,15 +257,12 @@ PreconditionBlockSSOR<SparseMatrixEZ<float>, float>::Tvmult<double>(
   Vector<double>&,
   const Vector<double>&) const;
 
-
 // the instantiation for class PreconditionBlockSSOR<SparseMatrixEZ<float>, double> is skipped
 // because it does not make sense to have inverse block matrices with
 // higher precision than the matrix itself
 
-
 // explicit instantiations for "double" PreconditionBlockSSOR
 template class PreconditionBlockSSOR<SparseMatrixEZ<double>, float>;
-
 
 template void
 PreconditionBlockSSOR<SparseMatrixEZ<double>, float>::vmult<float>(

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test that all of the Sacado number traits combinations are constructible
 
 #include "../tests.h"

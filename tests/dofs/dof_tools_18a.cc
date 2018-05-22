@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "dof_tools_common.h"
 #include <deal.II/lac/sparsity_pattern.h>
@@ -22,8 +21,6 @@
 //   DoFTools::
 //   make_flux_sparsity_pattern (const DoFHandler<dim> &,
 //                           SparsityPattern       &);
-
-
 
 // set up masks. choose X-shaped
 // masks with full first row and
@@ -40,7 +37,6 @@ make_masks(const unsigned int            n,
     m1(i, 0) = m1(0, i) = m2(i, 0) = m2(0, i) = m1(i, i) = m2(i, i)
       = DoFTools::nonzero;
 }
-
 
 template <int dim>
 void

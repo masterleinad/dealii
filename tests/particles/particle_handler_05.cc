@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Check that particles are correctly transferred during grid refinement/coarsening.
 // Note that this also tests some special cases. Since many particles lie exactly on cell boundaries
 // they are sorted into the first child cell that approximately contains them (i.e the order in
@@ -142,8 +140,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main(int argc, char* argv[])

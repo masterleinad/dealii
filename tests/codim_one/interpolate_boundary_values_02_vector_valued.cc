@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test VectorTools::interpolate_boundary_values for codim=1. like _02
 // but for vector-valued elements
 
@@ -97,8 +95,6 @@ test()
                 }
     }
 }
-
-
 
 int
 main()

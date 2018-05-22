@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // create a shared tria mesh and distribute with a custom function
 //
 // this is like the tria_custom_refine01 test except that it attaches
@@ -28,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -58,7 +55,6 @@ test()
         ++cell;
       }
   });
-
 
   GridGenerator::hyper_L(shared_tria);
   shared_tria.refine_global();

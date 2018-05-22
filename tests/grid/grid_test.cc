@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
@@ -23,13 +21,11 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
 std::ofstream logfile("output");
 
 // 1: continuous refinement of the unit square always in the middle
 // 2: refinement of the circle at the boundary
 // 2: refinement of a wiggled area at the boundary
-
 
 template <int dim>
 class Ball : public FlatManifold<dim>
@@ -59,7 +55,6 @@ public:
   }
 };
 
-
 template <int dim>
 class CurvedLine : public FlatManifold<dim>
 {
@@ -72,7 +67,6 @@ public:
   get_new_point_on_quad(
     const typename Triangulation<dim>::quad_iterator& quad) const;
 };
-
 
 template <int dim>
 Point<dim>
@@ -104,7 +98,6 @@ CurvedLine<dim>::get_new_point_on_line(
        && (line->manifold_id() == 1))
       return middle;
 
-
   double x = middle(0), y = middle(1);
 
   if(y < x)
@@ -120,7 +113,6 @@ CurvedLine<dim>::get_new_point_on_line(
 
   return middle;
 }
-
 
 template <int dim>
 Point<dim>
@@ -154,7 +146,6 @@ CurvedLine<dim>::get_new_point_on_quad(
   return middle;
 }
 
-
 template <int dim>
 void
 test(const int test_case)
@@ -175,7 +166,6 @@ test(const int test_case)
       deallog << "Impossible for this dimension." << std::endl;
       return;
     };
-
 
   switch(test_case)
     {
@@ -212,7 +202,6 @@ test(const int test_case)
               tria.begin_active()->face(4)->set_manifold_id(1);
               tria.begin_active()->face(5)->set_manifold_id(1);
             };
-
 
           // set the manifold function
           Ball<dim>       ball;
@@ -258,7 +247,6 @@ test(const int test_case)
 
   deallog.pop();
 }
-
 
 int
 main()

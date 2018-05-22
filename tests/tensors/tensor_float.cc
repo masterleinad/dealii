@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Same as tensor.cc, but uses tensors based on floats instead of doubles
 
 #include "../tests.h"

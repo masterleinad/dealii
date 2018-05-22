@@ -58,8 +58,6 @@ FiniteElementData<dim>::FiniteElementData(
          ExcDimensionMismatch(dofs_per_object.size() - 1, dim));
 }
 
-
-
 template <int dim>
 bool
 FiniteElementData<dim>::operator==(const FiniteElementData<dim>& f) const
@@ -70,7 +68,6 @@ FiniteElementData<dim>::operator==(const FiniteElementData<dim>& f) const
           && (dofs_per_hex == f.dofs_per_hex) && (components == f.components)
           && (degree == f.degree) && (conforming_space == f.conforming_space));
 }
-
 
 template class FiniteElementData<1>;
 template class FiniteElementData<2>;

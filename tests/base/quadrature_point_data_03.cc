@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Same as quadrature_point_data_2.cc, but for different base and actuall data classes.
-
 
 #include "../tests.h"
 
@@ -32,7 +29,6 @@
 #include <deal.II/grid/tria_accessor.h>
 
 #include <deal.II/base/quadrature_point_data.h>
-
 
 using namespace dealii;
 
@@ -62,7 +58,6 @@ struct MyDataBase : public TransferableQuadraturePointData
   virtual ~MyDataBase(){};
 };
 
-
 struct MyData : public MyDataBase
 {
   double value1;
@@ -73,7 +68,6 @@ struct MyData : public MyDataBase
   {
     return 2;
   }
-
 
   MyData(){};
   virtual ~MyData(){};
@@ -101,7 +95,6 @@ DeclException3(ExcWrongValue,
                double,
                double,
                << arg1 << " != " << arg2 << " with delta = " << arg3);
-
 
 /**
  * Loop over quadrature points and check that value is the same as given by the function.
@@ -192,7 +185,6 @@ test()
 
   check_qph(tr, data_storage, rhs, my_func);
 
-
   // mark some for refinement
   for(cell = tr.begin_active(); cell != tr.end(); ++cell)
     if(cell->center()[0] < 0.5)
@@ -217,7 +209,6 @@ test()
 
   deallog << "Ok" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

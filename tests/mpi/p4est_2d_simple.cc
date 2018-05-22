@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test p4est grid interaction with one cell in 2d
 
 #include "../tests.h"
@@ -25,8 +23,6 @@
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
-
-
 
 template <int dim>
 void
@@ -63,17 +59,14 @@ test()
                  ExcInternalError());
         }
 
-
       const unsigned int checksum = tr.get_checksum();
       if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
 
-
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
-
 
 int
 main(int argc, char* argv[])

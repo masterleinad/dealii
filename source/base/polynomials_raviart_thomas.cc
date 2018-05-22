@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/polynomials_raviart_thomas.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/thread_management.h>
@@ -26,15 +25,12 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <int dim>
 PolynomialsRaviartThomas<dim>::PolynomialsRaviartThomas(const unsigned int k)
   : my_degree(k),
     polynomial_space(create_polynomials(k)),
     n_pols(compute_n_pols(k))
 {}
-
-
 
 template <int dim>
 std::vector<std::vector<Polynomials::Polynomial<double>>>
@@ -51,7 +47,6 @@ PolynomialsRaviartThomas<dim>::create_polynomials(const unsigned int k)
 
   return pols;
 }
-
 
 template <int dim>
 void
@@ -160,7 +155,6 @@ PolynomialsRaviartThomas<dim>::compute(
     }
 }
 
-
 template <int dim>
 unsigned int
 PolynomialsRaviartThomas<dim>::compute_n_pols(unsigned int k)
@@ -176,10 +170,8 @@ PolynomialsRaviartThomas<dim>::compute_n_pols(unsigned int k)
   return 0;
 }
 
-
 template class PolynomialsRaviartThomas<1>;
 template class PolynomialsRaviartThomas<2>;
 template class PolynomialsRaviartThomas<3>;
-
 
 DEAL_II_NAMESPACE_CLOSE

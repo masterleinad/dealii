@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/distributed/tria.h>
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/fe/fe_tools.h>
@@ -49,8 +48,6 @@ namespace internal
           level_dof_index(numbers::invalid_dof_index)
       {}
     };
-
-
 
     template <int dim, int spacedim>
     void
@@ -140,7 +137,6 @@ namespace internal
                   bool level_mine
                     = mg_dof.locally_owned_mg_dofs(level).is_element(
                       level_dof_indices[i]);
-
 
                   if(global_mine && level_mine)
                     {
@@ -335,8 +331,6 @@ namespace internal
                   copy_indices_global_mine[level].end(),
                   compare);
     }
-
-
 
     // initialize the vectors needed for the transfer (and merge with the
     // content in copy_indices_global_mine)
@@ -597,7 +591,6 @@ namespace internal
         FETools::get_fe_by_name<1, 1>(fe_name));
 
       setup_element_info(elem_info, *fe, mg_dof);
-
 
       // -------------- 2. Extract and match dof indices between child and parent
       const unsigned int n_levels = tria.n_global_levels();

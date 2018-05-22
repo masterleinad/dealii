@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check MGTransferBlockMatrixFree::copy_[from|to]_mg by comparison to non-block
 // MGTransferMatrixFree. This is similar to transfer_05 but using
 // a separate DoFHandler for each block
@@ -36,7 +35,6 @@
 #include <algorithm>
 
 using namespace std;
-
 
 template <int dim, typename Number>
 void
@@ -220,7 +218,6 @@ check(const unsigned int fe_degree)
       deallog << std::endl;
     }
 }
-
 
 int
 main(int argc, char** argv)

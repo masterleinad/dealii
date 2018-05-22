@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Until version 1.50 of mg_dof_handler.cc, the
 // DoFHandler::renumbering function could not handle coarsened grids
 // (unused cells). Check that this works now.
@@ -59,7 +58,6 @@ check()
   for(unsigned int level = 0; level < tria.n_levels(); ++level)
     DoFRenumbering::downstream(mg_dof_handler, level, a);
 }
-
 
 int
 main()

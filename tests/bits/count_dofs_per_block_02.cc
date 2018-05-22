@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like the _01 testcase, but with a non-primitive element that actually
 // defines blocks of non-unit size
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -34,8 +32,6 @@
 
 #include <string>
 
-
-
 void
 print(const std::vector<types::global_dof_index>& v)
 {
@@ -44,8 +40,6 @@ print(const std::vector<types::global_dof_index>& v)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -80,7 +74,6 @@ check()
     DoFTools::count_dofs_per_block(dof_handler, dpc);
     print(dpc);
   }
-
 
   // grouping into less groups than
   // components
@@ -122,8 +115,6 @@ check()
     print(dpc);
   }
 }
-
-
 
 int
 main()

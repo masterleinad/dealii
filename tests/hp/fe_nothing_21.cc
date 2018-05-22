@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // interpolate() can not deal with FE_Nothing, simplified version of fe_nothing_20.cc
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -34,8 +31,6 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
-
 template <int dim>
 void
 test()
@@ -49,7 +44,6 @@ test()
   deallog << "n support points: " << fe.get_unit_support_points().size()
           << std::endl;
 
-
   DoFHandler<dim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
@@ -58,7 +52,6 @@ test()
           << "   Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
-
   Vector<double> solution(dof_handler.n_dofs());
 
   VectorTools::interpolate(
@@ -66,8 +59,6 @@ test()
 
   deallog << "l2_norm = " << solution.l2_norm() << std::endl;
 }
-
-
 
 int
 main()

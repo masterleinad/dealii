@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /**
  * @file Test initialization of Assembler::MatrixSimple and
  * DoFInfo including assigning of local block sizes with multiple matrices

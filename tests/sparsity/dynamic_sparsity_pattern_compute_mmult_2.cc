@@ -14,8 +14,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check DynamicSparsityPattern::compute_mmult_pattern(). Test if multiplication
 // of two patterns yield the right DynamicSparsityPattern.
 
@@ -24,7 +22,6 @@
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/sparsity_pattern.h>
-
 
 void
 test()
@@ -79,7 +76,6 @@ test()
         mat_left[0][n] = 1;
       }
 
-
   // do matrix-matrix-multiplication
   mat_left.mmult(mat_out, mat_right);
   dyn_out.compute_mmult_pattern(dyn_left, dyn_right);
@@ -97,8 +93,6 @@ test()
   Assert(!test_failed, ExcInternalError());
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

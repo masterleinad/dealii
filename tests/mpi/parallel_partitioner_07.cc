@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test for the Partitioner with a smaller ghost index set within a larger one
 // regarding the import_from_ghosted_array() calls
 #include "../tests.h"
@@ -23,7 +22,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-
 
 void
 test()
@@ -187,8 +185,6 @@ test()
     deallog << locally_owned_array[i] << " ";
   deallog << std::endl;
 }
-
-
 
 int
 main(int argc, char** argv)

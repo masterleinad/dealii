@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this tests the correctness of distribute_local_to_globa() for DiagonalMatrix
 
 #include "../tests.h"
@@ -36,8 +34,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <iostream>
-
-
 
 template <int dim, int fe_degree>
 void
@@ -74,7 +70,6 @@ test(const bool hanging_nodes = true)
   //std::cout << "Number of cells: " << tria.n_global_active_cells() << std::endl;
   //std::cout << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
-
 
   // assemble trilinos sparse matrix
   TrilinosWrappers::SparseMatrix sparse_matrix;
@@ -153,7 +148,6 @@ test(const bool hanging_nodes = true)
 
   deallog << "Ok." << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

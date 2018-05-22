@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #ifndef dealii_cuda_matrix_free_templates_h
 #define dealii_cuda_matrix_free_templates_h
 
@@ -28,7 +27,6 @@
 #  include <deal.II/grid/filtered_iterator.h>
 #  include <deal.II/matrix_free/shape_info.h>
 #  include <functional>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -65,8 +63,6 @@ namespace CUDAWrappers
           dst[j * N + i] = src[i * M + j];
     }
 
-
-
     /**
      * Same as above but the source and the destination are the same vector.
      */
@@ -82,8 +78,6 @@ namespace CUDAWrappers
 
       transpose(n, m, old.data(), array_host.data());
     }
-
-
 
     /**
      * Allocate an array to the device and copy @p array_host to the device.
@@ -103,8 +97,6 @@ namespace CUDAWrappers
                               cudaMemcpyHostToDevice);
       AssertCuda(error_code);
     }
-
-
 
     /**
      * Helper class to (re)initialize MatrixFree object.
@@ -157,8 +149,6 @@ namespace CUDAWrappers
       const unsigned int               padding_length;
     };
 
-
-
     template <int dim, typename Number>
     ReinitHelper<dim, Number>::ReinitHelper(
       MatrixFree<dim, Number>*  data,
@@ -185,8 +175,6 @@ namespace CUDAWrappers
       lexicographic_dof_indices.resize(dofs_per_cell);
     }
 
-
-
     template <int dim, typename Number>
     void
     ReinitHelper<dim, Number>::setup_color_arrays(const unsigned int n_colors)
@@ -208,8 +196,6 @@ namespace CUDAWrappers
       if(update_flags & update_gradients)
         data->inv_jacobian.resize(n_colors);
     }
-
-
 
     template <int dim, typename Number>
     void
@@ -260,8 +246,6 @@ namespace CUDAWrappers
       constraint_mask_host.resize(n_cells);
     }
 
-
-
     template <int dim, typename Number>
     template <typename CellFilter>
     void
@@ -306,8 +290,6 @@ namespace CUDAWrappers
                  q_points_per_cell * sizeof(DerivativeForm<1, dim, dim>));
         }
     }
-
-
 
     template <int dim, typename Number>
     void
@@ -374,8 +356,6 @@ namespace CUDAWrappers
         &data->constraint_mask[color], constraint_mask_host, n_cells);
     }
 
-
-
     template <int dim>
     std::vector<types::global_dof_index>
     get_conflict_indices(
@@ -391,8 +371,6 @@ namespace CUDAWrappers
       return local_dof_indices;
     }
 
-
-
     template <typename Number>
     __global__ void
     copy_constrained_dofs(
@@ -407,8 +385,6 @@ namespace CUDAWrappers
         dst[constrained_dofs[dof]] = src[constrained_dofs[dof]];
     }
 
-
-
     template <typename Number>
     __global__ void
     set_constrained_dofs(
@@ -422,8 +398,6 @@ namespace CUDAWrappers
       if(dof < n_constrained_dofs)
         dst[constrained_dofs[dof]] = val;
     }
-
-
 
     template <int dim, typename Number, typename functor>
     __global__ void
@@ -455,14 +429,10 @@ namespace CUDAWrappers
     }
   } // namespace internal
 
-
-
   template <int dim, typename Number>
   MatrixFree<dim, Number>::MatrixFree()
     : constrained_dofs(nullptr), padding_length(0)
   {}
-
-
 
   template <int dim, typename Number>
   void
@@ -614,8 +584,6 @@ namespace CUDAWrappers
       }
   }
 
-
-
   template <int dim, typename Number>
   MatrixFree<dim, Number>::Data
   MatrixFree<dim, Number>::get_data(unsigned int color) const
@@ -632,8 +600,6 @@ namespace CUDAWrappers
 
     return data_copy;
   }
-
-
 
   template <int dim, typename Number>
   void
@@ -689,7 +655,6 @@ namespace CUDAWrappers
           }
       }
 
-
     q_points.clear();
     local_to_global.clear();
     inv_jacobian.clear();
@@ -704,8 +669,6 @@ namespace CUDAWrappers
       }
   }
 
-
-
   template <int dim, typename Number>
   void
   MatrixFree<dim, Number>::copy_constrained_values(
@@ -719,8 +682,6 @@ namespace CUDAWrappers
                                                       dst.get_values());
   }
 
-
-
   template <int dim, typename Number>
   void
   MatrixFree<dim, Number>::set_constrained_values(Number              val,
@@ -731,16 +692,12 @@ namespace CUDAWrappers
         constrained_dofs, n_constrained_dofs, val, dst.get_values());
   }
 
-
-
   template <int dim, typename Number>
   unsigned int
   MatrixFree<dim, Number>::get_padding_length() const
   {
     return padding_length;
   }
-
-
 
   template <int dim, typename Number>
   template <typename functor>
@@ -754,8 +711,6 @@ namespace CUDAWrappers
         <<<grid_dim[i], block_dim[i]>>>(
           func, get_data(i), src.get_values(), dst.get_values());
   }
-
-
 
   template <int dim, typename Number>
   std::size_t

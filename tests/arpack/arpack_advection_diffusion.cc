@@ -33,7 +33,6 @@
 
 #include "../tests.h"
 
-
 #include <deal.II/base/function.h>
 #include <deal.II/base/function_parser.h>
 #include <deal.II/base/parameter_handler.h>
@@ -64,7 +63,6 @@
 #include <iostream>
 
 using namespace dealii;
-
 
 template <int dim>
 class EigenvalueProblem
@@ -97,14 +95,10 @@ private:
   unsigned int n_eigenvalues;
 };
 
-
-
 template <int dim>
 EigenvalueProblem<dim>::EigenvalueProblem(unsigned int n_eigenvalues)
   : fe(1), dof_handler(triangulation), n_eigenvalues(n_eigenvalues)
 {}
-
-
 
 template <int dim>
 void
@@ -136,8 +130,6 @@ EigenvalueProblem<dim>::make_grid_and_dofs()
   for(unsigned int i = 0; i < eigenvectors.size(); ++i)
     eigenvectors[i].reinit(dof_handler.n_dofs());
 }
-
-
 
 template <int dim>
 void
@@ -200,8 +192,6 @@ EigenvalueProblem<dim>::assemble_system()
   stiffness_matrix.compress(VectorOperation::add);
   mass_matrix.compress(VectorOperation::add);
 }
-
-
 
 template <int dim>
 void
@@ -302,7 +292,6 @@ EigenvalueProblem<dim>::run()
     deallog << "      Eigenvalue " << i << " : " << eigenvalues[i] << std::endl;
 }
 
-
 int
 main(int argc, char** argv)
 {
@@ -311,7 +300,6 @@ main(int argc, char** argv)
       using namespace dealii;
 
       initlog();
-
 
       EigenvalueProblem<2> problem(4);
       problem.run();

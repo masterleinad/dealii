@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/distributed/tria.h>
@@ -53,7 +52,6 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>&      mg_dof,
                       tria->get_communicator());
     }
 }
-
 
 template <int dim>
 void
@@ -139,7 +137,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer.copy_from_mg_add(mgdof, v, u);
   deallog << "diff " << v.l2_norm() << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

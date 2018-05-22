@@ -76,8 +76,6 @@ first_grid()
   std::cout << "Grid written to grid-1.eps" << std::endl;
 }
 
-
-
 // @sect3{Creating the second mesh}
 
 // The grid in the following, second function is slightly more complicated in
@@ -240,7 +238,6 @@ second_grid()
       triangulation.execute_coarsening_and_refinement();
     }
 
-
   // Finally, after these five iterations of refinement, we want to again
   // write the resulting mesh to a file, again in eps format. This works just
   // as above:
@@ -265,8 +262,6 @@ second_grid()
   // manifold object upon its destruction, and everything would have been
   // fine.
 }
-
-
 
 // @sect3{The main function}
 

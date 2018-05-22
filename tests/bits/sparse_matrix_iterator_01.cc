@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // SparseMatrix::const_iterator::operator++(int) was declared but not defined
 // for some time, leading to a linker error
 
 #include "../tests.h"
 #include <deal.II/lac/sparse_matrix.h>
-
 
 void
 test()
@@ -42,8 +39,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

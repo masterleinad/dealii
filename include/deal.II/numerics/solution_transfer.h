@@ -16,9 +16,7 @@
 #ifndef dealii_solution_transfer_h
 #  define dealii_solution_transfer_h
 
-
 /*----------------------------   solutiontransfer.h     ----------------------*/
-
 
 #  include <deal.II/base/config.h>
 #  include <deal.II/base/exceptions.h>
@@ -467,7 +465,6 @@ private:
    */
   PreparationState prepared_for;
 
-
   /**
    * Is used for @p prepare_for_refining (of course also for @p
    * repare_for_refining_and_coarsening) and stores all dof indices of the
@@ -528,9 +525,7 @@ private:
     dof_values_on_cell;
 };
 
-
 DEAL_II_NAMESPACE_CLOSE
-
 
 /*----------------------------   solutiontransfer.h     ---------------------------*/
 #endif

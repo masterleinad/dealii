@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "shapes.h"
 #include <deal.II/fe/fe_dgp_monomial.h>
@@ -21,7 +20,6 @@
 #include <string>
 
 #define PRECISION 8
-
 
 template <int dim>
 void
@@ -47,7 +45,6 @@ plot_FE_DGPMonomial_shape_functions()
       test_compute_functions(m, p3, "DGPMonomial3");
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // no refinement, just 4 cells.
 // Make sure fe_values and shape functions are continuous
 
@@ -78,7 +77,6 @@ public:
     return res;
   }
 };
-
 
 template <int dim>
 void
@@ -177,7 +175,6 @@ test5()
 
   dof_handler.clear();
 }
-
 
 int
 main(int argc, char** argv)

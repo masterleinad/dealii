@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check GriOut::write_mesh_per_processor_as_vtu()
 
 #include "../tests.h"
@@ -31,7 +29,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/numerics/data_out.h>
-
 
 template <int dim>
 void
@@ -79,7 +76,6 @@ test()
   output(tr, "file1", false, true);
   output(tr, "file2", true, false);
 }
-
 
 int
 main(int argc, char* argv[])

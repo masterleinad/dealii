@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // this is the same as system_02 but using the variadic constructor:
 // check what happens with an FE_System if we hand it 0 components
 

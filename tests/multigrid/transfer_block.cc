@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 #include "../tests.h"
 #include <deal.II/base/mg_level_object.h>
 #include <deal.II/dofs/dof_renumbering.h>
@@ -190,7 +188,6 @@ check_block(const FiniteElement<dim>& fe,
   transfer.copy_from_mg_add(mgdof, v, u);
   deallog << "diff " << v.l2_norm() << std::endl;
 }
-
 
 int
 main()

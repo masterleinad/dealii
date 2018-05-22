@@ -16,7 +16,6 @@
 #ifndef dealii_smartpointer_h
 #define dealii_smartpointer_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/subscriptor.h>
 
@@ -99,7 +98,6 @@ public:
    * id of this pointer is set to the name of the class P.
    */
   SmartPointer(T* t);
-
 
   /**
    * Destructor, removing the subscription.
@@ -199,15 +197,11 @@ private:
   const char* const id;
 };
 
-
 /* --------------------------- inline Template functions ------------------------------*/
-
 
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer() : t(nullptr), id(typeid(P).name())
 {}
-
-
 
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(T* t) : t(t), id(typeid(P).name())
@@ -216,16 +210,12 @@ inline SmartPointer<T, P>::SmartPointer(T* t) : t(t), id(typeid(P).name())
     t->subscribe(id);
 }
 
-
-
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(T* t, const char* id) : t(t), id(id)
 {
   if(t != nullptr)
     t->subscribe(id);
 }
-
-
 
 template <typename T, typename P>
 template <class Q>
@@ -236,8 +226,6 @@ inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, Q>& tt)
     t->subscribe(id);
 }
 
-
-
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, P>& tt)
   : t(tt.t), id(tt.id)
@@ -246,16 +234,12 @@ inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, P>& tt)
     t->subscribe(id);
 }
 
-
-
 template <typename T, typename P>
 inline SmartPointer<T, P>::~SmartPointer()
 {
   if(t != nullptr)
     t->unsubscribe(id);
 }
-
-
 
 template <typename T, typename P>
 inline void
@@ -268,8 +252,6 @@ SmartPointer<T, P>::clear()
       t = nullptr;
     }
 }
-
-
 
 template <typename T, typename P>
 inline SmartPointer<T, P>&
@@ -287,8 +269,6 @@ SmartPointer<T, P>::operator=(T* tt)
     tt->subscribe(id);
   return *this;
 }
-
-
 
 template <typename T, typename P>
 template <class Q>
@@ -309,8 +289,6 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, Q>& tt)
   return *this;
 }
 
-
-
 template <typename T, typename P>
 inline SmartPointer<T, P>&
 SmartPointer<T, P>::operator=(const SmartPointer<T, P>& tt)
@@ -329,15 +307,11 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, P>& tt)
   return *this;
 }
 
-
-
 template <typename T, typename P>
 inline SmartPointer<T, P>::operator T*() const
 {
   return t;
 }
-
-
 
 template <typename T, typename P>
 inline T& SmartPointer<T, P>::operator*() const
@@ -346,16 +320,12 @@ inline T& SmartPointer<T, P>::operator*() const
   return *t;
 }
 
-
-
 template <typename T, typename P>
 inline T* SmartPointer<T, P>::operator->() const
 {
   Assert(t != nullptr, ExcNotInitialized());
   return t;
 }
-
-
 
 template <typename T, typename P>
 template <class Q>
@@ -371,8 +341,6 @@ SmartPointer<T, P>::swap(SmartPointer<T, Q>& tt)
 #endif
 }
 
-
-
 template <typename T, typename P>
 inline void
 SmartPointer<T, P>::swap(T*& tt)
@@ -386,16 +354,12 @@ SmartPointer<T, P>::swap(T*& tt)
     t->subscribe(id);
 }
 
-
-
 template <typename T, typename P>
 inline std::size_t
 SmartPointer<T, P>::memory_consumption() const
 {
   return sizeof(SmartPointer<T, P>);
 }
-
-
 
 // The following function is not strictly necessary but is an optimization
 // for places where you call swap(p1,p2) with SmartPointer objects p1, p2.
@@ -419,7 +383,6 @@ swap(SmartPointer<T, P>& t1, SmartPointer<T, Q>& t2)
 }
 #endif
 
-
 /**
  * Global function to swap the contents of a smart pointer and a C-style
  * pointer.
@@ -433,8 +396,6 @@ swap(SmartPointer<T, P>& t1, T*& t2)
 {
   t1.swap(t2);
 }
-
-
 
 /**
  * Global function to swap the contents of a C-style pointer and a smart

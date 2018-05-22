@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include "fe_tools_common.h"
 #include <deal.II/base/quadrature_lib.h>
@@ -28,8 +27,6 @@
 // this test makes sure that projecting onto a finite element space
 // sufficiently fine to hold the quadrature point data, then interpolating
 // back to the quadrature points is an identity operation
-
-
 
 template <int dim>
 void
@@ -48,7 +45,6 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   if(already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
-
 
   // test with the same quadrature formulas
   // of a degree that is high enough to

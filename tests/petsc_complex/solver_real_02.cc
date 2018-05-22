@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test the PETSc Chebychev solver
 
 // Note: This is (almost) a clone of the tests/petsc/solver_02.cc

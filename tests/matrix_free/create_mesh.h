@@ -3,7 +3,6 @@
 //
 //-----------------------  create_mesh.h  -----------------------------
 
-
 // this creates a mesh that contains cells of all different kinds detected in
 // the MatrixFree class: Use a mesh that consists of a square cell, then a
 // triangular cell, a parallelepiped cell and two trapezoidal cells, where one
@@ -14,7 +13,6 @@
 
 #include <fstream>
 #include <iostream>
-
 
 void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
 {
@@ -50,7 +48,6 @@ void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
     for(unsigned int i = 0; i < points.size(); ++i)
       points[i] *= scale_grid;
 
-
   // connect the points to cells
   std::vector<CellData<dim>> cells(5);
   for(unsigned int i = 0; i < 5; ++i)
@@ -64,8 +61,6 @@ void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
 
   tria.create_triangulation(points, cells, SubCellData());
 }
-
-
 
 void create_mesh(Triangulation<3>& tria, const double scale_grid = 1.)
 {

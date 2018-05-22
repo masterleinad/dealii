@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // there used to be a bug in MappingCartesian, where we used the size
 // of the quadrature points array to initialize something else. this
 // yielded a wrong result and after factoring out some code an abort
@@ -30,8 +28,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 void
@@ -49,7 +45,6 @@ check(const Triangulation<dim>& tria)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

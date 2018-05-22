@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // investigate performance issues in DynamicSparsityPattern::begin(r) and
 // end(r) for large sets with many empty rows.
 
 #include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-
 
 void
 test(bool empty, bool large_gap)
@@ -41,8 +38,6 @@ test(bool empty, bool large_gap)
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

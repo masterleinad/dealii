@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test eigenvalue approximation by GMRES algorithm
 
 #include "../tests.h"

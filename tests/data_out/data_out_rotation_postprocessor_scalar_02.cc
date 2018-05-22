@@ -13,10 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
 // tests DataPostprocessor: access the cell we are currently working
 // on for a scalar finite element field and DataOutRotation
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -35,10 +33,7 @@
 #include <deal.II/numerics/data_out_rotation.h>
 #include <deal.II/numerics/data_postprocessor.h>
 
-
-
 std::ofstream logfile("output");
-
 
 template <int dim>
 class MyPostprocessor : public DataPostprocessorScalar<dim>
@@ -67,8 +62,6 @@ public:
       }
   }
 };
-
-
 
 template <int dim>
 void
@@ -108,7 +101,6 @@ test()
   data_out.build_patches(4);
   data_out.write_gnuplot(logfile);
 }
-
 
 int
 main()

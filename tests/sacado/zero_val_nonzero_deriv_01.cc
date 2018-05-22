@@ -16,7 +16,6 @@
 // Tests the computation of the first derivatives of a function with zero
 // input can have a non-zero first derivative.
 
-
 #include "../tests.h"
 
 #include <deal.II/base/quadrature_lib.h>

@@ -29,7 +29,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 namespace internal
 {
   namespace DataOutFacesImplementation
@@ -54,8 +53,6 @@ namespace internal
           true)
     {}
 
-
-
     /**
      * In a WorkStream context, use this function to append the patch computed
      * by the parallel stage to the array of patches.
@@ -72,16 +69,12 @@ namespace internal
   } // namespace DataOutFacesImplementation
 } // namespace internal
 
-
-
 template <int dim, typename DoFHandlerType>
 DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so)
   : surface_only(so)
 {
   Assert(dim == DoFHandlerType::dimension, ExcNotImplemented());
 }
-
-
 
 template <int dim, typename DoFHandlerType>
 void
@@ -306,8 +299,6 @@ DataOutFaces<dim, DoFHandlerType>::build_one_patch(
     }
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 void
 DataOutFaces<dim, DoFHandlerType>::build_patches(
@@ -315,8 +306,6 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
 {
   build_patches(StaticMappingQ1<dimension>::mapping, n_subdivisions_);
 }
-
-
 
 template <int dim, typename DoFHandlerType>
 void
@@ -358,7 +347,6 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
   this->patches.clear();
   this->patches.reserve(all_faces.size());
   Assert(this->patches.size() == 0, ExcInternalError());
-
 
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
   for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
@@ -403,8 +391,6 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
                   sample_patch);
 }
 
-
-
 template <int dim, typename DoFHandlerType>
 typename DataOutFaces<dim, DoFHandlerType>::FaceDescriptor
 DataOutFaces<dim, DoFHandlerType>::first_face()
@@ -423,8 +409,6 @@ DataOutFaces<dim, DoFHandlerType>::first_face()
   // faces are owned by other processors
   return FaceDescriptor();
 }
-
-
 
 template <int dim, typename DoFHandlerType>
 typename DataOutFaces<dim, DoFHandlerType>::FaceDescriptor
@@ -481,8 +465,6 @@ DataOutFaces<dim, DoFHandlerType>::next_face(const FaceDescriptor& old_face)
   face.second = 0;
   return face;
 }
-
-
 
 // explicit instantiations
 #include "data_out_faces.inst"

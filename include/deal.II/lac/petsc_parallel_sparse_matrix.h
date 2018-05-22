@@ -27,11 +27,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 // forward declaration
 template <typename Matrix>
 class BlockMatrixBase;
-
 
 namespace PETScWrappers
 {
@@ -258,7 +256,6 @@ namespace PETScWrappers
        */
       SparseMatrix&
       operator=(const value_type d);
-
 
       /**
        * Make a copy of the PETSc matrix @p other. It is assumed that both
@@ -510,8 +507,6 @@ namespace PETScWrappers
        */
       friend class BlockMatrixBase<SparseMatrix>;
     };
-
-
 
     // -------- template and inline functions ----------
 

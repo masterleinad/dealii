@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/base/utilities.h>
 #include <deal.II/base/vector_slice.h>
@@ -36,8 +35,6 @@ __declspec(selectany) // Weak extern binding due to multiple link error
 #endif
   const SparsityPattern::size_type SparsityPattern::invalid_entry;
 
-
-
 SparsityPattern::SparsityPattern()
   : max_dim(0),
     max_vec_len(0),
@@ -48,8 +45,6 @@ SparsityPattern::SparsityPattern()
 {
   reinit(0, 0, 0);
 }
-
-
 
 SparsityPattern::SparsityPattern(const SparsityPattern& s)
   : Subscriptor(),
@@ -70,8 +65,6 @@ SparsityPattern::SparsityPattern(const SparsityPattern& s)
   reinit(0, 0, 0);
 }
 
-
-
 SparsityPattern::SparsityPattern(const size_type    m,
                                  const size_type    n,
                                  const unsigned int max_per_row)
@@ -85,8 +78,6 @@ SparsityPattern::SparsityPattern(const size_type    m,
   reinit(m, n, max_per_row);
 }
 
-
-
 SparsityPattern::SparsityPattern(const size_type                  m,
                                  const size_type                  n,
                                  const std::vector<unsigned int>& row_lengths)
@@ -99,8 +90,6 @@ SparsityPattern::SparsityPattern(const size_type                  m,
   reinit(m, n, row_lengths);
 }
 
-
-
 SparsityPattern::SparsityPattern(const size_type    m,
                                  const unsigned int max_per_row)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
@@ -108,16 +97,12 @@ SparsityPattern::SparsityPattern(const size_type    m,
   reinit(m, m, max_per_row);
 }
 
-
-
 SparsityPattern::SparsityPattern(const size_type                  m,
                                  const std::vector<unsigned int>& row_lengths)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
 {
   reinit(m, m, row_lengths);
 }
-
-
 
 SparsityPattern::SparsityPattern(const SparsityPattern& original,
                                  const unsigned int     max_per_row,
@@ -195,8 +180,6 @@ SparsityPattern::SparsityPattern(const SparsityPattern& original,
     };
 }
 
-
-
 SparsityPattern&
 SparsityPattern::operator=(const SparsityPattern& s)
 {
@@ -214,8 +197,6 @@ SparsityPattern::operator=(const SparsityPattern& s)
   return *this;
 }
 
-
-
 void
 SparsityPattern::reinit(const size_type    m,
                         const size_type    n,
@@ -225,8 +206,6 @@ SparsityPattern::reinit(const size_type    m,
   const std::vector<unsigned int> row_lengths(m, max_per_row);
   reinit(m, n, row_lengths);
 }
-
-
 
 void
 SparsityPattern::reinit(
@@ -335,8 +314,6 @@ SparsityPattern::reinit(
   compressed = false;
 }
 
-
-
 void
 SparsityPattern::compress()
 {
@@ -362,7 +339,6 @@ SparsityPattern::compress()
       std::not_equal_to<size_type>(), std::placeholders::_1, invalid_entry));
   // now allocate the respective memory
   std::unique_ptr<size_type[]> new_colnums(new size_type[nonzero_elements]);
-
 
   // reserve temporary storage to store the entries of one row
   std::vector<size_type> tmp_entries(max_row_length);
@@ -440,8 +416,6 @@ SparsityPattern::compress()
   compressed = true;
 }
 
-
-
 void
 SparsityPattern::copy_from(const SparsityPattern& sp)
 {
@@ -483,8 +457,6 @@ SparsityPattern::copy_from(const SparsityPattern& sp)
   compressed = true;
 }
 
-
-
 // Use a special implementation for DynamicSparsityPattern where we can use
 // the column_number method to gain faster access to the
 // entries. DynamicSparsityPattern::iterator can show quadratic complexity in
@@ -521,8 +493,6 @@ SparsityPattern::copy_from(const DynamicSparsityPattern& dsp)
   // too.
   compressed = true;
 }
-
-
 
 template <typename number>
 void
@@ -587,7 +557,6 @@ SparsityPattern::copy_from(const FullMatrix<number>& matrix)
   compress();
 }
 
-
 void
 SparsityPattern::reinit(const size_type                  m,
                         const size_type                  n,
@@ -595,8 +564,6 @@ SparsityPattern::reinit(const size_type                  m,
 {
   reinit(m, n, make_slice(row_lengths));
 }
-
-
 
 bool
 SparsityPattern::empty() const
@@ -619,8 +586,6 @@ SparsityPattern::empty() const
   return false;
 }
 
-
-
 SparsityPattern::size_type
 SparsityPattern::max_entries_per_row() const
 {
@@ -637,8 +602,6 @@ SparsityPattern::max_entries_per_row() const
 
   return m;
 }
-
-
 
 SparsityPattern::size_type
 SparsityPattern::operator()(const size_type i, const size_type j) const
@@ -674,8 +637,6 @@ SparsityPattern::operator()(const size_type i, const size_type j) const
     return invalid_entry;
 }
 
-
-
 void
 SparsityPattern::add(const size_type i, const size_type j)
 {
@@ -701,8 +662,6 @@ SparsityPattern::add(const size_type i, const size_type j)
   // this line
   Assert(false, ExcNotEnoughSpace(i, rowstart[i + 1] - rowstart[i]));
 }
-
-
 
 template <typename ForwardIterator>
 void
@@ -752,7 +711,6 @@ SparsityPattern::add_entries(const size_type row,
     }
 }
 
-
 bool
 SparsityPattern::exists(const size_type i, const size_type j) const
 {
@@ -769,8 +727,6 @@ SparsityPattern::exists(const size_type i, const size_type j) const
   return false;
 }
 
-
-
 SparsityPattern::size_type
 SparsityPattern::row_position(const size_type i, const size_type j) const
 {
@@ -786,8 +742,6 @@ SparsityPattern::row_position(const size_type i, const size_type j) const
     }
   return numbers::invalid_size_type;
 }
-
-
 
 std::pair<SparsityPattern::size_type, SparsityPattern::size_type>
 SparsityPattern::matrix_position(const std::size_t global_index) const
@@ -811,8 +765,6 @@ SparsityPattern::matrix_position(const std::size_t global_index) const
   // so return the respective pair
   return std::make_pair(row, col);
 }
-
-
 
 void
 SparsityPattern::symmetrize()
@@ -846,8 +798,6 @@ SparsityPattern::symmetrize()
       };
 }
 
-
-
 void
 SparsityPattern::print(std::ostream& out) const
 {
@@ -866,8 +816,6 @@ SparsityPattern::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 void
 SparsityPattern::print_gnuplot(std::ostream& out) const
@@ -919,8 +867,6 @@ SparsityPattern::print_svg(std::ostream& out) const
   out << "</svg>" << std::endl;
 }
 
-
-
 SparsityPattern::size_type
 SparsityPattern::bandwidth() const
 {
@@ -939,7 +885,6 @@ SparsityPattern::bandwidth() const
         break;
   return b;
 }
-
 
 void
 SparsityPattern::block_write(std::ostream& out) const
@@ -962,8 +907,6 @@ SparsityPattern::block_write(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 }
-
-
 
 void
 SparsityPattern::block_read(std::istream& in)
@@ -1002,16 +945,12 @@ SparsityPattern::block_read(std::istream& in)
   AssertThrow(c == ']', ExcIO());
 }
 
-
-
 std::size_t
 SparsityPattern::memory_consumption() const
 {
   return (max_dim * sizeof(size_type) + sizeof(*this)
           + max_vec_len * sizeof(size_type));
 }
-
-
 
 // explicit instantiations
 template void

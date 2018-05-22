@@ -56,7 +56,6 @@ namespace internal
           vertices_with_ghost_neighbors;
       };
 
-
       /** At a corner (vertex), determine if any of the neighboring cells are
        * ghosts.  If there are, find out their subdomain ids, and if this is a
        * local vertex, then add these subdomain ids to the map
@@ -321,7 +320,6 @@ namespace internal
       }
     } // namespace
 
-
     int (&functions<2>::quadrant_compare)(const void* v1, const void* v2)
       = p4est_quadrant_compare;
 
@@ -560,8 +558,6 @@ namespace internal
 
     const unsigned int functions<2>::max_level;
 
-
-
     int (&functions<3>::quadrant_compare)(const void* v1, const void* v2)
       = p8est_quadrant_compare;
 
@@ -750,8 +746,6 @@ namespace internal
 
     const unsigned int functions<3>::max_level;
 
-
-
     template <int dim>
     void
     init_quadrant_children(
@@ -773,7 +767,6 @@ namespace internal
             default:
               Assert(false, ExcNotImplemented());
           }
-
 
       functions<dim>::quadrant_childrenv(&p4est_cell, p4est_children);
     }
@@ -806,8 +799,6 @@ namespace internal
       return functions<dim>::quadrant_is_equal(&q1, &q2);
     }
 
-
-
     template <int dim>
     bool
     quadrant_is_ancestor(const typename types<dim>::quadrant& q1,
@@ -833,6 +824,5 @@ namespace internal
 
 /*-------------- Explicit Instantiations -------------------------------*/
 #include "p4est_wrappers.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

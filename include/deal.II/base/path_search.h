@@ -16,7 +16,6 @@
 #ifndef dealii_path_search_h
 #define dealii_path_search_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 
@@ -25,7 +24,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -254,9 +252,7 @@ private:
   static std::string empty;
 };
 
-
 /* ----------------------------- inline functions ------------------------- */
-
 
 template <class StreamType>
 inline void

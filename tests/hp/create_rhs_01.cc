@@ -13,12 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // call VectorTools::create_boundary_rhs. this crashed at the time of writing
 // this because we forgot to resize the size of a local_dofs array on each
 // cell. test and fix by Daniel Gerecht, University of Heidelberg
-
 
 #include "../tests.h"
 #include <deal.II/base/function.h>
@@ -35,7 +32,6 @@
 #include <deal.II/numerics/vector_tools.h>
 
 #include <numeric>
-
 
 void
 test()
@@ -104,7 +100,6 @@ test()
     ExcInternalError());
   deallog << rhs_vector.l2_norm() << std::endl;
 }
-
 
 int
 main()

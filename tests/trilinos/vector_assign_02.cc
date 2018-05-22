@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // this is equivalent to the trilinos_vector_assign_02 test, except that we use
 // operator+= instead of operator=. Now, this does not present a problem,
 // since the compiler does not automatically generate a version of this
@@ -27,7 +25,6 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <iostream>
 #include <vector>
-
 
 void
 test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
@@ -46,8 +43,6 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
   deallog << "OK" << std::endl;
 }
 
-
-
 int
 main(int argc, char** argv)
 {
@@ -55,7 +50,6 @@ main(int argc, char** argv)
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
-
 
   try
     {

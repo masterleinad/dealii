@@ -16,7 +16,6 @@
 #ifndef dealii_tensor_product_polynomials_bubbles_h
 #define dealii_tensor_product_polynomials_bubbles_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
@@ -28,7 +27,6 @@
 #include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 /**
  * @addtogroup Polynomials
@@ -148,7 +146,6 @@ public:
 
 /** @} */
 
-
 /* ---------------- template and inline functions ---------- */
 
 #ifndef DOXYGEN
@@ -169,16 +166,12 @@ inline TensorProductPolynomialsBubbles<dim>::TensorProductPolynomialsBubbles(
     }
 }
 
-
-
 template <int dim>
 inline unsigned int
 TensorProductPolynomialsBubbles<dim>::n() const
 {
   return this->n_tensor_pols + dim;
 }
-
-
 
 template <>
 inline unsigned int
@@ -337,7 +330,6 @@ TensorProductPolynomialsBubbles<dim>::compute_derivative(
         }
     }
 }
-
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

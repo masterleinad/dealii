@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Tests TridiagonalMatrix::all_zero
 // Tests TridiagonalMatrix::matrix_scalar_product
 // Tests TridiagonalMatrix::vmult
@@ -22,12 +21,9 @@
 // Tests TridiagonalMatrix::Tvmult_add
 // Tests TridiagonalMatrix::print
 
-
 #include "../tests.h"
 #include <deal.II/lac/tridiagonal_matrix.h>
 #include <deal.II/lac/vector.h>
-
-
 
 // Symmetric matrix with constant diagonals [-1,2,-1]
 template <typename number>
@@ -45,7 +41,6 @@ matrix1(TridiagonalMatrix<number>& M)
     }
 }
 
-
 // Nonsymmetric matrix with constant diagonals [-1,2,-3]
 template <typename number>
 void
@@ -61,7 +56,6 @@ matrix2(TridiagonalMatrix<number>& M)
         M(i, i + 1) = -3.;
     }
 }
-
 
 // Matrix with increasing diagonals and symmetric rows
 template <typename number>
@@ -79,7 +73,6 @@ matrix3(TridiagonalMatrix<number>& M)
     }
 }
 
-
 // Symmetric matrix with increasing diagonals
 template <typename number>
 void
@@ -96,7 +89,6 @@ matrix4(TridiagonalMatrix<number>& M)
     }
 }
 
-
 // Nonsymmetric matrix with increasing diagonals
 template <typename number>
 void
@@ -112,7 +104,6 @@ matrix5(TridiagonalMatrix<number>& M)
         M(i, i + 1) = 5. - 2. * i;
     }
 }
-
 
 template <typename number>
 void
@@ -167,7 +158,6 @@ check_vmult(TridiagonalMatrix<number>& M)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 }
-
 
 template <typename number>
 void

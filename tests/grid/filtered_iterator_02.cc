@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // check filtered iterators
-
 
 #include "../tests.h"
 #include <deal.II/grid/filtered_iterator.h>
@@ -27,14 +25,11 @@
 #include <algorithm>
 #include <numeric>
 
-
 DeclException2(ExcNumberMismatch,
                int,
                int,
                << "The numbers " << arg1 << " and " << arg2
                << " should be equation, but are not.");
-
-
 
 typedef Triangulation<2>::active_cell_iterator active_cell_iterator;
 
@@ -45,15 +40,12 @@ level_equal_to_3(const Iterator c)
   return (static_cast<unsigned int>(c->level()) == 3);
 }
 
-
-
 template <typename Iterator>
 bool
 level_equal_to(const Iterator c, const unsigned int level)
 {
   return (static_cast<unsigned int>(c->level()) == level);
 }
-
 
 void
 test()
@@ -105,7 +97,6 @@ test()
               << std::endl;
     };
 
-
   // check 2: count number of cells
   // on some level in a different way
   if(true)
@@ -126,7 +117,6 @@ test()
                     "Failed")
               << std::endl;
     };
-
 
   // check 3: count number of cells
   // on some level in yet a different
@@ -149,7 +139,6 @@ test()
                     "Failed")
               << std::endl;
     };
-
 
   // check 4: and yet another possibility
   if(true)
@@ -175,7 +164,6 @@ test()
                     "Failed")
               << std::endl;
     };
-
 
   // check 5: check that we loop over
   // all cells with a given subdomain
@@ -214,7 +202,6 @@ test()
       logfile << "Check 5: OK" << std::endl;
     };
 }
-
 
 int
 main()

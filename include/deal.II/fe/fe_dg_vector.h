@@ -128,8 +128,6 @@ private:
   Table<3, double> interior_weights;
 };
 
-
-
 /**
  * A vector-valued DG element based on the polynomials space of FE_Nedelec.
  *
@@ -155,8 +153,6 @@ public:
   virtual std::string
   get_name() const override;
 };
-
-
 
 /**
  * A vector-valued DG element based on the polynomials space of
@@ -185,8 +181,6 @@ public:
   get_name() const override;
 };
 
-
-
 /**
  * A vector-valued DG element based on the polynomials space of FE_BDM.
  *
@@ -211,7 +205,6 @@ public:
   virtual std::string
   get_name() const override;
 };
-
 
 DEAL_II_NAMESPACE_CLOSE
 

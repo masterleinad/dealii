@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a simple grid in 2d. here, we test
 // that coarsening a mesh actually works
 
@@ -42,8 +40,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -59,7 +55,6 @@ test(std::ostream& /*out*/)
   tr2.refine_global(2);
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
-
 
   for(unsigned int i = 0; i < 15 - 2 * dim; ++i)
     {
@@ -113,7 +108,6 @@ test(std::ostream& /*out*/)
       assert_tria_equal(tr, tr2);
     }
 }
-
 
 int
 main(int argc, char* argv[])

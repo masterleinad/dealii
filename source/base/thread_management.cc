@@ -23,9 +23,7 @@
 #  include <unistd.h>
 #endif
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace Threads
 {
@@ -33,14 +31,11 @@ namespace Threads
   {
     static std::atomic<unsigned int> n_existing_threads_counter(1);
 
-
     void
     register_thread()
     {
       ++n_existing_threads_counter;
     }
-
-
 
     void
     deregister_thread()
@@ -48,8 +43,6 @@ namespace Threads
       --n_existing_threads_counter;
       Assert(n_existing_threads_counter >= 1, ExcInternalError());
     }
-
-
 
     [[noreturn]] void
     handle_std_exception(const std::exception& exc) {
@@ -88,8 +81,6 @@ namespace Threads
       std::abort();
     }
 
-
-
       [[noreturn]] void handle_unknown_exception()
     {
       // lock the following context
@@ -123,14 +114,11 @@ namespace Threads
     }
   } // namespace internal
 
-
-
   unsigned int
   n_existing_threads()
   {
     return internal::n_existing_threads_counter;
   }
-
 
   unsigned int
   this_thread_id()
@@ -146,8 +134,6 @@ namespace Threads
     return static_cast<unsigned int>(this_id);
   }
 
-
-
 #ifndef DEAL_II_WITH_THREADS
   DummyBarrier::DummyBarrier(const unsigned int count, const char*, void*)
   {
@@ -155,10 +141,8 @@ namespace Threads
     Assert(count == 1, ExcBarrierSizeNotUseful(count));
   }
 
-
 #else
 #  ifdef DEAL_II_USE_MT_POSIX
-
 
 #    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
   PosixThreadBarrier::PosixThreadBarrier(const unsigned int count,
@@ -189,8 +173,6 @@ namespace Threads
   }
 #    endif
 
-
-
   PosixThreadBarrier::~PosixThreadBarrier()
   {
 #    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
@@ -203,8 +185,6 @@ namespace Threads
       std::abort();
 #    endif
   }
-
-
 
   int
   PosixThreadBarrier::wait()
@@ -226,12 +206,8 @@ namespace Threads
 #    endif
   }
 
-
-
 #  endif
 #endif
-
-
 
   std::vector<std::pair<unsigned int, unsigned int>>
   split_interval(const unsigned int begin,
@@ -268,6 +244,5 @@ namespace Threads
     return return_values;
   }
 } // namespace Threads
-
 
 DEAL_II_NAMESPACE_CLOSE

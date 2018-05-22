@@ -161,8 +161,6 @@ test_global_refinement(void (*test_block_list)(const Triangulation<dim>& tr,
   deallog.pop();
 }
 
-
-
 int
 main()
 {

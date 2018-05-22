@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // same as gmres_reorthogonalize_04 but with forced orthogonalization
 
 #include "../tests.h"
@@ -21,8 +20,6 @@
 #include <deal.II/lac/solver_gmres.h>
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
-
-
 
 // reimplements things from vector.templates.h in another way which is more
 // prone to roundoff, the linker will select this version instead of the one
@@ -48,8 +45,6 @@ namespace dealii
     return std::sqrt(sum);
   }
 } // namespace dealii
-
-
 
 template <typename number>
 void

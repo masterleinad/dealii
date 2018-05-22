@@ -16,7 +16,6 @@
 #ifndef dealii_data_out_base_h
 #define dealii_data_out_base_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/point.h>
@@ -40,7 +39,6 @@
 #include <ostream>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 class ParameterHandler;
 class XDMFEntry;
@@ -365,8 +363,6 @@ namespace DataOutBase
     //@}
   };
 
-
-
   /**
    * A specialization of the general Patch<dim,spacedim> template that is
    * tailored to the case of points, i.e., zero-dimensional objects embedded
@@ -511,7 +507,6 @@ namespace DataOutBase
     //@}
   };
 
-
   /**
    * Base class describing common functionality between different output
    * flags.
@@ -556,18 +551,15 @@ namespace DataOutBase
     memory_consumption() const;
   };
 
-
   template <typename FlagsType>
   void
   OutputFlagsBase<FlagsType>::declare_parameters(ParameterHandler&)
   {}
 
-
   template <typename FlagsType>
   void
   OutputFlagsBase<FlagsType>::parse_parameters(const ParameterHandler&)
   {}
-
 
   template <typename FlagsType>
   std::size_t
@@ -575,7 +567,6 @@ namespace DataOutBase
   {
     return sizeof(FlagsType);
   }
-
 
   /**
    * Flags controlling the details of output in OpenDX format.
@@ -780,7 +771,6 @@ namespace DataOutBase
     parse_parameters(const ParameterHandler& prm);
   };
 
-
   /**
    * Flags controlling the details of output in encapsulated postscript
    * format.
@@ -949,7 +939,6 @@ namespace DataOutBase
      * which is a member of this class.
      */
     ColorFunction color_function;
-
 
     /**
      * Default colorization function. This one does what one usually wants: It
@@ -1153,7 +1142,6 @@ namespace DataOutBase
              const ZlibCompressionLevel compression_level   = best_compression);
   };
 
-
   /**
    * Flags for SVG output.
    *
@@ -1207,7 +1195,6 @@ namespace DataOutBase
              const bool         margin         = true,
              const bool         draw_colorbar  = true);
   };
-
 
   /**
    * Flags controlling the details of output in deal.II intermediate format.
@@ -1414,7 +1401,6 @@ namespace DataOutBase
     void
     flush_cells();
 
-
   private:
     /**
      * Empty class to provide comparison function for Map3DPoint.
@@ -1505,7 +1491,6 @@ namespace DataOutBase
                       const unsigned int pt_index);
   };
 
-
   /**
    * Provide a data type specifying the presently supported output formats.
    */
@@ -1579,7 +1564,6 @@ namespace DataOutBase
      */
     hdf5
   };
-
 
   /**
    * Write the given list of patches to the output stream in OpenDX format.
@@ -1662,7 +1646,6 @@ namespace DataOutBase
                     vector_data_ranges,
     const EpsFlags& flags,
     std::ostream&   out);
-
 
   /**
    * Write the given list of patches to the output stream in GMV format.
@@ -1901,7 +1884,6 @@ namespace DataOutBase
                     vector_data_ranges,
     const VtkFlags& flags,
     std::ostream&   out);
-
 
   /**
    * Write the given list of patches to the output stream in VTU format. The
@@ -2369,8 +2351,6 @@ namespace DataOutBase
   //@}
 } // namespace DataOutBase
 
-
-
 /**
  * This class is the interface to the functions in the DataOutBase namespace,
  * as already its name might suggest. It does not offer much functionality
@@ -2742,7 +2722,6 @@ public:
   void
   write_filtered_data(DataOutBase::DataOutFilter& filtered_data) const;
 
-
   /**
    * Write data and grid to <tt>out</tt> according to the given data format.
    * This function simply calls the appropriate <tt>write_*</tt> function. If
@@ -2763,7 +2742,6 @@ public:
   void
   set_default_format(const DataOutBase::OutputFormat default_format);
 
-
   /**
    * Set the flags to be used for output. This method expects <tt>flags</tt>
    * to be a member of one of the child classes of <tt>OutputFlagsBase</tt>.
@@ -2771,7 +2749,6 @@ public:
   template <typename FlagType>
   void
   set_flags(const FlagType& flags);
-
 
   /**
    * A function that returns the same string as the respective function in the
@@ -2867,7 +2844,6 @@ protected:
   void
   validate_dataset_names() const;
 
-
   /**
    * The default number of subdivisions for patches. This is filled by
    * parse_parameters() and should be obeyed by build_patches() in derived
@@ -2943,8 +2919,6 @@ private:
    */
   DataOutBase::Deal_II_IntermediateFlags deal_II_intermediate_flags;
 };
-
-
 
 /**
  * A class that is used to read data written in deal.II intermediate format
@@ -3115,8 +3089,6 @@ private:
     vector_data_ranges;
 };
 
-
-
 /**
  * A class to store relevant data to use when writing a lightweight XDMF
  * file. The XDMF file in turn points to heavy data files (such as HDF5)
@@ -3237,8 +3209,6 @@ private:
   std::map<std::string, unsigned int> attribute_dims;
 };
 
-
-
 /* -------------------- inline functions ------------------- */
 
 namespace DataOutBase
@@ -3248,7 +3218,6 @@ namespace DataOutBase
   {
     return (red == green) && (red == blue);
   }
-
 
   /* -------------------- template functions ------------------- */
 
@@ -3264,8 +3233,6 @@ namespace DataOutBase
   std::ostream&
   operator<<(std::ostream& out, const Patch<dim, spacedim>& patch);
 
-
-
   /**
    * Input operator for an object of type <tt>DataOutBase::Patch</tt>. This
    * operator reads the intermediate graphics format represented by the patch
@@ -3278,7 +3245,6 @@ namespace DataOutBase
   std::istream&
   operator>>(std::istream& in, Patch<dim, spacedim>& patch);
 } // namespace DataOutBase
-
 
 DEAL_II_NAMESPACE_CLOSE
 

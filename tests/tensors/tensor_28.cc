@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Additional tests for tensor contraction
 //
 // Specifically, its to clarify the order of arguments and tensor

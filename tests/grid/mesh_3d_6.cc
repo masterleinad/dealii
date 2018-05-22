@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check that face orientation flags work by looping over all cells
 // and check on all faces that if we look from both sides that normal
 // vectors point in opposite directions
@@ -31,8 +29,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void check_this(Triangulation<3>& tria)
 {
@@ -84,7 +80,6 @@ void check_this(Triangulation<3>& tria)
         }
 }
 
-
 void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
@@ -105,7 +100,6 @@ void check(Triangulation<3>& tria)
   deallog << "Check " << 2 << std::endl;
   check_this(tria);
 }
-
 
 int
 main()

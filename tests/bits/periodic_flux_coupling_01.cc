@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 /* checks that make_flux_sparsity_pattern() with masks runs without
 * calling inactive cells
 * on an adapted mesh with periodic boundary conditions
@@ -32,8 +31,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MakeFlux
@@ -58,7 +55,6 @@ template <int dim>
 MakeFlux<dim>::MakeFlux() : fe(1), dof_handler(triangulation)
 {}
 
-
 template <int dim>
 void
 MakeFlux<dim>::make_grid()
@@ -80,7 +76,6 @@ MakeFlux<dim>::make_grid()
   triangulation.add_periodicity(periodic_faces);
   triangulation.refine_global(1);
 }
-
 
 template <int dim>
 void
@@ -129,7 +124,6 @@ MakeFlux<dim>::run()
     }
   deallog << "PASSED" << std::endl;
 }
-
 
 int
 main(int argc, char** argv)

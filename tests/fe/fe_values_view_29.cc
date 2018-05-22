@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _28 but also test a non-primitive element.
 
 #include "../tests.h"
@@ -29,8 +27,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 class F : public Function<2>
 {
@@ -47,14 +43,11 @@ public:
   }
 };
 
-
-
 Tensor<1, 1>
 curl(const Tensor<2, 2>& grads)
 {
   return Point<1>(grads[1][0] - grads[0][1]);
 }
-
 
 Tensor<1, 3>
 curl(const Tensor<2, 3>& grads)
@@ -63,8 +56,6 @@ curl(const Tensor<2, 3>& grads)
                   grads[0][2] - grads[2][0],
                   grads[1][0] - grads[0][1]);
 }
-
-
 
 template <int dim>
 void
@@ -118,8 +109,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_cube()
@@ -133,7 +122,6 @@ test_hyper_cube()
       test(tr, fe, degree);
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Check consistency of function implementations
 
 #include "../tests.h"
@@ -39,7 +38,6 @@
     check_gradient(f, 5);                      \
   }
 
-
 #define CHECKN(F, arg)                               \
   {                                                  \
     deallog << #F << '(' << arg << ')' << std::endl; \
@@ -47,7 +45,6 @@
     check_function_value_consistency(f, arg + 1);    \
     check_function_gradient_consistency(f, arg + 1); \
   }
-
 
 int
 main()

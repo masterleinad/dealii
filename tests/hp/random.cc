@@ -13,11 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // see what happens if we distribute different finite elements
 // randomly across the domain
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -28,8 +25,6 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/hp/dof_handler.h>
-
-
 
 template <int dim>
 void
@@ -73,7 +68,6 @@ test()
       deallog << std::endl;
     }
 }
-
 
 int
 main()

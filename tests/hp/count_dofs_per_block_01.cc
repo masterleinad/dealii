@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 // like bits/count_dofs_per_block_01 but for hp::DoFHandler
-
 
 #include "../tests.h"
 #include <deal.II/dofs/dof_accessor.h>
@@ -34,8 +32,6 @@
 
 #include <string>
 
-
-
 void
 print(const std::vector<types::global_dof_index>& v)
 {
@@ -44,8 +40,6 @@ print(const std::vector<types::global_dof_index>& v)
     deallog << ' ' << v[i];
   deallog << std::endl;
 }
-
-
 
 template <int dim>
 void
@@ -92,7 +86,6 @@ check()
     print(dpc);
   }
 
-
   // grouping into less groups than
   // components
   {
@@ -133,8 +126,6 @@ check()
     print(dpc);
   }
 }
-
-
 
 int
 main()

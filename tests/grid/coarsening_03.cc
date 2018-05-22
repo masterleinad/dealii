@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a simplified version of coarsening_03. what's happening is that we have a
 // uniformly 4x4 refined mesh, mark the bottom left 4 cells for refinement,
 // mark the top right 4 for coarsening, and then end up with a mesh that
@@ -29,8 +27,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 template <int dim>
 bool
@@ -58,7 +54,6 @@ satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
         return false;
   return true;
 }
-
 
 template <int dim>
 void
@@ -94,7 +89,6 @@ test()
   AssertThrow(satisfies_level1_at_vertex_rule(triangulation),
               ExcInternalError());
 }
-
 
 int
 main()

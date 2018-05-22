@@ -39,7 +39,6 @@ const unsigned int mn_tria_hex_user_flags_end     = 0xa113;
 const unsigned int mn_persistent_tria_flags_begin = 0xa200;
 const unsigned int mn_persistent_tria_flags_end   = 0xa201;
 
-
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

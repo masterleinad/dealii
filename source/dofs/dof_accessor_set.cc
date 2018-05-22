@@ -36,7 +36,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename DoFHandlerType, bool lda>
 template <class OutputVector, typename number>
 void
@@ -122,7 +121,6 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
         }
     }
 }
-
 
 // --------------------------------------------------------------------------
 // explicit instantiations

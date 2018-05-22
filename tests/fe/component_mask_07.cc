@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // tests for the ComponentMask class
 //
 // here: ComponentMask::first_selected_component
 
-
 #include "../tests.h"
 #include <deal.II/fe/component_mask.h>
-
-
 
 void
 test()
@@ -64,7 +59,6 @@ test()
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
 
 int
 main()

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Output transfer matrices on locally refined meshes with hanging node constraints
 
 #include "../tests.h"
@@ -64,7 +63,6 @@ check_simple(const FiniteElement<dim>& fe)
   transfer.print_matrices(deallog.get_file_stream());
   transfer.print_indices(deallog.get_file_stream());
 }
-
 
 int
 main()

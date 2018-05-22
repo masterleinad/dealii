@@ -13,11 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 
 #include <deal.II/base/quadrature_lib.h>
-
 
 template <template <int dim> class Quad, int dim, typename... Args>
 std::string
@@ -49,7 +47,6 @@ check_q_assign_move(Args&&... args)
   return "OK";
 }
 
-
 template <template <int dim> class Quad, typename... Args>
 void
 check_quadrature_assign_move(Args&&... args)
@@ -60,7 +57,6 @@ check_quadrature_assign_move(Args&&... args)
           << check_q_assign_move<Quad, 3>(std::forward<Args>(args)...) << 3
           << std::endl;
 }
-
 
 int
 main()

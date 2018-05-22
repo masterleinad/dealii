@@ -99,7 +99,6 @@
 
 #include <string>
 
-
 using namespace dealii;
 
 template <int dim>

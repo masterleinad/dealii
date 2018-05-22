@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // merge and print a bunch of ConstrainMatrices. test the case that we have
 // inhomogeneities in the constraints and the constraint matrix is constructed
 // based on an IndexSet to transform large global indices into local ones
@@ -22,10 +20,7 @@
 #include "../tests.h"
 #include <deal.II/lac/constraint_matrix.h>
 
-
-
 std::ofstream logfile("output");
-
 
 void
 merge_check()
@@ -105,7 +100,6 @@ merge_check()
       c1.print(logfile);
     };
 }
-
 
 int
 main()

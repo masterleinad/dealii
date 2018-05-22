@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // plot PolynomialsRaviartThomas on the reference cell
 
 #include "../tests.h"
@@ -36,7 +35,6 @@ plot(const PolynomialsRaviartThomas<dim>& poly)
   std::vector<Tensor<3, dim>> grads2;
   std::vector<Tensor<4, dim>> thirds;
   std::vector<Tensor<5, dim>> fourths;
-
 
   for(unsigned int k = 0; k < quadrature.size(); ++k)
     {

@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // extracted from count_dofs_per_block that crashed at one point
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -34,7 +31,6 @@
 #include <deal.II/numerics/data_out.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -105,7 +101,6 @@ test()
     }
   }
 }
-
 
 int
 main(int argc, char* argv[])

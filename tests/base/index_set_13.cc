@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::operator &
 
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -55,8 +53,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

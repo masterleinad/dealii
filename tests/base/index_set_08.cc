@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test IndexSet::is_contiguous and compress()
 
 #include "../tests.h"
 
 #include <deal.II/base/index_set.h>
-
 
 void
 test()
@@ -38,7 +36,6 @@ test()
   index_set.add_index(2);
   index_set.add_index(7);
 
-
   deallog << (index_set.is_contiguous() ? "true" : "false") << std::endl;
   Assert(index_set.is_contiguous() == true, ExcInternalError());
 
@@ -46,8 +43,6 @@ test()
     deallog << i << ' ' << (index_set.is_element(i) ? "true" : "false")
             << std::endl;
 }
-
-
 
 int
 main()

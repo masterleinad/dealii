@@ -30,14 +30,10 @@
 #include <algorithm>
 #include <cmath>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 template <int dim, int spacedim>
 const unsigned int MappingCartesian<dim, spacedim>::invalid_face_number;
-
-
 
 template <int dim, int spacedim>
 MappingCartesian<dim, spacedim>::InternalData::InternalData(
@@ -46,8 +42,6 @@ MappingCartesian<dim, spacedim>::InternalData::InternalData(
     volume_element(numbers::signaling_nan<double>()),
     quadrature_points(q.get_points())
 {}
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -59,16 +53,12 @@ MappingCartesian<dim, spacedim>::InternalData::memory_consumption() const
           + MemoryConsumption::memory_consumption(quadrature_points));
 }
 
-
-
 template <int dim, int spacedim>
 bool
 MappingCartesian<dim, spacedim>::preserves_vertex_locations() const
 {
   return true;
 }
-
-
 
 template <int dim, int spacedim>
 UpdateFlags
@@ -87,8 +77,6 @@ MappingCartesian<dim, spacedim>::requires_update_flags(
   return out;
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingCartesian<dim, spacedim>::get_data(const UpdateFlags      update_flags,
@@ -103,8 +91,6 @@ MappingCartesian<dim, spacedim>::get_data(const UpdateFlags      update_flags,
 
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
@@ -127,8 +113,6 @@ MappingCartesian<dim, spacedim>::get_face_data(
   return std::move(data);
 }
 
-
-
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingCartesian<dim, spacedim>::get_subface_data(
@@ -149,8 +133,6 @@ MappingCartesian<dim, spacedim>::get_subface_data(
 
   return std::move(data);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -229,7 +211,6 @@ MappingCartesian<dim, spacedim>::compute_fill(
         }
     }
 
-
   // transform quadrature point. this
   // is obtained simply by scaling
   // unit coordinates with lengths in
@@ -265,7 +246,6 @@ MappingCartesian<dim, spacedim>::compute_fill(
               += data.cell_extents[d] * data.quadrature_points[i + offset](d);
         }
     }
-
 
   // compute normal vectors. since
   // cells are aligned to coordinate
@@ -320,8 +300,6 @@ MappingCartesian<dim, spacedim>::compute_fill(
         }
     }
 }
-
-
 
 template <int dim, int spacedim>
 CellSimilarity::Similarity
@@ -432,8 +410,6 @@ MappingCartesian<dim, spacedim>::fill_fe_values(
   return cell_similarity;
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::fill_fe_face_values(
@@ -535,8 +511,6 @@ MappingCartesian<dim, spacedim>::fill_fe_face_values(
           output_data.inverse_jacobians[i][d][d] = 1. / data.cell_extents[d];
       }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -649,8 +623,6 @@ MappingCartesian<dim, spacedim>::fill_fe_subface_values(
       }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
@@ -708,8 +680,6 @@ MappingCartesian<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -820,8 +790,6 @@ MappingCartesian<dim, spacedim>::transform(
     }
 }
 
-
-
 template <int dim, int spacedim>
 void
 MappingCartesian<dim, spacedim>::transform(
@@ -930,7 +898,6 @@ MappingCartesian<dim, spacedim>::transform(
         Assert(false, ExcNotImplemented());
     }
 }
-
 
 template <int dim, int spacedim>
 void
@@ -1055,7 +1022,6 @@ MappingCartesian<dim, spacedim>::transform(
     }
 }
 
-
 template <int dim, int spacedim>
 Point<spacedim>
 MappingCartesian<dim, spacedim>::transform_unit_to_real_cell(
@@ -1089,8 +1055,6 @@ MappingCartesian<dim, spacedim>::transform_unit_to_real_cell(
   return p_real;
 }
 
-
-
 template <int dim, int spacedim>
 Point<dim>
 MappingCartesian<dim, spacedim>::transform_real_to_unit_cell(
@@ -1123,7 +1087,6 @@ MappingCartesian<dim, spacedim>::transform_real_to_unit_cell(
   return real;
 }
 
-
 template <int dim, int spacedim>
 std::unique_ptr<Mapping<dim, spacedim>>
 MappingCartesian<dim, spacedim>::clone() const
@@ -1131,10 +1094,8 @@ MappingCartesian<dim, spacedim>::clone() const
   return std_cxx14::make_unique<MappingCartesian<dim, spacedim>>(*this);
 }
 
-
 //---------------------------------------------------------------------------
 // explicit instantiations
 #include "mapping_cartesian.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

@@ -16,7 +16,6 @@
 #ifndef dealii_dof_accessor_h
 #define dealii_dof_accessor_h
 
-
 #include <deal.II/base/config.h>
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/grid/tria_accessor.h>
@@ -37,7 +36,6 @@ class TriaRawIterator;
 
 template <int, int>
 class FiniteElement;
-
 
 namespace internal
 {
@@ -68,7 +66,6 @@ namespace internal
 // this file.  this includes a lot of templates and thus makes
 // compilation slower, but at the same time allows for more aggressive
 // inlining and thus faster code.
-
 
 namespace internal
 {
@@ -101,7 +98,6 @@ namespace internal
       typedef dealii::TriaAccessor<structdim, dim, spacedim> BaseClass;
     };
 
-
     /**
      * This is the specialization of the general template used for the case
      * where an object has full dimension, i.e. is a cell. See the general
@@ -119,10 +115,7 @@ namespace internal
   } // namespace DoFAccessorImplementation
 } // namespace internal
 
-
 /* -------------------------------------------------------------------------- */
-
-
 
 /**
  * A class that gives access to the degrees of freedom stored in a DoFHandler
@@ -741,8 +734,6 @@ private:
   friend struct dealii::internal::DoFAccessorImplementation::Implementation;
 };
 
-
-
 /**
  * Specialization of the general DoFAccessor class template for the case of
  * zero-dimensional objects (a vertex) that are the face of a one-dimensional
@@ -1198,7 +1189,6 @@ protected:
   template <typename>
   friend class TriaRawIterator;
 
-
   /**
    * Make the DoFHandler class a friend so that it can call the set_xxx()
    * functions.
@@ -1215,10 +1205,7 @@ protected:
   friend struct dealii::internal::DoFCellAccessorImplementation::Implementation;
 };
 
-
-
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * A class that represents DoF accessor objects to iterators that don't make sense
@@ -1291,10 +1278,7 @@ public:
                 = DoFHandler<dim, spacedim>::default_fe_index) const;
 };
 
-
-
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * Grant access to the degrees of freedom on a cell.
@@ -1323,7 +1307,6 @@ public:
    * Extract space dimension from DoFHandlerType.
    */
   static const unsigned int spacedim = DoFHandlerType::space_dimension;
-
 
   /**
    * Data type passed by the iterator class.
@@ -1939,15 +1922,12 @@ private:
   friend struct dealii::internal::DoFCellAccessorImplementation::Implementation;
 };
 
-
 template <int sd, typename DoFHandlerType, bool level_dof_access>
 inline bool
 DoFAccessor<sd, DoFHandlerType, level_dof_access>::is_level_cell()
 {
   return level_dof_access;
 }
-
-
 
 template <int structdim, int dim, int spacedim>
 template <typename OtherAccessor>
@@ -1962,12 +1942,9 @@ DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
                     "the conversion is not valid in the current context."));
 }
 
-
-
 DEAL_II_NAMESPACE_CLOSE
 
 // include more templates
 #include "dof_accessor.templates.h"
-
 
 #endif

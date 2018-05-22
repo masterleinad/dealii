@@ -248,7 +248,6 @@ namespace SLEPcWrappers
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
   }
 
-
   void
   SolverBase::get_eigenpair(const unsigned int         index,
                             double&                    real_eigenvalues,
@@ -363,7 +362,6 @@ namespace SLEPcWrappers
         AssertThrow(ierr == 0, ExcSLEPcError(ierr));
       }
   }
-
 
   /* ---------------------- Lanczos ------------------------ */
   SolverLanczos::AdditionalData::AdditionalData(const EPSLanczosReorthogType r)

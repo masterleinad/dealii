@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -34,7 +33,6 @@
 
 #define PRECISION 2
 
-
 void
 plot_diff(const Vector<double>& v1,
           const Vector<double>& v2,
@@ -49,7 +47,6 @@ plot_diff(const Vector<double>& v1,
   deallog << " tangential  diff " << p1 - p2 << " (" << p1 << " - " << p2 << ')'
           << std::endl;
 }
-
 
 void
 plot_diff(const Vector<double>& v1,
@@ -72,7 +69,6 @@ plot_diff(const Vector<double>& v1,
   deallog << " tangential  diff " << p1 - p2 << " (" << p1 << " - " << p2 << ')'
           << std::endl;
 }
-
 
 template <int dim>
 void
@@ -124,7 +120,6 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
                                  quadrature,
                                  update_values | update_quadrature_points
                                    | update_normal_vectors);
-
 
   for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
       c != dof.end();
@@ -189,8 +184,6 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
   //     }
 }
 
-
-
 template <int dim>
 inline void
 check(const unsigned int p)
@@ -208,7 +201,6 @@ check(const unsigned int p)
   tr.execute_coarsening_and_refinement();
   plot(tr, p);
 }
-
 
 int
 main()

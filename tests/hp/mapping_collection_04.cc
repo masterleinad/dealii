@@ -13,17 +13,12 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // a test that shows that mapping_collection_0[1-3] really is due to
 // the fact that MappingQ has a dysfunctional copy constructor...
-
 
 #include "../tests.h"
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/hp/mapping_collection.h>
-
-
 
 template <int dim>
 void
@@ -37,8 +32,6 @@ test()
   }
   deallog << "Destroying original..." << std::endl;
 }
-
-
 
 int
 main()

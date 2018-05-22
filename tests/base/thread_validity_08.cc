@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // see if we can detach from threads
 
 #include "../tests.h"
@@ -22,10 +21,8 @@
 
 #include <deal.II/base/thread_management.h>
 
-
 Threads::Mutex          mutex;
 static std::atomic<int> spin_lock(0);
-
 
 void
 worker()
@@ -38,8 +35,6 @@ worker()
   deallog << "OK." << std::endl;
   spin_lock = 1;
 }
-
-
 
 int
 main()

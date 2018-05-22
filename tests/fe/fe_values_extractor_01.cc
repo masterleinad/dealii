@@ -13,14 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that the FEValuesExtractors are copyable
 
 #include "../tests.h"
 #include <deal.II/fe/fe_values.h>
-
-
 
 int
 main()

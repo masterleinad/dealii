@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _24_nonsymmetric, but for a simpler mesh for which the output has been
 // verified to be correct
 
@@ -29,8 +27,6 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/manifold_lib.h>
 #include <deal.II/lac/vector.h>
-
-
 
 template <int dim>
 void
@@ -75,8 +71,6 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
 }
 
-
-
 template <int dim>
 void
 test_hyper_cube()
@@ -87,7 +81,6 @@ test_hyper_cube()
   FESystem<dim> fe(FE_Q<dim>(1), Tensor<2, dim>::n_independent_components);
   test(tr, fe);
 }
-
 
 int
 main()

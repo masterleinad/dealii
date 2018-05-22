@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // distribute dofs on a shared and distributed triangulation and compare
 // Note: this doesn't pass for all meshes since, for some complicated refinement
 //       schemes, cells may be traversed in different order in a distributed
@@ -86,8 +85,6 @@ compare_meshes(DoFHandler<dim>& shared_dof_handler,
                ExcInternalError());
     }
 }
-
-
 
 template <int dim>
 void

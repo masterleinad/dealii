@@ -13,15 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // VectorTools::interpolate_boundary_values produced an exception when
 // used with hp::DoFHandler in 1d. Test that this is no longer the case
 
-
 #include "../tests.h"
 std::ofstream logfile("output");
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -52,7 +48,6 @@ std::ofstream logfile("output");
 #include <list>
 #include <sstream>
 
-
 template <int dim>
 class ExactSolution : public Function<dim>
 {
@@ -65,7 +60,6 @@ public:
     return p(0);
   }
 };
-
 
 template <int dim>
 void
@@ -101,7 +95,6 @@ test()
       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
-
 
 int
 main()

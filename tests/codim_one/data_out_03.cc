@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // DataOut::build_patches did not compute mapped coordinates for all cells
 // if dim<spacedim even if a mapping was explicitly requested.
 
@@ -43,7 +41,6 @@ public:
   Identity() : Function<dim>(dim)
   {}
 
-
   virtual double
   value(const Point<dim>& p, const unsigned int component) const
   {
@@ -58,7 +55,6 @@ public:
   }
 };
 
-
 int
 main()
 {
@@ -66,7 +62,6 @@ main()
 
   int fe_degree      = 2;
   int mapping_degree = 2;
-
 
   Triangulation<2, 3> tria;
 
@@ -77,7 +72,6 @@ main()
   SphericalManifold<3> boundary_description;
   Triangulation<3>     volume_mesh;
   GridGenerator::half_hyper_ball(volume_mesh);
-
 
   volume_mesh.set_manifold(1, boundary_description);
   volume_mesh.set_manifold(0, boundary_description);
@@ -116,7 +110,6 @@ main()
   data_out.build_patches(mapping, 2);
 
   data_out.write_gnuplot(deallog.get_file_stream());
-
 
   dh_test.clear();
   tria.reset_manifold(0);

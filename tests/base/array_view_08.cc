@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test ArrayView::begin and ArrayView::end
 
 #include "../tests.h"
@@ -78,8 +77,6 @@ test()
 
   deallog << "OK" << std::endl;
 }
-
-
 
 int
 main()

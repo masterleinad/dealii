@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Plot PolynomialsRT_Bubbles on the reference cell
 
 #include "../tests.h"
@@ -22,7 +21,6 @@
 #include <deal.II/base/tensor.h>
 
 #include <vector>
-
 
 template <int dim>
 void
@@ -52,8 +50,6 @@ plot(const PolynomialsRT_Bubbles<dim>& poly)
       deallog << std::endl;
     }
 }
-
-
 
 int
 main()

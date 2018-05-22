@@ -20,9 +20,7 @@
 
 #include <cmath>
 
-
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace Functions
 {
@@ -34,15 +32,12 @@ namespace Functions
       aux_gradients(dim + 1)
   {}
 
-
-
   template <int dim>
   void
   FlowFunction<dim>::pressure_adjustment(double p)
   {
     mean_pressure = p;
   }
-
 
   template <int dim>
   void
@@ -71,7 +66,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   void
   FlowFunction<dim>::vector_value(const Point<dim>& point,
@@ -96,7 +90,6 @@ namespace Functions
       value(d) = aux_values[d][0];
   }
 
-
   template <int dim>
   double
   FlowFunction<dim>::value(const Point<dim>&  point,
@@ -117,7 +110,6 @@ namespace Functions
 
     return aux_values[comp][0];
   }
-
 
   template <int dim>
   void
@@ -146,7 +138,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   void
   FlowFunction<dim>::vector_laplacian_list(
@@ -174,7 +165,6 @@ namespace Functions
       }
   }
 
-
   template <int dim>
   std::size_t
   FlowFunction<dim>::memory_consumption() const
@@ -182,7 +172,6 @@ namespace Functions
     Assert(false, ExcNotImplemented());
     return 0;
   }
-
 
   //----------------------------------------------------------------------//
 
@@ -192,8 +181,6 @@ namespace Functions
   {
     Assert(Reynolds != 0., ExcMessage("Reynolds number cannot be zero"));
   }
-
-
 
   template <int dim>
   void
@@ -231,8 +218,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   void
   PoisseuilleFlow<dim>::vector_gradients(
@@ -264,8 +249,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   void
   PoisseuilleFlow<dim>::vector_laplacians(
@@ -291,8 +274,6 @@ namespace Functions
     : viscosity(nu), reaction(r)
   {}
 
-
-
   template <int dim>
   void
   StokesCosine<dim>::set_parameters(const double nu, const double r)
@@ -300,7 +281,6 @@ namespace Functions
     viscosity = nu;
     reaction  = r;
   }
-
 
   template <int dim>
   void
@@ -348,8 +328,6 @@ namespace Functions
           }
       }
   }
-
-
 
   template <int dim>
   void
@@ -415,8 +393,6 @@ namespace Functions
       }
   }
 
-
-
   template <int dim>
   void
   StokesCosine<dim>::vector_laplacians(
@@ -443,7 +419,6 @@ namespace Functions
           for(unsigned int k = 0; k < values[d].size(); ++k)
             values[d][k] = 0.;
       }
-
 
     for(unsigned int k = 0; k < n; ++k)
       {
@@ -485,7 +460,6 @@ namespace Functions
       }
   }
 
-
   //----------------------------------------------------------------------//
 
   const double StokesLSingularity::lambda = 0.54448373678246;
@@ -497,14 +471,12 @@ namespace Functions
       lm(1. - lambda)
   {}
 
-
   inline double
   StokesLSingularity::Psi(double phi) const
   {
     return coslo * (sin(lp * phi) / lp - sin(lm * phi) / lm) - cos(lp * phi)
            + cos(lm * phi);
   }
-
 
   inline double
   StokesLSingularity::Psi_1(double phi) const
@@ -513,14 +485,12 @@ namespace Functions
            - lm * sin(lm * phi);
   }
 
-
   inline double
   StokesLSingularity::Psi_2(double phi) const
   {
     return coslo * (lm * sin(lm * phi) - lp * sin(lp * phi))
            + lp * lp * cos(lp * phi) - lm * lm * cos(lm * phi);
   }
-
 
   inline double
   StokesLSingularity::Psi_3(double phi) const
@@ -529,7 +499,6 @@ namespace Functions
            + lm * lm * lm * sin(lm * phi) - lp * lp * lp * sin(lp * phi);
   }
 
-
   inline double
   StokesLSingularity::Psi_4(double phi) const
   {
@@ -537,7 +506,6 @@ namespace Functions
            + lm * lm * lm * lm * cos(lm * phi)
            - lp * lp * lp * lp * cos(lp * phi);
   }
-
 
   void
   StokesLSingularity::vector_values(
@@ -576,8 +544,6 @@ namespace Functions
           }
       }
   }
-
-
 
   void
   StokesLSingularity::vector_gradients(
@@ -639,8 +605,6 @@ namespace Functions
       }
   }
 
-
-
   void
   StokesLSingularity::vector_laplacians(
     const std::vector<Point<2>>&      points,
@@ -657,7 +621,6 @@ namespace Functions
         values[d][k] = 0.;
   }
 
-
   //----------------------------------------------------------------------//
 
   Kovasznay::Kovasznay(double Re, bool stokes) : Reynolds(Re), stokes(stokes)
@@ -671,8 +634,6 @@ namespace Functions
     // x-direction
     p_average = 1 / (8 * l) * (std::exp(3. * l) - std::exp(-l));
   }
-
-
 
   void
   Kovasznay::vector_values(const std::vector<Point<2>>&      points,
@@ -696,7 +657,6 @@ namespace Functions
         values[2][k] = -.5 * elx * elx + p_average + this->mean_pressure;
       }
   }
-
 
   void
   Kovasznay::vector_gradients(
@@ -728,8 +688,6 @@ namespace Functions
         gradients[2][i][1] = 0.;
       }
   }
-
-
 
   void
   Kovasznay::vector_laplacians(const std::vector<Point<2>>&      points,
@@ -775,8 +733,6 @@ namespace Functions
     return lbda;
   }
 
-
-
   template class FlowFunction<2>;
   template class FlowFunction<3>;
   template class PoisseuilleFlow<2>;
@@ -784,7 +740,5 @@ namespace Functions
   template class StokesCosine<2>;
   template class StokesCosine<3>;
 } // namespace Functions
-
-
 
 DEAL_II_NAMESPACE_CLOSE

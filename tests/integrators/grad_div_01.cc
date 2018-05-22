@@ -13,13 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Test the functions in integrators/grad_div.h
 // Output matrices and assert consistency of residuals
 
 #include "../test_grids.h"
 #include "../tests.h"
-
 
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_nedelec.h>
@@ -70,7 +68,6 @@ test_cell(const FEValuesBase<dim>& fev)
     deallog << std::endl;
   }
 }
-
 
 template <int dim>
 void
@@ -126,7 +123,6 @@ test_boundary(const FEValuesBase<dim>& fev)
     deallog << std::endl;
   }
 }
-
 
 template <int dim>
 void
@@ -240,7 +236,6 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
   }
 }
 
-
 template <int dim>
 void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
@@ -275,7 +270,6 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
   test_face(fef1, fef2);
 }
 
-
 template <int dim>
 void
 test(Triangulation<dim>& tr)
@@ -294,7 +288,6 @@ test(Triangulation<dim>& tr)
   FE_RaviartThomas<dim> rt1(1);
   test_fe(tr, rt1);
 }
-
 
 int
 main()

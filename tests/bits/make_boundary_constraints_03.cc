@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // bug: https://code.google.com/p/dealii/issues/detail?id=154
 // fixed in r31734
 
@@ -37,7 +35,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-
 
 template <int dim>
 void

@@ -41,11 +41,9 @@
 #include <iomanip>
 #include <type_traits>
 
-
 #include <boost/container/small_vector.hpp>
 
 DEAL_II_NAMESPACE_OPEN
-
 
 namespace internal
 {
@@ -57,16 +55,12 @@ namespace internal
     return internal::ElementAccess<VectorType>::get(vector, cell_number);
   }
 
-
-
   IndexSet::value_type inline get_vector_element(
     const IndexSet&               is,
     const types::global_dof_index cell_number)
   {
     return (is.is_element(cell_number) ? 1 : 0);
   }
-
-
 
   template <int dim, int spacedim>
   inline std::vector<unsigned int>
@@ -129,8 +123,6 @@ namespace internal
   } // namespace
 } // namespace internal
 
-
-
 namespace FEValuesViews
 {
   template <int dim, int spacedim>
@@ -169,14 +161,10 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   Scalar<dim, spacedim>::Scalar()
     : fe_values(nullptr), component(numbers::invalid_unsigned_int)
   {}
-
-
 
   template <int dim, int spacedim>
   Scalar<dim, spacedim>&
@@ -186,8 +174,6 @@ namespace FEValuesViews
     Assert(false, ExcInternalError());
     return *this;
   }
-
-
 
   template <int dim, int spacedim>
   Vector<dim, spacedim>::Vector(const FEValuesBase<dim, spacedim>& fe_values,
@@ -260,14 +246,10 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   Vector<dim, spacedim>::Vector()
     : fe_values(nullptr), first_vector_component(numbers::invalid_unsigned_int)
   {}
-
-
 
   template <int dim, int spacedim>
   Vector<dim, spacedim>&
@@ -277,8 +259,6 @@ namespace FEValuesViews
     Assert(false, ExcInternalError());
     return *this;
   }
-
-
 
   template <int dim, int spacedim>
   SymmetricTensor<2, dim, spacedim>::SymmetricTensor(
@@ -361,14 +341,10 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   SymmetricTensor<2, dim, spacedim>::SymmetricTensor()
     : fe_values(nullptr), first_tensor_component(numbers::invalid_unsigned_int)
   {}
-
-
 
   template <int dim, int spacedim>
   SymmetricTensor<2, dim, spacedim>&
@@ -379,8 +355,6 @@ namespace FEValuesViews
     Assert(false, ExcInternalError());
     return *this;
   }
-
-
 
   template <int dim, int spacedim>
   Tensor<2, dim, spacedim>::Tensor(const FEValuesBase<dim, spacedim>& fe_values,
@@ -452,14 +426,10 @@ namespace FEValuesViews
       }
   }
 
-
-
   template <int dim, int spacedim>
   Tensor<2, dim, spacedim>::Tensor()
     : fe_values(nullptr), first_tensor_component(numbers::invalid_unsigned_int)
   {}
-
-
 
   template <int dim, int spacedim>
   Tensor<2, dim, spacedim>&
@@ -469,8 +439,6 @@ namespace FEValuesViews
     Assert(false, ExcInternalError());
     return *this;
   }
-
-
 
   namespace internal
   {
@@ -516,8 +484,6 @@ namespace FEValuesViews
           }
     }
 
-
-
     // same code for gradient and Hessian, template argument 'order' to give
     // the order of the derivative (= rank of gradient/Hessian tensor)
     template <int order, int dim, int spacedim, typename Number>
@@ -562,8 +528,6 @@ namespace FEValuesViews
           }
     }
 
-
-
     template <int dim, int spacedim, typename Number>
     void
     do_function_laplacians(
@@ -604,8 +568,6 @@ namespace FEValuesViews
               laplacians[q_point] += value * trace(*shape_hessian_ptr++);
           }
     }
-
-
 
     // ----------------------------- vector part ---------------------------
 
@@ -669,8 +631,6 @@ namespace FEValuesViews
                 }
         }
     }
-
-
 
     template <int order, int dim, int spacedim, typename Number>
     void
@@ -737,8 +697,6 @@ namespace FEValuesViews
                 }
         }
     }
-
-
 
     template <int dim, int spacedim, typename Number>
     void
@@ -812,8 +770,6 @@ namespace FEValuesViews
         }
     }
 
-
-
     template <int dim, int spacedim, typename Number>
     void
     do_function_divergences(
@@ -875,8 +831,6 @@ namespace FEValuesViews
                 }
         }
     }
-
-
 
     template <int dim, int spacedim, typename Number>
     void
@@ -1140,8 +1094,6 @@ namespace FEValuesViews
         }
     }
 
-
-
     template <int dim, int spacedim, typename Number>
     void
     do_function_laplacians(
@@ -1205,8 +1157,6 @@ namespace FEValuesViews
                 }
         }
     }
-
-
 
     // ---------------------- symmetric tensor part ------------------------
 
@@ -1281,8 +1231,6 @@ namespace FEValuesViews
                 }
         }
     }
-
-
 
     template <int dim, int spacedim, typename Number>
     void
@@ -1461,8 +1409,6 @@ namespace FEValuesViews
         }
     }
 
-
-
     template <int dim, int spacedim, typename Number>
     void
     do_function_divergences(
@@ -1531,8 +1477,6 @@ namespace FEValuesViews
             }
         }
     }
-
-
 
     template <int dim, int spacedim, typename Number>
     void
@@ -1605,8 +1549,6 @@ namespace FEValuesViews
 
   } // end of namespace internal
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1636,8 +1578,6 @@ namespace FEValuesViews
       values);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1660,8 +1600,6 @@ namespace FEValuesViews
       shape_function_data,
       values);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1692,8 +1630,6 @@ namespace FEValuesViews
       gradients);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1716,8 +1652,6 @@ namespace FEValuesViews
       shape_function_data,
       gradients);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1748,8 +1682,6 @@ namespace FEValuesViews
       hessians);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1772,8 +1704,6 @@ namespace FEValuesViews
       shape_function_data,
       hessians);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1804,8 +1734,6 @@ namespace FEValuesViews
       laplacians);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1828,8 +1756,6 @@ namespace FEValuesViews
       shape_function_data,
       laplacians);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1860,8 +1786,6 @@ namespace FEValuesViews
       third_derivatives);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1883,8 +1807,6 @@ namespace FEValuesViews
       shape_function_data,
       third_derivatives);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1915,8 +1837,6 @@ namespace FEValuesViews
       values);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1939,8 +1859,6 @@ namespace FEValuesViews
       shape_function_data,
       values);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -1971,8 +1889,6 @@ namespace FEValuesViews
       gradients);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -1995,8 +1911,6 @@ namespace FEValuesViews
       shape_function_data,
       gradients);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2027,8 +1941,6 @@ namespace FEValuesViews
       symmetric_gradients);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2050,8 +1962,6 @@ namespace FEValuesViews
       shape_function_data,
       symmetric_gradients);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2083,8 +1993,6 @@ namespace FEValuesViews
       divergences);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2107,8 +2015,6 @@ namespace FEValuesViews
       shape_function_data,
       divergences);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2139,8 +2045,6 @@ namespace FEValuesViews
       curls);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2163,8 +2067,6 @@ namespace FEValuesViews
       shape_function_data,
       curls);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2195,8 +2097,6 @@ namespace FEValuesViews
       hessians);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2219,8 +2119,6 @@ namespace FEValuesViews
       shape_function_data,
       hessians);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2256,8 +2154,6 @@ namespace FEValuesViews
       laplacians);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2283,8 +2179,6 @@ namespace FEValuesViews
       shape_function_data,
       laplacians);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2315,8 +2209,6 @@ namespace FEValuesViews
       third_derivatives);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2338,8 +2230,6 @@ namespace FEValuesViews
       shape_function_data,
       third_derivatives);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2370,8 +2260,6 @@ namespace FEValuesViews
       values);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2394,8 +2282,6 @@ namespace FEValuesViews
       shape_function_data,
       values);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2427,8 +2313,6 @@ namespace FEValuesViews
       divergences);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2452,8 +2336,6 @@ namespace FEValuesViews
       shape_function_data,
       divergences);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2484,8 +2366,6 @@ namespace FEValuesViews
       values);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2508,8 +2388,6 @@ namespace FEValuesViews
       shape_function_data,
       values);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2541,8 +2419,6 @@ namespace FEValuesViews
       divergences);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2565,8 +2441,6 @@ namespace FEValuesViews
       shape_function_data,
       divergences);
   }
-
-
 
   template <int dim, int spacedim>
   template <class InputVector>
@@ -2598,8 +2472,6 @@ namespace FEValuesViews
       gradients);
   }
 
-
-
   template <int dim, int spacedim>
   template <class InputVector>
   void
@@ -2624,7 +2496,6 @@ namespace FEValuesViews
   }
 
 } // namespace FEValuesViews
-
 
 namespace internal
 {
@@ -2688,7 +2559,6 @@ namespace internal
                                                                      component);
         }
 
-
       // compute number of symmetric tensors in the same way as above
       const unsigned int n_second_order_tensors
         = (fe.n_components() >= dim * dim ? fe.n_components() - dim * dim + 1 :
@@ -2708,7 +2578,6 @@ namespace internal
     }
   } // namespace FEValuesViews
 } // namespace internal
-
 
 /* ---------------- FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
 
@@ -2750,7 +2619,6 @@ public:
 };
 
 /* ---------------- classes derived from FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
-
 
 /**
  * Implementation of derived classes of the CellIteratorBase
@@ -2801,7 +2669,6 @@ private:
    */
   const CI cell;
 };
-
 
 /**
  * Implementation of a derived class of the CellIteratorBase
@@ -2874,18 +2741,13 @@ private:
   static const char* const message_string;
 };
 
-
-
 /* ---------------- FEValuesBase<dim,spacedim>::CellIterator<CI> --------- */
-
 
 template <int dim, int spacedim>
 template <typename CI>
 FEValuesBase<dim, spacedim>::CellIterator<CI>::CellIterator(const CI& cell)
   : cell(cell)
 {}
-
-
 
 template <int dim, int spacedim>
 template <typename CI>
@@ -2895,8 +2757,6 @@ operator typename Triangulation<dim, spacedim>::cell_iterator() const
   return cell;
 }
 
-
-
 template <int dim, int spacedim>
 template <typename CI>
 types::global_dof_index
@@ -2905,11 +2765,7 @@ FEValuesBase<dim, spacedim>::CellIterator<CI>::n_dofs_for_dof_handler() const
   return cell->get_dof_handler().n_dofs();
 }
 
-
-
 #include "fe_values.impl.1.inst"
-
-
 
 template <int dim, int spacedim>
 template <typename CI>
@@ -2928,7 +2784,6 @@ FEValuesBase<dim, spacedim>::CellIterator<CI>::get_interpolated_dof_values(
     out[i] = (in.is_element(dof_indices[i]) ? 1 : 0);
 }
 
-
 /* ---------------- FEValuesBase<dim,spacedim>::TriaCellIterator --------- */
 
 template <int dim, int spacedim>
@@ -2941,15 +2796,11 @@ const char* const FEValuesBase<dim, spacedim>::TriaCellIterator::message_string
      "FEValues::reinit with an iterator type that allows to extract\n"
      "degrees of freedom, such as DoFHandler<dim,spacedim>::cell_iterator.");
 
-
-
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::TriaCellIterator::TriaCellIterator(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   : cell(cell)
 {}
-
-
 
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::TriaCellIterator::
@@ -2957,8 +2808,6 @@ operator typename Triangulation<dim, spacedim>::cell_iterator() const
 {
   return cell;
 }
-
-
 
 template <int dim, int spacedim>
 types::global_dof_index
@@ -2968,11 +2817,7 @@ FEValuesBase<dim, spacedim>::TriaCellIterator::n_dofs_for_dof_handler() const
   return 0;
 }
 
-
-
 #include "fe_values.impl.2.inst"
-
-
 
 template <int dim, int spacedim>
 void
@@ -2982,8 +2827,6 @@ FEValuesBase<dim, spacedim>::TriaCellIterator::get_interpolated_dof_values(
 {
   Assert(false, ExcMessage(message_string));
 }
-
-
 
 namespace internal
 {
@@ -3048,8 +2891,6 @@ namespace internal
           n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
     }
 
-
-
     template <int dim, int spacedim>
     std::size_t
     MappingRelatedData<dim, spacedim>::memory_consumption() const
@@ -3070,8 +2911,6 @@ namespace internal
         + MemoryConsumption::memory_consumption(normal_vectors)
         + MemoryConsumption::memory_consumption(boundary_forms));
     }
-
-
 
     template <int dim, int spacedim>
     void
@@ -3128,8 +2967,6 @@ namespace internal
         }
     }
 
-
-
     template <int dim, int spacedim>
     std::size_t
     FiniteElementRelatedData<dim, spacedim>::memory_consumption() const
@@ -3144,10 +2981,7 @@ namespace internal
   } // namespace FEValuesImplementation
 } // namespace internal
 
-
-
 /*------------------------------- FEValuesBase ---------------------------*/
-
 
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::FEValuesBase(
@@ -3170,16 +3004,12 @@ FEValuesBase<dim, spacedim>::FEValuesBase(
   this->update_flags = flags;
 }
 
-
-
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::~FEValuesBase()
 {
   tria_listener_refinement.disconnect();
   tria_listener_mesh_transform.disconnect();
 }
-
-
 
 namespace internal
 {
@@ -3229,8 +3059,6 @@ namespace internal
           values[point] += value * (*shape_value_ptr++);
       }
   }
-
-
 
   template <int dim, int spacedim, typename VectorType>
   void
@@ -3336,8 +3164,6 @@ namespace internal
         }
   }
 
-
-
   // use the same implementation for gradients and Hessians, distinguish them
   // by the rank of the tensors
   template <int order, int spacedim, typename Number>
@@ -3380,8 +3206,6 @@ namespace internal
       }
   }
 
-
-
   template <int order, int dim, int spacedim, typename Number>
   void
   do_function_derivatives(
@@ -3404,7 +3228,6 @@ namespace internal
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     if(dofs_per_cell == 0)
       return;
-
 
     const unsigned int n_quadrature_points = shape_derivatives[0].size();
     const unsigned int n_components        = fe.n_components();
@@ -3485,8 +3308,6 @@ namespace internal
         }
   }
 
-
-
   template <int spacedim, typename Number, typename Number2>
   void
   do_function_laplacians(
@@ -3524,8 +3345,6 @@ namespace internal
       }
   }
 
-
-
   template <int dim, int spacedim, typename VectorType, typename Number>
   void
   do_function_laplacians(
@@ -3548,7 +3367,6 @@ namespace internal
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     if(dofs_per_cell == 0)
       return;
-
 
     const unsigned int n_quadrature_points = shape_hessians[0].size();
     const unsigned int n_components        = fe.n_components();
@@ -3637,8 +3455,6 @@ namespace internal
   }
 } // namespace internal
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3661,8 +3477,6 @@ FEValuesBase<dim, spacedim>::get_function_values(
     dof_values.begin(), this->finite_element_output.shape_values, values);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3683,8 +3497,6 @@ FEValuesBase<dim, spacedim>::get_function_values(
   internal::do_function_values(
     dof_values.data(), this->finite_element_output.shape_values, values);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3711,8 +3523,6 @@ FEValuesBase<dim, spacedim>::get_function_values(
     this->finite_element_output.shape_function_to_row_table,
     make_array_view(values.begin(), values.end()));
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3742,8 +3552,6 @@ FEValuesBase<dim, spacedim>::get_function_values(
     false,
     indices.size() / dofs_per_cell);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3777,8 +3585,6 @@ FEValuesBase<dim, spacedim>::get_function_values(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3802,8 +3608,6 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
     dof_values.begin(), this->finite_element_output.shape_gradients, gradients);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3825,8 +3629,6 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
   internal::do_function_derivatives(
     dof_values.data(), this->finite_element_output.shape_gradients, gradients);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3854,8 +3656,6 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
     this->finite_element_output.shape_function_to_row_table,
     make_array_view(gradients.begin(), gradients.end()));
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3889,8 +3689,6 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3914,8 +3712,6 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
     dof_values.begin(), this->finite_element_output.shape_hessians, hessians);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -3937,8 +3733,6 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
   internal::do_function_derivatives(
     dof_values.data(), this->finite_element_output.shape_hessians, hessians);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -3968,8 +3762,6 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
     make_array_view(hessians.begin(), hessians.end()),
     quadrature_points_fastest);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4001,8 +3793,6 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -4025,8 +3815,6 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
     dof_values.begin(), this->finite_element_output.shape_hessians, laplacians);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -4047,8 +3835,6 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
   internal::do_function_laplacians(
     dof_values.data(), this->finite_element_output.shape_hessians, laplacians);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4074,8 +3860,6 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
     this->finite_element_output.shape_function_to_row_table,
     laplacians);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4106,8 +3890,6 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -4136,8 +3918,6 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -4163,8 +3943,6 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
     third_derivatives);
 }
 
-
-
 template <int dim, int spacedim>
 template <class InputVector>
 void
@@ -4188,8 +3966,6 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
     this->finite_element_output.shape_3rd_derivatives,
     third_derivatives);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4219,8 +3995,6 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
     make_array_view(third_derivatives.begin(), third_derivatives.end()),
     quadrature_points_fastest);
 }
-
-
 
 template <int dim, int spacedim>
 template <class InputVector>
@@ -4252,16 +4026,12 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
     indices.size() / dofs_per_cell);
 }
 
-
-
 template <int dim, int spacedim>
 const typename Triangulation<dim, spacedim>::cell_iterator
 FEValuesBase<dim, spacedim>::get_cell() const
 {
   return *present_cell;
 }
-
-
 
 template <int dim, int spacedim>
 const std::vector<Tensor<1, spacedim>>&
@@ -4273,8 +4043,6 @@ FEValuesBase<dim, spacedim>::get_all_normal_vectors() const
   return get_normal_vectors();
 }
 
-
-
 template <int dim, int spacedim>
 const std::vector<Tensor<1, spacedim>>&
 FEValuesBase<dim, spacedim>::get_normal_vectors() const
@@ -4285,8 +4053,6 @@ FEValuesBase<dim, spacedim>::get_normal_vectors() const
 
   return this->mapping_output.normal_vectors;
 }
-
-
 
 template <int dim, int spacedim>
 std::size_t
@@ -4306,8 +4072,6 @@ FEValuesBase<dim, spacedim>::memory_consumption() const
           + MemoryConsumption::memory_consumption(finite_element_output));
 }
 
-
-
 template <int dim, int spacedim>
 UpdateFlags
 FEValuesBase<dim, spacedim>::compute_update_flags(
@@ -4325,8 +4089,6 @@ FEValuesBase<dim, spacedim>::compute_update_flags(
   return flags;
 }
 
-
-
 template <int dim, int spacedim>
 void
 FEValuesBase<dim, spacedim>::invalidate_present_cell()
@@ -4342,8 +4104,6 @@ FEValuesBase<dim, spacedim>::invalidate_present_cell()
   tria_listener_mesh_transform.disconnect();
   present_cell.reset();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4389,8 +4149,6 @@ FEValuesBase<dim, spacedim>::maybe_invalidate_previous_present_cell(
           std::ref(static_cast<FEValuesBase<dim, spacedim>&>(*this))));
     }
 }
-
-
 
 template <int dim, int spacedim>
 inline void
@@ -4448,8 +4206,6 @@ FEValuesBase<dim, spacedim>::check_cell_similarity(
   // children of a parallelogram.
 }
 
-
-
 template <int dim, int spacedim>
 CellSimilarity::Similarity
 FEValuesBase<dim, spacedim>::get_cell_similarity() const
@@ -4457,12 +4213,8 @@ FEValuesBase<dim, spacedim>::get_cell_similarity() const
   return cell_similarity;
 }
 
-
-
 template <int dim, int spacedim>
 const unsigned int FEValuesBase<dim, spacedim>::dimension;
-
-
 
 template <int dim, int spacedim>
 const unsigned int FEValuesBase<dim, spacedim>::space_dimension;
@@ -4471,8 +4223,6 @@ const unsigned int FEValuesBase<dim, spacedim>::space_dimension;
 
 template <int dim, int spacedim>
 const unsigned int FEValues<dim, spacedim>::integral_dimension;
-
-
 
 template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim>&       mapping,
@@ -4489,8 +4239,6 @@ FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim>&       mapping,
   initialize(update_flags);
 }
 
-
-
 template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const FiniteElement<dim, spacedim>& fe,
                                   const Quadrature<dim>&              q,
@@ -4504,8 +4252,6 @@ FEValues<dim, spacedim>::FEValues(const FiniteElement<dim, spacedim>& fe,
 {
   initialize(update_flags);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4557,8 +4303,6 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
       typename Mapping<dim, spacedim>::InternalDataBase>();
 }
 
-
-
 namespace
 {
   // Reset a unique_ptr. If we can, do not de-allocate the previously
@@ -4588,8 +4332,6 @@ namespace
   }
 } // namespace
 
-
-
 template <int dim, int spacedim>
 void
 FEValues<dim, spacedim>::reinit(
@@ -4609,8 +4351,6 @@ FEValues<dim, spacedim>::reinit(
   // the real work.
   do_reinit();
 }
-
-
 
 template <int dim, int spacedim>
 template <template <int, int> class DoFHandlerType, bool lda>
@@ -4637,8 +4377,6 @@ FEValues<dim, spacedim>::reinit(
   // the real work.
   do_reinit();
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4672,8 +4410,6 @@ FEValues<dim, spacedim>::do_reinit()
                                 this->finite_element_output);
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FEValues<dim, spacedim>::memory_consumption() const
@@ -4682,9 +4418,7 @@ FEValues<dim, spacedim>::memory_consumption() const
           + MemoryConsumption::memory_consumption(quadrature));
 }
 
-
 /*------------------------------- FEFaceValuesBase --------------------------*/
-
 
 template <int dim, int spacedim>
 FEFaceValuesBase<dim, spacedim>::FEFaceValuesBase(
@@ -4703,8 +4437,6 @@ FEFaceValuesBase<dim, spacedim>::FEFaceValuesBase(
     quadrature(quadrature)
 {}
 
-
-
 template <int dim, int spacedim>
 const std::vector<Tensor<1, spacedim>>&
 FEFaceValuesBase<dim, spacedim>::get_boundary_forms() const
@@ -4715,8 +4447,6 @@ FEFaceValuesBase<dim, spacedim>::get_boundary_forms() const
   return this->mapping_output.boundary_forms;
 }
 
-
-
 template <int dim, int spacedim>
 std::size_t
 FEFaceValuesBase<dim, spacedim>::memory_consumption() const
@@ -4725,18 +4455,13 @@ FEFaceValuesBase<dim, spacedim>::memory_consumption() const
           + MemoryConsumption::memory_consumption(quadrature));
 }
 
-
 /*------------------------------- FEFaceValues -------------------------------*/
 
 template <int dim, int spacedim>
 const unsigned int FEFaceValues<dim, spacedim>::dimension;
 
-
-
 template <int dim, int spacedim>
 const unsigned int FEFaceValues<dim, spacedim>::integral_dimension;
-
-
 
 template <int dim, int spacedim>
 FEFaceValues<dim, spacedim>::FEFaceValues(
@@ -4754,8 +4479,6 @@ FEFaceValues<dim, spacedim>::FEFaceValues(
   initialize(update_flags);
 }
 
-
-
 template <int dim, int spacedim>
 FEFaceValues<dim, spacedim>::FEFaceValues(
   const FiniteElement<dim, spacedim>& fe,
@@ -4770,8 +4493,6 @@ FEFaceValues<dim, spacedim>::FEFaceValues(
 {
   initialize(update_flags);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4816,8 +4537,6 @@ FEFaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
       typename Mapping<dim, spacedim>::InternalDataBase>();
 }
 
-
-
 template <int dim, int spacedim>
 template <template <int, int> class DoFHandlerType, bool lda>
 void
@@ -4847,8 +4566,6 @@ FEFaceValues<dim, spacedim>::reinit(
   do_reinit(face_no);
 }
 
-
-
 template <int dim, int spacedim>
 void
 FEFaceValues<dim, spacedim>::reinit(
@@ -4868,8 +4585,6 @@ FEFaceValues<dim, spacedim>::reinit(
   // the real work.
   do_reinit(face_no);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4899,19 +4614,13 @@ FEFaceValues<dim, spacedim>::do_reinit(const unsigned int face_no)
                                      this->finite_element_output);
 }
 
-
 /*------------------------------- FESubFaceValues -------------------------------*/
-
 
 template <int dim, int spacedim>
 const unsigned int FESubfaceValues<dim, spacedim>::dimension;
 
-
-
 template <int dim, int spacedim>
 const unsigned int FESubfaceValues<dim, spacedim>::integral_dimension;
-
-
 
 template <int dim, int spacedim>
 FESubfaceValues<dim, spacedim>::FESubfaceValues(
@@ -4929,8 +4638,6 @@ FESubfaceValues<dim, spacedim>::FESubfaceValues(
   initialize(update_flags);
 }
 
-
-
 template <int dim, int spacedim>
 FESubfaceValues<dim, spacedim>::FESubfaceValues(
   const FiniteElement<dim, spacedim>& fe,
@@ -4945,8 +4652,6 @@ FESubfaceValues<dim, spacedim>::FESubfaceValues(
 {
   initialize(update_flags);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -4993,8 +4698,6 @@ FESubfaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
       typename Mapping<dim, spacedim>::InternalDataBase>();
 }
 
-
-
 template <int dim, int spacedim>
 template <template <int, int> class DoFHandlerType, bool lda>
 void
@@ -5040,8 +4743,6 @@ FESubfaceValues<dim, spacedim>::reinit(
   do_reinit(face_no, subface_no);
 }
 
-
-
 template <int dim, int spacedim>
 void
 FESubfaceValues<dim, spacedim>::reinit(
@@ -5064,8 +4765,6 @@ FESubfaceValues<dim, spacedim>::reinit(
   // the real work.
   do_reinit(face_no, subface_no);
 }
-
-
 
 template <int dim, int spacedim>
 void
@@ -5162,7 +4861,6 @@ FESubfaceValues<dim, spacedim>::do_reinit(const unsigned int face_no,
                                         *this->fe_data,
                                         this->finite_element_output);
 }
-
 
 /*------------------------------- Explicit Instantiations -------------*/
 #define SPLIT_INSTANTIATIONS_COUNT 6

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test FE_Enriched in real-life application on eigenvalue problem similar
 // to Step-36. That involves assembly (shape values and gradients) and
 // error estimator (Kelly - > face gradients) and MPI run.
@@ -439,7 +438,6 @@ namespace Step36
                                      | update_quadrature_points
                                      | update_JxW_values);
 
-
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
@@ -861,7 +859,6 @@ namespace Step36
         output.close();
       } //end scope
   }
-
 
   template <int dim>
   void

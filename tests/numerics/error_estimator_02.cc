@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Denis Davydov, University of Erlangen-Nuremberg, 2015 */
 // make sure that the modified Kelly error estimator with
 // strategy = face_diameter_over_twice_max_degree
@@ -69,8 +67,6 @@
 // ------------------
 //
 // and evaluate error of the interpolated to it function.
-
-
 
 #include "../tests.h"
 
@@ -726,7 +722,6 @@ test(const MySecondFunction<dim>& func)
   dof_handler.clear();
 }
 
-
 int
 main()
 {
@@ -768,8 +763,6 @@ main()
     MySecondFunction<2> function;
     test(function);
   }
-
-
 
   dealii::deallog << "Ok" << std::endl;
 }

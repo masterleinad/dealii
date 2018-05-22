@@ -13,16 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check FE_DGPMonomial::hp_line_dof_identities
-
 
 #include "../tests.h"
 #include <deal.II/fe/fe_dgp_monomial.h>
 #include <deal.II/hp/fe_collection.h>
-
-
 
 template <int dim>
 void
@@ -54,8 +49,6 @@ test()
           }
       }
 }
-
-
 
 int
 main()

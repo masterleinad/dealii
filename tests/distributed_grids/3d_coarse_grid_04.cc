@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a 3d mesh
 
 #include "../tests.h"
@@ -25,7 +23,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
 
 template <int dim>
 void
@@ -39,7 +36,6 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "1");
 }
-
 
 int
 main(int argc, char* argv[])

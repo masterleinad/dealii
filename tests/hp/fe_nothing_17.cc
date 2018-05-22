@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // test that SolutionTransfer works with FE_Nothing. This was broken
 // before r24829, resulting in an exception.
 
@@ -36,7 +34,6 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <iostream>
 #include <vector>
-
 
 template <int dim>
 void
@@ -98,7 +95,6 @@ transfer(std::ostream& out)
 
   deallog << "OK" << std::endl;
 }
-
 
 int
 main()

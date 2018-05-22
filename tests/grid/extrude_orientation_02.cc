@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test GridGenerator::extrude. 2d meshes are always correctly
 // edge-oriented, and so if we stack them one on top of the other, we
 // should also get a 3d mesh for which both edge and face orientations
@@ -65,7 +63,6 @@ test()
                 << std::endl;
     }
 }
-
 
 int
 main()

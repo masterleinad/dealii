@@ -39,13 +39,10 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/vector_tools.h>
 
-
 #include <algorithm>
 #include <numeric>
 
 DEAL_II_NAMESPACE_OPEN
-
-
 
 namespace DoFTools
 {
@@ -102,8 +99,6 @@ namespace DoFTools
             dofs_on_this_cell, sparsity, keep_constrained_dofs);
         }
   }
-
-
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
@@ -182,7 +177,6 @@ namespace DoFTools
           dofs_on_this_cell.resize(dofs_per_cell);
           cell->get_dof_indices(dofs_on_this_cell);
 
-
           // make sparsity pattern for this cell. if no constraints pattern
           // was given, then the following call acts as if simply no
           // constraints existed
@@ -192,8 +186,6 @@ namespace DoFTools
                                                   bool_dof_mask[fe_index]);
         }
   }
-
-
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
@@ -216,7 +208,6 @@ namespace DoFTools
     const std::list<std::pair<typename DoFHandlerType::cell_iterator,
                               typename DoFHandlerType::cell_iterator>>
       cell_list = GridTools::get_finest_common_cells(dof_row, dof_col);
-
 
     typename std::list<std::pair<typename DoFHandlerType::cell_iterator,
                                  typename DoFHandlerType::cell_iterator>>::
@@ -301,8 +292,6 @@ namespace DoFTools
       }
   }
 
-
-
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_boundary_sparsity_pattern(
@@ -372,8 +361,6 @@ namespace DoFTools
                              dof_to_boundary_mapping[dofs_on_this_face[j]]);
           }
   }
-
-
 
   template <typename DoFHandlerType,
             typename SparsityPatternType,
@@ -471,8 +458,6 @@ namespace DoFTools
                              dof_to_boundary_mapping[dofs_on_this_face[j]]);
           }
   }
-
-
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
@@ -639,8 +624,6 @@ namespace DoFTools
         }
   }
 
-
-
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_flux_sparsity_pattern(const DoFHandlerType& dof,
@@ -689,8 +672,6 @@ namespace DoFTools
     return dof_couplings;
   }
 
-
-
   template <int dim, int spacedim>
   std::vector<Table<2, Coupling>>
   dof_couplings_from_component_couplings(
@@ -704,8 +685,6 @@ namespace DoFTools
 
     return return_value;
   }
-
-
 
   namespace internal
   {
@@ -996,7 +975,6 @@ namespace DoFTools
             }
       }
 
-
       // implementation of the same function in namespace DoFTools for hp
       // DoFHandlers
       template <int dim, int spacedim, typename SparsityPatternType>
@@ -1056,7 +1034,6 @@ namespace DoFTools
                 if(int_and_flux_dof_mask[f](i, j) != none)
                   bool_int_and_flux_dof_mask[f](i, j) = true;
           }
-
 
         typename dealii::hp::DoFHandler<dim, spacedim>::active_cell_iterator
           cell
@@ -1255,8 +1232,6 @@ namespace DoFTools
 
   } // namespace internal
 
-
-
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_flux_sparsity_pattern(const DoFHandlerType&     dof,
@@ -1328,14 +1303,10 @@ namespace DoFTools
                                          subdomain_id);
   }
 
-
 } // end of namespace DoFTools
-
 
 // --------------------------------------------------- explicit instantiations
 
 #include "dof_tools_sparsity.inst"
-
-
 
 DEAL_II_NAMESPACE_CLOSE

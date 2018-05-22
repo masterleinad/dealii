@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Integrate the derivatives in the interior and compare the result to the
 // integral of the values on the boundary.
 
@@ -33,8 +32,6 @@
 #include <deal.II/lac/vector.h>
 
 #include <sstream>
-
-
 
 template <int dim>
 Tensor<1, dim>
@@ -144,8 +141,6 @@ test(const Triangulation<dim>& tr,
     }
 }
 
-
-
 // at the time of writing this test, RaviartThomas elements did not pass
 // the hyper_ball version of the test, perhaps due to issues on the boundary.
 template <int dim>
@@ -166,7 +161,6 @@ test_hyper_cube(const double tolerance)
   FE_RaviartThomas<dim> fe(2);
   test(tr, fe, tolerance);
 }
-
 
 int
 main()

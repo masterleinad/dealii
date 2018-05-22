@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include "../tests.h"
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/dofs/dof_accessor.h>
@@ -31,8 +30,6 @@
 #include <vector>
 
 #define PRECISION 2
-
-
 
 template <int dim>
 inline void
@@ -71,7 +68,6 @@ check(const unsigned int p)
       c->set_dof_values(tmp, values);
     };
 
-
   // then output these values at the
   // quadrature points of all cells
   // of the finer grid
@@ -101,7 +97,6 @@ check(const unsigned int p)
       deallog << std::endl;
     }
 }
-
 
 int
 main()

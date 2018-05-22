@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // ParameterHandler seemed to ignore everything on the same line behind "end",
 // we should generate an error instead.
 

@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_parallel_vector.h>
@@ -29,6 +28,5 @@
 DEAL_II_NAMESPACE_OPEN
 
 #include "mesh_worker_vector_selector.inst"
-
 
 DEAL_II_NAMESPACE_CLOSE

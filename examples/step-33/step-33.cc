@@ -17,7 +17,6 @@
  * Author: David Neckels, Boulder, Colorado, 2007, 2008
  */
 
-
 // @sect3{Include files}
 
 // First a standard set of deal.II includes. Nothing special to comment on
@@ -64,7 +63,6 @@
 #include <deal.II/lac/trilinos_solver.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 
-
 // Sacado is the automatic differentiation package within Trilinos, which is
 // used to find the Jacobian for a fully implicit Newton iteration:
 #include <Sacado.hpp>
@@ -81,7 +79,6 @@
 namespace Step33
 {
   using namespace dealii;
-
 
   // @sect3{Euler equation specifics}
 
@@ -134,7 +131,6 @@ namespace Step33
       return names;
     }
 
-
     static std::vector<DataComponentInterpretation::DataComponentInterpretation>
     component_interpretation()
     {
@@ -149,7 +145,6 @@ namespace Step33
       return data_component_interpretation;
     }
 
-
     // @sect4{Transformations between variables}
 
     // Next, we define the gas constant. We will set it to 1.4 in its
@@ -160,7 +155,6 @@ namespace Step33
     // molecules composed of two atoms, such as air which consists up to small
     // traces almost entirely of $N_2$ and $O_2$.
     static const double gas_gamma;
-
 
     // In the following, we will need to compute the kinetic energy and the
     // pressure from a vector of conserved variables. This we can do based on
@@ -181,7 +175,6 @@ namespace Step33
       return kinetic_energy;
     }
 
-
     template <typename InputVector>
     static typename InputVector::value_type
     compute_pressure(const InputVector& W)
@@ -189,7 +182,6 @@ namespace Step33
       return ((gas_gamma - 1.0)
               * (W[energy_component] - compute_kinetic_energy(W)));
     }
-
 
     // @sect4{EulerEquations::compute_flux_matrix}
 
@@ -239,7 +231,6 @@ namespace Step33
                                     / W[density_component]
                                     * (W[energy_component] + pressure);
     }
-
 
     // @sect4{EulerEquations::compute_normal_flux}
 
@@ -305,7 +296,6 @@ namespace Step33
           }
     }
 
-
     // @sect4{Dealing with boundary conditions}
 
     // Another thing we have to deal with is boundary conditions. To this end,
@@ -318,7 +308,6 @@ namespace Step33
       no_penetration_boundary,
       pressure_boundary
     };
-
 
     // The next part is to actually decide what to do at each kind of
     // boundary. To this end, remember from the introduction that boundary
@@ -429,7 +418,6 @@ namespace Step33
           }
     }
 
-
     // @sect4{EulerEquations::compute_refinement_indicators}
 
     // In this class, we also want to specify how to refine the mesh. The
@@ -474,8 +462,6 @@ namespace Step33
             1 + std::sqrt(dU[0][density_component] * dU[0][density_component]));
         }
     }
-
-
 
     // @sect4{EulerEquations::Postprocessor}
 
@@ -541,18 +527,14 @@ namespace Step33
     };
   };
 
-
   template <int dim>
   const double EulerEquations<dim>::gas_gamma = 1.4;
-
-
 
   template <int dim>
   EulerEquations<dim>::Postprocessor::Postprocessor(
     const bool do_schlieren_plot)
     : do_schlieren_plot(do_schlieren_plot)
   {}
-
 
   // This is the only function worth commenting on. When generating graphical
   // output, the DataOut and related classes will call this function on each
@@ -620,7 +602,6 @@ namespace Step33
       }
   }
 
-
   template <int dim>
   std::vector<std::string>
   EulerEquations<dim>::Postprocessor::get_names() const
@@ -635,7 +616,6 @@ namespace Step33
 
     return names;
   }
-
 
   template <int dim>
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -654,8 +634,6 @@ namespace Step33
     return interpretation;
   }
 
-
-
   template <int dim>
   UpdateFlags
   EulerEquations<dim>::Postprocessor::get_needed_update_flags() const
@@ -665,7 +643,6 @@ namespace Step33
     else
       return update_values;
   }
-
 
   // @sect3{Run time parameter handling}
 
@@ -760,8 +737,6 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
-
-
     void
     Solver::declare_parameters(ParameterHandler& prm)
     {
@@ -800,8 +775,6 @@ namespace Step33
       prm.leave_subsection();
     }
 
-
-
     void
     Solver::parse_parameters(ParameterHandler& prm)
     {
@@ -829,8 +802,6 @@ namespace Step33
       prm.leave_subsection();
     }
 
-
-
     // @sect4{Parameters::Refinement}
     //
     // Similarly, here are a few parameters that determine how the mesh is to
@@ -847,8 +818,6 @@ namespace Step33
       void
       parse_parameters(ParameterHandler& prm);
     };
-
-
 
     void
     Refinement::declare_parameters(ParameterHandler& prm)
@@ -883,7 +852,6 @@ namespace Step33
       prm.leave_subsection();
     }
 
-
     void
     Refinement::parse_parameters(ParameterHandler& prm)
     {
@@ -895,8 +863,6 @@ namespace Step33
       }
       prm.leave_subsection();
     }
-
-
 
     // @sect4{Parameters::Flux}
     //
@@ -927,7 +893,6 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
-
     void
     Flux::declare_parameters(ParameterHandler& prm)
     {
@@ -944,7 +909,6 @@ namespace Step33
       }
       prm.leave_subsection();
     }
-
 
     void
     Flux::parse_parameters(ParameterHandler& prm)
@@ -964,8 +928,6 @@ namespace Step33
       prm.leave_subsection();
     }
 
-
-
     // @sect4{Parameters::Output}
     //
     // Then a section on output parameters. We offer to produce Schlieren
@@ -983,8 +945,6 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
-
-
     void
     Output::declare_parameters(ParameterHandler& prm)
     {
@@ -1000,8 +960,6 @@ namespace Step33
       prm.leave_subsection();
     }
 
-
-
     void
     Output::parse_parameters(ParameterHandler& prm)
     {
@@ -1012,8 +970,6 @@ namespace Step33
       }
       prm.leave_subsection();
     }
-
-
 
     // @sect4{Parameters::AllParameters}
     //
@@ -1079,7 +1035,6 @@ namespace Step33
         BoundaryConditions();
       };
 
-
       AllParameters();
 
       double diffusion_power;
@@ -1099,8 +1054,6 @@ namespace Step33
       parse_parameters(ParameterHandler& prm);
     };
 
-
-
     template <int dim>
     AllParameters<dim>::BoundaryConditions::BoundaryConditions()
       : values(EulerEquations<dim>::n_components)
@@ -1108,7 +1061,6 @@ namespace Step33
       for(unsigned int c = 0; c < EulerEquations<dim>::n_components; ++c)
         kind[c] = EulerEquations<dim>::no_penetration_boundary;
     }
-
 
     template <int dim>
     AllParameters<dim>::AllParameters()
@@ -1119,7 +1071,6 @@ namespace Step33
         is_stationary(true),
         initial_conditions(EulerEquations<dim>::n_components)
     {}
-
 
     template <int dim>
     void
@@ -1147,7 +1098,6 @@ namespace Step33
                           "implicit Euler (theta=1).");
       }
       prm.leave_subsection();
-
 
       for(unsigned int b = 0; b < max_n_boundaries; ++b)
         {
@@ -1193,7 +1143,6 @@ namespace Step33
       Parameters::Flux::declare_parameters(prm);
       Parameters::Output::declare_parameters(prm);
     }
-
 
     template <int dim>
     void
@@ -1284,8 +1233,6 @@ namespace Step33
     }
   } // namespace Parameters
 
-
-
   // @sect3{Conservation law class}
 
   // Here finally comes the class that actually does something with all the
@@ -1335,8 +1282,6 @@ namespace Step33
 
     void
     output_results() const;
-
-
 
     // The first few member variables are also rather standard. Note that we
     // define a mapping object to be used throughout the program when
@@ -1388,7 +1333,6 @@ namespace Step33
     ConditionalOStream             verbose_cout;
   };
 
-
   // @sect4{ConservationLaw::ConservationLaw}
   //
   // There is nothing much to say about the constructor. Essentially, it reads
@@ -1412,8 +1356,6 @@ namespace Step33
                                == Parameters::Solver::verbose);
   }
 
-
-
   // @sect4{ConservationLaw::setup_system}
   //
   // The following (easy) function is called each time the mesh is
@@ -1429,7 +1371,6 @@ namespace Step33
 
     system_matrix.reinit(dsp);
   }
-
 
   // @sect4{ConservationLaw::assemble_system}
   //
@@ -1630,7 +1571,6 @@ namespace Step33
       }
   }
 
-
   // @sect4{ConservationLaw::assemble_cell_term}
   //
   // This function assembles the cell term by computing the cell part of the
@@ -1781,7 +1721,6 @@ namespace Step33
             }
         }
 
-
     // Next, in order to compute the cell contributions, we need to evaluate
     // $\mathbf{F}({\mathbf w}^k_{n+1})$, $\mathbf{G}({\mathbf w}^k_{n+1})$ and
     // $\mathbf{F}({\mathbf w}_n)$, $\mathbf{G}({\mathbf w}_n)$ at all quadrature
@@ -1812,7 +1751,6 @@ namespace Step33
         EulerEquations<dim>::compute_flux_matrix(W[q], flux[q]);
         EulerEquations<dim>::compute_forcing_vector(W[q], forcing[q]);
       }
-
 
     // We now have all of the pieces in place, so perform the assembly.  We
     // have an outer loop through the components of the system, and an inner
@@ -1908,7 +1846,6 @@ namespace Step33
       }
   }
 
-
   // @sect4{ConservationLaw::assemble_face_term}
   //
   // Here, we do essentially the same as in the previous function. At the top,
@@ -1953,7 +1890,6 @@ namespace Step33
           independent_neighbor_dof_values[i].diff(i + dofs_per_cell,
                                                   n_independent_variables);
         }
-
 
     // Next, we need to define the values of the conservative variables
     // ${\mathbf W}$ on this side of the face ($ {\mathbf W}^+$)
@@ -2046,7 +1982,6 @@ namespace Step33
           }
       }
 
-
     // Now that we have $\mathbf w^+$ and $\mathbf w^-$, we can go about
     // computing the numerical flux function $\mathbf H(\mathbf w^+,\mathbf
     // w^-, \mathbf n)$ for each quadrature point. Before calling the function
@@ -2123,7 +2058,6 @@ namespace Step33
           right_hand_side(dof_indices[i]) -= R_i.val();
         }
   }
-
 
   // @sect4{ConservationLaw::solve}
   //
@@ -2231,7 +2165,6 @@ namespace Step33
     return std::pair<unsigned int, double>(0, 0);
   }
 
-
   // @sect4{ConservationLaw::compute_refinement_indicators}
 
   // This function is real simple: We don't pretend that we know here what a
@@ -2246,8 +2179,6 @@ namespace Step33
     EulerEquations<dim>::compute_refinement_indicators(
       dof_handler, mapping, predictor, refinement_indicators);
   }
-
-
 
   // @sect4{ConservationLaw::refine_grid}
 
@@ -2322,7 +2253,6 @@ namespace Step33
     right_hand_side.reinit(dof_handler.n_dofs());
   }
 
-
   // @sect4{ConservationLaw::output_results}
 
   // This function now is rather straightforward. All the magic, including
@@ -2361,8 +2291,6 @@ namespace Step33
 
     ++output_file_number;
   }
-
-
 
   // @sect4{ConservationLaw::run}
 

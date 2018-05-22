@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // Compare preconditioned Richardson with block relaxation in
 // different permutation modes. All output diffs
 // should be zero.

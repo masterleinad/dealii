@@ -19,7 +19,6 @@
 #include <deal.II/base/parameter_handler.h>
 #include <memory>
 
-
 void
 test(const Patterns::PatternBase& p)
 {
@@ -43,7 +42,6 @@ test(const Patterns::PatternBase& p)
                                "does not have the same "
                                "description as the original pattern!"));
 }
-
 
 using namespace Patterns;
 

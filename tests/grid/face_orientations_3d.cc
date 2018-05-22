@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // just like grid_in_3d, but count the number of misoriented faces in
 // the meshes that can be oriented
 
@@ -27,8 +25,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-
-
 
 void
 test(const char* filename)
@@ -65,7 +61,6 @@ test(const char* filename)
         }
   deallog << "  " << misoriented_faces << " misoriented faces" << std::endl;
 }
-
 
 int
 main()

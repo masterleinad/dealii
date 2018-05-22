@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // check ParameterHandler::parse_input_from_xml. try to read a file that is not
 // valid XML (there is more than one top-level element)
 
 #include "../tests.h"
 #include <deal.II/base/parameter_handler.h>
-
 
 int
 main()

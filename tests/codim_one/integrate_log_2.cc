@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // integrates the function x^M ln(|x-x0|/alpha) on different
 // situations, to test the QGaussLogR quadrature formula
 
@@ -44,7 +42,6 @@ using namespace std;
 
 std::ofstream logfile("output");
 
-
 // Returns the following integral: /int_0^1 x^N * ln(|x-point|/alpha) dx
 double
 log_integral(const unsigned int N, const double point, const double alpha);
@@ -55,7 +52,6 @@ main()
   deallog.attach(logfile);
   deallog << std::fixed;
   deallog << std::setprecision(10);
-
 
   vector<Point<1>> origins;
   origins.push_back(Point<1>());
@@ -69,7 +65,6 @@ main()
   alphas.push_back(1.);
   alphas.push_back(1. / 3.);
   alphas.push_back(3. / 2.);
-
 
   double exact_integral;
   double eps = 1e-10;
@@ -131,8 +126,6 @@ main()
         }
     }
 }
-
-
 
 double
 log_integral(const unsigned int N, const double point, const double alpha)

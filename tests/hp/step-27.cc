@@ -14,12 +14,10 @@
  * --------------------------------------------------------------------
  */
 
-
 // A combination of step-27 from 8.4 with corrected k-vectors, that is 2\pi*k instead of \pi*k
 // and a new step-27 from 8.5 which use FESeries namespace. By default, the new
 // version is used, but the blessed output file is obtained using the
 // modified 8.4 version.
-
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -52,12 +50,9 @@
 #include <fstream>
 #include <iostream>
 
-
 namespace Step27
 {
   using namespace dealii;
-
-
 
   template <int dim>
   class LaplaceProblem
@@ -106,8 +101,6 @@ namespace Step27
     const unsigned int max_degree;
   };
 
-
-
   template <int dim>
   class RightHandSide : public Function<dim>
   {
@@ -118,7 +111,6 @@ namespace Step27
     virtual double
     value(const Point<dim>& p, const unsigned int component) const;
   };
-
 
   template <int dim>
   double
@@ -131,13 +123,11 @@ namespace Step27
     return product;
   }
 
-
   template <typename T>
   void resize(Table<2, T>& coeff, const unsigned int N)
   {
     coeff.reinit(N, N);
   }
-
 
   template <int dim>
   LaplaceProblem<dim>::LaplaceProblem()
@@ -162,14 +152,11 @@ namespace Step27
     resize(fourier_coefficients, N);
   }
 
-
-
   template <int dim>
   LaplaceProblem<dim>::~LaplaceProblem()
   {
     dof_handler.clear();
   }
-
 
   template <int dim>
   void
@@ -192,8 +179,6 @@ namespace Step27
 
     system_matrix.reinit(sparsity_pattern);
   }
-
-
 
   template <int dim>
   void
@@ -253,8 +238,6 @@ namespace Step27
       }
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::solve()
@@ -271,8 +254,6 @@ namespace Step27
     constraints.distribute(solution);
   }
 
-
-
   template <int dim>
   void
   LaplaceProblem<dim>::postprocess(const unsigned int cycle)
@@ -283,7 +264,6 @@ namespace Step27
                                        typename FunctionMap<dim>::type(),
                                        solution,
                                        estimated_error_per_cell);
-
 
     Vector<float> smoothness_indicators(triangulation.n_active_cells());
     estimate_smoothness(smoothness_indicators);
@@ -360,8 +340,6 @@ namespace Step27
     }
   }
 
-
-
   template <>
   void
   LaplaceProblem<2>::create_coarse_grid()
@@ -417,8 +395,6 @@ namespace Step27
     triangulation.create_triangulation(vertices, cells, SubCellData());
     triangulation.refine_global(3);
   }
-
-
 
   template <int dim>
   void
@@ -512,13 +488,11 @@ namespace Step27
     for(unsigned int i = 0; i < n_fourier_modes; ++i)
       ln_k[i] = std::log(k_vectors[i].norm());
 
-
     std::vector<Table<2, std::complex<double>>> fourier_transform_matrices(
       fe_collection.size());
 
     QGauss<1>      base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
-
 
     for(unsigned int fe = 0; fe < fe_collection.size(); ++fe)
       {
@@ -629,8 +603,6 @@ namespace Step27
 #endif
   }
 } // namespace Step27
-
-
 
 int
 main()

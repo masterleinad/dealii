@@ -13,7 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
 // test LAPACKFullMatrix::reciprocal_condition_number() for triangular matrices
 
 /* MWE for size=3 in Octave:
@@ -29,7 +28,6 @@ ans =  0.055556
 #include <deal.II/lac/vector.h>
 
 #include <iostream>
-
 
 template <typename NumberType>
 void
@@ -54,7 +52,6 @@ test(const unsigned int size)
 
   deallog << rcond << std::endl;
 }
-
 
 int
 main()

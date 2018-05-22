@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // We take two cells with two common dofs and create the system_matrix
 // and the right-hand-side-vector for this system.  But we have the following
 // two inhomogeneous constraints:
@@ -138,7 +136,6 @@ test(bool use_constraint_matrix)
 
   solution.print(logfile);
 }
-
 
 int
 main()

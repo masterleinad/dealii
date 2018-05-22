@@ -13,10 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // like _01, but allow for artificial cells
-
 
 #include "../tests.h"
 #include <deal.II/base/tensor.h>
@@ -32,7 +29,6 @@
 #include <deal.II/hp/dof_handler.h>
 
 #include <numeric>
-
 
 template <int dim>
 void
@@ -78,7 +74,6 @@ test()
                ExcInternalError());
     }
 }
-
 
 int
 main(int argc, char* argv[])

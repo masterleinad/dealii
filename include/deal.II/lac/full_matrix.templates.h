@@ -16,7 +16,6 @@
 #ifndef dealii_full_matrix_templates_h
 #define dealii_full_matrix_templates_h
 
-
 // TODO: this file has a lot of operations between matrices and matrices or
 // matrices and vectors of different precision. we should go through the
 // file and in each case pick the more accurate data type for intermediate
@@ -39,17 +38,14 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
 template <typename number>
 FullMatrix<number>::FullMatrix(const size_type n) : Table<2, number>(n, n)
 {}
-
 
 template <typename number>
 FullMatrix<number>::FullMatrix(const size_type m, const size_type n)
   : Table<2, number>(m, n)
 {}
-
 
 template <typename number>
 FullMatrix<number>::FullMatrix(const size_type m,
@@ -60,8 +56,6 @@ FullMatrix<number>::FullMatrix(const size_type m,
   this->fill(entries);
 }
 
-
-
 template <typename number>
 FullMatrix<number>::FullMatrix(const IdentityMatrix& id)
   : Table<2, number>(id.m(), id.n())
@@ -69,8 +63,6 @@ FullMatrix<number>::FullMatrix(const IdentityMatrix& id)
   for(size_type i = 0; i < id.m(); ++i)
     (*this)(i, i) = 1;
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -80,8 +72,6 @@ FullMatrix<number>::operator=(const FullMatrix<number2>& M)
   TableBase<2, number>::operator=(M);
   return *this;
 }
-
-
 
 template <typename number>
 FullMatrix<number>&
@@ -93,8 +83,6 @@ FullMatrix<number>::operator=(const IdentityMatrix& id)
 
   return *this;
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -109,8 +97,6 @@ FullMatrix<number>::operator=(const LAPACKFullMatrix<number2>& M)
 
   return *this;
 }
-
-
 
 template <typename number>
 bool
@@ -127,8 +113,6 @@ FullMatrix<number>::all_zero() const
   return true;
 }
 
-
-
 template <typename number>
 FullMatrix<number>&
 FullMatrix<number>::operator*=(const number factor)
@@ -142,8 +126,6 @@ FullMatrix<number>::operator*=(const number factor)
 
   return *this;
 }
-
-
 
 template <typename number>
 FullMatrix<number>&
@@ -163,8 +145,6 @@ FullMatrix<number>::operator/=(const number factor)
 
   return *this;
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -194,8 +174,6 @@ FullMatrix<number>::vmult(Vector<number2>&       dst,
       dst(i) = s;
     }
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -230,7 +208,6 @@ FullMatrix<number>::Tvmult(Vector<number2>&       dst,
     };
 }
 
-
 template <typename number>
 template <typename number2, typename number3>
 number
@@ -259,8 +236,6 @@ FullMatrix<number>::residual(Vector<number2>&       dst,
   return std::sqrt(res);
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -285,8 +260,6 @@ FullMatrix<number>::forward(Vector<number2>&       dst,
     }
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -307,8 +280,6 @@ FullMatrix<number>::backward(Vector<number2>&       dst,
       AssertIsFinite(dst(i));
     }
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -334,7 +305,6 @@ FullMatrix<number>::fill(const FullMatrix<number2>& src,
         = src(src_offset_i + i, src_offset_j + j);
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -352,8 +322,6 @@ FullMatrix<number>::fill_permutation(const FullMatrix<number2>&    src,
       (*this)(i, j) = src(p_rows[i], p_cols[j]);
 }
 
-
-
 template <typename number>
 void
 FullMatrix<number>::add_row(const size_type i,
@@ -365,7 +333,6 @@ FullMatrix<number>::add_row(const size_type i,
   for(size_type k = 0; k < n(); ++k)
     (*this)(i, k) += s * (*this)(j, k);
 }
-
 
 template <typename number>
 void
@@ -382,7 +349,6 @@ FullMatrix<number>::add_row(const size_type i,
     (*this)(i, l) += s * (*this)(j, l) + t * (*this)(k, l);
 }
 
-
 template <typename number>
 void
 FullMatrix<number>::add_col(const size_type i,
@@ -394,7 +360,6 @@ FullMatrix<number>::add_col(const size_type i,
   for(size_type k = 0; k < m(); ++k)
     (*this)(k, i) += s * (*this)(k, j);
 }
-
 
 template <typename number>
 void
@@ -410,8 +375,6 @@ FullMatrix<number>::add_col(const size_type i,
     (*this)(l, i) += s * (*this)(l, j) + t * (*this)(l, k);
 }
 
-
-
 template <typename number>
 void
 FullMatrix<number>::swap_row(const size_type i, const size_type j)
@@ -421,7 +384,6 @@ FullMatrix<number>::swap_row(const size_type i, const size_type j)
   for(size_type k = 0; k < n(); ++k)
     std::swap((*this)(i, k), (*this)(j, k));
 }
-
 
 template <typename number>
 void
@@ -433,7 +395,6 @@ FullMatrix<number>::swap_col(const size_type i, const size_type j)
     std::swap((*this)(k, i), (*this)(k, j));
 }
 
-
 template <typename number>
 void
 FullMatrix<number>::diagadd(const number src)
@@ -444,7 +405,6 @@ FullMatrix<number>::diagadd(const number src)
   for(size_type i = 0; i < n(); ++i)
     (*this)(i, i) += src;
 }
-
 
 template <typename number>
 template <typename number2>
@@ -460,7 +420,6 @@ FullMatrix<number>::equ(const number a, const FullMatrix<number2>& A)
     for(size_type j = 0; j < n(); ++j)
       (*this)(i, j) = a * number(A(i, j));
 }
-
 
 template <typename number>
 template <typename number2>
@@ -481,7 +440,6 @@ FullMatrix<number>::equ(const number               a,
     for(size_type j = 0; j < n(); ++j)
       (*this)(i, j) = a * number(A(i, j)) + b * number(B(i, j));
 }
-
 
 template <typename number>
 template <typename number2>
@@ -507,8 +465,6 @@ FullMatrix<number>::equ(const number               a,
       (*this)(i, j)
         = a * number(A(i, j)) + b * number(B(i, j)) + c * number(C(i, j));
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -589,8 +545,6 @@ FullMatrix<number>::mmult(FullMatrix<number2>&       dst,
       }
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -602,7 +556,6 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
   Assert(m() == src.m(), ExcDimensionMismatch(m(), src.m()));
   Assert(n() == dst.m(), ExcDimensionMismatch(n(), dst.m()));
   Assert(src.n() == dst.n(), ExcDimensionMismatch(src.n(), dst.n()));
-
 
   // see if we can use BLAS algorithms for this and if the type for 'number'
   // works for us (it is usually not efficient to use BLAS for very small
@@ -691,8 +644,6 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
           dst(i, j) = add_value;
         }
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -791,8 +742,6 @@ FullMatrix<number>::mTmult(FullMatrix<number2>&       dst,
         }
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -804,7 +753,6 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
   Assert(m() == src.n(), ExcDimensionMismatch(m(), src.n()));
   Assert(n() == dst.m(), ExcDimensionMismatch(n(), dst.m()));
   Assert(src.m() == dst.n(), ExcDimensionMismatch(src.m(), dst.n()));
-
 
   // see if we can use BLAS algorithms for this and if the type for 'number'
   // works for us (it is usually not efficient to use BLAS for very small
@@ -875,7 +823,6 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
       }
 }
 
-
 template <typename number>
 void
 FullMatrix<number>::triple_product(const FullMatrix<number>& A,
@@ -931,7 +878,6 @@ FullMatrix<number>::triple_product(const FullMatrix<number>& A,
       }
 }
 
-
 template <typename number>
 template <typename number2>
 number2
@@ -959,7 +905,6 @@ FullMatrix<number>::matrix_norm_square(const Vector<number2>& v) const
 
   return sum;
 }
-
 
 template <typename number>
 template <typename number2>
@@ -991,8 +936,6 @@ FullMatrix<number>::matrix_scalar_product(const Vector<number2>& u,
   return sum;
 }
 
-
-
 template <typename number>
 void
 FullMatrix<number>::symmetrize()
@@ -1007,7 +950,6 @@ FullMatrix<number>::symmetrize()
         (*this)(i, j) = (*this)(j, i) = t;
       };
 }
-
 
 template <typename number>
 typename FullMatrix<number>::real_type
@@ -1029,8 +971,6 @@ FullMatrix<number>::l1_norm() const
   return max;
 }
 
-
-
 template <typename number>
 typename FullMatrix<number>::real_type
 FullMatrix<number>::linfty_norm() const
@@ -1051,8 +991,6 @@ FullMatrix<number>::linfty_norm() const
   return max;
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -1067,7 +1005,6 @@ FullMatrix<number>::add(const number a, const FullMatrix<number2>& A)
     for(size_type j = 0; j < n(); ++j)
       (*this)(i, j) += a * number(A(i, j));
 }
-
 
 template <typename number>
 template <typename number2>
@@ -1089,8 +1026,6 @@ FullMatrix<number>::add(const number               a,
       (*this)(i, j) += a * number(A(i, j)) + b * number(B(i, j));
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -1110,14 +1045,11 @@ FullMatrix<number>::add(const number               a,
   Assert(m() == C.m(), ExcDimensionMismatch(m(), C.m()));
   Assert(n() == C.n(), ExcDimensionMismatch(n(), C.n()));
 
-
   for(size_type i = 0; i < m(); ++i)
     for(size_type j = 0; j < n(); ++j)
       (*this)(i, j)
         += a * number(A(i, j)) + b * number(B(i, j)) + c * number(C(i, j));
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1144,8 +1076,6 @@ FullMatrix<number>::add(const FullMatrix<number2>& src,
         += factor * number(src(src_offset_i + i, src_offset_j + j));
 }
 
-
-
 template <typename number>
 template <typename number2>
 void
@@ -1165,14 +1095,11 @@ FullMatrix<number>::Tadd(const FullMatrix<number2>& src,
   const size_type rows = std::min(m() - dst_offset_i, src.n() - src_offset_j);
   const size_type cols = std::min(n() - dst_offset_j, src.m() - src_offset_i);
 
-
   for(size_type i = 0; i < rows; ++i)
     for(size_type j = 0; j < cols; ++j)
       (*this)(dst_offset_i + i, dst_offset_j + j)
         += factor * number(src(src_offset_i + j, src_offset_j + i));
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1190,7 +1117,6 @@ FullMatrix<number>::Tadd(const number a, const FullMatrix<number2>& A)
       (*this)(i, j) += a * number(A(j, i));
 }
 
-
 template <typename number>
 bool
 FullMatrix<number>::operator==(const FullMatrix<number>& M) const
@@ -1198,7 +1124,6 @@ FullMatrix<number>::operator==(const FullMatrix<number>& M) const
   // simply pass down to the base class
   return Table<2, number>::operator==(M);
 }
-
 
 namespace internal
 {
@@ -1216,7 +1141,6 @@ namespace internal
         return 0.0;
       }
     };
-
 
     // LAPACKFullMatrix is only implemented for
     // floats and doubles
@@ -1252,7 +1176,6 @@ namespace internal
   } // namespace
 } // namespace internal
 
-
 template <typename number>
 number
 FullMatrix<number>::determinant() const
@@ -1280,8 +1203,6 @@ FullMatrix<number>::determinant() const
     };
 }
 
-
-
 template <typename number>
 number
 FullMatrix<number>::trace() const
@@ -1298,8 +1219,6 @@ FullMatrix<number>::trace() const
   return tr;
 }
 
-
-
 template <typename number>
 typename FullMatrix<number>::real_type
 FullMatrix<number>::frobenius_norm() const
@@ -1311,8 +1230,6 @@ FullMatrix<number>::frobenius_norm() const
     s += numbers::NumberTraits<number>::abs_square(this->values[i]);
   return std::sqrt(s);
 }
-
-
 
 template <typename number>
 typename FullMatrix<number>::real_type
@@ -1336,8 +1253,6 @@ FullMatrix<number>::relative_symmetry_norm2() const
     return std::sqrt(a) / std::sqrt(s);
   return 0;
 }
-
-
 
 template <typename number>
 template <typename number2>
@@ -1520,7 +1435,6 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
             break;
           }
 
-
         default:
           // if no inversion is
           // hardcoded, fall back
@@ -1530,7 +1444,6 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
           gauss_jordan();
       };
 }
-
 
 template <typename number>
 template <typename number2>
@@ -1575,7 +1488,6 @@ FullMatrix<number>::cholesky(const FullMatrix<number2>& A)
     }
 }
 
-
 template <typename number>
 template <typename number2>
 void
@@ -1594,7 +1506,6 @@ FullMatrix<number>::outer_product(const Vector<number2>& V,
         }
     }
 }
-
 
 template <typename number>
 template <typename number2>
@@ -1672,7 +1583,6 @@ FullMatrix<number>::right_invert(const FullMatrix<number2>& A)
     }
 }
 
-
 template <typename number>
 template <int dim>
 void
@@ -1701,7 +1611,6 @@ FullMatrix<number>::copy_from(const Tensor<2, dim>& T,
       }
 }
 
-
 template <typename number>
 template <int dim>
 void FullMatrix<number>::copy_to(Tensor<2, dim>&    T,
@@ -1729,8 +1638,6 @@ void FullMatrix<number>::copy_to(Tensor<2, dim>&    T,
       }
 }
 
-
-
 template <typename number>
 template <typename somenumber>
 void
@@ -1749,8 +1656,6 @@ FullMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
   for(size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr)
     *dst_ptr = somenumber(om) * *src_ptr / somenumber((*this)(i, i));
 }
-
-
 
 template <typename number>
 void
@@ -1804,7 +1709,6 @@ FullMatrix<number>::print_formatted(std::ostream&      out,
   out.flags(old_flags);
   out.precision(old_precision);
 }
-
 
 template <typename number>
 void
@@ -1959,8 +1863,6 @@ FullMatrix<number>::gauss_jordan()
     }
 }
 
-
-
 template <typename number>
 std::size_t
 FullMatrix<number>::memory_consumption() const
@@ -1968,7 +1870,6 @@ FullMatrix<number>::memory_consumption() const
   return (sizeof(*this) - sizeof(Table<2, number>)
           + Table<2, number>::memory_consumption());
 }
-
 
 DEAL_II_NAMESPACE_CLOSE
 

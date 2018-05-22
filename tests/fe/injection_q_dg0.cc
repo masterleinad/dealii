@@ -13,14 +13,11 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 char logname[] = "output";
 
 #include <deal.II/base/quadrature_lib.h>
 
 #include "injection_common.h"
-
 
 template <int dim>
 void

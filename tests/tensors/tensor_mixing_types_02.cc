@@ -21,7 +21,6 @@
 
 #include <complex>
 
-
 int
 main()
 {

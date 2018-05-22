@@ -13,11 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 /* Author: Wolfgang Bangerth, University of Heidelberg, 2001 */
-
-
 
 #include "../tests.h"
 #include <deal.II/base/function_lib.h>
@@ -32,8 +28,6 @@
 #include <deal.II/lac/vector.h>
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/numerics/vector_tools.h>
-
-
 
 template <int dim>
 class MySquareFunction : public Function<dim>
@@ -56,8 +50,6 @@ public:
   }
 };
 
-
-
 template <int dim>
 Quadrature<dim - 1>&
 get_q_face(Function<dim>&)
@@ -65,7 +57,6 @@ get_q_face(Function<dim>&)
   static QGauss<dim - 1> q(4);
   return q;
 }
-
 
 template <int dim>
 void
@@ -109,7 +100,6 @@ check()
   for(unsigned int i = 0; i < error.size(); ++i)
     deallog << error(i) * 100 << std::endl;
 }
-
 
 int
 main()

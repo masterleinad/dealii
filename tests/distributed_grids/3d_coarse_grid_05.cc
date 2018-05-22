@@ -13,8 +13,6 @@
 //
 // ---------------------------------------------------------------------
 
-
-
 // Test interaction with p4est with a 3d mesh. this is a redux of the
 // _03 test where p4est errors out for a mesh that has multiple
 // disconnected components
@@ -30,8 +28,6 @@
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/tria.h>
-
-
 
 // create a mesh that consists of two disconnected hypercubes
 template <int dim>
@@ -137,8 +133,6 @@ create_disconnected_mesh(Triangulation<dim>& tria)
   tria.create_triangulation(vertices, cells, SubCellData());
 }
 
-
-
 template <int dim>
 void
 test(std::ostream& /*out*/)
@@ -149,7 +143,6 @@ test(std::ostream& /*out*/)
 
   write_vtk(tr, "1");
 }
-
 
 int
 main(int argc, char* argv[])

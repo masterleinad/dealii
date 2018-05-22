@@ -13,9 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-
 #include <deal.II/base/parallel.h>
-
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -33,7 +31,6 @@ namespace internal
     // tests are documented at https://github.com/dealii/dealii/issues/2496
     unsigned int minimum_parallel_grain_size = 4096;
   } // namespace VectorImplementation
-
 
   namespace SparseMatrixImplementation
   {
@@ -59,8 +56,6 @@ namespace parallel
         in_use(false)
     {}
 
-
-
     TBBPartitioner::~TBBPartitioner()
     {
       AssertNothrow(
@@ -68,8 +63,6 @@ namespace parallel
         ExcInternalError("A vector partitioner goes out of scope, but "
                          "it appears to be still in use."));
     }
-
-
 
     std::shared_ptr<tbb::affinity_partitioner>
     TBBPartitioner::acquire_one_partitioner()
@@ -81,8 +74,6 @@ namespace parallel
       in_use = true;
       return my_partitioner;
     }
-
-
 
     void
     TBBPartitioner::release_one_partitioner(
@@ -99,7 +90,5 @@ namespace parallel
 #endif
   } // namespace internal
 } // namespace parallel
-
-
 
 DEAL_II_NAMESPACE_CLOSE
