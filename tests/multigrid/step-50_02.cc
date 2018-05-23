@@ -169,20 +169,19 @@ namespace Step50
   }
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-    : triangulation(
-        MPI_COMM_WORLD,
-        typename Triangulation<dim>::MeshSmoothing(
-          Triangulation<dim>::limit_level_difference_at_vertices),
-        true,
-        // parallel::shared::Triangulation<dim>::Settings::partition_custom_signal),
-        typename parallel::shared::Triangulation<dim>::Settings(
-          parallel::shared::Triangulation<dim>::partition_zorder
-          | parallel::shared::Triangulation<
-              dim>::construct_multigrid_hierarchy)),
-      fe(degree),
-      mg_dof_handler(triangulation),
-      degree(degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+    triangulation(
+      MPI_COMM_WORLD,
+      typename Triangulation<dim>::MeshSmoothing(
+        Triangulation<dim>::limit_level_difference_at_vertices),
+      true,
+      // parallel::shared::Triangulation<dim>::Settings::partition_custom_signal),
+      typename parallel::shared::Triangulation<dim>::Settings(
+        parallel::shared::Triangulation<dim>::partition_zorder
+        | parallel::shared::Triangulation<dim>::construct_multigrid_hierarchy)),
+    fe(degree),
+    mg_dof_handler(triangulation),
+    degree(degree)
   {}
 
   template <int dim>

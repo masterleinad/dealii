@@ -98,8 +98,12 @@ template <int dim>
 class PeriodicHillManifold : public ChartManifold<dim>
 {
 public:
-  PeriodicHillManifold()
-    : ChartManifold<dim>(), h(0.028), x_max(9.0 * h), y_max(2.036 * h), y_FoR(h)
+  PeriodicHillManifold() :
+    ChartManifold<dim>(),
+    h(0.028),
+    x_max(9.0 * h),
+    y_max(2.036 * h),
+    y_FoR(h)
   {}
 
   virtual std::unique_ptr<Manifold<dim>>

@@ -486,11 +486,11 @@ namespace Step21
 
   SchurComplement::SchurComplement(
     const BlockSparseMatrix<double>&           A,
-    const InverseMatrix<SparseMatrix<double>>& Minv)
-    : system_matrix(&A),
-      m_inverse(&Minv),
-      tmp1(A.block(0, 0).m()),
-      tmp2(A.block(0, 0).m())
+    const InverseMatrix<SparseMatrix<double>>& Minv) :
+    system_matrix(&A),
+    m_inverse(&Minv),
+    tmp1(A.block(0, 0).m()),
+    tmp2(A.block(0, 0).m())
   {}
 
   void
@@ -516,8 +516,10 @@ namespace Step21
   };
 
   ApproximateSchurComplement::ApproximateSchurComplement(
-    const BlockSparseMatrix<double>& A)
-    : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
+    const BlockSparseMatrix<double>& A) :
+    system_matrix(&A),
+    tmp1(A.block(0, 0).m()),
+    tmp2(A.block(0, 0).m())
   {}
 
   void
@@ -543,19 +545,19 @@ namespace Step21
   // before it is needed first, as described in a subsection of the
   // introduction.
   template <int dim>
-  TwoPhaseFlowProblem<dim>::TwoPhaseFlowProblem(const unsigned int degree)
-    : degree(degree),
-      fe(FE_RaviartThomas<dim>(degree),
-         1,
-         FE_DGQ<dim>(degree),
-         1,
-         FE_DGQ<dim>(degree),
-         1),
-      dof_handler(triangulation),
-      n_refinement_steps(5),
-      time_step(0),
-      timestep_number(1),
-      viscosity(0.2)
+  TwoPhaseFlowProblem<dim>::TwoPhaseFlowProblem(const unsigned int degree) :
+    degree(degree),
+    fe(FE_RaviartThomas<dim>(degree),
+       1,
+       FE_DGQ<dim>(degree),
+       1,
+       FE_DGQ<dim>(degree),
+       1),
+    dof_handler(triangulation),
+    n_refinement_steps(5),
+    time_step(0),
+    timestep_number(1),
+    viscosity(0.2)
   {}
 
   // @sect4{TwoPhaseFlowProblem::make_grid_and_dofs}

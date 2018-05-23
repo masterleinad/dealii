@@ -181,8 +181,11 @@ namespace Maxwell
   };
 
   template <int dim>
-  MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
-    : mapping(1), dof_handler(triangulation), fe(order), exact_solution()
+  MaxwellProblem<dim>::MaxwellProblem(const unsigned int order) :
+    mapping(1),
+    dof_handler(triangulation),
+    fe(order),
+    exact_solution()
   {
     p_order    = order;
     quad_order = 2 * (p_order + 1);

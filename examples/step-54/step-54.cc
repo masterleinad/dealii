@@ -113,11 +113,11 @@ namespace Step54
     const std::string&   initial_mesh_filename,
     const std::string&   cad_file_name,
     const std::string&   output_filename,
-    const ProjectionType surface_projection_kind)
-    : initial_mesh_filename(initial_mesh_filename),
-      cad_file_name(cad_file_name),
-      output_filename(output_filename),
-      surface_projection_kind(surface_projection_kind)
+    const ProjectionType surface_projection_kind) :
+    initial_mesh_filename(initial_mesh_filename),
+    cad_file_name(cad_file_name),
+    output_filename(output_filename),
+    surface_projection_kind(surface_projection_kind)
   {}
 
   TriangulationOnCAD::~TriangulationOnCAD()

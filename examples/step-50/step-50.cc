@@ -227,15 +227,15 @@ namespace Step50
   // flag to the constructor of the
   // triangulation class.
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-    : pcout(std::cout, (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)),
-      triangulation(MPI_COMM_WORLD,
-                    Triangulation<dim>::limit_level_difference_at_vertices,
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
-      fe(degree),
-      mg_dof_handler(triangulation),
-      degree(degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+    pcout(std::cout, (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)),
+    triangulation(
+      MPI_COMM_WORLD,
+      Triangulation<dim>::limit_level_difference_at_vertices,
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
+    fe(degree),
+    mg_dof_handler(triangulation),
+    degree(degree)
   {}
 
   // @sect4{LaplaceProblem::setup_system}

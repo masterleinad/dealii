@@ -338,14 +338,14 @@ namespace Step56
       const SparseMatrix<double>&      schur_complement_matrix,
       const PreconditionerAType&       preconditioner_A,
       const PreconditionerSType&       preconditioner_S,
-      const bool                       do_solve_A)
-    : n_iterations_A(0),
-      n_iterations_S(0),
-      system_matrix(system_matrix),
-      schur_complement_matrix(schur_complement_matrix),
-      preconditioner_A(preconditioner_A),
-      preconditioner_S(preconditioner_S),
-      do_solve_A(do_solve_A)
+      const bool                       do_solve_A) :
+    n_iterations_A(0),
+    n_iterations_S(0),
+    system_matrix(system_matrix),
+    schur_complement_matrix(schur_complement_matrix),
+    preconditioner_A(preconditioner_A),
+    preconditioner_S(preconditioner_S),
+    do_solve_A(do_solve_A)
   {}
 
   template <class PreconditionerAType, class PreconditionerSType>
@@ -450,17 +450,17 @@ namespace Step56
 
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int pressure_degree,
-                                    SolverType::type   solver_type)
-    : pressure_degree(pressure_degree),
-      solver_type(solver_type),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      // Finite element for the velocity only:
-      velocity_fe(FE_Q<dim>(pressure_degree + 1), dim),
-      // Finite element for the whole system:
-      fe(velocity_fe, 1, FE_Q<dim>(pressure_degree), 1),
-      dof_handler(triangulation),
-      velocity_dof_handler(triangulation),
-      computing_timer(std::cout, TimerOutput::never, TimerOutput::wall_times)
+                                    SolverType::type   solver_type) :
+    pressure_degree(pressure_degree),
+    solver_type(solver_type),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    // Finite element for the velocity only:
+    velocity_fe(FE_Q<dim>(pressure_degree + 1), dim),
+    // Finite element for the whole system:
+    fe(velocity_fe, 1, FE_Q<dim>(pressure_degree), 1),
+    dof_handler(triangulation),
+    velocity_dof_handler(triangulation),
+    computing_timer(std::cout, TimerOutput::never, TimerOutput::wall_times)
   {}
 
   // @sect4{StokesProblem::setup_dofs}

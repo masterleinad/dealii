@@ -145,11 +145,11 @@ namespace Step22
   }
 
   template <int dim>
-  StokesProblem<dim>::StokesProblem(const unsigned int degree)
-    : degree(degree),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
-      dof_handler(triangulation)
+  StokesProblem<dim>::StokesProblem(const unsigned int degree) :
+    degree(degree),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
+    dof_handler(triangulation)
   {}
 
   template <int dim>

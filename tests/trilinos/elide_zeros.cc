@@ -132,12 +132,12 @@ namespace LinearAdvectionTest
   };
 
   template <int dim>
-  AdvectionProblem<dim>::AdvectionProblem()
-    : n_mpi_processes(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)),
-      this_mpi_process(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)),
-      triangulation(MPI_COMM_WORLD),
-      fe(1),
-      dof_handler(triangulation)
+  AdvectionProblem<dim>::AdvectionProblem() :
+    n_mpi_processes(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)),
+    this_mpi_process(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)),
+    triangulation(MPI_COMM_WORLD),
+    fe(1),
+    dof_handler(triangulation)
   {
     std::vector<unsigned int> repetitions(2);
     repetitions[0] = 2;

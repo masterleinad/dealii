@@ -2861,8 +2861,9 @@ namespace GridTools
       };
 
       inline CrossDerivative::CrossDerivative(const unsigned int d0,
-                                              const unsigned int d1)
-        : direction_0(d0), direction_1(d1)
+                                              const unsigned int d1) :
+        direction_0(d0),
+        direction_1(d1)
       {}
 
       /**

@@ -37,8 +37,9 @@ template <int dim>
 class LegendreFunction : public Function<dim>
 {
 public:
-  LegendreFunction(const Table<dim, double>& coefficients)
-    : dealii::Function<dim>(1), coefficients(coefficients)
+  LegendreFunction(const Table<dim, double>& coefficients) :
+    dealii::Function<dim>(1),
+    coefficients(coefficients)
   {}
 
   virtual double

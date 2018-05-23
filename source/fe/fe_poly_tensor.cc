@@ -142,12 +142,12 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(
   const unsigned int                degree,
   const FiniteElementData<dim>&     fe_data,
   const std::vector<bool>&          restriction_is_additive_flags,
-  const std::vector<ComponentMask>& nonzero_components)
-  : FiniteElement<dim, spacedim>(fe_data,
-                                 restriction_is_additive_flags,
-                                 nonzero_components),
-    mapping_type(MappingType::mapping_none),
-    poly_space(PolynomialType(degree))
+  const std::vector<ComponentMask>& nonzero_components) :
+  FiniteElement<dim, spacedim>(fe_data,
+                               restriction_is_additive_flags,
+                               nonzero_components),
+  mapping_type(MappingType::mapping_none),
+  poly_space(PolynomialType(degree))
 {
   cached_point(0) = -1;
   // Set up the table converting

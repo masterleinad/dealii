@@ -160,16 +160,16 @@ namespace StokesClass
                                const PreconditionerA&  Apreconditioner,
                                const bool              do_solve_A,
                                const double            A_block_tolerance,
-                               const double            S_block_tolerance)
-      : stokes_matrix(S),
-        mass_matrix(Mass),
-        mp_preconditioner(Mppreconditioner),
-        a_preconditioner(Apreconditioner),
-        do_solve_A(do_solve_A),
-        n_iterations_A_(0),
-        n_iterations_S_(0),
-        A_block_tolerance(A_block_tolerance),
-        S_block_tolerance(S_block_tolerance)
+                               const double            S_block_tolerance) :
+      stokes_matrix(S),
+      mass_matrix(Mass),
+      mp_preconditioner(Mppreconditioner),
+      a_preconditioner(Apreconditioner),
+      do_solve_A(do_solve_A),
+      n_iterations_A_(0),
+      n_iterations_S_(0),
+      A_block_tolerance(A_block_tolerance),
+      S_block_tolerance(S_block_tolerance)
     {}
 
     template <class StokesMatrixType,
@@ -429,9 +429,9 @@ namespace StokesClass
         Base<dim, LinearAlgebra::distributed::BlockVector<number>>
   {
   public:
-    StokesOperator()
-      : MatrixFreeOperators::
-          Base<dim, LinearAlgebra::distributed::BlockVector<number>>()
+    StokesOperator() :
+      MatrixFreeOperators::
+        Base<dim, LinearAlgebra::distributed::BlockVector<number>>()
     {}
     void
     clear();
@@ -558,9 +558,9 @@ namespace StokesClass
         Base<dim, LinearAlgebra::distributed::Vector<number>>
   {
   public:
-    MassMatrixOperator()
-      : MatrixFreeOperators::Base<dim,
-                                  LinearAlgebra::distributed::Vector<number>>()
+    MassMatrixOperator() :
+      MatrixFreeOperators::Base<dim,
+                                LinearAlgebra::distributed::Vector<number>>()
     {}
     void
     clear();
@@ -733,9 +733,9 @@ namespace StokesClass
                            Base<dim, LinearAlgebra::distributed::Vector<number>>
   {
   public:
-    ABlockOperator()
-      : MatrixFreeOperators::Base<dim,
-                                  LinearAlgebra::distributed::Vector<number>>()
+    ABlockOperator() :
+      MatrixFreeOperators::Base<dim,
+                                LinearAlgebra::distributed::Vector<number>>()
     {}
     void
     clear();
@@ -957,19 +957,19 @@ namespace StokesClass
   };
 
   template <int dim>
-  StokesProblem<dim>::StokesProblem()
-    : degree_u(velocity_degree),
-      fe_u(FE_Q<dim>(degree_u), dim),
-      fe_p(FE_Q<dim>(degree_u - 1)),
-      triangulation(MPI_COMM_WORLD,
-                    typename Triangulation<dim>::MeshSmoothing(
-                      Triangulation<dim>::limit_level_difference_at_vertices
-                      | Triangulation<dim>::smoothing_on_refinement
-                      | Triangulation<dim>::smoothing_on_coarsening),
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
-      dof_handler_u(triangulation),
-      dof_handler_p(triangulation)
+  StokesProblem<dim>::StokesProblem() :
+    degree_u(velocity_degree),
+    fe_u(FE_Q<dim>(degree_u), dim),
+    fe_p(FE_Q<dim>(degree_u - 1)),
+    triangulation(
+      MPI_COMM_WORLD,
+      typename Triangulation<dim>::MeshSmoothing(
+        Triangulation<dim>::limit_level_difference_at_vertices
+        | Triangulation<dim>::smoothing_on_refinement
+        | Triangulation<dim>::smoothing_on_coarsening),
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
+    dof_handler_u(triangulation),
+    dof_handler_p(triangulation)
   {}
 
   template <int dim>

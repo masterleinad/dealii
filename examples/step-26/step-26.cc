@@ -194,13 +194,13 @@ namespace Step26
   // period with 100 time steps) and chooses the Crank Nicolson method
   // by setting $\theta=1/2$.
   template <int dim>
-  HeatEquation<dim>::HeatEquation()
-    : fe(1),
-      dof_handler(triangulation),
-      time(0.0),
-      time_step(1. / 500),
-      timestep_number(0),
-      theta(0.5)
+  HeatEquation<dim>::HeatEquation() :
+    fe(1),
+    dof_handler(triangulation),
+    time(0.0),
+    time_step(1. / 500),
+    timestep_number(0),
+    theta(0.5)
   {}
 
   // @sect4{<code>HeatEquation::setup_system</code>}

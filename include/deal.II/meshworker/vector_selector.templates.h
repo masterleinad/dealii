@@ -25,8 +25,9 @@ DEAL_II_NAMESPACE_OPEN
 namespace MeshWorker
 {
   template <int dim, int spacedim, typename Number>
-  VectorDataBase<dim, spacedim, Number>::VectorDataBase(const VectorSelector& v)
-    : VectorSelector(v)
+  VectorDataBase<dim, spacedim, Number>::VectorDataBase(
+    const VectorSelector& v) :
+    VectorSelector(v)
   {}
 
   template <int dim, int spacedim, typename Number>
@@ -73,8 +74,8 @@ namespace MeshWorker
   //----------------------------------------------------------------------//
 
   template <typename VectorType, int dim, int spacedim>
-  VectorData<VectorType, dim, spacedim>::VectorData(const VectorSelector& s)
-    : VectorDataBase<dim, spacedim, typename VectorType::value_type>(s)
+  VectorData<VectorType, dim, spacedim>::VectorData(const VectorSelector& s) :
+    VectorDataBase<dim, spacedim, typename VectorType::value_type>(s)
   {}
 
   template <typename VectorType, int dim, int spacedim>
@@ -161,8 +162,9 @@ namespace MeshWorker
   //----------------------------------------------------------------------//
 
   template <typename VectorType, int dim, int spacedim>
-  MGVectorData<VectorType, dim, spacedim>::MGVectorData(const VectorSelector& s)
-    : VectorData<VectorType, dim, spacedim>(s)
+  MGVectorData<VectorType, dim, spacedim>::MGVectorData(
+    const VectorSelector& s) :
+    VectorData<VectorType, dim, spacedim>(s)
   {}
 
   template <typename VectorType, int dim, int spacedim>

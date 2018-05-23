@@ -111,8 +111,10 @@ namespace internal
     {
       TBBForFunctor(Functor&        functor,
                     const size_type start,
-                    const size_type end)
-        : functor(functor), start(start), end(end)
+                    const size_type end) :
+        functor(functor),
+        start(start),
+        end(end)
       {
         const size_type vec_size = end - start;
         // set chunk size for sub-tasks
@@ -265,8 +267,9 @@ namespace internal
     template <typename Number>
     struct Vectorization_multiply_factor
     {
-      Vectorization_multiply_factor(Number* val, Number factor)
-        : val(val), factor(factor)
+      Vectorization_multiply_factor(Number* val, Number factor) :
+        val(val),
+        factor(factor)
       {}
 
       void
@@ -292,8 +295,10 @@ namespace internal
     template <typename Number>
     struct Vectorization_add_av
     {
-      Vectorization_add_av(Number* val, Number* v_val, Number factor)
-        : val(val), v_val(v_val), factor(factor)
+      Vectorization_add_av(Number* val, Number* v_val, Number factor) :
+        val(val),
+        v_val(v_val),
+        factor(factor)
       {}
 
       void
@@ -320,8 +325,11 @@ namespace internal
     template <typename Number>
     struct Vectorization_sadd_xav
     {
-      Vectorization_sadd_xav(Number* val, Number* v_val, Number a, Number x)
-        : val(val), v_val(v_val), a(a), x(x)
+      Vectorization_sadd_xav(Number* val, Number* v_val, Number a, Number x) :
+        val(val),
+        v_val(v_val),
+        a(a),
+        x(x)
       {}
 
       void
@@ -349,8 +357,9 @@ namespace internal
     template <typename Number>
     struct Vectorization_subtract_v
     {
-      Vectorization_subtract_v(Number* val, Number* v_val)
-        : val(val), v_val(v_val)
+      Vectorization_subtract_v(Number* val, Number* v_val) :
+        val(val),
+        v_val(v_val)
       {}
 
       void
@@ -376,8 +385,9 @@ namespace internal
     template <typename Number>
     struct Vectorization_add_factor
     {
-      Vectorization_add_factor(Number* val, Number factor)
-        : val(val), factor(factor)
+      Vectorization_add_factor(Number* val, Number factor) :
+        val(val),
+        factor(factor)
       {}
 
       void
@@ -433,8 +443,12 @@ namespace internal
                               Number* v_val,
                               Number* w_val,
                               Number  a,
-                              Number  b)
-        : val(val), v_val(v_val), w_val(w_val), a(a), b(b)
+                              Number  b) :
+        val(val),
+        v_val(v_val),
+        w_val(w_val),
+        a(a),
+        b(b)
       {}
 
       void
@@ -463,8 +477,10 @@ namespace internal
     template <typename Number>
     struct Vectorization_sadd_xv
     {
-      Vectorization_sadd_xv(Number* val, Number* v_val, Number x)
-        : val(val), v_val(v_val), x(x)
+      Vectorization_sadd_xv(Number* val, Number* v_val, Number x) :
+        val(val),
+        v_val(v_val),
+        x(x)
       {}
 
       void
@@ -496,8 +512,13 @@ namespace internal
                                Number* w_val,
                                Number  x,
                                Number  a,
-                               Number  b)
-        : val(val), v_val(v_val), w_val(w_val), x(x), a(a), b(b)
+                               Number  b) :
+        val(val),
+        v_val(v_val),
+        w_val(w_val),
+        x(x),
+        a(a),
+        b(b)
       {}
 
       void
@@ -553,8 +574,10 @@ namespace internal
     template <typename Number>
     struct Vectorization_equ_au
     {
-      Vectorization_equ_au(Number* val, Number* u_val, Number a)
-        : val(val), u_val(u_val), a(a)
+      Vectorization_equ_au(Number* val, Number* u_val, Number a) :
+        val(val),
+        u_val(u_val),
+        a(a)
       {}
 
       void
@@ -585,8 +608,12 @@ namespace internal
                              Number* u_val,
                              Number* v_val,
                              Number  a,
-                             Number  b)
-        : val(val), u_val(u_val), v_val(v_val), a(a), b(b)
+                             Number  b) :
+        val(val),
+        u_val(u_val),
+        v_val(v_val),
+        a(a),
+        b(b)
       {}
 
       void
@@ -621,8 +648,14 @@ namespace internal
                                Number* w_val,
                                Number  a,
                                Number  b,
-                               Number  c)
-        : val(val), u_val(u_val), v_val(v_val), w_val(w_val), a(a), b(b), c(c)
+                               Number  c) :
+        val(val),
+        u_val(u_val),
+        v_val(v_val),
+        w_val(w_val),
+        a(a),
+        b(b),
+        c(c)
       {}
 
       void
@@ -653,8 +686,10 @@ namespace internal
     template <typename Number>
     struct Vectorization_ratio
     {
-      Vectorization_ratio(Number* val, Number* a_val, Number* b_val)
-        : val(val), a_val(a_val), b_val(b_val)
+      Vectorization_ratio(Number* val, Number* a_val, Number* b_val) :
+        val(val),
+        a_val(a_val),
+        b_val(b_val)
       {}
 
       void
@@ -834,8 +869,11 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      AddAndDot(Number* X, const Number* V, const Number* W, Number a)
-        : X(X), V(V), W(W), a(a)
+      AddAndDot(Number* X, const Number* V, const Number* W, Number a) :
+        X(X),
+        V(V),
+        W(W),
+        a(a)
       {}
 
       Number
@@ -1182,8 +1220,10 @@ namespace internal
 
       TBBReduceFunctor(const Operation& op,
                        const size_type  start,
-                       const size_type  end)
-        : op(op), start(start), end(end)
+                       const size_type  end) :
+        op(op),
+        start(start),
+        end(end)
       {
         const size_type vec_size = end - start;
         // set chunk size for sub-tasks

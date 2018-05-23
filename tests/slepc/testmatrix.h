@@ -51,8 +51,9 @@ private:
 
 // --------------- inline and template functions -----------------
 
-inline FDDiagMatrix::FDDiagMatrix(unsigned int nx, unsigned int ny)
-  : nx(nx), ny(ny)
+inline FDDiagMatrix::FDDiagMatrix(unsigned int nx, unsigned int ny) :
+  nx(nx),
+  ny(ny)
 {}
 
 template <typename SP>

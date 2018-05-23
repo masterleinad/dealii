@@ -70,8 +70,11 @@ private:
 };
 
 template <int dim>
-BubbleFunction<dim>::BubbleFunction(unsigned int degree, unsigned int direction)
-  : Function<dim>(), m_degree(degree), m_direction(direction)
+BubbleFunction<dim>::BubbleFunction(unsigned int degree,
+                                    unsigned int direction) :
+  Function<dim>(),
+  m_degree(degree),
+  m_direction(direction)
 {}
 
 template <int dim>
@@ -151,8 +154,10 @@ private:
 };
 
 template <int dim>
-Step3<dim>::Step3(FiniteElement<dim>* fe, const unsigned int degree)
-  : fe(fe), dof_handler(triangulation), m_degree(degree + 1)
+Step3<dim>::Step3(FiniteElement<dim>* fe, const unsigned int degree) :
+  fe(fe),
+  dof_handler(triangulation),
+  m_degree(degree + 1)
 {}
 
 template <int dim>

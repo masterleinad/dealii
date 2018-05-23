@@ -77,11 +77,11 @@ private:
 };
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
-  : fe(1),
-    dof_handler(triangulation),
-    mapping(mapping_degree),
-    last_error(std::numeric_limits<double>::max())
+LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree) :
+  fe(1),
+  dof_handler(triangulation),
+  mapping(mapping_degree),
+  last_error(std::numeric_limits<double>::max())
 {
   deallog << "Using mapping with degree " << mapping_degree << ":" << std::endl
           << "============================" << std::endl;

@@ -78,12 +78,12 @@ namespace MeshWorker
     /**
      * Constructor.
      */
-    LoopControl()
-      : own_cells(true),
-        ghost_cells(false),
-        faces_to_ghost(LoopControl::one),
-        own_faces(LoopControl::one),
-        cells_first(true)
+    LoopControl() :
+      own_cells(true),
+      ghost_cells(false),
+      faces_to_ghost(LoopControl::one),
+      own_faces(LoopControl::one),
+      cells_first(true)
     {}
 
     /**

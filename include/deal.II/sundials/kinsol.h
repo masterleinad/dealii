@@ -261,17 +261,17 @@ namespace SUNDIALS
         const double&           maximum_newton_step           = 0.0,
         const double&           dq_relative_error             = 0.0,
         const unsigned int&     maximum_beta_failures         = 0,
-        const unsigned int&     anderson_subspace_size        = 0)
-        : strategy(strategy),
-          maximum_non_linear_iterations(maximum_non_linear_iterations),
-          function_tolerance(function_tolerance),
-          step_tolerance(step_tolerance),
-          no_init_setup(no_init_setup),
-          maximum_setup_calls(maximum_setup_calls),
-          maximum_newton_step(maximum_newton_step),
-          dq_relative_error(dq_relative_error),
-          maximum_beta_failures(maximum_beta_failures),
-          anderson_subspace_size(anderson_subspace_size)
+        const unsigned int&     anderson_subspace_size        = 0) :
+        strategy(strategy),
+        maximum_non_linear_iterations(maximum_non_linear_iterations),
+        function_tolerance(function_tolerance),
+        step_tolerance(step_tolerance),
+        no_init_setup(no_init_setup),
+        maximum_setup_calls(maximum_setup_calls),
+        maximum_newton_step(maximum_newton_step),
+        dq_relative_error(dq_relative_error),
+        maximum_beta_failures(maximum_beta_failures),
+        anderson_subspace_size(anderson_subspace_size)
       {}
 
       /**

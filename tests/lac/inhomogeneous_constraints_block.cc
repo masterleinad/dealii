@@ -107,8 +107,9 @@ RightHandSide<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-AdvectionProblem<dim>::AdvectionProblem()
-  : dof_handler(triangulation), fe(FE_Q<dim>(2), 2)
+AdvectionProblem<dim>::AdvectionProblem() :
+  dof_handler(triangulation),
+  fe(FE_Q<dim>(2), 2)
 {}
 
 template <int dim>

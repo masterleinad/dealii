@@ -197,8 +197,9 @@ namespace Step13
     template <int dim>
     PointValueEvaluation<dim>::PointValueEvaluation(
       const Point<dim>& evaluation_point,
-      TableHandler&     results_table)
-      : evaluation_point(evaluation_point), results_table(results_table)
+      TableHandler&     results_table) :
+      evaluation_point(evaluation_point),
+      results_table(results_table)
     {}
 
     // Now for the function that is mainly of interest in this class, the
@@ -376,8 +377,9 @@ namespace Step13
     template <int dim>
     SolutionOutput<dim>::SolutionOutput(
       const std::string&              output_name_base,
-      const DataOutBase::OutputFormat output_format)
-      : output_name_base(output_name_base), output_format(output_format)
+      const DataOutBase::OutputFormat output_format) :
+      output_name_base(output_name_base),
+      output_format(output_format)
     {}
 
     // Following the description above, the function generating the actual output
@@ -517,8 +519,8 @@ namespace Step13
     // The implementation of the only two non-abstract functions is then
     // rather boring:
     template <int dim>
-    Base<dim>::Base(Triangulation<dim>& coarse_grid)
-      : triangulation(&coarse_grid)
+    Base<dim>::Base(Triangulation<dim>& coarse_grid) :
+      triangulation(&coarse_grid)
     {}
 
     template <int dim>
@@ -668,12 +670,12 @@ namespace Step13
     Solver<dim>::Solver(Triangulation<dim>&       triangulation,
                         const FiniteElement<dim>& fe,
                         const Quadrature<dim>&    quadrature,
-                        const Function<dim>&      boundary_values)
-      : Base<dim>(triangulation),
-        fe(&fe),
-        quadrature(&quadrature),
-        dof_handler(triangulation),
-        boundary_values(&boundary_values)
+                        const Function<dim>&      boundary_values) :
+      Base<dim>(triangulation),
+      fe(&fe),
+      quadrature(&quadrature),
+      dof_handler(triangulation),
+      boundary_values(&boundary_values)
     {}
 
     // The destructor is simple, it only clears the information stored in the
@@ -900,16 +902,16 @@ namespace Step13
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
       const FiniteElement<dim>& fe,
-      const Quadrature<dim>&    quadrature)
-      : fe_values(fe, quadrature, update_gradients | update_JxW_values)
+      const Quadrature<dim>&    quadrature) :
+      fe_values(fe, quadrature, update_gradients | update_JxW_values)
     {}
 
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
-      const AssemblyScratchData& scratch_data)
-      : fe_values(scratch_data.fe_values.get_fe(),
-                  scratch_data.fe_values.get_quadrature(),
-                  update_gradients | update_JxW_values)
+      const AssemblyScratchData& scratch_data) :
+      fe_values(scratch_data.fe_values.get_fe(),
+                scratch_data.fe_values.get_quadrature(),
+                update_gradients | update_JxW_values)
     {}
 
     template <int dim>
@@ -1068,10 +1070,10 @@ namespace Step13
                                     const FiniteElement<dim>& fe,
                                     const Quadrature<dim>&    quadrature,
                                     const Function<dim>&      rhs_function,
-                                    const Function<dim>&      boundary_values)
-      : Base<dim>(triangulation),
-        Solver<dim>(triangulation, fe, quadrature, boundary_values),
-        rhs_function(&rhs_function)
+                                    const Function<dim>&      boundary_values) :
+      Base<dim>(triangulation),
+      Solver<dim>(triangulation, fe, quadrature, boundary_values),
+      rhs_function(&rhs_function)
     {}
 
     // ... as does the <code>assemble_rhs</code> function. Since this is
@@ -1153,13 +1155,13 @@ namespace Step13
       const FiniteElement<dim>& fe,
       const Quadrature<dim>&    quadrature,
       const Function<dim>&      rhs_function,
-      const Function<dim>&      boundary_values)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          fe,
-                          quadrature,
-                          rhs_function,
-                          boundary_values)
+      const Function<dim>&      boundary_values) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        fe,
+                        quadrature,
+                        rhs_function,
+                        boundary_values)
     {}
 
     template <int dim>
@@ -1195,17 +1197,18 @@ namespace Step13
     };
 
     template <int dim>
-    RefinementKelly<dim>::RefinementKelly(Triangulation<dim>&       coarse_grid,
-                                          const FiniteElement<dim>& fe,
-                                          const Quadrature<dim>&    quadrature,
-                                          const Function<dim>& rhs_function,
-                                          const Function<dim>& boundary_values)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          fe,
-                          quadrature,
-                          rhs_function,
-                          boundary_values)
+    RefinementKelly<dim>::RefinementKelly(
+      Triangulation<dim>&       coarse_grid,
+      const FiniteElement<dim>& fe,
+      const Quadrature<dim>&    quadrature,
+      const Function<dim>&      rhs_function,
+      const Function<dim>&      boundary_values) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        fe,
+                        quadrature,
+                        rhs_function,
+                        boundary_values)
     {}
 
     template <int dim>

@@ -621,8 +621,9 @@ namespace GridTools
     class Rotate3d
     {
     public:
-      Rotate3d(const double angle, const unsigned int axis)
-        : angle(angle), axis(axis)
+      Rotate3d(const double angle, const unsigned int axis) :
+        angle(angle),
+        axis(axis)
       {}
 
       Point<3>

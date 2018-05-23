@@ -53,8 +53,8 @@ namespace PETScWrappers
                                const size_type local_columns,
                                const size_type n_nonzero_per_row,
                                const bool      is_symmetric,
-                               const size_type n_offdiag_nonzero_per_row)
-      : communicator(communicator)
+                               const size_type n_offdiag_nonzero_per_row) :
+      communicator(communicator)
     {
       do_reinit(m,
                 n,
@@ -73,8 +73,8 @@ namespace PETScWrappers
       const size_type               local_columns,
       const std::vector<size_type>& row_lengths,
       const bool                    is_symmetric,
-      const std::vector<size_type>& offdiag_row_lengths)
-      : communicator(communicator)
+      const std::vector<size_type>& offdiag_row_lengths) :
+      communicator(communicator)
     {
       do_reinit(m,
                 n,
@@ -92,8 +92,8 @@ namespace PETScWrappers
       const std::vector<size_type>& local_rows_per_process,
       const std::vector<size_type>& local_columns_per_process,
       const unsigned int            this_process,
-      const bool                    preset_nonzero_locations)
-      : communicator(communicator)
+      const bool                    preset_nonzero_locations) :
+      communicator(communicator)
     {
       do_reinit(sparsity_pattern,
                 local_rows_per_process,

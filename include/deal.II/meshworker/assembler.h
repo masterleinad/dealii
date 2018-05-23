@@ -597,8 +597,8 @@ namespace MeshWorker
 
     template <typename MatrixType, typename number>
     inline MatrixLocalBlocksToGlobalBlocks<MatrixType, number>::
-      MatrixLocalBlocksToGlobalBlocks(double threshold)
-      : threshold(threshold)
+      MatrixLocalBlocksToGlobalBlocks(double threshold) :
+      threshold(threshold)
     {}
 
     template <typename MatrixType, typename number>
@@ -746,8 +746,8 @@ namespace MeshWorker
 
     template <typename MatrixType, typename number>
     inline MGMatrixLocalBlocksToGlobalBlocks<MatrixType, number>::
-      MGMatrixLocalBlocksToGlobalBlocks(double threshold)
-      : threshold(threshold)
+      MGMatrixLocalBlocksToGlobalBlocks(double threshold) :
+      threshold(threshold)
     {}
 
     template <typename MatrixType, typename number>

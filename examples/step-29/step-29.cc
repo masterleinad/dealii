@@ -153,8 +153,8 @@ namespace Step29
 
   // The constructor stores a reference to the ParameterHandler object that is
   // passed to it:
-  ParameterReader::ParameterReader(ParameterHandler& paramhandler)
-    : prm(paramhandler)
+  ParameterReader::ParameterReader(ParameterHandler& paramhandler) :
+    prm(paramhandler)
   {}
 
   // @sect4{<code>ParameterReader::declare_parameters</code>}
@@ -317,8 +317,8 @@ namespace Step29
   // In our case, only the function values of $v$ and $w$ are needed to
   // compute $|u|$, so we're good with the update_values flag.
   template <int dim>
-  ComputeIntensity<dim>::ComputeIntensity()
-    : DataPostprocessorScalar<dim>("Intensity", update_values)
+  ComputeIntensity<dim>::ComputeIntensity() :
+    DataPostprocessorScalar<dim>("Intensity", update_values)
   {}
 
   // The actual postprocessing happens in the following function. Its input is
@@ -405,8 +405,10 @@ namespace Step29
   // system, which consists of two copies of the scalar Q1 field, one for $v$
   // and one for $w$:
   template <int dim>
-  UltrasoundProblem<dim>::UltrasoundProblem(ParameterHandler& param)
-    : prm(param), dof_handler(triangulation), fe(FE_Q<dim>(1), 2)
+  UltrasoundProblem<dim>::UltrasoundProblem(ParameterHandler& param) :
+    prm(param),
+    dof_handler(triangulation),
+    fe(FE_Q<dim>(1), 2)
   {}
 
   template <int dim>

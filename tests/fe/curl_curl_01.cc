@@ -248,8 +248,9 @@ RightHandSide<dim>::vector_value_list(
 // END RIGHT HAND SIDE MEMBERS
 
 template <int dim>
-MaxwellProblem<dim>::MaxwellProblem(const unsigned int order)
-  : dof_handler(triangulation), fe(order)
+MaxwellProblem<dim>::MaxwellProblem(const unsigned int order) :
+  dof_handler(triangulation),
+  fe(order)
 {
   p_order    = order;
   quad_order = p_order + 2;

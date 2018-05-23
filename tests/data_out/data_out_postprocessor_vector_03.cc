@@ -227,11 +227,11 @@ template <int dim>
 class HeatFluxPostprocessor : public DataPostprocessorVector<dim>
 {
 public:
-  HeatFluxPostprocessor()
-    : // like above, but now also make sure that DataOut provides
-      // us with coordinates of the evaluation points:
-      DataPostprocessorVector<dim>("heatflux",
-                                   update_gradients | update_quadrature_points)
+  HeatFluxPostprocessor() :
+    // like above, but now also make sure that DataOut provides
+    // us with coordinates of the evaluation points:
+    DataPostprocessorVector<dim>("heatflux",
+                                 update_gradients | update_quadrature_points)
   {}
 
   virtual void

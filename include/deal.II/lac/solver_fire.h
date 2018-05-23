@@ -190,10 +190,10 @@ template <typename VectorType>
 SolverFIRE<VectorType>::AdditionalData::AdditionalData(
   const double initial_timestep,
   const double maximum_timestep,
-  const double maximum_linfty_norm)
-  : initial_timestep(initial_timestep),
-    maximum_timestep(maximum_timestep),
-    maximum_linfty_norm(maximum_linfty_norm)
+  const double maximum_linfty_norm) :
+  initial_timestep(initial_timestep),
+  maximum_timestep(maximum_timestep),
+  maximum_linfty_norm(maximum_linfty_norm)
 {
   AssertThrow(initial_timestep > 0. && maximum_timestep > 0.
                 && maximum_linfty_norm > 0.,
@@ -205,14 +205,16 @@ SolverFIRE<VectorType>::AdditionalData::AdditionalData(
 template <typename VectorType>
 SolverFIRE<VectorType>::SolverFIRE(SolverControl&            solver_control,
                                    VectorMemory<VectorType>& vector_memory,
-                                   const AdditionalData&     data)
-  : Solver<VectorType>(solver_control, vector_memory), additional_data(data)
+                                   const AdditionalData&     data) :
+  Solver<VectorType>(solver_control, vector_memory),
+  additional_data(data)
 {}
 
 template <typename VectorType>
 SolverFIRE<VectorType>::SolverFIRE(SolverControl&        solver_control,
-                                   const AdditionalData& data)
-  : Solver<VectorType>(solver_control), additional_data(data)
+                                   const AdditionalData& data) :
+  Solver<VectorType>(solver_control),
+  additional_data(data)
 {}
 
 template <typename VectorType>

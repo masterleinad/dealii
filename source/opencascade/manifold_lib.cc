@@ -74,8 +74,9 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   NormalProjectionManifold<dim, spacedim>::NormalProjectionManifold(
     const TopoDS_Shape& sh,
-    const double        tolerance)
-    : sh(sh), tolerance(tolerance)
+    const double        tolerance) :
+    sh(sh),
+    tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
   }
@@ -110,8 +111,10 @@ namespace OpenCASCADE
   DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold(
     const TopoDS_Shape&        sh,
     const Tensor<1, spacedim>& direction,
-    const double               tolerance)
-    : sh(sh), direction(direction), tolerance(tolerance)
+    const double               tolerance) :
+    sh(sh),
+    direction(direction),
+    tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
   }
@@ -145,8 +148,9 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::NormalToMeshProjectionManifold(
     const TopoDS_Shape& sh,
-    const double        tolerance)
-    : sh(sh), tolerance(tolerance)
+    const double        tolerance) :
+    sh(sh),
+    tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
     Assert(
@@ -289,15 +293,14 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::
     ArclengthProjectionLineManifold(const TopoDS_Shape& sh,
-                                    const double        tolerance)
-    :
+                                    const double        tolerance) :
 
-      ChartManifold<dim, spacedim, 1>(sh.Closed() ? Point<1>(shape_length(sh)) :
-                                                    Point<1>()),
-      sh(sh),
-      curve(curve_adaptor(sh)),
-      tolerance(tolerance),
-      length(shape_length(sh))
+    ChartManifold<dim, spacedim, 1>(sh.Closed() ? Point<1>(shape_length(sh)) :
+                                                  Point<1>()),
+    sh(sh),
+    curve(curve_adaptor(sh)),
+    tolerance(tolerance),
+    length(shape_length(sh))
   {
     Assert(spacedim >= 2, ExcImpossibleInDimSpacedim(dim, spacedim));
   }
@@ -339,9 +342,11 @@ namespace OpenCASCADE
   }
 
   template <int dim, int spacedim>
-  NURBSPatchManifold<dim, spacedim>::NURBSPatchManifold(const TopoDS_Face& face,
-                                                        const double tolerance)
-    : face(face), tolerance(tolerance)
+  NURBSPatchManifold<dim, spacedim>::NURBSPatchManifold(
+    const TopoDS_Face& face,
+    const double       tolerance) :
+    face(face),
+    tolerance(tolerance)
   {}
 
   template <int dim, int spacedim>

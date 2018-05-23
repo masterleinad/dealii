@@ -154,23 +154,23 @@ namespace CUDAWrappers
   } // namespace internal
 
   template <typename Number>
-  SparseMatrix<Number>::SparseMatrix()
-    : nnz(0),
-      n_rows(0),
-      val_dev(nullptr),
-      column_index_dev(nullptr),
-      row_ptr_dev(nullptr),
-      descr(nullptr)
+  SparseMatrix<Number>::SparseMatrix() :
+    nnz(0),
+    n_rows(0),
+    val_dev(nullptr),
+    column_index_dev(nullptr),
+    row_ptr_dev(nullptr),
+    descr(nullptr)
   {}
 
   template <typename Number>
   SparseMatrix<Number>::SparseMatrix(
     Utilities::CUDA::Handle&              handle,
-    const ::dealii::SparseMatrix<Number>& sparse_matrix_host)
-    : val_dev(nullptr),
-      column_index_dev(nullptr),
-      row_ptr_dev(nullptr),
-      descr(nullptr)
+    const ::dealii::SparseMatrix<Number>& sparse_matrix_host) :
+    val_dev(nullptr),
+    column_index_dev(nullptr),
+    row_ptr_dev(nullptr),
+    descr(nullptr)
   {
     reinit(handle, sparse_matrix_host);
   }

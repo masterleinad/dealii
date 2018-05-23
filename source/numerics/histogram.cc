@@ -29,8 +29,11 @@ Histogram::logarithmic_less(const number n1, const number n2)
           || ((n2 < n1) && (n1 > 0) && (n2 <= 0)));
 }
 
-Histogram::Interval::Interval(const double left_point, const double right_point)
-  : left_point(left_point), right_point(right_point), content(0)
+Histogram::Interval::Interval(const double left_point,
+                              const double right_point) :
+  left_point(left_point),
+  right_point(right_point),
+  content(0)
 {}
 
 std::size_t

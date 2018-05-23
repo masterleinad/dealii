@@ -24,9 +24,9 @@ namespace Functions
 {
   template <int dim>
   ParsedFunction<dim>::ParsedFunction(const unsigned int n_components,
-                                      const double       h)
-    : AutoDerivativeFunction<dim>(h, n_components),
-      function_object(n_components)
+                                      const double       h) :
+    AutoDerivativeFunction<dim>(h, n_components),
+    function_object(n_components)
   {}
 
   template <int dim>

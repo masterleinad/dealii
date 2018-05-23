@@ -352,8 +352,9 @@ namespace Step43
     template <class MatrixType, class PreconditionerType>
     InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
       const MatrixType&         m,
-      const PreconditionerType& preconditioner)
-      : matrix(&m), preconditioner(preconditioner)
+      const PreconditionerType& preconditioner) :
+      matrix(&m),
+      preconditioner(preconditioner)
     {}
 
     template <class MatrixType, class PreconditionerType>
@@ -409,11 +410,11 @@ namespace Step43
         const TrilinosWrappers::BlockSparseMatrix& S,
         const InverseMatrix<TrilinosWrappers::SparseMatrix,
                             PreconditionerTypeMp>& Mpinv,
-        const PreconditionerTypeA&                 Apreconditioner)
-      : darcy_matrix(&S),
-        m_inverse(&Mpinv),
-        a_preconditioner(Apreconditioner),
-        tmp(complete_index_set(darcy_matrix->block(1, 1).m()))
+        const PreconditionerTypeA&                 Apreconditioner) :
+      darcy_matrix(&S),
+      m_inverse(&Mpinv),
+      a_preconditioner(Apreconditioner),
+      tmp(complete_index_set(darcy_matrix->block(1, 1).m()))
     {}
 
     template <class PreconditionerTypeA, class PreconditionerTypeMp>
@@ -605,34 +606,34 @@ namespace Step43
   // stepping variables related to operator splitting as well as the option
   // for matrix assembly and preconditioning:
   template <int dim>
-  TwoPhaseFlowProblem<dim>::TwoPhaseFlowProblem(const unsigned int degree)
-    : triangulation(Triangulation<dim>::maximum_smoothing),
-      global_Omega_diameter(std::numeric_limits<double>::quiet_NaN()),
-      degree(degree),
-      darcy_degree(degree),
-      darcy_fe(FE_Q<dim>(darcy_degree + 1), dim, FE_Q<dim>(darcy_degree), 1),
-      darcy_dof_handler(triangulation),
+  TwoPhaseFlowProblem<dim>::TwoPhaseFlowProblem(const unsigned int degree) :
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    global_Omega_diameter(std::numeric_limits<double>::quiet_NaN()),
+    degree(degree),
+    darcy_degree(degree),
+    darcy_fe(FE_Q<dim>(darcy_degree + 1), dim, FE_Q<dim>(darcy_degree), 1),
+    darcy_dof_handler(triangulation),
 
-      saturation_degree(degree + 1),
-      saturation_fe(saturation_degree),
-      saturation_dof_handler(triangulation),
+    saturation_degree(degree + 1),
+    saturation_fe(saturation_degree),
+    saturation_dof_handler(triangulation),
 
-      saturation_refinement_threshold(0.5),
+    saturation_refinement_threshold(0.5),
 
-      time(0),
-      end_time(10),
+    time(0),
+    end_time(10),
 
-      current_macro_time_step(0),
-      old_macro_time_step(0),
+    current_macro_time_step(0),
+    old_macro_time_step(0),
 
-      time_step(0),
-      old_time_step(0),
-      timestep_number(0),
-      viscosity(0.2),
-      porosity(1.0),
-      AOS_threshold(3.0),
+    time_step(0),
+    old_time_step(0),
+    timestep_number(0),
+    viscosity(0.2),
+    porosity(1.0),
+    AOS_threshold(3.0),
 
-      rebuild_saturation_matrix(true)
+    rebuild_saturation_matrix(true)
   {}
 
   // @sect3{TwoPhaseFlowProblem<dim>::setup_dofs}

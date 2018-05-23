@@ -625,11 +625,11 @@ namespace internal
 
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::InternalData::InternalData(
-  const unsigned int polynomial_degree)
-  : polynomial_degree(polynomial_degree),
-    n_shape_functions(Utilities::fixed_power<dim>(polynomial_degree + 1)),
-    line_support_points(QGaussLobatto<1>(polynomial_degree + 1)),
-    tensor_product_quadrature(false)
+  const unsigned int polynomial_degree) :
+  polynomial_degree(polynomial_degree),
+  n_shape_functions(Utilities::fixed_power<dim>(polynomial_degree + 1)),
+  line_support_points(QGaussLobatto<1>(polynomial_degree + 1)),
+  tensor_product_quadrature(false)
 {}
 
 template <int dim, int spacedim>
@@ -2206,18 +2206,18 @@ namespace internal
 } // namespace internal
 
 template <int dim, int spacedim>
-MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
-  : polynomial_degree(p),
-    line_support_points(this->polynomial_degree + 1),
-    fe_q(dim == 3 ? new FE_Q<dim>(this->polynomial_degree) : nullptr),
-    support_point_weights_perimeter_to_interior(
-      internal::MappingQGenericImplementation::
-        compute_support_point_weights_perimeter_to_interior(
-          this->polynomial_degree,
-          dim)),
-    support_point_weights_cell(
-      internal::MappingQGenericImplementation::
-        compute_support_point_weights_cell<dim>(this->polynomial_degree))
+MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p) :
+  polynomial_degree(p),
+  line_support_points(this->polynomial_degree + 1),
+  fe_q(dim == 3 ? new FE_Q<dim>(this->polynomial_degree) : nullptr),
+  support_point_weights_perimeter_to_interior(
+    internal::MappingQGenericImplementation::
+      compute_support_point_weights_perimeter_to_interior(
+        this->polynomial_degree,
+        dim)),
+  support_point_weights_cell(
+    internal::MappingQGenericImplementation::compute_support_point_weights_cell<
+      dim>(this->polynomial_degree))
 {
   Assert(p >= 1,
          ExcMessage("It only makes sense to create polynomial mappings "
@@ -2226,13 +2226,13 @@ MappingQGeneric<dim, spacedim>::MappingQGeneric(const unsigned int p)
 
 template <int dim, int spacedim>
 MappingQGeneric<dim, spacedim>::MappingQGeneric(
-  const MappingQGeneric<dim, spacedim>& mapping)
-  : polynomial_degree(mapping.polynomial_degree),
-    line_support_points(mapping.line_support_points),
-    fe_q(dim == 3 ? new FE_Q<dim>(*mapping.fe_q) : nullptr),
-    support_point_weights_perimeter_to_interior(
-      mapping.support_point_weights_perimeter_to_interior),
-    support_point_weights_cell(mapping.support_point_weights_cell)
+  const MappingQGeneric<dim, spacedim>& mapping) :
+  polynomial_degree(mapping.polynomial_degree),
+  line_support_points(mapping.line_support_points),
+  fe_q(dim == 3 ? new FE_Q<dim>(*mapping.fe_q) : nullptr),
+  support_point_weights_perimeter_to_interior(
+    mapping.support_point_weights_perimeter_to_interior),
+  support_point_weights_cell(mapping.support_point_weights_cell)
 {}
 
 template <int dim, int spacedim>

@@ -46,8 +46,9 @@ template <int dim>
 class RefFunc : public Function<dim>
 {
 public:
-  RefFunc(const Point<dim> origin = Point<dim>())
-    : Function<dim>(1), origin(origin)
+  RefFunc(const Point<dim> origin = Point<dim>()) :
+    Function<dim>(1),
+    origin(origin)
   {}
 
   virtual double
@@ -116,8 +117,8 @@ template <int dim>
 class SphFunc : public Functions::Spherical<dim>
 {
 public:
-  SphFunc(const Point<dim> origin = Point<dim>())
-    : Functions::Spherical<dim>(origin)
+  SphFunc(const Point<dim> origin = Point<dim>()) :
+    Functions::Spherical<dim>(origin)
   {}
 
 private:

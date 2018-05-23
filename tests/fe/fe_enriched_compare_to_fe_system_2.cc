@@ -63,8 +63,9 @@ template <int dim>
 class EnrichmentFunction : public Function<dim>
 {
 public:
-  EnrichmentFunction(const Point<dim>& origin)
-    : Function<dim>(1), origin(origin)
+  EnrichmentFunction(const Point<dim>& origin) :
+    Function<dim>(1),
+    origin(origin)
   {}
 
   virtual double

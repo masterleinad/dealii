@@ -158,10 +158,10 @@ public:
      */
     AdditionalData(double       relaxation     = 1.,
                    unsigned int start_adaption = 6,
-                   bool         use_residual   = true)
-      : relaxation(relaxation),
-        start_adaption(start_adaption),
-        use_residual(use_residual)
+                   bool         use_residual   = true) :
+      relaxation(relaxation),
+      start_adaption(start_adaption),
+      use_residual(use_residual)
     {}
   };
 
@@ -201,8 +201,9 @@ protected:
 template <class VectorType>
 EigenPower<VectorType>::EigenPower(SolverControl&            cn,
                                    VectorMemory<VectorType>& mem,
-                                   const AdditionalData&     data)
-  : Solver<VectorType>(cn, mem), additional_data(data)
+                                   const AdditionalData&     data) :
+  Solver<VectorType>(cn, mem),
+  additional_data(data)
 {}
 
 template <class VectorType>
@@ -284,8 +285,9 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 template <class VectorType>
 EigenInverse<VectorType>::EigenInverse(SolverControl&            cn,
                                        VectorMemory<VectorType>& mem,
-                                       const AdditionalData&     data)
-  : Solver<VectorType>(cn, mem), additional_data(data)
+                                       const AdditionalData&     data) :
+  Solver<VectorType>(cn, mem),
+  additional_data(data)
 {}
 
 template <class VectorType>

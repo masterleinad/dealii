@@ -232,13 +232,15 @@ protected:
 template <typename VectorType>
 SolverCG<VectorType>::SolverCG(SolverControl&            cn,
                                VectorMemory<VectorType>& mem,
-                               const AdditionalData&     data)
-  : Solver<VectorType>(cn, mem), additional_data(data)
+                               const AdditionalData&     data) :
+  Solver<VectorType>(cn, mem),
+  additional_data(data)
 {}
 
 template <typename VectorType>
-SolverCG<VectorType>::SolverCG(SolverControl& cn, const AdditionalData& data)
-  : Solver<VectorType>(cn), additional_data(data)
+SolverCG<VectorType>::SolverCG(SolverControl& cn, const AdditionalData& data) :
+  Solver<VectorType>(cn),
+  additional_data(data)
 {}
 
 template <typename VectorType>

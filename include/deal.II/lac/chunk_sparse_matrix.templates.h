@@ -260,13 +260,18 @@ namespace internal
 } // namespace internal
 
 template <typename number>
-ChunkSparseMatrix<number>::ChunkSparseMatrix()
-  : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
+ChunkSparseMatrix<number>::ChunkSparseMatrix() :
+  cols(nullptr, "ChunkSparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {}
 
 template <typename number>
-ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparseMatrix& m)
-  : Subscriptor(m), cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
+ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparseMatrix& m) :
+  Subscriptor(m),
+  cols(nullptr, "ChunkSparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   Assert(
     m.cols == nullptr && m.val == nullptr && m.max_len == 0,
@@ -292,8 +297,10 @@ ChunkSparseMatrix<number>::operator=(const ChunkSparseMatrix<number>& m)
 }
 
 template <typename number>
-ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c)
-  : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
+ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c) :
+  cols(nullptr, "ChunkSparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   // virtual functions called in constructors and destructors never use the
   // override in a derived class
@@ -303,8 +310,10 @@ ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c)
 
 template <typename number>
 ChunkSparseMatrix<number>::ChunkSparseMatrix(const ChunkSparsityPattern& c,
-                                             const IdentityMatrix&       id)
-  : cols(nullptr, "ChunkSparseMatrix"), val(nullptr), max_len(0)
+                                             const IdentityMatrix&       id) :
+  cols(nullptr, "ChunkSparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   (void) id;
   Assert(c.n_rows() == id.m(), ExcDimensionMismatch(c.n_rows(), id.m()));

@@ -196,8 +196,9 @@ namespace Step8
   // compose the system of, and how often it shall be repeated:
 
   template <int dim>
-  ElasticProblem<dim>::ElasticProblem()
-    : dof_handler(triangulation), fe(FE_Q<dim>(1), dim)
+  ElasticProblem<dim>::ElasticProblem() :
+    dof_handler(triangulation),
+    fe(FE_Q<dim>(1), dim)
   {}
   // In fact, the <code>FESystem</code> class has several more constructors
   // which can perform more complex operations than just stacking together

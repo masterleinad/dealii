@@ -466,8 +466,8 @@ operator>(const DerivedIterator& other) const
 
 template <class DerivedIterator, class AccessorType>
 inline LinearIndexIterator<DerivedIterator, AccessorType>::LinearIndexIterator(
-  const AccessorType accessor)
-  : accessor(accessor)
+  const AccessorType accessor) :
+  accessor(accessor)
 {}
 
 DEAL_II_NAMESPACE_CLOSE

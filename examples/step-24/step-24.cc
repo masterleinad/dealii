@@ -188,14 +188,14 @@ namespace Step24
   // i.e. theta is set to 0.5. The time step is later selected to satisfy $k =
   // \frac hc$: here we initialize it to an invalid number.
   template <int dim>
-  TATForwardProblem<dim>::TATForwardProblem()
-    : fe(1),
-      dof_handler(triangulation),
-      time_step(std::numeric_limits<double>::quiet_NaN()),
-      time(time_step),
-      timestep_number(1),
-      theta(0.5),
-      wave_speed(1.437)
+  TATForwardProblem<dim>::TATForwardProblem() :
+    fe(1),
+    dof_handler(triangulation),
+    time_step(std::numeric_limits<double>::quiet_NaN()),
+    time(time_step),
+    timestep_number(1),
+    theta(0.5),
+    wave_speed(1.437)
   {
     // The second task in the constructor is to initialize the array that
     // holds the detector locations. The results of this program were compared

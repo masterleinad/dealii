@@ -51,20 +51,20 @@ namespace internal
       public:
         ActualCellWork(MFWorkerInterface** worker_pointer,
                        const unsigned int  partition,
-                       const TaskInfo&     task_info)
-          : worker(nullptr),
-            worker_pointer(worker_pointer),
-            partition(partition),
-            task_info(task_info)
+                       const TaskInfo&     task_info) :
+          worker(nullptr),
+          worker_pointer(worker_pointer),
+          partition(partition),
+          task_info(task_info)
         {}
 
         ActualCellWork(MFWorkerInterface& worker,
                        const unsigned int partition,
-                       const TaskInfo&    task_info)
-          : worker(&worker),
-            worker_pointer(nullptr),
-            partition(partition),
-            task_info(task_info)
+                       const TaskInfo&    task_info) :
+          worker(&worker),
+          worker_pointer(nullptr),
+          partition(partition),
+          task_info(task_info)
         {}
 
         void
@@ -102,10 +102,10 @@ namespace internal
         CellWork(MFWorkerInterface& worker,
                  const unsigned int partition,
                  const TaskInfo&    task_info,
-                 const bool         is_blocked)
-          : dummy(nullptr),
-            work(worker, partition, task_info),
-            is_blocked(is_blocked)
+                 const bool         is_blocked) :
+          dummy(nullptr),
+          work(worker, partition, task_info),
+          is_blocked(is_blocked)
         {}
 
         tbb::task*
@@ -131,12 +131,12 @@ namespace internal
         PartitionWork(MFWorkerInterface& function_in,
                       const unsigned int partition_in,
                       const TaskInfo&    task_info_in,
-                      const bool         is_blocked_in = false)
-          : dummy(nullptr),
-            function(function_in),
-            partition(partition_in),
-            task_info(task_info_in),
-            is_blocked(is_blocked_in)
+                      const bool         is_blocked_in = false) :
+          dummy(nullptr),
+          function(function_in),
+          partition(partition_in),
+          task_info(task_info_in),
+          is_blocked(is_blocked_in)
         {}
 
         tbb::task*
@@ -223,8 +223,10 @@ namespace internal
       public:
         CellWork(MFWorkerInterface& worker_in,
                  const TaskInfo&    task_info_in,
-                 const unsigned int partition_in)
-          : worker(worker_in), task_info(task_info_in), partition(partition_in)
+                 const unsigned int partition_in) :
+          worker(worker_in),
+          task_info(task_info_in),
+          partition(partition_in)
         {}
 
         void
@@ -256,12 +258,12 @@ namespace internal
         PartitionWork(MFWorkerInterface& worker_in,
                       const unsigned int partition_in,
                       const TaskInfo&    task_info_in,
-                      const bool         is_blocked_in)
-          : dummy(nullptr),
-            worker(worker_in),
-            partition(partition_in),
-            task_info(task_info_in),
-            is_blocked(is_blocked_in)
+                      const bool         is_blocked_in) :
+          dummy(nullptr),
+          worker(worker_in),
+          partition(partition_in),
+          task_info(task_info_in),
+          is_blocked(is_blocked_in)
         {}
 
         tbb::task*
@@ -293,8 +295,9 @@ namespace internal
     class MPICommunication : public tbb::task
     {
     public:
-      MPICommunication(MFWorkerInterface& worker_in, const bool do_compress)
-        : worker(worker_in), do_compress(do_compress)
+      MPICommunication(MFWorkerInterface& worker_in, const bool do_compress) :
+        worker(worker_in),
+        do_compress(do_compress)
       {}
 
       tbb::task*

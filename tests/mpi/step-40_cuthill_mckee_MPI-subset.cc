@@ -101,18 +101,18 @@ namespace Step40
   };
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(MPI_Comm comm)
-    : mpi_communicator(comm),
-      triangulation(mpi_communicator,
-                    typename Triangulation<dim>::MeshSmoothing(
-                      Triangulation<dim>::smoothing_on_refinement
-                      | Triangulation<dim>::smoothing_on_coarsening)),
-      dof_handler(triangulation),
-      fe(2),
-      pcout(Utilities::MPI::this_mpi_process(mpi_communicator) == 0 ?
-              deallog.get_file_stream() :
-              std::cout,
-            (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
+  LaplaceProblem<dim>::LaplaceProblem(MPI_Comm comm) :
+    mpi_communicator(comm),
+    triangulation(mpi_communicator,
+                  typename Triangulation<dim>::MeshSmoothing(
+                    Triangulation<dim>::smoothing_on_refinement
+                    | Triangulation<dim>::smoothing_on_coarsening)),
+    dof_handler(triangulation),
+    fe(2),
+    pcout(Utilities::MPI::this_mpi_process(mpi_communicator) == 0 ?
+            deallog.get_file_stream() :
+            std::cout,
+          (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
   {}
 
   template <int dim>

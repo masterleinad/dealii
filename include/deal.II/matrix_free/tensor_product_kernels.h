@@ -127,8 +127,10 @@ namespace internal
      * Empty constructor. Does nothing. Be careful when using 'values' and
      * related methods because they need to be filled with the other pointer
      */
-    EvaluatorTensorProduct()
-      : shape_values(nullptr), shape_gradients(nullptr), shape_hessians(nullptr)
+    EvaluatorTensorProduct() :
+      shape_values(nullptr),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr)
     {}
 
     /**
@@ -138,10 +140,10 @@ namespace internal
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
                            const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
-      : shape_values(shape_values.begin()),
-        shape_gradients(shape_gradients.begin()),
-        shape_hessians(shape_hessians.begin())
+                           const unsigned int            dummy2 = 0) :
+      shape_values(shape_values.begin()),
+      shape_gradients(shape_gradients.begin()),
+      shape_hessians(shape_hessians.begin())
     {
       // We can enter this function either for the apply() path that has
       // n_rows * n_columns entries or for the apply_face() path that only has
@@ -520,12 +522,12 @@ namespace internal
      * Empty constructor. Does nothing. Be careful when using 'values' and
      * related methods because they need to be filled with the other constructor
      */
-    EvaluatorTensorProduct()
-      : shape_values(nullptr),
-        shape_gradients(nullptr),
-        shape_hessians(nullptr),
-        n_rows(numbers::invalid_unsigned_int),
-        n_columns(numbers::invalid_unsigned_int)
+    EvaluatorTensorProduct() :
+      shape_values(nullptr),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr),
+      n_rows(numbers::invalid_unsigned_int),
+      n_columns(numbers::invalid_unsigned_int)
     {}
 
     /**
@@ -535,12 +537,12 @@ namespace internal
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
                            const unsigned int            n_rows,
-                           const unsigned int            n_columns)
-      : shape_values(shape_values.begin()),
-        shape_gradients(shape_gradients.begin()),
-        shape_hessians(shape_hessians.begin()),
-        n_rows(n_rows),
-        n_columns(n_columns)
+                           const unsigned int            n_columns) :
+      shape_values(shape_values.begin()),
+      shape_gradients(shape_gradients.begin()),
+      shape_hessians(shape_hessians.begin()),
+      n_rows(n_rows),
+      n_columns(n_columns)
     {
       // We can enter this function either for the apply() path that has
       // n_rows * n_columns entries or for the apply_face() path that only has
@@ -868,10 +870,10 @@ namespace internal
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
                            const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
-      : shape_values(shape_values.begin()),
-        shape_gradients(shape_gradients.begin()),
-        shape_hessians(shape_hessians.begin())
+                           const unsigned int            dummy2 = 0) :
+      shape_values(shape_values.begin()),
+      shape_gradients(shape_gradients.begin()),
+      shape_hessians(shape_hessians.begin())
     {
       Assert(shape_values.size() == 0
                || shape_values.size() == n_rows * n_columns,
@@ -1441,18 +1443,20 @@ namespace internal
      * related methods because they need to be filled with the other
      * constructor passing in at least an array for the values.
      */
-    EvaluatorTensorProduct()
-      : shape_values(nullptr), shape_gradients(nullptr), shape_hessians(nullptr)
+    EvaluatorTensorProduct() :
+      shape_values(nullptr),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr)
     {}
 
     /**
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values)
-      : shape_values(shape_values.begin()),
-        shape_gradients(nullptr),
-        shape_hessians(nullptr)
+    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values) :
+      shape_values(shape_values.begin()),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr)
     {
       AssertDimension(shape_values.size(), n_rows * ((n_columns + 1) / 2));
     }
@@ -1465,10 +1469,10 @@ namespace internal
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
                            const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
-      : shape_values(shape_values.begin()),
-        shape_gradients(shape_gradients.begin()),
-        shape_hessians(shape_hessians.begin())
+                           const unsigned int            dummy2 = 0) :
+      shape_values(shape_values.begin()),
+      shape_gradients(shape_gradients.begin()),
+      shape_hessians(shape_hessians.begin())
     {
       // In this function, we allow for dummy pointers if some of values,
       // gradients or hessians should not be computed
@@ -1822,18 +1826,20 @@ namespace internal
      * related methods because they need to be filled with the other
      * constructor passing in at least an array for the values.
      */
-    EvaluatorTensorProduct()
-      : shape_values(nullptr), shape_gradients(nullptr), shape_hessians(nullptr)
+    EvaluatorTensorProduct() :
+      shape_values(nullptr),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr)
     {}
 
     /**
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number>& shape_values)
-      : shape_values(shape_values.begin()),
-        shape_gradients(nullptr),
-        shape_hessians(nullptr)
+    EvaluatorTensorProduct(const AlignedVector<Number>& shape_values) :
+      shape_values(shape_values.begin()),
+      shape_gradients(nullptr),
+      shape_hessians(nullptr)
     {}
 
     /**
@@ -1844,10 +1850,10 @@ namespace internal
                            const AlignedVector<Number2>& shape_gradients,
                            const AlignedVector<Number2>& shape_hessians,
                            const unsigned int            dummy1 = 0,
-                           const unsigned int            dummy2 = 0)
-      : shape_values(shape_values.begin()),
-        shape_gradients(shape_gradients.begin()),
-        shape_hessians(shape_hessians.begin())
+                           const unsigned int            dummy2 = 0) :
+      shape_values(shape_values.begin()),
+      shape_gradients(shape_gradients.begin()),
+      shape_hessians(shape_hessians.begin())
     {
       (void) dummy1;
       (void) dummy2;

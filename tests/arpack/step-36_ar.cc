@@ -91,8 +91,9 @@ namespace Step36
   };
 
   template <int dim>
-  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file)
-    : fe(1), dof_handler(triangulation)
+  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file) :
+    fe(1),
+    dof_handler(triangulation)
   {}
 
   template <int dim>

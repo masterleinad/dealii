@@ -113,11 +113,11 @@ private:
 
 template <int dim>
 TestFEQConstraints<dim>::TestFEQConstraints(unsigned int p_order,
-                                            unsigned int refinements)
-  : refinements(refinements),
-    p_order(p_order),
-    fe(p_order),
-    dof_handler(triangulation)
+                                            unsigned int refinements) :
+  refinements(refinements),
+  p_order(p_order),
+  fe(p_order),
+  dof_handler(triangulation)
 {}
 
 // Actually this function creates with pseudo-random numbers errors,

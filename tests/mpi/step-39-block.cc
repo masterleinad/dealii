@@ -421,15 +421,15 @@ namespace Step39
 
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
-    const FiniteElement<dim>& fe)
-    : triangulation(MPI_COMM_WORLD,
-                    Triangulation<dim>::limit_level_difference_at_vertices,
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
-      mapping(1),
-      fe(fe),
-      dof_handler(triangulation),
-      estimates(1)
+    const FiniteElement<dim>& fe) :
+    triangulation(
+      MPI_COMM_WORLD,
+      Triangulation<dim>::limit_level_difference_at_vertices,
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
+    mapping(1),
+    fe(fe),
+    dof_handler(triangulation),
+    estimates(1)
   {
     GridGenerator::hyper_L(triangulation, -1, 1);
   }

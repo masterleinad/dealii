@@ -913,8 +913,9 @@ private:
 
 template <typename number>
 inline SparseMatrixEZ<number>::Entry::Entry(const size_type column,
-                                            const number&   value)
-  : column(column), value(value)
+                                            const number&   value) :
+  column(column),
+  value(value)
 {}
 
 template <typename number>
@@ -922,8 +923,10 @@ inline SparseMatrixEZ<number>::Entry::Entry() : column(invalid), value(0)
 {}
 
 template <typename number>
-inline SparseMatrixEZ<number>::RowInfo::RowInfo(const size_type start)
-  : start(start), length(0), diagonal(invalid_diagonal)
+inline SparseMatrixEZ<number>::RowInfo::RowInfo(const size_type start) :
+  start(start),
+  length(0),
+  diagonal(invalid_diagonal)
 {}
 
 //---------------------------------------------------------------------------
@@ -931,8 +934,10 @@ template <typename number>
 inline SparseMatrixEZ<number>::const_iterator::Accessor::Accessor(
   const SparseMatrixEZ<number>* matrix,
   const size_type               r,
-  const unsigned short          i)
-  : matrix(matrix), a_row(r), a_index(i)
+  const unsigned short          i) :
+  matrix(matrix),
+  a_row(r),
+  a_index(i)
 {}
 
 template <typename number>
@@ -967,8 +972,8 @@ template <typename number>
 inline SparseMatrixEZ<number>::const_iterator::const_iterator(
   const SparseMatrixEZ<number>* matrix,
   const size_type               r,
-  const unsigned short          i)
-  : accessor(matrix, r, i)
+  const unsigned short          i) :
+  accessor(matrix, r, i)
 {
   // Finish if this is the end()
   if(r == accessor.matrix->m() && i == 0)

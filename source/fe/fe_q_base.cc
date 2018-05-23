@@ -418,16 +418,16 @@ template <class PolynomialType, int dim, int spacedim>
 FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
   const PolynomialType&         poly_space,
   const FiniteElementData<dim>& fe_data,
-  const std::vector<bool>&      restriction_is_additive_flags)
-  : FE_Poly<PolynomialType, dim, spacedim>(
-      poly_space,
-      fe_data,
-      restriction_is_additive_flags,
-      std::vector<ComponentMask>(1, std::vector<bool>(1, true))),
-    q_degree(std::is_same<PolynomialType,
-                          TensorProductPolynomialsBubbles<dim>>::value ?
-               this->degree - 1 :
-               this->degree)
+  const std::vector<bool>&      restriction_is_additive_flags) :
+  FE_Poly<PolynomialType, dim, spacedim>(
+    poly_space,
+    fe_data,
+    restriction_is_additive_flags,
+    std::vector<ComponentMask>(1, std::vector<bool>(1, true))),
+  q_degree(
+    std::is_same<PolynomialType, TensorProductPolynomialsBubbles<dim>>::value ?
+      this->degree - 1 :
+      this->degree)
 {}
 
 template <class PolynomialType, int dim, int spacedim>

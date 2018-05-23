@@ -2841,71 +2841,71 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   const unsigned int             quad_no_in,
   const unsigned int             fe_degree,
   const unsigned int             n_q_points,
-  const bool                     is_interior_face)
-  : scratch_data_array(data_in.acquire_scratch_data()),
-    quad_no(quad_no_in),
-    n_fe_components(data_in.get_dof_info(dof_no).start_components.back()),
-    active_fe_index(fe_degree != numbers::invalid_unsigned_int ?
-                      data_in.get_dof_info(dof_no).fe_index_from_degree(
-                        first_selected_component,
-                        fe_degree) :
+  const bool                     is_interior_face) :
+  scratch_data_array(data_in.acquire_scratch_data()),
+  quad_no(quad_no_in),
+  n_fe_components(data_in.get_dof_info(dof_no).start_components.back()),
+  active_fe_index(fe_degree != numbers::invalid_unsigned_int ?
+                    data_in.get_dof_info(dof_no).fe_index_from_degree(
+                      first_selected_component,
+                      fe_degree) :
+                    0),
+  active_quad_index(fe_degree != numbers::invalid_unsigned_int ?
+                      (is_face ? data_in.get_mapping_info()
+                                   .face_data[quad_no_in]
+                                   .quad_index_from_n_q_points(n_q_points) :
+                                 data_in.get_mapping_info()
+                                   .cell_data[quad_no_in]
+                                   .quad_index_from_n_q_points(n_q_points)) :
                       0),
-    active_quad_index(fe_degree != numbers::invalid_unsigned_int ?
-                        (is_face ? data_in.get_mapping_info()
-                                     .face_data[quad_no_in]
-                                     .quad_index_from_n_q_points(n_q_points) :
-                                   data_in.get_mapping_info()
-                                     .cell_data[quad_no_in]
-                                     .quad_index_from_n_q_points(n_q_points)) :
-                        0),
-    n_quadrature_points(fe_degree != numbers::invalid_unsigned_int ?
-                          n_q_points :
-                          (is_face ? data_in
-                                       .get_shape_info(dof_no,
-                                                       quad_no_in,
-                                                       active_fe_index,
-                                                       active_quad_index)
-                                       .n_q_points_face :
-                                     data_in
-                                       .get_shape_info(dof_no,
-                                                       quad_no_in,
-                                                       active_fe_index,
-                                                       active_quad_index)
-                                       .n_q_points)),
-    matrix_info(&data_in),
-    dof_info(&data_in.get_dof_info(dof_no)),
-    mapping_data(internal::MatrixFreeFunctions::
-                   MappingInfoCellsOrFaces<dim, Number, is_face>::get(
-                     data_in.get_mapping_info(),
-                     quad_no)),
-    data(&data_in.get_shape_info(
-      dof_no,
-      quad_no_in,
-      dof_info->component_to_base_index[first_selected_component],
-      active_fe_index,
-      active_quad_index)),
-    jacobian(nullptr),
-    J_value(nullptr),
-    normal_vectors(nullptr),
-    normal_x_jacobian(nullptr),
-    quadrature_weights(
-      mapping_data->descriptor[active_quad_index].quadrature_weights.begin()),
-    cell(numbers::invalid_unsigned_int),
-    is_interior_face(is_interior_face),
-    dof_access_index(
-      is_face ?
-        (is_interior_face ?
-           internal::MatrixFreeFunctions::DoFInfo::dof_access_face_interior :
-           internal::MatrixFreeFunctions::DoFInfo::dof_access_face_exterior) :
-        internal::MatrixFreeFunctions::DoFInfo::dof_access_cell),
-    cell_type(internal::MatrixFreeFunctions::general),
-    dof_values_initialized(false),
-    values_quad_initialized(false),
-    gradients_quad_initialized(false),
-    hessians_quad_initialized(false),
-    values_quad_submitted(false),
-    gradients_quad_submitted(false),
-    first_selected_component(first_selected_component)
+  n_quadrature_points(fe_degree != numbers::invalid_unsigned_int ?
+                        n_q_points :
+                        (is_face ? data_in
+                                     .get_shape_info(dof_no,
+                                                     quad_no_in,
+                                                     active_fe_index,
+                                                     active_quad_index)
+                                     .n_q_points_face :
+                                   data_in
+                                     .get_shape_info(dof_no,
+                                                     quad_no_in,
+                                                     active_fe_index,
+                                                     active_quad_index)
+                                     .n_q_points)),
+  matrix_info(&data_in),
+  dof_info(&data_in.get_dof_info(dof_no)),
+  mapping_data(internal::MatrixFreeFunctions::
+                 MappingInfoCellsOrFaces<dim, Number, is_face>::get(
+                   data_in.get_mapping_info(),
+                   quad_no)),
+  data(&data_in.get_shape_info(
+    dof_no,
+    quad_no_in,
+    dof_info->component_to_base_index[first_selected_component],
+    active_fe_index,
+    active_quad_index)),
+  jacobian(nullptr),
+  J_value(nullptr),
+  normal_vectors(nullptr),
+  normal_x_jacobian(nullptr),
+  quadrature_weights(
+    mapping_data->descriptor[active_quad_index].quadrature_weights.begin()),
+  cell(numbers::invalid_unsigned_int),
+  is_interior_face(is_interior_face),
+  dof_access_index(
+    is_face ?
+      (is_interior_face ?
+         internal::MatrixFreeFunctions::DoFInfo::dof_access_face_interior :
+         internal::MatrixFreeFunctions::DoFInfo::dof_access_face_exterior) :
+      internal::MatrixFreeFunctions::DoFInfo::dof_access_cell),
+  cell_type(internal::MatrixFreeFunctions::general),
+  dof_values_initialized(false),
+  values_quad_initialized(false),
+  gradients_quad_initialized(false),
+  hessians_quad_initialized(false),
+  values_quad_submitted(false),
+  gradients_quad_submitted(false),
+  first_selected_component(first_selected_component)
 {
   set_data_pointers();
   Assert(matrix_info->mapping_initialized() == true, ExcNotInitialized());
@@ -2951,40 +2951,40 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
   const Quadrature<1>&      quadrature,
   const UpdateFlags         update_flags,
   const unsigned int        first_selected_component,
-  const FEEvaluationBase<dim, n_components_other, Number>* other)
-  : scratch_data_array(new AlignedVector<VectorizedArray<Number>>()),
-    quad_no(numbers::invalid_unsigned_int),
-    n_fe_components(n_components_),
-    active_fe_index(numbers::invalid_unsigned_int),
-    active_quad_index(numbers::invalid_unsigned_int),
-    n_quadrature_points(
-      Utilities::fixed_power < is_face ? dim - 1 : dim > (quadrature.size())),
-    matrix_info(nullptr),
-    dof_info(nullptr),
-    mapping_data(nullptr),
-    // select the correct base element from the given FE component
-    data(new internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>(
-      quadrature,
-      fe,
-      fe.component_to_base_index(first_selected_component).first)),
-    jacobian(nullptr),
-    J_value(nullptr),
-    normal_vectors(nullptr),
-    normal_x_jacobian(nullptr),
-    quadrature_weights(nullptr),
-    cell(0),
-    cell_type(internal::MatrixFreeFunctions::general),
-    is_interior_face(true),
-    dof_access_index(internal::MatrixFreeFunctions::DoFInfo::dof_access_cell),
-    dof_values_initialized(false),
-    values_quad_initialized(false),
-    gradients_quad_initialized(false),
-    hessians_quad_initialized(false),
-    values_quad_submitted(false),
-    gradients_quad_submitted(false),
-    // keep the number of the selected component within the current base element
-    // for reading dof values
-    first_selected_component(first_selected_component)
+  const FEEvaluationBase<dim, n_components_other, Number>* other) :
+  scratch_data_array(new AlignedVector<VectorizedArray<Number>>()),
+  quad_no(numbers::invalid_unsigned_int),
+  n_fe_components(n_components_),
+  active_fe_index(numbers::invalid_unsigned_int),
+  active_quad_index(numbers::invalid_unsigned_int),
+  n_quadrature_points(
+    Utilities::fixed_power < is_face ? dim - 1 : dim > (quadrature.size())),
+  matrix_info(nullptr),
+  dof_info(nullptr),
+  mapping_data(nullptr),
+  // select the correct base element from the given FE component
+  data(new internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>(
+    quadrature,
+    fe,
+    fe.component_to_base_index(first_selected_component).first)),
+  jacobian(nullptr),
+  J_value(nullptr),
+  normal_vectors(nullptr),
+  normal_x_jacobian(nullptr),
+  quadrature_weights(nullptr),
+  cell(0),
+  cell_type(internal::MatrixFreeFunctions::general),
+  is_interior_face(true),
+  dof_access_index(internal::MatrixFreeFunctions::DoFInfo::dof_access_cell),
+  dof_values_initialized(false),
+  values_quad_initialized(false),
+  gradients_quad_initialized(false),
+  hessians_quad_initialized(false),
+  values_quad_submitted(false),
+  gradients_quad_submitted(false),
+  // keep the number of the selected component within the current base element
+  // for reading dof values
+  first_selected_component(first_selected_component)
 {
   set_data_pointers();
 
@@ -3015,42 +3015,41 @@ inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationBase<dim, n_components_, Number, is_face>::FEEvaluationBase(
-  const FEEvaluationBase<dim, n_components_, Number, is_face>& other)
-  : scratch_data_array(other.matrix_info == nullptr ?
-                         new AlignedVector<VectorizedArray<Number>>() :
-                         other.matrix_info->acquire_scratch_data()),
-    quad_no(other.quad_no),
-    n_fe_components(other.n_fe_components),
-    active_fe_index(other.active_fe_index),
-    active_quad_index(other.active_quad_index),
-    n_quadrature_points(other.n_quadrature_points),
-    matrix_info(other.matrix_info),
-    dof_info(other.dof_info),
-    mapping_data(other.mapping_data),
-    data(
-      other.matrix_info == nullptr ?
-        new internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>(
-          *other.data) :
-        other.data),
-    jacobian(nullptr),
-    J_value(nullptr),
-    normal_vectors(nullptr),
-    normal_x_jacobian(nullptr),
-    quadrature_weights(
-      other.matrix_info == nullptr ?
-        nullptr :
-        mapping_data->descriptor[active_quad_index].quadrature_weights.begin()),
-    cell(numbers::invalid_unsigned_int),
-    cell_type(internal::MatrixFreeFunctions::general),
-    is_interior_face(other.is_interior_face),
-    dof_access_index(other.dof_access_index),
-    dof_values_initialized(false),
-    values_quad_initialized(false),
-    gradients_quad_initialized(false),
-    hessians_quad_initialized(false),
-    values_quad_submitted(false),
-    gradients_quad_submitted(false),
-    first_selected_component(other.first_selected_component)
+  const FEEvaluationBase<dim, n_components_, Number, is_face>& other) :
+  scratch_data_array(other.matrix_info == nullptr ?
+                       new AlignedVector<VectorizedArray<Number>>() :
+                       other.matrix_info->acquire_scratch_data()),
+  quad_no(other.quad_no),
+  n_fe_components(other.n_fe_components),
+  active_fe_index(other.active_fe_index),
+  active_quad_index(other.active_quad_index),
+  n_quadrature_points(other.n_quadrature_points),
+  matrix_info(other.matrix_info),
+  dof_info(other.dof_info),
+  mapping_data(other.mapping_data),
+  data(other.matrix_info == nullptr ?
+         new internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>(
+           *other.data) :
+         other.data),
+  jacobian(nullptr),
+  J_value(nullptr),
+  normal_vectors(nullptr),
+  normal_x_jacobian(nullptr),
+  quadrature_weights(
+    other.matrix_info == nullptr ?
+      nullptr :
+      mapping_data->descriptor[active_quad_index].quadrature_weights.begin()),
+  cell(numbers::invalid_unsigned_int),
+  cell_type(internal::MatrixFreeFunctions::general),
+  is_interior_face(other.is_interior_face),
+  dof_access_index(other.dof_access_index),
+  dof_values_initialized(false),
+  values_quad_initialized(false),
+  gradients_quad_initialized(false),
+  hessians_quad_initialized(false),
+  values_quad_submitted(false),
+  gradients_quad_submitted(false),
+  first_selected_component(other.first_selected_component)
 {
   set_data_pointers();
 
@@ -5007,15 +5006,15 @@ inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
                      const unsigned int             quad_no_in,
                      const unsigned int             fe_degree,
                      const unsigned int             n_q_points,
-                     const bool                     is_interior_face)
-  : FEEvaluationBase<dim, n_components_, Number, is_face>(
-      data_in,
-      dof_no,
-      first_selected_component,
-      quad_no_in,
-      fe_degree,
-      n_q_points,
-      is_interior_face)
+                     const bool                     is_interior_face) :
+  FEEvaluationBase<dim, n_components_, Number, is_face>(
+    data_in,
+    dof_no,
+    first_selected_component,
+    quad_no_in,
+    fe_degree,
+    n_q_points,
+    is_interior_face)
 {}
 
 template <int dim, int n_components_, typename Number, bool is_face>
@@ -5027,21 +5026,21 @@ inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
     const Quadrature<1>&      quadrature,
     const UpdateFlags         update_flags,
     const unsigned int        first_selected_component,
-    const FEEvaluationBase<dim, n_components_other, Number, is_face>* other)
-  : FEEvaluationBase<dim, n_components_, Number, is_face>(
-      mapping,
-      fe,
-      quadrature,
-      update_flags,
-      first_selected_component,
-      other)
+    const FEEvaluationBase<dim, n_components_other, Number, is_face>* other) :
+  FEEvaluationBase<dim, n_components_, Number, is_face>(
+    mapping,
+    fe,
+    quadrature,
+    update_flags,
+    first_selected_component,
+    other)
 {}
 
 template <int dim, int n_components_, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, n_components_, Number, is_face>::
   FEEvaluationAccess(
-    const FEEvaluationAccess<dim, n_components_, Number, is_face>& other)
-  : FEEvaluationBase<dim, n_components_, Number, is_face>(other)
+    const FEEvaluationAccess<dim, n_components_, Number, is_face>& other) :
+  FEEvaluationBase<dim, n_components_, Number, is_face>(other)
 {}
 
 template <int dim, int n_components_, typename Number, bool is_face>
@@ -5063,14 +5062,14 @@ inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
   const unsigned int             quad_no_in,
   const unsigned int             fe_degree,
   const unsigned int             n_q_points,
-  const bool                     is_interior_face)
-  : FEEvaluationBase<dim, 1, Number, is_face>(data_in,
-                                              dof_no,
-                                              first_selected_component,
-                                              quad_no_in,
-                                              fe_degree,
-                                              n_q_points,
-                                              is_interior_face)
+  const bool                     is_interior_face) :
+  FEEvaluationBase<dim, 1, Number, is_face>(data_in,
+                                            dof_no,
+                                            first_selected_component,
+                                            quad_no_in,
+                                            fe_degree,
+                                            n_q_points,
+                                            is_interior_face)
 {}
 
 template <int dim, typename Number, bool is_face>
@@ -5081,19 +5080,19 @@ inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
   const Quadrature<1>&      quadrature,
   const UpdateFlags         update_flags,
   const unsigned int        first_selected_component,
-  const FEEvaluationBase<dim, n_components_other, Number, is_face>* other)
-  : FEEvaluationBase<dim, 1, Number, is_face>(mapping,
-                                              fe,
-                                              quadrature,
-                                              update_flags,
-                                              first_selected_component,
-                                              other)
+  const FEEvaluationBase<dim, n_components_other, Number, is_face>* other) :
+  FEEvaluationBase<dim, 1, Number, is_face>(mapping,
+                                            fe,
+                                            quadrature,
+                                            update_flags,
+                                            first_selected_component,
+                                            other)
 {}
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, 1, Number, is_face>::FEEvaluationAccess(
-  const FEEvaluationAccess<dim, 1, Number, is_face>& other)
-  : FEEvaluationBase<dim, 1, Number, is_face>(other)
+  const FEEvaluationAccess<dim, 1, Number, is_face>& other) :
+  FEEvaluationBase<dim, 1, Number, is_face>(other)
 {}
 
 template <int dim, typename Number, bool is_face>
@@ -5314,14 +5313,14 @@ inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
   const unsigned int             quad_no_in,
   const unsigned int             fe_degree,
   const unsigned int             n_q_points,
-  const bool                     is_interior_face)
-  : FEEvaluationBase<dim, dim, Number, is_face>(data_in,
-                                                dof_no,
-                                                first_selected_component,
-                                                quad_no_in,
-                                                fe_degree,
-                                                n_q_points,
-                                                is_interior_face)
+  const bool                     is_interior_face) :
+  FEEvaluationBase<dim, dim, Number, is_face>(data_in,
+                                              dof_no,
+                                              first_selected_component,
+                                              quad_no_in,
+                                              fe_degree,
+                                              n_q_points,
+                                              is_interior_face)
 {}
 
 template <int dim, typename Number, bool is_face>
@@ -5332,19 +5331,19 @@ inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
   const Quadrature<1>&      quadrature,
   const UpdateFlags         update_flags,
   const unsigned int        first_selected_component,
-  const FEEvaluationBase<dim, n_components_other, Number, is_face>* other)
-  : FEEvaluationBase<dim, dim, Number, is_face>(mapping,
-                                                fe,
-                                                quadrature,
-                                                update_flags,
-                                                first_selected_component,
-                                                other)
+  const FEEvaluationBase<dim, n_components_other, Number, is_face>* other) :
+  FEEvaluationBase<dim, dim, Number, is_face>(mapping,
+                                              fe,
+                                              quadrature,
+                                              update_flags,
+                                              first_selected_component,
+                                              other)
 {}
 
 template <int dim, typename Number, bool is_face>
 inline FEEvaluationAccess<dim, dim, Number, is_face>::FEEvaluationAccess(
-  const FEEvaluationAccess<dim, dim, Number, is_face>& other)
-  : FEEvaluationBase<dim, dim, Number, is_face>(other)
+  const FEEvaluationAccess<dim, dim, Number, is_face>& other) :
+  FEEvaluationBase<dim, dim, Number, is_face>(other)
 {}
 
 template <int dim, typename Number, bool is_face>
@@ -5659,14 +5658,14 @@ inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
   const unsigned int           quad_no_in,
   const unsigned int           fe_degree,
   const unsigned int           n_q_points,
-  const bool                   is_interior_face)
-  : FEEvaluationBase<1, 1, Number, is_face>(data_in,
-                                            dof_no,
-                                            first_selected_component,
-                                            quad_no_in,
-                                            fe_degree,
-                                            n_q_points,
-                                            is_interior_face)
+  const bool                   is_interior_face) :
+  FEEvaluationBase<1, 1, Number, is_face>(data_in,
+                                          dof_no,
+                                          first_selected_component,
+                                          quad_no_in,
+                                          fe_degree,
+                                          n_q_points,
+                                          is_interior_face)
 {}
 
 template <typename Number, bool is_face>
@@ -5677,19 +5676,19 @@ inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
   const Quadrature<1>&    quadrature,
   const UpdateFlags       update_flags,
   const unsigned int      first_selected_component,
-  const FEEvaluationBase<1, n_components_other, Number, is_face>* other)
-  : FEEvaluationBase<1, 1, Number, is_face>(mapping,
-                                            fe,
-                                            quadrature,
-                                            update_flags,
-                                            first_selected_component,
-                                            other)
+  const FEEvaluationBase<1, n_components_other, Number, is_face>* other) :
+  FEEvaluationBase<1, 1, Number, is_face>(mapping,
+                                          fe,
+                                          quadrature,
+                                          update_flags,
+                                          first_selected_component,
+                                          other)
 {}
 
 template <typename Number, bool is_face>
 inline FEEvaluationAccess<1, 1, Number, is_face>::FEEvaluationAccess(
-  const FEEvaluationAccess<1, 1, Number, is_face>& other)
-  : FEEvaluationBase<1, 1, Number, is_face>(other)
+  const FEEvaluationAccess<1, 1, Number, is_face>& other) :
+  FEEvaluationBase<1, 1, Number, is_face>(other)
 {}
 
 template <typename Number, bool is_face>
@@ -5893,16 +5892,16 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   FEEvaluation(const MatrixFree<dim, Number>& data_in,
                const unsigned int             fe_no,
                const unsigned int             quad_no,
-               const unsigned int             first_selected_component)
-  : BaseClass(data_in,
-              fe_no,
-              first_selected_component,
-              quad_no,
-              fe_degree,
-              static_n_q_points),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points)
+               const unsigned int             first_selected_component) :
+  BaseClass(data_in,
+            fe_no,
+            first_selected_component,
+            quad_no,
+            fe_degree,
+            static_n_q_points),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points)
 {
   check_template_arguments(fe_no, 0);
 }
@@ -5917,16 +5916,16 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
                const FiniteElement<dim>& fe,
                const Quadrature<1>&      quadrature,
                const UpdateFlags         update_flags,
-               const unsigned int        first_selected_component)
-  : BaseClass(mapping,
-              fe,
-              quadrature,
-              update_flags,
-              first_selected_component,
-              static_cast<FEEvaluationBase<dim, 1, Number, false>*>(nullptr)),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points)
+               const unsigned int        first_selected_component) :
+  BaseClass(mapping,
+            fe,
+            quadrature,
+            update_flags,
+            first_selected_component,
+            static_cast<FEEvaluationBase<dim, 1, Number, false>*>(nullptr)),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points)
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
@@ -5940,16 +5939,16 @@ inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   FEEvaluation(const FiniteElement<dim>& fe,
                const Quadrature<1>&      quadrature,
                const UpdateFlags         update_flags,
-               const unsigned int        first_selected_component)
-  : BaseClass(StaticMappingQ1<dim>::mapping,
-              fe,
-              quadrature,
-              update_flags,
-              first_selected_component,
-              static_cast<FEEvaluationBase<dim, 1, Number, false>*>(nullptr)),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points)
+               const unsigned int        first_selected_component) :
+  BaseClass(StaticMappingQ1<dim>::mapping,
+            fe,
+            quadrature,
+            update_flags,
+            first_selected_component,
+            static_cast<FEEvaluationBase<dim, 1, Number, false>*>(nullptr)),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points)
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
@@ -5963,16 +5962,16 @@ template <int n_components_other>
 inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   FEEvaluation(const FiniteElement<dim>&                                fe,
                const FEEvaluationBase<dim, n_components_other, Number>& other,
-               const unsigned int first_selected_component)
-  : BaseClass(other.mapped_geometry->get_fe_values().get_mapping(),
-              fe,
-              other.mapped_geometry->get_quadrature(),
-              other.mapped_geometry->get_fe_values().get_update_flags(),
-              first_selected_component,
-              &other),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points)
+               const unsigned int first_selected_component) :
+  BaseClass(other.mapped_geometry->get_fe_values().get_mapping(),
+            fe,
+            other.mapped_geometry->get_quadrature(),
+            other.mapped_geometry->get_fe_values().get_update_flags(),
+            first_selected_component,
+            &other),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points)
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
@@ -5983,11 +5982,11 @@ template <int dim,
           int n_components_,
           typename Number>
 inline FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
-  FEEvaluation(const FEEvaluation& other)
-  : BaseClass(other),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points)
+  FEEvaluation(const FEEvaluation& other) :
+  BaseClass(other),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points)
 {
   check_template_arguments(numbers::invalid_unsigned_int, 0);
 }
@@ -6461,17 +6460,17 @@ inline FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
                    const bool                     is_interior_face,
                    const unsigned int             dof_no,
                    const unsigned int             quad_no,
-                   const unsigned int             first_selected_component)
-  : BaseClass(matrix_free,
-              dof_no,
-              first_selected_component,
-              quad_no,
-              fe_degree,
-              static_n_q_points,
-              is_interior_face),
-    dofs_per_component(this->data->dofs_per_component_on_cell),
-    dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
-    n_q_points(this->data->n_q_points_face)
+                   const unsigned int             first_selected_component) :
+  BaseClass(matrix_free,
+            dof_no,
+            first_selected_component,
+            quad_no,
+            fe_degree,
+            static_n_q_points,
+            is_interior_face),
+  dofs_per_component(this->data->dofs_per_component_on_cell),
+  dofs_per_cell(this->data->dofs_per_component_on_cell * n_components_),
+  n_q_points(this->data->n_q_points_face)
 {}
 
 template <int dim,

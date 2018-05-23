@@ -195,8 +195,9 @@ namespace Patterns
 
   const char* Integer::description_init = "[Integer";
 
-  Integer::Integer(const int lower_bound, const int upper_bound)
-    : lower_bound(lower_bound), upper_bound(upper_bound)
+  Integer::Integer(const int lower_bound, const int upper_bound) :
+    lower_bound(lower_bound),
+    upper_bound(upper_bound)
   {}
 
   bool
@@ -321,8 +322,9 @@ namespace Patterns
 
   const char* Double::description_init = "[Double";
 
-  Double::Double(const double lower_bound, const double upper_bound)
-    : lower_bound(lower_bound), upper_bound(upper_bound)
+  Double::Double(const double lower_bound, const double upper_bound) :
+    lower_bound(lower_bound),
+    upper_bound(upper_bound)
   {}
 
   bool
@@ -600,11 +602,11 @@ namespace Patterns
   List::List(const PatternBase& p,
              const unsigned int min_elements,
              const unsigned int max_elements,
-             const std::string& separator)
-    : pattern(p.clone()),
-      min_elements(min_elements),
-      max_elements(max_elements),
-      separator(separator)
+             const std::string& separator) :
+    pattern(p.clone()),
+    min_elements(min_elements),
+    max_elements(max_elements),
+    separator(separator)
   {
     Assert(min_elements <= max_elements,
            ExcInvalidRange(min_elements, max_elements));
@@ -612,11 +614,11 @@ namespace Patterns
            ExcMessage("The separator must have a non-zero length."));
   }
 
-  List::List(const List& other)
-    : pattern(other.pattern->clone()),
-      min_elements(other.min_elements),
-      max_elements(other.max_elements),
-      separator(other.separator)
+  List::List(const List& other) :
+    pattern(other.pattern->clone()),
+    min_elements(other.min_elements),
+    max_elements(other.max_elements),
+    separator(other.separator)
   {}
 
   const std::string&
@@ -752,13 +754,13 @@ namespace Patterns
            const unsigned int min_elements,
            const unsigned int max_elements,
            const std::string& separator,
-           const std::string& key_value_separator)
-    : key_pattern(p_key.clone()),
-      value_pattern(p_value.clone()),
-      min_elements(min_elements),
-      max_elements(max_elements),
-      separator(separator),
-      key_value_separator(key_value_separator)
+           const std::string& key_value_separator) :
+    key_pattern(p_key.clone()),
+    value_pattern(p_value.clone()),
+    min_elements(min_elements),
+    max_elements(max_elements),
+    separator(separator),
+    key_value_separator(key_value_separator)
   {
     Assert(min_elements <= max_elements,
            ExcInvalidRange(min_elements, max_elements));
@@ -773,13 +775,13 @@ namespace Patterns
                  "of <key:value> pairs"));
   }
 
-  Map::Map(const Map& other)
-    : key_pattern(other.key_pattern->clone()),
-      value_pattern(other.value_pattern->clone()),
-      min_elements(other.min_elements),
-      max_elements(other.max_elements),
-      separator(other.separator),
-      key_value_separator(other.key_value_separator)
+  Map::Map(const Map& other) :
+    key_pattern(other.key_pattern->clone()),
+    value_pattern(other.value_pattern->clone()),
+    min_elements(other.min_elements),
+    max_elements(other.max_elements),
+    separator(other.separator),
+    key_value_separator(other.key_value_separator)
   {}
 
   bool
@@ -955,8 +957,8 @@ namespace Patterns
   const char* Tuple::description_init = "[Tuple";
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
-               const std::string&                               separator)
-    : separator(separator)
+               const std::string&                               separator) :
+    separator(separator)
   {
     Assert(ps.size() > 0,
            ExcMessage("The Patterns list must have a non-zero length."));
@@ -968,8 +970,8 @@ namespace Patterns
   }
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
-               const char*                                      separator)
-    : Tuple(ps, std::string(separator))
+               const char*                                      separator) :
+    Tuple(ps, std::string(separator))
   {}
 
   Tuple::Tuple(const Tuple& other) : separator(other.separator)

@@ -129,10 +129,10 @@ CPUClock::now() noexcept
 }
 
 template <typename clock_type_>
-Timer::ClockMeasurements<clock_type_>::ClockMeasurements()
-  : current_lap_start_time(clock_type::now()),
-    accumulated_time(duration_type::zero()),
-    last_lap_time(duration_type::zero())
+Timer::ClockMeasurements<clock_type_>::ClockMeasurements() :
+  current_lap_start_time(clock_type::now()),
+  accumulated_time(duration_type::zero()),
+  last_lap_time(duration_type::zero())
 {}
 
 template <typename clock_type_>
@@ -147,10 +147,10 @@ Timer::ClockMeasurements<clock_type_>::reset()
 Timer::Timer() : Timer(MPI_COMM_SELF, /*sync_lap_times=*/false)
 {}
 
-Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_)
-  : running(false),
-    mpi_communicator(mpi_communicator),
-    sync_lap_times(sync_lap_times_)
+Timer::Timer(MPI_Comm mpi_communicator, const bool sync_lap_times_) :
+  running(false),
+  mpi_communicator(mpi_communicator),
+  sync_lap_times(sync_lap_times_)
 {
   reset();
   start();
@@ -279,44 +279,44 @@ Timer::reset()
 
 TimerOutput::TimerOutput(std::ostream&         stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
-  : output_frequency(output_frequency),
-    output_type(output_type),
-    out_stream(stream, true),
-    output_is_enabled(true),
-    mpi_communicator(MPI_COMM_SELF)
+                         const OutputType      output_type) :
+  output_frequency(output_frequency),
+  output_type(output_type),
+  out_stream(stream, true),
+  output_is_enabled(true),
+  mpi_communicator(MPI_COMM_SELF)
 {}
 
 TimerOutput::TimerOutput(ConditionalOStream&   stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
-  : output_frequency(output_frequency),
-    output_type(output_type),
-    out_stream(stream),
-    output_is_enabled(true),
-    mpi_communicator(MPI_COMM_SELF)
+                         const OutputType      output_type) :
+  output_frequency(output_frequency),
+  output_type(output_type),
+  out_stream(stream),
+  output_is_enabled(true),
+  mpi_communicator(MPI_COMM_SELF)
 {}
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          std::ostream&         stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
-  : output_frequency(output_frequency),
-    output_type(output_type),
-    out_stream(stream, true),
-    output_is_enabled(true),
-    mpi_communicator(mpi_communicator)
+                         const OutputType      output_type) :
+  output_frequency(output_frequency),
+  output_type(output_type),
+  out_stream(stream, true),
+  output_is_enabled(true),
+  mpi_communicator(mpi_communicator)
 {}
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
                          ConditionalOStream&   stream,
                          const OutputFrequency output_frequency,
-                         const OutputType      output_type)
-  : output_frequency(output_frequency),
-    output_type(output_type),
-    out_stream(stream),
-    output_is_enabled(true),
-    mpi_communicator(mpi_communicator)
+                         const OutputType      output_type) :
+  output_frequency(output_frequency),
+  output_type(output_type),
+  out_stream(stream),
+  output_is_enabled(true),
+  mpi_communicator(mpi_communicator)
 {}
 
 TimerOutput::~TimerOutput()

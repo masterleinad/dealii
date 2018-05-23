@@ -389,8 +389,8 @@ namespace LinearAlgebra
   /*----------------------- Inline functions ----------------------------------*/
 
   template <typename Number>
-  inline Vector<Number>::Vector(const Vector<Number>& V)
-    : ReadWriteVector<Number>(V)
+  inline Vector<Number>::Vector(const Vector<Number>& V) :
+    ReadWriteVector<Number>(V)
   {}
 
   template <typename Number>

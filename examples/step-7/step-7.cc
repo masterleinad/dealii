@@ -473,9 +473,12 @@ namespace Step7
   // arguments, and associate the DoF handler object with the triangulation
   // (which is empty at present, however).
   template <int dim>
-  HelmholtzProblem<dim>::HelmholtzProblem(const FiniteElement<dim>& fe,
-                                          const RefinementMode refinement_mode)
-    : dof_handler(triangulation), fe(&fe), refinement_mode(refinement_mode)
+  HelmholtzProblem<dim>::HelmholtzProblem(
+    const FiniteElement<dim>& fe,
+    const RefinementMode      refinement_mode) :
+    dof_handler(triangulation),
+    fe(&fe),
+    refinement_mode(refinement_mode)
   {}
 
   // @sect4{HelmholtzProblem::~HelmholtzProblem}

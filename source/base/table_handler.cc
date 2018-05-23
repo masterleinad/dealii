@@ -129,22 +129,22 @@ namespace internal
 
 /* ------------------------------------------------ */
 
-TableHandler::Column::Column(const std::string& tex_caption)
-  : tex_caption(tex_caption),
-    tex_format("c"),
-    precision(4),
-    scientific(false),
-    flag(0),
-    max_length(0)
+TableHandler::Column::Column(const std::string& tex_caption) :
+  tex_caption(tex_caption),
+  tex_format("c"),
+  precision(4),
+  scientific(false),
+  flag(0),
+  max_length(0)
 {}
 
-TableHandler::Column::Column()
-  : tex_caption(),
-    tex_format("c"),
-    precision(4),
-    scientific(false),
-    flag(0),
-    max_length(0)
+TableHandler::Column::Column() :
+  tex_caption(),
+  tex_format("c"),
+  precision(4),
+  scientific(false),
+  flag(0),
+  max_length(0)
 {}
 
 void

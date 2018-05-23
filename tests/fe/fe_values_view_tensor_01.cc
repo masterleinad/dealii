@@ -70,15 +70,15 @@ private:
 };
 
 template <int dim>
-MixedElastoPlasticity<dim>::MixedElastoPlasticity(const unsigned int degree)
-  : degree(degree),
-    n_stress_components(dim * dim),
-    n_gamma_components(1),
-    fe(FE_Q<dim>(degree),
-       n_stress_components,
-       FE_Q<dim>(degree),
-       n_gamma_components),
-    dof_handler(triangulation)
+MixedElastoPlasticity<dim>::MixedElastoPlasticity(const unsigned int degree) :
+  degree(degree),
+  n_stress_components(dim * dim),
+  n_gamma_components(1),
+  fe(FE_Q<dim>(degree),
+     n_stress_components,
+     FE_Q<dim>(degree),
+     n_gamma_components),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

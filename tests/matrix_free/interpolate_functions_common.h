@@ -54,8 +54,8 @@ public:
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in,
-                 const Mapping<dim>&            mapping)
-    : data(data_in){};
+                 const Mapping<dim>&            mapping) :
+    data(data_in){};
 
   virtual ~MatrixFreeTest()
   {}

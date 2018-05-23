@@ -516,12 +516,12 @@ namespace Step39
   // FiniteElement is provided as a parameter to allow flexibility.
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
-    const FiniteElement<dim>& fe)
-    : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-      mapping(),
-      fe(fe),
-      dof_handler(triangulation),
-      estimates(1)
+    const FiniteElement<dim>& fe) :
+    triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+    mapping(),
+    fe(fe),
+    dof_handler(triangulation),
+    estimates(1)
   {
     GridGenerator::hyper_cube_slit(triangulation, -1, 1);
   }

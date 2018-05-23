@@ -235,13 +235,13 @@ protected:
 };
 
 template <int dim>
-JxWError<dim>::JxWError(const unsigned int n_global_refines)
-  : manufactured_solution(new HardManufacturedSolution<dim>()),
-    manufactured_forcing(new HardManufacturedForcing<dim>()),
-    finite_element(fe_order),
-    dof_handler(triangulation),
-    cell_quadrature(fe_order + 1),
-    cell_mapping(fe_order)
+JxWError<dim>::JxWError(const unsigned int n_global_refines) :
+  manufactured_solution(new HardManufacturedSolution<dim>()),
+  manufactured_forcing(new HardManufacturedForcing<dim>()),
+  finite_element(fe_order),
+  dof_handler(triangulation),
+  cell_quadrature(fe_order + 1),
+  cell_mapping(fe_order)
 
 {
   boundary_manifold = cubic_roof(triangulation);

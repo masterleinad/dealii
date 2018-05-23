@@ -239,12 +239,12 @@ namespace Step57
     double                           viscosity,
     const BlockSparseMatrix<double>& S,
     const SparseMatrix<double>&      P,
-    const PreconditionerMp&          Mppreconditioner)
-    : gamma(gamma),
-      viscosity(viscosity),
-      stokes_matrix(S),
-      pressure_mass_matrix(P),
-      mp_preconditioner(Mppreconditioner)
+    const PreconditionerMp&          Mppreconditioner) :
+    gamma(gamma),
+    viscosity(viscosity),
+    stokes_matrix(S),
+    pressure_mass_matrix(P),
+    mp_preconditioner(Mppreconditioner)
   {
     A_inverse.initialize(stokes_matrix.block(0, 0));
   }
@@ -283,13 +283,14 @@ namespace Step57
   //
 
   template <int dim>
-  StationaryNavierStokes<dim>::StationaryNavierStokes(const unsigned int degree)
-    : viscosity(1.0 / 7500.0),
-      gamma(1.0),
-      degree(degree),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
-      dof_handler(triangulation)
+  StationaryNavierStokes<dim>::StationaryNavierStokes(
+    const unsigned int degree) :
+    viscosity(1.0 / 7500.0),
+    gamma(1.0),
+    degree(degree),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
+    dof_handler(triangulation)
   {}
 
   // @sect4{StationaryNavierStokes::setup_dofs}

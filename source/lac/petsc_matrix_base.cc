@@ -71,8 +71,9 @@ namespace PETScWrappers
     }
   } // namespace MatrixIterators
 
-  MatrixBase::MatrixBase()
-    : matrix(nullptr), last_action(VectorOperation::unknown)
+  MatrixBase::MatrixBase() :
+    matrix(nullptr),
+    last_action(VectorOperation::unknown)
   {}
 
   MatrixBase::~MatrixBase()

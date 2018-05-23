@@ -167,178 +167,182 @@ namespace TrilinosWrappers
   // thread on a configuration with
   // MPI will still get a parallel
   // interface.
-  SparseMatrix::SparseMatrix()
-    : column_space_map(new Epetra_Map(0, 0, Utilities::Trilinos::comm_self())),
-      matrix(
-        new Epetra_FECrsMatrix(View, *column_space_map, *column_space_map, 0)),
-      last_action(Zero),
-      compressed(true)
+  SparseMatrix::SparseMatrix() :
+    column_space_map(new Epetra_Map(0, 0, Utilities::Trilinos::comm_self())),
+    matrix(
+      new Epetra_FECrsMatrix(View, *column_space_map, *column_space_map, 0)),
+    last_action(Zero),
+    compressed(true)
   {
     matrix->FillComplete();
   }
 
   SparseMatrix::SparseMatrix(const Epetra_Map& input_map,
-                             const size_type   n_max_entries_per_row)
-    : column_space_map(new Epetra_Map(input_map)),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        *column_space_map,
-        TrilinosWrappers::types::int_type(n_max_entries_per_row),
-        false)),
-      last_action(Zero),
-      compressed(false)
+                             const size_type   n_max_entries_per_row) :
+    column_space_map(new Epetra_Map(input_map)),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      *column_space_map,
+      TrilinosWrappers::types::int_type(n_max_entries_per_row),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const Epetra_Map&                input_map,
-                             const std::vector<unsigned int>& n_entries_per_row)
-    : column_space_map(new Epetra_Map(input_map)),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        *column_space_map,
-        (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
-        false)),
-      last_action(Zero),
-      compressed(false)
+  SparseMatrix::SparseMatrix(
+    const Epetra_Map&                input_map,
+    const std::vector<unsigned int>& n_entries_per_row) :
+    column_space_map(new Epetra_Map(input_map)),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      *column_space_map,
+      (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
   SparseMatrix::SparseMatrix(const Epetra_Map& input_row_map,
                              const Epetra_Map& input_col_map,
-                             const size_type   n_max_entries_per_row)
-    : column_space_map(new Epetra_Map(input_col_map)),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        input_row_map,
-        TrilinosWrappers::types::int_type(n_max_entries_per_row),
-        false)),
-      last_action(Zero),
-      compressed(false)
+                             const size_type   n_max_entries_per_row) :
+    column_space_map(new Epetra_Map(input_col_map)),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      input_row_map,
+      TrilinosWrappers::types::int_type(n_max_entries_per_row),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const Epetra_Map&                input_row_map,
-                             const Epetra_Map&                input_col_map,
-                             const std::vector<unsigned int>& n_entries_per_row)
-    : column_space_map(new Epetra_Map(input_col_map)),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        input_row_map,
-        (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
-        false)),
-      last_action(Zero),
-      compressed(false)
+  SparseMatrix::SparseMatrix(
+    const Epetra_Map&                input_row_map,
+    const Epetra_Map&                input_col_map,
+    const std::vector<unsigned int>& n_entries_per_row) :
+    column_space_map(new Epetra_Map(input_col_map)),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      input_row_map,
+      (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
   SparseMatrix::SparseMatrix(const size_type    m,
                              const size_type    n,
-                             const unsigned int n_max_entries_per_row)
-    : column_space_map(
-        new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
-                       0,
-                       Utilities::Trilinos::comm_self())),
+                             const unsigned int n_max_entries_per_row) :
+    column_space_map(
+      new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
+                     0,
+                     Utilities::Trilinos::comm_self())),
 
-      // on one processor only, we know how the
-      // columns of the matrix will be
-      // distributed (everything on one
-      // processor), so we can hand in this
-      // information to the constructor. we
-      // can't do so in parallel, where the
-      // information from columns is only
-      // available when entries have been added
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(m),
-                   0,
-                   Utilities::Trilinos::comm_self()),
-        *column_space_map,
-        n_max_entries_per_row,
-        false)),
-      last_action(Zero),
-      compressed(false)
+    // on one processor only, we know how the
+    // columns of the matrix will be
+    // distributed (everything on one
+    // processor), so we can hand in this
+    // information to the constructor. we
+    // can't do so in parallel, where the
+    // information from columns is only
+    // available when entries have been added
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(m),
+                 0,
+                 Utilities::Trilinos::comm_self()),
+      *column_space_map,
+      n_max_entries_per_row,
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const size_type                  m,
-                             const size_type                  n,
-                             const std::vector<unsigned int>& n_entries_per_row)
-    : column_space_map(
-        new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
-                       0,
-                       Utilities::Trilinos::comm_self())),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(m),
-                   0,
-                   Utilities::Trilinos::comm_self()),
-        *column_space_map,
-        (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
-        false)),
-      last_action(Zero),
-      compressed(false)
+  SparseMatrix::SparseMatrix(
+    const size_type                  m,
+    const size_type                  n,
+    const std::vector<unsigned int>& n_entries_per_row) :
+    column_space_map(
+      new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
+                     0,
+                     Utilities::Trilinos::comm_self())),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(m),
+                 0,
+                 Utilities::Trilinos::comm_self()),
+      *column_space_map,
+      (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
   SparseMatrix::SparseMatrix(const IndexSet&    parallel_partitioning,
                              const MPI_Comm&    communicator,
-                             const unsigned int n_max_entries_per_row)
-    : column_space_map(new Epetra_Map(
-        parallel_partitioning.make_trilinos_map(communicator, false))),
-      matrix(new Epetra_FECrsMatrix(Copy,
-                                    *column_space_map,
-                                    n_max_entries_per_row,
-                                    false)),
-      last_action(Zero),
-      compressed(false)
+                             const unsigned int n_max_entries_per_row) :
+    column_space_map(new Epetra_Map(
+      parallel_partitioning.make_trilinos_map(communicator, false))),
+    matrix(new Epetra_FECrsMatrix(Copy,
+                                  *column_space_map,
+                                  n_max_entries_per_row,
+                                  false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const IndexSet& parallel_partitioning,
-                             const MPI_Comm& communicator,
-                             const std::vector<unsigned int>& n_entries_per_row)
-    : column_space_map(new Epetra_Map(
-        parallel_partitioning.make_trilinos_map(communicator, false))),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        *column_space_map,
-        (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
-        false)),
-      last_action(Zero),
-      compressed(false)
-  {}
-
-  SparseMatrix::SparseMatrix(const IndexSet& row_parallel_partitioning,
-                             const IndexSet& col_parallel_partitioning,
-                             const MPI_Comm& communicator,
-                             const size_type n_max_entries_per_row)
-    : column_space_map(new Epetra_Map(
-        col_parallel_partitioning.make_trilinos_map(communicator, false))),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        row_parallel_partitioning.make_trilinos_map(communicator, false),
-        n_max_entries_per_row,
-        false)),
-      last_action(Zero),
-      compressed(false)
+  SparseMatrix::SparseMatrix(
+    const IndexSet&                  parallel_partitioning,
+    const MPI_Comm&                  communicator,
+    const std::vector<unsigned int>& n_entries_per_row) :
+    column_space_map(new Epetra_Map(
+      parallel_partitioning.make_trilinos_map(communicator, false))),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      *column_space_map,
+      (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
   SparseMatrix::SparseMatrix(const IndexSet& row_parallel_partitioning,
                              const IndexSet& col_parallel_partitioning,
                              const MPI_Comm& communicator,
-                             const std::vector<unsigned int>& n_entries_per_row)
-    : column_space_map(new Epetra_Map(
-        col_parallel_partitioning.make_trilinos_map(communicator, false))),
-      matrix(new Epetra_FECrsMatrix(
-        Copy,
-        row_parallel_partitioning.make_trilinos_map(communicator, false),
-        (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
-        false)),
-      last_action(Zero),
-      compressed(false)
+                             const size_type n_max_entries_per_row) :
+    column_space_map(new Epetra_Map(
+      col_parallel_partitioning.make_trilinos_map(communicator, false))),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      row_parallel_partitioning.make_trilinos_map(communicator, false),
+      n_max_entries_per_row,
+      false)),
+    last_action(Zero),
+    compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const SparsityPattern& sparsity_pattern)
-    : column_space_map(new Epetra_Map(sparsity_pattern.domain_partitioner())),
-      matrix(
-        new Epetra_FECrsMatrix(Copy,
-                               sparsity_pattern.trilinos_sparsity_pattern(),
-                               false)),
-      last_action(Zero),
-      compressed(true)
+  SparseMatrix::SparseMatrix(
+    const IndexSet&                  row_parallel_partitioning,
+    const IndexSet&                  col_parallel_partitioning,
+    const MPI_Comm&                  communicator,
+    const std::vector<unsigned int>& n_entries_per_row) :
+    column_space_map(new Epetra_Map(
+      col_parallel_partitioning.make_trilinos_map(communicator, false))),
+    matrix(new Epetra_FECrsMatrix(
+      Copy,
+      row_parallel_partitioning.make_trilinos_map(communicator, false),
+      (int*) const_cast<unsigned int*>(&(n_entries_per_row[0])),
+      false)),
+    last_action(Zero),
+    compressed(false)
+  {}
+
+  SparseMatrix::SparseMatrix(const SparsityPattern& sparsity_pattern) :
+    column_space_map(new Epetra_Map(sparsity_pattern.domain_partitioner())),
+    matrix(new Epetra_FECrsMatrix(Copy,
+                                  sparsity_pattern.trilinos_sparsity_pattern(),
+                                  false)),
+    last_action(Zero),
+    compressed(true)
   {
     Assert(
       sparsity_pattern.trilinos_sparsity_pattern().Filled() == true,
@@ -346,13 +350,13 @@ namespace TrilinosWrappers
     compress(VectorOperation::insert);
   }
 
-  SparseMatrix::SparseMatrix(SparseMatrix&& other) noexcept
-    : column_space_map(std::move(other.column_space_map)),
-      matrix(std::move(other.matrix)),
-      nonlocal_matrix(std::move(other.nonlocal_matrix)),
-      nonlocal_matrix_exporter(std::move(other.nonlocal_matrix_exporter)),
-      last_action(other.last_action),
-      compressed(other.compressed)
+  SparseMatrix::SparseMatrix(SparseMatrix&& other) noexcept :
+    column_space_map(std::move(other.column_space_map)),
+    matrix(std::move(other.matrix)),
+    nonlocal_matrix(std::move(other.nonlocal_matrix)),
+    nonlocal_matrix_exporter(std::move(other.nonlocal_matrix_exporter)),
+    last_action(other.last_action),
+    compressed(other.compressed)
   {
     other.last_action = Zero;
     other.compressed  = false;
@@ -561,8 +565,8 @@ namespace TrilinosWrappers
     {
     public:
       Epetra_CrsGraphMod(const Epetra_Map& row_map,
-                         const int*        n_entries_per_row)
-        : Epetra_CrsGraph(Copy, row_map, n_entries_per_row, true){};
+                         const int*        n_entries_per_row) :
+        Epetra_CrsGraph(Copy, row_map, n_entries_per_row, true){};
 
       void
       SetIndicesAreGlobal()
@@ -2445,15 +2449,15 @@ namespace TrilinosWrappers
 
     namespace LinearOperatorImplementation
     {
-      TrilinosPayload::TrilinosPayload()
-        : use_transpose(false),
+      TrilinosPayload::TrilinosPayload() :
+        use_transpose(false),
 #  ifdef DEAL_II_WITH_MPI
-          communicator(MPI_COMM_SELF),
-          domain_map(IndexSet().make_trilinos_map(communicator.Comm())),
-          range_map(IndexSet().make_trilinos_map(communicator.Comm()))
+        communicator(MPI_COMM_SELF),
+        domain_map(IndexSet().make_trilinos_map(communicator.Comm())),
+        range_map(IndexSet().make_trilinos_map(communicator.Comm()))
 #  else
-          domain_map(internal::make_serial_Epetra_map(IndexSet())),
-          range_map(internal::make_serial_Epetra_map(IndexSet()))
+        domain_map(internal::make_serial_Epetra_map(IndexSet())),
+        range_map(internal::make_serial_Epetra_map(IndexSet()))
 #  endif
       {
         vmult = [](Range&, const Domain&) {
@@ -2483,21 +2487,21 @@ namespace TrilinosWrappers
 
       TrilinosPayload::TrilinosPayload(
         const TrilinosWrappers::SparseMatrix& matrix_exemplar,
-        const TrilinosWrappers::SparseMatrix& matrix)
-        : use_transpose(matrix_exemplar.trilinos_matrix().UseTranspose()),
+        const TrilinosWrappers::SparseMatrix& matrix) :
+        use_transpose(matrix_exemplar.trilinos_matrix().UseTranspose()),
 #  ifdef DEAL_II_WITH_MPI
-          communicator(matrix_exemplar.get_mpi_communicator()),
-          domain_map(
-            matrix_exemplar.locally_owned_domain_indices().make_trilinos_map(
-              communicator.Comm())),
-          range_map(
-            matrix_exemplar.locally_owned_range_indices().make_trilinos_map(
-              communicator.Comm()))
+        communicator(matrix_exemplar.get_mpi_communicator()),
+        domain_map(
+          matrix_exemplar.locally_owned_domain_indices().make_trilinos_map(
+            communicator.Comm())),
+        range_map(
+          matrix_exemplar.locally_owned_range_indices().make_trilinos_map(
+            communicator.Comm()))
 #  else
-          domain_map(internal::make_serial_Epetra_map(
-            matrix_exemplar.locally_owned_domain_indices())),
-          range_map(internal::make_serial_Epetra_map(
-            matrix_exemplar.locally_owned_range_indices()))
+        domain_map(internal::make_serial_Epetra_map(
+          matrix_exemplar.locally_owned_domain_indices())),
+        range_map(internal::make_serial_Epetra_map(
+          matrix_exemplar.locally_owned_range_indices()))
 #  endif
       {
         vmult = [&matrix_exemplar, &matrix](Range&        tril_dst,
@@ -2565,21 +2569,21 @@ namespace TrilinosWrappers
 
       TrilinosPayload::TrilinosPayload(
         const TrilinosWrappers::SparseMatrix&     matrix_exemplar,
-        const TrilinosWrappers::PreconditionBase& preconditioner)
-        : use_transpose(matrix_exemplar.trilinos_matrix().UseTranspose()),
+        const TrilinosWrappers::PreconditionBase& preconditioner) :
+        use_transpose(matrix_exemplar.trilinos_matrix().UseTranspose()),
 #  ifdef DEAL_II_WITH_MPI
-          communicator(matrix_exemplar.get_mpi_communicator()),
-          domain_map(
-            matrix_exemplar.locally_owned_domain_indices().make_trilinos_map(
-              communicator.Comm())),
-          range_map(
-            matrix_exemplar.locally_owned_range_indices().make_trilinos_map(
-              communicator.Comm()))
+        communicator(matrix_exemplar.get_mpi_communicator()),
+        domain_map(
+          matrix_exemplar.locally_owned_domain_indices().make_trilinos_map(
+            communicator.Comm())),
+        range_map(
+          matrix_exemplar.locally_owned_range_indices().make_trilinos_map(
+            communicator.Comm()))
 #  else
-          domain_map(internal::make_serial_Epetra_map(
-            matrix_exemplar.locally_owned_domain_indices())),
-          range_map(internal::make_serial_Epetra_map(
-            matrix_exemplar.locally_owned_range_indices()))
+        domain_map(internal::make_serial_Epetra_map(
+          matrix_exemplar.locally_owned_domain_indices())),
+        range_map(internal::make_serial_Epetra_map(
+          matrix_exemplar.locally_owned_range_indices()))
 #  endif
       {
         vmult = [&matrix_exemplar, &preconditioner](Range&        tril_dst,
@@ -2681,20 +2685,20 @@ namespace TrilinosWrappers
 
       TrilinosPayload::TrilinosPayload(
         const TrilinosWrappers::PreconditionBase& preconditioner_exemplar,
-        const TrilinosWrappers::PreconditionBase& preconditioner)
-        : use_transpose(
-            preconditioner_exemplar.trilinos_operator().UseTranspose()),
+        const TrilinosWrappers::PreconditionBase& preconditioner) :
+        use_transpose(
+          preconditioner_exemplar.trilinos_operator().UseTranspose()),
 #  ifdef DEAL_II_WITH_MPI
-          communicator(preconditioner_exemplar.get_mpi_communicator()),
-          domain_map(preconditioner_exemplar.locally_owned_domain_indices()
-                       .make_trilinos_map(communicator.Comm())),
-          range_map(preconditioner_exemplar.locally_owned_range_indices()
-                      .make_trilinos_map(communicator.Comm()))
+        communicator(preconditioner_exemplar.get_mpi_communicator()),
+        domain_map(preconditioner_exemplar.locally_owned_domain_indices()
+                     .make_trilinos_map(communicator.Comm())),
+        range_map(preconditioner_exemplar.locally_owned_range_indices()
+                    .make_trilinos_map(communicator.Comm()))
 #  else
-          domain_map(internal::make_serial_Epetra_map(
-            preconditioner_exemplar.locally_owned_domain_indices())),
-          range_map(internal::make_serial_Epetra_map(
-            preconditioner_exemplar.locally_owned_range_indices()))
+        domain_map(internal::make_serial_Epetra_map(
+          preconditioner_exemplar.locally_owned_domain_indices())),
+        range_map(internal::make_serial_Epetra_map(
+          preconditioner_exemplar.locally_owned_range_indices()))
 #  endif
       {
         vmult = [&preconditioner_exemplar,
@@ -2794,26 +2798,26 @@ namespace TrilinosWrappers
         };
       }
 
-      TrilinosPayload::TrilinosPayload(const TrilinosPayload& payload)
-        : vmult(payload.vmult),
-          Tvmult(payload.Tvmult),
-          inv_vmult(payload.inv_vmult),
-          inv_Tvmult(payload.inv_Tvmult),
-          use_transpose(payload.use_transpose),
-          communicator(payload.communicator),
-          domain_map(payload.domain_map),
-          range_map(payload.range_map)
+      TrilinosPayload::TrilinosPayload(const TrilinosPayload& payload) :
+        vmult(payload.vmult),
+        Tvmult(payload.Tvmult),
+        inv_vmult(payload.inv_vmult),
+        inv_Tvmult(payload.inv_Tvmult),
+        use_transpose(payload.use_transpose),
+        communicator(payload.communicator),
+        domain_map(payload.domain_map),
+        range_map(payload.range_map)
       {}
 
       // Composite copy constructor
       // This is required for PackagedOperations
       TrilinosPayload::TrilinosPayload(const TrilinosPayload& first_op,
-                                       const TrilinosPayload& second_op)
-        : use_transpose(
-            false), // The combination of operators provides the exact definition of the operation
-          communicator(first_op.communicator),
-          domain_map(second_op.domain_map),
-          range_map(first_op.range_map)
+                                       const TrilinosPayload& second_op) :
+        use_transpose(
+          false), // The combination of operators provides the exact definition of the operation
+        communicator(first_op.communicator),
+        domain_map(second_op.domain_map),
+        range_map(first_op.range_map)
       {}
 
       TrilinosPayload

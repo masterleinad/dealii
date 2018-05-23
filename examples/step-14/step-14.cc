@@ -122,8 +122,8 @@ namespace Step14
 
     template <int dim>
     PointValueEvaluation<dim>::PointValueEvaluation(
-      const Point<dim>& evaluation_point)
-      : evaluation_point(evaluation_point)
+      const Point<dim>& evaluation_point) :
+      evaluation_point(evaluation_point)
     {}
 
     template <int dim>
@@ -191,8 +191,8 @@ namespace Step14
 
     template <int dim>
     PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
-      const Point<dim>& evaluation_point)
-      : evaluation_point(evaluation_point)
+      const Point<dim>& evaluation_point) :
+      evaluation_point(evaluation_point)
     {}
 
     // The more interesting things happen inside the function doing the actual
@@ -318,8 +318,8 @@ namespace Step14
     };
 
     template <int dim>
-    GridOutput<dim>::GridOutput(const std::string& output_name_base)
-      : output_name_base(output_name_base)
+    GridOutput<dim>::GridOutput(const std::string& output_name_base) :
+      output_name_base(output_name_base)
     {}
 
     template <int dim>
@@ -380,9 +380,9 @@ namespace Step14
     };
 
     template <int dim>
-    Base<dim>::Base(Triangulation<dim>& coarse_grid)
-      : triangulation(&coarse_grid),
-        refinement_cycle(numbers::invalid_unsigned_int)
+    Base<dim>::Base(Triangulation<dim>& coarse_grid) :
+      triangulation(&coarse_grid),
+      refinement_cycle(numbers::invalid_unsigned_int)
     {}
 
     template <int dim>
@@ -484,13 +484,13 @@ namespace Step14
                         const FiniteElement<dim>&  fe,
                         const Quadrature<dim>&     quadrature,
                         const Quadrature<dim - 1>& face_quadrature,
-                        const Function<dim>&       boundary_values)
-      : Base<dim>(triangulation),
-        fe(&fe),
-        quadrature(&quadrature),
-        face_quadrature(&face_quadrature),
-        dof_handler(triangulation),
-        boundary_values(&boundary_values)
+                        const Function<dim>&       boundary_values) :
+      Base<dim>(triangulation),
+      fe(&fe),
+      quadrature(&quadrature),
+      face_quadrature(&face_quadrature),
+      dof_handler(triangulation),
+      boundary_values(&boundary_values)
     {}
 
     template <int dim>
@@ -564,16 +564,16 @@ namespace Step14
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
       const FiniteElement<dim>& fe,
-      const Quadrature<dim>&    quadrature)
-      : fe_values(fe, quadrature, update_gradients | update_JxW_values)
+      const Quadrature<dim>&    quadrature) :
+      fe_values(fe, quadrature, update_gradients | update_JxW_values)
     {}
 
     template <int dim>
     Solver<dim>::AssemblyScratchData::AssemblyScratchData(
-      const AssemblyScratchData& scratch_data)
-      : fe_values(scratch_data.fe_values.get_fe(),
-                  scratch_data.fe_values.get_quadrature(),
-                  update_gradients | update_JxW_values)
+      const AssemblyScratchData& scratch_data) :
+      fe_values(scratch_data.fe_values.get_fe(),
+                scratch_data.fe_values.get_quadrature(),
+                update_gradients | update_JxW_values)
     {}
 
     template <int dim>
@@ -726,14 +726,14 @@ namespace Step14
                                     const Quadrature<dim>&     quadrature,
                                     const Quadrature<dim - 1>& face_quadrature,
                                     const Function<dim>&       rhs_function,
-                                    const Function<dim>&       boundary_values)
-      : Base<dim>(triangulation),
-        Solver<dim>(triangulation,
-                    fe,
-                    quadrature,
-                    face_quadrature,
-                    boundary_values),
-        rhs_function(&rhs_function)
+                                    const Function<dim>& boundary_values) :
+      Base<dim>(triangulation),
+      Solver<dim>(triangulation,
+                  fe,
+                  quadrature,
+                  face_quadrature,
+                  boundary_values),
+      rhs_function(&rhs_function)
     {}
 
     template <int dim>
@@ -815,14 +815,14 @@ namespace Step14
       const Quadrature<dim>&     quadrature,
       const Quadrature<dim - 1>& face_quadrature,
       const Function<dim>&       rhs_function,
-      const Function<dim>&       boundary_values)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          fe,
-                          quadrature,
-                          face_quadrature,
-                          rhs_function,
-                          boundary_values)
+      const Function<dim>&       boundary_values) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        fe,
+                        quadrature,
+                        face_quadrature,
+                        rhs_function,
+                        boundary_values)
     {}
 
     template <int dim>
@@ -854,14 +854,14 @@ namespace Step14
       const Quadrature<dim>&     quadrature,
       const Quadrature<dim - 1>& face_quadrature,
       const Function<dim>&       rhs_function,
-      const Function<dim>&       boundary_values)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          fe,
-                          quadrature,
-                          face_quadrature,
-                          rhs_function,
-                          boundary_values)
+      const Function<dim>&       boundary_values) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        fe,
+                        quadrature,
+                        face_quadrature,
+                        rhs_function,
+                        boundary_values)
     {}
 
     template <int dim>
@@ -919,15 +919,15 @@ namespace Step14
       const Quadrature<dim - 1>& face_quadrature,
       const Function<dim>&       rhs_function,
       const Function<dim>&       boundary_values,
-      const Function<dim>&       weighting_function)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          fe,
-                          quadrature,
-                          face_quadrature,
-                          rhs_function,
-                          boundary_values),
-        weighting_function(&weighting_function)
+      const Function<dim>&       weighting_function) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        fe,
+                        quadrature,
+                        face_quadrature,
+                        rhs_function,
+                        boundary_values),
+      weighting_function(&weighting_function)
     {}
 
     // Now, here comes the main function, including the weighting:
@@ -1428,8 +1428,8 @@ namespace Step14
 
     template <int dim>
     PointValueEvaluation<dim>::PointValueEvaluation(
-      const Point<dim>& evaluation_point)
-      : evaluation_point(evaluation_point)
+      const Point<dim>& evaluation_point) :
+      evaluation_point(evaluation_point)
     {}
 
     // As for doing the main purpose of the class, assembling the right hand
@@ -1505,8 +1505,8 @@ namespace Step14
 
     template <int dim>
     PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
-      const Point<dim>& evaluation_point)
-      : evaluation_point(evaluation_point)
+      const Point<dim>& evaluation_point) :
+      evaluation_point(evaluation_point)
     {}
 
     // What is interesting is the implementation of this functional: here,
@@ -1652,14 +1652,14 @@ namespace Step14
       const FiniteElement<dim>&                      fe,
       const Quadrature<dim>&                         quadrature,
       const Quadrature<dim - 1>&                     face_quadrature,
-      const DualFunctional::DualFunctionalBase<dim>& dual_functional)
-      : Base<dim>(triangulation),
-        Solver<dim>(triangulation,
-                    fe,
-                    quadrature,
-                    face_quadrature,
-                    boundary_values),
-        dual_functional(&dual_functional)
+      const DualFunctional::DualFunctionalBase<dim>& dual_functional) :
+      Base<dim>(triangulation),
+      Solver<dim>(triangulation,
+                  fe,
+                  quadrature,
+                  face_quadrature,
+                  boundary_values),
+      dual_functional(&dual_functional)
     {}
 
     template <int dim>
@@ -1879,44 +1879,44 @@ namespace Step14
     WeightedResidual<dim>::CellData::CellData(
       const FiniteElement<dim>& fe,
       const Quadrature<dim>&    quadrature,
-      const Function<dim>&      right_hand_side)
-      : fe_values(fe,
-                  quadrature,
-                  update_values | update_hessians | update_quadrature_points
-                    | update_JxW_values),
-        right_hand_side(&right_hand_side),
-        cell_residual(quadrature.size()),
-        rhs_values(quadrature.size()),
-        dual_weights(quadrature.size()),
-        cell_laplacians(quadrature.size())
+      const Function<dim>&      right_hand_side) :
+      fe_values(fe,
+                quadrature,
+                update_values | update_hessians | update_quadrature_points
+                  | update_JxW_values),
+      right_hand_side(&right_hand_side),
+      cell_residual(quadrature.size()),
+      rhs_values(quadrature.size()),
+      dual_weights(quadrature.size()),
+      cell_laplacians(quadrature.size())
     {}
 
     template <int dim>
-    WeightedResidual<dim>::CellData::CellData(const CellData& cell_data)
-      : fe_values(cell_data.fe_values.get_fe(),
-                  cell_data.fe_values.get_quadrature(),
-                  update_values | update_hessians | update_quadrature_points
-                    | update_JxW_values),
-        right_hand_side(cell_data.right_hand_side),
-        cell_residual(cell_data.cell_residual),
-        rhs_values(cell_data.rhs_values),
-        dual_weights(cell_data.dual_weights),
-        cell_laplacians(cell_data.cell_laplacians)
+    WeightedResidual<dim>::CellData::CellData(const CellData& cell_data) :
+      fe_values(cell_data.fe_values.get_fe(),
+                cell_data.fe_values.get_quadrature(),
+                update_values | update_hessians | update_quadrature_points
+                  | update_JxW_values),
+      right_hand_side(cell_data.right_hand_side),
+      cell_residual(cell_data.cell_residual),
+      rhs_values(cell_data.rhs_values),
+      dual_weights(cell_data.dual_weights),
+      cell_laplacians(cell_data.cell_laplacians)
     {}
 
     template <int dim>
     WeightedResidual<dim>::FaceData::FaceData(
       const FiniteElement<dim>&  fe,
-      const Quadrature<dim - 1>& face_quadrature)
-      : fe_face_values_cell(fe,
-                            face_quadrature,
-                            update_values | update_gradients | update_JxW_values
-                              | update_normal_vectors),
-        fe_face_values_neighbor(fe,
-                                face_quadrature,
-                                update_values | update_gradients
-                                  | update_JxW_values | update_normal_vectors),
-        fe_subface_values_cell(fe, face_quadrature, update_gradients)
+      const Quadrature<dim - 1>& face_quadrature) :
+      fe_face_values_cell(fe,
+                          face_quadrature,
+                          update_values | update_gradients | update_JxW_values
+                            | update_normal_vectors),
+      fe_face_values_neighbor(fe,
+                              face_quadrature,
+                              update_values | update_gradients
+                                | update_JxW_values | update_normal_vectors),
+      fe_subface_values_cell(fe, face_quadrature, update_gradients)
     {
       const unsigned int n_face_q_points = face_quadrature.size();
 
@@ -1927,24 +1927,23 @@ namespace Step14
     }
 
     template <int dim>
-    WeightedResidual<dim>::FaceData::FaceData(const FaceData& face_data)
-      : fe_face_values_cell(face_data.fe_face_values_cell.get_fe(),
-                            face_data.fe_face_values_cell.get_quadrature(),
-                            update_values | update_gradients | update_JxW_values
-                              | update_normal_vectors),
-        fe_face_values_neighbor(
-          face_data.fe_face_values_neighbor.get_fe(),
-          face_data.fe_face_values_neighbor.get_quadrature(),
-          update_values | update_gradients | update_JxW_values
-            | update_normal_vectors),
-        fe_subface_values_cell(
-          face_data.fe_subface_values_cell.get_fe(),
-          face_data.fe_subface_values_cell.get_quadrature(),
-          update_gradients),
-        jump_residual(face_data.jump_residual),
-        dual_weights(face_data.dual_weights),
-        cell_grads(face_data.cell_grads),
-        neighbor_grads(face_data.neighbor_grads)
+    WeightedResidual<dim>::FaceData::FaceData(const FaceData& face_data) :
+      fe_face_values_cell(face_data.fe_face_values_cell.get_fe(),
+                          face_data.fe_face_values_cell.get_quadrature(),
+                          update_values | update_gradients | update_JxW_values
+                            | update_normal_vectors),
+      fe_face_values_neighbor(
+        face_data.fe_face_values_neighbor.get_fe(),
+        face_data.fe_face_values_neighbor.get_quadrature(),
+        update_values | update_gradients | update_JxW_values
+          | update_normal_vectors),
+      fe_subface_values_cell(face_data.fe_subface_values_cell.get_fe(),
+                             face_data.fe_subface_values_cell.get_quadrature(),
+                             update_gradients),
+      jump_residual(face_data.jump_residual),
+      dual_weights(face_data.dual_weights),
+      cell_grads(face_data.cell_grads),
+      neighbor_grads(face_data.neighbor_grads)
     {}
 
     template <int dim>
@@ -1955,21 +1954,21 @@ namespace Step14
         const Quadrature<dim - 1>& primal_face_quadrature,
         const Function<dim>&       rhs_function,
         const Vector<double>&      primal_solution,
-        const Vector<double>&      dual_weights)
-      : cell_data(primal_fe, primal_quadrature, rhs_function),
-        face_data(primal_fe, primal_face_quadrature),
-        primal_solution(primal_solution),
-        dual_weights(dual_weights)
+        const Vector<double>&      dual_weights) :
+      cell_data(primal_fe, primal_quadrature, rhs_function),
+      face_data(primal_fe, primal_face_quadrature),
+      primal_solution(primal_solution),
+      dual_weights(dual_weights)
     {}
 
     template <int dim>
     WeightedResidual<dim>::WeightedResidualScratchData::
       WeightedResidualScratchData(
-        const WeightedResidualScratchData& scratch_data)
-      : cell_data(scratch_data.cell_data),
-        face_data(scratch_data.face_data),
-        primal_solution(scratch_data.primal_solution),
-        dual_weights(scratch_data.dual_weights)
+        const WeightedResidualScratchData& scratch_data) :
+      cell_data(scratch_data.cell_data),
+      face_data(scratch_data.face_data),
+      primal_solution(scratch_data.primal_solution),
+      dual_weights(scratch_data.dual_weights)
     {}
 
     template <int dim>
@@ -1981,19 +1980,19 @@ namespace Step14
       const Quadrature<dim - 1>&                     face_quadrature,
       const Function<dim>&                           rhs_function,
       const Function<dim>&                           bv,
-      const DualFunctional::DualFunctionalBase<dim>& dual_functional)
-      : Base<dim>(coarse_grid),
-        PrimalSolver<dim>(coarse_grid,
-                          primal_fe,
-                          quadrature,
-                          face_quadrature,
-                          rhs_function,
-                          bv),
-        DualSolver<dim>(coarse_grid,
-                        dual_fe,
+      const DualFunctional::DualFunctionalBase<dim>& dual_functional) :
+      Base<dim>(coarse_grid),
+      PrimalSolver<dim>(coarse_grid,
+                        primal_fe,
                         quadrature,
                         face_quadrature,
-                        dual_functional)
+                        rhs_function,
+                        bv),
+      DualSolver<dim>(coarse_grid,
+                      dual_fe,
+                      quadrature,
+                      face_quadrature,
+                      dual_functional)
     {}
 
     // The next five functions are boring, as they simply relay their work to
@@ -2679,11 +2678,11 @@ namespace Step14
   // As for the implementation, first the constructor of the parameter object,
   // setting all values to their defaults:
   template <int dim>
-  Framework<dim>::ProblemDescription::ProblemDescription()
-    : primal_fe_degree(1),
-      dual_fe_degree(2),
-      refinement_criterion(dual_weighted_error_estimator),
-      max_degrees_of_freedom(20000)
+  Framework<dim>::ProblemDescription::ProblemDescription() :
+    primal_fe_degree(1),
+    dual_fe_degree(2),
+    refinement_criterion(dual_weighted_error_estimator),
+    max_degrees_of_freedom(20000)
   {}
 
   // Then the function which drives the whole process:

@@ -101,8 +101,8 @@ namespace Evaluation
 
   template <int dim>
   PointValueEvaluation<dim>::PointValueEvaluation(
-    const Point<dim>& evaluation_point)
-    : evaluation_point(evaluation_point)
+    const Point<dim>& evaluation_point) :
+    evaluation_point(evaluation_point)
   {}
 
   template <int dim>
@@ -156,8 +156,8 @@ namespace Evaluation
 
   template <int dim>
   PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
-    const Point<dim>& evaluation_point)
-    : evaluation_point(evaluation_point)
+    const Point<dim>& evaluation_point) :
+    evaluation_point(evaluation_point)
   {}
 
   template <int dim>
@@ -221,8 +221,8 @@ namespace Evaluation
   };
 
   template <int dim>
-  GridOutput<dim>::GridOutput(const std::string& output_name_base)
-    : output_name_base(output_name_base)
+  GridOutput<dim>::GridOutput(const std::string& output_name_base) :
+    output_name_base(output_name_base)
   {}
 
   template <int dim>
@@ -350,13 +350,13 @@ namespace LaplaceSolver
                       const FiniteElement<dim>&  fe,
                       const Quadrature<dim>&     quadrature,
                       const Quadrature<dim - 1>& face_quadrature,
-                      const Function<dim>&       boundary_values)
-    : Base<dim>(triangulation),
-      fe(&fe),
-      quadrature(&quadrature),
-      face_quadrature(&face_quadrature),
-      dof_handler(triangulation),
-      boundary_values(&boundary_values)
+                      const Function<dim>&       boundary_values) :
+    Base<dim>(triangulation),
+    fe(&fe),
+    quadrature(&quadrature),
+    face_quadrature(&face_quadrature),
+    dof_handler(triangulation),
+    boundary_values(&boundary_values)
   {}
 
   template <int dim>
@@ -546,14 +546,14 @@ namespace LaplaceSolver
                                   const Quadrature<dim>&     quadrature,
                                   const Quadrature<dim - 1>& face_quadrature,
                                   const Function<dim>&       rhs_function,
-                                  const Function<dim>&       boundary_values)
-    : Base<dim>(triangulation),
-      Solver<dim>(triangulation,
-                  fe,
-                  quadrature,
-                  face_quadrature,
-                  boundary_values),
-      rhs_function(&rhs_function)
+                                  const Function<dim>&       boundary_values) :
+    Base<dim>(triangulation),
+    Solver<dim>(triangulation,
+                fe,
+                quadrature,
+                face_quadrature,
+                boundary_values),
+    rhs_function(&rhs_function)
   {}
 
   template <int dim>
@@ -653,14 +653,14 @@ namespace LaplaceSolver
     const Quadrature<dim>&     quadrature,
     const Quadrature<dim - 1>& face_quadrature,
     const Function<dim>&       rhs_function,
-    const Function<dim>&       boundary_values)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        fe,
-                        quadrature,
-                        face_quadrature,
-                        rhs_function,
-                        boundary_values)
+    const Function<dim>&       boundary_values) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      fe,
+                      quadrature,
+                      face_quadrature,
+                      rhs_function,
+                      boundary_values)
   {}
 
   template <int dim>
@@ -692,14 +692,14 @@ namespace LaplaceSolver
     const Quadrature<dim>&     quadrature,
     const Quadrature<dim - 1>& face_quadrature,
     const Function<dim>&       rhs_function,
-    const Function<dim>&       boundary_values)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        fe,
-                        quadrature,
-                        face_quadrature,
-                        rhs_function,
-                        boundary_values)
+    const Function<dim>&       boundary_values) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      fe,
+                      quadrature,
+                      face_quadrature,
+                      rhs_function,
+                      boundary_values)
   {}
 
   template <int dim>
@@ -745,15 +745,15 @@ namespace LaplaceSolver
     const Quadrature<dim - 1>& face_quadrature,
     const Function<dim>&       rhs_function,
     const Function<dim>&       boundary_values,
-    const Function<dim>&       weighting_function)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        fe,
-                        quadrature,
-                        face_quadrature,
-                        rhs_function,
-                        boundary_values),
-      weighting_function(&weighting_function)
+    const Function<dim>&       weighting_function) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      fe,
+                      quadrature,
+                      face_quadrature,
+                      rhs_function,
+                      boundary_values),
+    weighting_function(&weighting_function)
   {}
 
   template <int dim>
@@ -1020,8 +1020,8 @@ namespace DualFunctional
 
   template <int dim>
   PointValueEvaluation<dim>::PointValueEvaluation(
-    const Point<dim>& evaluation_point)
-    : evaluation_point(evaluation_point)
+    const Point<dim>& evaluation_point) :
+    evaluation_point(evaluation_point)
   {}
 
   template <int dim>
@@ -1068,8 +1068,8 @@ namespace DualFunctional
 
   template <int dim>
   PointXDerivativeEvaluation<dim>::PointXDerivativeEvaluation(
-    const Point<dim>& evaluation_point)
-    : evaluation_point(evaluation_point)
+    const Point<dim>& evaluation_point) :
+    evaluation_point(evaluation_point)
   {}
 
   template <int dim>
@@ -1162,14 +1162,14 @@ namespace LaplaceSolver
     const FiniteElement<dim>&                      fe,
     const Quadrature<dim>&                         quadrature,
     const Quadrature<dim - 1>&                     face_quadrature,
-    const DualFunctional::DualFunctionalBase<dim>& dual_functional)
-    : Base<dim>(triangulation),
-      Solver<dim>(triangulation,
-                  fe,
-                  quadrature,
-                  face_quadrature,
-                  boundary_values),
-      dual_functional(&dual_functional)
+    const DualFunctional::DualFunctionalBase<dim>& dual_functional) :
+    Base<dim>(triangulation),
+    Solver<dim>(triangulation,
+                fe,
+                quadrature,
+                face_quadrature,
+                boundary_values),
+    dual_functional(&dual_functional)
   {}
 
   template <int dim>
@@ -1308,12 +1308,12 @@ namespace LaplaceSolver
   WeightedResidual<dim>::CellData::CellData(
     const FiniteElement<dim>& fe,
     const Quadrature<dim>&    quadrature,
-    const Function<dim>&      right_hand_side)
-    : fe_values(fe,
-                quadrature,
-                update_values | update_hessians | update_quadrature_points
-                  | update_JxW_values),
-      right_hand_side(&right_hand_side)
+    const Function<dim>&      right_hand_side) :
+    fe_values(fe,
+              quadrature,
+              update_values | update_hessians | update_quadrature_points
+                | update_JxW_values),
+    right_hand_side(&right_hand_side)
   {
     const unsigned int n_q_points = quadrature.size();
 
@@ -1326,16 +1326,16 @@ namespace LaplaceSolver
   template <int dim>
   WeightedResidual<dim>::FaceData::FaceData(
     const FiniteElement<dim>&  fe,
-    const Quadrature<dim - 1>& face_quadrature)
-    : fe_face_values_cell(fe,
-                          face_quadrature,
-                          update_values | update_gradients | update_JxW_values
-                            | update_normal_vectors),
-      fe_face_values_neighbor(fe,
-                              face_quadrature,
-                              update_values | update_gradients
-                                | update_JxW_values | update_normal_vectors),
-      fe_subface_values_cell(fe, face_quadrature, update_gradients)
+    const Quadrature<dim - 1>& face_quadrature) :
+    fe_face_values_cell(fe,
+                        face_quadrature,
+                        update_values | update_gradients | update_JxW_values
+                          | update_normal_vectors),
+    fe_face_values_neighbor(fe,
+                            face_quadrature,
+                            update_values | update_gradients | update_JxW_values
+                              | update_normal_vectors),
+    fe_subface_values_cell(fe, face_quadrature, update_gradients)
   {
     const unsigned int n_face_q_points = face_quadrature.size();
 
@@ -1354,19 +1354,19 @@ namespace LaplaceSolver
     const Quadrature<dim - 1>&                     face_quadrature,
     const Function<dim>&                           rhs_function,
     const Function<dim>&                           bv,
-    const DualFunctional::DualFunctionalBase<dim>& dual_functional)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        primal_fe,
-                        quadrature,
-                        face_quadrature,
-                        rhs_function,
-                        bv),
-      DualSolver<dim>(coarse_grid,
-                      dual_fe,
+    const DualFunctional::DualFunctionalBase<dim>& dual_functional) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      primal_fe,
                       quadrature,
                       face_quadrature,
-                      dual_functional)
+                      rhs_function,
+                      bv),
+    DualSolver<dim>(coarse_grid,
+                    dual_fe,
+                    quadrature,
+                    face_quadrature,
+                    dual_functional)
   {}
 
   template <int dim>
@@ -1789,11 +1789,11 @@ public:
 };
 
 template <int dim>
-Framework<dim>::ProblemDescription::ProblemDescription()
-  : primal_fe_degree(1),
-    dual_fe_degree(2),
-    refinement_criterion(dual_weighted_error_estimator),
-    max_degrees_of_freedom(5000)
+Framework<dim>::ProblemDescription::ProblemDescription() :
+  primal_fe_degree(1),
+  dual_fe_degree(2),
+  refinement_criterion(dual_weighted_error_estimator),
+  max_degrees_of_freedom(5000)
 {}
 
 template <int dim>

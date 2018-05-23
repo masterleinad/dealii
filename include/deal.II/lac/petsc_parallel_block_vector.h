@@ -302,8 +302,8 @@ namespace PETScWrappers
       reinit(block_sizes, communicator, local_elements, false);
     }
 
-    inline BlockVector::BlockVector(const BlockVector& v)
-      : BlockVectorBase<Vector>()
+    inline BlockVector::BlockVector(const BlockVector& v) :
+      BlockVectorBase<Vector>()
     {
       this->components.resize(v.n_blocks());
       this->block_indices = v.block_indices;

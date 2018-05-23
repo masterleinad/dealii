@@ -96,8 +96,10 @@ private:
 };
 
 template <int dim>
-EigenvalueProblem<dim>::EigenvalueProblem(unsigned int n_eigenvalues)
-  : fe(1), dof_handler(triangulation), n_eigenvalues(n_eigenvalues)
+EigenvalueProblem<dim>::EigenvalueProblem(unsigned int n_eigenvalues) :
+  fe(1),
+  dof_handler(triangulation),
+  n_eigenvalues(n_eigenvalues)
 {}
 
 template <int dim>

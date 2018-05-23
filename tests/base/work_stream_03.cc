@@ -50,22 +50,22 @@ namespace
   template <int dim>
   struct Scratch
   {
-    Scratch(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
-      : fe_collection(fe),
-        quadrature_collection(quadrature),
-        x_fe_values(fe_collection,
-                    quadrature_collection,
-                    update_quadrature_points),
-        rhs_values(quadrature_collection.size())
+    Scratch(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature) :
+      fe_collection(fe),
+      quadrature_collection(quadrature),
+      x_fe_values(fe_collection,
+                  quadrature_collection,
+                  update_quadrature_points),
+      rhs_values(quadrature_collection.size())
     {}
 
-    Scratch(const Scratch& data)
-      : fe_collection(data.fe_collection),
-        quadrature_collection(data.quadrature_collection),
-        x_fe_values(fe_collection,
-                    quadrature_collection,
-                    update_quadrature_points),
-        rhs_values(data.rhs_values)
+    Scratch(const Scratch& data) :
+      fe_collection(data.fe_collection),
+      quadrature_collection(data.quadrature_collection),
+      x_fe_values(fe_collection,
+                  quadrature_collection,
+                  update_quadrature_points),
+      rhs_values(data.rhs_values)
     {}
 
     const FiniteElement<dim>& fe_collection;

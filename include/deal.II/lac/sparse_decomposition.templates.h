@@ -26,8 +26,10 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
-SparseLUDecomposition<number>::SparseLUDecomposition()
-  : SparseMatrix<number>(), strengthen_diagonal(0), own_sparsity(nullptr)
+SparseLUDecomposition<number>::SparseLUDecomposition() :
+  SparseMatrix<number>(),
+  strengthen_diagonal(0),
+  own_sparsity(nullptr)
 {}
 
 template <typename number>

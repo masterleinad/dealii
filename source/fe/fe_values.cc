@@ -127,10 +127,10 @@ namespace FEValuesViews
 {
   template <int dim, int spacedim>
   Scalar<dim, spacedim>::Scalar(const FEValuesBase<dim, spacedim>& fe_values,
-                                const unsigned int                 component)
-    : fe_values(&fe_values),
-      component(component),
-      shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                const unsigned int                 component) :
+    fe_values(&fe_values),
+    component(component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim>& fe = *this->fe_values->fe;
     Assert(component < fe.n_components(),
@@ -162,8 +162,9 @@ namespace FEValuesViews
   }
 
   template <int dim, int spacedim>
-  Scalar<dim, spacedim>::Scalar()
-    : fe_values(nullptr), component(numbers::invalid_unsigned_int)
+  Scalar<dim, spacedim>::Scalar() :
+    fe_values(nullptr),
+    component(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>
@@ -177,10 +178,10 @@ namespace FEValuesViews
 
   template <int dim, int spacedim>
   Vector<dim, spacedim>::Vector(const FEValuesBase<dim, spacedim>& fe_values,
-                                const unsigned int first_vector_component)
-    : fe_values(&fe_values),
-      first_vector_component(first_vector_component),
-      shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                const unsigned int first_vector_component) :
+    fe_values(&fe_values),
+    first_vector_component(first_vector_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim>& fe = *this->fe_values->fe;
     Assert(first_vector_component + spacedim - 1 < fe.n_components(),
@@ -247,8 +248,9 @@ namespace FEValuesViews
   }
 
   template <int dim, int spacedim>
-  Vector<dim, spacedim>::Vector()
-    : fe_values(nullptr), first_vector_component(numbers::invalid_unsigned_int)
+  Vector<dim, spacedim>::Vector() :
+    fe_values(nullptr),
+    first_vector_component(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>
@@ -263,10 +265,10 @@ namespace FEValuesViews
   template <int dim, int spacedim>
   SymmetricTensor<2, dim, spacedim>::SymmetricTensor(
     const FEValuesBase<dim, spacedim>& fe_values,
-    const unsigned int                 first_tensor_component)
-    : fe_values(&fe_values),
-      first_tensor_component(first_tensor_component),
-      shape_function_data(this->fe_values->fe->dofs_per_cell)
+    const unsigned int                 first_tensor_component) :
+    fe_values(&fe_values),
+    first_tensor_component(first_tensor_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim>& fe = *this->fe_values->fe;
     Assert(first_tensor_component + (dim * dim + dim) / 2 - 1
@@ -342,8 +344,9 @@ namespace FEValuesViews
   }
 
   template <int dim, int spacedim>
-  SymmetricTensor<2, dim, spacedim>::SymmetricTensor()
-    : fe_values(nullptr), first_tensor_component(numbers::invalid_unsigned_int)
+  SymmetricTensor<2, dim, spacedim>::SymmetricTensor() :
+    fe_values(nullptr),
+    first_tensor_component(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>
@@ -358,10 +361,10 @@ namespace FEValuesViews
 
   template <int dim, int spacedim>
   Tensor<2, dim, spacedim>::Tensor(const FEValuesBase<dim, spacedim>& fe_values,
-                                   const unsigned int first_tensor_component)
-    : fe_values(&fe_values),
-      first_tensor_component(first_tensor_component),
-      shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                   const unsigned int first_tensor_component) :
+    fe_values(&fe_values),
+    first_tensor_component(first_tensor_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim>& fe = *this->fe_values->fe;
     Assert(first_tensor_component + dim * dim - 1 < fe.n_components(),
@@ -427,8 +430,9 @@ namespace FEValuesViews
   }
 
   template <int dim, int spacedim>
-  Tensor<2, dim, spacedim>::Tensor()
-    : fe_values(nullptr), first_tensor_component(numbers::invalid_unsigned_int)
+  Tensor<2, dim, spacedim>::Tensor() :
+    fe_values(nullptr),
+    first_tensor_component(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>
@@ -2745,8 +2749,8 @@ private:
 
 template <int dim, int spacedim>
 template <typename CI>
-FEValuesBase<dim, spacedim>::CellIterator<CI>::CellIterator(const CI& cell)
-  : cell(cell)
+FEValuesBase<dim, spacedim>::CellIterator<CI>::CellIterator(const CI& cell) :
+  cell(cell)
 {}
 
 template <int dim, int spacedim>
@@ -2798,8 +2802,8 @@ const char* const FEValuesBase<dim, spacedim>::TriaCellIterator::message_string
 
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::TriaCellIterator::TriaCellIterator(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell)
-  : cell(cell)
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell) :
+  cell(cell)
 {}
 
 template <int dim, int spacedim>
@@ -2989,13 +2993,13 @@ FEValuesBase<dim, spacedim>::FEValuesBase(
   const unsigned int                  dofs_per_cell,
   const UpdateFlags                   flags,
   const Mapping<dim, spacedim>&       mapping,
-  const FiniteElement<dim, spacedim>& fe)
-  : n_quadrature_points(n_q_points),
-    dofs_per_cell(dofs_per_cell),
-    mapping(&mapping, typeid(*this).name()),
-    fe(&fe, typeid(*this).name()),
-    cell_similarity(CellSimilarity::Similarity::none),
-    fe_values_views_cache(*this)
+  const FiniteElement<dim, spacedim>& fe) :
+  n_quadrature_points(n_q_points),
+  dofs_per_cell(dofs_per_cell),
+  mapping(&mapping, typeid(*this).name()),
+  fe(&fe, typeid(*this).name()),
+  cell_similarity(CellSimilarity::Similarity::none),
+  fe_values_views_cache(*this)
 {
   Assert(n_q_points > 0,
          ExcMessage("There is nothing useful you can do with an FEValues "
@@ -4228,13 +4232,13 @@ template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim>&       mapping,
                                   const FiniteElement<dim, spacedim>& fe,
                                   const Quadrature<dim>&              q,
-                                  const UpdateFlags update_flags)
-  : FEValuesBase<dim, spacedim>(q.size(),
-                                fe.dofs_per_cell,
-                                update_default,
-                                mapping,
-                                fe),
-    quadrature(q)
+                                  const UpdateFlags update_flags) :
+  FEValuesBase<dim, spacedim>(q.size(),
+                              fe.dofs_per_cell,
+                              update_default,
+                              mapping,
+                              fe),
+  quadrature(q)
 {
   initialize(update_flags);
 }
@@ -4242,13 +4246,13 @@ FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim>&       mapping,
 template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const FiniteElement<dim, spacedim>& fe,
                                   const Quadrature<dim>&              q,
-                                  const UpdateFlags update_flags)
-  : FEValuesBase<dim, spacedim>(q.size(),
-                                fe.dofs_per_cell,
-                                update_default,
-                                StaticMappingQ1<dim, spacedim>::mapping,
-                                fe),
-    quadrature(q)
+                                  const UpdateFlags update_flags) :
+  FEValuesBase<dim, spacedim>(q.size(),
+                              fe.dofs_per_cell,
+                              update_default,
+                              StaticMappingQ1<dim, spacedim>::mapping,
+                              fe),
+  quadrature(q)
 {
   initialize(update_flags);
 }
@@ -4427,14 +4431,14 @@ FEFaceValuesBase<dim, spacedim>::FEFaceValuesBase(
   const UpdateFlags,
   const Mapping<dim, spacedim>&       mapping,
   const FiniteElement<dim, spacedim>& fe,
-  const Quadrature<dim - 1>&          quadrature)
-  : FEValuesBase<dim, spacedim>(n_q_points,
-                                dofs_per_cell,
-                                update_default,
-                                mapping,
-                                fe),
-    present_face_index(numbers::invalid_unsigned_int),
-    quadrature(quadrature)
+  const Quadrature<dim - 1>&          quadrature) :
+  FEValuesBase<dim, spacedim>(n_q_points,
+                              dofs_per_cell,
+                              update_default,
+                              mapping,
+                              fe),
+  present_face_index(numbers::invalid_unsigned_int),
+  quadrature(quadrature)
 {}
 
 template <int dim, int spacedim>
@@ -4468,13 +4472,13 @@ FEFaceValues<dim, spacedim>::FEFaceValues(
   const Mapping<dim, spacedim>&       mapping,
   const FiniteElement<dim, spacedim>& fe,
   const Quadrature<dim - 1>&          quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4483,13 +4487,13 @@ template <int dim, int spacedim>
 FEFaceValues<dim, spacedim>::FEFaceValues(
   const FiniteElement<dim, spacedim>& fe,
   const Quadrature<dim - 1>&          quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    StaticMappingQ1<dim, spacedim>::mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  StaticMappingQ1<dim, spacedim>::mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4627,13 +4631,13 @@ FESubfaceValues<dim, spacedim>::FESubfaceValues(
   const Mapping<dim, spacedim>&       mapping,
   const FiniteElement<dim, spacedim>& fe,
   const Quadrature<dim - 1>&          quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4642,13 +4646,13 @@ template <int dim, int spacedim>
 FESubfaceValues<dim, spacedim>::FESubfaceValues(
   const FiniteElement<dim, spacedim>& fe,
   const Quadrature<dim - 1>&          quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    StaticMappingQ1<dim, spacedim>::mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  StaticMappingQ1<dim, spacedim>::mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }

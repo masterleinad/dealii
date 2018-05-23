@@ -451,10 +451,10 @@ private:
 inline ArpackSolver::AdditionalData::AdditionalData(
   const unsigned int     number_of_arnoldi_vectors,
   const WhichEigenvalues eigenvalue_of_interest,
-  const bool             symmetric)
-  : number_of_arnoldi_vectors(number_of_arnoldi_vectors),
-    eigenvalue_of_interest(eigenvalue_of_interest),
-    symmetric(symmetric)
+  const bool             symmetric) :
+  number_of_arnoldi_vectors(number_of_arnoldi_vectors),
+  eigenvalue_of_interest(eigenvalue_of_interest),
+  symmetric(symmetric)
 {
   //Check for possible options for symmetric problems
   if(symmetric)
@@ -479,12 +479,12 @@ inline ArpackSolver::AdditionalData::AdditionalData(
 }
 
 inline ArpackSolver::ArpackSolver(SolverControl&        control,
-                                  const AdditionalData& data)
-  : solver_control(control),
-    additional_data(data),
-    initial_vector_provided(false),
-    sigmar(0.0),
-    sigmai(0.0)
+                                  const AdditionalData& data) :
+  solver_control(control),
+  additional_data(data),
+  initial_vector_provided(false),
+  sigmar(0.0),
+  sigmai(0.0)
 {}
 
 inline void

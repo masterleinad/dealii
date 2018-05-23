@@ -25,8 +25,10 @@ template <int dim>
 class ExpFunc : public Function<dim>
 {
 public:
-  ExpFunc(const Point<dim>& origin, const double& Z)
-    : Function<dim>(1), origin(origin), Z(Z)
+  ExpFunc(const Point<dim>& origin, const double& Z) :
+    Function<dim>(1),
+    origin(origin),
+    Z(Z)
   {}
 
   virtual double
@@ -73,8 +75,9 @@ template <int dim>
 class ExpFunc2 : public Functions::Spherical<dim>
 {
 public:
-  ExpFunc2(const Point<dim>& origin, const double& Z)
-    : Functions::Spherical<dim>(origin), Z(Z)
+  ExpFunc2(const Point<dim>& origin, const double& Z) :
+    Functions::Spherical<dim>(origin),
+    Z(Z)
   {}
 
 private:

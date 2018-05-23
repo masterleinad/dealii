@@ -126,29 +126,29 @@ namespace internal
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
-  const FiniteElement<dim, spacedim>& fe_base)
-  : FE_Enriched<dim, spacedim>(
-      fe_base,
-      FE_Nothing<dim, spacedim>(fe_base.n_components(), true),
-      nullptr)
+  const FiniteElement<dim, spacedim>& fe_base) :
+  FE_Enriched<dim, spacedim>(
+    fe_base,
+    FE_Nothing<dim, spacedim>(fe_base.n_components(), true),
+    nullptr)
 {}
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
   const FiniteElement<dim, spacedim>& fe_base,
   const FiniteElement<dim, spacedim>& fe_enriched,
-  const Function<spacedim>*           enrichment_function)
-  : FE_Enriched<dim, spacedim>(
-      &fe_base,
-      std::vector<const FiniteElement<dim, spacedim>*>(1, &fe_enriched),
-      std::vector<std::vector<std::function<const Function<spacedim>*(
-        const typename Triangulation<dim, spacedim>::cell_iterator&)>>>(
+  const Function<spacedim>*           enrichment_function) :
+  FE_Enriched<dim, spacedim>(
+    &fe_base,
+    std::vector<const FiniteElement<dim, spacedim>*>(1, &fe_enriched),
+    std::vector<std::vector<std::function<const Function<spacedim>*(
+      const typename Triangulation<dim, spacedim>::cell_iterator&)>>>(
+      1,
+      std::vector<std::function<const Function<spacedim>*(
+        const typename Triangulation<dim, spacedim>::cell_iterator&)>>(
         1,
-        std::vector<std::function<const Function<spacedim>*(
-          const typename Triangulation<dim, spacedim>::cell_iterator&)>>(
-          1,
-          [=](const typename Triangulation<dim, spacedim>::cell_iterator&)
-            -> const Function<spacedim>* { return enrichment_function; })))
+        [=](const typename Triangulation<dim, spacedim>::cell_iterator&)
+          -> const Function<spacedim>* { return enrichment_function; })))
 {}
 
 template <int dim, int spacedim>
@@ -156,11 +156,12 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
   const FiniteElement<dim, spacedim>*                     fe_base,
   const std::vector<const FiniteElement<dim, spacedim>*>& fe_enriched,
   const std::vector<std::vector<std::function<const Function<spacedim>*(
-    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>& functions)
-  : FE_Enriched<dim, spacedim>(
-      internal::FE_Enriched::build_fes(fe_base, fe_enriched),
-      internal::FE_Enriched::build_multiplicities(functions),
-      functions)
+    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>&
+    functions) :
+  FE_Enriched<dim, spacedim>(
+    internal::FE_Enriched::build_fes(fe_base, fe_enriched),
+    internal::FE_Enriched::build_multiplicities(functions),
+    functions)
 {}
 
 template <int dim, int spacedim>
@@ -168,19 +169,19 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
   const std::vector<const FiniteElement<dim, spacedim>*>& fes,
   const std::vector<unsigned int>&                        multiplicities,
   const std::vector<std::vector<std::function<const Function<spacedim>*(
-    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>& functions)
-  : FiniteElement<dim, spacedim>(
-      FETools::Compositing::multiply_dof_numbers(fes, multiplicities, false),
-      FETools::Compositing::compute_restriction_is_additive_flags(
-        fes,
-        multiplicities),
-      FETools::Compositing::compute_nonzero_components(fes,
-                                                       multiplicities,
-                                                       false)),
-    enrichments(functions),
-    is_enriched(internal::FE_Enriched::check_if_enriched(fes)),
-    fe_system(
-      std_cxx14::make_unique<FESystem<dim, spacedim>>(fes, multiplicities))
+    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>&
+    functions) :
+  FiniteElement<dim, spacedim>(
+    FETools::Compositing::multiply_dof_numbers(fes, multiplicities, false),
+    FETools::Compositing::compute_restriction_is_additive_flags(fes,
+                                                                multiplicities),
+    FETools::Compositing::compute_nonzero_components(fes,
+                                                     multiplicities,
+                                                     false)),
+  enrichments(functions),
+  is_enriched(internal::FE_Enriched::check_if_enriched(fes)),
+  fe_system(
+    std_cxx14::make_unique<FESystem<dim, spacedim>>(fes, multiplicities))
 {
   // descriptive error are thrown within the function.
   Assert(
@@ -984,8 +985,9 @@ FE_Enriched<dim, spacedim>::get_restriction_matrix(
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::InternalData::InternalData(
-  std::unique_ptr<typename FESystem<dim, spacedim>::InternalData> fesystem_data)
-  : fesystem_data(std::move(fesystem_data))
+  std::unique_ptr<typename FESystem<dim, spacedim>::InternalData>
+    fesystem_data) :
+  fesystem_data(std::move(fesystem_data))
 {}
 
 template <int dim, int spacedim>

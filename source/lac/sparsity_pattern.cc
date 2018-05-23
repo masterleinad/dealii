@@ -35,25 +35,25 @@ __declspec(selectany) // Weak extern binding due to multiple link error
 #endif
   const SparsityPattern::size_type SparsityPattern::invalid_entry;
 
-SparsityPattern::SparsityPattern()
-  : max_dim(0),
-    max_vec_len(0),
-    rowstart(nullptr),
-    colnums(nullptr),
-    compressed(false),
-    store_diagonal_first_in_row(false)
+SparsityPattern::SparsityPattern() :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr),
+  compressed(false),
+  store_diagonal_first_in_row(false)
 {
   reinit(0, 0, 0);
 }
 
-SparsityPattern::SparsityPattern(const SparsityPattern& s)
-  : Subscriptor(),
-    max_dim(0),
-    max_vec_len(0),
-    rowstart(nullptr),
-    colnums(nullptr),
-    compressed(false),
-    store_diagonal_first_in_row(false)
+SparsityPattern::SparsityPattern(const SparsityPattern& s) :
+  Subscriptor(),
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr),
+  compressed(false),
+  store_diagonal_first_in_row(false)
 {
   (void) s;
   Assert(s.empty(),
@@ -67,47 +67,56 @@ SparsityPattern::SparsityPattern(const SparsityPattern& s)
 
 SparsityPattern::SparsityPattern(const size_type    m,
                                  const size_type    n,
-                                 const unsigned int max_per_row)
-  : max_dim(0),
-    max_vec_len(0),
-    rowstart(nullptr),
-    colnums(nullptr),
-    compressed(false),
-    store_diagonal_first_in_row(m == n)
+                                 const unsigned int max_per_row) :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr),
+  compressed(false),
+  store_diagonal_first_in_row(m == n)
 {
   reinit(m, n, max_per_row);
 }
 
 SparsityPattern::SparsityPattern(const size_type                  m,
                                  const size_type                  n,
-                                 const std::vector<unsigned int>& row_lengths)
-  : max_dim(0),
-    max_vec_len(0),
-    rowstart(nullptr),
-    colnums(nullptr),
-    store_diagonal_first_in_row(m == n)
+                                 const std::vector<unsigned int>& row_lengths) :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr),
+  store_diagonal_first_in_row(m == n)
 {
   reinit(m, n, row_lengths);
 }
 
 SparsityPattern::SparsityPattern(const size_type    m,
-                                 const unsigned int max_per_row)
-  : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
+                                 const unsigned int max_per_row) :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr)
 {
   reinit(m, m, max_per_row);
 }
 
 SparsityPattern::SparsityPattern(const size_type                  m,
-                                 const std::vector<unsigned int>& row_lengths)
-  : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
+                                 const std::vector<unsigned int>& row_lengths) :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr)
 {
   reinit(m, m, row_lengths);
 }
 
 SparsityPattern::SparsityPattern(const SparsityPattern& original,
                                  const unsigned int     max_per_row,
-                                 const size_type        extra_off_diagonals)
-  : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
+                                 const size_type        extra_off_diagonals) :
+  max_dim(0),
+  max_vec_len(0),
+  rowstart(nullptr),
+  colnums(nullptr)
 {
   Assert(original.rows == original.cols, ExcNotQuadratic());
   Assert(original.is_compressed(), ExcNotCompressed());

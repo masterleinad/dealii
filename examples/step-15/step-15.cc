@@ -168,8 +168,9 @@ namespace Step15
   // few tutorials.
 
   template <int dim>
-  MinimalSurfaceProblem<dim>::MinimalSurfaceProblem()
-    : dof_handler(triangulation), fe(2)
+  MinimalSurfaceProblem<dim>::MinimalSurfaceProblem() :
+    dof_handler(triangulation),
+    fe(2)
   {}
 
   template <int dim>

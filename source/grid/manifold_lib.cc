@@ -111,10 +111,10 @@ namespace internal
 // ============================================================
 
 template <int dim, int spacedim>
-PolarManifold<dim, spacedim>::PolarManifold(const Point<spacedim> center)
-  : ChartManifold<dim, spacedim, spacedim>(
-      PolarManifold<dim, spacedim>::get_periodicity()),
-    center(center)
+PolarManifold<dim, spacedim>::PolarManifold(const Point<spacedim> center) :
+  ChartManifold<dim, spacedim, spacedim>(
+    PolarManifold<dim, spacedim>::get_periodicity()),
+  center(center)
 {}
 
 template <int dim, int spacedim>
@@ -259,8 +259,9 @@ PolarManifold<dim, spacedim>::push_forward_gradient(
 
 template <int dim, int spacedim>
 SphericalManifold<dim, spacedim>::SphericalManifold(
-  const Point<spacedim> center)
-  : center(center), polar_manifold(center)
+  const Point<spacedim> center) :
+  center(center),
+  polar_manifold(center)
 {}
 
 template <int dim, int spacedim>
@@ -922,11 +923,12 @@ SphericalManifold<3, 3>::get_new_point(
 // CylindricalManifold
 // ============================================================
 template <int dim, int spacedim>
-CylindricalManifold<dim, spacedim>::CylindricalManifold(const unsigned int axis,
-                                                        const double tolerance)
-  : CylindricalManifold<dim, spacedim>(Point<spacedim>::unit_vector(axis),
-                                       Point<spacedim>(),
-                                       tolerance)
+CylindricalManifold<dim, spacedim>::CylindricalManifold(
+  const unsigned int axis,
+  const double       tolerance) :
+  CylindricalManifold<dim, spacedim>(Point<spacedim>::unit_vector(axis),
+                                     Point<spacedim>(),
+                                     tolerance)
 {
   // do not use static_assert to make dimension-independent programming
   // easier.
@@ -938,12 +940,12 @@ template <int dim, int spacedim>
 CylindricalManifold<dim, spacedim>::CylindricalManifold(
   const Tensor<1, spacedim>& direction,
   const Point<spacedim>&     point_on_axis,
-  const double               tolerance)
-  : ChartManifold<dim, spacedim, 3>(Tensor<1, 3>({0, 2. * numbers::PI, 0})),
-    normal_direction(internal::compute_normal(direction, true)),
-    direction(direction / direction.norm()),
-    point_on_axis(point_on_axis),
-    tolerance(tolerance)
+  const double               tolerance) :
+  ChartManifold<dim, spacedim, 3>(Tensor<1, 3>({0, 2. * numbers::PI, 0})),
+  normal_direction(internal::compute_normal(direction, true)),
+  direction(direction / direction.norm()),
+  point_on_axis(point_on_axis),
+  tolerance(tolerance)
 {
   // do not use static_assert to make dimension-independent programming
   // easier.
@@ -1080,13 +1082,13 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
   const Function<chartdim>&  push_forward_function,
   const Function<spacedim>&  pull_back_function,
   const Tensor<1, chartdim>& periodicity,
-  const double               tolerance)
-  : ChartManifold<dim, spacedim, chartdim>(periodicity),
-    push_forward_function(&push_forward_function),
-    pull_back_function(&pull_back_function),
-    tolerance(tolerance),
-    owns_pointers(false),
-    finite_difference_step(0)
+  const double               tolerance) :
+  ChartManifold<dim, spacedim, chartdim>(periodicity),
+  push_forward_function(&push_forward_function),
+  pull_back_function(&pull_back_function),
+  tolerance(tolerance),
+  owns_pointers(false),
+  finite_difference_step(0)
 {
   AssertDimension(push_forward_function.n_components, spacedim);
   AssertDimension(pull_back_function.n_components, chartdim);
@@ -1101,16 +1103,16 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
   const std::string                                 chart_vars,
   const std::string                                 space_vars,
   const double                                      tolerance,
-  const double                                      h)
-  : ChartManifold<dim, spacedim, chartdim>(periodicity),
-    const_map(const_map),
-    tolerance(tolerance),
-    owns_pointers(true),
-    push_forward_expression(push_forward_expression),
-    pull_back_expression(pull_back_expression),
-    chart_vars(chart_vars),
-    space_vars(space_vars),
-    finite_difference_step(h)
+  const double                                      h) :
+  ChartManifold<dim, spacedim, chartdim>(periodicity),
+  const_map(const_map),
+  tolerance(tolerance),
+  owns_pointers(true),
+  push_forward_expression(push_forward_expression),
+  pull_back_expression(pull_back_expression),
+  chart_vars(chart_vars),
+  space_vars(space_vars),
+  finite_difference_step(h)
 {
   FunctionParser<chartdim>* pf = new FunctionParser<chartdim>(spacedim, 0.0, h);
   FunctionParser<spacedim>* pb = new FunctionParser<spacedim>(chartdim, 0.0, h);
@@ -1255,10 +1257,10 @@ TorusManifold<dim>::push_forward(const Point<3>& chart_point) const
 }
 
 template <int dim>
-TorusManifold<dim>::TorusManifold(const double R, const double r)
-  : ChartManifold<dim, 3, 3>(Point<3>(2 * numbers::PI, 2 * numbers::PI, 0.0)),
-    r(r),
-    R(R)
+TorusManifold<dim>::TorusManifold(const double R, const double r) :
+  ChartManifold<dim, 3, 3>(Point<3>(2 * numbers::PI, 2 * numbers::PI, 0.0)),
+  r(r),
+  R(R)
 {
   Assert(R > r,
          ExcMessage("Outer radius R must be greater than the inner "
@@ -1303,8 +1305,9 @@ TorusManifold<dim>::push_forward_gradient(const Point<3>& chart_point) const
 // ============================================================
 template <int dim, int spacedim>
 TransfiniteInterpolationManifold<dim,
-                                 spacedim>::TransfiniteInterpolationManifold()
-  : triangulation(nullptr), level_coarse(-1)
+                                 spacedim>::TransfiniteInterpolationManifold() :
+  triangulation(nullptr),
+  level_coarse(-1)
 {
   AssertThrow(dim > 1, ExcNotImplemented());
 }

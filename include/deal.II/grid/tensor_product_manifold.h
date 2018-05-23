@@ -192,13 +192,13 @@ TensorProductManifold<dim,
                       chartdim_B>::
   TensorProductManifold(
     const ChartManifold<dim_A, spacedim_A, chartdim_A>& manifold_A,
-    const ChartManifold<dim_B, spacedim_B, chartdim_B>& manifold_B)
-  : ChartManifold<dim, spacedim_A + spacedim_B, chartdim_A + chartdim_B>(
-      internal::TensorProductManifoldImplementation::concat(
-        manifold_A.get_periodicity(),
-        manifold_B.get_periodicity())),
-    manifold_A(&manifold_A),
-    manifold_B(&manifold_B)
+    const ChartManifold<dim_B, spacedim_B, chartdim_B>& manifold_B) :
+  ChartManifold<dim, spacedim_A + spacedim_B, chartdim_A + chartdim_B>(
+    internal::TensorProductManifoldImplementation::concat(
+      manifold_A.get_periodicity(),
+      manifold_B.get_periodicity())),
+  manifold_A(&manifold_A),
+  manifold_B(&manifold_B)
 {}
 
 template <int dim,

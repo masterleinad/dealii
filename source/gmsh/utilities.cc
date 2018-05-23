@@ -29,9 +29,9 @@ namespace Gmsh
 {
   AdditionalParameters::AdditionalParameters(
     const double       characteristic_length,
-    const std::string& output_base_name)
-    : characteristic_length(characteristic_length),
-      output_base_name(output_base_name)
+    const std::string& output_base_name) :
+    characteristic_length(characteristic_length),
+    output_base_name(output_base_name)
   {}
 
   void

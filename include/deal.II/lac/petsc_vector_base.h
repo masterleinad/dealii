@@ -832,8 +832,9 @@ namespace PETScWrappers
   namespace internal
   {
     inline VectorReference::VectorReference(const VectorBase& vector,
-                                            const size_type   index)
-      : vector(vector), index(index)
+                                            const size_type   index) :
+      vector(vector),
+      index(index)
     {}
 
     inline const VectorReference&

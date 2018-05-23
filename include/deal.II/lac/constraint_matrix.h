@@ -1568,8 +1568,10 @@ private:
 
 /* ---------------- template and inline functions ----------------- */
 
-inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints)
-  : lines(), local_lines(local_constraints), sorted(false)
+inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints) :
+  lines(),
+  local_lines(local_constraints),
+  sorted(false)
 {
   // make sure the IndexSet is compressed. Otherwise this can lead to crashes
   // that are hard to find (only happen in release mode).
@@ -1578,12 +1580,12 @@ inline ConstraintMatrix::ConstraintMatrix(const IndexSet& local_constraints)
 }
 
 inline ConstraintMatrix::ConstraintMatrix(
-  const ConstraintMatrix& constraint_matrix)
-  : Subscriptor(),
-    lines(constraint_matrix.lines),
-    lines_cache(constraint_matrix.lines_cache),
-    local_lines(constraint_matrix.local_lines),
-    sorted(constraint_matrix.sorted)
+  const ConstraintMatrix& constraint_matrix) :
+  Subscriptor(),
+  lines(constraint_matrix.lines),
+  lines_cache(constraint_matrix.lines_cache),
+  local_lines(constraint_matrix.local_lines),
+  sorted(constraint_matrix.sorted)
 {}
 
 inline void

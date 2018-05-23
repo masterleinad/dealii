@@ -62,16 +62,16 @@ namespace internal
 } // namespace internal
 
 template <int dim>
-FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
-  : FE_PolyTensor<PolynomialsNedelec<dim>, dim>(
-      order,
-      FiniteElementData<dim>(get_dpo_vector(order),
-                             dim,
-                             order + 1,
-                             FiniteElementData<dim>::Hcurl),
-      std::vector<bool>(PolynomialsNedelec<dim>::compute_n_pols(order), true),
-      std::vector<ComponentMask>(PolynomialsNedelec<dim>::compute_n_pols(order),
-                                 std::vector<bool>(dim, true)))
+FE_Nedelec<dim>::FE_Nedelec(const unsigned int order) :
+  FE_PolyTensor<PolynomialsNedelec<dim>, dim>(
+    order,
+    FiniteElementData<dim>(get_dpo_vector(order),
+                           dim,
+                           order + 1,
+                           FiniteElementData<dim>::Hcurl),
+    std::vector<bool>(PolynomialsNedelec<dim>::compute_n_pols(order), true),
+    std::vector<ComponentMask>(PolynomialsNedelec<dim>::compute_n_pols(order),
+                               std::vector<bool>(dim, true)))
 {
 #ifdef DEBUG_NEDELEC
   deallog << get_name() << std::endl;

@@ -101,12 +101,12 @@ namespace Utilities
   {
     ProcessGrid::ProcessGrid(
       MPI_Comm                                     mpi_comm,
-      const std::pair<unsigned int, unsigned int>& grid_dimensions)
-      : mpi_communicator(mpi_comm),
-        this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
-        n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
-        n_process_rows(grid_dimensions.first),
-        n_process_columns(grid_dimensions.second)
+      const std::pair<unsigned int, unsigned int>& grid_dimensions) :
+      mpi_communicator(mpi_comm),
+      this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
+      n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
+      n_process_rows(grid_dimensions.first),
+      n_process_columns(grid_dimensions.second)
     {
       Assert(grid_dimensions.first > 0,
              ExcMessage("Number of process grid rows has to be positive."));
@@ -204,19 +204,19 @@ namespace Utilities
                              const unsigned int n_rows_matrix,
                              const unsigned int n_columns_matrix,
                              const unsigned int row_block_size,
-                             const unsigned int column_block_size)
-      : ProcessGrid(mpi_comm,
-                    compute_processor_grid_sizes(mpi_comm,
-                                                 n_rows_matrix,
-                                                 n_columns_matrix,
-                                                 row_block_size,
-                                                 column_block_size))
+                             const unsigned int column_block_size) :
+      ProcessGrid(mpi_comm,
+                  compute_processor_grid_sizes(mpi_comm,
+                                               n_rows_matrix,
+                                               n_columns_matrix,
+                                               row_block_size,
+                                               column_block_size))
     {}
 
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,
                              const unsigned int n_rows,
-                             const unsigned int n_columns)
-      : ProcessGrid(mpi_comm, std::make_pair(n_rows, n_columns))
+                             const unsigned int n_columns) :
+      ProcessGrid(mpi_comm, std::make_pair(n_rows, n_columns))
     {}
 
     ProcessGrid::~ProcessGrid()

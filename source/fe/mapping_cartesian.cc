@@ -37,10 +37,10 @@ const unsigned int MappingCartesian<dim, spacedim>::invalid_face_number;
 
 template <int dim, int spacedim>
 MappingCartesian<dim, spacedim>::InternalData::InternalData(
-  const Quadrature<dim>& q)
-  : cell_extents(numbers::signaling_nan<Tensor<1, dim>>()),
-    volume_element(numbers::signaling_nan<double>()),
-    quadrature_points(q.get_points())
+  const Quadrature<dim>& q) :
+  cell_extents(numbers::signaling_nan<Tensor<1, dim>>()),
+  volume_element(numbers::signaling_nan<double>()),
+  quadrature_points(q.get_points())
 {}
 
 template <int dim, int spacedim>

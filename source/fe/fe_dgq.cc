@@ -45,21 +45,20 @@ namespace internal
 } // namespace internal
 
 template <int dim, int spacedim>
-FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)
-  : FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
-      TensorProductPolynomials<dim>(
-        Polynomials::generate_complete_Lagrange_basis(
-          internal::FE_DGQ::get_QGaussLobatto_points(degree))),
-      FiniteElementData<dim>(get_dpo_vector(degree),
-                             1,
-                             degree,
-                             FiniteElementData<dim>::L2),
-      std::vector<bool>(
-        FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
-        true),
-      std::vector<ComponentMask>(
-        FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
-        std::vector<bool>(1, true)))
+FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree) :
+  FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
+    TensorProductPolynomials<dim>(Polynomials::generate_complete_Lagrange_basis(
+      internal::FE_DGQ::get_QGaussLobatto_points(degree))),
+    FiniteElementData<dim>(get_dpo_vector(degree),
+                           1,
+                           degree,
+                           FiniteElementData<dim>::L2),
+    std::vector<bool>(
+      FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
+      true),
+    std::vector<ComponentMask>(
+      FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
+      std::vector<bool>(1, true)))
 {
   // Compute support points, which are the tensor product of the Lagrange
   // interpolation points in the constructor.
@@ -76,25 +75,25 @@ FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree)
 
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(
-  const std::vector<Polynomials::Polynomial<double>>& polynomials)
-  : FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
-      TensorProductPolynomials<dim>(polynomials),
+  const std::vector<Polynomials::Polynomial<double>>& polynomials) :
+  FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
+    TensorProductPolynomials<dim>(polynomials),
+    FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
+                           1,
+                           polynomials.size() - 1,
+                           FiniteElementData<dim>::L2),
+    std::vector<bool>(
       FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
                              1,
-                             polynomials.size() - 1,
-                             FiniteElementData<dim>::L2),
-      std::vector<bool>(
-        FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
-                               1,
-                               polynomials.size() - 1)
-          .dofs_per_cell,
-        true),
-      std::vector<ComponentMask>(
-        FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
-                               1,
-                               polynomials.size() - 1)
-          .dofs_per_cell,
-        std::vector<bool>(1, true)))
+                             polynomials.size() - 1)
+        .dofs_per_cell,
+      true),
+    std::vector<ComponentMask>(
+      FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
+                             1,
+                             polynomials.size() - 1)
+        .dofs_per_cell,
+      std::vector<bool>(1, true)))
 {
   // No support points can be defined in general. Derived classes might define
   // support points like the class FE_DGQArbitraryNodes
@@ -674,9 +673,9 @@ FE_DGQ<dim, spacedim>::memory_consumption() const
 
 template <int dim, int spacedim>
 FE_DGQArbitraryNodes<dim, spacedim>::FE_DGQArbitraryNodes(
-  const Quadrature<1>& points)
-  : FE_DGQ<dim, spacedim>(
-      Polynomials::generate_complete_Lagrange_basis(points.get_points()))
+  const Quadrature<1>& points) :
+  FE_DGQ<dim, spacedim>(
+    Polynomials::generate_complete_Lagrange_basis(points.get_points()))
 {
   Assert(points.size() > 0,
          (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
@@ -816,9 +815,8 @@ FE_DGQArbitraryNodes<dim, spacedim>::clone() const
 // ---------------------------------- FE_DGQLegendre -------------------------
 
 template <int dim, int spacedim>
-FE_DGQLegendre<dim, spacedim>::FE_DGQLegendre(const unsigned int degree)
-  : FE_DGQ<dim, spacedim>(
-      Polynomials::Legendre::generate_complete_basis(degree))
+FE_DGQLegendre<dim, spacedim>::FE_DGQLegendre(const unsigned int degree) :
+  FE_DGQ<dim, spacedim>(Polynomials::Legendre::generate_complete_basis(degree))
 {}
 
 template <int dim, int spacedim>
@@ -851,9 +849,9 @@ FE_DGQLegendre<dim, spacedim>::clone() const
 // ---------------------------------- FE_DGQHermite --------------------------
 
 template <int dim, int spacedim>
-FE_DGQHermite<dim, spacedim>::FE_DGQHermite(const unsigned int degree)
-  : FE_DGQ<dim, spacedim>(
-      Polynomials::HermiteLikeInterpolation::generate_complete_basis(degree))
+FE_DGQHermite<dim, spacedim>::FE_DGQHermite(const unsigned int degree) :
+  FE_DGQ<dim, spacedim>(
+    Polynomials::HermiteLikeInterpolation::generate_complete_basis(degree))
 {}
 
 template <int dim, int spacedim>

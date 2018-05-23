@@ -151,12 +151,12 @@ namespace Step52
   };
 
   // We choose quadratic finite elements and we initialize the parameters.
-  Diffusion::Diffusion()
-    : fe_degree(2),
-      diffusion_coefficient(1. / 30.),
-      absorption_cross_section(1.),
-      fe(fe_degree),
-      dof_handler(triangulation)
+  Diffusion::Diffusion() :
+    fe_degree(2),
+    diffusion_coefficient(1. / 30.),
+    absorption_cross_section(1.),
+    fe(fe_degree),
+    dof_handler(triangulation)
   {}
 
   // @sect4{<code>Diffusion::setup_system</code>}

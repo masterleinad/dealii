@@ -64,11 +64,11 @@ namespace Step38
   };
 
   template <int spacedim>
-  Extract_Mesh_Test<spacedim>::Extract_Mesh_Test()
-    : space_fe(spacedim),
-      boundary_fe(1),
-      space_dof_handler(volume_mesh_triangulation),
-      contact_dof_handler(boundary_triangulation)
+  Extract_Mesh_Test<spacedim>::Extract_Mesh_Test() :
+    space_fe(spacedim),
+    boundary_fe(1),
+    space_dof_handler(volume_mesh_triangulation),
+    contact_dof_handler(boundary_triangulation)
   {}
 
   template <int spacedim>

@@ -1333,8 +1333,9 @@ namespace TrilinosWrappers
   namespace internal
   {
     inline VectorReference::VectorReference(MPI::Vector&    vector,
-                                            const size_type index)
-      : vector(vector), index(index)
+                                            const size_type index) :
+      vector(vector),
+      index(index)
     {}
 
     inline const VectorReference&

@@ -28,8 +28,11 @@ namespace Functions
   CutOffFunctionBase<dim>::CutOffFunctionBase(const double       r,
                                               const Point<dim>   p,
                                               const unsigned int n_components,
-                                              const unsigned int select)
-    : Function<dim>(n_components), center(p), radius(r), selected(select)
+                                              const unsigned int select) :
+    Function<dim>(n_components),
+    center(p),
+    radius(r),
+    selected(select)
   {}
 
   template <int dim>
@@ -53,8 +56,8 @@ namespace Functions
     const double       r,
     const Point<dim>   p,
     const unsigned int n_components,
-    const unsigned int select)
-    : CutOffFunctionBase<dim>(r, p, n_components, select)
+    const unsigned int select) :
+    CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
 
   template <int dim>
@@ -114,8 +117,8 @@ namespace Functions
   CutOffFunctionW1<dim>::CutOffFunctionW1(const double       r,
                                           const Point<dim>   p,
                                           const unsigned int n_components,
-                                          const unsigned int select)
-    : CutOffFunctionBase<dim>(r, p, n_components, select)
+                                          const unsigned int select) :
+    CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
 
   template <int dim>
@@ -180,8 +183,8 @@ namespace Functions
     const double       r,
     const Point<dim>   p,
     const unsigned int n_components,
-    const unsigned int select)
-    : CutOffFunctionBase<dim>(r, p, n_components, select)
+    const unsigned int select) :
+    CutOffFunctionBase<dim>(r, p, n_components, select)
   {}
 
   template <int dim>

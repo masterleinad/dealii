@@ -393,15 +393,17 @@ namespace CUDAWrappers
 
   template <typename Number>
   SolverDirect<Number>::AdditionalData::AdditionalData(
-    const std::string& solver_type)
-    : solver_type(solver_type)
+    const std::string& solver_type) :
+    solver_type(solver_type)
   {}
 
   template <typename Number>
   SolverDirect<Number>::SolverDirect(const Utilities::CUDA::Handle& handle,
                                      SolverControl&                 cn,
-                                     const AdditionalData&          data)
-    : cuda_handle(handle), solver_control(cn), additional_data(data.solver_type)
+                                     const AdditionalData&          data) :
+    cuda_handle(handle),
+    solver_control(cn),
+    additional_data(data.solver_type)
   {}
 
   template <typename Number>

@@ -269,8 +269,8 @@ class MGTransferPrebuiltMF
   : public MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>
 {
 public:
-  MGTransferPrebuiltMF(const MGLevelObject<MatrixType>& laplace)
-    : laplace_operator(laplace){};
+  MGTransferPrebuiltMF(const MGLevelObject<MatrixType>& laplace) :
+    laplace_operator(laplace){};
 
   /**
    * Overload copy_to_mg from MGTransferPrebuilt to get the vectors compatible

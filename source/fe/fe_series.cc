@@ -64,10 +64,10 @@ namespace FESeries
   template <int dim>
   Fourier<dim>::Fourier(const unsigned int           N,
                         const hp::FECollection<dim>& fe_collection,
-                        const hp::QCollection<dim>&  q_collection)
-    : fe_collection(&fe_collection),
-      q_collection(&q_collection),
-      fourier_transform_matrices(fe_collection.size())
+                        const hp::QCollection<dim>&  q_collection) :
+    fe_collection(&fe_collection),
+    q_collection(&q_collection),
+    fourier_transform_matrices(fe_collection.size())
   {
     set_k_vectors(k_vectors, N);
     unrolled_coefficients.resize(k_vectors.n_elements());
@@ -234,12 +234,12 @@ namespace FESeries
   template <int dim>
   Legendre<dim>::Legendre(const unsigned int           size_in_each_direction,
                           const hp::FECollection<dim>& fe_collection,
-                          const hp::QCollection<dim>&  q_collection)
-    : N(size_in_each_direction),
-      fe_collection(&fe_collection),
-      q_collection(&q_collection),
-      legendre_transform_matrices(fe_collection.size()),
-      unrolled_coefficients(Utilities::fixed_power<dim>(N), 0.)
+                          const hp::QCollection<dim>&  q_collection) :
+    N(size_in_each_direction),
+    fe_collection(&fe_collection),
+    q_collection(&q_collection),
+    legendre_transform_matrices(fe_collection.size()),
+    unrolled_coefficients(Utilities::fixed_power<dim>(N), 0.)
   {}
 
   template <int dim>

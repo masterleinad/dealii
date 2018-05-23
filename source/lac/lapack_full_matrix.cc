@@ -31,18 +31,25 @@ DEAL_II_NAMESPACE_OPEN
 using namespace LAPACKSupport;
 
 template <typename number>
-LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type n)
-  : TransposeTable<number>(n, n), state(matrix), property(general)
+LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type n) :
+  TransposeTable<number>(n, n),
+  state(matrix),
+  property(general)
 {}
 
 template <typename number>
-LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type m, const size_type n)
-  : TransposeTable<number>(m, n), state(matrix), property(general)
+LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type m,
+                                           const size_type n) :
+  TransposeTable<number>(m, n),
+  state(matrix),
+  property(general)
 {}
 
 template <typename number>
-LAPACKFullMatrix<number>::LAPACKFullMatrix(const LAPACKFullMatrix& M)
-  : TransposeTable<number>(M), state(matrix), property(general)
+LAPACKFullMatrix<number>::LAPACKFullMatrix(const LAPACKFullMatrix& M) :
+  TransposeTable<number>(M),
+  state(matrix),
+  property(general)
 {}
 
 template <typename number>

@@ -37,8 +37,9 @@ namespace PETScWrappers
     destroy_krylov_solver(ksp);
   }
 
-  SolverBase::SolverBase(SolverControl& cn, const MPI_Comm& mpi_communicator)
-    : solver_control(cn), mpi_communicator(mpi_communicator)
+  SolverBase::SolverBase(SolverControl& cn, const MPI_Comm& mpi_communicator) :
+    solver_control(cn),
+    mpi_communicator(mpi_communicator)
   {}
 
   void
@@ -227,14 +228,15 @@ namespace PETScWrappers
 
   /* ---------------------- SolverRichardson ------------------------ */
 
-  SolverRichardson::AdditionalData::AdditionalData(const double omega)
-    : omega(omega)
+  SolverRichardson::AdditionalData::AdditionalData(const double omega) :
+    omega(omega)
   {}
 
   SolverRichardson::SolverRichardson(SolverControl&        cn,
                                      const MPI_Comm&       mpi_communicator,
-                                     const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                                     const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -278,8 +280,9 @@ namespace PETScWrappers
 
   SolverChebychev::SolverChebychev(SolverControl&        cn,
                                    const MPI_Comm&       mpi_communicator,
-                                   const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                                   const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -299,8 +302,9 @@ namespace PETScWrappers
 
   SolverCG::SolverCG(SolverControl&        cn,
                      const MPI_Comm&       mpi_communicator,
-                     const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                     const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -320,8 +324,9 @@ namespace PETScWrappers
 
   SolverBiCG::SolverBiCG(SolverControl&        cn,
                          const MPI_Comm&       mpi_communicator,
-                         const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                         const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -341,15 +346,16 @@ namespace PETScWrappers
 
   SolverGMRES::AdditionalData::AdditionalData(
     const unsigned int restart_parameter,
-    const bool         right_preconditioning)
-    : restart_parameter(restart_parameter),
-      right_preconditioning(right_preconditioning)
+    const bool         right_preconditioning) :
+    restart_parameter(restart_parameter),
+    right_preconditioning(right_preconditioning)
   {}
 
   SolverGMRES::SolverGMRES(SolverControl&        cn,
                            const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                           const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -405,8 +411,9 @@ namespace PETScWrappers
 
   SolverBicgstab::SolverBicgstab(SolverControl&        cn,
                                  const MPI_Comm&       mpi_communicator,
-                                 const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                                 const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -426,8 +433,9 @@ namespace PETScWrappers
 
   SolverCGS::SolverCGS(SolverControl&        cn,
                        const MPI_Comm&       mpi_communicator,
-                       const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                       const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -447,8 +455,9 @@ namespace PETScWrappers
 
   SolverTFQMR::SolverTFQMR(SolverControl&        cn,
                            const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                           const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -468,8 +477,9 @@ namespace PETScWrappers
 
   SolverTCQMR::SolverTCQMR(SolverControl&        cn,
                            const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                           const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -489,8 +499,9 @@ namespace PETScWrappers
 
   SolverCR::SolverCR(SolverControl&        cn,
                      const MPI_Comm&       mpi_communicator,
-                     const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                     const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -510,8 +521,9 @@ namespace PETScWrappers
 
   SolverLSQR::SolverLSQR(SolverControl&        cn,
                          const MPI_Comm&       mpi_communicator,
-                         const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                         const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -531,8 +543,9 @@ namespace PETScWrappers
 
   SolverPreOnly::SolverPreOnly(SolverControl&        cn,
                                const MPI_Comm&       mpi_communicator,
-                               const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator), additional_data(data)
+                               const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data)
   {}
 
   void
@@ -569,10 +582,10 @@ namespace PETScWrappers
 
   SparseDirectMUMPS::SparseDirectMUMPS(SolverControl&        cn,
                                        const MPI_Comm&       mpi_communicator,
-                                       const AdditionalData& data)
-    : SolverBase(cn, mpi_communicator),
-      additional_data(data),
-      symmetric_mode(false)
+                                       const AdditionalData& data) :
+    SolverBase(cn, mpi_communicator),
+    additional_data(data),
+    symmetric_mode(false)
   {}
 
   void

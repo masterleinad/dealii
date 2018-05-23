@@ -122,8 +122,9 @@ namespace Step36
   // their values from the input file whose name is specified as an argument
   // to this function:
   template <int dim>
-  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file)
-    : fe(1), dof_handler(triangulation)
+  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file) :
+    fe(1),
+    dof_handler(triangulation)
   {
     //TODO investigate why the minimum number of refinement steps required to obtain the correct eigenvalue degeneracies is 6
     parameters.declare_entry(

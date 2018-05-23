@@ -33,20 +33,20 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, typename Number>
-MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree()
-  : fe_degree(0),
-    element_is_continuous(false),
-    n_components(0),
-    n_child_cell_dofs(0)
+MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree() :
+  fe_degree(0),
+  element_is_continuous(false),
+  n_components(0),
+  n_child_cell_dofs(0)
 {}
 
 template <int dim, typename Number>
 MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree(
-  const MGConstrainedDoFs& mg_c)
-  : fe_degree(0),
-    element_is_continuous(false),
-    n_components(0),
-    n_child_cell_dofs(0)
+  const MGConstrainedDoFs& mg_c) :
+  fe_degree(0),
+  element_is_continuous(false),
+  n_components(0),
+  n_child_cell_dofs(0)
 {
   this->mg_constrained_dofs = &mg_c;
 }
@@ -570,16 +570,16 @@ MGTransferMatrixFree<dim, Number>::memory_consumption() const
 
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
-  const MGConstrainedDoFs& mg_c)
-  : same_for_all(true)
+  const MGConstrainedDoFs& mg_c) :
+  same_for_all(true)
 {
   matrix_free_transfer_vector.emplace_back(mg_c);
 }
 
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
-  const std::vector<MGConstrainedDoFs>& mg_c)
-  : same_for_all(false)
+  const std::vector<MGConstrainedDoFs>& mg_c) :
+  same_for_all(false)
 {
   for(unsigned int i = 0; i < mg_c.size(); ++i)
     matrix_free_transfer_vector.emplace_back(mg_c[i]);

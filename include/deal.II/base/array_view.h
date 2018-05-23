@@ -258,21 +258,23 @@ private:
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(value_type*       starting_element,
-                                         const std::size_t n_elements)
-  : starting_element(starting_element), n_elements(n_elements)
+                                         const std::size_t n_elements) :
+  starting_element(starting_element),
+  n_elements(n_elements)
 {}
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
-  const ArrayView<typename std::remove_cv<value_type>::type>& view)
-  : starting_element(view.starting_element), n_elements(view.n_elements)
+  const ArrayView<typename std::remove_cv<value_type>::type>& view) :
+  starting_element(view.starting_element),
+  n_elements(view.n_elements)
 {}
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
-  const std::vector<typename std::remove_cv<value_type>::type>& vector)
-  : // use delegating constructor
-    ArrayView(vector.data(), vector.size())
+  const std::vector<typename std::remove_cv<value_type>::type>& vector) :
+  // use delegating constructor
+  ArrayView(vector.data(), vector.size())
 {
   // the following static_assert is not strictly necessary because,
   // if we got a const std::vector reference argument but ElementType
@@ -292,9 +294,9 @@ inline ArrayView<ElementType>::ArrayView(
 
 template <typename ElementType>
 inline ArrayView<ElementType>::ArrayView(
-  std::vector<typename std::remove_cv<value_type>::type>& vector)
-  : // use delegating constructor
-    ArrayView(vector.data(), vector.size())
+  std::vector<typename std::remove_cv<value_type>::type>& vector) :
+  // use delegating constructor
+  ArrayView(vector.data(), vector.size())
 {}
 
 template <typename ElementType>

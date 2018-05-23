@@ -91,8 +91,8 @@ public:
 
 template <class VectorType>
 SolverRelaxation<VectorType>::SolverRelaxation(SolverControl& cn,
-                                               const AdditionalData&)
-  : Solver<VectorType>(cn)
+                                               const AdditionalData&) :
+  Solver<VectorType>(cn)
 {}
 
 template <class VectorType>

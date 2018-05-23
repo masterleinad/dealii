@@ -60,18 +60,18 @@ namespace Assembly
     template <int dim>
     struct Data
     {
-      Data(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
-        : fe_values(fe,
-                    quadrature,
-                    update_values | update_gradients | update_quadrature_points
-                      | update_JxW_values)
+      Data(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature) :
+        fe_values(fe,
+                  quadrature,
+                  update_values | update_gradients | update_quadrature_points
+                    | update_JxW_values)
       {}
 
-      Data(const Data& data)
-        : fe_values(data.fe_values.get_mapping(),
-                    data.fe_values.get_fe(),
-                    data.fe_values.get_quadrature(),
-                    data.fe_values.get_update_flags())
+      Data(const Data& data) :
+        fe_values(data.fe_values.get_mapping(),
+                  data.fe_values.get_fe(),
+                  data.fe_values.get_quadrature(),
+                  data.fe_values.get_update_flags())
       {}
 
       FEValues<dim> fe_values;
@@ -82,8 +82,8 @@ namespace Assembly
   {
     struct Data
     {
-      Data(const bool assemble_reference)
-        : assemble_reference(assemble_reference)
+      Data(const bool assemble_reference) :
+        assemble_reference(assemble_reference)
       {}
       std::vector<types::global_dof_index> local_dof_indices;
       FullMatrix<double>                   local_matrix;
@@ -196,11 +196,11 @@ RightHandSide<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : triangulation(MPI_COMM_WORLD),
-    dof_handler(triangulation),
-    fe(1),
-    quadrature(fe.degree + 1)
+LaplaceProblem<dim>::LaplaceProblem() :
+  triangulation(MPI_COMM_WORLD),
+  dof_handler(triangulation),
+  fe(1),
+  quadrature(fe.degree + 1)
 {}
 
 template <int dim>

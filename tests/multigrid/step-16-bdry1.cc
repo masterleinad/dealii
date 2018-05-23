@@ -86,8 +86,8 @@ public:
 };
 
 template <int dim>
-LaplaceMatrix<dim>::LaplaceMatrix()
-  : MeshWorker::LocalIntegrator<dim>(true, false, false)
+LaplaceMatrix<dim>::LaplaceMatrix() :
+  MeshWorker::LocalIntegrator<dim>(true, false, false)
 {}
 
 template <int dim>
@@ -212,12 +212,12 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-  : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-    fe(degree),
-    mg_dof_handler(triangulation),
-    degree(degree),
-    matrix_integrator()
+LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+  triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+  fe(degree),
+  mg_dof_handler(triangulation),
+  degree(degree),
+  matrix_integrator()
 {}
 
 template <int dim>

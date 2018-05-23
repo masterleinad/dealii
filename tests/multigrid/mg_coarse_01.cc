@@ -177,15 +177,15 @@ namespace Step50
   }
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-    : triangulation(MPI_COMM_WORLD,
-                    Triangulation<dim>::limit_level_difference_at_vertices,
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
-      fe(degree),
-      mg_dof_handler(triangulation),
-      degree(degree),
-      K(3)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+    triangulation(
+      MPI_COMM_WORLD,
+      Triangulation<dim>::limit_level_difference_at_vertices,
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
+    fe(degree),
+    mg_dof_handler(triangulation),
+    degree(degree),
+    K(3)
   {}
 
   template <int dim>
@@ -419,9 +419,10 @@ namespace Step50
   class MGCoarseAMG : public MGCoarseGridBase<VECTOR>
   {
   public:
-    MGCoarseAMG(const LA::MPI::SparseMatrix&                   coarse_matrix,
-                const LA::MPI::PreconditionAMG::AdditionalData additional_data)
-      : count(0)
+    MGCoarseAMG(
+      const LA::MPI::SparseMatrix&                   coarse_matrix,
+      const LA::MPI::PreconditionAMG::AdditionalData additional_data) :
+      count(0)
     {
       precondition_amg.initialize(coarse_matrix, additional_data);
     }

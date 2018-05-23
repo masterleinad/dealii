@@ -30,20 +30,20 @@ namespace hp
 
   template <int dim, int spacedim>
   MappingCollection<dim, spacedim>::MappingCollection(
-    const MappingCollection<dim, spacedim>& mapping_collection)
-    : Subscriptor(),
-      // copy the array
-      // of shared
-      // pointers. nothing
-      // bad should
-      // happen -- they
-      // simply all point
-      // to the same
-      // objects, and the
-      // last one to die
-      // will delete the
-      // mappings
-      mappings(mapping_collection.mappings)
+    const MappingCollection<dim, spacedim>& mapping_collection) :
+    Subscriptor(),
+    // copy the array
+    // of shared
+    // pointers. nothing
+    // bad should
+    // happen -- they
+    // simply all point
+    // to the same
+    // objects, and the
+    // last one to die
+    // will delete the
+    // mappings
+    mappings(mapping_collection.mappings)
   {}
 
   template <int dim, int spacedim>

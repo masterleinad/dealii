@@ -122,8 +122,10 @@ private:
 };
 
 template <int dim>
-MinimizationProblem<dim>::MinimizationProblem(const unsigned int run_number)
-  : run_number(run_number), fe(FE_Q<dim>(1)), dof_handler(triangulation)
+MinimizationProblem<dim>::MinimizationProblem(const unsigned int run_number) :
+  run_number(run_number),
+  fe(FE_Q<dim>(1)),
+  dof_handler(triangulation)
 {}
 
 template <>

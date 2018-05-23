@@ -41,11 +41,11 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <typename Number>
-Vector<Number>::Vector(const Vector<Number>& v)
-  : Subscriptor(),
-    vec_size(v.size()),
-    max_vec_size(v.size()),
-    values(nullptr, &free)
+Vector<Number>::Vector(const Vector<Number>& v) :
+  Subscriptor(),
+  vec_size(v.size()),
+  max_vec_size(v.size()),
+  values(nullptr, &free)
 {
   if(vec_size != 0)
     {
@@ -55,12 +55,12 @@ Vector<Number>::Vector(const Vector<Number>& v)
 }
 
 template <typename Number>
-Vector<Number>::Vector(Vector<Number>&& v) noexcept
-  : Subscriptor(std::move(v)),
-    vec_size(v.vec_size),
-    max_vec_size(v.max_vec_size),
-    values(std::move(v.values)),
-    thread_loop_partitioner(std::move(v.thread_loop_partitioner))
+Vector<Number>::Vector(Vector<Number>&& v) noexcept :
+  Subscriptor(std::move(v)),
+  vec_size(v.vec_size),
+  max_vec_size(v.max_vec_size),
+  values(std::move(v.values)),
+  thread_loop_partitioner(std::move(v.thread_loop_partitioner))
 {
   v.vec_size     = 0;
   v.max_vec_size = 0;
@@ -69,11 +69,11 @@ Vector<Number>::Vector(Vector<Number>&& v) noexcept
 
 template <typename Number>
 template <typename OtherNumber>
-Vector<Number>::Vector(const Vector<OtherNumber>& v)
-  : Subscriptor(),
-    vec_size(v.size()),
-    max_vec_size(v.size()),
-    values(nullptr, &free)
+Vector<Number>::Vector(const Vector<OtherNumber>& v) :
+  Subscriptor(),
+  vec_size(v.size()),
+  max_vec_size(v.size()),
+  values(nullptr, &free)
 {
   if(vec_size != 0)
     {
@@ -127,8 +127,11 @@ namespace internal
 } // namespace internal
 
 template <typename Number>
-Vector<Number>::Vector(const PETScWrappers::VectorBase& v)
-  : Subscriptor(), vec_size(0), max_vec_size(0), values(nullptr, &free)
+Vector<Number>::Vector(const PETScWrappers::VectorBase& v) :
+  Subscriptor(),
+  vec_size(0),
+  max_vec_size(0),
+  values(nullptr, &free)
 {
   if(v.size() != 0)
     {
@@ -140,11 +143,11 @@ Vector<Number>::Vector(const PETScWrappers::VectorBase& v)
 #ifdef DEAL_II_WITH_TRILINOS
 
 template <typename Number>
-Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector& v)
-  : Subscriptor(),
-    vec_size(v.size()),
-    max_vec_size(v.size()),
-    values(nullptr, &free)
+Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector& v) :
+  Subscriptor(),
+  vec_size(v.size()),
+  max_vec_size(v.size()),
+  values(nullptr, &free)
 {
   if(vec_size != 0)
     {

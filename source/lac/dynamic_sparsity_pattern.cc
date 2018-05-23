@@ -212,12 +212,20 @@ DynamicSparsityPattern::Line::memory_consumption() const
   return entries.capacity() * sizeof(size_type) + sizeof(Line);
 }
 
-DynamicSparsityPattern::DynamicSparsityPattern()
-  : have_entries(false), rows(0), cols(0), rowset(0)
+DynamicSparsityPattern::DynamicSparsityPattern() :
+  have_entries(false),
+  rows(0),
+  cols(0),
+  rowset(0)
 {}
 
-DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
-  : Subscriptor(), have_entries(false), rows(0), cols(0), rowset(0)
+DynamicSparsityPattern::DynamicSparsityPattern(
+  const DynamicSparsityPattern& s) :
+  Subscriptor(),
+  have_entries(false),
+  rows(0),
+  cols(0),
+  rowset(0)
 {
   (void) s;
   Assert(s.rows == 0 && s.cols == 0,
@@ -229,20 +237,29 @@ DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
 
 DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
                                                const size_type n,
-                                               const IndexSet& rowset_)
-  : have_entries(false), rows(0), cols(0), rowset(0)
+                                               const IndexSet& rowset_) :
+  have_entries(false),
+  rows(0),
+  cols(0),
+  rowset(0)
 {
   reinit(m, n, rowset_);
 }
 
-DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet& rowset_)
-  : have_entries(false), rows(0), cols(0), rowset(0)
+DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet& rowset_) :
+  have_entries(false),
+  rows(0),
+  cols(0),
+  rowset(0)
 {
   reinit(rowset_.size(), rowset_.size(), rowset_);
 }
 
-DynamicSparsityPattern::DynamicSparsityPattern(const size_type n)
-  : have_entries(false), rows(0), cols(0), rowset(0)
+DynamicSparsityPattern::DynamicSparsityPattern(const size_type n) :
+  have_entries(false),
+  rows(0),
+  cols(0),
+  rowset(0)
 {
   reinit(n, n);
 }

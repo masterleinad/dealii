@@ -150,13 +150,16 @@ protected:
 template <class VectorType>
 SolverMinRes<VectorType>::SolverMinRes(SolverControl&            cn,
                                        VectorMemory<VectorType>& mem,
-                                       const AdditionalData&)
-  : Solver<VectorType>(cn, mem), res2(numbers::signaling_nan<double>())
+                                       const AdditionalData&) :
+  Solver<VectorType>(cn, mem),
+  res2(numbers::signaling_nan<double>())
 {}
 
 template <class VectorType>
-SolverMinRes<VectorType>::SolverMinRes(SolverControl& cn, const AdditionalData&)
-  : Solver<VectorType>(cn), res2(numbers::signaling_nan<double>())
+SolverMinRes<VectorType>::SolverMinRes(SolverControl& cn,
+                                       const AdditionalData&) :
+  Solver<VectorType>(cn),
+  res2(numbers::signaling_nan<double>())
 {}
 
 template <class VectorType>

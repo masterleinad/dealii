@@ -10157,10 +10157,10 @@ const unsigned int Triangulation<dim, spacedim>::dimension;
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::Triangulation(
   const MeshSmoothing smooth_grid,
-  const bool          check_for_distorted_cells)
-  : smooth_grid(smooth_grid),
-    anisotropic_refinement(false),
-    check_for_distorted_cells(check_for_distorted_cells)
+  const bool          check_for_distorted_cells) :
+  smooth_grid(smooth_grid),
+  anisotropic_refinement(false),
+  check_for_distorted_cells(check_for_distorted_cells)
 {
   if(dim == 1)
     {
@@ -10179,21 +10179,21 @@ Triangulation<dim, spacedim>::Triangulation(
 
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::Triangulation(
-  Triangulation<dim, spacedim>&& tria) noexcept
-  : Subscriptor(std::move(tria)),
-    smooth_grid(tria.smooth_grid),
-    periodic_face_pairs_level_0(std::move(tria.periodic_face_pairs_level_0)),
-    periodic_face_map(std::move(tria.periodic_face_map)),
-    levels(std::move(tria.levels)),
-    faces(std::move(tria.faces)),
-    vertices(std::move(tria.vertices)),
-    vertices_used(std::move(tria.vertices_used)),
-    manifold(std::move(tria.manifold)),
-    anisotropic_refinement(tria.anisotropic_refinement),
-    check_for_distorted_cells(tria.check_for_distorted_cells),
-    number_cache(std::move(tria.number_cache)),
-    vertex_to_boundary_id_map_1d(std::move(tria.vertex_to_boundary_id_map_1d)),
-    vertex_to_manifold_id_map_1d(std::move(tria.vertex_to_manifold_id_map_1d))
+  Triangulation<dim, spacedim>&& tria) noexcept :
+  Subscriptor(std::move(tria)),
+  smooth_grid(tria.smooth_grid),
+  periodic_face_pairs_level_0(std::move(tria.periodic_face_pairs_level_0)),
+  periodic_face_map(std::move(tria.periodic_face_map)),
+  levels(std::move(tria.levels)),
+  faces(std::move(tria.faces)),
+  vertices(std::move(tria.vertices)),
+  vertices_used(std::move(tria.vertices_used)),
+  manifold(std::move(tria.manifold)),
+  anisotropic_refinement(tria.anisotropic_refinement),
+  check_for_distorted_cells(tria.check_for_distorted_cells),
+  number_cache(std::move(tria.number_cache)),
+  vertex_to_boundary_id_map_1d(std::move(tria.vertex_to_boundary_id_map_1d)),
+  vertex_to_manifold_id_map_1d(std::move(tria.vertex_to_manifold_id_map_1d))
 {
   tria.number_cache = internal::TriangulationImplementation::NumberCache<dim>();
 }

@@ -51,9 +51,9 @@ namespace parallel
   namespace internal
   {
 #ifdef DEAL_II_WITH_THREADS
-    TBBPartitioner::TBBPartitioner()
-      : my_partitioner(std::make_shared<tbb::affinity_partitioner>()),
-        in_use(false)
+    TBBPartitioner::TBBPartitioner() :
+      my_partitioner(std::make_shared<tbb::affinity_partitioner>()),
+      in_use(false)
     {}
 
     TBBPartitioner::~TBBPartitioner()

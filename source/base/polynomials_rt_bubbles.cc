@@ -22,11 +22,11 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
-PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
-  : my_degree(k),
-    raviart_thomas_space(k - 1),
-    monomials(k + 2),
-    n_pols(compute_n_pols(k))
+PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k) :
+  my_degree(k),
+  raviart_thomas_space(k - 1),
+  monomials(k + 2),
+  n_pols(compute_n_pols(k))
 {
   Assert(dim >= 2, ExcImpossibleInDim(dim));
 

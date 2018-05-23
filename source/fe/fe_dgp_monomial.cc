@@ -122,19 +122,19 @@ namespace internal
 } // namespace internal
 
 template <int dim>
-FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)
-  : FE_Poly<PolynomialsP<dim>, dim>(
-      PolynomialsP<dim>(degree),
-      FiniteElementData<dim>(get_dpo_vector(degree),
-                             1,
-                             degree,
-                             FiniteElementData<dim>::L2),
-      std::vector<bool>(
-        FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
-        true),
-      std::vector<ComponentMask>(
-        FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
-        std::vector<bool>(1, true)))
+FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree) :
+  FE_Poly<PolynomialsP<dim>, dim>(
+    PolynomialsP<dim>(degree),
+    FiniteElementData<dim>(get_dpo_vector(degree),
+                           1,
+                           degree,
+                           FiniteElementData<dim>::L2),
+    std::vector<bool>(
+      FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
+      true),
+    std::vector<ComponentMask>(
+      FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
+      std::vector<bool>(1, true)))
 {
   Assert(this->poly_space.n() == this->dofs_per_cell, ExcInternalError());
   Assert(this->poly_space.degree() == this->degree, ExcInternalError());

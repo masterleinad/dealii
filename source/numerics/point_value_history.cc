@@ -52,8 +52,8 @@ namespace internal
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
-  const unsigned int n_independent_variables)
-  : n_indep(n_independent_variables)
+  const unsigned int n_independent_variables) :
+  n_indep(n_independent_variables)
 {
   closed                = false;
   cleared               = false;
@@ -72,8 +72,9 @@ PointValueHistory<dim>::PointValueHistory(
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
   const DoFHandler<dim>& dof_handler,
-  const unsigned int     n_independent_variables)
-  : dof_handler(&dof_handler), n_indep(n_independent_variables)
+  const unsigned int     n_independent_variables) :
+  dof_handler(&dof_handler),
+  n_indep(n_independent_variables)
 {
   closed                = false;
   cleared               = false;

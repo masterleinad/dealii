@@ -328,8 +328,8 @@ namespace TrilinosWrappers
       reinit(num_blocks);
     }
 
-    inline BlockVector::BlockVector(const BlockVector& v)
-      : dealii::BlockVectorBase<MPI::Vector>()
+    inline BlockVector::BlockVector(const BlockVector& v) :
+      dealii::BlockVectorBase<MPI::Vector>()
     {
       this->components.resize(v.n_blocks());
       this->block_indices = v.block_indices;

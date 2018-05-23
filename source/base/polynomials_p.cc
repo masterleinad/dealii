@@ -18,10 +18,10 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
-PolynomialsP<dim>::PolynomialsP(const unsigned int p)
-  : PolynomialSpace<dim>(
-      Polynomials::Monomial<double>::generate_complete_basis(p)),
-    p(p)
+PolynomialsP<dim>::PolynomialsP(const unsigned int p) :
+  PolynomialSpace<dim>(
+    Polynomials::Monomial<double>::generate_complete_basis(p)),
+  p(p)
 {
   std::vector<unsigned int> index_map(this->n());
   create_polynomial_ordering(index_map);

@@ -54,16 +54,16 @@ namespace internal
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
                         finite_elements,
-      const UpdateFlags update_flags)
-      : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
-          n_datasets,
-          n_subdivisions,
-          n_postprocessor_outputs,
-          mapping,
-          finite_elements,
-          update_flags,
-          false),
-        n_patches_per_circle(n_patches_per_circle)
+      const UpdateFlags update_flags) :
+      internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
+        n_datasets,
+        n_subdivisions,
+        n_postprocessor_outputs,
+        mapping,
+        finite_elements,
+        update_flags,
+        false),
+      n_patches_per_circle(n_patches_per_circle)
     {}
 
     /**

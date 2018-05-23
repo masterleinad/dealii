@@ -70,8 +70,9 @@ namespace Step48
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
     const MatrixFree<dim, double>& data_in,
-    const double                   time_step)
-    : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
+    const double                   time_step) :
+    data(data_in),
+    delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
     VectorizedArray<double> one = make_vectorized_array(1.);
 
@@ -167,8 +168,8 @@ namespace Step48
   class ExactSolution : public Function<dim>
   {
   public:
-    ExactSolution(const unsigned int n_components = 1, const double time = 0.)
-      : Function<dim>(n_components, time)
+    ExactSolution(const unsigned int n_components = 1, const double time = 0.) :
+      Function<dim>(n_components, time)
     {}
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const;
@@ -216,14 +217,14 @@ namespace Step48
   };
 
   template <int dim>
-  SineGordonProblem<dim>::SineGordonProblem()
-    : fe(QGaussLobatto<1>(fe_degree + 1)),
-      dof_handler(triangulation),
-      n_global_refinements(2),
-      time(-10),
-      final_time(-9.75),
-      cfl_number(.1 / fe_degree),
-      output_timestep_skip(1)
+  SineGordonProblem<dim>::SineGordonProblem() :
+    fe(QGaussLobatto<1>(fe_degree + 1)),
+    dof_handler(triangulation),
+    n_global_refinements(2),
+    time(-10),
+    final_time(-9.75),
+    cfl_number(.1 / fe_degree),
+    output_timestep_skip(1)
   {}
 
   template <int dim>

@@ -38,19 +38,23 @@ namespace TrilinosWrappers
 {
   SolverBase::AdditionalData::AdditionalData(
     const bool         output_solver_details,
-    const unsigned int gmres_restart_parameter)
-    : output_solver_details(output_solver_details),
-      gmres_restart_parameter(gmres_restart_parameter)
+    const unsigned int gmres_restart_parameter) :
+    output_solver_details(output_solver_details),
+    gmres_restart_parameter(gmres_restart_parameter)
   {}
 
-  SolverBase::SolverBase(SolverControl& cn, const AdditionalData& data)
-    : solver_name(gmres), solver_control(cn), additional_data(data)
+  SolverBase::SolverBase(SolverControl& cn, const AdditionalData& data) :
+    solver_name(gmres),
+    solver_control(cn),
+    additional_data(data)
   {}
 
   SolverBase::SolverBase(const SolverBase::SolverName solver_name,
                          SolverControl&               cn,
-                         const AdditionalData&        data)
-    : solver_name(solver_name), solver_control(cn), additional_data(data)
+                         const AdditionalData&        data) :
+    solver_name(solver_name),
+    solver_control(cn),
+    additional_data(data)
   {}
 
   SolverControl&
@@ -330,9 +334,9 @@ namespace TrilinosWrappers
         const int&                  max_steps,
         const double&               tolerance,
         const double&               reduction,
-        const Epetra_LinearProblem& linear_problem)
-        : initial_residual(std::numeric_limits<double>::max()),
-          current_residual(std::numeric_limits<double>::max())
+        const Epetra_LinearProblem& linear_problem) :
+        initial_residual(std::numeric_limits<double>::max()),
+        current_residual(std::numeric_limits<double>::max())
       {
         // Consider linear problem converged if any of the collection
         // of criterion are met
@@ -554,12 +558,13 @@ namespace TrilinosWrappers
 
   /* ---------------------- SolverCG ------------------------ */
 
-  SolverCG::AdditionalData::AdditionalData(const bool output_solver_details)
-    : SolverBase::AdditionalData(output_solver_details)
+  SolverCG::AdditionalData::AdditionalData(const bool output_solver_details) :
+    SolverBase::AdditionalData(output_solver_details)
   {}
 
-  SolverCG::SolverCG(SolverControl& cn, const AdditionalData& data)
-    : SolverBase(cn, data), additional_data(data)
+  SolverCG::SolverCG(SolverControl& cn, const AdditionalData& data) :
+    SolverBase(cn, data),
+    additional_data(data)
   {
     solver_name = cg;
   }
@@ -568,12 +573,13 @@ namespace TrilinosWrappers
 
   SolverGMRES::AdditionalData::AdditionalData(
     const bool         output_solver_details,
-    const unsigned int restart_parameter)
-    : SolverBase::AdditionalData(output_solver_details, restart_parameter)
+    const unsigned int restart_parameter) :
+    SolverBase::AdditionalData(output_solver_details, restart_parameter)
   {}
 
-  SolverGMRES::SolverGMRES(SolverControl& cn, const AdditionalData& data)
-    : SolverBase(cn, data), additional_data(data)
+  SolverGMRES::SolverGMRES(SolverControl& cn, const AdditionalData& data) :
+    SolverBase(cn, data),
+    additional_data(data)
   {
     solver_name = gmres;
   }
@@ -581,36 +587,41 @@ namespace TrilinosWrappers
   /* ---------------------- SolverBicgstab ------------------------ */
 
   SolverBicgstab::AdditionalData::AdditionalData(
-    const bool output_solver_details)
-    : SolverBase::AdditionalData(output_solver_details)
+    const bool output_solver_details) :
+    SolverBase::AdditionalData(output_solver_details)
   {}
 
-  SolverBicgstab::SolverBicgstab(SolverControl& cn, const AdditionalData& data)
-    : SolverBase(cn, data), additional_data(data)
+  SolverBicgstab::SolverBicgstab(SolverControl&        cn,
+                                 const AdditionalData& data) :
+    SolverBase(cn, data),
+    additional_data(data)
   {
     solver_name = bicgstab;
   }
 
   /* ---------------------- SolverCGS ------------------------ */
 
-  SolverCGS::AdditionalData::AdditionalData(const bool output_solver_details)
-    : SolverBase::AdditionalData(output_solver_details)
+  SolverCGS::AdditionalData::AdditionalData(const bool output_solver_details) :
+    SolverBase::AdditionalData(output_solver_details)
   {}
 
-  SolverCGS::SolverCGS(SolverControl& cn, const AdditionalData& data)
-    : SolverBase(cn, data), additional_data(data)
+  SolverCGS::SolverCGS(SolverControl& cn, const AdditionalData& data) :
+    SolverBase(cn, data),
+    additional_data(data)
   {
     solver_name = cgs;
   }
 
   /* ---------------------- SolverTFQMR ------------------------ */
 
-  SolverTFQMR::AdditionalData::AdditionalData(const bool output_solver_details)
-    : SolverBase::AdditionalData(output_solver_details)
+  SolverTFQMR::AdditionalData::AdditionalData(
+    const bool output_solver_details) :
+    SolverBase::AdditionalData(output_solver_details)
   {}
 
-  SolverTFQMR::SolverTFQMR(SolverControl& cn, const AdditionalData& data)
-    : SolverBase(cn, data), additional_data(data)
+  SolverTFQMR::SolverTFQMR(SolverControl& cn, const AdditionalData& data) :
+    SolverBase(cn, data),
+    additional_data(data)
   {
     solver_name = tfqmr;
   }
@@ -618,13 +629,14 @@ namespace TrilinosWrappers
   /* ---------------------- SolverDirect ------------------------ */
 
   SolverDirect::AdditionalData::AdditionalData(const bool output_solver_details,
-                                               const std::string& solver_type)
-    : output_solver_details(output_solver_details), solver_type(solver_type)
+                                               const std::string& solver_type) :
+    output_solver_details(output_solver_details),
+    solver_type(solver_type)
   {}
 
-  SolverDirect::SolverDirect(SolverControl& cn, const AdditionalData& data)
-    : solver_control(cn),
-      additional_data(data.output_solver_details, data.solver_type)
+  SolverDirect::SolverDirect(SolverControl& cn, const AdditionalData& data) :
+    solver_control(cn),
+    additional_data(data.output_solver_details, data.solver_type)
   {}
 
   SolverControl&

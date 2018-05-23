@@ -44,21 +44,23 @@ namespace Polynomials
   // -------------------- class Polynomial ---------------- //
 
   template <typename number>
-  Polynomial<number>::Polynomial(const std::vector<number>& a)
-    : coefficients(a), in_lagrange_product_form(false), lagrange_weight(1.)
+  Polynomial<number>::Polynomial(const std::vector<number>& a) :
+    coefficients(a),
+    in_lagrange_product_form(false),
+    lagrange_weight(1.)
   {}
 
   template <typename number>
-  Polynomial<number>::Polynomial(const unsigned int n)
-    : coefficients(n + 1, 0.),
-      in_lagrange_product_form(false),
-      lagrange_weight(1.)
+  Polynomial<number>::Polynomial(const unsigned int n) :
+    coefficients(n + 1, 0.),
+    in_lagrange_product_form(false),
+    lagrange_weight(1.)
   {}
 
   template <typename number>
   Polynomial<number>::Polynomial(const std::vector<Point<1>>& supp,
-                                 const unsigned int           center)
-    : in_lagrange_product_form(true)
+                                 const unsigned int           center) :
+    in_lagrange_product_form(true)
   {
     Assert(supp.size() > 0, ExcEmptyObject());
     AssertIndexRange(center, supp.size());
@@ -628,8 +630,8 @@ namespace Polynomials
   }
 
   template <typename number>
-  Monomial<number>::Monomial(unsigned int n, double coefficient)
-    : Polynomial<number>(make_vector(n, coefficient))
+  Monomial<number>::Monomial(unsigned int n, double coefficient) :
+    Polynomial<number>(make_vector(n, coefficient))
   {}
 
   template <typename number>
@@ -662,10 +664,10 @@ namespace Polynomials
   }   // namespace internal
 
   LagrangeEquidistant::LagrangeEquidistant(const unsigned int n,
-                                           const unsigned int support_point)
-    : Polynomial<double>(internal::LagrangeEquidistantImplementation::
-                           generate_equidistant_unit_points(n),
-                         support_point)
+                                           const unsigned int support_point) :
+    Polynomial<double>(internal::LagrangeEquidistantImplementation::
+                         generate_equidistant_unit_points(n),
+                       support_point)
   {
     Assert(coefficients.size() == 0, ExcInternalError());
 
@@ -807,8 +809,8 @@ namespace Polynomials
 
   // ------------------ class Lobatto -------------------- //
 
-  Lobatto::Lobatto(const unsigned int p)
-    : Polynomial<double>(compute_coefficients(p))
+  Lobatto::Lobatto(const unsigned int p) :
+    Polynomial<double>(compute_coefficients(p))
   {}
 
   std::vector<double>
@@ -915,8 +917,8 @@ namespace Polynomials
   std::vector<std::unique_ptr<const std::vector<double>>>
     Hierarchical::recursive_coefficients(20);
 
-  Hierarchical::Hierarchical(const unsigned int k)
-    : Polynomial<double>(get_coefficients(k))
+  Hierarchical::Hierarchical(const unsigned int k) :
+    Polynomial<double>(get_coefficients(k))
   {}
 
   void
@@ -1097,8 +1099,8 @@ namespace Polynomials
 
   // ------------------ HermiteInterpolation --------------- //
 
-  HermiteInterpolation::HermiteInterpolation(const unsigned int p)
-    : Polynomial<double>(0)
+  HermiteInterpolation::HermiteInterpolation(const unsigned int p) :
+    Polynomial<double>(0)
   {
     this->coefficients.clear();
     this->in_lagrange_product_form = true;
@@ -1211,8 +1213,8 @@ namespace Polynomials
   } // namespace
 
   HermiteLikeInterpolation::HermiteLikeInterpolation(const unsigned int degree,
-                                                     const unsigned int index)
-    : Polynomial<double>(0)
+                                                     const unsigned int index) :
+    Polynomial<double>(0)
   {
     AssertIndexRange(index, degree + 1);
 

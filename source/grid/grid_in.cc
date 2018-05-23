@@ -89,8 +89,9 @@ namespace
 } // namespace
 
 template <int dim, int spacedim>
-GridIn<dim, spacedim>::GridIn()
-  : tria(nullptr, typeid(*this).name()), default_format(ucd)
+GridIn<dim, spacedim>::GridIn() :
+  tria(nullptr, typeid(*this).name()),
+  default_format(ucd)
 {}
 
 template <int dim, int spacedim>
@@ -3091,9 +3092,9 @@ GridIn<dim, spacedim>::get_format_names()
 namespace
 {
   template <int dim>
-  Abaqus_to_UCD<dim>::Abaqus_to_UCD()
-    : tolerance(
-        5e-16) // Used to offset Cubit tolerance error when outputting value close to zero
+  Abaqus_to_UCD<dim>::Abaqus_to_UCD() :
+    tolerance(
+      5e-16) // Used to offset Cubit tolerance error when outputting value close to zero
   {
     AssertThrow(dim == 2 || dim == 3, ExcNotImplemented());
   }

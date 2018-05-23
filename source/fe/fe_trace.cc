@@ -31,17 +31,17 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
-FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree)
-  : FE_PolyFace<TensorProductPolynomials<dim - 1>, dim, spacedim>(
-      TensorProductPolynomials<dim - 1>(
-        Polynomials::generate_complete_Lagrange_basis(
-          QGaussLobatto<1>(degree + 1).get_points())),
-      FiniteElementData<dim>(get_dpo_vector(degree),
-                             1,
-                             degree,
-                             FiniteElementData<dim>::L2),
-      std::vector<bool>(1, true)),
-    fe_q(degree)
+FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree) :
+  FE_PolyFace<TensorProductPolynomials<dim - 1>, dim, spacedim>(
+    TensorProductPolynomials<dim - 1>(
+      Polynomials::generate_complete_Lagrange_basis(
+        QGaussLobatto<1>(degree + 1).get_points())),
+    FiniteElementData<dim>(get_dpo_vector(degree),
+                           1,
+                           degree,
+                           FiniteElementData<dim>::L2),
+    std::vector<bool>(1, true)),
+  fe_q(degree)
 {
   Assert(degree > 0,
          ExcMessage("FE_Trace can only be used for polynomial degrees "
@@ -236,8 +236,8 @@ FE_TraceQ<dim, spacedim>::get_subface_interpolation_matrix(
 }
 
 template <int spacedim>
-FE_TraceQ<1, spacedim>::FE_TraceQ(const unsigned int degree)
-  : FE_FaceQ<1, spacedim>(degree)
+FE_TraceQ<1, spacedim>::FE_TraceQ(const unsigned int degree) :
+  FE_FaceQ<1, spacedim>(degree)
 {}
 
 template <int spacedim>

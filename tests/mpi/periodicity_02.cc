@@ -198,11 +198,11 @@ namespace Step22
     const Matrix&         m,
     const Preconditioner& preconditioner,
     const IndexSet&       locally_owned,
-    const MPI_Comm&       mpi_communicator)
-    : matrix(&m),
-      preconditioner(&preconditioner),
-      mpi_communicator(&mpi_communicator),
-      tmp(locally_owned, mpi_communicator)
+    const MPI_Comm&       mpi_communicator) :
+    matrix(&m),
+    preconditioner(&preconditioner),
+    mpi_communicator(&mpi_communicator),
+    tmp(locally_owned, mpi_communicator)
   {}
 
   template <class Matrix, class Preconditioner>
@@ -251,11 +251,11 @@ namespace Step22
                     A_inverse,
     const IndexSet& owned_vel,
     const IndexSet& relevant_vel,
-    const MPI_Comm& mpi_communicator)
-    : system_matrix(&system_matrix),
-      A_inverse(&A_inverse),
-      tmp1(owned_vel, mpi_communicator),
-      tmp2(tmp1)
+    const MPI_Comm& mpi_communicator) :
+    system_matrix(&system_matrix),
+    A_inverse(&A_inverse),
+    tmp1(owned_vel, mpi_communicator),
+    tmp2(tmp1)
   {}
 
   template <class Preconditioner>

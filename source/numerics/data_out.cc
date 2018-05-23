@@ -44,15 +44,15 @@ namespace internal
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
                                                     finite_elements,
       const UpdateFlags                             update_flags,
-      const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map)
-      : ParallelDataBase<dim, spacedim>(n_datasets,
-                                        n_subdivisions,
-                                        n_postprocessor_outputs,
-                                        mapping,
-                                        finite_elements,
-                                        update_flags,
-                                        false),
-        cell_to_patch_index_map(&cell_to_patch_index_map)
+      const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map) :
+      ParallelDataBase<dim, spacedim>(n_datasets,
+                                      n_subdivisions,
+                                      n_postprocessor_outputs,
+                                      mapping,
+                                      finite_elements,
+                                      update_flags,
+                                      false),
+      cell_to_patch_index_map(&cell_to_patch_index_map)
     {}
   } // namespace DataOutImplementation
 } // namespace internal

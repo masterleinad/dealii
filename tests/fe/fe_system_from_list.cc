@@ -97,8 +97,8 @@ MySimulator<dim>::create_fe_multiplicities()
 
 template <int dim>
 MySimulator<dim>::VectorElementDestroyer::VectorElementDestroyer(
-  const std::vector<const FiniteElement<dim>*>& pointers)
-  : data(pointers)
+  const std::vector<const FiniteElement<dim>*>& pointers) :
+  data(pointers)
 {}
 
 template <int dim>
@@ -119,9 +119,9 @@ MySimulator<dim>::VectorElementDestroyer::get_data() const
 }
 
 template <int dim>
-MySimulator<dim>::MySimulator(const unsigned int polynomial_degree)
-  : fe(VectorElementDestroyer(create_fe_list(polynomial_degree)).get_data(),
-       create_fe_multiplicities())
+MySimulator<dim>::MySimulator(const unsigned int polynomial_degree) :
+  fe(VectorElementDestroyer(create_fe_list(polynomial_degree)).get_data(),
+     create_fe_multiplicities())
 {}
 
 int

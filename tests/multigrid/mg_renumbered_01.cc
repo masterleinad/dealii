@@ -189,12 +189,12 @@ private:
 };
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem(const unsigned int deg)
-  : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-    fe(FE_Q<dim>(deg), 2, FE_Q<dim>(deg), 2),
-    mg_dof_handler(triangulation),
-    mg_dof_handler_renumbered(triangulation),
-    degree(deg)
+LaplaceProblem<dim>::LaplaceProblem(const unsigned int deg) :
+  triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+  fe(FE_Q<dim>(deg), 2, FE_Q<dim>(deg), 2),
+  mg_dof_handler(triangulation),
+  mg_dof_handler_renumbered(triangulation),
+  degree(deg)
 {}
 
 template <int dim>

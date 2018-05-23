@@ -145,16 +145,16 @@ namespace SUNDIALS
   } // namespace
 
   template <typename VectorType>
-  IDA<VectorType>::IDA(const AdditionalData& data, const MPI_Comm mpi_comm)
-    : data(data),
-      ida_mem(nullptr),
-      yy(nullptr),
-      yp(nullptr),
-      abs_tolls(nullptr),
-      diff_id(nullptr),
-      communicator(is_serial_vector<VectorType>::value ?
-                     MPI_COMM_SELF :
-                     Utilities::MPI::duplicate_communicator(mpi_comm))
+  IDA<VectorType>::IDA(const AdditionalData& data, const MPI_Comm mpi_comm) :
+    data(data),
+    ida_mem(nullptr),
+    yy(nullptr),
+    yp(nullptr),
+    abs_tolls(nullptr),
+    diff_id(nullptr),
+    communicator(is_serial_vector<VectorType>::value ?
+                   MPI_COMM_SELF :
+                   Utilities::MPI::duplicate_communicator(mpi_comm))
   {
     set_functions_to_trigger_an_assert();
   }

@@ -2267,12 +2267,13 @@ GeometryInfo<3>::d_linear_shape_function_gradient(const Point<3>&    xi,
 
 /* -------------- inline functions ------------- */
 
-inline GeometryPrimitive::GeometryPrimitive(const Object object)
-  : object(object)
+inline GeometryPrimitive::GeometryPrimitive(const Object object) :
+  object(object)
 {}
 
-inline GeometryPrimitive::GeometryPrimitive(const unsigned int object_dimension)
-  : object(static_cast<Object>(object_dimension))
+inline GeometryPrimitive::GeometryPrimitive(
+  const unsigned int object_dimension) :
+  object(static_cast<Object>(object_dimension))
 {}
 
 inline GeometryPrimitive::operator unsigned int() const
@@ -2284,8 +2285,9 @@ namespace internal
 {
   template <int dim>
   inline SubfaceCase<dim>::SubfaceCase(
-    const typename SubfacePossibilities<dim>::Possibilities subface_possibility)
-    : value(subface_possibility)
+    const typename SubfacePossibilities<dim>::Possibilities
+      subface_possibility) :
+    value(subface_possibility)
   {}
 
   template <int dim>
@@ -2338,14 +2340,14 @@ RefinementCase<3>::cut_axis(const unsigned int i)
 }
 
 template <int dim>
-inline RefinementCase<dim>::RefinementCase()
-  : value(RefinementPossibilities<dim>::no_refinement)
+inline RefinementCase<dim>::RefinementCase() :
+  value(RefinementPossibilities<dim>::no_refinement)
 {}
 
 template <int dim>
 inline RefinementCase<dim>::RefinementCase(
-  const typename RefinementPossibilities<dim>::Possibilities refinement_case)
-  : value(refinement_case)
+  const typename RefinementPossibilities<dim>::Possibilities refinement_case) :
+  value(refinement_case)
 {
   // check that only those bits of
   // the given argument are set that
@@ -2357,8 +2359,8 @@ inline RefinementCase<dim>::RefinementCase(
 }
 
 template <int dim>
-inline RefinementCase<dim>::RefinementCase(const std::uint8_t refinement_case)
-  : value(refinement_case)
+inline RefinementCase<dim>::RefinementCase(const std::uint8_t refinement_case) :
+  value(refinement_case)
 {
   // check that only those bits of
   // the given argument are set that

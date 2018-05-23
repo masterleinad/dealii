@@ -44,12 +44,12 @@ SparseDirectUMFPACK::initialize(const SparsityPattern&)
 
 #ifdef DEAL_II_WITH_UMFPACK
 
-SparseDirectUMFPACK::SparseDirectUMFPACK()
-  : _m(0),
-    _n(0),
-    symbolic_decomposition(nullptr),
-    numeric_decomposition(nullptr),
-    control(UMFPACK_CONTROL)
+SparseDirectUMFPACK::SparseDirectUMFPACK() :
+  _m(0),
+  _n(0),
+  symbolic_decomposition(nullptr),
+  numeric_decomposition(nullptr),
+  control(UMFPACK_CONTROL)
 {
   umfpack_dl_defaults(control.data());
 }
@@ -342,12 +342,12 @@ SparseDirectUMFPACK::solve(const Matrix&        matrix,
 
 #else
 
-SparseDirectUMFPACK::SparseDirectUMFPACK()
-  : _m(0),
-    _n(0),
-    symbolic_decomposition(0),
-    numeric_decomposition(0),
-    control(0)
+SparseDirectUMFPACK::SparseDirectUMFPACK() :
+  _m(0),
+  _n(0),
+  symbolic_decomposition(0),
+  numeric_decomposition(0),
+  control(0)
 {}
 
 void

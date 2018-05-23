@@ -417,10 +417,10 @@ class MGTransferMF
 {
 public:
   MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
-               const MGConstrainedDoFs&              mg_constrained_dofs)
-    : MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>(
-        mg_constrained_dofs),
-      laplace_operator(laplace)
+               const MGConstrainedDoFs&              mg_constrained_dofs) :
+    MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>(
+      mg_constrained_dofs),
+    laplace_operator(laplace)
   {}
 
   /**
