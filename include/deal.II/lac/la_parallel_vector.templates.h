@@ -185,20 +185,20 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    Vector<Number>::Vector()
-      : partitioner(new Utilities::MPI::Partitioner()),
-        allocated_size(0),
-        values(nullptr, &free)
+    Vector<Number>::Vector() :
+      partitioner(new Utilities::MPI::Partitioner()),
+      allocated_size(0),
+      values(nullptr, &free)
     {
       reinit(0);
     }
 
     template <typename Number>
-    Vector<Number>::Vector(const Vector<Number>& v)
-      : Subscriptor(),
-        allocated_size(0),
-        values(nullptr, &free),
-        vector_is_ghosted(false)
+    Vector<Number>::Vector(const Vector<Number>& v) :
+      Subscriptor(),
+      allocated_size(0),
+      values(nullptr, &free),
+      vector_is_ghosted(false)
     {
       reinit(v, true);
 
@@ -217,31 +217,39 @@ namespace LinearAlgebra
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
                            const IndexSet& ghost_indices,
-                           const MPI_Comm  communicator)
-      : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
+                           const MPI_Comm  communicator) :
+      allocated_size(0),
+      values(nullptr, &free),
+      vector_is_ghosted(false)
     {
       reinit(local_range, ghost_indices, communicator);
     }
 
     template <typename Number>
     Vector<Number>::Vector(const IndexSet& local_range,
-                           const MPI_Comm  communicator)
-      : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
+                           const MPI_Comm  communicator) :
+      allocated_size(0),
+      values(nullptr, &free),
+      vector_is_ghosted(false)
     {
       reinit(local_range, communicator);
     }
 
     template <typename Number>
-    Vector<Number>::Vector(const size_type size)
-      : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
+    Vector<Number>::Vector(const size_type size) :
+      allocated_size(0),
+      values(nullptr, &free),
+      vector_is_ghosted(false)
     {
       reinit(size, false);
     }
 
     template <typename Number>
     Vector<Number>::Vector(
-      const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner)
-      : allocated_size(0), values(nullptr, &free), vector_is_ghosted(false)
+      const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner) :
+      allocated_size(0),
+      values(nullptr, &free),
+      vector_is_ghosted(false)
     {
       reinit(partitioner);
     }

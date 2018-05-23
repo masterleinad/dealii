@@ -112,8 +112,9 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : fe(FE_Q<dim>(1)), dof_handler(triangulation)
+LaplaceProblem<dim>::LaplaceProblem() :
+  fe(FE_Q<dim>(1)),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

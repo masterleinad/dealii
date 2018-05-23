@@ -149,8 +149,9 @@ RightHandSide<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : dof_handler(triangulation), max_degree(5)
+LaplaceProblem<dim>::LaplaceProblem() :
+  dof_handler(triangulation),
+  max_degree(5)
 {
   if(dim == 2)
     for(unsigned int degree = 2; degree <= max_degree; ++degree)

@@ -33,17 +33,18 @@ namespace TrilinosWrappers
 {
   PreconditionBase::PreconditionBase()
 #  ifdef DEAL_II_WITH_MPI
-    : communicator(MPI_COMM_SELF)
+    :
+    communicator(MPI_COMM_SELF)
 #  endif
   {}
 
-  PreconditionBase::PreconditionBase(const PreconditionBase& base)
-    : Subscriptor(),
-      preconditioner(base.preconditioner),
+  PreconditionBase::PreconditionBase(const PreconditionBase& base) :
+    Subscriptor(),
+    preconditioner(base.preconditioner),
 #  ifdef DEAL_II_WITH_MPI
-      communicator(base.communicator),
+    communicator(base.communicator),
 #  endif
-      vector_distributor(new Epetra_Map(*base.vector_distributor))
+    vector_distributor(new Epetra_Map(*base.vector_distributor))
   {}
 
   void
@@ -91,8 +92,10 @@ namespace TrilinosWrappers
   PreconditionJacobi::AdditionalData::AdditionalData(
     const double       omega,
     const double       min_diagonal,
-    const unsigned int n_sweeps)
-    : omega(omega), min_diagonal(min_diagonal), n_sweeps(n_sweeps)
+    const unsigned int n_sweeps) :
+    omega(omega),
+    min_diagonal(min_diagonal),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -134,14 +137,15 @@ namespace TrilinosWrappers
 
   /* -------------------------- PreconditionSSOR -------------------------- */
 
-  PreconditionSSOR::AdditionalData::AdditionalData(const double omega,
-                                                   const double min_diagonal,
-                                                   const unsigned int overlap,
-                                                   const unsigned int n_sweeps)
-    : omega(omega),
-      min_diagonal(min_diagonal),
-      overlap(overlap),
-      n_sweeps(n_sweeps)
+  PreconditionSSOR::AdditionalData::AdditionalData(
+    const double       omega,
+    const double       min_diagonal,
+    const unsigned int overlap,
+    const unsigned int n_sweeps) :
+    omega(omega),
+    min_diagonal(min_diagonal),
+    overlap(overlap),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -186,11 +190,11 @@ namespace TrilinosWrappers
   PreconditionSOR::AdditionalData::AdditionalData(const double omega,
                                                   const double min_diagonal,
                                                   const unsigned int overlap,
-                                                  const unsigned int n_sweeps)
-    : omega(omega),
-      min_diagonal(min_diagonal),
-      overlap(overlap),
-      n_sweeps(n_sweeps)
+                                                  const unsigned int n_sweeps) :
+    omega(omega),
+    min_diagonal(min_diagonal),
+    overlap(overlap),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -237,12 +241,12 @@ namespace TrilinosWrappers
     const std::string& block_creation_type,
     const double       omega,
     const double       min_diagonal,
-    const unsigned int n_sweeps)
-    : block_size(block_size),
-      block_creation_type(block_creation_type),
-      omega(omega),
-      min_diagonal(min_diagonal),
-      n_sweeps(n_sweeps)
+    const unsigned int n_sweeps) :
+    block_size(block_size),
+    block_creation_type(block_creation_type),
+    omega(omega),
+    min_diagonal(min_diagonal),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -300,13 +304,13 @@ namespace TrilinosWrappers
     const double       omega,
     const double       min_diagonal,
     const unsigned int overlap,
-    const unsigned int n_sweeps)
-    : block_size(block_size),
-      block_creation_type(block_creation_type),
-      omega(omega),
-      min_diagonal(min_diagonal),
-      overlap(overlap),
-      n_sweeps(n_sweeps)
+    const unsigned int n_sweeps) :
+    block_size(block_size),
+    block_creation_type(block_creation_type),
+    omega(omega),
+    min_diagonal(min_diagonal),
+    overlap(overlap),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -364,13 +368,13 @@ namespace TrilinosWrappers
     const double       omega,
     const double       min_diagonal,
     const unsigned int overlap,
-    const unsigned int n_sweeps)
-    : block_size(block_size),
-      block_creation_type(block_creation_type),
-      omega(omega),
-      min_diagonal(min_diagonal),
-      overlap(overlap),
-      n_sweeps(n_sweeps)
+    const unsigned int n_sweeps) :
+    block_size(block_size),
+    block_creation_type(block_creation_type),
+    omega(omega),
+    min_diagonal(min_diagonal),
+    overlap(overlap),
+    n_sweeps(n_sweeps)
   {}
 
   void
@@ -425,8 +429,11 @@ namespace TrilinosWrappers
   PreconditionIC::AdditionalData::AdditionalData(const unsigned int ic_fill,
                                                  const double       ic_atol,
                                                  const double       ic_rtol,
-                                                 const unsigned int overlap)
-    : ic_fill(ic_fill), ic_atol(ic_atol), ic_rtol(ic_rtol), overlap(overlap)
+                                                 const unsigned int overlap) :
+    ic_fill(ic_fill),
+    ic_atol(ic_atol),
+    ic_rtol(ic_rtol),
+    overlap(overlap)
   {}
 
   void
@@ -468,11 +475,11 @@ namespace TrilinosWrappers
   PreconditionILU::AdditionalData::AdditionalData(const unsigned int ilu_fill,
                                                   const double       ilu_atol,
                                                   const double       ilu_rtol,
-                                                  const unsigned int overlap)
-    : ilu_fill(ilu_fill),
-      ilu_atol(ilu_atol),
-      ilu_rtol(ilu_rtol),
-      overlap(overlap)
+                                                  const unsigned int overlap) :
+    ilu_fill(ilu_fill),
+    ilu_atol(ilu_atol),
+    ilu_rtol(ilu_rtol),
+    overlap(overlap)
   {}
 
   void
@@ -516,12 +523,12 @@ namespace TrilinosWrappers
                                                    const unsigned int ilut_fill,
                                                    const double       ilut_atol,
                                                    const double       ilut_rtol,
-                                                   const unsigned int overlap)
-    : ilut_drop(ilut_drop),
-      ilut_fill(ilut_fill),
-      ilut_atol(ilut_atol),
-      ilut_rtol(ilut_rtol),
-      overlap(overlap)
+                                                   const unsigned int overlap) :
+    ilut_drop(ilut_drop),
+    ilut_fill(ilut_fill),
+    ilut_atol(ilut_atol),
+    ilut_rtol(ilut_rtol),
+    overlap(overlap)
   {}
 
   void
@@ -562,8 +569,8 @@ namespace TrilinosWrappers
   /* ---------------------- PreconditionBlockDirect --------------------- */
 
   PreconditionBlockwiseDirect::AdditionalData::AdditionalData(
-    const unsigned int overlap)
-    : overlap(overlap)
+    const unsigned int overlap) :
+    overlap(overlap)
   {}
 
   void
@@ -605,13 +612,13 @@ namespace TrilinosWrappers
     const double       eigenvalue_ratio,
     const double       min_eigenvalue,
     const double       min_diagonal,
-    const bool         nonzero_starting)
-    : degree(degree),
-      max_eigenvalue(max_eigenvalue),
-      eigenvalue_ratio(eigenvalue_ratio),
-      min_eigenvalue(min_eigenvalue),
-      min_diagonal(min_diagonal),
-      nonzero_starting(nonzero_starting)
+    const bool         nonzero_starting) :
+    degree(degree),
+    max_eigenvalue(max_eigenvalue),
+    eigenvalue_ratio(eigenvalue_ratio),
+    min_eigenvalue(min_eigenvalue),
+    min_diagonal(min_diagonal),
+    nonzero_starting(nonzero_starting)
   {}
 
   void

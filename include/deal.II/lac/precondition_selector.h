@@ -197,8 +197,9 @@ private:
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::PreconditionSelector(
   const std::string&                     preconditioning,
-  const typename VectorType::value_type& omega)
-  : preconditioning(preconditioning), omega(omega)
+  const typename VectorType::value_type& omega) :
+  preconditioning(preconditioning),
+  omega(omega)
 {}
 
 template <typename MatrixType, typename VectorType>

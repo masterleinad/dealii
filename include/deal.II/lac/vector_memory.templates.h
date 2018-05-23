@@ -70,7 +70,10 @@ inline GrowingVectorMemory<VectorType>::GrowingVectorMemory(
   const size_type initial_size,
   const bool      log_statistics)
 
-  : total_alloc(0), current_alloc(0), log_statistics(log_statistics)
+  :
+  total_alloc(0),
+  current_alloc(0),
+  log_statistics(log_statistics)
 {
   Threads::Mutex::ScopedLock lock(mutex);
   pool.initialize(initial_size);

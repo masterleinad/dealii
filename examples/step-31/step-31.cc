@@ -272,8 +272,9 @@ namespace Step31
     template <class MatrixType, class PreconditionerType>
     InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
       const MatrixType&         m,
-      const PreconditionerType& preconditioner)
-      : matrix(&m), preconditioner(preconditioner)
+      const PreconditionerType& preconditioner) :
+      matrix(&m),
+      preconditioner(preconditioner)
     {}
 
     template <class MatrixType, class PreconditionerType>
@@ -390,11 +391,11 @@ namespace Step31
         const TrilinosWrappers::BlockSparseMatrix& S,
         const InverseMatrix<TrilinosWrappers::SparseMatrix,
                             PreconditionerTypeMp>& Mpinv,
-        const PreconditionerTypeA&                 Apreconditioner)
-      : stokes_matrix(&S),
-        m_inverse(&Mpinv),
-        a_preconditioner(Apreconditioner),
-        tmp(complete_index_set(stokes_matrix->block(1, 1).m()))
+        const PreconditionerTypeA&                 Apreconditioner) :
+      stokes_matrix(&S),
+      m_inverse(&Mpinv),
+      a_preconditioner(Apreconditioner),
+      tmp(complete_index_set(stokes_matrix->block(1, 1).m()))
     {}
 
     // Next is the <code>vmult</code> function. We implement the action of
@@ -552,23 +553,23 @@ namespace Step31
   // initialize the time stepping as well as the options for matrix assembly
   // and preconditioning:
   template <int dim>
-  BoussinesqFlowProblem<dim>::BoussinesqFlowProblem()
-    : triangulation(Triangulation<dim>::maximum_smoothing),
-      global_Omega_diameter(std::numeric_limits<double>::quiet_NaN()),
-      stokes_degree(1),
-      stokes_fe(FE_Q<dim>(stokes_degree + 1), dim, FE_Q<dim>(stokes_degree), 1),
-      stokes_dof_handler(triangulation),
+  BoussinesqFlowProblem<dim>::BoussinesqFlowProblem() :
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    global_Omega_diameter(std::numeric_limits<double>::quiet_NaN()),
+    stokes_degree(1),
+    stokes_fe(FE_Q<dim>(stokes_degree + 1), dim, FE_Q<dim>(stokes_degree), 1),
+    stokes_dof_handler(triangulation),
 
-      temperature_degree(2),
-      temperature_fe(temperature_degree),
-      temperature_dof_handler(triangulation),
+    temperature_degree(2),
+    temperature_fe(temperature_degree),
+    temperature_dof_handler(triangulation),
 
-      time_step(0),
-      old_time_step(0),
-      timestep_number(0),
-      rebuild_stokes_matrix(true),
-      rebuild_temperature_matrices(true),
-      rebuild_stokes_preconditioner(true)
+    time_step(0),
+    old_time_step(0),
+    timestep_number(0),
+    rebuild_stokes_matrix(true),
+    rebuild_temperature_matrices(true),
+    rebuild_stokes_preconditioner(true)
   {}
 
   // @sect4{BoussinesqFlowProblem::get_maximal_velocity}

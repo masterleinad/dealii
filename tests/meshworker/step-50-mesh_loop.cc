@@ -87,18 +87,18 @@ namespace Step50
   struct ScratchData
   {
     ScratchData(const FiniteElement<dim>& fe,
-                const unsigned int        quadrature_degree)
-      : fe_values(fe,
-                  QGauss<dim>(quadrature_degree),
-                  update_values | update_gradients | update_quadrature_points
-                    | update_JxW_values)
+                const unsigned int        quadrature_degree) :
+      fe_values(fe,
+                QGauss<dim>(quadrature_degree),
+                update_values | update_gradients | update_quadrature_points
+                  | update_JxW_values)
     {}
 
-    ScratchData(const ScratchData<dim>& scratch_data)
-      : fe_values(scratch_data.fe_values.get_fe(),
-                  scratch_data.fe_values.get_quadrature(),
-                  update_values | update_gradients | update_quadrature_points
-                    | update_JxW_values)
+    ScratchData(const ScratchData<dim>& scratch_data) :
+      fe_values(scratch_data.fe_values.get_fe(),
+                scratch_data.fe_values.get_quadrature(),
+                update_values | update_gradients | update_quadrature_points
+                  | update_JxW_values)
     {}
 
     FEValues<dim> fe_values;
@@ -206,14 +206,14 @@ namespace Step50
   }
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-    : triangulation(MPI_COMM_WORLD,
-                    Triangulation<dim>::limit_level_difference_at_vertices,
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
-      fe(degree),
-      mg_dof_handler(triangulation),
-      degree(degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+    triangulation(
+      MPI_COMM_WORLD,
+      Triangulation<dim>::limit_level_difference_at_vertices,
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
+    fe(degree),
+    mg_dof_handler(triangulation),
+    degree(degree)
   {}
 
   template <int dim>

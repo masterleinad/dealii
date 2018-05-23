@@ -26,8 +26,9 @@ std::vector<SmartPointer<ParameterAcceptor>> ParameterAcceptor::class_list;
 // Static parameter handler
 ParameterHandler ParameterAcceptor::prm;
 
-ParameterAcceptor::ParameterAcceptor(const std::string& name)
-  : acceptor_id(class_list.size()), section_name(name)
+ParameterAcceptor::ParameterAcceptor(const std::string& name) :
+  acceptor_id(class_list.size()),
+  section_name(name)
 {
   SmartPointer<ParameterAcceptor> pt(
     this, boost::core::demangle(typeid(*this).name()).c_str());

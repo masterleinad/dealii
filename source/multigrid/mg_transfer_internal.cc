@@ -36,16 +36,16 @@ namespace internal
 
       DoFPair(const unsigned int            level,
               const types::global_dof_index global_dof_index,
-              const types::global_dof_index level_dof_index)
-        : level(level),
-          global_dof_index(global_dof_index),
-          level_dof_index(level_dof_index)
+              const types::global_dof_index level_dof_index) :
+        level(level),
+        global_dof_index(global_dof_index),
+        level_dof_index(level_dof_index)
       {}
 
-      DoFPair()
-        : level(numbers::invalid_unsigned_int),
-          global_dof_index(numbers::invalid_dof_index),
-          level_dof_index(numbers::invalid_dof_index)
+      DoFPair() :
+        level(numbers::invalid_unsigned_int),
+        global_dof_index(numbers::invalid_dof_index),
+        level_dof_index(numbers::invalid_dof_index)
       {}
     };
 

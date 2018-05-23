@@ -285,8 +285,9 @@ namespace Step22
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
     const MatrixType&         m,
-    const PreconditionerType& preconditioner)
-    : matrix(&m), preconditioner(&preconditioner)
+    const PreconditionerType& preconditioner) :
+    matrix(&m),
+    preconditioner(&preconditioner)
   {}
 
   // This is the implementation of the <code>vmult</code> function.
@@ -346,11 +347,11 @@ namespace Step22
   template <class PreconditionerType>
   SchurComplement<PreconditionerType>::SchurComplement(
     const BlockSparseMatrix<double>& system_matrix,
-    const InverseMatrix<SparseMatrix<double>, PreconditionerType>& A_inverse)
-    : system_matrix(&system_matrix),
-      A_inverse(&A_inverse),
-      tmp1(system_matrix.block(0, 0).m()),
-      tmp2(system_matrix.block(0, 0).m())
+    const InverseMatrix<SparseMatrix<double>, PreconditionerType>& A_inverse) :
+    system_matrix(&system_matrix),
+    A_inverse(&A_inverse),
+    tmp1(system_matrix.block(0, 0).m()),
+    tmp2(system_matrix.block(0, 0).m())
   {}
 
   template <class PreconditionerType>
@@ -382,11 +383,11 @@ namespace Step22
   // grids are too unstructured), see the documentation of
   // <code>Triangulation::MeshSmoothing</code> for details.
   template <int dim>
-  StokesProblem<dim>::StokesProblem(const unsigned int degree)
-    : degree(degree),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
-      dof_handler(triangulation)
+  StokesProblem<dim>::StokesProblem(const unsigned int degree) :
+    degree(degree),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
+    dof_handler(triangulation)
   {}
 
   // @sect4{StokesProblem::setup_dofs}

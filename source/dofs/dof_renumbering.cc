@@ -1873,8 +1873,9 @@ namespace DoFRenumbering
       /**
        * Constructor.
        */
-      ClockCells(const Point<dim>& center, bool counter)
-        : center(center), counter(counter)
+      ClockCells(const Point<dim>& center, bool counter) :
+        center(center),
+        counter(counter)
       {}
 
       /**

@@ -666,22 +666,22 @@ namespace DynamicSparsityPatternIterators
 {
   inline Accessor::Accessor(const DynamicSparsityPattern* sparsity_pattern,
                             const size_type               row,
-                            const unsigned int            index_within_row)
-    : sparsity_pattern(sparsity_pattern),
-      current_row(row),
-      current_entry(
-        ((sparsity_pattern->rowset.size() == 0) ?
-           sparsity_pattern->lines[current_row].entries.begin() :
-           sparsity_pattern
-             ->lines[sparsity_pattern->rowset.index_within_set(current_row)]
-             .entries.begin())
-        + index_within_row),
-      end_of_row(
-        (sparsity_pattern->rowset.size() == 0) ?
-          sparsity_pattern->lines[current_row].entries.end() :
-          sparsity_pattern
-            ->lines[sparsity_pattern->rowset.index_within_set(current_row)]
-            .entries.end())
+                            const unsigned int            index_within_row) :
+    sparsity_pattern(sparsity_pattern),
+    current_row(row),
+    current_entry(
+      ((sparsity_pattern->rowset.size() == 0) ?
+         sparsity_pattern->lines[current_row].entries.begin() :
+         sparsity_pattern
+           ->lines[sparsity_pattern->rowset.index_within_set(current_row)]
+           .entries.begin())
+      + index_within_row),
+    end_of_row(
+      (sparsity_pattern->rowset.size() == 0) ?
+        sparsity_pattern->lines[current_row].entries.end() :
+        sparsity_pattern
+          ->lines[sparsity_pattern->rowset.index_within_set(current_row)]
+          .entries.end())
   {
     AssertIndexRange(current_row, sparsity_pattern->n_rows());
     Assert((sparsity_pattern->rowset.size() == 0)
@@ -699,11 +699,11 @@ namespace DynamicSparsityPatternIterators
            .entries.size()));
   }
 
-  inline Accessor::Accessor(const DynamicSparsityPattern* sparsity_pattern)
-    : sparsity_pattern(sparsity_pattern),
-      current_row(numbers::invalid_size_type),
-      current_entry(),
-      end_of_row()
+  inline Accessor::Accessor(const DynamicSparsityPattern* sparsity_pattern) :
+    sparsity_pattern(sparsity_pattern),
+    current_row(numbers::invalid_size_type),
+    current_entry(),
+    end_of_row()
   {}
 
   inline size_type
@@ -800,12 +800,12 @@ namespace DynamicSparsityPatternIterators
 
   inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern,
                             const size_type               row,
-                            const unsigned int            index_within_row)
-    : accessor(sparsity_pattern, row, index_within_row)
+                            const unsigned int            index_within_row) :
+    accessor(sparsity_pattern, row, index_within_row)
   {}
 
-  inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern)
-    : accessor(sparsity_pattern)
+  inline Iterator::Iterator(const DynamicSparsityPattern* sparsity_pattern) :
+    accessor(sparsity_pattern)
   {}
 
   inline Iterator&

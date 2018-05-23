@@ -407,14 +407,15 @@ namespace Step51
   // elements for the local DG part, including the gradient/flux part and the
   // scalar part.
   template <int dim>
-  HDG<dim>::HDG(const unsigned int degree, const RefinementMode refinement_mode)
-    : fe_local(FE_DGQ<dim>(degree), dim, FE_DGQ<dim>(degree), 1),
-      dof_handler_local(triangulation),
-      fe(degree),
-      dof_handler(triangulation),
-      fe_u_post(degree + 1),
-      dof_handler_u_post(triangulation),
-      refinement_mode(refinement_mode)
+  HDG<dim>::HDG(const unsigned int   degree,
+                const RefinementMode refinement_mode) :
+    fe_local(FE_DGQ<dim>(degree), dim, FE_DGQ<dim>(degree), 1),
+    dof_handler_local(triangulation),
+    fe(degree),
+    dof_handler(triangulation),
+    fe_u_post(degree + 1),
+    dof_handler_u_post(triangulation),
+    refinement_mode(refinement_mode)
   {}
 
   // @sect4{HDG::setup_system}
@@ -487,11 +488,11 @@ namespace Step51
 
     bool trace_reconstruct;
 
-    PerTaskData(const unsigned int n_dofs, const bool trace_reconstruct)
-      : cell_matrix(n_dofs, n_dofs),
-        cell_vector(n_dofs),
-        dof_indices(n_dofs),
-        trace_reconstruct(trace_reconstruct)
+    PerTaskData(const unsigned int n_dofs, const bool trace_reconstruct) :
+      cell_matrix(n_dofs, n_dofs),
+      cell_vector(n_dofs),
+      dof_indices(n_dofs),
+      trace_reconstruct(trace_reconstruct)
     {}
   };
 
@@ -542,26 +543,24 @@ namespace Step51
                 const QGauss<dim - 1>&    face_quadrature_formula,
                 const UpdateFlags         local_flags,
                 const UpdateFlags         local_face_flags,
-                const UpdateFlags         flags)
-      : fe_values_local(fe_local, quadrature_formula, local_flags),
-        fe_face_values_local(fe_local,
-                             face_quadrature_formula,
-                             local_face_flags),
-        fe_face_values(fe, face_quadrature_formula, flags),
-        ll_matrix(fe_local.dofs_per_cell, fe_local.dofs_per_cell),
-        lf_matrix(fe_local.dofs_per_cell, fe.dofs_per_cell),
-        fl_matrix(fe.dofs_per_cell, fe_local.dofs_per_cell),
-        tmp_matrix(fe.dofs_per_cell, fe_local.dofs_per_cell),
-        l_rhs(fe_local.dofs_per_cell),
-        tmp_rhs(fe_local.dofs_per_cell),
-        q_phi(fe_local.dofs_per_cell),
-        q_phi_div(fe_local.dofs_per_cell),
-        u_phi(fe_local.dofs_per_cell),
-        u_phi_grad(fe_local.dofs_per_cell),
-        tr_phi(fe.dofs_per_cell),
-        trace_values(face_quadrature_formula.size()),
-        fe_local_support_on_face(GeometryInfo<dim>::faces_per_cell),
-        fe_support_on_face(GeometryInfo<dim>::faces_per_cell)
+                const UpdateFlags         flags) :
+      fe_values_local(fe_local, quadrature_formula, local_flags),
+      fe_face_values_local(fe_local, face_quadrature_formula, local_face_flags),
+      fe_face_values(fe, face_quadrature_formula, flags),
+      ll_matrix(fe_local.dofs_per_cell, fe_local.dofs_per_cell),
+      lf_matrix(fe_local.dofs_per_cell, fe.dofs_per_cell),
+      fl_matrix(fe.dofs_per_cell, fe_local.dofs_per_cell),
+      tmp_matrix(fe.dofs_per_cell, fe_local.dofs_per_cell),
+      l_rhs(fe_local.dofs_per_cell),
+      tmp_rhs(fe_local.dofs_per_cell),
+      q_phi(fe_local.dofs_per_cell),
+      q_phi_div(fe_local.dofs_per_cell),
+      u_phi(fe_local.dofs_per_cell),
+      u_phi_grad(fe_local.dofs_per_cell),
+      tr_phi(fe.dofs_per_cell),
+      trace_values(face_quadrature_formula.size()),
+      fe_local_support_on_face(GeometryInfo<dim>::faces_per_cell),
+      fe_support_on_face(GeometryInfo<dim>::faces_per_cell)
     {
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
           ++face)
@@ -580,30 +579,30 @@ namespace Step51
           }
     }
 
-    ScratchData(const ScratchData& sd)
-      : fe_values_local(sd.fe_values_local.get_fe(),
-                        sd.fe_values_local.get_quadrature(),
-                        sd.fe_values_local.get_update_flags()),
-        fe_face_values_local(sd.fe_face_values_local.get_fe(),
-                             sd.fe_face_values_local.get_quadrature(),
-                             sd.fe_face_values_local.get_update_flags()),
-        fe_face_values(sd.fe_face_values.get_fe(),
-                       sd.fe_face_values.get_quadrature(),
-                       sd.fe_face_values.get_update_flags()),
-        ll_matrix(sd.ll_matrix),
-        lf_matrix(sd.lf_matrix),
-        fl_matrix(sd.fl_matrix),
-        tmp_matrix(sd.tmp_matrix),
-        l_rhs(sd.l_rhs),
-        tmp_rhs(sd.tmp_rhs),
-        q_phi(sd.q_phi),
-        q_phi_div(sd.q_phi_div),
-        u_phi(sd.u_phi),
-        u_phi_grad(sd.u_phi_grad),
-        tr_phi(sd.tr_phi),
-        trace_values(sd.trace_values),
-        fe_local_support_on_face(sd.fe_local_support_on_face),
-        fe_support_on_face(sd.fe_support_on_face)
+    ScratchData(const ScratchData& sd) :
+      fe_values_local(sd.fe_values_local.get_fe(),
+                      sd.fe_values_local.get_quadrature(),
+                      sd.fe_values_local.get_update_flags()),
+      fe_face_values_local(sd.fe_face_values_local.get_fe(),
+                           sd.fe_face_values_local.get_quadrature(),
+                           sd.fe_face_values_local.get_update_flags()),
+      fe_face_values(sd.fe_face_values.get_fe(),
+                     sd.fe_face_values.get_quadrature(),
+                     sd.fe_face_values.get_update_flags()),
+      ll_matrix(sd.ll_matrix),
+      lf_matrix(sd.lf_matrix),
+      fl_matrix(sd.fl_matrix),
+      tmp_matrix(sd.tmp_matrix),
+      l_rhs(sd.l_rhs),
+      tmp_rhs(sd.tmp_rhs),
+      q_phi(sd.q_phi),
+      q_phi_div(sd.q_phi_div),
+      u_phi(sd.u_phi),
+      u_phi_grad(sd.u_phi_grad),
+      tr_phi(sd.tr_phi),
+      trace_values(sd.trace_values),
+      fe_local_support_on_face(sd.fe_local_support_on_face),
+      fe_support_on_face(sd.fe_support_on_face)
     {}
   };
 
@@ -628,28 +627,28 @@ namespace Step51
                            const FiniteElement<dim>& fe_local,
                            const QGauss<dim>&        quadrature_formula,
                            const UpdateFlags         local_flags,
-                           const UpdateFlags         flags)
-      : fe_values_local(fe_local, quadrature_formula, local_flags),
-        fe_values(fe, quadrature_formula, flags),
-        u_values(quadrature_formula.size()),
-        u_gradients(quadrature_formula.size()),
-        cell_matrix(fe.dofs_per_cell, fe.dofs_per_cell),
-        cell_rhs(fe.dofs_per_cell),
-        cell_sol(fe.dofs_per_cell)
+                           const UpdateFlags         flags) :
+      fe_values_local(fe_local, quadrature_formula, local_flags),
+      fe_values(fe, quadrature_formula, flags),
+      u_values(quadrature_formula.size()),
+      u_gradients(quadrature_formula.size()),
+      cell_matrix(fe.dofs_per_cell, fe.dofs_per_cell),
+      cell_rhs(fe.dofs_per_cell),
+      cell_sol(fe.dofs_per_cell)
     {}
 
-    PostProcessScratchData(const PostProcessScratchData& sd)
-      : fe_values_local(sd.fe_values_local.get_fe(),
-                        sd.fe_values_local.get_quadrature(),
-                        sd.fe_values_local.get_update_flags()),
-        fe_values(sd.fe_values.get_fe(),
-                  sd.fe_values.get_quadrature(),
-                  sd.fe_values.get_update_flags()),
-        u_values(sd.u_values),
-        u_gradients(sd.u_gradients),
-        cell_matrix(sd.cell_matrix),
-        cell_rhs(sd.cell_rhs),
-        cell_sol(sd.cell_sol)
+    PostProcessScratchData(const PostProcessScratchData& sd) :
+      fe_values_local(sd.fe_values_local.get_fe(),
+                      sd.fe_values_local.get_quadrature(),
+                      sd.fe_values_local.get_update_flags()),
+      fe_values(sd.fe_values.get_fe(),
+                sd.fe_values.get_quadrature(),
+                sd.fe_values.get_update_flags()),
+      u_values(sd.u_values),
+      u_gradients(sd.u_gradients),
+      cell_matrix(sd.cell_matrix),
+      cell_rhs(sd.cell_rhs),
+      cell_sol(sd.cell_sol)
     {}
   };
 

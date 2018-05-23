@@ -26,8 +26,8 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int rank, int dim, typename Number>
-TensorFunction<rank, dim, Number>::TensorFunction(const Number initial_time)
-  : FunctionTime<Number>(initial_time)
+TensorFunction<rank, dim, Number>::TensorFunction(const Number initial_time) :
+  FunctionTime<Number>(initial_time)
 {}
 
 template <int rank, int dim, typename Number>
@@ -75,8 +75,9 @@ TensorFunction<rank, dim, Number>::gradient_list(
 template <int rank, int dim, typename Number>
 ConstantTensorFunction<rank, dim, Number>::ConstantTensorFunction(
   const Tensor<rank, dim, Number>& value,
-  const Number                     initial_time)
-  : TensorFunction<rank, dim, Number>(initial_time), _value(value)
+  const Number                     initial_time) :
+  TensorFunction<rank, dim, Number>(initial_time),
+  _value(value)
 {}
 
 template <int rank, int dim, typename Number>
@@ -130,10 +131,9 @@ ConstantTensorFunction<rank, dim, Number>::gradient_list(
 
 template <int rank, int dim, typename Number>
 ZeroTensorFunction<rank, dim, Number>::ZeroTensorFunction(
-  const Number initial_time)
-  : ConstantTensorFunction<rank, dim, Number>(
-      dealii::Tensor<rank, dim, Number>(),
-      initial_time)
+  const Number initial_time) :
+  ConstantTensorFunction<rank, dim, Number>(dealii::Tensor<rank, dim, Number>(),
+                                            initial_time)
 {}
 
 DEAL_II_NAMESPACE_CLOSE

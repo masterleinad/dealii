@@ -92,8 +92,10 @@ private:
 
 // --------------- inline and template functions -----------------
 
-inline PetscFDMatrix::PetscFDMatrix(unsigned int size, unsigned int dim)
-  : PETScWrappers::MatrixFree(dim, dim, dim, dim), nx(size), ny(size)
+inline PetscFDMatrix::PetscFDMatrix(unsigned int size, unsigned int dim) :
+  PETScWrappers::MatrixFree(dim, dim, dim, dim),
+  nx(size),
+  ny(size)
 {}
 
 inline void

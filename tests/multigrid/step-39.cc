@@ -415,12 +415,12 @@ namespace Step39
 
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
-    const FiniteElement<dim>& fe)
-    : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-      mapping(1),
-      fe(fe),
-      dof_handler(triangulation),
-      estimates(1)
+    const FiniteElement<dim>& fe) :
+    triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+    mapping(1),
+    fe(fe),
+    dof_handler(triangulation),
+    estimates(1)
   {
     GridGenerator::hyper_cube_slit(triangulation, -1, 1);
   }

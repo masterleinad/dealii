@@ -175,17 +175,17 @@ namespace internal
 } // namespace internal
 
 template <int dim, int spacedim>
-FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
-  : FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
-      TensorProductPolynomialsBubbles<dim>(
-        Polynomials::generate_complete_Lagrange_basis(
-          QGaussLobatto<1>(q_degree + 1).get_points())),
-      FiniteElementData<dim>(get_dpo_vector(q_degree),
-                             1,
-                             q_degree + 1,
-                             FiniteElementData<dim>::H1),
-      get_riaf_vector(q_degree)),
-    n_bubbles((q_degree <= 1) ? 1 : dim)
+FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree) :
+  FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
+    TensorProductPolynomialsBubbles<dim>(
+      Polynomials::generate_complete_Lagrange_basis(
+        QGaussLobatto<1>(q_degree + 1).get_points())),
+    FiniteElementData<dim>(get_dpo_vector(q_degree),
+                           1,
+                           q_degree + 1,
+                           FiniteElementData<dim>::H1),
+    get_riaf_vector(q_degree)),
+  n_bubbles((q_degree <= 1) ? 1 : dim)
 {
   Assert(q_degree > 0,
          ExcMessage("This element can only be used for polynomial degrees "
@@ -212,16 +212,16 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
 }
 
 template <int dim, int spacedim>
-FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points)
-  : FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
-      TensorProductPolynomialsBubbles<dim>(
-        Polynomials::generate_complete_Lagrange_basis(points.get_points())),
-      FiniteElementData<dim>(get_dpo_vector(points.size() - 1),
-                             1,
-                             points.size(),
-                             FiniteElementData<dim>::H1),
-      get_riaf_vector(points.size() - 1)),
-    n_bubbles((points.size() - 1 <= 1) ? 1 : dim)
+FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points) :
+  FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
+    TensorProductPolynomialsBubbles<dim>(
+      Polynomials::generate_complete_Lagrange_basis(points.get_points())),
+    FiniteElementData<dim>(get_dpo_vector(points.size() - 1),
+                           1,
+                           points.size(),
+                           FiniteElementData<dim>::H1),
+    get_riaf_vector(points.size() - 1)),
+  n_bubbles((points.size() - 1 <= 1) ? 1 : dim)
 {
   Assert(points.size() > 1,
          ExcMessage("This element can only be used for polynomial degrees "

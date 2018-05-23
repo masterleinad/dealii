@@ -754,7 +754,8 @@ inline DEAL_II_CUDA_HOST_DEV
 Tensor<0, dim, Number>::Tensor()
   // Some auto-differentiable numbers need explicit
   // zero initialization.
-  : value(internal::NumberType<Number>::value(0.0))
+  :
+  value(internal::NumberType<Number>::value(0.0))
 {}
 
 template <int dim, typename Number>

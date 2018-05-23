@@ -329,8 +329,9 @@ namespace Step22
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
     const Matrix&         m,
-    const Preconditioner& preconditioner)
-    : matrix(&m), preconditioner(&preconditioner)
+    const Preconditioner& preconditioner) :
+    matrix(&m),
+    preconditioner(&preconditioner)
   {}
 
   template <class Matrix, class Preconditioner>
@@ -374,11 +375,11 @@ namespace Step22
   template <class Preconditioner>
   SchurComplement<Preconditioner>::SchurComplement(
     const BlockSparseMatrix<double>&                           system_matrix,
-    const InverseMatrix<SparseMatrix<double>, Preconditioner>& A_inverse)
-    : system_matrix(&system_matrix),
-      A_inverse(&A_inverse),
-      tmp1(system_matrix.block(0, 0).m()),
-      tmp2(system_matrix.block(0, 0).m())
+    const InverseMatrix<SparseMatrix<double>, Preconditioner>& A_inverse) :
+    system_matrix(&system_matrix),
+    A_inverse(&A_inverse),
+    tmp1(system_matrix.block(0, 0).m()),
+    tmp2(system_matrix.block(0, 0).m())
   {}
 
   template <class Preconditioner>
@@ -393,11 +394,11 @@ namespace Step22
 
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int degree,
-                                    FESystem<dim>&     fe_)
-    : degree(degree),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      fe(fe_),
-      dof_handler(triangulation)
+                                    FESystem<dim>&     fe_) :
+    degree(degree),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    fe(fe_),
+    dof_handler(triangulation)
   {}
 
   template <int dim>

@@ -89,8 +89,9 @@ private:
 // first component: Q1-Element,
 // second component: lowest order DG_Element
 template <int dim>
-FindBug<dim>::FindBug()
-  : fe(FE_RaviartThomas<dim>(0), 1, FE_Q<dim>(1), 1), dof_handler(triangulation)
+FindBug<dim>::FindBug() :
+  fe(FE_RaviartThomas<dim>(0), 1, FE_Q<dim>(1), 1),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

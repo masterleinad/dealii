@@ -210,49 +210,48 @@ namespace internal
       const types::material_id  material_id,
       const typename FunctionMap<spacedim, number>::type* neumann_bc,
       const ComponentMask&                                component_mask,
-      const Function<spacedim>*                           coefficients)
-      : finite_element(fe),
-        face_quadratures(face_quadratures),
-        fe_face_values_cell(mapping,
-                            finite_element,
-                            face_quadratures,
-                            update_gradients | update_JxW_values
-                              | (need_quadrature_points ?
-                                   update_quadrature_points :
-                                   UpdateFlags())
-                              | update_normal_vectors),
-        fe_face_values_neighbor(mapping,
-                                finite_element,
-                                face_quadratures,
-                                update_gradients | update_normal_vectors),
-        fe_subface_values(mapping,
-                          finite_element,
-                          face_quadratures,
-                          update_gradients | update_normal_vectors),
-        phi(n_solution_vectors,
-            std::vector<std::vector<number>>(
-              face_quadratures.max_n_quadrature_points(),
-              std::vector<number>(fe.n_components()))),
-        psi(n_solution_vectors,
-            std::vector<std::vector<Tensor<1, spacedim, number>>>(
-              face_quadratures.max_n_quadrature_points(),
-              std::vector<Tensor<1, spacedim, number>>(fe.n_components()))),
-        neighbor_psi(
-          n_solution_vectors,
+      const Function<spacedim>*                           coefficients) :
+      finite_element(fe),
+      face_quadratures(face_quadratures),
+      fe_face_values_cell(
+        mapping,
+        finite_element,
+        face_quadratures,
+        update_gradients | update_JxW_values
+          | (need_quadrature_points ? update_quadrature_points : UpdateFlags())
+          | update_normal_vectors),
+      fe_face_values_neighbor(mapping,
+                              finite_element,
+                              face_quadratures,
+                              update_gradients | update_normal_vectors),
+      fe_subface_values(mapping,
+                        finite_element,
+                        face_quadratures,
+                        update_gradients | update_normal_vectors),
+      phi(n_solution_vectors,
+          std::vector<std::vector<number>>(
+            face_quadratures.max_n_quadrature_points(),
+            std::vector<number>(fe.n_components()))),
+      psi(n_solution_vectors,
           std::vector<std::vector<Tensor<1, spacedim, number>>>(
             face_quadratures.max_n_quadrature_points(),
             std::vector<Tensor<1, spacedim, number>>(fe.n_components()))),
-        normal_vectors(face_quadratures.max_n_quadrature_points()),
-        neighbor_normal_vectors(face_quadratures.max_n_quadrature_points()),
-        coefficient_values1(face_quadratures.max_n_quadrature_points()),
-        coefficient_values(face_quadratures.max_n_quadrature_points(),
-                           dealii::Vector<double>(fe.n_components())),
-        JxW_values(face_quadratures.max_n_quadrature_points()),
-        subdomain_id(subdomain_id),
-        material_id(material_id),
-        neumann_bc(neumann_bc),
-        component_mask(component_mask),
-        coefficients(coefficients)
+      neighbor_psi(
+        n_solution_vectors,
+        std::vector<std::vector<Tensor<1, spacedim, number>>>(
+          face_quadratures.max_n_quadrature_points(),
+          std::vector<Tensor<1, spacedim, number>>(fe.n_components()))),
+      normal_vectors(face_quadratures.max_n_quadrature_points()),
+      neighbor_normal_vectors(face_quadratures.max_n_quadrature_points()),
+      coefficient_values1(face_quadratures.max_n_quadrature_points()),
+      coefficient_values(face_quadratures.max_n_quadrature_points(),
+                         dealii::Vector<double>(fe.n_components())),
+      JxW_values(face_quadratures.max_n_quadrature_points()),
+      subdomain_id(subdomain_id),
+      material_id(material_id),
+      neumann_bc(neumann_bc),
+      component_mask(component_mask),
+      coefficients(coefficients)
     {}
 
     template <typename DoFHandlerType, typename number>

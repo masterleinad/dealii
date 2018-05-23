@@ -1233,10 +1233,10 @@ namespace TrilinosWrappers
   {
     inline Accessor::Accessor(const SparsityPattern* sp,
                               const size_type        row,
-                              const size_type        index)
-      : sparsity_pattern(const_cast<SparsityPattern*>(sp)),
-        a_row(row),
-        a_index(index)
+                              const size_type        index) :
+      sparsity_pattern(const_cast<SparsityPattern*>(sp)),
+      a_row(row),
+      a_index(index)
     {
       visit_present_row();
     }
@@ -1267,8 +1267,8 @@ namespace TrilinosWrappers
 
     inline Iterator::Iterator(const SparsityPattern* sp,
                               const size_type        row,
-                              const size_type        index)
-      : accessor(sp, row, index)
+                              const size_type        index) :
+      accessor(sp, row, index)
     {}
 
     inline Iterator::Iterator(const Iterator&) = default;

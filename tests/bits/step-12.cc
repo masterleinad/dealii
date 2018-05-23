@@ -159,8 +159,10 @@ private:
 };
 
 template <int dim>
-DGTransportEquation<dim>::DGTransportEquation()
-  : beta_function(), rhs_function(), boundary_function()
+DGTransportEquation<dim>::DGTransportEquation() :
+  beta_function(),
+  rhs_function(),
+  boundary_function()
 {}
 
 template <int dim>
@@ -342,13 +344,13 @@ private:
 };
 
 template <int dim>
-DGMethod<dim>::DGMethod()
-  : mapping(1),
-    fe(1),
-    dof_handler(triangulation),
-    quadrature(4),
-    face_quadrature(4),
-    dg()
+DGMethod<dim>::DGMethod() :
+  mapping(1),
+  fe(1),
+  dof_handler(triangulation),
+  quadrature(4),
+  face_quadrature(4),
+  dg()
 {}
 
 template <int dim>

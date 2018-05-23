@@ -7644,17 +7644,17 @@ namespace VectorTools
       const dealii::hp::MappingCollection<dim, spacedim>& mapping,
       const dealii::hp::FECollection<dim, spacedim>&      fe,
       const dealii::hp::QCollection<dim>&                 q,
-      const UpdateFlags                                   update_flags)
-      : x_fe_values(mapping, fe, q, update_flags)
+      const UpdateFlags                                   update_flags) :
+      x_fe_values(mapping, fe, q, update_flags)
     {}
 
     template <int dim, int spacedim, typename Number>
     IDScratchData<dim, spacedim, Number>::IDScratchData(
-      const IDScratchData& data)
-      : x_fe_values(data.x_fe_values.get_mapping_collection(),
-                    data.x_fe_values.get_fe_collection(),
-                    data.x_fe_values.get_quadrature_collection(),
-                    data.x_fe_values.get_update_flags())
+      const IDScratchData& data) :
+      x_fe_values(data.x_fe_values.get_mapping_collection(),
+                  data.x_fe_values.get_fe_collection(),
+                  data.x_fe_values.get_quadrature_collection(),
+                  data.x_fe_values.get_update_flags())
     {}
 
     template <int dim, int spacedim, typename Number>

@@ -1009,8 +1009,8 @@ namespace Threads
     /**
      * Construct a thread object with a function object.
      */
-    Thread(const std::function<RT()>& function)
-      : thread_descriptor(new internal::ThreadDescriptor<RT>())
+    Thread(const std::function<RT()>& function) :
+      thread_descriptor(new internal::ThreadDescriptor<RT>())
     {
       // in a second step, start the thread.
       thread_descriptor->start(function);
@@ -1351,8 +1351,8 @@ namespace Threads
     template <typename RT>
     struct TaskEntryPoint : public tbb::task
     {
-      TaskEntryPoint(TaskDescriptor<RT>& task_descriptor)
-        : task_descriptor(task_descriptor)
+      TaskEntryPoint(TaskDescriptor<RT>& task_descriptor) :
+        task_descriptor(task_descriptor)
       {}
 
       virtual tbb::task*
@@ -1486,8 +1486,10 @@ namespace Threads
 
     template <typename RT>
     inline TaskDescriptor<RT>::TaskDescriptor(
-      const std::function<RT()>& function)
-      : function(function), task(nullptr), task_is_done(false)
+      const std::function<RT()>& function) :
+      function(function),
+      task(nullptr),
+      task_is_done(false)
     {}
 
     template <typename RT>
@@ -1520,8 +1522,8 @@ namespace Threads
     }
 
     template <typename RT>
-    TaskDescriptor<RT>::TaskDescriptor(const TaskDescriptor&)
-      : task_is_done(false)
+    TaskDescriptor<RT>::TaskDescriptor(const TaskDescriptor&) :
+      task_is_done(false)
     {
       // we shouldn't be getting here -- task descriptors
       // can't be copied

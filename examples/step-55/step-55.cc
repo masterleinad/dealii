@@ -117,8 +117,9 @@ namespace Step55
     template <class Matrix, class Preconditioner>
     InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
       const Matrix&         m,
-      const Preconditioner& preconditioner)
-      : matrix(&m), preconditioner(preconditioner)
+      const Preconditioner& preconditioner) :
+      matrix(&m),
+      preconditioner(preconditioner)
     {}
 
     template <class Matrix, class Preconditioner>
@@ -161,8 +162,9 @@ namespace Step55
     template <class PreconditionerA, class PreconditionerS>
     BlockDiagonalPreconditioner<PreconditionerA, PreconditionerS>::
       BlockDiagonalPreconditioner(const PreconditionerA& preconditioner_A,
-                                  const PreconditionerS& preconditioner_S)
-      : preconditioner_A(preconditioner_A), preconditioner_S(preconditioner_S)
+                                  const PreconditionerS& preconditioner_S) :
+      preconditioner_A(preconditioner_A),
+      preconditioner_S(preconditioner_S)
     {}
 
     template <class PreconditionerA, class PreconditionerS>
@@ -313,22 +315,21 @@ namespace Step55
   };
 
   template <int dim>
-  StokesProblem<dim>::StokesProblem(unsigned int velocity_degree)
-    : velocity_degree(velocity_degree),
-      viscosity(0.1),
-      mpi_communicator(MPI_COMM_WORLD),
-      fe(FE_Q<dim>(velocity_degree), dim, FE_Q<dim>(velocity_degree - 1), 1),
-      triangulation(mpi_communicator,
-                    typename Triangulation<dim>::MeshSmoothing(
-                      Triangulation<dim>::smoothing_on_refinement
-                      | Triangulation<dim>::smoothing_on_coarsening)),
-      dof_handler(triangulation),
-      pcout(std::cout,
-            (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
-      computing_timer(mpi_communicator,
-                      pcout,
-                      TimerOutput::summary,
-                      TimerOutput::wall_times)
+  StokesProblem<dim>::StokesProblem(unsigned int velocity_degree) :
+    velocity_degree(velocity_degree),
+    viscosity(0.1),
+    mpi_communicator(MPI_COMM_WORLD),
+    fe(FE_Q<dim>(velocity_degree), dim, FE_Q<dim>(velocity_degree - 1), 1),
+    triangulation(mpi_communicator,
+                  typename Triangulation<dim>::MeshSmoothing(
+                    Triangulation<dim>::smoothing_on_refinement
+                    | Triangulation<dim>::smoothing_on_coarsening)),
+    dof_handler(triangulation),
+    pcout(std::cout, (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
+    computing_timer(mpi_communicator,
+                    pcout,
+                    TimerOutput::summary,
+                    TimerOutput::wall_times)
   {}
 
   // The Kovasnay flow is defined on the domain [-0.5, 1.5]^2, which we

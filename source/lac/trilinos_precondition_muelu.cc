@@ -48,17 +48,17 @@ namespace TrilinosWrappers
     const unsigned int                    smoother_overlap,
     const bool                            output_details,
     const char*                           smoother_type,
-    const char*                           coarse_type)
-    : elliptic(elliptic),
-      n_cycles(n_cycles),
-      w_cycle(w_cycle),
-      aggregation_threshold(aggregation_threshold),
-      constant_modes(constant_modes),
-      smoother_sweeps(smoother_sweeps),
-      smoother_overlap(smoother_overlap),
-      output_details(output_details),
-      smoother_type(smoother_type),
-      coarse_type(coarse_type)
+    const char*                           coarse_type) :
+    elliptic(elliptic),
+    n_cycles(n_cycles),
+    w_cycle(w_cycle),
+    aggregation_threshold(aggregation_threshold),
+    constant_modes(constant_modes),
+    smoother_sweeps(smoother_sweeps),
+    smoother_overlap(smoother_overlap),
+    output_details(output_details),
+    smoother_type(smoother_type),
+    coarse_type(coarse_type)
   {}
 
   PreconditionAMGMueLu::PreconditionAMGMueLu()

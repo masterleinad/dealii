@@ -76,11 +76,11 @@ namespace pdd
 
   // The constructor and destructor of the class
   template <int dim>
-  PDDProblem<dim>::PDDProblem()
-    : mpi_communicator(MPI_COMM_WORLD),
-      triangulation(mpi_communicator),
-      dof_handler(triangulation),
-      fe(1)
+  PDDProblem<dim>::PDDProblem() :
+    mpi_communicator(MPI_COMM_WORLD),
+    triangulation(mpi_communicator),
+    dof_handler(triangulation),
+    fe(1)
   {}
 
   template <int dim>

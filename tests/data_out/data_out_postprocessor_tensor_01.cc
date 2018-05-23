@@ -116,8 +116,9 @@ namespace Step8
   }
 
   template <int dim>
-  ElasticProblem<dim>::ElasticProblem()
-    : dof_handler(triangulation), fe(FE_Q<dim>(1), dim)
+  ElasticProblem<dim>::ElasticProblem() :
+    dof_handler(triangulation),
+    fe(FE_Q<dim>(1), dim)
   {}
 
   template <int dim>
@@ -287,8 +288,8 @@ namespace Step8
   class StrainPostprocessor : public DataPostprocessorTensor<dim>
   {
   public:
-    StrainPostprocessor()
-      : DataPostprocessorTensor<dim>("strain", update_gradients)
+    StrainPostprocessor() :
+      DataPostprocessorTensor<dim>("strain", update_gradients)
     {}
 
     virtual void

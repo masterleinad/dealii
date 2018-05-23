@@ -1012,14 +1012,14 @@ namespace internals
   };
 
   inline Distributing::Distributing(const size_type global_row,
-                                    const size_type local_row)
-    : global_row(global_row),
-      local_row(local_row),
-      constraint_position(numbers::invalid_size_type)
+                                    const size_type local_row) :
+    global_row(global_row),
+    local_row(local_row),
+    constraint_position(numbers::invalid_size_type)
   {}
 
-  inline Distributing::Distributing(const Distributing& in)
-    : constraint_position(numbers::invalid_size_type)
+  inline Distributing::Distributing(const Distributing& in) :
+    constraint_position(numbers::invalid_size_type)
   {
     *this = (in);
   }
@@ -1509,8 +1509,8 @@ namespace internals
        * Constructor. Grabs a scratch data object on the current thread and
        * mark it as used
        */
-      ScratchDataAccessor()
-        : my_scratch_data(&ConstraintMatrixData::scratch_data.get())
+      ScratchDataAccessor() :
+        my_scratch_data(&ConstraintMatrixData::scratch_data.get())
       {
         Assert(my_scratch_data->in_use == false,
                ExcMessage(

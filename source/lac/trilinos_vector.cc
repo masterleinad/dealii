@@ -61,18 +61,18 @@ namespace TrilinosWrappers
 
   namespace MPI
   {
-    Vector::Vector()
-      : Subscriptor(),
-        last_action(Zero),
-        compressed(true),
-        has_ghosts(false),
-        vector(new Epetra_FEVector(
-          Epetra_Map(0, 0, 0, Utilities::Trilinos::comm_self())))
+    Vector::Vector() :
+      Subscriptor(),
+      last_action(Zero),
+      compressed(true),
+      has_ghosts(false),
+      vector(new Epetra_FEVector(
+        Epetra_Map(0, 0, 0, Utilities::Trilinos::comm_self())))
     {}
 
     Vector::Vector(const IndexSet& parallel_partitioning,
-                   const MPI_Comm& communicator)
-      : Vector()
+                   const MPI_Comm& communicator) :
+      Vector()
     {
       reinit(parallel_partitioning, communicator);
     }
@@ -92,8 +92,8 @@ namespace TrilinosWrappers
 
     Vector::Vector(const IndexSet& parallel_partitioner,
                    const Vector&   v,
-                   const MPI_Comm& communicator)
-      : Vector()
+                   const MPI_Comm& communicator) :
+      Vector()
     {
       AssertThrow(parallel_partitioner.size()
                     == static_cast<size_type>(
@@ -109,8 +109,8 @@ namespace TrilinosWrappers
 
     Vector::Vector(const IndexSet& local,
                    const IndexSet& ghost,
-                   const MPI_Comm& communicator)
-      : Vector()
+                   const MPI_Comm& communicator) :
+      Vector()
     {
       reinit(local, ghost, communicator, false);
     }

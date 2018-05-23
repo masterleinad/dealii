@@ -139,8 +139,9 @@ RightHandSide<dim>::vector_value_list(
 }
 
 template <int dim>
-ElasticProblem<dim>::ElasticProblem()
-  : dof_handler(triangulation), fe(FESystem<dim>(FE_Q<dim>(1), dim))
+ElasticProblem<dim>::ElasticProblem() :
+  dof_handler(triangulation),
+  fe(FESystem<dim>(FE_Q<dim>(1), dim))
 {}
 
 template <int dim>

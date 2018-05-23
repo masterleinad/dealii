@@ -97,12 +97,12 @@ namespace FETools
                                                                    tree_index_,
           const typename DoFHandler<dim, spacedim>::cell_iterator& dealii_cell_,
           const typename dealii::internal::p4est::types<dim>::quadrant&
-            p4est_cell_)
-          : forest(forest_),
-            tree(tree_),
-            tree_index(tree_index_),
-            dealii_cell(dealii_cell_),
-            p4est_cell(p4est_cell_)
+            p4est_cell_) :
+          forest(forest_),
+          tree(tree_),
+          tree_index(tree_index_),
+          dealii_cell(dealii_cell_),
+          p4est_cell(p4est_cell_)
         {}
       };
 
@@ -461,19 +461,21 @@ namespace FETools
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::
-      ExtrapolateImplementation()
-      : round(0)
+      ExtrapolateImplementation() :
+      round(0)
     {}
 
     template <int dim, int spacedim, class OutVector>
-    ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData()
-      : tree_index(0), receiver(0)
+    ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData() :
+      tree_index(0),
+      receiver(0)
     {}
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData(
-      const unsigned int dofs_per_cell)
-      : tree_index(0), receiver(0)
+      const unsigned int dofs_per_cell) :
+      tree_index(0),
+      receiver(0)
     {
       dof_values.reinit(dofs_per_cell);
     }

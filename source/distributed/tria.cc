@@ -1269,8 +1269,8 @@ namespace
 
   template <int dim, int spacedim>
   PartitionWeights<dim, spacedim>::PartitionWeights(
-    const std::vector<unsigned int>& cell_weights)
-    : cell_weights_list(cell_weights)
+    const std::vector<unsigned int>& cell_weights) :
+    cell_weights_list(cell_weights)
   {
     // set the current pointer to the first element of the list, given that
     // we will walk through it sequentially
@@ -1314,25 +1314,25 @@ namespace parallel
       MPI_Comm mpi_communicator,
       const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
                      smooth_grid,
-      const Settings settings_)
-      : // Do not check for distorted cells.
-        // For multigrid, we need limit_level_difference_at_vertices
-        // to make sure the transfer operators only need to consider two levels.
-        dealii::parallel::Triangulation<dim, spacedim>(
-          mpi_communicator,
-          (settings_ & construct_multigrid_hierarchy) ?
-            static_cast<
-              typename dealii::Triangulation<dim, spacedim>::MeshSmoothing>(
-              smooth_grid
-              | Triangulation<dim,
-                              spacedim>::limit_level_difference_at_vertices) :
-            smooth_grid,
-          false),
-        settings(settings_),
-        triangulation_has_content(false),
-        connectivity(nullptr),
-        parallel_forest(nullptr),
-        cell_attached_data({0, 0, 0, {}})
+      const Settings settings_) :
+      // Do not check for distorted cells.
+      // For multigrid, we need limit_level_difference_at_vertices
+      // to make sure the transfer operators only need to consider two levels.
+      dealii::parallel::Triangulation<dim, spacedim>(
+        mpi_communicator,
+        (settings_ & construct_multigrid_hierarchy) ?
+          static_cast<
+            typename dealii::Triangulation<dim, spacedim>::MeshSmoothing>(
+            smooth_grid
+            | Triangulation<dim,
+                            spacedim>::limit_level_difference_at_vertices) :
+          smooth_grid,
+        false),
+      settings(settings_),
+      triangulation_has_content(false),
+      connectivity(nullptr),
+      parallel_forest(nullptr),
+      cell_attached_data({0, 0, 0, {}})
     {
       parallel_ghost = nullptr;
     }
@@ -3930,10 +3930,10 @@ namespace parallel
       MPI_Comm mpi_communicator,
       const typename dealii::Triangulation<1, spacedim>::MeshSmoothing
         smooth_grid,
-      const Settings /*settings*/)
-      : dealii::parallel::Triangulation<1, spacedim>(mpi_communicator,
-                                                     smooth_grid,
-                                                     false)
+      const Settings /*settings*/) :
+      dealii::parallel::Triangulation<1, spacedim>(mpi_communicator,
+                                                   smooth_grid,
+                                                   false)
     {
       Assert(false, ExcNotImplemented());
     }

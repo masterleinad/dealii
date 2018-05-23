@@ -148,13 +148,13 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-Step4<dim>::Step4()
-  : triangulation(MPI_COMM_WORLD,
-                  typename Triangulation<dim>::MeshSmoothing(
-                    Triangulation<dim>::smoothing_on_refinement
-                    | Triangulation<dim>::smoothing_on_coarsening)),
-    fe(1),
-    dof_handler(triangulation)
+Step4<dim>::Step4() :
+  triangulation(MPI_COMM_WORLD,
+                typename Triangulation<dim>::MeshSmoothing(
+                  Triangulation<dim>::smoothing_on_refinement
+                  | Triangulation<dim>::smoothing_on_coarsening)),
+  fe(1),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

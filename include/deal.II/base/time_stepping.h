@@ -381,10 +381,10 @@ namespace TimeStepping
      */
     struct Status : public TimeStepping<VectorType>::Status
     {
-      Status()
-        : method(invalid),
-          n_iterations(numbers::invalid_unsigned_int),
-          norm_residual(numbers::signaling_nan<double>())
+      Status() :
+        method(invalid),
+        n_iterations(numbers::invalid_unsigned_int),
+        norm_residual(numbers::signaling_nan<double>())
       {}
 
       runge_kutta_method method;

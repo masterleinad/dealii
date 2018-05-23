@@ -39,9 +39,9 @@ namespace internal
      */
     struct FaceIdentifier
     {
-      FaceIdentifier()
-        : n_hanging_faces_smaller_subdomain(0),
-          n_hanging_faces_larger_subdomain(0)
+      FaceIdentifier() :
+        n_hanging_faces_smaller_subdomain(0),
+        n_hanging_faces_larger_subdomain(0)
       {}
 
       std::vector<std::pair<CellId, CellId>> shared_faces;

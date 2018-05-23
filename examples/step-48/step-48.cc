@@ -114,8 +114,9 @@ namespace Step48
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
     const MatrixFree<dim, double>& data_in,
-    const double                   time_step)
-    : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
+    const double                   time_step) :
+    data(data_in),
+    delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
     VectorizedArray<double> one = make_vectorized_array(1.);
 
@@ -242,8 +243,8 @@ namespace Step48
   class ExactSolution : public Function<dim>
   {
   public:
-    ExactSolution(const unsigned int n_components = 1, const double time = 0.)
-      : Function<dim>(n_components, time)
+    ExactSolution(const unsigned int n_components = 1, const double time = 0.) :
+      Function<dim>(n_components, time)
     {}
     virtual double
     value(const Point<dim>& p, const unsigned int component = 0) const override;
@@ -325,19 +326,19 @@ namespace Step48
   // conditioning versus equidistant points. To make things more explicit, we
   // choose to state the selection of the nodal points nonetheless.
   template <int dim>
-  SineGordonProblem<dim>::SineGordonProblem()
-    : pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0),
+  SineGordonProblem<dim>::SineGordonProblem() :
+    pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0),
 #ifdef DEAL_II_WITH_P4EST
-      triangulation(MPI_COMM_WORLD),
+    triangulation(MPI_COMM_WORLD),
 #endif
-      fe(QGaussLobatto<1>(fe_degree + 1)),
-      dof_handler(triangulation),
-      n_global_refinements(10 - 2 * dim),
-      time(-10),
-      time_step(10.),
-      final_time(10),
-      cfl_number(.1 / fe_degree),
-      output_timestep_skip(200)
+    fe(QGaussLobatto<1>(fe_degree + 1)),
+    dof_handler(triangulation),
+    n_global_refinements(10 - 2 * dim),
+    time(-10),
+    time_step(10.),
+    final_time(10),
+    cfl_number(.1 / fe_degree),
+    output_timestep_skip(200)
   {}
 
   //@sect4{SineGordonProblem::make_grid_and_dofs}

@@ -226,8 +226,10 @@ namespace Step12
   // We start with the constructor. The 1 in the constructor call of
   // <code>fe</code> is the polynomial degree.
   template <int dim>
-  AdvectionProblem<dim>::AdvectionProblem()
-    : mapping(), fe(1), dof_handler(triangulation)
+  AdvectionProblem<dim>::AdvectionProblem() :
+    mapping(),
+    fe(1),
+    dof_handler(triangulation)
   {}
 
   template <int dim>

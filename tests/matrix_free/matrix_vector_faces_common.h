@@ -210,10 +210,10 @@ class MatrixFreeVariant
 public:
   MatrixFreeVariant(const MatrixFree<dim, number>& data,
                     const bool                     zero_within_loop = true,
-                    const unsigned int             start_vector_component = 0)
-    : data(data),
-      zero_within_loop(zero_within_loop),
-      start_vector_component(start_vector_component)
+                    const unsigned int             start_vector_component = 0) :
+    data(data),
+    zero_within_loop(zero_within_loop),
+    start_vector_component(start_vector_component)
   {}
 
   void
@@ -397,10 +397,10 @@ class MatrixFreeAdvection
 public:
   MatrixFreeAdvection(const MatrixFree<dim, number>& data,
                       const bool                     zero_within_loop = true,
-                      const unsigned int             start_vector_component = 0)
-    : data(data),
-      zero_within_loop(zero_within_loop),
-      start_vector_component(start_vector_component)
+                      const unsigned int start_vector_component       = 0) :
+    data(data),
+    zero_within_loop(zero_within_loop),
+    start_vector_component(start_vector_component)
   {
     for(unsigned int d = 0; d < dim; ++d)
       advection[d] = 0.4 + 0.12 * d;

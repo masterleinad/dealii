@@ -455,16 +455,16 @@ namespace DataOutBase
     }
   } // namespace
 
-  DataOutFilter::DataOutFilter()
-    : flags(false, true),
-      node_dim(numbers::invalid_unsigned_int),
-      vertices_per_cell(numbers::invalid_unsigned_int)
+  DataOutFilter::DataOutFilter() :
+    flags(false, true),
+    node_dim(numbers::invalid_unsigned_int),
+    vertices_per_cell(numbers::invalid_unsigned_int)
   {}
 
-  DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags& flags)
-    : flags(flags),
-      node_dim(numbers::invalid_unsigned_int),
-      vertices_per_cell(numbers::invalid_unsigned_int)
+  DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags& flags) :
+    flags(flags),
+    node_dim(numbers::invalid_unsigned_int),
+    vertices_per_cell(numbers::invalid_unsigned_int)
   {}
 
   template <int dim>
@@ -778,10 +778,10 @@ namespace
     /*
      * Constructor. Stores a reference to the output stream for immediate use.
      */
-    StreamBase(std::ostream& stream, const FlagsType& flags)
-      : selected_component(numbers::invalid_unsigned_int),
-        stream(stream),
-        flags(flags)
+    StreamBase(std::ostream& stream, const FlagsType& flags) :
+      selected_component(numbers::invalid_unsigned_int),
+      stream(stream),
+      flags(flags)
     {}
 
     /**
@@ -1142,8 +1142,8 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  DXStream::DXStream(std::ostream& out, const DataOutBase::DXFlags& f)
-    : StreamBase<DataOutBase::DXFlags>(out, f)
+  DXStream::DXStream(std::ostream& out, const DataOutBase::DXFlags& f) :
+    StreamBase<DataOutBase::DXFlags>(out, f)
   {}
 
   template <int dim>
@@ -1225,8 +1225,8 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  GmvStream::GmvStream(std::ostream& out, const DataOutBase::GmvFlags& f)
-    : StreamBase<DataOutBase::GmvFlags>(out, f)
+  GmvStream::GmvStream(std::ostream& out, const DataOutBase::GmvFlags& f) :
+    StreamBase<DataOutBase::GmvFlags>(out, f)
   {}
 
   template <int dim>
@@ -1269,8 +1269,8 @@ namespace
   }
 
   TecplotStream::TecplotStream(std::ostream&                    out,
-                               const DataOutBase::TecplotFlags& f)
-    : StreamBase<DataOutBase::TecplotFlags>(out, f)
+                               const DataOutBase::TecplotFlags& f) :
+    StreamBase<DataOutBase::TecplotFlags>(out, f)
   {}
 
   template <int dim>
@@ -1309,8 +1309,8 @@ namespace
     stream << '\n';
   }
 
-  UcdStream::UcdStream(std::ostream& out, const DataOutBase::UcdFlags& f)
-    : StreamBase<DataOutBase::UcdFlags>(out, f)
+  UcdStream::UcdStream(std::ostream& out, const DataOutBase::UcdFlags& f) :
+    StreamBase<DataOutBase::UcdFlags>(out, f)
   {}
 
   template <int dim>
@@ -1379,8 +1379,8 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  VtkStream::VtkStream(std::ostream& out, const DataOutBase::VtkFlags& f)
-    : StreamBase<DataOutBase::VtkFlags>(out, f)
+  VtkStream::VtkStream(std::ostream& out, const DataOutBase::VtkFlags& f) :
+    StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
 
   template <int dim>
@@ -1420,8 +1420,8 @@ namespace
     stream << '\n';
   }
 
-  VtuStream::VtuStream(std::ostream& out, const DataOutBase::VtkFlags& f)
-    : StreamBase<DataOutBase::VtkFlags>(out, f)
+  VtuStream::VtuStream(std::ostream& out, const DataOutBase::VtkFlags& f) :
+    StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
 
   template <int dim>
@@ -1544,8 +1544,10 @@ namespace DataOutBase
   const unsigned int Patch<dim, spacedim>::no_neighbor;
 
   template <int dim, int spacedim>
-  Patch<dim, spacedim>::Patch()
-    : patch_index(no_neighbor), n_subdivisions(1), points_are_available(false)
+  Patch<dim, spacedim>::Patch() :
+    patch_index(no_neighbor),
+    n_subdivisions(1),
+    points_are_available(false)
   // all the other data has a constructor of its own, except for the
   // "neighbors" field, which we set to invalid values.
   {
@@ -1633,8 +1635,9 @@ namespace DataOutBase
   unsigned int Patch<0, spacedim>::n_subdivisions = 1;
 
   template <int spacedim>
-  Patch<0, spacedim>::Patch()
-    : patch_index(no_neighbor), points_are_available(false)
+  Patch<0, spacedim>::Patch() :
+    patch_index(no_neighbor),
+    points_are_available(false)
   {
     Assert(spacedim <= 3, ExcNotImplemented());
   }
@@ -1700,8 +1703,8 @@ namespace DataOutBase
     space_dimension_labels.emplace_back("z");
   }
 
-  GnuplotFlags::GnuplotFlags(const std::vector<std::string>& labels)
-    : space_dimension_labels(labels)
+  GnuplotFlags::GnuplotFlags(const std::vector<std::string>& labels) :
+    space_dimension_labels(labels)
   {}
 
   std::size_t
@@ -1712,14 +1715,16 @@ namespace DataOutBase
 
   PovrayFlags::PovrayFlags(const bool smooth,
                            const bool bicubic_patch,
-                           const bool external_data)
-    : smooth(smooth), bicubic_patch(bicubic_patch), external_data(external_data)
+                           const bool external_data) :
+    smooth(smooth),
+    bicubic_patch(bicubic_patch),
+    external_data(external_data)
   {}
 
   DataOutFilterFlags::DataOutFilterFlags(const bool filter_duplicate_vertices,
-                                         const bool xdmf_hdf5_output)
-    : filter_duplicate_vertices(filter_duplicate_vertices),
-      xdmf_hdf5_output(xdmf_hdf5_output)
+                                         const bool xdmf_hdf5_output) :
+    filter_duplicate_vertices(filter_duplicate_vertices),
+    xdmf_hdf5_output(xdmf_hdf5_output)
   {}
 
   void
@@ -1768,12 +1773,12 @@ namespace DataOutBase
   DXFlags::DXFlags(const bool write_neighbors,
                    const bool int_binary,
                    const bool coordinates_binary,
-                   const bool data_binary)
-    : write_neighbors(write_neighbors),
-      int_binary(int_binary),
-      coordinates_binary(coordinates_binary),
-      data_binary(data_binary),
-      data_double(false)
+                   const bool data_binary) :
+    write_neighbors(write_neighbors),
+    int_binary(int_binary),
+    coordinates_binary(coordinates_binary),
+    data_binary(data_binary),
+    data_double(false)
   {}
 
   void
@@ -1835,15 +1840,15 @@ namespace DataOutBase
                      const int          polar_angle,
                      const unsigned int line_thickness,
                      const bool         margin,
-                     const bool         draw_colorbar)
-    : height(4000),
-      width(0),
-      height_vector(height_vector),
-      azimuth_angle(azimuth_angle),
-      polar_angle(polar_angle),
-      line_thickness(line_thickness),
-      margin(margin),
-      draw_colorbar(draw_colorbar)
+                     const bool         draw_colorbar) :
+    height(4000),
+    width(0),
+    height_vector(height_vector),
+    azimuth_angle(azimuth_angle),
+    polar_angle(polar_angle),
+    line_thickness(line_thickness),
+    margin(margin),
+    draw_colorbar(draw_colorbar)
   {}
 
   void
@@ -1885,19 +1890,19 @@ namespace DataOutBase
                      const bool          draw_mesh,
                      const bool          draw_cells,
                      const bool          shade_cells,
-                     const ColorFunction color_function)
-    : height_vector(height_vector),
-      color_vector(color_vector),
-      size_type(size_type),
-      size(size),
-      line_width(line_width),
-      azimut_angle(azimut_angle),
-      turn_angle(turn_angle),
-      z_scaling(z_scaling),
-      draw_mesh(draw_mesh),
-      draw_cells(draw_cells),
-      shade_cells(shade_cells),
-      color_function(color_function)
+                     const ColorFunction color_function) :
+    height_vector(height_vector),
+    color_vector(color_vector),
+    size_type(size_type),
+    size(size),
+    line_width(line_width),
+    azimut_angle(azimut_angle),
+    turn_angle(turn_angle),
+    z_scaling(z_scaling),
+    draw_mesh(draw_mesh),
+    draw_cells(draw_cells),
+    shade_cells(shade_cells),
+    color_function(color_function)
   {}
 
   EpsFlags::RgbValues
@@ -2114,10 +2119,10 @@ namespace DataOutBase
 
   TecplotFlags::TecplotFlags(const char*  tecplot_binary_file_name,
                              const char*  zone_name,
-                             const double solution_time)
-    : tecplot_binary_file_name(tecplot_binary_file_name),
-      zone_name(zone_name),
-      solution_time(solution_time)
+                             const double solution_time) :
+    tecplot_binary_file_name(tecplot_binary_file_name),
+    zone_name(zone_name),
+    solution_time(solution_time)
   {}
 
   std::size_t
@@ -2131,11 +2136,11 @@ namespace DataOutBase
   VtkFlags::VtkFlags(const double                         time,
                      const unsigned int                   cycle,
                      const bool                           print_date_and_time,
-                     const VtkFlags::ZlibCompressionLevel compression_level)
-    : time(time),
-      cycle(cycle),
-      print_date_and_time(print_date_and_time),
-      compression_level(compression_level)
+                     const VtkFlags::ZlibCompressionLevel compression_level) :
+    time(time),
+    cycle(cycle),
+    print_date_and_time(print_date_and_time),
+    compression_level(compression_level)
   {}
 
   OutputFormat
@@ -4357,8 +4362,11 @@ namespace DataOutBase
     inline TecplotMacros::TecplotMacros(const unsigned int n_nodes,
                                         const unsigned int n_vars,
                                         const unsigned int n_cells,
-                                        const unsigned int n_vert)
-      : n_nodes(n_nodes), n_vars(n_vars), n_cells(n_cells), n_vert(n_vert)
+                                        const unsigned int n_vert) :
+      n_nodes(n_nodes),
+      n_vars(n_vars),
+      n_cells(n_cells),
+      n_vert(n_vert)
     {
       nodalData.resize(n_nodes * n_vars);
       connData.resize(n_cells * n_vert);
@@ -6716,8 +6724,9 @@ namespace DataOutBase
 /* --------------------------- class DataOutInterface ---------------------- */
 
 template <int dim, int spacedim>
-DataOutInterface<dim, spacedim>::DataOutInterface()
-  : default_subdivisions(1), default_fmt(DataOutBase::default_format)
+DataOutInterface<dim, spacedim>::DataOutInterface() :
+  default_subdivisions(1),
+  default_fmt(DataOutBase::default_format)
 {}
 
 template <int dim, int spacedim>
@@ -8097,23 +8106,23 @@ DataOutReader<dim, spacedim>::get_vector_data_ranges() const
 
 // ---------------------------------------------- XDMFEntry ----------
 
-XDMFEntry::XDMFEntry()
-  : valid(false),
-    h5_sol_filename(""),
-    h5_mesh_filename(""),
-    entry_time(0.0),
-    num_nodes(numbers::invalid_unsigned_int),
-    num_cells(numbers::invalid_unsigned_int),
-    dimension(numbers::invalid_unsigned_int),
-    space_dimension(numbers::invalid_unsigned_int)
+XDMFEntry::XDMFEntry() :
+  valid(false),
+  h5_sol_filename(""),
+  h5_mesh_filename(""),
+  entry_time(0.0),
+  num_nodes(numbers::invalid_unsigned_int),
+  num_cells(numbers::invalid_unsigned_int),
+  dimension(numbers::invalid_unsigned_int),
+  space_dimension(numbers::invalid_unsigned_int)
 {}
 
 XDMFEntry::XDMFEntry(const std::string& filename,
                      const double       time,
                      const unsigned int nodes,
                      const unsigned int cells,
-                     const unsigned int dim)
-  : XDMFEntry(filename, filename, time, nodes, cells, dim, dim)
+                     const unsigned int dim) :
+  XDMFEntry(filename, filename, time, nodes, cells, dim, dim)
 {}
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
@@ -8121,8 +8130,8 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const double       time,
                      const unsigned int nodes,
                      const unsigned int cells,
-                     const unsigned int dim)
-  : XDMFEntry(mesh_filename, solution_filename, time, nodes, cells, dim, dim)
+                     const unsigned int dim) :
+  XDMFEntry(mesh_filename, solution_filename, time, nodes, cells, dim, dim)
 {}
 
 XDMFEntry::XDMFEntry(const std::string& mesh_filename,
@@ -8131,15 +8140,15 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
                      const unsigned int nodes,
                      const unsigned int cells,
                      const unsigned int dim,
-                     const unsigned int spacedim)
-  : valid(true),
-    h5_sol_filename(solution_filename),
-    h5_mesh_filename(mesh_filename),
-    entry_time(time),
-    num_nodes(nodes),
-    num_cells(cells),
-    dimension(dim),
-    space_dimension(spacedim)
+                     const unsigned int spacedim) :
+  valid(true),
+  h5_sol_filename(solution_filename),
+  h5_mesh_filename(mesh_filename),
+  entry_time(time),
+  num_nodes(nodes),
+  num_cells(cells),
+  dimension(dim),
+  space_dimension(spacedim)
 {}
 
 void

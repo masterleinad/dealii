@@ -37,16 +37,17 @@ namespace PETScWrappers
 
     Vector::Vector(const MPI_Comm& communicator,
                    const size_type n,
-                   const size_type local_size)
-      : communicator(communicator)
+                   const size_type local_size) :
+      communicator(communicator)
     {
       Vector::create_vector(n, local_size);
     }
 
     Vector::Vector(const MPI_Comm&   communicator,
                    const VectorBase& v,
-                   const size_type   local_size)
-      : VectorBase(v), communicator(communicator)
+                   const size_type   local_size) :
+      VectorBase(v),
+      communicator(communicator)
     {
       // In the past (before it was deprecated) this constructor did a
       // byte-for-byte copy of v. This choice resulted in two problems:
@@ -62,8 +63,8 @@ namespace PETScWrappers
 
     Vector::Vector(const IndexSet& local,
                    const IndexSet& ghost,
-                   const MPI_Comm& communicator)
-      : communicator(communicator)
+                   const MPI_Comm& communicator) :
+      communicator(communicator)
     {
       Assert(local.is_ascending_and_one_to_one(communicator),
              ExcNotImplemented());
@@ -74,8 +75,8 @@ namespace PETScWrappers
       Vector::create_vector(local.size(), local.n_elements(), ghost_set);
     }
 
-    Vector::Vector(const IndexSet& local, const MPI_Comm& communicator)
-      : communicator(communicator)
+    Vector::Vector(const IndexSet& local, const MPI_Comm& communicator) :
+      communicator(communicator)
     {
       Assert(local.is_ascending_and_one_to_one(communicator),
              ExcNotImplemented());

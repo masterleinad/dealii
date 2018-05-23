@@ -2621,8 +2621,10 @@ namespace TrilinosWrappers
   {
     inline AccessorBase::AccessorBase(SparseMatrix* matrix,
                                       size_type     row,
-                                      size_type     index)
-      : matrix(matrix), a_row(row), a_index(index)
+                                      size_type     index) :
+      matrix(matrix),
+      a_row(row),
+      a_index(index)
     {
       visit_present_row();
     }
@@ -2650,13 +2652,13 @@ namespace TrilinosWrappers
 
     inline Accessor<true>::Accessor(MatrixType*     matrix,
                                     const size_type row,
-                                    const size_type index)
-      : AccessorBase(const_cast<SparseMatrix*>(matrix), row, index)
+                                    const size_type index) :
+      AccessorBase(const_cast<SparseMatrix*>(matrix), row, index)
     {}
 
     template <bool Other>
-    inline Accessor<true>::Accessor(const Accessor<Other>& other)
-      : AccessorBase(other)
+    inline Accessor<true>::Accessor(const Accessor<Other>& other) :
+      AccessorBase(other)
     {}
 
     inline TrilinosScalar
@@ -2666,8 +2668,8 @@ namespace TrilinosWrappers
       return (*value_cache)[a_index];
     }
 
-    inline Accessor<false>::Reference::Reference(const Accessor<false>& acc)
-      : accessor(const_cast<Accessor<false>&>(acc))
+    inline Accessor<false>::Reference::Reference(const Accessor<false>& acc) :
+      accessor(const_cast<Accessor<false>&>(acc))
     {}
 
     inline Accessor<false>::Reference::operator TrilinosScalar() const
@@ -2722,8 +2724,8 @@ namespace TrilinosWrappers
 
     inline Accessor<false>::Accessor(MatrixType*     matrix,
                                      const size_type row,
-                                     const size_type index)
-      : AccessorBase(matrix, row, index)
+                                     const size_type index) :
+      AccessorBase(matrix, row, index)
     {}
 
     inline Accessor<false>::Reference
@@ -2736,14 +2738,14 @@ namespace TrilinosWrappers
     template <bool Constness>
     inline Iterator<Constness>::Iterator(MatrixType*     matrix,
                                          const size_type row,
-                                         const size_type index)
-      : accessor(matrix, row, index)
+                                         const size_type index) :
+      accessor(matrix, row, index)
     {}
 
     template <bool Constness>
     template <bool Other>
-    inline Iterator<Constness>::Iterator(const Iterator<Other>& other)
-      : accessor(other.accessor)
+    inline Iterator<Constness>::Iterator(const Iterator<Other>& other) :
+      accessor(other.accessor)
     {}
 
     template <bool Constness>

@@ -44,10 +44,10 @@ inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
   const Triangulation<dim, spacedim>* tria,
   const int                           level,
   const int                           index,
-  const AccessorData*)
-  : present_level((structdim == dim) ? level : 0),
-    present_index(index),
-    tria(tria)
+  const AccessorData*) :
+  present_level((structdim == dim) ? level : 0),
+  present_index(index),
+  tria(tria)
 {
   // non-cells have no level, so a 0
   // should have been passed, or a -1
@@ -63,8 +63,10 @@ inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
-  const TriaAccessorBase<structdim, dim, spacedim>& a)
-  : present_level(a.present_level), present_index(a.present_index), tria(a.tria)
+  const TriaAccessorBase<structdim, dim, spacedim>& a) :
+  present_level(a.present_level),
+  present_index(a.present_index),
+  tria(a.tria)
 {}
 
 template <int structdim, int dim, int spacedim>
@@ -376,9 +378,9 @@ InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
 
 template <int structdim, int dim, int spacedim>
 InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
-  const InvalidAccessor& i)
-  : TriaAccessorBase<structdim, dim, spacedim>(
-      static_cast<const TriaAccessorBase<structdim, dim, spacedim>&>(i))
+  const InvalidAccessor& i) :
+  TriaAccessorBase<structdim, dim, spacedim>(
+    static_cast<const TriaAccessorBase<structdim, dim, spacedim>&>(i))
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -1036,8 +1038,8 @@ inline TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
   const Triangulation<dim, spacedim>* parent,
   const int                           level,
   const int                           index,
-  const AccessorData*                 local_data)
-  : TriaAccessorBase<structdim, dim, spacedim>(parent, level, index, local_data)
+  const AccessorData*                 local_data) :
+  TriaAccessorBase<structdim, dim, spacedim>(parent, level, index, local_data)
 {}
 
 template <int structdim, int dim, int spacedim>
@@ -2030,8 +2032,9 @@ TriaAccessor<structdim, dim, spacedim>::is_translation_of(
 template <int dim, int spacedim>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
   const Triangulation<dim, spacedim>* tria,
-  const unsigned int                  vertex_index)
-  : tria(tria), global_vertex_index(vertex_index)
+  const unsigned int                  vertex_index) :
+  tria(tria),
+  global_vertex_index(vertex_index)
 {}
 
 template <int dim, int spacedim>
@@ -2039,15 +2042,17 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
   const Triangulation<dim, spacedim>* tria,
   const int /*level*/,
   const int index,
-  const AccessorData*)
-  : tria(tria), global_vertex_index(index)
+  const AccessorData*) :
+  tria(tria),
+  global_vertex_index(index)
 {}
 
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2>&)
-  : tria(nullptr), global_vertex_index(numbers::invalid_unsigned_int)
+  const TriaAccessor<structdim2, dim2, spacedim2>&) :
+  tria(nullptr),
+  global_vertex_index(numbers::invalid_unsigned_int)
 {
   Assert(false, ExcImpossibleInDim(0));
 }
@@ -2055,8 +2060,9 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2>&)
-  : tria(nullptr), global_vertex_index(numbers::invalid_unsigned_int)
+  const InvalidAccessor<structdim2, dim2, spacedim2>&) :
+  tria(nullptr),
+  global_vertex_index(numbers::invalid_unsigned_int)
 {
   Assert(false, ExcImpossibleInDim(0));
 }
@@ -2313,8 +2319,10 @@ template <int spacedim>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
   const Triangulation<1, spacedim>* tria,
   const VertexKind                  vertex_kind,
-  const unsigned int                vertex_index)
-  : tria(tria), vertex_kind(vertex_kind), global_vertex_index(vertex_index)
+  const unsigned int                vertex_index) :
+  tria(tria),
+  vertex_kind(vertex_kind),
+  global_vertex_index(vertex_index)
 {}
 
 template <int spacedim>
@@ -2322,10 +2330,10 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
   const Triangulation<1, spacedim>* tria,
   const int                         level,
   const int                         index,
-  const AccessorData*)
-  : tria(tria),
-    vertex_kind(interior_vertex),
-    global_vertex_index(numbers::invalid_unsigned_int)
+  const AccessorData*) :
+  tria(tria),
+  vertex_kind(interior_vertex),
+  global_vertex_index(numbers::invalid_unsigned_int)
 {
   // in general, calling this constructor should yield an error -- users should
   // instead call the one immediately above. however, if you create something
@@ -2341,10 +2349,10 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 template <int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2>&)
-  : tria(nullptr),
-    vertex_kind(interior_vertex),
-    global_vertex_index(numbers::invalid_unsigned_int)
+  const TriaAccessor<structdim2, dim2, spacedim2>&) :
+  tria(nullptr),
+  vertex_kind(interior_vertex),
+  global_vertex_index(numbers::invalid_unsigned_int)
 {
   Assert(false, ExcImpossibleInDim(0));
 }
@@ -2352,10 +2360,10 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 template <int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2>&)
-  : tria(nullptr),
-    vertex_kind(interior_vertex),
-    global_vertex_index(numbers::invalid_unsigned_int)
+  const InvalidAccessor<structdim2, dim2, spacedim2>&) :
+  tria(nullptr),
+  vertex_kind(interior_vertex),
+  global_vertex_index(numbers::invalid_unsigned_int)
 {
   Assert(false, ExcImpossibleInDim(0));
 }
@@ -2669,15 +2677,15 @@ inline CellAccessor<dim, spacedim>::CellAccessor(
   const Triangulation<dim, spacedim>* parent,
   const int                           level,
   const int                           index,
-  const AccessorData*                 local_data)
-  : TriaAccessor<dim, dim, spacedim>(parent, level, index, local_data)
+  const AccessorData*                 local_data) :
+  TriaAccessor<dim, dim, spacedim>(parent, level, index, local_data)
 {}
 
 template <int dim, int spacedim>
 inline CellAccessor<dim, spacedim>::CellAccessor(
-  const TriaAccessor<dim, dim, spacedim>& cell_accessor)
-  : TriaAccessor<dim, dim, spacedim>(
-      static_cast<const TriaAccessor<dim, dim, spacedim>&>(cell_accessor))
+  const TriaAccessor<dim, dim, spacedim>& cell_accessor) :
+  TriaAccessor<dim, dim, spacedim>(
+    static_cast<const TriaAccessor<dim, dim, spacedim>&>(cell_accessor))
 {}
 
 namespace internal

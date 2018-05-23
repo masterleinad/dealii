@@ -320,16 +320,16 @@ namespace Step34
   // knowledge of the number of components.
   template <int dim>
   BEMProblem<dim>::BEMProblem(const unsigned int fe_degree,
-                              const unsigned int mapping_degree)
-    : fe(fe_degree),
-      dh(tria),
-      mapping(mapping_degree, true),
-      wind(dim),
-      singular_quadrature_order(5),
-      n_cycles(4),
-      external_refinement(5),
-      run_in_this_dimension(true),
-      extend_solution(true)
+                              const unsigned int mapping_degree) :
+    fe(fe_degree),
+    dh(tria),
+    mapping(mapping_degree, true),
+    wind(dim),
+    singular_quadrature_order(5),
+    n_cycles(4),
+    external_refinement(5),
+    run_in_this_dimension(true),
+    extend_solution(true)
   {}
 
   template <int dim>

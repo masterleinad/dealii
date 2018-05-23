@@ -62,13 +62,14 @@ namespace SLEPcWrappers
   /* ------------------- TransformationShift --------------------- */
 
   TransformationShift::AdditionalData::AdditionalData(
-    const double shift_parameter)
-    : shift_parameter(shift_parameter)
+    const double shift_parameter) :
+    shift_parameter(shift_parameter)
   {}
 
   TransformationShift::TransformationShift(const MPI_Comm& mpi_communicator,
-                                           const AdditionalData& data)
-    : TransformationBase(mpi_communicator), additional_data(data)
+                                           const AdditionalData& data) :
+    TransformationBase(mpi_communicator),
+    additional_data(data)
   {
     PetscErrorCode ierr = STSetType(st, const_cast<char*>(STSHIFT));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
@@ -80,14 +81,15 @@ namespace SLEPcWrappers
   /* ---------------- TransformationShiftInvert ------------------ */
 
   TransformationShiftInvert::AdditionalData::AdditionalData(
-    const double shift_parameter)
-    : shift_parameter(shift_parameter)
+    const double shift_parameter) :
+    shift_parameter(shift_parameter)
   {}
 
   TransformationShiftInvert::TransformationShiftInvert(
     const MPI_Comm&       mpi_communicator,
-    const AdditionalData& data)
-    : TransformationBase(mpi_communicator), additional_data(data)
+    const AdditionalData& data) :
+    TransformationBase(mpi_communicator),
+    additional_data(data)
   {
     PetscErrorCode ierr = STSetType(st, const_cast<char*>(STSINVERT));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
@@ -99,14 +101,15 @@ namespace SLEPcWrappers
   /* --------------- TransformationSpectrumFolding ----------------- */
 
   TransformationSpectrumFolding::AdditionalData::AdditionalData(
-    const double shift_parameter)
-    : shift_parameter(shift_parameter)
+    const double shift_parameter) :
+    shift_parameter(shift_parameter)
   {}
 
   TransformationSpectrumFolding::TransformationSpectrumFolding(
     const MPI_Comm&       mpi_communicator,
-    const AdditionalData& data)
-    : TransformationBase(mpi_communicator), additional_data(data)
+    const AdditionalData& data) :
+    TransformationBase(mpi_communicator),
+    additional_data(data)
   {
 #  if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
     PetscErrorCode ierr = STSetType(st, const_cast<char*>(STFOLD));
@@ -128,13 +131,15 @@ namespace SLEPcWrappers
 
   TransformationCayley::AdditionalData::AdditionalData(
     const double shift_parameter,
-    const double antishift_parameter)
-    : shift_parameter(shift_parameter), antishift_parameter(antishift_parameter)
+    const double antishift_parameter) :
+    shift_parameter(shift_parameter),
+    antishift_parameter(antishift_parameter)
   {}
 
   TransformationCayley::TransformationCayley(const MPI_Comm& mpi_communicator,
-                                             const AdditionalData& data)
-    : TransformationBase(mpi_communicator), additional_data(data)
+                                             const AdditionalData& data) :
+    TransformationBase(mpi_communicator),
+    additional_data(data)
   {
     PetscErrorCode ierr = STSetType(st, const_cast<char*>(STCAYLEY));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));

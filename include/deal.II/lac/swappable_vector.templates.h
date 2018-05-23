@@ -27,8 +27,10 @@ SwappableVector<number>::SwappableVector() : data_is_preloaded(false)
 {}
 
 template <typename number>
-SwappableVector<number>::SwappableVector(const SwappableVector<number>& v)
-  : Vector<number>(v), filename(), data_is_preloaded(false)
+SwappableVector<number>::SwappableVector(const SwappableVector<number>& v) :
+  Vector<number>(v),
+  filename(),
+  data_is_preloaded(false)
 {
   Assert(v.filename == "", ExcInvalidCopyOperation());
 }

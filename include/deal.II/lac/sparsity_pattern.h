@@ -1173,13 +1173,14 @@ private:
 namespace SparsityPatternIterators
 {
   inline Accessor::Accessor(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
-    : sparsity_pattern(sparsity_pattern), index_within_sparsity(i)
+                            const std::size_t      i) :
+    sparsity_pattern(sparsity_pattern),
+    index_within_sparsity(i)
   {}
 
-  inline Accessor::Accessor(const SparsityPattern* sparsity_pattern)
-    : sparsity_pattern(sparsity_pattern),
-      index_within_sparsity(sparsity_pattern->rowstart[sparsity_pattern->rows])
+  inline Accessor::Accessor(const SparsityPattern* sparsity_pattern) :
+    sparsity_pattern(sparsity_pattern),
+    index_within_sparsity(sparsity_pattern->rowstart[sparsity_pattern->rows])
   {}
 
   inline bool
@@ -1252,8 +1253,8 @@ namespace SparsityPatternIterators
   }
 
   inline Iterator::Iterator(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
-    : accessor(sparsity_pattern, i)
+                            const std::size_t      i) :
+    accessor(sparsity_pattern, i)
   {}
 
   inline Iterator&

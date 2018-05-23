@@ -159,8 +159,11 @@ namespace polytest
   };
 
   template <int dim>
-  polytest<dim>::polytest(unsigned int degree)
-    : p_order(degree), quad_order(2 * degree + 3), dof_handler(tria), fe(degree)
+  polytest<dim>::polytest(unsigned int degree) :
+    p_order(degree),
+    quad_order(2 * degree + 3),
+    dof_handler(tria),
+    fe(degree)
   {}
   template <int dim>
   polytest<dim>::~polytest()

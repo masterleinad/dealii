@@ -467,8 +467,11 @@ namespace Step44
   class Time
   {
   public:
-    Time(const double time_end, const double delta_t)
-      : timestep(0), time_current(0.0), time_end(time_end), delta_t(delta_t)
+    Time(const double time_end, const double delta_t) :
+      timestep(0),
+      time_current(0.0),
+      time_end(time_end),
+      delta_t(delta_t)
     {}
 
     virtual ~Time()
@@ -542,13 +545,14 @@ namespace Step44
   class Material_Compressible_Neo_Hook_Three_Field
   {
   public:
-    Material_Compressible_Neo_Hook_Three_Field(const double mu, const double nu)
-      : kappa((2.0 * mu * (1.0 + nu)) / (3.0 * (1.0 - 2.0 * nu))),
-        c_1(mu / 2.0),
-        det_F(1.0),
-        p_tilde(0.0),
-        J_tilde(1.0),
-        b_bar(Physics::Elasticity::StandardTensors<dim>::I)
+    Material_Compressible_Neo_Hook_Three_Field(const double mu,
+                                               const double nu) :
+      kappa((2.0 * mu * (1.0 + nu)) / (3.0 * (1.0 - 2.0 * nu))),
+      c_1(mu / 2.0),
+      det_F(1.0),
+      p_tilde(0.0),
+      J_tilde(1.0),
+      b_bar(Physics::Elasticity::StandardTensors<dim>::I)
     {
       Assert(kappa > 0, ExcInternalError());
     }
@@ -722,12 +726,12 @@ namespace Step44
   class PointHistory
   {
   public:
-    PointHistory()
-      : F_inv(Physics::Elasticity::StandardTensors<dim>::I),
-        tau(SymmetricTensor<2, dim>()),
-        d2Psi_vol_dJ2(0.0),
-        dPsi_vol_dJ(0.0),
-        Jc(SymmetricTensor<4, dim>())
+    PointHistory() :
+      F_inv(Physics::Elasticity::StandardTensors<dim>::I),
+      tau(SymmetricTensor<2, dim>()),
+      d2Psi_vol_dJ2(0.0),
+      dPsi_vol_dJ(0.0),
+      Jc(SymmetricTensor<4, dim>())
     {}
 
     virtual ~PointHistory()
@@ -1116,37 +1120,37 @@ namespace Step44
 
   // We initialize the Solid class using data extracted from the parameter file.
   template <int dim>
-  Solid<dim>::Solid(const std::string& input_file)
-    : parameters(input_file),
-      vol_reference(0.),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      time(parameters.end_time, parameters.delta_t),
-      timer(std::cout, TimerOutput::summary, TimerOutput::wall_times),
-      degree(parameters.poly_degree),
-      // The Finite Element System is composed of dim continuous displacement
-      // DOFs, and discontinuous pressure and dilatation DOFs. In an attempt to
-      // satisfy the Babuska-Brezzi or LBB stability conditions (see Hughes
-      // (2000)), we setup a $Q_n \times DGPM_{n-1} \times DGPM_{n-1}$
-      // system. $Q_2 \times DGPM_1 \times DGPM_1$ elements satisfy this
-      // condition, while $Q_1 \times DGPM_0 \times DGPM_0$ elements do
-      // not. However, it has been shown that the latter demonstrate good
-      // convergence characteristics nonetheless.
-      fe(FE_Q<dim>(parameters.poly_degree),
-         dim, // displacement
-         FE_DGPMonomial<dim>(parameters.poly_degree - 1),
-         1, // pressure
-         FE_DGPMonomial<dim>(parameters.poly_degree - 1),
-         1), // dilatation
-      dof_handler_ref(triangulation),
-      dofs_per_cell(fe.dofs_per_cell),
-      u_fe(first_u_component),
-      p_fe(p_component),
-      J_fe(J_component),
-      dofs_per_block(n_blocks),
-      qf_cell(parameters.quad_order),
-      qf_face(parameters.quad_order),
-      n_q_points(qf_cell.size()),
-      n_q_points_f(qf_face.size())
+  Solid<dim>::Solid(const std::string& input_file) :
+    parameters(input_file),
+    vol_reference(0.),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    time(parameters.end_time, parameters.delta_t),
+    timer(std::cout, TimerOutput::summary, TimerOutput::wall_times),
+    degree(parameters.poly_degree),
+    // The Finite Element System is composed of dim continuous displacement
+    // DOFs, and discontinuous pressure and dilatation DOFs. In an attempt to
+    // satisfy the Babuska-Brezzi or LBB stability conditions (see Hughes
+    // (2000)), we setup a $Q_n \times DGPM_{n-1} \times DGPM_{n-1}$
+    // system. $Q_2 \times DGPM_1 \times DGPM_1$ elements satisfy this
+    // condition, while $Q_1 \times DGPM_0 \times DGPM_0$ elements do
+    // not. However, it has been shown that the latter demonstrate good
+    // convergence characteristics nonetheless.
+    fe(FE_Q<dim>(parameters.poly_degree),
+       dim, // displacement
+       FE_DGPMonomial<dim>(parameters.poly_degree - 1),
+       1, // pressure
+       FE_DGPMonomial<dim>(parameters.poly_degree - 1),
+       1), // dilatation
+    dof_handler_ref(triangulation),
+    dofs_per_cell(fe.dofs_per_cell),
+    u_fe(first_u_component),
+    p_fe(p_component),
+    J_fe(J_component),
+    dofs_per_block(n_blocks),
+    qf_cell(parameters.quad_order),
+    qf_face(parameters.quad_order),
+    n_q_points(qf_cell.size()),
+    n_q_points_f(qf_face.size())
   {
     Assert(dim == 2 || dim == 3,
            ExcMessage("This problem only works in 2 or 3 space dimensions."));
@@ -1250,9 +1254,9 @@ namespace Step44
     FullMatrix<double>                   cell_matrix;
     std::vector<types::global_dof_index> local_dof_indices;
 
-    PerTaskData_K(const unsigned int dofs_per_cell)
-      : cell_matrix(dofs_per_cell, dofs_per_cell),
-        local_dof_indices(dofs_per_cell)
+    PerTaskData_K(const unsigned int dofs_per_cell) :
+      cell_matrix(dofs_per_cell, dofs_per_cell),
+      local_dof_indices(dofs_per_cell)
     {}
 
     void
@@ -1277,23 +1281,22 @@ namespace Step44
 
     ScratchData_K(const FiniteElement<dim>& fe_cell,
                   const QGauss<dim>&        qf_cell,
-                  const UpdateFlags         uf_cell)
-      : fe_values_ref(fe_cell, qf_cell, uf_cell),
-        Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
-        grad_Nx(qf_cell.size(),
-                std::vector<Tensor<2, dim>>(fe_cell.dofs_per_cell)),
-        symm_grad_Nx(
-          qf_cell.size(),
-          std::vector<SymmetricTensor<2, dim>>(fe_cell.dofs_per_cell))
+                  const UpdateFlags         uf_cell) :
+      fe_values_ref(fe_cell, qf_cell, uf_cell),
+      Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
+      grad_Nx(qf_cell.size(),
+              std::vector<Tensor<2, dim>>(fe_cell.dofs_per_cell)),
+      symm_grad_Nx(qf_cell.size(),
+                   std::vector<SymmetricTensor<2, dim>>(fe_cell.dofs_per_cell))
     {}
 
-    ScratchData_K(const ScratchData_K& rhs)
-      : fe_values_ref(rhs.fe_values_ref.get_fe(),
-                      rhs.fe_values_ref.get_quadrature(),
-                      rhs.fe_values_ref.get_update_flags()),
-        Nx(rhs.Nx),
-        grad_Nx(rhs.grad_Nx),
-        symm_grad_Nx(rhs.symm_grad_Nx)
+    ScratchData_K(const ScratchData_K& rhs) :
+      fe_values_ref(rhs.fe_values_ref.get_fe(),
+                    rhs.fe_values_ref.get_quadrature(),
+                    rhs.fe_values_ref.get_update_flags()),
+      Nx(rhs.Nx),
+      grad_Nx(rhs.grad_Nx),
+      symm_grad_Nx(rhs.symm_grad_Nx)
     {}
 
     void
@@ -1327,8 +1330,9 @@ namespace Step44
     Vector<double>                       cell_rhs;
     std::vector<types::global_dof_index> local_dof_indices;
 
-    PerTaskData_RHS(const unsigned int dofs_per_cell)
-      : cell_rhs(dofs_per_cell), local_dof_indices(dofs_per_cell)
+    PerTaskData_RHS(const unsigned int dofs_per_cell) :
+      cell_rhs(dofs_per_cell),
+      local_dof_indices(dofs_per_cell)
     {}
 
     void
@@ -1351,24 +1355,23 @@ namespace Step44
                     const QGauss<dim>&        qf_cell,
                     const UpdateFlags         uf_cell,
                     const QGauss<dim - 1>&    qf_face,
-                    const UpdateFlags         uf_face)
-      : fe_values_ref(fe_cell, qf_cell, uf_cell),
-        fe_face_values_ref(fe_cell, qf_face, uf_face),
-        Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
-        symm_grad_Nx(
-          qf_cell.size(),
-          std::vector<SymmetricTensor<2, dim>>(fe_cell.dofs_per_cell))
+                    const UpdateFlags         uf_face) :
+      fe_values_ref(fe_cell, qf_cell, uf_cell),
+      fe_face_values_ref(fe_cell, qf_face, uf_face),
+      Nx(qf_cell.size(), std::vector<double>(fe_cell.dofs_per_cell)),
+      symm_grad_Nx(qf_cell.size(),
+                   std::vector<SymmetricTensor<2, dim>>(fe_cell.dofs_per_cell))
     {}
 
-    ScratchData_RHS(const ScratchData_RHS& rhs)
-      : fe_values_ref(rhs.fe_values_ref.get_fe(),
-                      rhs.fe_values_ref.get_quadrature(),
-                      rhs.fe_values_ref.get_update_flags()),
-        fe_face_values_ref(rhs.fe_face_values_ref.get_fe(),
-                           rhs.fe_face_values_ref.get_quadrature(),
-                           rhs.fe_face_values_ref.get_update_flags()),
-        Nx(rhs.Nx),
-        symm_grad_Nx(rhs.symm_grad_Nx)
+    ScratchData_RHS(const ScratchData_RHS& rhs) :
+      fe_values_ref(rhs.fe_values_ref.get_fe(),
+                    rhs.fe_values_ref.get_quadrature(),
+                    rhs.fe_values_ref.get_update_flags()),
+      fe_face_values_ref(rhs.fe_face_values_ref.get_fe(),
+                         rhs.fe_face_values_ref.get_quadrature(),
+                         rhs.fe_face_values_ref.get_update_flags()),
+      Nx(rhs.Nx),
+      symm_grad_Nx(rhs.symm_grad_Nx)
     {}
 
     void
@@ -1419,18 +1422,18 @@ namespace Step44
     PerTaskData_SC(const unsigned int dofs_per_cell,
                    const unsigned int n_u,
                    const unsigned int n_p,
-                   const unsigned int n_J)
-      : cell_matrix(dofs_per_cell, dofs_per_cell),
-        local_dof_indices(dofs_per_cell),
-        k_orig(dofs_per_cell, dofs_per_cell),
-        k_pu(n_p, n_u),
-        k_pJ(n_p, n_J),
-        k_JJ(n_J, n_J),
-        k_pJ_inv(n_p, n_J),
-        k_bbar(n_u, n_u),
-        A(n_J, n_u),
-        B(n_J, n_u),
-        C(n_p, n_u)
+                   const unsigned int n_J) :
+      cell_matrix(dofs_per_cell, dofs_per_cell),
+      local_dof_indices(dofs_per_cell),
+      k_orig(dofs_per_cell, dofs_per_cell),
+      k_pu(n_p, n_u),
+      k_pJ(n_p, n_J),
+      k_JJ(n_J, n_J),
+      k_pJ_inv(n_p, n_J),
+      k_bbar(n_u, n_u),
+      A(n_J, n_u),
+      B(n_J, n_u),
+      C(n_p, n_u)
     {}
 
     void
@@ -1491,22 +1494,22 @@ namespace Step44
     ScratchData_UQPH(const FiniteElement<dim>&  fe_cell,
                      const QGauss<dim>&         qf_cell,
                      const UpdateFlags          uf_cell,
-                     const BlockVector<double>& solution_total)
-      : solution_total(solution_total),
-        solution_grads_u_total(qf_cell.size()),
-        solution_values_p_total(qf_cell.size()),
-        solution_values_J_total(qf_cell.size()),
-        fe_values_ref(fe_cell, qf_cell, uf_cell)
+                     const BlockVector<double>& solution_total) :
+      solution_total(solution_total),
+      solution_grads_u_total(qf_cell.size()),
+      solution_values_p_total(qf_cell.size()),
+      solution_values_J_total(qf_cell.size()),
+      fe_values_ref(fe_cell, qf_cell, uf_cell)
     {}
 
-    ScratchData_UQPH(const ScratchData_UQPH& rhs)
-      : solution_total(rhs.solution_total),
-        solution_grads_u_total(rhs.solution_grads_u_total),
-        solution_values_p_total(rhs.solution_values_p_total),
-        solution_values_J_total(rhs.solution_values_J_total),
-        fe_values_ref(rhs.fe_values_ref.get_fe(),
-                      rhs.fe_values_ref.get_quadrature(),
-                      rhs.fe_values_ref.get_update_flags())
+    ScratchData_UQPH(const ScratchData_UQPH& rhs) :
+      solution_total(rhs.solution_total),
+      solution_grads_u_total(rhs.solution_grads_u_total),
+      solution_values_p_total(rhs.solution_values_p_total),
+      solution_values_J_total(rhs.solution_values_J_total),
+      fe_values_ref(rhs.fe_values_ref.get_fe(),
+                    rhs.fe_values_ref.get_quadrature(),
+                    rhs.fe_values_ref.get_update_flags())
     {}
 
     void

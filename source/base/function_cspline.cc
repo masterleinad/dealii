@@ -25,8 +25,9 @@ namespace Functions
 {
   template <int dim>
   CSpline<dim>::CSpline(const std::vector<double>& x_,
-                        const std::vector<double>& y_)
-    : interpolation_points(x_), interpolation_values(y_)
+                        const std::vector<double>& y_) :
+    interpolation_points(x_),
+    interpolation_values(y_)
   {
     Assert(interpolation_points.size() > 0,
            ExcCSplineEmpty(interpolation_points.size()));

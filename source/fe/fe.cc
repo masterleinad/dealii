@@ -33,8 +33,8 @@ DEAL_II_NAMESPACE_OPEN
 /*------------------------------- FiniteElement ----------------------*/
 
 template <int dim, int spacedim>
-FiniteElement<dim, spacedim>::InternalDataBase::InternalDataBase()
-  : update_each(update_default)
+FiniteElement<dim, spacedim>::InternalDataBase::InternalDataBase() :
+  update_each(update_default)
 {}
 
 template <int dim, int spacedim>
@@ -48,36 +48,34 @@ template <int dim, int spacedim>
 FiniteElement<dim, spacedim>::FiniteElement(
   const FiniteElementData<dim>&     fe_data,
   const std::vector<bool>&          r_i_a_f,
-  const std::vector<ComponentMask>& nonzero_c)
-  : FiniteElementData<dim>(fe_data),
-    adjust_quad_dof_index_for_face_orientation_table(
-      dim == 3 ? this->dofs_per_quad : 0,
-      dim == 3 ? 8 : 0),
-    adjust_line_dof_index_for_line_orientation_table(
-      dim == 3 ? this->dofs_per_line : 0),
-    system_to_base_table(this->dofs_per_cell),
-    face_system_to_base_table(this->dofs_per_face),
-    component_to_base_table(this->components,
-                            std::make_pair(std::make_pair(0U, 0U), 0U)),
+  const std::vector<ComponentMask>& nonzero_c) :
+  FiniteElementData<dim>(fe_data),
+  adjust_quad_dof_index_for_face_orientation_table(
+    dim == 3 ? this->dofs_per_quad : 0,
+    dim == 3 ? 8 : 0),
+  adjust_line_dof_index_for_line_orientation_table(
+    dim == 3 ? this->dofs_per_line : 0),
+  system_to_base_table(this->dofs_per_cell),
+  face_system_to_base_table(this->dofs_per_face),
+  component_to_base_table(this->components,
+                          std::make_pair(std::make_pair(0U, 0U), 0U)),
 
-    // Special handling of vectors of length one: in this case, we
-    // assume that all entries were supposed to be equal
-    restriction_is_additive_flags(
-      r_i_a_f.size() == 1 ?
-        std::vector<bool>(fe_data.dofs_per_cell, r_i_a_f[0]) :
-        r_i_a_f),
-    nonzero_components(
-      nonzero_c.size() == 1 ?
-        std::vector<ComponentMask>(fe_data.dofs_per_cell, nonzero_c[0]) :
-        nonzero_c),
-    n_nonzero_components_table(
-      compute_n_nonzero_components(nonzero_components)),
-    cached_primitivity(
-      std::find_if(
-        n_nonzero_components_table.begin(),
-        n_nonzero_components_table.end(),
-        std::bind(std::not_equal_to<unsigned int>(), std::placeholders::_1, 1U))
-      == n_nonzero_components_table.end())
+  // Special handling of vectors of length one: in this case, we
+  // assume that all entries were supposed to be equal
+  restriction_is_additive_flags(
+    r_i_a_f.size() == 1 ? std::vector<bool>(fe_data.dofs_per_cell, r_i_a_f[0]) :
+                          r_i_a_f),
+  nonzero_components(
+    nonzero_c.size() == 1 ?
+      std::vector<ComponentMask>(fe_data.dofs_per_cell, nonzero_c[0]) :
+      nonzero_c),
+  n_nonzero_components_table(compute_n_nonzero_components(nonzero_components)),
+  cached_primitivity(
+    std::find_if(
+      n_nonzero_components_table.begin(),
+      n_nonzero_components_table.end(),
+      std::bind(std::not_equal_to<unsigned int>(), std::placeholders::_1, 1U))
+    == n_nonzero_components_table.end())
 {
   Assert(restriction_is_additive_flags.size() == this->dofs_per_cell,
          ExcDimensionMismatch(restriction_is_additive_flags.size(),

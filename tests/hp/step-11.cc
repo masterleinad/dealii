@@ -78,10 +78,10 @@ private:
 };
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
-  : fe(FE_Q<dim>(1)),
-    dof_handler(triangulation),
-    mapping(MappingQ<dim>(mapping_degree))
+LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree) :
+  fe(FE_Q<dim>(1)),
+  dof_handler(triangulation),
+  mapping(MappingQ<dim>(mapping_degree))
 {
   deallog << "Using mapping with degree " << mapping_degree << ":" << std::endl
           << "============================" << std::endl;

@@ -113,15 +113,15 @@ namespace Step40
   };
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem()
-    : mpi_communicator(MPI_COMM_WORLD),
-      triangulation(mpi_communicator),
-      dof_handler(triangulation),
-      fe(2),
-      pcout(Utilities::MPI::this_mpi_process(mpi_communicator) == 0 ?
-              deallog.get_file_stream() :
-              std::cout,
-            (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
+  LaplaceProblem<dim>::LaplaceProblem() :
+    mpi_communicator(MPI_COMM_WORLD),
+    triangulation(mpi_communicator),
+    dof_handler(triangulation),
+    fe(2),
+    pcout(Utilities::MPI::this_mpi_process(mpi_communicator) == 0 ?
+            deallog.get_file_stream() :
+            std::cout,
+          (Utilities::MPI::this_mpi_process(mpi_communicator) == 0))
   {}
 
   template <int dim>

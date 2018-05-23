@@ -84,10 +84,10 @@ private:
 };
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-    fe(1),
-    mg_dof_handler(triangulation)
+LaplaceProblem<dim>::LaplaceProblem() :
+  triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+  fe(1),
+  mg_dof_handler(triangulation)
 {}
 
 template <int dim>

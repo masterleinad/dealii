@@ -1063,8 +1063,9 @@ private:
 namespace BlockMatrixIterators
 {
   template <class BlockMatrixType>
-  inline AccessorBase<BlockMatrixType>::AccessorBase()
-    : row_block(0), col_block(0)
+  inline AccessorBase<BlockMatrixType>::AccessorBase() :
+    row_block(0),
+    col_block(0)
   {}
 
   template <class BlockMatrixType>
@@ -1089,8 +1090,9 @@ namespace BlockMatrixIterators
   inline Accessor<BlockMatrixType, true>::Accessor(
     const BlockMatrixType* matrix,
     const size_type        row,
-    const size_type        col)
-    : matrix(matrix), base_iterator(matrix->block(0, 0).begin())
+    const size_type        col) :
+    matrix(matrix),
+    base_iterator(matrix->block(0, 0).begin())
   {
     (void) col;
     Assert(col == 0, ExcNotImplemented());
@@ -1147,8 +1149,9 @@ namespace BlockMatrixIterators
 
   template <class BlockMatrixType>
   inline Accessor<BlockMatrixType, true>::Accessor(
-    const Accessor<BlockMatrixType, false>& other)
-    : matrix(other.matrix), base_iterator(other.base_iterator)
+    const Accessor<BlockMatrixType, false>& other) :
+    matrix(other.matrix),
+    base_iterator(other.base_iterator)
   {
     this->row_block = other.row_block;
     this->col_block = other.col_block;
@@ -1276,8 +1279,9 @@ namespace BlockMatrixIterators
   template <class BlockMatrixType>
   inline Accessor<BlockMatrixType, false>::Accessor(BlockMatrixType* matrix,
                                                     const size_type  row,
-                                                    const size_type  col)
-    : matrix(matrix), base_iterator(matrix->block(0, 0).begin())
+                                                    const size_type  col) :
+    matrix(matrix),
+    base_iterator(matrix->block(0, 0).begin())
   {
     (void) col;
     Assert(col == 0, ExcNotImplemented());

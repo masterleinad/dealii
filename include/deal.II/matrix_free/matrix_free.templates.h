@@ -44,13 +44,15 @@ DEAL_II_NAMESPACE_OPEN
 // --------------------- MatrixFree -----------------------------------
 
 template <int dim, typename Number>
-MatrixFree<dim, Number>::MatrixFree()
-  : Subscriptor(), indices_are_initialized(false), mapping_is_initialized(false)
+MatrixFree<dim, Number>::MatrixFree() :
+  Subscriptor(),
+  indices_are_initialized(false),
+  mapping_is_initialized(false)
 {}
 
 template <int dim, typename Number>
-MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number>& other)
-  : Subscriptor()
+MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number>& other) :
+  Subscriptor()
 {
   copy_from(other);
 }

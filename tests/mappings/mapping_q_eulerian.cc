@@ -101,8 +101,10 @@ private:
 // .... CONSTRUCTOR
 
 template <int dim>
-MappingTest<dim>::MappingTest(unsigned int degree)
-  : dof_handler(triangulation), fe(FE_Q<dim>(degree), dim), degree(degree)
+MappingTest<dim>::MappingTest(unsigned int degree) :
+  dof_handler(triangulation),
+  fe(FE_Q<dim>(degree), dim),
+  degree(degree)
 {}
 
 // .... DESTRUCTOR

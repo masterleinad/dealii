@@ -161,17 +161,18 @@ namespace
     /**
      * Default constructor. Initialize the fields with invalid values.
      */
-    AdjacentCell()
-      : cell_index(numbers::invalid_unsigned_int),
-        edge_within_cell(numbers::invalid_unsigned_int)
+    AdjacentCell() :
+      cell_index(numbers::invalid_unsigned_int),
+      edge_within_cell(numbers::invalid_unsigned_int)
     {}
 
     /**
      * Constructor. Initialize the fields with the given values.
      */
     AdjacentCell(const unsigned int cell_index,
-                 const unsigned int edge_within_cell)
-      : cell_index(cell_index), edge_within_cell(edge_within_cell)
+                 const unsigned int edge_within_cell) :
+      cell_index(cell_index),
+      edge_within_cell(edge_within_cell)
     {}
 
     unsigned int cell_index;
@@ -285,8 +286,8 @@ namespace
      * in @p cell, and selecting the edge with number @p edge_number
      * within this cell. Initialize the edge as unoriented.
      */
-    Edge(const CellData<dim>& cell, const unsigned int edge_number)
-      : orientation_status(not_oriented)
+    Edge(const CellData<dim>& cell, const unsigned int edge_number) :
+      orientation_status(not_oriented)
     {
       Assert(edge_number < GeometryInfo<dim>::lines_per_cell,
              ExcInternalError());

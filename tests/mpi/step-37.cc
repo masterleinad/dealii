@@ -134,22 +134,21 @@ namespace Step37
   };
 
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem()
-    :
+  LaplaceProblem<dim>::LaplaceProblem() :
 #ifdef DEAL_II_WITH_P4EST
-      triangulation(MPI_COMM_WORLD,
-                    Triangulation<dim>::limit_level_difference_at_vertices,
-                    parallel::distributed::Triangulation<
-                      dim>::construct_multigrid_hierarchy),
+    triangulation(
+      MPI_COMM_WORLD,
+      Triangulation<dim>::limit_level_difference_at_vertices,
+      parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy),
 #else
-      triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+    triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
 #endif
-      fe(degree_finite_element),
-      dof_handler(triangulation),
-      fe_euler(degree_finite_element),
-      fe_system(fe_euler, dim),
-      dof_euler(triangulation),
-      pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    fe(degree_finite_element),
+    dof_handler(triangulation),
+    fe_euler(degree_finite_element),
+    fe_system(fe_euler, dim),
+    dof_euler(triangulation),
+    pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
   {}
 
   template <int dim>
@@ -272,10 +271,10 @@ namespace Step37
   class PotentialBCFunction : public Function<dim>
   {
   public:
-    PotentialBCFunction(const double& charge, const Point<dim>& dipole)
-      : Function<dim>(1),
-        charge(charge),
-        x0(std::abs(charge) < 1e-10 ? Point<dim>() : dipole / charge)
+    PotentialBCFunction(const double& charge, const Point<dim>& dipole) :
+      Function<dim>(1),
+      charge(charge),
+      x0(std::abs(charge) < 1e-10 ? Point<dim>() : dipole / charge)
     {}
 
     virtual ~PotentialBCFunction() = default;

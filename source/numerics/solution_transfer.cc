@@ -37,8 +37,10 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 SolutionTransfer<dim, VectorType, DoFHandlerType>::SolutionTransfer(
-  const DoFHandlerType& dof)
-  : dof_handler(&dof, typeid(*this).name()), n_dofs_old(0), prepared_for(none)
+  const DoFHandlerType& dof) :
+  dof_handler(&dof, typeid(*this).name()),
+  n_dofs_old(0),
+  prepared_for(none)
 {
   Assert(
     (dynamic_cast<const parallel::distributed::Triangulation<

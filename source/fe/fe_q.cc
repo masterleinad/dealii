@@ -46,30 +46,29 @@ namespace internal
 } // namespace internal
 
 template <int dim, int spacedim>
-FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)
-  : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
-      TensorProductPolynomials<dim>(
-        Polynomials::generate_complete_Lagrange_basis(
-          internal::FE_Q::get_QGaussLobatto_points(degree))),
-      FiniteElementData<dim>(this->get_dpo_vector(degree),
-                             1,
-                             degree,
-                             FiniteElementData<dim>::H1),
-      std::vector<bool>(1, false))
+FE_Q<dim, spacedim>::FE_Q(const unsigned int degree) :
+  FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
+    TensorProductPolynomials<dim>(Polynomials::generate_complete_Lagrange_basis(
+      internal::FE_Q::get_QGaussLobatto_points(degree))),
+    FiniteElementData<dim>(this->get_dpo_vector(degree),
+                           1,
+                           degree,
+                           FiniteElementData<dim>::H1),
+    std::vector<bool>(1, false))
 {
   this->initialize(internal::FE_Q::get_QGaussLobatto_points(degree));
 }
 
 template <int dim, int spacedim>
-FE_Q<dim, spacedim>::FE_Q(const Quadrature<1>& points)
-  : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
-      TensorProductPolynomials<dim>(
-        Polynomials::generate_complete_Lagrange_basis(points.get_points())),
-      FiniteElementData<dim>(this->get_dpo_vector(points.size() - 1),
-                             1,
-                             points.size() - 1,
-                             FiniteElementData<dim>::H1),
-      std::vector<bool>(1, false))
+FE_Q<dim, spacedim>::FE_Q(const Quadrature<1>& points) :
+  FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
+    TensorProductPolynomials<dim>(
+      Polynomials::generate_complete_Lagrange_basis(points.get_points())),
+    FiniteElementData<dim>(this->get_dpo_vector(points.size() - 1),
+                           1,
+                           points.size() - 1,
+                           FiniteElementData<dim>::H1),
+    std::vector<bool>(1, false))
 {
   this->initialize(points.get_points());
 }

@@ -31,11 +31,11 @@ FE_Poly<PolynomialType, dim, spacedim>::FE_Poly(
   const PolynomialType&             poly_space,
   const FiniteElementData<dim>&     fe_data,
   const std::vector<bool>&          restriction_is_additive_flags,
-  const std::vector<ComponentMask>& nonzero_components)
-  : FiniteElement<dim, spacedim>(fe_data,
-                                 restriction_is_additive_flags,
-                                 nonzero_components),
-    poly_space(poly_space)
+  const std::vector<ComponentMask>& nonzero_components) :
+  FiniteElement<dim, spacedim>(fe_data,
+                               restriction_is_additive_flags,
+                               nonzero_components),
+  poly_space(poly_space)
 {
   AssertDimension(dim, PolynomialType::dimension);
 }

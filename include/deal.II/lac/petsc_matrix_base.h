@@ -1074,8 +1074,10 @@ namespace PETScWrappers
   {
     inline const_iterator::Accessor::Accessor(const MatrixBase* matrix,
                                               const size_type   row,
-                                              const size_type   index)
-      : matrix(const_cast<MatrixBase*>(matrix)), a_row(row), a_index(index)
+                                              const size_type   index) :
+      matrix(const_cast<MatrixBase*>(matrix)),
+      a_row(row),
+      a_index(index)
     {
       visit_present_row();
     }
@@ -1110,8 +1112,8 @@ namespace PETScWrappers
 
     inline const_iterator::const_iterator(const MatrixBase* matrix,
                                           const size_type   row,
-                                          const size_type   index)
-      : accessor(matrix, row, index)
+                                          const size_type   index) :
+      accessor(matrix, row, index)
     {}
 
     inline const_iterator&

@@ -18,11 +18,11 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-FE_P1NC::FE_P1NC()
-  : FiniteElement<2, 2>(
-      FiniteElementData<2>(get_dpo_vector(), 1, 1, FiniteElementData<2>::L2),
-      std::vector<bool>(1, false),
-      std::vector<ComponentMask>(4, ComponentMask(1, true)))
+FE_P1NC::FE_P1NC() :
+  FiniteElement<2, 2>(
+    FiniteElementData<2>(get_dpo_vector(), 1, 1, FiniteElementData<2>::L2),
+    std::vector<bool>(1, false),
+    std::vector<ComponentMask>(4, ComponentMask(1, true)))
 {
   // face support points: 2 end vertices
   unit_face_support_points.resize(2);

@@ -21,15 +21,15 @@ DEAL_II_NAMESPACE_OPEN
 
 // Constructor:
 template <int dim>
-FE_NedelecSZ<dim>::FE_NedelecSZ(const unsigned int degree)
-  : FiniteElement<dim, dim>(
-      FiniteElementData<dim>(get_dpo_vector(degree),
-                             dim,
-                             degree + 1,
-                             FiniteElementData<dim>::Hcurl),
-      std::vector<bool>(compute_num_dofs(degree), true),
-      std::vector<ComponentMask>(compute_num_dofs(degree),
-                                 std::vector<bool>(dim, true)))
+FE_NedelecSZ<dim>::FE_NedelecSZ(const unsigned int degree) :
+  FiniteElement<dim, dim>(
+    FiniteElementData<dim>(get_dpo_vector(degree),
+                           dim,
+                           degree + 1,
+                           FiniteElementData<dim>::Hcurl),
+    std::vector<bool>(compute_num_dofs(degree), true),
+    std::vector<ComponentMask>(compute_num_dofs(degree),
+                               std::vector<bool>(dim, true)))
 {
   Assert(dim >= 2, ExcImpossibleInDim(dim));
 

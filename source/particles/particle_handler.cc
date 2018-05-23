@@ -28,37 +28,37 @@ DEAL_II_NAMESPACE_OPEN
 namespace Particles
 {
   template <int dim, int spacedim>
-  ParticleHandler<dim, spacedim>::ParticleHandler()
-    : triangulation(),
-      particles(),
-      ghost_particles(),
-      global_number_of_particles(0),
-      global_max_particles_per_cell(0),
-      next_free_particle_index(0),
-      property_pool(new PropertyPool(0)),
-      size_callback(),
-      store_callback(),
-      load_callback(),
-      handle(numbers::invalid_unsigned_int)
+  ParticleHandler<dim, spacedim>::ParticleHandler() :
+    triangulation(),
+    particles(),
+    ghost_particles(),
+    global_number_of_particles(0),
+    global_max_particles_per_cell(0),
+    next_free_particle_index(0),
+    property_pool(new PropertyPool(0)),
+    size_callback(),
+    store_callback(),
+    load_callback(),
+    handle(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>
   ParticleHandler<dim, spacedim>::ParticleHandler(
     const parallel::distributed::Triangulation<dim, spacedim>& triangulation,
     const Mapping<dim, spacedim>&                              mapping,
-    const unsigned int                                         n_properties)
-    : triangulation(&triangulation, typeid(*this).name()),
-      mapping(&mapping, typeid(*this).name()),
-      particles(),
-      ghost_particles(),
-      global_number_of_particles(0),
-      global_max_particles_per_cell(0),
-      next_free_particle_index(0),
-      property_pool(new PropertyPool(n_properties)),
-      size_callback(),
-      store_callback(),
-      load_callback(),
-      handle(numbers::invalid_unsigned_int)
+    const unsigned int                                         n_properties) :
+    triangulation(&triangulation, typeid(*this).name()),
+    mapping(&mapping, typeid(*this).name()),
+    particles(),
+    ghost_particles(),
+    global_number_of_particles(0),
+    global_max_particles_per_cell(0),
+    next_free_particle_index(0),
+    property_pool(new PropertyPool(n_properties)),
+    size_callback(),
+    store_callback(),
+    load_callback(),
+    handle(numbers::invalid_unsigned_int)
   {}
 
   template <int dim, int spacedim>

@@ -38,14 +38,14 @@ namespace Functions
   FEFieldFunction<dim, DoFHandlerType, VectorType>::FEFieldFunction(
     const DoFHandlerType& mydh,
     const VectorType&     myv,
-    const Mapping<dim>&   mymapping)
-    : Function<dim, typename VectorType::value_type>(
-        mydh.get_fe(0).n_components()),
-      dh(&mydh, "FEFieldFunction"),
-      data_vector(myv),
-      mapping(mymapping),
-      cache(dh->get_triangulation(), mymapping),
-      cell_hint(dh->end())
+    const Mapping<dim>&   mymapping) :
+    Function<dim, typename VectorType::value_type>(
+      mydh.get_fe(0).n_components()),
+    dh(&mydh, "FEFieldFunction"),
+    data_vector(myv),
+    mapping(mymapping),
+    cache(dh->get_triangulation(), mymapping),
+    cell_hint(dh->end())
   {}
 
   template <int dim, typename DoFHandlerType, typename VectorType>

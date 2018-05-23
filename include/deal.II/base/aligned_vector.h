@@ -371,8 +371,9 @@ namespace internal
      */
     AlignedVectorCopy(const T* const source_begin,
                       const T* const source_end,
-                      T* const       destination)
-      : source_(source_begin), destination_(destination)
+                      T* const       destination) :
+      source_(source_begin),
+      destination_(destination)
     {
       Assert(source_end >= source_begin, ExcInternalError());
       Assert(source_end == source_begin || destination != nullptr,
@@ -436,8 +437,9 @@ namespace internal
      */
     AlignedVectorMove(T* const source_begin,
                       T* const source_end,
-                      T* const destination)
-      : source_(source_begin), destination_(destination)
+                      T* const destination) :
+      source_(source_begin),
+      destination_(destination)
     {
       Assert(source_end >= source_begin, ExcInternalError());
       Assert(source_end == source_begin || destination != nullptr,
@@ -507,8 +509,10 @@ namespace internal
      */
     AlignedVectorSet(const std::size_t size,
                      const T&          element,
-                     T* const          destination)
-      : element_(element), destination_(destination), trivial_element(false)
+                     T* const          destination) :
+      element_(element),
+      destination_(destination),
+      trivial_element(false)
     {
       if(size == 0)
         return;
@@ -600,8 +604,9 @@ namespace internal
      * Constructor. Issues a parallel call if there are sufficiently many
      * elements, otherwise work in serial.
      */
-    AlignedVectorDefaultInitialize(const std::size_t size, T* const destination)
-      : destination_(destination)
+    AlignedVectorDefaultInitialize(const std::size_t size,
+                                   T* const          destination) :
+      destination_(destination)
     {
       if(size == 0)
         return;
@@ -661,13 +666,17 @@ namespace internal
 #ifndef DOXYGEN
 
 template <class T>
-inline AlignedVector<T>::AlignedVector()
-  : _data(nullptr), _end_data(nullptr), _end_allocated(nullptr)
+inline AlignedVector<T>::AlignedVector() :
+  _data(nullptr),
+  _end_data(nullptr),
+  _end_allocated(nullptr)
 {}
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(const size_type size, const T& init)
-  : _data(nullptr), _end_data(nullptr), _end_allocated(nullptr)
+inline AlignedVector<T>::AlignedVector(const size_type size, const T& init) :
+  _data(nullptr),
+  _end_data(nullptr),
+  _end_allocated(nullptr)
 {
   if(size > 0)
     resize(size, init);
@@ -680,8 +689,10 @@ inline AlignedVector<T>::~AlignedVector()
 }
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec)
-  : _data(nullptr), _end_data(nullptr), _end_allocated(nullptr)
+inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec) :
+  _data(nullptr),
+  _end_data(nullptr),
+  _end_allocated(nullptr)
 {
   // copy the data from vec
   reserve(vec._end_data - vec._data);
@@ -690,10 +701,10 @@ inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec)
 }
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(AlignedVector<T>&& vec) noexcept
-  : _data(vec._data),
-    _end_data(vec._end_data),
-    _end_allocated(vec._end_allocated)
+inline AlignedVector<T>::AlignedVector(AlignedVector<T>&& vec) noexcept :
+  _data(vec._data),
+  _end_data(vec._end_data),
+  _end_allocated(vec._end_allocated)
 {
   vec._data          = nullptr;
   vec._end_data      = nullptr;

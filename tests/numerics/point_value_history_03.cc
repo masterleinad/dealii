@@ -128,8 +128,9 @@ private:
 };
 
 template <int dim>
-TestPointValueHistory<dim>::TestPointValueHistory()
-  : finite_element(2), dof_handler(triangulation)
+TestPointValueHistory<dim>::TestPointValueHistory() :
+  finite_element(2),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

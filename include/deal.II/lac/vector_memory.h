@@ -473,10 +473,11 @@ namespace internal
 /* --------------------- inline functions ---------------------- */
 
 template <typename VectorType>
-inline VectorMemory<VectorType>::Pointer::Pointer(VectorMemory<VectorType>& mem)
-  : std::unique_ptr<VectorType, std::function<void(VectorType*)>>(
-      mem.alloc(),
-      [&mem](VectorType* v) { mem.free(v); })
+inline VectorMemory<VectorType>::Pointer::Pointer(
+  VectorMemory<VectorType>& mem) :
+  std::unique_ptr<VectorType, std::function<void(VectorType*)>>(
+    mem.alloc(),
+    [&mem](VectorType* v) { mem.free(v); })
 {}
 
 template <typename VectorType>

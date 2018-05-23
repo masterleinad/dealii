@@ -38,17 +38,17 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
-FE_ABF<dim>::FE_ABF(const unsigned int deg)
-  : FE_PolyTensor<PolynomialsABF<dim>, dim>(
-      deg,
-      FiniteElementData<dim>(get_dpo_vector(deg),
-                             dim,
-                             deg + 2,
-                             FiniteElementData<dim>::Hdiv),
-      std::vector<bool>(PolynomialsABF<dim>::compute_n_pols(deg), true),
-      std::vector<ComponentMask>(PolynomialsABF<dim>::compute_n_pols(deg),
-                                 std::vector<bool>(dim, true))),
-    rt_order(deg)
+FE_ABF<dim>::FE_ABF(const unsigned int deg) :
+  FE_PolyTensor<PolynomialsABF<dim>, dim>(
+    deg,
+    FiniteElementData<dim>(get_dpo_vector(deg),
+                           dim,
+                           deg + 2,
+                           FiniteElementData<dim>::Hdiv),
+    std::vector<bool>(PolynomialsABF<dim>::compute_n_pols(deg), true),
+    std::vector<ComponentMask>(PolynomialsABF<dim>::compute_n_pols(deg),
+                               std::vector<bool>(dim, true))),
+  rt_order(deg)
 {
   Assert(dim >= 2, ExcImpossibleInDim(dim));
   const unsigned int n_dofs = this->dofs_per_cell;

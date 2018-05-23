@@ -76,27 +76,27 @@ private:
   unsigned int                              prob_number;
 };
 template <int dim>
-SeventhProblem<dim>::SeventhProblem(unsigned int prob_number)
-  : mpi_communicator(MPI_COMM_WORLD),
-    settings(
-      parallel::distributed::Triangulation<2, 2>::no_automatic_repartitioning),
-    triangulation(mpi_communicator,
-                  typename Triangulation<dim>::MeshSmoothing(
-                    Triangulation<dim>::smoothing_on_refinement
-                    | Triangulation<dim>::smoothing_on_coarsening),
-                  settings),
-    dof_handler(triangulation),
-    fe(2),
-    second_triangulation(mpi_communicator,
-                         typename Triangulation<dim>::MeshSmoothing(
-                           Triangulation<dim>::smoothing_on_refinement
-                           | Triangulation<dim>::smoothing_on_coarsening),
-                         settings),
-    second_dof_handler(second_triangulation),
-    second_fe(2),
-    pcout(deallog.get_file_stream(),
-          (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
-    prob_number(prob_number)
+SeventhProblem<dim>::SeventhProblem(unsigned int prob_number) :
+  mpi_communicator(MPI_COMM_WORLD),
+  settings(
+    parallel::distributed::Triangulation<2, 2>::no_automatic_repartitioning),
+  triangulation(mpi_communicator,
+                typename Triangulation<dim>::MeshSmoothing(
+                  Triangulation<dim>::smoothing_on_refinement
+                  | Triangulation<dim>::smoothing_on_coarsening),
+                settings),
+  dof_handler(triangulation),
+  fe(2),
+  second_triangulation(mpi_communicator,
+                       typename Triangulation<dim>::MeshSmoothing(
+                         Triangulation<dim>::smoothing_on_refinement
+                         | Triangulation<dim>::smoothing_on_coarsening),
+                       settings),
+  second_dof_handler(second_triangulation),
+  second_fe(2),
+  pcout(deallog.get_file_stream(),
+        (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
+  prob_number(prob_number)
 {}
 
 template <int dim>

@@ -653,11 +653,11 @@ namespace internal
     }
 
     template <typename G>
-    inline TriaObjects<G>::TriaObjects()
-      : next_free_single(numbers::invalid_unsigned_int),
-        next_free_pair(numbers::invalid_unsigned_int),
-        reverse_order_next_free_single(false),
-        user_data_type(data_unknown)
+    inline TriaObjects<G>::TriaObjects() :
+      next_free_single(numbers::invalid_unsigned_int),
+      next_free_pair(numbers::invalid_unsigned_int),
+      reverse_order_next_free_single(false),
+      user_data_type(data_unknown)
     {}
 
     template <typename G>

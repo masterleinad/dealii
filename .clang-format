@@ -48,7 +48,7 @@ BreakBeforeBinaryOperators: All
 BreakBeforeBraces: Custom
 BreakBeforeInheritanceComma: false
 BreakBeforeTernaryOperators: false
-BreakConstructorInitializers: BeforeColon
+BreakConstructorInitializers: AfterColon
 BreakStringLiterals: false
 
 ColumnLimit: 80

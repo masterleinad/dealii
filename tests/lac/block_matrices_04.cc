@@ -88,22 +88,28 @@ private:
 
 template <typename VectorType, class Matrix, class Sparsity>
 LaplaceProblem<VectorType, Matrix, Sparsity>::LaplaceProblem(
-  const unsigned int n_blocks)
-  : n_blocks(n_blocks), fe(1), dof_handler(triangulation)
+  const unsigned int n_blocks) :
+  n_blocks(n_blocks),
+  fe(1),
+  dof_handler(triangulation)
 {
   sparsity_pattern.reinit(n_blocks, n_blocks);
 }
 
 template <>
 LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>::
-  LaplaceProblem(const unsigned int n_blocks)
-  : n_blocks(n_blocks), fe(1), dof_handler(triangulation)
+  LaplaceProblem(const unsigned int n_blocks) :
+  n_blocks(n_blocks),
+  fe(1),
+  dof_handler(triangulation)
 {}
 
 template <>
 LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>::
-  LaplaceProblem(const unsigned int n_blocks)
-  : n_blocks(n_blocks), fe(1), dof_handler(triangulation)
+  LaplaceProblem(const unsigned int n_blocks) :
+  n_blocks(n_blocks),
+  fe(1),
+  dof_handler(triangulation)
 {}
 
 template <typename VectorType, class Matrix, class Sparsity>

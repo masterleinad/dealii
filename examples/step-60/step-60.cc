@@ -510,9 +510,9 @@ namespace Step60
   // `DistributedLagrangeProblem` for two different dimensions, without having
   // conflicts in the parameters for the two problems.
   template <int dim, int spacedim>
-  DistributedLagrangeProblem<dim, spacedim>::Parameters::Parameters()
-    : ParameterAcceptor("/Distributed Lagrange<" + Utilities::int_to_string(dim)
-                        + "," + Utilities::int_to_string(spacedim) + ">/")
+  DistributedLagrangeProblem<dim, spacedim>::Parameters::Parameters() :
+    ParameterAcceptor("/Distributed Lagrange<" + Utilities::int_to_string(dim)
+                      + "," + Utilities::int_to_string(spacedim) + ">/")
   {
     // The ParameterAcceptor::add_parameter() function does a few things:
     //
@@ -575,12 +575,12 @@ namespace Step60
   // `ParameterAcceptorProxy` objects, as explained earlier.
   template <int dim, int spacedim>
   DistributedLagrangeProblem<dim, spacedim>::DistributedLagrangeProblem(
-    const Parameters& parameters)
-    : parameters(parameters),
-      embedded_configuration_function("Embedded configuration", spacedim),
-      embedded_value_function("Embedded value"),
-      schur_solver_control("Schur solver control"),
-      monitor(std::cout, TimerOutput::summary, TimerOutput::cpu_and_wall_times)
+    const Parameters& parameters) :
+    parameters(parameters),
+    embedded_configuration_function("Embedded configuration", spacedim),
+    embedded_value_function("Embedded value"),
+    schur_solver_control("Schur solver control"),
+    monitor(std::cout, TimerOutput::summary, TimerOutput::cpu_and_wall_times)
   {
     // Here is a way to set default values for a ParameterAcceptor class
     // that was constructed using ParameterAcceptorProxy.

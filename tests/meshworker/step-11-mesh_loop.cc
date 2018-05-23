@@ -108,8 +108,10 @@ namespace Step11
   // denotes the polynomial degree), and mappings of given order. Print to
   // screen what we are about to do.
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
-    : fe(1), dof_handler(triangulation), mapping(mapping_degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree) :
+    fe(1),
+    dof_handler(triangulation),
+    mapping(mapping_degree)
   {
     deallog << "Using mapping with degree " << mapping_degree << ":\n"
             << "============================" << std::endl;
@@ -163,30 +165,30 @@ namespace Step11
   {
     ScratchData(const Mapping<dim>&       mapping,
                 const FiniteElement<dim>& fe,
-                const unsigned int        quadrature_degree)
-      : fe_values(mapping,
-                  fe,
-                  QGauss<dim>(quadrature_degree),
-                  update_values | update_gradients | update_quadrature_points
-                    | update_JxW_values),
-        fe_face_values(mapping,
-                       fe,
-                       QGauss<dim - 1>(quadrature_degree),
-                       update_values | update_quadrature_points
-                         | update_JxW_values | update_normal_vectors)
+                const unsigned int        quadrature_degree) :
+      fe_values(mapping,
+                fe,
+                QGauss<dim>(quadrature_degree),
+                update_values | update_gradients | update_quadrature_points
+                  | update_JxW_values),
+      fe_face_values(mapping,
+                     fe,
+                     QGauss<dim - 1>(quadrature_degree),
+                     update_values | update_quadrature_points
+                       | update_JxW_values | update_normal_vectors)
     {}
 
-    ScratchData(const ScratchData<dim>& scratch_data)
-      : fe_values(scratch_data.fe_values.get_mapping(),
-                  scratch_data.fe_values.get_fe(),
-                  scratch_data.fe_values.get_quadrature(),
-                  update_values | update_gradients | update_quadrature_points
-                    | update_JxW_values),
-        fe_face_values(scratch_data.fe_face_values.get_mapping(),
-                       scratch_data.fe_face_values.get_fe(),
-                       scratch_data.fe_face_values.get_quadrature(),
-                       update_values | update_quadrature_points
-                         | update_JxW_values | update_normal_vectors)
+    ScratchData(const ScratchData<dim>& scratch_data) :
+      fe_values(scratch_data.fe_values.get_mapping(),
+                scratch_data.fe_values.get_fe(),
+                scratch_data.fe_values.get_quadrature(),
+                update_values | update_gradients | update_quadrature_points
+                  | update_JxW_values),
+      fe_face_values(scratch_data.fe_face_values.get_mapping(),
+                     scratch_data.fe_face_values.get_fe(),
+                     scratch_data.fe_face_values.get_quadrature(),
+                     update_values | update_quadrature_points
+                       | update_JxW_values | update_normal_vectors)
     {}
 
     FEValues<dim>     fe_values;

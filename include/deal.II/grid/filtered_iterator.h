@@ -901,15 +901,17 @@ filter_iterators(IteratorRange<BaseIterator> i,
 
 template <typename BaseIterator>
 template <typename Predicate>
-inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate p)
-  : predicate(new PredicateTemplate<Predicate>(p))
+inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate p) :
+  predicate(new PredicateTemplate<Predicate>(p))
 {}
 
 template <typename BaseIterator>
 template <typename Predicate>
-inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate           p,
-                                                        const BaseIterator& bi)
-  : BaseIterator(bi), predicate(new PredicateTemplate<Predicate>(p))
+inline FilteredIterator<BaseIterator>::FilteredIterator(
+  Predicate           p,
+  const BaseIterator& bi) :
+  BaseIterator(bi),
+  predicate(new PredicateTemplate<Predicate>(p))
 {
   if((this->state() == IteratorState::valid) && !(*predicate)(*this))
     set_to_next_positive(bi);
@@ -917,13 +919,13 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate           p,
 
 template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>::FilteredIterator(
-  const FilteredIterator& fi)
-  : // this construction looks strange, but without going through the
-    // address of fi, GCC would not cast fi to the base class of type
-    // BaseIterator but tries to go through constructing a new
-    // BaseIterator with an Accessor.
-    BaseIterator(*(BaseIterator*) (&fi)),
-    predicate(fi.predicate->clone())
+  const FilteredIterator& fi) :
+  // this construction looks strange, but without going through the
+  // address of fi, GCC would not cast fi to the base class of type
+  // BaseIterator but tries to go through constructing a new
+  // BaseIterator with an Accessor.
+  BaseIterator(*(BaseIterator*) (&fi)),
+  predicate(fi.predicate->clone())
 {}
 
 template <typename BaseIterator>
@@ -1073,8 +1075,8 @@ FilteredIterator<BaseIterator>::operator--(int)
 template <typename BaseIterator>
 template <typename Predicate>
 inline FilteredIterator<BaseIterator>::PredicateTemplate<
-  Predicate>::PredicateTemplate(const Predicate& predicate)
-  : predicate(predicate)
+  Predicate>::PredicateTemplate(const Predicate& predicate) :
+  predicate(predicate)
 {}
 
 template <typename BaseIterator>
@@ -1136,8 +1138,8 @@ namespace IteratorFilters
 
   // ---------------- IteratorFilters::SubdomainEqualTo ---------
   inline SubdomainEqualTo::SubdomainEqualTo(
-    const types::subdomain_id subdomain_id)
-    : subdomain_id(subdomain_id)
+    const types::subdomain_id subdomain_id) :
+    subdomain_id(subdomain_id)
   {}
 
   template <class Iterator>
@@ -1168,14 +1170,16 @@ namespace IteratorFilters
   // ---------------- IteratorFilters::MaterialIdEqualTo ---------
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const types::material_id material_id,
-    const bool               only_locally_owned)
-    : material_ids{material_id}, only_locally_owned(only_locally_owned)
+    const bool               only_locally_owned) :
+    material_ids{material_id},
+    only_locally_owned(only_locally_owned)
   {}
 
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const std::set<types::material_id>& material_ids,
-    const bool                          only_locally_owned)
-    : material_ids(material_ids), only_locally_owned(only_locally_owned)
+    const bool                          only_locally_owned) :
+    material_ids(material_ids),
+    only_locally_owned(only_locally_owned)
   {}
 
   template <class Iterator>
@@ -1191,15 +1195,16 @@ namespace IteratorFilters
   // ---------------- IteratorFilters::ActiveFEIndexEqualTo ---------
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const unsigned int active_fe_index,
-    const bool         only_locally_owned)
-    : active_fe_indices{active_fe_index}, only_locally_owned(only_locally_owned)
+    const bool         only_locally_owned) :
+    active_fe_indices{active_fe_index},
+    only_locally_owned(only_locally_owned)
   {}
 
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const std::set<unsigned int>& active_fe_indices,
-    const bool                    only_locally_owned)
-    : active_fe_indices(active_fe_indices),
-      only_locally_owned(only_locally_owned)
+    const bool                    only_locally_owned) :
+    active_fe_indices(active_fe_indices),
+    only_locally_owned(only_locally_owned)
   {}
 
   template <class Iterator>

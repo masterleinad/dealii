@@ -852,8 +852,8 @@ namespace MatrixFreeOperators
   template <int dim, int fe_degree, int n_components, typename Number>
   inline CellwiseInverseMassMatrix<dim, fe_degree, n_components, Number>::
     CellwiseInverseMassMatrix(
-      const FEEvaluationBase<dim, n_components, Number>& fe_eval)
-    : fe_eval(fe_eval)
+      const FEEvaluationBase<dim, n_components, Number>& fe_eval) :
+    fe_eval(fe_eval)
   {
     FullMatrix<double> shapes_1d(fe_degree + 1, fe_degree + 1);
     for(unsigned int i = 0, c = 0; i < shapes_1d.m(); ++i)
@@ -1463,8 +1463,9 @@ namespace MatrixFreeOperators
   //------------------------- MGInterfaceOperator ------------------------------
 
   template <typename OperatorType>
-  MGInterfaceOperator<OperatorType>::MGInterfaceOperator()
-    : Subscriptor(), mf_base_operator(nullptr)
+  MGInterfaceOperator<OperatorType>::MGInterfaceOperator() :
+    Subscriptor(),
+    mf_base_operator(nullptr)
   {}
 
   template <typename OperatorType>
@@ -1536,8 +1537,8 @@ namespace MatrixFreeOperators
             int n_components,
             typename VectorType>
   MassOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
-    MassOperator()
-    : Base<dim, VectorType>()
+    MassOperator() :
+    Base<dim, VectorType>()
   {}
 
   template <int dim,
@@ -1623,8 +1624,8 @@ namespace MatrixFreeOperators
             int n_components,
             typename VectorType>
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
-    LaplaceOperator()
-    : Base<dim, VectorType>()
+    LaplaceOperator() :
+    Base<dim, VectorType>()
   {}
 
   template <int dim,

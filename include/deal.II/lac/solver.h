@@ -488,8 +488,8 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
 
 template <class VectorType>
 inline Solver<VectorType>::Solver(SolverControl&            solver_control,
-                                  VectorMemory<VectorType>& vector_memory)
-  : memory(vector_memory)
+                                  VectorMemory<VectorType>& vector_memory) :
+  memory(vector_memory)
 {
   // connect the solver control object to the signal. SolverControl::check
   // only takes two arguments, the iteration and the check_value, and so
@@ -502,9 +502,9 @@ inline Solver<VectorType>::Solver(SolverControl&            solver_control,
 }
 
 template <class VectorType>
-inline Solver<VectorType>::Solver(SolverControl& solver_control)
-  : // use the static memory object this class owns
-    memory(static_vector_memory)
+inline Solver<VectorType>::Solver(SolverControl& solver_control) :
+  // use the static memory object this class owns
+  memory(static_vector_memory)
 {
   // connect the solver control object to the signal. SolverControl::check
   // only takes two arguments, the iteration and the check_value, and so

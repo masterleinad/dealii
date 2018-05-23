@@ -47,12 +47,12 @@ inline DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
                       DoFHandlerType::space_dimension>* tria,
   const int                                             level,
   const int                                             index,
-  const DoFHandlerType*                                 dof_handler)
-  : dealii::internal::DoFAccessorImplementation::Inheritance<
-      structdim,
-      DoFHandlerType::dimension,
-      DoFHandlerType::space_dimension>::BaseClass(tria, level, index),
-    dof_handler(const_cast<DoFHandlerType*>(dof_handler))
+  const DoFHandlerType*                                 dof_handler) :
+  dealii::internal::DoFAccessorImplementation::Inheritance<
+    structdim,
+    DoFHandlerType::dimension,
+    DoFHandlerType::space_dimension>::BaseClass(tria, level, index),
+  dof_handler(const_cast<DoFHandlerType*>(dof_handler))
 {
   Assert(
     tria == nullptr || &dof_handler->get_triangulation() == tria,
@@ -72,8 +72,9 @@ DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 template <int dim2, class DoFHandlerType2, bool level_dof_access2>
 inline DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
-  const DoFAccessor<dim2, DoFHandlerType2, level_dof_access2>& other)
-  : BaseClass(other), dof_handler(nullptr)
+  const DoFAccessor<dim2, DoFHandlerType2, level_dof_access2>& other) :
+  BaseClass(other),
+  dof_handler(nullptr)
 {
   Assert(
     false,
@@ -88,9 +89,9 @@ inline DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
 template <bool level_dof_access2>
 inline DoFAccessor<structdim, DoFHandlerType, level_dof_access>::DoFAccessor(
-  const DoFAccessor<structdim, DoFHandlerType, level_dof_access2>& other)
-  : BaseClass(other),
-    dof_handler(const_cast<DoFHandlerType*>(other.dof_handler))
+  const DoFAccessor<structdim, DoFHandlerType, level_dof_access2>& other) :
+  BaseClass(other),
+  dof_handler(const_cast<DoFHandlerType*>(other.dof_handler))
 {}
 
 template <int structdim, typename DoFHandlerType, bool level_dof_access>
@@ -2119,9 +2120,9 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
     const Triangulation<1, spacedim>*                       tria,
     const typename TriaAccessor<0, 1, spacedim>::VertexKind vertex_kind,
     const unsigned int                                      vertex_index,
-    const DoFHandlerType<1, spacedim>*                      dof_handler)
-  : BaseClass(tria, vertex_kind, vertex_index),
-    dof_handler(const_cast<DoFHandlerType<1, spacedim>*>(dof_handler))
+    const DoFHandlerType<1, spacedim>*                      dof_handler) :
+  BaseClass(tria, vertex_kind, vertex_index),
+  dof_handler(const_cast<DoFHandlerType<1, spacedim>*>(dof_handler))
 {}
 
 template <template <int, int> class DoFHandlerType,
@@ -2131,8 +2132,8 @@ inline DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>::
   DoFAccessor(const Triangulation<1, spacedim>*,
               const int,
               const int,
-              const DoFHandlerType<1, spacedim>*)
-  : dof_handler(nullptr)
+              const DoFHandlerType<1, spacedim>*) :
+  dof_handler(nullptr)
 {
   Assert(
     false,
@@ -3134,12 +3135,12 @@ inline DoFCellAccessor<DoFHandlerType, level_dof_access>::DoFCellAccessor(
                       DoFHandlerType::space_dimension>* tria,
   const int                                             level,
   const int                                             index,
-  const AccessorData*                                   local_data)
-  : DoFAccessor<DoFHandlerType::dimension, DoFHandlerType, level_dof_access>(
-      tria,
-      level,
-      index,
-      local_data)
+  const AccessorData*                                   local_data) :
+  DoFAccessor<DoFHandlerType::dimension, DoFHandlerType, level_dof_access>(
+    tria,
+    level,
+    index,
+    local_data)
 {}
 
 template <typename DoFHandlerType, bool level_dof_access>
@@ -3153,8 +3154,8 @@ inline DoFCellAccessor<DoFHandlerType, level_dof_access>::DoFCellAccessor(
 template <typename DoFHandlerType, bool level_dof_access>
 template <int dim2, class DoFHandlerType2, bool level_dof_access2>
 inline DoFCellAccessor<DoFHandlerType, level_dof_access>::DoFCellAccessor(
-  const DoFAccessor<dim2, DoFHandlerType2, level_dof_access2>& other)
-  : BaseClass(other)
+  const DoFAccessor<dim2, DoFHandlerType2, level_dof_access2>& other) :
+  BaseClass(other)
 {}
 
 template <typename DoFHandlerType, bool level_dof_access>

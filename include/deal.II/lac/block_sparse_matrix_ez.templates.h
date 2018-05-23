@@ -24,8 +24,9 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
 BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(const unsigned int rows,
-                                                 const unsigned int cols)
-  : row_indices(rows, 0), column_indices(cols, 0)
+                                                 const unsigned int cols) :
+  row_indices(rows, 0),
+  column_indices(cols, 0)
 {}
 
 //  template <typename number>
@@ -70,11 +71,11 @@ BlockSparseMatrixEZ<number>::operator=(const double d)
 
 template <typename number>
 BlockSparseMatrixEZ<number>::BlockSparseMatrixEZ(
-  const BlockSparseMatrixEZ<number>& m)
-  : Subscriptor(m),
-    row_indices(m.row_indices),
-    column_indices(m.column_indices),
-    blocks(m.blocks)
+  const BlockSparseMatrixEZ<number>& m) :
+  Subscriptor(m),
+  row_indices(m.row_indices),
+  column_indices(m.column_indices),
+  blocks(m.blocks)
 {}
 
 template <typename number>

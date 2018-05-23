@@ -931,8 +931,9 @@ namespace internal
     template <int rank_, int dim, bool constness, int P, typename Number>
     Accessor<rank_, dim, constness, P, Number>::Accessor(
       tensor_type&               tensor,
-      const TableIndices<rank_>& previous_indices)
-      : tensor(tensor), previous_indices(previous_indices)
+      const TableIndices<rank_>& previous_indices) :
+      tensor(tensor),
+      previous_indices(previous_indices)
     {}
 
     template <int rank_, int dim, bool constness, int P, typename Number>
@@ -956,8 +957,9 @@ namespace internal
     template <int rank_, int dim, bool constness, typename Number>
     Accessor<rank_, dim, constness, 1, Number>::Accessor(
       tensor_type&               tensor,
-      const TableIndices<rank_>& previous_indices)
-      : tensor(tensor), previous_indices(previous_indices)
+      const TableIndices<rank_>& previous_indices) :
+      tensor(tensor),
+      previous_indices(previous_indices)
     {}
 
     template <int rank_, int dim, bool constness, typename Number>
@@ -1043,8 +1045,8 @@ inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
 
 template <int rank_, int dim, typename Number>
 inline SymmetricTensor<rank_, dim, Number>::SymmetricTensor(
-  const Number (&array)[n_independent_components])
-  : data(*reinterpret_cast<const typename base_tensor_type::array_type*>(array))
+  const Number (&array)[n_independent_components]) :
+  data(*reinterpret_cast<const typename base_tensor_type::array_type*>(array))
 {
   // ensure that the reinterpret_cast above actually works
   Assert(sizeof(typename base_tensor_type::array_type) == sizeof(array),

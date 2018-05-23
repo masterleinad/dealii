@@ -263,13 +263,13 @@ namespace Step17
   // the latter is determined by testing whether the process currently
   // executing the constructor call is the first in the MPI universe.
   template <int dim>
-  ElasticProblem<dim>::ElasticProblem()
-    : mpi_communicator(MPI_COMM_WORLD),
-      n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
-      this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
-      pcout(std::cout, (this_mpi_process == 0)),
-      dof_handler(triangulation),
-      fe(FE_Q<dim>(1), dim)
+  ElasticProblem<dim>::ElasticProblem() :
+    mpi_communicator(MPI_COMM_WORLD),
+    n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
+    this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
+    pcout(std::cout, (this_mpi_process == 0)),
+    dof_handler(triangulation),
+    fe(FE_Q<dim>(1), dim)
   {}
 
   // @sect4{ElasticProblem::~ElasticProblem}

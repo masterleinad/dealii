@@ -74,8 +74,8 @@ namespace internal
     };
 
     template <typename Number>
-    ConstraintValues<Number>::ConstraintValues()
-      : constraints(FPArrayComparator<double>(1.))
+    ConstraintValues<Number>::ConstraintValues() :
+      constraints(FPArrayComparator<double>(1.))
     {}
 
     template <typename Number>

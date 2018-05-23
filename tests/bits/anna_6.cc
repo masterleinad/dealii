@@ -122,8 +122,9 @@ BoundaryFunction<dim>::vector_value(const Point<dim>&,
 // Construct FE with first component: Nedelec-Element,
 // second component: Q1_Element
 template <int dim>
-ImposeBC<dim>::ImposeBC()
-  : fe(FE_Nedelec<dim>(0), 1, FE_Q<dim>(1), 1), dof_handler(triangulation)
+ImposeBC<dim>::ImposeBC() :
+  fe(FE_Nedelec<dim>(0), 1, FE_Q<dim>(1), 1),
+  dof_handler(triangulation)
 {}
 
 template <int dim>

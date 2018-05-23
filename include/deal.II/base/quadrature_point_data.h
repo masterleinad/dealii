@@ -682,16 +682,16 @@ namespace parallel
     ContinuousQuadratureDataTransfer<dim, DataType>::
       ContinuousQuadratureDataTransfer(const FiniteElement<dim>& projection_fe_,
                                        const Quadrature<dim>&    lhs_quadrature,
-                                       const Quadrature<dim>&    rhs_quadrature)
-      : projection_fe(
-          std::unique_ptr<const FiniteElement<dim>>(projection_fe_.clone())),
-        data_size_in_bytes(0),
-        n_q_points(rhs_quadrature.size()),
-        project_to_fe_matrix(projection_fe->dofs_per_cell, n_q_points),
-        project_to_qp_matrix(n_q_points, projection_fe->dofs_per_cell),
-        handle(numbers::invalid_unsigned_int),
-        data_storage(nullptr),
-        triangulation(nullptr)
+                                       const Quadrature<dim>& rhs_quadrature) :
+      projection_fe(
+        std::unique_ptr<const FiniteElement<dim>>(projection_fe_.clone())),
+      data_size_in_bytes(0),
+      n_q_points(rhs_quadrature.size()),
+      project_to_fe_matrix(projection_fe->dofs_per_cell, n_q_points),
+      project_to_qp_matrix(n_q_points, projection_fe->dofs_per_cell),
+      handle(numbers::invalid_unsigned_int),
+      data_storage(nullptr),
+      triangulation(nullptr)
     {
       Assert(
         projection_fe->n_components() == 1,

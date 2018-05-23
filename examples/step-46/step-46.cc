@@ -255,26 +255,26 @@ namespace Step46
   template <int dim>
   FluidStructureProblem<dim>::FluidStructureProblem(
     const unsigned int stokes_degree,
-    const unsigned int elasticity_degree)
-    : stokes_degree(stokes_degree),
-      elasticity_degree(elasticity_degree),
-      triangulation(Triangulation<dim>::maximum_smoothing),
-      stokes_fe(FE_Q<dim>(stokes_degree + 1),
-                dim,
-                FE_Q<dim>(stokes_degree),
-                1,
-                FE_Nothing<dim>(),
-                dim),
-      elasticity_fe(FE_Nothing<dim>(),
-                    dim,
-                    FE_Nothing<dim>(),
-                    1,
-                    FE_Q<dim>(elasticity_degree),
-                    dim),
-      dof_handler(triangulation),
-      viscosity(2),
-      lambda(1),
-      mu(1)
+    const unsigned int elasticity_degree) :
+    stokes_degree(stokes_degree),
+    elasticity_degree(elasticity_degree),
+    triangulation(Triangulation<dim>::maximum_smoothing),
+    stokes_fe(FE_Q<dim>(stokes_degree + 1),
+              dim,
+              FE_Q<dim>(stokes_degree),
+              1,
+              FE_Nothing<dim>(),
+              dim),
+    elasticity_fe(FE_Nothing<dim>(),
+                  dim,
+                  FE_Nothing<dim>(),
+                  1,
+                  FE_Q<dim>(elasticity_degree),
+                  dim),
+    dof_handler(triangulation),
+    viscosity(2),
+    lambda(1),
+    mu(1)
   {
     fe_collection.push_back(stokes_fe);
     fe_collection.push_back(elasticity_fe);

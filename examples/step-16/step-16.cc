@@ -112,8 +112,8 @@ namespace Step16
   };
 
   template <int dim>
-  LaplaceIntegrator<dim>::LaplaceIntegrator()
-    : MeshWorker::LocalIntegrator<dim>(true, false, false)
+  LaplaceIntegrator<dim>::LaplaceIntegrator() :
+    MeshWorker::LocalIntegrator<dim>(true, false, false)
   {}
 
   // Next the actual integrator on each cell. We solve a Poisson problem with a
@@ -245,11 +245,11 @@ namespace Step16
   // Triangulation::limit_level_difference_at_vertices flag to the constructor
   // of the triangulation class.
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree)
-    : triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
-      fe(degree),
-      dof_handler(triangulation),
-      degree(degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int degree) :
+    triangulation(Triangulation<dim>::limit_level_difference_at_vertices),
+    fe(degree),
+    dof_handler(triangulation),
+    degree(degree)
   {}
 
   // @sect4{LaplaceProblem::setup_system}

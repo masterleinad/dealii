@@ -113,8 +113,9 @@ private:
   const double phi;
 
 public:
-  TestDef1(const unsigned int n_components, const double ph)
-    : Function<dim>(n_components), phi(ph)
+  TestDef1(const unsigned int n_components, const double ph) :
+    Function<dim>(n_components),
+    phi(ph)
   {}
 
   virtual ~TestDef1()
@@ -163,8 +164,9 @@ private:
   const double scale;
 
 public:
-  TestDef2(const unsigned int n_components, const double sc)
-    : Function<dim>(n_components), scale(sc)
+  TestDef2(const unsigned int n_components, const double sc) :
+    Function<dim>(n_components),
+    scale(sc)
   {}
 
   virtual ~TestDef2()
@@ -210,8 +212,9 @@ private:
   const double scale;
 
 public:
-  TestDef3(const unsigned int n_components, const double sc)
-    : Function<dim>(n_components), scale(sc)
+  TestDef3(const unsigned int n_components, const double sc) :
+    Function<dim>(n_components),
+    scale(sc)
   {}
 
   virtual ~TestDef3()

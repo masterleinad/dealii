@@ -70,8 +70,8 @@ Mapping<dim, spacedim>::project_real_point_to_unit_point_on_face(
 /*------------------------------ InternalDataBase ------------------------------*/
 
 template <int dim, int spacedim>
-Mapping<dim, spacedim>::InternalDataBase::InternalDataBase()
-  : update_each(update_default)
+Mapping<dim, spacedim>::InternalDataBase::InternalDataBase() :
+  update_each(update_default)
 {}
 
 template <int dim, int spacedim>

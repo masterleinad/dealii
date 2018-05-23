@@ -461,8 +461,9 @@ namespace internal
 template <int dim, int spacedim>
 FlatManifold<dim, spacedim>::FlatManifold(
   const Tensor<1, spacedim>& periodicity,
-  const double               tolerance)
-  : periodicity(periodicity), tolerance(tolerance)
+  const double               tolerance) :
+  periodicity(periodicity),
+  tolerance(tolerance)
 {}
 
 template <int dim, int spacedim>
@@ -860,8 +861,8 @@ FlatManifold<dim, spacedim>::normal_vector(
 /* -------------------------- ChartManifold --------------------- */
 template <int dim, int spacedim, int chartdim>
 ChartManifold<dim, spacedim, chartdim>::ChartManifold(
-  const Tensor<1, chartdim>& periodicity)
-  : sub_manifold(periodicity)
+  const Tensor<1, chartdim>& periodicity) :
+  sub_manifold(periodicity)
 {}
 
 template <int dim, int spacedim, int chartdim>

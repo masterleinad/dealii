@@ -36,8 +36,8 @@ namespace internal
 
     template <int structdim, int spacedim, typename Number>
     MappingInfoStorage<structdim, spacedim, Number>::QuadratureDescriptor ::
-      QuadratureDescriptor()
-      : n_q_points(numbers::invalid_unsigned_int)
+      QuadratureDescriptor() :
+      n_q_points(numbers::invalid_unsigned_int)
     {}
 
     template <int structdim, int spacedim, typename Number>
@@ -288,8 +288,8 @@ namespace internal
       template <int dim, typename Number>
       struct CompressedCellData
       {
-        CompressedCellData(const double expected_size)
-          : data(FPArrayComparator<Number>(expected_size))
+        CompressedCellData(const double expected_size) :
+          data(FPArrayComparator<Number>(expected_size))
         {}
 
         std::map<
@@ -321,8 +321,8 @@ namespace internal
       };
 
       template <int dim, typename Number>
-      LocalData<dim, Number>::LocalData(const double jac_size_in)
-        : jac_size(jac_size_in)
+      LocalData<dim, Number>::LocalData(const double jac_size_in) :
+        jac_size(jac_size_in)
       {}
 
       template <int dim, typename Number>
@@ -1143,9 +1143,9 @@ namespace internal
         // select the inverse of the Jacobian (not the Jacobian as in the
         // CompressedCellData) and add another factor of 512 to account for
         // some roundoff effects.
-        CompressedFaceData(const Number jacobian_size)
-          : data(FPArrayComparator<Number>(512. / jacobian_size)),
-            jacobian_size(jacobian_size)
+        CompressedFaceData(const Number jacobian_size) :
+          data(FPArrayComparator<Number>(512. / jacobian_size)),
+          jacobian_size(jacobian_size)
         {}
 
         // Store the Jacobians on both sides of a face (2*(dim*dim) entries),
@@ -2072,8 +2072,8 @@ namespace internal
     /* ------------------------------------------------------------------ */
 
     template <typename Number>
-    FPArrayComparator<Number>::FPArrayComparator(const Number scaling)
-      : tolerance(scaling * std::numeric_limits<double>::epsilon() * 1024.)
+    FPArrayComparator<Number>::FPArrayComparator(const Number scaling) :
+      tolerance(scaling * std::numeric_limits<double>::epsilon() * 1024.)
     {}
 
     template <typename Number>

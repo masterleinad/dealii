@@ -532,8 +532,8 @@ namespace Step33
 
   template <int dim>
   EulerEquations<dim>::Postprocessor::Postprocessor(
-    const bool do_schlieren_plot)
-    : do_schlieren_plot(do_schlieren_plot)
+    const bool do_schlieren_plot) :
+    do_schlieren_plot(do_schlieren_plot)
   {}
 
   // This is the only function worth commenting on. When generating graphical
@@ -1055,21 +1055,21 @@ namespace Step33
     };
 
     template <int dim>
-    AllParameters<dim>::BoundaryConditions::BoundaryConditions()
-      : values(EulerEquations<dim>::n_components)
+    AllParameters<dim>::BoundaryConditions::BoundaryConditions() :
+      values(EulerEquations<dim>::n_components)
     {
       for(unsigned int c = 0; c < EulerEquations<dim>::n_components; ++c)
         kind[c] = EulerEquations<dim>::no_penetration_boundary;
     }
 
     template <int dim>
-    AllParameters<dim>::AllParameters()
-      : diffusion_power(0.),
-        time_step(1.),
-        final_time(1.),
-        theta(.5),
-        is_stationary(true),
-        initial_conditions(EulerEquations<dim>::n_components)
+    AllParameters<dim>::AllParameters() :
+      diffusion_power(0.),
+      time_step(1.),
+      final_time(1.),
+      theta(.5),
+      is_stationary(true),
+      initial_conditions(EulerEquations<dim>::n_components)
     {}
 
     template <int dim>
@@ -1338,13 +1338,13 @@ namespace Step33
   // There is nothing much to say about the constructor. Essentially, it reads
   // the input file and fills the parameter object with the parsed values:
   template <int dim>
-  ConservationLaw<dim>::ConservationLaw(const char* input_filename)
-    : mapping(),
-      fe(FE_Q<dim>(1), EulerEquations<dim>::n_components),
-      dof_handler(triangulation),
-      quadrature(2),
-      face_quadrature(2),
-      verbose_cout(std::cout, false)
+  ConservationLaw<dim>::ConservationLaw(const char* input_filename) :
+    mapping(),
+    fe(FE_Q<dim>(1), EulerEquations<dim>::n_components),
+    dof_handler(triangulation),
+    quadrature(2),
+    face_quadrature(2),
+    verbose_cout(std::cout, false)
   {
     ParameterHandler prm;
     Parameters::AllParameters<dim>::declare_parameters(prm);

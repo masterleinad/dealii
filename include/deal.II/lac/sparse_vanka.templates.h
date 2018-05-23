@@ -29,28 +29,28 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
-SparseVanka<number>::SparseVanka()
-  : matrix(),
-    conserve_mem(false),
-    selected(),
-    n_threads(0),
-    inverses(),
-    _m(0),
-    _n(0)
+SparseVanka<number>::SparseVanka() :
+  matrix(),
+  conserve_mem(false),
+  selected(),
+  n_threads(0),
+  inverses(),
+  _m(0),
+  _n(0)
 {}
 
 template <typename number>
 SparseVanka<number>::SparseVanka(const SparseMatrix<number>& M,
                                  const std::vector<bool>&    selected_dofs,
                                  const bool                  conserve_mem,
-                                 const unsigned int          n_threads)
-  : matrix(&M, typeid(*this).name()),
-    conserve_mem(conserve_mem),
-    selected(&selected_dofs),
-    n_threads(n_threads),
-    inverses(M.m(), nullptr),
-    _m(M.m()),
-    _n(M.n())
+                                 const unsigned int          n_threads) :
+  matrix(&M, typeid(*this).name()),
+  conserve_mem(conserve_mem),
+  selected(&selected_dofs),
+  n_threads(n_threads),
+  inverses(M.m(), nullptr),
+  _m(M.m()),
+  _n(M.n())
 {
   Assert(M.m() == M.n(), ExcNotQuadratic());
   Assert(M.m() == selected->size(),
@@ -399,8 +399,10 @@ template <typename number>
 SparseVanka<number>::AdditionalData::AdditionalData(
   const std::vector<bool>& selected,
   const bool               conserve_mem,
-  const unsigned int       n_threads)
-  : selected(selected), conserve_mem(conserve_mem), n_threads(n_threads)
+  const unsigned int       n_threads) :
+  selected(selected),
+  conserve_mem(conserve_mem),
+  n_threads(n_threads)
 {}
 
 //---------------------------------------------------------------------------
@@ -412,10 +414,10 @@ SparseBlockVanka<number>::SparseBlockVanka(
   const unsigned int          n_blocks,
   const BlockingStrategy      blocking_strategy,
   const bool                  conserve_memory,
-  const unsigned int          n_threads)
-  : SparseVanka<number>(M, selected, conserve_memory, n_threads),
-    n_blocks(n_blocks),
-    dof_masks(n_blocks, std::vector<bool>(M.m(), false))
+  const unsigned int          n_threads) :
+  SparseVanka<number>(M, selected, conserve_memory, n_threads),
+  n_blocks(n_blocks),
+  dof_masks(n_blocks, std::vector<bool>(M.m(), false))
 {
   compute_dof_masks(M, selected, blocking_strategy);
 }

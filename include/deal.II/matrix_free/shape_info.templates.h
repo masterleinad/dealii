@@ -54,15 +54,15 @@ namespace internal
     } // namespace
 
     template <typename Number>
-    ShapeInfo<Number>::ShapeInfo()
-      : element_type(tensor_general),
-        fe_degree(numbers::invalid_unsigned_int),
-        n_q_points_1d(0),
-        n_q_points(0),
-        dofs_per_component_on_cell(0),
-        n_q_points_face(0),
-        dofs_per_component_on_face(0),
-        nodal_at_cell_boundaries(false)
+    ShapeInfo<Number>::ShapeInfo() :
+      element_type(tensor_general),
+      fe_degree(numbers::invalid_unsigned_int),
+      n_q_points_1d(0),
+      n_q_points(0),
+      dofs_per_component_on_cell(0),
+      n_q_points_face(0),
+      dofs_per_component_on_face(0),
+      nodal_at_cell_boundaries(false)
     {}
 
     template <typename Number>

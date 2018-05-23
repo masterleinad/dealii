@@ -290,10 +290,10 @@ namespace Step20
   // used <code>dim</code> copies of the <code>FE_Q(1)</code> element, one
   // copy for the displacement in each coordinate direction.
   template <int dim>
-  MixedLaplaceProblem<dim>::MixedLaplaceProblem(const unsigned int degree)
-    : degree(degree),
-      fe(FE_RaviartThomas<dim>(degree), 1, FE_DGQ<dim>(degree), 1),
-      dof_handler(triangulation)
+  MixedLaplaceProblem<dim>::MixedLaplaceProblem(const unsigned int degree) :
+    degree(degree),
+    fe(FE_RaviartThomas<dim>(degree), 1, FE_DGQ<dim>(degree), 1),
+    dof_handler(triangulation)
   {}
 
   // @sect4{MixedLaplaceProblem::make_grid_and_dofs}
@@ -635,11 +635,11 @@ namespace Step20
 
   SchurComplement ::SchurComplement(
     const BlockSparseMatrix<double>&           A,
-    const InverseMatrix<SparseMatrix<double>>& Minv)
-    : system_matrix(&A),
-      m_inverse(&Minv),
-      tmp1(A.block(0, 0).m()),
-      tmp2(A.block(0, 0).m())
+    const InverseMatrix<SparseMatrix<double>>& Minv) :
+    system_matrix(&A),
+    m_inverse(&Minv),
+    tmp1(A.block(0, 0).m()),
+    tmp2(A.block(0, 0).m())
   {}
 
   void
@@ -671,8 +671,10 @@ namespace Step20
   };
 
   ApproximateSchurComplement::ApproximateSchurComplement(
-    const BlockSparseMatrix<double>& A)
-    : system_matrix(&A), tmp1(A.block(0, 0).m()), tmp2(A.block(0, 0).m())
+    const BlockSparseMatrix<double>& A) :
+    system_matrix(&A),
+    tmp1(A.block(0, 0).m()),
+    tmp2(A.block(0, 0).m())
   {}
 
   void

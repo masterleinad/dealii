@@ -203,20 +203,19 @@ namespace Step40
   // use to determine how much compute time the different parts of the program
   // take:
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem()
-    : mpi_communicator(MPI_COMM_WORLD),
-      triangulation(mpi_communicator,
-                    typename Triangulation<dim>::MeshSmoothing(
-                      Triangulation<dim>::smoothing_on_refinement
-                      | Triangulation<dim>::smoothing_on_coarsening)),
-      dof_handler(triangulation),
-      fe(2),
-      pcout(std::cout,
-            (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
-      computing_timer(mpi_communicator,
-                      pcout,
-                      TimerOutput::summary,
-                      TimerOutput::wall_times)
+  LaplaceProblem<dim>::LaplaceProblem() :
+    mpi_communicator(MPI_COMM_WORLD),
+    triangulation(mpi_communicator,
+                  typename Triangulation<dim>::MeshSmoothing(
+                    Triangulation<dim>::smoothing_on_refinement
+                    | Triangulation<dim>::smoothing_on_coarsening)),
+    dof_handler(triangulation),
+    fe(2),
+    pcout(std::cout, (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)),
+    computing_timer(mpi_communicator,
+                    pcout,
+                    TimerOutput::summary,
+                    TimerOutput::wall_times)
   {}
 
   template <int dim>

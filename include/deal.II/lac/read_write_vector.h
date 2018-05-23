@@ -701,8 +701,9 @@ namespace LinearAlgebra
 #ifndef DOXYGEN
 
   template <typename Number>
-  inline ReadWriteVector<Number>::ReadWriteVector()
-    : Subscriptor(), values(nullptr, free)
+  inline ReadWriteVector<Number>::ReadWriteVector() :
+    Subscriptor(),
+    values(nullptr, free)
   {
     // virtual functions called in constructors and destructors never use the
     // override in a derived class
@@ -712,15 +713,17 @@ namespace LinearAlgebra
 
   template <typename Number>
   inline ReadWriteVector<Number>::ReadWriteVector(
-    const ReadWriteVector<Number>& v)
-    : Subscriptor(), values(nullptr, free)
+    const ReadWriteVector<Number>& v) :
+    Subscriptor(),
+    values(nullptr, free)
   {
     this->operator=(v);
   }
 
   template <typename Number>
-  inline ReadWriteVector<Number>::ReadWriteVector(const size_type size)
-    : Subscriptor(), values(nullptr, free)
+  inline ReadWriteVector<Number>::ReadWriteVector(const size_type size) :
+    Subscriptor(),
+    values(nullptr, free)
   {
     // virtual functions called in constructors and destructors never use the
     // override in a derived class
@@ -730,8 +733,9 @@ namespace LinearAlgebra
 
   template <typename Number>
   inline ReadWriteVector<Number>::ReadWriteVector(
-    const IndexSet& locally_stored_indices)
-    : Subscriptor(), values(nullptr, free)
+    const IndexSet& locally_stored_indices) :
+    Subscriptor(),
+    values(nullptr, free)
   {
     // virtual functions called in constructors and destructors never use the
     // override in a derived class
@@ -909,8 +913,9 @@ namespace LinearAlgebra
   template <typename Functor>
   inline ReadWriteVector<Number>::FunctorTemplate<Functor>::FunctorTemplate(
     ReadWriteVector<Number>& parent,
-    const Functor&           functor)
-    : parent(parent), functor(functor)
+    const Functor&           functor) :
+    parent(parent),
+    functor(functor)
   {}
 
   template <typename Number>

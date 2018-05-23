@@ -101,8 +101,9 @@ namespace Evaluation
   template <int dim>
   PointValueEvaluation<dim>::PointValueEvaluation(
     const Point<dim>& evaluation_point,
-    TableHandler&     results_table)
-    : evaluation_point(evaluation_point), results_table(results_table)
+    TableHandler&     results_table) :
+    evaluation_point(evaluation_point),
+    results_table(results_table)
   {}
 
   template <int dim>
@@ -154,8 +155,9 @@ namespace Evaluation
   template <int dim>
   SolutionOutput<dim>::SolutionOutput(
     const std::string&              output_name_base,
-    const DataOutBase::OutputFormat output_format)
-    : output_name_base(output_name_base), output_format(output_format)
+    const DataOutBase::OutputFormat output_format) :
+    output_name_base(output_name_base),
+    output_format(output_format)
   {}
 
   template <int dim>
@@ -269,12 +271,12 @@ namespace LaplaceSolver
   Solver<dim>::Solver(Triangulation<dim>&       triangulation,
                       const FiniteElement<dim>& fe,
                       const Quadrature<dim>&    quadrature,
-                      const Function<dim>&      boundary_values)
-    : Base<dim>(triangulation),
-      fe(&fe),
-      quadrature(&quadrature),
-      dof_handler(triangulation),
-      boundary_values(&boundary_values)
+                      const Function<dim>&      boundary_values) :
+    Base<dim>(triangulation),
+    fe(&fe),
+    quadrature(&quadrature),
+    dof_handler(triangulation),
+    boundary_values(&boundary_values)
   {}
 
   template <int dim>
@@ -449,10 +451,10 @@ namespace LaplaceSolver
                                   const FiniteElement<dim>& fe,
                                   const Quadrature<dim>&    quadrature,
                                   const Function<dim>&      rhs_function,
-                                  const Function<dim>&      boundary_values)
-    : Base<dim>(triangulation),
-      Solver<dim>(triangulation, fe, quadrature, boundary_values),
-      rhs_function(&rhs_function)
+                                  const Function<dim>&      boundary_values) :
+    Base<dim>(triangulation),
+    Solver<dim>(triangulation, fe, quadrature, boundary_values),
+    rhs_function(&rhs_function)
   {}
 
   template <int dim>
@@ -506,17 +508,18 @@ namespace LaplaceSolver
   };
 
   template <int dim>
-  RefinementGlobal<dim>::RefinementGlobal(Triangulation<dim>&       coarse_grid,
-                                          const FiniteElement<dim>& fe,
-                                          const Quadrature<dim>&    quadrature,
-                                          const Function<dim>& rhs_function,
-                                          const Function<dim>& boundary_values)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        fe,
-                        quadrature,
-                        rhs_function,
-                        boundary_values)
+  RefinementGlobal<dim>::RefinementGlobal(
+    Triangulation<dim>&       coarse_grid,
+    const FiniteElement<dim>& fe,
+    const Quadrature<dim>&    quadrature,
+    const Function<dim>&      rhs_function,
+    const Function<dim>&      boundary_values) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      fe,
+                      quadrature,
+                      rhs_function,
+                      boundary_values)
   {}
 
   template <int dim>
@@ -545,13 +548,13 @@ namespace LaplaceSolver
                                         const FiniteElement<dim>& fe,
                                         const Quadrature<dim>&    quadrature,
                                         const Function<dim>&      rhs_function,
-                                        const Function<dim>& boundary_values)
-    : Base<dim>(coarse_grid),
-      PrimalSolver<dim>(coarse_grid,
-                        fe,
-                        quadrature,
-                        rhs_function,
-                        boundary_values)
+                                        const Function<dim>& boundary_values) :
+    Base<dim>(coarse_grid),
+    PrimalSolver<dim>(coarse_grid,
+                      fe,
+                      quadrature,
+                      rhs_function,
+                      boundary_values)
   {}
 
   template <int dim>

@@ -133,22 +133,21 @@ namespace TrilinosWrappers
     reinit(m, n, n_entries_per_row);
   }
 
-  SparsityPattern::SparsityPattern(SparsityPattern&& other) noexcept
-    : Subscriptor(std::move(other)),
-      column_space_map(std::move(other.column_space_map)),
-      graph(std::move(other.graph)),
-      nonlocal_graph(std::move(other.nonlocal_graph))
+  SparsityPattern::SparsityPattern(SparsityPattern&& other) noexcept :
+    Subscriptor(std::move(other)),
+    column_space_map(std::move(other.column_space_map)),
+    graph(std::move(other.graph)),
+    nonlocal_graph(std::move(other.nonlocal_graph))
   {}
 
   // Copy function only works if the
   // sparsity pattern is empty.
-  SparsityPattern::SparsityPattern(const SparsityPattern& input_sparsity)
-    : Subscriptor(),
-      column_space_map(new Epetra_Map(TrilinosWrappers::types::int_type(0),
-                                      TrilinosWrappers::types::int_type(0),
-                                      Utilities::Trilinos::comm_self())),
-      graph(
-        new Epetra_FECrsGraph(View, *column_space_map, *column_space_map, 0))
+  SparsityPattern::SparsityPattern(const SparsityPattern& input_sparsity) :
+    Subscriptor(),
+    column_space_map(new Epetra_Map(TrilinosWrappers::types::int_type(0),
+                                    TrilinosWrappers::types::int_type(0),
+                                    Utilities::Trilinos::comm_self())),
+    graph(new Epetra_FECrsGraph(View, *column_space_map, *column_space_map, 0))
   {
     (void) input_sparsity;
     Assert(

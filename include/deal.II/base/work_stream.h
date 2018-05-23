@@ -195,8 +195,9 @@ namespace WorkStream
             ScratchDataObject() : currently_in_use(false)
             {}
 
-            ScratchDataObject(ScratchData* p, const bool in_use)
-              : scratch_data(p), currently_in_use(in_use)
+            ScratchDataObject(ScratchData* p, const bool in_use) :
+              scratch_data(p),
+              currently_in_use(in_use)
             {}
 
             //TODO: when we push back an object to the list of scratch objects, in
@@ -207,9 +208,9 @@ namespace WorkStream
             //      the original one goes out of scope right away again, but it's
             //      certainly awkward. one way to avoid this would be to use unique_ptr
             //      but we'd need to figure out a way to use it in non-C++11 mode
-            ScratchDataObject(const ScratchDataObject& o)
-              : scratch_data(o.scratch_data),
-                currently_in_use(o.currently_in_use)
+            ScratchDataObject(const ScratchDataObject& o) :
+              scratch_data(o.scratch_data),
+              currently_in_use(o.currently_in_use)
             {}
           };
 
@@ -288,11 +289,11 @@ namespace WorkStream
            * Default constructor. Initialize everything that doesn't have a
            * default constructor itself.
            */
-          ItemType()
-            : n_items(0),
-              scratch_data(nullptr),
-              sample_scratch_data(nullptr),
-              currently_in_use(false)
+          ItemType() :
+            n_items(0),
+            scratch_data(nullptr),
+            sample_scratch_data(nullptr),
+            currently_in_use(false)
           {}
         };
 
@@ -306,12 +307,12 @@ namespace WorkStream
                                   const unsigned int buffer_size,
                                   const unsigned int chunk_size,
                                   const ScratchData& sample_scratch_data,
-                                  const CopyData&    sample_copy_data)
-          : tbb::filter(/*is_serial=*/true),
-            remaining_iterator_range(begin, end),
-            item_buffer(buffer_size),
-            sample_scratch_data(sample_scratch_data),
-            chunk_size(chunk_size)
+                                  const CopyData&    sample_copy_data) :
+          tbb::filter(/*is_serial=*/true),
+          remaining_iterator_range(begin, end),
+          item_buffer(buffer_size),
+          sample_scratch_data(sample_scratch_data),
+          chunk_size(chunk_size)
         {
           // initialize the elements of the ring buffer
           for(unsigned int element = 0; element < item_buffer.size(); ++element)
@@ -459,10 +460,10 @@ namespace WorkStream
          */
         Worker(const std::function<
                  void(const Iterator&, ScratchData&, CopyData&)>& worker,
-               bool copier_exist = true)
-          : tbb::filter(/* is_serial= */ false),
-            worker(worker),
-            copier_exist(copier_exist)
+               bool copier_exist = true) :
+          tbb::filter(/* is_serial= */ false),
+          worker(worker),
+          copier_exist(copier_exist)
         {}
 
         /**
@@ -600,8 +601,9 @@ namespace WorkStream
          * copying from the additional data object to the global matrix or
          * similar.
          */
-        Copier(const std::function<void(const CopyData&)>& copier)
-          : tbb::filter(/*is_serial=*/true), copier(copier)
+        Copier(const std::function<void(const CopyData&)>& copier) :
+          tbb::filter(/*is_serial=*/true),
+          copier(copier)
         {}
 
         /**
@@ -684,8 +686,10 @@ namespace WorkStream
 
         ScratchAndCopyDataObjects(ScratchData* p,
                                   CopyData*    q,
-                                  const bool   in_use)
-          : scratch_data(p), copy_data(q), currently_in_use(in_use)
+                                  const bool   in_use) :
+          scratch_data(p),
+          copy_data(q),
+          currently_in_use(in_use)
         {}
 
         //TODO: when we push back an object to the list of scratch objects, in
@@ -696,10 +700,10 @@ namespace WorkStream
         //      the original one goes out of scope right away again, but it's
         //      certainly awkward. one way to avoid this would be to use unique_ptr
         //      but we'd need to figure out a way to use it in non-C++11 mode
-        ScratchAndCopyDataObjects(const ScratchAndCopyDataObjects& o)
-          : scratch_data(o.scratch_data),
-            copy_data(o.copy_data),
-            currently_in_use(o.currently_in_use)
+        ScratchAndCopyDataObjects(const ScratchAndCopyDataObjects& o) :
+          scratch_data(o.scratch_data),
+          copy_data(o.copy_data),
+          currently_in_use(o.currently_in_use)
         {}
       };
 
@@ -720,11 +724,11 @@ namespace WorkStream
                                                       worker,
           const std::function<void(const CopyData&)>& copier,
           const ScratchData&                          sample_scratch_data,
-          const CopyData&                             sample_copy_data)
-          : worker(worker),
-            copier(copier),
-            sample_scratch_data(sample_scratch_data),
-            sample_copy_data(sample_copy_data)
+          const CopyData&                             sample_copy_data) :
+          worker(worker),
+          copier(copier),
+          sample_scratch_data(sample_scratch_data),
+          sample_copy_data(sample_copy_data)
         {}
 
         /**

@@ -39,13 +39,18 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
-SparseMatrix<number>::SparseMatrix()
-  : cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
+SparseMatrix<number>::SparseMatrix() :
+  cols(nullptr, "SparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {}
 
 template <typename number>
-SparseMatrix<number>::SparseMatrix(const SparseMatrix& m)
-  : Subscriptor(m), cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
+SparseMatrix<number>::SparseMatrix(const SparseMatrix& m) :
+  Subscriptor(m),
+  cols(nullptr, "SparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   Assert(
     m.cols == nullptr && m.val == nullptr && m.max_len == 0,
@@ -56,11 +61,11 @@ SparseMatrix<number>::SparseMatrix(const SparseMatrix& m)
 }
 
 template <typename number>
-SparseMatrix<number>::SparseMatrix(SparseMatrix<number>&& m) noexcept
-  : Subscriptor(std::move(m)),
-    cols(m.cols),
-    val(std::move(m.val)),
-    max_len(m.max_len)
+SparseMatrix<number>::SparseMatrix(SparseMatrix<number>&& m) noexcept :
+  Subscriptor(std::move(m)),
+  cols(m.cols),
+  val(std::move(m.val)),
+  max_len(m.max_len)
 {
   m.cols    = nullptr;
   m.val     = nullptr;
@@ -97,8 +102,10 @@ SparseMatrix<number>::operator=(SparseMatrix<number>&& m) noexcept
 }
 
 template <typename number>
-SparseMatrix<number>::SparseMatrix(const SparsityPattern& c)
-  : cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
+SparseMatrix<number>::SparseMatrix(const SparsityPattern& c) :
+  cols(nullptr, "SparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   // virtual functions called in constructors and destructors never use the
   // override in a derived class
@@ -108,8 +115,10 @@ SparseMatrix<number>::SparseMatrix(const SparsityPattern& c)
 
 template <typename number>
 SparseMatrix<number>::SparseMatrix(const SparsityPattern& c,
-                                   const IdentityMatrix&  id)
-  : cols(nullptr, "SparseMatrix"), val(nullptr), max_len(0)
+                                   const IdentityMatrix&  id) :
+  cols(nullptr, "SparseMatrix"),
+  val(nullptr),
+  max_len(0)
 {
   (void) id;
   Assert(c.n_rows() == id.m(), ExcDimensionMismatch(c.n_rows(), id.m()));

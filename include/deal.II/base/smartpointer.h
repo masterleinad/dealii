@@ -219,16 +219,18 @@ inline SmartPointer<T, P>::SmartPointer(T* t, const char* id) : t(t), id(id)
 
 template <typename T, typename P>
 template <class Q>
-inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, Q>& tt)
-  : t(tt.t), id(tt.id)
+inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, Q>& tt) :
+  t(tt.t),
+  id(tt.id)
 {
   if(t != nullptr)
     t->subscribe(id);
 }
 
 template <typename T, typename P>
-inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, P>& tt)
-  : t(tt.t), id(tt.id)
+inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, P>& tt) :
+  t(tt.t),
+  id(tt.id)
 {
   if(t != nullptr)
     t->subscribe(id);

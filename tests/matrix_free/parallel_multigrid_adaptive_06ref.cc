@@ -53,10 +53,10 @@ class MGTransferMF
 {
 public:
   MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
-               const MGConstrainedDoFs&              mg_constrained_dofs)
-    : MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
-        mg_constrained_dofs),
-      laplace_operator(laplace)
+               const MGConstrainedDoFs&              mg_constrained_dofs) :
+    MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
+      mg_constrained_dofs),
+    laplace_operator(laplace)
   {}
 
   /**

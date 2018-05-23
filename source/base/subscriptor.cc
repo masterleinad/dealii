@@ -34,8 +34,9 @@ Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
 Subscriptor::Subscriptor(const Subscriptor&) : counter(0), object_info(nullptr)
 {}
 
-Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept
-  : counter(0), object_info(subscriptor.object_info)
+Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept :
+  counter(0),
+  object_info(subscriptor.object_info)
 {
   subscriptor.check_no_subscribers();
 }

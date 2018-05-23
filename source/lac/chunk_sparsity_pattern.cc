@@ -24,10 +24,10 @@ ChunkSparsityPattern::ChunkSparsityPattern()
   reinit(0, 0, 0, 1);
 }
 
-ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
-  : Subscriptor(),
-    chunk_size(s.chunk_size),
-    sparsity_pattern(s.sparsity_pattern)
+ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s) :
+  Subscriptor(),
+  chunk_size(s.chunk_size),
+  sparsity_pattern(s.sparsity_pattern)
 {
   Assert(s.rows == 0 && s.cols == 0,
          ExcMessage(

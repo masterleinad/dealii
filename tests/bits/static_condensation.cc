@@ -213,12 +213,12 @@ private:
 
 template <int dim>
 HelmholtzProblem<dim>::HelmholtzProblem(const unsigned int   fe_degree,
-                                        const RefinementMode refinement_mode)
-  : fe(fe_degree),
-    dof_handler(triangulation),
-    fe_trace(fe_degree),
-    dof_handler_trace(triangulation),
-    refinement_mode(refinement_mode)
+                                        const RefinementMode refinement_mode) :
+  fe(fe_degree),
+  dof_handler(triangulation),
+  fe_trace(fe_degree),
+  dof_handler_trace(triangulation),
+  refinement_mode(refinement_mode)
 {
   deallog << "Solving with Q" << fe_degree << " elements, "
           << (refinement_mode == global_refinement ? "global" : "adaptive")

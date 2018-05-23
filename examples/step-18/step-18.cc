@@ -654,11 +654,11 @@ namespace Step18
   template <int dim>
   IncrementalBoundaryValues<dim>::IncrementalBoundaryValues(
     const double present_time,
-    const double present_timestep)
-    : Function<dim>(dim),
-      velocity(.08),
-      present_time(present_time),
-      present_timestep(present_timestep)
+    const double present_timestep) :
+    Function<dim>(dim),
+    velocity(.08),
+    present_time(present_time),
+    present_timestep(present_timestep)
   {}
 
   template <int dim>
@@ -705,20 +705,20 @@ namespace Step18
   // Gaussian quadrature formula with 2 points in each coordinate
   // direction. The destructor should be obvious:
   template <int dim>
-  TopLevel<dim>::TopLevel()
-    : triangulation(MPI_COMM_WORLD),
-      fe(FE_Q<dim>(1), dim),
-      dof_handler(triangulation),
-      quadrature_formula(2),
-      present_time(0.0),
-      present_timestep(1.0),
-      end_time(10.0),
-      timestep_no(0),
-      mpi_communicator(MPI_COMM_WORLD),
-      n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
-      this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
-      pcout(std::cout, this_mpi_process == 0),
-      n_local_cells(numbers::invalid_unsigned_int)
+  TopLevel<dim>::TopLevel() :
+    triangulation(MPI_COMM_WORLD),
+    fe(FE_Q<dim>(1), dim),
+    dof_handler(triangulation),
+    quadrature_formula(2),
+    present_time(0.0),
+    present_timestep(1.0),
+    end_time(10.0),
+    timestep_no(0),
+    mpi_communicator(MPI_COMM_WORLD),
+    n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
+    this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
+    pcout(std::cout, this_mpi_process == 0),
+    n_local_cells(numbers::invalid_unsigned_int)
   {}
 
   template <int dim>

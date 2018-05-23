@@ -133,8 +133,9 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : dof_handler(triangulation), fe(FE_Q<dim>(2))
+LaplaceProblem<dim>::LaplaceProblem() :
+  dof_handler(triangulation),
+  fe(FE_Q<dim>(2))
 {}
 
 template <int dim>

@@ -202,8 +202,10 @@ private:
 
 template <int dim>
 HelmholtzProblem<dim>::HelmholtzProblem(const FiniteElement<dim>& fe,
-                                        const RefinementMode refinement_mode)
-  : dof_handler(triangulation), fe(&fe), refinement_mode(refinement_mode)
+                                        const RefinementMode refinement_mode) :
+  dof_handler(triangulation),
+  fe(&fe),
+  refinement_mode(refinement_mode)
 {}
 
 template <int dim>

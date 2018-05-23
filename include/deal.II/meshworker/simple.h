@@ -575,8 +575,8 @@ namespace MeshWorker
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
-    inline MatrixSimple<MatrixType>::MatrixSimple(double threshold)
-      : threshold(threshold)
+    inline MatrixSimple<MatrixType>::MatrixSimple(double threshold) :
+      threshold(threshold)
     {}
 
     template <typename MatrixType>
@@ -740,8 +740,8 @@ namespace MeshWorker
     //----------------------------------------------------------------------//
 
     template <typename MatrixType>
-    inline MGMatrixSimple<MatrixType>::MGMatrixSimple(double threshold)
-      : threshold(threshold)
+    inline MGMatrixSimple<MatrixType>::MGMatrixSimple(double threshold) :
+      threshold(threshold)
     {}
 
     template <typename MatrixType>
@@ -1180,8 +1180,8 @@ namespace MeshWorker
     //----------------------------------------------------------------------//
 
     template <typename MatrixType, typename VectorType>
-    SystemSimple<MatrixType, VectorType>::SystemSimple(double t)
-      : MatrixSimple<MatrixType>(t)
+    SystemSimple<MatrixType, VectorType>::SystemSimple(double t) :
+      MatrixSimple<MatrixType>(t)
     {}
 
     template <typename MatrixType, typename VectorType>

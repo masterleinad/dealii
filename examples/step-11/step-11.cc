@@ -107,8 +107,10 @@ namespace Step11
   // denotes the polynomial degree), and mappings of given order. Print to
   // screen what we are about to do.
   template <int dim>
-  LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree)
-    : fe(1), dof_handler(triangulation), mapping(mapping_degree)
+  LaplaceProblem<dim>::LaplaceProblem(const unsigned int mapping_degree) :
+    fe(1),
+    dof_handler(triangulation),
+    mapping(mapping_degree)
   {
     std::cout << "Using mapping with degree " << mapping_degree << ":"
               << std::endl

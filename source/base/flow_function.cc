@@ -25,11 +25,11 @@ DEAL_II_NAMESPACE_OPEN
 namespace Functions
 {
   template <int dim>
-  FlowFunction<dim>::FlowFunction()
-    : Function<dim>(dim + 1),
-      mean_pressure(0),
-      aux_values(dim + 1),
-      aux_gradients(dim + 1)
+  FlowFunction<dim>::FlowFunction() :
+    Function<dim>(dim + 1),
+    mean_pressure(0),
+    aux_values(dim + 1),
+    aux_gradients(dim + 1)
   {}
 
   template <int dim>
@@ -176,8 +176,9 @@ namespace Functions
   //----------------------------------------------------------------------//
 
   template <int dim>
-  PoisseuilleFlow<dim>::PoisseuilleFlow(const double r, const double Re)
-    : radius(r), Reynolds(Re)
+  PoisseuilleFlow<dim>::PoisseuilleFlow(const double r, const double Re) :
+    radius(r),
+    Reynolds(Re)
   {
     Assert(Reynolds != 0., ExcMessage("Reynolds number cannot be zero"));
   }
@@ -270,8 +271,9 @@ namespace Functions
   //----------------------------------------------------------------------//
 
   template <int dim>
-  StokesCosine<dim>::StokesCosine(const double nu, const double r)
-    : viscosity(nu), reaction(r)
+  StokesCosine<dim>::StokesCosine(const double nu, const double r) :
+    viscosity(nu),
+    reaction(r)
   {}
 
   template <int dim>
@@ -464,11 +466,11 @@ namespace Functions
 
   const double StokesLSingularity::lambda = 0.54448373678246;
 
-  StokesLSingularity::StokesLSingularity()
-    : omega(3. / 2. * numbers::PI),
-      coslo(cos(lambda * omega)),
-      lp(1. + lambda),
-      lm(1. - lambda)
+  StokesLSingularity::StokesLSingularity() :
+    omega(3. / 2. * numbers::PI),
+    coslo(cos(lambda * omega)),
+    lp(1. + lambda),
+    lm(1. - lambda)
   {}
 
   inline double

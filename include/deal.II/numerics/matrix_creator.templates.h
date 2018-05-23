@@ -103,13 +103,16 @@ namespace MatrixCreator
     template <typename DoFHandlerType>
     inline IteratorRange<DoFHandlerType>::IteratorRange(
       const active_cell_iterator& first,
-      const active_cell_iterator& second)
-      : first(first), second(second)
+      const active_cell_iterator& second) :
+      first(first),
+      second(second)
     {}
 
     template <typename DoFHandlerType>
-    inline IteratorRange<DoFHandlerType>::IteratorRange(const iterator_pair& ip)
-      : first(ip.first), second(ip.second)
+    inline IteratorRange<DoFHandlerType>::IteratorRange(
+      const iterator_pair& ip) :
+      first(ip.first),
+      second(ip.second)
     {}
 
     namespace AssemblerData
@@ -125,43 +128,43 @@ namespace MatrixCreator
                                                                 coefficient,
           const Function<spacedim, number>*                     rhs_function,
           const ::dealii::hp::QCollection<dim>&                 quadrature,
-          const ::dealii::hp::MappingCollection<dim, spacedim>& mapping)
-          : fe_collection(fe),
-            quadrature_collection(quadrature),
-            mapping_collection(mapping),
-            x_fe_values(mapping_collection,
-                        fe_collection,
-                        quadrature_collection,
-                        update_flags),
-            coefficient_values(quadrature_collection.max_n_quadrature_points()),
-            coefficient_vector_values(
-              quadrature_collection.max_n_quadrature_points(),
-              dealii::Vector<typename numbers::NumberTraits<number>::real_type>(
-                fe_collection.n_components())),
-            rhs_values(quadrature_collection.max_n_quadrature_points()),
-            rhs_vector_values(
-              quadrature_collection.max_n_quadrature_points(),
-              dealii::Vector<number>(fe_collection.n_components())),
-            coefficient(coefficient),
-            rhs_function(rhs_function),
-            update_flags(update_flags)
+          const ::dealii::hp::MappingCollection<dim, spacedim>& mapping) :
+          fe_collection(fe),
+          quadrature_collection(quadrature),
+          mapping_collection(mapping),
+          x_fe_values(mapping_collection,
+                      fe_collection,
+                      quadrature_collection,
+                      update_flags),
+          coefficient_values(quadrature_collection.max_n_quadrature_points()),
+          coefficient_vector_values(
+            quadrature_collection.max_n_quadrature_points(),
+            dealii::Vector<typename numbers::NumberTraits<number>::real_type>(
+              fe_collection.n_components())),
+          rhs_values(quadrature_collection.max_n_quadrature_points()),
+          rhs_vector_values(
+            quadrature_collection.max_n_quadrature_points(),
+            dealii::Vector<number>(fe_collection.n_components())),
+          coefficient(coefficient),
+          rhs_function(rhs_function),
+          update_flags(update_flags)
         {}
 
-        Scratch(const Scratch& data)
-          : fe_collection(data.fe_collection),
-            quadrature_collection(data.quadrature_collection),
-            mapping_collection(data.mapping_collection),
-            x_fe_values(mapping_collection,
-                        fe_collection,
-                        quadrature_collection,
-                        data.update_flags),
-            coefficient_values(data.coefficient_values),
-            coefficient_vector_values(data.coefficient_vector_values),
-            rhs_values(data.rhs_values),
-            rhs_vector_values(data.rhs_vector_values),
-            coefficient(data.coefficient),
-            rhs_function(data.rhs_function),
-            update_flags(data.update_flags)
+        Scratch(const Scratch& data) :
+          fe_collection(data.fe_collection),
+          quadrature_collection(data.quadrature_collection),
+          mapping_collection(data.mapping_collection),
+          x_fe_values(mapping_collection,
+                      fe_collection,
+                      quadrature_collection,
+                      data.update_flags),
+          coefficient_values(data.coefficient_values),
+          coefficient_vector_values(data.coefficient_vector_values),
+          rhs_values(data.rhs_values),
+          rhs_vector_values(data.rhs_vector_values),
+          coefficient(data.coefficient),
+          rhs_function(data.rhs_function),
+          update_flags(data.update_flags)
         {}
 
         Scratch&
@@ -646,18 +649,18 @@ namespace MatrixCreator
       };
 
       template <typename DoFHandlerType, typename number>
-      CopyData<DoFHandlerType, number>::CopyData()
-        : dofs_per_cell(numbers::invalid_unsigned_int)
+      CopyData<DoFHandlerType, number>::CopyData() :
+        dofs_per_cell(numbers::invalid_unsigned_int)
       {}
 
       template <typename DoFHandlerType, typename number>
-      CopyData<DoFHandlerType, number>::CopyData(CopyData const& data)
-        : dofs_per_cell(data.dofs_per_cell),
-          dofs(data.dofs),
-          dof_is_on_face(data.dof_is_on_face),
-          cell(data.cell),
-          cell_matrix(data.cell_matrix),
-          cell_vector(data.cell_vector)
+      CopyData<DoFHandlerType, number>::CopyData(CopyData const& data) :
+        dofs_per_cell(data.dofs_per_cell),
+        dofs(data.dofs),
+        dof_is_on_face(data.dof_is_on_face),
+        cell(data.cell),
+        cell_matrix(data.cell_matrix),
+        cell_vector(data.cell_vector)
       {}
     } // namespace AssemblerBoundary
   }   // namespace internal

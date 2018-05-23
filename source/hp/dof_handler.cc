@@ -982,14 +982,16 @@ namespace hp
   const unsigned int DoFHandler<dim, spacedim>::default_fe_index;
 
   template <int dim, int spacedim>
-  DoFHandler<dim, spacedim>::DoFHandler()
-    : tria(nullptr, typeid(*this).name()), faces(nullptr)
+  DoFHandler<dim, spacedim>::DoFHandler() :
+    tria(nullptr, typeid(*this).name()),
+    faces(nullptr)
   {}
 
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::DoFHandler(
-    const Triangulation<dim, spacedim>& tria)
-    : tria(&tria, typeid(*this).name()), faces(nullptr)
+    const Triangulation<dim, spacedim>& tria) :
+    tria(&tria, typeid(*this).name()),
+    faces(nullptr)
   {
     setup_policy_and_listeners();
 

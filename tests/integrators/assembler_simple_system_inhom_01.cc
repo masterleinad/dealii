@@ -505,8 +505,10 @@ private:
 
 template <int dim>
 MeshWorkerConstraintMatrixTest<dim>::MeshWorkerConstraintMatrixTest(
-  const FiniteElement<dim>& fe)
-  : mapping(), dof_handler(triangulation), fe(fe)
+  const FiniteElement<dim>& fe) :
+  mapping(),
+  dof_handler(triangulation),
+  fe(fe)
 {
   GridGenerator::hyper_cube(this->triangulation, -1, 1);
 

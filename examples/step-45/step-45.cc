@@ -206,11 +206,11 @@ namespace Step45
     const MatrixType&         m,
     const PreconditionerType& preconditioner,
     const IndexSet&           locally_owned,
-    const MPI_Comm&           mpi_communicator)
-    : matrix(&m),
-      preconditioner(&preconditioner),
-      mpi_communicator(&mpi_communicator),
-      tmp(locally_owned, mpi_communicator)
+    const MPI_Comm&           mpi_communicator) :
+    matrix(&m),
+    preconditioner(&preconditioner),
+    mpi_communicator(&mpi_communicator),
+    tmp(locally_owned, mpi_communicator)
   {}
 
   template <class MatrixType, class PreconditionerType>
@@ -256,11 +256,11 @@ namespace Step45
     const InverseMatrix<TrilinosWrappers::SparseMatrix, PreconditionerType>&
                     A_inverse,
     const IndexSet& owned_vel,
-    const MPI_Comm& mpi_communicator)
-    : system_matrix(&system_matrix),
-      A_inverse(&A_inverse),
-      tmp1(owned_vel, mpi_communicator),
-      tmp2(tmp1)
+    const MPI_Comm& mpi_communicator) :
+    system_matrix(&system_matrix),
+    A_inverse(&A_inverse),
+    tmp1(owned_vel, mpi_communicator),
+    tmp2(tmp1)
   {}
 
   template <class PreconditionerType>
@@ -275,14 +275,14 @@ namespace Step45
   }
 
   template <int dim>
-  StokesProblem<dim>::StokesProblem(const unsigned int degree)
-    : degree(degree),
-      mpi_communicator(MPI_COMM_WORLD),
-      triangulation(mpi_communicator),
-      fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
-      dof_handler(triangulation),
-      pcout(std::cout, Utilities::MPI::this_mpi_process(mpi_communicator) == 0),
-      mapping(degree + 1)
+  StokesProblem<dim>::StokesProblem(const unsigned int degree) :
+    degree(degree),
+    mpi_communicator(MPI_COMM_WORLD),
+    triangulation(mpi_communicator),
+    fe(FE_Q<dim>(degree + 1), dim, FE_Q<dim>(degree), 1),
+    dof_handler(triangulation),
+    pcout(std::cout, Utilities::MPI::this_mpi_process(mpi_communicator) == 0),
+    mapping(degree + 1)
   {}
   // @endcond
   //

@@ -795,8 +795,11 @@ namespace internal
 } // namespace internal
 
 template <int dim, int spacedim>
-DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)
-  : tria(&tria, typeid(*this).name()), faces(nullptr), mg_faces(nullptr)
+DoFHandler<dim, spacedim>::DoFHandler(
+  const Triangulation<dim, spacedim>& tria) :
+  tria(&tria, typeid(*this).name()),
+  faces(nullptr),
+  mg_faces(nullptr)
 {
   // decide whether we need a sequential or a parallel distributed policy
   if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&tria)
@@ -1420,8 +1423,9 @@ DoFHandler<dim, spacedim>::set_dof_index(
 }
 
 template <int dim, int spacedim>
-DoFHandler<dim, spacedim>::MGVertexDoFs::MGVertexDoFs()
-  : coarsest_level(numbers::invalid_unsigned_int), finest_level(0)
+DoFHandler<dim, spacedim>::MGVertexDoFs::MGVertexDoFs() :
+  coarsest_level(numbers::invalid_unsigned_int),
+  finest_level(0)
 {}
 
 template <int dim, int spacedim>

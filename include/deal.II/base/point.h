@@ -282,8 +282,8 @@ inline Point<dim, Number>::Point()
 {}
 
 template <int dim, typename Number>
-inline Point<dim, Number>::Point(const Tensor<1, dim, Number>& t)
-  : Tensor<1, dim, Number>(t)
+inline Point<dim, Number>::Point(const Tensor<1, dim, Number>& t) :
+  Tensor<1, dim, Number>(t)
 {}
 
 template <int dim, typename Number>

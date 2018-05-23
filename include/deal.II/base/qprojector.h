@@ -321,13 +321,13 @@ private:
 
 template <int dim>
 inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor(
-  const unsigned int dataset_offset)
-  : dataset_offset(dataset_offset)
+  const unsigned int dataset_offset) :
+  dataset_offset(dataset_offset)
 {}
 
 template <int dim>
-inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor()
-  : dataset_offset(numbers::invalid_unsigned_int)
+inline QProjector<dim>::DataSetDescriptor::DataSetDescriptor() :
+  dataset_offset(numbers::invalid_unsigned_int)
 {}
 
 template <int dim>

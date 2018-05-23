@@ -170,14 +170,14 @@ namespace Step28
   //
   // At present, material data is stored for 8 different types of
   // material. This, as well, may easily be extended in the future.
-  MaterialData::MaterialData(const unsigned int n_groups)
-    : n_groups(n_groups),
-      n_materials(8),
-      diffusion(n_materials, n_groups),
-      sigma_r(n_materials, n_groups),
-      nu_sigma_f(n_materials, n_groups),
-      sigma_s(n_materials, n_groups, n_groups),
-      chi(n_materials, n_groups)
+  MaterialData::MaterialData(const unsigned int n_groups) :
+    n_groups(n_groups),
+    n_materials(8),
+    diffusion(n_materials, n_groups),
+    sigma_r(n_materials, n_groups),
+    nu_sigma_f(n_materials, n_groups),
+    sigma_s(n_materials, n_groups, n_groups),
+    chi(n_materials, n_groups)
   {
     switch(this->n_groups)
       {
@@ -536,11 +536,11 @@ namespace Step28
   EnergyGroup<dim>::EnergyGroup(const unsigned int        group,
                                 const MaterialData&       material_data,
                                 const Triangulation<dim>& coarse_grid,
-                                const FiniteElement<dim>& fe)
-    : group(group),
-      material_data(material_data),
-      fe(fe),
-      dof_handler(triangulation)
+                                const FiniteElement<dim>& fe) :
+    group(group),
+    material_data(material_data),
+    fe(fe),
+    dof_handler(triangulation)
   {
     triangulation.copy_triangulation(coarse_grid);
     dof_handler.distribute_dofs(fe);
@@ -1219,11 +1219,11 @@ namespace Step28
   // parameters classes using the ParameterHandler capabilities. We will
   // therefore not comment further on this:
   template <int dim>
-  NeutronDiffusionProblem<dim>::Parameters::Parameters()
-    : n_groups(2),
-      n_refinement_cycles(5),
-      fe_degree(2),
-      convergence_tolerance(1e-12)
+  NeutronDiffusionProblem<dim>::Parameters::Parameters() :
+    n_groups(2),
+    n_refinement_cycles(5),
+    fe_degree(2),
+    convergence_tolerance(1e-12)
   {}
 
   template <int dim>
@@ -1268,11 +1268,11 @@ namespace Step28
   // and destructor have nothing of much interest:
   template <int dim>
   NeutronDiffusionProblem<dim>::NeutronDiffusionProblem(
-    const Parameters& parameters)
-    : parameters(parameters),
-      material_data(parameters.n_groups),
-      fe(parameters.fe_degree),
-      k_eff(std::numeric_limits<double>::quiet_NaN())
+    const Parameters& parameters) :
+    parameters(parameters),
+    material_data(parameters.n_groups),
+    fe(parameters.fe_degree),
+    k_eff(std::numeric_limits<double>::quiet_NaN())
   {}
 
   template <int dim>

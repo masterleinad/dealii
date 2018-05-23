@@ -384,8 +384,9 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
 
 template <int dim>
 AnisotropicPolynomials<dim>::AnisotropicPolynomials(
-  const std::vector<std::vector<Polynomials::Polynomial<double>>>& pols)
-  : polynomials(pols), n_tensor_pols(get_n_tensor_pols(pols))
+  const std::vector<std::vector<Polynomials::Polynomial<double>>>& pols) :
+  polynomials(pols),
+  n_tensor_pols(get_n_tensor_pols(pols))
 {
   Assert(pols.size() == dim, ExcDimensionMismatch(pols.size(), dim));
   for(unsigned int d = 0; d < dim; ++d)

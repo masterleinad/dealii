@@ -59,13 +59,13 @@ LogStream::Prefix::~Prefix()
     }
 }
 
-LogStream::LogStream()
-  : std_out(&std::cout),
-    file(nullptr),
-    std_depth(0),
-    file_depth(10000),
-    print_thread_id(false),
-    at_newline(true)
+LogStream::LogStream() :
+  std_out(&std::cout),
+  file(nullptr),
+  std_depth(0),
+  file_depth(10000),
+  print_thread_id(false),
+  at_newline(true)
 {
   get_prefixes().push("DEAL:");
 }

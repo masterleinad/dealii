@@ -105,12 +105,12 @@ namespace Advection
   };
 
   template <int dim>
-  AdvectionProblem<dim>::AdvectionProblem()
-    : mapping(1),
-      wavespeed(1.0),
-      dof_handler(triangulation),
-      fe(FE_DGQ<dim>(0), 1), // p=0, and solving for a scalar
-      upos(0)
+  AdvectionProblem<dim>::AdvectionProblem() :
+    mapping(1),
+    wavespeed(1.0),
+    dof_handler(triangulation),
+    fe(FE_DGQ<dim>(0), 1), // p=0, and solving for a scalar
+    upos(0)
   {}
 
   template <int dim>

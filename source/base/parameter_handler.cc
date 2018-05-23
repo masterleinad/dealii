@@ -37,8 +37,8 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-ParameterHandler::ParameterHandler()
-  : entries(new boost::property_tree::ptree())
+ParameterHandler::ParameterHandler() :
+  entries(new boost::property_tree::ptree())
 {}
 
 namespace
@@ -2272,11 +2272,11 @@ MultipleParameterLoop::memory_consumption() const
 
 MultipleParameterLoop::Entry::Entry(const std::vector<std::string>& ssp,
                                     const std::string&              Name,
-                                    const std::string&              Value)
-  : subsection_path(ssp),
-    entry_name(Name),
-    entry_value(Value),
-    type(Entry::array)
+                                    const std::string&              Value) :
+  subsection_path(ssp),
+  entry_name(Name),
+  entry_value(Value),
+  type(Entry::array)
 {}
 
 void

@@ -634,17 +634,17 @@ Multigrid<VectorType>::Multigrid(const DoFHandler<dim>&          mg_dof_handler,
                                  const MGSmootherBase<VectorType>& post_smooth,
                                  const unsigned int                min_level,
                                  const unsigned int                max_level,
-                                 Cycle                             cycle)
-  : cycle_type(cycle),
-    minlevel(min_level),
-    matrix(&matrix, typeid(*this).name()),
-    coarse(&coarse, typeid(*this).name()),
-    transfer(&transfer, typeid(*this).name()),
-    pre_smooth(&pre_smooth, typeid(*this).name()),
-    post_smooth(&post_smooth, typeid(*this).name()),
-    edge_down(nullptr, typeid(*this).name()),
-    edge_up(nullptr, typeid(*this).name()),
-    debug(0)
+                                 Cycle                             cycle) :
+  cycle_type(cycle),
+  minlevel(min_level),
+  matrix(&matrix, typeid(*this).name()),
+  coarse(&coarse, typeid(*this).name()),
+  transfer(&transfer, typeid(*this).name()),
+  pre_smooth(&pre_smooth, typeid(*this).name()),
+  post_smooth(&post_smooth, typeid(*this).name()),
+  edge_down(nullptr, typeid(*this).name()),
+  edge_up(nullptr, typeid(*this).name()),
+  debug(0)
 {
   const unsigned int dof_handler_max_level
     = mg_dof_handler.get_triangulation().n_global_levels() - 1;
@@ -664,18 +664,18 @@ Multigrid<VectorType>::Multigrid(const MGMatrixBase<VectorType>&     matrix,
                                  const MGSmootherBase<VectorType>& post_smooth,
                                  const unsigned int                min_level,
                                  const unsigned int                max_level,
-                                 Cycle                             cycle)
-  : cycle_type(cycle),
-    matrix(&matrix, typeid(*this).name()),
-    coarse(&coarse, typeid(*this).name()),
-    transfer(&transfer, typeid(*this).name()),
-    pre_smooth(&pre_smooth, typeid(*this).name()),
-    post_smooth(&post_smooth, typeid(*this).name()),
-    edge_out(nullptr, typeid(*this).name()),
-    edge_in(nullptr, typeid(*this).name()),
-    edge_down(nullptr, typeid(*this).name()),
-    edge_up(nullptr, typeid(*this).name()),
-    debug(0)
+                                 Cycle                             cycle) :
+  cycle_type(cycle),
+  matrix(&matrix, typeid(*this).name()),
+  coarse(&coarse, typeid(*this).name()),
+  transfer(&transfer, typeid(*this).name()),
+  pre_smooth(&pre_smooth, typeid(*this).name()),
+  post_smooth(&post_smooth, typeid(*this).name()),
+  edge_out(nullptr, typeid(*this).name()),
+  edge_in(nullptr, typeid(*this).name()),
+  edge_down(nullptr, typeid(*this).name()),
+  edge_up(nullptr, typeid(*this).name()),
+  debug(0)
 {
   if(max_level == numbers::invalid_unsigned_int)
     maxlevel = matrix.get_maxlevel();
@@ -832,24 +832,24 @@ template <int dim, typename VectorType, class TRANSFER>
 PreconditionMG<dim, VectorType, TRANSFER>::PreconditionMG(
   const DoFHandler<dim>& dof_handler,
   Multigrid<VectorType>& mg,
-  const TRANSFER&        transfer)
-  : dof_handler_vector(1, &dof_handler),
-    dof_handler_vector_raw(1, &dof_handler),
-    multigrid(&mg),
-    transfer(&transfer),
-    uses_dof_handler_vector(false)
+  const TRANSFER&        transfer) :
+  dof_handler_vector(1, &dof_handler),
+  dof_handler_vector_raw(1, &dof_handler),
+  multigrid(&mg),
+  transfer(&transfer),
+  uses_dof_handler_vector(false)
 {}
 
 template <int dim, typename VectorType, class TRANSFER>
 PreconditionMG<dim, VectorType, TRANSFER>::PreconditionMG(
   const std::vector<const DoFHandler<dim>*>& dof_handler,
   Multigrid<VectorType>&                     mg,
-  const TRANSFER&                            transfer)
-  : dof_handler_vector(dof_handler.size()),
-    dof_handler_vector_raw(dof_handler.size()),
-    multigrid(&mg),
-    transfer(&transfer),
-    uses_dof_handler_vector(true)
+  const TRANSFER&                            transfer) :
+  dof_handler_vector(dof_handler.size()),
+  dof_handler_vector_raw(dof_handler.size()),
+  multigrid(&mg),
+  transfer(&transfer),
+  uses_dof_handler_vector(true)
 {
   for(unsigned int i = 0; i < dof_handler.size(); ++i)
     {

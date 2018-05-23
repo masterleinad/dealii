@@ -292,13 +292,13 @@ namespace Step23
   // time step, see the section on Courant, Friedrichs, and Lewy in the
   // introduction):
   template <int dim>
-  WaveEquation<dim>::WaveEquation()
-    : fe(1),
-      dof_handler(triangulation),
-      time_step(1. / 64),
-      time(time_step),
-      timestep_number(1),
-      theta(0.5)
+  WaveEquation<dim>::WaveEquation() :
+    fe(1),
+    dof_handler(triangulation),
+    time_step(1. / 64),
+    time(time_step),
+    timestep_number(1),
+    theta(0.5)
   {}
 
   // @sect4{WaveEquation::setup_system}

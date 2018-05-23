@@ -53,12 +53,12 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
   InternalData(const FiniteElement<dim, spacedim>& fe,
-               const ComponentMask&                mask)
-  : unit_tangentials(),
-    n_shape_functions(fe.dofs_per_cell),
-    mask(mask),
-    local_dof_indices(fe.dofs_per_cell),
-    local_dof_values(fe.dofs_per_cell)
+               const ComponentMask&                mask) :
+  unit_tangentials(),
+  n_shape_functions(fe.dofs_per_cell),
+  mask(mask),
+  local_dof_indices(fe.dofs_per_cell),
+  local_dof_values(fe.dofs_per_cell)
 {}
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
@@ -206,18 +206,18 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
   const DoFHandlerType& euler_dof_handler,
   const VectorType&     euler_vector,
-  const ComponentMask&  mask)
-  : euler_vector(&euler_vector),
-    euler_dof_handler(&euler_dof_handler),
-    fe_mask(mask.size() ?
-              mask :
-              ComponentMask(
-                euler_dof_handler.get_fe().get_nonzero_components(0).size(),
-                true)),
-    fe_to_real(fe_mask.size(), numbers::invalid_unsigned_int),
-    fe_values(this->euler_dof_handler->get_fe(),
-              get_vertex_quadrature<dim>(),
-              update_values)
+  const ComponentMask&  mask) :
+  euler_vector(&euler_vector),
+  euler_dof_handler(&euler_dof_handler),
+  fe_mask(
+    mask.size() ?
+      mask :
+      ComponentMask(euler_dof_handler.get_fe().get_nonzero_components(0).size(),
+                    true)),
+  fe_to_real(fe_mask.size(), numbers::invalid_unsigned_int),
+  fe_values(this->euler_dof_handler->get_fe(),
+            get_vertex_quadrature<dim>(),
+            update_values)
 {
   unsigned int size = 0;
   for(unsigned int i = 0; i < fe_mask.size(); ++i)
@@ -230,14 +230,14 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
-  const MappingFEField<dim, spacedim, VectorType, DoFHandlerType>& mapping)
-  : euler_vector(mapping.euler_vector),
-    euler_dof_handler(mapping.euler_dof_handler),
-    fe_mask(mapping.fe_mask),
-    fe_to_real(mapping.fe_to_real),
-    fe_values(mapping.euler_dof_handler->get_fe(),
-              get_vertex_quadrature<dim>(),
-              update_values)
+  const MappingFEField<dim, spacedim, VectorType, DoFHandlerType>& mapping) :
+  euler_vector(mapping.euler_vector),
+  euler_dof_handler(mapping.euler_dof_handler),
+  fe_mask(mapping.fe_mask),
+  fe_to_real(mapping.fe_to_real),
+  fe_values(mapping.euler_dof_handler->get_fe(),
+            get_vertex_quadrature<dim>(),
+            update_values)
 {}
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>

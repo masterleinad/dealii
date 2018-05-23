@@ -254,8 +254,10 @@ namespace Step38
   // DoF handler to the triangulation:
   template <int spacedim>
   LaplaceBeltramiProblem<spacedim>::LaplaceBeltramiProblem(
-    const unsigned degree)
-    : fe(degree), dof_handler(triangulation), mapping(degree)
+    const unsigned degree) :
+    fe(degree),
+    dof_handler(triangulation),
+    mapping(degree)
   {}
 
   // @sect4{LaplaceBeltramiProblem::make_grid_and_dofs}

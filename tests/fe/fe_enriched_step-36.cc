@@ -85,8 +85,11 @@ class EnrichmentFunction : public Function<dim>
 public:
   EnrichmentFunction(const Point<dim>& origin,
                      const double&     Z,
-                     const double&     radius)
-    : Function<dim>(1), origin(origin), Z(Z), radius(radius)
+                     const double&     radius) :
+    Function<dim>(1),
+    origin(origin),
+    Z(Z),
+    radius(radius)
   {}
 
   virtual double
@@ -203,23 +206,23 @@ namespace Step36
   };
 
   template <int dim>
-  EigenvalueProblem<dim>::EigenvalueProblem()
-    : dof_handler(triangulation),
-      mpi_communicator(MPI_COMM_WORLD),
-      n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
-      this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
-      pcout(std::cout, (this_mpi_process == 0)),
-      number_of_eigenvalues(1),
-      enrichment(Point<dim>(),
-                 /*Z*/ 1.0,
-                 /*radius*/
-                 2.5), // radius is set such that 8 cells are marked as enriched
-      fe_extractor(/*dofs start at...*/ 0),
-      fe_fe_index(0),
-      fe_material_id(0),
-      pou_extractor(/*dofs start at (scalar fields!)*/ 1),
-      pou_fe_index(1),
-      pou_material_id(1)
+  EigenvalueProblem<dim>::EigenvalueProblem() :
+    dof_handler(triangulation),
+    mpi_communicator(MPI_COMM_WORLD),
+    n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
+    this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
+    pcout(std::cout, (this_mpi_process == 0)),
+    number_of_eigenvalues(1),
+    enrichment(Point<dim>(),
+               /*Z*/ 1.0,
+               /*radius*/
+               2.5), // radius is set such that 8 cells are marked as enriched
+    fe_extractor(/*dofs start at...*/ 0),
+    fe_fe_index(0),
+    fe_material_id(0),
+    pou_extractor(/*dofs start at (scalar fields!)*/ 1),
+    pou_fe_index(1),
+    pou_material_id(1)
   {
     GridGenerator::hyper_cube(triangulation, -10, 10);
     triangulation.refine_global(2); // 64 cells

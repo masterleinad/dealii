@@ -37,12 +37,12 @@ namespace parallel
       const typename dealii::Triangulation<dim, spacedim>::MeshSmoothing
                      smooth_grid,
       const bool     allow_artificial_cells,
-      const Settings settings)
-      : dealii::parallel::Triangulation<dim, spacedim>(mpi_communicator,
-                                                       smooth_grid,
-                                                       false),
-        settings(settings),
-        allow_artificial_cells(allow_artificial_cells)
+      const Settings settings) :
+      dealii::parallel::Triangulation<dim, spacedim>(mpi_communicator,
+                                                     smooth_grid,
+                                                     false),
+      settings(settings),
+      allow_artificial_cells(allow_artificial_cells)
     {
       const auto partition_settings
         = (partition_zoltan | partition_metis | partition_zorder

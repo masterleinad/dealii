@@ -116,20 +116,20 @@ private:
   TimerOutput        timer;
 };
 
-Test_Solver_Output::Test_Solver_Output()
-  : mpi_comm(MPI_COMM_WORLD),
-    n_mpi_proc(Utilities::MPI::n_mpi_processes(mpi_comm)),
-    this_mpi_proc(Utilities::MPI::this_mpi_process(mpi_comm)),
-    triangulation(mpi_comm,
-                  typename Triangulation<2>::MeshSmoothing(
-                    Triangulation<2>::smoothing_on_refinement
-                    | Triangulation<2>::smoothing_on_coarsening)),
-    dof_handler(triangulation),
-    fe(1),
-    pcout(std::cout, (Utilities::MPI::this_mpi_process(mpi_comm) == 0)),
-    // pcout(deallog.get_file_stream(),
-    //       (Utilities::MPI::this_mpi_process(mpi_comm) == 0)),
-    timer(mpi_comm, pcout, TimerOutput::never, TimerOutput::wall_times)
+Test_Solver_Output::Test_Solver_Output() :
+  mpi_comm(MPI_COMM_WORLD),
+  n_mpi_proc(Utilities::MPI::n_mpi_processes(mpi_comm)),
+  this_mpi_proc(Utilities::MPI::this_mpi_process(mpi_comm)),
+  triangulation(mpi_comm,
+                typename Triangulation<2>::MeshSmoothing(
+                  Triangulation<2>::smoothing_on_refinement
+                  | Triangulation<2>::smoothing_on_coarsening)),
+  dof_handler(triangulation),
+  fe(1),
+  pcout(std::cout, (Utilities::MPI::this_mpi_process(mpi_comm) == 0)),
+  // pcout(deallog.get_file_stream(),
+  //       (Utilities::MPI::this_mpi_process(mpi_comm) == 0)),
+  timer(mpi_comm, pcout, TimerOutput::never, TimerOutput::wall_times)
 {}
 
 Test_Solver_Output::~Test_Solver_Output()

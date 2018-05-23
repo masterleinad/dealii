@@ -112,10 +112,10 @@ namespace Step53
   // member functions we call here are static because (i) they do not
   // access any member variables of the class, and (ii) because they are
   // called at a time when the object is not initialized fully anyway.
-  AfricaTopography::AfricaTopography()
-    : topography_data(get_endpoints(),
-                      n_intervals(),
-                      Table<2, double>(380, 220, get_data().begin()))
+  AfricaTopography::AfricaTopography() :
+    topography_data(get_endpoints(),
+                    n_intervals(),
+                    Table<2, double>(380, 220, get_data().begin()))
   {}
 
   double

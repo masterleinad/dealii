@@ -157,19 +157,19 @@ namespace CUDAWrappers
       const Quadrature<1>&      quad,
       const ::dealii::internal::MatrixFreeFunctions::ShapeInfo<Number>&
                          shape_info,
-      const UpdateFlags& update_flags)
-      : data(data),
-        fe_degree(data->fe_degree),
-        dofs_per_cell(data->dofs_per_cell),
-        q_points_per_cell(data->q_points_per_cell),
-        fe_values(mapping,
-                  fe,
-                  Quadrature<dim>(quad),
-                  update_inverse_jacobians | update_quadrature_points
-                    | update_values | update_gradients | update_JxW_values),
-        lexicographic_inv(shape_info.lexicographic_numbering),
-        update_flags(update_flags),
-        padding_length(data->get_padding_length())
+      const UpdateFlags& update_flags) :
+      data(data),
+      fe_degree(data->fe_degree),
+      dofs_per_cell(data->dofs_per_cell),
+      q_points_per_cell(data->q_points_per_cell),
+      fe_values(mapping,
+                fe,
+                Quadrature<dim>(quad),
+                update_inverse_jacobians | update_quadrature_points
+                  | update_values | update_gradients | update_JxW_values),
+      lexicographic_inv(shape_info.lexicographic_numbering),
+      update_flags(update_flags),
+      padding_length(data->get_padding_length())
     {
       local_dof_indices.resize(data->dofs_per_cell);
       lexicographic_dof_indices.resize(dofs_per_cell);
@@ -430,8 +430,9 @@ namespace CUDAWrappers
   } // namespace internal
 
   template <int dim, typename Number>
-  MatrixFree<dim, Number>::MatrixFree()
-    : constrained_dofs(nullptr), padding_length(0)
+  MatrixFree<dim, Number>::MatrixFree() :
+    constrained_dofs(nullptr),
+    padding_length(0)
   {}
 
   template <int dim, typename Number>

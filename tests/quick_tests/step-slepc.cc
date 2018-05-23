@@ -68,8 +68,9 @@ private:
   TableHandler output_table;
 };
 
-LaplaceEigenspectrumProblem::LaplaceEigenspectrumProblem()
-  : fe(1), dof_handler(triangulation)
+LaplaceEigenspectrumProblem::LaplaceEigenspectrumProblem() :
+  fe(1),
+  dof_handler(triangulation)
 {}
 
 void

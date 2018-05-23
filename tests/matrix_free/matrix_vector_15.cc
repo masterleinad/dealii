@@ -44,8 +44,9 @@ class MatrixFreeTest
 {
 public:
   MatrixFreeTest(const DoFHandler<dim>&  dof_handler,
-                 const ConstraintMatrix& constraints)
-    : dof_handler(dof_handler), constraints(constraints)
+                 const ConstraintMatrix& constraints) :
+    dof_handler(dof_handler),
+    constraints(constraints)
   {}
 
   void

@@ -112,11 +112,11 @@ BoundaryValues<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-Step4<dim>::Step4()
-  : fe(3),
-    dof_handler(triangulation),
-    fe_precondition(3),
-    dof_handler_precondition(triangulation)
+Step4<dim>::Step4() :
+  fe(3),
+  dof_handler(triangulation),
+  fe_precondition(3),
+  dof_handler_precondition(triangulation)
 {}
 
 template <int dim>

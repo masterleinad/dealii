@@ -394,8 +394,8 @@ namespace Functions
   //////////////////////////////////////////////////////////////////////
 
   template <int dim>
-  CosineFunction<dim>::CosineFunction(const unsigned int n_components)
-    : Function<dim>(n_components)
+  CosineFunction<dim>::CosineFunction(const unsigned int n_components) :
+    Function<dim>(n_components)
   {}
 
   template <int dim>
@@ -1718,8 +1718,9 @@ namespace Functions
 
   template <int dim>
   JumpFunction<dim>::JumpFunction(const Point<dim>& direction,
-                                  const double      steepness)
-    : direction(direction), steepness(steepness)
+                                  const double      steepness) :
+    direction(direction),
+    steepness(steepness)
   {
     switch(dim)
       {
@@ -1831,8 +1832,9 @@ namespace Functions
 
   template <int dim>
   FourierCosineFunction<dim>::FourierCosineFunction(
-    const Tensor<1, dim>& fourier_coefficients)
-    : Function<dim>(1), fourier_coefficients(fourier_coefficients)
+    const Tensor<1, dim>& fourier_coefficients) :
+    Function<dim>(1),
+    fourier_coefficients(fourier_coefficients)
   {}
 
   template <int dim>
@@ -1870,8 +1872,9 @@ namespace Functions
 
   template <int dim>
   FourierSineFunction<dim>::FourierSineFunction(
-    const Tensor<1, dim>& fourier_coefficients)
-    : Function<dim>(1), fourier_coefficients(fourier_coefficients)
+    const Tensor<1, dim>& fourier_coefficients) :
+    Function<dim>(1),
+    fourier_coefficients(fourier_coefficients)
   {}
 
   template <int dim>
@@ -1910,10 +1913,10 @@ namespace Functions
   template <int dim>
   FourierSineSum<dim>::FourierSineSum(
     const std::vector<Point<dim>>& fourier_coefficients,
-    const std::vector<double>&     weights)
-    : Function<dim>(1),
-      fourier_coefficients(fourier_coefficients),
-      weights(weights)
+    const std::vector<double>&     weights) :
+    Function<dim>(1),
+    fourier_coefficients(fourier_coefficients),
+    weights(weights)
   {
     Assert(fourier_coefficients.size() > 0, ExcZero());
     Assert(fourier_coefficients.size() == weights.size(),
@@ -1974,10 +1977,10 @@ namespace Functions
   template <int dim>
   FourierCosineSum<dim>::FourierCosineSum(
     const std::vector<Point<dim>>& fourier_coefficients,
-    const std::vector<double>&     weights)
-    : Function<dim>(1),
-      fourier_coefficients(fourier_coefficients),
-      weights(weights)
+    const std::vector<double>&     weights) :
+    Function<dim>(1),
+    fourier_coefficients(fourier_coefficients),
+    weights(weights)
   {
     Assert(fourier_coefficients.size() > 0, ExcZero());
     Assert(fourier_coefficients.size() == weights.size(),
@@ -2037,8 +2040,9 @@ namespace Functions
 
   template <int dim>
   Monomial<dim>::Monomial(const Tensor<1, dim>& exponents,
-                          const unsigned int    n_components)
-    : Function<dim>(n_components), exponents(exponents)
+                          const unsigned int    n_components) :
+    Function<dim>(n_components),
+    exponents(exponents)
   {}
 
   template <int dim>
@@ -2125,8 +2129,10 @@ namespace Functions
   template <int dim>
   Bessel1<dim>::Bessel1(const unsigned int order,
                         const double       wave_number,
-                        const Point<dim>   center)
-    : order(order), wave_number(wave_number), center(center)
+                        const Point<dim>   center) :
+    order(order),
+    wave_number(wave_number),
+    center(center)
   {}
 
   template <int dim>
@@ -2345,8 +2351,9 @@ namespace Functions
   template <int dim>
   InterpolatedTensorProductGridData<dim>::InterpolatedTensorProductGridData(
     const std::array<std::vector<double>, dim>& coordinate_values,
-    const Table<dim, double>&                   data_values)
-    : coordinate_values(coordinate_values), data_values(data_values)
+    const Table<dim, double>&                   data_values) :
+    coordinate_values(coordinate_values),
+    data_values(data_values)
   {
     for(unsigned int d = 0; d < dim; ++d)
       {
@@ -2461,10 +2468,10 @@ namespace Functions
   InterpolatedUniformGridData<dim>::InterpolatedUniformGridData(
     const std::array<std::pair<double, double>, dim>& interval_endpoints,
     const std::array<unsigned int, dim>&              n_subintervals,
-    const Table<dim, double>&                         data_values)
-    : interval_endpoints(interval_endpoints),
-      n_subintervals(n_subintervals),
-      data_values(data_values)
+    const Table<dim, double>&                         data_values) :
+    interval_endpoints(interval_endpoints),
+    n_subintervals(n_subintervals),
+    data_values(data_values)
   {
     for(unsigned int d = 0; d < dim; ++d)
       {
@@ -2530,8 +2537,10 @@ namespace Functions
 
   template <int dim>
   Polynomial<dim>::Polynomial(const Table<2, double>&    exponents,
-                              const std::vector<double>& coefficients)
-    : Function<dim>(1), exponents(exponents), coefficients(coefficients)
+                              const std::vector<double>& coefficients) :
+    Function<dim>(1),
+    exponents(exponents),
+    coefficients(coefficients)
   {
     Assert(exponents.n_rows() == coefficients.size(),
            ExcDimensionMismatch(exponents.n_rows(), coefficients.size()));

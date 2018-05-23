@@ -42,15 +42,15 @@ namespace internal
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
                         finite_elements,
-      const UpdateFlags update_flags)
-      : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
-          n_datasets,
-          n_subdivisions,
-          n_postprocessor_outputs,
-          mapping,
-          finite_elements,
-          update_flags,
-          true)
+      const UpdateFlags update_flags) :
+      internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
+        n_datasets,
+        n_subdivisions,
+        n_postprocessor_outputs,
+        mapping,
+        finite_elements,
+        update_flags,
+        true)
     {}
 
     /**
@@ -70,8 +70,8 @@ namespace internal
 } // namespace internal
 
 template <int dim, typename DoFHandlerType>
-DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so)
-  : surface_only(so)
+DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so) :
+  surface_only(so)
 {
   Assert(dim == DoFHandlerType::dimension, ExcNotImplemented());
 }

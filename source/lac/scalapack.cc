@@ -79,12 +79,12 @@ ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
   const size_type                                           row_block_size_,
   const size_type                                           column_block_size_,
-  const LAPACKSupport::Property                             property_)
-  : uplo('L'), // for non-symmetric matrices this is not needed
-    first_process_row(0),
-    first_process_column(0),
-    submatrix_row(1),
-    submatrix_column(1)
+  const LAPACKSupport::Property                             property_) :
+  uplo('L'), // for non-symmetric matrices this is not needed
+  first_process_row(0),
+  first_process_column(0),
+  submatrix_row(1),
+  submatrix_column(1)
 {
   reinit(n_rows_,
          n_columns_,
@@ -99,13 +99,13 @@ ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const size_type                                          size,
   const std::shared_ptr<const Utilities::MPI::ProcessGrid> process_grid,
   const size_type                                          block_size,
-  const LAPACKSupport::Property                            property)
-  : ScaLAPACKMatrix<NumberType>(size,
-                                size,
-                                process_grid,
-                                block_size,
-                                block_size,
-                                property)
+  const LAPACKSupport::Property                            property) :
+  ScaLAPACKMatrix<NumberType>(size,
+                              size,
+                              process_grid,
+                              block_size,
+                              block_size,
+                              property)
 {}
 
 template <typename NumberType>

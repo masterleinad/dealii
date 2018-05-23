@@ -506,21 +506,21 @@ namespace parallel
       template <typename Reductor>
       ReductionOnSubranges(const Function&  f,
                            const Reductor&  reductor,
-                           const ResultType neutral_element = ResultType())
-        : result(neutral_element),
-          f(f),
-          neutral_element(neutral_element),
-          reductor(reductor)
+                           const ResultType neutral_element = ResultType()) :
+        result(neutral_element),
+        f(f),
+        neutral_element(neutral_element),
+        reductor(reductor)
       {}
 
       /**
        * Splitting constructor. See the TBB book for more details about this.
        */
-      ReductionOnSubranges(const ReductionOnSubranges& r, tbb::split)
-        : result(r.neutral_element),
-          f(r.f),
-          neutral_element(r.neutral_element),
-          reductor(r.reductor)
+      ReductionOnSubranges(const ReductionOnSubranges& r, tbb::split) :
+        result(r.neutral_element),
+        f(r.f),
+        neutral_element(r.neutral_element),
+        reductor(r.reductor)
       {}
 
       /**
@@ -767,8 +767,8 @@ namespace parallel
      */
     struct ParallelForWrapper
     {
-      ParallelForWrapper(const parallel::ParallelForInteger& worker)
-        : worker_(worker)
+      ParallelForWrapper(const parallel::ParallelForInteger& worker) :
+        worker_(worker)
       {}
 
       void

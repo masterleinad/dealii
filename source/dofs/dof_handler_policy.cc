@@ -2378,8 +2378,8 @@ namespace internal
       /* --------------------- class Sequential ---------------- */
 
       template <class DoFHandlerType>
-      Sequential<DoFHandlerType>::Sequential(DoFHandlerType& dof_handler)
-        : dof_handler(&dof_handler)
+      Sequential<DoFHandlerType>::Sequential(DoFHandlerType& dof_handler) :
+        dof_handler(&dof_handler)
       {}
 
       template <class DoFHandlerType>
@@ -2465,8 +2465,8 @@ namespace internal
 
       template <class DoFHandlerType>
       ParallelShared<DoFHandlerType>::ParallelShared(
-        DoFHandlerType& dof_handler)
-        : dof_handler(&dof_handler)
+        DoFHandlerType& dof_handler) :
+        dof_handler(&dof_handler)
       {}
 
       namespace
@@ -3878,8 +3878,8 @@ namespace internal
 
       template <class DoFHandlerType>
       ParallelDistributed<DoFHandlerType>::ParallelDistributed(
-        DoFHandlerType& dof_handler)
-        : dof_handler(&dof_handler)
+        DoFHandlerType& dof_handler) :
+        dof_handler(&dof_handler)
       {}
 
       template <class DoFHandlerType>

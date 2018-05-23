@@ -29,10 +29,10 @@ DEAL_II_NAMESPACE_OPEN
 // is for deal_II_dimension >= any_number and not for ==
 
 template <>
-QGauss<0>::QGauss(const unsigned int)
-  : // there are n_q^dim == 1
-    // points
-    Quadrature<0>(1)
+QGauss<0>::QGauss(const unsigned int) :
+  // there are n_q^dim == 1
+  // points
+  Quadrature<0>(1)
 {
   // the single quadrature point gets unit
   // weight
@@ -40,10 +40,10 @@ QGauss<0>::QGauss(const unsigned int)
 }
 
 template <>
-QGaussLobatto<0>::QGaussLobatto(const unsigned int)
-  : // there are n_q^dim == 1
-    // points
-    Quadrature<0>(1)
+QGaussLobatto<0>::QGaussLobatto(const unsigned int) :
+  // there are n_q^dim == 1
+  // points
+  Quadrature<0>(1)
 {
   // the single quadrature point gets unit
   // weight
@@ -212,8 +212,8 @@ QWeddle<1>::QWeddle() : Quadrature<1>(7)
 }
 
 template <>
-QGaussLog<1>::QGaussLog(const unsigned int n, const bool revert)
-  : Quadrature<1>(n)
+QGaussLog<1>::QGaussLog(const unsigned int n, const bool revert) :
+  Quadrature<1>(n)
 {
   std::vector<double> p = get_quadrature_points(n);
   std::vector<double> w = get_quadrature_weights(n);
@@ -492,11 +492,10 @@ template <>
 QGaussLogR<1>::QGaussLogR(const unsigned int n,
                           const Point<1>     origin,
                           const double       alpha,
-                          const bool         factor_out_singularity)
-  : Quadrature<1>(((origin[0] == 0) || (origin[0] == 1)) ?
-                    (alpha == 1 ? n : 2 * n) :
-                    4 * n),
-    fraction(((origin[0] == 0) || (origin[0] == 1.)) ? 1. : origin[0])
+                          const bool         factor_out_singularity) :
+  Quadrature<1>(
+    ((origin[0] == 0) || (origin[0] == 1)) ? (alpha == 1 ? n : 2 * n) : 4 * n),
+  fraction(((origin[0] == 0) || (origin[0] == 1.)) ? 1. : origin[0])
 {
   // The three quadrature formulas that make this one up. There are
   // at most two when the origin is one of the extremes, and there is
@@ -591,8 +590,8 @@ QGaussOneOverR<2>::quad_size(const Point<2> singularity, const unsigned int n)
 template <>
 QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
                                   const Point<2>     singularity,
-                                  const bool         factor_out_singularity)
-  : Quadrature<2>(quad_size(singularity, n))
+                                  const bool         factor_out_singularity) :
+  Quadrature<2>(quad_size(singularity, n))
 {
   // We treat all the cases in the
   // same way. Split the element in 4
@@ -639,8 +638,8 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 template <>
 QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
                                   const unsigned int vertex_index,
-                                  const bool         factor_out_singularity)
-  : Quadrature<2>(2 * n * n)
+                                  const bool         factor_out_singularity) :
+  Quadrature<2>(2 * n * n)
 {
   // This version of the constructor
   // works only for the 4
@@ -766,18 +765,18 @@ QSorted<dim>::compare_weights(const unsigned int a, const unsigned int b) const
 // tensor product of lower dimensions
 
 template <int dim>
-QGauss<dim>::QGauss(const unsigned int n)
-  : Quadrature<dim>(QGauss<dim - 1>(n), QGauss<1>(n))
+QGauss<dim>::QGauss(const unsigned int n) :
+  Quadrature<dim>(QGauss<dim - 1>(n), QGauss<1>(n))
 {}
 
 template <int dim>
-QGaussLobatto<dim>::QGaussLobatto(const unsigned int n)
-  : Quadrature<dim>(QGaussLobatto<dim - 1>(n), QGaussLobatto<1>(n))
+QGaussLobatto<dim>::QGaussLobatto(const unsigned int n) :
+  Quadrature<dim>(QGaussLobatto<dim - 1>(n), QGaussLobatto<1>(n))
 {}
 
 template <int dim>
-QMidpoint<dim>::QMidpoint()
-  : Quadrature<dim>(QMidpoint<dim - 1>(), QMidpoint<1>())
+QMidpoint<dim>::QMidpoint() :
+  Quadrature<dim>(QMidpoint<dim - 1>(), QMidpoint<1>())
 {}
 
 template <int dim>
@@ -798,32 +797,33 @@ QWeddle<dim>::QWeddle() : Quadrature<dim>(QWeddle<dim - 1>(), QWeddle<1>())
 
 template <int dim>
 QTelles<dim>::QTelles(const Quadrature<1>& base_quad,
-                      const Point<dim>&    singularity)
-  : // We need the explicit implementation if dim == 1. If dim > 1 we use the
-    // former implementation and apply a tensorial product to obtain the higher
-    // dimensions.
-    Quadrature<dim>(
-      dim == 2 ?
-        QAnisotropic<dim>(QTelles<1>(base_quad, Point<1>(singularity[0])),
-                          QTelles<1>(base_quad, Point<1>(singularity[1]))) :
-        dim == 3 ?
-        QAnisotropic<dim>(QTelles<1>(base_quad, Point<1>(singularity[0])),
-                          QTelles<1>(base_quad, Point<1>(singularity[1])),
-                          QTelles<1>(base_quad, Point<1>(singularity[2]))) :
-        Quadrature<dim>())
+                      const Point<dim>&    singularity) :
+  // We need the explicit implementation if dim == 1. If dim > 1 we use the
+  // former implementation and apply a tensorial product to obtain the higher
+  // dimensions.
+  Quadrature<dim>(
+    dim == 2 ?
+      QAnisotropic<dim>(QTelles<1>(base_quad, Point<1>(singularity[0])),
+                        QTelles<1>(base_quad, Point<1>(singularity[1]))) :
+      dim == 3 ?
+      QAnisotropic<dim>(QTelles<1>(base_quad, Point<1>(singularity[0])),
+                        QTelles<1>(base_quad, Point<1>(singularity[1])),
+                        QTelles<1>(base_quad, Point<1>(singularity[2]))) :
+      Quadrature<dim>())
 {}
 
 template <int dim>
-QTelles<dim>::QTelles(const unsigned int n, const Point<dim>& singularity)
-  : // In this case we map the standard Gauss Legendre formula using the given
-    // singularity point coordinates.
-    Quadrature<dim>(QTelles<dim>(QGauss<1>(n), singularity))
+QTelles<dim>::QTelles(const unsigned int n, const Point<dim>& singularity) :
+  // In this case we map the standard Gauss Legendre formula using the given
+  // singularity point coordinates.
+  Quadrature<dim>(QTelles<dim>(QGauss<1>(n), singularity))
 {}
 
 template <>
-QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
-  : // We explicitly implement the Telles' variable change if dim == 1.
-    Quadrature<1>(base_quad)
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity) :
+  // We explicitly implement the Telles' variable change if dim == 1.
+  Quadrature<1>(base_quad)
 {
   // We define all the constants to be used in the implementation of
   // Telles' rule
@@ -955,8 +955,8 @@ QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n) : Quadrature<1>(n)
 }
 
 template <int dim>
-QGaussChebyshev<dim>::QGaussChebyshev(const unsigned int n)
-  : Quadrature<dim>(QGaussChebyshev<1>(n))
+QGaussChebyshev<dim>::QGaussChebyshev(const unsigned int n) :
+  Quadrature<dim>(QGaussChebyshev<1>(n))
 {}
 
 namespace internal
@@ -1033,8 +1033,10 @@ namespace internal
 } // namespace internal
 
 template <>
-QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
-  : Quadrature<1>(n), ep(ep)
+QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n,
+                                              EndPoint           ep) :
+  Quadrature<1>(n),
+  ep(ep)
 {
   Assert(n > 0, ExcMessage("Need at least one point for quadrature rules"));
   std::vector<double> p
@@ -1051,11 +1053,11 @@ QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
 
 template <int dim>
 QGaussRadauChebyshev<dim>::QGaussRadauChebyshev(const unsigned int n,
-                                                EndPoint           ep)
-  : Quadrature<dim>(QGaussRadauChebyshev<1>(
-      n,
-      static_cast<QGaussRadauChebyshev<1>::EndPoint>(ep))),
-    ep(ep)
+                                                EndPoint           ep) :
+  Quadrature<dim>(QGaussRadauChebyshev<1>(
+    n,
+    static_cast<QGaussRadauChebyshev<1>::EndPoint>(ep))),
+  ep(ep)
 {}
 
 namespace internal
@@ -1099,8 +1101,8 @@ namespace internal
 } // namespace internal
 
 template <>
-QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
-  : Quadrature<1>(n)
+QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n) :
+  Quadrature<1>(n)
 {
   Assert(
     n > 1,
@@ -1118,8 +1120,8 @@ QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
 }
 
 template <int dim>
-QGaussLobattoChebyshev<dim>::QGaussLobattoChebyshev(const unsigned int n)
-  : Quadrature<dim>(QGaussLobattoChebyshev<1>(n))
+QGaussLobattoChebyshev<dim>::QGaussLobattoChebyshev(const unsigned int n) :
+  Quadrature<dim>(QGaussLobattoChebyshev<1>(n))
 {}
 
 template <int dim>
@@ -1170,8 +1172,8 @@ QSimplex<dim>::compute_affine_transformation(
 }
 
 QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
-                               const Quadrature<1>& angular_quadrature)
-  : QSimplex<2>(Quadrature<2>())
+                               const Quadrature<1>& angular_quadrature) :
+  QSimplex<2>(Quadrature<2>())
 {
   const QAnisotropic<2> base(radial_quadrature, angular_quadrature);
   this->quadrature_points.resize(base.size());
@@ -1197,14 +1199,14 @@ QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
     }
 }
 
-QTrianglePolar::QTrianglePolar(const unsigned int& n)
-  : QTrianglePolar(QGauss<1>(n), QGauss<1>(n))
+QTrianglePolar::QTrianglePolar(const unsigned int& n) :
+  QTrianglePolar(QGauss<1>(n), QGauss<1>(n))
 {}
 
 QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
                const Quadrature<1>& angular_quadrature,
-               const double         beta)
-  : QSimplex<2>(Quadrature<2>())
+               const double         beta) :
+  QSimplex<2>(Quadrature<2>())
 {
   const QAnisotropic<2> base(radial_quadrature, angular_quadrature);
   this->quadrature_points.resize(base.size());
@@ -1227,8 +1229,8 @@ QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
     }
 }
 
-QDuffy::QDuffy(const unsigned int n, const double beta)
-  : QDuffy(QGauss<1>(n), QGauss<1>(n), beta)
+QDuffy::QDuffy(const unsigned int n, const double beta) :
+  QDuffy(QGauss<1>(n), QGauss<1>(n), beta)
 {}
 
 template <int dim>

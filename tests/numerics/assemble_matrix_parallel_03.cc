@@ -58,18 +58,18 @@ namespace Assembly
     struct Data
     {
       Data(const hp::FECollection<dim>& fe,
-           const hp::QCollection<dim>&  quadrature)
-        : hp_fe_values(fe,
-                       quadrature,
-                       update_values | update_gradients
-                         | update_quadrature_points | update_JxW_values)
+           const hp::QCollection<dim>&  quadrature) :
+        hp_fe_values(fe,
+                     quadrature,
+                     update_values | update_gradients | update_quadrature_points
+                       | update_JxW_values)
       {}
 
-      Data(const Data& data)
-        : hp_fe_values(data.hp_fe_values.get_mapping_collection(),
-                       data.hp_fe_values.get_fe_collection(),
-                       data.hp_fe_values.get_quadrature_collection(),
-                       data.hp_fe_values.get_update_flags())
+      Data(const Data& data) :
+        hp_fe_values(data.hp_fe_values.get_mapping_collection(),
+                     data.hp_fe_values.get_fe_collection(),
+                     data.hp_fe_values.get_quadrature_collection(),
+                     data.hp_fe_values.get_update_flags())
       {}
 
       hp::FEValues<dim> hp_fe_values;
@@ -192,8 +192,9 @@ RightHandSide<dim>::value(const Point<dim>& p,
 }
 
 template <int dim>
-LaplaceProblem<dim>::LaplaceProblem()
-  : dof_handler(triangulation), max_degree(5)
+LaplaceProblem<dim>::LaplaceProblem() :
+  dof_handler(triangulation),
+  max_degree(5)
 {
   if(dim == 2)
     for(unsigned int degree = 2; degree <= max_degree; ++degree)

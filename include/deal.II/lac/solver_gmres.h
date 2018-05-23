@@ -467,8 +467,8 @@ public:
      * Constructor. By default, set the maximum basis size to 30.
      */
     explicit AdditionalData(const unsigned int max_basis_size   = 30,
-                            const bool /*use_default_residual*/ = true)
-      : max_basis_size(max_basis_size)
+                            const bool /*use_default_residual*/ = true) :
+      max_basis_size(max_basis_size)
     {}
 
     /**
@@ -528,8 +528,9 @@ namespace internal
   {
     template <class VectorType>
     inline TmpVectors<VectorType>::TmpVectors(const unsigned int max_size,
-                                              VectorMemory<VectorType>& vmem)
-      : mem(vmem), data(max_size)
+                                              VectorMemory<VectorType>& vmem) :
+      mem(vmem),
+      data(max_size)
     {}
 
     template <class VectorType>
@@ -579,11 +580,11 @@ inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(
   const unsigned int max_n_tmp_vectors,
   const bool         right_preconditioning,
   const bool         use_default_residual,
-  const bool         force_re_orthogonalization)
-  : max_n_tmp_vectors(max_n_tmp_vectors),
-    right_preconditioning(right_preconditioning),
-    use_default_residual(use_default_residual),
-    force_re_orthogonalization(force_re_orthogonalization)
+  const bool         force_re_orthogonalization) :
+  max_n_tmp_vectors(max_n_tmp_vectors),
+  right_preconditioning(right_preconditioning),
+  use_default_residual(use_default_residual),
+  force_re_orthogonalization(force_re_orthogonalization)
 {
   Assert(3 <= max_n_tmp_vectors,
          ExcMessage("SolverGMRES needs at least three "
@@ -593,14 +594,16 @@ inline SolverGMRES<VectorType>::AdditionalData::AdditionalData(
 template <class VectorType>
 SolverGMRES<VectorType>::SolverGMRES(SolverControl&            cn,
                                      VectorMemory<VectorType>& mem,
-                                     const AdditionalData&     data)
-  : Solver<VectorType>(cn, mem), additional_data(data)
+                                     const AdditionalData&     data) :
+  Solver<VectorType>(cn, mem),
+  additional_data(data)
 {}
 
 template <class VectorType>
 SolverGMRES<VectorType>::SolverGMRES(SolverControl&        cn,
-                                     const AdditionalData& data)
-  : Solver<VectorType>(cn), additional_data(data)
+                                     const AdditionalData& data) :
+  Solver<VectorType>(cn),
+  additional_data(data)
 {}
 
 template <class VectorType>
@@ -1120,14 +1123,16 @@ SolverGMRES<VectorType>::criterion()
 template <class VectorType>
 SolverFGMRES<VectorType>::SolverFGMRES(SolverControl&            cn,
                                        VectorMemory<VectorType>& mem,
-                                       const AdditionalData&     data)
-  : Solver<VectorType>(cn, mem), additional_data(data)
+                                       const AdditionalData&     data) :
+  Solver<VectorType>(cn, mem),
+  additional_data(data)
 {}
 
 template <class VectorType>
 SolverFGMRES<VectorType>::SolverFGMRES(SolverControl&        cn,
-                                       const AdditionalData& data)
-  : Solver<VectorType>(cn), additional_data(data)
+                                       const AdditionalData& data) :
+  Solver<VectorType>(cn),
+  additional_data(data)
 {}
 
 template <class VectorType>
