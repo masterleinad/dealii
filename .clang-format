@@ -66,6 +66,8 @@ DerivePointerAlignment: false
 
 DisableFormat: false
 
+ExperimentalAutoDetectBinPacking: true
+
 FixNamespaceComments: true
 
 IncludeBlocks: Preserve
