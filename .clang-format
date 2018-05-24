@@ -1,9 +1,6 @@
 #
-# An approximation of deal.II indent style as "defined" by
-#   ./contrib/styles/astyle.rc
+# The clang-format (Clang 6) style file used by deal.II.
 #
-
-BasedOnStyle: "LLVM"
 
 AccessModifierOffset: -2
 
@@ -63,8 +60,6 @@ ContinuationIndentWidth: 2
 Cpp11BracedListStyle: true
 
 DerivePointerAlignment: false
-
-DisableFormat: false
 
 FixNamespaceComments: true
 
