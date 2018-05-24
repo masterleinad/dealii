@@ -3792,7 +3792,8 @@ namespace GridGenerator
   void
   merge_triangulations(const Triangulation<dim, spacedim> &triangulation_1,
                        const Triangulation<dim, spacedim> &triangulation_2,
-                       Triangulation<dim, spacedim> &      result)
+                       Triangulation<dim, spacedim> &      result,
+                       const double duplicated_vertex_tolerance)
   {
     Assert(triangulation_1.n_levels() == 1,
            ExcMessage("The input triangulations must be coarse meshes."));
@@ -3842,7 +3843,8 @@ namespace GridGenerator
     GridTools::delete_duplicated_vertices(vertices,
                                           cells,
                                           subcell_data,
-                                          considered_vertices);
+                                          considered_vertices,
+                                          duplicated_vertex_tolerance);
 
     // reorder the cells to ensure that they satisfy the convention for
     // edge and face directions
