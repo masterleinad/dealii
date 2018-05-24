@@ -315,7 +315,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
         mg_dof);
       dsp.reinit(0, 0);
 
-      FullMatrix<double> prolongation;
+      FullMatrix<typename VectorType::value_type> prolongation;
 
       // now actually build the matrices
       for (cell = mg_dof.begin(level); cell != endc; ++cell)
