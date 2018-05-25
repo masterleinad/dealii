@@ -42,8 +42,8 @@ namespace Differentiation
 
     /**
      * A struct to indicate whether a given @p NumberType is a supported Sacado::Fad
-     * number or not. By default, numbers are not considered to have the necessary
-     * characteristics to fulfill this condition.
+     * number or not. By default, numbers are not considered to have the
+     * necessary characteristics to fulfill this condition.
      *
      * @author Jean-Paul Pelteret, 2017
      */
@@ -54,8 +54,8 @@ namespace Differentiation
 
     /**
      * A struct to indicate whether a given @p NumberType is a supported Sacado::Rad
-     * number or not. By default, numbers are not considered to have the necessary
-     * characteristics to fulfill this condition.
+     * number or not. By default, numbers are not considered to have the
+     * necessary characteristics to fulfill this condition.
      *
      * @author Jean-Paul Pelteret, 2017
      */
@@ -121,7 +121,7 @@ namespace Differentiation
 } // namespace Differentiation
 
 
-/* --------------------------- inline and template functions and specializations ------------------------- */
+/* ----------- inline and template functions and specializations ----------- */
 
 
 #  ifndef DOXYGEN
@@ -139,7 +139,8 @@ namespace Differentiation
       // and the examples in
       // https://github.com/trilinos/Trilinos/tree/master/packages/sacado/example
       //
-      // If one dares to venture there, the relevant files for the classes supported here are:
+      // If one dares to venture there, the relevant files for the classes
+      // supported here are:
       //
       // Forward-mode auto-differentiable types:
       // https://github.com/trilinos/Trilinos/blob/master/packages/sacado/src/sacado_dfad_DFad.hpp

@@ -190,8 +190,7 @@ check()
           << std::endl;
 
 
-  //--------------- Sparsity pattern checks for
-  //                boundary sparsity generators -----------------
+  //-------- Sparsity pattern checks for boundary sparsity generators --------
 
   // check boundary matrices
   check_boundary(dof);

@@ -66,8 +66,8 @@ namespace internal
 
         /**
          * Distribute degrees of freedom on the DoFHandler object associated
-         * with this policy object. The argument is a reference to the NumberCache
-         * of the DoFHandler object. The function may modify it to
+         * with this policy object. The argument is a reference to the
+         * NumberCache of the DoFHandler object. The function may modify it to
          * make DoFHandler related functions work properly when called within
          * the policies classes. The updated NumberCache is written to that
          * argument.
@@ -261,6 +261,5 @@ namespace internal
 
 DEAL_II_NAMESPACE_CLOSE
 
-/*----------------------------   dof_handler_policy.h     ---------------------------*/
 #endif
-/*----------------------------   dof_handler_policy.h     ---------------------------*/
+/*--------------------------   dof_handler_policy.h -------------------------*/

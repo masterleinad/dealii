@@ -1629,8 +1629,8 @@ namespace TrilinosWrappers
    * except for the higher_order_elements parameter which does not exist in
    * PreconditionerAMGMueLu.
    *
-   * @note This class requires Trilinos 11.14 or higher. At the moment 64bit-indices
-   * are not supported.
+   * @note This class requires Trilinos 11.14 or higher. At the moment
+   * 64bit-indices are not supported.
    *
    * @warning This interface should not be considered as stable.
    *
@@ -1940,7 +1940,7 @@ namespace TrilinosWrappers
 
 
 
-  // -------------------------- inline and template functions ----------------------
+  // ----------------------- inline and template functions --------------------
 
 
 #    ifndef DOXYGEN
@@ -2015,9 +2015,8 @@ namespace TrilinosWrappers
                     preconditioner->OperatorDomainMap().NumMyElements());
     AssertDimension(static_cast<TrilinosWrappers::types::int_type>(src.size()),
                     preconditioner->OperatorRangeMap().NumMyElements());
-    Epetra_Vector tril_dst(View,
-                           preconditioner->OperatorDomainMap(),
-                           dst.begin());
+    Epetra_Vector tril_dst(
+      View, preconditioner->OperatorDomainMap(), dst.begin());
     Epetra_Vector tril_src(View,
                            preconditioner->OperatorRangeMap(),
                            const_cast<double *>(src.begin()));
@@ -2035,9 +2034,8 @@ namespace TrilinosWrappers
                     preconditioner->OperatorDomainMap().NumMyElements());
     AssertDimension(static_cast<TrilinosWrappers::types::int_type>(src.size()),
                     preconditioner->OperatorRangeMap().NumMyElements());
-    Epetra_Vector tril_dst(View,
-                           preconditioner->OperatorDomainMap(),
-                           dst.begin());
+    Epetra_Vector tril_dst(
+      View, preconditioner->OperatorDomainMap(), dst.begin());
     Epetra_Vector tril_src(View,
                            preconditioner->OperatorRangeMap(),
                            const_cast<double *>(src.begin()));
@@ -2055,15 +2053,14 @@ namespace TrilinosWrappers
     LinearAlgebra::distributed::Vector<double> &      dst,
     const LinearAlgebra::distributed::Vector<double> &src) const
   {
-    AssertDimension(static_cast<TrilinosWrappers::types::int_type>(
-                      dst.local_size()),
-                    preconditioner->OperatorDomainMap().NumMyElements());
-    AssertDimension(static_cast<TrilinosWrappers::types::int_type>(
-                      src.local_size()),
-                    preconditioner->OperatorRangeMap().NumMyElements());
-    Epetra_Vector tril_dst(View,
-                           preconditioner->OperatorDomainMap(),
-                           dst.begin());
+    AssertDimension(
+      static_cast<TrilinosWrappers::types::int_type>(dst.local_size()),
+      preconditioner->OperatorDomainMap().NumMyElements());
+    AssertDimension(
+      static_cast<TrilinosWrappers::types::int_type>(src.local_size()),
+      preconditioner->OperatorRangeMap().NumMyElements());
+    Epetra_Vector tril_dst(
+      View, preconditioner->OperatorDomainMap(), dst.begin());
     Epetra_Vector tril_src(View,
                            preconditioner->OperatorRangeMap(),
                            const_cast<double *>(src.begin()));
@@ -2077,15 +2074,14 @@ namespace TrilinosWrappers
     LinearAlgebra::distributed::Vector<double> &      dst,
     const LinearAlgebra::distributed::Vector<double> &src) const
   {
-    AssertDimension(static_cast<TrilinosWrappers::types::int_type>(
-                      dst.local_size()),
-                    preconditioner->OperatorDomainMap().NumMyElements());
-    AssertDimension(static_cast<TrilinosWrappers::types::int_type>(
-                      src.local_size()),
-                    preconditioner->OperatorRangeMap().NumMyElements());
-    Epetra_Vector tril_dst(View,
-                           preconditioner->OperatorDomainMap(),
-                           dst.begin());
+    AssertDimension(
+      static_cast<TrilinosWrappers::types::int_type>(dst.local_size()),
+      preconditioner->OperatorDomainMap().NumMyElements());
+    AssertDimension(
+      static_cast<TrilinosWrappers::types::int_type>(src.local_size()),
+      preconditioner->OperatorRangeMap().NumMyElements());
+    Epetra_Vector tril_dst(
+      View, preconditioner->OperatorDomainMap(), dst.begin());
     Epetra_Vector tril_src(View,
                            preconditioner->OperatorRangeMap(),
                            const_cast<double *>(src.begin()));
@@ -2108,7 +2104,5 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_TRILINOS
 
-/*----------------------------   trilinos_precondition.h     ---------------------------*/
-
-#endif
-/*----------------------------   trilinos_precondition.h     ---------------------------*/
+#endif // trilinos_precondition_h
+/*------------------------- trilinos_precondition.h -------------------------*/

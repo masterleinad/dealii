@@ -94,8 +94,8 @@ namespace OpenCASCADE
    *
    * @author Luca Heltai, Andrea Mola, 2011--2014.
    *
-   * @deprecated Use DirectionalProjectionManifold instead, which is identical to
-   * this class but satisfies the modern Manifold-based naming convention.
+   * @deprecated Use DirectionalProjectionManifold instead, which is identical
+   * to this class but satisfies the modern Manifold-based naming convention.
    */
   template <int dim, int spacedim>
   class DEAL_II_DEPRECATED DirectionalProjectionBoundary
@@ -160,8 +160,8 @@ namespace OpenCASCADE
    *
    * @author Luca Heltai, Andrea Mola, 2011--2014.
    *
-   * @deprecated Use NormalToMeshProjectionManifold instead, which is identical to
-   * this class but satisfies the modern Manifold-based naming convention.
+   * @deprecated Use NormalToMeshProjectionManifold instead, which is identical
+   * to this class but satisfies the modern Manifold-based naming convention.
    */
   template <int dim, int spacedim>
   class DEAL_II_DEPRECATED NormalToMeshProjectionBoundary
@@ -189,6 +189,5 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_OPENCASCADE
 
-/*------------------------------ occ_boundary_lib.h ------------------------------*/
-#endif
-/*------------------------------ occ_boundary_lib.h ------------------------------*/
+#endif // dealii_occ_boundary_lib_h
+/*---------------------------- occ_boundary_lib.h ---------------------------*/

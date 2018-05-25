@@ -239,8 +239,8 @@ namespace PETScWrappers
        * way, the ghost parameter can equal the set of locally relevant
        * degrees of freedom, see step-32.
        *
-       * @note This operation always creates a ghosted vector, which is considered
-       * read-only.
+       * @note This operation always creates a ghosted vector, which is
+       * considered read-only.
        *
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
@@ -441,8 +441,8 @@ namespace PETScWrappers
     template <typename number>
     Vector::Vector(const MPI_Comm &              communicator,
                    const dealii::Vector<number> &v,
-                   const size_type               local_size)
-      : communicator(communicator)
+                   const size_type               local_size) :
+      communicator(communicator)
     {
       Vector::create_vector(v.size(), local_size);
 
@@ -569,7 +569,5 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_PETSC
 
-/*----------------------------   petsc_parallel_vector.h     ---------------------------*/
-
 #endif
-/*----------------------------   petsc_parallel_vector.h     ---------------------------*/
+/*------------------------- petsc_parallel_vector.h -------------------------*/

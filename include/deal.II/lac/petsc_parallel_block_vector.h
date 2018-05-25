@@ -288,7 +288,7 @@ namespace PETScWrappers
 
     /*@}*/
 
-    /*----------------------- Inline functions ----------------------------------*/
+    /*--------------------- Inline functions --------------------------------*/
 
     inline BlockVector::BlockVector(const unsigned int n_blocks,
                                     const MPI_Comm &   communicator,
@@ -309,8 +309,8 @@ namespace PETScWrappers
     }
 
 
-    inline BlockVector::BlockVector(const BlockVector &v)
-      : BlockVectorBase<Vector>()
+    inline BlockVector::BlockVector(const BlockVector &v) :
+      BlockVectorBase<Vector>()
     {
       this->components.resize(v.n_blocks());
       this->block_indices = v.block_indices;
@@ -388,10 +388,8 @@ namespace PETScWrappers
         this->components.resize(this->n_blocks());
 
       for (unsigned int i = 0; i < this->n_blocks(); ++i)
-        this->components[i].reinit(communicator,
-                                   block_sizes[i],
-                                   local_sizes[i],
-                                   omit_zeroing_entries);
+        this->components[i].reinit(
+          communicator, block_sizes[i], local_sizes[i], omit_zeroing_entries);
     }
 
 
@@ -436,9 +434,8 @@ namespace PETScWrappers
         this->components.resize(this->n_blocks());
 
       for (unsigned int i = 0; i < this->n_blocks(); ++i)
-        block(i).reinit(parallel_partitioning[i],
-                        ghost_entries[i],
-                        communicator);
+        block(i).reinit(
+          parallel_partitioning[i], ghost_entries[i], communicator);
     }
 
 

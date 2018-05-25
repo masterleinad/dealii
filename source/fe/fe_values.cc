@@ -139,16 +139,16 @@ namespace FEValuesViews
 {
   template <int dim, int spacedim>
   Scalar<dim, spacedim>::Scalar(const FEValuesBase<dim, spacedim> &fe_values,
-                                const unsigned int                 component)
-    : fe_values(&fe_values)
-    , component(component)
-    , shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                const unsigned int                 component) :
+    fe_values(&fe_values),
+    component(component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim> &fe = *this->fe_values->fe;
     Assert(component < fe.n_components(),
            ExcIndexRange(component, 0, fe.n_components()));
 
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table =
@@ -176,9 +176,9 @@ namespace FEValuesViews
 
 
   template <int dim, int spacedim>
-  Scalar<dim, spacedim>::Scalar()
-    : fe_values(nullptr)
-    , component(numbers::invalid_unsigned_int)
+  Scalar<dim, spacedim>::Scalar() :
+    fe_values(nullptr),
+    component(numbers::invalid_unsigned_int)
   {}
 
 
@@ -196,18 +196,17 @@ namespace FEValuesViews
 
   template <int dim, int spacedim>
   Vector<dim, spacedim>::Vector(const FEValuesBase<dim, spacedim> &fe_values,
-                                const unsigned int first_vector_component)
-    : fe_values(&fe_values)
-    , first_vector_component(first_vector_component)
-    , shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                const unsigned int first_vector_component) :
+    fe_values(&fe_values),
+    first_vector_component(first_vector_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim> &fe = *this->fe_values->fe;
     Assert(first_vector_component + spacedim - 1 < fe.n_components(),
-           ExcIndexRange(first_vector_component + spacedim - 1,
-                         0,
-                         fe.n_components()));
+           ExcIndexRange(
+             first_vector_component + spacedim - 1, 0, fe.n_components()));
 
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table =
@@ -268,9 +267,9 @@ namespace FEValuesViews
 
 
   template <int dim, int spacedim>
-  Vector<dim, spacedim>::Vector()
-    : fe_values(nullptr)
-    , first_vector_component(numbers::invalid_unsigned_int)
+  Vector<dim, spacedim>::Vector() :
+    fe_values(nullptr),
+    first_vector_component(numbers::invalid_unsigned_int)
   {}
 
 
@@ -289,10 +288,10 @@ namespace FEValuesViews
   template <int dim, int spacedim>
   SymmetricTensor<2, dim, spacedim>::SymmetricTensor(
     const FEValuesBase<dim, spacedim> &fe_values,
-    const unsigned int                 first_tensor_component)
-    : fe_values(&fe_values)
-    , first_tensor_component(first_tensor_component)
-    , shape_function_data(this->fe_values->fe->dofs_per_cell)
+    const unsigned int                 first_tensor_component) :
+    fe_values(&fe_values),
+    first_tensor_component(first_tensor_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim> &fe = *this->fe_values->fe;
     Assert(first_tensor_component + (dim * dim + dim) / 2 - 1 <
@@ -302,7 +301,7 @@ namespace FEValuesViews
                dealii::SymmetricTensor<2, dim>::n_independent_components - 1,
              0,
              fe.n_components()));
-    //TODO: we'd like to use the fields with the same name as these
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table =
@@ -369,9 +368,9 @@ namespace FEValuesViews
 
 
   template <int dim, int spacedim>
-  SymmetricTensor<2, dim, spacedim>::SymmetricTensor()
-    : fe_values(nullptr)
-    , first_tensor_component(numbers::invalid_unsigned_int)
+  SymmetricTensor<2, dim, spacedim>::SymmetricTensor() :
+    fe_values(nullptr),
+    first_tensor_component(numbers::invalid_unsigned_int)
   {}
 
 
@@ -390,17 +389,16 @@ namespace FEValuesViews
 
   template <int dim, int spacedim>
   Tensor<2, dim, spacedim>::Tensor(const FEValuesBase<dim, spacedim> &fe_values,
-                                   const unsigned int first_tensor_component)
-    : fe_values(&fe_values)
-    , first_tensor_component(first_tensor_component)
-    , shape_function_data(this->fe_values->fe->dofs_per_cell)
+                                   const unsigned int first_tensor_component) :
+    fe_values(&fe_values),
+    first_tensor_component(first_tensor_component),
+    shape_function_data(this->fe_values->fe->dofs_per_cell)
   {
     const FiniteElement<dim, spacedim> &fe = *this->fe_values->fe;
     Assert(first_tensor_component + dim * dim - 1 < fe.n_components(),
-           ExcIndexRange(first_tensor_component + dim * dim - 1,
-                         0,
-                         fe.n_components()));
-    //TODO: we'd like to use the fields with the same name as these
+           ExcIndexRange(
+             first_tensor_component + dim * dim - 1, 0, fe.n_components()));
+    // TODO: we'd like to use the fields with the same name as these
     // variables from FEValuesBase, but they aren't initialized yet
     // at the time we get here, so re-create it all
     const std::vector<unsigned int> shape_function_to_row_table =
@@ -461,9 +459,9 @@ namespace FEValuesViews
 
 
   template <int dim, int spacedim>
-  Tensor<2, dim, spacedim>::Tensor()
-    : fe_values(nullptr)
-    , first_tensor_component(numbers::invalid_unsigned_int)
+  Tensor<2, dim, spacedim>::Tensor() :
+    fe_values(nullptr),
+    first_tensor_component(numbers::invalid_unsigned_int)
   {}
 
 
@@ -509,8 +507,8 @@ namespace FEValuesViews
               .is_nonzero_shape_function_component)
           {
             const Number &value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -554,8 +552,8 @@ namespace FEValuesViews
               .is_nonzero_shape_function_component)
           {
             const Number &value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -597,8 +595,8 @@ namespace FEValuesViews
               .is_nonzero_shape_function_component)
           {
             const Number &value = dof_values[shape_function];
-            // For auto-differentiable numbers, the fact that a DoF value is zero
-            // does not imply that its derivatives are zero as well. So we
+            // For auto-differentiable numbers, the fact that a DoF value is
+            // zero does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
             if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
@@ -928,9 +926,9 @@ namespace FEValuesViews
                     continue;
 
                   const Number &value = dof_values[shape_function];
-                  // For auto-differentiable numbers, the fact that a DoF value is zero
-                  // does not imply that its derivatives are zero as well. So we
-                  // can't filter by value for these number types.
+                  // For auto-differentiable numbers, the fact that a DoF value
+                  // is zero does not imply that its derivatives are zero as
+                  // well. So we can't filter by value for these number types.
                   if (dealii::internal::CheckForZero<Number>::value(value) ==
                       true)
                     continue;
@@ -959,9 +957,10 @@ namespace FEValuesViews
                             value * (*shape_gradient_ptr++)[0];
                     }
                   else
-                    // we have multiple non-zero components in the shape functions. not
-                    // all of them must necessarily be within the 2-component window
-                    // this FEValuesViews::Vector object considers, however.
+                    // we have multiple non-zero components in the shape
+                    // functions. not all of them must necessarily be within the
+                    // 2-component window this FEValuesViews::Vector object
+                    // considers, however.
                     {
                       if (shape_function_data[shape_function]
                             .is_nonzero_shape_function_component[0])
@@ -1011,9 +1010,9 @@ namespace FEValuesViews
                     continue;
 
                   const Number &value = dof_values[shape_function];
-                  // For auto-differentiable numbers, the fact that a DoF value is zero
-                  // does not imply that its derivatives are zero as well. So we
-                  // can't filter by value for these number types.
+                  // For auto-differentiable numbers, the fact that a DoF value
+                  // is zero does not imply that its derivatives are zero as
+                  // well. So we can't filter by value for these number types.
                   if (dealii::internal::CheckForZero<Number>::value(value) ==
                       true)
                     continue;
@@ -1076,9 +1075,10 @@ namespace FEValuesViews
                     }
 
                   else
-                    // we have multiple non-zero components in the shape functions. not
-                    // all of them must necessarily be within the 3-component window
-                    // this FEValuesViews::Vector object considers, however.
+                    // we have multiple non-zero components in the shape
+                    // functions. not all of them must necessarily be within the
+                    // 3-component window this FEValuesViews::Vector object
+                    // considers, however.
                     {
                       if (shape_function_data[shape_function]
                             .is_nonzero_shape_function_component[0])
@@ -1628,7 +1628,8 @@ namespace FEValuesViews
     AssertDimension(fe_function.size(),
                     fe_values->present_cell->n_dofs_for_dof_handler());
 
-    // get function values of dofs on this cell and call internal worker function
+    // get function values of dofs on this cell and call internal worker
+    // function
     dealii::Vector<typename InputVector::value_type> dof_values(
       fe_values->dofs_per_cell);
     fe_values->present_cell->get_interpolated_dof_values(fe_function,
@@ -2238,9 +2239,9 @@ namespace FEValuesViews
     Assert(fe_values->update_flags & update_hessians,
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_hessians")));
-    Assert(laplacians.size() == fe_values->n_quadrature_points,
-           ExcDimensionMismatch(laplacians.size(),
-                                fe_values->n_quadrature_points));
+    Assert(
+      laplacians.size() == fe_values->n_quadrature_points,
+      ExcDimensionMismatch(laplacians.size(), fe_values->n_quadrature_points));
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     Assert(
@@ -2274,9 +2275,9 @@ namespace FEValuesViews
     Assert(fe_values->update_flags & update_hessians,
            (typename FEValuesBase<dim, spacedim>::ExcAccessToUninitializedField(
              "update_hessians")));
-    Assert(laplacians.size() == fe_values->n_quadrature_points,
-           ExcDimensionMismatch(laplacians.size(),
-                                fe_values->n_quadrature_points));
+    Assert(
+      laplacians.size() == fe_values->n_quadrature_points,
+      ExcDimensionMismatch(laplacians.size(), fe_values->n_quadrature_points));
     Assert(fe_values->present_cell.get() != nullptr,
            ExcMessage("FEValues object is not reinit'ed to any cell"));
     AssertDimension(dof_values.size(), fe_values->dofs_per_cell);
@@ -2654,9 +2655,9 @@ namespace internal
             dealii::FEValuesViews::Scalar<dim, spacedim>(fe_values, component);
         }
 
-      // compute number of vectors that we can fit into this finite element. note
-      // that this is based on the dimensionality 'dim' of the
-      // manifold, not 'spacedim' of the output vector
+      // compute number of vectors that we can fit into this finite element.
+      // note that this is based on the dimensionality 'dim' of the manifold,
+      // not 'spacedim' of the output vector
       const unsigned int n_vectors =
         (fe.n_components() >= spacedim ? fe.n_components() - spacedim + 1 : 0);
       vectors.resize(n_vectors);
@@ -2752,7 +2753,7 @@ public:
                               Vector<IndexSet::value_type> &out) const = 0;
 };
 
-/* ---------------- classes derived from FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
+/* --- classes derived from FEValuesBase<dim,spacedim>::CellIteratorBase --- */
 
 
 /**
@@ -2811,17 +2812,18 @@ private:
  * interface. See there for a description of the use of
  * these classes.
  *
- * This class is basically a specialization of the general template for iterators into
- * Triangulation objects (but since C++ does not allow something like this for nested
- * classes, it runs under a separate name). Since these do not implement the interface
- * that we would like to call, the functions of this class cannot be implemented
- * meaningfully. However, most functions of the FEValues class do not make any use of
- * degrees of freedom at all, so it should be possible to call FEValues::reinit() with a tria
- * iterator only; this class makes this possible, but whenever one of the functions
- * of FEValues tries to call any of the functions of this class, an exception will be
- * raised reminding the user that if she wants to use these features, then the
- * FEValues object has to be reinitialized with a cell iterator that allows to
- * extract degree of freedom information.
+ * This class is basically a specialization of the general template for
+ * iterators into Triangulation objects (but since C++ does not allow something
+ * like this for nested classes, it runs under a separate name). Since these do
+ * not implement the interface that we would like to call, the functions of this
+ * class cannot be implemented meaningfully. However, most functions of the
+ * FEValues class do not make any use of degrees of freedom at all, so it should
+ * be possible to call FEValues::reinit() with a tria iterator only; this class
+ * makes this possible, but whenever one of the functions of FEValues tries to
+ * call any of the functions of this class, an exception will be raised
+ * reminding the user that if she wants to use these features, then the FEValues
+ * object has to be reinitialized with a cell iterator that allows to extract
+ * degree of freedom information.
  *
  * @author Wolfgang Bangerth, 2003
  */
@@ -2871,8 +2873,8 @@ private:
 
   /**
    * String to be displayed whenever one of the functions of this class is
-   * called. Make it a static member variable, since we show the same message for
-   * all member functions.
+   * called. Make it a static member variable, since we show the same message
+   * for all member functions.
    */
   static const char *const message_string;
 };
@@ -2884,8 +2886,8 @@ private:
 
 template <int dim, int spacedim>
 template <typename CI>
-FEValuesBase<dim, spacedim>::CellIterator<CI>::CellIterator(const CI &cell)
-  : cell(cell)
+FEValuesBase<dim, spacedim>::CellIterator<CI>::CellIterator(const CI &cell) :
+  cell(cell)
 {}
 
 
@@ -2949,8 +2951,8 @@ const char *const FEValuesBase<dim,
 
 template <int dim, int spacedim>
 FEValuesBase<dim, spacedim>::TriaCellIterator::TriaCellIterator(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell)
-  : cell(cell)
+  const typename Triangulation<dim, spacedim>::cell_iterator &cell) :
+  cell(cell)
 {}
 
 
@@ -3159,13 +3161,13 @@ FEValuesBase<dim, spacedim>::FEValuesBase(
   const unsigned int                  dofs_per_cell,
   const UpdateFlags                   flags,
   const Mapping<dim, spacedim> &      mapping,
-  const FiniteElement<dim, spacedim> &fe)
-  : n_quadrature_points(n_q_points)
-  , dofs_per_cell(dofs_per_cell)
-  , mapping(&mapping, typeid(*this).name())
-  , fe(&fe, typeid(*this).name())
-  , cell_similarity(CellSimilarity::Similarity::none)
-  , fe_values_views_cache(*this)
+  const FiniteElement<dim, spacedim> &fe) :
+  n_quadrature_points(n_q_points),
+  dofs_per_cell(dofs_per_cell),
+  mapping(&mapping, typeid(*this).name()),
+  fe(&fe, typeid(*this).name()),
+  cell_similarity(CellSimilarity::Similarity::none),
+  fe_values_views_cache(*this)
 {
   Assert(n_q_points > 0,
          ExcMessage("There is nothing useful you can do with an FEValues "
@@ -3250,9 +3252,8 @@ namespace internal
     typedef typename VectorType::value_type Number;
     // initialize with zero
     for (unsigned int i = 0; i < values.size(); ++i)
-      std::fill_n(values[i].begin(),
-                  values[i].size(),
-                  typename VectorType::value_type());
+      std::fill_n(
+        values[i].begin(), values[i].size(), typename VectorType::value_type());
 
     // see if there the current cell has DoFs at all, and if not
     // then there is nothing else to do.
@@ -3665,9 +3666,8 @@ FEValuesBase<dim, spacedim>::get_function_values(
   // get function values of dofs on this cell
   Vector<Number> dof_values(dofs_per_cell);
   present_cell->get_interpolated_dof_values(fe_function, dof_values);
-  internal::do_function_values(dof_values.begin(),
-                               this->finite_element_output.shape_values,
-                               values);
+  internal::do_function_values(
+    dof_values.begin(), this->finite_element_output.shape_values, values);
 }
 
 
@@ -3689,9 +3689,8 @@ FEValuesBase<dim, spacedim>::get_function_values(
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
   for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
-  internal::do_function_values(dof_values.data(),
-                               this->finite_element_output.shape_values,
-                               values);
+  internal::do_function_values(
+    dof_values.data(), this->finite_element_output.shape_values, values);
 }
 
 
@@ -3808,9 +3807,8 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
   // get function values of dofs on this cell
   Vector<Number> dof_values(dofs_per_cell);
   present_cell->get_interpolated_dof_values(fe_function, dof_values);
-  internal::do_function_derivatives(dof_values.begin(),
-                                    this->finite_element_output.shape_gradients,
-                                    gradients);
+  internal::do_function_derivatives(
+    dof_values.begin(), this->finite_element_output.shape_gradients, gradients);
 }
 
 
@@ -3833,9 +3831,8 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
   for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
-  internal::do_function_derivatives(dof_values.data(),
-                                    this->finite_element_output.shape_gradients,
-                                    gradients);
+  internal::do_function_derivatives(
+    dof_values.data(), this->finite_element_output.shape_gradients, gradients);
 }
 
 
@@ -3922,9 +3919,8 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
   // get function values of dofs on this cell
   Vector<Number> dof_values(dofs_per_cell);
   present_cell->get_interpolated_dof_values(fe_function, dof_values);
-  internal::do_function_derivatives(dof_values.begin(),
-                                    this->finite_element_output.shape_hessians,
-                                    hessians);
+  internal::do_function_derivatives(
+    dof_values.begin(), this->finite_element_output.shape_hessians, hessians);
 }
 
 
@@ -3947,9 +3943,8 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
   for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
-  internal::do_function_derivatives(dof_values.data(),
-                                    this->finite_element_output.shape_hessians,
-                                    hessians);
+  internal::do_function_derivatives(
+    dof_values.data(), this->finite_element_output.shape_hessians, hessians);
 }
 
 
@@ -4035,9 +4030,8 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
   // get function values of dofs on this cell
   Vector<Number> dof_values(dofs_per_cell);
   present_cell->get_interpolated_dof_values(fe_function, dof_values);
-  internal::do_function_laplacians(dof_values.begin(),
-                                   this->finite_element_output.shape_hessians,
-                                   laplacians);
+  internal::do_function_laplacians(
+    dof_values.begin(), this->finite_element_output.shape_hessians, laplacians);
 }
 
 
@@ -4059,9 +4053,8 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
   for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
-  internal::do_function_laplacians(dof_values.data(),
-                                   this->finite_element_output.shape_hessians,
-                                   laplacians);
+  internal::do_function_laplacians(
+    dof_values.data(), this->finite_element_output.shape_hessians, laplacians);
 }
 
 
@@ -4491,13 +4484,13 @@ template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim> &      mapping,
                                   const FiniteElement<dim, spacedim> &fe,
                                   const Quadrature<dim> &             q,
-                                  const UpdateFlags update_flags)
-  : FEValuesBase<dim, spacedim>(q.size(),
-                                fe.dofs_per_cell,
-                                update_default,
-                                mapping,
-                                fe)
-  , quadrature(q)
+                                  const UpdateFlags update_flags) :
+  FEValuesBase<dim, spacedim>(q.size(),
+                              fe.dofs_per_cell,
+                              update_default,
+                              mapping,
+                              fe),
+  quadrature(q)
 {
   initialize(update_flags);
 }
@@ -4507,13 +4500,13 @@ FEValues<dim, spacedim>::FEValues(const Mapping<dim, spacedim> &      mapping,
 template <int dim, int spacedim>
 FEValues<dim, spacedim>::FEValues(const FiniteElement<dim, spacedim> &fe,
                                   const Quadrature<dim> &             q,
-                                  const UpdateFlags update_flags)
-  : FEValuesBase<dim, spacedim>(q.size(),
-                                fe.dofs_per_cell,
-                                update_default,
-                                StaticMappingQ1<dim, spacedim>::mapping,
-                                fe)
-  , quadrature(q)
+                                  const UpdateFlags update_flags) :
+  FEValuesBase<dim, spacedim>(q.size(),
+                              fe.dofs_per_cell,
+                              update_default,
+                              StaticMappingQ1<dim, spacedim>::mapping,
+                              fe),
+  quadrature(q)
 {
   initialize(update_flags);
 }
@@ -4539,9 +4532,8 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   // initialize the base classes
   if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
-  this->finite_element_output.initialize(this->n_quadrature_points,
-                                         *this->fe,
-                                         flags);
+  this->finite_element_output.initialize(
+    this->n_quadrature_points, *this->fe, flags);
 
   // then get objects into which the FE and the Mapping can store
   // intermediate data used across calls to reinit. we can do this in parallel
@@ -4557,10 +4549,8 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
     std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>>
     mapping_get_data;
   if (flags & update_mapping)
-    mapping_get_data = Threads::new_task(&Mapping<dim, spacedim>::get_data,
-                                         *this->mapping,
-                                         flags,
-                                         quadrature);
+    mapping_get_data = Threads::new_task(
+      &Mapping<dim, spacedim>::get_data, *this->mapping, flags, quadrature);
 
   this->update_flags = flags;
 
@@ -4709,14 +4699,14 @@ FEFaceValuesBase<dim, spacedim>::FEFaceValuesBase(
   const UpdateFlags,
   const Mapping<dim, spacedim> &      mapping,
   const FiniteElement<dim, spacedim> &fe,
-  const Quadrature<dim - 1> &         quadrature)
-  : FEValuesBase<dim, spacedim>(n_q_points,
-                                dofs_per_cell,
-                                update_default,
-                                mapping,
-                                fe)
-  , present_face_index(numbers::invalid_unsigned_int)
-  , quadrature(quadrature)
+  const Quadrature<dim - 1> &         quadrature) :
+  FEValuesBase<dim, spacedim>(n_q_points,
+                              dofs_per_cell,
+                              update_default,
+                              mapping,
+                              fe),
+  present_face_index(numbers::invalid_unsigned_int),
+  quadrature(quadrature)
 {}
 
 
@@ -4759,13 +4749,13 @@ FEFaceValues<dim, spacedim>::FEFaceValues(
   const Mapping<dim, spacedim> &      mapping,
   const FiniteElement<dim, spacedim> &fe,
   const Quadrature<dim - 1> &         quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4776,13 +4766,13 @@ template <int dim, int spacedim>
 FEFaceValues<dim, spacedim>::FEFaceValues(
   const FiniteElement<dim, spacedim> &fe,
   const Quadrature<dim - 1> &         quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    StaticMappingQ1<dim, spacedim>::mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  StaticMappingQ1<dim, spacedim>::mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4798,9 +4788,8 @@ FEFaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   // initialize the base classes
   if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
-  this->finite_element_output.initialize(this->n_quadrature_points,
-                                         *this->fe,
-                                         flags);
+  this->finite_element_output.initialize(
+    this->n_quadrature_points, *this->fe, flags);
 
   // then get objects into which the FE and the Mapping can store
   // intermediate data used across calls to reinit. this can be done in parallel
@@ -4917,7 +4906,7 @@ FEFaceValues<dim, spacedim>::do_reinit(const unsigned int face_no)
 }
 
 
-/*------------------------------- FESubFaceValues -------------------------------*/
+/* ---------------------------- FESubFaceValues ---------------------------- */
 
 
 template <int dim, int spacedim>
@@ -4935,13 +4924,13 @@ FESubfaceValues<dim, spacedim>::FESubfaceValues(
   const Mapping<dim, spacedim> &      mapping,
   const FiniteElement<dim, spacedim> &fe,
   const Quadrature<dim - 1> &         quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4952,13 +4941,13 @@ template <int dim, int spacedim>
 FESubfaceValues<dim, spacedim>::FESubfaceValues(
   const FiniteElement<dim, spacedim> &fe,
   const Quadrature<dim - 1> &         quadrature,
-  const UpdateFlags                   update_flags)
-  : FEFaceValuesBase<dim, spacedim>(quadrature.size(),
-                                    fe.dofs_per_cell,
-                                    update_flags,
-                                    StaticMappingQ1<dim, spacedim>::mapping,
-                                    fe,
-                                    quadrature)
+  const UpdateFlags                   update_flags) :
+  FEFaceValuesBase<dim, spacedim>(quadrature.size(),
+                                  fe.dofs_per_cell,
+                                  update_flags,
+                                  StaticMappingQ1<dim, spacedim>::mapping,
+                                  fe,
+                                  quadrature)
 {
   initialize(update_flags);
 }
@@ -4974,9 +4963,8 @@ FESubfaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   // initialize the base classes
   if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
-  this->finite_element_output.initialize(this->n_quadrature_points,
-                                         *this->fe,
-                                         flags);
+  this->finite_element_output.initialize(
+    this->n_quadrature_points, *this->fe, flags);
 
   // then get objects into which the FE and the Mapping can store
   // intermediate data used across calls to reinit. this can be done
@@ -5033,16 +5021,14 @@ FESubfaceValues<dim, spacedim>::reinit(
   // but unfortunately the current function is also called for
   // faces without children (see tests/fe/mapping.cc). Therefore,
   // we must use following workaround of two separate assertions
-  Assert(cell->face(face_no)->has_children() ||
-           subface_no < GeometryInfo<dim>::max_children_per_face,
-         ExcIndexRange(subface_no,
-                       0,
-                       GeometryInfo<dim>::max_children_per_face));
-  Assert(!cell->face(face_no)->has_children() ||
-           subface_no < cell->face(face_no)->number_of_children(),
-         ExcIndexRange(subface_no,
-                       0,
-                       cell->face(face_no)->number_of_children()));
+  Assert(
+    cell->face(face_no)->has_children() ||
+      subface_no < GeometryInfo<dim>::max_children_per_face,
+    ExcIndexRange(subface_no, 0, GeometryInfo<dim>::max_children_per_face));
+  Assert(
+    !cell->face(face_no)->has_children() ||
+      subface_no < cell->face(face_no)->number_of_children(),
+    ExcIndexRange(subface_no, 0, cell->face(face_no)->number_of_children()));
   Assert(cell->has_children() == false,
          ExcMessage("You can't use subface data for cells that are "
                     "already refined. Iterate over their children "

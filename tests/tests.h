@@ -68,7 +68,7 @@ struct DisableWindowsDebugRuntimeDialog
 using namespace dealii;
 
 
-// ------------------------------ Utility functions used in tests -----------------------
+// ------------------------- Utility functions used in tests ------------------
 
 /**
  * Go through the input stream @p in and filter out binary data for the key @p key .
@@ -140,10 +140,10 @@ get_real_assert_zero_imag(const number &a)
 }
 
 
-// Cygwin has a different implementation for rand() which causes many tests to fail.
-// This here is a reimplementation that gives the same sequence of numbers as a program
-// that uses rand() on a typical linux machine.
-// we put this into a namespace to not conflict with stdlib
+// Cygwin has a different implementation for rand() which causes many tests to
+// fail. This here is a reimplementation that gives the same sequence of numbers
+// as a program that uses rand() on a typical linux machine. we put this into a
+// namespace to not conflict with stdlib
 namespace Testing
 {
   /**
@@ -184,7 +184,7 @@ namespace Testing
 
     if (!inited || reseed)
       {
-        //srand treats a seed 0 as 1 for some reason
+        // srand treats a seed 0 as 1 for some reason
         r[0]          = (seed == 0) ? 1 : seed;
         long int word = r[0];
 
@@ -353,10 +353,8 @@ unify_pretty_function(const std::string &text)
  * steps.
  */
 
-#define check_solver_within_range(SolverType_COMMAND,                \
-                                  CONTROL_COMMAND,                   \
-                                  MIN_ALLOWED,                       \
-                                  MAX_ALLOWED)                       \
+#define check_solver_within_range(                                   \
+  SolverType_COMMAND, CONTROL_COMMAND, MIN_ALLOWED, MAX_ALLOWED)     \
   {                                                                  \
     const unsigned int previous_depth = deallog.depth_file(0);       \
     try                                                              \
@@ -395,7 +393,7 @@ filter_out_small_numbers(const Number number, const double tolerance)
     return number;
 }
 
-// ------------------------------ Functions used in initializing subsystems -------------------
+// ---------------- Functions used in initializing subsystems -----------------
 
 
 /*
@@ -631,7 +629,7 @@ struct SetTBBAssertionHandler
 #endif /*TBB_DO_ASSERT*/
 
 
-// ------------------------------ Adjust global variables in deal.II -----------------------
+// ---------------------- Adjust global variables in deal.II ------------------
 
 
 DEAL_II_NAMESPACE_OPEN
@@ -694,8 +692,8 @@ struct SetGrainSizes
 DEAL_II_NAMESPACE_CLOSE
 
 /*
- * Do not use a template here to work around an overload resolution issue with clang and
- * enabled  C++11 mode.
+ * Do not use a template here to work around an overload resolution issue with
+ * clang and enabled  C++11 mode.
  *
  * - Maier 2013
  */

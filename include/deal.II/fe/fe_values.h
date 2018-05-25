@@ -371,7 +371,8 @@ namespace FEValuesViews
      * or, for a generic @p Number type,
      * @code
      * std::vector<Number> local_dof_values(cell->get_fe().dofs_per_cell);
-     * cell->get_dof_values(solution, local_dof_values.begin(), local_dof_values.end());
+     * cell->get_dof_values(solution, local_dof_values.begin(),
+     * local_dof_values.end());
      * @endcode
      */
     template <class InputVector>
@@ -943,7 +944,8 @@ namespace FEValuesViews
      * or, for a generic @p Number type,
      * @code
      * std::vector<Number> local_dof_values(cell->get_fe().dofs_per_cell);
-     * cell->get_dof_values(solution, local_dof_values.begin(), local_dof_values.end());
+     * cell->get_dof_values(solution, local_dof_values.begin(),
+     * local_dof_values.end());
      * @endcode
      */
     template <class InputVector>
@@ -1456,7 +1458,8 @@ namespace FEValuesViews
      * or, for a generic @p Number type,
      * @code
      * std::vector<Number> local_dof_values(cell->get_fe().dofs_per_cell);
-     * cell->get_dof_values(solution, local_dof_values.begin(), local_dof_values.end());
+     * cell->get_dof_values(solution, local_dof_values.begin(),
+     * local_dof_values.end());
      * @endcode
      */
     template <class InputVector>
@@ -1536,11 +1539,11 @@ namespace FEValuesViews
    * @ref vector_valued
    * module.
    *
-   * This class allows to query the value, gradient and divergence of (components of)
-   * shape functions and solutions representing tensors. The divergence of a
-   * tensor $T_{ij},\, 0\le i,j<\text{dim}$ is defined as $d_i = \sum_j
-   * \frac{\partial T_{ij}}{\partial x_j}, \, 0\le i<\text{dim}$,
-   * whereas its gradient is $G_{ijk} = \frac{\partial T_{ij}}{\partial x_k}$.
+   * This class allows to query the value, gradient and divergence of
+   * (components of) shape functions and solutions representing tensors. The
+   * divergence of a tensor $T_{ij},\, 0\le i,j<\text{dim}$ is defined as $d_i =
+   * \sum_j \frac{\partial T_{ij}}{\partial x_j}, \, 0\le i<\text{dim}$, whereas
+   * its gradient is $G_{ijk} = \frac{\partial T_{ij}}{\partial x_k}$.
    *
    * You get an object of this type if you apply a FEValuesExtractors::Tensor
    * to an FEValues, FEFaceValues or FESubfaceValues object.
@@ -1565,7 +1568,8 @@ namespace FEValuesViews
     typedef dealii::Tensor<1, spacedim> divergence_type;
 
     /**
-     * Data type for taking the gradient of a second order tensor: a third order tensor.
+     * Data type for taking the gradient of a second order tensor: a third order
+     * tensor.
      */
     typedef dealii::Tensor<3, spacedim> gradient_type;
 
@@ -1708,8 +1712,8 @@ namespace FEValuesViews
                const unsigned int q_point) const;
 
     /**
-     * Return the gradient (3-rd order tensor) of the vector components selected by this
-     * view, for the shape function and quadrature point selected by the
+     * Return the gradient (3-rd order tensor) of the vector components selected
+     * by this view, for the shape function and quadrature point selected by the
      * arguments.
      *
      * See the general discussion of this class for a definition of the
@@ -1766,7 +1770,8 @@ namespace FEValuesViews
      * or, for a generic @p Number type,
      * @code
      * std::vector<Number> local_dof_values(cell->get_fe().dofs_per_cell);
-     * cell->get_dof_values(solution, local_dof_values.begin(), local_dof_values.end());
+     * cell->get_dof_values(solution, local_dof_values.begin(),
+     * local_dof_values.end());
      * @endcode
      */
     template <class InputVector>
@@ -2057,7 +2062,8 @@ public:
   ~FEValuesBase() override;
 
 
-  /// @name ShapeAccess Access to shape function values. These fields are filled by the finite element.
+  /// @name ShapeAccess Access to shape function values. These fields are filled
+  /// by the finite element.
   //@{
 
   /**
@@ -2511,7 +2517,8 @@ public:
     bool quadrature_points_fastest = false) const;
 
   //@}
-  /// @name Access to second derivatives (Hessian matrices and Laplacians) of global finite element fields
+  /// @name Access to second derivatives (Hessian matrices and Laplacians) of
+  /// global finite element fields
   //@{
 
   /**
@@ -3190,7 +3197,8 @@ public:
     << "upon construction.");
 
   /**
-   * Mismatch between the FEValues FiniteElement and cell->get_dof_handler().get_fe()
+   * Mismatch between the FEValues FiniteElement and
+   * cell->get_dof_handler().get_fe()
    *
    * @ingroup Exceptions
    */
@@ -3213,7 +3221,8 @@ public:
                  << "_component suffix?");
 
   /**
-   * The given FiniteElement is not a primitive element, see FiniteElement::is_primitive().
+   * The given FiniteElement is not a primitive element, see
+   * FiniteElement::is_primitive().
    *
    * @ingroup Exceptions
    */
@@ -4755,7 +4764,7 @@ namespace FEValuesViews
 
 
 
-/*------------------------ Inline functions: FEValuesBase ------------------------*/
+/*---------------------- Inline functions: FEValuesBase ---------------------*/
 
 
 
@@ -4763,10 +4772,9 @@ template <int dim, int spacedim>
 inline const FEValuesViews::Scalar<dim, spacedim> &FEValuesBase<dim, spacedim>::
                                                    operator[](const FEValuesExtractors::Scalar &scalar) const
 {
-  Assert(scalar.component < fe_values_views_cache.scalars.size(),
-         ExcIndexRange(scalar.component,
-                       0,
-                       fe_values_views_cache.scalars.size()));
+  Assert(
+    scalar.component < fe_values_views_cache.scalars.size(),
+    ExcIndexRange(scalar.component, 0, fe_values_views_cache.scalars.size()));
 
   return fe_values_views_cache.scalars[scalar.component];
 }
@@ -5413,7 +5421,7 @@ FEValuesBase<dim, spacedim>::normal_vector(const unsigned int i) const
 
 
 
-/*------------------------ Inline functions: FEValues ----------------------------*/
+/*--------------------- Inline functions: FEValues --------------------------*/
 
 
 template <int dim, int spacedim>
@@ -5433,7 +5441,7 @@ FEValues<dim, spacedim>::get_present_fe_values() const
 }
 
 
-/*------------------------ Inline functions: FEFaceValuesBase --------------------*/
+/*---------------------- Inline functions: FEFaceValuesBase -----------------*/
 
 
 template <int dim, int spacedim>
@@ -5444,7 +5452,7 @@ FEFaceValuesBase<dim, spacedim>::get_face_index() const
 }
 
 
-/*------------------------ Inline functions: FE*FaceValues --------------------*/
+/*----------------------- Inline functions: FE*FaceValues -------------------*/
 
 template <int dim, int spacedim>
 inline const Quadrature<dim - 1> &

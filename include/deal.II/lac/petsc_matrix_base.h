@@ -1078,17 +1078,17 @@ namespace PETScWrappers
 
 
 #    ifndef DOXYGEN
-  // -------------------------- inline and template functions ----------------------
+  // ---------------------- inline and template functions ---------------------
 
 
   namespace MatrixIterators
   {
     inline const_iterator::Accessor::Accessor(const MatrixBase *matrix,
                                               const size_type   row,
-                                              const size_type   index)
-      : matrix(const_cast<MatrixBase *>(matrix))
-      , a_row(row)
-      , a_index(index)
+                                              const size_type   index) :
+      matrix(const_cast<MatrixBase *>(matrix)),
+      a_row(row),
+      a_index(index)
     {
       visit_present_row();
     }
@@ -1129,8 +1129,8 @@ namespace PETScWrappers
 
     inline const_iterator::const_iterator(const MatrixBase *matrix,
                                           const size_type   row,
-                                          const size_type   index)
-      : accessor(matrix, row, index)
+                                          const size_type   index) :
+      accessor(matrix, row, index)
     {}
 
 
@@ -1575,8 +1575,8 @@ namespace PETScWrappers
   inline void
   MatrixBase::assert_is_compressed()
   {
-    // compress() sets the last action to none, which allows us to check if there
-    // are pending add/insert operations:
+    // compress() sets the last action to none, which allows us to check if
+    // there are pending add/insert operations:
     AssertThrow(last_action == VectorOperation::unknown,
                 ExcMessage("Error: missing compress() call."));
   }
@@ -1606,8 +1606,5 @@ DEAL_II_NAMESPACE_CLOSE
 
 #  endif // DEAL_II_WITH_PETSC
 
-
-/*----------------------------   petsc_matrix_base.h     ---------------------------*/
-
 #endif
-/*----------------------------   petsc_matrix_base.h     ---------------------------*/
+/*---------------------------- petsc_matrix_base.h --------------------------*/

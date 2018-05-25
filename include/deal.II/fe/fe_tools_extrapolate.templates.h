@@ -102,12 +102,12 @@ namespace FETools
             &                                                      tree_index_,
           const typename DoFHandler<dim, spacedim>::cell_iterator &dealii_cell_,
           const typename dealii::internal::p4est::types<dim>::quadrant
-            &p4est_cell_)
-          : forest(forest_)
-          , tree(tree_)
-          , tree_index(tree_index_)
-          , dealii_cell(dealii_cell_)
-          , p4est_cell(p4est_cell_)
+            &p4est_cell_) :
+          forest(forest_),
+          tree(tree_),
+          tree_index(tree_index_),
+          dealii_cell(dealii_cell_),
+          p4est_cell(p4est_cell_)
         {}
       };
 
@@ -468,25 +468,25 @@ namespace FETools
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::
-      ExtrapolateImplementation()
-      : round(0)
+      ExtrapolateImplementation() :
+      round(0)
     {}
 
 
 
     template <int dim, int spacedim, class OutVector>
-    ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData()
-      : tree_index(0)
-      , receiver(0)
+    ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData() :
+      tree_index(0),
+      receiver(0)
     {}
 
 
 
     template <int dim, int spacedim, class OutVector>
     ExtrapolateImplementation<dim, spacedim, OutVector>::CellData::CellData(
-      const unsigned int dofs_per_cell)
-      : tree_index(0)
-      , receiver(0)
+      const unsigned int dofs_per_cell) :
+      tree_index(0),
+      receiver(0)
     {
       dof_values.reinit(dofs_per_cell);
     }
@@ -513,7 +513,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if (idx == -1 &&
           (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
              const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
@@ -563,10 +564,8 @@ namespace FETools
           // needs should come up
           Assert(new_needs.size() == 0, ExcInternalError());
 
-          set_dof_values_by_interpolation(dealii_cell,
-                                          p4est_cell,
-                                          interpolated_values,
-                                          u2);
+          set_dof_values_by_interpolation(
+            dealii_cell, p4est_cell, interpolated_values, u2);
         }
     }
 
@@ -607,9 +606,9 @@ namespace FETools
             dealii_cell->get_dof_handler().get_fe();
           const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
-          Assert(interpolated_values.size() == dofs_per_cell,
-                 ExcDimensionMismatch(interpolated_values.size(),
-                                      dofs_per_cell));
+          Assert(
+            interpolated_values.size() == dofs_per_cell,
+            ExcDimensionMismatch(interpolated_values.size(), dofs_per_cell));
           Assert(u.size() == dealii_cell->get_dof_handler().n_dofs(),
                  ExcDimensionMismatch(u.size(),
                                       dealii_cell->get_dof_handler().n_dofs()));
@@ -735,7 +734,8 @@ namespace FETools
               dealii_cell->get_dof_indices(indices);
               for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
-                  // don't set this dof if there is a more refined ghosted neighbor setting this dof.
+                  // don't set this dof if there is a more refined ghosted
+                  // neighbor setting this dof.
                   const bool on_refined_neighbor =
                     (dofs_on_refined_neighbors.find(indices[j]) !=
                      dofs_on_refined_neighbors.end());
@@ -770,10 +770,8 @@ namespace FETools
                 fe.get_prolongation_matrix(c, dealii_cell->refinement_case())
                   .vmult(tmp, local_values);
 
-              set_dof_values_by_interpolation(dealii_cell->child(c),
-                                              p4est_child[c],
-                                              tmp,
-                                              u);
+              set_dof_values_by_interpolation(
+                dealii_cell->child(c), p4est_child[c], tmp, u);
             }
         }
     }
@@ -854,7 +852,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if (idx == -1 &&
           (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
              const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
@@ -1063,7 +1062,8 @@ namespace FETools
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // if neither this cell nor one of it's children belongs to us, don't do anything
+      // if neither this cell nor one of it's children belongs to us, don't do
+      // anything
       if (idx == -1 &&
           (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
              const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
@@ -1317,9 +1317,8 @@ namespace FETools
           compute_cells(dof2, u, cells_to_compute, computed_cells, new_needs);
 
           // if there are no cells to compute and no new needs, stop
-          ready =
-            Utilities::MPI::sum(new_needs.size() + cells_to_compute.size(),
-                                communicator);
+          ready = Utilities::MPI::sum(
+            new_needs.size() + cells_to_compute.size(), communicator);
 
           for (typename std::vector<CellData>::const_iterator comp =
                  computed_cells.begin();
@@ -1515,7 +1514,7 @@ namespace FETools
 
       u2.compress(VectorOperation::insert);
     }
-#endif //DEAL_II_WITH_P4EST
+#endif // DEAL_II_WITH_P4EST
 
     namespace
     {
@@ -1558,7 +1557,7 @@ namespace FETools
         const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
@@ -1594,7 +1593,7 @@ namespace FETools
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 #  endif
-#endif //DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
       template <int dim, int spacedim, typename Number>
       void
@@ -1638,7 +1637,7 @@ namespace FETools
                       locally_relevant_dofs,
                       parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_PETSC
+#endif // DEAL_II_WITH_PETSC
 
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
@@ -1658,7 +1657,7 @@ namespace FETools
                       locally_relevant_dofs,
                       parallel_tria->get_communicator());
       }
-#endif //DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
       template <int dim, int spacedim, typename Number>
       void
@@ -1764,8 +1763,8 @@ namespace FETools
     Assert(u2.size() == dof2.n_dofs(),
            ExcDimensionMismatch(u2.size(), dof2.n_dofs()));
 
-    // make sure that each cell on the coarsest level is at least once refined, otherwise, these cells
-    // can't be treated and would generate a bogus result
+    // make sure that each cell on the coarsest level is at least once refined,
+    // otherwise, these cells can't be treated and would generate a bogus result
     {
       typename DoFHandler<dim, spacedim>::cell_iterator cell = dof2.begin(0),
                                                         endc = dof2.end(0);
@@ -1803,6 +1802,5 @@ namespace FETools
 
 DEAL_II_NAMESPACE_CLOSE
 
-/*----------------------------   fe_tools_extrapolate_templates.h     ---------------------------*/
-/* end of #ifndef dealii_fe_tools_extrapolate_templates_H */
-#endif
+/*--------------------   fe_tools_extrapolate_templates.h -------------------*/
+#endif // dealii_fe_tools_extrapolate_templates_H
