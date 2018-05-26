@@ -58,7 +58,8 @@ namespace hp
   template <int dim>
   class QCollection;
 }
-class ConstraintMatrix;
+template <typename number>
+class AffineConstraints;
 
 
 //TODO: Move documentation of functions to the functions!
@@ -726,8 +727,8 @@ namespace VectorTools
    *
    * For this case (continuous elements on grids with hanging nodes), please
    * use the interpolate_to_different_mesh function with an additional
-   * ConstraintMatrix argument, see below, or make the field conforming
-   * yourself by calling the @p ConstraintsMatrix::distribute function of your
+   * AffineConstraints argument, see below, or make the field conforming
+   * yourself by calling the @p AffineConstraints::distribute function of your
    * hanging node constraints object.
    *
    * @note: This function works with parallel::distributed::Triangulation, but
@@ -763,11 +764,12 @@ namespace VectorTools
             typename VectorType,
             template <int, int> class DoFHandlerType>
   void
-  interpolate_to_different_mesh(const DoFHandlerType<dim, spacedim> &dof1,
-                                const VectorType &                   u1,
-                                const DoFHandlerType<dim, spacedim> &dof2,
-                                const ConstraintMatrix &constraints,
-                                VectorType &            u2);
+  interpolate_to_different_mesh(
+    const DoFHandlerType<dim, spacedim> &                     dof1,
+    const VectorType &                                        u1,
+    const DoFHandlerType<dim, spacedim> &                     dof2,
+    const AffineConstraints<typename VectorType::value_type> &constraints,
+    VectorType &                                              u2);
 
   /**
    * The same function as above, but takes an InterGridMap object directly as
@@ -782,10 +784,10 @@ namespace VectorTools
             template <int, int> class DoFHandlerType>
   void
   interpolate_to_different_mesh(
-    const InterGridMap<DoFHandlerType<dim, spacedim>> &intergridmap,
-    const VectorType &                                 u1,
-    const ConstraintMatrix &                           constraints,
-    VectorType &                                       u2);
+    const InterGridMap<DoFHandlerType<dim, spacedim>> &       intergridmap,
+    const VectorType &                                        u1,
+    const AffineConstraints<typename VectorType::value_type> &constraints,
+    VectorType &                                              u2);
 
   /**
    * Compute the projection of @p function to the finite element space.
@@ -840,10 +842,10 @@ namespace VectorTools
    */
   template <int dim, typename VectorType, int spacedim>
   void
-  project(const Mapping<dim, spacedim> &   mapping,
-          const DoFHandler<dim, spacedim> &dof,
-          const ConstraintMatrix &         constraints,
-          const Quadrature<dim> &          quadrature,
+  project(const Mapping<dim, spacedim> &                            mapping,
+          const DoFHandler<dim, spacedim> &                         dof,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
+          const Quadrature<dim> &                                   quadrature,
           const Function<spacedim, typename VectorType::value_type> &function,
           VectorType &                                               vec,
           const bool                 enforce_zero_boundary     = false,
@@ -858,9 +860,9 @@ namespace VectorTools
    */
   template <int dim, typename VectorType, int spacedim>
   void
-  project(const DoFHandler<dim, spacedim> &dof,
-          const ConstraintMatrix &         constraints,
-          const Quadrature<dim> &          quadrature,
+  project(const DoFHandler<dim, spacedim> &                         dof,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
+          const Quadrature<dim> &                                   quadrature,
           const Function<spacedim, typename VectorType::value_type> &function,
           VectorType &                                               vec,
           const bool                 enforce_zero_boundary     = false,
@@ -875,10 +877,10 @@ namespace VectorTools
    */
   template <int dim, typename VectorType, int spacedim>
   void
-  project(const hp::MappingCollection<dim, spacedim> &mapping,
-          const hp::DoFHandler<dim, spacedim> &       dof,
-          const ConstraintMatrix &                    constraints,
-          const hp::QCollection<dim> &                quadrature,
+  project(const hp::MappingCollection<dim, spacedim> &              mapping,
+          const hp::DoFHandler<dim, spacedim> &                     dof,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
+          const hp::QCollection<dim> &                              quadrature,
           const Function<spacedim, typename VectorType::value_type> &function,
           VectorType &                                               vec,
           const bool                      enforce_zero_boundary = false,
@@ -892,9 +894,9 @@ namespace VectorTools
    */
   template <int dim, typename VectorType, int spacedim>
   void
-  project(const hp::DoFHandler<dim, spacedim> &dof,
-          const ConstraintMatrix &             constraints,
-          const hp::QCollection<dim> &         quadrature,
+  project(const hp::DoFHandler<dim, spacedim> &                     dof,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
+          const hp::QCollection<dim> &                              quadrature,
           const Function<spacedim, typename VectorType::value_type> &function,
           VectorType &                                               vec,
           const bool                      enforce_zero_boundary = false,
@@ -925,14 +927,14 @@ namespace VectorTools
    */
   template <int dim, typename VectorType, int spacedim>
   void
-  project(const Mapping<dim, spacedim> &   mapping,
-          const DoFHandler<dim, spacedim> &dof,
-          const ConstraintMatrix &         constraints,
-          const Quadrature<dim> &          quadrature,
+  project(const Mapping<dim, spacedim> &                            mapping,
+          const DoFHandler<dim, spacedim> &                         dof,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
+          const Quadrature<dim> &                                   quadrature,
           const std::function<typename VectorType::value_type(
             const typename DoFHandler<dim, spacedim>::active_cell_iterator &,
-            const unsigned int)> &         func,
-          VectorType &                     vec_result);
+            const unsigned int)> &                                  func,
+          VectorType &                                              vec_result);
 
   /**
    * The same as above for projection of scalar-valued MatrixFree quadrature
@@ -962,7 +964,7 @@ namespace VectorTools
   void
   project(std::shared_ptr<
             const MatrixFree<dim, typename VectorType::value_type>> data,
-          const ConstraintMatrix &                                  constraints,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
           const unsigned int      n_q_points_1d,
           const std::function<VectorizedArray<typename VectorType::value_type>(
             const unsigned int,
@@ -977,7 +979,7 @@ namespace VectorTools
   void
   project(std::shared_ptr<
             const MatrixFree<dim, typename VectorType::value_type>> data,
-          const ConstraintMatrix &                                  constraints,
+          const AffineConstraints<typename VectorType::value_type> &constraints,
           const std::function<VectorizedArray<typename VectorType::value_type>(
             const unsigned int,
             const unsigned int)> &                                  func,
@@ -1139,7 +1141,7 @@ namespace VectorTools
    *
    * @note When combining adaptively refined meshes with hanging node
    * constraints and boundary conditions like from the current function within
-   * one ConstraintMatrix object, the hanging node constraints should always
+   * one AffineConstraints object, the hanging node constraints should always
    * be set first, and then the boundary conditions since boundary conditions
    * are not set in the second operation on degrees of freedom that are
    * already constrained. This makes sure that the discretization remains
@@ -1195,9 +1197,9 @@ namespace VectorTools
     const Mapping<dim, spacedim> &       mapping,
     const DoFHandlerType<dim, spacedim> &dof,
     const std::map<types::boundary_id, const Function<spacedim, number> *>
-      &                  function_map,
-    ConstraintMatrix &   constraints,
-    const ComponentMask &component_mask = ComponentMask());
+      &                        function_map,
+    AffineConstraints<number> &constraints,
+    const ComponentMask &      component_mask = ComponentMask());
 
   /**
    * Same function as above, but taking only one pair of boundary indicator
@@ -1220,7 +1222,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof,
     const types::boundary_id             boundary_component,
     const Function<spacedim, number> &   boundary_function,
-    ConstraintMatrix &                   constraints,
+    AffineConstraints<number> &          constraints,
     const ComponentMask &                component_mask = ComponentMask());
 
   /**
@@ -1243,7 +1245,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof,
     const types::boundary_id             boundary_component,
     const Function<spacedim, number> &   boundary_function,
-    ConstraintMatrix &                   constraints,
+    AffineConstraints<number> &          constraints,
     const ComponentMask &                component_mask = ComponentMask());
 
 
@@ -1263,9 +1265,9 @@ namespace VectorTools
   interpolate_boundary_values(
     const DoFHandlerType<dim, spacedim> &dof,
     const std::map<types::boundary_id, const Function<spacedim, number> *>
-      &                  function_map,
-    ConstraintMatrix &   constraints,
-    const ComponentMask &component_mask = ComponentMask());
+      &                        function_map,
+    AffineConstraints<number> &constraints,
+    const ComponentMask &      component_mask = ComponentMask());
 
 
   /**
@@ -1399,7 +1401,7 @@ namespace VectorTools
    *
    * @note When combining adaptively refined meshes with hanging node
    * constraints and boundary conditions like from the current function within
-   * one ConstraintMatrix object, the hanging node constraints should always
+   * one AffineConstraints object, the hanging node constraints should always
    * be set first, and then the boundary conditions since boundary conditions
    * are not set in the second operation on degrees of freedom that are
    * already constrained. This makes sure that the discretization remains
@@ -1431,7 +1433,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number> *>
       &                        boundary_functions,
     const Quadrature<dim - 1> &q,
-    ConstraintMatrix &         constraints,
+    AffineConstraints<number> &constraints,
     std::vector<unsigned int>  component_mapping = std::vector<unsigned int>());
 
   /**
@@ -1447,7 +1449,7 @@ namespace VectorTools
     const std::map<types::boundary_id, const Function<spacedim, number> *>
       &                        boundary_function,
     const Quadrature<dim - 1> &q,
-    ConstraintMatrix &         constraints,
+    AffineConstraints<number> &constraints,
     std::vector<unsigned int>  component_mapping = std::vector<unsigned int>());
 
 
@@ -1512,7 +1514,7 @@ namespace VectorTools
     const unsigned int           first_vector_component,
     const Function<dim, double> &boundary_function,
     const types::boundary_id     boundary_component,
-    ConstraintMatrix &           constraints,
+    AffineConstraints<double> &  constraints,
     const Mapping<dim> &         mapping = StaticMappingQ1<dim>::mapping);
 
   /**
@@ -1530,7 +1532,7 @@ namespace VectorTools
     const unsigned int                     first_vector_component,
     const Function<dim, double> &          boundary_function,
     const types::boundary_id               boundary_component,
-    ConstraintMatrix &                     constraints,
+    AffineConstraints<double> &            constraints,
     const hp::MappingCollection<dim, dim> &mapping_collection =
       hp::StaticMappingQ1<dim>::mapping_collection);
 
@@ -1636,7 +1638,7 @@ namespace VectorTools
     const unsigned int           first_vector_component,
     const Function<dim, double> &boundary_function,
     const types::boundary_id     boundary_component,
-    ConstraintMatrix &           constraints,
+    AffineConstraints<double> &  constraints,
     const Mapping<dim> &         mapping = StaticMappingQ1<dim>::mapping);
 
 
@@ -1653,7 +1655,7 @@ namespace VectorTools
     const unsigned int                     first_vector_component,
     const Function<dim, double> &          boundary_function,
     const types::boundary_id               boundary_component,
-    ConstraintMatrix &                     constraints,
+    AffineConstraints<double> &            constraints,
     const hp::MappingCollection<dim, dim> &mapping_collection =
       hp::StaticMappingQ1<dim>::mapping_collection);
 
@@ -1669,7 +1671,7 @@ namespace VectorTools
    * elements. Thus it throws an exception, if it is called with other finite
    * elements.
    *
-   * If the ConstraintMatrix @p constraints contained values or other
+   * If the AffineConstraints object @p constraints contained values or other
    * constraints before, the new ones are added or the old ones overwritten,
    * if a node of the boundary part to be used was already in the list of
    * constraints. This is handled by using inhomogeneous constraints. Please
@@ -1711,7 +1713,7 @@ namespace VectorTools
     const unsigned int           first_vector_component,
     const Function<dim, double> &boundary_function,
     const types::boundary_id     boundary_component,
-    ConstraintMatrix &           constraints,
+    AffineConstraints<double> &  constraints,
     const Mapping<dim> &         mapping = StaticMappingQ1<dim>::mapping);
 
   /**
@@ -1729,7 +1731,7 @@ namespace VectorTools
     const unsigned int                     first_vector_component,
     const Function<dim, double> &          boundary_function,
     const types::boundary_id               boundary_component,
-    ConstraintMatrix &                     constraints,
+    AffineConstraints<double> &            constraints,
     const hp::MappingCollection<dim, dim> &mapping_collection =
       hp::StaticMappingQ1<dim>::mapping_collection);
 
@@ -1967,7 +1969,7 @@ namespace VectorTools
     const unsigned int                    first_vector_component,
     const std::set<types::boundary_id> &  boundary_ids,
     typename FunctionMap<spacedim>::type &function_map,
-    ConstraintMatrix &                    constraints,
+    AffineConstraints<double> &           constraints,
     const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
 
   /**
@@ -1987,7 +1989,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof_handler,
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
-    ConstraintMatrix &                   constraints,
+    AffineConstraints<double> &          constraints,
     const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
 
   /**
@@ -2013,7 +2015,7 @@ namespace VectorTools
     const unsigned int                    first_vector_component,
     const std::set<types::boundary_id> &  boundary_ids,
     typename FunctionMap<spacedim>::type &function_map,
-    ConstraintMatrix &                    constraints,
+    AffineConstraints<double> &           constraints,
     const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
 
   /**
@@ -2030,7 +2032,7 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof_handler,
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
-    ConstraintMatrix &                   constraints,
+    AffineConstraints<double> &          constraints,
     const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
 
 
@@ -2054,7 +2056,8 @@ namespace VectorTools
     const Quadrature<dim> &                                    q,
     const Function<spacedim, typename VectorType::value_type> &rhs,
     VectorType &                                               rhs_vector,
-    const ConstraintMatrix &constraints = ConstraintMatrix());
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
 
   /**
    * Call the create_right_hand_side() function, see above, with
@@ -2067,7 +2070,8 @@ namespace VectorTools
     const Quadrature<dim> &                                    q,
     const Function<spacedim, typename VectorType::value_type> &rhs,
     VectorType &                                               rhs_vector,
-    const ConstraintMatrix &constraints = ConstraintMatrix());
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -2080,7 +2084,8 @@ namespace VectorTools
     const hp::QCollection<dim> &                               q,
     const Function<spacedim, typename VectorType::value_type> &rhs,
     VectorType &                                               rhs_vector,
-    const ConstraintMatrix &constraints = ConstraintMatrix());
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -2092,7 +2097,8 @@ namespace VectorTools
     const hp::QCollection<dim> &                               q,
     const Function<spacedim, typename VectorType::value_type> &rhs,
     VectorType &                                               rhs_vector,
-    const ConstraintMatrix &constraints = ConstraintMatrix());
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
 
   /**
    * Create a right hand side vector for a point source at point @p p. In
