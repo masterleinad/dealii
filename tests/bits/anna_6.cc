@@ -107,7 +107,7 @@ public:
   BoundaryFunction();
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const;
+  vector_value(const Point<dim>& p, Vector<double>& values) const;
 };
 
 
@@ -119,8 +119,8 @@ BoundaryFunction<dim>::BoundaryFunction() : Function<dim>(dim + 1)
 
 template <int dim>
 inline void
-BoundaryFunction<dim>::vector_value(const Point<dim> &,
-                                    Vector<double> &values) const
+BoundaryFunction<dim>::vector_value(const Point<dim>&,
+                                    Vector<double>& values) const
 {
   Assert(values.size() == dim + 1,
          ExcDimensionMismatch(values.size(), dim + 1));
@@ -281,7 +281,7 @@ main()
       ImposeBC<2>().run();
       ImposeBC<3>().run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

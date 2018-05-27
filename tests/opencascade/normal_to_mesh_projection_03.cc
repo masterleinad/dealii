@@ -85,7 +85,7 @@ main()
 
     std::sort(spoints.begin(),
               spoints.end(),
-              [&](const Point<3> &p1, const Point<3> &p2) {
+              [&](const Point<3>& p1, const Point<3>& p2) {
                 return OpenCASCADE::point_compare(p1, p2, direction, tolerance);
               });
 
@@ -105,7 +105,7 @@ main()
 
     std::sort(spoints.begin(),
               spoints.end(),
-              [&](const Point<3> &p1, const Point<3> &p2) {
+              [&](const Point<3>& p1, const Point<3>& p2) {
                 return OpenCASCADE::point_compare(p1, p2, direction, tolerance);
               });
 

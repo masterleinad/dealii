@@ -33,7 +33,7 @@
 #include "../tests.h"
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   logfile.precision(4);

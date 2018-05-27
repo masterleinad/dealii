@@ -49,7 +49,7 @@ test()
   else
     {}
 
-  auto check = [&](IndexSet &idxset) {
+  auto check = [&](IndexSet& idxset) {
     deallog << "IndexSet before size=" << idxset.size() << " values: ";
     idxset.print(deallog);
     IndexSet back(idxset.make_trilinos_map(MPI_COMM_WORLD, true));
@@ -76,7 +76,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -28,7 +28,7 @@ int
 main()
 {
   initlog();
-  std::ostream &logfile = deallog.get_file_stream();
+  std::ostream& logfile = deallog.get_file_stream();
   deallog << std::fixed;
   deallog << std::setprecision(3);
   logfile << numbers::PI << std::endl;

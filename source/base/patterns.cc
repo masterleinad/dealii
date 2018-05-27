@@ -48,7 +48,7 @@ namespace Patterns
   namespace internal
   {
     std::string
-    escape(const std::string &input, const PatternBase::OutputStyle style)
+    escape(const std::string& input, const PatternBase::OutputStyle style)
     {
       switch (style)
         {
@@ -112,7 +112,7 @@ namespace Patterns
      * characters as well.
      */
     bool
-    has_only_whitespace(std::istream &in)
+    has_only_whitespace(std::istream& in)
     {
       while (in)
         {
@@ -133,7 +133,7 @@ namespace Patterns
 
 
   std::unique_ptr<PatternBase>
-  pattern_factory(const std::string &description)
+  pattern_factory(const std::string& description)
   {
     std::unique_ptr<PatternBase> p;
 
@@ -187,13 +187,13 @@ namespace Patterns
   std::size_t
   PatternBase::memory_consumption() const
   {
-    if (dynamic_cast<const Integer *>(this) != nullptr)
+    if (dynamic_cast<const Integer*>(this) != nullptr)
       return sizeof(Integer);
-    else if (dynamic_cast<const Double *>(this) != nullptr)
+    else if (dynamic_cast<const Double*>(this) != nullptr)
       return sizeof(Double);
-    else if (dynamic_cast<const Bool *>(this) != nullptr)
+    else if (dynamic_cast<const Bool*>(this) != nullptr)
       return sizeof(Bool);
-    else if (dynamic_cast<const Anything *>(this) != nullptr)
+    else if (dynamic_cast<const Anything*>(this) != nullptr)
       return sizeof(Anything);
     else
       return sizeof(*this) + 32;
@@ -204,7 +204,7 @@ namespace Patterns
   const int Integer::min_int_value = std::numeric_limits<int>::min();
   const int Integer::max_int_value = std::numeric_limits<int>::max();
 
-  const char *Integer::description_init = "[Integer";
+  const char* Integer::description_init = "[Integer";
 
   Integer::Integer(const int lower_bound, const int upper_bound) :
     lower_bound(lower_bound),
@@ -214,7 +214,7 @@ namespace Patterns
 
 
   bool
-  Integer::match(const std::string &test_string) const
+  Integer::match(const std::string& test_string) const
   {
     std::istringstream str(test_string);
 
@@ -305,7 +305,7 @@ namespace Patterns
 
 
   std::unique_ptr<Integer>
-  Integer::create(const std::string &description)
+  Integer::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -342,7 +342,7 @@ namespace Patterns
   const double Double::min_double_value = -std::numeric_limits<double>::max();
   const double Double::max_double_value = std::numeric_limits<double>::max();
 
-  const char *Double::description_init = "[Double";
+  const char* Double::description_init = "[Double";
 
   Double::Double(const double lower_bound, const double upper_bound) :
     lower_bound(lower_bound),
@@ -352,7 +352,7 @@ namespace Patterns
 
 
   bool
-  Double::match(const std::string &test_string) const
+  Double::match(const std::string& test_string) const
   {
     std::istringstream str(test_string);
 
@@ -483,7 +483,7 @@ namespace Patterns
 
 
   std::unique_ptr<Double>
-  Double::create(const std::string &description)
+  Double::create(const std::string& description)
   {
     const std::string description_init_str = description_init;
     if (description.compare(
@@ -522,10 +522,10 @@ namespace Patterns
 
 
 
-  const char *Selection::description_init = "[Selection";
+  const char* Selection::description_init = "[Selection";
 
 
-  Selection::Selection(const std::string &seq) : sequence(seq)
+  Selection::Selection(const std::string& seq) : sequence(seq)
   {
     while (sequence.find(" |") != std::string::npos)
       sequence.replace(sequence.find(" |"), 2, "|");
@@ -536,7 +536,7 @@ namespace Patterns
 
 
   bool
-  Selection::match(const std::string &test_string) const
+  Selection::match(const std::string& test_string) const
   {
     std::string tmp(sequence);
 
@@ -619,7 +619,7 @@ namespace Patterns
 
 
   std::unique_ptr<Selection>
-  Selection::create(const std::string &description)
+  Selection::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -640,13 +640,13 @@ namespace Patterns
   const unsigned int List::max_int_value =
     std::numeric_limits<unsigned int>::max();
 
-  const char *List::description_init = "[List";
+  const char* List::description_init = "[List";
 
 
-  List::List(const PatternBase &p,
+  List::List(const PatternBase& p,
              const unsigned int min_elements,
              const unsigned int max_elements,
-             const std::string &separator) :
+             const std::string& separator) :
     pattern(p.clone()),
     min_elements(min_elements),
     max_elements(max_elements),
@@ -660,7 +660,7 @@ namespace Patterns
 
 
 
-  List::List(const List &other) :
+  List::List(const List& other) :
     pattern(other.pattern->clone()),
     min_elements(other.min_elements),
     max_elements(other.max_elements),
@@ -668,7 +668,7 @@ namespace Patterns
   {}
 
 
-  const std::string &
+  const std::string&
   List::get_separator() const
   {
     return separator;
@@ -676,7 +676,7 @@ namespace Patterns
 
 
 
-  const PatternBase &
+  const PatternBase&
   List::get_base_pattern() const
   {
     return *pattern;
@@ -685,7 +685,7 @@ namespace Patterns
 
 
   bool
-  List::match(const std::string &test_string_list) const
+  List::match(const std::string& test_string_list) const
   {
     const std::vector<std::string> split_list =
       Utilities::split_string_list(test_string_list, separator);
@@ -695,7 +695,7 @@ namespace Patterns
       return false;
 
     // check the different possibilities
-    for (const std::string &string : split_list)
+    for (const std::string& string : split_list)
       if (pattern->match(string) == false)
         return false;
 
@@ -766,7 +766,7 @@ namespace Patterns
 
 
   std::unique_ptr<List>
-  List::create(const std::string &description)
+  List::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -808,15 +808,15 @@ namespace Patterns
   const unsigned int Map::max_int_value =
     std::numeric_limits<unsigned int>::max();
 
-  const char *Map::description_init = "[Map";
+  const char* Map::description_init = "[Map";
 
 
-  Map::Map(const PatternBase &p_key,
-           const PatternBase &p_value,
+  Map::Map(const PatternBase& p_key,
+           const PatternBase& p_value,
            const unsigned int min_elements,
            const unsigned int max_elements,
-           const std::string &separator,
-           const std::string &key_value_separator) :
+           const std::string& separator,
+           const std::string& key_value_separator) :
     key_pattern(p_key.clone()),
     value_pattern(p_value.clone()),
     min_elements(min_elements),
@@ -839,7 +839,7 @@ namespace Patterns
 
 
 
-  Map::Map(const Map &other) :
+  Map::Map(const Map& other) :
     key_pattern(other.key_pattern->clone()),
     value_pattern(other.value_pattern->clone()),
     min_elements(other.min_elements),
@@ -851,7 +851,7 @@ namespace Patterns
 
 
   bool
-  Map::match(const std::string &test_string_list) const
+  Map::match(const std::string& test_string_list) const
   {
     std::vector<std::string> split_list =
       Utilities::split_string_list(test_string_list, separator);
@@ -859,7 +859,7 @@ namespace Patterns
         (split_list.size() > max_elements))
       return false;
 
-    for (auto &key_value_pair : split_list)
+    for (auto& key_value_pair : split_list)
       {
         std::vector<std::string> pair =
           Utilities::split_string_list(key_value_pair, key_value_separator);
@@ -955,7 +955,7 @@ namespace Patterns
 
 
   std::unique_ptr<Map>
-  Map::create(const std::string &description)
+  Map::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1007,7 +1007,7 @@ namespace Patterns
 
 
 
-  const PatternBase &
+  const PatternBase&
   Map::get_key_pattern() const
   {
     return *key_pattern;
@@ -1015,7 +1015,7 @@ namespace Patterns
 
 
 
-  const PatternBase &
+  const PatternBase&
   Map::get_value_pattern() const
   {
     return *value_pattern;
@@ -1023,14 +1023,14 @@ namespace Patterns
 
 
 
-  const std::string &
+  const std::string&
   Map::get_separator() const
   {
     return separator;
   }
 
 
-  const std::string &
+  const std::string&
   Map::get_key_value_separator() const
   {
     return key_value_separator;
@@ -1038,11 +1038,11 @@ namespace Patterns
 
 
 
-  const char *Tuple::description_init = "[Tuple";
+  const char* Tuple::description_init = "[Tuple";
 
 
-  Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>> &ps,
-               const std::string &                              separator) :
+  Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
+               const std::string&                               separator) :
     separator(separator)
   {
     Assert(ps.size() > 0,
@@ -1056,14 +1056,14 @@ namespace Patterns
 
 
 
-  Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>> &ps,
-               const char *                                     separator) :
+  Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
+               const char*                                      separator) :
     Tuple(ps, std::string(separator))
   {}
 
 
 
-  Tuple::Tuple(const Tuple &other) : separator(other.separator)
+  Tuple::Tuple(const Tuple& other) : separator(other.separator)
   {
     patterns.resize(other.patterns.size());
     for (unsigned int i = 0; i < other.patterns.size(); ++i)
@@ -1073,7 +1073,7 @@ namespace Patterns
 
 
   bool
-  Tuple::match(const std::string &test_string_list) const
+  Tuple::match(const std::string& test_string_list) const
   {
     std::vector<std::string> split_list =
       Utilities::split_string_list(test_string_list, separator);
@@ -1158,7 +1158,7 @@ namespace Patterns
 
 
   std::unique_ptr<Tuple>
-  Tuple::create(const std::string &description)
+  Tuple::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1204,15 +1204,15 @@ namespace Patterns
 
 
 
-  const PatternBase &
-  Tuple::get_pattern(const unsigned int &i) const
+  const PatternBase&
+  Tuple::get_pattern(const unsigned int& i) const
   {
     return *patterns[i];
   }
 
 
 
-  const std::string &
+  const std::string&
   Tuple::get_separator() const
   {
     return separator;
@@ -1220,10 +1220,10 @@ namespace Patterns
 
 
 
-  const char *MultipleSelection::description_init = "[MultipleSelection";
+  const char* MultipleSelection::description_init = "[MultipleSelection";
 
 
-  MultipleSelection::MultipleSelection(const std::string &seq)
+  MultipleSelection::MultipleSelection(const std::string& seq)
   {
     Assert(seq.find(',') == std::string::npos,
            ExcCommasNotAllowed(seq.find(',')));
@@ -1238,7 +1238,7 @@ namespace Patterns
 
 
   bool
-  MultipleSelection::match(const std::string &test_string_list) const
+  MultipleSelection::match(const std::string& test_string_list) const
   {
     std::string              tmp = test_string_list;
     std::vector<std::string> split_names;
@@ -1355,7 +1355,7 @@ namespace Patterns
 
 
   std::unique_ptr<MultipleSelection>
-  MultipleSelection::create(const std::string &description)
+  MultipleSelection::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1373,7 +1373,7 @@ namespace Patterns
 
 
 
-  const char *Bool::description_init = "[Bool";
+  const char* Bool::description_init = "[Bool";
 
 
   Bool::Bool() : Selection("true|false")
@@ -1418,7 +1418,7 @@ namespace Patterns
 
 
   std::unique_ptr<Bool>
-  Bool::create(const std::string &description)
+  Bool::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1429,12 +1429,12 @@ namespace Patterns
 
 
 
-  const char *Anything::description_init = "[Anything";
+  const char* Anything::description_init = "[Anything";
 
 
 
   bool
-  Anything::match(const std::string &) const
+  Anything::match(const std::string&) const
   {
     return true;
   }
@@ -1478,7 +1478,7 @@ namespace Patterns
 
 
   std::unique_ptr<Anything>
-  Anything::create(const std::string &description)
+  Anything::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1489,7 +1489,7 @@ namespace Patterns
 
 
 
-  const char *FileName::description_init = "[FileName";
+  const char* FileName::description_init = "[FileName";
 
 
   FileName::FileName(const FileType type) : file_type(type)
@@ -1498,7 +1498,7 @@ namespace Patterns
 
 
   bool
-  FileName::match(const std::string &) const
+  FileName::match(const std::string&) const
   {
     return true;
   }
@@ -1550,7 +1550,7 @@ namespace Patterns
 
 
   std::unique_ptr<FileName>
-  FileName::create(const std::string &description)
+  FileName::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)
@@ -1576,12 +1576,12 @@ namespace Patterns
 
 
 
-  const char *DirectoryName::description_init = "[DirectoryName";
+  const char* DirectoryName::description_init = "[DirectoryName";
 
 
 
   bool
-  DirectoryName::match(const std::string &) const
+  DirectoryName::match(const std::string&) const
   {
     return true;
   }
@@ -1625,7 +1625,7 @@ namespace Patterns
 
 
   std::unique_ptr<DirectoryName>
-  DirectoryName::create(const std::string &description)
+  DirectoryName::create(const std::string& description)
   {
     if (description.compare(
           0, std::strlen(description_init), description_init) == 0)

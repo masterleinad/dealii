@@ -57,7 +57,7 @@ namespace PETScWrappers
   }
 
 
-  const MPI_Comm &
+  const MPI_Comm&
   FullMatrix::get_mpi_communicator() const
   {
     static const MPI_Comm communicator = MPI_COMM_SELF;

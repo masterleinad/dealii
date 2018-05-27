@@ -166,7 +166,7 @@ private:
 };
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
   MPILogInitAll                    log;

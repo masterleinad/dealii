@@ -59,10 +59,10 @@ public:
    */
 
   void
-  compute(const Point<2> &           unit_point,
-          std::vector<double> &      values,
-          std::vector<Tensor<1, 2>> &grads,
-          std::vector<Tensor<2, 2>> &grad_grads) const;
+  compute(const Point<2>&            unit_point,
+          std::vector<double>&       values,
+          std::vector<Tensor<1, 2>>& grads,
+          std::vector<Tensor<2, 2>>& grad_grads) const;
 
   /**
    * Compute the value of the <tt>i</tt>th polynomial at <tt>unit_point</tt>.
@@ -71,7 +71,7 @@ public:
    */
 
   double
-  compute_value(const unsigned int i, const Point<2> &p) const;
+  compute_value(const unsigned int i, const Point<2>& p) const;
 
   /**
    * Compute the gradient of the <tt>i</tt>th polynomial at
@@ -81,7 +81,7 @@ public:
    */
 
   Tensor<1, 2>
-  compute_grad(const unsigned int i, const Point<2> &p) const;
+  compute_grad(const unsigned int i, const Point<2>& p) const;
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th polynomial
    * at <tt>unit_point</tt>.
@@ -90,9 +90,9 @@ public:
    */
 
   Tensor<2, 2>
-  compute_grad_grad(const unsigned int i, const Point<2> &p) const;
+  compute_grad_grad(const unsigned int i, const Point<2>& p) const;
   Tensor<2, 2>
-  compute_grad_grad_2(const unsigned int i, const Point<2> &p) const;
+  compute_grad_grad_2(const unsigned int i, const Point<2>& p) const;
 
 private:
   /**

@@ -21,7 +21,7 @@
 using namespace Polynomials;
 
 void
-plot(const std::vector<Polynomial<double>> &polynomials)
+plot(const std::vector<Polynomial<double>>& polynomials)
 {
   LogStream::Prefix("plot");
   const unsigned int n = 8;
@@ -36,7 +36,7 @@ plot(const std::vector<Polynomial<double>> &polynomials)
 }
 
 void
-interpolation_conditions(const std::vector<Polynomial<double>> &polynomials)
+interpolation_conditions(const std::vector<Polynomial<double>>& polynomials)
 {
   std::vector<double> values(2);
   for (unsigned int i = 0; i < polynomials.size(); ++i)

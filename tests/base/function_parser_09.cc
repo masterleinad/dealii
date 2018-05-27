@@ -27,7 +27,7 @@
 
 
 double
-eval(const std::string &exp)
+eval(const std::string& exp)
 {
   std::string                   variables = "x,y";
   std::map<std::string, double> constants;

@@ -68,13 +68,13 @@ namespace hp
      * desired, though it would probably be clearer to add all mappings the
      * same way.
      */
-    explicit MappingCollection(const Mapping<dim, spacedim> &mapping);
+    explicit MappingCollection(const Mapping<dim, spacedim>& mapping);
 
     /**
      * Copy constructor.
      */
     MappingCollection(
-      const MappingCollection<dim, spacedim> &mapping_collection);
+      const MappingCollection<dim, spacedim>& mapping_collection);
 
     /**
      * Adds a new mapping to the MappingCollection. Generally, you will
@@ -89,7 +89,7 @@ namespace hp
      * collection.
      */
     void
-    push_back(const Mapping<dim, spacedim> &new_mapping);
+    push_back(const Mapping<dim, spacedim>& new_mapping);
 
     /**
      * Return the mapping object which was specified by the user for the
@@ -98,7 +98,7 @@ namespace hp
      * @pre @p index must be between zero and the number of elements of the
      * collection.
      */
-    const Mapping<dim, spacedim> &operator[](const unsigned int index) const;
+    const Mapping<dim, spacedim>& operator[](const unsigned int index) const;
 
     /**
      * Return the number of mapping objects stored in this container.
@@ -161,7 +161,7 @@ namespace hp
 
 
   template <int dim, int spacedim>
-  inline const Mapping<dim, spacedim> &MappingCollection<dim, spacedim>::
+  inline const Mapping<dim, spacedim>& MappingCollection<dim, spacedim>::
                                        operator[](const unsigned int index) const
   {
     Assert(index < mappings.size(), ExcIndexRange(index, 0, mappings.size()));

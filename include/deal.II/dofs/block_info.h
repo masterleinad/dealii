@@ -111,7 +111,7 @@ public:
    */
   template <int dim, int spacedim>
   void
-  initialize(const DoFHandler<dim, spacedim> &,
+  initialize(const DoFHandler<dim, spacedim>&,
              bool levels_only = false,
              bool active_only = false);
 
@@ -121,24 +121,24 @@ public:
    */
   template <int dim, int spacedim>
   void
-  initialize_local(const DoFHandler<dim, spacedim> &);
+  initialize_local(const DoFHandler<dim, spacedim>&);
 
   /**
    * Access the BlockIndices structure of the global system.
    */
-  const BlockIndices &
+  const BlockIndices&
   global() const;
 
   /**
    * Access BlockIndices for the local system on a cell.
    */
-  const BlockIndices &
+  const BlockIndices&
   local() const;
 
   /**
    * Access the BlockIndices structure of a level in the multilevel hierarchy.
    */
-  const BlockIndices &
+  const BlockIndices&
   level(unsigned int level) const;
 
   /**
@@ -170,7 +170,7 @@ public:
    */
   template <class OS>
   void
-  print(OS &stream) const;
+  print(OS& stream) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -185,7 +185,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive &ar, const unsigned int /*version*/);
+  serialize(Archive& ar, const unsigned int /*version*/);
 
 private:
   /**
@@ -218,21 +218,21 @@ private:
 
 //----------------------------------------------------------------------//
 
-inline const BlockIndices &
+inline const BlockIndices&
 BlockInfo::global() const
 {
   return bi_global;
 }
 
 
-inline const BlockIndices &
+inline const BlockIndices&
 BlockInfo::local() const
 {
   return bi_local;
 }
 
 
-inline const BlockIndices &
+inline const BlockIndices&
 BlockInfo::level(const unsigned int l) const
 {
   AssertIndexRange(l, levels.size());
@@ -267,7 +267,7 @@ BlockInfo::n_base_elements() const
 
 template <class OS>
 inline void
-BlockInfo::print(OS &os) const
+BlockInfo::print(OS& os) const
 {
   os << "global   dofs " << std::setw(5) << global().total_size() << " blocks";
   for (unsigned int i = 0; i < global().size(); ++i)
@@ -310,13 +310,13 @@ BlockInfo::memory_consumption() const
 
 template <class Archive>
 void
-BlockInfo::serialize(Archive &ar, const unsigned int /*version*/)
+BlockInfo::serialize(Archive& ar, const unsigned int /*version*/)
 {
-  ar &bi_global;
-  ar &levels;
-  ar &bi_local;
-  ar &base_elements;
-  ar &local_renumbering;
+  ar& bi_global;
+  ar& levels;
+  ar& bi_local;
+  ar& base_elements;
+  ar& local_renumbering;
 }
 
 

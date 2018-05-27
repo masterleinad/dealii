@@ -42,8 +42,8 @@
 
 template <int dim>
 void
-output(const parallel::shared::Triangulation<dim> &tr,
-       const std::string &                         filename,
+output(const parallel::shared::Triangulation<dim>& tr,
+       const std::string&                          filename,
        const bool                                  view_levels,
        const bool                                  include_artificial)
 {
@@ -102,7 +102,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

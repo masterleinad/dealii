@@ -424,9 +424,9 @@ public:
   /**
    * Constructor.
    */
-  TimeDependent(const TimeSteppingData &data_primal,
-                const TimeSteppingData &data_dual,
-                const TimeSteppingData &data_postprocess);
+  TimeDependent(const TimeSteppingData& data_primal,
+                const TimeSteppingData& data_dual,
+                const TimeSteppingData& data_postprocess);
 
 
   /**
@@ -457,7 +457,7 @@ public:
    * numbers that were used in the previous sweep.
    */
   void
-  insert_timestep(const TimeStepBase *position, TimeStepBase *new_timestep);
+  insert_timestep(const TimeStepBase* position, TimeStepBase* new_timestep);
 
   /**
    * Just like @p insert_timestep, but insert at the end.
@@ -469,7 +469,7 @@ public:
    * @endcode
    */
   void
-  add_timestep(TimeStepBase *new_timestep);
+  add_timestep(TimeStepBase* new_timestep);
 
   /**
    * Delete a timestep. This is only necessary to call, if you want to delete
@@ -549,7 +549,7 @@ public:
   void
   do_loop(InitFunctionObject      init_function,
           LoopFunctionObject      loop_function,
-          const TimeSteppingData &timestepping_data,
+          const TimeSteppingData& timestepping_data,
           const Direction         direction);
 
 
@@ -850,12 +850,12 @@ protected:
   /**
    * Pointer to the previous time step object in the list.
    */
-  const TimeStepBase *previous_timestep;
+  const TimeStepBase* previous_timestep;
 
   /**
    * Pointer to the next time step object in the list.
    */
-  const TimeStepBase *next_timestep;
+  const TimeStepBase* next_timestep;
 
   /**
    * Number of the sweep we are presently in. This number is reset by the time
@@ -891,7 +891,7 @@ private:
    * a timestep is inserted or deleted.
    */
   void
-  set_previous_timestep(const TimeStepBase *previous);
+  set_previous_timestep(const TimeStepBase* previous);
 
   /**
    * Reset the pointer to the next time step; shall only be called by the time
@@ -901,7 +901,7 @@ private:
    * a timestep is inserted or deleted.
    */
   void
-  set_next_timestep(const TimeStepBase *next);
+  set_next_timestep(const TimeStepBase* next);
 
   /**
    * Set the number this time step has in the list of timesteps. This function
@@ -926,7 +926,7 @@ private:
    * private prevents the compiler to provide it's own, incorrect one if
    * anyone chose to copy such an object.
    */
-  TimeStepBase(const TimeStepBase &) = delete;
+  TimeStepBase(const TimeStepBase&) = delete;
 
   /**
    * Copy operator. I can see no reason why someone might want to use it, so I
@@ -934,8 +934,8 @@ private:
    * prevents the compiler to provide it's own, incorrect one if anyone chose
    * to copy such an object.
    */
-  TimeStepBase &
-  operator=(const TimeStepBase &) = delete;
+  TimeStepBase&
+  operator=(const TimeStepBase&) = delete;
 
   // make the manager object a friend
   friend class TimeDependent;
@@ -1151,7 +1151,7 @@ namespace TimeStepBase_Tria_Flags
                     const unsigned int min_cells_for_correction    = 0,
                     const double       cell_number_corridor_top    = (1 << dim),
                     const double       cell_number_corridor_bottom = 1,
-                    const CorrectionRelaxations &correction_relaxations =
+                    const CorrectionRelaxations& correction_relaxations =
                       CorrectionRelaxations(),
                     const unsigned int cell_number_correction_steps  = 0,
                     const bool         mirror_flags_to_previous_grid = false,
@@ -1353,9 +1353,9 @@ public:
    */
   TimeStepBase_Tria(
     const double                   time,
-    const Triangulation<dim, dim> &coarse_grid,
-    const Flags &                  flags,
-    const RefinementFlags &        refinement_flags = RefinementFlags());
+    const Triangulation<dim, dim>& coarse_grid,
+    const Flags&                   flags,
+    const RefinementFlags&         refinement_flags = RefinementFlags());
 
   /**
    * Destructor. At present, this does not more than releasing the lock on the
@@ -1435,7 +1435,7 @@ public:
    * management object.
    */
   virtual void
-  get_tria_refinement_criteria(Vector<float> &criteria) const = 0;
+  get_tria_refinement_criteria(Vector<float>& criteria) const = 0;
 
   /**
    * The refinement flags of the triangulation are stored in a local variable
@@ -1521,7 +1521,7 @@ template <typename InitFunctionObject, typename LoopFunctionObject>
 void
 TimeDependent::do_loop(InitFunctionObject      init_function,
                        LoopFunctionObject      loop_function,
-                       const TimeSteppingData &timestepping_data,
+                       const TimeSteppingData& timestepping_data,
                        const Direction         direction)
 {
   // the following functions looks quite

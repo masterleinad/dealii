@@ -89,8 +89,8 @@ public:
    * your points, and do not call set_points() again, then all following results
    * will likely be wrong.
    */
-  KDTree(const unsigned int &           max_leaf_size = 10,
-         const std::vector<Point<dim>> &pts = std::vector<Point<dim>>());
+  KDTree(const unsigned int&            max_leaf_size = 10,
+         const std::vector<Point<dim>>& pts = std::vector<Point<dim>>());
 
 
   /**
@@ -110,14 +110,14 @@ public:
      * Reference to the vector of points from which we want to compute
      * the distance.
      */
-    const std::vector<Point<dim>> &points;
+    const std::vector<Point<dim>>& points;
 
 
     /**
      * The constructor needs the vector of points from which we want to build
      * the tree.
      */
-    PointCloudAdaptor(const std::vector<Point<dim>> &_points);
+    PointCloudAdaptor(const std::vector<Point<dim>>& _points);
 
 
     /**
@@ -131,7 +131,7 @@ public:
      * Return the L2 distance between points
      */
     coord_t
-    kdtree_distance(const coord_t *p1,
+    kdtree_distance(const coord_t* p1,
                     const size_t   idx_p2,
                     const size_t   size) const;
 
@@ -152,7 +152,7 @@ public:
      */
     template <class BBOX>
     bool
-    kdtree_get_bbox(BBOX &) const;
+    kdtree_get_bbox(BBOX&) const;
   };
 
 
@@ -186,13 +186,13 @@ public:
    * @param[in] pts A collection of points
    */
   void
-  set_points(const std::vector<Point<dim>> &pts);
+  set_points(const std::vector<Point<dim>>& pts);
 
 
   /**
    * A const accessor to the @p i'th one among the underlying points.
    */
-  const Point<dim> &operator[](const unsigned int i) const;
+  const Point<dim>& operator[](const unsigned int i) const;
 
 
   /**
@@ -214,8 +214,8 @@ public:
    * @return A vector of indices and distances to @p target of the matching points
    */
   std::vector<std::pair<unsigned int, double>>
-  get_points_within_ball(const Point<dim> &target,
-                         const double &    radius,
+  get_points_within_ball(const Point<dim>& target,
+                         const double&     radius,
                          const bool        sorted = false) const;
 
   /**
@@ -228,7 +228,7 @@ public:
    * @return A vector of pairs of indices and distances of the matching points
    */
   std::vector<std::pair<unsigned int, double>>
-  get_closest_points(const Point<dim> & target,
+  get_closest_points(const Point<dim>&  target,
                      const unsigned int n_points) const;
 
 private:
@@ -267,7 +267,7 @@ KDTree<dim>::size() const
 
 
 template <int dim>
-inline const Point<dim> &KDTree<dim>::operator[](const unsigned int i) const
+inline const Point<dim>& KDTree<dim>::operator[](const unsigned int i) const
 {
   AssertIndexRange(i, size());
   return adaptor->points[i];
@@ -277,7 +277,7 @@ inline const Point<dim> &KDTree<dim>::operator[](const unsigned int i) const
 
 template <int dim>
 KDTree<dim>::PointCloudAdaptor::PointCloudAdaptor(
-  const std::vector<Point<dim>> &_points) :
+  const std::vector<Point<dim>>& _points) :
   points(_points)
 {}
 
@@ -305,7 +305,7 @@ KDTree<dim>::PointCloudAdaptor::kdtree_get_pt(const size_t idx, int d) const
 template <int dim>
 template <class BBOX>
 inline bool
-KDTree<dim>::PointCloudAdaptor::kdtree_get_bbox(BBOX &) const
+KDTree<dim>::PointCloudAdaptor::kdtree_get_bbox(BBOX&) const
 {
   return false;
 }
@@ -314,7 +314,7 @@ KDTree<dim>::PointCloudAdaptor::kdtree_get_bbox(BBOX &) const
 
 template <int dim>
 inline double
-KDTree<dim>::PointCloudAdaptor::kdtree_distance(const double *p1,
+KDTree<dim>::PointCloudAdaptor::kdtree_distance(const double* p1,
                                                 const size_t  idx_p2,
                                                 const size_t  size) const
 {

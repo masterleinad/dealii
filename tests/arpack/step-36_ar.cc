@@ -69,7 +69,7 @@ namespace Step36
   class EigenvalueProblem
   {
   public:
-    EigenvalueProblem(const std::string &prm_file);
+    EigenvalueProblem(const std::string& prm_file);
     void
     run();
 
@@ -98,7 +98,7 @@ namespace Step36
 
 
   template <int dim>
-  EigenvalueProblem<dim>::EigenvalueProblem(const std::string &prm_file) :
+  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file) :
     fe(1),
     dof_handler(triangulation)
   {}
@@ -324,7 +324,7 @@ namespace Step36
 } // namespace Step36
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   try
     {
@@ -338,7 +338,7 @@ main(int argc, char **argv)
       problem.run();
     }
 
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

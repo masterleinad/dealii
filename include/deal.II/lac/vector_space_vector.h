@@ -63,39 +63,39 @@ namespace LinearAlgebra
      * copied.
      */
     virtual void
-    reinit(const VectorSpaceVector<Number> &V,
+    reinit(const VectorSpaceVector<Number>& V,
            const bool                       omit_zeroing_entries = false) = 0;
 
     /**
      * Sets all elements of the vector to the scalar @p s. This operation is
      * only allowed if @p s is equal to zero.
      */
-    virtual VectorSpaceVector<Number> &
+    virtual VectorSpaceVector<Number>&
     operator=(const Number s) = 0;
 
     /**
      * Multiply the entire vector by a fixed factor.
      */
-    virtual VectorSpaceVector<Number> &
+    virtual VectorSpaceVector<Number>&
     operator*=(const Number factor) = 0;
 
     /**
      * Divide the entire vector by a fixed factor.
      */
-    virtual VectorSpaceVector<Number> &
+    virtual VectorSpaceVector<Number>&
     operator/=(const Number factor) = 0;
 
     /**
      * Add the vector @p V to the present one.
      */
-    virtual VectorSpaceVector<Number> &
-    operator+=(const VectorSpaceVector<Number> &V) = 0;
+    virtual VectorSpaceVector<Number>&
+    operator+=(const VectorSpaceVector<Number>& V) = 0;
 
     /**
      * Subtract the vector @p V from the present one.
      */
-    virtual VectorSpaceVector<Number> &
-    operator-=(const VectorSpaceVector<Number> &V) = 0;
+    virtual VectorSpaceVector<Number>&
+    operator-=(const VectorSpaceVector<Number>& V) = 0;
 
     /**
      * Import all the elements present in the vector's IndexSet from the input
@@ -107,7 +107,7 @@ namespace LinearAlgebra
      */
     virtual void
     import(
-      const ReadWriteVector<Number> &                 V,
+      const ReadWriteVector<Number>&                  V,
       VectorOperation::values                         operation,
       std::shared_ptr<const CommunicationPatternBase> communication_pattern =
         std::shared_ptr<const CommunicationPatternBase>()) = 0;
@@ -115,7 +115,7 @@ namespace LinearAlgebra
     /**
      * Return the scalar product of two vectors.
      */
-    virtual Number operator*(const VectorSpaceVector<Number> &V) const = 0;
+    virtual Number operator*(const VectorSpaceVector<Number>& V) const = 0;
 
     /**
      * Add @p a to all components. Note that @p a is a scalar not a vector.
@@ -127,16 +127,16 @@ namespace LinearAlgebra
      * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
      */
     virtual void
-    add(const Number a, const VectorSpaceVector<Number> &V) = 0;
+    add(const Number a, const VectorSpaceVector<Number>& V) = 0;
 
     /**
      * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
      */
     virtual void
     add(const Number                     a,
-        const VectorSpaceVector<Number> &V,
+        const VectorSpaceVector<Number>& V,
         const Number                     b,
-        const VectorSpaceVector<Number> &W) = 0;
+        const VectorSpaceVector<Number>& W) = 0;
 
     /**
      * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
@@ -145,7 +145,7 @@ namespace LinearAlgebra
     virtual void
     sadd(const Number                     s,
          const Number                     a,
-         const VectorSpaceVector<Number> &V) = 0;
+         const VectorSpaceVector<Number>& V) = 0;
 
     /**
      * Scale each element of this vector by the corresponding element in the
@@ -153,13 +153,13 @@ namespace LinearAlgebra
      * immediate re-assignment) by a diagonal scaling matrix.
      */
     virtual void
-    scale(const VectorSpaceVector<Number> &scaling_factors) = 0;
+    scale(const VectorSpaceVector<Number>& scaling_factors) = 0;
 
     /**
      * Assignment <tt>*this = a*V</tt>.
      */
     virtual void
-    equ(const Number a, const VectorSpaceVector<Number> &V) = 0;
+    equ(const Number a, const VectorSpaceVector<Number>& V) = 0;
 
     /**
      * Return whether the vector contains only elements with value zero.
@@ -216,8 +216,8 @@ namespace LinearAlgebra
      */
     virtual Number
     add_and_dot(const Number                     a,
-                const VectorSpaceVector<Number> &V,
-                const VectorSpaceVector<Number> &W) = 0;
+                const VectorSpaceVector<Number>& V,
+                const VectorSpaceVector<Number>& W) = 0;
 
     /**
      * This function does nothing and only exists for backward compatibility.
@@ -250,7 +250,7 @@ namespace LinearAlgebra
      * Print the vector to the output stream @p out.
      */
     virtual void
-    print(std::ostream &     out,
+    print(std::ostream&      out,
           const unsigned int precision  = 3,
           const bool         scientific = true,
           const bool         across     = true) const = 0;

@@ -44,7 +44,7 @@ namespace MatrixFreeOperators
     template <typename VectorType>
     typename std::enable_if<IsBlockVector<VectorType>::value,
                             unsigned int>::type
-    n_blocks(const VectorType &vector)
+    n_blocks(const VectorType& vector)
     {
       return vector.n_blocks();
     }
@@ -52,23 +52,23 @@ namespace MatrixFreeOperators
     template <typename VectorType>
     typename std::enable_if<!IsBlockVector<VectorType>::value,
                             unsigned int>::type
-    n_blocks(const VectorType &)
+    n_blocks(const VectorType&)
     {
       return 1;
     }
 
     template <typename VectorType>
     typename std::enable_if<IsBlockVector<VectorType>::value,
-                            typename VectorType::BlockType &>::type
-    subblock(VectorType &vector, unsigned int block_no)
+                            typename VectorType::BlockType&>::type
+    subblock(VectorType& vector, unsigned int block_no)
     {
       return vector.block(block_no);
     }
 
     template <typename VectorType>
     typename std::enable_if<IsBlockVector<VectorType>::value,
-                            const typename VectorType::BlockType &>::type
-    subblock(const VectorType &vector, unsigned int block_no)
+                            const typename VectorType::BlockType&>::type
+    subblock(const VectorType& vector, unsigned int block_no)
     {
       AssertIndexRange(block_no, vector.n_blocks());
       return vector.block(block_no);
@@ -76,30 +76,30 @@ namespace MatrixFreeOperators
 
     template <typename VectorType>
     typename std::enable_if<!IsBlockVector<VectorType>::value,
-                            VectorType &>::type
-    subblock(VectorType &vector, unsigned int)
+                            VectorType&>::type
+    subblock(VectorType& vector, unsigned int)
     {
       return vector;
     }
 
     template <typename VectorType>
     typename std::enable_if<!IsBlockVector<VectorType>::value,
-                            const VectorType &>::type
-    subblock(const VectorType &vector, unsigned int)
+                            const VectorType&>::type
+    subblock(const VectorType& vector, unsigned int)
     {
       return vector;
     }
 
     template <typename VectorType>
     typename std::enable_if<IsBlockVector<VectorType>::value, void>::type
-    collect_sizes(VectorType &vector)
+    collect_sizes(VectorType& vector)
     {
       vector.collect_sizes();
     }
 
     template <typename VectorType>
     typename std::enable_if<!IsBlockVector<VectorType>::value, void>::type
-    collect_sizes(const VectorType &)
+    collect_sizes(const VectorType&)
     {}
   } // namespace
 
@@ -231,9 +231,9 @@ namespace MatrixFreeOperators
      */
     void
     initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
-               const std::vector<unsigned int> &selected_row_blocks =
+               const std::vector<unsigned int>& selected_row_blocks =
                  std::vector<unsigned int>(),
-               const std::vector<unsigned int> &selected_column_blocks =
+               const std::vector<unsigned int>& selected_column_blocks =
                  std::vector<unsigned int>());
 
     /**
@@ -251,9 +251,9 @@ namespace MatrixFreeOperators
      */
     void
     initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
-               const MGConstrainedDoFs &        mg_constrained_dofs,
+               const MGConstrainedDoFs&         mg_constrained_dofs,
                const unsigned int               level,
-               const std::vector<unsigned int> &selected_row_blocks =
+               const std::vector<unsigned int>& selected_row_blocks =
                  std::vector<unsigned int>());
 
     /**
@@ -272,9 +272,9 @@ namespace MatrixFreeOperators
      */
     void
     initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data_,
-               const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+               const std::vector<MGConstrainedDoFs>& mg_constrained_dofs,
                const unsigned int                    level,
-               const std::vector<unsigned int> &     selected_row_blocks =
+               const std::vector<unsigned int>&      selected_row_blocks =
                  std::vector<unsigned int>());
 
     /**
@@ -293,37 +293,37 @@ namespace MatrixFreeOperators
      * vmult operator for interface.
      */
     void
-    vmult_interface_down(VectorType &dst, const VectorType &src) const;
+    vmult_interface_down(VectorType& dst, const VectorType& src) const;
 
     /**
      * vmult operator for interface.
      */
     void
-    vmult_interface_up(VectorType &dst, const VectorType &src) const;
+    vmult_interface_up(VectorType& dst, const VectorType& src) const;
 
     /**
      * Matrix-vector multiplication.
      */
     void
-    vmult(VectorType &dst, const VectorType &src) const;
+    vmult(VectorType& dst, const VectorType& src) const;
 
     /**
      * Transpose matrix-vector multiplication.
      */
     void
-    Tvmult(VectorType &dst, const VectorType &src) const;
+    Tvmult(VectorType& dst, const VectorType& src) const;
 
     /**
      * Adding Matrix-vector multiplication.
      */
     void
-    vmult_add(VectorType &dst, const VectorType &src) const;
+    vmult_add(VectorType& dst, const VectorType& src) const;
 
     /**
      * Adding transpose matrix-vector multiplication.
      */
     void
-    Tvmult_add(VectorType &dst, const VectorType &src) const;
+    Tvmult_add(VectorType& dst, const VectorType& src) const;
 
     /**
      * Return the value of the matrix entry (row,col). In matrix-free context
@@ -343,7 +343,7 @@ namespace MatrixFreeOperators
      * A wrapper for initialize_dof_vector() of MatrixFree object.
      */
     void
-    initialize_dof_vector(VectorType &vec) const;
+    initialize_dof_vector(VectorType& vec) const;
 
     /**
      * Compute diagonal of this operator.
@@ -364,13 +364,13 @@ namespace MatrixFreeOperators
     /**
      * Get read access to the inverse diagonal of this operator.
      */
-    const std::shared_ptr<DiagonalMatrix<VectorType>> &
+    const std::shared_ptr<DiagonalMatrix<VectorType>>&
     get_matrix_diagonal_inverse() const;
 
     /**
      * Get read access to the diagonal of this operator.
      */
-    const std::shared_ptr<DiagonalMatrix<VectorType>> &
+    const std::shared_ptr<DiagonalMatrix<VectorType>>&
     get_matrix_diagonal() const;
 
 
@@ -380,8 +380,8 @@ namespace MatrixFreeOperators
      * multiplies the result with the relaxation factor <tt>omega</tt>.
      */
     void
-    precondition_Jacobi(VectorType &      dst,
-                        const VectorType &src,
+    precondition_Jacobi(VectorType&       dst,
+                        const VectorType& src,
                         const value_type  omega) const;
 
   protected:
@@ -390,27 +390,27 @@ namespace MatrixFreeOperators
      * apply_add() or Tapply_add() inside mult_add().
      */
     void
-    preprocess_constraints(VectorType &dst, const VectorType &src) const;
+    preprocess_constraints(VectorType& dst, const VectorType& src) const;
 
     /**
      * Perform necessary operations related to constraints after calling
      * apply_add() or Tapply_add() inside mult_add().
      */
     void
-    postprocess_constraints(VectorType &dst, const VectorType &src) const;
+    postprocess_constraints(VectorType& dst, const VectorType& src) const;
 
     /**
      * Set constrained entries (both from hanging nodes and edge constraints)
      * of @p dst to one.
      */
     void
-    set_constrained_entries_to_one(VectorType &dst) const;
+    set_constrained_entries_to_one(VectorType& dst) const;
 
     /**
      * Apply operator to @p src and add result in @p dst.
      */
     virtual void
-    apply_add(VectorType &dst, const VectorType &src) const = 0;
+    apply_add(VectorType& dst, const VectorType& src) const = 0;
 
     /**
      * Apply transpose operator to @p src and add result in @p dst.
@@ -418,7 +418,7 @@ namespace MatrixFreeOperators
      * Default implementation is to call apply_add().
      */
     virtual void
-    Tapply_add(VectorType &dst, const VectorType &src) const;
+    Tapply_add(VectorType& dst, const VectorType& src) const;
 
     /**
      * MatrixFree object to be used with this operator.
@@ -472,8 +472,8 @@ namespace MatrixFreeOperators
      * Tvmult_add (@p transpose = true).
      */
     void
-    mult_add(VectorType &      dst,
-             const VectorType &src,
+    mult_add(VectorType&       dst,
+             const VectorType& src,
              const bool        transpose) const;
 
     /**
@@ -484,7 +484,7 @@ namespace MatrixFreeOperators
      * indices with the correct local indices.
      */
     void
-    adjust_ghost_range_if_necessary(const VectorType &vec,
+    adjust_ghost_range_if_necessary(const VectorType& vec,
                                     const bool        is_row) const;
   };
 
@@ -555,28 +555,28 @@ namespace MatrixFreeOperators
      * Initialize this class with an operator @p operator_in.
      */
     void
-    initialize(const OperatorType &operator_in);
+    initialize(const OperatorType& operator_in);
 
     /**
      * vmult operator, see class description for more info.
      */
     template <typename VectorType>
     void
-    vmult(VectorType &dst, const VectorType &src) const;
+    vmult(VectorType& dst, const VectorType& src) const;
 
     /**
      * Tvmult operator, see class description for more info.
      */
     template <typename VectorType>
     void
-    Tvmult(VectorType &dst, const VectorType &src) const;
+    Tvmult(VectorType& dst, const VectorType& src) const;
 
     /**
      * A wrapper for initialize_dof_vector() of OperatorType object.
      */
     template <typename VectorType>
     void
-    initialize_dof_vector(VectorType &vec) const;
+    initialize_dof_vector(VectorType& vec) const;
 
 
   private:
@@ -619,7 +619,7 @@ namespace MatrixFreeOperators
      * in the class FEEval.
      */
     CellwiseInverseMassMatrix(
-      const FEEvaluationBase<dim, n_components, Number> &fe_eval);
+      const FEEvaluationBase<dim, n_components, Number>& fe_eval);
 
     /**
      * Applies the inverse mass matrix operation on an input array. It is
@@ -630,10 +630,10 @@ namespace MatrixFreeOperators
      * coefficient is allowed.
      */
     void
-    apply(const AlignedVector<VectorizedArray<Number>> &inverse_coefficient,
+    apply(const AlignedVector<VectorizedArray<Number>>& inverse_coefficient,
           const unsigned int                            n_actual_components,
-          const VectorizedArray<Number> *               in_array,
-          VectorizedArray<Number> *                     out_array) const;
+          const VectorizedArray<Number>*                in_array,
+          VectorizedArray<Number>*                      out_array) const;
 
     /**
      * Fills the given array with the inverse of the JxW values, i.e., a mass
@@ -642,13 +642,13 @@ namespace MatrixFreeOperators
      */
     void
     fill_inverse_JxW_values(
-      AlignedVector<VectorizedArray<Number>> &inverse_jxw) const;
+      AlignedVector<VectorizedArray<Number>>& inverse_jxw) const;
 
   private:
     /**
      * A reference to the FEEvaluation object for getting the JxW_values.
      */
-    const FEEvaluationBase<dim, n_components, Number> &fe_eval;
+    const FEEvaluationBase<dim, n_components, Number>& fe_eval;
 
     /**
      * A structure to hold inverse shape functions
@@ -704,17 +704,17 @@ namespace MatrixFreeOperators
      * using initialize_dof_vector().
      */
     virtual void
-    apply_add(VectorType &dst, const VectorType &src) const override;
+    apply_add(VectorType& dst, const VectorType& src) const override;
 
     /**
      * For this operator, there is just a cell contribution.
      */
     void
     local_apply_cell(
-      const MatrixFree<dim, value_type> &          data,
-      VectorType &                                 dst,
-      const VectorType &                           src,
-      const std::pair<unsigned int, unsigned int> &cell_range) const;
+      const MatrixFree<dim, value_type>&           data,
+      VectorType&                                  dst,
+      const VectorType&                            src,
+      const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
 
 
@@ -810,8 +810,9 @@ namespace MatrixFreeOperators
      * will delete the table.
      */
     void
-    set_coefficient(const std::shared_ptr<Table<2, VectorizedArray<value_type>>>
-                      &scalar_coefficient);
+    set_coefficient(
+      const std::shared_ptr<Table<2, VectorizedArray<value_type>>>&
+        scalar_coefficient);
 
     virtual void
     clear();
@@ -832,35 +833,35 @@ namespace MatrixFreeOperators
      * using initialize_dof_vector().
      */
     virtual void
-    apply_add(VectorType &dst, const VectorType &src) const;
+    apply_add(VectorType& dst, const VectorType& src) const;
 
     /**
      * Applies the Laplace operator on a cell.
      */
     void
     local_apply_cell(
-      const MatrixFree<dim, value_type> &          data,
-      VectorType &                                 dst,
-      const VectorType &                           src,
-      const std::pair<unsigned int, unsigned int> &cell_range) const;
+      const MatrixFree<dim, value_type>&           data,
+      VectorType&                                  dst,
+      const VectorType&                            src,
+      const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     /**
      * Apply diagonal part of the Laplace operator on a cell.
      */
     void
     local_diagonal_cell(
-      const MatrixFree<dim, value_type> &data,
-      VectorType &                       dst,
-      const unsigned int &,
-      const std::pair<unsigned int, unsigned int> &cell_range) const;
+      const MatrixFree<dim, value_type>& data,
+      VectorType&                        dst,
+      const unsigned int&,
+      const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     /**
      * Apply Laplace operator on a cell @p cell.
      */
     void
     do_operation_on_cell(
-      FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, value_type>
-        &                phi,
+      FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, value_type>&
+                         phi,
       const unsigned int cell) const;
 
     /**
@@ -876,7 +877,7 @@ namespace MatrixFreeOperators
   template <int dim, int fe_degree, int n_components, typename Number>
   inline CellwiseInverseMassMatrix<dim, fe_degree, n_components, Number>::
     CellwiseInverseMassMatrix(
-      const FEEvaluationBase<dim, n_components, Number> &fe_eval) :
+      const FEEvaluationBase<dim, n_components, Number>& fe_eval) :
     fe_eval(fe_eval)
   {
     FullMatrix<double> shapes_1d(fe_degree + 1, fe_degree + 1);
@@ -905,7 +906,7 @@ namespace MatrixFreeOperators
   inline void
   CellwiseInverseMassMatrix<dim, fe_degree, n_components, Number>::
     fill_inverse_JxW_values(
-      AlignedVector<VectorizedArray<Number>> &inverse_jxw) const
+      AlignedVector<VectorizedArray<Number>>& inverse_jxw) const
   {
     constexpr unsigned int dofs_per_cell = Utilities::pow(fe_degree + 1, dim);
     Assert(
@@ -933,10 +934,10 @@ namespace MatrixFreeOperators
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
   CellwiseInverseMassMatrix<dim, fe_degree, n_components, Number>::apply(
-    const AlignedVector<VectorizedArray<Number>> &inverse_coefficients,
+    const AlignedVector<VectorizedArray<Number>>& inverse_coefficients,
     const unsigned int                            n_actual_components,
-    const VectorizedArray<Number> *               in_array,
-    VectorizedArray<Number> *                     out_array) const
+    const VectorizedArray<Number>*                in_array,
+    VectorizedArray<Number>*                      out_array) const
   {
     constexpr unsigned int dofs_per_cell = Utilities::pow(fe_degree + 1, dim);
     Assert(
@@ -958,12 +959,12 @@ namespace MatrixFreeOperators
 
     const unsigned int shift_coefficient =
       inverse_coefficients.size() > dofs_per_cell ? dofs_per_cell : 0;
-    const VectorizedArray<Number> *inv_coefficient = &inverse_coefficients[0];
+    const VectorizedArray<Number>* inv_coefficient = &inverse_coefficients[0];
     VectorizedArray<Number>        temp_data_field[dofs_per_cell];
     for (unsigned int d = 0; d < n_actual_components; ++d)
       {
-        const VectorizedArray<Number> *in  = in_array + d * dofs_per_cell;
-        VectorizedArray<Number> *      out = out_array + d * dofs_per_cell;
+        const VectorizedArray<Number>* in  = in_array + d * dofs_per_cell;
+        VectorizedArray<Number>*       out = out_array + d * dofs_per_cell;
         // Need to select 'apply' method with hessian slot because values
         // assume symmetries that do not exist in the inverse shapes
         evaluator.template hessians<0, false, false>(in, temp_data_field);
@@ -1047,7 +1048,7 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::initialize_dof_vector(VectorType &vec) const
+  Base<dim, VectorType>::initialize_dof_vector(VectorType& vec) const
   {
     Assert(data.get() != nullptr, ExcNotInitialized());
     AssertDimension(n_blocks(vec), selected_rows.size());
@@ -1074,8 +1075,8 @@ namespace MatrixFreeOperators
   Base<dim, VectorType>::initialize(
     std::shared_ptr<
       const MatrixFree<dim, typename Base<dim, VectorType>::value_type>> data_,
-    const std::vector<unsigned int> &given_row_selection,
-    const std::vector<unsigned int> &given_column_selection)
+    const std::vector<unsigned int>& given_row_selection,
+    const std::vector<unsigned int>& given_column_selection)
   {
     data = data_;
 
@@ -1127,9 +1128,9 @@ namespace MatrixFreeOperators
   Base<dim, VectorType>::initialize(
     std::shared_ptr<
       const MatrixFree<dim, typename Base<dim, VectorType>::value_type>> data_,
-    const MGConstrainedDoFs &        mg_constrained_dofs,
+    const MGConstrainedDoFs&         mg_constrained_dofs,
     const unsigned int               level,
-    const std::vector<unsigned int> &given_row_selection)
+    const std::vector<unsigned int>& given_row_selection)
   {
     std::vector<MGConstrainedDoFs> mg_constrained_dofs_vector(
       1, mg_constrained_dofs);
@@ -1142,9 +1143,9 @@ namespace MatrixFreeOperators
   void
   Base<dim, VectorType>::initialize(
     std::shared_ptr<const MatrixFree<dim, value_type>> data_,
-    const std::vector<MGConstrainedDoFs> &             mg_constrained_dofs,
+    const std::vector<MGConstrainedDoFs>&              mg_constrained_dofs,
     const unsigned int                                 level,
-    const std::vector<unsigned int> &                  given_row_selection)
+    const std::vector<unsigned int>&                   given_row_selection)
   {
     AssertThrow(level != numbers::invalid_unsigned_int,
                 ExcMessage("level is not set"));
@@ -1193,7 +1194,7 @@ namespace MatrixFreeOperators
         edge_constrained_indices[j].clear();
         edge_constrained_indices[j].reserve(interface_indices.size());
         edge_constrained_values[j].resize(interface_indices.size());
-        const IndexSet &locally_owned =
+        const IndexSet& locally_owned =
           data->get_dof_handler(selected_rows[j]).locally_owned_mg_dofs(level);
         for (unsigned int i = 0; i < interface_indices.size(); ++i)
           if (locally_owned.is_element(interface_indices[i]))
@@ -1210,11 +1211,11 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::set_constrained_entries_to_one(VectorType &dst) const
+  Base<dim, VectorType>::set_constrained_entries_to_one(VectorType& dst) const
   {
     for (unsigned int j = 0; j < n_blocks(dst); ++j)
       {
-        const std::vector<unsigned int> &constrained_dofs =
+        const std::vector<unsigned int>& constrained_dofs =
           data->get_constrained_dofs(selected_rows[j]);
         for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
           subblock(dst, j).local_element(constrained_dofs[i]) = 1.;
@@ -1227,7 +1228,7 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::vmult(VectorType &dst, const VectorType &src) const
+  Base<dim, VectorType>::vmult(VectorType& dst, const VectorType& src) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
     dst = Number(0.);
@@ -1238,7 +1239,7 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::vmult_add(VectorType &dst, const VectorType &src) const
+  Base<dim, VectorType>::vmult_add(VectorType& dst, const VectorType& src) const
   {
     mult_add(dst, src, false);
   }
@@ -1247,8 +1248,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::Tvmult_add(VectorType &      dst,
-                                    const VectorType &src) const
+  Base<dim, VectorType>::Tvmult_add(VectorType&       dst,
+                                    const VectorType& src) const
   {
     mult_add(dst, src, true);
   }
@@ -1258,7 +1259,7 @@ namespace MatrixFreeOperators
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::adjust_ghost_range_if_necessary(
-    const VectorType &src,
+    const VectorType& src,
     const bool        is_row) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
@@ -1282,9 +1283,9 @@ namespace MatrixFreeOperators
         // copy the vector content to a temporary vector so that it does not get
         // lost
         LinearAlgebra::distributed::Vector<Number> copy_vec(subblock(src, i));
-        subblock(const_cast<VectorType &>(src), i)
+        subblock(const_cast<VectorType&>(src), i)
           .reinit(data->get_dof_info(mf_component).vector_partitioner);
-        subblock(const_cast<VectorType &>(src), i)
+        subblock(const_cast<VectorType&>(src), i)
           .copy_locally_owned_data_from(copy_vec);
       }
   }
@@ -1293,8 +1294,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::preprocess_constraints(VectorType &      dst,
-                                                const VectorType &src) const
+  Base<dim, VectorType>::preprocess_constraints(VectorType&       dst,
+                                                const VectorType& src) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
     adjust_ghost_range_if_necessary(src, false);
@@ -1309,7 +1310,7 @@ namespace MatrixFreeOperators
             edge_constrained_values[j][i] = std::pair<Number, Number>(
               subblock(src, j).local_element(edge_constrained_indices[j][i]),
               subblock(dst, j).local_element(edge_constrained_indices[j][i]));
-            subblock(const_cast<VectorType &>(src), j)
+            subblock(const_cast<VectorType&>(src), j)
               .local_element(edge_constrained_indices[j][i]) = 0.;
           }
       }
@@ -1319,8 +1320,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::mult_add(VectorType &      dst,
-                                  const VectorType &src,
+  Base<dim, VectorType>::mult_add(VectorType&       dst,
+                                  const VectorType& src,
                                   const bool        transpose) const
   {
     AssertDimension(dst.size(), src.size());
@@ -1338,12 +1339,12 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::postprocess_constraints(VectorType &      dst,
-                                                 const VectorType &src) const
+  Base<dim, VectorType>::postprocess_constraints(VectorType&       dst,
+                                                 const VectorType& src) const
   {
     for (unsigned int j = 0; j < n_blocks(dst); ++j)
       {
-        const std::vector<unsigned int> &constrained_dofs =
+        const std::vector<unsigned int>& constrained_dofs =
           data->get_constrained_dofs(selected_rows[j]);
         for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
           subblock(dst, j).local_element(constrained_dofs[i]) +=
@@ -1356,7 +1357,7 @@ namespace MatrixFreeOperators
       {
         for (unsigned int i = 0; i < edge_constrained_indices[j].size(); ++i)
           {
-            subblock(const_cast<VectorType &>(src), j)
+            subblock(const_cast<VectorType&>(src), j)
               .local_element(edge_constrained_indices[j][i]) =
               edge_constrained_values[j][i].first;
             subblock(dst, j).local_element(edge_constrained_indices[j][i]) =
@@ -1370,8 +1371,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::vmult_interface_down(VectorType &      dst,
-                                              const VectorType &src) const
+  Base<dim, VectorType>::vmult_interface_down(VectorType&       dst,
+                                              const VectorType& src) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
@@ -1391,7 +1392,7 @@ namespace MatrixFreeOperators
           edge_constrained_values[j][i] = std::pair<Number, Number>(
             subblock(src, j).local_element(edge_constrained_indices[j][i]),
             subblock(dst, j).local_element(edge_constrained_indices[j][i]));
-          subblock(const_cast<VectorType &>(src), j)
+          subblock(const_cast<VectorType&>(src), j)
             .local_element(edge_constrained_indices[j][i]) = 0.;
         }
 
@@ -1407,7 +1408,7 @@ namespace MatrixFreeOperators
             ++c;
 
             // reset the src values
-            subblock(const_cast<VectorType &>(src), j)
+            subblock(const_cast<VectorType&>(src), j)
               .local_element(edge_constrained_indices[j][i]) =
               edge_constrained_values[j][i].first;
           }
@@ -1420,8 +1421,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::vmult_interface_up(VectorType &      dst,
-                                            const VectorType &src) const
+  Base<dim, VectorType>::vmult_interface_up(VectorType&       dst,
+                                            const VectorType& src) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
@@ -1458,7 +1459,7 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::Tvmult(VectorType &dst, const VectorType &src) const
+  Base<dim, VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
   {
     typedef typename Base<dim, VectorType>::value_type Number;
     dst = Number(0.);
@@ -1489,7 +1490,7 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  const std::shared_ptr<DiagonalMatrix<VectorType>> &
+  const std::shared_ptr<DiagonalMatrix<VectorType>>&
   Base<dim, VectorType>::get_matrix_diagonal_inverse() const
   {
     Assert(inverse_diagonal_entries.get() != nullptr &&
@@ -1501,7 +1502,7 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  const std::shared_ptr<DiagonalMatrix<VectorType>> &
+  const std::shared_ptr<DiagonalMatrix<VectorType>>&
   Base<dim, VectorType>::get_matrix_diagonal() const
   {
     Assert(diagonal_entries.get() != nullptr && diagonal_entries->m() > 0,
@@ -1513,8 +1514,8 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::Tapply_add(VectorType &      dst,
-                                    const VectorType &src) const
+  Base<dim, VectorType>::Tapply_add(VectorType&       dst,
+                                    const VectorType& src) const
   {
     apply_add(dst, src);
   }
@@ -1524,8 +1525,8 @@ namespace MatrixFreeOperators
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::precondition_Jacobi(
-    VectorType &                                     dst,
-    const VectorType &                               src,
+    VectorType&                                      dst,
+    const VectorType&                                src,
     const typename Base<dim, VectorType>::value_type omega) const
   {
     Assert(inverse_diagonal_entries.get() && inverse_diagonal_entries->m() > 0,
@@ -1557,7 +1558,7 @@ namespace MatrixFreeOperators
 
   template <typename OperatorType>
   void
-  MGInterfaceOperator<OperatorType>::initialize(const OperatorType &operator_in)
+  MGInterfaceOperator<OperatorType>::initialize(const OperatorType& operator_in)
   {
     mf_base_operator = &operator_in;
   }
@@ -1567,8 +1568,8 @@ namespace MatrixFreeOperators
   template <typename OperatorType>
   template <typename VectorType>
   void
-  MGInterfaceOperator<OperatorType>::vmult(VectorType &      dst,
-                                           const VectorType &src) const
+  MGInterfaceOperator<OperatorType>::vmult(VectorType&       dst,
+                                           const VectorType& src) const
   {
 #ifndef DEAL_II_MSVC
     static_assert(
@@ -1587,8 +1588,8 @@ namespace MatrixFreeOperators
   template <typename OperatorType>
   template <typename VectorType>
   void
-  MGInterfaceOperator<OperatorType>::Tvmult(VectorType &      dst,
-                                            const VectorType &src) const
+  MGInterfaceOperator<OperatorType>::Tvmult(VectorType&       dst,
+                                            const VectorType& src) const
   {
 #ifndef DEAL_II_MSVC
     static_assert(
@@ -1608,7 +1609,7 @@ namespace MatrixFreeOperators
   template <typename VectorType>
   void
   MGInterfaceOperator<OperatorType>::initialize_dof_vector(
-    VectorType &vec) const
+    VectorType& vec) const
   {
     Assert(mf_base_operator != nullptr, ExcNotInitialized());
 
@@ -1645,9 +1646,9 @@ namespace MatrixFreeOperators
 
     this->inverse_diagonal_entries.reset(new DiagonalMatrix<VectorType>());
     this->diagonal_entries.reset(new DiagonalMatrix<VectorType>());
-    VectorType &inverse_diagonal_vector =
+    VectorType& inverse_diagonal_vector =
       this->inverse_diagonal_entries->get_vector();
-    VectorType &diagonal_vector = this->diagonal_entries->get_vector();
+    VectorType& diagonal_vector = this->diagonal_entries->get_vector();
     this->initialize_dof_vector(inverse_diagonal_vector);
     this->initialize_dof_vector(diagonal_vector);
     inverse_diagonal_vector = Number(1.);
@@ -1674,7 +1675,7 @@ namespace MatrixFreeOperators
             typename VectorType>
   void
   MassOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
-    apply_add(VectorType &dst, const VectorType &src) const
+    apply_add(VectorType& dst, const VectorType& src) const
   {
     Base<dim, VectorType>::data->cell_loop(
       &MassOperator::local_apply_cell, this, dst, src);
@@ -1690,10 +1691,10 @@ namespace MatrixFreeOperators
   void
   MassOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
     local_apply_cell(
-      const MatrixFree<dim, typename Base<dim, VectorType>::value_type> &data,
-      VectorType &                                                       dst,
-      const VectorType &                                                 src,
-      const std::pair<unsigned int, unsigned int> &cell_range) const
+      const MatrixFree<dim, typename Base<dim, VectorType>::value_type>& data,
+      VectorType&                                                        dst,
+      const VectorType&                                                  src,
+      const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     typedef typename Base<dim, VectorType>::value_type                Number;
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number> phi(
@@ -1749,8 +1750,8 @@ namespace MatrixFreeOperators
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
     set_coefficient(
       const std::shared_ptr<
-        Table<2, VectorizedArray<typename Base<dim, VectorType>::value_type>>>
-        &scalar_coefficient_)
+        Table<2, VectorizedArray<typename Base<dim, VectorType>::value_type>>>&
+        scalar_coefficient_)
   {
     scalar_coefficient = scalar_coefficient_;
   }
@@ -1793,9 +1794,9 @@ namespace MatrixFreeOperators
     unsigned int dummy = 0;
     this->inverse_diagonal_entries.reset(new DiagonalMatrix<VectorType>());
     this->diagonal_entries.reset(new DiagonalMatrix<VectorType>());
-    VectorType &inverse_diagonal_vector =
+    VectorType& inverse_diagonal_vector =
       this->inverse_diagonal_entries->get_vector();
-    VectorType &diagonal_vector = this->diagonal_entries->get_vector();
+    VectorType& diagonal_vector = this->diagonal_entries->get_vector();
     this->initialize_dof_vector(inverse_diagonal_vector);
     this->initialize_dof_vector(diagonal_vector);
 
@@ -1826,7 +1827,7 @@ namespace MatrixFreeOperators
             typename VectorType>
   void
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
-    apply_add(VectorType &dst, const VectorType &src) const
+    apply_add(VectorType& dst, const VectorType& src) const
   {
     Base<dim, VectorType>::data->cell_loop(
       &LaplaceOperator::local_apply_cell, this, dst, src);
@@ -1836,7 +1837,7 @@ namespace MatrixFreeOperators
   {
     template <typename Number>
     bool
-    non_negative(const VectorizedArray<Number> &n)
+    non_negative(const VectorizedArray<Number>& n)
     {
       for (unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements;
            ++v)
@@ -1861,7 +1862,7 @@ namespace MatrixFreeOperators
                    fe_degree,
                    n_q_points_1d,
                    n_components,
-                   typename Base<dim, VectorType>::value_type> &phi,
+                   typename Base<dim, VectorType>::value_type>& phi,
       const unsigned int                                        cell) const
   {
     phi.evaluate(false, true, false);
@@ -1895,10 +1896,10 @@ namespace MatrixFreeOperators
   void
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
     local_apply_cell(
-      const MatrixFree<dim, typename Base<dim, VectorType>::value_type> &data,
-      VectorType &                                                       dst,
-      const VectorType &                                                 src,
-      const std::pair<unsigned int, unsigned int> &cell_range) const
+      const MatrixFree<dim, typename Base<dim, VectorType>::value_type>& data,
+      VectorType&                                                        dst,
+      const VectorType&                                                  src,
+      const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     typedef typename Base<dim, VectorType>::value_type                Number;
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number> phi(
@@ -1921,10 +1922,10 @@ namespace MatrixFreeOperators
   void
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
     local_diagonal_cell(
-      const MatrixFree<dim, typename Base<dim, VectorType>::value_type> &data,
-      VectorType &                                                       dst,
-      const unsigned int &,
-      const std::pair<unsigned int, unsigned int> &cell_range) const
+      const MatrixFree<dim, typename Base<dim, VectorType>::value_type>& data,
+      VectorType&                                                        dst,
+      const unsigned int&,
+      const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     typedef typename Base<dim, VectorType>::value_type                Number;
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number> phi(

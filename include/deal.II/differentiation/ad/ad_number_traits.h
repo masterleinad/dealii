@@ -353,10 +353,10 @@ namespace Differentiation
          */
         template <typename ADNumberType>
         static void
-        independent_variable(const ScalarType &in,
+        independent_variable(const ScalarType& in,
                              const unsigned int,
                              const unsigned int,
-                             ADNumberType &out)
+                             ADNumberType& out)
         {
           out = in;
         }
@@ -366,7 +366,7 @@ namespace Differentiation
          */
         template <typename ADNumberType>
         static void
-        dependent_variable(ADNumberType &, const ScalarType &)
+        dependent_variable(ADNumberType&, const ScalarType&)
         {
           AssertThrow(
             false,
@@ -389,10 +389,10 @@ namespace Differentiation
          */
         template <typename ScalarType>
         static void
-        independent_variable(const ScalarType &in,
+        independent_variable(const ScalarType& in,
                              const unsigned int,
                              const unsigned int,
-                             ADNumberType &out)
+                             ADNumberType& out)
         {
           AssertThrow(
             false,
@@ -406,7 +406,7 @@ namespace Differentiation
          */
         template <typename ScalarType>
         static void
-        dependent_variable(ADNumberType &, const ScalarType &)
+        dependent_variable(ADNumberType&, const ScalarType&)
         {
           AssertThrow(
             false,
@@ -542,8 +542,8 @@ namespace Differentiation
         /**
          * Extract the floating point value.
          */
-        static const NumberType &
-        value(const NumberType &x)
+        static const NumberType&
+        value(const NumberType& x)
         {
           return x;
         }
@@ -553,7 +553,7 @@ namespace Differentiation
          * Extract the number of directional derivatives.
          */
         static unsigned int
-        n_directional_derivatives(const NumberType &)
+        n_directional_derivatives(const NumberType&)
         {
           return 0;
         }
@@ -563,7 +563,7 @@ namespace Differentiation
          * Extract the directional derivative in the specified @p direction.
          */
         static NumberType
-        directional_derivative(const NumberType &, const unsigned int)
+        directional_derivative(const NumberType&, const unsigned int)
         {
           return 0.0;
         }
@@ -586,7 +586,7 @@ namespace Differentiation
          * Extract the floating point value.
          */
         static std::complex<typename ADNumberTraits<ADNumberType>::scalar_type>
-        value(const std::complex<ADNumberType> &x)
+        value(const std::complex<ADNumberType>& x)
         {
           return std::complex<
             typename ADNumberTraits<ADNumberType>::scalar_type>(
@@ -599,7 +599,7 @@ namespace Differentiation
          * Extract the number of directional derivatives.
          */
         static unsigned int
-        n_directional_derivatives(const std::complex<ADNumberType> &x)
+        n_directional_derivatives(const std::complex<ADNumberType>& x)
         {
           return ExtractData<ADNumberType>::n_directional_derivatives(x.real());
         }
@@ -610,7 +610,7 @@ namespace Differentiation
          */
         static std::complex<
           typename ADNumberTraits<ADNumberType>::derivative_type>
-        directional_derivative(const std::complex<ADNumberType> &x,
+        directional_derivative(const std::complex<ADNumberType>& x,
                                const unsigned int                direction)
         {
           return std::complex<
@@ -631,9 +631,9 @@ namespace Differentiation
          */
         template <typename F>
         static auto
-        value(const F &f,
-              typename std::enable_if<!is_ad_number<F>::value>::type * =
-                nullptr) -> decltype(dealii::internal::NumberType<T>::value(f))
+        value(const F& f,
+              typename std::enable_if<!is_ad_number<F>::value>::type* = nullptr)
+          -> decltype(dealii::internal::NumberType<T>::value(f))
         {
           // We call the other function defined in the numbers
           // header to take care of all of the usual cases.
@@ -648,9 +648,9 @@ namespace Differentiation
          */
         template <typename F>
         static T
-        value(const F &f,
+        value(const F& f,
               typename std::enable_if<is_ad_number<F>::value &&
-                                      std::is_arithmetic<T>::value>::type * =
+                                      std::is_arithmetic<T>::value>::type* =
                 nullptr)
         {
           // We recursively call this function in case the AD number is a
@@ -667,9 +667,9 @@ namespace Differentiation
          */
         template <typename F>
         static T
-        value(const F &f,
+        value(const F& f,
               typename std::enable_if<is_ad_number<F>::value &&
-                                      is_ad_number<T>::value>::type * = nullptr)
+                                      is_ad_number<T>::value>::type* = nullptr)
         {
           return T(f);
         }
@@ -683,9 +683,8 @@ namespace Differentiation
          */
         template <typename F>
         static auto
-        value(
-          const F &f,
-          typename std::enable_if<!is_ad_number<F>::value>::type * = nullptr)
+        value(const F& f,
+              typename std::enable_if<!is_ad_number<F>::value>::type* = nullptr)
           -> decltype(dealii::internal::NumberType<std::complex<T>>::value(f))
         {
           // We call the other function defined in the numbers
@@ -700,9 +699,9 @@ namespace Differentiation
          */
         template <typename F>
         static std::complex<T>
-        value(const F &f,
+        value(const F& f,
               typename std::enable_if<is_ad_number<F>::value &&
-                                      std::is_arithmetic<T>::value>::type * =
+                                      std::is_arithmetic<T>::value>::type* =
                 nullptr)
         {
           // We recursively call this function in case the AD number is a
@@ -714,7 +713,7 @@ namespace Differentiation
 
         template <typename F>
         static std::complex<T>
-        value(const std::complex<F> &f)
+        value(const std::complex<F>& f)
         {
           // Deal with the two parts of the input complex
           // number individually.
@@ -895,7 +894,7 @@ namespace Differentiation
       /**
        * Extract the value of an auto-differentiable number
        */
-      static scalar_type get_scalar_value(const ad_type &x)
+      static scalar_type get_scalar_value(const ad_type& x)
       {
         // Some tricky conversion cases to consider here:
         // - Nested AD numbers
@@ -912,7 +911,7 @@ namespace Differentiation
        * Extract the derivative value of an auto-differentiable number
        */
       static derivative_type get_directional_derivative(
-        const ad_type &x, const unsigned int direction)
+        const ad_type& x, const unsigned int direction)
       {
         return internal::ExtractData<ad_type>::directional_derivative(
           x, direction);
@@ -923,7 +922,7 @@ namespace Differentiation
        * Extract the number of directional derivatives value tracked by
        * an auto-differentiable number
        */
-      static unsigned int n_directional_derivatives(const ad_type &x)
+      static unsigned int n_directional_derivatives(const ad_type& x)
       {
         return internal::ExtractData<ad_type>::n_directional_derivatives(x);
       }
@@ -1040,7 +1039,7 @@ namespace Differentiation
       typedef ScalarType scalar_type;
 
       static ScalarType
-      get_directional_derivative(const ScalarType & /*x*/,
+      get_directional_derivative(const ScalarType& /*x*/,
                                  const unsigned int /*direction*/)
       {
         // If the AD drivers are correctly implemented then we should not get
@@ -1068,7 +1067,7 @@ namespace numbers
   bool
   is_nan(const typename std::enable_if<
          Differentiation::AD::is_ad_number<ADNumberType>::value,
-         ADNumberType>::type &x)
+         ADNumberType>::type& x)
   {
     return is_nan(
       Differentiation::AD::ADNumberTraits<ADNumberType>::get_value(x));

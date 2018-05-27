@@ -27,7 +27,7 @@
 
 template <int dim, int spacedim>
 void
-check(DataOutBase::VtkFlags flags, std::ostream &out)
+check(DataOutBase::VtkFlags flags, std::ostream& out)
 {
   const unsigned int np = 4;
 
@@ -48,7 +48,7 @@ check(DataOutBase::VtkFlags flags, std::ostream &out)
 
 template <int dim, int spacedim>
 void
-check_all(std::ostream &log)
+check_all(std::ostream& log)
 {
   for (unsigned int i = 0; i < 4; ++i)
     {

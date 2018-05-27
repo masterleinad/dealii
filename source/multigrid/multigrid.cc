@@ -41,15 +41,15 @@ MGTransferBlockBase::MGTransferBlockBase() : n_mg_blocks(0)
 
 
 
-MGTransferBlockBase::MGTransferBlockBase(const MGConstrainedDoFs &mg_c) :
+MGTransferBlockBase::MGTransferBlockBase(const MGConstrainedDoFs& mg_c) :
   n_mg_blocks(0),
   mg_constrained_dofs(&mg_c)
 {}
 
 
 
-MGTransferBlockBase::MGTransferBlockBase(const ConstraintMatrix & /*c*/,
-                                         const MGConstrainedDoFs &mg_c) :
+MGTransferBlockBase::MGTransferBlockBase(const ConstraintMatrix& /*c*/,
+                                         const MGConstrainedDoFs& mg_c) :
   n_mg_blocks(0),
   mg_constrained_dofs(&mg_c)
 {}
@@ -71,8 +71,8 @@ MGTransferBlock<number>::~MGTransferBlock()
 
 template <typename number>
 void
-MGTransferBlock<number>::initialize(const std::vector<number> &   f,
-                                    VectorMemory<Vector<number>> &mem)
+MGTransferBlock<number>::initialize(const std::vector<number>&    f,
+                                    VectorMemory<Vector<number>>& mem)
 {
   factors = f;
   memory  = &mem;
@@ -82,8 +82,8 @@ MGTransferBlock<number>::initialize(const std::vector<number> &   f,
 template <typename number>
 void
 MGTransferBlock<number>::prolongate(const unsigned int         to_level,
-                                    BlockVector<number> &      dst,
-                                    const BlockVector<number> &src) const
+                                    BlockVector<number>&       dst,
+                                    const BlockVector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
          ExcIndexRange(to_level, 1, prolongation_matrices.size() + 1));
@@ -107,8 +107,8 @@ MGTransferBlock<number>::prolongate(const unsigned int         to_level,
 template <typename number>
 void
 MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
-                                          BlockVector<number> &      dst,
-                                          const BlockVector<number> &src) const
+                                          BlockVector<number>&       dst,
+                                          const BlockVector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));
@@ -124,7 +124,7 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
           if (factors.size() != 0)
             {
               Assert(memory != nullptr, ExcNotInitialized());
-              Vector<number> *aux = memory->alloc();
+              Vector<number>* aux = memory->alloc();
               aux->reinit(dst.block(this->mg_block[b]));
               prolongation_matrices[from_level - 1]->block(b, b).Tvmult(
                 *aux, src.block(this->mg_block[b]));
@@ -200,7 +200,7 @@ MGTransferSelect<number>::MGTransferSelect() :
 
 
 template <typename number>
-MGTransferSelect<number>::MGTransferSelect(const ConstraintMatrix &c) :
+MGTransferSelect<number>::MGTransferSelect(const ConstraintMatrix& c) :
   selected_component(0),
   mg_selected_component(0),
   constraints(&c)
@@ -211,8 +211,8 @@ MGTransferSelect<number>::MGTransferSelect(const ConstraintMatrix &c) :
 template <typename number>
 void
 MGTransferSelect<number>::prolongate(const unsigned int    to_level,
-                                     Vector<number> &      dst,
-                                     const Vector<number> &src) const
+                                     Vector<number>&       dst,
+                                     const Vector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
          ExcIndexRange(to_level, 1, prolongation_matrices.size() + 1));
@@ -228,8 +228,8 @@ MGTransferSelect<number>::prolongate(const unsigned int    to_level,
 template <typename number>
 void
 MGTransferSelect<number>::restrict_and_add(const unsigned int    from_level,
-                                           Vector<number> &      dst,
-                                           const Vector<number> &src) const
+                                           Vector<number>&       dst,
+                                           const Vector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));
@@ -251,7 +251,7 @@ MGTransferBlockSelect<number>::MGTransferBlockSelect() : selected_block(0)
 
 template <typename number>
 MGTransferBlockSelect<number>::MGTransferBlockSelect(
-  const MGConstrainedDoFs &mg_c) :
+  const MGConstrainedDoFs& mg_c) :
   MGTransferBlockBase(mg_c),
   selected_block(0)
 {}
@@ -260,8 +260,8 @@ MGTransferBlockSelect<number>::MGTransferBlockSelect(
 
 template <typename number>
 MGTransferBlockSelect<number>::MGTransferBlockSelect(
-  const ConstraintMatrix & /*c*/,
-  const MGConstrainedDoFs &mg_c) :
+  const ConstraintMatrix& /*c*/,
+  const MGConstrainedDoFs& mg_c) :
   MGTransferBlockBase(mg_c),
   selected_block(0)
 {}
@@ -271,8 +271,8 @@ MGTransferBlockSelect<number>::MGTransferBlockSelect(
 template <typename number>
 void
 MGTransferBlockSelect<number>::prolongate(const unsigned int    to_level,
-                                          Vector<number> &      dst,
-                                          const Vector<number> &src) const
+                                          Vector<number>&       dst,
+                                          const Vector<number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
          ExcIndexRange(to_level, 1, prolongation_matrices.size() + 1));
@@ -286,8 +286,8 @@ MGTransferBlockSelect<number>::prolongate(const unsigned int    to_level,
 template <typename number>
 void
 MGTransferBlockSelect<number>::restrict_and_add(const unsigned int from_level,
-                                                Vector<number> &   dst,
-                                                const Vector<number> &src) const
+                                                Vector<number>&    dst,
+                                                const Vector<number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));

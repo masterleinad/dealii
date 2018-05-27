@@ -103,7 +103,7 @@ namespace Utilities
   {
     ProcessGrid::ProcessGrid(
       MPI_Comm                                     mpi_comm,
-      const std::pair<unsigned int, unsigned int> &grid_dimensions) :
+      const std::pair<unsigned int, unsigned int>& grid_dimensions) :
       mpi_communicator(mpi_comm),
       this_mpi_process(Utilities::MPI::this_mpi_process(mpi_communicator)),
       n_mpi_processes(Utilities::MPI::n_mpi_processes(mpi_communicator)),
@@ -125,7 +125,7 @@ namespace Utilities
 
       // Initialize Cblas context from the provided communicator
       blacs_context     = Csys2blacs_handle(mpi_communicator);
-      const char *order = (column_major ? "Col" : "Row");
+      const char* order = (column_major ? "Col" : "Row");
       // Note that blacs_context can be modified below. Thus Cblacs2sys_handle
       // may not return the same MPI communicator.
       Cblacs_gridinit(&blacs_context, order, n_process_rows, n_process_columns);
@@ -240,7 +240,7 @@ namespace Utilities
 
     template <typename NumberType>
     void
-    ProcessGrid::send_to_inactive(NumberType *value, const int count) const
+    ProcessGrid::send_to_inactive(NumberType* value, const int count) const
     {
       Assert(count > 0, ExcInternalError());
       if (mpi_communicator_inactive_with_root != MPI_COMM_NULL)
@@ -261,12 +261,11 @@ namespace Utilities
 // instantiations
 
 template void
-Utilities::MPI::ProcessGrid::send_to_inactive<double>(double *,
-                                                      const int) const;
+Utilities::MPI::ProcessGrid::send_to_inactive<double>(double*, const int) const;
 template void
-Utilities::MPI::ProcessGrid::send_to_inactive<float>(float *, const int) const;
+Utilities::MPI::ProcessGrid::send_to_inactive<float>(float*, const int) const;
 template void
-Utilities::MPI::ProcessGrid::send_to_inactive<int>(int *, const int) const;
+Utilities::MPI::ProcessGrid::send_to_inactive<int>(int*, const int) const;
 
 DEAL_II_NAMESPACE_CLOSE
 

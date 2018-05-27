@@ -41,7 +41,7 @@ main()
 
     constexpr int structdim = 2;
     auto          objective =
-      [](const Tensor<1, GeometryInfo<structdim>::vertices_per_cell> &weights) {
+      [](const Tensor<1, GeometryInfo<structdim>::vertices_per_cell>& weights) {
         return std::sin(2.0 * weights[0]) * std::cos(3.0 * weights[1]) +
                std::cos(weights[2]);
       };

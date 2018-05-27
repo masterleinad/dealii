@@ -46,7 +46,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler)
+check_this(const DoFHandler<dim>& dof_handler)
 {
   const types::global_dof_index n_dofs = dof_handler.n_dofs();
 
@@ -60,7 +60,7 @@ check_this(const DoFHandler<dim> &dof_handler)
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  for (const auto &dof : locally_relevant_dofs)
+  for (const auto& dof : locally_relevant_dofs)
     if (is_hanging_node_constrained[dof])
       AssertThrow(constraints.is_constrained(dof), ExcInternalError());
 
@@ -76,7 +76,7 @@ check_this(const DoFHandler<dim> &dof_handler)
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe, const std::string &name)
+check(const FiniteElement<dim>& fe, const std::string& name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 
@@ -114,7 +114,7 @@ check(const FiniteElement<dim> &fe, const std::string &name)
   }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();

@@ -42,14 +42,14 @@ using namespace LocalIntegrators::Maxwell;
 
 template <int dim>
 void
-make_grid(Triangulation<dim> &tr)
+make_grid(Triangulation<dim>& tr)
 {
   GridGenerator::subdivided_hyper_cube(tr, 1, -1., 1.);
 }
 
 template <int dim>
 void
-TestMaxwellCurl(Triangulation<dim> &tr)
+TestMaxwellCurl(Triangulation<dim>& tr)
 {
   int element_order    = 1;
   int quadrature_order = 3;

@@ -117,48 +117,48 @@ namespace MeshWorker
    */
   template <class CellIteratorType, class ScratchData, class CopyData>
   void
-  mesh_loop(const CellIteratorType &                         begin,
-            const typename identity<CellIteratorType>::type &end,
+  mesh_loop(
+    const CellIteratorType&                          begin,
+    const typename identity<CellIteratorType>::type& end,
 
-            const typename identity<std::function<
-              void(const CellIteratorType &, ScratchData &, CopyData &)>>::type
-              &cell_worker,
-            const typename identity<std::function<void(const CopyData &)>>::type
-              &copier,
+    const typename identity<std::function<
+      void(const CellIteratorType&, ScratchData&, CopyData&)>>::type&
+                                                                         cell_worker,
+    const typename identity<std::function<void(const CopyData&)>>::type& copier,
 
-            const ScratchData &sample_scratch_data,
-            const CopyData &   sample_copy_data,
+    const ScratchData& sample_scratch_data,
+    const CopyData&    sample_copy_data,
 
-            const AssembleFlags flags = assemble_own_cells,
+    const AssembleFlags flags = assemble_own_cells,
 
-            const typename identity<std::function<void(const CellIteratorType &,
-                                                       const unsigned int &,
-                                                       ScratchData &,
-                                                       CopyData &)>>::type
-              &boundary_worker = std::function<void(const CellIteratorType &,
-                                                    const unsigned int &,
-                                                    ScratchData &,
-                                                    CopyData &)>(),
+    const typename identity<std::function<void(const CellIteratorType&,
+                                               const unsigned int&,
+                                               ScratchData&,
+                                               CopyData&)>>::type&
+      boundary_worker = std::function<void(const CellIteratorType&,
+                                           const unsigned int&,
+                                           ScratchData&,
+                                           CopyData&)>(),
 
-            const typename identity<std::function<void(const CellIteratorType &,
-                                                       const unsigned int &,
-                                                       const unsigned int &,
-                                                       const CellIteratorType &,
-                                                       const unsigned int &,
-                                                       const unsigned int &,
-                                                       ScratchData &,
-                                                       CopyData &)>>::type
-              &face_worker = std::function<void(const CellIteratorType &,
-                                                const unsigned int &,
-                                                const unsigned int &,
-                                                const CellIteratorType &,
-                                                const unsigned int &,
-                                                const unsigned int &,
-                                                ScratchData &,
-                                                CopyData &)>(),
+    const typename identity<std::function<void(const CellIteratorType&,
+                                               const unsigned int&,
+                                               const unsigned int&,
+                                               const CellIteratorType&,
+                                               const unsigned int&,
+                                               const unsigned int&,
+                                               ScratchData&,
+                                               CopyData&)>>::type& face_worker =
+      std::function<void(const CellIteratorType&,
+                         const unsigned int&,
+                         const unsigned int&,
+                         const CellIteratorType&,
+                         const unsigned int&,
+                         const unsigned int&,
+                         ScratchData&,
+                         CopyData&)>(),
 
-            const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
-            const unsigned int chunk_size   = 8)
+    const unsigned int queue_length = 2 * MultithreadInfo::n_threads(),
+    const unsigned int chunk_size   = 8)
   {
     Assert(
       (!cell_worker) == !(flags & work_on_cells),
@@ -193,9 +193,9 @@ namespace MeshWorker
       ExcMessage(
         "If you specify a boundary_worker, assemble_boundary_faces needs to be set."));
 
-    auto cell_action = [&](const CellIteratorType &cell,
-                           ScratchData &           scratch,
-                           CopyData &              copy) {
+    auto cell_action = [&](const CellIteratorType& cell,
+                           ScratchData&            scratch,
+                           CopyData&               copy) {
       // First reset the CopyData class to the empty copy_data given by the
       // user.
       copy = sample_copy_data;

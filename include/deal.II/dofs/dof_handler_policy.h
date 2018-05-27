@@ -90,7 +90,7 @@ namespace internal
          */
         virtual NumberCache
         renumber_dofs(
-          const std::vector<types::global_dof_index> &new_numbers) const = 0;
+          const std::vector<types::global_dof_index>& new_numbers) const = 0;
 
         /**
          * Renumber multilevel degrees of freedom on one level of a multigrid
@@ -103,7 +103,7 @@ namespace internal
         virtual NumberCache
         renumber_mg_dofs(
           const unsigned int                          level,
-          const std::vector<types::global_dof_index> &new_numbers) const = 0;
+          const std::vector<types::global_dof_index>& new_numbers) const = 0;
       };
 
 
@@ -121,7 +121,7 @@ namespace internal
          * @param dof_handler The DoFHandler object upon which this
          *   policy class is supposed to work.
          */
-        Sequential(DoFHandlerType &dof_handler);
+        Sequential(DoFHandlerType& dof_handler);
 
         // documentation is inherited
         virtual NumberCache
@@ -133,14 +133,14 @@ namespace internal
 
         // documentation is inherited
         virtual NumberCache
-        renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
+        renumber_dofs(const std::vector<types::global_dof_index>& new_numbers)
           const override;
 
         // documentation is inherited
         virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
-                         const std::vector<types::global_dof_index>
-                           &new_numbers) const override;
+                         const std::vector<types::global_dof_index>&
+                           new_numbers) const override;
 
       protected:
         /**
@@ -165,7 +165,7 @@ namespace internal
          * @param dof_handler The DoFHandler object upon which this
          *   policy class is supposed to work.
          */
-        ParallelShared(DoFHandlerType &dof_handler);
+        ParallelShared(DoFHandlerType& dof_handler);
 
         /**
          * Distribute degrees of freedom on the object given as first
@@ -194,14 +194,14 @@ namespace internal
          * parallel::distributed case.
          */
         virtual NumberCache
-        renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
+        renumber_dofs(const std::vector<types::global_dof_index>& new_numbers)
           const override;
 
         // documentation is inherited
         virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
-                         const std::vector<types::global_dof_index>
-                           &new_numbers) const override;
+                         const std::vector<types::global_dof_index>&
+                           new_numbers) const override;
 
       private:
         /**
@@ -226,7 +226,7 @@ namespace internal
          * @param dof_handler The DoFHandler object upon which this
          *   policy class is supposed to work.
          */
-        ParallelDistributed(DoFHandlerType &dof_handler);
+        ParallelDistributed(DoFHandlerType& dof_handler);
 
         // documentation is inherited
         virtual NumberCache
@@ -238,14 +238,14 @@ namespace internal
 
         // documentation is inherited
         virtual NumberCache
-        renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
+        renumber_dofs(const std::vector<types::global_dof_index>& new_numbers)
           const override;
 
         // documentation is inherited
         virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
-                         const std::vector<types::global_dof_index>
-                           &new_numbers) const override;
+                         const std::vector<types::global_dof_index>&
+                           new_numbers) const override;
 
       private:
         /**

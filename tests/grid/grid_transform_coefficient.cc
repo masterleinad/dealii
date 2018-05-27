@@ -34,7 +34,7 @@ class Coefficient : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     return (p[0] > 0 ? 10 : 1);
   }
@@ -83,7 +83,7 @@ main()
                    vertex_no < GeometryInfo<dim>::vertices_per_face;
                    ++vertex_no)
                 {
-                  const Point<dim> &v = face->vertex(vertex_no);
+                  const Point<dim>& v = face->vertex(vertex_no);
                   if (std::fabs(std::sqrt(v.square()) - outer_radius) < 1e-12)
                     {
                       // leave the

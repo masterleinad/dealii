@@ -52,29 +52,29 @@ namespace Functions
   {
   public:
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
     virtual void
-    vector_value(const Point<dim> &p, Vector<double> &values) const override;
+    vector_value(const Point<dim>& p, Vector<double>& values) const override;
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
     virtual void
-    vector_gradient(const Point<dim> &           p,
-                    std::vector<Tensor<1, dim>> &gradient) const override;
+    vector_gradient(const Point<dim>&            p,
+                    std::vector<Tensor<1, dim>>& gradient) const override;
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
   };
 
@@ -92,44 +92,44 @@ namespace Functions
   {
   public:
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<dim>> &,
-      std::vector<std::vector<Tensor<1, dim>>> &) const override;
+      const std::vector<Point<dim>>&,
+      std::vector<std::vector<Tensor<1, dim>>>&) const override;
 
     /**
      * Laplacian of the function at one point.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     /**
      * Laplacian of the function at multiple points.
      */
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
   };
 
@@ -164,44 +164,44 @@ namespace Functions
      * The value at a single point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Gradient at a single point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Gradients at multiple points.
      */
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     /**
      * Laplacian at a single point.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     /**
      * Laplacian at multiple points.
      */
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
 
   private:
@@ -229,48 +229,48 @@ namespace Functions
     CosineFunction(const unsigned int n_components = 1);
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
 
     /**
      * Second derivatives at a single point.
      */
     virtual SymmetricTensor<2, dim>
-    hessian(const Point<dim> & p,
+    hessian(const Point<dim>&  p,
             const unsigned int component = 0) const override;
 
     /**
      * Second derivatives at multiple points.
      */
     virtual void
-    hessian_list(const std::vector<Point<dim>> &       points,
-                 std::vector<SymmetricTensor<2, dim>> &hessians,
+    hessian_list(const std::vector<Point<dim>>&        points,
+                 std::vector<SymmetricTensor<2, dim>>& hessians,
                  const unsigned int component = 0) const override;
   };
 
@@ -297,33 +297,33 @@ namespace Functions
     CosineGradFunction();
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component) const override;
+    value(const Point<dim>& p, const unsigned int component) const override;
     virtual void
-    vector_value(const Point<dim> &p, Vector<double> &values) const override;
+    vector_value(const Point<dim>& p, Vector<double>& values) const override;
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim> &p, const unsigned int component) const override;
+    gradient(const Point<dim>& p, const unsigned int component) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<dim>> &           points,
-      std::vector<std::vector<Tensor<1, dim>>> &gradients) const override;
+      const std::vector<Point<dim>>&            points,
+      std::vector<std::vector<Tensor<1, dim>>>& gradients) const override;
 
     virtual double
-    laplacian(const Point<dim> &p, const unsigned int component) const override;
+    laplacian(const Point<dim>& p, const unsigned int component) const override;
   };
 
 
@@ -342,44 +342,44 @@ namespace Functions
      * The value at a single point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Gradient at a single point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Gradients at multiple points.
      */
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     /**
      * Laplacian at a single point.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     /**
      * Laplacian at multiple points.
      */
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
   };
 
@@ -400,38 +400,38 @@ namespace Functions
   {
   public:
     virtual double
-    value(const Point<2> &p, const unsigned int component = 0) const override;
+    value(const Point<2>& p, const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<2>> &points,
-               std::vector<double> &        values,
+    value_list(const std::vector<Point<2>>& points,
+               std::vector<double>&         values,
                const unsigned int           component = 0) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<2>> &points,
-                      std::vector<Vector<double>> &values) const override;
+    vector_value_list(const std::vector<Point<2>>& points,
+                      std::vector<Vector<double>>& values) const override;
 
     virtual Tensor<1, 2>
-    gradient(const Point<2> &   p,
+    gradient(const Point<2>&    p,
              const unsigned int component = 0) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<2>> &points,
-                  std::vector<Tensor<1, 2>> &  gradients,
+    gradient_list(const std::vector<Point<2>>& points,
+                  std::vector<Tensor<1, 2>>&   gradients,
                   const unsigned int           component = 0) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<2>> &,
-      std::vector<std::vector<Tensor<1, 2>>> &) const override;
+      const std::vector<Point<2>>&,
+      std::vector<std::vector<Tensor<1, 2>>>&) const override;
 
     virtual double
-    laplacian(const Point<2> &   p,
+    laplacian(const Point<2>&    p,
               const unsigned int component = 0) const override;
 
     virtual void
-    laplacian_list(const std::vector<Point<2>> &points,
-                   std::vector<double> &        values,
+    laplacian_list(const std::vector<Point<2>>& points,
+                   std::vector<double>&         values,
                    const unsigned int           component = 0) const override;
   };
 
@@ -454,36 +454,36 @@ namespace Functions
      */
     LSingularityGradFunction();
     virtual double
-    value(const Point<2> &p, const unsigned int component) const override;
+    value(const Point<2>& p, const unsigned int component) const override;
 
     virtual void
-    value_list(const std::vector<Point<2>> &points,
-               std::vector<double> &        values,
+    value_list(const std::vector<Point<2>>& points,
+               std::vector<double>&         values,
                const unsigned int           component) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<2>> &points,
-                      std::vector<Vector<double>> &values) const override;
+    vector_value_list(const std::vector<Point<2>>& points,
+                      std::vector<Vector<double>>& values) const override;
 
     virtual Tensor<1, 2>
-    gradient(const Point<2> &p, const unsigned int component) const override;
+    gradient(const Point<2>& p, const unsigned int component) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<2>> &points,
-                  std::vector<Tensor<1, 2>> &  gradients,
+    gradient_list(const std::vector<Point<2>>& points,
+                  std::vector<Tensor<1, 2>>&   gradients,
                   const unsigned int           component) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<2>> &,
-      std::vector<std::vector<Tensor<1, 2>>> &) const override;
+      const std::vector<Point<2>>&,
+      std::vector<std::vector<Tensor<1, 2>>>&) const override;
 
     virtual double
-    laplacian(const Point<2> &p, const unsigned int component) const override;
+    laplacian(const Point<2>& p, const unsigned int component) const override;
 
     virtual void
-    laplacian_list(const std::vector<Point<2>> &points,
-                   std::vector<double> &        values,
+    laplacian_list(const std::vector<Point<2>>& points,
+                   std::vector<double>&         values,
                    const unsigned int           component) const override;
   };
 
@@ -500,38 +500,38 @@ namespace Functions
   {
   public:
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<dim>> &,
-      std::vector<std::vector<Tensor<1, dim>>> &) const override;
+      const std::vector<Point<dim>>&,
+      std::vector<std::vector<Tensor<1, dim>>>&) const override;
 
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
   };
 
@@ -546,38 +546,38 @@ namespace Functions
   {
   public:
     virtual double
-    value(const Point<2> &p, const unsigned int component = 0) const override;
+    value(const Point<2>& p, const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<2>> &points,
-               std::vector<double> &        values,
+    value_list(const std::vector<Point<2>>& points,
+               std::vector<double>&         values,
                const unsigned int           component = 0) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<2>> &points,
-                      std::vector<Vector<double>> &values) const override;
+    vector_value_list(const std::vector<Point<2>>& points,
+                      std::vector<Vector<double>>& values) const override;
 
     virtual Tensor<1, 2>
-    gradient(const Point<2> &   p,
+    gradient(const Point<2>&    p,
              const unsigned int component = 0) const override;
 
     virtual void
-    gradient_list(const std::vector<Point<2>> &points,
-                  std::vector<Tensor<1, 2>> &  gradients,
+    gradient_list(const std::vector<Point<2>>& points,
+                  std::vector<Tensor<1, 2>>&   gradients,
                   const unsigned int           component = 0) const override;
 
     virtual void
     vector_gradient_list(
-      const std::vector<Point<2>> &,
-      std::vector<std::vector<Tensor<1, 2>>> &) const override;
+      const std::vector<Point<2>>&,
+      std::vector<std::vector<Tensor<1, 2>>>&) const override;
 
     virtual double
-    laplacian(const Point<2> &   p,
+    laplacian(const Point<2>&    p,
               const unsigned int component = 0) const override;
 
     virtual void
-    laplacian_list(const std::vector<Point<2>> &points,
-                   std::vector<double> &        values,
+    laplacian_list(const std::vector<Point<2>>& points,
+                   std::vector<double>&         values,
                    const unsigned int           component = 0) const override;
   };
 
@@ -606,50 +606,50 @@ namespace Functions
      * Constructor. Provide the advection direction here and the steepness of
      * the slope.
      */
-    JumpFunction(const Point<dim> &direction, const double steepness);
+    JumpFunction(const Point<dim>& direction, const double steepness);
 
     /**
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Gradient at one point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Gradients at multiple points.
      */
     virtual void
-    gradient_list(const std::vector<Point<dim>> &points,
-                  std::vector<Tensor<1, dim>> &  gradients,
+    gradient_list(const std::vector<Point<dim>>& points,
+                  std::vector<Tensor<1, dim>>&   gradients,
                   const unsigned int             component = 0) const override;
 
     /**
      * Laplacian of the function at one point.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     /**
      * Laplacian of the function at multiple points.
      */
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &points,
-                   std::vector<double> &          values,
+    laplacian_list(const std::vector<Point<dim>>& points,
+                   std::vector<double>&           values,
                    const unsigned int             component = 0) const override;
 
     /**
@@ -710,7 +710,7 @@ namespace Functions
      * Constructor. Take the Fourier coefficients in each space direction as
      * argument.
      */
-    FourierCosineFunction(const Tensor<1, dim> &fourier_coefficients);
+    FourierCosineFunction(const Tensor<1, dim>& fourier_coefficients);
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -719,21 +719,21 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
   private:
@@ -765,7 +765,7 @@ namespace Functions
      * Constructor. Take the Fourier coefficients in each space direction as
      * argument.
      */
-    FourierSineFunction(const Tensor<1, dim> &fourier_coefficients);
+    FourierSineFunction(const Tensor<1, dim>& fourier_coefficients);
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -774,21 +774,21 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
   private:
@@ -816,8 +816,8 @@ namespace Functions
      * Constructor. Take the Fourier coefficients in each space direction as
      * argument.
      */
-    FourierSineSum(const std::vector<Point<dim>> &fourier_coefficients,
-                   const std::vector<double> &    weights);
+    FourierSineSum(const std::vector<Point<dim>>& fourier_coefficients,
+                   const std::vector<double>&     weights);
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -826,21 +826,21 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
   private:
@@ -871,8 +871,8 @@ namespace Functions
      * Constructor. Take the Fourier coefficients in each space direction as
      * argument.
      */
-    FourierCosineSum(const std::vector<Point<dim>> &fourier_coefficients,
-                     const std::vector<double> &    weights);
+    FourierCosineSum(const std::vector<Point<dim>>& fourier_coefficients,
+                     const std::vector<double>&     weights);
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -881,21 +881,21 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
     virtual double
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
   private:
@@ -941,7 +941,7 @@ namespace Functions
      * Move the center of the ball to new point <tt>p</tt>.
      */
     void
-    new_center(const Point<dim> &p);
+    new_center(const Point<dim>& p);
 
     /**
      * Set the radius of the ball to <tt>r</tt>.
@@ -998,22 +998,22 @@ namespace Functions
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
   };
 
 
@@ -1046,22 +1046,22 @@ namespace Functions
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
   };
 
 
@@ -1095,28 +1095,28 @@ namespace Functions
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const override;
 
     /**
      * Function gradient at one point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
   };
 
@@ -1145,14 +1145,14 @@ namespace Functions
      * components this object shall represent. All vector components will have
      * the same value.
      */
-    Monomial(const Tensor<1, dim> &exponents,
+    Monomial(const Tensor<1, dim>& exponents,
              const unsigned int    n_components = 1);
 
     /**
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Return all components of a vector-valued function at a given point.
@@ -1161,21 +1161,21 @@ namespace Functions
      * #n_components.
      */
     virtual void
-    vector_value(const Point<dim> &p, Vector<double> &values) const override;
+    vector_value(const Point<dim>& p, Vector<double>& values) const override;
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Function gradient at one point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
   private:
@@ -1237,8 +1237,8 @@ namespace Functions
      * other data types into a table where you specify this argument.
      */
     InterpolatedTensorProductGridData(
-      const std::array<std::vector<double>, dim> &coordinate_values,
-      const Table<dim, double> &                  data_values);
+      const std::array<std::vector<double>, dim>& coordinate_values,
+      const Table<dim, double>&                   data_values);
 
     /**
      * Compute the value of the function set by bilinear interpolation of the
@@ -1251,7 +1251,7 @@ namespace Functions
      * the set of coordinates, the function is extended by a constant.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Compute the gradient of the function defined by bilinear interpolation
@@ -1265,7 +1265,7 @@ namespace Functions
      * is extended by a constant and so its gradient is extended by 0.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
   protected:
@@ -1273,7 +1273,7 @@ namespace Functions
      * Find the index in the table of the rectangle containing an input point
      */
     TableIndices<dim>
-    table_index_of_point(const Point<dim> &p) const;
+    table_index_of_point(const Point<dim>& p) const;
 
     /**
      * The set of coordinate values in each of the coordinate directions.
@@ -1341,9 +1341,9 @@ namespace Functions
      * other data types into a table where you specify this argument.
      */
     InterpolatedUniformGridData(
-      const std::array<std::pair<double, double>, dim> &interval_endpoints,
-      const std::array<unsigned int, dim> &             n_subintervals,
-      const Table<dim, double> &                        data_values);
+      const std::array<std::pair<double, double>, dim>& interval_endpoints,
+      const std::array<unsigned int, dim>&              n_subintervals,
+      const Table<dim, double>&                         data_values);
 
     /**
      * Compute the value of the function set by bilinear interpolation of the
@@ -1356,7 +1356,7 @@ namespace Functions
      * the set of coordinates, the function is extended by a constant.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
   private:
     /**
@@ -1401,29 +1401,29 @@ namespace Functions
      * x_{d}^{\alpha_{i,d}}$. The i-th element of the coefficients vector
      * contains the coefficient $a_{i}$ for the i-th monomial.
      */
-    Polynomial(const Table<2, double> &   exponents,
-               const std::vector<double> &coefficients);
+    Polynomial(const Table<2, double>&    exponents,
+               const std::vector<double>& coefficients);
 
     /**
      * Function value at one point.
      */
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
 
     /**
      * Function values at multiple points.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const override;
 
     /**
      * Function gradient at one point.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
   private:

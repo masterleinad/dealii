@@ -56,7 +56,7 @@ const double Y_C = 0.2; // center
 const unsigned int MANIFOLD_ID = 1;
 
 
-void create_triangulation(Triangulation<2> &tria)
+void create_triangulation(Triangulation<2>& tria)
 {
   AssertThrow(std::abs((X_2 - X_1) - 2.0 * (X_C - X_1)) < 1.0e-12,
               ExcMessage("Geometry parameters X_1,X_2,X_C invalid!"));
@@ -96,7 +96,7 @@ void create_triangulation(Triangulation<2> &tria)
     {
       for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         {
-          Point<2> &vertex = cell->vertex(v);
+          Point<2>& vertex = cell->vertex(v);
           if (std::abs(vertex[0] - X_2) < 1e-10 &&
               std::abs(vertex[1] - Y_C) < 1e-10)
             {
@@ -165,7 +165,7 @@ void create_triangulation(Triangulation<2> &tria)
     }
 }
 
-void create_triangulation(Triangulation<3> &tria)
+void create_triangulation(Triangulation<3>& tria)
 {
   Triangulation<2> tria_2d;
   create_triangulation(tria_2d);
@@ -185,22 +185,22 @@ void create_triangulation(Triangulation<3> &tria)
 template <int dim>
 struct ManifoldWrapper
 {
-  Manifold<dim> *
-  operator()(const Tensor<1, dim> &direction, const Point<dim> &center) const;
+  Manifold<dim>*
+  operator()(const Tensor<1, dim>& direction, const Point<dim>& center) const;
 };
 
 template <>
-Manifold<2> *
-ManifoldWrapper<2>::operator()(const Tensor<1, 2> & /*direction*/,
-                               const Point<2> &center) const
+Manifold<2>*
+ManifoldWrapper<2>::operator()(const Tensor<1, 2>& /*direction*/,
+                               const Point<2>& center) const
 {
   return new SphericalManifold<2>(center);
 }
 
 template <>
-Manifold<3> *
-ManifoldWrapper<3>::operator()(const Tensor<1, 3> &direction,
-                               const Point<3> &    center) const
+Manifold<3>*
+ManifoldWrapper<3>::operator()(const Tensor<1, 3>& direction,
+                               const Point<3>&     center) const
 {
   return new CylindricalManifold<3>(direction, center);
 }

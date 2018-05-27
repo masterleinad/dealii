@@ -141,7 +141,7 @@ MaxEmptyLinesToKeep: 3
 
 NamespaceIndentation: All
 
-PointerAlignment: Right
+PointerAlignment: Left
 
 ReflowComments: true
 CommentPragmas: '@(ref|p|copydoc) '

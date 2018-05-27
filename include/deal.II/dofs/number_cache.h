@@ -44,13 +44,13 @@ namespace internal
        * Copy constructor. Simply copy all members of the referenced
        * object to the current object.
        */
-      NumberCache(const NumberCache &) = default;
+      NumberCache(const NumberCache&) = default;
 
       /**
        * Move constructor. Simply move all members of the referenced
        * object to the current object.
        */
-      NumberCache(NumberCache &&) = default;
+      NumberCache(NumberCache&&) = default;
 
       /**
        * Create a NumberCache object that corresponds to a sequential
@@ -77,22 +77,22 @@ namespace internal
        * All other fields stored by the current object can be and are computed
        * from the argument.
        */
-      NumberCache(const std::vector<IndexSet> &locally_owned_dofs_per_processor,
+      NumberCache(const std::vector<IndexSet>& locally_owned_dofs_per_processor,
                   const unsigned int           my_rank);
 
       /**
        * Copy operator. Simply copy all members of the referenced
        * object to the current object.
        */
-      NumberCache &
-      operator=(const NumberCache &) = default;
+      NumberCache&
+      operator=(const NumberCache&) = default;
 
       /**
        * Move assignment operator. Simply move all members of the referenced
        * object to the current object.
        */
-      NumberCache &
-      operator=(NumberCache &&) = default;
+      NumberCache&
+      operator=(NumberCache&&) = default;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
@@ -162,18 +162,18 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
 
     template <class Archive>
     void
-    NumberCache::serialize(Archive &ar, const unsigned int /*version*/)
+    NumberCache::serialize(Archive& ar, const unsigned int /*version*/)
     {
-      ar &n_global_dofs &n_locally_owned_dofs;
-      ar &               locally_owned_dofs;
-      ar &               n_locally_owned_dofs_per_processor;
-      ar &               locally_owned_dofs_per_processor;
+      ar& n_global_dofs& n_locally_owned_dofs;
+      ar&                locally_owned_dofs;
+      ar&                n_locally_owned_dofs_per_processor;
+      ar&                locally_owned_dofs_per_processor;
     }
 
   } // namespace DoFHandlerImplementation

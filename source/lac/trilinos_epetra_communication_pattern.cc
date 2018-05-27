@@ -34,9 +34,9 @@ namespace LinearAlgebra
   namespace EpetraWrappers
   {
     CommunicationPattern::CommunicationPattern(
-      const IndexSet &vector_space_vector_index_set,
-      const IndexSet &read_write_vector_index_set,
-      const MPI_Comm &communicator)
+      const IndexSet& vector_space_vector_index_set,
+      const IndexSet& read_write_vector_index_set,
+      const MPI_Comm& communicator)
     {
       // virtual functions called in constructors and destructors never use the
       // override in a derived class
@@ -49,9 +49,9 @@ namespace LinearAlgebra
 
 
     void
-    CommunicationPattern::reinit(const IndexSet &vector_space_vector_index_set,
-                                 const IndexSet &read_write_vector_index_set,
-                                 const MPI_Comm &communicator)
+    CommunicationPattern::reinit(const IndexSet& vector_space_vector_index_set,
+                                 const IndexSet& read_write_vector_index_set,
+                                 const MPI_Comm& communicator)
     {
       comm = std::make_shared<const MPI_Comm>(communicator);
 
@@ -69,7 +69,7 @@ namespace LinearAlgebra
 
 
 
-    const MPI_Comm &
+    const MPI_Comm&
     CommunicationPattern::get_mpi_communicator() const
     {
       return *comm;
@@ -77,7 +77,7 @@ namespace LinearAlgebra
 
 
 
-    const Epetra_Import &
+    const Epetra_Import&
     CommunicationPattern::get_epetra_import() const
     {
       return *import;

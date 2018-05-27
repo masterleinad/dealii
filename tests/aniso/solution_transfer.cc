@@ -49,7 +49,7 @@ public:
   MyFunction() : Function<dim>(){};
 
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     double ret_value = sin(p[0] * 4) * cos(p[1] * 4);
     if (dim == 3)
@@ -61,7 +61,7 @@ public:
 
 template <int dim>
 void
-transfer(std::ostream &out)
+transfer(std::ostream& out)
 {
   MyFunction<dim>    function;
   Triangulation<dim> tria(Triangulation<dim>::allow_anisotropic_smoothing);

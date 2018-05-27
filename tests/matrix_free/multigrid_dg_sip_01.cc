@@ -67,8 +67,8 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim> &   mapping,
-             const DoFHandler<dim> &dof_handler,
+  initialize(const Mapping<dim>&    mapping,
+             const DoFHandler<dim>& dof_handler,
              const unsigned int     level = numbers::invalid_unsigned_int)
   {
     const QGauss<1>                                  quad(n_q_points_1d);
@@ -90,31 +90,31 @@ public:
   }
 
   void
-  vmult(parallel::distributed::Vector<number> &      dst,
-        const parallel::distributed::Vector<number> &src) const
+  vmult(parallel::distributed::Vector<number>&       dst,
+        const parallel::distributed::Vector<number>& src) const
   {
     dst = 0;
     vmult_add(dst, src);
   }
 
   void
-  Tvmult(parallel::distributed::Vector<number> &      dst,
-         const parallel::distributed::Vector<number> &src) const
+  Tvmult(parallel::distributed::Vector<number>&       dst,
+         const parallel::distributed::Vector<number>& src) const
   {
     dst = 0;
     vmult_add(dst, src);
   }
 
   void
-  Tvmult_add(parallel::distributed::Vector<number> &      dst,
-             const parallel::distributed::Vector<number> &src) const
+  Tvmult_add(parallel::distributed::Vector<number>&       dst,
+             const parallel::distributed::Vector<number>& src) const
   {
     vmult_add(dst, src);
   }
 
   void
-  vmult_add(parallel::distributed::Vector<number> &      dst,
-            const parallel::distributed::Vector<number> &src) const
+  vmult_add(parallel::distributed::Vector<number>&       dst,
+            const parallel::distributed::Vector<number>& src) const
   {
     if (!src.partitioners_are_globally_compatible(
           *data.get_dof_info(0).vector_partitioner))
@@ -122,7 +122,7 @@ public:
         parallel::distributed::Vector<number> src_copy;
         src_copy.reinit(data.get_dof_info().vector_partitioner);
         src_copy = src;
-        const_cast<parallel::distributed::Vector<number> &>(src).swap(src_copy);
+        const_cast<parallel::distributed::Vector<number>&>(src).swap(src_copy);
       }
     if (!dst.partitioners_are_globally_compatible(
           *data.get_dof_info(0).vector_partitioner))
@@ -162,12 +162,12 @@ public:
   }
 
   void
-  initialize_dof_vector(parallel::distributed::Vector<number> &vector) const
+  initialize_dof_vector(parallel::distributed::Vector<number>& vector) const
   {
     data.initialize_dof_vector(vector);
   }
 
-  const parallel::distributed::Vector<number> &
+  const parallel::distributed::Vector<number>&
   get_matrix_diagonal_inverse() const
   {
     return inverse_diagonal_entries;
@@ -176,10 +176,10 @@ public:
 
 private:
   void
-  local_apply(const MatrixFree<dim, number> &              data,
-              parallel::distributed::Vector<number> &      dst,
-              const parallel::distributed::Vector<number> &src,
-              const std::pair<unsigned int, unsigned int> &cell_range) const
+  local_apply(const MatrixFree<dim, number>&               data,
+              parallel::distributed::Vector<number>&       dst,
+              const parallel::distributed::Vector<number>& src,
+              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -197,10 +197,10 @@ private:
 
   void
   local_apply_face(
-    const MatrixFree<dim, number> &              data,
-    parallel::distributed::Vector<number> &      dst,
-    const parallel::distributed::Vector<number> &src,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&               data,
+    parallel::distributed::Vector<number>&       dst,
+    const parallel::distributed::Vector<number>& src,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> fe_eval(data,
                                                                        true);
@@ -246,10 +246,10 @@ private:
 
   void
   local_apply_boundary(
-    const MatrixFree<dim, number> &              data,
-    parallel::distributed::Vector<number> &      dst,
-    const parallel::distributed::Vector<number> &src,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&               data,
+    parallel::distributed::Vector<number>&       dst,
+    const parallel::distributed::Vector<number>& src,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> fe_eval(data,
                                                                        true);
@@ -298,10 +298,10 @@ private:
 
   void
   local_diagonal_cell(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const unsigned int &,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const unsigned int&,
+    const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -329,10 +329,10 @@ private:
 
   void
   local_diagonal_face(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const unsigned int &,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const unsigned int&,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data, true);
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi_outer(data,
@@ -415,10 +415,10 @@ private:
 
   void
   local_diagonal_boundary(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const unsigned int &,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const unsigned int&,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -474,15 +474,15 @@ public:
   {}
 
   void
-  initialize(const MATRIX &matrix)
+  initialize(const MATRIX& matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
   operator()(const unsigned int,
-             parallel::distributed::Vector<double> &      dst,
-             const parallel::distributed::Vector<double> &src) const
+             parallel::distributed::Vector<double>&       dst,
+             const parallel::distributed::Vector<double>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10, false, false);
     SolverCG<parallel::distributed::Vector<double>> solver_coarse(
@@ -490,7 +490,7 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MATRIX *coarse_matrix;
+  const MATRIX* coarse_matrix;
 };
 
 
@@ -500,8 +500,8 @@ class MGTransferMF
   : public MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>
 {
 public:
-  MGTransferMF(const MGLevelObject<LAPLACEOPERATOR> &laplace,
-               const MGConstrainedDoFs &             mg_constrained_dofs) :
+  MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
+               const MGConstrainedDoFs&              mg_constrained_dofs) :
     MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
       mg_constrained_dofs),
     laplace_operator(laplace){};
@@ -511,10 +511,10 @@ public:
    */
   template <class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim> &         mg_dof_handler,
+  copy_to_mg(const DoFHandler<dim, spacedim>&          mg_dof_handler,
              MGLevelObject<LinearAlgebra::distributed::Vector<
-               typename LAPLACEOPERATOR::value_type>> &dst,
-             const InVector &                          src) const
+               typename LAPLACEOPERATOR::value_type>>& dst,
+             const InVector&                           src) const
   {
     for (unsigned int level = dst.min_level(); level <= dst.max_level();
          ++level)
@@ -524,14 +524,14 @@ public:
   }
 
 private:
-  const MGLevelObject<LAPLACEOPERATOR> &laplace_operator;
+  const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
 
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
-do_test(const DoFHandler<dim> &dof, const bool also_test_parallel = false)
+do_test(const DoFHandler<dim>& dof, const bool also_test_parallel = false)
 {
   deallog << "Testing " << dof.get_fe().get_name();
   deallog << std::endl;
@@ -639,7 +639,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
   mpi_initlog();

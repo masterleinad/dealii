@@ -51,7 +51,7 @@ test()
     {
       fe_collection.n_blocks();
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

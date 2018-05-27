@@ -35,7 +35,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
 inline hid_t
-hdf5_type_id(const number *)
+hdf5_type_id(const number*)
 {
   Assert(false, dealii::ExcNotImplemented());
   // don't know what to put here; it does not matter
@@ -43,31 +43,31 @@ hdf5_type_id(const number *)
 }
 
 inline hid_t
-hdf5_type_id(const double *)
+hdf5_type_id(const double*)
 {
   return H5T_NATIVE_DOUBLE;
 }
 
 inline hid_t
-hdf5_type_id(const float *)
+hdf5_type_id(const float*)
 {
   return H5T_NATIVE_FLOAT;
 }
 
 inline hid_t
-hdf5_type_id(const int *)
+hdf5_type_id(const int*)
 {
   return H5T_NATIVE_INT;
 }
 
 inline hid_t
-hdf5_type_id(const unsigned int *)
+hdf5_type_id(const unsigned int*)
 {
   return H5T_NATIVE_UINT;
 }
 
 inline hid_t
-hdf5_type_id(const char *)
+hdf5_type_id(const char*)
 {
   return H5T_NATIVE_CHAR;
 }
@@ -79,7 +79,7 @@ template <typename NumberType>
 ScaLAPACKMatrix<NumberType>::ScaLAPACKMatrix(
   const size_type                                           n_rows_,
   const size_type                                           n_columns_,
-  const std::shared_ptr<const Utilities::MPI::ProcessGrid> &process_grid,
+  const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
   const size_type                                           row_block_size_,
   const size_type                                           column_block_size_,
   const LAPACKSupport::Property                             property_) :
@@ -120,7 +120,7 @@ void
 ScaLAPACKMatrix<NumberType>::reinit(
   const size_type                                           n_rows_,
   const size_type                                           n_columns_,
-  const std::shared_ptr<const Utilities::MPI::ProcessGrid> &process_grid,
+  const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
   const size_type                                           row_block_size_,
   const size_type                                           column_block_size_,
   const LAPACKSupport::Property                             property_)
@@ -232,8 +232,8 @@ ScaLAPACKMatrix<NumberType>::get_state() const
 
 
 template <typename NumberType>
-ScaLAPACKMatrix<NumberType> &
-ScaLAPACKMatrix<NumberType>::operator=(const FullMatrix<NumberType> &matrix)
+ScaLAPACKMatrix<NumberType>&
+ScaLAPACKMatrix<NumberType>::operator=(const FullMatrix<NumberType>& matrix)
 {
   // FIXME: another way to copy is to use pdgeadd_ PBLAS routine.
   // This routine computes the sum of two matrices B:=a*A+b*B.
@@ -299,7 +299,7 @@ ScaLAPACKMatrix<NumberType>::global_column(const unsigned int loc_column) const
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType> &matrix) const
+ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType>& matrix) const
 {
   // FIXME: use PDGEMR2D for copying?
   // PDGEMR2D copies a submatrix of A on a submatrix of B.
@@ -344,10 +344,10 @@ ScaLAPACKMatrix<NumberType>::copy_to(FullMatrix<NumberType> &matrix) const
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::copy_to(
-  ScaLAPACKMatrix<NumberType> &                B,
-  const std::pair<unsigned int, unsigned int> &offset_A,
-  const std::pair<unsigned int, unsigned int> &offset_B,
-  const std::pair<unsigned int, unsigned int> &submatrix_size) const
+  ScaLAPACKMatrix<NumberType>&                 B,
+  const std::pair<unsigned int, unsigned int>& offset_A,
+  const std::pair<unsigned int, unsigned int>& offset_B,
+  const std::pair<unsigned int, unsigned int>& submatrix_size) const
 {
   // submatrix is empty
   if (submatrix_size.first == 0 || submatrix_size.second == 0)
@@ -383,7 +383,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
    * need to create a union MPI communicator to initialise the BLACS context
    */
   int union_blacs_context = Csys2blacs_handle(this->grid->mpi_communicator);
-  const char *order       = "Col";
+  const char* order       = "Col";
   int         union_n_process_rows =
     Utilities::MPI::n_mpi_processes(this->grid->mpi_communicator);
   int union_n_process_columns = 1;
@@ -424,8 +424,8 @@ ScaLAPACKMatrix<NumberType>::copy_to(
 
   std::array<int, 9> desc_A, desc_B;
 
-  const NumberType *loc_vals_A = nullptr;
-  NumberType *      loc_vals_B = nullptr;
+  const NumberType* loc_vals_A = nullptr;
+  NumberType*       loc_vals_B = nullptr;
 
   // Note: the function pgemr2d has to be called for all processes in the union
   // BLACS context If the calling process is not part of the BLACS context of A,
@@ -476,7 +476,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType> &dest) const
+ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType>& dest) const
 {
   Assert(n_rows == dest.n_rows, ExcDimensionMismatch(n_rows, dest.n_rows));
   Assert(n_columns == dest.n_columns,
@@ -537,7 +537,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType> &dest) const
        * B
        */
       int union_blacs_context = Csys2blacs_handle(mpi_communicator_union);
-      const char *order       = "Col";
+      const char* order       = "Col";
       int         union_n_process_rows =
         Utilities::MPI::n_mpi_processes(mpi_communicator_union);
       int union_n_process_columns = 1;
@@ -546,8 +546,8 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType> &dest) const
                       union_n_process_rows,
                       union_n_process_columns);
 
-      const NumberType *loc_vals_source = nullptr;
-      NumberType *      loc_vals_dest   = nullptr;
+      const NumberType* loc_vals_source = nullptr;
+      NumberType*       loc_vals_dest   = nullptr;
 
       if (this->grid->mpi_process_is_active && (this->values.size() > 0))
         {
@@ -604,7 +604,7 @@ ScaLAPACKMatrix<NumberType>::copy_to(ScaLAPACKMatrix<NumberType> &dest) const
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::copy_transposed(
-  const ScaLAPACKMatrix<NumberType> &B)
+  const ScaLAPACKMatrix<NumberType>& B)
 {
   add(B, 0, 1, true);
 }
@@ -613,7 +613,7 @@ ScaLAPACKMatrix<NumberType>::copy_transposed(
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType>& B,
                                  const NumberType                   alpha,
                                  const NumberType                   beta,
                                  const bool                         transpose_B)
@@ -643,9 +643,9 @@ ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType> &B,
   if (this->grid->mpi_process_is_active)
     {
       char        trans_b = transpose_B ? 'T' : 'N';
-      NumberType *A_loc =
+      NumberType* A_loc =
         (this->values.size() > 0) ? &this->values[0] : nullptr;
-      const NumberType *B_loc = (B.values.size() > 0) ? &B.values[0] : nullptr;
+      const NumberType* B_loc = (B.values.size() > 0) ? &B.values[0] : nullptr;
 
       pgeadd(&trans_b,
              &n_rows,
@@ -669,7 +669,7 @@ ScaLAPACKMatrix<NumberType>::add(const ScaLAPACKMatrix<NumberType> &B,
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::add(const NumberType                   a,
-                                 const ScaLAPACKMatrix<NumberType> &B)
+                                 const ScaLAPACKMatrix<NumberType>& B)
 {
   add(B, 1, a, false);
 }
@@ -679,7 +679,7 @@ ScaLAPACKMatrix<NumberType>::add(const NumberType                   a,
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::Tadd(const NumberType                   a,
-                                  const ScaLAPACKMatrix<NumberType> &B)
+                                  const ScaLAPACKMatrix<NumberType>& B)
 {
   add(B, 1, a, true);
 }
@@ -689,9 +689,9 @@ ScaLAPACKMatrix<NumberType>::Tadd(const NumberType                   a,
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
-                                  const ScaLAPACKMatrix<NumberType> &B,
+                                  const ScaLAPACKMatrix<NumberType>& B,
                                   const NumberType                   c,
-                                  ScaLAPACKMatrix<NumberType> &      C,
+                                  ScaLAPACKMatrix<NumberType>&       C,
                                   const bool transpose_A,
                                   const bool transpose_B) const
 {
@@ -769,11 +769,11 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
       char trans_a = transpose_A ? 'T' : 'N';
       char trans_b = transpose_B ? 'T' : 'N';
 
-      const NumberType *A_loc =
+      const NumberType* A_loc =
         (this->values.size() > 0) ? (&(this->values[0])) : nullptr;
-      const NumberType *B_loc =
+      const NumberType* B_loc =
         (B.values.size() > 0) ? (&(B.values[0])) : nullptr;
-      NumberType *C_loc = (C.values.size() > 0) ? (&(C.values[0])) : nullptr;
+      NumberType* C_loc = (C.values.size() > 0) ? (&(C.values[0])) : nullptr;
       int         m     = C.n_rows;
       int         n     = C.n_columns;
       int         k     = transpose_A ? this->n_rows : this->n_columns;
@@ -805,8 +805,8 @@ ScaLAPACKMatrix<NumberType>::mult(const NumberType                   b,
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::mmult(ScaLAPACKMatrix<NumberType> &      C,
-                                   const ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::mmult(ScaLAPACKMatrix<NumberType>&       C,
+                                   const ScaLAPACKMatrix<NumberType>& B,
                                    const bool adding) const
 {
   if (adding)
@@ -819,8 +819,8 @@ ScaLAPACKMatrix<NumberType>::mmult(ScaLAPACKMatrix<NumberType> &      C,
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::Tmmult(ScaLAPACKMatrix<NumberType> &      C,
-                                    const ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::Tmmult(ScaLAPACKMatrix<NumberType>&       C,
+                                    const ScaLAPACKMatrix<NumberType>& B,
                                     const bool adding) const
 {
   if (adding)
@@ -833,8 +833,8 @@ ScaLAPACKMatrix<NumberType>::Tmmult(ScaLAPACKMatrix<NumberType> &      C,
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::mTmult(ScaLAPACKMatrix<NumberType> &      C,
-                                    const ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::mTmult(ScaLAPACKMatrix<NumberType>&       C,
+                                    const ScaLAPACKMatrix<NumberType>& B,
                                     const bool adding) const
 {
   if (adding)
@@ -847,8 +847,8 @@ ScaLAPACKMatrix<NumberType>::mTmult(ScaLAPACKMatrix<NumberType> &      C,
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::TmTmult(ScaLAPACKMatrix<NumberType> &      C,
-                                     const ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::TmTmult(ScaLAPACKMatrix<NumberType>&       C,
+                                     const ScaLAPACKMatrix<NumberType>& B,
                                      const bool adding) const
 {
   if (adding)
@@ -874,7 +874,7 @@ ScaLAPACKMatrix<NumberType>::compute_cholesky_factorization()
   if (grid->mpi_process_is_active)
     {
       int         info  = 0;
-      NumberType *A_loc = &this->values[0];
+      NumberType* A_loc = &this->values[0];
       // pdpotrf_(&uplo,&n_columns,A_loc,&submatrix_row,&submatrix_column,descriptor,&info);
       ppotrf(&uplo,
              &n_columns,
@@ -903,7 +903,7 @@ ScaLAPACKMatrix<NumberType>::compute_lu_factorization()
   if (grid->mpi_process_is_active)
     {
       int         info  = 0;
-      NumberType *A_loc = &this->values[0];
+      NumberType* A_loc = &this->values[0];
 
       const int iarow = indxg2p_(&submatrix_row,
                                  &row_block_size,
@@ -956,7 +956,7 @@ ScaLAPACKMatrix<NumberType>::invert()
   if (grid->mpi_process_is_active)
     {
       int         info  = 0;
-      NumberType *A_loc = &this->values[0];
+      NumberType* A_loc = &this->values[0];
 
       if (is_symmetric)
         {
@@ -1016,7 +1016,7 @@ ScaLAPACKMatrix<NumberType>::invert()
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index(
-  const std::pair<unsigned int, unsigned int> &index_limits,
+  const std::pair<unsigned int, unsigned int>& index_limits,
   const bool                                   compute_eigenvectors)
 {
   // check validity of index limits
@@ -1041,7 +1041,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index(
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value(
-  const std::pair<NumberType, NumberType> &value_limits,
+  const std::pair<NumberType, NumberType>& value_limits,
   const bool                               compute_eigenvectors)
 {
   Assert(!std::isnan(value_limits.first),
@@ -1061,8 +1061,8 @@ template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
   const bool                                   compute_eigenvectors,
-  const std::pair<unsigned int, unsigned int> &eigenvalue_idx,
-  const std::pair<NumberType, NumberType> &    eigenvalue_limits)
+  const std::pair<unsigned int, unsigned int>& eigenvalue_idx,
+  const std::pair<NumberType, NumberType>&     eigenvalue_limits)
 {
   Assert(state == LAPACKSupport::matrix,
          ExcMessage(
@@ -1171,14 +1171,14 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
           il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
           iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
-      NumberType *A_loc = &this->values[0];
+      NumberType* A_loc = &this->values[0];
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is
        * performed
        */
       int         lwork  = -1;
       int         liwork = -1;
-      NumberType *eigenvectors_loc =
+      NumberType* eigenvectors_loc =
         (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
       work.resize(1);
       iwork.resize(1);
@@ -1349,7 +1349,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric(
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index_MRRR(
-  const std::pair<unsigned int, unsigned int> &index_limits,
+  const std::pair<unsigned int, unsigned int>& index_limits,
   const bool                                   compute_eigenvectors)
 {
   // Check validity of index limits.
@@ -1372,7 +1372,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_index_MRRR(
 template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_by_value_MRRR(
-  const std::pair<NumberType, NumberType> &value_limits,
+  const std::pair<NumberType, NumberType>& value_limits,
   const bool                               compute_eigenvectors)
 {
   AssertIsFinite(value_limits.first);
@@ -1390,8 +1390,8 @@ template <typename NumberType>
 std::vector<NumberType>
 ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
   const bool                                   compute_eigenvectors,
-  const std::pair<unsigned int, unsigned int> &eigenvalue_idx,
-  const std::pair<NumberType, NumberType> &    eigenvalue_limits)
+  const std::pair<unsigned int, unsigned int>& eigenvalue_idx,
+  const std::pair<NumberType, NumberType>&     eigenvalue_limits)
 {
   Assert(state == LAPACKSupport::matrix,
          ExcMessage(
@@ -1474,7 +1474,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
           il = std::min(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
           iu = std::max(eigenvalue_idx.first, eigenvalue_idx.second) + 1;
         }
-      NumberType *A_loc = &this->values[0];
+      NumberType* A_loc = &this->values[0];
 
       /*
        * By setting lwork to -1 a workspace query for optimal length of work is
@@ -1482,7 +1482,7 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
        */
       int         lwork  = -1;
       int         liwork = -1;
-      NumberType *eigenvectors_loc =
+      NumberType* eigenvectors_loc =
         (compute_eigenvectors ? &eigenvectors->values[0] : nullptr);
       work.resize(1);
       iwork.resize(1);
@@ -1597,8 +1597,8 @@ ScaLAPACKMatrix<NumberType>::eigenpairs_symmetric_MRRR(
 
 template <typename NumberType>
 std::vector<NumberType>
-ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType> *U,
-                                         ScaLAPACKMatrix<NumberType> *VT)
+ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType>* U,
+                                         ScaLAPACKMatrix<NumberType>* VT)
 {
   Assert(state == LAPACKSupport::matrix,
          ExcMessage(
@@ -1643,9 +1643,9 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType> *U,
     {
       char        jobu   = left_singluar_vectors ? 'V' : 'N';
       char        jobvt  = right_singluar_vectors ? 'V' : 'N';
-      NumberType *A_loc  = &this->values[0];
-      NumberType *U_loc  = left_singluar_vectors ? &(U->values[0]) : nullptr;
-      NumberType *VT_loc = right_singluar_vectors ? &(VT->values[0]) : nullptr;
+      NumberType* A_loc  = &this->values[0];
+      NumberType* U_loc  = left_singluar_vectors ? &(U->values[0]) : nullptr;
+      NumberType* VT_loc = right_singluar_vectors ? &(VT->values[0]) : nullptr;
       int         info   = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is
@@ -1717,7 +1717,7 @@ ScaLAPACKMatrix<NumberType>::compute_SVD(ScaLAPACKMatrix<NumberType> *U,
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType> &B,
+ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType>& B,
                                            const bool transpose)
 {
   Assert(grid == B.grid,
@@ -1755,8 +1755,8 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType> &B,
   if (grid->mpi_process_is_active)
     {
       char        trans = transpose ? 'T' : 'N';
-      NumberType *A_loc = &this->values[0];
-      NumberType *B_loc = &B.values[0];
+      NumberType* A_loc = &this->values[0];
+      NumberType* B_loc = &B.values[0];
       int         info  = 0;
       /*
        * by setting lwork to -1 a workspace query for optimal length of work is
@@ -1911,7 +1911,7 @@ ScaLAPACKMatrix<NumberType>::reciprocal_condition_number(
       iwork.resize(liwork);
 
       int               info  = 0;
-      const NumberType *A_loc = &this->values[0];
+      const NumberType* A_loc = &this->values[0];
 
       // by setting lwork to -1 a workspace query for optimal length of work is
       // performed
@@ -2041,7 +2041,7 @@ ScaLAPACKMatrix<NumberType>::norm_general(const char type) const
         lwork = mp0;
 
       work.resize(lwork);
-      const NumberType *A_loc = this->values.begin();
+      const NumberType* A_loc = this->values.begin();
       res                     = plange(&type,
                    &n_rows,
                    &n_columns,
@@ -2106,7 +2106,7 @@ ScaLAPACKMatrix<NumberType>::norm_symmetric(const char type) const
       const int lwork =
         (type == 'M' || type == 'F' || type == 'E') ? 0 : 2 * Nq0 + Np0 + ldw;
       work.resize(lwork);
-      const NumberType *A_loc = this->values.begin();
+      const NumberType* A_loc = this->values.begin();
       res                     = plansy(&type,
                    &uplo,
                    &n_columns,
@@ -2128,62 +2128,61 @@ namespace internal
   namespace
   {
     void
-    create_HDF5_state_enum_id(hid_t &state_enum_id)
+    create_HDF5_state_enum_id(hid_t& state_enum_id)
     {
       // create HDF5 enum type for LAPACKSupport::State
       LAPACKSupport::State val;
       state_enum_id = H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::State));
       val           = LAPACKSupport::State::cholesky;
-      herr_t status = H5Tenum_insert(state_enum_id, "cholesky", (int *)&val);
+      herr_t status = H5Tenum_insert(state_enum_id, "cholesky", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::eigenvalues;
-      status = H5Tenum_insert(state_enum_id, "eigenvalues", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "eigenvalues", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::inverse_matrix;
-      status = H5Tenum_insert(state_enum_id, "inverse_matrix", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "inverse_matrix", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::inverse_svd;
-      status = H5Tenum_insert(state_enum_id, "inverse_svd", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "inverse_svd", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::lu;
-      status = H5Tenum_insert(state_enum_id, "lu", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "lu", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::matrix;
-      status = H5Tenum_insert(state_enum_id, "matrix", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "matrix", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::svd;
-      status = H5Tenum_insert(state_enum_id, "svd", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "svd", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
       val    = LAPACKSupport::State::unusable;
-      status = H5Tenum_insert(state_enum_id, "unusable", (int *)&val);
+      status = H5Tenum_insert(state_enum_id, "unusable", (int*)&val);
       AssertThrow(status >= 0, ExcInternalError());
     }
 
     void
-    create_HDF5_property_enum_id(hid_t &property_enum_id)
+    create_HDF5_property_enum_id(hid_t& property_enum_id)
     {
       // create HDF5 enum type for LAPACKSupport::Property
       property_enum_id = H5Tcreate(H5T_ENUM, sizeof(LAPACKSupport::Property));
       LAPACKSupport::Property prop = LAPACKSupport::Property::diagonal;
-      herr_t                  status =
-        H5Tenum_insert(property_enum_id, "diagonal", (int *)&prop);
+      herr_t status = H5Tenum_insert(property_enum_id, "diagonal", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop   = LAPACKSupport::Property::general;
-      status = H5Tenum_insert(property_enum_id, "general", (int *)&prop);
+      status = H5Tenum_insert(property_enum_id, "general", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop   = LAPACKSupport::Property::hessenberg;
-      status = H5Tenum_insert(property_enum_id, "hessenberg", (int *)&prop);
+      status = H5Tenum_insert(property_enum_id, "hessenberg", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop = LAPACKSupport::Property::lower_triangular;
       status =
-        H5Tenum_insert(property_enum_id, "lower_triangular", (int *)&prop);
+        H5Tenum_insert(property_enum_id, "lower_triangular", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop   = LAPACKSupport::Property::symmetric;
-      status = H5Tenum_insert(property_enum_id, "symmetric", (int *)&prop);
+      status = H5Tenum_insert(property_enum_id, "symmetric", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
       prop = LAPACKSupport::Property::upper_triangular;
       status =
-        H5Tenum_insert(property_enum_id, "upper_triangular", (int *)&prop);
+        H5Tenum_insert(property_enum_id, "upper_triangular", (int*)&prop);
       AssertThrow(status >= 0, ExcInternalError());
     }
   } // namespace
@@ -2195,8 +2194,8 @@ namespace internal
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::save(
-  const char *                                 filename,
-  const std::pair<unsigned int, unsigned int> &chunk_size) const
+  const char*                                  filename,
+  const std::pair<unsigned int, unsigned int>& chunk_size) const
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2237,8 +2236,8 @@ ScaLAPACKMatrix<NumberType>::save(
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::save_serial(
-  const char *                                 filename,
-  const std::pair<unsigned int, unsigned int> &chunk_size) const
+  const char*                                  filename,
+  const std::pair<unsigned int, unsigned int>& chunk_size) const
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2392,8 +2391,8 @@ ScaLAPACKMatrix<NumberType>::save_serial(
 template <typename NumberType>
 void
 ScaLAPACKMatrix<NumberType>::save_parallel(
-  const char *                                 filename,
-  const std::pair<unsigned int, unsigned int> &chunk_size) const
+  const char*                                  filename,
+  const std::pair<unsigned int, unsigned int>& chunk_size) const
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2419,7 +2418,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
   copy_to(tmp);
 
   // get pointer to data held by the process
-  NumberType *data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
+  NumberType* data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
 
   herr_t status;
   // dataset dimensions
@@ -2607,7 +2606,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::load(const char *filename)
+ScaLAPACKMatrix<NumberType>::load(const char* filename)
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2628,7 +2627,7 @@ ScaLAPACKMatrix<NumberType>::load(const char *filename)
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::load_serial(const char *filename)
+ScaLAPACKMatrix<NumberType>::load_serial(const char* filename)
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2804,7 +2803,7 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char *filename)
 
 template <typename NumberType>
 void
-ScaLAPACKMatrix<NumberType>::load_parallel(const char *filename)
+ScaLAPACKMatrix<NumberType>::load_parallel(const char* filename)
 {
 #  ifndef DEAL_II_WITH_HDF5
   (void)filename;
@@ -2830,7 +2829,7 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char *filename)
   ScaLAPACKMatrix<NumberType> tmp(n_rows, n_columns, column_grid, MB, NB);
 
   // get pointer to data held by the process
-  NumberType *data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
+  NumberType* data = (tmp.values.size() > 0) ? &tmp.values[0] : nullptr;
 
   herr_t status;
 
@@ -3011,8 +3010,8 @@ namespace internal
   {
     template <typename NumberType>
     void
-    scale_columns(ScaLAPACKMatrix<NumberType> &      matrix,
-                  const ArrayView<const NumberType> &factors)
+    scale_columns(ScaLAPACKMatrix<NumberType>&       matrix,
+                  const ArrayView<const NumberType>& factors)
     {
       Assert(matrix.n() == factors.size(),
              ExcDimensionMismatch(matrix.n(), factors.size()));
@@ -3028,8 +3027,8 @@ namespace internal
 
     template <typename NumberType>
     void
-    scale_rows(ScaLAPACKMatrix<NumberType> &      matrix,
-               const ArrayView<const NumberType> &factors)
+    scale_rows(ScaLAPACKMatrix<NumberType>&       matrix,
+               const ArrayView<const NumberType>& factors)
     {
       Assert(matrix.m() == factors.size(),
              ExcDimensionMismatch(matrix.m(), factors.size()));
@@ -3051,7 +3050,7 @@ namespace internal
 template <typename NumberType>
 template <class InputVector>
 void
-ScaLAPACKMatrix<NumberType>::scale_columns(const InputVector &factors)
+ScaLAPACKMatrix<NumberType>::scale_columns(const InputVector& factors)
 {
   if (this->grid->mpi_process_is_active)
     internal::scale_columns(*this, make_array_view(factors));
@@ -3062,7 +3061,7 @@ ScaLAPACKMatrix<NumberType>::scale_columns(const InputVector &factors)
 template <typename NumberType>
 template <class InputVector>
 void
-ScaLAPACKMatrix<NumberType>::scale_rows(const InputVector &factors)
+ScaLAPACKMatrix<NumberType>::scale_rows(const InputVector& factors)
 {
   if (this->grid->mpi_process_is_active)
     internal::scale_rows(*this, make_array_view(factors));

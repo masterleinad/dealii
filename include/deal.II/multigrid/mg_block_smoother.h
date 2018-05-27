@@ -58,7 +58,7 @@ public:
    * Constructor. Sets memory and smoothing parameters.
    */
   DEAL_II_DEPRECATED
-  MGSmootherBlock(VectorMemory<BlockVector<number>> &mem,
+  MGSmootherBlock(VectorMemory<BlockVector<number>>& mem,
                   const unsigned int                 steps     = 1,
                   const bool                         variable  = false,
                   const bool                         symmetric = false,
@@ -89,7 +89,7 @@ public:
    */
   template <class MGMatrixType, class MGRelaxationType>
   void
-  initialize(const MGMatrixType &matrices, const MGRelaxationType &smoothers);
+  initialize(const MGMatrixType& matrices, const MGRelaxationType& smoothers);
 
   /**
    * Empty all vectors.
@@ -110,8 +110,8 @@ public:
    */
   virtual void
   smooth(const unsigned int         level,
-         BlockVector<number> &      u,
-         const BlockVector<number> &rhs) const;
+         BlockVector<number>&       u,
+         const BlockVector<number>& rhs) const;
 
   /**
    * Memory used by this object.
@@ -151,7 +151,7 @@ private:
 
 template <typename MatrixType, class RelaxationType, typename number>
 inline MGSmootherBlock<MatrixType, RelaxationType, number>::MGSmootherBlock(
-  VectorMemory<BlockVector<number>> &mem,
+  VectorMemory<BlockVector<number>>& mem,
   const unsigned int                 steps,
   const bool                         variable,
   const bool                         symmetric,
@@ -192,8 +192,8 @@ template <typename MatrixType, class RelaxationType, typename number>
 template <class MGMatrixType, class MGRelaxationType>
 inline void
 MGSmootherBlock<MatrixType, RelaxationType, number>::initialize(
-  const MGMatrixType &    m,
-  const MGRelaxationType &s)
+  const MGMatrixType&     m,
+  const MGRelaxationType& s)
 {
   const unsigned int min = m.min_level();
   const unsigned int max = m.max_level();
@@ -236,8 +236,8 @@ template <typename MatrixType, class RelaxationType, typename number>
 inline void
 MGSmootherBlock<MatrixType, RelaxationType, number>::smooth(
   const unsigned int         level,
-  BlockVector<number> &      u,
-  const BlockVector<number> &rhs) const
+  BlockVector<number>&       u,
+  const BlockVector<number>& rhs) const
 {
   LogStream::Prefix prefix("Smooth");
 

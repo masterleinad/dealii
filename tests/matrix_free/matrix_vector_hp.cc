@@ -37,13 +37,13 @@ template <int dim, typename Number>
 class MatrixFreeTestHP
 {
 public:
-  MatrixFreeTestHP(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTestHP(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number> &              data,
-              Vector<Number> &                             dst,
-              const Vector<Number> &                       src,
-              const std::pair<unsigned int, unsigned int> &cell_range) const
+  local_apply(const MatrixFree<dim, Number>&               data,
+              Vector<Number>&                              dst,
+              const Vector<Number>&                        src,
+              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     // ask MatrixFree for cell_range for different orders
     std::pair<unsigned int, unsigned int> subrange_deg =
@@ -78,14 +78,14 @@ public:
   }
 
   void
-  vmult(Vector<Number> &dst, const Vector<Number> &src) const
+  vmult(Vector<Number>& dst, const Vector<Number>& src) const
   {
     dst = 0;
     data.cell_loop(&MatrixFreeTestHP<dim, Number>::local_apply, this, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
@@ -194,7 +194,7 @@ test()
         cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
         cell_matrix = 0;
         hp_fe_values.reinit(cell);
-        const FEValues<dim> &fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
 
         for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
              ++q_point)

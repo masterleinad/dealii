@@ -54,7 +54,7 @@ namespace Algorithms
      * later use.
      */
     static Event
-    assign(const char *name);
+    assign(const char* name);
 
     /**
      * If you forgot to store the result of assign, here is how to retrieve it
@@ -82,21 +82,21 @@ namespace Algorithms
     /**
      * Add the flags of the other event
      */
-    Event &
-    operator+=(const Event &event);
+    Event&
+    operator+=(const Event& event);
 
     /**
      * Clear the flags of the other event
      */
-    Event &
-    operator-=(const Event &event);
+    Event&
+    operator-=(const Event& event);
 
     /**
      * Test whether all the flags set in the other Event are also set in this
      * one.
      */
     bool
-    test(const Event &event) const;
+    test(const Event& event) const;
 
     /**
      * Return <tt>true</tt> if any event is set.
@@ -109,14 +109,14 @@ namespace Algorithms
      */
     template <class OS>
     void
-    print(OS &os) const;
+    print(OS& os) const;
 
     /**
      * List all assigned events.
      */
     template <class OS>
     static void
-    print_assigned(OS &os);
+    print_assigned(OS& os);
 
   private:
     /**
@@ -186,7 +186,7 @@ namespace Algorithms
 
 
   inline bool
-  Event::test(const Event &event) const
+  Event::test(const Event& event) const
   {
     // First, test all_true in this
     if (all_true)
@@ -231,8 +231,8 @@ namespace Algorithms
 
 
 
-  inline Event &
-  Event::operator+=(const Event &event)
+  inline Event&
+  Event::operator+=(const Event& event)
   {
     all_true |= event.all_true;
     if (all_true)
@@ -247,8 +247,8 @@ namespace Algorithms
   }
 
 
-  inline Event &
-  Event::operator-=(const Event &event)
+  inline Event&
+  Event::operator-=(const Event& event)
   {
     if (!event.any())
       return *this;
@@ -274,7 +274,7 @@ namespace Algorithms
 
   template <class OS>
   inline void
-  Event::print(OS &os) const
+  Event::print(OS& os) const
   {
     if (all_true)
       os << " ALL";
@@ -287,7 +287,7 @@ namespace Algorithms
 
   template <class OS>
   inline void
-  Event::print_assigned(OS &os)
+  Event::print_assigned(OS& os)
   {
     for (unsigned int i = 0; i < names.size(); ++i)
       os << i << '\t' << names[i] << std::endl;
@@ -300,8 +300,8 @@ namespace Algorithms
    * @relatesalso Event
    */
   template <class OS>
-  OS &
-  operator<<(OS &o, const Event &e)
+  OS&
+  operator<<(OS& o, const Event& e)
   {
     e.print(o);
     return o;

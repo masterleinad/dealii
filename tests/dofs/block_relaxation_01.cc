@@ -46,11 +46,11 @@
 
 template <int dim>
 void
-make_stokes_matrix(const DoFHandler<dim> &dof_handler,
-                   const Quadrature<dim> &quadrature_formula,
-                   SparseMatrix<double> & system_matrix)
+make_stokes_matrix(const DoFHandler<dim>& dof_handler,
+                   const Quadrature<dim>& quadrature_formula,
+                   SparseMatrix<double>&  system_matrix)
 {
-  const FiniteElement<dim> &fe     = dof_handler.get_fe();
+  const FiniteElement<dim>& fe     = dof_handler.get_fe();
   const unsigned int        degree = fe.degree;
   system_matrix                    = 0;
 

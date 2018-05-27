@@ -107,7 +107,7 @@ main()
   // forward, then backward
   for (unsigned int loop = 1; loop <= 4; ++loop)
     {
-      const SparsityPattern &sp =
+      const SparsityPattern& sp =
         (loop == 1 ? sp1 : (loop == 2 ? sp2 : (loop == 3 ? sp3 : sp4)));
       for (unsigned int i = 0; i < sp.n_nonzero_elements(); ++i)
         AssertThrow(

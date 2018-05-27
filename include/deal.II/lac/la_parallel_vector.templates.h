@@ -68,9 +68,9 @@ namespace LinearAlgebra
             ((allocated_size > 0 && values != nullptr) || values == nullptr),
             ExcInternalError());
 
-          Number *new_val;
+          Number* new_val;
           Utilities::System::posix_memalign(
-            (void **)&new_val, 64, sizeof(Number) * new_alloc_size);
+            (void**)&new_val, 64, sizeof(Number) * new_alloc_size);
           values.reset(new_val);
 
           allocated_size = new_alloc_size;
@@ -114,7 +114,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename Number2>
     void
-    Vector<Number>::reinit(const Vector<Number2> &v,
+    Vector<Number>::reinit(const Vector<Number2>& v,
                            const bool             omit_zeroing_entries)
     {
       clear_mpi_requests();
@@ -150,8 +150,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::reinit(const IndexSet &locally_owned_indices,
-                           const IndexSet &ghost_indices,
+    Vector<Number>::reinit(const IndexSet& locally_owned_indices,
+                           const IndexSet& ghost_indices,
                            const MPI_Comm  communicator)
     {
       // set up parallel partitioner with index sets and communicator
@@ -165,7 +165,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::reinit(const IndexSet &locally_owned_indices,
+    Vector<Number>::reinit(const IndexSet& locally_owned_indices,
                            const MPI_Comm  communicator)
     {
       // set up parallel partitioner with index sets and communicator
@@ -179,7 +179,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::reinit(
-      const std::shared_ptr<const Utilities::MPI::Partitioner> &partitioner_in)
+      const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner_in)
     {
       clear_mpi_requests();
       partitioner = partitioner_in;
@@ -216,7 +216,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number>::Vector(const Vector<Number> &v) :
+    Vector<Number>::Vector(const Vector<Number>& v) :
       Subscriptor(),
       allocated_size(0),
       values(nullptr, &free),
@@ -239,8 +239,8 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number>::Vector(const IndexSet &local_range,
-                           const IndexSet &ghost_indices,
+    Vector<Number>::Vector(const IndexSet& local_range,
+                           const IndexSet& ghost_indices,
                            const MPI_Comm  communicator) :
       allocated_size(0),
       values(nullptr, &free),
@@ -252,7 +252,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number>::Vector(const IndexSet &local_range,
+    Vector<Number>::Vector(const IndexSet& local_range,
                            const MPI_Comm  communicator) :
       allocated_size(0),
       values(nullptr, &free),
@@ -276,7 +276,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     Vector<Number>::Vector(
-      const std::shared_ptr<const Utilities::MPI::Partitioner> &partitioner) :
+      const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner) :
       allocated_size(0),
       values(nullptr, &free),
       vector_is_ghosted(false)
@@ -300,8 +300,8 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    inline Vector<Number> &
-    Vector<Number>::operator=(const Vector<Number> &c)
+    inline Vector<Number>&
+    Vector<Number>::operator=(const Vector<Number>& c)
     {
 #ifdef _MSC_VER
       return this->operator=<Number>(c);
@@ -314,8 +314,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     template <typename Number2>
-    inline Vector<Number> &
-    Vector<Number>::operator=(const Vector<Number2> &c)
+    inline Vector<Number>&
+    Vector<Number>::operator=(const Vector<Number2>& c)
     {
       Assert(c.partitioner.get() != nullptr, ExcNotInitialized());
 
@@ -384,7 +384,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename Number2>
     void
-    Vector<Number>::copy_locally_owned_data_from(const Vector<Number2> &src)
+    Vector<Number>::copy_locally_owned_data_from(const Vector<Number2>& src)
     {
       AssertDimension(partitioner->local_size(), src.partitioner->local_size());
       if (partitioner->local_size() > 0)
@@ -404,35 +404,35 @@ namespace LinearAlgebra
     {
       template <typename PETSC_Number, typename Number>
       void
-      copy_petsc_vector(const PETSC_Number *petsc_start_ptr,
-                        const PETSC_Number *petsc_end_ptr,
-                        Number *            ptr)
+      copy_petsc_vector(const PETSC_Number* petsc_start_ptr,
+                        const PETSC_Number* petsc_end_ptr,
+                        Number*             ptr)
       {
         std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
       }
 
       template <typename PETSC_Number, typename Number>
       void
-      copy_petsc_vector(const std::complex<PETSC_Number> *petsc_start_ptr,
-                        const std::complex<PETSC_Number> *petsc_end_ptr,
-                        std::complex<Number> *            ptr)
+      copy_petsc_vector(const std::complex<PETSC_Number>* petsc_start_ptr,
+                        const std::complex<PETSC_Number>* petsc_end_ptr,
+                        std::complex<Number>*             ptr)
       {
         std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
       }
 
       template <typename PETSC_Number, typename Number>
       void
-      copy_petsc_vector(const std::complex<PETSC_Number> * /*petsc_start_ptr*/,
-                        const std::complex<PETSC_Number> * /*petsc_end_ptr*/,
-                        Number * /*ptr*/)
+      copy_petsc_vector(const std::complex<PETSC_Number>* /*petsc_start_ptr*/,
+                        const std::complex<PETSC_Number>* /*petsc_end_ptr*/,
+                        Number* /*ptr*/)
       {
         AssertThrow(false, ExcMessage("Tried to copy complex -> real"));
       }
     } // namespace petsc_helpers
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator=(const PETScWrappers::MPI::Vector &petsc_vec)
+    Vector<Number>&
+    Vector<Number>::operator=(const PETScWrappers::MPI::Vector& petsc_vec)
     {
       // TODO: We would like to use the same compact infrastructure as for the
       // Trilinos vector below, but the interface through ReadWriteVector does
@@ -443,9 +443,9 @@ namespace LinearAlgebra
              StandardExceptions::ExcInvalidState());
 
       // get a representation of the vector and copy it
-      PetscScalar *  start_ptr;
+      PetscScalar*   start_ptr;
       PetscErrorCode ierr =
-        VecGetArray(static_cast<const Vec &>(petsc_vec), &start_ptr);
+        VecGetArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       const size_type vec_size = local_size();
@@ -453,7 +453,7 @@ namespace LinearAlgebra
         start_ptr, start_ptr + vec_size, begin());
 
       // restore the representation of the vector
-      ierr = VecRestoreArray(static_cast<const Vec &>(petsc_vec), &start_ptr);
+      ierr = VecRestoreArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // spread ghost values between processes?
@@ -472,8 +472,8 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_TRILINOS
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector &trilinos_vec)
+    Vector<Number>&
+    Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector& trilinos_vec)
     {
 #  ifdef DEAL_II_WITH_MPI
       IndexSet combined_set = partitioner->locally_owned_range();
@@ -652,7 +652,7 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::import(
-      const ReadWriteVector<Number> &                 V,
+      const ReadWriteVector<Number>&                  V,
       VectorOperation::values                         operation,
       std::shared_ptr<const CommunicationPatternBase> communication_pattern)
     {
@@ -686,7 +686,7 @@ namespace LinearAlgebra
       // including ghost entries. this is not really efficient right now
       // because indices are translated twice, once by nth_index_in_set(i) and
       // once for operator() of tmp_vector
-      const IndexSet &v_stored = V.get_stored_elements();
+      const IndexSet& v_stored = V.get_stored_elements();
       for (size_type i = 0; i < v_stored.n_elements(); ++i)
         tmp_vector(v_stored.nth_index_in_set(i)) = V.local_element(i);
 
@@ -705,7 +705,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::swap(Vector<Number> &v)
+    Vector<Number>::swap(Vector<Number>& v)
     {
 #ifdef DEAL_II_WITH_MPI
 
@@ -756,7 +756,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator=(const Number s)
     {
       const size_type this_size = local_size();
@@ -781,13 +781,13 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::reinit(const VectorSpaceVector<Number> &V,
+    Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
                            const bool omit_zeroing_entries)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
 
       reinit(down_V, omit_zeroing_entries);
     }
@@ -795,13 +795,13 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator+=(const VectorSpaceVector<Number> &vv)
+    Vector<Number>&
+    Vector<Number>::operator+=(const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -819,13 +819,13 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator-=(const VectorSpaceVector<Number> &vv)
+    Vector<Number>&
+    Vector<Number>::operator-=(const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -862,12 +862,12 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::add_local(const Number                     a,
-                              const VectorSpaceVector<Number> &vv)
+                              const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertIsFinite(a);
       AssertDimension(local_size(), v.local_size());
@@ -886,7 +886,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::add(const Number a, const VectorSpaceVector<Number> &vv)
+    Vector<Number>::add(const Number a, const VectorSpaceVector<Number>& vv)
     {
       add_local(a, vv);
 
@@ -899,17 +899,17 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::add(const Number                     a,
-                        const VectorSpaceVector<Number> &vv,
+                        const VectorSpaceVector<Number>& vv,
                         const Number                     b,
-                        const VectorSpaceVector<Number> &ww)
+                        const VectorSpaceVector<Number>& ww)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
-      Assert(dynamic_cast<const Vector<Number> *>(&ww) != nullptr,
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
+      Assert(dynamic_cast<const Vector<Number>*>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &w = dynamic_cast<const Vector<Number> &>(ww);
+      const Vector<Number>& w = dynamic_cast<const Vector<Number>&>(ww);
 
       AssertIsFinite(a);
       AssertIsFinite(b);
@@ -930,8 +930,8 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::add(const std::vector<size_type> &indices,
-                        const std::vector<Number> &   values)
+    Vector<Number>::add(const std::vector<size_type>& indices,
+                        const std::vector<Number>&    values)
     {
       for (std::size_t i = 0; i < indices.size(); ++i)
         {
@@ -943,7 +943,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::sadd(const Number x, const Vector<Number> &v)
+    Vector<Number>::sadd(const Number x, const Vector<Number>& v)
     {
       AssertIsFinite(x);
       AssertDimension(local_size(), v.local_size());
@@ -963,12 +963,12 @@ namespace LinearAlgebra
     void
     Vector<Number>::sadd_local(const Number                     x,
                                const Number                     a,
-                               const VectorSpaceVector<Number> &vv)
+                               const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertIsFinite(x);
       AssertIsFinite(a);
@@ -986,7 +986,7 @@ namespace LinearAlgebra
     void
     Vector<Number>::sadd(const Number                     x,
                          const Number                     a,
-                         const VectorSpaceVector<Number> &vv)
+                         const VectorSpaceVector<Number>& vv)
     {
       sadd_local(x, a, vv);
 
@@ -1000,9 +1000,9 @@ namespace LinearAlgebra
     void
     Vector<Number>::sadd(const Number          x,
                          const Number          a,
-                         const Vector<Number> &v,
+                         const Vector<Number>& v,
                          const Number          b,
-                         const Vector<Number> &w)
+                         const Vector<Number>& w)
     {
       AssertIsFinite(x);
       AssertIsFinite(a);
@@ -1023,7 +1023,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator*=(const Number factor)
     {
       AssertIsFinite(factor);
@@ -1042,7 +1042,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator/=(const Number factor)
     {
       operator*=(static_cast<Number>(1.) / factor);
@@ -1053,12 +1053,12 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::scale(const VectorSpaceVector<Number> &vv)
+    Vector<Number>::scale(const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -1075,12 +1075,12 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::equ(const Number a, const VectorSpaceVector<Number> &vv)
+    Vector<Number>::equ(const Number a, const VectorSpaceVector<Number>& vv)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       AssertIsFinite(a);
       AssertDimension(local_size(), v.local_size());
@@ -1099,9 +1099,9 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::equ(const Number          a,
-                        const Vector<Number> &v,
+                        const Vector<Number>& v,
                         const Number          b,
-                        const Vector<Number> &w)
+                        const Vector<Number>& w)
     {
       AssertIsFinite(a);
       AssertIsFinite(b);
@@ -1155,7 +1155,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename Number2>
     Number
-    Vector<Number>::inner_product_local(const Vector<Number2> &v) const
+    Vector<Number>::inner_product_local(const Vector<Number2>& v) const
     {
       if (PointerComparison::equal(this, &v))
         return norm_sqr_local();
@@ -1175,12 +1175,12 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Number Vector<Number>::operator*(const VectorSpaceVector<Number> &vv) const
+    Number Vector<Number>::operator*(const VectorSpaceVector<Number>& vv) const
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       Number local_result = inner_product_local(v);
       if (partitioner->n_mpi_processes() > 1)
@@ -1355,8 +1355,8 @@ namespace LinearAlgebra
     template <typename Number>
     Number
     Vector<Number>::add_and_dot_local(const Number          a,
-                                      const Vector<Number> &v,
-                                      const Vector<Number> &w)
+                                      const Vector<Number>& v,
+                                      const Vector<Number>& w)
     {
       const size_type vec_size = partitioner->local_size();
       AssertDimension(vec_size, v.local_size());
@@ -1376,16 +1376,16 @@ namespace LinearAlgebra
     template <typename Number>
     Number
     Vector<Number>::add_and_dot(const Number                     a,
-                                const VectorSpaceVector<Number> &vv,
-                                const VectorSpaceVector<Number> &ww)
+                                const VectorSpaceVector<Number>& vv,
+                                const VectorSpaceVector<Number>& ww)
     {
       // Downcast. Throws an exception if invalid.
-      Assert(dynamic_cast<const Vector<Number> *>(&vv) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &v = dynamic_cast<const Vector<Number> &>(vv);
-      Assert(dynamic_cast<const Vector<Number> *>(&ww) != nullptr,
+      const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
+      Assert(dynamic_cast<const Vector<Number>*>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const Vector<Number> &w = dynamic_cast<const Vector<Number> &>(ww);
+      const Vector<Number>& w = dynamic_cast<const Vector<Number>&>(ww);
 
       Number local_result = add_and_dot_local(a, v, w);
       if (partitioner->n_mpi_processes() > 1)
@@ -1400,7 +1400,7 @@ namespace LinearAlgebra
     template <typename Number>
     inline bool
     Vector<Number>::partitioners_are_compatible(
-      const Utilities::MPI::Partitioner &part) const
+      const Utilities::MPI::Partitioner& part) const
     {
       return partitioner->is_compatible(part);
     }
@@ -1410,7 +1410,7 @@ namespace LinearAlgebra
     template <typename Number>
     inline bool
     Vector<Number>::partitioners_are_globally_compatible(
-      const Utilities::MPI::Partitioner &part) const
+      const Utilities::MPI::Partitioner& part) const
     {
       return partitioner->is_globally_compatible(part);
     }
@@ -1440,7 +1440,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::print(std::ostream &     out,
+    Vector<Number>::print(std::ostream&      out,
                           const unsigned int precision,
                           const bool         scientific,
                           const bool         across) const

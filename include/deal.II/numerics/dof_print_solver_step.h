@@ -63,25 +63,25 @@ public:
    * One output file with the name <tt>basename.[step].[suffix]</tt> will be
    * produced for each iteration step.
    */
-  DoFPrintSolverStep(SolverControl &           control,
-                     VectorMemory<VectorType> &mem,
-                     DataOut<dim> &            data_out,
-                     const std::string &       basename);
+  DoFPrintSolverStep(SolverControl&            control,
+                     VectorMemory<VectorType>& mem,
+                     DataOut<dim>&             data_out,
+                     const std::string&        basename);
 
   /**
    * Call-back function for the iterative method.
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType & x,
-                const VectorType & r,
-                const VectorType & d) const;
+                const VectorType&  x,
+                const VectorType&  r,
+                const VectorType&  d) const;
 
 private:
   /**
    * Output object.
    */
-  DataOut<dim> &out;
+  DataOut<dim>& out;
 
   /**
    * Base of filenames.
@@ -94,10 +94,10 @@ private:
 
 template <int dim, typename SolverType, class VectorType>
 DoFPrintSolverStep<dim, SolverType, VectorType>::DoFPrintSolverStep(
-  SolverControl &           control,
-  VectorMemory<VectorType> &mem,
-  DataOut<dim> &            data_out,
-  const std::string &       basename) :
+  SolverControl&            control,
+  VectorMemory<VectorType>& mem,
+  DataOut<dim>&             data_out,
+  const std::string&        basename) :
   SolverType(control, mem),
   out(data_out),
   basename(basename)
@@ -108,9 +108,9 @@ template <int dim, typename SolverType, class VectorType>
 void
 DoFPrintSolverStep<dim, SolverType, VectorType>::print_vectors(
   const unsigned int step,
-  const VectorType & x,
-  const VectorType & r,
-  const VectorType & d) const
+  const VectorType&  x,
+  const VectorType&  r,
+  const VectorType&  d) const
 {
   out.clear_data_vectors();
   out.add_data_vector(x, "solution");

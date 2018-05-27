@@ -29,7 +29,7 @@
 
 template <class VectorType>
 void
-test(VectorType &v)
+test(VectorType& v)
 {
   std::vector<bool> filter(v.size(), false);
   // set some elements of the vector
@@ -86,7 +86,7 @@ main()
         test(v);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

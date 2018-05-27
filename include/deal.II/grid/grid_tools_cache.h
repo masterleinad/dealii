@@ -76,8 +76,8 @@ namespace GridTools
      * @param tria The triangulation for which to store information
      * @param mapping The mapping to use when computing cached objects
      */
-    Cache(const Triangulation<dim, spacedim> &tria,
-          const Mapping<dim, spacedim> &      mapping =
+    Cache(const Triangulation<dim, spacedim>& tria,
+          const Mapping<dim, spacedim>&       mapping =
             StaticMappingQ1<dim, spacedim>::mapping);
 
     /**
@@ -96,7 +96,7 @@ namespace GridTools
      * @param flags What to mark for update
      */
     void
-    mark_for_update(const CacheUpdateFlags &flags = update_all);
+    mark_for_update(const CacheUpdateFlags& flags = update_all);
 
 
     /**
@@ -104,33 +104,33 @@ namespace GridTools
      * GridTools::vertex_to_cell_map().
      */
     const std::vector<
-      std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>> &
+      std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>>&
     get_vertex_to_cell_map() const;
 
     /**
      * Return the cached vertex_to_cell_centers_directions as computed by
      * GridTools::vertex_to_cell_centers_directions().
      */
-    const std::vector<std::vector<Tensor<1, spacedim>>> &
+    const std::vector<std::vector<Tensor<1, spacedim>>>&
     get_vertex_to_cell_centers_directions() const;
 
     /**
      * Return the cached map of used vertices, as computed by
      * GridTools::extract_used_vertices().
      */
-    const std::map<unsigned int, Point<spacedim>> &
+    const std::map<unsigned int, Point<spacedim>>&
     get_used_vertices() const;
 
     /**
      * Return a reference to the stored triangulation.
      */
-    const Triangulation<dim, spacedim> &
+    const Triangulation<dim, spacedim>&
     get_triangulation() const;
 
     /**
      * Return a reference to the stored mapping.
      */
-    const Mapping<dim, spacedim> &
+    const Mapping<dim, spacedim>&
     get_mapping() const;
 
 #ifdef DEAL_II_WITH_NANOFLANN
@@ -138,7 +138,7 @@ namespace GridTools
      * Return the cached vertex_kdtree object, constructed with the vertices of
      * the stored triangulation.
      */
-    const KDTree<spacedim> &
+    const KDTree<spacedim>&
     get_vertex_kdtree() const;
 #endif
 
@@ -197,7 +197,7 @@ namespace GridTools
 
   // Inline functions
   template <int dim, int spacedim>
-  inline const Triangulation<dim, spacedim> &
+  inline const Triangulation<dim, spacedim>&
   Cache<dim, spacedim>::get_triangulation() const
   {
     return *tria;
@@ -206,7 +206,7 @@ namespace GridTools
 
 
   template <int dim, int spacedim>
-  inline const Mapping<dim, spacedim> &
+  inline const Mapping<dim, spacedim>&
   Cache<dim, spacedim>::get_mapping() const
   {
     return *mapping;

@@ -45,7 +45,7 @@ Test()
   tria.refine_global(3);
 
   // Vertices
-  const std::vector<Point<dim>> &vertices = tria.get_vertices();
+  const std::vector<Point<dim>>& vertices = tria.get_vertices();
 
   // Test vector declaration
   for (unsigned int i = 0; i < dim; ++i)

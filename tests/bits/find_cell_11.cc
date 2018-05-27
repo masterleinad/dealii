@@ -61,7 +61,7 @@ test()
     {
       GridTools::find_active_cell_around_point(mapping, tr, p);
     }
-  catch (GridTools::ExcPointNotFound<2> &e)
+  catch (GridTools::ExcPointNotFound<2>& e)
     {
       deallog << "outside" << std::endl;
     }
@@ -69,7 +69,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 

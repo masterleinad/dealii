@@ -29,9 +29,9 @@
 
 template <int dim>
 void
-check(const std::string &    name,
+check(const std::string&     name,
       const unsigned int     order,
-      const Quadrature<dim> &q)
+      const Quadrature<dim>& q)
 {
   Assert(QuadratureSelector<dim>(name, order).get_points() == q.get_points(),
          ExcInternalError());

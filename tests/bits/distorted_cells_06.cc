@@ -49,7 +49,7 @@ class MyManifold : public Manifold<dim>
 
   virtual Point<dim>
   get_new_point_on_line(
-    const typename Triangulation<dim>::line_iterator &line) const
+    const typename Triangulation<dim>::line_iterator& line) const
   {
     deallog << "Finding point between " << line->vertex(0) << " and "
             << line->vertex(1) << std::endl;
@@ -58,8 +58,7 @@ class MyManifold : public Manifold<dim>
   }
 
   virtual Point<dim>
-  get_new_point_on_quad(
-    const typename Triangulation<dim>::quad_iterator &) const
+  get_new_point_on_quad(const typename Triangulation<dim>::quad_iterator&) const
   {
     Assert(false, ExcInternalError());
     return Point<dim>(0, 0, 1.25);
@@ -98,7 +97,7 @@ check()
     {
       coarse_grid.refine_global(1);
     }
-  catch (typename Triangulation<dim>::DistortedCellList &dcv)
+  catch (typename Triangulation<dim>::DistortedCellList& dcv)
     {
       deallog << "Found " << dcv.distorted_cells.size() << " distorted cells"
               << std::endl;

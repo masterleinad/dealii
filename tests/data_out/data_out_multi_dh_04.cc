@@ -81,7 +81,7 @@ main()
 
       return 0;
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

@@ -31,7 +31,7 @@
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::fixed;

@@ -32,8 +32,8 @@ DEAL_II_NAMESPACE_OPEN
 namespace Algorithms
 {
   template <typename VectorType>
-  Newton<VectorType>::Newton(OperatorBase &residual,
-                             OperatorBase &inverse_derivative) :
+  Newton<VectorType>::Newton(OperatorBase& residual,
+                             OperatorBase& inverse_derivative) :
     residual(&residual),
     inverse_derivative(&inverse_derivative),
     assemble_now(false),
@@ -46,7 +46,7 @@ namespace Algorithms
 
   template <typename VectorType>
   void
-  Newton<VectorType>::declare_parameters(ParameterHandler &param)
+  Newton<VectorType>::declare_parameters(ParameterHandler& param)
   {
     param.enter_subsection("Newton");
     ReductionControl::declare_parameters(param);
@@ -59,7 +59,7 @@ namespace Algorithms
 
   template <typename VectorType>
   void
-  Newton<VectorType>::parse_parameters(ParameterHandler &param)
+  Newton<VectorType>::parse_parameters(ParameterHandler& param)
   {
     param.enter_subsection("Newton");
     control.parse_parameters(param);
@@ -71,14 +71,14 @@ namespace Algorithms
 
   template <typename VectorType>
   void
-  Newton<VectorType>::initialize(OutputOperator<VectorType> &output)
+  Newton<VectorType>::initialize(OutputOperator<VectorType>& output)
   {
     data_out = &output;
   }
 
   template <typename VectorType>
   void
-  Newton<VectorType>::notify(const Event &e)
+  Newton<VectorType>::notify(const Event& e)
   {
     residual->notify(e);
     inverse_derivative->notify(e);
@@ -97,12 +97,12 @@ namespace Algorithms
 
   template <typename VectorType>
   void
-  Newton<VectorType>::operator()(AnyData &out, const AnyData &in)
+  Newton<VectorType>::operator()(AnyData& out, const AnyData& in)
   {
     Assert(out.size() == 1, ExcNotImplemented());
     LogStream::Prefix prefix("Newton");
 
-    VectorType &u = *out.entry<VectorType *>(0);
+    VectorType& u = *out.entry<VectorType*>(0);
 
     if (debug > 2)
       deallog << "u: " << u.l2_norm() << std::endl;
@@ -115,14 +115,14 @@ namespace Algorithms
     res->reinit(u);
     AnyData src1;
     AnyData src2;
-    src1.add<const VectorType *>(&u, "Newton iterate");
+    src1.add<const VectorType*>(&u, "Newton iterate");
     src1.merge(in);
-    src2.add<const VectorType *>(res.get(), "Newton residual");
+    src2.add<const VectorType*>(res.get(), "Newton residual");
     src2.merge(src1);
     AnyData out1;
-    out1.add<VectorType *>(res.get(), "Residual");
+    out1.add<VectorType*>(res.get(), "Residual");
     AnyData out2;
-    out2.add<VectorType *>(Du.get(), "Update");
+    out2.add<VectorType*>(Du.get(), "Update");
 
     unsigned int step = 0;
     // fill res with (f(u), v)
@@ -133,12 +133,12 @@ namespace Algorithms
     if (debug_vectors)
       {
         AnyData     tmp;
-        VectorType *p = &u;
-        tmp.add<const VectorType *>(p, "solution");
+        VectorType* p = &u;
+        tmp.add<const VectorType*>(p, "solution");
         p = Du.get();
-        tmp.add<const VectorType *>(p, "update");
+        tmp.add<const VectorType*>(p, "update");
         p = res.get();
-        tmp.add<const VectorType *>(p, "residual");
+        tmp.add<const VectorType*>(p, "residual");
         *data_out << step;
         *data_out << tmp;
       }
@@ -154,7 +154,7 @@ namespace Algorithms
           {
             (*inverse_derivative)(out2, src2);
           }
-        catch (SolverControl::NoConvergence &e)
+        catch (SolverControl::NoConvergence& e)
           {
             deallog << "Inner iteration failed after " << e.last_step
                     << " steps with residual " << e.last_residual << std::endl;
@@ -163,12 +163,12 @@ namespace Algorithms
         if (debug_vectors)
           {
             AnyData     tmp;
-            VectorType *p = &u;
-            tmp.add<const VectorType *>(p, "solution");
+            VectorType* p = &u;
+            tmp.add<const VectorType*>(p, "solution");
             p = Du.get();
-            tmp.add<const VectorType *>(p, "update");
+            tmp.add<const VectorType*>(p, "update");
             p = res.get();
-            tmp.add<const VectorType *>(p, "residual");
+            tmp.add<const VectorType*>(p, "residual");
             *data_out << step;
             *data_out << tmp;
           }

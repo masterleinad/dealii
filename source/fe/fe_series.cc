@@ -34,14 +34,14 @@ namespace FESeries
 {
   /*-------------- Fourier -------------------------------*/
 
-  void set_k_vectors(Table<1, Tensor<1, 1>> &k_vectors, const unsigned int N)
+  void set_k_vectors(Table<1, Tensor<1, 1>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<1>(N));
     for (unsigned int i = 0; i < N; ++i)
       k_vectors(i)[0] = 2. * numbers::PI * i;
   }
 
-  void set_k_vectors(Table<2, Tensor<1, 2>> &k_vectors, const unsigned int N)
+  void set_k_vectors(Table<2, Tensor<1, 2>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<2>(N, N));
     for (unsigned int i = 0; i < N; ++i)
@@ -52,7 +52,7 @@ namespace FESeries
         }
   }
 
-  void set_k_vectors(Table<3, Tensor<1, 3>> &k_vectors, const unsigned int N)
+  void set_k_vectors(Table<3, Tensor<1, 3>>& k_vectors, const unsigned int N)
   {
     k_vectors.reinit(TableIndices<3>(N, N, N));
     for (unsigned int i = 0; i < N; ++i)
@@ -68,8 +68,8 @@ namespace FESeries
 
   template <int dim>
   Fourier<dim>::Fourier(const unsigned int           N,
-                        const hp::FECollection<dim> &fe_collection,
-                        const hp::QCollection<dim> & q_collection) :
+                        const hp::FECollection<dim>& fe_collection,
+                        const hp::QCollection<dim>&  q_collection) :
     fe_collection(&fe_collection),
     q_collection(&q_collection),
     fourier_transform_matrices(fe_collection.size())
@@ -81,12 +81,12 @@ namespace FESeries
   template <int dim>
   void
   Fourier<dim>::calculate(
-    const Vector<double> &            local_dof_values,
+    const Vector<double>&             local_dof_values,
     const unsigned int                cell_active_fe_index,
-    Table<dim, std::complex<double>> &fourier_coefficients)
+    Table<dim, std::complex<double>>& fourier_coefficients)
   {
     ensure_existence(cell_active_fe_index);
-    const FullMatrix<std::complex<double>> &matrix =
+    const FullMatrix<std::complex<double>>& matrix =
       fourier_transform_matrices[cell_active_fe_index];
 
     std::fill(unrolled_coefficients.begin(),
@@ -107,15 +107,15 @@ namespace FESeries
 
   template <int dim>
   std::complex<double>
-  integrate(const FiniteElement<dim> &fe,
-            const Quadrature<dim> &   quadrature,
-            const Tensor<1, dim> &    k_vector,
+  integrate(const FiniteElement<dim>& fe,
+            const Quadrature<dim>&    quadrature,
+            const Tensor<1, dim>&     k_vector,
             const unsigned int        j)
   {
     std::complex<double> sum = 0;
     for (unsigned int q = 0; q < quadrature.size(); ++q)
       {
-        const Point<dim> &x_q = quadrature.point(q);
+        const Point<dim>& x_q = quadrature.point(q);
         sum += std::exp(std::complex<double>(0, 1) * (k_vector * x_q)) *
                fe.shape_value(j, x_q) * quadrature.weight(q);
       }
@@ -201,7 +201,7 @@ namespace FESeries
    */
   template <int dim>
   double
-  Lh(const Point<dim> &x_q, const TableIndices<dim> &indices)
+  Lh(const Point<dim>& x_q, const TableIndices<dim>& indices)
   {
 #ifdef DEAL_II_WITH_GSL
     double res = 1.0;
@@ -230,7 +230,7 @@ namespace FESeries
    */
   template <int dim>
   double
-  multiplier(const TableIndices<dim> &indices)
+  multiplier(const TableIndices<dim>& indices)
   {
     double res = 1.0;
     for (unsigned int d = 0; d < dim; d++)
@@ -242,8 +242,8 @@ namespace FESeries
 
   template <int dim>
   Legendre<dim>::Legendre(const unsigned int           size_in_each_direction,
-                          const hp::FECollection<dim> &fe_collection,
-                          const hp::QCollection<dim> & q_collection) :
+                          const hp::FECollection<dim>& fe_collection,
+                          const hp::QCollection<dim>&  q_collection) :
     N(size_in_each_direction),
     fe_collection(&fe_collection),
     q_collection(&q_collection),
@@ -253,12 +253,12 @@ namespace FESeries
 
   template <int dim>
   void
-  Legendre<dim>::calculate(const dealii::Vector<double> &local_dof_values,
+  Legendre<dim>::calculate(const dealii::Vector<double>& local_dof_values,
                            const unsigned int            cell_active_fe_index,
-                           Table<dim, double> &          legendre_coefficients)
+                           Table<dim, double>&           legendre_coefficients)
   {
     ensure_existence(cell_active_fe_index);
-    const FullMatrix<double> &matrix =
+    const FullMatrix<double>& matrix =
       legendre_transform_matrices[cell_active_fe_index];
 
     std::fill(unrolled_coefficients.begin(), unrolled_coefficients.end(), 0.);
@@ -278,15 +278,15 @@ namespace FESeries
 
   template <int dim>
   double
-  integrate_Legendre(const FiniteElement<dim> &fe,
-                     const Quadrature<dim> &   quadrature,
-                     const TableIndices<dim> & indices,
+  integrate_Legendre(const FiniteElement<dim>& fe,
+                     const Quadrature<dim>&    quadrature,
+                     const TableIndices<dim>&  indices,
                      const unsigned int        dof)
   {
     double sum = 0;
     for (unsigned int q = 0; q < quadrature.size(); ++q)
       {
-        const Point<dim> &x_q = quadrature.point(q);
+        const Point<dim>& x_q = quadrature.point(q);
         sum +=
           Lh(x_q, indices) * fe.shape_value(dof, x_q) * quadrature.weight(q);
       }
@@ -368,7 +368,7 @@ namespace FESeries
 
   /*-------------- linear_regression -------------------------------*/
   std::pair<double, double>
-  linear_regression(const std::vector<double> &x, const std::vector<double> &y)
+  linear_regression(const std::vector<double>& x, const std::vector<double>& y)
   {
     FullMatrix<double> K(2, 2), invK(2, 2);
     Vector<double>     X(2), B(2);

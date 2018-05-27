@@ -57,7 +57,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 inline double
-gradient_power(const Tensor<1, dim> &v, const unsigned int n)
+gradient_power(const Tensor<1, dim>& v, const unsigned int n)
 {
   Assert((n / 2) * 2 == n, ExcMessage("Value of 'n' must be even"));
   double p = 1;
@@ -75,13 +75,13 @@ public:
   {}
 
   virtual double
-  value(const Point<1> &p, const unsigned int component = 0) const;
+  value(const Point<1>& p, const unsigned int component = 0) const;
 };
 
 
 
 double
-InitializationValues::value(const Point<1> &p, const unsigned int) const
+InitializationValues::value(const Point<1>& p, const unsigned int) const
 {
   const double base   = std::pow(p(0), 1. / 3.);
   const double random = random_value<double>(-1., 1.);
@@ -106,7 +106,7 @@ private:
   void
   assemble_step();
   double
-  line_search(const Vector<double> &update) const;
+  line_search(const Vector<double>& update) const;
   void
   do_step();
   void
@@ -115,7 +115,7 @@ private:
   refine_grid();
 
   static double
-  energy(const DoFHandler<dim> &dof_handler, const Vector<double> &function);
+  energy(const DoFHandler<dim>& dof_handler, const Vector<double>& function);
 
 
   const unsigned int run_number;
@@ -280,7 +280,7 @@ MinimizationProblem<dim>::assemble_step()
 
 template <int dim>
 double
-MinimizationProblem<dim>::line_search(const Vector<double> &update) const
+MinimizationProblem<dim>::line_search(const Vector<double>& update) const
 {
   double         alpha = 0.;
   Vector<double> tmp(present_solution.size());
@@ -497,8 +497,8 @@ MinimizationProblem<1>::refine_grid()
 
 template <int dim>
 double
-MinimizationProblem<dim>::energy(const DoFHandler<dim> &dof_handler,
-                                 const Vector<double> & function)
+MinimizationProblem<dim>::energy(const DoFHandler<dim>& dof_handler,
+                                 const Vector<double>&  function)
 {
   QGauss<dim>   quadrature_formula(4);
   FEValues<dim> fe_values(dof_handler.get_fe(),
@@ -589,7 +589,7 @@ main()
           minimization_problem_1d.run();
         }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

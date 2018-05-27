@@ -45,8 +45,8 @@ public:
   TestFunction(unsigned int degree);
 
   virtual void
-  vector_value_list(const std::vector<Point<dim>> &points,
-                    std::vector<Vector<double>> &  values) const;
+  vector_value_list(const std::vector<Point<dim>>& points,
+                    std::vector<Vector<double>>&   values) const;
 
 private:
   unsigned int degree;
@@ -60,8 +60,8 @@ TestFunction<dim>::TestFunction(unsigned int p) : Function<dim>(dim), degree(p)
 
 template <int dim>
 void
-TestFunction<dim>::vector_value_list(const std::vector<Point<dim>> &points,
-                                     std::vector<Vector<double>> &values) const
+TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
+                                     std::vector<Vector<double>>& values) const
 {
   for (unsigned int k = 0; k < points.size(); ++k)
     {
@@ -92,10 +92,10 @@ TestFunction<dim>::vector_value_list(const std::vector<Point<dim>> &points,
 
 template <int dim>
 double
-integrate_error(const DoFHandler<dim> &dof,
-                FEFaceValues<dim> &    fe,
-                const Vector<double> & u,
-                const Function<dim> &  f)
+integrate_error(const DoFHandler<dim>& dof,
+                FEFaceValues<dim>&     fe,
+                const Vector<double>&  u,
+                const Function<dim>&   f)
 {
   double                      result = 0.;
   std::vector<Vector<double>> f_values(fe.n_quadrature_points,
@@ -132,7 +132,7 @@ integrate_error(const DoFHandler<dim> &dof,
 
 template <int dim>
 void
-test_projection(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
+test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl
           << "Cells: " << tr.n_active_cells() << std::endl;
@@ -177,7 +177,7 @@ test_projection(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
 
 template <int dim>
 void
-test_hyper_cube(const FiniteElement<dim> &fe)
+test_hyper_cube(const FiniteElement<dim>& fe)
 {
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);

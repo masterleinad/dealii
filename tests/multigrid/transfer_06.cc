@@ -116,7 +116,7 @@ check(const unsigned int fe_degree)
       mgdof_2.distribute_dofs(fe_2);
       mgdof_2.distribute_mg_dofs(fe_2);
 
-      const std::vector<const DoFHandler<dim> *> mgdof_ptr{&mgdof_1, &mgdof_2};
+      const std::vector<const DoFHandler<dim>*> mgdof_ptr{&mgdof_1, &mgdof_2};
 
       std::vector<MGConstrainedDoFs>  mg_constrained_dofs_vector(2);
       ZeroFunction<dim>               zero_function;
@@ -230,7 +230,7 @@ check(const unsigned int fe_degree)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   // no threading in this test...
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);

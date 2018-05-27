@@ -80,7 +80,7 @@ test_point_owner(unsigned int n_procs)
       unsigned int tot_pt = 0;
       for (unsigned int rk = 0; rk < n_procs; ++rk)
         {
-          const auto &rk_points = std::get<0>(output_tp)[rk];
+          const auto& rk_points = std::get<0>(output_tp)[rk];
           for (unsigned int box = 0; box < rk; ++box)
             {
               if (std::find(rk_points.begin(), rk_points.end(), tot_pt) ==
@@ -131,10 +131,10 @@ test_point_owner(unsigned int n_procs)
 
   for (unsigned int rk = 0; rk < n_procs; ++rk)
     {
-      for (const auto &pt : std::get<0>(output_tp)[rk])
+      for (const auto& pt : std::get<0>(output_tp)[rk])
         {
           bool found = false;
-          for (const auto &bbox : global_bboxes[rk])
+          for (const auto& bbox : global_bboxes[rk])
             if (bbox.point_inside(points[pt]))
               {
                 found = true;

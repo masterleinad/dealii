@@ -63,13 +63,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> res = point;
     Assert(point.norm() > 0,
@@ -114,7 +114,7 @@ test5()
   // output 11th:
   {
     const unsigned int    global_dof = 11;
-    const Vector<double> &solution   = shape_functions[global_dof];
+    const Vector<double>& solution   = shape_functions[global_dof];
     QTrapez<dim>          quadrature;
     FEValues<dim>         fe_values(fe, quadrature, update_values);
 
@@ -139,7 +139,7 @@ test5()
           if (local_dof_indices[local_dof] == global_dof)
             break;
 
-        const std::vector<dealii::Point<dim>> &q_points =
+        const std::vector<dealii::Point<dim>>& q_points =
           fe_values.get_quadrature_points();
         fe_values.get_function_values(solution, solution_values);
 
@@ -180,7 +180,7 @@ test5()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -192,7 +192,7 @@ main(int argc, char **argv)
     {
       test5<2>();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

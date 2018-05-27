@@ -34,7 +34,7 @@ template <int dim>
 class L2_inverse : public Function<dim>
 {
 public:
-  L2_inverse(const std::vector<Point<dim>> &distance_source) :
+  L2_inverse(const std::vector<Point<dim>>& distance_source) :
     Function<dim>(),
     distance_source(distance_source)
   {
@@ -42,7 +42,7 @@ public:
   }
 
   virtual double
-  value(const dealii::Point<dim> &p, const unsigned int component = 0) const
+  value(const dealii::Point<dim>& p, const unsigned int component = 0) const
   {
     double l2_inverse = std::numeric_limits<double>::max();
 

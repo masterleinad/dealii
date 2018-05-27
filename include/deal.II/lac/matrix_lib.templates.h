@@ -24,7 +24,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename number>
 void
-MeanValueFilter::filter(Vector<number> &v) const
+MeanValueFilter::filter(Vector<number>& v) const
 {
   number mean = v.mean_value();
 
@@ -36,7 +36,7 @@ MeanValueFilter::filter(Vector<number> &v) const
 
 template <typename number>
 void
-MeanValueFilter::vmult(Vector<number> &dst, const Vector<number> &src) const
+MeanValueFilter::vmult(Vector<number>& dst, const Vector<number>& src) const
 {
   Assert(dst.size() == src.size(),
          ExcDimensionMismatch(dst.size(), src.size()));
@@ -51,7 +51,7 @@ MeanValueFilter::vmult(Vector<number> &dst, const Vector<number> &src) const
 
 template <typename number>
 void
-MeanValueFilter::vmult_add(Vector<number> &dst, const Vector<number> &src) const
+MeanValueFilter::vmult_add(Vector<number>& dst, const Vector<number>& src) const
 {
   Assert(dst.size() == src.size(),
          ExcDimensionMismatch(dst.size(), src.size()));
@@ -66,7 +66,7 @@ MeanValueFilter::vmult_add(Vector<number> &dst, const Vector<number> &src) const
 
 template <typename number>
 void
-MeanValueFilter::filter(BlockVector<number> &v) const
+MeanValueFilter::filter(BlockVector<number>& v) const
 {
   Assert(component != numbers::invalid_unsigned_int, ExcNotInitialized());
 
@@ -79,8 +79,8 @@ MeanValueFilter::filter(BlockVector<number> &v) const
 
 template <typename number>
 void
-MeanValueFilter::vmult(BlockVector<number> &      dst,
-                       const BlockVector<number> &src) const
+MeanValueFilter::vmult(BlockVector<number>&       dst,
+                       const BlockVector<number>& src) const
 {
   Assert(component != numbers::invalid_unsigned_int, ExcNotInitialized());
 
@@ -98,8 +98,8 @@ MeanValueFilter::vmult(BlockVector<number> &      dst,
 
 template <typename number>
 void
-MeanValueFilter::vmult_add(BlockVector<number> &      dst,
-                           const BlockVector<number> &src) const
+MeanValueFilter::vmult_add(BlockVector<number>&       dst,
+                           const BlockVector<number>& src) const
 {
   Assert(component != numbers::invalid_unsigned_int, ExcNotInitialized());
 

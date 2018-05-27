@@ -53,7 +53,7 @@ class LinearFunction : public Function<dim>
 {
 public:
   double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     return p[0] + 2;
   }
@@ -168,7 +168,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

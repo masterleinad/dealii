@@ -44,7 +44,7 @@ test1(const bool keep_boundary)
        ++cell)
     if (cell->is_locally_owned())
       {
-        const Point<dim> &p            = cell->center();
+        const Point<dim>& p            = cell->center();
         bool              all_positive = true;
         for (unsigned int d = 0; d < dim; ++d)
           if (p(d) <= 0.)
@@ -84,7 +84,7 @@ test1(const bool keep_boundary)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

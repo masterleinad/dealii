@@ -25,7 +25,7 @@ using namespace dealii;
 
 template <typename VectorType>
 void
-test(const VectorType &given_vector)
+test(const VectorType& given_vector)
 {
   Teuchos::RCP<VectorType> given_vector_rcp(new VectorType(given_vector));
 
@@ -59,7 +59,7 @@ test(const VectorType &given_vector)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   deallog.depth_console(10);
 
@@ -79,7 +79,7 @@ main(int argc, char **argv)
         test(trilinos_vector);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

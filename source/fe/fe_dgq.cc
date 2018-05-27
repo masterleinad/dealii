@@ -84,7 +84,7 @@ FE_DGQ<dim, spacedim>::FE_DGQ(const unsigned int degree) :
 
 template <int dim, int spacedim>
 FE_DGQ<dim, spacedim>::FE_DGQ(
-  const std::vector<Polynomials::Polynomial<double>> &polynomials) :
+  const std::vector<Polynomials::Polynomial<double>>& polynomials) :
   FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
     TensorProductPolynomials<dim>(polynomials),
     FiniteElementData<dim>(get_dpo_vector(polynomials.size() - 1),
@@ -133,8 +133,8 @@ FE_DGQ<dim, spacedim>::get_name() const
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>> &support_point_values,
-  std::vector<double> &              nodal_values) const
+  const std::vector<Vector<double>>& support_point_values,
+  std::vector<double>&               nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -179,7 +179,7 @@ FE_DGQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 
 template <int dim, int spacedim>
 void
-FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int> &numbers,
+FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                                       const char direction) const
 {
   const unsigned int n = this->degree + 1;
@@ -257,21 +257,21 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int> &numbers,
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &x_source_fe,
-  FullMatrix<double> &                interpolation_matrix) const
+  const FiniteElement<dim, spacedim>& x_source_fe,
+  FullMatrix<double>&                 interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
   // DGQ element
   typedef FiniteElement<dim, spacedim> FE;
   AssertThrow(
-    (dynamic_cast<const FE_DGQ<dim, spacedim> *>(&x_source_fe) != nullptr),
+    (dynamic_cast<const FE_DGQ<dim, spacedim>*>(&x_source_fe) != nullptr),
     typename FE::ExcInterpolationNotImplemented());
 
   // ok, source is a Q element, so
   // we will be able to do the work
-  const FE_DGQ<dim, spacedim> &source_fe =
-    dynamic_cast<const FE_DGQ<dim, spacedim> &>(x_source_fe);
+  const FE_DGQ<dim, spacedim>& source_fe =
+    dynamic_cast<const FE_DGQ<dim, spacedim>&>(x_source_fe);
 
   Assert(interpolation_matrix.m() == this->dofs_per_cell,
          ExcDimensionMismatch(interpolation_matrix.m(), this->dofs_per_cell));
@@ -336,8 +336,8 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &x_source_fe,
-  FullMatrix<double> &                interpolation_matrix) const
+  const FiniteElement<dim, spacedim>& x_source_fe,
+  FullMatrix<double>&                 interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGQ element. in that case,
@@ -348,7 +348,7 @@ FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
   (void)interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
   AssertThrow(
-    (dynamic_cast<const FE_DGQ<dim, spacedim> *>(&x_source_fe) != nullptr),
+    (dynamic_cast<const FE_DGQ<dim, spacedim>*>(&x_source_fe) != nullptr),
     typename FE::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -362,9 +362,9 @@ FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &x_source_fe,
+  const FiniteElement<dim, spacedim>& x_source_fe,
   const unsigned int,
-  FullMatrix<double> &interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGQ element. in that case,
@@ -375,7 +375,7 @@ FE_DGQ<dim, spacedim>::get_subface_interpolation_matrix(
   (void)interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
   AssertThrow(
-    (dynamic_cast<const FE_DGQ<dim, spacedim> *>(&x_source_fe) != nullptr),
+    (dynamic_cast<const FE_DGQ<dim, spacedim>*>(&x_source_fe) != nullptr),
     typename FE::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -387,10 +387,10 @@ FE_DGQ<dim, spacedim>::get_subface_interpolation_matrix(
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FE_DGQ<dim, spacedim>::get_prolongation_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -414,8 +414,8 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      FE_DGQ<dim, spacedim>& this_nonconst =
+        const_cast<FE_DGQ<dim, spacedim>&>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(
@@ -463,10 +463,10 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FE_DGQ<dim, spacedim>::get_restriction_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -490,8 +490,8 @@ FE_DGQ<dim, spacedim>::get_restriction_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      FE_DGQ<dim, spacedim>& this_nonconst =
+        const_cast<FE_DGQ<dim, spacedim>&>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(
@@ -550,7 +550,7 @@ FE_DGQ<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGQ<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim> & /*fe_other*/) const
+  const FiniteElement<dim, spacedim>& /*fe_other*/) const
 {
   // this element is discontinuous, so by definition there can
   // be no identities between its dofs and those of any neighbor
@@ -564,7 +564,7 @@ FE_DGQ<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGQ<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim> & /*fe_other*/) const
+  const FiniteElement<dim, spacedim>& /*fe_other*/) const
 {
   // this element is discontinuous, so by definition there can
   // be no identities between its dofs and those of any neighbor
@@ -578,7 +578,7 @@ FE_DGQ<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGQ<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim> & /*fe_other*/) const
+  const FiniteElement<dim, spacedim>& /*fe_other*/) const
 {
   // this element is discontinuous, so by definition there can
   // be no identities between its dofs and those of any neighbor
@@ -592,7 +592,7 @@ FE_DGQ<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_DGQ<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim> & /*fe_other*/) const
+  const FiniteElement<dim, spacedim>& /*fe_other*/) const
 {
   // this is a discontinuous element, so by definition there will
   // be no constraints wherever this element comes together with
@@ -721,7 +721,7 @@ FE_DGQ<dim, spacedim>::memory_consumption() const
 
 template <int dim, int spacedim>
 FE_DGQArbitraryNodes<dim, spacedim>::FE_DGQArbitraryNodes(
-  const Quadrature<1> &points) :
+  const Quadrature<1>& points) :
   FE_DGQ<dim, spacedim>(
     Polynomials::generate_complete_Lagrange_basis(points.get_points()))
 {
@@ -832,8 +832,8 @@ template <int dim, int spacedim>
 void
 FE_DGQArbitraryNodes<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());

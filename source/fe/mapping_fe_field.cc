@@ -60,8 +60,8 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
-  InternalData(const FiniteElement<dim, spacedim> &fe,
-               const ComponentMask &               mask) :
+  InternalData(const FiniteElement<dim, spacedim>& fe,
+               const ComponentMask&                mask) :
   unit_tangentials(),
   n_shape_functions(fe.dofs_per_cell),
   mask(mask),
@@ -83,7 +83,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-double &
+double&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::shape(
   const unsigned int qpoint,
   const unsigned int shape_nr)
@@ -96,7 +96,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::shape(
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-const Tensor<1, dim> &
+const Tensor<1, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   derivative(const unsigned int qpoint, const unsigned int shape_nr) const
 {
@@ -109,7 +109,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-Tensor<1, dim> &
+Tensor<1, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   derivative(const unsigned int qpoint, const unsigned int shape_nr)
 {
@@ -121,7 +121,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-const Tensor<2, dim> &
+const Tensor<2, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   second_derivative(const unsigned int qpoint,
                     const unsigned int shape_nr) const
@@ -137,7 +137,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-Tensor<2, dim> &
+Tensor<2, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   second_derivative(const unsigned int qpoint, const unsigned int shape_nr)
 {
@@ -151,7 +151,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-const Tensor<3, dim> &
+const Tensor<3, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   third_derivative(const unsigned int qpoint, const unsigned int shape_nr) const
 {
@@ -165,7 +165,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-Tensor<3, dim> &
+Tensor<3, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   third_derivative(const unsigned int qpoint, const unsigned int shape_nr)
 {
@@ -178,7 +178,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-const Tensor<4, dim> &
+const Tensor<4, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   fourth_derivative(const unsigned int qpoint,
                     const unsigned int shape_nr) const
@@ -194,7 +194,7 @@ MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
 
 
 template <int dim, int spacedim, typename DoFHandlerType, typename VectorType>
-Tensor<4, dim> &
+Tensor<4, dim>&
 MappingFEField<dim, spacedim, DoFHandlerType, VectorType>::InternalData::
   fourth_derivative(const unsigned int qpoint, const unsigned int shape_nr)
 {
@@ -213,7 +213,7 @@ namespace
   // Construct a quadrature formula containing the vertices of the reference
   // cell in dimension dim (with invalid weights)
   template <int dim>
-  Quadrature<dim> &
+  Quadrature<dim>&
   get_vertex_quadrature()
   {
     static Quadrature<dim> quad;
@@ -232,9 +232,9 @@ namespace
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
-  const DoFHandlerType &euler_dof_handler,
-  const VectorType &    euler_vector,
-  const ComponentMask & mask) :
+  const DoFHandlerType& euler_dof_handler,
+  const VectorType&     euler_vector,
+  const ComponentMask&  mask) :
   euler_vector(&euler_vector),
   euler_dof_handler(&euler_dof_handler),
   fe_mask(
@@ -259,7 +259,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
-  const MappingFEField<dim, spacedim, VectorType, DoFHandlerType> &mapping) :
+  const MappingFEField<dim, spacedim, VectorType, DoFHandlerType>& mapping) :
   euler_vector(mapping.euler_vector),
   euler_dof_handler(mapping.euler_dof_handler),
   fe_mask(mapping.fe_mask),
@@ -272,7 +272,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
 
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
-inline const double &
+inline const double&
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::InternalData::shape(
   const unsigned int qpoint,
   const unsigned int shape_nr) const
@@ -298,7 +298,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_vertices(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
 {
   // we transform our tria iterator into a dof iterator so we can access
   // data not associated with triangulations
@@ -337,9 +337,9 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   compute_shapes_virtual(
-    const std::vector<Point<dim>> &unit_points,
+    const std::vector<Point<dim>>& unit_points,
     typename MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-      InternalData &data) const
+      InternalData& data) const
 {
   const auto         fe       = &euler_dof_handler->get_fe();
   const unsigned int n_points = unit_points.size();
@@ -431,9 +431,9 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_data(
   const UpdateFlags      update_flags,
-  const Quadrature<dim> &q,
+  const Quadrature<dim>& q,
   const unsigned int     n_original_q_points,
-  InternalData &         data) const
+  InternalData&          data) const
 {
   // store the flags in the internal data object so we can access them
   // in fill_fe_*_values(). use the transitive hull of the required
@@ -482,9 +482,9 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
   const UpdateFlags      update_flags,
-  const Quadrature<dim> &q,
+  const Quadrature<dim>& q,
   const unsigned int     n_original_q_points,
-  InternalData &         data) const
+  InternalData&          data) const
 {
   compute_data(update_flags, q, n_original_q_points, data);
 
@@ -559,7 +559,7 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 typename std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_data(
   const UpdateFlags      update_flags,
-  const Quadrature<dim> &quadrature) const
+  const Quadrature<dim>& quadrature) const
 {
   auto data =
     std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(), fe_mask);
@@ -573,7 +573,7 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_face_data(
   const UpdateFlags          update_flags,
-  const Quadrature<dim - 1> &quadrature) const
+  const Quadrature<dim - 1>& quadrature) const
 {
   auto data =
     std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(), fe_mask);
@@ -588,7 +588,7 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::get_subface_data(
   const UpdateFlags          update_flags,
-  const Quadrature<dim - 1> &quadrature) const
+  const Quadrature<dim - 1>& quadrature) const
 {
   auto data =
     std_cxx14::make_unique<InternalData>(euler_dof_handler->get_fe(), fe_mask);
@@ -621,11 +621,11 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real,
-        std::vector<Point<spacedim>> &      quadrature_points)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real,
+        std::vector<Point<spacedim>>&       quadrature_points)
       {
         const UpdateFlags update_flags = data.update_each;
 
@@ -635,7 +635,7 @@ namespace internal
                  ++point)
               {
                 Point<spacedim> result;
-                const double *  shape = &data.shape(point + data_set, 0);
+                const double*   shape = &data.shape(point + data_set, 0);
 
                 for (unsigned int k = 0; k < data.n_shape_functions; ++k)
                   {
@@ -667,10 +667,10 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real)
       {
         const UpdateFlags update_flags = data.update_each;
 
@@ -687,7 +687,7 @@ namespace internal
 
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<1, dim> *data_derv =
+                    const Tensor<1, dim>* data_derv =
                       &data.derivative(point + data_set, 0);
 
                     Tensor<1, dim> result[spacedim];
@@ -747,11 +747,11 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                             data,
-        const FiniteElement<dim, spacedim> &           fe,
-        const ComponentMask &                          fe_mask,
-        const std::vector<unsigned int> &              fe_to_real,
-        std::vector<DerivativeForm<2, dim, spacedim>> &jacobian_grads)
+            InternalData&                              data,
+        const FiniteElement<dim, spacedim>&            fe,
+        const ComponentMask&                           fe_mask,
+        const std::vector<unsigned int>&               fe_to_real,
+        std::vector<DerivativeForm<2, dim, spacedim>>& jacobian_grads)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_grads)
@@ -762,7 +762,7 @@ namespace internal
               {
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<2, dim> *second =
+                    const Tensor<2, dim>* second =
                       &data.second_derivative(point + data_set, 0);
 
                     DerivativeForm<2, dim, spacedim> result;
@@ -805,11 +805,11 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real,
-        std::vector<Tensor<3, spacedim>> &  jacobian_pushed_forward_grads)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real,
+        std::vector<Tensor<3, spacedim>>&   jacobian_pushed_forward_grads)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_pushed_forward_grads)
@@ -822,7 +822,7 @@ namespace internal
                 double tmp[spacedim][spacedim][spacedim];
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<2, dim> *second =
+                    const Tensor<2, dim>* second =
                       &data.second_derivative(point + data_set, 0);
 
                     DerivativeForm<2, dim, spacedim> result;
@@ -886,11 +886,11 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                             data,
-        const FiniteElement<dim, spacedim> &           fe,
-        const ComponentMask &                          fe_mask,
-        const std::vector<unsigned int> &              fe_to_real,
-        std::vector<DerivativeForm<3, dim, spacedim>> &jacobian_2nd_derivatives)
+            InternalData&                              data,
+        const FiniteElement<dim, spacedim>&            fe,
+        const ComponentMask&                           fe_mask,
+        const std::vector<unsigned int>&               fe_to_real,
+        std::vector<DerivativeForm<3, dim, spacedim>>& jacobian_2nd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_2nd_derivatives)
@@ -901,7 +901,7 @@ namespace internal
               {
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<3, dim> *third =
+                    const Tensor<3, dim>* third =
                       &data.third_derivative(point + data_set, 0);
 
                     DerivativeForm<3, dim, spacedim> result;
@@ -949,12 +949,12 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real,
-        std::vector<Tensor<4, spacedim>>
-          &jacobian_pushed_forward_2nd_derivatives)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real,
+        std::vector<Tensor<4, spacedim>>&
+          jacobian_pushed_forward_2nd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_pushed_forward_2nd_derivatives)
@@ -967,7 +967,7 @@ namespace internal
                 double tmp[spacedim][spacedim][spacedim][spacedim];
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<3, dim> *third =
+                    const Tensor<3, dim>* third =
                       &data.third_derivative(point + data_set, 0);
 
                     DerivativeForm<3, dim, spacedim> result;
@@ -1058,11 +1058,11 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                             data,
-        const FiniteElement<dim, spacedim> &           fe,
-        const ComponentMask &                          fe_mask,
-        const std::vector<unsigned int> &              fe_to_real,
-        std::vector<DerivativeForm<4, dim, spacedim>> &jacobian_3rd_derivatives)
+            InternalData&                              data,
+        const FiniteElement<dim, spacedim>&            fe,
+        const ComponentMask&                           fe_mask,
+        const std::vector<unsigned int>&               fe_to_real,
+        std::vector<DerivativeForm<4, dim, spacedim>>& jacobian_3rd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_3rd_derivatives)
@@ -1073,7 +1073,7 @@ namespace internal
               {
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<4, dim> *fourth =
+                    const Tensor<4, dim>* fourth =
                       &data.fourth_derivative(point + data_set, 0);
 
                     DerivativeForm<4, dim, spacedim> result;
@@ -1124,12 +1124,12 @@ namespace internal
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real,
-        std::vector<Tensor<5, spacedim>>
-          &jacobian_pushed_forward_3rd_derivatives)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real,
+        std::vector<Tensor<5, spacedim>>&
+          jacobian_pushed_forward_3rd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
         if (update_flags & update_jacobian_pushed_forward_3rd_derivatives)
@@ -1142,7 +1142,7 @@ namespace internal
                 double tmp[spacedim][spacedim][spacedim][spacedim][spacedim];
                 for (unsigned int point = 0; point < n_q_points; ++point)
                   {
-                    const Tensor<4, dim> *fourth =
+                    const Tensor<4, dim>* fourth =
                       &data.fourth_derivative(point + data_set, 0);
 
                     DerivativeForm<4, dim, spacedim> result;
@@ -1251,17 +1251,17 @@ namespace internal
                 typename DoFHandlerType>
       void
       maybe_compute_face_data(
-        const dealii::Mapping<dim, spacedim> &mapping,
-        const typename dealii::Triangulation<dim, spacedim>::cell_iterator
-          &                        cell,
+        const dealii::Mapping<dim, spacedim>& mapping,
+        const typename dealii::Triangulation<dim, spacedim>::cell_iterator&
+                                   cell,
         const unsigned int         face_no,
         const unsigned int         subface_no,
-        const std::vector<double> &weights,
+        const std::vector<double>& weights,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &data,
-        internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-          &output_data)
+            InternalData& data,
+        internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+          output_data)
       {
         const UpdateFlags update_flags = data.update_each;
 
@@ -1412,21 +1412,21 @@ namespace internal
                 typename DoFHandlerType>
       void
       do_fill_fe_face_values(
-        const dealii::Mapping<dim, spacedim> &mapping,
-        const typename dealii::Triangulation<dim, spacedim>::cell_iterator
-          &                                                       cell,
+        const dealii::Mapping<dim, spacedim>& mapping,
+        const typename dealii::Triangulation<dim, spacedim>::cell_iterator&
+                                                                  cell,
         const unsigned int                                        face_no,
         const unsigned int                                        subface_no,
         const typename dealii::QProjector<dim>::DataSetDescriptor data_set,
-        const Quadrature<dim - 1> &                               quadrature,
+        const Quadrature<dim - 1>&                                quadrature,
         const typename dealii::
           MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-            InternalData &                  data,
-        const FiniteElement<dim, spacedim> &fe,
-        const ComponentMask &               fe_mask,
-        const std::vector<unsigned int> &   fe_to_real,
-        internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-          &output_data)
+            InternalData&                   data,
+        const FiniteElement<dim, spacedim>& fe,
+        const ComponentMask&                fe_mask,
+        const std::vector<unsigned int>&    fe_to_real,
+        internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+          output_data)
       {
         maybe_compute_q_points<dim, spacedim, VectorType, DoFHandlerType>(
           data_set,
@@ -1527,18 +1527,18 @@ namespace internal
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 CellSimilarity::Similarity
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const CellSimilarity::Similarity                            cell_similarity,
-  const Quadrature<dim> &                                     quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
-  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-    &output_data) const
+  const Quadrature<dim>&                                      quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+    output_data) const
 {
   // convert data object to internal data for this class. fails with an
   // exception if that is not possible
-  Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const InternalData& data = static_cast<const InternalData&>(internal_data);
 
   const unsigned int               n_q_points = quadrature.size();
   const CellSimilarity::Similarity updated_cell_similarity =
@@ -1565,7 +1565,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
       fe_to_real);
 
   const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double> &weights      = quadrature.get_weights();
+  const std::vector<double>& weights      = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
@@ -1757,18 +1757,18 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_face_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const unsigned int                                          face_no,
-  const Quadrature<dim - 1> &                                 quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
-  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-    &output_data) const
+  const Quadrature<dim - 1>&                                  quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+    output_data) const
 {
   // convert data object to internal data for this class. fails with an
   // exception if that is not possible
-  Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const InternalData& data = static_cast<const InternalData&>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1796,19 +1796,19 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   fill_fe_subface_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
     const unsigned int                                          face_no,
     const unsigned int                                          subface_no,
-    const Quadrature<dim - 1> &                                 quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase &   internal_data,
-    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-      &output_data) const
+    const Quadrature<dim - 1>&                                  quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+      output_data) const
 {
   // convert data object to internal data for this class. fails with an
   // exception if that is not possible
-  Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const InternalData& data = static_cast<const InternalData&>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1848,25 +1848,25 @@ namespace internal
                 typename DoFHandlerType>
       void
       transform_fields(
-        const ArrayView<const Tensor<rank, dim>> &               input,
+        const ArrayView<const Tensor<rank, dim>>&                input,
         const MappingType                                        mapping_type,
-        const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-        const ArrayView<Tensor<rank, spacedim>> &                output)
+        const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+        const ArrayView<Tensor<rank, spacedim>>&                 output)
       {
         AssertDimension(input.size(), output.size());
         Assert((dynamic_cast<
                   const typename dealii::
                     MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                      InternalData *>(&mapping_data) != nullptr),
+                      InternalData*>(&mapping_data) != nullptr),
                ExcInternalError());
         const typename dealii::MappingFEField<dim,
                                               spacedim,
                                               VectorType,
-                                              DoFHandlerType>::InternalData
-          &data = static_cast<
+                                              DoFHandlerType>::InternalData&
+          data = static_cast<
             const typename dealii::
               MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                InternalData &>(mapping_data);
+                InternalData&>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1934,25 +1934,25 @@ namespace internal
                 typename DoFHandlerType>
       void
       transform_differential_forms(
-        const ArrayView<const DerivativeForm<rank, dim, spacedim>> &input,
+        const ArrayView<const DerivativeForm<rank, dim, spacedim>>& input,
         const MappingType                                        mapping_type,
-        const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-        const ArrayView<Tensor<rank + 1, spacedim>> &            output)
+        const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+        const ArrayView<Tensor<rank + 1, spacedim>>&             output)
       {
         AssertDimension(input.size(), output.size());
         Assert((dynamic_cast<
                   const typename dealii::
                     MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                      InternalData *>(&mapping_data) != nullptr),
+                      InternalData*>(&mapping_data) != nullptr),
                ExcInternalError());
         const typename dealii::MappingFEField<dim,
                                               spacedim,
                                               VectorType,
-                                              DoFHandlerType>::InternalData
-          &data = static_cast<
+                                              DoFHandlerType>::InternalData&
+          data = static_cast<
             const typename dealii::
               MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                InternalData &>(mapping_data);
+                InternalData&>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1981,10 +1981,10 @@ namespace internal
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
-  const ArrayView<const Tensor<1, dim>> &                  input,
+  const ArrayView<const Tensor<1, dim>>&                   input,
   const MappingType                                        mapping_type,
-  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-  const ArrayView<Tensor<1, spacedim>> &                   output) const
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+  const ArrayView<Tensor<1, spacedim>>&                    output) const
 {
   AssertDimension(input.size(), output.size());
 
@@ -1998,10 +1998,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
-  const ArrayView<const DerivativeForm<1, dim, spacedim>> &input,
+  const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
   const MappingType                                        mapping_type,
-  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-  const ArrayView<Tensor<2, spacedim>> &                   output) const
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+  const ArrayView<Tensor<2, spacedim>>&                    output) const
 {
   AssertDimension(input.size(), output.size());
 
@@ -2015,10 +2015,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
-  const ArrayView<const Tensor<2, dim>> &input,
+  const ArrayView<const Tensor<2, dim>>& input,
   const MappingType,
-  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-  const ArrayView<Tensor<2, spacedim>> &                   output) const
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+  const ArrayView<Tensor<2, spacedim>>&                    output) const
 {
   (void)input;
   (void)output;
@@ -2033,15 +2033,15 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
-  const ArrayView<const DerivativeForm<2, dim, spacedim>> &input,
+  const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
   const MappingType                                        mapping_type,
-  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-  const ArrayView<Tensor<3, spacedim>> &                   output) const
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+  const ArrayView<Tensor<3, spacedim>>&                    output) const
 {
   AssertDimension(input.size(), output.size());
-  Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const InternalData& data = static_cast<const InternalData&>(mapping_data);
 
   switch (mapping_type)
     {
@@ -2081,10 +2081,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
-  const ArrayView<const Tensor<3, dim>> &input,
+  const ArrayView<const Tensor<3, dim>>& input,
   const MappingType /*mapping_type*/,
-  const typename Mapping<dim, spacedim>::InternalDataBase &mapping_data,
-  const ArrayView<Tensor<3, spacedim>> &                   output) const
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
+  const ArrayView<Tensor<3, spacedim>>&                    output) const
 {
   (void)input;
   (void)output;
@@ -2100,8 +2100,8 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<spacedim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   transform_unit_to_real_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
-    const Point<dim> &                                          p) const
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const Point<dim>&                                           p) const
 {
   //  Use the get_data function to create an InternalData with data vectors of
   //  the right size and transformation shape values already computed at point
@@ -2109,19 +2109,19 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   const Quadrature<dim> point_quadrature(p);
   std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase> mdata(
     get_data(update_quadrature_points | update_jacobians, point_quadrature));
-  Assert(dynamic_cast<InternalData *>(mdata.get()) != nullptr,
+  Assert(dynamic_cast<InternalData*>(mdata.get()) != nullptr,
          ExcInternalError());
 
-  update_internal_dofs(cell, dynamic_cast<InternalData &>(*mdata));
+  update_internal_dofs(cell, dynamic_cast<InternalData&>(*mdata));
 
-  return do_transform_unit_to_real_cell(dynamic_cast<InternalData &>(*mdata));
+  return do_transform_unit_to_real_cell(dynamic_cast<InternalData&>(*mdata));
 }
 
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<spacedim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-  do_transform_unit_to_real_cell(const InternalData &data) const
+  do_transform_unit_to_real_cell(const InternalData& data) const
 {
   Point<spacedim> p_real;
 
@@ -2143,8 +2143,8 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<dim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   transform_real_to_unit_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
-    const Point<spacedim> &                                     p) const
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const Point<spacedim>&                                      p) const
 {
   // first a Newton iteration based on the real mapping. It uses the center
   // point of the cell as a starting point
@@ -2155,7 +2155,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
         StaticMappingQ1<dim, spacedim>::mapping.transform_real_to_unit_cell(
           cell, p);
     }
-  catch (const typename Mapping<dim, spacedim>::ExcTransformationFailed &)
+  catch (const typename Mapping<dim, spacedim>::ExcTransformationFailed&)
     {
       // mirror the conditions of the code below to determine if we need to
       // use an arbitrary starting point or if we just need to rethrow the
@@ -2176,13 +2176,13 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
     update_flags |= update_jacobian_grads;
   std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase> mdata(
     get_data(update_flags, point_quadrature));
-  Assert(dynamic_cast<InternalData *>(mdata.get()) != nullptr,
+  Assert(dynamic_cast<InternalData*>(mdata.get()) != nullptr,
          ExcInternalError());
 
-  update_internal_dofs(cell, dynamic_cast<InternalData &>(*mdata));
+  update_internal_dofs(cell, dynamic_cast<InternalData&>(*mdata));
 
   return do_transform_real_to_unit_cell(
-    cell, p, initial_p_unit, dynamic_cast<InternalData &>(*mdata));
+    cell, p, initial_p_unit, dynamic_cast<InternalData&>(*mdata));
 }
 
 
@@ -2190,10 +2190,10 @@ template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 Point<dim>
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   do_transform_real_to_unit_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
-    const Point<spacedim> &                                     p,
-    const Point<dim> &                                          initial_p_unit,
-    InternalData &                                              mdata) const
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+    const Point<spacedim>&                                      p,
+    const Point<dim>&                                           initial_p_unit,
+    InternalData&                                               mdata) const
 {
   const unsigned int n_shapes = mdata.shape_values.size();
   (void)n_shapes;
@@ -2225,7 +2225,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       Tensor<2, dim>  df;
       for (unsigned int k = 0; k < mdata.n_shape_functions; ++k)
         {
-          const Tensor<1, dim> &grad_k = mdata.derivative(0, k);
+          const Tensor<1, dim>& grad_k = mdata.derivative(0, k);
           unsigned int          comp_k =
             euler_dof_handler->get_fe().system_to_component_index(k).first;
           if (fe_mask[comp_k])
@@ -2241,7 +2241,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
         }
       // Solve  [f'(x)]d=f(x)
       const Tensor<1, dim> delta =
-        invert(df) * static_cast<const Tensor<1, dim> &>(f);
+        invert(df) * static_cast<const Tensor<1, dim>&>(f);
       // do a line search
       double step_length = 1;
       do
@@ -2327,9 +2327,9 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::clone() const
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
 void
 MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::update_internal_dofs(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const typename MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-    InternalData &data) const
+    InternalData& data) const
 {
   Assert(euler_dof_handler != nullptr,
          ExcMessage("euler_dof_handler is empty"));

@@ -106,7 +106,7 @@ check()
     mapping, dof, quadrature, matrix_ref, rhs_function, rhs_ref);
   constraints.condense(matrix_ref, rhs_ref);
 
-  const Function<dim> *const dummy = nullptr;
+  const Function<dim>* const dummy = nullptr;
   MatrixTools::create_laplace_matrix(
     mapping, dof, quadrature, matrix, rhs_function, rhs, dummy, constraints);
 

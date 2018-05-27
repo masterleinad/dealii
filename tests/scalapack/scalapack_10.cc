@@ -79,7 +79,7 @@ test(const unsigned int size, const unsigned int block_size)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
@@ -87,11 +87,11 @@ main(int argc, char **argv)
   const std::vector<unsigned int> sizes       = {{100, 200, 300}};
   const std::vector<unsigned int> block_sizes = {{1, 16, 32}};
 
-  for (const auto &s : sizes)
-    for (const auto &b : block_sizes)
+  for (const auto& s : sizes)
+    for (const auto& b : block_sizes)
       test<double>(s, b);
 
-  for (const auto &s : sizes)
-    for (const auto &b : block_sizes)
+  for (const auto& s : sizes)
+    for (const auto& b : block_sizes)
       test<float>(s, b);
 }

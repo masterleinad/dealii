@@ -32,14 +32,14 @@ struct X
   int i;
 
 private:
-  X(const X &);
-  X &
-  operator=(const X &);
+  X(const X&);
+  X&
+  operator=(const X&);
 };
 
 
 void
-execute(const X &x)
+execute(const X& x)
 {
   AssertThrow(x.i == 42, ExcInternalError());
   deallog << "OK" << std::endl;

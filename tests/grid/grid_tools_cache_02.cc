@@ -37,9 +37,9 @@ test()
     auto m = cache.get_vertex_to_cell_map();
 
     unsigned int i = 0;
-    for (auto &v : m)
+    for (auto& v : m)
       {
-        for (auto &c : v)
+        for (auto& c : v)
           deallog << "Vertex " << i << ", cell " << c << std::endl;
         ++i;
       }
@@ -51,9 +51,9 @@ test()
     auto m = cache.get_vertex_to_cell_map();
 
     unsigned int i = 0;
-    for (auto &v : m)
+    for (auto& v : m)
       {
-        for (auto &c : v)
+        for (auto& c : v)
           deallog << "Vertex " << i << ", cell " << c << std::endl;
         ++i;
       }

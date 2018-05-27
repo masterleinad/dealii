@@ -42,10 +42,10 @@ namespace DoFToolsEx
   /// transfers solution between differently refined grids
   template <int dim, class InVector, class OutVector>
   void
-  transfer(const DoFHandler<dim> &source_dof,
-           const InVector &       source_vector,
-           const DoFHandler<dim> &target_dof,
-           OutVector &            target_vector);
+  transfer(const DoFHandler<dim>& source_dof,
+           const InVector&        source_vector,
+           const DoFHandler<dim>& target_dof,
+           OutVector&             target_vector);
 } // namespace DoFToolsEx
 
 /**
@@ -58,10 +58,10 @@ namespace DoFToolsEx
  */
 template <int dim, class InVector, class OutVector>
 void
-DoFToolsEx::transfer(const DoFHandler<dim> &source_dof,
-                     const InVector &       source_vector,
-                     const DoFHandler<dim> &target_dof,
-                     OutVector &            target_vector)
+DoFToolsEx::transfer(const DoFHandler<dim>& source_dof,
+                     const InVector&        source_vector,
+                     const DoFHandler<dim>& target_dof,
+                     OutVector&             target_vector)
 {
   // any sanity tests? Trias derived from same coarse grid?
 
@@ -106,7 +106,7 @@ public:
   TestFunction() : Function<2>()
   {}
   virtual double
-  value(const Point<2> &p, const unsigned int) const
+  value(const Point<2>& p, const unsigned int) const
   {
     return std::sin(3.14159 * p(0)) * std::sin(3.14159 * p(1));
   }

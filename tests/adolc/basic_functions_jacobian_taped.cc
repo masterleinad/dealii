@@ -34,10 +34,10 @@ main(void)
   const unsigned int n = 10; // Independents
   std::size_t        tape_stats[STAT_SIZE];
 
-  double * xp = new double[n];
-  double * yp = new double[m];
-  adouble *x  = new adouble[n];
-  adouble *y  = new adouble[m];
+  double*  xp = new double[n];
+  double*  yp = new double[m];
+  adouble* x  = new adouble[n];
+  adouble* y  = new adouble[m];
 
   for (unsigned int i = 0; i < n; i++)
     xp[i] = (i + 1.0) / (2.0 + i);
@@ -62,7 +62,7 @@ main(void)
   tapestats(1, tape_stats);
 
   // --- Functions ---
-  double *f = new double[m];
+  double* f = new double[m];
   function(1, m, n, xp, f);
 
   deallog << "Evaluation points:" << std::endl;
@@ -76,7 +76,7 @@ main(void)
 
   // --- Jacobian ---
 
-  double **J = new double *[m];
+  double** J = new double*[m];
   for (unsigned int j = 0; j < m; ++j)
     J[j] = new double[n];
 

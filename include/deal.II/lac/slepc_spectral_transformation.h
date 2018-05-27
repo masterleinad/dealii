@@ -73,7 +73,7 @@ namespace SLEPcWrappers
     /**
      * Constructor.
      */
-    TransformationBase(const MPI_Comm &mpi_communicator);
+    TransformationBase(const MPI_Comm& mpi_communicator);
 
   public:
     /**
@@ -97,7 +97,7 @@ namespace SLEPcWrappers
      * equations inside the eigensolver.
      */
     void
-    set_solver(const PETScWrappers::SolverBase &solver);
+    set_solver(const PETScWrappers::SolverBase& solver);
 
   protected:
     /**
@@ -141,8 +141,8 @@ namespace SLEPcWrappers
     /**
      * Constructor.
      */
-    TransformationShift(const MPI_Comm &      mpi_communicator,
-                        const AdditionalData &data = AdditionalData());
+    TransformationShift(const MPI_Comm&       mpi_communicator,
+                        const AdditionalData& data = AdditionalData());
 
 
   protected:
@@ -182,8 +182,8 @@ namespace SLEPcWrappers
     /**
      * Constructor.
      */
-    TransformationShiftInvert(const MPI_Comm &      mpi_communicator,
-                              const AdditionalData &data = AdditionalData());
+    TransformationShiftInvert(const MPI_Comm&       mpi_communicator,
+                              const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -230,8 +230,8 @@ namespace SLEPcWrappers
      * Constructor.
      */
     TransformationSpectrumFolding(
-      const MPI_Comm &      mpi_communicator,
-      const AdditionalData &data = AdditionalData());
+      const MPI_Comm&       mpi_communicator,
+      const AdditionalData& data = AdditionalData());
 
   protected:
     /**
@@ -275,8 +275,8 @@ namespace SLEPcWrappers
     /**
      * Constructor.
      */
-    TransformationCayley(const MPI_Comm &      mpi_communicator,
-                         const AdditionalData &data = AdditionalData());
+    TransformationCayley(const MPI_Comm&       mpi_communicator,
+                         const AdditionalData& data = AdditionalData());
 
   protected:
     /**

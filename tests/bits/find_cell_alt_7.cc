@@ -33,7 +33,7 @@
 
 
 
-void check(Triangulation<2> &tria)
+void check(Triangulation<2>& tria)
 {
   MappingQ<2> map(5);
 

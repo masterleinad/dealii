@@ -52,7 +52,7 @@ test()
   sub[0] = 5 * Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   sub[1] = 1;
   GridGenerator::subdivided_hyper_rectangle(
-    static_cast<Triangulation<2> &>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
+    static_cast<Triangulation<2>&>(tr), sub, Point<2>(0, 0), Point<2>(1, 1));
   tr.refine_global(1);
 
   Vector<float> indicators(tr.n_active_cells());
@@ -139,7 +139,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -40,7 +40,7 @@
 
 template <int dim>
 bool
-satisfies_level1_at_vertex_rule(const Triangulation<dim> &tr)
+satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
 {
   std::vector<unsigned int> min_adjacent_cell_level(tr.n_vertices(),
                                                     tr.n_levels());

@@ -46,15 +46,15 @@
 // .cc files
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler,
-           const Vector<double> & v_node,
-           const Vector<double> & v_cell);
+check_this(const DoFHandler<dim>& dof_handler,
+           const Vector<double>&  v_node,
+           const Vector<double>&  v_cell);
 
 
 
 // take a vector, and make a block vector out of it
 void
-make_block_vector(const Vector<double> &in, BlockVector<double> &out)
+make_block_vector(const Vector<double>& in, BlockVector<double>& out)
 {
   std::vector<types::global_dof_index> block_sizes(2);
   block_sizes[0] = in.size() / 2;
@@ -68,7 +68,7 @@ make_block_vector(const Vector<double> &in, BlockVector<double> &out)
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe, const std::string &name)
+check(const FiniteElement<dim>& fe, const std::string& name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 
@@ -132,7 +132,7 @@ main()
 
       return 0;
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

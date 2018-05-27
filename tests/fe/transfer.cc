@@ -47,10 +47,10 @@
 
 template <int dim>
 inline void
-print_matrix(Triangulation<dim> &      tr,
+print_matrix(Triangulation<dim>&       tr,
              unsigned int              level,
-             const FiniteElement<dim> &finel,
-             const char * /*name*/)
+             const FiniteElement<dim>& finel,
+             const char* /*name*/)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(finel);

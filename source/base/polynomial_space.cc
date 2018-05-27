@@ -109,7 +109,7 @@ PolynomialSpace<3>::compute_index(const unsigned int i) const
 
 template <int dim>
 void
-PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int> &renumber)
+PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int>& renumber)
 {
   Assert(renumber.size() == index_map.size(),
          ExcDimensionMismatch(renumber.size(), index_map.size()));
@@ -124,7 +124,7 @@ PolynomialSpace<dim>::set_numbering(const std::vector<unsigned int> &renumber)
 template <int dim>
 double
 PolynomialSpace<dim>::compute_value(const unsigned int i,
-                                    const Point<dim> & p) const
+                                    const Point<dim>&  p) const
 {
   const auto ix = compute_index(i);
   // take the product of the
@@ -141,7 +141,7 @@ PolynomialSpace<dim>::compute_value(const unsigned int i,
 template <int dim>
 Tensor<1, dim>
 PolynomialSpace<dim>::compute_grad(const unsigned int i,
-                                   const Point<dim> & p) const
+                                   const Point<dim>&  p) const
 {
   const auto ix = compute_index(i);
 
@@ -166,7 +166,7 @@ PolynomialSpace<dim>::compute_grad(const unsigned int i,
 template <int dim>
 Tensor<2, dim>
 PolynomialSpace<dim>::compute_grad_grad(const unsigned int i,
-                                        const Point<dim> & p) const
+                                        const Point<dim>&  p) const
 {
   const auto ix = compute_index(i);
 
@@ -201,12 +201,12 @@ PolynomialSpace<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 PolynomialSpace<dim>::compute(
-  const Point<dim> &           p,
-  std::vector<double> &        values,
-  std::vector<Tensor<1, dim>> &grads,
-  std::vector<Tensor<2, dim>> &grad_grads,
-  std::vector<Tensor<3, dim>> &third_derivatives,
-  std::vector<Tensor<4, dim>> &fourth_derivatives) const
+  const Point<dim>&            p,
+  std::vector<double>&         values,
+  std::vector<Tensor<1, dim>>& grads,
+  std::vector<Tensor<2, dim>>& grad_grads,
+  std::vector<Tensor<3, dim>>& third_derivatives,
+  std::vector<Tensor<4, dim>>& fourth_derivatives) const
 {
   const unsigned int n_1d = polynomials.size();
 

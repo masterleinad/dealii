@@ -84,7 +84,7 @@ private:
    * Fills the <tt>index_map</tt>.
    */
   void
-  create_polynomial_ordering(std::vector<unsigned int> &index_map) const;
+  create_polynomial_ordering(std::vector<unsigned int>& index_map) const;
 
   /**
    * Degree <tt>p</tt> of the polynomial space $P_p$, i.e. the number

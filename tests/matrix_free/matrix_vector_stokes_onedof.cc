@@ -63,13 +63,13 @@ public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
   typedef double                                         Number;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number> &              data,
-              VectorType &                                 dst,
-              const VectorType &                           src,
-              const std::pair<unsigned int, unsigned int> &cell_range) const
+  local_apply(const MatrixFree<dim, Number>&               data,
+              VectorType&                                  dst,
+              const VectorType&                            src,
+              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     typedef VectorizedArray<Number>                            vector_t;
     FEEvaluation<dim, degree_p + 1, degree_p + 2, dim, Number> velocity(
@@ -110,7 +110,7 @@ public:
 
 
   void
-  vmult(VectorType &dst, const VectorType &src) const
+  vmult(VectorType& dst, const VectorType& src) const
   {
     dst = 0;
     data.cell_loop(
@@ -118,14 +118,14 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
 
 template <int dim, int fe_degree>
 void
-test(const FESystem<dim> &fe)
+test(const FESystem<dim>& fe)
 {
   SphericalManifold<dim> manifold;
   Triangulation<dim>     triangulation;

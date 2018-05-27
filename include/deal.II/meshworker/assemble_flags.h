@@ -112,8 +112,8 @@ namespace MeshWorker
    * @ref AssembleFlags
    */
   template <class StreamType>
-  inline StreamType &
-  operator<<(StreamType &s, AssembleFlags u)
+  inline StreamType&
+  operator<<(StreamType& s, AssembleFlags u)
   {
     s << " AssembleFlags";
     if (u & assemble_own_cells)
@@ -158,8 +158,8 @@ namespace MeshWorker
    *
    * @ref AssembleFlags
    */
-  inline AssembleFlags &
-  operator|=(AssembleFlags &f1, AssembleFlags f2)
+  inline AssembleFlags&
+  operator|=(AssembleFlags& f1, AssembleFlags f2)
   {
     f1 = f1 | f2;
     return f1;
@@ -188,8 +188,8 @@ namespace MeshWorker
    *
    * @ref AssembleFlags
    */
-  inline AssembleFlags &
-  operator&=(AssembleFlags &f1, AssembleFlags f2)
+  inline AssembleFlags&
+  operator&=(AssembleFlags& f1, AssembleFlags f2)
   {
     f1 = f1 & f2;
     return f1;

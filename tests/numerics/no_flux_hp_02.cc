@@ -38,7 +38,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim> &tr, const hp::FECollection<dim> &fe)
+test(const Triangulation<dim>& tr, const hp::FECollection<dim>& fe)
 {
   hp::DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);

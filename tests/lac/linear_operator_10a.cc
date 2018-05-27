@@ -37,7 +37,7 @@ using namespace dealii;
 
 template <typename VECTOR>
 void
-print(const VECTOR &vec)
+print(const VECTOR& vec)
 {
   for (types::global_dof_index i = 0; i < vec.size(); ++i)
     {
@@ -52,9 +52,9 @@ template <class PRECONDITIONER,
           class VECTOR,
           class ADDITIONAL_DATA = typename PRECONDITIONER::AdditionalData>
 void
-test_preconditioner(const MATRIX &         A,
-                    const VECTOR &         b,
-                    const ADDITIONAL_DATA &data = ADDITIONAL_DATA())
+test_preconditioner(const MATRIX&          A,
+                    const VECTOR&          b,
+                    const ADDITIONAL_DATA& data = ADDITIONAL_DATA())
 {
   const auto lo_A = linear_operator<VECTOR>(A);
   // Note: The above should be equivalent to the following:
@@ -159,7 +159,7 @@ test_preconditioner(const MATRIX &         A,
 
 template <class SOLVER, class MATRIX, class VECTOR>
 void
-test_solver(const MATRIX &A, const VECTOR &b)
+test_solver(const MATRIX& A, const VECTOR& b)
 {
   const auto lo_A = linear_operator<VECTOR>(A);
   // Note: The above should be equivalent to the following:
@@ -218,7 +218,7 @@ test_solver(const MATRIX &A, const VECTOR &b)
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   initlog();

@@ -25,7 +25,7 @@
 
 template <int dim>
 void
-check_function_value_consistency(const Function<dim> &f,
+check_function_value_consistency(const Function<dim>& f,
                                  unsigned int         sub,
                                  double               threshold = 1.e-15)
 {
@@ -62,7 +62,7 @@ check_function_value_consistency(const Function<dim> &f,
 // Same for gradients
 template <int dim>
 void
-check_function_gradient_consistency(const Function<dim> &f,
+check_function_gradient_consistency(const Function<dim>& f,
                                     unsigned int         sub,
                                     double               threshold = 1.e-15)
 {
@@ -107,24 +107,24 @@ template <int dim>
 class DerivativeTestFunction : public AutoDerivativeFunction<dim>
 {
 public:
-  DerivativeTestFunction(const Function<dim> &, const double h);
+  DerivativeTestFunction(const Function<dim>&, const double h);
   ~DerivativeTestFunction();
 
   virtual void
-  vector_value(const Point<dim> &points, Vector<double> &value) const;
+  vector_value(const Point<dim>& points, Vector<double>& value) const;
   virtual double
-  value(const Point<dim> &points, const unsigned int component) const;
+  value(const Point<dim>& points, const unsigned int component) const;
   virtual void
-  vector_value_list(const std::vector<Point<dim>> &points,
-                    std::vector<Vector<double>> &  values) const;
+  vector_value_list(const std::vector<Point<dim>>& points,
+                    std::vector<Vector<double>>&   values) const;
 
 private:
-  const Function<dim> &func;
+  const Function<dim>& func;
 };
 
 
 template <int dim>
-DerivativeTestFunction<dim>::DerivativeTestFunction(const Function<dim> &f,
+DerivativeTestFunction<dim>::DerivativeTestFunction(const Function<dim>& f,
                                                     const double         h) :
   AutoDerivativeFunction<dim>(h, f.n_components),
   func(f)
@@ -141,8 +141,8 @@ DerivativeTestFunction<dim>::~DerivativeTestFunction()
 template <int dim>
 void
 DerivativeTestFunction<dim>::vector_value_list(
-  const std::vector<Point<dim>> &points,
-  std::vector<Vector<double>> &  values) const
+  const std::vector<Point<dim>>& points,
+  std::vector<Vector<double>>&   values) const
 {
   func.vector_value_list(points, values);
 }
@@ -150,8 +150,8 @@ DerivativeTestFunction<dim>::vector_value_list(
 
 template <int dim>
 void
-DerivativeTestFunction<dim>::vector_value(const Point<dim> &point,
-                                          Vector<double> &  value) const
+DerivativeTestFunction<dim>::vector_value(const Point<dim>& point,
+                                          Vector<double>&   value) const
 {
   func.vector_value(point, value);
 }
@@ -159,7 +159,7 @@ DerivativeTestFunction<dim>::vector_value(const Point<dim> &point,
 
 template <int dim>
 double
-DerivativeTestFunction<dim>::value(const Point<dim> & point,
+DerivativeTestFunction<dim>::value(const Point<dim>&  point,
                                    const unsigned int comp) const
 {
   //  std::cerr << '[' << point << '!' << func.value(point, comp) << ']';
@@ -171,7 +171,7 @@ DerivativeTestFunction<dim>::value(const Point<dim> & point,
 // Check whether the difference quotients converge to the gradient
 template <int dim>
 void
-check_gradient(const Function<dim> &f,
+check_gradient(const Function<dim>& f,
                unsigned int         sub,
                double               threshold = 1. / 14.)
 {
@@ -180,7 +180,7 @@ check_gradient(const Function<dim> &f,
 
   QMidpoint<1>                   mid;
   QIterated<dim>                 quadrature(mid, sub);
-  const std::vector<Point<dim>> &points = quadrature.get_points();
+  const std::vector<Point<dim>>& points = quadrature.get_points();
 
   std::vector<std::vector<Tensor<1, dim>>> gradients(
     f.n_components, std::vector<Tensor<1, dim>>(points.size()));

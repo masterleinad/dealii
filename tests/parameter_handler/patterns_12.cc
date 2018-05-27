@@ -30,7 +30,7 @@ main()
 
   // one pattern
   {
-    const auto &pattern = Patterns::Tuple(Patterns::Double());
+    const auto& pattern = Patterns::Tuple(Patterns::Double());
 
     deallog << pattern.description(Patterns::PatternBase::OutputStyle::Machine)
             << '\n'
@@ -43,7 +43,7 @@ main()
 
   // two patterns
   {
-    const auto &pattern =
+    const auto& pattern =
       Patterns::Tuple(Patterns::Double(), Patterns::Anything());
 
     deallog << pattern.description(Patterns::PatternBase::OutputStyle::Machine)
@@ -57,7 +57,7 @@ main()
 
   // three patterns
   {
-    const auto &pattern = Patterns::Tuple(
+    const auto& pattern = Patterns::Tuple(
       Patterns::Double(), Patterns::Anything(), Patterns::Bool());
 
     deallog << pattern.description(Patterns::PatternBase::OutputStyle::Machine)

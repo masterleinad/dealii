@@ -31,8 +31,8 @@
 // something)
 void
 make_masks(const unsigned int            n,
-           Table<2, DoFTools::Coupling> &m1,
-           Table<2, DoFTools::Coupling> &m2)
+           Table<2, DoFTools::Coupling>& m1,
+           Table<2, DoFTools::Coupling>& m2)
 {
   m1.reinit(n, n);
   m2.reinit(n, n);
@@ -45,7 +45,7 @@ make_masks(const unsigned int            n,
 
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler)
+check_this(const DoFHandler<dim>& dof_handler)
 {
   // we split up the matrix into
   // blocks according to the number
@@ -98,7 +98,7 @@ check_this(const DoFHandler<dim> &dof_handler)
   for (unsigned int r = 0; r < n_components; ++r)
     for (unsigned int c = 0; c < n_components; ++c)
       {
-        const DynamicSparsityPattern &x = sp.block(r, c);
+        const DynamicSparsityPattern& x = sp.block(r, c);
         deallog << x.bandwidth() << std::endl
                 << x.max_entries_per_row() << std::endl
                 << x.n_nonzero_elements() << std::endl;

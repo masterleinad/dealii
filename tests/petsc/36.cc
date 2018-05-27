@@ -26,7 +26,7 @@
 
 
 void
-test(PETScWrappers::MPI::Vector &v, PETScWrappers::MPI::Vector &w)
+test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector
@@ -64,7 +64,7 @@ test(PETScWrappers::MPI::Vector &v, PETScWrappers::MPI::Vector &w)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -79,7 +79,7 @@ main(int argc, char **argv)
         test(v, w);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -41,9 +41,9 @@ TimeDependent::TimeSteppingData::TimeSteppingData(
 {}
 
 
-TimeDependent::TimeDependent(const TimeSteppingData &data_primal,
-                             const TimeSteppingData &data_dual,
-                             const TimeSteppingData &data_postprocess) :
+TimeDependent::TimeDependent(const TimeSteppingData& data_primal,
+                             const TimeSteppingData& data_dual,
+                             const TimeSteppingData& data_postprocess) :
   sweep_no(numbers::invalid_unsigned_int),
   timestepping_data_primal(data_primal),
   timestepping_data_dual(data_dual),
@@ -64,8 +64,8 @@ TimeDependent::~TimeDependent()
 
 
 void
-TimeDependent::insert_timestep(const TimeStepBase *position,
-                               TimeStepBase *      new_timestep)
+TimeDependent::insert_timestep(const TimeStepBase* position,
+                               TimeStepBase*       new_timestep)
 {
   Assert((std::find(timesteps.begin(), timesteps.end(), position) !=
           timesteps.end()) ||
@@ -126,7 +126,7 @@ TimeDependent::insert_timestep(const TimeStepBase *position,
 
 
 void
-TimeDependent::add_timestep(TimeStepBase *new_timestep)
+TimeDependent::add_timestep(TimeStepBase* new_timestep)
 {
   insert_timestep(nullptr, new_timestep);
 }
@@ -140,7 +140,7 @@ TimeDependent::delete_timestep(const unsigned int position)
   // Remember time step object for
   // later deletion and unlock
   // SmartPointer
-  TimeStepBase *t     = timesteps[position];
+  TimeStepBase* t     = timesteps[position];
   timesteps[position] = nullptr;
   // Now delete unsubscribed object
   delete t;
@@ -381,7 +381,7 @@ TimeStepBase::get_forward_timestep() const
 
 
 void
-TimeStepBase::set_previous_timestep(const TimeStepBase *previous)
+TimeStepBase::set_previous_timestep(const TimeStepBase* previous)
 {
   previous_timestep = previous;
 }
@@ -389,7 +389,7 @@ TimeStepBase::set_previous_timestep(const TimeStepBase *previous)
 
 
 void
-TimeStepBase::set_next_timestep(const TimeStepBase *next)
+TimeStepBase::set_next_timestep(const TimeStepBase* next)
 {
   next_timestep = next;
 }
@@ -437,9 +437,9 @@ TimeStepBase_Tria<dim>::TimeStepBase_Tria() :
 template <int dim>
 TimeStepBase_Tria<dim>::TimeStepBase_Tria(
   const double              time,
-  const Triangulation<dim> &coarse_grid,
-  const Flags &             flags,
-  const RefinementFlags &   refinement_flags) :
+  const Triangulation<dim>& coarse_grid,
+  const Flags&              flags,
+  const RefinementFlags&    refinement_flags) :
   TimeStepBase(time),
   tria(nullptr, typeid(*this).name()),
   coarse_grid(&coarse_grid, typeid(*this).name()),
@@ -454,7 +454,7 @@ TimeStepBase_Tria<dim>::~TimeStepBase_Tria()
 {
   if (!flags.delete_and_rebuild_tria)
     {
-      Triangulation<dim> *t = tria;
+      Triangulation<dim>* t = tria;
       tria                  = nullptr;
       delete t;
     }
@@ -489,7 +489,7 @@ TimeStepBase_Tria<dim>::sleep(const unsigned int sleep_level)
 
       if (flags.delete_and_rebuild_tria)
         {
-          Triangulation<dim> *t = tria;
+          Triangulation<dim>* t = tria;
           tria                  = nullptr;
           delete t;
         }
@@ -560,8 +560,8 @@ namespace
   template <int dim>
   void
   mirror_refinement_flags(
-    const typename Triangulation<dim>::cell_iterator &new_cell,
-    const typename Triangulation<dim>::cell_iterator &old_cell)
+    const typename Triangulation<dim>::cell_iterator& new_cell,
+    const typename Triangulation<dim>::cell_iterator& old_cell)
   {
     // mirror the refinement
     // flags from the present time level to
@@ -612,8 +612,8 @@ namespace
 
   template <int dim>
   bool
-  adapt_grid_cells(const typename Triangulation<dim>::cell_iterator &cell1,
-                   const typename Triangulation<dim>::cell_iterator &cell2)
+  adapt_grid_cells(const typename Triangulation<dim>::cell_iterator& cell1,
+                   const typename Triangulation<dim>::cell_iterator& cell2)
   {
     if (cell2->has_children() && cell1->has_children())
       {
@@ -716,7 +716,7 @@ namespace
 
   template <int dim>
   bool
-  adapt_grids(Triangulation<dim> &tria1, Triangulation<dim> &tria2)
+  adapt_grids(Triangulation<dim>& tria1, Triangulation<dim>& tria2)
   {
     bool grids_changed = false;
 
@@ -847,8 +847,8 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
          loop < refinement_flags.cell_number_correction_steps;
          ++loop)
       {
-        Triangulation<dim> *previous_tria =
-          dynamic_cast<const TimeStepBase_Tria<dim> *>(previous_timestep)->tria;
+        Triangulation<dim>* previous_tria =
+          dynamic_cast<const TimeStepBase_Tria<dim>*>(previous_timestep)->tria;
 
         // do one adaption step if desired
         // (there are more coming below then
@@ -926,7 +926,7 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
         double delta_up   = refinement_flags.cell_number_corridor_top,
                delta_down = refinement_flags.cell_number_corridor_bottom;
 
-        const std::vector<std::pair<unsigned int, double>> &relaxations =
+        const std::vector<std::pair<unsigned int, double>>& relaxations =
           (sweep_no >= refinement_flags.correction_relaxations.size() ?
              refinement_flags.correction_relaxations.back() :
              refinement_flags.correction_relaxations[sweep_no]);
@@ -1097,8 +1097,8 @@ TimeStepBase_Tria<dim>::refine_grid(const RefinementData refinement_data)
   // treatment of its own.
   if ((timestep_no >= 1) && (refinement_flags.adapt_grids))
     {
-      Triangulation<dim> *previous_tria =
-        dynamic_cast<const TimeStepBase_Tria<dim> *>(previous_timestep)->tria;
+      Triangulation<dim>* previous_tria =
+        dynamic_cast<const TimeStepBase_Tria<dim>*>(previous_timestep)->tria;
       Assert(previous_tria != nullptr, ExcInternalError());
 
       // if we used the dual estimator, we
@@ -1204,7 +1204,7 @@ TimeStepBase_Tria_Flags::RefinementFlags<dim>::RefinementFlags(
   const unsigned int           min_cells_for_correction,
   const double                 cell_number_corridor_top,
   const double                 cell_number_corridor_bottom,
-  const CorrectionRelaxations &correction_relaxations,
+  const CorrectionRelaxations& correction_relaxations,
   const unsigned int           cell_number_correction_steps,
   const bool                   mirror_flags_to_previous_grid,
   const bool                   adapt_grids) :

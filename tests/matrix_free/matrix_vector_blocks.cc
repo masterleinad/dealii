@@ -48,22 +48,22 @@ template <int dim, int fe_degree, typename Number>
 class MatrixFreeBlock
 {
 public:
-  MatrixFreeBlock(const MatrixFree<dim, Number> &data_in) : data(data_in)
+  MatrixFreeBlock(const MatrixFree<dim, Number>& data_in) : data(data_in)
   {}
 
   void
-  vmult(LinearAlgebra::distributed::BlockVector<Number> &      dst,
-        const LinearAlgebra::distributed::BlockVector<Number> &src) const
+  vmult(LinearAlgebra::distributed::BlockVector<Number>&       dst,
+        const LinearAlgebra::distributed::BlockVector<Number>& src) const
   {
     data.cell_loop(&MatrixFreeBlock::local_apply, this, dst, src, true);
   }
 
 private:
   void
-  local_apply(const MatrixFree<dim, Number> &                        data,
-              LinearAlgebra::distributed::BlockVector<Number> &      dst,
-              const LinearAlgebra::distributed::BlockVector<Number> &src,
-              const std::pair<unsigned int, unsigned int> &cell_range) const
+  local_apply(const MatrixFree<dim, Number>&                         data,
+              LinearAlgebra::distributed::BlockVector<Number>&       dst,
+              const LinearAlgebra::distributed::BlockVector<Number>& src,
+              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     AssertDimension(src.n_blocks(), dst.n_blocks());
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> phi(data);
@@ -84,7 +84,7 @@ private:
       }
   }
 
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
@@ -204,7 +204,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

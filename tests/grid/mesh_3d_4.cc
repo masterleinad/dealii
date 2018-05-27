@@ -30,7 +30,7 @@
 
 
 unsigned int
-count_wrong_faces(const Triangulation<3> &tria)
+count_wrong_faces(const Triangulation<3>& tria)
 {
   unsigned int count = 0;
 
@@ -47,7 +47,7 @@ count_wrong_faces(const Triangulation<3> &tria)
 
 
 
-void check(Triangulation<3> &tria)
+void check(Triangulation<3>& tria)
 {
   const unsigned int initial_count = count_wrong_faces(tria);
   for (unsigned int r = 0; r < 3; ++r)

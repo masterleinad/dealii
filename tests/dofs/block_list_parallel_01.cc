@@ -20,8 +20,8 @@
 
 template <int dim>
 void
-test_block_list(const parallel::distributed::Triangulation<dim> &tr,
-                const FiniteElement<dim> &                       fe)
+test_block_list(const parallel::distributed::Triangulation<dim>& tr,
+                const FiniteElement<dim>&                        fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -53,7 +53,7 @@ test_block_list(const parallel::distributed::Triangulation<dim> &tr,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -112,15 +112,15 @@ public:
   /**
    * Constructor.
    */
-  SolverCG(SolverControl &           cn,
-           VectorMemory<VectorType> &mem,
-           const AdditionalData &    data = AdditionalData());
+  SolverCG(SolverControl&            cn,
+           VectorMemory<VectorType>& mem,
+           const AdditionalData&     data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverCG(SolverControl &cn, const AdditionalData &data = AdditionalData());
+  SolverCG(SolverControl& cn, const AdditionalData& data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -132,10 +132,10 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType &        A,
-        VectorType &              x,
-        const VectorType &        b,
-        const PreconditionerType &preconditioner);
+  solve(const MatrixType&         A,
+        VectorType&               x,
+        const VectorType&         b,
+        const PreconditionerType& preconditioner);
 
   /**
    * Connect a slot to retrieve the CG coefficients. The slot will be called
@@ -144,7 +144,7 @@ public:
    * for Sparse Linear Systems", section 6.7. Called once per iteration
    */
   boost::signals2::connection
-  connect_coefficients_slot(const std::function<void(double, double)> &slot);
+  connect_coefficients_slot(const std::function<void(double, double)>& slot);
 
   /**
    * Connect a slot to retrieve the estimated condition number. Called on each
@@ -153,7 +153,7 @@ public:
    * divergence has been detected).
    */
   boost::signals2::connection
-  connect_condition_number_slot(const std::function<void(double)> &slot,
+  connect_condition_number_slot(const std::function<void(double)>& slot,
                                 const bool every_iteration = false);
 
   /**
@@ -164,7 +164,7 @@ public:
    */
   boost::signals2::connection
   connect_eigenvalues_slot(
-    const std::function<void(const std::vector<double> &)> &slot,
+    const std::function<void(const std::vector<double>&)>& slot,
     const bool every_iteration = false);
 
 protected:
@@ -175,9 +175,9 @@ protected:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType & x,
-                const VectorType & r,
-                const VectorType & d) const;
+                const VectorType&  x,
+                const VectorType&  r,
+                const VectorType&  d) const;
 
   /**
    * Estimates the eigenvalues from diagonal and offdiagonal. Uses these
@@ -186,11 +186,11 @@ protected:
    */
   static void
   compute_eigs_and_cond(
-    const std::vector<double> &diagonal,
-    const std::vector<double> &offdiagonal,
-    const boost::signals2::signal<void(const std::vector<double> &)>
-      &                                          eigenvalues_signal,
-    const boost::signals2::signal<void(double)> &cond_signal);
+    const std::vector<double>& diagonal,
+    const std::vector<double>& offdiagonal,
+    const boost::signals2::signal<void(const std::vector<double>&)>&
+                                                 eigenvalues_signal,
+    const boost::signals2::signal<void(double)>& cond_signal);
 
   /**
    * Additional parameters.
@@ -218,13 +218,13 @@ protected:
    * Signal used to retrieve the estimated eigenvalues. Called once when all
    * iterations are ended.
    */
-  boost::signals2::signal<void(const std::vector<double> &)> eigenvalues_signal;
+  boost::signals2::signal<void(const std::vector<double>&)> eigenvalues_signal;
 
   /**
    * Signal used to retrieve the estimated eigenvalues. Called on each
    * iteration.
    */
-  boost::signals2::signal<void(const std::vector<double> &)>
+  boost::signals2::signal<void(const std::vector<double>&)>
     all_eigenvalues_signal;
 };
 
@@ -235,9 +235,9 @@ protected:
 #ifndef DOXYGEN
 
 template <typename VectorType>
-SolverCG<VectorType>::SolverCG(SolverControl &           cn,
-                               VectorMemory<VectorType> &mem,
-                               const AdditionalData &    data) :
+SolverCG<VectorType>::SolverCG(SolverControl&            cn,
+                               VectorMemory<VectorType>& mem,
+                               const AdditionalData&     data) :
   Solver<VectorType>(cn, mem),
   additional_data(data)
 {}
@@ -245,7 +245,7 @@ SolverCG<VectorType>::SolverCG(SolverControl &           cn,
 
 
 template <typename VectorType>
-SolverCG<VectorType>::SolverCG(SolverControl &cn, const AdditionalData &data) :
+SolverCG<VectorType>::SolverCG(SolverControl& cn, const AdditionalData& data) :
   Solver<VectorType>(cn),
   additional_data(data)
 {}
@@ -255,9 +255,9 @@ SolverCG<VectorType>::SolverCG(SolverControl &cn, const AdditionalData &data) :
 template <typename VectorType>
 void
 SolverCG<VectorType>::print_vectors(const unsigned int,
-                                    const VectorType &,
-                                    const VectorType &,
-                                    const VectorType &) const
+                                    const VectorType&,
+                                    const VectorType&,
+                                    const VectorType&) const
 {}
 
 
@@ -265,11 +265,11 @@ SolverCG<VectorType>::print_vectors(const unsigned int,
 template <typename VectorType>
 inline void
 SolverCG<VectorType>::compute_eigs_and_cond(
-  const std::vector<double> &diagonal,
-  const std::vector<double> &offdiagonal,
-  const boost::signals2::signal<void(const std::vector<double> &)>
-    &                                          eigenvalues_signal,
-  const boost::signals2::signal<void(double)> &cond_signal)
+  const std::vector<double>& diagonal,
+  const std::vector<double>& offdiagonal,
+  const boost::signals2::signal<void(const std::vector<double>&)>&
+                                               eigenvalues_signal,
+  const boost::signals2::signal<void(double)>& cond_signal)
 {
   // Avoid computing eigenvalues unless they are needed.
   if (!cond_signal.empty() || !eigenvalues_signal.empty())
@@ -307,10 +307,10 @@ SolverCG<VectorType>::compute_eigs_and_cond(
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverCG<VectorType>::solve(const MatrixType &        A,
-                            VectorType &              x,
-                            const VectorType &        b,
-                            const PreconditionerType &preconditioner)
+SolverCG<VectorType>::solve(const MatrixType&         A,
+                            VectorType&               x,
+                            const VectorType&         b,
+                            const PreconditionerType& preconditioner)
 {
   SolverControl::State conv = SolverControl::iterate;
 
@@ -322,9 +322,9 @@ SolverCG<VectorType>::solve(const MatrixType &        A,
   typename VectorMemory<VectorType>::Pointer h_pointer(this->memory);
 
   // define some aliases for simpler access
-  VectorType &g = *g_pointer;
-  VectorType &d = *d_pointer;
-  VectorType &h = *h_pointer;
+  VectorType& g = *g_pointer;
+  VectorType& d = *d_pointer;
+  VectorType& h = *h_pointer;
 
   // Should we build the matrix for eigenvalue computations?
   const bool do_eigenvalues =
@@ -448,7 +448,7 @@ SolverCG<VectorType>::solve(const MatrixType &        A,
 template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_coefficients_slot(
-  const std::function<void(double, double)> &slot)
+  const std::function<void(double, double)>& slot)
 {
   return coefficients_signal.connect(slot);
 }
@@ -458,7 +458,7 @@ SolverCG<VectorType>::connect_coefficients_slot(
 template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_condition_number_slot(
-  const std::function<void(double)> &slot,
+  const std::function<void(double)>& slot,
   const bool                         every_iteration)
 {
   if (every_iteration)
@@ -476,8 +476,8 @@ SolverCG<VectorType>::connect_condition_number_slot(
 template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_eigenvalues_slot(
-  const std::function<void(const std::vector<double> &)> &slot,
-  const bool                                              every_iteration)
+  const std::function<void(const std::vector<double>&)>& slot,
+  const bool                                             every_iteration)
 {
   if (every_iteration)
     {

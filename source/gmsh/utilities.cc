@@ -30,7 +30,7 @@ namespace Gmsh
 {
   AdditionalParameters::AdditionalParameters(
     const double       characteristic_length,
-    const std::string &output_base_name) :
+    const std::string& output_base_name) :
     characteristic_length(characteristic_length),
     output_base_name(output_base_name)
   {}
@@ -38,7 +38,7 @@ namespace Gmsh
 
 
   void
-  AdditionalParameters::add_parameters(ParameterHandler &prm)
+  AdditionalParameters::add_parameters(ParameterHandler& prm)
   {
     prm.add_parameter("Characteristic length", characteristic_length);
     prm.add_parameter("Intermediate file name base",
@@ -53,15 +53,15 @@ namespace Gmsh
 #  ifdef DEAL_II_WITH_OPENCASCADE
   template <int spacedim>
   void
-  create_triangulation_from_boundary_curve(const TopoDS_Edge &         boundary,
-                                           Triangulation<2, spacedim> &tria,
-                                           const AdditionalParameters &prm)
+  create_triangulation_from_boundary_curve(const TopoDS_Edge&          boundary,
+                                           Triangulation<2, spacedim>& tria,
+                                           const AdditionalParameters& prm)
   {
     std::string base_name      = prm.output_base_name;
     char        dir_template[] = "ctfbc-XXXXXX";
     if (base_name == "")
       {
-        const char *temp = mkdtemp(dir_template);
+        const char* temp = mkdtemp(dir_template);
         AssertThrow(temp != nullptr,
                     ExcMessage("Creating temporary directory failed!"));
         base_name = temp;
@@ -111,13 +111,13 @@ namespace Gmsh
         //
         // causes internal compiler errors with GCC's concepts implementation,
         // so give it an explicit type:
-        const std::array<const std::string *, 5> filenames{
+        const std::array<const std::string*, 5> filenames{
           {&iges_file_name,
            &geo_file_name,
            &msh_file_name,
            &log_file_name,
            &warnings_file_name}};
-        for (const std::string *filename : filenames)
+        for (const std::string* filename : filenames)
           {
             const auto ret_value = std::remove(filename->c_str());
             AssertThrow(ret_value == 0,

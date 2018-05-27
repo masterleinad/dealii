@@ -29,7 +29,7 @@ using namespace std;
 
 template <int dim>
 void
-plot(const PolynomialsBDM<dim> &poly)
+plot(const PolynomialsBDM<dim>& poly)
 {
   const PolynomialSpace<dim> legendre_poly_space =
     Polynomials::Legendre::generate_complete_basis(poly.degree());

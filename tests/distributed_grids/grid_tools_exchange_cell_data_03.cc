@@ -34,7 +34,7 @@ template <int dim>
 void
 test()
 {
-  const MPI_Comm &mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
   deallog << "dim = " << dim << std::endl;
 
   parallel::shared::Triangulation<dim> tria(
@@ -55,13 +55,13 @@ test()
   GridTools::exchange_cell_data_to_ghosts<DT,
                                           parallel::shared::Triangulation<dim>>(
     tria,
-    [&](const cell_iterator &cell) {
+    [&](const cell_iterator& cell) {
       DT value = ++counter;
 
       deallog << "pack " << cell->id() << " " << value << std::endl;
       return value;
     },
-    [&](const cell_iterator &cell, const DT &data) {
+    [&](const cell_iterator& cell, const DT& data) {
       std::ostringstream oss;
       oss << "unpack " << cell->id() << " " << data << " from "
           << cell->subdomain_id();
@@ -70,13 +70,13 @@ test()
     });
 
   // sort the output because it will come in in random order
-  for (auto &it : output)
+  for (auto& it : output)
     deallog << it << std::endl;
 }
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

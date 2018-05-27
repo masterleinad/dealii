@@ -31,7 +31,7 @@
 
 template <int dim>
 void
-check_value(const Function<dim> &f)
+check_value(const Function<dim>& f)
 {
   Point<dim> p;
   for (unsigned int i = 0; i < dim; i++)
@@ -43,7 +43,7 @@ check_value(const Function<dim> &f)
 
 template <int dim>
 void
-check_value_list(const Function<dim> &f)
+check_value_list(const Function<dim>& f)
 {
   const unsigned int      max_number_of_points = 5;
   std::vector<Point<dim>> points(max_number_of_points);
@@ -68,7 +68,7 @@ check_value_list(const Function<dim> &f)
 
 template <int dim>
 void
-check_gradient(const Function<dim> &f)
+check_gradient(const Function<dim>& f)
 {
   Point<dim> p;
   for (unsigned int i = 0; i < dim; i++)
@@ -80,7 +80,7 @@ check_gradient(const Function<dim> &f)
 
 template <int dim>
 void
-check_gradient_list(const Function<dim> &f)
+check_gradient_list(const Function<dim>& f)
 {
   const unsigned int      max_number_of_points = 5;
   std::vector<Point<dim>> points(max_number_of_points);
@@ -105,7 +105,7 @@ check_gradient_list(const Function<dim> &f)
 
 template <int dim>
 void
-check_laplacian(const Function<dim> &f)
+check_laplacian(const Function<dim>& f)
 {
   Point<dim> p;
   for (unsigned int i = 0; i < dim; i++)
@@ -118,7 +118,7 @@ check_laplacian(const Function<dim> &f)
 
 template <int dim>
 void
-check_laplacian_list(const Function<dim> &f)
+check_laplacian_list(const Function<dim>& f)
 {
   const unsigned int      max_number_of_points = 5;
   std::vector<Point<dim>> points(max_number_of_points);

@@ -61,13 +61,13 @@ public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
   typedef double                                         Number;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number> &              data,
-              VectorType &                                 dst,
-              const VectorType &                           src,
-              const std::pair<unsigned int, unsigned int> &cell_range) const
+  local_apply(const MatrixFree<dim, Number>&               data,
+              VectorType&                                  dst,
+              const VectorType&                            src,
+              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     typedef VectorizedArray<Number> vector_t;
     // allocate FEEvaluation. This test will test proper alignment
@@ -114,7 +114,7 @@ public:
 
 
   void
-  vmult(VectorType &dst, const VectorType &src) const
+  vmult(VectorType& dst, const VectorType& src) const
   {
     dst = 0;
     data.cell_loop(
@@ -122,7 +122,7 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
@@ -298,10 +298,10 @@ test()
 
   // setup matrix-free structure
   {
-    std::vector<const DoFHandler<dim> *> dofs;
+    std::vector<const DoFHandler<dim>*> dofs;
     dofs.push_back(&dof_handler_u);
     dofs.push_back(&dof_handler_p);
-    std::vector<const ConstraintMatrix *> constraints;
+    std::vector<const ConstraintMatrix*> constraints;
     constraints.push_back(&constraints_u);
     constraints.push_back(&constraints_p);
     QGauss<1> quad(fe_degree + 2);

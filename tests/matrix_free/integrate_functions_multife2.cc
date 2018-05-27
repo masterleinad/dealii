@@ -55,7 +55,7 @@ class MatrixFreeTest
 public:
   typedef std::vector<Vector<Number>> VectorType;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) :
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) :
     data(data_in),
     fe_val0(data.get_dof_handler(0).get_fe(),
             Quadrature<dim>(data.get_quadrature(0)),
@@ -68,13 +68,13 @@ public:
             update_values | update_gradients | update_JxW_values){};
 
   void
-  operator()(const MatrixFree<dim, Number> &              data,
-             VectorType &                                 dst,
-             const VectorType &                           src,
-             const std::pair<unsigned int, unsigned int> &cell_range) const;
+  operator()(const MatrixFree<dim, Number>&               data,
+             VectorType&                                  dst,
+             const VectorType&                            src,
+             const std::pair<unsigned int, unsigned int>& cell_range) const;
 
   void
-  test_functions(VectorType &dst) const
+  test_functions(VectorType& dst) const
   {
     for (unsigned int comp = 0; comp < dst.size(); ++comp)
       dst[comp] = 0;
@@ -86,7 +86,7 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
   mutable FEValues<dim>          fe_val0;
   mutable FEValues<dim>          fe_val01;
   mutable FEValues<dim>          fe_val1;
@@ -97,10 +97,10 @@ private:
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
-operator()(const MatrixFree<dim, Number> &data,
-           std::vector<Vector<Number>> &  dst,
-           const std::vector<Vector<Number>> &,
-           const std::pair<unsigned int, unsigned int> &cell_range) const
+operator()(const MatrixFree<dim, Number>& data,
+           std::vector<Vector<Number>>&   dst,
+           const std::vector<Vector<Number>>&,
+           const std::pair<unsigned int, unsigned int>& cell_range) const
 {
   FEEvaluation<dim, 0, 1, 1, Number>                     fe_eval0(data, 0, 0);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval1(data, 1, 1);
@@ -275,7 +275,7 @@ test()
   DoFHandler<dim> dof1(tria);
   dof1.distribute_dofs(fe1);
 
-  std::vector<const DoFHandler<dim> *> dof(2);
+  std::vector<const DoFHandler<dim>*> dof(2);
   dof[0] = &dof0;
   dof[1] = &dof1;
 
@@ -291,8 +291,8 @@ test()
   dst[4].reinit(dst[0]);
   dst[5].reinit(dst[0]);
 
-  std::vector<const ConstraintMatrix *> constraints(2);
-  ConstraintMatrix                      constraint0;
+  std::vector<const ConstraintMatrix*> constraints(2);
+  ConstraintMatrix                     constraint0;
   constraint0.close();
   constraints[0] = &constraint0;
   ConstraintMatrix constraint1;

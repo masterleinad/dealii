@@ -38,7 +38,7 @@ public:
             << std::endl;
   }
 
-  C(const C &)
+  C(const C&)
   {
     object_number = ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
@@ -52,14 +52,14 @@ public:
 
   template <typename Archive>
   void
-  serialize(Archive &ar, const unsigned int version)
+  serialize(Archive& ar, const unsigned int version)
   {
     deallog << "Serializing object number " << object_number << " via "
             << typeid(Archive).name() << std::endl;
   }
 
   bool
-  operator==(const C &) const
+  operator==(const C&) const
   {
     return true;
   }
@@ -72,10 +72,10 @@ private:
 void
 test()
 {
-  C *backup;
+  C* backup;
   {
-    C *p1  = new C();
-    C *p2  = new C(); // this is the pointer that will be overwritten
+    C* p1  = new C();
+    C* p2  = new C(); // this is the pointer that will be overwritten
     backup = p2;      // but save a pointer to the original object
 
     verify(p1, p2);

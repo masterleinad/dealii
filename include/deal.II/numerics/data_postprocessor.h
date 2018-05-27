@@ -191,7 +191,7 @@ namespace DataPostprocessorInputs
      */
     template <typename DoFHandlerType>
     void
-    set_cell(const typename DoFHandlerType::cell_iterator &cell);
+    set_cell(const typename DoFHandlerType::cell_iterator& cell);
 
     /**
      * Query the cell on which we currently produce graphical output.
@@ -455,8 +455,8 @@ public:
    * component.
    */
   virtual void
-  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim> &input_data,
-                        std::vector<Vector<double>> &computed_quantities) const;
+  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim>& input_data,
+                        std::vector<Vector<double>>& computed_quantities) const;
 
   /**
    * Same as the evaluate_scalar_field() function, but this
@@ -464,8 +464,8 @@ public:
    * i.e. the finite element in use has multiple vector components.
    */
   virtual void
-  evaluate_vector_field(const DataPostprocessorInputs::Vector<dim> &input_data,
-                        std::vector<Vector<double>> &computed_quantities) const;
+  evaluate_vector_field(const DataPostprocessorInputs::Vector<dim>& input_data,
+                        std::vector<Vector<double>>& computed_quantities) const;
 
   /**
    * Return the vector of strings describing the names of the computed
@@ -550,7 +550,7 @@ public:
    * be used in combination with DataOutFaces, you may also ask for a update
    * of normals via the @p update_normal_vectors flag.
    */
-  DataPostprocessorScalar(const std::string &name,
+  DataPostprocessorScalar(const std::string& name,
                           const UpdateFlags  update_flags);
 
   /**
@@ -790,7 +790,7 @@ public:
    * be used in combination with DataOutFaces, you may also ask for a update
    * of normals via the @p update_normal_vectors flag.
    */
-  DataPostprocessorVector(const std::string &name,
+  DataPostprocessorVector(const std::string& name,
                           const UpdateFlags  update_flags);
 
   /**
@@ -1034,7 +1034,7 @@ public:
    * be used in combination with DataOutFaces, you may also ask for a update
    * of normals via the @p update_normal_vectors flag.
    */
-  DataPostprocessorTensor(const std::string &name,
+  DataPostprocessorTensor(const std::string& name,
                           const UpdateFlags  update_flags);
 
   /**
@@ -1082,12 +1082,12 @@ namespace DataPostprocessorInputs
   template <typename DoFHandlerType>
   void
   CommonInputs<spacedim>::set_cell(
-    const typename DoFHandlerType::cell_iterator &new_cell)
+    const typename DoFHandlerType::cell_iterator& new_cell)
   {
     // see if we had previously already stored a cell that has the same
     // data type; if so, reuse the memory location and avoid calling 'new'
     // inside boost::any
-    if (typename DoFHandlerType::cell_iterator *storage_location =
+    if (typename DoFHandlerType::cell_iterator* storage_location =
           boost::any_cast<typename DoFHandlerType::cell_iterator>(&cell))
       *storage_location = new_cell;
     else

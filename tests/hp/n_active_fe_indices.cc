@@ -37,7 +37,7 @@
 
 template <int dim>
 void
-check_cells(const hp::DoFHandler<dim> &dof_handler)
+check_cells(const hp::DoFHandler<dim>& dof_handler)
 {
   for (typename hp::DoFHandler<dim>::active_cell_iterator cell =
          dof_handler.begin_active();
@@ -57,13 +57,13 @@ check_cells(const hp::DoFHandler<dim> &dof_handler)
 
 
 void
-check_faces(const hp::DoFHandler<1> &)
+check_faces(const hp::DoFHandler<1>&)
 {}
 
 
 template <int dim>
 void
-check_faces(const hp::DoFHandler<dim> &dof_handler)
+check_faces(const hp::DoFHandler<dim>& dof_handler)
 {
   for (typename hp::DoFHandler<dim>::active_cell_iterator cell =
          dof_handler.begin_active();
@@ -85,18 +85,18 @@ check_faces(const hp::DoFHandler<dim> &dof_handler)
 
 
 void
-check_edges(const hp::DoFHandler<1> &)
+check_edges(const hp::DoFHandler<1>&)
 {}
 
 
 void
-check_edges(const hp::DoFHandler<2> &)
+check_edges(const hp::DoFHandler<2>&)
 {}
 
 
 template <int dim>
 void
-check_edges(const hp::DoFHandler<dim> &dof_handler)
+check_edges(const hp::DoFHandler<dim>& dof_handler)
 {
   for (typename hp::DoFHandler<dim>::active_cell_iterator cell =
          dof_handler.begin_active();

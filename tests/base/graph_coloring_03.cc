@@ -37,7 +37,7 @@
 template <int dim>
 std::vector<types::global_dof_index>
 get_conflict_indices_cfem(
-  typename hp::DoFHandler<dim>::active_cell_iterator const &it)
+  typename hp::DoFHandler<dim>::active_cell_iterator const& it)
 {
   std::vector<types::global_dof_index> local_dof_indices(
     it->get_fe().dofs_per_cell);
@@ -78,7 +78,7 @@ check()
       dof_handler.begin_active(),
       dof_handler.end(),
       std::function<std::vector<types::global_dof_index>(
-        typename hp::DoFHandler<dim>::active_cell_iterator const &)>(
+        typename hp::DoFHandler<dim>::active_cell_iterator const&)>(
         &get_conflict_indices_cfem<dim>)));
 
   // Output the coloring

@@ -68,7 +68,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   initlog();
   deallog.depth_console(0);

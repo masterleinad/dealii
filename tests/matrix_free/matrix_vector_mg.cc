@@ -75,7 +75,7 @@ test()
   {
     DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
     DoFTools::make_sparsity_pattern(
-      static_cast<const DoFHandler<dim> &>(dof), csp, constraints, false);
+      static_cast<const DoFHandler<dim>&>(dof), csp, constraints, false);
     sparsity.copy_from(csp);
   }
   system_matrix.reinit(sparsity);

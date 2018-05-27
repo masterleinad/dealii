@@ -197,7 +197,7 @@ namespace Step40
       if (cell->is_locally_owned())
         {
           x_fe_values.reinit(cell);
-          const FEValues<dim> &fe_values = x_fe_values.get_present_fe_values();
+          const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
 
           const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
           const unsigned int n_q_points    = fe_values.get_quadrature().size();
@@ -363,7 +363,7 @@ test_mpi()
         laplace_problem_2d.run();
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -396,7 +396,7 @@ test_mpi()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

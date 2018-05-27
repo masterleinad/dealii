@@ -91,11 +91,11 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual void
-  value_list(const std::vector<Point<dim>> &points,
-             std::vector<double> &          values,
+  value_list(const std::vector<Point<dim>>& points,
+             std::vector<double>&           values,
              const unsigned int             component = 0) const;
 };
 
@@ -103,7 +103,7 @@ public:
 
 template <int dim>
 double
-Coefficient<dim>::value(const Point<dim> &p,
+Coefficient<dim>::value(const Point<dim>& p,
                         const unsigned int /*component*/) const
 {
   if (p.square() < 0.5 * 0.5)
@@ -116,8 +116,8 @@ Coefficient<dim>::value(const Point<dim> &p,
 
 template <int dim>
 void
-Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                             std::vector<double> &          values,
+Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                             std::vector<double>&           values,
                              const unsigned int             component) const
 {
   Assert(values.size() == points.size(),
@@ -198,7 +198,7 @@ LaplaceProblem<dim>::assemble_system()
       cell_rhs    = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<2> &fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
 
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);

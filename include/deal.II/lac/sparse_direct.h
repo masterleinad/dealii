@@ -120,7 +120,7 @@ public:
    * consistent with other sparse direct solvers.
    */
   void
-  initialize(const SparsityPattern &sparsity_pattern);
+  initialize(const SparsityPattern& sparsity_pattern);
 
   /**
    * Factorize the matrix. This function may be called multiple times for
@@ -141,14 +141,14 @@ public:
    */
   template <class Matrix>
   void
-  factorize(const Matrix &matrix);
+  factorize(const Matrix& matrix);
 
   /**
    * Initialize memory and call SparseDirectUMFPACK::factorize.
    */
   template <class Matrix>
   void
-  initialize(const Matrix &       matrix,
+  initialize(const Matrix&        matrix,
              const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -172,26 +172,26 @@ public:
    * of the matrix, $A^{-1}$.
    */
   void
-  vmult(Vector<double> &dst, const Vector<double> &src) const;
+  vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   /**
    * Same as before, but for block vectors.
    */
   void
-  vmult(BlockVector<double> &dst, const BlockVector<double> &src) const;
+  vmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
 
   /**
    * Same as before, but uses the transpose of the matrix, i.e. this function
    * multiplies with $A^{-T}$.
    */
   void
-  Tvmult(Vector<double> &dst, const Vector<double> &src) const;
+  Tvmult(Vector<double>& dst, const Vector<double>& src) const;
 
   /**
    * Same as before, but for block vectors
    */
   void
-  Tvmult(BlockVector<double> &dst, const BlockVector<double> &src) const;
+  Tvmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
 
   /**
    * Return the dimension of the codomain (or range) space. Note that the
@@ -234,13 +234,13 @@ public:
    * the matrix, i.e. $x=A^{-T}b$.
    */
   void
-  solve(Vector<double> &rhs_and_solution, const bool transpose = false) const;
+  solve(Vector<double>& rhs_and_solution, const bool transpose = false) const;
 
   /**
    * Same as before, but for block vectors.
    */
   void
-  solve(BlockVector<double> &rhs_and_solution,
+  solve(BlockVector<double>& rhs_and_solution,
         const bool           transpose = false) const;
 
   /**
@@ -251,8 +251,8 @@ public:
    */
   template <class Matrix>
   void
-  solve(const Matrix &  matrix,
-        Vector<double> &rhs_and_solution,
+  solve(const Matrix&   matrix,
+        Vector<double>& rhs_and_solution,
         const bool      transpose = false);
 
   /**
@@ -260,8 +260,8 @@ public:
    */
   template <class Matrix>
   void
-  solve(const Matrix &       matrix,
-        BlockVector<double> &rhs_and_solution,
+  solve(const Matrix&        matrix,
+        BlockVector<double>& rhs_and_solution,
         const bool           transpose = false);
 
   /**
@@ -275,7 +275,7 @@ public:
    */
   DeclException2(
     ExcUMFPACKError,
-    char *,
+    char*,
     int,
     << "UMFPACK routine " << arg1 << " returned error status " << arg2 << "."
     << "\n\n"
@@ -325,8 +325,8 @@ private:
    * about symbolic and numeric values of the decomposition. The actual data
    * type of these objects is opaque, and only passed around as void pointers.
    */
-  void *symbolic_decomposition;
-  void *numeric_decomposition;
+  void* symbolic_decomposition;
+  void* numeric_decomposition;
 
   /**
    * Free all memory that hasn't been freed yet.
@@ -342,15 +342,15 @@ private:
    */
   template <typename number>
   void
-  sort_arrays(const SparseMatrixEZ<number> &);
+  sort_arrays(const SparseMatrixEZ<number>&);
 
   template <typename number>
   void
-  sort_arrays(const SparseMatrix<number> &);
+  sort_arrays(const SparseMatrix<number>&);
 
   template <typename number>
   void
-  sort_arrays(const BlockSparseMatrix<number> &);
+  sort_arrays(const BlockSparseMatrix<number>&);
 
   /**
    * The arrays in which we store the data for the solver. SuiteSparse_long

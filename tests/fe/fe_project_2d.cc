@@ -102,14 +102,14 @@ public:
   VectorFunction() : Function<dim>(dim)
   {}
   virtual double
-  value(const Point<dim> &p, const unsigned int component) const;
+  value(const Point<dim>& p, const unsigned int component) const;
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const;
+  vector_value(const Point<dim>& p, Vector<double>& values) const;
 };
 
 template <>
 double
-VectorFunction<2>::value(const Point<2> &p, const unsigned int component) const
+VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
@@ -129,15 +129,15 @@ VectorFunction<2>::value(const Point<2> &p, const unsigned int component) const
 
 template <int dim>
 void
-VectorFunction<dim>::vector_value(const Point<dim> &p,
-                                  Vector<double> &  values) const
+VectorFunction<dim>::vector_value(const Point<dim>& p,
+                                  Vector<double>&   values) const
 {
   for (int i = 0; i < dim; ++i)
     values(i) = value(p, i);
 }
 
-void create_tria(Triangulation<2> &triangulation,
-                 const Point<2> *  vertices_parallelograms)
+void create_tria(Triangulation<2>& triangulation,
+                 const Point<2>*   vertices_parallelograms)
 {
   const std::vector<Point<2>> vertices(&vertices_parallelograms[0],
                                        &vertices_parallelograms[n_vertices]);
@@ -159,10 +159,10 @@ void create_tria(Triangulation<2> &triangulation,
 
 template <int dim>
 void
-test(const FiniteElement<dim> &fe,
+test(const FiniteElement<dim>& fe,
      unsigned                  n_cycles,
      bool                      global,
-     const Point<dim> *        vertices_parallelograms)
+     const Point<dim>*         vertices_parallelograms)
 {
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
   deallog << "DoFs\t\t||u-u_h||\tcurl(u_h)\tdiv(u_h)" << std::endl;
@@ -220,7 +220,7 @@ test(const FiniteElement<dim> &fe,
            ++cell, ++cell_index)
         {
           fe_values.reinit(cell);
-          const std::vector<double> &JxW_values = fe_values.get_JxW_values();
+          const std::vector<double>& JxW_values = fe_values.get_JxW_values();
           fe_values[vec].get_function_divergences(v, div_v);
           fe_values[vec].get_function_curls(v, curl_v);
           for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
@@ -259,7 +259,7 @@ main()
 
   deallog << "2d\nRectangular grid:\n";
 
-  const Point<dim> *vertices = &vertices_rectangular[0];
+  const Point<dim>* vertices = &vertices_rectangular[0];
   test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);

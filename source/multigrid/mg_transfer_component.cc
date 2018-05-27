@@ -81,11 +81,11 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_components(
-    const dealii::DoFHandler<dim, spacedim> &          mg_dof,
-    MGLevelObject<BlockVector<number>> &               v,
-    const std::vector<bool> &                          sel,
-    const std::vector<unsigned int> &                  target_comp,
-    std::vector<std::vector<types::global_dof_index>> &ndofs)
+    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
+    MGLevelObject<BlockVector<number>>&                v,
+    const std::vector<bool>&                           sel,
+    const std::vector<unsigned int>&                   target_comp,
+    std::vector<std::vector<types::global_dof_index>>& ndofs)
   {
     std::vector<bool>         selected         = sel;
     std::vector<unsigned int> target_component = target_comp;
@@ -180,11 +180,11 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_components(
-    const dealii::DoFHandler<dim, spacedim> &          mg_dof,
-    MGLevelObject<dealii::Vector<number>> &            v,
-    const ComponentMask &                              component_mask,
-    const std::vector<unsigned int> &                  target_component,
-    std::vector<std::vector<types::global_dof_index>> &ndofs)
+    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
+    MGLevelObject<dealii::Vector<number>>&             v,
+    const ComponentMask&                               component_mask,
+    const std::vector<unsigned int>&                   target_component,
+    std::vector<std::vector<types::global_dof_index>>& ndofs)
   {
     Assert(component_mask.represents_n_components(target_component.size()),
            ExcMessage("The component mask does not have the correct size."));
@@ -215,9 +215,9 @@ template <typename number>
 template <int dim, class InVector, int spacedim>
 void
 MGTransferSelect<number>::do_copy_to_mg(
-  const DoFHandler<dim, spacedim> &mg_dof_handler,
-  MGLevelObject<Vector<number>> &  dst,
-  const InVector &                 src) const
+  const DoFHandler<dim, spacedim>& mg_dof_handler,
+  MGLevelObject<Vector<number>>&   dst,
+  const InVector&                  src) const
 {
   dst = 0;
 
@@ -255,8 +255,8 @@ MGTransferSelect<number>::do_copy_to_mg(
 
 template <int dim, int spacedim>
 void
-MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
-                                        const DoFHandler<dim, spacedim> &mg_dof)
+MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim>&,
+                                        const DoFHandler<dim, spacedim>& mg_dof)
 {
   // Fill target component with
   // standard values (identity) if it
@@ -302,7 +302,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
         }
     }
 
-  const FiniteElement<dim> &fe = mg_dof.get_fe();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
 
   // Effective number of components
   // is the maximum entry in
@@ -432,7 +432,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
                 // set an alias to the
                 // prolongation matrix for
                 // this child
-                const FullMatrix<double> &prolongation =
+                const FullMatrix<double>& prolongation =
                   mg_dof.get_fe().get_prolongation_matrix(
                     child, cell->refinement_case());
 
@@ -472,7 +472,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
                 // set an alias to the
                 // prolongation matrix for
                 // this child
-                const FullMatrix<double> &prolongation =
+                const FullMatrix<double>& prolongation =
                   mg_dof.get_fe().get_prolongation_matrix(
                     child, cell->refinement_case());
 
@@ -566,15 +566,15 @@ template <typename number>
 template <int dim, int spacedim>
 void
 MGTransferSelect<number>::build_matrices(
-  const DoFHandler<dim, spacedim> &                     dof,
-  const DoFHandler<dim, spacedim> &                     mg_dof,
+  const DoFHandler<dim, spacedim>&                      dof,
+  const DoFHandler<dim, spacedim>&                      mg_dof,
   unsigned int                                          select,
   unsigned int                                          mg_select,
-  const std::vector<unsigned int> &                     t_component,
-  const std::vector<unsigned int> &                     mg_t_component,
-  const std::vector<std::set<types::global_dof_index>> &bdry_indices)
+  const std::vector<unsigned int>&                      t_component,
+  const std::vector<unsigned int>&                      mg_t_component,
+  const std::vector<std::set<types::global_dof_index>>& bdry_indices)
 {
-  const FiniteElement<dim> &fe    = mg_dof.get_fe();
+  const FiniteElement<dim>& fe    = mg_dof.get_fe();
   unsigned int              ncomp = mg_dof.get_fe(0).n_components();
 
   target_component    = t_component;

@@ -52,7 +52,7 @@ template <typename number>
 void
 SparseLUDecomposition<number>::clear()
 {
-  std::vector<const size_type *> tmp;
+  std::vector<const size_type*> tmp;
   tmp.swap(prebuilt_lower_bound);
 
   SparseMatrix<number>::clear();
@@ -70,12 +70,12 @@ template <typename number>
 template <typename somenumber>
 void
 SparseLUDecomposition<number>::initialize(
-  const SparseMatrix<somenumber> &matrix,
+  const SparseMatrix<somenumber>& matrix,
   const AdditionalData            data)
 {
-  const SparsityPattern &matrix_sparsity = matrix.get_sparsity_pattern();
+  const SparsityPattern& matrix_sparsity = matrix.get_sparsity_pattern();
 
-  const SparsityPattern *sparsity_pattern_to_use = nullptr;
+  const SparsityPattern* sparsity_pattern_to_use = nullptr;
 
   if (data.use_this_sparsity)
     sparsity_pattern_to_use = data.use_this_sparsity;
@@ -128,7 +128,7 @@ SparseLUDecomposition<number>::initialize(
     ExcMessage("It is not possible to compute this matrix decomposition for "
                "matrices that are not square."));
   {
-    std::vector<const size_type *> tmp;
+    std::vector<const size_type*> tmp;
     tmp.swap(prebuilt_lower_bound);
   }
   SparseMatrix<number>::reinit(*sparsity_pattern_to_use);
@@ -140,9 +140,9 @@ template <typename number>
 void
 SparseLUDecomposition<number>::prebuild_lower_bound()
 {
-  const size_type *const column_numbers =
+  const size_type* const column_numbers =
     this->get_sparsity_pattern().colnums.get();
-  const std::size_t *const rowstart_indices =
+  const std::size_t* const rowstart_indices =
     this->get_sparsity_pattern().rowstart.get();
   const size_type N = this->m();
 
@@ -160,15 +160,15 @@ SparseLUDecomposition<number>::prebuild_lower_bound()
 template <typename number>
 template <typename somenumber>
 void
-SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber> &matrix)
+SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber>& matrix)
 {
   // check whether we use the same sparsity
   // pattern as the input matrix
   if (&this->get_sparsity_pattern() == &matrix.get_sparsity_pattern())
     {
-      const somenumber *  input_ptr = matrix.val.get();
-      number *            this_ptr  = this->val.get();
-      const number *const end_ptr   = this_ptr + this->n_nonzero_elements();
+      const somenumber*   input_ptr = matrix.val.get();
+      number*             this_ptr  = this->val.get();
+      const number* const end_ptr   = this_ptr + this->n_nonzero_elements();
       if (std::is_same<somenumber, number>::value == true)
         std::memcpy(
           this_ptr, input_ptr, this->n_nonzero_elements() * sizeof(number));

@@ -37,7 +37,7 @@
 
 template <int dim>
 void
-check2(const FiniteElement<dim> &fe)
+check2(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
   const std::vector<Point<dim - 1>> unit_f_s_p =

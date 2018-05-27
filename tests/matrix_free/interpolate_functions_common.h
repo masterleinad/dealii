@@ -60,10 +60,10 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in,
-                 const Mapping<dim> &           mapping) :
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in,
+                 const Mapping<dim>&            mapping) :
     data(data_in){};
 
   virtual ~MatrixFreeTest()
@@ -72,10 +72,10 @@ public:
   // make function virtual to allow derived classes to define a different
   // function
   virtual void
-  cell(const MatrixFree<dim, Number> &data,
-       Vector<Number> &,
-       const Vector<Number> &                       src,
-       const std::pair<unsigned int, unsigned int> &cell_range) const
+  cell(const MatrixFree<dim, Number>& data,
+       Vector<Number>&,
+       const Vector<Number>&                        src,
+       const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
 
@@ -108,10 +108,10 @@ public:
   }
 
   virtual void
-  face(const MatrixFree<dim, Number> &data,
-       Vector<Number> &,
-       const Vector<Number> &                       src,
-       const std::pair<unsigned int, unsigned int> &face_range) const
+  face(const MatrixFree<dim, Number>& data,
+       Vector<Number>&,
+       const Vector<Number>&                        src,
+       const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_evalm(data,
                                                                         true);
@@ -177,10 +177,10 @@ public:
   }
 
   virtual void
-  boundary(const MatrixFree<dim, Number> &data,
-           Vector<Number> &,
-           const Vector<Number> &                       src,
-           const std::pair<unsigned int, unsigned int> &face_range) const
+  boundary(const MatrixFree<dim, Number>& data,
+           Vector<Number>&,
+           const Vector<Number>&                        src,
+           const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_evalm(data,
                                                                         true);
@@ -232,7 +232,7 @@ public:
 
 
   void
-  test_functions(const Vector<Number> &src) const
+  test_functions(const Vector<Number>& src) const
   {
     for (unsigned int i = 0; i < 4; ++i)
       {
@@ -297,7 +297,7 @@ public:
   };
 
 protected:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
   mutable double cell_errors[4], facem_errors[4], facep_errors[4],
     boundary_errors[4];
   mutable unsigned long long cell_times, facem_times, facep_times,
@@ -308,7 +308,7 @@ protected:
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim> &dof, const ConstraintMatrix &constraints)
+do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   // use this for info on problem

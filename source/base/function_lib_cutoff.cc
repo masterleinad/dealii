@@ -40,7 +40,7 @@ namespace Functions
 
   template <int dim>
   void
-  CutOffFunctionBase<dim>::new_center(const Point<dim> &p)
+  CutOffFunctionBase<dim>::new_center(const Point<dim>& p)
   {
     center = p;
   }
@@ -67,7 +67,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionLinfty<dim>::value(const Point<dim> & p,
+  CutOffFunctionLinfty<dim>::value(const Point<dim>&  p,
                                    const unsigned int component) const
   {
     if (this->selected == CutOffFunctionBase<dim>::no_component ||
@@ -79,8 +79,8 @@ namespace Functions
 
   template <int dim>
   void
-  CutOffFunctionLinfty<dim>::value_list(const std::vector<Point<dim>> &points,
-                                        std::vector<double> &          values,
+  CutOffFunctionLinfty<dim>::value_list(const std::vector<Point<dim>>& points,
+                                        std::vector<double>&           values,
                                         const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -101,8 +101,8 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionLinfty<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -133,7 +133,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionW1<dim>::value(const Point<dim> & p,
+  CutOffFunctionW1<dim>::value(const Point<dim>&  p,
                                const unsigned int component) const
   {
     if (this->selected == CutOffFunctionBase<dim>::no_component ||
@@ -148,8 +148,8 @@ namespace Functions
 
   template <int dim>
   void
-  CutOffFunctionW1<dim>::value_list(const std::vector<Point<dim>> &points,
-                                    std::vector<double> &          values,
+  CutOffFunctionW1<dim>::value_list(const std::vector<Point<dim>>& points,
+                                    std::vector<double>&           values,
                                     const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -171,8 +171,8 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionW1<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -204,7 +204,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionCinfty<dim>::value(const Point<dim> & p,
+  CutOffFunctionCinfty<dim>::value(const Point<dim>&  p,
                                    const unsigned int component) const
   {
     if (this->selected == CutOffFunctionBase<dim>::no_component ||
@@ -223,8 +223,8 @@ namespace Functions
 
   template <int dim>
   void
-  CutOffFunctionCinfty<dim>::value_list(const std::vector<Point<dim>> &points,
-                                        std::vector<double> &          values,
+  CutOffFunctionCinfty<dim>::value_list(const std::vector<Point<dim>>& points,
+                                        std::vector<double>&           values,
                                         const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -255,8 +255,8 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionCinfty<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -287,7 +287,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  CutOffFunctionCinfty<dim>::gradient(const Point<dim> &p,
+  CutOffFunctionCinfty<dim>::gradient(const Point<dim>& p,
                                       const unsigned int) const
   {
     const double d = this->center.distance(p);

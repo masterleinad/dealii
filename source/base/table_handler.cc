@@ -98,7 +98,7 @@ namespace internal
       cached_value = "\"\"";
   }
 
-  const std::string &
+  const std::string&
   TableEntry::get_cached_string() const
   {
     return cached_value;
@@ -113,7 +113,7 @@ namespace internal
     {
       template <typename T>
       void
-      operator()(T &operand) const
+      operator()(T& operand) const
       {
         operand = T();
       }
@@ -134,7 +134,7 @@ namespace internal
 
 /* ------------------------------------------------ */
 
-TableHandler::Column::Column(const std::string &tex_caption) :
+TableHandler::Column::Column(const std::string& tex_caption) :
   tex_caption(tex_caption),
   tex_format("c"),
   precision(4),
@@ -167,7 +167,7 @@ TableHandler::Column::pad_column_below(const unsigned int size)
   while (entries.size() < size)
     {
       entries.push_back(entries.back().get_default_constructed_copy());
-      internal::TableEntry &entry = entries.back();
+      internal::TableEntry& entry = entries.back();
       entry.cache_string(scientific, precision);
       max_length =
         std::max(max_length,
@@ -202,7 +202,7 @@ TableHandler::TableHandler() : auto_fill_mode(false)
 
 
 void
-TableHandler::declare_column(const std::string &key)
+TableHandler::declare_column(const std::string& key)
 {
   // see if the column already exists; insert it if not
   Assert(columns.find(key) == columns.end(),
@@ -234,7 +234,7 @@ TableHandler::start_new_row()
     while (col->second.entries.size() < max_col_length)
       {
         col->second.entries.emplace_back("");
-        internal::TableEntry &entry = col->second.entries.back();
+        internal::TableEntry& entry = col->second.entries.back();
         entry.cache_string(col->second.scientific, col->second.precision);
         col->second.max_length = std::max(
           col->second.max_length,
@@ -252,8 +252,8 @@ TableHandler::set_auto_fill_mode(const bool state)
 
 
 void
-TableHandler::add_column_to_supercolumn(const std::string &key,
-                                        const std::string &superkey)
+TableHandler::add_column_to_supercolumn(const std::string& key,
+                                        const std::string& superkey)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
 
@@ -301,7 +301,7 @@ TableHandler::add_column_to_supercolumn(const std::string &key,
 
 
 void
-TableHandler::set_column_order(const std::vector<std::string> &new_order)
+TableHandler::set_column_order(const std::vector<std::string>& new_order)
 {
   for (unsigned int j = 0; j < new_order.size(); ++j)
     Assert(supercolumns.count(new_order[j]) || columns.count(new_order[j]),
@@ -312,8 +312,8 @@ TableHandler::set_column_order(const std::vector<std::string> &new_order)
 
 
 void
-TableHandler::set_tex_caption(const std::string &key,
-                              const std::string &tex_caption)
+TableHandler::set_tex_caption(const std::string& key,
+                              const std::string& tex_caption)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
   columns[key].tex_caption = tex_caption;
@@ -322,7 +322,7 @@ TableHandler::set_tex_caption(const std::string &key,
 
 
 void
-TableHandler::set_tex_table_caption(const std::string &table_caption)
+TableHandler::set_tex_table_caption(const std::string& table_caption)
 {
   tex_table_caption = table_caption;
 }
@@ -330,7 +330,7 @@ TableHandler::set_tex_table_caption(const std::string &table_caption)
 
 
 void
-TableHandler::set_tex_table_label(const std::string &table_label)
+TableHandler::set_tex_table_label(const std::string& table_label)
 {
   tex_table_label = table_label;
 }
@@ -338,8 +338,8 @@ TableHandler::set_tex_table_label(const std::string &table_label)
 
 
 void
-TableHandler::set_tex_supercaption(const std::string &superkey,
-                                   const std::string &tex_supercaption)
+TableHandler::set_tex_supercaption(const std::string& superkey,
+                                   const std::string& tex_supercaption)
 {
   Assert(supercolumns.count(superkey), ExcSuperColumnNotExistent(superkey));
   Assert(tex_supercaptions.count(superkey), ExcInternalError());
@@ -349,8 +349,8 @@ TableHandler::set_tex_supercaption(const std::string &superkey,
 
 
 void
-TableHandler::set_tex_format(const std::string &key,
-                             const std::string &tex_format)
+TableHandler::set_tex_format(const std::string& key,
+                             const std::string& tex_format)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
   Assert(tex_format == "l" || tex_format == "c" || tex_format == "r",
@@ -361,7 +361,7 @@ TableHandler::set_tex_format(const std::string &key,
 
 
 void
-TableHandler::set_precision(const std::string &key,
+TableHandler::set_precision(const std::string& key,
                             const unsigned int precision)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
@@ -374,7 +374,7 @@ TableHandler::set_precision(const std::string &key,
 
 
 void
-TableHandler::set_scientific(const std::string &key, const bool scientific)
+TableHandler::set_scientific(const std::string& key, const bool scientific)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
   if (columns[key].scientific != scientific)
@@ -386,7 +386,7 @@ TableHandler::set_scientific(const std::string &key, const bool scientific)
 
 
 void
-TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
+TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
 {
   AssertThrow(out, ExcIO());
   boost::io::ios_flags_saver restore_flags(out);
@@ -413,8 +413,8 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
   const unsigned int n_cols = sel_columns.size();
 
   // cache the columns and compute the widths of each column for alignment
-  std::vector<const Column *> cols;
-  std::vector<unsigned int>   column_widths(n_cols, 0);
+  std::vector<const Column*> cols;
+  std::vector<unsigned int>  column_widths(n_cols, 0);
   for (unsigned int j = 0; j < n_cols; ++j)
     {
       std::string                                         key = sel_columns[j];
@@ -434,7 +434,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
           out << "| " << std::left;
           for (unsigned int j = 0; j < n_cols; ++j)
             {
-              const std::string &key = sel_columns[j];
+              const std::string& key = sel_columns[j];
               column_widths[j] =
                 std::max(column_widths[j], (unsigned int)key.length());
               out << std::setw(column_widths[j]);
@@ -448,7 +448,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
               out << "| ";
               for (unsigned int j = 0; j < n_cols; ++j)
                 {
-                  const Column &column = *(cols[j]);
+                  const Column& column = *(cols[j]);
 
                   out << std::setw(column_widths[j]);
                   out << column.entries[i].get_cached_string();
@@ -466,7 +466,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
           // write the captions
           for (unsigned int j = 0; j < n_cols; ++j)
             {
-              const std::string &key = sel_columns[j];
+              const std::string& key = sel_columns[j];
               out << "# " << j + 1 << ": " << key << '\n';
             }
 
@@ -475,7 +475,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
             {
               for (unsigned int j = 0; j < n_cols; ++j)
                 {
-                  const Column &column = *(cols[j]);
+                  const Column& column = *(cols[j]);
 
                   out << column.entries[i].get_cached_string();
                   out << ' ';
@@ -506,7 +506,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
           // over all the columns that belong to it.
           for (unsigned int j = 0; j < column_order.size(); ++j)
             {
-              const std::string &key   = column_order[j];
+              const std::string& key   = column_order[j];
               unsigned int       width = 0;
               {
                 // compute the width of this column or supercolumn
@@ -590,7 +590,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
     {
       for (unsigned int j = 0; j < n_cols; ++j)
         {
-          const Column &column = *(cols[j]);
+          const Column& column = *(cols[j]);
           out << std::setw(column_widths[j]);
           out << column.entries[i].get_cached_string();
 
@@ -604,7 +604,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
 
 
 void
-TableHandler::write_tex(std::ostream &out, const bool with_header) const
+TableHandler::write_tex(std::ostream& out, const bool with_header) const
 {
   // TODO[TH]: update code similar to
   // write_text() to use the cache
@@ -715,7 +715,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
             columns.find(key);
           Assert(col_iter != columns.end(), ExcInternalError());
 
-          const Column &column = col_iter->second;
+          const Column& column = col_iter->second;
 
           out << std::setprecision(column.precision);
 
@@ -776,7 +776,7 @@ TableHandler::n_rows() const
 
 
 void
-TableHandler::get_selected_columns(std::vector<std::string> &sel_columns) const
+TableHandler::get_selected_columns(std::vector<std::string>& sel_columns) const
 {
   sel_columns.clear();
 

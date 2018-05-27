@@ -23,7 +23,7 @@
 #include "../tests.h"
 
 void
-check(const char *p)
+check(const char* p)
 {
   ParameterHandler prm;
   prm.declare_entry("test_1",

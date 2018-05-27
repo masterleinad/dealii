@@ -32,7 +32,7 @@
 
 template <typename VectorType>
 void
-test(VectorType &vector)
+test(VectorType& vector)
 {
   const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
@@ -67,7 +67,7 @@ test(VectorType &vector)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

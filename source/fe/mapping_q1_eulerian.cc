@@ -40,8 +40,8 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, class VectorType, int spacedim>
 MappingQ1Eulerian<dim, VectorType, spacedim>::MappingQ1Eulerian(
-  const DoFHandler<dim, spacedim> &shiftmap_dof_handler,
-  const VectorType &               euler_transform_vectors) :
+  const DoFHandler<dim, spacedim>& shiftmap_dof_handler,
+  const VectorType&                euler_transform_vectors) :
   MappingQGeneric<dim, spacedim>(1),
   euler_transform_vectors(&euler_transform_vectors),
   shiftmap_dof_handler(&shiftmap_dof_handler)
@@ -52,7 +52,7 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::MappingQ1Eulerian(
 template <int dim, class VectorType, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 MappingQ1Eulerian<dim, VectorType, spacedim>::get_vertices(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
 {
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell> vertices;
   // The assertions can not be in the constructor, since this would
@@ -102,7 +102,7 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::get_vertices(
 template <int dim, class VectorType, int spacedim>
 std::vector<Point<spacedim>>
 MappingQ1Eulerian<dim, VectorType, spacedim>::compute_mapping_support_points(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell) const
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
 {
   const std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
     vertices = this->get_vertices(cell);
@@ -129,12 +129,12 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::clone() const
 template <int dim, class VectorType, int spacedim>
 CellSimilarity::Similarity
 MappingQ1Eulerian<dim, VectorType, spacedim>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const CellSimilarity::Similarity,
-  const Quadrature<dim> &                                  quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase &internal_data,
-  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-    &output_data) const
+  const Quadrature<dim>&                                   quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
+  internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+    output_data) const
 {
   // call the function of the base class, but ignoring
   // any potentially detected cell similarity between

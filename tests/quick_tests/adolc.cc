@@ -35,9 +35,9 @@ main(void)
   const unsigned int n   = 10;
   std::size_t        tape_stats[STAT_SIZE];
 
-  double * xp = new double[n];
+  double*  xp = new double[n];
   double   yp = 0.0;
-  adouble *x  = new adouble[n];
+  adouble* x  = new adouble[n];
   adouble  y  = 1.0;
 
   for (unsigned int i = 0; i < n; i++)
@@ -55,7 +55,7 @@ main(void)
   tapestats(1, tape_stats);
 
   // --- Function ---
-  double *f = new double;
+  double* f = new double;
   function(1, 1, n, xp, f);
 
   const double error_func_1 = yp - 1.0 / (1.0 + n);
@@ -68,7 +68,7 @@ main(void)
 
   // --- Gradient ---
 
-  double *g = new double[n];
+  double* g = new double[n];
   gradient(1, n, xp, g);
 
   double err_grad = 0;
@@ -80,7 +80,7 @@ main(void)
 
   // --- Hessian ---
 
-  double **H = new double *[n];
+  double** H = new double*[n];
   for (unsigned int i = 0; i < n; ++i)
     H[i] = new double[i + 1];
 

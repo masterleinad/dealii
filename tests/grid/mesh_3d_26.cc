@@ -55,7 +55,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
     for (unsigned int d = 0; d < dim; ++d)
@@ -72,7 +72,7 @@ private:
 
 template <int dim>
 void
-test(Triangulation<dim> &triangulation)
+test(Triangulation<dim>& triangulation)
 {
   // create a MappingQ(3) which is used on ALL
   // cells

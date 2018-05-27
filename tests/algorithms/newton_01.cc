@@ -30,11 +30,11 @@ class SquareRoot : public Subscriptor
 {
 public:
   void
-  start_vector(Vector<double> &start) const;
+  start_vector(Vector<double>& start) const;
   void
-  residual(AnyData &out, const AnyData &in);
+  residual(AnyData& out, const AnyData& in);
   void
-  solve(AnyData &out, const AnyData &in);
+  solve(AnyData& out, const AnyData& in);
 };
 
 class SquareRootResidual : public Algorithms::OperatorBase
@@ -42,11 +42,11 @@ class SquareRootResidual : public Algorithms::OperatorBase
   SmartPointer<SquareRoot, SquareRootResidual> discretization;
 
 public:
-  SquareRootResidual(SquareRoot &problem) : discretization(&problem)
+  SquareRootResidual(SquareRoot& problem) : discretization(&problem)
   {}
 
   virtual void
-  operator()(AnyData &out, const AnyData &in)
+  operator()(AnyData& out, const AnyData& in)
   {
     discretization->residual(out, in);
   }
@@ -57,34 +57,33 @@ class SquareRootSolver : public Algorithms::OperatorBase
   SmartPointer<SquareRoot, SquareRootSolver> solver;
 
 public:
-  SquareRootSolver(SquareRoot &problem) : solver(&problem)
+  SquareRootSolver(SquareRoot& problem) : solver(&problem)
   {}
 
   virtual void
-  operator()(AnyData &out, const AnyData &in)
+  operator()(AnyData& out, const AnyData& in)
   {
     solver->solve(out, in);
   }
 };
 
 void
-SquareRoot::residual(AnyData &out, const AnyData &in)
+SquareRoot::residual(AnyData& out, const AnyData& in)
 {
-  Vector<double> &v = *out.entry<Vector<double> *>(0);
+  Vector<double>& v = *out.entry<Vector<double>*>(0);
   // residuum = 0
   v(0)                    = 0.;
-  const Vector<double> &x = *in.entry<const Vector<double> *>("Newton iterate");
+  const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
   v(0)                    = x * x - 2.;
 }
 
 void
-SquareRoot::solve(AnyData &out, const AnyData &in)
+SquareRoot::solve(AnyData& out, const AnyData& in)
 {
-  Vector<double> &v       = *out.entry<Vector<double> *>(0);
+  Vector<double>& v       = *out.entry<Vector<double>*>(0);
   v(0)                    = 0;
-  const Vector<double> &x = *in.entry<const Vector<double> *>("Newton iterate");
-  const Vector<double> &r =
-    *in.entry<const Vector<double> *>("Newton residual");
+  const Vector<double>& x = *in.entry<const Vector<double>*>("Newton iterate");
+  const Vector<double>& r = *in.entry<const Vector<double>*>("Newton residual");
 
   v(0) = 1. / 2. / x(0) * r(0);
 }
@@ -108,13 +107,13 @@ test()
 
   Vector<double> solution(1);
   solution = 10.;
-  out_data.add<Vector<double> *>(&solution, "solution");
+  out_data.add<Vector<double>*>(&solution, "solution");
 
   newton.control.set_reduction(1.e-20);
   newton.control.log_history(true);
   newton.debug_vectors = true;
   newton(out_data, in_data);
-  deallog << " square root " << (*out_data.read<Vector<double> *>(0))(0)
+  deallog << " square root " << (*out_data.read<Vector<double>*>(0))(0)
           << std::endl;
 }
 

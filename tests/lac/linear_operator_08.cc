@@ -52,9 +52,9 @@ template <class PRECONDITIONER,
           typename VectorType,
           class ADDITIONAL_DATA = typename PRECONDITIONER::AdditionalData>
 void
-test_preconditioner_block(const MatrixType &     A,
-                          const VectorType &     b,
-                          const ADDITIONAL_DATA &data = ADDITIONAL_DATA())
+test_preconditioner_block(const MatrixType&      A,
+                          const VectorType&      b,
+                          const ADDITIONAL_DATA& data = ADDITIONAL_DATA())
 {
   const auto lo_A = linear_operator<VectorType>(A);
 
@@ -87,9 +87,9 @@ test_preconditioner_block(const MatrixType &     A,
 // does not define vector_type
 template <class PRECONDITIONER>
 void
-test_preconditioner(const SparseMatrix<double> &                   A,
-                    const Vector<double> &                         b,
-                    const typename PRECONDITIONER::AdditionalData &data =
+test_preconditioner(const SparseMatrix<double>&                    A,
+                    const Vector<double>&                          b,
+                    const typename PRECONDITIONER::AdditionalData& data =
                       typename PRECONDITIONER::AdditionalData())
 {
   const auto lo_A = linear_operator(A);
@@ -127,7 +127,7 @@ test_preconditioner(const SparseMatrix<double> &                   A,
 
 template <typename SolverType>
 void
-test_solver(const SparseMatrix<double> &A, const Vector<double> &b)
+test_solver(const SparseMatrix<double>& A, const Vector<double>& b)
 {
   // Standard solver
   {
@@ -176,8 +176,8 @@ public:
   {}
 
   void
-  initialize(const BlockMatrixBase<MatrixType> &matrix,
-             const AdditionalData &additional_data = AdditionalData())
+  initialize(const BlockMatrixBase<MatrixType>& matrix,
+             const AdditionalData& additional_data = AdditionalData())
   {
     this->row_block_indices    = matrix.get_row_indices();
     this->column_block_indices = matrix.get_column_indices();
@@ -187,14 +187,14 @@ public:
 
   template <typename VectorType>
   void
-  vmult(VectorType &dst, const VectorType &src) const
+  vmult(VectorType& dst, const VectorType& src) const
   {
     dst = src;
   }
 
   template <typename VectorType>
   void
-  Tvmult(VectorType &dst, const VectorType &src) const
+  Tvmult(VectorType& dst, const VectorType& src) const
   {
     dst = src;
   }

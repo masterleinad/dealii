@@ -117,7 +117,7 @@ main()
 
   {
     // also test copy and reference assignment to a LinearOperator
-    LinearOperator<BlockVector<double>> &op_x1 = op_b;
+    LinearOperator<BlockVector<double>>& op_x1 = op_b;
     LinearOperator<BlockVector<double>>  op_x2 = op_b;
     LinearOperator<BlockVector<double>>  op_x3(op_b);
   }

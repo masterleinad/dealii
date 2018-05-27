@@ -62,7 +62,7 @@ namespace TestGrids
    */
   template <int dim>
   void
-  hypercube(Triangulation<dim> &tr,
+  hypercube(Triangulation<dim>& tr,
             unsigned int        refinement = 0,
             bool                local      = false)
   {
@@ -79,7 +79,7 @@ namespace TestGrids
                  cell != tr.end();
                  ++cell)
               {
-                const Point<dim> &p        = cell->center();
+                const Point<dim>& p        = cell->center();
                 bool              negative = true;
                 for (unsigned int d = 0; d < dim; ++d)
                   if (p(d) >= 0.)
@@ -114,7 +114,7 @@ namespace TestGrids
    */
   template <int dim>
   void
-  star_shaped(Triangulation<dim> &tr,
+  star_shaped(Triangulation<dim>& tr,
               unsigned int        refinement = 0,
               bool                local      = false);
   /**
@@ -123,18 +123,18 @@ namespace TestGrids
    */
   template <int dim>
   void
-  checkers(Triangulation<dim> &tr);
+  checkers(Triangulation<dim>& tr);
   /**
    * Islands of local refinement
    */
   template <int dim>
   void
-  islands(Triangulation<dim> &tr);
+  islands(Triangulation<dim>& tr);
   /**
    * Local refinement with an
    * unrefined hole.
    */
   template <int dim>
   void
-  laguna(Triangulation<dim> &tr);
+  laguna(Triangulation<dim>& tr);
 } // namespace TestGrids

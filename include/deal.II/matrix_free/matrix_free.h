@@ -467,7 +467,7 @@ public:
   /**
    * Copy constructor, calls copy_from
    */
-  MatrixFree(const MatrixFree<dim, Number> &other);
+  MatrixFree(const MatrixFree<dim, Number>& other);
 
   /**
    * Destructor.
@@ -487,10 +487,10 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const Mapping<dim> &    mapping,
-         const DoFHandlerType &  dof_handler,
-         const ConstraintMatrix &constraint,
-         const QuadratureType &  quad,
+  reinit(const Mapping<dim>&     mapping,
+         const DoFHandlerType&   dof_handler,
+         const ConstraintMatrix& constraint,
+         const QuadratureType&   quad,
          const AdditionalData    additional_data = AdditionalData());
 
   /**
@@ -499,9 +499,9 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const DoFHandlerType &  dof_handler,
-         const ConstraintMatrix &constraint,
-         const QuadratureType &  quad,
+  reinit(const DoFHandlerType&   dof_handler,
+         const ConstraintMatrix& constraint,
+         const QuadratureType&   quad,
          const AdditionalData    additional_data = AdditionalData());
 
   /**
@@ -513,11 +513,11 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   DEAL_II_DEPRECATED void
-  reinit(const Mapping<dim> &    mapping,
-         const DoFHandlerType &  dof_handler,
-         const ConstraintMatrix &constraint,
-         const IndexSet &        locally_owned_dofs,
-         const QuadratureType &  quad,
+  reinit(const Mapping<dim>&     mapping,
+         const DoFHandlerType&   dof_handler,
+         const ConstraintMatrix& constraint,
+         const IndexSet&         locally_owned_dofs,
+         const QuadratureType&   quad,
          const AdditionalData    additional_data = AdditionalData());
 
   /**
@@ -542,10 +542,10 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const Mapping<dim> &                         mapping,
-         const std::vector<const DoFHandlerType *> &  dof_handler,
-         const std::vector<const ConstraintMatrix *> &constraint,
-         const std::vector<QuadratureType> &          quad,
+  reinit(const Mapping<dim>&                         mapping,
+         const std::vector<const DoFHandlerType*>&   dof_handler,
+         const std::vector<const ConstraintMatrix*>& constraint,
+         const std::vector<QuadratureType>&          quad,
          const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -554,9 +554,9 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const std::vector<const DoFHandlerType *> &  dof_handler,
-         const std::vector<const ConstraintMatrix *> &constraint,
-         const std::vector<QuadratureType> &          quad,
+  reinit(const std::vector<const DoFHandlerType*>&   dof_handler,
+         const std::vector<const ConstraintMatrix*>& constraint,
+         const std::vector<QuadratureType>&          quad,
          const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -568,11 +568,11 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   DEAL_II_DEPRECATED void
-  reinit(const Mapping<dim> &                         mapping,
-         const std::vector<const DoFHandlerType *> &  dof_handler,
-         const std::vector<const ConstraintMatrix *> &constraint,
-         const std::vector<IndexSet> &                locally_owned_set,
-         const std::vector<QuadratureType> &          quad,
+  reinit(const Mapping<dim>&                         mapping,
+         const std::vector<const DoFHandlerType*>&   dof_handler,
+         const std::vector<const ConstraintMatrix*>& constraint,
+         const std::vector<IndexSet>&                locally_owned_set,
+         const std::vector<QuadratureType>&          quad,
          const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -584,10 +584,10 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const Mapping<dim> &                         mapping,
-         const std::vector<const DoFHandlerType *> &  dof_handler,
-         const std::vector<const ConstraintMatrix *> &constraint,
-         const QuadratureType &                       quad,
+  reinit(const Mapping<dim>&                         mapping,
+         const std::vector<const DoFHandlerType*>&   dof_handler,
+         const std::vector<const ConstraintMatrix*>& constraint,
+         const QuadratureType&                       quad,
          const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -596,9 +596,9 @@ public:
    */
   template <typename DoFHandlerType, typename QuadratureType>
   void
-  reinit(const std::vector<const DoFHandlerType *> &  dof_handler,
-         const std::vector<const ConstraintMatrix *> &constraint,
-         const QuadratureType &                       quad,
+  reinit(const std::vector<const DoFHandlerType*>&   dof_handler,
+         const std::vector<const ConstraintMatrix*>& constraint,
+         const QuadratureType&                       quad,
          const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -607,7 +607,7 @@ public:
    * should not be needed very often.
    */
   void
-  copy_from(const MatrixFree<dim, Number> &matrix_free_base);
+  copy_from(const MatrixFree<dim, Number>& matrix_free_base);
 
   /**
    * Clear all data fields and brings the class into a condition similar to
@@ -714,13 +714,13 @@ public:
   template <typename OutVector, typename InVector>
   void
   cell_loop(
-    const std::function<void(const MatrixFree<dim, Number> &,
-                             OutVector &,
-                             const InVector &,
-                             const std::pair<unsigned int, unsigned int> &)>
-      &             cell_operation,
-    OutVector &     dst,
-    const InVector &src,
+    const std::function<void(const MatrixFree<dim, Number>&,
+                             OutVector&,
+                             const InVector&,
+                             const std::pair<unsigned int, unsigned int>&)>&
+                    cell_operation,
+    OutVector&      dst,
+    const InVector& src,
     const bool      zero_dst_vector = false) const;
 
   /**
@@ -767,13 +767,13 @@ public:
   template <typename CLASS, typename OutVector, typename InVector>
   void
   cell_loop(void (CLASS::*cell_operation)(
-              const MatrixFree &,
-              OutVector &,
-              const InVector &,
-              const std::pair<unsigned int, unsigned int> &) const,
-            const CLASS *   owning_class,
-            OutVector &     dst,
-            const InVector &src,
+              const MatrixFree&,
+              OutVector&,
+              const InVector&,
+              const std::pair<unsigned int, unsigned int>&) const,
+            const CLASS*    owning_class,
+            OutVector&      dst,
+            const InVector& src,
             const bool      zero_dst_vector = false) const;
 
   /**
@@ -781,15 +781,15 @@ public:
    */
   template <typename CLASS, typename OutVector, typename InVector>
   void
-  cell_loop(void (CLASS::*cell_operation)(
-              const MatrixFree &,
-              OutVector &,
-              const InVector &,
-              const std::pair<unsigned int, unsigned int> &),
-            CLASS *         owning_class,
-            OutVector &     dst,
-            const InVector &src,
-            const bool      zero_dst_vector = false) const;
+  cell_loop(
+    void (CLASS::*cell_operation)(const MatrixFree&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&),
+    CLASS*          owning_class,
+    OutVector&      dst,
+    const InVector& src,
+    const bool      zero_dst_vector = false) const;
 
   /**
    * This method runs a loop over all cells (in parallel) and performs the MPI
@@ -868,23 +868,23 @@ public:
    */
   template <typename OutVector, typename InVector>
   void
-  loop(const std::function<void(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &)>
-         &cell_operation,
-       const std::function<void(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &)>
-         &face_operation,
-       const std::function<void(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &)>
-         &                     boundary_operation,
-       OutVector &             dst,
-       const InVector &        src,
+  loop(const std::function<void(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&)>&
+         cell_operation,
+       const std::function<void(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&)>&
+         face_operation,
+       const std::function<void(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&)>&
+                               boundary_operation,
+       OutVector&              dst,
+       const InVector&         src,
        const bool              zero_dst_vector = false,
        const DataAccessOnFaces dst_vector_face_access =
          DataAccessOnFaces::unspecified,
@@ -978,24 +978,24 @@ public:
   template <typename CLASS, typename OutVector, typename InVector>
   void
   loop(
-    void (CLASS::*cell_operation)(const MatrixFree &,
-                                  OutVector &,
-                                  const InVector &,
-                                  const std::pair<unsigned int, unsigned int> &)
+    void (CLASS::*cell_operation)(const MatrixFree&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&)
       const,
-    void (CLASS::*face_operation)(const MatrixFree &,
-                                  OutVector &,
-                                  const InVector &,
-                                  const std::pair<unsigned int, unsigned int> &)
+    void (CLASS::*face_operation)(const MatrixFree&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&)
       const,
     void (CLASS::*boundary_operation)(
-      const MatrixFree &,
-      OutVector &,
-      const InVector &,
-      const std::pair<unsigned int, unsigned int> &) const,
-    const CLASS *           owning_class,
-    OutVector &             dst,
-    const InVector &        src,
+      const MatrixFree&,
+      OutVector&,
+      const InVector&,
+      const std::pair<unsigned int, unsigned int>&) const,
+    const CLASS*            owning_class,
+    OutVector&              dst,
+    const InVector&         src,
     const bool              zero_dst_vector = false,
     const DataAccessOnFaces dst_vector_face_access =
       DataAccessOnFaces::unspecified,
@@ -1007,29 +1007,28 @@ public:
    */
   template <typename CLASS, typename OutVector, typename InVector>
   void
-  loop(void (CLASS::*cell_operation)(
-         const MatrixFree &,
-         OutVector &,
-         const InVector &,
-         const std::pair<unsigned int, unsigned int> &),
-       void (CLASS::*face_operation)(
-         const MatrixFree &,
-         OutVector &,
-         const InVector &,
-         const std::pair<unsigned int, unsigned int> &),
-       void (CLASS::*boundary_operation)(
-         const MatrixFree &,
-         OutVector &,
-         const InVector &,
-         const std::pair<unsigned int, unsigned int> &),
-       CLASS *                 owning_class,
-       OutVector &             dst,
-       const InVector &        src,
-       const bool              zero_dst_vector = false,
-       const DataAccessOnFaces dst_vector_face_access =
-         DataAccessOnFaces::unspecified,
-       const DataAccessOnFaces src_vector_face_access =
-         DataAccessOnFaces::unspecified) const;
+  loop(
+    void (CLASS::*cell_operation)(const MatrixFree&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&),
+    void (CLASS::*face_operation)(const MatrixFree&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&),
+    void (CLASS::*boundary_operation)(
+      const MatrixFree&,
+      OutVector&,
+      const InVector&,
+      const std::pair<unsigned int, unsigned int>&),
+    CLASS*                  owning_class,
+    OutVector&              dst,
+    const InVector&         src,
+    const bool              zero_dst_vector = false,
+    const DataAccessOnFaces dst_vector_face_access =
+      DataAccessOnFaces::unspecified,
+    const DataAccessOnFaces src_vector_face_access =
+      DataAccessOnFaces::unspecified) const;
 
   /**
    * In the hp adaptive case, a subrange of cells as computed during the cell
@@ -1039,7 +1038,7 @@ public:
    * function call.
    */
   std::pair<unsigned int, unsigned int>
-  create_cell_subrange_hp(const std::pair<unsigned int, unsigned int> &range,
+  create_cell_subrange_hp(const std::pair<unsigned int, unsigned int>& range,
                           const unsigned int fe_degree,
                           const unsigned int dof_handler_index = 0) const;
 
@@ -1051,7 +1050,7 @@ public:
    */
   std::pair<unsigned int, unsigned int>
   create_cell_subrange_hp_by_index(
-    const std::pair<unsigned int, unsigned int> &range,
+    const std::pair<unsigned int, unsigned int>& range,
     const unsigned int                           fe_index,
     const unsigned int                           dof_handler_index = 0) const;
 
@@ -1083,7 +1082,7 @@ public:
    */
   template <typename VectorType>
   void
-  initialize_dof_vector(VectorType &       vec,
+  initialize_dof_vector(VectorType&        vec,
                         const unsigned int dof_handler_index = 0) const;
 
   /**
@@ -1108,7 +1107,7 @@ public:
    */
   template <typename Number2>
   void
-  initialize_dof_vector(LinearAlgebra::distributed::Vector<Number2> &vec,
+  initialize_dof_vector(LinearAlgebra::distributed::Vector<Number2>& vec,
                         const unsigned int dof_handler_index = 0) const;
 
   /**
@@ -1121,19 +1120,19 @@ public:
    * usually prefer this data structure as the data exchange information can
    * be reused from one vector to another.
    */
-  const std::shared_ptr<const Utilities::MPI::Partitioner> &
+  const std::shared_ptr<const Utilities::MPI::Partitioner>&
   get_vector_partitioner(const unsigned int dof_handler_index = 0) const;
 
   /**
    * Return the set of cells that are oned by the processor.
    */
-  const IndexSet &
+  const IndexSet&
   get_locally_owned_set(const unsigned int dof_handler_index = 0) const;
 
   /**
    * Return the set of ghost cells needed but not owned by the processor.
    */
-  const IndexSet &
+  const IndexSet&
   get_ghost_set(const unsigned int dof_handler_index = 0) const;
 
   /**
@@ -1145,7 +1144,7 @@ public:
    * vector. In addition, it only returns the indices for degrees of freedom
    * that are owned locally, not for ghosts.
    */
-  const std::vector<unsigned int> &
+  const std::vector<unsigned int>&
   get_constrained_dofs(const unsigned int dof_handler_index = 0) const;
 
   /**
@@ -1159,7 +1158,7 @@ public:
    * MatrixFree becomes invalid.
    */
   void
-  renumber_dofs(std::vector<types::global_dof_index> &renumbering,
+  renumber_dofs(std::vector<types::global_dof_index>& renumbering,
                 const unsigned int                    dof_handler_index = 0);
 
   //@}
@@ -1173,7 +1172,7 @@ public:
    */
   template <int spacedim>
   static bool
-  is_supported(const FiniteElement<dim, spacedim> &fe);
+  is_supported(const FiniteElement<dim, spacedim>& fe);
 
   /**
    * Return the number of different DoFHandlers specified at initialization.
@@ -1280,7 +1279,7 @@ public:
    * Return the DoFHandler with the index as given to the respective
    * `std::vector` argument in the reinit() function.
    */
-  const DoFHandler<dim> &
+  const DoFHandler<dim>&
   get_dof_handler(const unsigned int dof_handler_index = 0) const;
 
   /**
@@ -1395,14 +1394,14 @@ public:
   /**
    * Return the quadrature rule for given hp index.
    */
-  const Quadrature<dim> &
+  const Quadrature<dim>&
   get_quadrature(const unsigned int quad_index         = 0,
                  const unsigned int hp_active_fe_index = 0) const;
 
   /**
    * Return the quadrature rule for given hp index.
    */
-  const Quadrature<dim - 1> &
+  const Quadrature<dim - 1>&
   get_face_quadrature(const unsigned int quad_index         = 0,
                       const unsigned int hp_active_fe_index = 0) const;
 
@@ -1449,14 +1448,14 @@ public:
    */
   template <typename StreamType>
   void
-  print_memory_consumption(StreamType &out) const;
+  print_memory_consumption(StreamType& out) const;
 
   /**
    * Prints a summary of this class to the given output stream. It is focused
    * on the indices, and does not print all the data stored.
    */
   void
-  print(std::ostream &out) const;
+  print(std::ostream& out) const;
 
   //@}
 
@@ -1468,26 +1467,26 @@ public:
   /**
    * Return information on task graph.
    */
-  const internal::MatrixFreeFunctions::TaskInfo &
+  const internal::MatrixFreeFunctions::TaskInfo&
   get_task_info() const;
 
   /**
    * Return information on system size.
    */
   DEAL_II_DEPRECATED
-  const internal::MatrixFreeFunctions::TaskInfo &
+  const internal::MatrixFreeFunctions::TaskInfo&
   get_size_info() const;
 
   /*
    * Return geometry-dependent information on the cells.
    */
-  const internal::MatrixFreeFunctions::MappingInfo<dim, Number> &
+  const internal::MatrixFreeFunctions::MappingInfo<dim, Number>&
   get_mapping_info() const;
 
   /**
    * Return information on indexation degrees of freedom.
    */
-  const internal::MatrixFreeFunctions::DoFInfo &
+  const internal::MatrixFreeFunctions::DoFInfo&
   get_dof_info(const unsigned int dof_handler_index_component = 0) const;
 
   /**
@@ -1500,7 +1499,7 @@ public:
    * Return a pointer to the first number in the constraint pool data with
    * index @p pool_index (to be used together with @p constraint_pool_end()).
    */
-  const Number *
+  const Number*
   constraint_pool_begin(const unsigned int pool_index) const;
 
   /**
@@ -1508,13 +1507,13 @@ public:
    * with index @p pool_index (to be used together with @p
    * constraint_pool_begin()).
    */
-  const Number *
+  const Number*
   constraint_pool_end(const unsigned int pool_index) const;
 
   /**
    * Return the unit cell information for given hp index.
    */
-  const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &
+  const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>&
   get_shape_info(const unsigned int dof_handler_index_component = 0,
                  const unsigned int quad_index                  = 0,
                  const unsigned int fe_base_element             = 0,
@@ -1525,7 +1524,7 @@ public:
    * Return the connectivity information of a face.
    */
   const internal::MatrixFreeFunctions::FaceToCellTopology<
-    VectorizedArray<Number>::n_array_elements> &
+    VectorizedArray<Number>::n_array_elements>&
   get_face_info(const unsigned int face_batch_number) const;
 
   /**
@@ -1541,7 +1540,7 @@ public:
    * local contributions of WorkStream, see
    * @ref workstream_paper "the WorkStream paper".
    */
-  AlignedVector<VectorizedArray<Number>> *
+  AlignedVector<VectorizedArray<Number>>*
   acquire_scratch_data() const;
 
   /**
@@ -1549,7 +1548,7 @@ public:
    */
   void
   release_scratch_data(
-    const AlignedVector<VectorizedArray<Number>> *memory) const;
+    const AlignedVector<VectorizedArray<Number>>* memory) const;
 
   /**
    * Obtains a scratch data object for internal use. Make sure to release it
@@ -1560,7 +1559,7 @@ public:
    * that the thread releasing the scratch data can be different than the one
    * that acquired it.
    */
-  AlignedVector<Number> *
+  AlignedVector<Number>*
   acquire_scratch_data_non_threadsafe() const;
 
   /**
@@ -1568,7 +1567,7 @@ public:
    */
   void
   release_scratch_data_non_threadsafe(
-    const AlignedVector<Number> *memory) const;
+    const AlignedVector<Number>* memory) const;
 
   //@}
 
@@ -1578,23 +1577,23 @@ private:
    * DoFHandler case.
    */
   void
-  internal_reinit(const Mapping<dim> &                         mapping,
-                  const std::vector<const DoFHandler<dim> *> & dof_handler,
-                  const std::vector<const ConstraintMatrix *> &constraint,
-                  const std::vector<IndexSet> &          locally_owned_set,
-                  const std::vector<hp::QCollection<1>> &quad,
-                  const AdditionalData &                 additional_data);
+  internal_reinit(const Mapping<dim>&                         mapping,
+                  const std::vector<const DoFHandler<dim>*>&  dof_handler,
+                  const std::vector<const ConstraintMatrix*>& constraint,
+                  const std::vector<IndexSet>&                locally_owned_set,
+                  const std::vector<hp::QCollection<1>>&      quad,
+                  const AdditionalData&                       additional_data);
 
   /**
    * Same as before but for hp::DoFHandler instead of generic DoFHandler type.
    */
   void
-  internal_reinit(const Mapping<dim> &                            mapping,
-                  const std::vector<const hp::DoFHandler<dim> *> &dof_handler,
-                  const std::vector<const ConstraintMatrix *> &   constraint,
-                  const std::vector<IndexSet> &          locally_owned_set,
-                  const std::vector<hp::QCollection<1>> &quad,
-                  const AdditionalData &                 additional_data);
+  internal_reinit(const Mapping<dim>&                            mapping,
+                  const std::vector<const hp::DoFHandler<dim>*>& dof_handler,
+                  const std::vector<const ConstraintMatrix*>&    constraint,
+                  const std::vector<IndexSet>&           locally_owned_set,
+                  const std::vector<hp::QCollection<1>>& quad,
+                  const AdditionalData&                  additional_data);
 
   /**
    * Initializes the fields in DoFInfo together with the constraint pool that
@@ -1603,32 +1602,32 @@ private:
    * consequently only need to be stored once).
    */
   void
-  initialize_indices(const std::vector<const ConstraintMatrix *> &constraint,
-                     const std::vector<IndexSet> &locally_owned_set,
-                     const AdditionalData &       additional_data);
+  initialize_indices(const std::vector<const ConstraintMatrix*>& constraint,
+                     const std::vector<IndexSet>& locally_owned_set,
+                     const AdditionalData&        additional_data);
 
   /**
    * Initializes the DoFHandlers based on a DoFHandler<dim> argument.
    */
   void
   initialize_dof_handlers(
-    const std::vector<const DoFHandler<dim> *> &dof_handlers,
-    const AdditionalData &                      additional_data);
+    const std::vector<const DoFHandler<dim>*>& dof_handlers,
+    const AdditionalData&                      additional_data);
 
   /**
    * Initializes the DoFHandlers based on a hp::DoFHandler<dim> argument.
    */
   void
   initialize_dof_handlers(
-    const std::vector<const hp::DoFHandler<dim> *> &dof_handlers,
-    const AdditionalData &                          additional_data);
+    const std::vector<const hp::DoFHandler<dim>*>& dof_handlers,
+    const AdditionalData&                          additional_data);
 
   /**
    * Setup connectivity graph with information on the dependencies between
    * block due to shared faces.
    */
   void
-  make_connectivity_graph_faces(DynamicSparsityPattern &connectivity);
+  make_connectivity_graph_faces(DynamicSparsityPattern& connectivity);
 
   /**
    * This struct defines which DoFHandler has actually been given at
@@ -1769,7 +1768,7 @@ private:
 template <int dim, typename Number>
 template <typename VectorType>
 inline void
-MatrixFree<dim, Number>::initialize_dof_vector(VectorType &       vec,
+MatrixFree<dim, Number>::initialize_dof_vector(VectorType&        vec,
                                                const unsigned int comp) const
 {
   AssertIndexRange(comp, n_components());
@@ -1782,7 +1781,7 @@ template <int dim, typename Number>
 template <typename Number2>
 inline void
 MatrixFree<dim, Number>::initialize_dof_vector(
-  LinearAlgebra::distributed::Vector<Number2> &vec,
+  LinearAlgebra::distributed::Vector<Number2>& vec,
   const unsigned int                           comp) const
 {
   AssertIndexRange(comp, n_components());
@@ -1792,7 +1791,7 @@ MatrixFree<dim, Number>::initialize_dof_vector(
 
 
 template <int dim, typename Number>
-inline const std::shared_ptr<const Utilities::MPI::Partitioner> &
+inline const std::shared_ptr<const Utilities::MPI::Partitioner>&
 MatrixFree<dim, Number>::get_vector_partitioner(const unsigned int comp) const
 {
   AssertIndexRange(comp, n_components());
@@ -1802,7 +1801,7 @@ MatrixFree<dim, Number>::get_vector_partitioner(const unsigned int comp) const
 
 
 template <int dim, typename Number>
-inline const std::vector<unsigned int> &
+inline const std::vector<unsigned int>&
 MatrixFree<dim, Number>::get_constrained_dofs(const unsigned int comp) const
 {
   AssertIndexRange(comp, n_components());
@@ -1833,7 +1832,7 @@ MatrixFree<dim, Number>::n_base_elements(const unsigned int dof_no) const
 
 
 template <int dim, typename Number>
-inline const internal::MatrixFreeFunctions::TaskInfo &
+inline const internal::MatrixFreeFunctions::TaskInfo&
 MatrixFree<dim, Number>::get_task_info() const
 {
   return task_info;
@@ -1842,7 +1841,7 @@ MatrixFree<dim, Number>::get_task_info() const
 
 
 template <int dim, typename Number>
-inline const internal::MatrixFreeFunctions::TaskInfo &
+inline const internal::MatrixFreeFunctions::TaskInfo&
 MatrixFree<dim, Number>::get_size_info() const
 {
   return task_info;
@@ -1956,7 +1955,7 @@ MatrixFree<dim, Number>::get_faces_by_cells_boundary_id(
 
 
 template <int dim, typename Number>
-inline const internal::MatrixFreeFunctions::MappingInfo<dim, Number> &
+inline const internal::MatrixFreeFunctions::MappingInfo<dim, Number>&
 MatrixFree<dim, Number>::get_mapping_info() const
 {
   return mapping_info;
@@ -1965,7 +1964,7 @@ MatrixFree<dim, Number>::get_mapping_info() const
 
 
 template <int dim, typename Number>
-inline const internal::MatrixFreeFunctions::DoFInfo &
+inline const internal::MatrixFreeFunctions::DoFInfo&
 MatrixFree<dim, Number>::get_dof_info(const unsigned int dof_index) const
 {
   AssertIndexRange(dof_index, n_components());
@@ -1984,7 +1983,7 @@ MatrixFree<dim, Number>::n_constraint_pool_entries() const
 
 
 template <int dim, typename Number>
-inline const Number *
+inline const Number*
 MatrixFree<dim, Number>::constraint_pool_begin(const unsigned int row) const
 {
   AssertIndexRange(row, constraint_pool_row_index.size() - 1);
@@ -1996,7 +1995,7 @@ MatrixFree<dim, Number>::constraint_pool_begin(const unsigned int row) const
 
 
 template <int dim, typename Number>
-inline const Number *
+inline const Number*
 MatrixFree<dim, Number>::constraint_pool_end(const unsigned int row) const
 {
   AssertIndexRange(row, constraint_pool_row_index.size() - 1);
@@ -2010,7 +2009,7 @@ MatrixFree<dim, Number>::constraint_pool_end(const unsigned int row) const
 template <int dim, typename Number>
 inline std::pair<unsigned int, unsigned int>
 MatrixFree<dim, Number>::create_cell_subrange_hp(
-  const std::pair<unsigned int, unsigned int> &range,
+  const std::pair<unsigned int, unsigned int>& range,
   const unsigned int                           degree,
   const unsigned int                           dof_handler_component) const
 {
@@ -2153,7 +2152,7 @@ MatrixFree<dim, Number>::get_n_q_points_face(
 
 
 template <int dim, typename Number>
-inline const IndexSet &
+inline const IndexSet&
 MatrixFree<dim, Number>::get_locally_owned_set(
   const unsigned int dof_handler_index) const
 {
@@ -2163,7 +2162,7 @@ MatrixFree<dim, Number>::get_locally_owned_set(
 
 
 template <int dim, typename Number>
-inline const IndexSet &
+inline const IndexSet&
 MatrixFree<dim, Number>::get_ghost_set(
   const unsigned int dof_handler_index) const
 {
@@ -2173,7 +2172,7 @@ MatrixFree<dim, Number>::get_ghost_set(
 
 
 template <int dim, typename Number>
-inline const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &
+inline const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>&
 MatrixFree<dim, Number>::get_shape_info(
   const unsigned int dof_handler_index,
   const unsigned int index_quad,
@@ -2195,7 +2194,7 @@ MatrixFree<dim, Number>::get_shape_info(
 
 template <int dim, typename Number>
 inline const internal::MatrixFreeFunctions::FaceToCellTopology<
-  VectorizedArray<Number>::n_array_elements> &
+  VectorizedArray<Number>::n_array_elements>&
 MatrixFree<dim, Number>::get_face_info(const unsigned int macro_face) const
 {
   AssertIndexRange(macro_face, face_info.faces.size());
@@ -2205,7 +2204,7 @@ MatrixFree<dim, Number>::get_face_info(const unsigned int macro_face) const
 
 
 template <int dim, typename Number>
-inline const Quadrature<dim> &
+inline const Quadrature<dim>&
 MatrixFree<dim, Number>::get_quadrature(
   const unsigned int quad_index,
   const unsigned int active_fe_index) const
@@ -2219,7 +2218,7 @@ MatrixFree<dim, Number>::get_quadrature(
 
 
 template <int dim, typename Number>
-inline const Quadrature<dim - 1> &
+inline const Quadrature<dim - 1>&
 MatrixFree<dim, Number>::get_face_quadrature(
   const unsigned int quad_index,
   const unsigned int active_fe_index) const
@@ -2299,12 +2298,12 @@ MatrixFree<dim, Number>::mapping_initialized() const
 
 
 template <int dim, typename Number>
-AlignedVector<VectorizedArray<Number>> *
+AlignedVector<VectorizedArray<Number>>*
 MatrixFree<dim, Number>::acquire_scratch_data() const
 {
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
-  list_type &data = scratch_pad.get();
+  list_type& data = scratch_pad.get();
   for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
     if (it->first == false)
       {
@@ -2321,11 +2320,11 @@ MatrixFree<dim, Number>::acquire_scratch_data() const
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::release_scratch_data(
-  const AlignedVector<VectorizedArray<Number>> *scratch) const
+  const AlignedVector<VectorizedArray<Number>>* scratch) const
 {
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
-  list_type &data = scratch_pad.get();
+  list_type& data = scratch_pad.get();
   for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
     if (&it->second == scratch)
       {
@@ -2339,7 +2338,7 @@ MatrixFree<dim, Number>::release_scratch_data(
 
 
 template <int dim, typename Number>
-AlignedVector<Number> *
+AlignedVector<Number>*
 MatrixFree<dim, Number>::acquire_scratch_data_non_threadsafe() const
 {
   for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it =
@@ -2361,7 +2360,7 @@ MatrixFree<dim, Number>::acquire_scratch_data_non_threadsafe() const
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::release_scratch_data_non_threadsafe(
-  const AlignedVector<Number> *scratch) const
+  const AlignedVector<Number>* scratch) const
 {
   for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it =
          scratch_pad_non_threadsafe.begin();
@@ -2387,8 +2386,8 @@ namespace internal
     template <typename DoFHandlerType>
     inline std::vector<IndexSet>
     extract_locally_owned_index_sets(
-      const std::vector<const DoFHandlerType *> &dofh,
-      const unsigned int                         level)
+      const std::vector<const DoFHandlerType*>& dofh,
+      const unsigned int                        level)
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
@@ -2403,8 +2402,8 @@ namespace internal
     template <int dim, int spacedim>
     inline std::vector<IndexSet>
     extract_locally_owned_index_sets(
-      const std::vector<const ::dealii::DoFHandler<dim, spacedim> *> &dofh,
-      const unsigned int                                              level)
+      const std::vector<const ::dealii::DoFHandler<dim, spacedim>*>& dofh,
+      const unsigned int                                             level)
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
@@ -2424,14 +2423,14 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const DoFHandlerType &                                 dof_handler,
-  const ConstraintMatrix &                               constraints_in,
-  const QuadratureType &                                 quad,
+  const DoFHandlerType&                                  dof_handler,
+  const ConstraintMatrix&                                constraints_in,
+  const QuadratureType&                                  quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
-  std::vector<const DoFHandlerType *>   dof_handlers;
-  std::vector<const ConstraintMatrix *> constraints;
-  std::vector<QuadratureType>           quads;
+  std::vector<const DoFHandlerType*>   dof_handlers;
+  std::vector<const ConstraintMatrix*> constraints;
+  std::vector<QuadratureType>          quads;
 
   dof_handlers.push_back(&dof_handler);
   constraints.push_back(&constraints_in);
@@ -2458,14 +2457,14 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const Mapping<dim> &                                   mapping,
-  const DoFHandlerType &                                 dof_handler,
-  const ConstraintMatrix &                               constraints_in,
-  const QuadratureType &                                 quad,
+  const Mapping<dim>&                                    mapping,
+  const DoFHandlerType&                                  dof_handler,
+  const ConstraintMatrix&                                constraints_in,
+  const QuadratureType&                                  quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
-  std::vector<const DoFHandlerType *>   dof_handlers;
-  std::vector<const ConstraintMatrix *> constraints;
+  std::vector<const DoFHandlerType*>   dof_handlers;
+  std::vector<const ConstraintMatrix*> constraints;
 
   dof_handlers.push_back(&dof_handler);
   constraints.push_back(&constraints_in);
@@ -2491,9 +2490,9 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const std::vector<const DoFHandlerType *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &          constraint,
-  const std::vector<QuadratureType> &                    quad,
+  const std::vector<const DoFHandlerType*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&            constraint,
+  const std::vector<QuadratureType>&                     quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
   std::vector<IndexSet> locally_owned_set =
@@ -2516,9 +2515,9 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const std::vector<const DoFHandlerType *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &          constraint,
-  const QuadratureType &                                 quad,
+  const std::vector<const DoFHandlerType*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&            constraint,
+  const QuadratureType&                                  quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
   std::vector<IndexSet> locally_owned_set =
@@ -2540,10 +2539,10 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const Mapping<dim> &                                   mapping,
-  const std::vector<const DoFHandlerType *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &          constraint,
-  const QuadratureType &                                 quad,
+  const Mapping<dim>&                                    mapping,
+  const std::vector<const DoFHandlerType*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&            constraint,
+  const QuadratureType&                                  quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
   std::vector<IndexSet> locally_owned_set =
@@ -2565,10 +2564,10 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const Mapping<dim> &                                   mapping,
-  const std::vector<const DoFHandlerType *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &          constraint,
-  const std::vector<QuadratureType> &                    quad,
+  const Mapping<dim>&                                    mapping,
+  const std::vector<const DoFHandlerType*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&            constraint,
+  const std::vector<QuadratureType>&                     quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
   std::vector<IndexSet> locally_owned_set =
@@ -2591,11 +2590,11 @@ template <int dim, typename Number>
 template <typename DoFHandlerType, typename QuadratureType>
 void
 MatrixFree<dim, Number>::reinit(
-  const Mapping<dim> &                                   mapping,
-  const std::vector<const DoFHandlerType *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &          constraint,
-  const std::vector<IndexSet> &                          locally_owned_set,
-  const std::vector<QuadratureType> &                    quad,
+  const Mapping<dim>&                                    mapping,
+  const std::vector<const DoFHandlerType*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&            constraint,
+  const std::vector<IndexSet>&                           locally_owned_set,
+  const std::vector<QuadratureType>&                     quad,
   const typename MatrixFree<dim, Number>::AdditionalData additional_data)
 {
   // find out whether we use a hp Quadrature or a standard quadrature
@@ -2633,7 +2632,7 @@ namespace internal
     static constexpr unsigned int channel_shift = 103;
 
     VectorDataExchange(
-      const dealii::MatrixFree<dim, Number> &matrix_free,
+      const dealii::MatrixFree<dim, Number>& matrix_free,
       const typename dealii::MatrixFree<dim, Number>::DataAccessOnFaces
                          vector_face_access,
       const unsigned int n_components) :
@@ -2668,7 +2667,7 @@ namespace internal
     }
 
     unsigned int
-    find_vector_in_mf(const LinearAlgebra::distributed::Vector<Number> &vec,
+    find_vector_in_mf(const LinearAlgebra::distributed::Vector<Number>& vec,
                       const bool check_global_compatibility = true) const
     {
       unsigned int mf_component = numbers::invalid_unsigned_int;
@@ -2689,7 +2688,7 @@ namespace internal
       return mf_component;
     }
 
-    const Utilities::MPI::Partitioner &
+    const Utilities::MPI::Partitioner&
     get_partitioner(const unsigned int mf_component) const
     {
       AssertDimension(matrix_free.get_dof_info(mf_component)
@@ -2711,7 +2710,7 @@ namespace internal
     void
     update_ghost_values_start(
       const unsigned int component_in_block_vector,
-      const LinearAlgebra::distributed::Vector<Number> &vec)
+      const LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void)component_in_block_vector;
       bool ghosts_set = vec.has_ghost_elements();
@@ -2734,7 +2733,7 @@ namespace internal
               return;
             }
 
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             get_partitioner(mf_component);
           if (part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
             return;
@@ -2750,7 +2749,7 @@ namespace internal
             ArrayView<const Number>(vec.begin(), part.local_size()),
             ArrayView<Number>(tmp_data[component_in_block_vector]->begin(),
                               part.n_import_indices()),
-            ArrayView<Number>(const_cast<Number *>(vec.begin()) +
+            ArrayView<Number>(const_cast<Number*>(vec.begin()) +
                                 vec.get_partitioner()->local_size(),
                               vec.get_partitioner()->n_ghost_indices()),
             this->requests[component_in_block_vector]);
@@ -2761,7 +2760,7 @@ namespace internal
     void
     update_ghost_values_finish(
       const unsigned int component_in_block_vector,
-      const LinearAlgebra::distributed::Vector<Number> &vec)
+      const LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void)component_in_block_vector;
       if (vector_face_access ==
@@ -2776,7 +2775,7 @@ namespace internal
           AssertDimension(requests.size(), tmp_data.size());
 
           const unsigned int mf_component = find_vector_in_mf(vec);
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             get_partitioner(mf_component);
           if (&part ==
               matrix_free.get_dof_info(mf_component).vector_partitioner.get())
@@ -2789,7 +2788,7 @@ namespace internal
             return;
 
           part.export_to_ghosted_array_finish(
-            ArrayView<Number>(const_cast<Number *>(vec.begin()) +
+            ArrayView<Number>(const_cast<Number*>(vec.begin()) +
                                 vec.get_partitioner()->local_size(),
                               vec.get_partitioner()->n_ghost_indices()),
             this->requests[component_in_block_vector]);
@@ -2803,7 +2802,7 @@ namespace internal
 
     void
     compress_start(const unsigned int component_in_block_vector,
-                   LinearAlgebra::distributed::Vector<Number> &vec)
+                   LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void)component_in_block_vector;
       Assert(vec.has_ghost_elements() == false, ExcNotImplemented());
@@ -2816,7 +2815,7 @@ namespace internal
 #  ifdef DEAL_II_WITH_MPI
 
           const unsigned int mf_component = find_vector_in_mf(vec);
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             get_partitioner(mf_component);
           if (&part ==
               matrix_free.get_dof_info(mf_component).vector_partitioner.get())
@@ -2848,7 +2847,7 @@ namespace internal
 
     void
     compress_finish(const unsigned int component_in_block_vector,
-                    LinearAlgebra::distributed::Vector<Number> &vec)
+                    LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void)component_in_block_vector;
       if (vector_face_access ==
@@ -2863,7 +2862,7 @@ namespace internal
 
           const unsigned int mf_component = find_vector_in_mf(vec);
 
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             get_partitioner(mf_component);
           if (&part ==
               matrix_free.get_dof_info(mf_component).vector_partitioner.get())
@@ -2894,7 +2893,7 @@ namespace internal
 
     void
     reset_ghost_values(
-      const LinearAlgebra::distributed::Vector<Number> &vec) const
+      const LinearAlgebra::distributed::Vector<Number>& vec) const
     {
       if (ghosts_were_set == true)
         return;
@@ -2909,7 +2908,7 @@ namespace internal
           AssertDimension(requests.size(), tmp_data.size());
 
           const unsigned int mf_component = find_vector_in_mf(vec);
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             get_partitioner(mf_component);
           if (&part ==
               matrix_free.get_dof_info(mf_component).vector_partitioner.get())
@@ -2925,8 +2924,7 @@ namespace internal
                 for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
                      j++)
                   {
-                    const_cast<LinearAlgebra::distributed::Vector<Number> &>(
-                      vec)
+                    const_cast<LinearAlgebra::distributed::Vector<Number>&>(vec)
                       .local_element(j + part.local_size()) = 0.;
                   }
             }
@@ -2936,14 +2934,14 @@ namespace internal
 
     void
     zero_vector_region(const unsigned int                          range_index,
-                       LinearAlgebra::distributed::Vector<Number> &vec) const
+                       LinearAlgebra::distributed::Vector<Number>& vec) const
     {
       if (range_index == numbers::invalid_unsigned_int)
         vec = Number();
       else
         {
           const unsigned int mf_component = find_vector_in_mf(vec, false);
-          const internal::MatrixFreeFunctions::DoFInfo &dof_info =
+          const internal::MatrixFreeFunctions::DoFInfo& dof_info =
             matrix_free.get_dof_info(mf_component);
           Assert(dof_info.vector_zero_range_list_index.empty() == false,
                  ExcNotInitialized());
@@ -2973,23 +2971,23 @@ namespace internal
         }
     }
 
-    const dealii::MatrixFree<dim, Number> &matrix_free;
+    const dealii::MatrixFree<dim, Number>& matrix_free;
     const typename dealii::MatrixFree<dim, Number>::DataAccessOnFaces
          vector_face_access;
     bool ghosts_were_set;
 #  ifdef DEAL_II_WITH_MPI
-    std::vector<AlignedVector<Number> *>  tmp_data;
+    std::vector<AlignedVector<Number>*>   tmp_data;
     std::vector<std::vector<MPI_Request>> requests;
 #  endif
   };
 
   template <typename VectorStruct>
   unsigned int
-  n_components(const VectorStruct &vec);
+  n_components(const VectorStruct& vec);
 
   template <typename VectorStruct>
   unsigned int
-  n_components_block(const VectorStruct &vec,
+  n_components_block(const VectorStruct& vec,
                      std::integral_constant<bool, true>)
   {
     unsigned int components = 0;
@@ -3000,14 +2998,14 @@ namespace internal
 
   template <typename VectorStruct>
   unsigned int
-  n_components_block(const VectorStruct &, std::integral_constant<bool, false>)
+  n_components_block(const VectorStruct&, std::integral_constant<bool, false>)
   {
     return 1;
   }
 
   template <typename VectorStruct>
   unsigned int
-  n_components(const VectorStruct &vec)
+  n_components(const VectorStruct& vec)
   {
     return n_components_block(
       vec, std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
@@ -3015,7 +3013,7 @@ namespace internal
 
   template <typename VectorStruct>
   inline unsigned int
-  n_components(const std::vector<VectorStruct> &vec)
+  n_components(const std::vector<VectorStruct>& vec)
   {
     unsigned int components = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3027,7 +3025,7 @@ namespace internal
 
   template <typename VectorStruct>
   inline unsigned int
-  n_components(const std::vector<VectorStruct *> &vec)
+  n_components(const std::vector<VectorStruct*>& vec)
   {
     unsigned int components = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3039,80 +3037,80 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   void
-  update_ghost_values_start_block(const VectorStruct &vec,
+  update_ghost_values_start_block(const VectorStruct& vec,
                                   const unsigned int  channel,
                                   std::integral_constant<bool, true>,
-                                  VectorDataExchange<dim, Number> &exchanger);
+                                  VectorDataExchange<dim, Number>& exchanger);
   template <int dim, typename VectorStruct, typename Number>
   void
-  reset_ghost_values_block(const VectorStruct &vec,
+  reset_ghost_values_block(const VectorStruct& vec,
                            std::integral_constant<bool, true>,
-                           VectorDataExchange<dim, Number> &exchanger);
+                           VectorDataExchange<dim, Number>& exchanger);
   template <int dim, typename VectorStruct, typename Number>
   void
-  update_ghost_values_finish_block(const VectorStruct &vec,
+  update_ghost_values_finish_block(const VectorStruct& vec,
                                    const unsigned int  channel,
                                    std::integral_constant<bool, true>,
-                                   VectorDataExchange<dim, Number> &exchanger);
+                                   VectorDataExchange<dim, Number>& exchanger);
   template <int dim, typename VectorStruct, typename Number>
   void
-  compress_start_block(const VectorStruct &vec,
+  compress_start_block(const VectorStruct& vec,
                        const unsigned int  channel,
                        std::integral_constant<bool, true>,
-                       VectorDataExchange<dim, Number> &exchanger);
+                       VectorDataExchange<dim, Number>& exchanger);
   template <int dim, typename VectorStruct, typename Number>
   void
-  compress_finish_block(const VectorStruct &vec,
+  compress_finish_block(const VectorStruct& vec,
                         const unsigned int  channel,
                         std::integral_constant<bool, true>,
-                        VectorDataExchange<dim, Number> &exchanger);
+                        VectorDataExchange<dim, Number>& exchanger);
   template <int dim, typename VectorStruct, typename Number>
   void
   zero_vector_region_block(const unsigned int range_index,
-                           VectorStruct &,
+                           VectorStruct&,
                            std::integral_constant<bool, true>,
-                           VectorDataExchange<dim, Number> &);
+                           VectorDataExchange<dim, Number>&);
 
   template <int dim, typename VectorStruct, typename Number>
   void
-  update_ghost_values_start_block(const VectorStruct &,
+  update_ghost_values_start_block(const VectorStruct&,
                                   const unsigned int,
                                   std::integral_constant<bool, false>,
-                                  VectorDataExchange<dim, Number> &)
+                                  VectorDataExchange<dim, Number>&)
   {}
   template <int dim, typename VectorStruct, typename Number>
   void
-  reset_ghost_values_block(const VectorStruct &,
+  reset_ghost_values_block(const VectorStruct&,
                            std::integral_constant<bool, false>,
-                           VectorDataExchange<dim, Number> &)
+                           VectorDataExchange<dim, Number>&)
   {}
   template <int dim, typename VectorStruct, typename Number>
   void
-  update_ghost_values_finish_block(const VectorStruct &,
+  update_ghost_values_finish_block(const VectorStruct&,
                                    const unsigned int,
                                    std::integral_constant<bool, false>,
-                                   VectorDataExchange<dim, Number> &)
+                                   VectorDataExchange<dim, Number>&)
   {}
   template <int dim, typename VectorStruct, typename Number>
   void
-  compress_start_block(const VectorStruct &,
+  compress_start_block(const VectorStruct&,
                        const unsigned int,
                        std::integral_constant<bool, false>,
-                       VectorDataExchange<dim, Number> &)
+                       VectorDataExchange<dim, Number>&)
   {}
   template <int dim, typename VectorStruct, typename Number>
   void
-  compress_finish_block(const VectorStruct &,
+  compress_finish_block(const VectorStruct&,
                         const unsigned int,
                         std::integral_constant<bool, false>,
-                        VectorDataExchange<dim, Number> &)
+                        VectorDataExchange<dim, Number>&)
   {}
   template <int dim, typename VectorStruct, typename Number>
   void
   zero_vector_region_block(const unsigned int range_index,
-                           VectorStruct &     vec,
+                           VectorStruct&      vec,
                            std::integral_constant<bool, false>,
-                           VectorDataExchange<dim, Number> &)
+                           VectorDataExchange<dim, Number>&)
   {
     if (range_index == 0 || range_index == numbers::invalid_unsigned_int)
       vec = 0;
@@ -3125,8 +3123,8 @@ namespace internal
   // with ghosts all the time
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  reset_ghost_values(const VectorStruct &             vec,
-                     VectorDataExchange<dim, Number> &exchanger)
+  reset_ghost_values(const VectorStruct&              vec,
+                     VectorDataExchange<dim, Number>& exchanger)
   {
     reset_ghost_values_block(
       vec,
@@ -3138,8 +3136,8 @@ namespace internal
 
   template <int dim, typename Number, typename Number2>
   inline void
-  reset_ghost_values(const LinearAlgebra::distributed::Vector<Number> &vec,
-                     VectorDataExchange<dim, Number2> &exchanger)
+  reset_ghost_values(const LinearAlgebra::distributed::Vector<Number>& vec,
+                     VectorDataExchange<dim, Number2>& exchanger)
   {
     exchanger.reset_ghost_values(vec);
   }
@@ -3148,8 +3146,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  reset_ghost_values(const std::vector<VectorStruct> &vec,
-                     VectorDataExchange<dim, Number> &exchanger)
+  reset_ghost_values(const std::vector<VectorStruct>& vec,
+                     VectorDataExchange<dim, Number>& exchanger)
   {
     for (unsigned int comp = 0; comp < vec.size(); comp++)
       reset_ghost_values(vec[comp], exchanger);
@@ -3159,8 +3157,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  reset_ghost_values(const std::vector<VectorStruct *> &vec,
-                     VectorDataExchange<dim, Number> &  exchanger)
+  reset_ghost_values(const std::vector<VectorStruct*>& vec,
+                     VectorDataExchange<dim, Number>&  exchanger)
   {
     for (unsigned int comp = 0; comp < vec.size(); comp++)
       reset_ghost_values(*vec[comp], exchanger);
@@ -3170,9 +3168,9 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  reset_ghost_values_block(const VectorStruct &vec,
+  reset_ghost_values_block(const VectorStruct& vec,
                            std::integral_constant<bool, true>,
-                           VectorDataExchange<dim, Number> &exchanger)
+                           VectorDataExchange<dim, Number>& exchanger)
   {
     for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       reset_ghost_values(vec.block(i), exchanger);
@@ -3186,7 +3184,7 @@ namespace internal
   // for generic vectors
   template <typename VectorStruct>
   constexpr unsigned int
-  get_communication_block_size(const VectorStruct &)
+  get_communication_block_size(const VectorStruct&)
   {
     return numbers::invalid_unsigned_int;
   }
@@ -3198,7 +3196,7 @@ namespace internal
   template <typename Number>
   constexpr unsigned int
   get_communication_block_size(
-    const LinearAlgebra::distributed::BlockVector<Number> &)
+    const LinearAlgebra::distributed::BlockVector<Number>&)
   {
     return LinearAlgebra::distributed::BlockVector<
       Number>::communication_block_size;
@@ -3208,8 +3206,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_start(const VectorStruct &             vec,
-                            VectorDataExchange<dim, Number> &exchanger,
+  update_ghost_values_start(const VectorStruct&              vec,
+                            VectorDataExchange<dim, Number>& exchanger,
                             const unsigned int               channel = 0)
   {
     update_ghost_values_start_block(
@@ -3224,8 +3222,8 @@ namespace internal
   template <int dim, typename Number, typename Number2>
   inline void
   update_ghost_values_start(
-    const LinearAlgebra::distributed::Vector<Number> &vec,
-    VectorDataExchange<dim, Number2> &                exchanger,
+    const LinearAlgebra::distributed::Vector<Number>& vec,
+    VectorDataExchange<dim, Number2>&                 exchanger,
     const unsigned int                                channel = 0)
   {
     exchanger.update_ghost_values_start(channel, vec);
@@ -3235,8 +3233,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_start(const std::vector<VectorStruct> &vec,
-                            VectorDataExchange<dim, Number> &exchanger)
+  update_ghost_values_start(const std::vector<VectorStruct>& vec,
+                            VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3250,8 +3248,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_start(const std::vector<VectorStruct *> &vec,
-                            VectorDataExchange<dim, Number> &  exchanger)
+  update_ghost_values_start(const std::vector<VectorStruct*>& vec,
+                            VectorDataExchange<dim, Number>&  exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3265,10 +3263,10 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_start_block(const VectorStruct &vec,
+  update_ghost_values_start_block(const VectorStruct& vec,
                                   const unsigned int  channel,
                                   std::integral_constant<bool, true>,
-                                  VectorDataExchange<dim, Number> &exchanger)
+                                  VectorDataExchange<dim, Number>& exchanger)
   {
     if (get_communication_block_size(vec) < vec.n_blocks())
       vec.update_ghost_values();
@@ -3281,8 +3279,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_finish(const VectorStruct &             vec,
-                             VectorDataExchange<dim, Number> &exchanger,
+  update_ghost_values_finish(const VectorStruct&              vec,
+                             VectorDataExchange<dim, Number>& exchanger,
                              const unsigned int               channel = 0)
   {
     update_ghost_values_finish_block(
@@ -3297,8 +3295,8 @@ namespace internal
   template <int dim, typename Number, typename Number2>
   inline void
   update_ghost_values_finish(
-    const LinearAlgebra::distributed::Vector<Number> &vec,
-    VectorDataExchange<dim, Number2> &                exchanger,
+    const LinearAlgebra::distributed::Vector<Number>& vec,
+    VectorDataExchange<dim, Number2>&                 exchanger,
     const unsigned int                                channel = 0)
   {
     exchanger.update_ghost_values_finish(channel, vec);
@@ -3308,8 +3306,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_finish(const std::vector<VectorStruct> &vec,
-                             VectorDataExchange<dim, Number> &exchanger)
+  update_ghost_values_finish(const std::vector<VectorStruct>& vec,
+                             VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3323,8 +3321,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_finish(const std::vector<VectorStruct *> &vec,
-                             VectorDataExchange<dim, Number> &  exchanger)
+  update_ghost_values_finish(const std::vector<VectorStruct*>& vec,
+                             VectorDataExchange<dim, Number>&  exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3338,10 +3336,10 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  update_ghost_values_finish_block(const VectorStruct &vec,
+  update_ghost_values_finish_block(const VectorStruct& vec,
                                    const unsigned int  channel,
                                    std::integral_constant<bool, true>,
-                                   VectorDataExchange<dim, Number> &exchanger)
+                                   VectorDataExchange<dim, Number>& exchanger)
   {
     if (get_communication_block_size(vec) < vec.n_blocks())
       {
@@ -3357,8 +3355,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_start(VectorStruct &                   vec,
-                 VectorDataExchange<dim, Number> &exchanger,
+  compress_start(VectorStruct&                    vec,
+                 VectorDataExchange<dim, Number>& exchanger,
                  const unsigned int               channel = 0)
   {
     compress_start_block(
@@ -3372,8 +3370,8 @@ namespace internal
 
   template <int dim, typename Number, typename Number2>
   inline void
-  compress_start(LinearAlgebra::distributed::Vector<Number> &vec,
-                 VectorDataExchange<dim, Number2> &          exchanger,
+  compress_start(LinearAlgebra::distributed::Vector<Number>& vec,
+                 VectorDataExchange<dim, Number2>&           exchanger,
                  const unsigned int                          channel = 0)
   {
     exchanger.compress_start(channel, vec);
@@ -3383,8 +3381,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_start(std::vector<VectorStruct> &      vec,
-                 VectorDataExchange<dim, Number> &exchanger)
+  compress_start(std::vector<VectorStruct>&       vec,
+                 VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3398,8 +3396,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_start(std::vector<VectorStruct *> &    vec,
-                 VectorDataExchange<dim, Number> &exchanger)
+  compress_start(std::vector<VectorStruct*>&      vec,
+                 VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3413,10 +3411,10 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_start_block(VectorStruct &     vec,
+  compress_start_block(VectorStruct&      vec,
                        const unsigned int channel,
                        std::integral_constant<bool, true>,
-                       VectorDataExchange<dim, Number> &exchanger)
+                       VectorDataExchange<dim, Number>& exchanger)
   {
     if (get_communication_block_size(vec) < vec.n_blocks())
       vec.compress(dealii::VectorOperation::add);
@@ -3429,8 +3427,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_finish(VectorStruct &                   vec,
-                  VectorDataExchange<dim, Number> &exchanger,
+  compress_finish(VectorStruct&                    vec,
+                  VectorDataExchange<dim, Number>& exchanger,
                   const unsigned int               channel = 0)
   {
     compress_finish_block(
@@ -3444,8 +3442,8 @@ namespace internal
 
   template <int dim, typename Number, typename Number2>
   inline void
-  compress_finish(LinearAlgebra::distributed::Vector<Number> &vec,
-                  VectorDataExchange<dim, Number2> &          exchanger,
+  compress_finish(LinearAlgebra::distributed::Vector<Number>& vec,
+                  VectorDataExchange<dim, Number2>&           exchanger,
                   const unsigned int                          channel = 0)
   {
     exchanger.compress_finish(channel, vec);
@@ -3455,8 +3453,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_finish(std::vector<VectorStruct> &      vec,
-                  VectorDataExchange<dim, Number> &exchanger)
+  compress_finish(std::vector<VectorStruct>&       vec,
+                  VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3470,8 +3468,8 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_finish(std::vector<VectorStruct *> &    vec,
-                  VectorDataExchange<dim, Number> &exchanger)
+  compress_finish(std::vector<VectorStruct*>&      vec,
+                  VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
     for (unsigned int comp = 0; comp < vec.size(); comp++)
@@ -3485,10 +3483,10 @@ namespace internal
 
   template <int dim, typename VectorStruct, typename Number>
   inline void
-  compress_finish_block(VectorStruct &     vec,
+  compress_finish_block(VectorStruct&      vec,
                         const unsigned int channel,
                         std::integral_constant<bool, true>,
-                        VectorDataExchange<dim, Number> &exchanger)
+                        VectorDataExchange<dim, Number>& exchanger)
   {
     if (get_communication_block_size(vec) < vec.n_blocks())
       {
@@ -3505,8 +3503,8 @@ namespace internal
   template <int dim, typename VectorStruct, typename Number>
   inline void
   zero_vector_region(const unsigned int               range_index,
-                     VectorStruct &                   vec,
-                     VectorDataExchange<dim, Number> &exchanger)
+                     VectorStruct&                    vec,
+                     VectorDataExchange<dim, Number>& exchanger)
   {
     zero_vector_region_block(
       range_index,
@@ -3520,8 +3518,8 @@ namespace internal
   template <int dim, typename Number, typename Number2>
   inline void
   zero_vector_region(const unsigned int                          range_index,
-                     LinearAlgebra::distributed::Vector<Number> &vec,
-                     VectorDataExchange<dim, Number2> &          exchanger)
+                     LinearAlgebra::distributed::Vector<Number>& vec,
+                     VectorDataExchange<dim, Number2>&           exchanger)
   {
     exchanger.zero_vector_region(range_index, vec);
   }
@@ -3531,8 +3529,8 @@ namespace internal
   template <int dim, typename VectorStruct, typename Number>
   inline void
   zero_vector_region(const unsigned int               range_index,
-                     std::vector<VectorStruct> &      vec,
-                     VectorDataExchange<dim, Number> &exchanger)
+                     std::vector<VectorStruct>&       vec,
+                     VectorDataExchange<dim, Number>& exchanger)
   {
     for (unsigned int comp = 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, vec[comp], exchanger);
@@ -3543,8 +3541,8 @@ namespace internal
   template <int dim, typename VectorStruct, typename Number>
   inline void
   zero_vector_region(const unsigned int               range_index,
-                     std::vector<VectorStruct *> &    vec,
-                     VectorDataExchange<dim, Number> &exchanger)
+                     std::vector<VectorStruct*>&      vec,
+                     VectorDataExchange<dim, Number>& exchanger)
   {
     for (unsigned int comp = 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, *vec[comp], exchanger);
@@ -3555,9 +3553,9 @@ namespace internal
   template <int dim, typename VectorStruct, typename Number>
   inline void
   zero_vector_region_block(const unsigned int range_index,
-                           VectorStruct &     vec,
+                           VectorStruct&      vec,
                            std::integral_constant<bool, true>,
-                           VectorDataExchange<dim, Number> &exchanger)
+                           VectorDataExchange<dim, Number>& exchanger)
   {
     for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       zero_vector_region(range_index, vec.block(i), exchanger);
@@ -3581,10 +3579,10 @@ namespace internal
     struct InterfaceSelector<MF, InVector, OutVector, Container, true>
     {
       typedef void (Container::*function_type)(
-        const MF &,
-        OutVector &,
-        const InVector &,
-        const std::pair<unsigned int, unsigned int> &) const;
+        const MF&,
+        OutVector&,
+        const InVector&,
+        const std::pair<unsigned int, unsigned int>&) const;
     };
 
     // Version for non-constant functions
@@ -3595,10 +3593,10 @@ namespace internal
     struct InterfaceSelector<MF, InVector, OutVector, Container, false>
     {
       typedef void (Container::*function_type)(
-        const MF &,
-        OutVector &,
-        const InVector &,
-        const std::pair<unsigned int, unsigned int> &);
+        const MF&,
+        OutVector&,
+        const InVector&,
+        const std::pair<unsigned int, unsigned int>&);
     };
   } // namespace MatrixFreeFunctions
 
@@ -3620,11 +3618,11 @@ namespace internal
         function_type function_type;
 
     // constructor, binds all the arguments to this class
-    MFWorker(const MF &                           matrix_free,
-             const InVector &                     src,
-             OutVector &                          dst,
+    MFWorker(const MF&                            matrix_free,
+             const InVector&                      src,
+             OutVector&                           dst,
              const bool                           zero_dst_vector_setting,
-             const Container &                    container,
+             const Container&                     container,
              function_type                        cell_function,
              function_type                        face_function,
              function_type                        boundary_function,
@@ -3633,7 +3631,7 @@ namespace internal
              const typename MF::DataAccessOnFaces dst_vector_face_access =
                MF::DataAccessOnFaces::none) :
       matrix_free(matrix_free),
-      container(const_cast<Container &>(container)),
+      container(const_cast<Container&>(container)),
       cell_function(cell_function),
       face_function(face_function),
       boundary_function(boundary_function),
@@ -3651,7 +3649,7 @@ namespace internal
 
     // Runs the cell work. If no function is given, nothing is done
     virtual void
-    cell(const std::pair<unsigned int, unsigned int> &cell_range) override
+    cell(const std::pair<unsigned int, unsigned int>& cell_range) override
     {
       if (cell_function != nullptr && cell_range.second > cell_range.first)
         (container.*
@@ -3661,7 +3659,7 @@ namespace internal
     // Runs the assembler on interior faces. If no function is given, nothing
     // is done
     virtual void
-    face(const std::pair<unsigned int, unsigned int> &face_range) override
+    face(const std::pair<unsigned int, unsigned int>& face_range) override
     {
       if (face_function != nullptr && face_range.second > face_range.first)
         (container.*
@@ -3671,7 +3669,7 @@ namespace internal
     // Runs the assembler on boundary faces. If no function is given, nothing
     // is done
     virtual void
-    boundary(const std::pair<unsigned int, unsigned int> &face_range) override
+    boundary(const std::pair<unsigned int, unsigned int>& face_range) override
     {
       if (boundary_function != nullptr && face_range.second > face_range.first)
         (container.*
@@ -3724,14 +3722,14 @@ namespace internal
     }
 
   private:
-    const MF &    matrix_free;
-    Container &   container;
+    const MF&     matrix_free;
+    Container&    container;
     function_type cell_function;
     function_type face_function;
     function_type boundary_function;
 
-    const InVector &src;
-    OutVector &     dst;
+    const InVector& src;
+    OutVector&      dst;
     VectorDataExchange<MF::dimension, typename MF::value_type>
       src_data_exchanger;
     VectorDataExchange<MF::dimension, typename MF::value_type>
@@ -3749,10 +3747,10 @@ namespace internal
   template <class MF, typename InVector, typename OutVector>
   struct MFClassWrapper
   {
-    typedef std::function<void(const MF &,
-                               OutVector &,
-                               const InVector &,
-                               const std::pair<unsigned int, unsigned int> &)>
+    typedef std::function<void(const MF&,
+                               OutVector&,
+                               const InVector&,
+                               const std::pair<unsigned int, unsigned int>&)>
       function_type;
 
     MFClassWrapper(const function_type cell,
@@ -3764,20 +3762,20 @@ namespace internal
     {}
 
     void
-    cell_integrator(const MF &                                   mf,
-                    OutVector &                                  dst,
-                    const InVector &                             src,
-                    const std::pair<unsigned int, unsigned int> &range) const
+    cell_integrator(const MF&                                    mf,
+                    OutVector&                                   dst,
+                    const InVector&                              src,
+                    const std::pair<unsigned int, unsigned int>& range) const
     {
       if (cell)
         cell(mf, dst, src, range);
     }
 
     void
-    face_integrator(const MF &                                   mf,
-                    OutVector &                                  dst,
-                    const InVector &                             src,
-                    const std::pair<unsigned int, unsigned int> &range) const
+    face_integrator(const MF&                                    mf,
+                    OutVector&                                   dst,
+                    const InVector&                              src,
+                    const std::pair<unsigned int, unsigned int>& range) const
     {
       if (face)
         face(mf, dst, src, range);
@@ -3785,10 +3783,10 @@ namespace internal
 
     void
     boundary_integrator(
-      const MF &                                   mf,
-      OutVector &                                  dst,
-      const InVector &                             src,
-      const std::pair<unsigned int, unsigned int> &range) const
+      const MF&                                    mf,
+      OutVector&                                   dst,
+      const InVector&                              src,
+      const std::pair<unsigned int, unsigned int>& range) const
     {
       if (boundary)
         boundary(mf, dst, src, range);
@@ -3807,13 +3805,13 @@ template <int dim, typename Number>
 template <typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::cell_loop(
-  const std::function<void(const MatrixFree<dim, Number> &,
-                           OutVector &,
-                           const InVector &,
-                           const std::pair<unsigned int, unsigned int> &)>
-    &             cell_operation,
-  OutVector &     dst,
-  const InVector &src,
+  const std::function<void(const MatrixFree<dim, Number>&,
+                           OutVector&,
+                           const InVector&,
+                           const std::pair<unsigned int, unsigned int>&)>&
+                  cell_operation,
+  OutVector&      dst,
+  const InVector& src,
   const bool      zero_dst_vector) const
 {
   typedef internal::MFClassWrapper<MatrixFree<dim, Number>, InVector, OutVector>
@@ -3839,23 +3837,23 @@ template <int dim, typename Number>
 template <typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::loop(
-  const std::function<void(const MatrixFree<dim, Number> &,
-                           OutVector &,
-                           const InVector &,
-                           const std::pair<unsigned int, unsigned int> &)>
-    &cell_operation,
-  const std::function<void(const MatrixFree<dim, Number> &,
-                           OutVector &,
-                           const InVector &,
-                           const std::pair<unsigned int, unsigned int> &)>
-    &face_operation,
-  const std::function<void(const MatrixFree<dim, Number> &,
-                           OutVector &,
-                           const InVector &,
-                           const std::pair<unsigned int, unsigned int> &)>
-    &                     boundary_operation,
-  OutVector &             dst,
-  const InVector &        src,
+  const std::function<void(const MatrixFree<dim, Number>&,
+                           OutVector&,
+                           const InVector&,
+                           const std::pair<unsigned int, unsigned int>&)>&
+    cell_operation,
+  const std::function<void(const MatrixFree<dim, Number>&,
+                           OutVector&,
+                           const InVector&,
+                           const std::pair<unsigned int, unsigned int>&)>&
+    face_operation,
+  const std::function<void(const MatrixFree<dim, Number>&,
+                           OutVector&,
+                           const InVector&,
+                           const std::pair<unsigned int, unsigned int>&)>&
+                          boundary_operation,
+  OutVector&              dst,
+  const InVector&         src,
   const bool              zero_dst_vector,
   const DataAccessOnFaces dst_vector_face_access,
   const DataAccessOnFaces src_vector_face_access) const
@@ -3885,14 +3883,14 @@ template <int dim, typename Number>
 template <typename CLASS, typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::cell_loop(
-  void (CLASS::*function_pointer)(const MatrixFree<dim, Number> &,
-                                  OutVector &,
-                                  const InVector &,
-                                  const std::pair<unsigned int, unsigned int> &)
+  void (CLASS::*function_pointer)(const MatrixFree<dim, Number>&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&)
     const,
-  const CLASS *   owning_class,
-  OutVector &     dst,
-  const InVector &src,
+  const CLASS*    owning_class,
+  OutVector&      dst,
+  const InVector& src,
   const bool      zero_dst_vector) const
 {
   internal::MFWorker<MatrixFree<dim, Number>, InVector, OutVector, CLASS, true>
@@ -3913,24 +3911,24 @@ template <int dim, typename Number>
 template <typename CLASS, typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::loop(
-  void (CLASS::*cell_operation)(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &)
+  void (CLASS::*cell_operation)(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&)
     const,
-  void (CLASS::*face_operation)(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &)
+  void (CLASS::*face_operation)(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&)
     const,
   void (CLASS::*boundary_operation)(
-    const MatrixFree<dim, Number> &,
-    OutVector &,
-    const InVector &,
-    const std::pair<unsigned int, unsigned int> &) const,
-  const CLASS *           owning_class,
-  OutVector &             dst,
-  const InVector &        src,
+    const MatrixFree<dim, Number>&,
+    OutVector&,
+    const InVector&,
+    const std::pair<unsigned int, unsigned int>&) const,
+  const CLASS*            owning_class,
+  OutVector&              dst,
+  const InVector&         src,
   const bool              zero_dst_vector,
   const DataAccessOnFaces dst_vector_face_access,
   const DataAccessOnFaces src_vector_face_access) const
@@ -3955,14 +3953,13 @@ template <int dim, typename Number>
 template <typename CLASS, typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::cell_loop(
-  void (CLASS::*function_pointer)(
-    const MatrixFree<dim, Number> &,
-    OutVector &,
-    const InVector &,
-    const std::pair<unsigned int, unsigned int> &),
-  CLASS *         owning_class,
-  OutVector &     dst,
-  const InVector &src,
+  void (CLASS::*function_pointer)(const MatrixFree<dim, Number>&,
+                                  OutVector&,
+                                  const InVector&,
+                                  const std::pair<unsigned int, unsigned int>&),
+  CLASS*          owning_class,
+  OutVector&      dst,
+  const InVector& src,
   const bool      zero_dst_vector) const
 {
   internal::MFWorker<MatrixFree<dim, Number>, InVector, OutVector, CLASS, false>
@@ -3983,22 +3980,22 @@ template <int dim, typename Number>
 template <typename CLASS, typename OutVector, typename InVector>
 inline void
 MatrixFree<dim, Number>::loop(
-  void (CLASS::*cell_operation)(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &),
-  void (CLASS::*face_operation)(const MatrixFree<dim, Number> &,
-                                OutVector &,
-                                const InVector &,
-                                const std::pair<unsigned int, unsigned int> &),
+  void (CLASS::*cell_operation)(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&),
+  void (CLASS::*face_operation)(const MatrixFree<dim, Number>&,
+                                OutVector&,
+                                const InVector&,
+                                const std::pair<unsigned int, unsigned int>&),
   void (CLASS::*boundary_operation)(
-    const MatrixFree<dim, Number> &,
-    OutVector &,
-    const InVector &,
-    const std::pair<unsigned int, unsigned int> &),
-  CLASS *                 owning_class,
-  OutVector &             dst,
-  const InVector &        src,
+    const MatrixFree<dim, Number>&,
+    OutVector&,
+    const InVector&,
+    const std::pair<unsigned int, unsigned int>&),
+  CLASS*                  owning_class,
+  OutVector&              dst,
+  const InVector&         src,
   const bool              zero_dst_vector,
   const DataAccessOnFaces dst_vector_face_access,
   const DataAccessOnFaces src_vector_face_access) const

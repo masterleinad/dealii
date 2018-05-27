@@ -24,7 +24,7 @@
 class FirstClass : public ParameterAcceptor
 {
 public:
-  FirstClass(const std::string &name = "First Class") : ParameterAcceptor(name)
+  FirstClass(const std::string& name = "First Class") : ParameterAcceptor(name)
   {
     add_parameter("First int", f_i);
     add_parameter("First double", f_d);
@@ -42,7 +42,7 @@ private:
 class SecondClass : public ParameterAcceptor
 {
 public:
-  SecondClass(const std::string &name = "Second Class") :
+  SecondClass(const std::string& name = "Second Class") :
     ParameterAcceptor(name)
   {
     add_parameter("Second int", s_i);

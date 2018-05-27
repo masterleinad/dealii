@@ -150,7 +150,7 @@ public:
     AdditionalData(const double           strengthen_diagonal   = 0,
                    const unsigned int     extra_off_diagonals   = 0,
                    const bool             use_previous_sparsity = false,
-                   const SparsityPattern *use_this_sparsity     = nullptr);
+                   const SparsityPattern* use_this_sparsity     = nullptr);
 
     /**
      * <code>strengthen_diag</code> times the sum of absolute row entries is
@@ -192,7 +192,7 @@ public:
      * Fill-in is allowed, as well as filtering out some elements in the
      * matrix.
      */
-    const SparsityPattern *use_this_sparsity;
+    const SparsityPattern* use_this_sparsity;
   };
 
   /**
@@ -212,7 +212,7 @@ public:
    */
   template <typename somenumber>
   void
-  initialize(const SparseMatrix<somenumber> &matrix,
+  initialize(const SparseMatrix<somenumber>& matrix,
              const AdditionalData            parameters);
 
   /**
@@ -247,7 +247,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  vmult_add(OutVector &dst, const InVector &src) const;
+  vmult_add(OutVector& dst, const InVector& src) const;
 
   /**
    * Adding Matrix-vector multiplication. Add <i>M<sup>T</sup>*src</i> to
@@ -258,7 +258,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  Tvmult_add(OutVector &dst, const InVector &src) const;
+  Tvmult_add(OutVector& dst, const InVector& src) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -287,7 +287,7 @@ protected:
    */
   template <typename somenumber>
   void
-  copy_from(const SparseMatrix<somenumber> &matrix);
+  copy_from(const SparseMatrix<somenumber>& matrix);
 
   /**
    * Performs the strengthening loop. For each row calculates the sum of
@@ -320,7 +320,7 @@ protected:
    * pointer to the row's first afterdiagonal entry. Becomes available after
    * invocation of prebuild_lower_bound().
    */
-  std::vector<const size_type *> prebuilt_lower_bound;
+  std::vector<const size_type*> prebuilt_lower_bound;
 
   /**
    * Fills the #prebuilt_lower_bound array.
@@ -338,7 +338,7 @@ private:
    * sparsity. It keeps this pointer to it enabling it to delete this sparsity
    * at destruction time.
    */
-  SparsityPattern *own_sparsity;
+  SparsityPattern* own_sparsity;
 };
 
 /*@}*/
@@ -387,8 +387,8 @@ SparseLUDecomposition<number>::n() const
 template <typename number>
 template <class OutVector, class InVector>
 inline void
-SparseLUDecomposition<number>::vmult_add(OutVector &     dst,
-                                         const InVector &src) const
+SparseLUDecomposition<number>::vmult_add(OutVector&      dst,
+                                         const InVector& src) const
 {
   OutVector tmp;
   tmp.reinit(dst);
@@ -403,8 +403,8 @@ SparseLUDecomposition<number>::vmult_add(OutVector &     dst,
 template <typename number>
 template <class OutVector, class InVector>
 inline void
-SparseLUDecomposition<number>::Tvmult_add(OutVector &     dst,
-                                          const InVector &src) const
+SparseLUDecomposition<number>::Tvmult_add(OutVector&      dst,
+                                          const InVector& src) const
 {
   OutVector tmp;
   tmp.reinit(dst);
@@ -420,7 +420,7 @@ SparseLUDecomposition<number>::AdditionalData::AdditionalData(
   const double           strengthen_diag,
   const unsigned int     extra_off_diag,
   const bool             use_prev_sparsity,
-  const SparsityPattern *use_this_spars) :
+  const SparsityPattern* use_this_spars) :
   strengthen_diagonal(strengthen_diag),
   extra_off_diagonals(extra_off_diag),
   use_previous_sparsity(use_prev_sparsity),

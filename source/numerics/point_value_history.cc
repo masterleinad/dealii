@@ -41,9 +41,9 @@ namespace internal
     /// Only a constructor needed for this class (a struct really)
     template <int dim>
     PointGeometryData<dim>::PointGeometryData(
-      const Point<dim> &                          new_requested_location,
-      const std::vector<Point<dim>> &             new_locations,
-      const std::vector<types::global_dof_index> &new_sol_indices)
+      const Point<dim>&                           new_requested_location,
+      const std::vector<Point<dim>>&              new_locations,
+      const std::vector<types::global_dof_index>& new_sol_indices)
     {
       requested_location      = new_requested_location;
       support_point_locations = new_locations;
@@ -77,7 +77,7 @@ PointValueHistory<dim>::PointValueHistory(
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
-  const DoFHandler<dim> &dof_handler,
+  const DoFHandler<dim>& dof_handler,
   const unsigned int     n_independent_variables) :
   dof_handler(&dof_handler),
   n_indep(n_independent_variables)
@@ -103,7 +103,7 @@ PointValueHistory<dim>::PointValueHistory(
 
 template <int dim>
 PointValueHistory<dim>::PointValueHistory(
-  const PointValueHistory &point_value_history)
+  const PointValueHistory& point_value_history)
 {
   dataset_key         = point_value_history.dataset_key;
   independent_values  = point_value_history.independent_values;
@@ -135,8 +135,8 @@ PointValueHistory<dim>::PointValueHistory(
 
 
 template <int dim>
-PointValueHistory<dim> &
-PointValueHistory<dim>::operator=(const PointValueHistory &point_value_history)
+PointValueHistory<dim>&
+PointValueHistory<dim>::operator=(const PointValueHistory& point_value_history)
 {
   dataset_key         = point_value_history.dataset_key;
   independent_values  = point_value_history.independent_values;
@@ -182,7 +182,7 @@ PointValueHistory<dim>::~PointValueHistory()
 
 template <int dim>
 void
-PointValueHistory<dim>::add_point(const Point<dim> &location)
+PointValueHistory<dim>::add_point(const Point<dim>& location)
 {
   // can't be closed to add additional points
   // or vectors
@@ -309,7 +309,7 @@ PointValueHistory<dim>::add_point(const Point<dim> &location)
     {
       // add an extra row to each vector
       // entry
-      const ComponentMask &current_mask =
+      const ComponentMask& current_mask =
         (component_mask.find(data_store_begin->first))->second;
       unsigned int n_stored = current_mask.n_selected_components();
       data_store_begin->second.resize(data_store_begin->second.size() +
@@ -321,7 +321,7 @@ PointValueHistory<dim>::add_point(const Point<dim> &location)
 
 template <int dim>
 void
-PointValueHistory<dim>::add_points(const std::vector<Point<dim>> &locations)
+PointValueHistory<dim>::add_points(const std::vector<Point<dim>>& locations)
 {
   // This algorithm adds points in the same
   // order as they appear in the vector
@@ -460,8 +460,8 @@ PointValueHistory<dim>::add_points(const std::vector<Point<dim>> &locations)
 
 template <int dim>
 void
-PointValueHistory<dim>::add_field_name(const std::string &  vector_name,
-                                       const ComponentMask &mask)
+PointValueHistory<dim>::add_field_name(const std::string&   vector_name,
+                                       const ComponentMask& mask)
 {
   // can't be closed to add additional points
   // or vectors
@@ -506,7 +506,7 @@ PointValueHistory<dim>::add_field_name(const std::string &  vector_name,
 
 template <int dim>
 void
-PointValueHistory<dim>::add_field_name(const std::string &vector_name,
+PointValueHistory<dim>::add_field_name(const std::string& vector_name,
                                        const unsigned int n_components)
 {
   std::vector<bool> temp_mask(n_components, true);
@@ -517,8 +517,8 @@ PointValueHistory<dim>::add_field_name(const std::string &vector_name,
 template <int dim>
 void
 PointValueHistory<dim>::add_component_names(
-  const std::string &             vector_name,
-  const std::vector<std::string> &component_names)
+  const std::string&              vector_name,
+  const std::vector<std::string>& component_names)
 {
   typename std::map<std::string, std::vector<std::string>>::iterator names =
     component_names_map.find(vector_name);
@@ -540,7 +540,7 @@ PointValueHistory<dim>::add_component_names(
 template <int dim>
 void
 PointValueHistory<dim>::add_independent_names(
-  const std::vector<std::string> &independent_names)
+  const std::vector<std::string>& independent_names)
 {
   Assert(independent_names.size() == n_indep,
          ExcDimensionMismatch(independent_names.size(), n_indep));
@@ -582,8 +582,8 @@ PointValueHistory<dim>::clear()
 template <int dim>
 template <typename VectorType>
 void
-PointValueHistory<dim>::evaluate_field(const std::string &vector_name,
-                                       const VectorType & solution)
+PointValueHistory<dim>::evaluate_field(const std::string& vector_name,
+                                       const VectorType&  solution)
 {
   // must be closed to add data to internal
   // members.
@@ -650,10 +650,10 @@ template <int dim>
 template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field(
-  const std::vector<std::string> &vector_names,
-  const VectorType &              solution,
-  const DataPostprocessor<dim> &  data_postprocessor,
-  const Quadrature<dim> &         quadrature)
+  const std::vector<std::string>& vector_names,
+  const VectorType&               solution,
+  const DataPostprocessor<dim>&   data_postprocessor,
+  const Quadrature<dim>&          quadrature)
 {
   // must be closed to add data to internal
   // members.
@@ -876,10 +876,10 @@ template <int dim>
 template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field(
-  const std::string &           vector_name,
-  const VectorType &            solution,
-  const DataPostprocessor<dim> &data_postprocessor,
-  const Quadrature<dim> &       quadrature)
+  const std::string&            vector_name,
+  const VectorType&             solution,
+  const DataPostprocessor<dim>& data_postprocessor,
+  const Quadrature<dim>&        quadrature)
 {
   std::vector<std::string> vector_names;
   vector_names.push_back(vector_name);
@@ -892,8 +892,8 @@ template <int dim>
 template <typename VectorType>
 void
 PointValueHistory<dim>::evaluate_field_at_requested_location(
-  const std::string &vector_name,
-  const VectorType & solution)
+  const std::string& vector_name,
+  const VectorType&  solution)
 {
   typedef typename VectorType::value_type number;
   // must be closed to add data to internal
@@ -974,7 +974,7 @@ PointValueHistory<dim>::start_new_dataset(double key)
 template <int dim>
 void
 PointValueHistory<dim>::push_back_independent(
-  const std::vector<double> &indep_values)
+  const std::vector<double>& indep_values)
 {
   // must be closed to add data to internal
   // members.
@@ -996,8 +996,8 @@ PointValueHistory<dim>::push_back_independent(
 template <int dim>
 void
 PointValueHistory<dim>::write_gnuplot(
-  const std::string &            base_name,
-  const std::vector<Point<dim>> &postprocessor_locations)
+  const std::string&             base_name,
+  const std::vector<Point<dim>>& postprocessor_locations)
 {
   AssertThrow(closed, ExcInvalidState());
   AssertThrow(!cleared, ExcInvalidState());
@@ -1237,7 +1237,7 @@ PointValueHistory<dim>::mark_support_locations()
 template <int dim>
 void
 PointValueHistory<dim>::get_support_locations(
-  std::vector<std::vector<Point<dim>>> &locations)
+  std::vector<std::vector<Point<dim>>>& locations)
 {
   AssertThrow(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
@@ -1259,7 +1259,7 @@ PointValueHistory<dim>::get_support_locations(
 template <int dim>
 void
 PointValueHistory<dim>::get_points(
-  std::vector<std::vector<Point<dim>>> &locations)
+  std::vector<std::vector<Point<dim>>>& locations)
 {
   get_support_locations(locations);
 }
@@ -1268,8 +1268,8 @@ PointValueHistory<dim>::get_points(
 template <int dim>
 void
 PointValueHistory<dim>::get_postprocessor_locations(
-  const Quadrature<dim> &  quadrature,
-  std::vector<Point<dim>> &locations)
+  const Quadrature<dim>&   quadrature,
+  std::vector<Point<dim>>& locations)
 {
   Assert(!cleared, ExcInvalidState());
   AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
@@ -1319,7 +1319,7 @@ PointValueHistory<dim>::get_postprocessor_locations(
 
 template <int dim>
 void
-PointValueHistory<dim>::status(std::ostream &out)
+PointValueHistory<dim>::status(std::ostream& out)
 {
   out << "***PointValueHistory status output***\n\n";
   out << "Closed: " << closed << "\n";

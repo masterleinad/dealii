@@ -42,7 +42,7 @@ const double rect[3][4] = {{4., 3., 2., 1.},
 
 
 void
-test_rect(unsigned int m, unsigned int n, const double *values)
+test_rect(unsigned int m, unsigned int n, const double* values)
 {
   std::ostringstream prefix;
   prefix << m << 'x' << n;

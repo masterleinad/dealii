@@ -24,8 +24,8 @@ DEAL_II_NAMESPACE_OPEN
 namespace Functions
 {
   template <int dim>
-  CSpline<dim>::CSpline(const std::vector<double> &x_,
-                        const std::vector<double> &y_) :
+  CSpline<dim>::CSpline(const std::vector<double>& x_,
+                        const std::vector<double>& y_) :
     interpolation_points(x_),
     interpolation_values(y_)
   {
@@ -65,14 +65,14 @@ namespace Functions
 
   template <int dim>
   double
-  CSpline<dim>::value(const Point<dim> &p, const unsigned int) const
+  CSpline<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     // GSL functions may modify gsl_interp_accel *acc object (last argument).
     // This can only work in multithreaded applications if we lock the data
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double &x = p[0];
+    const double& x = p[0];
     Assert(x >= interpolation_points.front() &&
              x <= interpolation_points.back(),
            ExcCSplineRange(
@@ -85,14 +85,14 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  CSpline<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  CSpline<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     // GSL functions may modify gsl_interp_accel *acc object (last argument).
     // This can only work in multithreaded applications if we lock the data
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double &x = p[0];
+    const double& x = p[0];
     Assert(x >= interpolation_points.front() &&
              x <= interpolation_points.back(),
            ExcCSplineRange(
@@ -108,14 +108,14 @@ namespace Functions
 
   template <int dim>
   double
-  CSpline<dim>::laplacian(const Point<dim> &p, const unsigned int) const
+  CSpline<dim>::laplacian(const Point<dim>& p, const unsigned int) const
   {
     // GSL functions may modify gsl_interp_accel *acc object (last argument).
     // This can only work in multithreaded applications if we lock the data
     // structures via a mutex.
     Threads::Mutex::ScopedLock lock(acc_mutex);
 
-    const double &x = p[0];
+    const double& x = p[0];
     Assert(x >= interpolation_points.front() &&
              x <= interpolation_points.back(),
            ExcCSplineRange(
@@ -128,7 +128,7 @@ namespace Functions
 
   template <int dim>
   SymmetricTensor<2, dim>
-  CSpline<dim>::hessian(const Point<dim> &p, const unsigned int) const
+  CSpline<dim>::hessian(const Point<dim>& p, const unsigned int) const
   {
     SymmetricTensor<2, dim> res;
     res[0][0] = laplacian(p);

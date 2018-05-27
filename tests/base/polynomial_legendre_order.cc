@@ -27,7 +27,7 @@ using namespace Polynomials;
 
 
 void
-check_at_one(const std::vector<Polynomial<double>> &p)
+check_at_one(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Function value of polynomial at right end point: ";
   for (unsigned int i = 0; i < p.size(); ++i)

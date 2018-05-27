@@ -80,14 +80,14 @@ public:
    * an object of the same number of block rows and columns. Since it calls
    * the copy constructor of SparseMatrixEZ, the block s must be empty.
    */
-  BlockSparseMatrixEZ(const BlockSparseMatrixEZ<Number> &);
+  BlockSparseMatrixEZ(const BlockSparseMatrixEZ<Number>&);
 
   /**
    * Copy operator. Like the copy constructor, this may be called for objects
    * with empty blocks only.
    */
-  BlockSparseMatrixEZ &
-  operator=(const BlockSparseMatrixEZ<Number> &);
+  BlockSparseMatrixEZ&
+  operator=(const BlockSparseMatrixEZ<Number>&);
 
   /**
    * This operator assigns a scalar to a matrix. Since this does usually not
@@ -97,7 +97,7 @@ public:
    * allow for the obvious notation <tt>matrix=0</tt>, which sets all elements
    * of the matrix to zero, but keep the sparsity pattern previously used.
    */
-  BlockSparseMatrixEZ &
+  BlockSparseMatrixEZ&
   operator=(const double d);
 
 
@@ -128,7 +128,7 @@ public:
   /**
    * Access the block with the given coordinates.
    */
-  SparseMatrixEZ<Number> &
+  SparseMatrixEZ<Number>&
   block(const unsigned int row, const unsigned int column);
 
 
@@ -136,7 +136,7 @@ public:
    * Access the block with the given coordinates. Version for constant
    * objects.
    */
-  const SparseMatrixEZ<Number> &
+  const SparseMatrixEZ<Number>&
   block(const unsigned int row, const unsigned int column) const;
 
   /**
@@ -201,7 +201,7 @@ public:
    */
   template <typename somenumber>
   void
-  vmult(BlockVector<somenumber> &dst, const BlockVector<somenumber> &src) const;
+  vmult(BlockVector<somenumber>& dst, const BlockVector<somenumber>& src) const;
 
   /**
    * Matrix-vector multiplication: let $dst = M^T*src$ with $M$ being this
@@ -210,8 +210,8 @@ public:
    */
   template <typename somenumber>
   void
-  Tvmult(BlockVector<somenumber> &      dst,
-         const BlockVector<somenumber> &src) const;
+  Tvmult(BlockVector<somenumber>&       dst,
+         const BlockVector<somenumber>& src) const;
 
   /**
    * Adding Matrix-vector multiplication. Add $M*src$ on $dst$ with $M$ being
@@ -219,8 +219,8 @@ public:
    */
   template <typename somenumber>
   void
-  vmult_add(BlockVector<somenumber> &      dst,
-            const BlockVector<somenumber> &src) const;
+  vmult_add(BlockVector<somenumber>&       dst,
+            const BlockVector<somenumber>& src) const;
 
   /**
    * Adding Matrix-vector multiplication. Add $M^T*src$ to $dst$ with $M$
@@ -229,8 +229,8 @@ public:
    */
   template <typename somenumber>
   void
-  Tvmult_add(BlockVector<somenumber> &      dst,
-             const BlockVector<somenumber> &src) const;
+  Tvmult_add(BlockVector<somenumber>&       dst,
+             const BlockVector<somenumber>& src) const;
 
 
   /**
@@ -240,7 +240,7 @@ public:
    */
   template <class StreamType>
   void
-  print_statistics(StreamType &s, bool full = false);
+  print_statistics(StreamType& s, bool full = false);
 
 private:
   /**
@@ -284,7 +284,7 @@ BlockSparseMatrixEZ<Number>::n_block_cols() const
 
 
 template <typename Number>
-inline SparseMatrixEZ<Number> &
+inline SparseMatrixEZ<Number>&
 BlockSparseMatrixEZ<Number>::block(const unsigned int row,
                                    const unsigned int column)
 {
@@ -297,7 +297,7 @@ BlockSparseMatrixEZ<Number>::block(const unsigned int row,
 
 
 template <typename Number>
-inline const SparseMatrixEZ<Number> &
+inline const SparseMatrixEZ<Number>&
 BlockSparseMatrixEZ<Number>::block(const unsigned int row,
                                    const unsigned int column) const
 {
@@ -365,8 +365,8 @@ BlockSparseMatrixEZ<Number>::add(const size_type i,
 template <typename Number>
 template <typename somenumber>
 void
-BlockSparseMatrixEZ<Number>::vmult(BlockVector<somenumber> &      dst,
-                                   const BlockVector<somenumber> &src) const
+BlockSparseMatrixEZ<Number>::vmult(BlockVector<somenumber>&       dst,
+                                   const BlockVector<somenumber>& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_rows()));
@@ -385,8 +385,8 @@ BlockSparseMatrixEZ<Number>::vmult(BlockVector<somenumber> &      dst,
 template <typename Number>
 template <typename somenumber>
 void
-BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber> &      dst,
-                                       const BlockVector<somenumber> &src) const
+BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber>&       dst,
+                                       const BlockVector<somenumber>& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_rows()));
@@ -403,8 +403,8 @@ BlockSparseMatrixEZ<Number>::vmult_add(BlockVector<somenumber> &      dst,
 template <typename Number>
 template <typename somenumber>
 void
-BlockSparseMatrixEZ<Number>::Tvmult(BlockVector<somenumber> &      dst,
-                                    const BlockVector<somenumber> &src) const
+BlockSparseMatrixEZ<Number>::Tvmult(BlockVector<somenumber>&       dst,
+                                    const BlockVector<somenumber>& src) const
 {
   Assert(dst.n_blocks() == n_block_cols(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_cols()));
@@ -424,8 +424,8 @@ template <typename Number>
 template <typename somenumber>
 void
 BlockSparseMatrixEZ<Number>::Tvmult_add(
-  BlockVector<somenumber> &      dst,
-  const BlockVector<somenumber> &src) const
+  BlockVector<somenumber>&       dst,
+  const BlockVector<somenumber>& src) const
 {
   Assert(dst.n_blocks() == n_block_cols(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_cols()));
@@ -441,7 +441,7 @@ BlockSparseMatrixEZ<Number>::Tvmult_add(
 template <typename number>
 template <class StreamType>
 inline void
-BlockSparseMatrixEZ<number>::print_statistics(StreamType &out, bool full)
+BlockSparseMatrixEZ<number>::print_statistics(StreamType& out, bool full)
 {
   size_type              used_total      = 0;
   size_type              allocated_total = 0;

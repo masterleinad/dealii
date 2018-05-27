@@ -55,8 +55,8 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim> &   mapping,
-             const DoFHandler<dim> &dof_handler,
+  initialize(const Mapping<dim>&    mapping,
+             const DoFHandler<dim>& dof_handler,
              const unsigned int     level = numbers::invalid_unsigned_int)
   {
     const QGauss<1>                                  quad(n_q_points_1d);
@@ -78,7 +78,7 @@ public:
   }
 
   void
-  compute_diagonal_by_face(parallel::distributed::Vector<number> &result) const
+  compute_diagonal_by_face(parallel::distributed::Vector<number>& result) const
   {
     int dummy;
     result = 0;
@@ -91,7 +91,7 @@ public:
   }
 
   void
-  compute_diagonal_by_cell(parallel::distributed::Vector<number> &result) const
+  compute_diagonal_by_cell(parallel::distributed::Vector<number>& result) const
   {
     int dummy;
     result.zero_out_ghosts();
@@ -100,7 +100,7 @@ public:
   }
 
   void
-  initialize_dof_vector(parallel::distributed::Vector<number> &vector) const
+  initialize_dof_vector(parallel::distributed::Vector<number>& vector) const
   {
     data.initialize_dof_vector(vector);
   }
@@ -108,18 +108,18 @@ public:
 
 private:
   void
-  local_diagonal_dummy(const MatrixFree<dim, number> &,
-                       parallel::distributed::Vector<number> &,
-                       const int &,
-                       const std::pair<unsigned int, unsigned int> &) const
+  local_diagonal_dummy(const MatrixFree<dim, number>&,
+                       parallel::distributed::Vector<number>&,
+                       const int&,
+                       const std::pair<unsigned int, unsigned int>&) const
   {}
 
   void
   local_diagonal_face(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const int &,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const int&,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data, true);
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi_outer(data,
@@ -207,10 +207,10 @@ private:
 
   void
   local_diagonal_boundary(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const int &,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const int&,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
@@ -251,10 +251,10 @@ private:
 
   void
   local_diagonal_by_cell(
-    const MatrixFree<dim, number> &        data,
-    parallel::distributed::Vector<number> &dst,
-    const int &,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
+    const MatrixFree<dim, number>&         data,
+    parallel::distributed::Vector<number>& dst,
+    const int&,
+    const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phif(data);
 
@@ -371,7 +371,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv);
   mpi_initlog();

@@ -25,7 +25,7 @@
 
 
 void
-test(Vector<std::complex<double>> &v)
+test(Vector<std::complex<double>>& v)
 {
   for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = std::complex<double>(i + 1., i + 2.);
@@ -54,7 +54,7 @@ main()
       Vector<std::complex<double>> v(100);
       test(v);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

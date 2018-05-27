@@ -31,24 +31,24 @@
 
 template <int dim>
 void
-works(const FiniteElement<dim> &fe, const ComponentMask &m)
+works(const FiniteElement<dim>& fe, const ComponentMask& m)
 {
   deallog << "FE: " << fe.get_name() << " mask: " << m << std::endl;
 
-  const FiniteElement<dim> &child = fe.get_sub_fe(m);
+  const FiniteElement<dim>& child = fe.get_sub_fe(m);
 
   deallog << "  worked: " << child.get_name() << std::endl;
 }
 
 template <int dim>
 void
-fails(const FiniteElement<dim> &fe, const ComponentMask &m)
+fails(const FiniteElement<dim>& fe, const ComponentMask& m)
 {
   deallog << "FE: " << fe.get_name() << " mask: " << m << std::endl;
 
   try
     {
-      const FiniteElement<dim> &child = fe.get_sub_fe(m);
+      const FiniteElement<dim>& child = fe.get_sub_fe(m);
       deallog << "  ERROR: we succeeded and got " << child.get_name()
               << " but we should have failed!" << std::endl;
     }

@@ -46,7 +46,7 @@ public:
   {}
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &v) const
+  vector_value(const Point<dim>& p, Vector<double>& v) const
   {
     Assert(v.size() == dim, ExcInternalError());
 
@@ -71,7 +71,7 @@ public:
 
 template <int dim>
 void
-test(const Triangulation<dim> &tr, const hp::FECollection<dim> &fe)
+test(const Triangulation<dim>& tr, const hp::FECollection<dim>& fe)
 {
   hp::DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);

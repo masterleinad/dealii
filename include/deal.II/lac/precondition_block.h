@@ -167,7 +167,7 @@ public:
    * Additionally, a relaxation parameter for derived classes may be provided.
    */
   void
-  initialize(const MatrixType &A, const AdditionalData parameters);
+  initialize(const MatrixType& A, const AdditionalData parameters);
 
 protected:
   /**
@@ -182,9 +182,9 @@ protected:
    * Additionally, a relaxation parameter for derived classes may be provided.
    */
   void
-  initialize(const MatrixType &            A,
-             const std::vector<size_type> &permutation,
-             const std::vector<size_type> &inverse_permutation,
+  initialize(const MatrixType&             A,
+             const std::vector<size_type>& permutation,
+             const std::vector<size_type>& inverse_permutation,
              const AdditionalData          parameters);
 
   /**
@@ -211,8 +211,8 @@ protected:
    * other order is only admissible for block permutation.
    */
   void
-  set_permutation(const std::vector<size_type> &permutation,
-                  const std::vector<size_type> &inverse_permutation);
+  set_permutation(const std::vector<size_type>& permutation,
+                  const std::vector<size_type>& inverse_permutation);
 
   /**
    * Replacement of invert_diagblocks() for permuted preconditioning.
@@ -273,9 +273,9 @@ public:
    */
   template <typename number2>
   void
-  forward_step(Vector<number2> &      dst,
-               const Vector<number2> &prev,
-               const Vector<number2> &src,
+  forward_step(Vector<number2>&       dst,
+               const Vector<number2>& prev,
+               const Vector<number2>& src,
                const bool             transpose_diagonal) const;
 
   /**
@@ -291,9 +291,9 @@ public:
    */
   template <typename number2>
   void
-  backward_step(Vector<number2> &      dst,
-                const Vector<number2> &prev,
-                const Vector<number2> &src,
+  backward_step(Vector<number2>&       dst,
+                const Vector<number2>& prev,
+                const Vector<number2>& src,
                 const bool             transpose_diagonal) const;
 
 
@@ -411,7 +411,7 @@ public:
        * Constructor. Since we use accessors only for read access, a const
        * matrix pointer is sufficient.
        */
-      Accessor(const PreconditionBlockJacobi<MatrixType, inverse_type> *matrix,
+      Accessor(const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
                const size_type                                          row);
 
       /**
@@ -436,7 +436,7 @@ public:
       /**
        * The matrix accessed.
        */
-      const PreconditionBlockJacobi<MatrixType, inverse_type> *matrix;
+      const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix;
 
       /**
        * Save block size here for further reference.
@@ -469,42 +469,42 @@ public:
      * Constructor.
      */
     const_iterator(
-      const PreconditionBlockJacobi<MatrixType, inverse_type> *matrix,
+      const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
       const size_type                                          row);
 
     /**
      * Prefix increment.
      */
-    const_iterator &
+    const_iterator&
     operator++();
 
     /**
      * Dereferencing operator.
      */
-    const Accessor &operator*() const;
+    const Accessor& operator*() const;
 
     /**
      * Dereferencing operator.
      */
-    const Accessor *operator->() const;
+    const Accessor* operator->() const;
 
     /**
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const const_iterator &) const;
+    operator==(const const_iterator&) const;
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const const_iterator &) const;
+    operator!=(const const_iterator&) const;
 
     /**
      * Comparison operator. Result is true if either the first row number is
      * smaller or if the row numbers are equal and the first index is smaller.
      */
     bool
-    operator<(const const_iterator &) const;
+    operator<(const const_iterator&) const;
 
   private:
     /**
@@ -539,14 +539,14 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2> &, const Vector<number2> &) const;
+  vmult(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Same as @p vmult, since Jacobi is symmetric.
    */
   template <typename number2>
   void
-  Tvmult(Vector<number2> &, const Vector<number2> &) const;
+  Tvmult(Vector<number2>&, const Vector<number2>&) const;
   /**
    * Execute block Jacobi preconditioning, adding to @p dst.
    *
@@ -556,28 +556,28 @@ public:
    */
   template <typename number2>
   void
-  vmult_add(Vector<number2> &, const Vector<number2> &) const;
+  vmult_add(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Same as @p vmult_add, since Jacobi is symmetric.
    */
   template <typename number2>
   void
-  Tvmult_add(Vector<number2> &, const Vector<number2> &) const;
+  Tvmult_add(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Perform one step of the Jacobi iteration.
    */
   template <typename number2>
   void
-  step(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  step(Vector<number2>& dst, const Vector<number2>& rhs) const;
 
   /**
    * Perform one step of the Jacobi iteration.
    */
   template <typename number2>
   void
-  Tstep(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  Tstep(Vector<number2>& dst, const Vector<number2>& rhs) const;
 
   /**
    * Iterator starting at the first entry.
@@ -613,7 +613,7 @@ private:
    */
   template <typename number2>
   void
-  do_vmult(Vector<number2> &, const Vector<number2> &, bool adding) const;
+  do_vmult(Vector<number2>&, const Vector<number2>&, bool adding) const;
 
   friend class Accessor;
   friend class const_iterator;
@@ -704,7 +704,7 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2> &, const Vector<number2> &) const;
+  vmult(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Execute block SOR preconditioning.
@@ -718,7 +718,7 @@ public:
    */
   template <typename number2>
   void
-  vmult_add(Vector<number2> &, const Vector<number2> &) const;
+  vmult_add(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Backward application of vmult().
@@ -730,7 +730,7 @@ public:
    */
   template <typename number2>
   void
-  Tvmult(Vector<number2> &, const Vector<number2> &) const;
+  Tvmult(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Execute backward block SOR preconditioning.
@@ -744,21 +744,21 @@ public:
    */
   template <typename number2>
   void
-  Tvmult_add(Vector<number2> &, const Vector<number2> &) const;
+  Tvmult_add(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Perform one step of the SOR iteration.
    */
   template <typename number2>
   void
-  step(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  step(Vector<number2>& dst, const Vector<number2>& rhs) const;
 
   /**
    * Perform one step of the transposed SOR iteration.
    */
   template <typename number2>
   void
-  Tstep(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  Tstep(Vector<number2>& dst, const Vector<number2>& rhs) const;
 
 protected:
   /**
@@ -777,8 +777,8 @@ protected:
    */
   template <typename number2>
   void
-  forward(Vector<number2> &,
-          const Vector<number2> &,
+  forward(Vector<number2>&,
+          const Vector<number2>&,
           const bool transpose_diagonal,
           const bool adding) const;
 
@@ -793,8 +793,8 @@ protected:
    */
   template <typename number2>
   void
-  backward(Vector<number2> &,
-           const Vector<number2> &,
+  backward(Vector<number2>&,
+           const Vector<number2>&,
            const bool transpose_diagonal,
            const bool adding) const;
 };
@@ -874,28 +874,28 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2> &, const Vector<number2> &) const;
+  vmult(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Same as vmult()
    */
   template <typename number2>
   void
-  Tvmult(Vector<number2> &, const Vector<number2> &) const;
+  Tvmult(Vector<number2>&, const Vector<number2>&) const;
 
   /**
    * Perform one step of the SOR iteration.
    */
   template <typename number2>
   void
-  step(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  step(Vector<number2>& dst, const Vector<number2>& rhs) const;
 
   /**
    * Perform one step of the transposed SOR iteration.
    */
   template <typename number2>
   void
-  Tstep(Vector<number2> &dst, const Vector<number2> &rhs) const;
+  Tstep(Vector<number2>& dst, const Vector<number2>& rhs) const;
 };
 
 /*@}*/
@@ -920,7 +920,7 @@ PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
   const size_type    bs = blocksize;
   const unsigned int nb = i / bs;
 
-  const FullMatrix<inverse_type> &B = this->inverse(nb);
+  const FullMatrix<inverse_type>& B = this->inverse(nb);
 
   const size_type ib = i % bs;
   const size_type jb = j % bs;
@@ -938,7 +938,7 @@ PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
 template <typename MatrixType, typename inverse_type>
 inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   Accessor::Accessor(
-    const PreconditionBlockJacobi<MatrixType, inverse_type> *matrix,
+    const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
     const size_type                                          row) :
   matrix(matrix),
   b_iterator(&matrix->inverse(0), 0, 0),
@@ -997,7 +997,7 @@ PreconditionBlockJacobi<MatrixType,
 template <typename MatrixType, typename inverse_type>
 inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   const_iterator(
-    const PreconditionBlockJacobi<MatrixType, inverse_type> *matrix,
+    const PreconditionBlockJacobi<MatrixType, inverse_type>* matrix,
     const size_type                                          row) :
   accessor(matrix, row)
 {}
@@ -1005,7 +1005,7 @@ inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
 
 template <typename MatrixType, typename inverse_type>
 inline
-  typename PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator &
+  typename PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator&
   PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
   operator++()
 {
@@ -1029,7 +1029,7 @@ inline
 
 template <typename MatrixType, typename inverse_type>
 inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
-  const_iterator::Accessor &
+  const_iterator::Accessor&
     PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
     operator*() const
 {
@@ -1039,7 +1039,7 @@ inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
 
 template <typename MatrixType, typename inverse_type>
 inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
-  const_iterator::Accessor *
+  const_iterator::Accessor*
     PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
     operator->() const
 {
@@ -1050,7 +1050,7 @@ inline const typename PreconditionBlockJacobi<MatrixType, inverse_type>::
 template <typename MatrixType, typename inverse_type>
 inline bool
 PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
-operator==(const const_iterator &other) const
+operator==(const const_iterator& other) const
 {
   if (accessor.a_block == accessor.matrix->size() &&
       accessor.a_block == other.accessor.a_block)
@@ -1067,7 +1067,7 @@ operator==(const const_iterator &other) const
 template <typename MatrixType, typename inverse_type>
 inline bool
 PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
-operator!=(const const_iterator &other) const
+operator!=(const const_iterator& other) const
 {
   return !(*this == other);
 }
@@ -1076,7 +1076,7 @@ operator!=(const const_iterator &other) const
 template <typename MatrixType, typename inverse_type>
 inline bool
 PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
-operator<(const const_iterator &other) const
+operator<(const const_iterator& other) const
 {
   return (accessor.row() < other.accessor.row() ||
           (accessor.row() == other.accessor.row() &&

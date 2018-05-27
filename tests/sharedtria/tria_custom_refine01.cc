@@ -31,7 +31,7 @@
 
 template <int dim>
 void
-mypartition(parallel::shared::Triangulation<dim> &tria)
+mypartition(parallel::shared::Triangulation<dim>& tria)
 {
   const unsigned int nproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
@@ -81,7 +81,7 @@ test()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

@@ -38,7 +38,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 
   /**
    * n_components=2. First
@@ -46,7 +46,7 @@ public:
    * filled by @p{value} function.
    */
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const;
+  vector_value(const Point<dim>& p, Vector<double>& values) const;
 };
 
 
@@ -59,7 +59,7 @@ AutoSinExp<dim>::AutoSinExp() : AutoDerivativeFunction<dim>(1e-6, 2)
 
 template <int dim>
 double
-AutoSinExp<dim>::value(const Point<dim> &p, const unsigned int) const
+AutoSinExp<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   return std::sin(2 * p(0)) * std::exp(3 * p(1));
 }
@@ -67,7 +67,7 @@ AutoSinExp<dim>::value(const Point<dim> &p, const unsigned int) const
 
 template <int dim>
 void
-AutoSinExp<dim>::vector_value(const Point<dim> &p, Vector<double> &values) const
+AutoSinExp<dim>::vector_value(const Point<dim>& p, Vector<double>& values) const
 {
   Assert(values.size() == this->n_components,
          ExcDimensionMismatch(values.size(), this->n_components));
@@ -87,18 +87,18 @@ public:
   {}
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const;
+  gradient(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual void
-  vector_gradient(const Point<dim> &                    p,
-                  typename std::vector<Tensor<1, dim>> &gradients) const;
+  vector_gradient(const Point<dim>&                     p,
+                  typename std::vector<Tensor<1, dim>>& gradients) const;
 };
 
 
 
 template <int dim>
 Tensor<1, dim>
-ExactSinExp<dim>::gradient(const Point<dim> &p, const unsigned int) const
+ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> grad;
   grad[0] = 2 * std::cos(2 * p(0)) * std::exp(3 * p(1));
@@ -110,8 +110,8 @@ ExactSinExp<dim>::gradient(const Point<dim> &p, const unsigned int) const
 template <int dim>
 void
 ExactSinExp<dim>::vector_gradient(
-  const Point<dim> &                    p,
-  typename std::vector<Tensor<1, dim>> &gradients) const
+  const Point<dim>&                     p,
+  typename std::vector<Tensor<1, dim>>& gradients) const
 {
   Assert(gradients.size() == this->n_components,
          ExcDimensionMismatch(gradients.size(), this->n_components));

@@ -53,18 +53,18 @@ public:
       Vector()
       {}
 
-      Vector(const IndexSet local, const MPI_Comm &comm)
+      Vector(const IndexSet local, const MPI_Comm& comm)
       {}
 
-      Vector(const IndexSet &local, const IndexSet &ghost, const MPI_Comm &comm)
-      {}
-
-      void
-      reinit(const IndexSet local, const MPI_Comm &comm)
+      Vector(const IndexSet& local, const IndexSet& ghost, const MPI_Comm& comm)
       {}
 
       void
-      reinit(const IndexSet local, const IndexSet &ghost, const MPI_Comm &comm)
+      reinit(const IndexSet local, const MPI_Comm& comm)
+      {}
+
+      void
+      reinit(const IndexSet local, const IndexSet& ghost, const MPI_Comm& comm)
       {}
 
       void
@@ -90,27 +90,27 @@ public:
       }
 
 
-      const Vector &
+      const Vector&
       operator=(const double number)
       {
         return *this;
       }
 
 
-      const Vector &
+      const Vector&
       operator*=(const double factor)
       {
         return *this;
       }
 
-      double &
+      double&
       operator()(unsigned int)
       {
         static double d;
         return d;
       }
 
-      const double &
+      const double&
       operator()(unsigned int) const
       {
         static double d;
@@ -122,16 +122,16 @@ public:
     {
     public:
       template <typename SP>
-      SparseMatrix(const IndexSet &local,
-                   const IndexSet &,
-                   SP &            sp,
-                   const MPI_Comm &comm = MPI_COMM_WORLD)
+      SparseMatrix(const IndexSet& local,
+                   const IndexSet&,
+                   SP&             sp,
+                   const MPI_Comm& comm = MPI_COMM_WORLD)
       {}
 
       void
       set(unsigned int, unsigned int, double);
 
-      const double &
+      const double&
       operator()(unsigned int, unsigned int) const
       {
         static double d;

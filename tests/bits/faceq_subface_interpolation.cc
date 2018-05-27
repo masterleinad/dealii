@@ -25,7 +25,7 @@
 
 
 void
-output_matrix(const FullMatrix<double> &m)
+output_matrix(const FullMatrix<double>& m)
 {
   if ((m.m() == 0) || (m.n() == 0))
     {
@@ -45,7 +45,7 @@ output_matrix(const FullMatrix<double> &m)
 
 template <int dim>
 void
-check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
+check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 {
   // check all combinations of fe1 and fe2
   for (unsigned int subface = 0;
@@ -165,7 +165,7 @@ main()
 
       return 0;
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

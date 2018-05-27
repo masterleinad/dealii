@@ -77,8 +77,8 @@ template <int dim, int spacedim>
 void
 FE_Q_iso_Q1<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -107,10 +107,10 @@ FE_Q_iso_Q1<dim, spacedim>::clone() const
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_Q_iso_Q1<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim> &fe_other) const
+  const FiniteElement<dim, spacedim>& fe_other) const
 {
-  if (const FE_Q_iso_Q1<dim, spacedim> *fe_q_iso_q1_other =
-        dynamic_cast<const FE_Q_iso_Q1<dim, spacedim> *>(&fe_other))
+  if (const FE_Q_iso_Q1<dim, spacedim>* fe_q_iso_q1_other =
+        dynamic_cast<const FE_Q_iso_Q1<dim, spacedim>*>(&fe_other))
     {
       // different behavior as in FE_Q: as FE_Q_iso_Q1(2) is not a subspace of
       // FE_Q_iso_Q1(3), need that the element degrees are multiples of each
@@ -126,8 +126,8 @@ FE_Q_iso_Q1<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::neither_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
-             dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
+  else if (const FE_Nothing<dim>* fe_nothing =
+             dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
     {
       if (fe_nothing->is_dominating())
         {

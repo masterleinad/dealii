@@ -36,7 +36,7 @@ template <int dim, int fe_degree, typename number>
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, number> &data) : data(data), error(2)
+  MatrixFreeTest(const MatrixFree<dim, number>& data) : data(data), error(2)
   {}
 
   ~MatrixFreeTest()
@@ -45,7 +45,7 @@ public:
   }
 
   void
-  check_error(Vector<number> &src) const
+  check_error(Vector<number>& src) const
   {
     data.loop(&MatrixFreeTest::local_apply,
               &MatrixFreeTest::local_apply_face,
@@ -57,18 +57,18 @@ public:
 
 private:
   void
-  local_apply(const MatrixFree<dim, number> &,
-              Vector<number> &,
-              const Vector<number> &,
-              const std::pair<unsigned int, unsigned int> &) const
+  local_apply(const MatrixFree<dim, number>&,
+              Vector<number>&,
+              const Vector<number>&,
+              const std::pair<unsigned int, unsigned int>&) const
   {}
 
   void
   local_apply_face(
-    const MatrixFree<dim, number> &data,
-    Vector<number> &,
-    const Vector<number> &                       src,
-    const std::pair<unsigned int, unsigned int> &face_range) const
+    const MatrixFree<dim, number>& data,
+    Vector<number>&,
+    const Vector<number>&                        src,
+    const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> ref(data, true);
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> check(data,
@@ -168,7 +168,7 @@ private:
       }
   }
 
-  const MatrixFree<dim, number> &data;
+  const MatrixFree<dim, number>& data;
   mutable std::vector<double>    error;
 };
 

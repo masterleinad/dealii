@@ -109,7 +109,7 @@ namespace PETScWrappers
      */
     SparseMatrix(const size_type               m,
                  const size_type               n,
-                 const std::vector<size_type> &row_lengths,
+                 const std::vector<size_type>& row_lengths,
                  const bool                    is_symmetric = false);
 
     /**
@@ -130,7 +130,7 @@ namespace PETScWrappers
      * efficient to get memory allocation right from the start.
      */
     template <typename SparsityPatternType>
-    explicit SparseMatrix(const SparsityPatternType &sparsity_pattern,
+    explicit SparseMatrix(const SparsityPatternType& sparsity_pattern,
                           const bool preset_nonzero_locations = true);
 
     /**
@@ -142,7 +142,7 @@ namespace PETScWrappers
      * all elements of the matrix to zero, but keep the sparsity pattern
      * previously used.
      */
-    SparseMatrix &
+    SparseMatrix&
     operator=(const double d);
 
     /**
@@ -164,7 +164,7 @@ namespace PETScWrappers
     void
     reinit(const size_type               m,
            const size_type               n,
-           const std::vector<size_type> &row_lengths,
+           const std::vector<size_type>& row_lengths,
            const bool                    is_symmetric = false);
 
     /**
@@ -194,7 +194,7 @@ namespace PETScWrappers
      */
     template <typename SparsityPatternType>
     void
-    reinit(const SparsityPatternType &sparsity_pattern,
+    reinit(const SparsityPatternType& sparsity_pattern,
            const bool                 preset_nonzero_locations = true);
 
     /**
@@ -202,7 +202,7 @@ namespace PETScWrappers
      * matrix. Since this is a sequential matrix, it returns the MPI_COMM_SELF
      * communicator.
      */
-    virtual const MPI_Comm &
+    virtual const MPI_Comm&
     get_mpi_communicator() const override;
 
     /**
@@ -224,9 +224,9 @@ namespace PETScWrappers
      * This function calls MatrixBase::mmult() to do the actual work.
      */
     void
-    mmult(SparseMatrix &      C,
-          const SparseMatrix &B,
-          const MPI::Vector & V = MPI::Vector()) const;
+    mmult(SparseMatrix&       C,
+          const SparseMatrix& B,
+          const MPI::Vector&  V = MPI::Vector()) const;
 
     /**
      * Perform the matrix-matrix multiplication with the transpose of
@@ -236,20 +236,20 @@ namespace PETScWrappers
      * This function calls MatrixBase::Tmmult() to do the actual work.
      */
     void
-    Tmmult(SparseMatrix &      C,
-           const SparseMatrix &B,
-           const MPI::Vector & V = MPI::Vector()) const;
+    Tmmult(SparseMatrix&       C,
+           const SparseMatrix& B,
+           const MPI::Vector&  V = MPI::Vector()) const;
 
   private:
     /**
      * Purposefully not implemented
      */
-    SparseMatrix(const SparseMatrix &) = delete;
+    SparseMatrix(const SparseMatrix&) = delete;
     /**
      * Purposefully not implemented
      */
-    SparseMatrix &
-    operator=(const SparseMatrix &) = delete;
+    SparseMatrix&
+    operator=(const SparseMatrix&) = delete;
 
     /**
      * Do the actual work for the respective reinit() function and the
@@ -268,7 +268,7 @@ namespace PETScWrappers
     void
     do_reinit(const size_type               m,
               const size_type               n,
-              const std::vector<size_type> &row_lengths,
+              const std::vector<size_type>& row_lengths,
               const bool                    is_symmetric = false);
 
     /**
@@ -276,7 +276,7 @@ namespace PETScWrappers
      */
     template <typename SparsityPatternType>
     void
-    do_reinit(const SparsityPatternType &sparsity_pattern,
+    do_reinit(const SparsityPatternType& sparsity_pattern,
               const bool                 preset_nonzero_locations);
 
     /**

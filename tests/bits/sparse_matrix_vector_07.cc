@@ -26,7 +26,7 @@
 
 
 void
-test(Vector<double> &v, Vector<double> &w, Vector<double> &x)
+test(Vector<double>& v, Vector<double>& w, Vector<double>& x)
 {
   // set some entries in the
   // matrix. actually, set them all
@@ -86,7 +86,7 @@ main()
       Vector<double> x(100);
       test(v, w, x);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

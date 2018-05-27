@@ -26,7 +26,7 @@
 
 
 void
-test(Vector<double> &v, Vector<float> &w)
+test(Vector<double>& v, Vector<float>& w)
 {
   // set only certain elements of each
   // vector
@@ -56,7 +56,7 @@ main()
       Vector<float>  w(100);
       test(v, w);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

@@ -92,7 +92,7 @@ public:
    */
   template <typename T = DataType>
   void
-  initialize(const CellIteratorType &cell,
+  initialize(const CellIteratorType& cell,
              const unsigned int      number_of_data_points_per_cell);
 
   /**
@@ -102,8 +102,8 @@ public:
    */
   template <typename T = DataType>
   void
-  initialize(const CellIteratorType &cell_start,
-             const CellIteratorType &cell_end,
+  initialize(const CellIteratorType& cell_start,
+             const CellIteratorType& cell_end,
              const unsigned int      number_of_data_points_per_cell);
 
   /**
@@ -116,7 +116,7 @@ public:
    * that the only references to the stored data are that made by this class.
    */
   bool
-  erase(const CellIteratorType &cell);
+  erase(const CellIteratorType& cell);
 
   /**
    * Clear all the data stored in this object.
@@ -137,7 +137,7 @@ public:
    */
   template <typename T = DataType>
   std::vector<std::shared_ptr<T>>
-  get_data(const CellIteratorType &cell);
+  get_data(const CellIteratorType& cell);
 
   /**
    * Get a vector of constant pointers to data located at @p cell .
@@ -152,7 +152,7 @@ public:
    */
   template <typename T = DataType>
   std::vector<std::shared_ptr<const T>>
-  get_data(const CellIteratorType &cell) const;
+  get_data(const CellIteratorType& cell) const;
 
 private:
   /**
@@ -212,7 +212,7 @@ public:
    * case.
    */
   virtual void
-  pack_values(std::vector<double> &values) const = 0;
+  pack_values(std::vector<double>& values) const = 0;
 
   /**
    * The opposite of the above, namely
@@ -223,7 +223,7 @@ public:
    * case.
    */
   virtual void
-  unpack_values(const std::vector<double> &values) = 0;
+  unpack_values(const std::vector<double>& values) = 0;
 };
 
 
@@ -366,9 +366,9 @@ namespace parallel
        * @note Since this class does projection on cell-by-cell basis,
        * @p projection_fe is only required to be continuous within the cell.
        */
-      ContinuousQuadratureDataTransfer(const FiniteElement<dim> &projection_fe,
-                                       const Quadrature<dim> &mass_quadrature,
-                                       const Quadrature<dim> &data_quadrature);
+      ContinuousQuadratureDataTransfer(const FiniteElement<dim>& projection_fe,
+                                       const Quadrature<dim>& mass_quadrature,
+                                       const Quadrature<dim>& data_quadrature);
 
       /**
        * Destructor.
@@ -387,8 +387,8 @@ namespace parallel
        */
       void
       prepare_for_coarsening_and_refinement(
-        parallel::distributed::Triangulation<dim> &  tria,
-        CellDataStorage<CellIteratorType, DataType> &data_storage);
+        parallel::distributed::Triangulation<dim>&   tria,
+        CellDataStorage<CellIteratorType, DataType>& data_storage);
 
       /**
        * Interpolate the data previously stored in this object before the mesh
@@ -411,10 +411,10 @@ namespace parallel
        */
       void
       pack_function(const typename parallel::distributed::
-                      Triangulation<dim, dim>::cell_iterator &cell,
+                      Triangulation<dim, dim>::cell_iterator& cell,
                     const typename parallel::distributed::
                       Triangulation<dim, dim>::CellStatus status,
-                    void *                                data);
+                    void*                                 data);
 
       /**
        * A callback function used to unpack the data on the current mesh that
@@ -423,10 +423,10 @@ namespace parallel
        */
       void
       unpack_function(const typename parallel::distributed::
-                        Triangulation<dim, dim>::cell_iterator &cell,
+                        Triangulation<dim, dim>::cell_iterator& cell,
                       const typename parallel::distributed::
                         Triangulation<dim, dim>::CellStatus status,
-                      const void *                          data);
+                      const void*                           data);
 
       /**
        * FiniteElement used to project data from and to quadrature points.
@@ -484,13 +484,13 @@ namespace parallel
       /**
        * A pointer to the CellDataStorage class whose data will be transferred.
        */
-      CellDataStorage<CellIteratorType, DataType> *data_storage;
+      CellDataStorage<CellIteratorType, DataType>* data_storage;
 
       /**
        * A pointer to the distributed triangulation to which cell data is
        * attached.
        */
-      parallel::distributed::Triangulation<dim> *triangulation;
+      parallel::distributed::Triangulation<dim>* triangulation;
     };
 
   } // namespace distributed
@@ -513,7 +513,7 @@ template <typename CellIteratorType, typename DataType>
 template <typename T>
 void
 CellDataStorage<CellIteratorType, DataType>::initialize(
-  const CellIteratorType &cell,
+  const CellIteratorType& cell,
   const unsigned int      n_q_points)
 {
   static_assert(std::is_base_of<DataType, T>::value,
@@ -537,8 +537,8 @@ template <typename CellIteratorType, typename DataType>
 template <typename T>
 void
 CellDataStorage<CellIteratorType, DataType>::initialize(
-  const CellIteratorType &cell_start,
-  const CellIteratorType &cell_end,
+  const CellIteratorType& cell_start,
+  const CellIteratorType& cell_end,
   const unsigned int      number)
 {
   for (CellIteratorType it = cell_start; it != cell_end; it++)
@@ -550,7 +550,7 @@ CellDataStorage<CellIteratorType, DataType>::initialize(
 
 template <typename CellIteratorType, typename DataType>
 bool
-CellDataStorage<CellIteratorType, DataType>::erase(const CellIteratorType &cell)
+CellDataStorage<CellIteratorType, DataType>::erase(const CellIteratorType& cell)
 {
   const auto it = map.find(cell);
   for (unsigned int i = 0; i < it->second.size(); i++)
@@ -594,7 +594,7 @@ template <typename CellIteratorType, typename DataType>
 template <typename T>
 std::vector<std::shared_ptr<T>>
 CellDataStorage<CellIteratorType, DataType>::get_data(
-  const CellIteratorType &cell)
+  const CellIteratorType& cell)
 {
   static_assert(std::is_base_of<DataType, T>::value,
                 "User's T class should be derived from user's DataType class");
@@ -619,7 +619,7 @@ template <typename CellIteratorType, typename DataType>
 template <typename T>
 std::vector<std::shared_ptr<const T>>
 CellDataStorage<CellIteratorType, DataType>::get_data(
-  const CellIteratorType &cell) const
+  const CellIteratorType& cell) const
 {
   static_assert(std::is_base_of<DataType, T>::value,
                 "User's T class should be derived from user's DataType class");
@@ -650,9 +650,9 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
  */
 template <typename CellIteratorType, typename DataType>
 void
-pack_cell_data(const CellIteratorType &                           cell,
-               const CellDataStorage<CellIteratorType, DataType> *data_storage,
-               FullMatrix<double> &                               matrix_data)
+pack_cell_data(const CellIteratorType&                            cell,
+               const CellDataStorage<CellIteratorType, DataType>* data_storage,
+               FullMatrix<double>&                                matrix_data)
 {
   static_assert(
     std::is_base_of<TransferableQuadraturePointData, DataType>::value,
@@ -684,9 +684,9 @@ pack_cell_data(const CellIteratorType &                           cell,
  */
 template <typename CellIteratorType, typename DataType>
 void
-unpack_to_cell_data(const CellIteratorType &                     cell,
-                    const FullMatrix<double> &                   values_at_qp,
-                    CellDataStorage<CellIteratorType, DataType> *data_storage)
+unpack_to_cell_data(const CellIteratorType&                      cell,
+                    const FullMatrix<double>&                    values_at_qp,
+                    CellDataStorage<CellIteratorType, DataType>* data_storage)
 {
   static_assert(
     std::is_base_of<TransferableQuadraturePointData, DataType>::value,
@@ -717,9 +717,9 @@ namespace parallel
   {
     template <int dim, typename DataType>
     ContinuousQuadratureDataTransfer<dim, DataType>::
-      ContinuousQuadratureDataTransfer(const FiniteElement<dim> &projection_fe_,
-                                       const Quadrature<dim> &   lhs_quadrature,
-                                       const Quadrature<dim> &rhs_quadrature) :
+      ContinuousQuadratureDataTransfer(const FiniteElement<dim>& projection_fe_,
+                                       const Quadrature<dim>&    lhs_quadrature,
+                                       const Quadrature<dim>& rhs_quadrature) :
       projection_fe(
         std::unique_ptr<const FiniteElement<dim>>(projection_fe_.clone())),
       data_size_in_bytes(0),
@@ -758,8 +758,8 @@ namespace parallel
     void
     ContinuousQuadratureDataTransfer<dim, DataType>::
       prepare_for_coarsening_and_refinement(
-        parallel::distributed::Triangulation<dim> &  tr_,
-        CellDataStorage<CellIteratorType, DataType> &data_storage_)
+        parallel::distributed::Triangulation<dim>&   tr_,
+        CellDataStorage<CellIteratorType, DataType>& data_storage_)
     {
       Assert(data_storage == nullptr,
              ExcMessage("This function can be called only once"));
@@ -828,13 +828,13 @@ namespace parallel
     void
     ContinuousQuadratureDataTransfer<dim, DataType>::pack_function(
       const typename parallel::distributed::Triangulation<dim,
-                                                          dim>::cell_iterator
-        &cell,
+                                                          dim>::cell_iterator&
+        cell,
       const typename parallel::distributed::Triangulation<dim, dim>::
         CellStatus /*status*/,
-      void *data)
+      void* data)
     {
-      double *data_store = reinterpret_cast<double *>(data);
+      double* data_store = reinterpret_cast<double*>(data);
 
       pack_cell_data(cell, data_storage, matrix_quadrature);
 
@@ -850,18 +850,18 @@ namespace parallel
     void
     ContinuousQuadratureDataTransfer<dim, DataType>::unpack_function(
       const typename parallel::distributed::Triangulation<dim,
-                                                          dim>::cell_iterator
-        &cell,
+                                                          dim>::cell_iterator&
+        cell,
       const typename parallel::distributed::Triangulation<dim, dim>::CellStatus
                   status,
-      const void *data)
+      const void* data)
     {
       Assert((status !=
               parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN),
              ExcNotImplemented());
       (void)status;
 
-      const double *data_store = reinterpret_cast<const double *>(data);
+      const double* data_store = reinterpret_cast<const double*>(data);
 
       std::memcpy(&matrix_dofs(0, 0), data_store, data_size_in_bytes);
 

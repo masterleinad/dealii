@@ -85,7 +85,7 @@ namespace internal
       /**
        * Copy constructor.
        */
-      DoFInfo(const DoFInfo &) = default;
+      DoFInfo(const DoFInfo&) = default;
 
       /**
        * Clear all data fields in this class.
@@ -112,12 +112,12 @@ namespace internal
        */
       void
       read_dof_indices(
-        const std::vector<types::global_dof_index> &local_indices,
-        const std::vector<unsigned int> &           lexicographic_inv,
-        const ConstraintMatrix &                    constraints,
+        const std::vector<types::global_dof_index>& local_indices,
+        const std::vector<unsigned int>&            lexicographic_inv,
+        const ConstraintMatrix&                     constraints,
         const unsigned int                          cell_number,
-        ConstraintValues<double> &                  constraint_values,
-        bool &                                      cell_at_boundary);
+        ConstraintValues<double>&                   constraint_values,
+        bool&                                       cell_at_boundary);
 
       /**
        * This method assigns the correct indices to ghost indices from the
@@ -127,7 +127,7 @@ namespace internal
        * access to all vector entries.
        */
       void
-      assign_ghosts(const std::vector<unsigned int> &boundary_cells);
+      assign_ghosts(const std::vector<unsigned int>& boundary_cells);
 
       /**
        * This method reorders the way cells are gone through based on a given
@@ -136,10 +136,10 @@ namespace internal
        * vectorization.
        */
       void
-      reorder_cells(const TaskInfo &                  task_info,
-                    const std::vector<unsigned int> & renumbering,
-                    const std::vector<unsigned int> & constraint_pool_row_index,
-                    const std::vector<unsigned char> &irregular_cells);
+      reorder_cells(const TaskInfo&                   task_info,
+                    const std::vector<unsigned int>&  renumbering,
+                    const std::vector<unsigned int>&  constraint_pool_row_index,
+                    const std::vector<unsigned char>& irregular_cells);
 
       /**
        * Finds possible compression for the cell indices that we can apply for
@@ -147,7 +147,7 @@ namespace internal
        */
       void
       compute_cell_index_compression(
-        const std::vector<unsigned char> &irregular_cells);
+        const std::vector<unsigned char>& irregular_cells);
 
       /**
        * Finds possible compression for the face indices that we can apply for
@@ -156,7 +156,7 @@ namespace internal
       template <int length>
       void
       compute_face_index_compression(
-        const std::vector<FaceToCellTopology<length>> &faces);
+        const std::vector<FaceToCellTopology<length>>& faces);
 
       /**
        * This function computes the connectivity of the currently stored
@@ -164,9 +164,9 @@ namespace internal
        * fills the structure into a sparsity pattern.
        */
       void
-      make_connectivity_graph(const TaskInfo &                 task_info,
-                              const std::vector<unsigned int> &renumbering,
-                              DynamicSparsityPattern &connectivity) const;
+      make_connectivity_graph(const TaskInfo&                  task_info,
+                              const std::vector<unsigned int>& renumbering,
+                              DynamicSparsityPattern& connectivity) const;
 
       /**
        * Compute a renumbering of the degrees of freedom to improve the data
@@ -180,7 +180,7 @@ namespace internal
        */
       void
       compute_dof_renumbering(
-        std::vector<types::global_dof_index> &renumbering);
+        std::vector<types::global_dof_index>& renumbering);
 
       /**
        * Fills the array that defines how to zero selected ranges in the result
@@ -194,8 +194,8 @@ namespace internal
       template <int length>
       void
       compute_vector_zero_access_pattern(
-        const TaskInfo &                               task_info,
-        const std::vector<FaceToCellTopology<length>> &faces);
+        const TaskInfo&                                task_info,
+        const std::vector<FaceToCellTopology<length>>& faces);
 
       /**
        * Return the memory consumption in bytes of this class.
@@ -209,8 +209,8 @@ namespace internal
        */
       template <typename StreamType>
       void
-      print_memory_consumption(StreamType &    out,
-                               const TaskInfo &size_info) const;
+      print_memory_consumption(StreamType&     out,
+                               const TaskInfo& size_info) const;
 
       /**
        * Prints a representation of the indices in the class to the given
@@ -218,9 +218,9 @@ namespace internal
        */
       template <typename Number>
       void
-      print(const std::vector<Number> &      constraint_pool_data,
-            const std::vector<unsigned int> &constraint_pool_row_index,
-            std::ostream &                   out) const;
+      print(const std::vector<Number>&       constraint_pool_data,
+            const std::vector<unsigned int>& constraint_pool_row_index,
+            std::ostream&                    out) const;
 
       /**
        * Enum for various storage variants of the indices. This storage format

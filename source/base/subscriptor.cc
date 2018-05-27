@@ -24,7 +24,7 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-static const char *unknown_subscriber = "unknown subscriber";
+static const char* unknown_subscriber = "unknown subscriber";
 
 
 Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
@@ -35,12 +35,12 @@ Subscriptor::Subscriptor() : counter(0), object_info(nullptr)
 
 
 
-Subscriptor::Subscriptor(const Subscriptor &) : counter(0), object_info(nullptr)
+Subscriptor::Subscriptor(const Subscriptor&) : counter(0), object_info(nullptr)
 {}
 
 
 
-Subscriptor::Subscriptor(Subscriptor &&subscriptor) noexcept :
+Subscriptor::Subscriptor(Subscriptor&& subscriptor) noexcept :
   counter(0),
   object_info(subscriptor.object_info)
 {
@@ -122,8 +122,8 @@ Subscriptor::check_no_subscribers() const noexcept
 
 
 
-Subscriptor &
-Subscriptor::operator=(const Subscriptor &s)
+Subscriptor&
+Subscriptor::operator=(const Subscriptor& s)
 {
   check_no_subscribers();
   object_info = s.object_info;
@@ -132,8 +132,8 @@ Subscriptor::operator=(const Subscriptor &s)
 
 
 
-Subscriptor &
-Subscriptor::operator=(Subscriptor &&s) noexcept
+Subscriptor&
+Subscriptor::operator=(Subscriptor&& s) noexcept
 {
   check_no_subscribers();
   s.check_no_subscribers();
@@ -144,7 +144,7 @@ Subscriptor::operator=(Subscriptor &&s) noexcept
 
 
 void
-Subscriptor::subscribe(const char *id) const
+Subscriptor::subscribe(const char* id) const
 {
 #ifdef DEBUG
   if (object_info == nullptr)
@@ -154,7 +154,7 @@ Subscriptor::subscribe(const char *id) const
   // This feature is disabled when we compile with threads: see the
   // documentation of this class.
 #  ifndef DEAL_II_WITH_THREADS
-  const char *const name = (id != 0) ? id : unknown_subscriber;
+  const char* const name = (id != 0) ? id : unknown_subscriber;
 
   map_iterator it = counter_map.find(name);
   if (it == counter_map.end())
@@ -172,10 +172,10 @@ Subscriptor::subscribe(const char *id) const
 
 
 void
-Subscriptor::unsubscribe(const char *id) const
+Subscriptor::unsubscribe(const char* id) const
 {
 #ifdef DEBUG
-  const char *name = (id != nullptr) ? id : unknown_subscriber;
+  const char* name = (id != nullptr) ? id : unknown_subscriber;
   AssertNothrow(counter > 0, ExcNoSubscriber(object_info->name(), name));
   // This is for the case that we do
   // not abort after the exception

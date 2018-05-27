@@ -43,11 +43,11 @@ namespace internal
       ParallelData(const unsigned int               n_datasets,
                    const unsigned int               n_subdivisions,
                    const unsigned int               n_patches_per_circle,
-                   const std::vector<unsigned int> &n_postprocessor_outputs,
-                   const Mapping<dim, spacedim> &   mapping,
+                   const std::vector<unsigned int>& n_postprocessor_outputs,
+                   const Mapping<dim, spacedim>&    mapping,
                    const std::vector<
-                     std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
-                     &               finite_elements,
+                     std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
+                                     finite_elements,
                    const UpdateFlags update_flags);
 
       const unsigned int n_patches_per_circle;
@@ -185,7 +185,7 @@ public:
    * good idea.
    */
   virtual cell_iterator
-  next_cell(const cell_iterator &cell);
+  next_cell(const cell_iterator& cell);
 
   /**
    * Exception
@@ -208,12 +208,12 @@ private:
    */
   void
   build_one_patch(
-    const cell_iterator *cell,
+    const cell_iterator* cell,
     internal::DataOutRotationImplementation::ParallelData<dimension,
-                                                          space_dimension>
-      &data,
-    std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>
-      &my_patches);
+                                                          space_dimension>&
+      data,
+    std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>&
+      my_patches);
 };
 
 

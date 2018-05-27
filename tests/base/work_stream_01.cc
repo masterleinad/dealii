@@ -34,15 +34,15 @@ struct CopyData
 struct X
 {
   void
-  worker(const std::vector<unsigned int>::iterator &i,
-         ScratchData &,
-         CopyData &ad)
+  worker(const std::vector<unsigned int>::iterator& i,
+         ScratchData&,
+         CopyData& ad)
   {
     ad.computed = *i * 2;
   }
 
   void
-  copier(const CopyData &ad)
+  copier(const CopyData& ad)
   {
     deallog << ad.computed << std::endl;
   }

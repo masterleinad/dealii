@@ -23,7 +23,7 @@
 
 template <typename number>
 void
-checkAssign(FullMatrix<number> &A, FullMatrix<number> &B)
+checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
 {
   deallog << "=" << std::endl;
   deallog << "Init with matrix 1" << std::endl;

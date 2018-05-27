@@ -37,7 +37,7 @@ struct X
   int i;
 };
 
-Threads::ThreadLocalStorage<X> *tls_data;
+Threads::ThreadLocalStorage<X>* tls_data;
 
 static std::atomic<int> counter(0);
 

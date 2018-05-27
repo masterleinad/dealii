@@ -174,7 +174,7 @@ LaplaceProblem::assemble_system()
     {
       x_fe_values.reinit(cell);
 
-      const FEValues<2> &fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
 
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -209,9 +209,9 @@ LaplaceProblem::assemble_system()
   hanging_node_constraints.condense(system_matrix);
   hanging_node_constraints.condense(system_rhs);
 
-  std::map<types::global_dof_index, double>         boundary_values;
-  Functions::ZeroFunction<2>                        zero;
-  std::map<types::boundary_id, const Function<2> *> b_v_functions{
+  std::map<types::global_dof_index, double>        boundary_values;
+  Functions::ZeroFunction<2>                       zero;
+  std::map<types::boundary_id, const Function<2>*> b_v_functions{
     {types::boundary_id(0), &zero}};
 
   VectorTools::interpolate_boundary_values(

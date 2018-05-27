@@ -53,42 +53,42 @@ print()
            AD::is_tapeless_ad_number<ADNumber>::value,
          ExcMessage("Error const"));
 
-  Assert(AD::is_ad_number<ADNumber &>::value ==
+  Assert(AD::is_ad_number<ADNumber&>::value ==
            AD::is_ad_number<ADNumber>::value,
          ExcMessage("Error reference"));
-  Assert(AD::is_adolc_number<ADNumber &>::value ==
+  Assert(AD::is_adolc_number<ADNumber&>::value ==
            AD::is_adolc_number<ADNumber>::value,
          ExcMessage("Error reference"));
-  Assert(AD::is_taped_ad_number<ADNumber &>::value ==
+  Assert(AD::is_taped_ad_number<ADNumber&>::value ==
            AD::is_taped_ad_number<ADNumber>::value,
          ExcMessage("Error reference"));
-  Assert(AD::is_tapeless_ad_number<ADNumber &>::value ==
+  Assert(AD::is_tapeless_ad_number<ADNumber&>::value ==
            AD::is_tapeless_ad_number<ADNumber>::value,
          ExcMessage("Error reference"));
 
-  Assert(AD::is_ad_number<const ADNumber &>::value ==
+  Assert(AD::is_ad_number<const ADNumber&>::value ==
            AD::is_ad_number<ADNumber>::value,
          ExcMessage("Error const reference"));
-  Assert(AD::is_adolc_number<const ADNumber &>::value ==
+  Assert(AD::is_adolc_number<const ADNumber&>::value ==
            AD::is_adolc_number<ADNumber>::value,
          ExcMessage("Error const reference"));
-  Assert(AD::is_taped_ad_number<const ADNumber &>::value ==
+  Assert(AD::is_taped_ad_number<const ADNumber&>::value ==
            AD::is_taped_ad_number<ADNumber>::value,
          ExcMessage("Error const reference"));
-  Assert(AD::is_tapeless_ad_number<const ADNumber &>::value ==
+  Assert(AD::is_tapeless_ad_number<const ADNumber&>::value ==
            AD::is_tapeless_ad_number<ADNumber>::value,
          ExcMessage("Error const reference"));
 
-  Assert(AD::is_ad_number<ADNumber &&>::value ==
+  Assert(AD::is_ad_number<ADNumber&&>::value ==
            AD::is_ad_number<ADNumber>::value,
          ExcMessage("Error rvalue"));
-  Assert(AD::is_adolc_number<ADNumber &&>::value ==
+  Assert(AD::is_adolc_number<ADNumber&&>::value ==
            AD::is_adolc_number<ADNumber>::value,
          ExcMessage("Error rvalue"));
-  Assert(AD::is_taped_ad_number<ADNumber &&>::value ==
+  Assert(AD::is_taped_ad_number<ADNumber&&>::value ==
            AD::is_taped_ad_number<ADNumber>::value,
          ExcMessage("Error rvalue"));
-  Assert(AD::is_tapeless_ad_number<ADNumber &&>::value ==
+  Assert(AD::is_tapeless_ad_number<ADNumber&&>::value ==
            AD::is_tapeless_ad_number<ADNumber>::value,
          ExcMessage("Error rvalue"));
 }

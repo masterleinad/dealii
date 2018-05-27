@@ -21,7 +21,7 @@
 #include "../tests.h"
 
 void
-test(IndexSet &index_set, unsigned int n)
+test(IndexSet& index_set, unsigned int n)
 {
   deallog << "n=" << n;
 

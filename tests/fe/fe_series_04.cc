@@ -65,17 +65,17 @@ public:
   {}
 
   virtual double
-  value(const dealii::Point<dim> &point,
+  value(const dealii::Point<dim>& point,
         const unsigned int        component = 0) const;
 };
 
 template <int dim>
 double
-LegendreFunction<dim>::value(const Point<dim> &point, const unsigned int) const
+LegendreFunction<dim>::value(const Point<dim>& point, const unsigned int) const
 {
   Assert(dim == 1, dealii::ExcNotImplemented());
 
-  const double &x = point[0];
+  const double& x = point[0];
   return 1.81735e-05 * (1.0 - x) * (0.5 - x) * 2 +
          0.000901649 * x * (x - 0.5) * 2 + 1.35059e-05 * x * (1.0 - x) * 4.0;
 }
@@ -83,7 +83,7 @@ LegendreFunction<dim>::value(const Point<dim> &point, const unsigned int) const
 
 template <int dim>
 void
-test(const LegendreFunction<dim> &func, const unsigned int poly_degree)
+test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 {
   Triangulation<dim>    triangulation;
   hp::DoFHandler<dim>   dof_handler(triangulation);
@@ -171,7 +171,7 @@ test_legendre_orthonormal(const unsigned int N)
         double ortho = 0;
         for (unsigned int q = 0; q < quadrature.size(); ++q)
           {
-            const Point<dim> &x_q = quadrature.point(q);
+            const Point<dim>& x_q = quadrature.point(q);
             const double      m   = 0.5;              // mid-point
             const double      h   = 0.5;              // half-length
             const double      x   = (x_q[0] - m) / h; // 1D only

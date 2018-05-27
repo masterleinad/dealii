@@ -21,7 +21,7 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2> &, const Vector<number2> &) const;
+  vmult(Vector<number2>&, const Vector<number2>&) const;
 
 protected:
   const unsigned int nx;
@@ -38,7 +38,7 @@ QuickMatrix<number>::QuickMatrix(unsigned int nx, unsigned int ny) :
 template <typename number>
 template <typename number2>
 void
-QuickMatrix<number>::vmult(Vector<number2> &d, const Vector<number2> &s) const
+QuickMatrix<number>::vmult(Vector<number2>& d, const Vector<number2>& s) const
 {
   const unsigned int step  = nx - 1;
   const unsigned int right = step - 1;

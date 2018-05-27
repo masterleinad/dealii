@@ -27,7 +27,7 @@
 // function.
 template <int dim, typename Number>
 void fill_tensor(
-  dealii::SymmetricTensor<2, dim, dealii::VectorizedArray<Number>> &A)
+  dealii::SymmetricTensor<2, dim, dealii::VectorizedArray<Number>>& A)
 {
   Number counter = 0.0;
   for (unsigned int i = 0; i < dim; ++i)

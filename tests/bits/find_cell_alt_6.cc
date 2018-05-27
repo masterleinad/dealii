@@ -41,9 +41,9 @@
 
 
 
-void check(Triangulation<2> &tria)
+void check(Triangulation<2>& tria)
 {
-  const std::vector<Point<2>> &v = tria.get_vertices();
+  const std::vector<Point<2>>& v = tria.get_vertices();
   MappingQGeneric<2>           map(1);
 
   for (unsigned i = 0; i < tria.n_vertices(); i++)
@@ -73,7 +73,7 @@ main()
       coarse_grid.execute_coarsening_and_refinement();
       check(coarse_grid);
     }
-  catch (const std::exception &exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

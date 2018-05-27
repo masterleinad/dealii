@@ -115,7 +115,7 @@ public:
   /**
    * Convert a tensor to a point.
    */
-  explicit Point(const Tensor<1, dim, Number> &);
+  explicit Point(const Tensor<1, dim, Number>&);
 
   /**
    * Constructor for one dimensional points. This function is only implemented
@@ -160,7 +160,7 @@ public:
   /**
    * Read and write access to the <tt>index</tt>th coordinate.
    */
-  Number &
+  Number&
   operator()(const unsigned int index);
 
   /*
@@ -172,7 +172,7 @@ public:
    * Add an offset given as Tensor<1,dim,Number> to a point.
    */
   Point<dim, Number>
-  operator+(const Tensor<1, dim, Number> &) const;
+  operator+(const Tensor<1, dim, Number>&) const;
 
   /**
    * Subtract two points, i.e., obtain the vector that connects the two. As
@@ -182,7 +182,7 @@ public:
    * rather than as a Point@<dim@>.
    */
   Tensor<1, dim, Number>
-  operator-(const Point<dim, Number> &) const;
+  operator-(const Point<dim, Number>&) const;
 
   /**
    * Subtract a difference vector (represented by a Tensor@<1,dim@>) from the
@@ -191,7 +191,7 @@ public:
    * Point@<dim@> object rather than as a Tensor@<1,dim@>.
    */
   Point<dim, Number>
-  operator-(const Tensor<1, dim, Number> &) const;
+  operator-(const Tensor<1, dim, Number>&) const;
 
   /**
    * The opposite vector.
@@ -231,7 +231,7 @@ public:
   /**
    * Return the scalar product of the vectors representing two points.
    */
-  Number operator*(const Tensor<1, dim, Number> &p) const;
+  Number operator*(const Tensor<1, dim, Number>& p) const;
 
   /**
    * Return the scalar product of this point vector with itself, i.e. the
@@ -252,14 +252,14 @@ public:
    * vectors representing the two points.
    */
   typename numbers::NumberTraits<Number>::real_type
-  distance(const Point<dim, Number> &p) const;
+  distance(const Point<dim, Number>& p) const;
 
   /**
    * Return the squared Euclidean distance of <tt>this</tt> point to the point
    * <tt>p</tt>.
    */
   typename numbers::NumberTraits<Number>::real_type
-  distance_square(const Point<dim, Number> &p) const;
+  distance_square(const Point<dim, Number>& p) const;
 
   /**
    * @}
@@ -271,7 +271,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive &ar, const unsigned int version);
+  serialize(Archive& ar, const unsigned int version);
 };
 
 /*--------------------------- Inline functions: Point -----------------------*/
@@ -287,7 +287,7 @@ inline Point<dim, Number>::Point()
 
 
 template <int dim, typename Number>
-inline Point<dim, Number>::Point(const Tensor<1, dim, Number> &t) :
+inline Point<dim, Number>::Point(const Tensor<1, dim, Number>& t) :
   Tensor<1, dim, Number>(t)
 {}
 
@@ -379,7 +379,7 @@ Point<dim, Number>::operator()(const unsigned int index) const
 
 
 template <int dim, typename Number>
-inline Number &
+inline Number&
 Point<dim, Number>::operator()(const unsigned int index)
 {
   AssertIndexRange((int)index, dim);
@@ -390,7 +390,7 @@ Point<dim, Number>::operator()(const unsigned int index)
 
 template <int dim, typename Number>
 inline Point<dim, Number>
-Point<dim, Number>::operator+(const Tensor<1, dim, Number> &p) const
+Point<dim, Number>::operator+(const Tensor<1, dim, Number>& p) const
 {
   Point<dim, Number> tmp = *this;
   tmp += p;
@@ -401,7 +401,7 @@ Point<dim, Number>::operator+(const Tensor<1, dim, Number> &p) const
 
 template <int dim, typename Number>
 inline Tensor<1, dim, Number>
-Point<dim, Number>::operator-(const Point<dim, Number> &p) const
+Point<dim, Number>::operator-(const Point<dim, Number>& p) const
 {
   return (Tensor<1, dim, Number>(*this) -= p);
 }
@@ -410,7 +410,7 @@ Point<dim, Number>::operator-(const Point<dim, Number> &p) const
 
 template <int dim, typename Number>
 inline Point<dim, Number>
-Point<dim, Number>::operator-(const Tensor<1, dim, Number> &p) const
+Point<dim, Number>::operator-(const Tensor<1, dim, Number>& p) const
 {
   Point<dim, Number> tmp = *this;
   tmp -= p;
@@ -465,7 +465,7 @@ Point<dim, Number>::operator/(const OtherNumber factor) const
 
 template <int dim, typename Number>
 inline Number Point<dim, Number>::
-              operator*(const Tensor<1, dim, Number> &p) const
+              operator*(const Tensor<1, dim, Number>& p) const
 {
   Number res = Number();
   for (unsigned int i = 0; i < dim; ++i)
@@ -485,7 +485,7 @@ Point<dim, Number>::square() const
 
 template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
-Point<dim, Number>::distance(const Point<dim, Number> &p) const
+Point<dim, Number>::distance(const Point<dim, Number>& p) const
 {
   return std::sqrt(distance_square(p));
 }
@@ -494,7 +494,7 @@ Point<dim, Number>::distance(const Point<dim, Number> &p) const
 
 template <int dim, typename Number>
 inline typename numbers::NumberTraits<Number>::real_type
-Point<dim, Number>::distance_square(const Point<dim, Number> &p) const
+Point<dim, Number>::distance_square(const Point<dim, Number>& p) const
 {
   Number sum = internal::NumberType<Number>::value(0.0);
   for (unsigned int i = 0; i < dim; ++i)
@@ -511,11 +511,11 @@ Point<dim, Number>::distance_square(const Point<dim, Number> &p) const
 template <int dim, typename Number>
 template <class Archive>
 inline void
-Point<dim, Number>::serialize(Archive &ar, const unsigned int)
+Point<dim, Number>::serialize(Archive& ar, const unsigned int)
 {
   // forward to serialization
   // function in the base class
-  ar &static_cast<Tensor<1, dim, Number> &>(*this);
+  ar& static_cast<Tensor<1, dim, Number>&>(*this);
 }
 
 #endif // DOXYGEN
@@ -535,7 +535,7 @@ inline Point<
   dim,
   typename ProductType<Number,
                        typename EnableIfScalar<OtherNumber>::type>::type>
-operator*(const OtherNumber factor, const Point<dim, Number> &p)
+operator*(const OtherNumber factor, const Point<dim, Number>& p)
 {
   return p * factor;
 }
@@ -548,8 +548,8 @@ operator*(const OtherNumber factor, const Point<dim, Number> &p)
  * @relatesalso Point
  */
 template <int dim, typename Number>
-inline std::ostream &
-operator<<(std::ostream &out, const Point<dim, Number> &p)
+inline std::ostream&
+operator<<(std::ostream& out, const Point<dim, Number>& p)
 {
   for (unsigned int i = 0; i < dim - 1; ++i)
     out << p[i] << ' ';
@@ -565,8 +565,8 @@ operator<<(std::ostream &out, const Point<dim, Number> &p)
  * @relatesalso Point
  */
 template <int dim, typename Number>
-inline std::istream &
-operator>>(std::istream &in, Point<dim, Number> &p)
+inline std::istream&
+operator>>(std::istream& in, Point<dim, Number>& p)
 {
   for (unsigned int i = 0; i < dim; ++i)
     in >> p[i];
@@ -583,8 +583,8 @@ operator>>(std::istream &in, Point<dim, Number> &p)
  * loop is empty.
  */
 template <typename Number>
-inline std::ostream &
-operator<<(std::ostream &out, const Point<1, Number> &p)
+inline std::ostream&
+operator<<(std::ostream& out, const Point<1, Number>& p)
 {
   out << p[0];
 

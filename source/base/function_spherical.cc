@@ -98,13 +98,13 @@ namespace Functions
      */
     template <int dim>
     void
-    set_unit_vectors(const double &  cos_theta,
-                     const double &  sin_theta,
-                     const double &  cos_phi,
-                     const double &  sin_phi,
-                     Tensor<1, dim> &unit_r,
-                     Tensor<1, dim> &unit_theta,
-                     Tensor<1, dim> &unit_phi)
+    set_unit_vectors(const double&   cos_theta,
+                     const double&   sin_theta,
+                     const double&   cos_phi,
+                     const double&   sin_phi,
+                     Tensor<1, dim>& unit_r,
+                     Tensor<1, dim>& unit_theta,
+                     Tensor<1, dim>& unit_phi)
     {
       unit_r[0] = cos_theta * sin_phi;
       unit_r[1] = sin_theta * sin_phi;
@@ -124,10 +124,10 @@ namespace Functions
      * calculates out[i][j] += v*(in1[i]*in2[j]+in1[j]*in2[i])
      */
     template <int dim>
-    void add_outer_product(SymmetricTensor<2, dim> &out,
-                           const double &           val,
-                           const Tensor<1, dim> &   in1,
-                           const Tensor<1, dim> &   in2)
+    void add_outer_product(SymmetricTensor<2, dim>& out,
+                           const double&            val,
+                           const Tensor<1, dim>&    in1,
+                           const Tensor<1, dim>&    in2)
     {
       if (val != 0.)
         for (unsigned int i = 0; i < dim; i++)
@@ -139,9 +139,9 @@ namespace Functions
      * calculates out[i][j] += v*in[i]in[j]
      */
     template <int dim>
-    void add_outer_product(SymmetricTensor<2, dim> &out,
-                           const double &           val,
-                           const Tensor<1, dim> &   in)
+    void add_outer_product(SymmetricTensor<2, dim>& out,
+                           const double&            val,
+                           const Tensor<1, dim>&    in)
     {
       if (val != 0.)
         for (unsigned int i = 0; i < dim; i++)
@@ -153,7 +153,7 @@ namespace Functions
 
 
   template <int dim>
-  Spherical<dim>::Spherical(const Point<dim> & p,
+  Spherical<dim>::Spherical(const Point<dim>&  p,
                             const unsigned int n_components) :
     Function<dim>(n_components),
     coordinate_system_offset(p)
@@ -165,7 +165,7 @@ namespace Functions
 
   template <int dim>
   double
-  Spherical<dim>::value(const Point<dim> & p_,
+  Spherical<dim>::value(const Point<dim>&  p_,
                         const unsigned int component) const
   {
     const Point<dim>              p = p_ - coordinate_system_offset;
@@ -178,7 +178,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  Spherical<dim>::gradient(const Point<dim> & /*p_*/,
+  Spherical<dim>::gradient(const Point<dim>& /*p_*/,
                            const unsigned int /*component*/) const
 
   {
@@ -190,7 +190,7 @@ namespace Functions
 
   template <>
   Tensor<1, 3>
-  Spherical<3>::gradient(const Point<3> &p_, const unsigned int component) const
+  Spherical<3>::gradient(const Point<3>& p_, const unsigned int component) const
   {
     constexpr int                 dim = 3;
     const Point<dim>              p   = p_ - coordinate_system_offset;
@@ -234,7 +234,7 @@ namespace Functions
 
   template <int dim>
   SymmetricTensor<2, dim>
-  Spherical<dim>::hessian(const Point<dim> & /*p*/,
+  Spherical<dim>::hessian(const Point<dim>& /*p*/,
                           const unsigned int /*component*/) const
   {
     Assert(false, ExcNotImplemented());
@@ -245,7 +245,7 @@ namespace Functions
 
   template <>
   SymmetricTensor<2, 3>
-  Spherical<3>::hessian(const Point<3> &p_, const unsigned int component) const
+  Spherical<3>::hessian(const Point<3>& p_, const unsigned int component) const
 
   {
     constexpr int                 dim = 3;
@@ -314,7 +314,7 @@ namespace Functions
 
   template <int dim>
   double
-  Spherical<dim>::svalue(const std::array<double, dim> & /* sp */,
+  Spherical<dim>::svalue(const std::array<double, dim>& /* sp */,
                          const unsigned int /*component*/) const
   {
     AssertThrow(false, ExcNotImplemented());
@@ -325,7 +325,7 @@ namespace Functions
 
   template <int dim>
   std::array<double, dim>
-  Spherical<dim>::sgradient(const std::array<double, dim> & /* sp */,
+  Spherical<dim>::sgradient(const std::array<double, dim>& /* sp */,
                             const unsigned int /*component*/) const
   {
     AssertThrow(false, ExcNotImplemented());
@@ -336,7 +336,7 @@ namespace Functions
 
   template <int dim>
   std::array<double, 6>
-  Spherical<dim>::shessian(const std::array<double, dim> & /* sp */,
+  Spherical<dim>::shessian(const std::array<double, dim>& /* sp */,
                            const unsigned int /*component*/) const
   {
     AssertThrow(false, ExcNotImplemented());

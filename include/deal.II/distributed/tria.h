@@ -394,7 +394,7 @@ namespace parallel
        */
       virtual void
       copy_triangulation(
-        const dealii::Triangulation<dim, spacedim> &other_tria) override;
+        const dealii::Triangulation<dim, spacedim>& other_tria) override;
 
       /**
        * Create a triangulation as documented in the base class.
@@ -406,9 +406,9 @@ namespace parallel
        * processors.
        */
       virtual void
-      create_triangulation(const std::vector<Point<spacedim>> &vertices,
-                           const std::vector<CellData<dim>> &  cells,
-                           const SubCellData &subcelldata) override;
+      create_triangulation(const std::vector<Point<spacedim>>& vertices,
+                           const std::vector<CellData<dim>>&   cells,
+                           const SubCellData& subcelldata) override;
 
       /**
        * Coarsen and refine the mesh according to refinement and coarsening
@@ -548,7 +548,7 @@ namespace parallel
        */
       void
       communicate_locally_moved_vertices(
-        const std::vector<bool> &vertex_locally_moved);
+        const std::vector<bool>& vertex_locally_moved);
 
 
       /**
@@ -591,7 +591,7 @@ namespace parallel
        * interface between deal.II and p4est.
        */
       void
-      write_mesh_vtk(const char *file_basename) const;
+      write_mesh_vtk(const char* file_basename) const;
 
       /**
        * Produce a check sum of the triangulation.  This is a collective
@@ -608,7 +608,7 @@ namespace parallel
        * cell-based data can be saved using register_data_attach().
        */
       void
-      save(const char *filename) const;
+      save(const char* filename) const;
 
       /**
        * Load the refinement information saved with save() back in. The mesh
@@ -629,7 +629,7 @@ namespace parallel
        * if a different number of MPI processes is encountered).
        */
       void
-      load(const char *filename, const bool autopartition = true);
+      load(const char* filename, const bool autopartition = true);
 
       /**
        * Register a function that can be used to attach data of fixed size
@@ -727,10 +727,10 @@ namespace parallel
        *   another call to these functions.
        */
       unsigned int
-      register_data_attach(const std::size_t                  size,
-                           const std::function<void(const cell_iterator &,
-                                                    const CellStatus,
-                                                    void *)> &pack_callback);
+      register_data_attach(
+        const std::size_t size,
+        const std::function<
+          void(const cell_iterator&, const CellStatus, void*)>& pack_callback);
 
       /**
        * This function is the opposite of register_data_attach(). It is called
@@ -782,10 +782,10 @@ namespace parallel
        */
       void
       notify_ready_to_unpack(
-        const unsigned int                       handle,
-        const std::function<void(const cell_iterator &,
+        const unsigned int                      handle,
+        const std::function<void(const cell_iterator&,
                                  const CellStatus,
-                                 const void *)> &unpack_callback);
+                                 const void*)>& unpack_callback);
 
       /**
        * Return a permutation vector for the order the coarse cells are handed
@@ -793,7 +793,7 @@ namespace parallel
        * vector is the index of the deal.II coarse cell (counting from
        * begin(0)) that corresponds to the $i$th tree managed by p4est.
        */
-      const std::vector<types::global_dof_index> &
+      const std::vector<types::global_dof_index>&
       get_p4est_tree_to_coarse_cell_permutation() const;
 
       /**
@@ -801,7 +801,7 @@ namespace parallel
        * cells to the p4est trees. This is the inverse of
        * get_p4est_tree_to_coarse_cell_permutation.
        */
-      const std::vector<types::global_dof_index> &
+      const std::vector<types::global_dof_index>&
       get_coarse_cell_to_p4est_tree_permutation() const;
 
       /**
@@ -825,7 +825,7 @@ namespace parallel
        */
       virtual void
       add_periodicity(
-        const std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>> &)
+        const std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>&)
         override;
 
 
@@ -852,19 +852,19 @@ namespace parallel
        * each tree is rooted in a coarse grid cell, this data structure holds
        * the connectivity between the cells of the coarse grid.
        */
-      typename dealii::internal::p4est::types<dim>::connectivity *connectivity;
+      typename dealii::internal::p4est::types<dim>::connectivity* connectivity;
 
       /**
        * A data structure that holds the local part of the global
        * triangulation.
        */
-      typename dealii::internal::p4est::types<dim>::forest *parallel_forest;
+      typename dealii::internal::p4est::types<dim>::forest* parallel_forest;
 
       /**
        * A data structure that holds some information about the ghost cells of
        * the triangulation.
        */
-      typename dealii::internal::p4est::types<dim>::ghost *parallel_ghost;
+      typename dealii::internal::p4est::types<dim>::ghost* parallel_ghost;
 
       /**
        * A structure that stores information about the data that has been, or
@@ -896,7 +896,7 @@ namespace parallel
         using pack_callback_t = std::function<void(
           typename Triangulation<dim, spacedim>::cell_iterator,
           CellStatus,
-          void *)>;
+          void*)>;
 
         /**
          * List of callback functions registered by register_data_attach() that
@@ -933,7 +933,7 @@ namespace parallel
        * Return a pointer to the p4est tree that belongs to the given
        * dealii_coarse_cell_index()
        */
-      typename dealii::internal::p4est::types<dim>::tree *
+      typename dealii::internal::p4est::types<dim>::tree*
       init_tree(const int dealii_coarse_cell_index) const;
 
       /**
@@ -1070,7 +1070,7 @@ namespace parallel
        * denotes that the first cell in hierarchical ordering is the ith deal
        * cell starting from begin(0).
        */
-      const std::vector<types::global_dof_index> &
+      const std::vector<types::global_dof_index>&
       get_p4est_tree_to_coarse_cell_permutation() const;
 
       /**
@@ -1108,21 +1108,21 @@ namespace parallel
        */
       void
       communicate_locally_moved_vertices(
-        const std::vector<bool> &vertex_locally_moved);
+        const std::vector<bool>& vertex_locally_moved);
 
       /**
        * This function is not implemented, but needs to be present for the
        * compiler.
        */
       void
-      load(const char *filename, const bool autopartition = true);
+      load(const char* filename, const bool autopartition = true);
 
       /**
        * This function is not implemented, but needs to be present for the
        * compiler.
        */
       void
-      save(const char *filename) const;
+      save(const char* filename) const;
 
       /**
        * This function is not implemented, but needs to be present for the
@@ -1132,9 +1132,9 @@ namespace parallel
       register_data_attach(
         const std::size_t size,
         const std::function<void(
-          const typename dealii::Triangulation<1, spacedim>::cell_iterator &,
+          const typename dealii::Triangulation<1, spacedim>::cell_iterator&,
           const typename dealii::Triangulation<1, spacedim>::CellStatus,
-          void *)> &      pack_callback);
+          void*)>&        pack_callback);
 
       /**
        * This function is not implemented, but needs to be present for the
@@ -1144,9 +1144,9 @@ namespace parallel
       notify_ready_to_unpack(
         const unsigned int offset,
         const std::function<void(
-          const typename dealii::Triangulation<1, spacedim>::cell_iterator &,
+          const typename dealii::Triangulation<1, spacedim>::cell_iterator&,
           const typename dealii::Triangulation<1, spacedim>::CellStatus,
-          const void *)> & unpack_callback);
+          const void*)>&   unpack_callback);
 
       /**
        * Dummy arrays. This class isn't usable but the compiler wants to see

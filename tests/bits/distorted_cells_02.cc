@@ -53,7 +53,7 @@ check()
     {
       gi.read_ucd(in);
     }
-  catch (typename Triangulation<dim>::DistortedCellList &dcv)
+  catch (typename Triangulation<dim>::DistortedCellList& dcv)
     {
       flag = true;
 

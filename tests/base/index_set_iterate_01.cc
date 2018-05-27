@@ -21,7 +21,7 @@
 #include "../tests.h"
 
 void
-test(IndexSet &index_set)
+test(IndexSet& index_set)
 {
   index_set.print(deallog);
 

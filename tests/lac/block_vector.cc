@@ -144,9 +144,9 @@ main()
   // do the same weird stuff as in
   // tests/base/reference.cc
 #if __GNUC__ != 2
-  std::basic_streambuf<char> *old_cerr_buf = std::cerr.rdbuf();
+  std::basic_streambuf<char>* old_cerr_buf = std::cerr.rdbuf();
 #else
-  streambuf *old_cerr_buf = std::cerr.rdbuf();
+  streambuf* old_cerr_buf = std::cerr.rdbuf();
 #endif
   std::cerr.rdbuf(logfile.rdbuf());
 
@@ -154,7 +154,7 @@ main()
     {
       test();
     }
-  catch (std::exception &e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl

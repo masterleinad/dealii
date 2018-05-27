@@ -107,11 +107,11 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual void
-  value_list(const std::vector<Point<dim>> &points,
-             std::vector<double> &          values,
+  value_list(const std::vector<Point<dim>>& points,
+             std::vector<double>&           values,
              const unsigned int             component = 0) const;
 };
 
@@ -119,7 +119,7 @@ public:
 
 template <int dim>
 double
-Coefficient<dim>::value(const Point<dim> &p, const unsigned int) const
+Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   if (p.square() < 0.5 * 0.5)
     return 20;
@@ -131,8 +131,8 @@ Coefficient<dim>::value(const Point<dim> &p, const unsigned int) const
 
 template <int dim>
 void
-Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                             std::vector<double> &          values,
+Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                             std::vector<double>&           values,
                              const unsigned int             component) const
 {
   const unsigned int n_points = points.size();
@@ -172,7 +172,7 @@ LaplaceProblem<dim>::setup_system()
                           mg_dof_handler.n_dofs(),
                           mg_dof_handler.max_couplings_between_dofs());
   DoFTools::make_sparsity_pattern(
-    static_cast<const DoFHandler<dim> &>(mg_dof_handler), sparsity_pattern);
+    static_cast<const DoFHandler<dim>&>(mg_dof_handler), sparsity_pattern);
 
   solution.reinit(mg_dof_handler.n_dofs());
   system_rhs.reinit(mg_dof_handler.n_dofs());
@@ -511,7 +511,7 @@ LaplaceProblem<dim>::refine_grid()
   Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
   KellyErrorEstimator<dim>::estimate(
-    static_cast<DoFHandler<dim> &>(mg_dof_handler),
+    static_cast<DoFHandler<dim>&>(mg_dof_handler),
     QGauss<dim - 1>(3),
     typename FunctionMap<dim>::type(),
     solution,
@@ -609,7 +609,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

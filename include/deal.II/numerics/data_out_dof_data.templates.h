@@ -61,11 +61,11 @@ namespace internal
     ParallelDataBase<dim, spacedim>::ParallelDataBase(
       const unsigned int               n_datasets,
       const unsigned int               n_subdivisions,
-      const std::vector<unsigned int> &n_postprocessor_outputs,
-      const Mapping<dim, spacedim> &   mapping,
+      const std::vector<unsigned int>& n_postprocessor_outputs,
+      const Mapping<dim, spacedim>&    mapping,
       const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
-        &               finite_elements,
+        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
+                        finite_elements,
       const UpdateFlags update_flags,
       const bool        use_face_values) :
       n_datasets(n_datasets),
@@ -150,7 +150,7 @@ namespace internal
     // x_fe_values
     template <int dim, int spacedim>
     ParallelDataBase<dim, spacedim>::ParallelDataBase(
-      const ParallelDataBase<dim, spacedim> &data) :
+      const ParallelDataBase<dim, spacedim>& data) :
       n_datasets(data.n_datasets),
       n_subdivisions(data.n_subdivisions),
       patch_values_scalar(data.patch_values_scalar),
@@ -219,8 +219,8 @@ namespace internal
     template <typename DoFHandlerType>
     void
     ParallelDataBase<dim, spacedim>::reinit_all_fe_values(
-      std::vector<std::shared_ptr<DataEntryBase<DoFHandlerType>>> &dof_data,
-      const typename dealii::Triangulation<dim, spacedim>::cell_iterator &cell,
+      std::vector<std::shared_ptr<DataEntryBase<DoFHandlerType>>>& dof_data,
+      const typename dealii::Triangulation<dim, spacedim>::cell_iterator& cell,
       const unsigned int                                                  face)
     {
       for (unsigned int dataset = 0; dataset < dof_data.size(); ++dataset)
@@ -260,7 +260,7 @@ namespace internal
 
 
     template <int dim, int spacedim>
-    const FEValuesBase<dim, spacedim> &
+    const FEValuesBase<dim, spacedim>&
     ParallelDataBase<dim, spacedim>::get_present_fe_values(
       const unsigned int dataset) const
     {
@@ -304,8 +304,8 @@ namespace internal
     template <int dim, int spacedim>
     void
     append_patch_to_list(
-      const DataOutBase::Patch<dim, spacedim> &       patch,
-      std::vector<DataOutBase::Patch<dim, spacedim>> &patches)
+      const DataOutBase::Patch<dim, spacedim>&        patch,
+      std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
     {
       patches.push_back(patch);
       patches.back().patch_index = patches.size() - 1;
@@ -345,7 +345,7 @@ namespace internal
      */
     template <typename NumberType>
     double
-    get_component(const std::complex<NumberType> &value,
+    get_component(const std::complex<NumberType>& value,
                   const ComponentExtractor        extract_component)
     {
       switch (extract_component)
@@ -367,7 +367,7 @@ namespace internal
 
     template <int rank, int dim, typename NumberType>
     Tensor<rank, dim>
-    get_component(const Tensor<rank, dim, NumberType> &value,
+    get_component(const Tensor<rank, dim, NumberType>& value,
                   const ComponentExtractor             extract_component)
     {
       Assert(extract_component == ComponentExtractor::real_part,
@@ -384,11 +384,11 @@ namespace internal
 
     template <typename DoFHandlerType>
     DataEntryBase<DoFHandlerType>::DataEntryBase(
-      const DoFHandlerType *          dofs,
-      const std::vector<std::string> &names_in,
+      const DoFHandlerType*           dofs,
+      const std::vector<std::string>& names_in,
       const std::vector<
-        DataComponentInterpretation::DataComponentInterpretation>
-        &data_component_interpretation) :
+        DataComponentInterpretation::DataComponentInterpretation>&
+        data_component_interpretation) :
       dof_handler(
         dofs,
         typeid(dealii::DataOut_DoFData<DoFHandlerType,
@@ -421,9 +421,9 @@ namespace internal
 
     template <typename DoFHandlerType>
     DataEntryBase<DoFHandlerType>::DataEntryBase(
-      const DoFHandlerType *dofs,
-      const DataPostprocessor<DoFHandlerType::space_dimension>
-        *data_postprocessor) :
+      const DoFHandlerType* dofs,
+      const DataPostprocessor<DoFHandlerType::space_dimension>*
+        data_postprocessor) :
       dof_handler(
         dofs,
         typeid(dealii::DataOut_DoFData<DoFHandlerType,
@@ -472,22 +472,22 @@ namespace internal
        * the vector and their interpretation as scalar or vector data. This
        * constructor assumes that no postprocessor is going to be used.
        */
-      DataEntry(const DoFHandlerType *          dofs,
-                const VectorType *              data,
-                const std::vector<std::string> &names,
+      DataEntry(const DoFHandlerType*           dofs,
+                const VectorType*               data,
+                const std::vector<std::string>& names,
                 const std::vector<
-                  DataComponentInterpretation::DataComponentInterpretation>
-                  &data_component_interpretation);
+                  DataComponentInterpretation::DataComponentInterpretation>&
+                  data_component_interpretation);
 
       /**
        * Constructor when a data postprocessor is going to be used. In that
        * case, the names and vector declarations are going to be acquired from
        * the postprocessor.
        */
-      DataEntry(const DoFHandlerType *dofs,
-                const VectorType *    data,
-                const DataPostprocessor<DoFHandlerType::space_dimension>
-                  *data_postprocessor);
+      DataEntry(const DoFHandlerType* dofs,
+                const VectorType*     data,
+                const DataPostprocessor<DoFHandlerType::space_dimension>*
+                  data_postprocessor);
 
       /**
        * Assuming that the stored vector is a cell vector, extract the given
@@ -505,9 +505,9 @@ namespace internal
       virtual void
       get_function_values(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<double> &patch_values) const override;
+        std::vector<double>& patch_values) const override;
 
       /**
        * Given a FEValuesBase object, extract the values on the present cell
@@ -517,9 +517,9 @@ namespace internal
       virtual void
       get_function_values(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<dealii::Vector<double>> &patch_values_system)
+        std::vector<dealii::Vector<double>>& patch_values_system)
         const override;
 
       /**
@@ -529,10 +529,10 @@ namespace internal
       virtual void
       get_function_gradients(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<Tensor<1, DoFHandlerType::space_dimension>>
-          &patch_gradients) const override;
+        std::vector<Tensor<1, DoFHandlerType::space_dimension>>&
+          patch_gradients) const override;
 
       /**
        * Given a FEValuesBase object, extract the gradients on the present
@@ -542,10 +542,10 @@ namespace internal
       virtual void
       get_function_gradients(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>
-          &patch_gradients_system) const override;
+        std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
+          patch_gradients_system) const override;
 
       /**
        * Given a FEValuesBase object, extract the second derivatives on the
@@ -554,9 +554,9 @@ namespace internal
       virtual void
       get_function_hessians(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<Tensor<2, DoFHandlerType::space_dimension>> &patch_hessians)
+        std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
         const override;
 
       /**
@@ -567,10 +567,10 @@ namespace internal
       virtual void
       get_function_hessians(
         const FEValuesBase<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_patch_values,
+                           DoFHandlerType::space_dimension>& fe_patch_values,
         const ComponentExtractor                             extract_component,
-        std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>
-          &patch_hessians_system) const override;
+        std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
+          patch_hessians_system) const override;
 
       /**
        * Return whether the data represented by (a derived class of) this object
@@ -597,19 +597,19 @@ namespace internal
        * Pointer to the data vector. Note that ownership of the vector pointed
        * to remains with the caller of this class.
        */
-      const VectorType *vector;
+      const VectorType* vector;
     };
 
 
 
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
-      const DoFHandlerType *          dofs,
-      const VectorType *              data,
-      const std::vector<std::string> &names,
+      const DoFHandlerType*           dofs,
+      const VectorType*               data,
+      const std::vector<std::string>& names,
       const std::vector<
-        DataComponentInterpretation::DataComponentInterpretation>
-        &data_component_interpretation) :
+        DataComponentInterpretation::DataComponentInterpretation>&
+        data_component_interpretation) :
       DataEntryBase<DoFHandlerType>(dofs, names, data_component_interpretation),
       vector(data)
     {}
@@ -618,10 +618,10 @@ namespace internal
 
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
-      const DoFHandlerType *dofs,
-      const VectorType *    data,
-      const DataPostprocessor<DoFHandlerType::space_dimension>
-        *data_postprocessor) :
+      const DoFHandlerType* dofs,
+      const VectorType*     data,
+      const DataPostprocessor<DoFHandlerType::space_dimension>*
+        data_postprocessor) :
       DataEntryBase<DoFHandlerType>(dofs, data_postprocessor),
       vector(data)
     {}
@@ -631,7 +631,7 @@ namespace internal
     {
       template <typename VectorType>
       inline typename VectorType::value_type
-      get_vector_element(const VectorType & vector,
+      get_vector_element(const VectorType&  vector,
                          const unsigned int cell_number)
       {
         return internal::ElementAccess<VectorType>::get(vector, cell_number);
@@ -639,7 +639,7 @@ namespace internal
 
 
       inline double
-      get_vector_element(const IndexSet &is, const unsigned int cell_number)
+      get_vector_element(const IndexSet& is, const unsigned int cell_number)
       {
         return (is.is_element(cell_number) ? 1 : 0);
       }
@@ -663,9 +663,9 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_values(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<dealii::Vector<double>> &patch_values_system) const
+      std::vector<dealii::Vector<double>>& patch_values_system) const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
         {
@@ -681,7 +681,7 @@ namespace internal
             // executed, but the cast is necessary
             // to allow compilation even if we don't get here
             reinterpret_cast<
-              std::vector<dealii::Vector<typename VectorType::value_type>> &>(
+              std::vector<dealii::Vector<typename VectorType::value_type>>&>(
               patch_values_system));
         }
       else
@@ -721,9 +721,9 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_values(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<double> &                                patch_values) const
+      std::vector<double>&                                 patch_values) const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
         {
@@ -738,7 +738,7 @@ namespace internal
             // identity cast whenever the code is
             // executed, but the cast is necessary
             // to allow compilation even if we don't get here
-            reinterpret_cast<std::vector<typename VectorType::value_type> &>(
+            reinterpret_cast<std::vector<typename VectorType::value_type>&>(
               patch_values));
         }
       else
@@ -758,10 +758,10 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_gradients(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>
-        &patch_gradients_system) const
+      std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
+        patch_gradients_system) const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
         {
@@ -779,7 +779,7 @@ namespace internal
             reinterpret_cast<std::vector<
               std::vector<Tensor<1,
                                  DoFHandlerType::space_dimension,
-                                 typename VectorType::value_type>>> &>(
+                                 typename VectorType::value_type>>>&>(
               patch_gradients_system));
         }
       else
@@ -821,9 +821,9 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_gradients(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<Tensor<1, DoFHandlerType::space_dimension>> &patch_gradients)
+      std::vector<Tensor<1, DoFHandlerType::space_dimension>>& patch_gradients)
       const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
@@ -842,7 +842,7 @@ namespace internal
             reinterpret_cast<
               std::vector<Tensor<1,
                                  DoFHandlerType::space_dimension,
-                                 typename VectorType::value_type>> &>(
+                                 typename VectorType::value_type>>&>(
               patch_gradients));
         }
       else
@@ -866,10 +866,10 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_hessians(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>
-        &patch_hessians_system) const
+      std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
+        patch_hessians_system) const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
         {
@@ -887,7 +887,7 @@ namespace internal
             reinterpret_cast<std::vector<
               std::vector<Tensor<2,
                                  DoFHandlerType::space_dimension,
-                                 typename VectorType::value_type>>> &>(
+                                 typename VectorType::value_type>>>&>(
               patch_hessians_system));
         }
       else
@@ -929,9 +929,9 @@ namespace internal
     void
     DataEntry<DoFHandlerType, VectorType>::get_function_hessians(
       const FEValuesBase<DoFHandlerType::dimension,
-                         DoFHandlerType::space_dimension> &fe_patch_values,
+                         DoFHandlerType::space_dimension>& fe_patch_values,
       const ComponentExtractor                             extract_component,
-      std::vector<Tensor<2, DoFHandlerType::space_dimension>> &patch_hessians)
+      std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
       const
     {
       if (typeid(typename VectorType::value_type) == typeid(double))
@@ -950,7 +950,7 @@ namespace internal
             reinterpret_cast<
               std::vector<Tensor<2,
                                  DoFHandlerType ::space_dimension,
-                                 typename VectorType::value_type>> &>(
+                                 typename VectorType::value_type>>&>(
               patch_hessians));
         }
       else
@@ -1022,7 +1022,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::~DataOut_DoFData()
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::attach_dof_handler(
-  const DoFHandlerType &d)
+  const DoFHandlerType& d)
 {
   Assert(dof_data.size() == 0,
          Exceptions::DataOutImplementation::ExcOldDataStillPresent());
@@ -1043,7 +1043,7 @@ void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   attach_triangulation(
     const Triangulation<DoFHandlerType::dimension,
-                        DoFHandlerType::space_dimension> &tria)
+                        DoFHandlerType::space_dimension>& tria)
 {
   Assert(dof_data.size() == 0,
          Exceptions::DataOutImplementation::ExcOldDataStillPresent());
@@ -1062,9 +1062,9 @@ template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
-  const DoFHandlerType &                                    dof_handler,
-  const VectorType &                                        vec,
-  const DataPostprocessor<DoFHandlerType::space_dimension> &data_postprocessor)
+  const DoFHandlerType&                                     dof_handler,
+  const VectorType&                                         vec,
+  const DataPostprocessor<DoFHandlerType::space_dimension>& data_postprocessor)
 {
   // this is a specialized version of the other function where we have a
   // postprocessor. if we do, we know that we have type_dof_data, which makes
@@ -1104,12 +1104,12 @@ template <typename VectorType>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   add_data_vector_internal(
-    const DoFHandlerType *          dof_handler,
-    const VectorType &              data_vector,
-    const std::vector<std::string> &names,
+    const DoFHandlerType*           dof_handler,
+    const VectorType&               data_vector,
+    const std::vector<std::string>& names,
     const DataVectorType            type,
-    const std::vector<DataComponentInterpretation::DataComponentInterpretation>
-      &        data_component_interpretation_,
+    const std::vector<DataComponentInterpretation::DataComponentInterpretation>&
+               data_component_interpretation_,
     const bool deduce_output_names)
 {
   // Check available mesh information:
@@ -1205,7 +1205,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
         Assert(false, ExcInternalError());
     }
 
-  const auto &data_component_interpretation =
+  const auto& data_component_interpretation =
     (data_component_interpretation_.size() != 0 ?
        data_component_interpretation_ :
        std::vector<DataComponentInterpretation::DataComponentInterpretation>(
@@ -1412,7 +1412,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
 
 
 template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
-const std::vector<dealii::DataOutBase::Patch<patch_dim, patch_space_dim>> &
+const std::vector<dealii::DataOutBase::Patch<patch_dim, patch_space_dim>>&
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_patches() const
 {
   return patches;

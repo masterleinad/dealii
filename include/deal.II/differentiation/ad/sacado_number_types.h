@@ -306,10 +306,10 @@ namespace Differentiation
          * Initialize the state of an independent variable.
          */
         static void
-        independent_variable(const scalar_type &in,
+        independent_variable(const scalar_type& in,
                              const unsigned int index,
                              const unsigned int n_independent_variables,
-                             ad_type &          out)
+                             ad_type&           out)
         {
           // It is required that we first initialise the outer number before
           // any of the nested ones.
@@ -324,7 +324,7 @@ namespace Differentiation
          * Initialize the state of a dependent variable.
          */
         static void
-        dependent_variable(ad_type &out, const ad_type &func)
+        dependent_variable(ad_type& out, const ad_type& func)
         {
           out = func;
         }
@@ -351,10 +351,10 @@ namespace Differentiation
          * Initialize the state of an independent variable.
          */
         static void
-        independent_variable(const scalar_type &in,
+        independent_variable(const scalar_type& in,
                              const unsigned int index,
                              const unsigned int n_independent_variables,
-                             ad_type &          out)
+                             ad_type&           out)
         {
           // For Sacado::Rad::ADvar numbers, we have to initialize the
           // ADNumber with an already fully-configured value. This means
@@ -374,7 +374,7 @@ namespace Differentiation
          * Initialize the state of a dependent variable.
          */
         static void
-        dependent_variable(ad_type &out, const ad_type &func)
+        dependent_variable(ad_type& out, const ad_type& func)
         {
           out = func;
         }
@@ -404,7 +404,7 @@ namespace Differentiation
          * Extract the real scalar value.
          */
         static scalar_type
-        value(const Sacado::Fad::DFad<NumberType> &x)
+        value(const Sacado::Fad::DFad<NumberType>& x)
         {
           return ExtractData<value_type>::value(x.val());
         }
@@ -414,7 +414,7 @@ namespace Differentiation
          * Extract the number of directional derivatives.
          */
         static unsigned int
-        n_directional_derivatives(const Sacado::Fad::DFad<NumberType> &x)
+        n_directional_derivatives(const Sacado::Fad::DFad<NumberType>& x)
         {
           return x.size();
         }
@@ -424,7 +424,7 @@ namespace Differentiation
          * Extract the directional derivative in the specified @p direction.
          */
         static derivative_type
-        directional_derivative(const Sacado::Fad::DFad<NumberType> &x,
+        directional_derivative(const Sacado::Fad::DFad<NumberType>& x,
                                const unsigned int                   direction)
         {
           if (x.hasFastAccess())
@@ -458,7 +458,7 @@ namespace Differentiation
          * Extract the real scalar value.
          */
         static scalar_type
-        value(const Sacado::Rad::ADvar<NumberType> &x)
+        value(const Sacado::Rad::ADvar<NumberType>& x)
         {
           return ExtractData<value_type>::value(x.val());
         }
@@ -468,7 +468,7 @@ namespace Differentiation
          * Extract the number of directional derivatives.
          */
         static unsigned int
-        n_directional_derivatives(const Sacado::Rad::ADvar<NumberType> &)
+        n_directional_derivatives(const Sacado::Rad::ADvar<NumberType>&)
         {
           // There are as many directional derivatives as there are
           // independent variables, but each independent variable can
@@ -485,7 +485,7 @@ namespace Differentiation
          * @p df/dx of a dependent function @p f(x).
          */
         static derivative_type
-        directional_derivative(const Sacado::Rad::ADvar<NumberType> &x,
+        directional_derivative(const Sacado::Rad::ADvar<NumberType>& x,
                                const unsigned int)
         {
           return x.adj();

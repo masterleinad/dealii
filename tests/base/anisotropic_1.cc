@@ -30,9 +30,9 @@ using namespace Polynomials;
 
 template <int dim, class PolynomialType1, class PolynomialType2>
 void
-check_poly(const Point<dim> &     x,
-           const PolynomialType1 &p,
-           const PolynomialType2 &q)
+check_poly(const Point<dim>&      x,
+           const PolynomialType1& p,
+           const PolynomialType2& q)
 {
   const unsigned int n = p.n();
 
@@ -148,7 +148,7 @@ check_poly(const Point<dim> &     x,
 
 template <int dim>
 void
-check_tensor(const std::vector<Polynomial<double>> &v, const Point<dim> &x)
+check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
 {
   TensorProductPolynomials<dim> p(v);
 
@@ -160,7 +160,7 @@ check_tensor(const std::vector<Polynomial<double>> &v, const Point<dim> &x)
 
 
 void
-check_dimensions(const std::vector<Polynomial<double>> &p)
+check_dimensions(const std::vector<Polynomial<double>>& p)
 {
   deallog.push("1d");
   check_tensor(p, Point<1>(.5));

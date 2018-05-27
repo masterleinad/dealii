@@ -121,9 +121,9 @@ namespace Utilities
 
 
   std::string
-  replace_in_string(const std::string &input,
-                    const std::string &from,
-                    const std::string &to)
+  replace_in_string(const std::string& input,
+                    const std::string& from,
+                    const std::string& to)
   {
     if (from.empty())
       return input;
@@ -140,7 +140,7 @@ namespace Utilities
   }
 
   std::string
-  trim(const std::string &input)
+  trim(const std::string& input)
   {
     std::string::size_type left  = 0;
     std::string::size_type right = input.size() > 0 ? input.size() - 1 : 0;
@@ -198,7 +198,7 @@ namespace Utilities
 
 
   int
-  string_to_int(const std::string &s_)
+  string_to_int(const std::string& s_)
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
@@ -213,7 +213,7 @@ namespace Utilities
     // before calling strtol since otherwise it may be that the
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
-    char *p;
+    char* p;
     errno       = 0;
     const int i = std::strtol(s.c_str(), &p, 10);
     AssertThrow(
@@ -226,7 +226,7 @@ namespace Utilities
 
 
   std::vector<int>
-  string_to_int(const std::vector<std::string> &s)
+  string_to_int(const std::vector<std::string>& s)
   {
     std::vector<int> tmp(s.size());
     for (unsigned int i = 0; i < s.size(); ++i)
@@ -237,7 +237,7 @@ namespace Utilities
 
 
   double
-  string_to_double(const std::string &s_)
+  string_to_double(const std::string& s_)
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
@@ -252,7 +252,7 @@ namespace Utilities
     // before calling strtol since otherwise it may be that the
     // conversion succeeds and that errno remains at the value it
     // was before, whatever that was
-    char *p;
+    char* p;
     errno          = 0;
     const double d = std::strtod(s.c_str(), &p);
     AssertThrow(
@@ -265,7 +265,7 @@ namespace Utilities
 
 
   std::vector<double>
-  string_to_double(const std::vector<std::string> &s)
+  string_to_double(const std::vector<std::string>& s)
   {
     std::vector<double> tmp(s.size());
     for (unsigned int i = 0; i < s.size(); ++i)
@@ -276,7 +276,7 @@ namespace Utilities
 
 
   std::vector<std::string>
-  split_string_list(const std::string &s, const std::string &delimiter)
+  split_string_list(const std::string& s, const std::string& delimiter)
   {
     // keep the currently remaining part of the input string in 'tmp' and
     // keep chopping elements of the list off the front
@@ -321,7 +321,7 @@ namespace Utilities
 
 
   std::vector<std::string>
-  split_string_list(const std::string &s, const char delimiter)
+  split_string_list(const std::string& s, const char delimiter)
   {
     std::string d = ",";
     d[0]          = delimiter;
@@ -330,7 +330,7 @@ namespace Utilities
 
 
   std::vector<std::string>
-  break_text_into_lines(const std::string &original_text,
+  break_text_into_lines(const std::string& original_text,
                         const unsigned int width,
                         const char         delimiter)
   {
@@ -410,7 +410,7 @@ namespace Utilities
 
 
   bool
-  match_at_string_start(const std::string &name, const std::string &pattern)
+  match_at_string_start(const std::string& name, const std::string& pattern)
   {
     if (pattern.size() > name.size())
       return false;
@@ -425,7 +425,7 @@ namespace Utilities
 
 
   std::pair<int, unsigned int>
-  get_integer_at_position(const std::string &name, const unsigned int position)
+  get_integer_at_position(const std::string& name, const unsigned int position)
   {
     Assert(position < name.size(), ExcInternalError());
 
@@ -486,7 +486,7 @@ namespace Utilities
 
 
   std::vector<unsigned int>
-  reverse_permutation(const std::vector<unsigned int> &permutation)
+  reverse_permutation(const std::vector<unsigned int>& permutation)
   {
     const unsigned int n = permutation.size();
 
@@ -500,7 +500,7 @@ namespace Utilities
 
 
   std::vector<unsigned int>
-  invert_permutation(const std::vector<unsigned int> &permutation)
+  invert_permutation(const std::vector<unsigned int>& permutation)
   {
     const unsigned int n = permutation.size();
 
@@ -522,7 +522,7 @@ namespace Utilities
   }
 
   std::vector<unsigned long long int>
-  reverse_permutation(const std::vector<unsigned long long int> &permutation)
+  reverse_permutation(const std::vector<unsigned long long int>& permutation)
   {
     const unsigned long long int n = permutation.size();
 
@@ -536,7 +536,7 @@ namespace Utilities
 
 
   std::vector<unsigned long long int>
-  invert_permutation(const std::vector<unsigned long long int> &permutation)
+  invert_permutation(const std::vector<unsigned long long int>& permutation)
   {
     const unsigned long long int n = permutation.size();
 
@@ -560,7 +560,7 @@ namespace Utilities
 
   template <typename Integer>
   std::vector<Integer>
-  reverse_permutation(const std::vector<Integer> &permutation)
+  reverse_permutation(const std::vector<Integer>& permutation)
   {
     const unsigned int n = permutation.size();
 
@@ -575,7 +575,7 @@ namespace Utilities
 
   template <typename Integer>
   std::vector<Integer>
-  invert_permutation(const std::vector<Integer> &permutation)
+  invert_permutation(const std::vector<Integer>& permutation)
   {
     const unsigned int n = permutation.size();
 
@@ -649,7 +649,7 @@ namespace Utilities
 
 
     void
-    get_memory_stats(MemoryStats &stats)
+    get_memory_stats(MemoryStats& stats)
     {
       stats.VmPeak = stats.VmSize = stats.VmHWM = stats.VmRSS = 0;
 
@@ -701,7 +701,7 @@ namespace Utilities
     get_time()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm *   time  = std::localtime(&time1);
+      std::tm*    time  = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_hour << ":" << (time->tm_min < 10 ? "0" : "")
@@ -717,7 +717,7 @@ namespace Utilities
     get_date()
     {
       std::time_t time1 = std::time(nullptr);
-      std::tm *   time  = std::localtime(&time1);
+      std::tm*    time  = std::localtime(&time1);
 
       std::ostringstream o;
       o << time->tm_year + 1900 << "/" << time->tm_mon + 1 << "/"
@@ -729,7 +729,7 @@ namespace Utilities
 
 
     void
-    posix_memalign(void **memptr, size_t alignment, size_t size)
+    posix_memalign(void** memptr, size_t alignment, size_t size)
     {
 #ifndef DEAL_II_MSVC
       const int ierr = ::posix_memalign(memptr, alignment, size);
@@ -759,7 +759,7 @@ namespace Utilities
 
   namespace Trilinos
   {
-    const Epetra_Comm &
+    const Epetra_Comm&
     comm_world()
     {
 #  ifdef DEAL_II_WITH_MPI
@@ -775,7 +775,7 @@ namespace Utilities
 
 
 
-    const Epetra_Comm &
+    const Epetra_Comm&
     comm_self()
     {
 #  ifdef DEAL_II_WITH_MPI
@@ -791,16 +791,16 @@ namespace Utilities
 
 
 
-    Epetra_Comm *
-    duplicate_communicator(const Epetra_Comm &communicator)
+    Epetra_Comm*
+    duplicate_communicator(const Epetra_Comm& communicator)
     {
 #  ifdef DEAL_II_WITH_MPI
 
       // see if the communicator is in fact a
       // parallel MPI communicator; if so,
       // return a duplicate of it
-      const Epetra_MpiComm *mpi_comm =
-        dynamic_cast<const Epetra_MpiComm *>(&communicator);
+      const Epetra_MpiComm* mpi_comm =
+        dynamic_cast<const Epetra_MpiComm*>(&communicator);
       if (mpi_comm != nullptr)
         return new Epetra_MpiComm(
           Utilities::MPI::duplicate_communicator(mpi_comm->GetMpiComm()));
@@ -810,21 +810,21 @@ namespace Utilities
       // communicator in question was in fact
       // not an MPI communicator, return a
       // copy of the same object again
-      Assert(dynamic_cast<const Epetra_SerialComm *>(&communicator) != nullptr,
+      Assert(dynamic_cast<const Epetra_SerialComm*>(&communicator) != nullptr,
              ExcInternalError());
       return new Epetra_SerialComm(
-        dynamic_cast<const Epetra_SerialComm &>(communicator));
+        dynamic_cast<const Epetra_SerialComm&>(communicator));
     }
 
 
 
     void
-    destroy_communicator(Epetra_Comm &communicator)
+    destroy_communicator(Epetra_Comm& communicator)
     {
       // save the communicator, reset the map, and delete the communicator if
       // this whole thing was created as an MPI communicator
 #  ifdef DEAL_II_WITH_MPI
-      Epetra_MpiComm *mpi_comm = dynamic_cast<Epetra_MpiComm *>(&communicator);
+      Epetra_MpiComm* mpi_comm = dynamic_cast<Epetra_MpiComm*>(&communicator);
       if (mpi_comm != nullptr)
         {
           MPI_Comm comm  = mpi_comm->GetMpiComm();
@@ -838,14 +838,14 @@ namespace Utilities
 
 
     unsigned int
-    get_n_mpi_processes(const Epetra_Comm &mpi_communicator)
+    get_n_mpi_processes(const Epetra_Comm& mpi_communicator)
     {
       return mpi_communicator.NumProc();
     }
 
 
     unsigned int
-    get_this_mpi_process(const Epetra_Comm &mpi_communicator)
+    get_this_mpi_process(const Epetra_Comm& mpi_communicator)
     {
       return (unsigned int)mpi_communicator.MyPID();
     }
@@ -853,7 +853,7 @@ namespace Utilities
 
 
     Epetra_Map
-    duplicate_map(const Epetra_BlockMap &map, const Epetra_Comm &comm)
+    duplicate_map(const Epetra_BlockMap& map, const Epetra_Comm& comm)
     {
       if (map.LinearMap() == true)
         {

@@ -21,8 +21,8 @@ DEAL_II_NAMESPACE_OPEN
 
 void
 ConvergenceTable::evaluate_convergence_rates(
-  const std::string &data_column_key,
-  const std::string &reference_column_key,
+  const std::string& data_column_key,
+  const std::string& reference_column_key,
   const RateMode     rate_mode,
   const unsigned int dim)
 {
@@ -37,8 +37,8 @@ ConvergenceTable::evaluate_convergence_rates(
   // the top that don't yet exist
   set_auto_fill_mode(false);
 
-  std::vector<internal::TableEntry> &entries = columns[data_column_key].entries;
-  std::vector<internal::TableEntry> &ref_entries =
+  std::vector<internal::TableEntry>& entries = columns[data_column_key].entries;
+  std::vector<internal::TableEntry>& ref_entries =
     columns[reference_column_key].entries;
   std::string rate_key = data_column_key + "...";
 
@@ -107,7 +107,7 @@ ConvergenceTable::evaluate_convergence_rates(
   columns[rate_key].flag = 1;
   set_precision(rate_key, 2);
 
-  const std::string &superkey = data_column_key;
+  const std::string& superkey = data_column_key;
   if (!supercolumns.count(superkey))
     {
       add_column_to_supercolumn(data_column_key, superkey);
@@ -124,7 +124,7 @@ ConvergenceTable::evaluate_convergence_rates(
 
 
 void
-ConvergenceTable::evaluate_convergence_rates(const std::string &data_column_key,
+ConvergenceTable::evaluate_convergence_rates(const std::string& data_column_key,
                                              const RateMode     rate_mode)
 {
   Assert(columns.count(data_column_key), ExcColumnNotExistent(data_column_key));
@@ -133,7 +133,7 @@ ConvergenceTable::evaluate_convergence_rates(const std::string &data_column_key,
   // the top that don't yet exist
   set_auto_fill_mode(false);
 
-  std::vector<internal::TableEntry> &entries = columns[data_column_key].entries;
+  std::vector<internal::TableEntry>& entries = columns[data_column_key].entries;
   std::string                        rate_key = data_column_key + "...";
 
   const unsigned int n = entries.size();
@@ -196,7 +196,7 @@ ConvergenceTable::evaluate_convergence_rates(const std::string &data_column_key,
   set_precision(rate_key, 2);
 
   // set the superkey equal to the key
-  const std::string &superkey = data_column_key;
+  const std::string& superkey = data_column_key;
   // and set the tex caption of the supercolumn to the tex caption of the
   // data_column.
   if (!supercolumns.count(superkey))
@@ -216,7 +216,7 @@ ConvergenceTable::evaluate_convergence_rates(const std::string &data_column_key,
 
 void
 ConvergenceTable::omit_column_from_convergence_rate_evaluation(
-  const std::string &key)
+  const std::string& key)
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
 
@@ -228,7 +228,7 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
 
 void
 ConvergenceTable::evaluate_all_convergence_rates(
-  const std::string &reference_column_key,
+  const std::string& reference_column_key,
   const RateMode     rate_mode)
 {
   for (std::map<std::string, Column>::const_iterator col_iter = columns.begin();

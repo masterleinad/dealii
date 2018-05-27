@@ -49,7 +49,7 @@ namespace
      * lexicographic ordering of the two vertex indices.
      */
     bool
-    operator<(const CheapEdge &e) const
+    operator<(const CheapEdge& e) const
     {
       return ((v0 < e.v0) || ((v0 == e.v0) && (v1 < e.v1)));
     }
@@ -72,7 +72,7 @@ namespace
    */
   template <int dim>
   bool
-  is_consistent(const std::vector<CellData<dim>> &cells)
+  is_consistent(const std::vector<CellData<dim>>& cells)
   {
     std::set<CheapEdge> edges;
 
@@ -207,7 +207,7 @@ namespace
      * An iterator that allows iterating over all cells adjacent
      * to the edge represented by the current object.
      */
-    typedef const AdjacentCell *const_iterator;
+    typedef const AdjacentCell* const_iterator;
 
     /**
      * Add the given cell to the collection of cells adjacent to
@@ -218,7 +218,7 @@ namespace
      * adjacent cells for each edge.
      */
     void
-    push_back(const AdjacentCell &adjacent_cell)
+    push_back(const AdjacentCell& adjacent_cell)
     {
       if (adjacent_cells[0].cell_index == numbers::invalid_unsigned_int)
         adjacent_cells[0] = adjacent_cell;
@@ -303,7 +303,7 @@ namespace
      * in @p cell, and selecting the edge with number @p edge_number
      * within this cell. Initialize the edge as unoriented.
      */
-    Edge(const CellData<dim> &cell, const unsigned int edge_number) :
+    Edge(const CellData<dim>& cell, const unsigned int edge_number) :
       orientation_status(not_oriented)
     {
       Assert(edge_number < GeometryInfo<dim>::lines_per_cell,
@@ -325,7 +325,7 @@ namespace
      * lexicographic ordering of the two vertex indices.
      */
     bool
-    operator<(const Edge<dim> &e) const
+    operator<(const Edge<dim>& e) const
     {
       return ((vertex_indices[0] < e.vertex_indices[0]) ||
               ((vertex_indices[0] == e.vertex_indices[0]) &&
@@ -336,7 +336,7 @@ namespace
      * Compare two edges for equality based on their vertex indices.
      */
     bool
-    operator==(const Edge<dim> &e) const
+    operator==(const Edge<dim>& e) const
     {
       return ((vertex_indices[0] == e.vertex_indices[0]) &&
               (vertex_indices[1] == e.vertex_indices[1]));
@@ -382,7 +382,7 @@ namespace
      * (sorted) list of edges and to point the edges of the current
      * object into this list of edges.
      */
-    Cell(const CellData<dim> &c, const std::vector<Edge<dim>> &edge_list)
+    Cell(const CellData<dim>& c, const std::vector<Edge<dim>>& edge_list)
     {
       for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         vertex_indices[i] = c.vertices[i];
@@ -433,7 +433,7 @@ namespace
     /**
      * Iterator type for the elements of the set.
      */
-    typedef const unsigned int *const_iterator;
+    typedef const unsigned int* const_iterator;
 
     /**
      * Default constructor. Initialize both slots as unused, corresponding
@@ -531,7 +531,7 @@ namespace
    */
   template <int dim>
   std::vector<Edge<dim>>
-  build_edges(const std::vector<CellData<dim>> &cells)
+  build_edges(const std::vector<CellData<dim>>& cells)
   {
     // build the edge list for all cells. because each cell has
     // GeometryInfo<dim>::lines_per_cell edges, the total number
@@ -559,8 +559,8 @@ namespace
    */
   template <int dim>
   std::vector<Cell<dim>>
-  build_cells_and_connect_edges(const std::vector<CellData<dim>> &cells,
-                                std::vector<Edge<dim>> &          edges)
+  build_cells_and_connect_edges(const std::vector<CellData<dim>>& cells,
+                                std::vector<Edge<dim>>&           edges)
   {
     std::vector<Cell<dim>> cell_list;
     cell_list.reserve(cells.size());
@@ -589,8 +589,8 @@ namespace
    */
   template <int dim>
   unsigned int
-  get_next_unoriented_cell(const std::vector<Cell<dim>> &cells,
-                           const std::vector<Edge<dim>> &edges,
+  get_next_unoriented_cell(const std::vector<Cell<dim>>& cells,
+                           const std::vector<Edge<dim>>& edges,
                            const unsigned int            current_cell)
   {
     for (unsigned int c = current_cell; c < cells.size(); ++c)
@@ -611,8 +611,8 @@ namespace
    */
   template <int dim>
   void
-  orient_one_set_of_parallel_edges(const std::vector<Cell<dim>> &cells,
-                                   std::vector<Edge<dim>> &      edges,
+  orient_one_set_of_parallel_edges(const std::vector<Cell<dim>>& cells,
+                                   std::vector<Edge<dim>>&       edges,
                                    const unsigned int            cell,
                                    const unsigned int            local_edge)
   {
@@ -801,10 +801,10 @@ namespace
    */
   template <int dim>
   void
-  rotate_cell(const std::vector<Cell<dim>> &cell_list,
-              const std::vector<Edge<dim>> &edge_list,
+  rotate_cell(const std::vector<Cell<dim>>& cell_list,
+              const std::vector<Edge<dim>>& edge_list,
               const unsigned int            cell_index,
-              std::vector<CellData<dim>> &  raw_cells)
+              std::vector<CellData<dim>>&   raw_cells)
   {
     // find the first vertex of the cell. this is the vertex where dim edges
     // originate, so for each of the edges record which the starting vertex is
@@ -948,7 +948,7 @@ namespace
    */
   template <int dim>
   void
-  reorient(std::vector<CellData<dim>> &cells)
+  reorient(std::vector<CellData<dim>>& cells)
   {
     // first build the arrays that connect cells to edges and the other
     // way around
@@ -1003,7 +1003,7 @@ namespace
 
   // overload of the function above for 1d -- there is nothing
   // to orient in that case
-  void reorient(std::vector<CellData<1>> &)
+  void reorient(std::vector<CellData<1>>&)
   {}
 } // namespace
 
@@ -1020,18 +1020,18 @@ namespace
    * do the reordering of their
    * arguments in-place.
    */
-  void reorder_new_to_old_style(std::vector<CellData<1>> &)
+  void reorder_new_to_old_style(std::vector<CellData<1>>&)
   {}
 
 
-  void reorder_new_to_old_style(std::vector<CellData<2>> &cells)
+  void reorder_new_to_old_style(std::vector<CellData<2>>& cells)
   {
     for (unsigned int cell = 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
 
 
-  void reorder_new_to_old_style(std::vector<CellData<3>> &cells)
+  void reorder_new_to_old_style(std::vector<CellData<3>>& cells)
   {
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
     for (unsigned int cell = 0; cell < cells.size(); ++cell)
@@ -1047,18 +1047,18 @@ namespace
   /**
    * And now also in the opposite direction.
    */
-  void reorder_old_to_new_style(std::vector<CellData<1>> &)
+  void reorder_old_to_new_style(std::vector<CellData<1>>&)
   {}
 
 
-  void reorder_old_to_new_style(std::vector<CellData<2>> &cells)
+  void reorder_old_to_new_style(std::vector<CellData<2>>& cells)
   {
     // just invert the permutation:
     reorder_new_to_old_style(cells);
   }
 
 
-  void reorder_old_to_new_style(std::vector<CellData<3>> &cells)
+  void reorder_old_to_new_style(std::vector<CellData<3>>& cells)
   {
     // undo the ordering above
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
@@ -1076,7 +1076,7 @@ namespace
 
 template <int dim, int spacedim>
 void
-GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
+GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>>& cells,
                                              const bool use_new_style_ordering)
 {
   Assert(cells.size() != 0,
@@ -1097,7 +1097,7 @@ GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
       {
         reorient(cells);
       }
-    catch (const ExcMeshNotOrientable &)
+    catch (const ExcMeshNotOrientable&)
       {
         // the mesh is not orientable. this is acceptable if we are in 3d,
         // as class Triangulation knows how to handle this, but it is
@@ -1116,8 +1116,8 @@ GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
 template <>
 void
 GridReordering<1>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<1>> &,
-  std::vector<CellData<1>> &)
+  const std::vector<Point<1>>&,
+  std::vector<CellData<1>>&)
 {
   // nothing to be done in 1d
 }
@@ -1127,8 +1127,8 @@ GridReordering<1>::invert_all_cells_of_negative_grid(
 template <>
 void
 GridReordering<1, 2>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<2>> &,
-  std::vector<CellData<1>> &)
+  const std::vector<Point<2>>&,
+  std::vector<CellData<1>>&)
 {
   // nothing to be done in 1d
 }
@@ -1138,8 +1138,8 @@ GridReordering<1, 2>::invert_all_cells_of_negative_grid(
 template <>
 void
 GridReordering<1, 3>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<3>> &,
-  std::vector<CellData<1>> &)
+  const std::vector<Point<3>>&,
+  std::vector<CellData<1>>&)
 {
   // nothing to be done in 1d
 }
@@ -1148,8 +1148,8 @@ GridReordering<1, 3>::invert_all_cells_of_negative_grid(
 template <>
 void
 GridReordering<2>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<2>> &all_vertices,
-  std::vector<CellData<2>> &   cells)
+  const std::vector<Point<2>>& all_vertices,
+  std::vector<CellData<2>>&    cells)
 {
   unsigned int vertices_lex[GeometryInfo<2>::vertices_per_cell];
   unsigned int n_negative_cells = 0;
@@ -1209,8 +1209,8 @@ GridReordering<2>::invert_all_cells_of_negative_grid(
 template <>
 void
 GridReordering<2, 3>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<3>> &,
-  std::vector<CellData<2>> &)
+  const std::vector<Point<3>>&,
+  std::vector<CellData<2>>&)
 {
   Assert(false, ExcNotImplemented());
 }
@@ -1220,8 +1220,8 @@ GridReordering<2, 3>::invert_all_cells_of_negative_grid(
 template <>
 void
 GridReordering<3>::invert_all_cells_of_negative_grid(
-  const std::vector<Point<3>> &all_vertices,
-  std::vector<CellData<3>> &   cells)
+  const std::vector<Point<3>>& all_vertices,
+  std::vector<CellData<3>>&    cells)
 {
   unsigned int vertices_lex[GeometryInfo<3>::vertices_per_cell];
   unsigned int n_negative_cells = 0;

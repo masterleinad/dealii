@@ -42,17 +42,17 @@ std::ofstream logfile("output");
 
 
 void
-output_double_number(double input, const std::string &text)
+output_double_number(double input, const std::string& text)
 {
   deallog << text << input << std::endl;
 }
 
 template <int dim, int fe_degree, typename Number>
 void
-mass_operator(const MatrixFree<dim, Number> &              data,
-              Vector<Number> &                             dst,
-              const Vector<Number> &                       src,
-              const std::pair<unsigned int, unsigned int> &cell_range)
+mass_operator(const MatrixFree<dim, Number>&               data,
+              Vector<Number>&                              dst,
+              const Vector<Number>&                        src,
+              const std::pair<unsigned int, unsigned int>& cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
@@ -79,29 +79,29 @@ class MatrixFreeTest
 public:
   typedef VectorizedArray<Number> vector_t;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  vmult(Vector<Number> &dst, const Vector<Number> &src) const
+  vmult(Vector<Number>& dst, const Vector<Number>& src) const
   {
     dst = 0;
-    const std::function<void(const MatrixFree<dim, Number> &,
-                             Vector<Number> &,
-                             const Vector<Number> &,
-                             const std::pair<unsigned int, unsigned int> &)>
+    const std::function<void(const MatrixFree<dim, Number>&,
+                             Vector<Number>&,
+                             const Vector<Number>&,
+                             const std::pair<unsigned int, unsigned int>&)>
       wrap = mass_operator<dim, fe_degree, Number>;
     data.cell_loop(wrap, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
 
 template <int dim, int fe_degree>
 void
-test(const FiniteElement<dim> &fe, const unsigned int n_iterations)
+test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
 {
   typedef double number;
 

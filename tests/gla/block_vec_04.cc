@@ -73,7 +73,7 @@ test()
         typename LA::MPI::BlockVector x = v_1;
         x                               = v_2; // error
       }
-    catch (const ExceptionBase &e)
+    catch (const ExceptionBase& e)
       {
         deallog << "Exception: " << e.get_exc_name() << std::endl;
       }
@@ -87,7 +87,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

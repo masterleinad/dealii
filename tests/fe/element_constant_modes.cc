@@ -30,7 +30,7 @@
 
 template <int dim>
 void
-print_constant_modes(const FiniteElement<dim> &fe)
+print_constant_modes(const FiniteElement<dim>& fe)
 {
   deallog << "Testing " << fe.get_name() << std::endl;
 

@@ -499,11 +499,11 @@ double matv[] = {
 
 
 void
-check(Epetra_FECrsMatrix &    mat,
-      Teuchos::ParameterList &parameter_list,
-      Epetra_FEVector &       x1,
-      Epetra_FEVector &       x2,
-      Epetra_FEVector &       b)
+check(Epetra_FECrsMatrix&     mat,
+      Teuchos::ParameterList& parameter_list,
+      Epetra_FEVector&        x1,
+      Epetra_FEVector&        x2,
+      Epetra_FEVector&        b)
 {
   int ierr;
   {
@@ -540,7 +540,7 @@ run()
 
   for (unsigned int i = 0; i < n; ++i)
     {
-      ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int *)&matj[i]);
+      ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*)&matj[i]);
       assert(ierr == 0);
     }
 
@@ -587,7 +587,7 @@ run()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

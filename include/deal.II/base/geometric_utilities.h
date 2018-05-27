@@ -55,7 +55,7 @@ namespace GeometricUtilities
      */
     template <int dim>
     std::array<double, dim>
-    to_spherical(const Point<dim> &point);
+    to_spherical(const Point<dim>& point);
 
     /**
      * Return the Cartesian coordinates of a spherical point defined by @p scoord
@@ -72,7 +72,7 @@ namespace GeometricUtilities
      */
     template <std::size_t dim>
     Point<dim>
-    from_spherical(const std::array<double, dim> &scoord);
+    from_spherical(const std::array<double, dim>& scoord);
 
   } // namespace Coordinates
 } // namespace GeometricUtilities

@@ -32,8 +32,8 @@
 
 template <int dim>
 void
-compare_meshes(parallel::shared::Triangulation<dim> &     shared_tria,
-               parallel::distributed::Triangulation<dim> &p4est_tria)
+compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
+               parallel::distributed::Triangulation<dim>& p4est_tria)
 {
   AssertThrow(shared_tria.n_locally_owned_active_cells() ==
                 p4est_tria.n_locally_owned_active_cells(),
@@ -143,7 +143,7 @@ test()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

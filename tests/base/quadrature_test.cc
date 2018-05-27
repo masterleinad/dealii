@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-fill_vector(std::vector<Quadrature<dim> *> &quadratures)
+fill_vector(std::vector<Quadrature<dim>*>& quadratures)
 {
   quadratures.push_back(new QMidpoint<dim>());
   quadratures.push_back(new QTrapez<dim>());
@@ -48,14 +48,14 @@ fill_vector(std::vector<Quadrature<dim> *> &quadratures)
 
 template <int dim>
 void
-check_cells(std::vector<Quadrature<dim> *> &quadratures)
+check_cells(std::vector<Quadrature<dim>*>& quadratures)
 {
   Quadrature<dim> quadrature;
   for (unsigned int n = 0; n < quadratures.size(); ++n)
     {
       quadrature                             = *quadratures[n];
-      const std::vector<Point<dim>> &points  = quadrature.get_points();
-      const std::vector<double> &    weights = quadrature.get_weights();
+      const std::vector<Point<dim>>& points  = quadrature.get_points();
+      const std::vector<double>&     weights = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
@@ -115,8 +115,8 @@ check_cells(std::vector<Quadrature<dim> *> &quadratures)
 
 template <int dim>
 void
-check_faces(const std::vector<Quadrature<dim - 1> *> &quadratures,
-            const bool                                sub)
+check_faces(const std::vector<Quadrature<dim - 1>*>& quadratures,
+            const bool                               sub)
 {
   if (sub)
     deallog.push("subfaces");
@@ -129,8 +129,8 @@ check_faces(const std::vector<Quadrature<dim - 1> *> &quadratures,
         sub == false ?
           QProjector<dim>::project_to_all_faces(*quadratures[n]) :
           QProjector<dim>::project_to_all_subfaces(*quadratures[n]));
-      const std::vector<Point<dim>> &points  = quadrature.get_points();
-      const std::vector<double> &    weights = quadrature.get_weights();
+      const std::vector<Point<dim>>& points  = quadrature.get_points();
+      const std::vector<double>&     weights = quadrature.get_weights();
 
       deallog << "Quadrature no." << n;
 
@@ -196,9 +196,9 @@ main()
 {
   initlog();
 
-  std::vector<Quadrature<1> *> q1;
-  std::vector<Quadrature<2> *> q2;
-  std::vector<Quadrature<3> *> q3;
+  std::vector<Quadrature<1>*> q1;
+  std::vector<Quadrature<2>*> q2;
+  std::vector<Quadrature<3>*> q3;
   fill_vector(q1);
   fill_vector(q2);
   fill_vector(q3);

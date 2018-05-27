@@ -144,8 +144,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const override;
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const override;
 
   /**
    * @name Functions to support hp
@@ -163,7 +163,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
   //@}
 };
 

@@ -22,7 +22,7 @@
 #include "../tests.h"
 
 void
-check(const char *p, std::string last_line)
+check(const char* p, std::string last_line)
 {
   ParameterHandler prm;
   prm.declare_entry("var_1", "-1", Patterns::Integer(-1, 1));

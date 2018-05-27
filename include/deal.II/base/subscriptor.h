@@ -72,7 +72,7 @@ public:
    * The counter of the copy is zero, since references point to the original
    * object.
    */
-  Subscriptor(const Subscriptor &);
+  Subscriptor(const Subscriptor&);
 
   /**
    * Move constructor.
@@ -80,7 +80,7 @@ public:
    * An object inheriting from Subscriptor can only be moved if no other
    * objects are subscribing to it.
    */
-  Subscriptor(Subscriptor &&) noexcept;
+  Subscriptor(Subscriptor&&) noexcept;
 
   /**
    * Destructor, asserting that the counter is zero.
@@ -93,23 +93,23 @@ public:
    * This has to be handled with care, too, because the counter has to remain
    * the same. It therefore does nothing more than returning <tt>*this</tt>.
    */
-  Subscriptor &
-  operator=(const Subscriptor &);
+  Subscriptor&
+  operator=(const Subscriptor&);
 
   /**
    * Move assignment operator.
    *
    * Asserts that the counter for the moved object is zero.
    */
-  Subscriptor &
-  operator=(Subscriptor &&) noexcept;
+  Subscriptor&
+  operator=(Subscriptor&&) noexcept;
 
   /**
    * Subscribes a user of the object. The subscriber may be identified by text
    * supplied as <tt>identifier</tt>.
    */
   void
-  subscribe(const char *identifier = nullptr) const;
+  subscribe(const char* identifier = nullptr) const;
 
   /**
    * Unsubscribes a user from the object.
@@ -118,7 +118,7 @@ public:
    * supplied to subscribe(), not just the same text.
    */
   void
-  unsubscribe(const char *identifier = nullptr) const;
+  unsubscribe(const char* identifier = nullptr) const;
 
   /**
    * Return the present number of subscriptions to this object. This allows to
@@ -181,18 +181,18 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive &ar, const unsigned int version);
+  serialize(Archive& ar, const unsigned int version);
 
 private:
   /**
    * The data type used in #counter_map.
    */
-  typedef std::map<const char *, unsigned int>::value_type map_value_type;
+  typedef std::map<const char*, unsigned int>::value_type map_value_type;
 
   /**
    * The iterator type used in #counter_map.
    */
-  typedef std::map<const char *, unsigned int>::iterator map_iterator;
+  typedef std::map<const char*, unsigned int>::iterator map_iterator;
 
   /**
    * Store the number of objects which subscribed to this object. Initially,
@@ -216,7 +216,7 @@ private:
    * In this map, we count subscriptions for each different identification
    * string supplied to subscribe().
    */
-  mutable std::map<const char *, unsigned int> counter_map;
+  mutable std::map<const char*, unsigned int> counter_map;
 
   /**
    * Pointer to the typeinfo object of this object, from which we can later
@@ -224,7 +224,7 @@ private:
    * neither available in the destructor, nor in the constructor, we obtain it
    * in between and store it here.
    */
-  mutable const std::type_info *object_info;
+  mutable const std::type_info* object_info;
 
   /**
    * Check that there are no objects subscribing to this object. If this check
@@ -247,7 +247,7 @@ private:
 
 template <class Archive>
 inline void
-Subscriptor::serialize(Archive &, const unsigned int)
+Subscriptor::serialize(Archive&, const unsigned int)
 {
   // do nothing, as explained in the
   // documentation of this function

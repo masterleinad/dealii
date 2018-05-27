@@ -112,21 +112,21 @@ public:
    * of Polynomials::Polynomial@<double@>.
    */
   template <class Pol>
-  PolynomialSpace(const std::vector<Pol> &pols);
+  PolynomialSpace(const std::vector<Pol>& pols);
 
   /**
    * Prints the list of the indices to <tt>out</tt>.
    */
   template <class StreamType>
   void
-  output_indices(StreamType &out) const;
+  output_indices(StreamType& out) const;
 
   /**
    * Set the ordering of the polynomials. Requires
    * <tt>renumber.size()==n()</tt>. Stores a copy of <tt>renumber</tt>.
    */
   void
-  set_numbering(const std::vector<unsigned int> &renumber);
+  set_numbering(const std::vector<unsigned int>& renumber);
 
   /**
    * Compute the value and the first and second derivatives of each
@@ -142,12 +142,12 @@ public:
    * compute_grad_grad() functions, see below, in a loop over all polynomials.
    */
   void
-  compute(const Point<dim> &           unit_point,
-          std::vector<double> &        values,
-          std::vector<Tensor<1, dim>> &grads,
-          std::vector<Tensor<2, dim>> &grad_grads,
-          std::vector<Tensor<3, dim>> &third_derivatives,
-          std::vector<Tensor<4, dim>> &fourth_derivatives) const;
+  compute(const Point<dim>&            unit_point,
+          std::vector<double>&         values,
+          std::vector<Tensor<1, dim>>& grads,
+          std::vector<Tensor<2, dim>>& grad_grads,
+          std::vector<Tensor<3, dim>>& third_derivatives,
+          std::vector<Tensor<4, dim>>& fourth_derivatives) const;
 
   /**
    * Compute the value of the <tt>i</tt>th polynomial at unit point
@@ -156,7 +156,7 @@ public:
    * Consider using compute() instead.
    */
   double
-  compute_value(const unsigned int i, const Point<dim> &p) const;
+  compute_value(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the <tt>order</tt>th derivative of the <tt>i</tt>th polynomial
@@ -168,7 +168,7 @@ public:
    */
   template <int order>
   Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim> &p) const;
+  compute_derivative(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the gradient of the <tt>i</tt>th polynomial at unit point
@@ -177,7 +177,7 @@ public:
    * Consider using compute() instead.
    */
   Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th polynomial
@@ -186,7 +186,7 @@ public:
    * Consider using compute() instead.
    */
   Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Return the number of polynomials spanning the space represented by this
@@ -269,7 +269,7 @@ PolynomialSpace<3>::compute_index(const unsigned int n) const;
 
 template <int dim>
 template <class Pol>
-PolynomialSpace<dim>::PolynomialSpace(const std::vector<Pol> &pols) :
+PolynomialSpace<dim>::PolynomialSpace(const std::vector<Pol>& pols) :
   polynomials(pols.begin(), pols.end()),
   n_pols(compute_n_pols(polynomials.size())),
   index_map(n_pols),
@@ -307,7 +307,7 @@ PolynomialSpace<dim>::degree() const
 template <int dim>
 template <class StreamType>
 void
-PolynomialSpace<dim>::output_indices(StreamType &out) const
+PolynomialSpace<dim>::output_indices(StreamType& out) const
 {
   for (unsigned int i = 0; i < n_pols; ++i)
     {
@@ -323,7 +323,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 PolynomialSpace<dim>::compute_derivative(const unsigned int i,
-                                         const Point<dim> & p) const
+                                         const Point<dim>&  p) const
 {
   const std::array<unsigned int, dim> indices = compute_index(i);
 
@@ -343,8 +343,8 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
     {
       case 1:
         {
-          Tensor<1, dim> &derivative_1 =
-            *reinterpret_cast<Tensor<1, dim> *>(&derivative);
+          Tensor<1, dim>& derivative_1 =
+            *reinterpret_cast<Tensor<1, dim>*>(&derivative);
           for (unsigned int d = 0; d < dim; ++d)
             {
               derivative_1[d] = 1.;
@@ -362,8 +362,8 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         }
       case 2:
         {
-          Tensor<2, dim> &derivative_2 =
-            *reinterpret_cast<Tensor<2, dim> *>(&derivative);
+          Tensor<2, dim>& derivative_2 =
+            *reinterpret_cast<Tensor<2, dim>*>(&derivative);
           for (unsigned int d1 = 0; d1 < dim; ++d1)
             for (unsigned int d2 = 0; d2 < dim; ++d2)
               {
@@ -384,8 +384,8 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         }
       case 3:
         {
-          Tensor<3, dim> &derivative_3 =
-            *reinterpret_cast<Tensor<3, dim> *>(&derivative);
+          Tensor<3, dim>& derivative_3 =
+            *reinterpret_cast<Tensor<3, dim>*>(&derivative);
           for (unsigned int d1 = 0; d1 < dim; ++d1)
             for (unsigned int d2 = 0; d2 < dim; ++d2)
               for (unsigned int d3 = 0; d3 < dim; ++d3)
@@ -409,8 +409,8 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         }
       case 4:
         {
-          Tensor<4, dim> &derivative_4 =
-            *reinterpret_cast<Tensor<4, dim> *>(&derivative);
+          Tensor<4, dim>& derivative_4 =
+            *reinterpret_cast<Tensor<4, dim>*>(&derivative);
           for (unsigned int d1 = 0; d1 < dim; ++d1)
             for (unsigned int d2 = 0; d2 < dim; ++d2)
               for (unsigned int d3 = 0; d3 < dim; ++d3)

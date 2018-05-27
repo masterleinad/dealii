@@ -149,7 +149,7 @@ public:
    * returns a reference to the same structure.
    */
   DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
+  const Utilities::MPI::MinMaxAvg&
   get_data() const;
 
   /**
@@ -158,7 +158,7 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
+  const Utilities::MPI::MinMaxAvg&
   get_last_lap_wall_time_data() const;
 
   /**
@@ -171,7 +171,7 @@ public:
    * returns a reference the same structure.
    */
   DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
+  const Utilities::MPI::MinMaxAvg&
   get_total_data() const;
 
   /**
@@ -180,7 +180,7 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
+  const Utilities::MPI::MinMaxAvg&
   get_accumulated_wall_time_data() const;
 
   /**
@@ -192,7 +192,7 @@ public:
    */
   template <class StreamType>
   DEAL_II_DEPRECATED void
-  print_data(StreamType &stream) const;
+  print_data(StreamType& stream) const;
 
   /**
    * Print the data returned by Timer::get_last_lap_wall_time_data() to the
@@ -200,7 +200,7 @@ public:
    */
   template <class StreamType>
   void
-  print_last_lap_wall_time_data(StreamType &stream) const;
+  print_last_lap_wall_time_data(StreamType& stream) const;
 
   /**
    * Prints the data returned by get_total_data(), i.e. for the total run,
@@ -211,7 +211,7 @@ public:
    */
   template <class StreamType>
   DEAL_II_DEPRECATED void
-  print_total_data(StreamType &stream) const;
+  print_total_data(StreamType& stream) const;
 
   /**
    * Print the data returned by Timer::get_accumulated_wall_time_data() to the
@@ -219,7 +219,7 @@ public:
    */
   template <class StreamType>
   void
-  print_accumulated_wall_time_data(StreamType &stream) const;
+  print_accumulated_wall_time_data(StreamType& stream) const;
 
   /**
    * Begin measuring a new lap. If <code>sync_lap_times</code> is
@@ -592,7 +592,7 @@ public:
      * Enter the given section in the timer. Exit automatically when calling
      * stop() or destructor runs.
      */
-    Scope(dealii::TimerOutput &timer_, const std::string &section_name);
+    Scope(dealii::TimerOutput& timer_, const std::string& section_name);
 
     /**
      * Destructor calls stop()
@@ -610,7 +610,7 @@ public:
     /**
      * Reference to the TimerOutput object
      */
-    dealii::TimerOutput &timer;
+    dealii::TimerOutput& timer;
 
     /**
      * Name of the section we need to exit
@@ -697,7 +697,7 @@ public:
    * @param output_type A variable indicating what kind of timing the output
    * should represent (CPU or wall time).
    */
-  TimerOutput(std::ostream &        stream,
+  TimerOutput(std::ostream&         stream,
               const OutputFrequency output_frequency,
               const OutputType      output_type);
 
@@ -711,7 +711,7 @@ public:
    * @param output_type A variable indicating what kind of timing the output
    * should represent (CPU or wall time).
    */
-  TimerOutput(ConditionalOStream &  stream,
+  TimerOutput(ConditionalOStream&   stream,
               const OutputFrequency output_frequency,
               const OutputType      output_type);
 
@@ -739,7 +739,7 @@ public:
    * each section.
    */
   TimerOutput(MPI_Comm              mpi_comm,
-              std::ostream &        stream,
+              std::ostream&         stream,
               const OutputFrequency output_frequency,
               const OutputType      output_type);
 
@@ -767,7 +767,7 @@ public:
    * each section.)
    */
   TimerOutput(MPI_Comm              mpi_comm,
-              ConditionalOStream &  stream,
+              ConditionalOStream&   stream,
               const OutputFrequency output_frequency,
               const OutputType      output_type);
 
@@ -782,13 +782,13 @@ public:
    * exists, that section is entered once again and times are accumulated.
    */
   void
-  enter_subsection(const std::string &section_name);
+  enter_subsection(const std::string& section_name);
 
   /**
    * Same as @p enter_subsection.
    */
   void
-  enter_section(const std::string &section_name);
+  enter_section(const std::string& section_name);
 
   // TODO: make some of these functions DEPRECATED (I would keep
   // enter/exit_section)
@@ -798,13 +798,13 @@ public:
    * is left.
    */
   void
-  leave_subsection(const std::string &section_name = std::string());
+  leave_subsection(const std::string& section_name = std::string());
 
   /**
    * Same as @p leave_subsection.
    */
   void
-  exit_section(const std::string &section_name = std::string());
+  exit_section(const std::string& section_name = std::string());
 
   /**
    * Get a map with the collected data of the specified type for each subsection
@@ -923,7 +923,7 @@ Timer::restart()
 
 
 
-inline const Utilities::MPI::MinMaxAvg &
+inline const Utilities::MPI::MinMaxAvg&
 Timer::get_data() const
 {
   return last_lap_wall_time_data;
@@ -931,7 +931,7 @@ Timer::get_data() const
 
 
 
-inline const Utilities::MPI::MinMaxAvg &
+inline const Utilities::MPI::MinMaxAvg&
 Timer::get_last_lap_wall_time_data() const
 {
   return last_lap_wall_time_data;
@@ -939,7 +939,7 @@ Timer::get_last_lap_wall_time_data() const
 
 
 
-inline const Utilities::MPI::MinMaxAvg &
+inline const Utilities::MPI::MinMaxAvg&
 Timer::get_total_data() const
 {
   return accumulated_wall_time_data;
@@ -947,7 +947,7 @@ Timer::get_total_data() const
 
 
 
-inline const Utilities::MPI::MinMaxAvg &
+inline const Utilities::MPI::MinMaxAvg&
 Timer::get_accumulated_wall_time_data() const
 {
   return accumulated_wall_time_data;
@@ -957,7 +957,7 @@ Timer::get_accumulated_wall_time_data() const
 
 template <class StreamType>
 inline void
-Timer::print_data(StreamType &stream) const
+Timer::print_data(StreamType& stream) const
 {
   print_last_lap_wall_time_data(stream);
 }
@@ -966,9 +966,9 @@ Timer::print_data(StreamType &stream) const
 
 template <class StreamType>
 inline void
-Timer::print_last_lap_wall_time_data(StreamType &stream) const
+Timer::print_last_lap_wall_time_data(StreamType& stream) const
 {
-  const Utilities::MPI::MinMaxAvg &statistic = get_last_lap_wall_time_data();
+  const Utilities::MPI::MinMaxAvg& statistic = get_last_lap_wall_time_data();
   stream << statistic.max << " wall,"
          << " max @" << statistic.max_index << ", min=" << statistic.min << " @"
          << statistic.min_index << ", avg=" << statistic.avg << std::endl;
@@ -978,7 +978,7 @@ Timer::print_last_lap_wall_time_data(StreamType &stream) const
 
 template <class StreamType>
 inline void
-Timer::print_total_data(StreamType &stream) const
+Timer::print_total_data(StreamType& stream) const
 {
   print_accumulated_wall_time_data(stream);
 }
@@ -987,7 +987,7 @@ Timer::print_total_data(StreamType &stream) const
 
 template <class StreamType>
 inline void
-Timer::print_accumulated_wall_time_data(StreamType &stream) const
+Timer::print_accumulated_wall_time_data(StreamType& stream) const
 {
   const Utilities::MPI::MinMaxAvg statistic = get_accumulated_wall_time_data();
   stream << statistic.max << " wall,"
@@ -998,7 +998,7 @@ Timer::print_accumulated_wall_time_data(StreamType &stream) const
 
 
 inline void
-TimerOutput::enter_section(const std::string &section_name)
+TimerOutput::enter_section(const std::string& section_name)
 {
   enter_subsection(section_name);
 }
@@ -1006,13 +1006,13 @@ TimerOutput::enter_section(const std::string &section_name)
 
 
 inline void
-TimerOutput::exit_section(const std::string &section_name)
+TimerOutput::exit_section(const std::string& section_name)
 {
   leave_subsection(section_name);
 }
 
-inline TimerOutput::Scope::Scope(dealii::TimerOutput &timer_,
-                                 const std::string &  section_name_) :
+inline TimerOutput::Scope::Scope(dealii::TimerOutput& timer_,
+                                 const std::string&   section_name_) :
   timer(timer_),
   section_name(section_name_),
   in(true)

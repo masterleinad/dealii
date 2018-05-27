@@ -73,7 +73,7 @@ main()
   deallog.attach(logfile);
 
   const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
-  for (const auto &s : sizes)
+  for (const auto& s : sizes)
     {
       // test<float>(s);
       test<double>(s);

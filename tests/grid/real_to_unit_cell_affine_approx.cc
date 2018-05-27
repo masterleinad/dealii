@@ -29,7 +29,7 @@
 
 template <int dim, int spacedim>
 void
-do_test(const Triangulation<dim, spacedim> &tria, const Point<spacedim> &p)
+do_test(const Triangulation<dim, spacedim>& tria, const Point<spacedim>& p)
 {
   MappingQ<dim, spacedim> mapping(1);
 

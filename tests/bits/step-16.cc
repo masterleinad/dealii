@@ -116,7 +116,7 @@ LaplaceProblem<dim>::setup_system()
                           mg_dof_handler.n_dofs(),
                           mg_dof_handler.max_couplings_between_dofs());
   DoFTools::make_sparsity_pattern(
-    static_cast<const DoFHandler<dim> &>(mg_dof_handler), sparsity_pattern);
+    static_cast<const DoFHandler<dim>&>(mg_dof_handler), sparsity_pattern);
   sparsity_pattern.compress();
 
   system_matrix.reinit(sparsity_pattern);

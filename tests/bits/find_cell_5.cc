@@ -32,7 +32,7 @@
 
 
 
-void check(Triangulation<3> &tria)
+void check(Triangulation<3>& tria)
 {
   Point<3> p(0.75, 0.75, 0.75);
 
@@ -66,7 +66,7 @@ main()
       coarse_grid.refine_global(3);
       check(coarse_grid);
     }
-  catch (const std::exception &exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

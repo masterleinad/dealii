@@ -27,7 +27,7 @@ using namespace Polynomials;
 
 
 void
-check_scale(const std::vector<Polynomial<double>> &p)
+check_scale(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Scale operation";
   for (unsigned int i = 0; i < p.size(); ++i)
@@ -50,7 +50,7 @@ check_scale(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_shift(const std::vector<Polynomial<double>> &p)
+check_shift(const std::vector<Polynomial<double>>& p)
 {
   // shift does not work for too high orders
   if (p.size() > 30)
@@ -77,7 +77,7 @@ check_shift(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_mult_scalar(const std::vector<Polynomial<double>> &p)
+check_mult_scalar(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Multiply by scalar";
   for (unsigned int i = 0; i < p.size(); ++i)
@@ -100,7 +100,7 @@ check_mult_scalar(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_mult(const std::vector<Polynomial<double>> &p)
+check_mult(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Multiply by polynomial";
   for (unsigned int i = 0; i < p.size(); ++i)
@@ -126,7 +126,7 @@ check_mult(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_expand(const std::vector<Polynomial<double>> &p)
+check_expand(const std::vector<Polynomial<double>>& p)
 {
   if (p.size() > 10)
     return;
@@ -160,7 +160,7 @@ check_expand(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_mult_expand(const std::vector<Polynomial<double>> &p)
+check_mult_expand(const std::vector<Polynomial<double>>& p)
 {
   if (p.size() > 6)
     return;
@@ -207,7 +207,7 @@ check_lge(unsigned int n)
 
 
 void
-check_poly(const Quadrature<1> &q)
+check_poly(const Quadrature<1>& q)
 {
   deallog << "Points: " << q.size() << std::endl;
   std::vector<Polynomial<double>> p =

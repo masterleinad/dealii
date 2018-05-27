@@ -22,7 +22,7 @@
 
 
 void
-graph_laplacian(const SparsityPattern &sparsity, SparseMatrix<double> &matrix)
+graph_laplacian(const SparsityPattern& sparsity, SparseMatrix<double>& matrix)
 {
   matrix = 0.0;
 
@@ -39,7 +39,7 @@ graph_laplacian(const SparsityPattern &sparsity, SparseMatrix<double> &matrix)
 
 
 SparseMatrix<double>
-graph_laplacian(const SparsityPattern &sparsity)
+graph_laplacian(const SparsityPattern& sparsity)
 {
   SparseMatrix<double> A(sparsity);
   graph_laplacian(sparsity, A);
@@ -49,7 +49,7 @@ graph_laplacian(const SparsityPattern &sparsity)
 
 
 SparseMatrix<double>
-graph_laplacian_move_return(const SparsityPattern &sparsity)
+graph_laplacian_move_return(const SparsityPattern& sparsity)
 {
   SparseMatrix<double> A(sparsity);
   graph_laplacian(sparsity, A);

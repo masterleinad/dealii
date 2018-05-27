@@ -75,18 +75,18 @@ public:
    * <tt>block_sizes[i]</tt>. The number of blocks will be the size of @p
    * block_sizes.
    */
-  BlockIndices(const std::vector<size_type> &block_sizes);
+  BlockIndices(const std::vector<size_type>& block_sizes);
 
   /**
    * Move constructor. Initialize a new object by stealing the internal data of
    * another BlockIndices object.
    */
-  BlockIndices(BlockIndices &&b) noexcept;
+  BlockIndices(BlockIndices&& b) noexcept;
 
   /**
    * Copy constructor.
    */
-  BlockIndices(const BlockIndices &) = default;
+  BlockIndices(const BlockIndices&) = default;
 
   /**
    * Specialized constructor for a structure with blocks of equal size.
@@ -108,7 +108,7 @@ public:
    * <tt>block_sizes[i]</tt>.
    */
   void
-  reinit(const std::vector<size_type> &block_sizes);
+  reinit(const std::vector<size_type>& block_sizes);
 
   /**
    * Add another block of given size to the end of the block structure.
@@ -184,28 +184,28 @@ public:
   /**
    * Copy operator.
    */
-  BlockIndices &
-  operator=(const BlockIndices &b);
+  BlockIndices&
+  operator=(const BlockIndices& b);
 
   /**
    * Move assignment operator. Move another BlockIndices object onto the
    * current one by transferring its contents.
    */
-  BlockIndices &
-  operator=(BlockIndices &&) noexcept;
+  BlockIndices&
+  operator=(BlockIndices&&) noexcept;
 
   /**
    * Compare whether two objects are the same, i.e. whether the number of
    * blocks and the sizes of all blocks are equal.
    */
   bool
-  operator==(const BlockIndices &b) const;
+  operator==(const BlockIndices& b) const;
 
   /**
    * Swap the contents of these two objects.
    */
   void
-  swap(BlockIndices &b);
+  swap(BlockIndices& b);
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -237,8 +237,8 @@ private:
  * @author Guido Kanschat
  * @date 2011
  */
-inline LogStream &
-operator<<(LogStream &s, const BlockIndices &bi)
+inline LogStream&
+operator<<(LogStream& s, const BlockIndices& bi)
 {
   const unsigned int n = bi.size();
   s << n << ":[";
@@ -268,7 +268,7 @@ BlockIndices::reinit(const unsigned int nb, const size_type block_size)
 
 
 inline void
-BlockIndices::reinit(const std::vector<size_type> &block_sizes)
+BlockIndices::reinit(const std::vector<size_type>& block_sizes)
 {
   if (start_indices.size() != block_sizes.size() + 1)
     {
@@ -297,7 +297,7 @@ inline BlockIndices::BlockIndices(const unsigned int n_blocks,
 
 
 
-inline BlockIndices::BlockIndices(const std::vector<size_type> &block_sizes) :
+inline BlockIndices::BlockIndices(const std::vector<size_type>& block_sizes) :
   n_blocks(static_cast<unsigned int>(block_sizes.size())),
   start_indices(block_sizes.size() + 1)
 {
@@ -306,7 +306,7 @@ inline BlockIndices::BlockIndices(const std::vector<size_type> &block_sizes) :
 
 
 
-inline BlockIndices::BlockIndices(BlockIndices &&b) noexcept :
+inline BlockIndices::BlockIndices(BlockIndices&& b) noexcept :
   n_blocks(b.n_blocks),
   start_indices(std::move(b.start_indices))
 {
@@ -404,8 +404,8 @@ BlockIndices::block_start(const unsigned int block) const
 
 
 
-inline BlockIndices &
-BlockIndices::operator=(const BlockIndices &b)
+inline BlockIndices&
+BlockIndices::operator=(const BlockIndices& b)
 {
   start_indices = b.start_indices;
   n_blocks      = b.n_blocks;
@@ -414,8 +414,8 @@ BlockIndices::operator=(const BlockIndices &b)
 
 
 
-inline BlockIndices &
-BlockIndices::operator=(BlockIndices &&b) noexcept
+inline BlockIndices&
+BlockIndices::operator=(BlockIndices&& b) noexcept
 {
   start_indices = std::move(b.start_indices);
   n_blocks      = b.n_blocks;
@@ -429,7 +429,7 @@ BlockIndices::operator=(BlockIndices &&b) noexcept
 
 
 inline bool
-BlockIndices::operator==(const BlockIndices &b) const
+BlockIndices::operator==(const BlockIndices& b) const
 {
   if (n_blocks != b.n_blocks)
     return false;
@@ -444,7 +444,7 @@ BlockIndices::operator==(const BlockIndices &b) const
 
 
 inline void
-BlockIndices::swap(BlockIndices &b)
+BlockIndices::swap(BlockIndices& b)
 {
   std::swap(n_blocks, b.n_blocks);
   std::swap(start_indices, b.start_indices);
@@ -472,7 +472,7 @@ BlockIndices::memory_consumption() const
  * @author Wolfgang Bangerth, 2000
  */
 inline void
-swap(BlockIndices &u, BlockIndices &v)
+swap(BlockIndices& u, BlockIndices& v)
 {
   u.swap(v);
 }

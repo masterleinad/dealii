@@ -30,7 +30,7 @@ template <int dim>
 void
 test()
 {
-  const MPI_Comm &mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
   deallog << "dim = " << dim << std::endl;
 
   parallel::distributed::Triangulation<dim> tria(mpi_communicator);
@@ -74,8 +74,8 @@ test()
                it_2 != ghost_cell_halo_layer.end();
                ++it_1, ++it_2)
             {
-              const cell_iterator &cell_1 = *it_1;
-              const cell_iterator &cell_2 = *it_2;
+              const cell_iterator& cell_1 = *it_1;
+              const cell_iterator& cell_2 = *it_2;
               AssertThrow(cell_1->is_ghost() == true,
                           ExcMessage("Cell is not a ghost cell!"));
               AssertThrow(cell_2->is_ghost() == true,
@@ -96,7 +96,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

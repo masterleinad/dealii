@@ -51,7 +51,7 @@ MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree() :
 
 template <int dim, typename Number>
 MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree(
-  const MGConstrainedDoFs &mg_c) :
+  const MGConstrainedDoFs& mg_c) :
   fe_degree(0),
   element_is_continuous(false),
   n_components(0),
@@ -65,7 +65,7 @@ MGTransferMatrixFree<dim, Number>::MGTransferMatrixFree(
 template <int dim, typename Number>
 void
 MGTransferMatrixFree<dim, Number>::initialize_constraints(
-  const MGConstrainedDoFs &mg_c)
+  const MGConstrainedDoFs& mg_c)
 {
   this->mg_constrained_dofs = &mg_c;
 }
@@ -94,7 +94,7 @@ MGTransferMatrixFree<dim, Number>::clear()
 
 template <int dim, typename Number>
 void
-MGTransferMatrixFree<dim, Number>::build(const DoFHandler<dim, dim> &mg_dof)
+MGTransferMatrixFree<dim, Number>::build(const DoFHandler<dim, dim>& mg_dof)
 {
   this->fill_and_communicate_copy_indices(mg_dof);
 
@@ -157,8 +157,8 @@ template <int dim, typename Number>
 void
 MGTransferMatrixFree<dim, Number>::prolongate(
   const unsigned int                                to_level,
-  LinearAlgebra::distributed::Vector<Number> &      dst,
-  const LinearAlgebra::distributed::Vector<Number> &src) const
+  LinearAlgebra::distributed::Vector<Number>&       dst,
+  const LinearAlgebra::distributed::Vector<Number>& src) const
 {
   Assert((to_level >= 1) && (to_level <= level_dof_indices.size()),
          ExcIndexRange(to_level, 1, level_dof_indices.size() + 1));
@@ -234,8 +234,8 @@ template <int dim, typename Number>
 void
 MGTransferMatrixFree<dim, Number>::restrict_and_add(
   const unsigned int                                from_level,
-  LinearAlgebra::distributed::Vector<Number> &      dst,
-  const LinearAlgebra::distributed::Vector<Number> &src) const
+  LinearAlgebra::distributed::Vector<Number>&       dst,
+  const LinearAlgebra::distributed::Vector<Number>& src) const
 {
   Assert((from_level >= 1) && (from_level <= level_dof_indices.size()),
          ExcIndexRange(from_level, 1, level_dof_indices.size() + 1));
@@ -309,10 +309,10 @@ namespace
 {
   template <int dim, int degree, typename Number>
   void
-  weight_dofs_on_child(const VectorizedArray<Number> *weights,
+  weight_dofs_on_child(const VectorizedArray<Number>* weights,
                        const unsigned int             n_components,
                        const unsigned int             fe_degree,
-                       VectorizedArray<Number> *      data)
+                       VectorizedArray<Number>*       data)
   {
     Assert(fe_degree > 0, ExcNotImplemented());
     Assert(fe_degree < 100, ExcNotImplemented());
@@ -345,8 +345,8 @@ template <int degree>
 void
 MGTransferMatrixFree<dim, Number>::do_prolongate_add(
   const unsigned int                                to_level,
-  LinearAlgebra::distributed::Vector<Number> &      dst,
-  const LinearAlgebra::distributed::Vector<Number> &src) const
+  LinearAlgebra::distributed::Vector<Number>&       dst,
+  const LinearAlgebra::distributed::Vector<Number>& src) const
 {
   const unsigned int vec_size    = VectorizedArray<Number>::n_array_elements;
   const unsigned int degree_size = (degree > -1 ? degree : fe_degree) + 1;
@@ -371,7 +371,7 @@ MGTransferMatrixFree<dim, Number>::do_prolongate_add(
               parent_child_connect[to_level - 1][cell + v].second,
               fe_degree + 1 - element_is_continuous,
               fe_degree);
-          const unsigned int *indices =
+          const unsigned int* indices =
             &level_dof_indices[to_level - 1]
                               [parent_child_connect[to_level - 1][cell + v]
                                    .first *
@@ -442,7 +442,7 @@ MGTransferMatrixFree<dim, Number>::do_prolongate_add(
         }
 
       // write into dst vector
-      const unsigned int *indices =
+      const unsigned int* indices =
         &level_dof_indices[to_level][cell * n_child_cell_dofs];
       for (unsigned int v = 0; v < n_lanes; ++v)
         {
@@ -460,8 +460,8 @@ template <int degree>
 void
 MGTransferMatrixFree<dim, Number>::do_restrict_add(
   const unsigned int                                from_level,
-  LinearAlgebra::distributed::Vector<Number> &      dst,
-  const LinearAlgebra::distributed::Vector<Number> &src) const
+  LinearAlgebra::distributed::Vector<Number>&       dst,
+  const LinearAlgebra::distributed::Vector<Number>& src) const
 {
   const unsigned int vec_size    = VectorizedArray<Number>::n_array_elements;
   const unsigned int degree_size = (degree > -1 ? degree : fe_degree) + 1;
@@ -480,7 +480,7 @@ MGTransferMatrixFree<dim, Number>::do_restrict_add(
 
       // read from source vector
       {
-        const unsigned int *indices =
+        const unsigned int* indices =
           &level_dof_indices[from_level][cell * n_child_cell_dofs];
         for (unsigned int v = 0; v < n_lanes; ++v)
           {
@@ -549,7 +549,7 @@ MGTransferMatrixFree<dim, Number>::do_restrict_add(
                 n_child_cell_dofs +
               n_child_cell_dofs - 1,
             level_dof_indices[from_level - 1].size());
-          const unsigned int *indices =
+          const unsigned int* indices =
             &level_dof_indices[from_level - 1]
                               [parent_child_connect[from_level - 1][cell + v]
                                    .first *
@@ -599,7 +599,7 @@ MGTransferMatrixFree<dim, Number>::memory_consumption() const
 
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
-  const MGConstrainedDoFs &mg_c) :
+  const MGConstrainedDoFs& mg_c) :
   same_for_all(true)
 {
   matrix_free_transfer_vector.emplace_back(mg_c);
@@ -609,7 +609,7 @@ MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
 
 template <int dim, typename Number>
 MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
-  const std::vector<MGConstrainedDoFs> &mg_c) :
+  const std::vector<MGConstrainedDoFs>& mg_c) :
   same_for_all(false)
 {
   for (unsigned int i = 0; i < mg_c.size(); ++i)
@@ -621,7 +621,7 @@ MGTransferBlockMatrixFree<dim, Number>::MGTransferBlockMatrixFree(
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::initialize_constraints(
-  const MGConstrainedDoFs &mg_c)
+  const MGConstrainedDoFs& mg_c)
 {
   Assert(same_for_all,
          ExcMessage("This object was initialized with support for usage with "
@@ -637,7 +637,7 @@ MGTransferBlockMatrixFree<dim, Number>::initialize_constraints(
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::initialize_constraints(
-  const std::vector<MGConstrainedDoFs> &mg_c)
+  const std::vector<MGConstrainedDoFs>& mg_c)
 {
   Assert(!same_for_all,
          ExcMessage("This object was initialized with support for using "
@@ -664,7 +664,7 @@ MGTransferBlockMatrixFree<dim, Number>::clear()
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::build(
-  const DoFHandler<dim, dim> &mg_dof)
+  const DoFHandler<dim, dim>& mg_dof)
 {
   AssertDimension(matrix_free_transfer_vector.size(), 1);
   matrix_free_transfer_vector[0].build(mg_dof);
@@ -675,7 +675,7 @@ MGTransferBlockMatrixFree<dim, Number>::build(
 template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::build(
-  const std::vector<const DoFHandler<dim, dim> *> &mg_dof)
+  const std::vector<const DoFHandler<dim, dim>*>& mg_dof)
 {
   AssertDimension(matrix_free_transfer_vector.size(), mg_dof.size());
   for (unsigned int i = 0; i < mg_dof.size(); ++i)
@@ -688,8 +688,8 @@ template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::prolongate(
   const unsigned int                                     to_level,
-  LinearAlgebra::distributed::BlockVector<Number> &      dst,
-  const LinearAlgebra::distributed::BlockVector<Number> &src) const
+  LinearAlgebra::distributed::BlockVector<Number>&       dst,
+  const LinearAlgebra::distributed::BlockVector<Number>& src) const
 {
   const unsigned int n_blocks = src.n_blocks();
   AssertDimension(dst.n_blocks(), n_blocks);
@@ -711,8 +711,8 @@ template <int dim, typename Number>
 void
 MGTransferBlockMatrixFree<dim, Number>::restrict_and_add(
   const unsigned int                                     from_level,
-  LinearAlgebra::distributed::BlockVector<Number> &      dst,
-  const LinearAlgebra::distributed::BlockVector<Number> &src) const
+  LinearAlgebra::distributed::BlockVector<Number>&       dst,
+  const LinearAlgebra::distributed::BlockVector<Number>& src) const
 {
   const unsigned int n_blocks = src.n_blocks();
   AssertDimension(dst.n_blocks(), n_blocks);
@@ -735,7 +735,7 @@ std::size_t
 MGTransferBlockMatrixFree<dim, Number>::memory_consumption() const
 {
   std::size_t total_memory_consumption = 0;
-  for (const auto &el : matrix_free_transfer_vector)
+  for (const auto& el : matrix_free_transfer_vector)
     total_memory_consumption += el.memory_consumption();
   return total_memory_consumption;
 }

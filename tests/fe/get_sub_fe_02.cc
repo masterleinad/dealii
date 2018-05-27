@@ -43,7 +43,7 @@ check()
   // same using component masks to copy over:
   auto run = [&](const unsigned int first,
                  const unsigned int n,
-                 const std::string &desc) {
+                 const std::string& desc) {
     const unsigned int n_components = fe.n_components();
 
     ComponentMask mask(n_components, false);

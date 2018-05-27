@@ -190,7 +190,7 @@ test(const unsigned int size,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);
@@ -200,8 +200,8 @@ main(int argc, char **argv)
 
   const double tol = 1e-10;
 
-  for (const auto &s : sizes)
-    for (const auto &b : blocks)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
       if (b <= s)
         test<double>(s, b, tol);
 }

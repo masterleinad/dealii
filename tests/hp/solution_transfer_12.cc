@@ -58,7 +58,7 @@ public:
   MyFunction() : Function<dim>(){};
 
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     double f = 0.25 + 2 * p[0];
     if (dim > 1)
@@ -72,7 +72,7 @@ public:
 
 template <int dim>
 void
-transfer(std::ostream &out)
+transfer(std::ostream& out)
 {
   MyFunction<dim>    func;
   Triangulation<dim> tria;
@@ -139,7 +139,7 @@ transfer(std::ostream &out)
     for (; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
-        const FEValues<dim> &fe_val = hp_fe_val.get_present_fe_values();
+        const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
         local_dof_indices.resize(fe_val.dofs_per_cell);
 
         cell->get_dof_indices(local_dof_indices);
@@ -215,7 +215,7 @@ transfer(std::ostream &out)
     for (; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
-        const FEValues<dim> &fe_val = hp_fe_val.get_present_fe_values();
+        const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
         fe_val.get_function_values(q_solution, vals);
         for (unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
           {

@@ -103,7 +103,7 @@ inline GrowingVectorMemory<VectorType>::~GrowingVectorMemory()
 
 
 template <typename VectorType>
-inline VectorType *
+inline VectorType*
 GrowingVectorMemory<VectorType>::alloc()
 {
   Threads::Mutex::ScopedLock lock(mutex);
@@ -134,7 +134,7 @@ GrowingVectorMemory<VectorType>::alloc()
 
 template <typename VectorType>
 inline void
-GrowingVectorMemory<VectorType>::free(const VectorType *const v)
+GrowingVectorMemory<VectorType>::free(const VectorType* const v)
 {
   Threads::Mutex::ScopedLock lock(mutex);
 

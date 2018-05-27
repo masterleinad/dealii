@@ -45,7 +45,7 @@ public:
    * "milne", "weddle", etc) and, if it is "gauss", the number of quadrature
    * points in each coordinate direction.
    */
-  QuadratureSelector(const std::string &s, const unsigned int order = 0);
+  QuadratureSelector(const std::string& s, const unsigned int order = 0);
 
   /**
    * This function returns all possible names for quadratures as a list
@@ -94,7 +94,7 @@ private:
    * is called from the constructor.
    */
   static Quadrature<dim>
-  create_quadrature(const std::string &s, const unsigned int order);
+  create_quadrature(const std::string& s, const unsigned int order);
 };
 DEAL_II_NAMESPACE_CLOSE
 

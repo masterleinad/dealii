@@ -28,7 +28,7 @@
 
 template <int dim>
 void
-abaqus_grid(const char *name)
+abaqus_grid(const char* name)
 {
   Triangulation<dim> tria;
   GridIn<dim>        grid_in;
@@ -83,7 +83,7 @@ main()
       deallog << "3d_test_abaqus.inp" << std::endl;
       abaqus_grid<3>(SOURCE_DIR "/grids/abaqus/3d/3d_test_abaqus.inp");
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

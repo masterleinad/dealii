@@ -41,7 +41,7 @@
 
 template <int dim>
 void
-check(const Triangulation<dim> &tria, const unsigned int order)
+check(const Triangulation<dim>& tria, const unsigned int order)
 {
   MappingQ<dim> mapping(order);
 

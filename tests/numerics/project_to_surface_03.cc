@@ -70,7 +70,7 @@ test()
             (dim > 2 ?
                cell->quad(e) :
                *reinterpret_cast<
-                 const typename Triangulation<dim>::quad_iterator *>(&cell));
+                 const typename Triangulation<dim>::quad_iterator*>(&cell));
 
           deallog << "    Quad " << e << ", projected point=";
 

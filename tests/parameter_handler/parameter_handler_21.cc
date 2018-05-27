@@ -24,7 +24,7 @@
 #include "../tests.h"
 
 void
-check(const char *defaults, const char *defined, const char *input)
+check(const char* defaults, const char* defined, const char* input)
 {
   ParameterHandler prm;
   prm.declare_entry("v", defaults, Patterns::MultipleSelection(defined), "");

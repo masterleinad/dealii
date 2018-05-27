@@ -39,7 +39,7 @@
 
 template <int dim>
 double
-value(const Point<dim> &p)
+value(const Point<dim>& p)
 {
   double val = 0;
   for (unsigned int d = 0; d < dim; ++d)
@@ -53,7 +53,7 @@ namespace
   template <int dim>
   struct Scratch
   {
-    Scratch(const FiniteElement<dim> &fe, const Quadrature<dim> &quadrature) :
+    Scratch(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature) :
       fe_collection(fe),
       quadrature_collection(quadrature),
       x_fe_values(fe_collection,
@@ -62,7 +62,7 @@ namespace
       rhs_values(quadrature_collection.size())
     {}
 
-    Scratch(const Scratch &data) :
+    Scratch(const Scratch& data) :
       fe_collection(data.fe_collection),
       quadrature_collection(data.quadrature_collection),
       x_fe_values(fe_collection,
@@ -71,8 +71,8 @@ namespace
       rhs_values(data.rhs_values)
     {}
 
-    const FiniteElement<dim> &fe_collection;
-    const Quadrature<dim> &   quadrature_collection;
+    const FiniteElement<dim>& fe_collection;
+    const Quadrature<dim>&    quadrature_collection;
 
     FEValues<dim> x_fe_values;
 
@@ -88,7 +88,7 @@ namespace
 void
 zero_subrange(const unsigned int   begin,
               const unsigned int   end,
-              std::vector<double> &dst)
+              std::vector<double>& dst)
 {
   for (unsigned int i = begin; i < end; ++i)
     dst[i] = 0;
@@ -96,7 +96,7 @@ zero_subrange(const unsigned int   begin,
 
 
 void
-zero_element(std::vector<double> &dst, const unsigned int i)
+zero_element(std::vector<double>& dst, const unsigned int i)
 {
   dst[i] = 0;
 }
@@ -104,9 +104,9 @@ zero_element(std::vector<double> &dst, const unsigned int i)
 
 template <int dim>
 void
-mass_assembler(const typename Triangulation<dim>::active_cell_iterator &cell,
-               Scratch<dim> &                                           data,
-               CopyData &copy_data)
+mass_assembler(const typename Triangulation<dim>::active_cell_iterator& cell,
+               Scratch<dim>&                                            data,
+               CopyData& copy_data)
 {
   data.x_fe_values.reinit(cell);
 
@@ -129,7 +129,7 @@ mass_assembler(const typename Triangulation<dim>::active_cell_iterator &cell,
 
 
 void
-copy_local_to_global(const CopyData &data, double *sum)
+copy_local_to_global(const CopyData& data, double* sum)
 {
   *sum += data.cell_rhs[0];
 }
@@ -139,7 +139,7 @@ copy_local_to_global(const CopyData &data, double *sum)
 // field, so we need to always return the same index
 template <int dim>
 std::vector<types::global_dof_index>
-conflictor(const typename Triangulation<dim>::active_cell_iterator &)
+conflictor(const typename Triangulation<dim>::active_cell_iterator&)
 {
   return std::vector<types::global_dof_index>(1, types::global_dof_index());
 }
@@ -170,7 +170,7 @@ do_project()
           triangulation.begin_active(),
           triangulation.end(),
           std::function<std::vector<types::global_dof_index>(
-            const Triangulation<dim>::active_cell_iterator &)>(
+            const Triangulation<dim>::active_cell_iterator&)>(
             &conflictor<dim>)),
         &mass_assembler<dim>,
         std::bind(&copy_local_to_global, std::placeholders::_1, &sum),

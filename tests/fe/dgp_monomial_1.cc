@@ -40,7 +40,7 @@ test(const unsigned int degree)
 
   for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     {
-      const FullMatrix<double> &m = fe_q.get_prolongation_matrix(c);
+      const FullMatrix<double>& m = fe_q.get_prolongation_matrix(c);
 
       for (unsigned int i = 0; i < m.m(); ++i)
         {

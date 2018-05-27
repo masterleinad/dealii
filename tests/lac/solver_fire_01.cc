@@ -33,7 +33,7 @@ using vector_t = typename dealii::Vector<double>;
 
 
 double
-compute(vector_t &G, const vector_t &X)
+compute(vector_t& G, const vector_t& X)
 {
   AssertThrow(X.size() == 2 && G.size() == 2, ExcInternalError());
 

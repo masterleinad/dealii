@@ -66,7 +66,7 @@ namespace Polynomials
      * If the number of intervals is one, the piecewise polynomial behaves
      * exactly like a usual polynomial.
      */
-    PiecewisePolynomial(const Polynomial<number> &coefficients_on_interval,
+    PiecewisePolynomial(const Polynomial<number>& coefficients_on_interval,
                         const unsigned int        n_intervals,
                         const unsigned int        interval,
                         const bool                spans_next_interval);
@@ -95,7 +95,7 @@ namespace Polynomials
      * make sense.
      */
     void
-    value(const number x, std::vector<number> &values) const;
+    value(const number x, std::vector<number>& values) const;
 
     /**
      * Return the values and the derivatives of the Polynomial at point
@@ -115,7 +115,7 @@ namespace Polynomials
     void
     value(const number       x,
           const unsigned int n_derivatives,
-          number *           values) const;
+          number*            values) const;
 
     /**
      * Degree of the polynomial. This is the degree of the underlying base
@@ -130,7 +130,7 @@ namespace Polynomials
      */
     template <class Archive>
     void
-    serialize(Archive &ar, const unsigned int version);
+    serialize(Archive& ar, const unsigned int version);
 
   protected:
     /**
@@ -232,14 +232,14 @@ namespace Polynomials
   template <typename number>
   template <class Archive>
   inline void
-  PiecewisePolynomial<number>::serialize(Archive &ar, const unsigned int)
+  PiecewisePolynomial<number>::serialize(Archive& ar, const unsigned int)
   {
     // forward to serialization function in the base class.
-    ar &static_cast<Subscriptor &>(*this);
-    ar &polynomial;
-    ar &n_intervals;
-    ar &interval;
-    ar &spans_two_intervals;
+    ar& static_cast<Subscriptor&>(*this);
+    ar& polynomial;
+    ar& n_intervals;
+    ar& interval;
+    ar& spans_two_intervals;
   }
 
 } // namespace Polynomials

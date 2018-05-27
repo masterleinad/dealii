@@ -37,7 +37,7 @@
 
 template <int dim>
 inline void
-show_values(FiniteElement<dim> &fe, const char *name)
+show_values(FiniteElement<dim>& fe, const char* name)
 {
   deallog.push(name);
 

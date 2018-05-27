@@ -77,8 +77,8 @@ test()
   mf_data_0->reinit(dof, constraints_0, quad, data);
   mf_data_1->reinit(dof, constraints_1, quad, data);
   {
-    std::vector<const DoFHandler<dim> *>  dof_handlers(2, &dof);
-    std::vector<const ConstraintMatrix *> constraint(2);
+    std::vector<const DoFHandler<dim>*>  dof_handlers(2, &dof);
+    std::vector<const ConstraintMatrix*> constraint(2);
     constraint[0] = &constraints_0;
     constraint[1] = &constraints_1;
     mf_data_combined->reinit(dof_handlers, constraint, quad, data);
@@ -119,7 +119,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

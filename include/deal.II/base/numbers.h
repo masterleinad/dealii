@@ -61,36 +61,36 @@ namespace std
 {
   template <typename Number>
   DEAL_II_ALWAYS_INLINE ::dealii::VectorizedArray<Number>
-  sqrt(const ::dealii::VectorizedArray<Number> &);
+  sqrt(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   DEAL_II_ALWAYS_INLINE ::dealii::VectorizedArray<Number>
-  abs(const ::dealii::VectorizedArray<Number> &);
+  abs(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   DEAL_II_ALWAYS_INLINE ::dealii::VectorizedArray<Number>
-  max(const ::dealii::VectorizedArray<Number> &,
-      const ::dealii::VectorizedArray<Number> &);
+  max(const ::dealii::VectorizedArray<Number>&,
+      const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   DEAL_II_ALWAYS_INLINE ::dealii::VectorizedArray<Number>
-  min(const ::dealii::VectorizedArray<Number> &,
-      const ::dealii::VectorizedArray<Number> &);
+  min(const ::dealii::VectorizedArray<Number>&,
+      const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  pow(const ::dealii::VectorizedArray<Number> &, const Number p);
+  pow(const ::dealii::VectorizedArray<Number>&, const Number p);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  sin(const ::dealii::VectorizedArray<Number> &);
+  sin(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  cos(const ::dealii::VectorizedArray<Number> &);
+  cos(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  tan(const ::dealii::VectorizedArray<Number> &);
+  tan(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  exp(const ::dealii::VectorizedArray<Number> &);
+  exp(const ::dealii::VectorizedArray<Number>&);
   template <typename Number>
   ::dealii::VectorizedArray<Number>
-  log(const ::dealii::VectorizedArray<Number> &);
+  log(const ::dealii::VectorizedArray<Number>&);
 } // namespace std
 
 DEAL_II_NAMESPACE_OPEN
@@ -196,14 +196,14 @@ namespace numbers
    * are finite.
    */
   bool
-  is_finite(const std::complex<double> &x);
+  is_finite(const std::complex<double>& x);
 
   /**
    * Return @p true if real and imaginary parts of the given complex number
    * are finite.
    */
   bool
-  is_finite(const std::complex<float> &x);
+  is_finite(const std::complex<float>& x);
 
   /**
    * Return @p true if real and imaginary parts of the given complex number
@@ -214,7 +214,7 @@ namespace numbers
    * with respect to <code>long double</code>.
    */
   bool
-  is_finite(const std::complex<long double> &x);
+  is_finite(const std::complex<long double>& x);
 
   /**
    * Return whether two numbers are equal to one another.
@@ -228,7 +228,7 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  values_are_equal(const Number1 &value_1, const Number2 &value_2);
+  values_are_equal(const Number1& value_1, const Number2& value_2);
 
   /**
    * Return whether two numbers are not equal to one another.
@@ -242,7 +242,7 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  values_are_not_equal(const Number1 &value_1, const Number2 &value_2);
+  values_are_not_equal(const Number1& value_1, const Number2& value_2);
 
   /**
    * Return whether or not a value is equal to zero.
@@ -253,7 +253,7 @@ namespace numbers
    */
   template <typename Number>
   bool
-  value_is_zero(const Number &value);
+  value_is_zero(const Number& value);
 
   /**
    * Return whether @p value_1 is less than that of @p value_2.
@@ -267,7 +267,7 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  value_is_less_than(const Number1 &value_1, const Number2 &value_2);
+  value_is_less_than(const Number1& value_1, const Number2& value_2);
 
   /**
    * Return whether @p value_1 is less than or equal to that of @p value_2.
@@ -281,8 +281,8 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  value_is_less_than_or_equal_to(const Number1 &value_1,
-                                 const Number2 &value_2);
+  value_is_less_than_or_equal_to(const Number1& value_1,
+                                 const Number2& value_2);
 
 
 
@@ -298,7 +298,7 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  value_is_greater_than(const Number1 &value_1, const Number2 &value_2);
+  value_is_greater_than(const Number1& value_1, const Number2& value_2);
 
   /**
    * Return whether @p value_1 is greater than or equal to that of @p value_2.
@@ -312,8 +312,8 @@ namespace numbers
    */
   template <typename Number1, typename Number2>
   bool
-  value_is_greater_than_or_equal_to(const Number1 &value_1,
-                                    const Number2 &value_2);
+  value_is_greater_than_or_equal_to(const Number1& value_1,
+                                    const Number2& value_2);
 
   /**
    * A structure that, together with its partial specializations
@@ -348,8 +348,8 @@ namespace numbers
      * template is selected if number is not a complex data type, this
      * function simply returns the given number.
      */
-    static DEAL_II_CUDA_HOST_DEV const number &
-                                       conjugate(const number &x);
+    static DEAL_II_CUDA_HOST_DEV const number&
+                                       conjugate(const number& x);
 
     /**
      * Return the square of the absolute value of the given number. Since the
@@ -359,13 +359,13 @@ namespace numbers
      * @see CUDAWrappers
      */
     static DEAL_II_CUDA_HOST_DEV real_type
-                                 abs_square(const number &x);
+                                 abs_square(const number& x);
 
     /**
      * Return the absolute value of a number.
      */
     static real_type
-    abs(const number &x);
+    abs(const number& x);
   };
 
 
@@ -397,7 +397,7 @@ namespace numbers
      * Return the complex-conjugate of the given number.
      */
     static std::complex<number>
-    conjugate(const std::complex<number> &x);
+    conjugate(const std::complex<number>& x);
 
     /**
      * Return the square of the absolute value of the given number. Since this
@@ -406,14 +406,14 @@ namespace numbers
      * complex conjugate.
      */
     static real_type
-    abs_square(const std::complex<number> &x);
+    abs_square(const std::complex<number>& x);
 
 
     /**
      * Return the absolute value of a complex number.
      */
     static real_type
-    abs(const std::complex<number> &x);
+    abs(const std::complex<number>& x);
   };
 
   // --------------- inline and template functions ---------------- //
@@ -433,7 +433,7 @@ namespace numbers
 
 
   inline bool
-  is_finite(const std::complex<double> &x)
+  is_finite(const std::complex<double>& x)
   {
     // Check complex numbers for infinity
     // by testing real and imaginary part
@@ -443,7 +443,7 @@ namespace numbers
 
 
   inline bool
-  is_finite(const std::complex<float> &x)
+  is_finite(const std::complex<float>& x)
   {
     // Check complex numbers for infinity
     // by testing real and imaginary part
@@ -453,7 +453,7 @@ namespace numbers
 
 
   inline bool
-  is_finite(const std::complex<long double> &x)
+  is_finite(const std::complex<long double>& x)
   {
     // Same for std::complex<long double>
     return (is_finite(x.real()) && is_finite(x.imag()));
@@ -461,8 +461,8 @@ namespace numbers
 
 
   template <typename number>
-  DEAL_II_CUDA_HOST_DEV const number &
-                              NumberTraits<number>::conjugate(const number &x)
+  DEAL_II_CUDA_HOST_DEV const number&
+                              NumberTraits<number>::conjugate(const number& x)
   {
     return x;
   }
@@ -471,7 +471,7 @@ namespace numbers
 
   template <typename number>
   DEAL_II_CUDA_HOST_DEV typename NumberTraits<number>::real_type
-  NumberTraits<number>::abs_square(const number &x)
+  NumberTraits<number>::abs_square(const number& x)
   {
     return x * x;
   }
@@ -480,7 +480,7 @@ namespace numbers
 
   template <typename number>
   typename NumberTraits<number>::real_type
-  NumberTraits<number>::abs(const number &x)
+  NumberTraits<number>::abs(const number& x)
   {
     return std::abs(x);
   }
@@ -489,7 +489,7 @@ namespace numbers
 
   template <typename number>
   std::complex<number>
-  NumberTraits<std::complex<number>>::conjugate(const std::complex<number> &x)
+  NumberTraits<std::complex<number>>::conjugate(const std::complex<number>& x)
   {
     return std::conj(x);
   }
@@ -498,7 +498,7 @@ namespace numbers
 
   template <typename number>
   typename NumberTraits<std::complex<number>>::real_type
-  NumberTraits<std::complex<number>>::abs(const std::complex<number> &x)
+  NumberTraits<std::complex<number>>::abs(const std::complex<number>& x)
   {
     return std::abs(x);
   }
@@ -507,7 +507,7 @@ namespace numbers
 
   template <typename number>
   typename NumberTraits<std::complex<number>>::real_type
-  NumberTraits<std::complex<number>>::abs_square(const std::complex<number> &x)
+  NumberTraits<std::complex<number>>::abs_square(const std::complex<number>& x)
   {
     return std::norm(x);
   }
@@ -582,8 +582,8 @@ namespace internal
   template <typename T>
   struct NumberType
   {
-    static DEAL_II_CUDA_HOST_DEV const T &
-                                       value(const T &t)
+    static DEAL_II_CUDA_HOST_DEV const T&
+                                       value(const T& t)
     {
       return t;
     }
@@ -598,11 +598,11 @@ namespace internal
     // Type T is constructible from F.
     template <typename F>
     static T
-    value(const F &f,
+    value(const F& f,
           typename std::enable_if<
             !std::is_same<typename std::decay<T>::type,
                           typename std::decay<F>::type>::value &&
-            std::is_constructible<T, F>::value>::type * = nullptr)
+            std::is_constructible<T, F>::value>::type* = nullptr)
     {
       return T(f);
     }
@@ -610,12 +610,12 @@ namespace internal
     // Type T is explicitly convertible (but not constructible) from F.
     template <typename F>
     static T
-    value(const F &f,
+    value(const F& f,
           typename std::enable_if<
             !std::is_same<typename std::decay<T>::type,
                           typename std::decay<F>::type>::value &&
             !std::is_constructible<T, F>::value &&
-            is_explicitly_convertible<const F, T>::value>::type * = nullptr)
+            is_explicitly_convertible<const F, T>::value>::type* = nullptr)
     {
       return static_cast<T>(f);
     }
@@ -626,13 +626,13 @@ namespace internal
     // might fall into the same category.
     template <typename F>
     static T
-    value(const F &f,
+    value(const F& f,
           typename std::enable_if<
             !std::is_same<typename std::decay<T>::type,
                           typename std::decay<F>::type>::value &&
             !std::is_constructible<T, F>::value &&
             !is_explicitly_convertible<const F, T>::value &&
-            Differentiation::AD::is_ad_number<F>::value>::type * = nullptr)
+            Differentiation::AD::is_ad_number<F>::value>::type* = nullptr)
     {
       return Differentiation::AD::internal::NumberType<T>::value(f);
     }
@@ -641,14 +641,14 @@ namespace internal
   template <typename T>
   struct NumberType<std::complex<T>>
   {
-    static const std::complex<T> &
-    value(const std::complex<T> &t)
+    static const std::complex<T>&
+    value(const std::complex<T>& t)
     {
       return t;
     }
 
     static std::complex<T>
-    value(const T &t)
+    value(const T& t)
     {
       return std::complex<T>(t);
     }
@@ -656,7 +656,7 @@ namespace internal
     // Facilitate cast from complex<double> to complex<float>
     template <typename U>
     static std::complex<T>
-    value(const std::complex<U> &t)
+    value(const std::complex<U>& t)
     {
       return std::complex<T>(NumberType<T>::value(t.real()),
                              NumberType<T>::value(t.imag()));
@@ -680,7 +680,7 @@ namespace numbers
    */
   // Defined in differentiation/ad/adolc_number_types.cc
   bool
-  values_are_equal(const adouble &value_1, const adouble &value_2);
+  values_are_equal(const adouble& value_1, const adouble& value_2);
 
 
   /**
@@ -695,7 +695,7 @@ namespace numbers
    */
   template <typename Number>
   bool
-  values_are_equal(const adouble &value_1, const Number &value_2)
+  values_are_equal(const adouble& value_1, const Number& value_2)
   {
     // Use the specialized definition for two Adol-C taped types
     return values_are_equal(value_1,
@@ -715,7 +715,7 @@ namespace numbers
    */
   template <typename Number>
   bool
-  values_are_equal(const Number &value_1, const adouble &value_2)
+  values_are_equal(const Number& value_1, const adouble& value_2)
   {
     // Use the above definition
     return values_are_equal(value_2, value_1);
@@ -734,7 +734,7 @@ namespace numbers
    */
   // Defined in differentiation/ad/adolc_number_types.cc
   bool
-  value_is_less_than(const adouble &value_1, const adouble &value_2);
+  value_is_less_than(const adouble& value_1, const adouble& value_2);
 
 
   /**
@@ -750,7 +750,7 @@ namespace numbers
    */
   template <typename Number>
   bool
-  value_is_less_than(const adouble &value_1, const Number &value_2)
+  value_is_less_than(const adouble& value_1, const Number& value_2)
   {
     // Use the specialized definition for two Adol-C taped types
     return value_is_less_than(value_1,
@@ -771,7 +771,7 @@ namespace numbers
    */
   template <typename Number>
   bool
-  value_is_less_than(const Number &value_1, const adouble &value_2)
+  value_is_less_than(const Number& value_1, const adouble& value_2)
   {
     // Use the specialized definition for two Adol-C taped types
     return value_is_less_than(internal::NumberType<adouble>::value(value_1),
@@ -783,7 +783,7 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   inline bool
-  values_are_equal(const Number1 &value_1, const Number2 &value_2)
+  values_are_equal(const Number1& value_1, const Number2& value_2)
   {
     return (value_1 == internal::NumberType<Number1>::value(value_2));
   }
@@ -791,7 +791,7 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   inline bool
-  values_are_not_equal(const Number1 &value_1, const Number2 &value_2)
+  values_are_not_equal(const Number1& value_1, const Number2& value_2)
   {
     return !(values_are_equal(value_1, value_2));
   }
@@ -799,7 +799,7 @@ namespace numbers
 
   template <typename Number>
   inline bool
-  value_is_zero(const Number &value)
+  value_is_zero(const Number& value)
   {
     return values_are_equal(value, 0.0);
   }
@@ -807,7 +807,7 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   inline bool
-  value_is_less_than(const Number1 &value_1, const Number2 &value_2)
+  value_is_less_than(const Number1& value_1, const Number2& value_2)
   {
     return (value_1 < internal::NumberType<Number1>::value(value_2));
   }
@@ -815,7 +815,7 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   inline bool
-  value_is_less_than_or_equal_to(const Number1 &value_1, const Number2 &value_2)
+  value_is_less_than_or_equal_to(const Number1& value_1, const Number2& value_2)
   {
     return (value_is_less_than(value_1, value_2) ||
             values_are_equal(value_1, value_2));
@@ -824,7 +824,7 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   bool
-  value_is_greater_than(const Number1 &value_1, const Number2 &value_2)
+  value_is_greater_than(const Number1& value_1, const Number2& value_2)
   {
     return !(value_is_less_than_or_equal_to(value_1, value_2));
   }
@@ -832,8 +832,8 @@ namespace numbers
 
   template <typename Number1, typename Number2>
   inline bool
-  value_is_greater_than_or_equal_to(const Number1 &value_1,
-                                    const Number2 &value_2)
+  value_is_greater_than_or_equal_to(const Number1& value_1,
+                                    const Number2& value_2)
   {
     return !(value_is_less_than(value_1, value_2));
   }

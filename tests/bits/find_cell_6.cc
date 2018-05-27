@@ -30,7 +30,7 @@
 
 #include "../tests.h"
 
-bool inside(Triangulation<3> &tria, Point<3> &p)
+bool inside(Triangulation<3>& tria, Point<3>& p)
 {
   for (Triangulation<3>::cell_iterator cell = tria.begin(0);
        cell != tria.end(0);
@@ -111,7 +111,7 @@ main()
       //      check1();
       check2();
     }
-  catch (const std::exception &exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

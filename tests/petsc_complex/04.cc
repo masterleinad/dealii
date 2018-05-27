@@ -24,7 +24,7 @@
 
 
 void
-test(PETScWrappers::SparseMatrix &m)
+test(PETScWrappers::SparseMatrix& m)
 {
   AssertThrow(m.m() == 5, ExcInternalError());
   AssertThrow(m.n() == 5, ExcInternalError());
@@ -34,7 +34,7 @@ test(PETScWrappers::SparseMatrix &m)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
   deallog.depth_console(0);
@@ -47,7 +47,7 @@ main(int argc, char **argv)
         test(m);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

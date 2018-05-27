@@ -144,8 +144,8 @@ namespace Utilities
        * ghost indices that are owned by other processors, but we need to have
        * read or write access to.
        */
-      Partitioner(const IndexSet &locally_owned_indices,
-                  const IndexSet &ghost_indices_in,
+      Partitioner(const IndexSet& locally_owned_indices,
+                  const IndexSet& ghost_indices_in,
                   const MPI_Comm  communicator_in);
 
       /**
@@ -155,7 +155,7 @@ namespace Utilities
        * indices at a later time. Apart from this, it is similar to the other
        * constructor with two index sets.
        */
-      Partitioner(const IndexSet &locally_owned_indices,
+      Partitioner(const IndexSet& locally_owned_indices,
                   const MPI_Comm  communicator_in);
 
       /**
@@ -166,15 +166,15 @@ namespace Utilities
        * ReadWriteVector object.
        */
       virtual void
-      reinit(const IndexSet &vector_space_vector_index_set,
-             const IndexSet &read_write_vector_index_set,
-             const MPI_Comm &communicator) override;
+      reinit(const IndexSet& vector_space_vector_index_set,
+             const IndexSet& read_write_vector_index_set,
+             const MPI_Comm& communicator) override;
 
       /**
        * Set the locally owned indices. Used in the constructor.
        */
       void
-      set_owned_indices(const IndexSet &locally_owned_indices);
+      set_owned_indices(const IndexSet& locally_owned_indices);
 
       /**
        * Set the ghost indices after the constructor has been
@@ -187,8 +187,8 @@ namespace Utilities
        * @p ghost_indices.
        */
       void
-      set_ghost_indices(const IndexSet &ghost_indices,
-                        const IndexSet &larger_ghost_index_set = IndexSet());
+      set_ghost_indices(const IndexSet& ghost_indices,
+                        const IndexSet& larger_ghost_index_set = IndexSet());
 
       /**
        * Return the global size.
@@ -209,7 +209,7 @@ namespace Utilities
        * consists of one single range of data, and is equivalent to the result
        * of local_range().
        */
-      const IndexSet &
+      const IndexSet&
       locally_owned_range() const;
 
       /**
@@ -260,7 +260,7 @@ namespace Utilities
       /**
        * Return an IndexSet representation of all ghost indices.
        */
-      const IndexSet &
+      const IndexSet&
       ghost_indices() const;
 
       /**
@@ -280,7 +280,7 @@ namespace Utilities
        * into account, this subset is simply defined as the half-open interval
        * <code>[0, n_ghost_indices())</code>.
        */
-      const std::vector<std::pair<unsigned int, unsigned int>> &
+      const std::vector<std::pair<unsigned int, unsigned int>>&
       ghost_indices_within_larger_ghost_set() const;
 
       /**
@@ -288,7 +288,7 @@ namespace Utilities
        * degrees of freedom owned by that processor (second entry). The sum of
        * the latter over all processors equals n_ghost_indices().
        */
-      const std::vector<std::pair<unsigned int, unsigned int>> &
+      const std::vector<std::pair<unsigned int, unsigned int>>&
       ghost_targets() const;
 
       /**
@@ -299,7 +299,7 @@ namespace Utilities
        * index of the first element and the index of the element one past the
        * last one in a range.
        */
-      const std::vector<std::pair<unsigned int, unsigned int>> &
+      const std::vector<std::pair<unsigned int, unsigned int>>&
       import_indices() const;
 
       /**
@@ -318,7 +318,7 @@ namespace Utilities
        * @note the returned vector only contains those processor id's for which
        * the second entry is non-zero.
        */
-      const std::vector<std::pair<unsigned int, unsigned int>> &
+      const std::vector<std::pair<unsigned int, unsigned int>>&
       import_targets() const;
 
       /**
@@ -331,7 +331,7 @@ namespace Utilities
        * the other processors will return @p true.
        */
       bool
-      is_compatible(const Partitioner &part) const;
+      is_compatible(const Partitioner& part) const;
 
       /**
        * Check whether the given partitioner is compatible with the
@@ -347,7 +347,7 @@ namespace Utilities
        * times.
        */
       bool
-      is_globally_compatible(const Partitioner &part) const;
+      is_globally_compatible(const Partitioner& part) const;
 
       /**
        * Return the MPI ID of the calling processor. Cached to have simple
@@ -367,13 +367,13 @@ namespace Utilities
        * Return the MPI communicator underlying the partitioner object.
        */
       DEAL_II_DEPRECATED
-      const MPI_Comm &
+      const MPI_Comm&
       get_communicator() const;
 
       /**
        * Return the MPI communicator underlying the partitioner object.
        */
-      virtual const MPI_Comm &
+      virtual const MPI_Comm&
       get_mpi_communicator() const override;
 
       /**
@@ -423,10 +423,10 @@ namespace Utilities
       void
       export_to_ghosted_array_start(
         const unsigned int             communication_channel,
-        const ArrayView<const Number> &locally_owned_array,
-        const ArrayView<Number> &      temporary_storage,
-        const ArrayView<Number> &      ghost_array,
-        std::vector<MPI_Request> &     requests) const;
+        const ArrayView<const Number>& locally_owned_array,
+        const ArrayView<Number>&       temporary_storage,
+        const ArrayView<Number>&       ghost_array,
+        std::vector<MPI_Request>&      requests) const;
 
       /**
        * Finish the exports of the data in a locally owned array to the range
@@ -447,8 +447,8 @@ namespace Utilities
        */
       template <typename Number>
       void
-      export_to_ghosted_array_finish(const ArrayView<Number> & ghost_array,
-                                     std::vector<MPI_Request> &requests) const;
+      export_to_ghosted_array_finish(const ArrayView<Number>&  ghost_array,
+                                     std::vector<MPI_Request>& requests) const;
 
       /**
        * Start importing the data on an array indexed by the ghost indices of
@@ -491,9 +491,9 @@ namespace Utilities
       import_from_ghosted_array_start(
         const VectorOperation::values vector_operation,
         const unsigned int            communication_channel,
-        const ArrayView<Number> &     ghost_array,
-        const ArrayView<Number> &     temporary_storage,
-        std::vector<MPI_Request> &    requests) const;
+        const ArrayView<Number>&      ghost_array,
+        const ArrayView<Number>&      temporary_storage,
+        std::vector<MPI_Request>&     requests) const;
 
       /**
        * Finish importing the data from an array indexed by the ghost
@@ -533,10 +533,10 @@ namespace Utilities
       void
       import_from_ghosted_array_finish(
         const VectorOperation::values  vector_operation,
-        const ArrayView<const Number> &temporary_storage,
-        const ArrayView<Number> &      locally_owned_storage,
-        const ArrayView<Number> &      ghost_array,
-        std::vector<MPI_Request> &     requests) const;
+        const ArrayView<const Number>& temporary_storage,
+        const ArrayView<Number>&       locally_owned_storage,
+        const ArrayView<Number>&       ghost_array,
+        std::vector<MPI_Request>&      requests) const;
 #endif
 
       /**
@@ -685,7 +685,7 @@ namespace Utilities
 
 
 
-    inline const IndexSet &
+    inline const IndexSet&
     Partitioner::locally_owned_range() const
     {
       return locally_owned_range_data;
@@ -769,7 +769,7 @@ namespace Utilities
 
 
 
-    inline const IndexSet &
+    inline const IndexSet&
     Partitioner::ghost_indices() const
     {
       return ghost_indices_data;
@@ -785,7 +785,7 @@ namespace Utilities
 
 
 
-    inline const std::vector<std::pair<unsigned int, unsigned int>> &
+    inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::ghost_indices_within_larger_ghost_set() const
     {
       return ghost_indices_subset_data;
@@ -793,14 +793,14 @@ namespace Utilities
 
 
 
-    inline const std::vector<std::pair<unsigned int, unsigned int>> &
+    inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::ghost_targets() const
     {
       return ghost_targets_data;
     }
 
 
-    inline const std::vector<std::pair<unsigned int, unsigned int>> &
+    inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::import_indices() const
     {
       return import_indices_data;
@@ -816,7 +816,7 @@ namespace Utilities
 
 
 
-    inline const std::vector<std::pair<unsigned int, unsigned int>> &
+    inline const std::vector<std::pair<unsigned int, unsigned int>>&
     Partitioner::import_targets() const
     {
       return import_targets_data;
@@ -846,7 +846,7 @@ namespace Utilities
 
 
 
-    inline const MPI_Comm &
+    inline const MPI_Comm&
     Partitioner::get_communicator() const
     {
       return communicator;
@@ -854,7 +854,7 @@ namespace Utilities
 
 
 
-    inline const MPI_Comm &
+    inline const MPI_Comm&
     Partitioner::get_mpi_communicator() const
     {
       return communicator;

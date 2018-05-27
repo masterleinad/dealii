@@ -48,7 +48,7 @@ namespace OpenCASCADE
      * not of topological dimension one.
      */
     Handle_Adaptor3d_HCurve
-    curve_adaptor(const TopoDS_Shape &shape)
+    curve_adaptor(const TopoDS_Shape& shape)
     {
       Assert((shape.ShapeType() == TopAbs_WIRE) ||
                (shape.ShapeType() == TopAbs_EDGE),
@@ -68,7 +68,7 @@ namespace OpenCASCADE
 
     // Helper internal functions.
     double
-    shape_length(const TopoDS_Shape &sh)
+    shape_length(const TopoDS_Shape& sh)
     {
       Handle_Adaptor3d_HCurve adapt = curve_adaptor(sh);
       return GCPnts_AbscissaPoint::Length(adapt->GetCurve());
@@ -79,7 +79,7 @@ namespace OpenCASCADE
    * ==============================*/
   template <int dim, int spacedim>
   NormalProjectionManifold<dim, spacedim>::NormalProjectionManifold(
-    const TopoDS_Shape &sh,
+    const TopoDS_Shape& sh,
     const double        tolerance) :
     sh(sh),
     tolerance(tolerance)
@@ -102,8 +102,8 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<spacedim>
   NormalProjectionManifold<dim, spacedim>::project_to_manifold(
-    const ArrayView<const Point<spacedim>> &surrounding_points,
-    const Point<spacedim> &                 candidate) const
+    const ArrayView<const Point<spacedim>>& surrounding_points,
+    const Point<spacedim>&                  candidate) const
   {
     (void)surrounding_points;
 #  ifdef DEBUG
@@ -121,8 +121,8 @@ namespace OpenCASCADE
    * ==============================*/
   template <int dim, int spacedim>
   DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold(
-    const TopoDS_Shape &       sh,
-    const Tensor<1, spacedim> &direction,
+    const TopoDS_Shape&        sh,
+    const Tensor<1, spacedim>& direction,
     const double               tolerance) :
     sh(sh),
     direction(direction),
@@ -146,8 +146,8 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<spacedim>
   DirectionalProjectionManifold<dim, spacedim>::project_to_manifold(
-    const ArrayView<const Point<spacedim>> &surrounding_points,
-    const Point<spacedim> &                 candidate) const
+    const ArrayView<const Point<spacedim>>& surrounding_points,
+    const Point<spacedim>&                  candidate) const
   {
     (void)surrounding_points;
 #  ifdef DEBUG
@@ -166,7 +166,7 @@ namespace OpenCASCADE
    * ==============================*/
   template <int dim, int spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::NormalToMeshProjectionManifold(
-    const TopoDS_Shape &sh,
+    const TopoDS_Shape& sh,
     const double        tolerance) :
     sh(sh),
     tolerance(tolerance)
@@ -190,8 +190,8 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::project_to_manifold(
-    const ArrayView<const Point<spacedim>> &surrounding_points,
-    const Point<spacedim> &                 candidate) const
+    const ArrayView<const Point<spacedim>>& surrounding_points,
+    const Point<spacedim>&                  candidate) const
   {
     TopoDS_Shape out_shape;
     Tensor<1, 3> average_normal;
@@ -313,7 +313,7 @@ namespace OpenCASCADE
    * ==============================*/
   template <int dim, int spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::
-    ArclengthProjectionLineManifold(const TopoDS_Shape &sh,
+    ArclengthProjectionLineManifold(const TopoDS_Shape& sh,
                                     const double        tolerance) :
 
     ChartManifold<dim, spacedim, 1>(sh.Closed() ? Point<1>(shape_length(sh)) :
@@ -341,7 +341,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<1>
   ArclengthProjectionLineManifold<dim, spacedim>::pull_back(
-    const Point<spacedim> &space_point) const
+    const Point<spacedim>& space_point) const
   {
     double              t(0.0);
     ShapeAnalysis_Curve curve_analysis;
@@ -360,7 +360,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::push_forward(
-    const Point<1> &chart_point) const
+    const Point<1>& chart_point) const
   {
     GCPnts_AbscissaPoint AP(
       curve->GetCurve(), chart_point[0], curve->GetCurve().FirstParameter());
@@ -370,7 +370,7 @@ namespace OpenCASCADE
 
   template <int dim, int spacedim>
   NURBSPatchManifold<dim, spacedim>::NURBSPatchManifold(
-    const TopoDS_Face &face,
+    const TopoDS_Face& face,
     const double       tolerance) :
     face(face),
     tolerance(tolerance)
@@ -391,7 +391,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<2>
   NURBSPatchManifold<dim, spacedim>::pull_back(
-    const Point<spacedim> &space_point) const
+    const Point<spacedim>& space_point) const
   {
     Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
 
@@ -407,7 +407,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   Point<spacedim>
   NURBSPatchManifold<dim, spacedim>::push_forward(
-    const Point<2> &chart_point) const
+    const Point<2>& chart_point) const
   {
     return ::dealii::OpenCASCADE::push_forward<spacedim>(
       face, chart_point[0], chart_point[1]);
@@ -416,7 +416,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   DerivativeForm<1, 2, spacedim>
   NURBSPatchManifold<dim, spacedim>::push_forward_gradient(
-    const Point<2> &chart_point) const
+    const Point<2>& chart_point) const
   {
     DerivativeForm<1, 2, spacedim> DX;
     Handle(Geom_Surface) surf = BRep_Tool::Surface(face);

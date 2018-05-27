@@ -85,7 +85,7 @@ test()
               << " level = " << current_cell.first->level() << std::endl;
       deallog << " pos: " << current_cell.second << std::endl;
     }
-  catch (GridTools::ExcPointNotFound<2> &e)
+  catch (GridTools::ExcPointNotFound<2>& e)
     {
       deallog << "outside" << std::endl;
     }
@@ -93,7 +93,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 

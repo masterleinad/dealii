@@ -64,7 +64,7 @@ public:
    */
   template <int dim, int spacedim>
   void
-  initialize(const DoFHandler<dim, spacedim> &dof);
+  initialize(const DoFHandler<dim, spacedim>& dof);
 
   /**
    * Fill the internal data structures with values extracted from the dof
@@ -79,9 +79,9 @@ public:
    */
   template <int dim, int spacedim>
   DEAL_II_DEPRECATED void
-  initialize(const DoFHandler<dim, spacedim> &      dof,
-             const typename FunctionMap<dim>::type &function_map,
-             const ComponentMask &component_mask = ComponentMask());
+  initialize(const DoFHandler<dim, spacedim>&       dof,
+             const typename FunctionMap<dim>::type& function_map,
+             const ComponentMask& component_mask = ComponentMask());
 
   /**
    * Fill the internal data structures with information
@@ -96,9 +96,9 @@ public:
   template <int dim, int spacedim>
   void
   make_zero_boundary_constraints(
-    const DoFHandler<dim, spacedim> &   dof,
-    const std::set<types::boundary_id> &boundary_ids,
-    const ComponentMask &               component_mask = ComponentMask());
+    const DoFHandler<dim, spacedim>&    dof,
+    const std::set<types::boundary_id>& boundary_ids,
+    const ComponentMask&                component_mask = ComponentMask());
 
   /**
    * Reset the data structures.
@@ -138,7 +138,7 @@ public:
    * initialize()).  The indices are restricted to the set of locally relevant
    * level dofs.
    */
-  const IndexSet &
+  const IndexSet&
   get_boundary_indices(const unsigned int level) const;
 
 
@@ -146,7 +146,7 @@ public:
    * Return the indices of dofs on the given level that lie on an refinement
    * edge (dofs on faces to neighbors that are coarser).
    */
-  const IndexSet &
+  const IndexSet&
   get_refinement_edge_indices(unsigned int level) const;
 
 
@@ -160,7 +160,7 @@ public:
    * Return the level constraint matrix for a given level, containing
    * periodicity constraints (if enabled on the triangulation).
    */
-  const ConstraintMatrix &
+  const ConstraintMatrix&
   get_level_constraint_matrix(const unsigned int level) const;
 
 private:
@@ -185,7 +185,7 @@ private:
 
 template <int dim, int spacedim>
 inline void
-MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim> &dof)
+MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
 {
   boundary_indices.clear();
   refinement_edge_indices.clear();
@@ -269,9 +269,9 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim> &dof)
 template <int dim, int spacedim>
 inline void
 MGConstrainedDoFs::initialize(
-  const DoFHandler<dim, spacedim> &      dof,
-  const typename FunctionMap<dim>::type &function_map,
-  const ComponentMask &                  component_mask)
+  const DoFHandler<dim, spacedim>&       dof,
+  const typename FunctionMap<dim>::type& function_map,
+  const ComponentMask&                   component_mask)
 {
   initialize(dof);
 
@@ -289,9 +289,9 @@ MGConstrainedDoFs::initialize(
 template <int dim, int spacedim>
 inline void
 MGConstrainedDoFs::make_zero_boundary_constraints(
-  const DoFHandler<dim, spacedim> &   dof,
-  const std::set<types::boundary_id> &boundary_ids,
-  const ComponentMask &               component_mask)
+  const DoFHandler<dim, spacedim>&    dof,
+  const std::set<types::boundary_id>& boundary_ids,
+  const ComponentMask&                component_mask)
 {
   // allocate an IndexSet for each global level. Contents will be
   // overwritten inside make_boundary_list.
@@ -339,7 +339,7 @@ MGConstrainedDoFs::is_interface_matrix_entry(
   const types::global_dof_index i,
   const types::global_dof_index j) const
 {
-  const IndexSet &interface_dofs_on_level =
+  const IndexSet& interface_dofs_on_level =
     this->get_refinement_edge_indices(level);
 
   return interface_dofs_on_level.is_element(i)     // at_refinement_edge(i)
@@ -350,7 +350,7 @@ MGConstrainedDoFs::is_interface_matrix_entry(
 
 
 
-inline const IndexSet &
+inline const IndexSet&
 MGConstrainedDoFs::get_boundary_indices(const unsigned int level) const
 {
   AssertIndexRange(level, boundary_indices.size());
@@ -359,7 +359,7 @@ MGConstrainedDoFs::get_boundary_indices(const unsigned int level) const
 
 
 
-inline const IndexSet &
+inline const IndexSet&
 MGConstrainedDoFs::get_refinement_edge_indices(unsigned int level) const
 {
   AssertIndexRange(level, refinement_edge_indices.size());
@@ -376,7 +376,7 @@ MGConstrainedDoFs::have_boundary_indices() const
 
 
 
-inline const ConstraintMatrix &
+inline const ConstraintMatrix&
 MGConstrainedDoFs::get_level_constraint_matrix(const unsigned int level) const
 {
   AssertIndexRange(level, level_constraints.size());

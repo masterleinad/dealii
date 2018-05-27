@@ -62,15 +62,15 @@ public:
   {}
 
   void
-  initialize(const MatrixType &matrix)
+  initialize(const MatrixType& matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
   operator()(const unsigned int                                level,
-             LinearAlgebra::distributed::Vector<double> &      dst,
-             const LinearAlgebra::distributed::Vector<double> &src) const
+             LinearAlgebra::distributed::Vector<double>&       dst,
+             const LinearAlgebra::distributed::Vector<double>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
     SolverCG<LinearAlgebra::distributed::Vector<double>> solver_coarse(
@@ -78,7 +78,7 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MatrixType *coarse_matrix;
+  const MatrixType* coarse_matrix;
 };
 
 
@@ -86,7 +86,7 @@ using namespace dealii::MatrixFreeOperators;
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
-do_test(const DoFHandler<dim> &dof)
+do_test(const DoFHandler<dim>& dof)
 {
   if (std::is_same<number, float>::value == true)
     {
@@ -272,7 +272,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 

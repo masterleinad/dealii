@@ -76,8 +76,8 @@ TridiagonalMatrix<number>::all_zero() const
 
 template <typename number>
 void
-TridiagonalMatrix<number>::vmult(Vector<number> &      w,
-                                 const Vector<number> &v,
+TridiagonalMatrix<number>::vmult(Vector<number>&       w,
+                                 const Vector<number>& v,
                                  const bool            adding) const
 {
   Assert(state == matrix, ExcState(state));
@@ -130,8 +130,8 @@ TridiagonalMatrix<number>::vmult(Vector<number> &      w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::vmult_add(Vector<number> &      w,
-                                     const Vector<number> &v) const
+TridiagonalMatrix<number>::vmult_add(Vector<number>&       w,
+                                     const Vector<number>& v) const
 {
   vmult(w, v, true);
 }
@@ -140,8 +140,8 @@ TridiagonalMatrix<number>::vmult_add(Vector<number> &      w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::Tvmult(Vector<number> &      w,
-                                  const Vector<number> &v,
+TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
+                                  const Vector<number>& v,
                                   const bool            adding) const
 {
   Assert(state == matrix, ExcState(state));
@@ -185,8 +185,8 @@ TridiagonalMatrix<number>::Tvmult(Vector<number> &      w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::Tvmult_add(Vector<number> &      w,
-                                      const Vector<number> &v) const
+TridiagonalMatrix<number>::Tvmult_add(Vector<number>&       w,
+                                      const Vector<number>& v) const
 {
   Tvmult(w, v, true);
 }
@@ -195,8 +195,8 @@ TridiagonalMatrix<number>::Tvmult_add(Vector<number> &      w,
 
 template <typename number>
 number
-TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number> &w,
-                                                 const Vector<number> &v) const
+TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
+                                                 const Vector<number>& v) const
 {
   Assert(state == matrix, ExcState(state));
 
@@ -222,7 +222,7 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number> &w,
 
 template <typename number>
 number
-TridiagonalMatrix<number>::matrix_norm_square(const Vector<number> &v) const
+TridiagonalMatrix<number>::matrix_norm_square(const Vector<number>& v) const
 {
   return matrix_scalar_product(v, v);
 }

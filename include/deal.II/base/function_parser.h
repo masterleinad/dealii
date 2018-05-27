@@ -262,9 +262,9 @@ public:
    * false, i.e. do not consider time.
    */
   void
-  initialize(const std::string &             vars,
-             const std::vector<std::string> &expressions,
-             const ConstMap &                constants,
+  initialize(const std::string&              vars,
+             const std::vector<std::string>& expressions,
+             const ConstMap&                 constants,
              const bool                      time_dependent = false);
 
   /**
@@ -275,9 +275,9 @@ public:
    * does not match the number of components of the base function.
    */
   void
-  initialize(const std::string &vars,
-             const std::string &expression,
-             const ConstMap &   constants,
+  initialize(const std::string& vars,
+             const std::string& expression,
+             const ConstMap&    constants,
              const bool         time_dependent = false);
 
   /**
@@ -295,7 +295,7 @@ public:
    * component.
    */
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const override;
+  value(const Point<dim>& p, const unsigned int component = 0) const override;
 
   /**
    * Return all components of a vector-valued function at the given point @p
@@ -304,7 +304,7 @@ public:
    * <tt>values</tt> shall have the right size beforehand, i.e. #n_components.
    */
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const override;
+  vector_value(const Point<dim>& p, Vector<double>& values) const override;
 
   /**
    * @addtogroup Exceptions
@@ -312,7 +312,7 @@ public:
    */
   DeclException2(ExcParseError,
                  int,
-                 char *,
+                 char*,
                  << "Parsing Error at Column " << arg1
                  << ". The parser said: " << arg2);
 

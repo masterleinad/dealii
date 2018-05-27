@@ -62,12 +62,12 @@ PolynomialsABF<dim>::PolynomialsABF(const unsigned int k) :
 template <int dim>
 void
 PolynomialsABF<dim>::compute(
-  const Point<dim> &           unit_point,
-  std::vector<Tensor<1, dim>> &values,
-  std::vector<Tensor<2, dim>> &grads,
-  std::vector<Tensor<3, dim>> &grad_grads,
-  std::vector<Tensor<4, dim>> &third_derivatives,
-  std::vector<Tensor<5, dim>> &fourth_derivatives) const
+  const Point<dim>&            unit_point,
+  std::vector<Tensor<1, dim>>& values,
+  std::vector<Tensor<2, dim>>& grads,
+  std::vector<Tensor<3, dim>>& grad_grads,
+  std::vector<Tensor<4, dim>>& third_derivatives,
+  std::vector<Tensor<5, dim>>& fourth_derivatives) const
 {
   Assert(values.size() == n_pols || values.size() == 0,
          ExcDimensionMismatch(values.size(), n_pols));

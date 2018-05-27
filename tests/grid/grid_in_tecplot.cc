@@ -29,7 +29,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-test(const std::string &infilename)
+test(const std::string& infilename)
 {
   Triangulation<dim> tria;
   GridIn<dim>        gi;

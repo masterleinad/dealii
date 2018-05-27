@@ -43,8 +43,8 @@
 
 template <int dim>
 void
-compare_meshes(DoFHandler<dim> &shared_dof_handler,
-               DoFHandler<dim> &distributed_dof_handler)
+compare_meshes(DoFHandler<dim>& shared_dof_handler,
+               DoFHandler<dim>& distributed_dof_handler)
 {
   FE_Q<dim> fe(2);
 
@@ -118,7 +118,7 @@ test()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

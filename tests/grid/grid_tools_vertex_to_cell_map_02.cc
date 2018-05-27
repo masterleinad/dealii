@@ -68,7 +68,7 @@ test()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   deallog << std::setprecision(4);
   logfile << std::setprecision(4);

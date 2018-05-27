@@ -33,8 +33,8 @@
 
 template <int dim>
 void
-check_function_consistency(const Function<dim> &f,
-                           const Function<dim> &gradf,
+check_function_consistency(const Function<dim>& f,
+                           const Function<dim>& gradf,
                            unsigned int         sub)
 {
   QMidpoint<1>   mid;
@@ -73,9 +73,9 @@ check_function_consistency(const Function<dim> &f,
 
 template <int dim>
 void
-check_function_derivative(const Functions::FlowFunction<dim> &f,
+check_function_derivative(const Functions::FlowFunction<dim>& f,
                           unsigned int                        sub,
-                          std::ostream &                      out)
+                          std::ostream&                       out)
 {
   DerivativeTestFunction<dim> dtest1(f, 1.e-2);
   DerivativeTestFunction<dim> dtest2(f, 2.e-2);

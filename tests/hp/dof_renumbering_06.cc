@@ -41,7 +41,7 @@
 
 template <int dim>
 void
-print_dofs(const hp::DoFHandler<dim> &dof)
+print_dofs(const hp::DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> v;
   for (typename hp::DoFHandler<dim>::active_cell_iterator cell =
@@ -62,11 +62,11 @@ print_dofs(const hp::DoFHandler<dim> &dof)
 
 template <int dim>
 void
-check_renumbering(hp::DoFHandler<dim> &dof)
+check_renumbering(hp::DoFHandler<dim>& dof)
 {
   for (unsigned int i = 0; i < dof.get_fe().size(); ++i)
     {
-      const FiniteElement<dim> &element = dof.get_fe()[i];
+      const FiniteElement<dim>& element = dof.get_fe()[i];
       deallog << element.get_name() << std::endl;
     }
 

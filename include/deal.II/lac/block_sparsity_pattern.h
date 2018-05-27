@@ -113,7 +113,7 @@ public:
    * at present. This is for the same reason as for the SparsityPattern, see
    * there for the details.
    */
-  BlockSparsityPatternBase(const BlockSparsityPatternBase &bsp);
+  BlockSparsityPatternBase(const BlockSparsityPatternBase& bsp);
 
   /**
    * Destructor.
@@ -141,8 +141,8 @@ public:
    * declared, defined and fine to be called, but the latter only for empty
    * objects.
    */
-  BlockSparsityPatternBase &
-  operator=(const BlockSparsityPatternBase &);
+  BlockSparsityPatternBase&
+  operator=(const BlockSparsityPatternBase&);
 
   /**
    * This function collects the sizes of the sub-objects and stores them in
@@ -156,7 +156,7 @@ public:
   /**
    * Access the block with the given coordinates.
    */
-  SparsityPatternType &
+  SparsityPatternType&
   block(const size_type row, const size_type column);
 
 
@@ -164,21 +164,21 @@ public:
    * Access the block with the given coordinates. Version for constant
    * objects.
    */
-  const SparsityPatternType &
+  const SparsityPatternType&
   block(const size_type row, const size_type column) const;
 
   /**
    * Grant access to the object describing the distribution of row indices to
    * the individual blocks.
    */
-  const BlockIndices &
+  const BlockIndices&
   get_row_indices() const;
 
   /**
    * Grant access to the object describing the distribution of column indices
    * to the individual blocks.
    */
-  const BlockIndices &
+  const BlockIndices&
   get_column_indices() const;
 
   /**
@@ -294,7 +294,7 @@ public:
    * <i>jn</i> are the allocated columns in this row.
    */
   void
-  print(std::ostream &out) const;
+  print(std::ostream& out) const;
 
   /**
    * Print the sparsity of the matrix in a format that <tt>gnuplot</tt>
@@ -304,7 +304,7 @@ public:
    * @ref SparsityPattern.
    */
   void
-  print_gnuplot(std::ostream &out) const;
+  print_gnuplot(std::ostream& out) const;
 
   /**
    * @addtogroup Exceptions
@@ -434,9 +434,9 @@ public:
    * optimized diagonals, while this is not done for the off-diagonal blocks.
    */
   void
-  reinit(const BlockIndices &                          row_indices,
-         const BlockIndices &                          col_indices,
-         const std::vector<std::vector<unsigned int>> &row_lengths);
+  reinit(const BlockIndices&                           row_indices,
+         const BlockIndices&                           col_indices,
+         const std::vector<std::vector<unsigned int>>& row_lengths);
 
 
   /**
@@ -459,7 +459,7 @@ public:
    * of each of the subobjects. Previous content of this object is lost.
    */
   void
-  copy_from(const BlockDynamicSparsityPattern &dsp);
+  copy_from(const BlockDynamicSparsityPattern& dsp);
 };
 
 
@@ -531,8 +531,8 @@ public:
    * previous constructor with the length of the two index vector and then
    * entering the index values.
    */
-  BlockDynamicSparsityPattern(const std::vector<size_type> &row_block_sizes,
-                              const std::vector<size_type> &col_block_sizes);
+  BlockDynamicSparsityPattern(const std::vector<size_type>& row_block_sizes,
+                              const std::vector<size_type>& col_block_sizes);
 
   /**
    * Initialize the pattern with symmetric blocks. The number of IndexSets in
@@ -542,14 +542,14 @@ public:
    * which is useful for distributed memory parallel computations and usually
    * corresponds to the locally owned DoFs.
    */
-  BlockDynamicSparsityPattern(const std::vector<IndexSet> &partitioning);
+  BlockDynamicSparsityPattern(const std::vector<IndexSet>& partitioning);
 
   /**
    * Initialize the pattern with two BlockIndices for the block structures of
    * matrix rows and columns.
    */
-  BlockDynamicSparsityPattern(const BlockIndices &row_indices,
-                              const BlockIndices &col_indices);
+  BlockDynamicSparsityPattern(const BlockIndices& row_indices,
+                              const BlockIndices& col_indices);
 
 
   /**
@@ -561,15 +561,15 @@ public:
    * dimensions <tt>row_block_sizes[i]</tt> times <tt>col_block_sizes[j]</tt>.
    */
   void
-  reinit(const std::vector<size_type> &row_block_sizes,
-         const std::vector<size_type> &col_block_sizes);
+  reinit(const std::vector<size_type>& row_block_sizes,
+         const std::vector<size_type>& col_block_sizes);
 
   /**
    * Resize the pattern with symmetric blocks determined by the size() of each
    * IndexSet. See the constructor taking a vector of IndexSets for details.
    */
   void
-  reinit(const std::vector<IndexSet> &partitioning);
+  reinit(const std::vector<IndexSet>& partitioning);
 
   /**
    * Resize the matrix to a tensor product of matrices with dimensions defined
@@ -577,7 +577,7 @@ public:
    * the sparsity pattern will have the same block structure afterwards.
    */
   void
-  reinit(const BlockIndices &row_indices, const BlockIndices &col_indices);
+  reinit(const BlockIndices& row_indices, const BlockIndices& col_indices);
 
   /**
    * Access to column number field. Return the column number of the @p index
@@ -647,8 +647,8 @@ namespace TrilinosWrappers
      * previous constructor with the length of the two index vector and then
      * entering the index values.
      */
-    BlockSparsityPattern(const std::vector<size_type> &row_block_sizes,
-                         const std::vector<size_type> &col_block_sizes);
+    BlockSparsityPattern(const std::vector<size_type>& row_block_sizes,
+                         const std::vector<size_type>& col_block_sizes);
 
     /**
      * Initialize the pattern with an array Epetra_Map that specifies both
@@ -661,7 +661,7 @@ namespace TrilinosWrappers
      * @deprecated Use the respective method with IndexSet arguments instead.
      */
     DEAL_II_DEPRECATED
-    BlockSparsityPattern(const std::vector<Epetra_Map> &parallel_partitioning);
+    BlockSparsityPattern(const std::vector<Epetra_Map>& parallel_partitioning);
 
     /**
      * Initialize the pattern with an array of index sets that specifies both
@@ -670,8 +670,8 @@ namespace TrilinosWrappers
      * blocks and the values in each IndexSet denotes the rows that are going
      * to be saved in each block.
      */
-    BlockSparsityPattern(const std::vector<IndexSet> &parallel_partitioning,
-                         const MPI_Comm &communicator = MPI_COMM_WORLD);
+    BlockSparsityPattern(const std::vector<IndexSet>& parallel_partitioning,
+                         const MPI_Comm& communicator = MPI_COMM_WORLD);
 
     /**
      * Initialize the pattern with two arrays of index sets that specify rows
@@ -685,10 +685,10 @@ namespace TrilinosWrappers
      * three index set arguments for more details.
      */
     BlockSparsityPattern(
-      const std::vector<IndexSet> &row_parallel_partitioning,
-      const std::vector<IndexSet> &column_parallel_partitioning,
-      const std::vector<IndexSet> &writeable_rows,
-      const MPI_Comm &             communicator = MPI_COMM_WORLD);
+      const std::vector<IndexSet>& row_parallel_partitioning,
+      const std::vector<IndexSet>& column_parallel_partitioning,
+      const std::vector<IndexSet>& writeable_rows,
+      const MPI_Comm&              communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a tensor product of matrices with dimensions
@@ -700,8 +700,8 @@ namespace TrilinosWrappers
      * <tt>col_block_sizes[j]</tt>.
      */
     void
-    reinit(const std::vector<size_type> &row_block_sizes,
-           const std::vector<size_type> &col_block_sizes);
+    reinit(const std::vector<size_type>& row_block_sizes,
+           const std::vector<size_type>& col_block_sizes);
 
     /**
      * Resize the matrix to a square tensor product of matrices with parallel
@@ -712,15 +712,15 @@ namespace TrilinosWrappers
      */
     DEAL_II_DEPRECATED
     void
-    reinit(const std::vector<Epetra_Map> &parallel_partitioning);
+    reinit(const std::vector<Epetra_Map>& parallel_partitioning);
 
     /**
      * Resize the matrix to a square tensor product of matrices. See the
      * constructor that takes a vector of IndexSets for details.
      */
     void
-    reinit(const std::vector<IndexSet> &parallel_partitioning,
-           const MPI_Comm &             communicator = MPI_COMM_WORLD);
+    reinit(const std::vector<IndexSet>& parallel_partitioning,
+           const MPI_Comm&              communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a rectangular block matrices. This method allows
@@ -728,9 +728,9 @@ namespace TrilinosWrappers
      * within the blocks.
      */
     void
-    reinit(const std::vector<IndexSet> &row_parallel_partitioning,
-           const std::vector<IndexSet> &column_parallel_partitioning,
-           const MPI_Comm &             communicator = MPI_COMM_WORLD);
+    reinit(const std::vector<IndexSet>& row_parallel_partitioning,
+           const std::vector<IndexSet>& column_parallel_partitioning,
+           const MPI_Comm&              communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a rectangular block matrices that furthermore
@@ -741,10 +741,10 @@ namespace TrilinosWrappers
      * index set arguments for more details.
      */
     void
-    reinit(const std::vector<IndexSet> &row_parallel_partitioning,
-           const std::vector<IndexSet> &column_parallel_partitioning,
-           const std::vector<IndexSet> &writeable_rows,
-           const MPI_Comm &             communicator = MPI_COMM_WORLD);
+    reinit(const std::vector<IndexSet>& row_parallel_partitioning,
+           const std::vector<IndexSet>& column_parallel_partitioning,
+           const std::vector<IndexSet>& writeable_rows,
+           const MPI_Comm&              communicator = MPI_COMM_WORLD);
 
     /**
      * Allow the use of the reinit functions of the base class as well.
@@ -763,7 +763,7 @@ namespace TrilinosWrappers
 
 
 template <typename SparsityPatternType>
-inline SparsityPatternType &
+inline SparsityPatternType&
 BlockSparsityPatternBase<SparsityPatternType>::block(const size_type row,
                                                      const size_type column)
 {
@@ -775,7 +775,7 @@ BlockSparsityPatternBase<SparsityPatternType>::block(const size_type row,
 
 
 template <typename SparsityPatternType>
-inline const SparsityPatternType &
+inline const SparsityPatternType&
 BlockSparsityPatternBase<SparsityPatternType>::block(
   const size_type row,
   const size_type column) const
@@ -788,7 +788,7 @@ BlockSparsityPatternBase<SparsityPatternType>::block(
 
 
 template <typename SparsityPatternType>
-inline const BlockIndices &
+inline const BlockIndices&
 BlockSparsityPatternBase<SparsityPatternType>::get_row_indices() const
 {
   return row_indices;
@@ -797,7 +797,7 @@ BlockSparsityPatternBase<SparsityPatternType>::get_row_indices() const
 
 
 template <typename SparsityPatternType>
-inline const BlockIndices &
+inline const BlockIndices&
 BlockSparsityPatternBase<SparsityPatternType>::get_column_indices() const
 {
   return column_indices;

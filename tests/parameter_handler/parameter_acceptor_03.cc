@@ -53,7 +53,7 @@ main()
   Test<2> b;
   Test<3> c;
 
-  auto &prm = ParameterAcceptor::prm;
+  auto& prm = ParameterAcceptor::prm;
   ParameterAcceptor::declare_all_parameters();
   prm.parse_input_from_string(""
                               "subsection Test<1>\n"

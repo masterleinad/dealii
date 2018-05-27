@@ -23,7 +23,7 @@
 
 // replace type names found on MAC OS
 std::string
-cleanup_type(const std::string &in)
+cleanup_type(const std::string& in)
 {
   std::string ret = in;
   ret =
@@ -38,7 +38,7 @@ cleanup_type(const std::string &in)
 
 template <typename number>
 void
-check(const number &x)
+check(const number& x)
 {
   deallog << "typeid(x).name() = " << cleanup_type(typeid(x).name())
           << std::endl;

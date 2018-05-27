@@ -55,9 +55,9 @@ FiniteElement<dim, spacedim>::InternalDataBase::memory_consumption() const
 
 template <int dim, int spacedim>
 FiniteElement<dim, spacedim>::FiniteElement(
-  const FiniteElementData<dim> &    fe_data,
-  const std::vector<bool> &         r_i_a_f,
-  const std::vector<ComponentMask> &nonzero_c) :
+  const FiniteElementData<dim>&     fe_data,
+  const std::vector<bool>&          r_i_a_f,
+  const std::vector<ComponentMask>& nonzero_c) :
   FiniteElementData<dim>(fe_data),
   adjust_quad_dof_index_for_face_orientation_table(
     dim == 3 ? this->dofs_per_quad : 0,
@@ -155,7 +155,7 @@ FiniteElement<dim, spacedim>::operator^(const unsigned int multiplicity) const
 template <int dim, int spacedim>
 double
 FiniteElement<dim, spacedim>::shape_value(const unsigned int,
-                                          const Point<dim> &) const
+                                          const Point<dim>&) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return 0.;
@@ -166,7 +166,7 @@ FiniteElement<dim, spacedim>::shape_value(const unsigned int,
 template <int dim, int spacedim>
 double
 FiniteElement<dim, spacedim>::shape_value_component(const unsigned int,
-                                                    const Point<dim> &,
+                                                    const Point<dim>&,
                                                     const unsigned int) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
@@ -178,7 +178,7 @@ FiniteElement<dim, spacedim>::shape_value_component(const unsigned int,
 template <int dim, int spacedim>
 Tensor<1, dim>
 FiniteElement<dim, spacedim>::shape_grad(const unsigned int,
-                                         const Point<dim> &) const
+                                         const Point<dim>&) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<1, dim>();
@@ -189,7 +189,7 @@ FiniteElement<dim, spacedim>::shape_grad(const unsigned int,
 template <int dim, int spacedim>
 Tensor<1, dim>
 FiniteElement<dim, spacedim>::shape_grad_component(const unsigned int,
-                                                   const Point<dim> &,
+                                                   const Point<dim>&,
                                                    const unsigned int) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
@@ -201,7 +201,7 @@ FiniteElement<dim, spacedim>::shape_grad_component(const unsigned int,
 template <int dim, int spacedim>
 Tensor<2, dim>
 FiniteElement<dim, spacedim>::shape_grad_grad(const unsigned int,
-                                              const Point<dim> &) const
+                                              const Point<dim>&) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<2, dim>();
@@ -213,7 +213,7 @@ template <int dim, int spacedim>
 Tensor<2, dim>
 FiniteElement<dim, spacedim>::shape_grad_grad_component(
   const unsigned int,
-  const Point<dim> &,
+  const Point<dim>&,
   const unsigned int) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
@@ -225,7 +225,7 @@ FiniteElement<dim, spacedim>::shape_grad_grad_component(
 template <int dim, int spacedim>
 Tensor<3, dim>
 FiniteElement<dim, spacedim>::shape_3rd_derivative(const unsigned int,
-                                                   const Point<dim> &) const
+                                                   const Point<dim>&) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<3, dim>();
@@ -237,7 +237,7 @@ template <int dim, int spacedim>
 Tensor<3, dim>
 FiniteElement<dim, spacedim>::shape_3rd_derivative_component(
   const unsigned int,
-  const Point<dim> &,
+  const Point<dim>&,
   const unsigned int) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
@@ -249,7 +249,7 @@ FiniteElement<dim, spacedim>::shape_3rd_derivative_component(
 template <int dim, int spacedim>
 Tensor<4, dim>
 FiniteElement<dim, spacedim>::shape_4th_derivative(const unsigned int,
-                                                   const Point<dim> &) const
+                                                   const Point<dim>&) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
   return Tensor<4, dim>();
@@ -261,7 +261,7 @@ template <int dim, int spacedim>
 Tensor<4, dim>
 FiniteElement<dim, spacedim>::shape_4th_derivative_component(
   const unsigned int,
-  const Point<dim> &,
+  const Point<dim>&,
   const unsigned int) const
 {
   AssertThrow(false, ExcUnitShapeValuesDoNotExist());
@@ -300,10 +300,10 @@ FiniteElement<dim, spacedim>::reinit_restriction_and_prolongation_matrices(
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_restriction_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -328,10 +328,10 @@ FiniteElement<dim, spacedim>::get_restriction_matrix(
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FiniteElement<dim, spacedim>::get_prolongation_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -373,7 +373,7 @@ FiniteElement<dim, spacedim>::component_to_block_index(
 template <int dim, int spacedim>
 ComponentMask
 FiniteElement<dim, spacedim>::component_mask(
-  const FEValuesExtractors::Scalar &scalar) const
+  const FEValuesExtractors::Scalar& scalar) const
 {
   AssertIndexRange(scalar.component, this->n_components());
 
@@ -391,7 +391,7 @@ FiniteElement<dim, spacedim>::component_mask(
 template <int dim, int spacedim>
 ComponentMask
 FiniteElement<dim, spacedim>::component_mask(
-  const FEValuesExtractors::Vector &vector) const
+  const FEValuesExtractors::Vector& vector) const
 {
   AssertIndexRange(vector.first_vector_component + dim - 1,
                    this->n_components());
@@ -413,7 +413,7 @@ FiniteElement<dim, spacedim>::component_mask(
 template <int dim, int spacedim>
 ComponentMask
 FiniteElement<dim, spacedim>::component_mask(
-  const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const
+  const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const
 {
   AssertIndexRange((sym_tensor.first_tensor_component +
                     SymmetricTensor<2, dim>::n_independent_components - 1),
@@ -437,7 +437,7 @@ FiniteElement<dim, spacedim>::component_mask(
 
 template <int dim, int spacedim>
 ComponentMask
-FiniteElement<dim, spacedim>::component_mask(const BlockMask &block_mask) const
+FiniteElement<dim, spacedim>::component_mask(const BlockMask& block_mask) const
 {
   // if we get a block mask that represents all blocks, then
   // do the same for the returned component mask
@@ -459,7 +459,7 @@ FiniteElement<dim, spacedim>::component_mask(const BlockMask &block_mask) const
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
-  const FEValuesExtractors::Scalar &scalar) const
+  const FEValuesExtractors::Scalar& scalar) const
 {
   // simply create the corresponding component mask (a simpler
   // process) and then convert it to a block mask
@@ -470,7 +470,7 @@ FiniteElement<dim, spacedim>::block_mask(
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
-  const FEValuesExtractors::Vector &vector) const
+  const FEValuesExtractors::Vector& vector) const
 {
   // simply create the corresponding component mask (a simpler
   // process) and then convert it to a block mask
@@ -481,7 +481,7 @@ FiniteElement<dim, spacedim>::block_mask(
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
-  const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const
+  const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const
 {
   // simply create the corresponding component mask (a simpler
   // process) and then convert it to a block mask
@@ -493,7 +493,7 @@ FiniteElement<dim, spacedim>::block_mask(
 template <int dim, int spacedim>
 BlockMask
 FiniteElement<dim, spacedim>::block_mask(
-  const ComponentMask &component_mask) const
+  const ComponentMask& component_mask) const
 {
   // if we get a component mask that represents all component, then
   // do the same for the returned block mask
@@ -802,7 +802,7 @@ FiniteElement<dim, spacedim>::isotropic_restriction_is_implemented() const
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::constraints_are_implemented(
-  const internal::SubfaceCase<dim> &subface_case) const
+  const internal::SubfaceCase<dim>& subface_case) const
 {
   if (subface_case == internal::SubfaceCase<dim>::case_isotropic)
     return (this->dofs_per_face == 0) || (interface_constraints.m() != 0);
@@ -822,9 +822,9 @@ FiniteElement<dim, spacedim>::hp_constraints_are_implemented() const
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FiniteElement<dim, spacedim>::constraints(
-  const internal::SubfaceCase<dim> &subface_case) const
+  const internal::SubfaceCase<dim>& subface_case) const
 {
   (void)subface_case;
   Assert(subface_case == internal::SubfaceCase<dim>::case_isotropic,
@@ -876,8 +876,8 @@ FiniteElement<dim, spacedim>::interface_constraints_size() const
 template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &,
-  FullMatrix<double> &) const
+  const FiniteElement<dim, spacedim>&,
+  FullMatrix<double>&) const
 {
   // by default, no interpolation
   // implemented. so throw exception,
@@ -892,8 +892,8 @@ FiniteElement<dim, spacedim>::get_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &,
-  FullMatrix<double> &) const
+  const FiniteElement<dim, spacedim>&,
+  FullMatrix<double>&) const
 {
   // by default, no interpolation
   // implemented. so throw exception,
@@ -908,9 +908,9 @@ FiniteElement<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &,
+  const FiniteElement<dim, spacedim>&,
   const unsigned int,
-  FullMatrix<double> &) const
+  FullMatrix<double>&) const
 {
   // by default, no interpolation
   // implemented. so throw exception,
@@ -925,7 +925,7 @@ FiniteElement<dim, spacedim>::get_subface_interpolation_matrix(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FiniteElement<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim> &) const
+  const FiniteElement<dim, spacedim>&) const
 {
   Assert(false, ExcNotImplemented());
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -936,7 +936,7 @@ FiniteElement<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FiniteElement<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim> &) const
+  const FiniteElement<dim, spacedim>&) const
 {
   Assert(false, ExcNotImplemented());
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -947,7 +947,7 @@ FiniteElement<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FiniteElement<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim> &) const
+  const FiniteElement<dim, spacedim>&) const
 {
   Assert(false, ExcNotImplemented());
   return std::vector<std::pair<unsigned int, unsigned int>>();
@@ -958,7 +958,7 @@ FiniteElement<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FiniteElement<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim> &) const
+  const FiniteElement<dim, spacedim>&) const
 {
   Assert(false, ExcNotImplemented());
   return FiniteElementDomination::neither_element_dominates;
@@ -969,13 +969,13 @@ FiniteElement<dim, spacedim>::compare_for_face_domination(
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::
-operator==(const FiniteElement<dim, spacedim> &f) const
+operator==(const FiniteElement<dim, spacedim>& f) const
 {
   // Compare fields in roughly increasing order of how expensive the
   // comparison is
   return ((typeid(*this) == typeid(f)) && (this->get_name() == f.get_name()) &&
-          (static_cast<const FiniteElementData<dim> &>(*this) ==
-           static_cast<const FiniteElementData<dim> &>(f)) &&
+          (static_cast<const FiniteElementData<dim>&>(*this) ==
+           static_cast<const FiniteElementData<dim>&>(f)) &&
           (interface_constraints == f.interface_constraints));
 }
 
@@ -984,7 +984,7 @@ operator==(const FiniteElement<dim, spacedim> &f) const
 template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::
-operator!=(const FiniteElement<dim, spacedim> &f) const
+operator!=(const FiniteElement<dim, spacedim>& f) const
 {
   return !(*this == f);
 }
@@ -992,7 +992,7 @@ operator!=(const FiniteElement<dim, spacedim> &f) const
 
 
 template <int dim, int spacedim>
-const std::vector<Point<dim>> &
+const std::vector<Point<dim>>&
 FiniteElement<dim, spacedim>::get_unit_support_points() const
 {
   // a finite element may define
@@ -1017,7 +1017,7 @@ FiniteElement<dim, spacedim>::has_support_points() const
 
 
 template <int dim, int spacedim>
-const std::vector<Point<dim>> &
+const std::vector<Point<dim>>&
 FiniteElement<dim, spacedim>::get_generalized_support_points() const
 {
   // If the finite element implements generalized support points, return
@@ -1052,7 +1052,7 @@ FiniteElement<dim, spacedim>::unit_support_point(const unsigned int index) const
 
 
 template <int dim, int spacedim>
-const std::vector<Point<dim - 1>> &
+const std::vector<Point<dim - 1>>&
 FiniteElement<dim, spacedim>::get_unit_face_support_points() const
 {
   // a finite element may define
@@ -1077,7 +1077,7 @@ FiniteElement<dim, spacedim>::has_face_support_points() const
 
 
 template <int dim, int spacedim>
-const std::vector<Point<dim - 1>> &
+const std::vector<Point<dim - 1>>&
 FiniteElement<dim, spacedim>::get_generalized_face_support_points() const
 {
   // a finite element may define
@@ -1125,8 +1125,8 @@ FiniteElement<dim, spacedim>::has_support_on_face(const unsigned int,
 
 
 template <int dim, int spacedim>
-const FiniteElement<dim, spacedim> &
-FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask &mask) const
+const FiniteElement<dim, spacedim>&
+FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask& mask) const
 {
   // Translate the ComponentMask into first_selected and n_components after
   // some error checking:
@@ -1158,7 +1158,7 @@ FiniteElement<dim, spacedim>::get_sub_fe(const ComponentMask &mask) const
 
 
 template <int dim, int spacedim>
-const FiniteElement<dim, spacedim> &
+const FiniteElement<dim, spacedim>&
 FiniteElement<dim, spacedim>::get_sub_fe(
   const unsigned int first_component,
   const unsigned int n_selected_components) const
@@ -1192,8 +1192,8 @@ template <int dim, int spacedim>
 void
 FiniteElement<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &,
-    std::vector<double> &) const
+    const std::vector<Vector<double>>&,
+    std::vector<double>&) const
 {
   Assert(has_generalized_support_points(),
          ExcMessage("The element for which you are calling the current "
@@ -1230,7 +1230,7 @@ FiniteElement<dim, spacedim>::memory_consumption() const
 template <int dim, int spacedim>
 std::vector<unsigned int>
 FiniteElement<dim, spacedim>::compute_n_nonzero_components(
-  const std::vector<ComponentMask> &nonzero_components)
+  const std::vector<ComponentMask>& nonzero_components)
 {
   std::vector<unsigned int> retval(nonzero_components.size());
   for (unsigned int i = 0; i < nonzero_components.size(); ++i)
@@ -1246,11 +1246,11 @@ template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FiniteElement<dim, spacedim>::get_face_data(
   const UpdateFlags             flags,
-  const Mapping<dim, spacedim> &mapping,
-  const Quadrature<dim - 1> &   quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const Quadrature<dim - 1>&    quadrature,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>
-    &output_data) const
+                                                                     spacedim>&
+    output_data) const
 {
   return get_data(flags,
                   mapping,
@@ -1264,11 +1264,11 @@ template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FiniteElement<dim, spacedim>::get_subface_data(
   const UpdateFlags             flags,
-  const Mapping<dim, spacedim> &mapping,
-  const Quadrature<dim - 1> &   quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const Quadrature<dim - 1>&    quadrature,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>
-    &output_data) const
+                                                                     spacedim>&
+    output_data) const
 {
   return get_data(flags,
                   mapping,
@@ -1279,7 +1279,7 @@ FiniteElement<dim, spacedim>::get_subface_data(
 
 
 template <int dim, int spacedim>
-const FiniteElement<dim, spacedim> &
+const FiniteElement<dim, spacedim>&
 FiniteElement<dim, spacedim>::base_element(const unsigned int index) const
 {
   (void)index;

@@ -46,7 +46,7 @@
 
 template <int dim>
 bool
-pred_d(const typename DoFHandler<dim>::active_cell_iterator &cell)
+pred_d(const typename DoFHandler<dim>::active_cell_iterator& cell)
 {
   return (cell->center()(0) < 0.5 && cell->center()(1) < 0.5);
 }
@@ -104,7 +104,7 @@ test(const unsigned int flag)
 
   const IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
     dh,
-    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator &)>(
+    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
       &pred_d<dim>),
     cm);
   const IndexSet support_local = support & dh.locally_owned_dofs();
@@ -131,7 +131,7 @@ test(const unsigned int flag)
         dh.n_dofs());
       for (unsigned int i = 0; i < dh.n_dofs(); ++i)
         {
-          LinearAlgebra::distributed::Vector<double> &s = shape_functions[i];
+          LinearAlgebra::distributed::Vector<double>& s = shape_functions[i];
           s.reinit(
             dh.locally_owned_dofs(), locally_relevant_set, MPI_COMM_WORLD);
           s = 0.;
@@ -176,7 +176,7 @@ test(const unsigned int flag)
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

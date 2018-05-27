@@ -58,13 +58,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     return (component + 1) * p.square();
   }
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const
+  vector_value(const Point<dim>& p, Vector<double>& values) const
   {
     for (unsigned int i = 0; i < dim + 1; ++i)
       values(i) = value(p, i);

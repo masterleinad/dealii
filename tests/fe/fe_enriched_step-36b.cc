@@ -73,13 +73,13 @@ public:
   {}
 
   virtual double
-  value(const dealii::Point<dim> &point,
+  value(const dealii::Point<dim>& point,
         const unsigned int        component = 0) const;
 };
 
 template <int dim>
 double
-PotentialFunction<dim>::value(const dealii::Point<dim> &p,
+PotentialFunction<dim>::value(const dealii::Point<dim>& p,
                               const unsigned int) const
 {
   return -1.0 / std::sqrt(p.square());
@@ -89,9 +89,9 @@ template <int dim>
 class EnrichmentFunction : public Function<dim>
 {
 public:
-  EnrichmentFunction(const Point<dim> &origin,
-                     const double &    Z,
-                     const double &    radius) :
+  EnrichmentFunction(const Point<dim>& origin,
+                     const double&     Z,
+                     const double&     radius) :
     Function<dim>(1),
     origin(origin),
     Z(Z),
@@ -99,7 +99,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
     const double   r    = dist.norm();
@@ -107,7 +107,7 @@ public:
   }
 
   bool
-  is_enriched(const Point<dim> &point) const
+  is_enriched(const Point<dim>& point) const
   {
     if (origin.distance(point) < radius)
       return true;
@@ -116,7 +116,7 @@ public:
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const
+  gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
     const double   r    = dist.norm();
@@ -157,7 +157,7 @@ namespace Step36
 
   private:
     bool
-    cell_is_pou(const typename hp::DoFHandler<dim>::cell_iterator &cell) const;
+    cell_is_pou(const typename hp::DoFHandler<dim>::cell_iterator& cell) const;
 
     std::pair<unsigned int, unsigned int>
     setup_system();
@@ -364,7 +364,7 @@ namespace Step36
   template <int dim>
   bool
   EigenvalueProblem<dim>::cell_is_pou(
-    const typename hp::DoFHandler<dim>::cell_iterator &cell) const
+    const typename hp::DoFHandler<dim>::cell_iterator& cell) const
   {
     return cell->material_id() == pou_material_id;
   }
@@ -450,10 +450,10 @@ namespace Step36
       if (cell->subdomain_id() == this_mpi_process)
         {
           fe_values_hp.reinit(cell);
-          const FEValues<dim> &fe_values = fe_values_hp.get_present_fe_values();
+          const FEValues<dim>& fe_values = fe_values_hp.get_present_fe_values();
 
-          const unsigned int &dofs_per_cell = cell->get_fe().dofs_per_cell;
-          const unsigned int &n_q_points    = fe_values.n_quadrature_points;
+          const unsigned int& dofs_per_cell = cell->get_fe().dofs_per_cell;
+          const unsigned int& n_q_points    = fe_values.n_quadrature_points;
 
           potential_values.resize(n_q_points);
           enrichment_values.resize(n_q_points);
@@ -681,9 +681,8 @@ namespace Step36
   EigenvalueProblem<dim>::estimate_error()
   {
     {
-      std::vector<const PETScWrappers::MPI::Vector *> sol(
-        number_of_eigenvalues);
-      std::vector<dealii::Vector<float> *> error(number_of_eigenvalues);
+      std::vector<const PETScWrappers::MPI::Vector*> sol(number_of_eigenvalues);
+      std::vector<dealii::Vector<float>*> error(number_of_eigenvalues);
 
       for (unsigned int i = 0; i < number_of_eigenvalues; i++)
         {
@@ -729,23 +728,23 @@ namespace Step36
   class Postprocessor : public DataPostprocessorScalar<dim>
   {
   public:
-    Postprocessor(const EnrichmentFunction<dim> &enrichment);
+    Postprocessor(const EnrichmentFunction<dim>& enrichment);
 
     virtual void
     compute_derived_quantities_vector(
-      const std::vector<Vector<double>> &             solution_values,
-      const std::vector<std::vector<Tensor<1, dim>>> &solution_gradients,
-      const std::vector<std::vector<Tensor<2, dim>>> &solution_hessians,
-      const std::vector<Point<dim>> &                 normals,
-      const std::vector<Point<dim>> &                 evaluation_points,
-      std::vector<Vector<double>> &computed_quantities) const;
+      const std::vector<Vector<double>>&              solution_values,
+      const std::vector<std::vector<Tensor<1, dim>>>& solution_gradients,
+      const std::vector<std::vector<Tensor<2, dim>>>& solution_hessians,
+      const std::vector<Point<dim>>&                  normals,
+      const std::vector<Point<dim>>&                  evaluation_points,
+      std::vector<Vector<double>>& computed_quantities) const;
 
   private:
-    const EnrichmentFunction<dim> &enrichment;
+    const EnrichmentFunction<dim>& enrichment;
   };
 
   template <int dim>
-  Postprocessor<dim>::Postprocessor(const EnrichmentFunction<dim> &enrichment) :
+  Postprocessor<dim>::Postprocessor(const EnrichmentFunction<dim>& enrichment) :
     DataPostprocessorScalar<dim>("total_solution",
                                  update_values | update_q_points),
     enrichment(enrichment)
@@ -754,12 +753,12 @@ namespace Step36
   template <int dim>
   void
   Postprocessor<dim>::compute_derived_quantities_vector(
-    const std::vector<Vector<double>> &solution_values,
-    const std::vector<std::vector<Tensor<1, dim>>> & /*solution_gradients*/,
-    const std::vector<std::vector<Tensor<2, dim>>> & /*solution_hessians*/,
-    const std::vector<Point<dim>> & /*normals*/,
-    const std::vector<Point<dim>> &evaluation_points,
-    std::vector<Vector<double>> &  computed_quantities) const
+    const std::vector<Vector<double>>& solution_values,
+    const std::vector<std::vector<Tensor<1, dim>>>& /*solution_gradients*/,
+    const std::vector<std::vector<Tensor<2, dim>>>& /*solution_hessians*/,
+    const std::vector<Point<dim>>& /*normals*/,
+    const std::vector<Point<dim>>& evaluation_points,
+    std::vector<Vector<double>>&   computed_quantities) const
   {
     const unsigned int n_quadrature_points = solution_values.size();
     Assert(computed_quantities.size() == n_quadrature_points,
@@ -889,7 +888,7 @@ namespace Step36
 } // namespace Step36
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   try
     {
@@ -904,7 +903,7 @@ main(int argc, char **argv)
         step36.run();
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

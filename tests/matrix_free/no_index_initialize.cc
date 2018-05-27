@@ -62,15 +62,15 @@ class MatrixFreeTest
 public:
   bool read_vector;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) :
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) :
     read_vector(false),
     data(data_in){};
 
   void
-  operator()(const MatrixFree<dim, Number> &data,
-             Vector<Number> &,
-             const Vector<Number> &                       src,
-             const std::pair<unsigned int, unsigned int> &cell_range) const
+  operator()(const MatrixFree<dim, Number>& data,
+             Vector<Number>&,
+             const Vector<Number>&                        src,
+             const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
 
@@ -103,7 +103,7 @@ public:
 
 
   void
-  test_functions(const Vector<Number> &src) const
+  test_functions(const Vector<Number>& src) const
   {
     Vector<Number> dst_dummy;
     data.cell_loop(&MatrixFreeTest::operator(), this, dst_dummy, src);
@@ -111,14 +111,14 @@ public:
   };
 
 protected:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim> &dof, const ConstraintMatrix &constraints)
+do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
 {
   // use this for info on problem
   // std::cout << "Number of cells: " <<
@@ -161,7 +161,7 @@ do_test(const DoFHandler<dim> &dof, const ConstraintMatrix &constraints)
       mf.read_vector = true;
       mf.test_functions(solution);
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

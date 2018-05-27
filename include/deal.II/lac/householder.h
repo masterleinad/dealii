@@ -94,7 +94,7 @@ public:
    * Create an object holding the QR-decomposition of the matrix $A$.
    */
   template <typename number2>
-  Householder(const FullMatrix<number2> &A);
+  Householder(const FullMatrix<number2>& A);
 
   /**
    * Compute the QR-decomposition of the given matrix $A$.
@@ -103,7 +103,7 @@ public:
    */
   template <typename number2>
   void
-  initialize(const FullMatrix<number2> &A);
+  initialize(const FullMatrix<number2>& A);
 
   /**
    * Solve the least-squares problem for the right hand side <tt>src</tt>. The
@@ -117,15 +117,15 @@ public:
    */
   template <typename number2>
   double
-  least_squares(Vector<number2> &dst, const Vector<number2> &src) const;
+  least_squares(Vector<number2>& dst, const Vector<number2>& src) const;
 
   /**
    * This function does the same as the previous one, but for BlockVectors.
    */
   template <typename number2>
   double
-  least_squares(BlockVector<number2> &      dst,
-                const BlockVector<number2> &src) const;
+  least_squares(BlockVector<number2>&       dst,
+                const BlockVector<number2>& src) const;
 
   /**
    * A wrapper to least_squares(), implementing the standard MatrixType
@@ -133,7 +133,7 @@ public:
    */
   template <class VectorType>
   void
-  vmult(VectorType &dst, const VectorType &src) const;
+  vmult(VectorType& dst, const VectorType& src) const;
 
   /**
    * A wrapper to least_squares() that implements multiplication with
@@ -141,7 +141,7 @@ public:
    */
   template <class VectorType>
   void
-  Tvmult(VectorType &dst, const VectorType &src) const;
+  Tvmult(VectorType& dst, const VectorType& src) const;
 
 
 private:
@@ -167,7 +167,7 @@ private:
 template <typename number>
 template <typename number2>
 void
-Householder<number>::initialize(const FullMatrix<number2> &M)
+Householder<number>::initialize(const FullMatrix<number2>& M)
 {
   const size_type m = M.n_rows(), n = M.n_cols();
   storage.reinit(m, n);
@@ -224,7 +224,7 @@ Householder<number>::initialize(const FullMatrix<number2> &M)
 
 template <typename number>
 template <typename number2>
-Householder<number>::Householder(const FullMatrix<number2> &M)
+Householder<number>::Householder(const FullMatrix<number2>& M)
 {
   initialize(M);
 }
@@ -234,8 +234,8 @@ Householder<number>::Householder(const FullMatrix<number2> &M)
 template <typename number>
 template <typename number2>
 double
-Householder<number>::least_squares(Vector<number2> &      dst,
-                                   const Vector<number2> &src) const
+Householder<number>::least_squares(Vector<number2>&       dst,
+                                   const Vector<number2>& src) const
 {
   Assert(!storage.empty(), typename FullMatrix<number2>::ExcEmptyMatrix());
   AssertDimension(dst.size(), storage.n());
@@ -279,8 +279,8 @@ Householder<number>::least_squares(Vector<number2> &      dst,
 template <typename number>
 template <typename number2>
 double
-Householder<number>::least_squares(BlockVector<number2> &      dst,
-                                   const BlockVector<number2> &src) const
+Householder<number>::least_squares(BlockVector<number2>&       dst,
+                                   const BlockVector<number2>& src) const
 {
   Assert(!storage.empty(), typename FullMatrix<number2>::ExcEmptyMatrix());
   AssertDimension(dst.size(), storage.n());
@@ -332,7 +332,7 @@ Householder<number>::least_squares(BlockVector<number2> &      dst,
 template <typename number>
 template <class VectorType>
 void
-Householder<number>::vmult(VectorType &dst, const VectorType &src) const
+Householder<number>::vmult(VectorType& dst, const VectorType& src) const
 {
   least_squares(dst, src);
 }
@@ -341,7 +341,7 @@ Householder<number>::vmult(VectorType &dst, const VectorType &src) const
 template <typename number>
 template <class VectorType>
 void
-Householder<number>::Tvmult(VectorType &, const VectorType &) const
+Householder<number>::Tvmult(VectorType&, const VectorType&) const
 {
   Assert(false, ExcNotImplemented());
 }

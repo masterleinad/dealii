@@ -56,24 +56,24 @@ public:
    * just put in the vector itself as argument and let this constructor make a
    * slice for you.
    */
-  VectorSlice(VectorType &v);
+  VectorSlice(VectorType& v);
   /**
    * The real constructor for a vector slice, allowing you to specify the
    * start index and the length of the slice.
    */
-  VectorSlice(VectorType &v, unsigned int start, unsigned int length);
+  VectorSlice(VectorType& v, unsigned int start, unsigned int length);
 
   /**
    * Conversion operator to an ArrayView object that represents an array of
    * non-const elements pointing to the same location as the current object.
    */
-  operator ArrayView<typename VectorType::value_type *>();
+  operator ArrayView<typename VectorType::value_type*>();
 
   /**
    * Conversion operator to an ArrayView object that represents an array of
    * const elements pointing to the same location as the current object.
    */
-  operator ArrayView<const typename VectorType::value_type *>() const;
+  operator ArrayView<const typename VectorType::value_type*>() const;
 
   /**
    * Return the length of the slice using the same interface as
@@ -122,7 +122,7 @@ private:
   /**
    * The vector we extract from.
    */
-  VectorType &v;
+  VectorType& v;
   /**
    * The start index of the slice.
    */
@@ -143,7 +143,7 @@ private:
  */
 template <typename VectorType>
 inline const VectorSlice<const VectorType>
-make_slice(VectorType &v)
+make_slice(VectorType& v)
 {
   const VectorSlice<const VectorType> r(v);
   return r;
@@ -160,7 +160,7 @@ make_slice(VectorType &v)
  */
 template <typename VectorType>
 inline const VectorSlice<const VectorType>
-make_slice(VectorType &v, const unsigned int start, const unsigned int length)
+make_slice(VectorType& v, const unsigned int start, const unsigned int length)
 {
   const VectorSlice<const VectorType> r(v, start, length);
   return r;
@@ -171,7 +171,7 @@ make_slice(VectorType &v, const unsigned int start, const unsigned int length)
 //---------------------------------------------------------------------------
 
 template <typename VectorType>
-inline VectorSlice<VectorType>::VectorSlice(VectorType &v) :
+inline VectorSlice<VectorType>::VectorSlice(VectorType& v) :
   v(v),
   start(0),
   length(v.size())
@@ -179,7 +179,7 @@ inline VectorSlice<VectorType>::VectorSlice(VectorType &v) :
 
 
 template <typename VectorType>
-inline VectorSlice<VectorType>::VectorSlice(VectorType & v,
+inline VectorSlice<VectorType>::VectorSlice(VectorType&  v,
                                             unsigned int start,
                                             unsigned int length) :
   v(v),
@@ -200,17 +200,17 @@ VectorSlice<VectorType>::size() const
 
 
 template <typename VectorType>
-VectorSlice<VectorType>::operator ArrayView<typename VectorType::value_type *>()
+VectorSlice<VectorType>::operator ArrayView<typename VectorType::value_type*>()
 {
-  return ArrayView<typename VectorType::value_type *>(&v[start], length);
+  return ArrayView<typename VectorType::value_type*>(&v[start], length);
 }
 
 
 template <typename VectorType>
 VectorSlice<VectorType>::
-operator ArrayView<const typename VectorType::value_type *>() const
+operator ArrayView<const typename VectorType::value_type*>() const
 {
-  return ArrayView<const typename VectorType::value_type *>(&v[start], length);
+  return ArrayView<const typename VectorType::value_type*>(&v[start], length);
 }
 
 

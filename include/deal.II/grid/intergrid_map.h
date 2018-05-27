@@ -129,7 +129,7 @@ public:
    * Create the mapping between the two grids.
    */
   void
-  make_mapping(const MeshType &source_grid, const MeshType &destination_grid);
+  make_mapping(const MeshType& source_grid, const MeshType& destination_grid);
 
   /**
    * Access operator: give a cell on the source grid and receive the
@@ -137,7 +137,7 @@ public:
    * refined cell of which the source cell would be created if it were further
    * refined.
    */
-  cell_iterator operator[](const cell_iterator &source_cell) const;
+  cell_iterator operator[](const cell_iterator& source_cell) const;
 
   /**
    * Delete all data of this class.
@@ -148,13 +148,13 @@ public:
   /**
    * Return a reference to the source grid.
    */
-  const MeshType &
+  const MeshType&
   get_source_grid() const;
 
   /**
    * Return a reference to the destination grid.
    */
-  const MeshType &
+  const MeshType&
   get_destination_grid() const;
 
   /**
@@ -197,7 +197,7 @@ private:
    * of refinement and all other properties.
    */
   void
-  set_mapping(const cell_iterator &src_cell, const cell_iterator &dst_cell);
+  set_mapping(const cell_iterator& src_cell, const cell_iterator& dst_cell);
 
   /**
    * Set the value of the key @p src_cell to @p dst_cell. Do so as well for
@@ -207,8 +207,8 @@ private:
    * on the @p dst_grid.
    */
   void
-  set_entries_to_cell(const cell_iterator &src_cell,
-                      const cell_iterator &dst_cell);
+  set_entries_to_cell(const cell_iterator& src_cell,
+                      const cell_iterator& dst_cell);
 };
 
 

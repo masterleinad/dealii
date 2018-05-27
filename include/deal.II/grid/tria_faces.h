@@ -82,7 +82,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
     /**
@@ -111,7 +111,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
     /**
@@ -147,32 +147,32 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
 
 
     template <class Archive>
     void
-    TriaFaces<1>::serialize(Archive &, const unsigned int)
+    TriaFaces<1>::serialize(Archive&, const unsigned int)
     {}
 
 
 
     template <class Archive>
     void
-    TriaFaces<2>::serialize(Archive &ar, const unsigned int)
+    TriaFaces<2>::serialize(Archive& ar, const unsigned int)
     {
-      ar &lines;
+      ar& lines;
     }
 
 
 
     template <class Archive>
     void
-    TriaFaces<3>::serialize(Archive &ar, const unsigned int)
+    TriaFaces<3>::serialize(Archive& ar, const unsigned int)
     {
-      ar &quads &lines;
+      ar& quads& lines;
     }
   } // namespace TriangulationImplementation
 } // namespace internal

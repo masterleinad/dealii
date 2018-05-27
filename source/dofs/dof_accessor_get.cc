@@ -44,8 +44,8 @@ template <typename DoFHandlerType, bool lda>
 template <class InputVector, typename number>
 void
 DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
-  const InputVector &values,
-  Vector<number> &   interpolated_values,
+  const InputVector& values,
+  Vector<number>&    interpolated_values,
   const unsigned int fe_index) const
 {
   if (!this->has_children())
@@ -54,7 +54,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
     // than the one we have on the current cell
     {
       if ((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                   DoFHandlerType::space_dimension> *>(
+                                   DoFHandlerType::space_dimension>*>(
              this->dof_handler) != nullptr) ||
           // for hp-DoFHandlers, we need to require that on
           // active cells, you either don't specify an fe_index,
@@ -90,7 +90,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
       // fe_index is given
       Assert(
         (dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                 DoFHandlerType::space_dimension> *>(
+                                 DoFHandlerType::space_dimension>*>(
            this->dof_handler) != nullptr) ||
           (fe_index != DoFHandlerType::default_fe_index),
         ExcMessage("You cannot call this function on non-active cells "
@@ -100,7 +100,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
                    "of freedom are only distributed on active cells for which "
                    "the active_fe_index has been set."));
 
-      const FiniteElement<dim, spacedim> &fe =
+      const FiniteElement<dim, spacedim>& fe =
         this->get_dof_handler().get_fe(fe_index);
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
 

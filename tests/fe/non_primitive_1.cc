@@ -50,10 +50,10 @@
 // primitive
 template <int dim>
 void
-create_stokes_matrix_1(const DoFHandler<dim> &dof_handler,
-                       SparseMatrix<double> & A)
+create_stokes_matrix_1(const DoFHandler<dim>& dof_handler,
+                       SparseMatrix<double>&  A)
 {
-  const FiniteElement<dim> &fe            = dof_handler.get_fe();
+  const FiniteElement<dim>& fe            = dof_handler.get_fe();
   const unsigned int        dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell =
@@ -119,10 +119,10 @@ create_stokes_matrix_1(const DoFHandler<dim> &dof_handler,
 // functions
 template <int dim>
 void
-create_stokes_matrix_2(const DoFHandler<dim> &dof_handler,
-                       SparseMatrix<double> & A)
+create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
+                       SparseMatrix<double>&  A)
 {
-  const FiniteElement<dim> &fe            = dof_handler.get_fe();
+  const FiniteElement<dim>& fe            = dof_handler.get_fe();
   const unsigned int        dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell =
@@ -192,10 +192,10 @@ create_stokes_matrix_2(const DoFHandler<dim> &dof_handler,
 // optimizations
 template <int dim>
 void
-create_stokes_matrix_3(const DoFHandler<dim> &dof_handler,
-                       SparseMatrix<double> & A)
+create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
+                       SparseMatrix<double>&  A)
 {
-  const FiniteElement<dim> &fe            = dof_handler.get_fe();
+  const FiniteElement<dim>& fe            = dof_handler.get_fe();
   const unsigned int        dofs_per_cell = fe.dofs_per_cell;
 
   typename DoFHandler<dim>::active_cell_iterator cell =

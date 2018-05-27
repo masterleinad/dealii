@@ -43,14 +43,14 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, typename VectorType, typename DoFHandlerType>
 SolutionTransfer<dim, VectorType, DoFHandlerType>::SolutionTransfer(
-  const DoFHandlerType &dof) :
+  const DoFHandlerType& dof) :
   dof_handler(&dof, typeid(*this).name()),
   n_dofs_old(0),
   prepared_for(none)
 {
   Assert((dynamic_cast<const parallel::distributed::Triangulation<
             DoFHandlerType::dimension,
-            DoFHandlerType::space_dimension> *>(
+            DoFHandlerType::space_dimension>*>(
             &dof_handler->get_triangulation()) == nullptr),
          ExcMessage("You are calling the dealii::SolutionTransfer class "
                     "with a DoF handler that is built on a "
@@ -125,8 +125,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::prepare_for_pure_refinement()
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::refine_interpolate(
-  const VectorType &in,
-  VectorType &      out) const
+  const VectorType& in,
+  VectorType&       out) const
 {
   Assert(prepared_for == pure_refinement, ExcNotPrepared());
   Assert(in.size() == n_dofs_old, ExcDimensionMismatch(in.size(), n_dofs_old));
@@ -197,17 +197,17 @@ namespace internal
    */
   template <typename DoFHandlerType>
   void
-  extract_interpolation_matrices(const DoFHandlerType &,
-                                 dealii::Table<2, FullMatrix<double>> &)
+  extract_interpolation_matrices(const DoFHandlerType&,
+                                 dealii::Table<2, FullMatrix<double>>&)
   {}
 
   template <int dim, int spacedim>
   void
   extract_interpolation_matrices(
-    const dealii::hp::DoFHandler<dim, spacedim> &dof,
-    dealii::Table<2, FullMatrix<double>> &       matrices)
+    const dealii::hp::DoFHandler<dim, spacedim>& dof,
+    dealii::Table<2, FullMatrix<double>>&        matrices)
   {
-    const dealii::hp::FECollection<dim, spacedim> &fe = dof.get_fe_collection();
+    const dealii::hp::FECollection<dim, spacedim>& fe = dof.get_fe_collection();
     matrices.reinit(fe.size(), fe.size());
     for (unsigned int i = 0; i < fe.size(); ++i)
       for (unsigned int j = 0; j < fe.size(); ++j)
@@ -227,7 +227,7 @@ namespace internal
                 fe[i].get_interpolation_matrix(fe[j], matrices(i, j));
               }
             catch (const typename FiniteElement<dim, spacedim>::
-                     ExcInterpolationNotImplemented &)
+                     ExcInterpolationNotImplemented&)
               {
                 matrices(i, j).reinit(0, 0);
               }
@@ -237,14 +237,14 @@ namespace internal
 
   template <int dim, int spacedim>
   void
-  restriction_additive(const FiniteElement<dim, spacedim> &,
-                       std::vector<std::vector<bool>> &)
+  restriction_additive(const FiniteElement<dim, spacedim>&,
+                       std::vector<std::vector<bool>>&)
   {}
 
   template <int dim, int spacedim>
   void
-  restriction_additive(const dealii::hp::FECollection<dim, spacedim> &fe,
-                       std::vector<std::vector<bool>> &restriction_is_additive)
+  restriction_additive(const dealii::hp::FECollection<dim, spacedim>& fe,
+                       std::vector<std::vector<bool>>& restriction_is_additive)
   {
     restriction_is_additive.resize(fe.size());
     for (unsigned int f = 0; f < fe.size(); ++f)
@@ -261,7 +261,7 @@ namespace internal
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::
-  prepare_for_coarsening_and_refinement(const std::vector<VectorType> &all_in)
+  prepare_for_coarsening_and_refinement(const std::vector<VectorType>& all_in)
 {
   Assert(prepared_for != pure_refinement, ExcAlreadyPrepForRef());
   Assert(prepared_for != coarsening_and_refinement,
@@ -423,7 +423,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::
-  prepare_for_coarsening_and_refinement(const VectorType &in)
+  prepare_for_coarsening_and_refinement(const VectorType& in)
 {
   std::vector<VectorType> all_in = std::vector<VectorType>(1, in);
   prepare_for_coarsening_and_refinement(all_in);
@@ -434,8 +434,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
-  const std::vector<VectorType> &all_in,
-  std::vector<VectorType> &      all_out) const
+  const std::vector<VectorType>& all_in,
+  std::vector<VectorType>&       all_out) const
 {
   Assert(prepared_for == coarsening_and_refinement, ExcNotPrepared());
   const unsigned int size = all_in.size();
@@ -472,11 +472,11 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
 
       if (pointerstruct != cell_map_end)
         {
-          const std::vector<types::global_dof_index> *const indexptr =
+          const std::vector<types::global_dof_index>* const indexptr =
             pointerstruct->second.indices_ptr;
 
-          const std::vector<Vector<typename VectorType::value_type>>
-            *const valuesptr = pointerstruct->second.dof_values_ptr;
+          const std::vector<Vector<typename VectorType::value_type>>* const
+            valuesptr = pointerstruct->second.dof_values_ptr;
 
           // cell stayed as it was or was refined
           if (indexptr)
@@ -531,7 +531,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
                   // test we would have to
                   // store the fe_index of all
                   // cells
-                  const Vector<typename VectorType::value_type> *data = nullptr;
+                  const Vector<typename VectorType::value_type>* data = nullptr;
                   const unsigned int active_fe_index = cell->active_fe_index();
                   if (active_fe_index != pointerstruct->second.active_fe_index)
                     {
@@ -569,8 +569,8 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
 template <int dim, typename VectorType, typename DoFHandlerType>
 void
 SolutionTransfer<dim, VectorType, DoFHandlerType>::interpolate(
-  const VectorType &in,
-  VectorType &      out) const
+  const VectorType& in,
+  VectorType&       out) const
 {
   Assert(in.size() == n_dofs_old, ExcDimensionMismatch(in.size(), n_dofs_old));
   Assert(out.size() == dof_handler->n_dofs(),

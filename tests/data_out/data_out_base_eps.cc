@@ -32,7 +32,7 @@
 
 template <int dim, int spacedim>
 void
-check(DataOutBase::EpsFlags flags, std::ostream &out)
+check(DataOutBase::EpsFlags flags, std::ostream& out)
 {
   const unsigned int np = 4;
 
@@ -56,7 +56,7 @@ void
 check_cont(unsigned int          ncells,
            unsigned int          nsub,
            DataOutBase::EpsFlags flags,
-           std::ostream &        out)
+           std::ostream&         out)
 {
   std::vector<DataOutBase::Patch<dim, dim>> patches;
 
@@ -71,14 +71,14 @@ check_cont(unsigned int          ncells,
 
 template <int dim, int spacedim>
 void
-check_all(std::ostream &log)
+check_all(std::ostream& log)
 {
 #if SEPARATE_FILES == 0
-  std::ostream &out = log;
+  std::ostream& out = log;
 #endif
 
   char                  name[100];
-  const char *          format = "%d%d%d%s.eps";
+  const char*           format = "%d%d%d%s.eps";
   DataOutBase::EpsFlags flags;
 
   if (true)
@@ -113,7 +113,7 @@ int
 main()
 {
   initlog();
-  auto &logfile = deallog.get_file_stream();
+  auto& logfile = deallog.get_file_stream();
   check_all<2, 2>(logfile);
   check_all<2, 3>(logfile);
 }

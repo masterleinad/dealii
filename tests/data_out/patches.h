@@ -25,11 +25,11 @@ double cell_coordinates[3][8] = {{0, 1, 0, 1, 0, 1, 0, 1},
 
 template <int dim, int spacedim>
 void
-create_patches(std::vector<DataOutBase::Patch<dim, spacedim>> &patches)
+create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 {
   for (unsigned int p = 0; p < patches.size(); ++p)
     {
-      DataOutBase::Patch<dim, spacedim> &patch = patches[p];
+      DataOutBase::Patch<dim, spacedim>& patch = patches[p];
 
       const unsigned int nsub  = p + 1;
       const unsigned int nsubp = nsub + 1;
@@ -74,7 +74,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>> &patches)
 
 template <int dim>
 void
-create_continuous_patches(std::vector<DataOutBase::Patch<dim, dim>> &patches,
+create_continuous_patches(std::vector<DataOutBase::Patch<dim, dim>>& patches,
                           unsigned int                               n_cells,
                           unsigned int                               n_sub)
 {

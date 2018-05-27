@@ -57,7 +57,7 @@ public:
   /**
    * Copy constructor.
    */
-  ExceptionBase(const ExceptionBase &exc);
+  ExceptionBase(const ExceptionBase& exc);
 
   /**
    * Destructor.
@@ -69,7 +69,7 @@ public:
    * are not copyable.
    */
   ExceptionBase
-  operator=(const ExceptionBase &) = delete;
+  operator=(const ExceptionBase&) = delete;
 
   /**
    * Set the file name and line of where the exception appeared as well as the
@@ -77,50 +77,50 @@ public:
    * function also populates the stacktrace.
    */
   void
-  set_fields(const char *file,
+  set_fields(const char* file,
              const int   line,
-             const char *function,
-             const char *cond,
-             const char *exc_name);
+             const char* function,
+             const char* cond,
+             const char* exc_name);
 
 
   /**
    * Override the standard function that returns the description of the error.
    */
-  virtual const char *
+  virtual const char*
   what() const noexcept override;
 
   /**
    * Get exception name.
    */
-  const char *
+  const char*
   get_exc_name() const;
 
   /**
    * Print out the general part of the error information.
    */
   void
-  print_exc_data(std::ostream &out) const;
+  print_exc_data(std::ostream& out) const;
 
   /**
    * Print more specific information about the exception which occurred.
    * Overload this function in your own exception classes.
    */
   virtual void
-  print_info(std::ostream &out) const;
+  print_info(std::ostream& out) const;
 
   /**
    * Print a stacktrace, if one has been recorded previously, to the given
    * stream.
    */
   void
-  print_stack_trace(std::ostream &out) const;
+  print_stack_trace(std::ostream& out) const;
 
 protected:
   /**
    * Name of the file this exception happens in.
    */
-  const char *file;
+  const char* file;
 
   /**
    * Line number in this file.
@@ -130,23 +130,23 @@ protected:
   /**
    * Name of the function, pretty printed.
    */
-  const char *function;
+  const char* function;
 
   /**
    * The violated condition, as a string.
    */
-  const char *cond;
+  const char* cond;
 
   /**
    * Name of the exception and call sequence.
    */
-  const char *exc;
+  const char* exc;
 
   /**
    * A backtrace to the position where the problem happened, if the system
    * supports this.
    */
-  mutable char **stacktrace;
+  mutable char** stacktrace;
 
   /**
    * The number of stacktrace frames that are stored in the previous variable.
@@ -158,7 +158,7 @@ protected:
   /**
    * array of pointers that contains the raw stack trace
    */
-  void *raw_stacktrace[25];
+  void* raw_stacktrace[25];
 #endif
 
 private:
@@ -200,12 +200,12 @@ private:
     class Exception : public dealii::ExceptionBase               \
     {                                                            \
     public:                                                      \
-      Exception(const std::string &msg = defaulttext) : arg(msg) \
+      Exception(const std::string& msg = defaulttext) : arg(msg) \
       {}                                                         \
       virtual ~Exception() noexcept                              \
       {}                                                         \
       virtual void                                               \
-      print_info(std::ostream &out) const override               \
+      print_info(std::ostream& out) const override               \
       {                                                          \
         out << "    " << arg << std::endl;                       \
       }                                                          \
@@ -229,7 +229,7 @@ private:
       virtual ~Exception1() noexcept                     \
       {}                                                 \
       virtual void                                       \
-      print_info(std::ostream &out) const override       \
+      print_info(std::ostream& out) const override       \
       {                                                  \
         out << "    " outsequence << std::endl;          \
       }                                                  \
@@ -257,7 +257,7 @@ private:
       virtual ~Exception2() noexcept                            \
       {}                                                        \
       virtual void                                              \
-      print_info(std::ostream &out) const override              \
+      print_info(std::ostream& out) const override              \
       {                                                         \
         out << "    " outsequence << std::endl;                 \
       }                                                         \
@@ -287,7 +287,7 @@ private:
       virtual ~Exception3() noexcept                                   \
       {}                                                               \
       virtual void                                                     \
-      print_info(std::ostream &out) const override                     \
+      print_info(std::ostream& out) const override                     \
       {                                                                \
         out << "    " outsequence << std::endl;                        \
       }                                                                \
@@ -322,7 +322,7 @@ private:
       virtual ~Exception4() noexcept                                          \
       {}                                                                      \
       virtual void                                                            \
-      print_info(std::ostream &out) const override                            \
+      print_info(std::ostream& out) const override                            \
       {                                                                       \
         out << "    " outsequence << std::endl;                               \
       }                                                                       \
@@ -361,7 +361,7 @@ private:
       virtual ~Exception5() noexcept                            \
       {}                                                        \
       virtual void                                              \
-      print_info(std::ostream &out) const override              \
+      print_info(std::ostream& out) const override              \
       {                                                         \
         out << "    " outsequence << std::endl;                 \
       }                                                         \
@@ -386,7 +386,7 @@ private:
  */
 #  define DeclException0(Exception0) \
     /** @ingroup Exceptions */       \
-    static dealii::ExceptionBase &Exception0()
+    static dealii::ExceptionBase& Exception0()
 
 /**
  * Declare an exception class derived from ExceptionBase that can take one
@@ -399,7 +399,7 @@ private:
 #  define DeclExceptionMsg(Exception, defaulttext) \
     /** @ingroup Exceptions */                     \
     /** @dealiiExceptionMessage{defaulttext} */    \
-    static dealii::ExceptionBase &Exception()
+    static dealii::ExceptionBase& Exception()
 
 /**
  * Declare an exception class derived from ExceptionBase with one additional
@@ -410,7 +410,7 @@ private:
 #  define DeclException1(Exception1, type1, outsequence) \
     /** @ingroup Exceptions */                           \
     /** @dealiiExceptionMessage{outsequence} */          \
-    static dealii::ExceptionBase &Exception1(type1 arg1)
+    static dealii::ExceptionBase& Exception1(type1 arg1)
 
 
 /**
@@ -422,7 +422,7 @@ private:
 #  define DeclException2(Exception2, type1, type2, outsequence) \
     /** @ingroup Exceptions */                                  \
     /** @dealiiExceptionMessage{outsequence} */                 \
-    static dealii::ExceptionBase &Exception2(type1 arg1, type2 arg2)
+    static dealii::ExceptionBase& Exception2(type1 arg1, type2 arg2)
 
 
 /**
@@ -434,7 +434,7 @@ private:
 #  define DeclException3(Exception3, type1, type2, type3, outsequence) \
     /** @ingroup Exceptions */                                         \
     /** @dealiiExceptionMessage{outsequence} */                        \
-    static dealii::ExceptionBase &Exception3(type1 arg1, type2 arg2, type3 arg3)
+    static dealii::ExceptionBase& Exception3(type1 arg1, type2 arg2, type3 arg3)
 
 
 /**
@@ -446,7 +446,7 @@ private:
 #  define DeclException4(Exception4, type1, type2, type3, type4, outsequence) \
     /** @ingroup Exceptions */                                                \
     /** @dealiiExceptionMessage{outsequence} */                               \
-    static dealii::ExceptionBase &Exception4(                                 \
+    static dealii::ExceptionBase& Exception4(                                 \
       type1 arg1, type2 arg2, type3 arg3, type4 arg4)
 
 
@@ -460,7 +460,7 @@ private:
     Exception5, type1, type2, type3, type4, type5, outsequence) \
     /** @ingroup Exceptions */                                  \
     /** @dealiiExceptionMessage{outsequence} */                 \
-    static dealii::ExceptionBase &Exception5(                   \
+    static dealii::ExceptionBase& Exception5(                   \
       type1 arg1, type2 arg2, type3 arg3, type4 arg4, type5 arg5)
 
 #endif /*ifndef DOXYGEN*/
@@ -587,7 +587,7 @@ namespace StandardExceptions
    * file.
    */
   DeclException1(ExcFileNotOpen,
-                 char *,
+                 char*,
                  << "Could not open file " << arg1 << ".");
 
   /**
@@ -964,7 +964,7 @@ namespace StandardExceptions
    * The constructor takes a single <tt>char*</tt>, the output of
    * cudaGetErrorString.
    */
-  DeclException1(ExcCudaError, char *, << arg1);
+  DeclException1(ExcCudaError, char*, << arg1);
   /**
    * This exception is raised if an error happened in a cuSPARSE function.
    */
@@ -1003,7 +1003,7 @@ namespace StandardExceptions
     ExcMPI(const int error_code);
 
     virtual void
-    print_info(std::ostream &out) const override;
+    print_info(std::ostream& out) const override;
 
     const int error_code;
   };
@@ -1039,7 +1039,7 @@ namespace deal_II_exceptions
    * @see Exceptions
    */
   void
-  set_additional_assert_output(const char *const p);
+  set_additional_assert_output(const char* const p);
 
   /**
    * Calling this function disables printing a stacktrace along with the other
@@ -1088,7 +1088,7 @@ namespace deal_II_exceptions
      * throws @p exc instead.
      */
     [[noreturn]] void
-    abort(const ExceptionBase &exc);
+    abort(const ExceptionBase& exc);
 
     /**
      * An enum describing how to treat an exception in issue_error.
@@ -1130,11 +1130,11 @@ namespace deal_II_exceptions
     template <class ExceptionType>
     [[noreturn]] void
     issue_error_noreturn(ExceptionHandling handling,
-                         const char *      file,
+                         const char*       file,
                          int               line,
-                         const char *      function,
-                         const char *      cond,
-                         const char *      exc_name,
+                         const char*       function,
+                         const char*       cond,
+                         const char*       exc_name,
                          ExceptionType     e) {
       // Fill the fields of the exception object
       e.set_fields(file, line, function, cond, exc_name);
@@ -1157,7 +1157,7 @@ namespace deal_II_exceptions
     /**
      * Internal function that does the work of issue_error_nothrow.
      */
-    void do_issue_error_nothrow(const ExceptionBase &e) noexcept;
+    void do_issue_error_nothrow(const ExceptionBase& e) noexcept;
 
     /**
      * Exception generation mechanism in case we must not throw.
@@ -1170,11 +1170,11 @@ namespace deal_II_exceptions
     template <class ExceptionType>
     void
     issue_error_nothrow(ExceptionHandling,
-                        const char *  file,
+                        const char*   file,
                         int           line,
-                        const char *  function,
-                        const char *  cond,
-                        const char *  exc_name,
+                        const char*   function,
+                        const char*   cond,
+                        const char*   exc_name,
                         ExceptionType e) noexcept
     {
       static_assert(std::is_base_of<ExceptionBase, ExceptionType>::value,

@@ -49,39 +49,39 @@ namespace SUNDIALS
 
 #    ifdef DEAL_II_WITH_TRILINOS
     void
-    copy(TrilinosWrappers::MPI::Vector &dst, const N_Vector &src);
+    copy(TrilinosWrappers::MPI::Vector& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const TrilinosWrappers::MPI::Vector &src);
+    copy(N_Vector& dst, const TrilinosWrappers::MPI::Vector& src);
     void
-    copy(TrilinosWrappers::MPI::BlockVector &dst, const N_Vector &src);
+    copy(TrilinosWrappers::MPI::BlockVector& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const TrilinosWrappers::MPI::BlockVector &src);
+    copy(N_Vector& dst, const TrilinosWrappers::MPI::BlockVector& src);
 #    endif // DEAL_II_WITH_TRILINOS
 
 #    ifdef DEAL_II_WITH_PETSC
 #      ifndef PETSC_USE_COMPLEX
     void
-    copy(PETScWrappers::MPI::Vector &dst, const N_Vector &src);
+    copy(PETScWrappers::MPI::Vector& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const PETScWrappers::MPI::Vector &src);
+    copy(N_Vector& dst, const PETScWrappers::MPI::Vector& src);
     void
-    copy(PETScWrappers::MPI::BlockVector &dst, const N_Vector &src);
+    copy(PETScWrappers::MPI::BlockVector& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const PETScWrappers::MPI::BlockVector &src);
+    copy(N_Vector& dst, const PETScWrappers::MPI::BlockVector& src);
 #      endif // PETSC_USE_COMPLEX
 #    endif   // DEAL_II_WITH_PETSC
 
 #  endif
 
     void
-    copy(BlockVector<double> &dst, const N_Vector &src);
+    copy(BlockVector<double>& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const BlockVector<double> &src);
+    copy(N_Vector& dst, const BlockVector<double>& src);
 
     void
-    copy(Vector<double> &dst, const N_Vector &src);
+    copy(Vector<double>& dst, const N_Vector& src);
     void
-    copy(N_Vector &dst, const Vector<double> &src);
+    copy(N_Vector& dst, const Vector<double>& src);
   } // namespace internal
 } // namespace SUNDIALS
 DEAL_II_NAMESPACE_CLOSE

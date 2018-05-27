@@ -39,7 +39,7 @@ using namespace std;
 
 template <int dim>
 void
-check(FiniteElement<dim> &fe)
+check(FiniteElement<dim>& fe)
 {
   deallog << std::endl << "**** " << fe.get_name() << std::endl;
 

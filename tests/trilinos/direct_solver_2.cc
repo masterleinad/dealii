@@ -89,7 +89,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
 
@@ -101,7 +101,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
 
@@ -114,14 +114,14 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
 
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim> &p,
+RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
   double return_value = 0;
@@ -134,7 +134,7 @@ RightHandSide<dim>::value(const Point<dim> &p,
 
 template <int dim>
 double
-RightHandSideTwo<dim>::value(const Point<dim> &p,
+RightHandSideTwo<dim>::value(const Point<dim>& p,
                              const unsigned int /*component*/) const
 {
   double return_value = 0;
@@ -147,7 +147,7 @@ RightHandSideTwo<dim>::value(const Point<dim> &p,
 
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim> &p,
+BoundaryValues<dim>::value(const Point<dim>& p,
                            const unsigned int /*component*/) const
 {
   return p.square();
@@ -376,7 +376,7 @@ Step4<dim>::run()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -388,7 +388,7 @@ main(int argc, char **argv)
       Step4<2> test;
       test.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

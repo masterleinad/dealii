@@ -25,7 +25,7 @@ namespace hp
   template <int dim, int spacedim>
   unsigned int
   FECollection<dim, spacedim>::find_least_face_dominating_fe(
-    const std::set<unsigned int> &fes) const
+    const std::set<unsigned int>& fes) const
   {
     // If the set of elements to be dominated contains only a single element X,
     // then by definition the dominating set contains this single element X
@@ -39,7 +39,7 @@ namespace hp
     if (fes.size() == 1)
       return *fes.begin();
 
-    const hp::FECollection<dim, spacedim> &fe_collection = *this;
+    const hp::FECollection<dim, spacedim>& fe_collection = *this;
     std::set<unsigned int>                 candidate_fes;
 
     // first loop over all FEs and check which can dominate those given in @p fes:
@@ -104,7 +104,7 @@ namespace hp
 
   template <int dim, int spacedim>
   FECollection<dim, spacedim>::FECollection(
-    const FiniteElement<dim, spacedim> &fe)
+    const FiniteElement<dim, spacedim>& fe)
   {
     push_back(fe);
   }
@@ -113,7 +113,7 @@ namespace hp
 
   template <int dim, int spacedim>
   FECollection<dim, spacedim>::FECollection(
-    const std::vector<const FiniteElement<dim, spacedim> *> &fes)
+    const std::vector<const FiniteElement<dim, spacedim>*>& fes)
   {
     Assert(fes.size() > 0,
            ExcMessage("Need to pass at least one finite element."));
@@ -127,7 +127,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   FECollection<dim, spacedim>::push_back(
-    const FiniteElement<dim, spacedim> &new_fe)
+    const FiniteElement<dim, spacedim>& new_fe)
   {
     // check that the new element has the right
     // number of components. only check with
@@ -147,7 +147,7 @@ namespace hp
   template <int dim, int spacedim>
   ComponentMask
   FECollection<dim, spacedim>::component_mask(
-    const FEValuesExtractors::Scalar &scalar) const
+    const FEValuesExtractors::Scalar& scalar) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -167,7 +167,7 @@ namespace hp
   template <int dim, int spacedim>
   ComponentMask
   FECollection<dim, spacedim>::component_mask(
-    const FEValuesExtractors::Vector &vector) const
+    const FEValuesExtractors::Vector& vector) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -187,7 +187,7 @@ namespace hp
   template <int dim, int spacedim>
   ComponentMask
   FECollection<dim, spacedim>::component_mask(
-    const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const
+    const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -206,7 +206,7 @@ namespace hp
 
   template <int dim, int spacedim>
   ComponentMask
-  FECollection<dim, spacedim>::component_mask(const BlockMask &block_mask) const
+  FECollection<dim, spacedim>::component_mask(const BlockMask& block_mask) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -228,7 +228,7 @@ namespace hp
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
-    const FEValuesExtractors::Scalar &scalar) const
+    const FEValuesExtractors::Scalar& scalar) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -250,7 +250,7 @@ namespace hp
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
-    const FEValuesExtractors::Vector &vector) const
+    const FEValuesExtractors::Vector& vector) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -272,7 +272,7 @@ namespace hp
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
-    const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const
+    const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));
@@ -295,7 +295,7 @@ namespace hp
   template <int dim, int spacedim>
   BlockMask
   FECollection<dim, spacedim>::block_mask(
-    const ComponentMask &component_mask) const
+    const ComponentMask& component_mask) const
   {
     Assert(size() > 0,
            ExcMessage("This collection contains no finite element."));

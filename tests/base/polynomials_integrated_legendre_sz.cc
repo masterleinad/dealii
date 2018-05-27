@@ -28,7 +28,7 @@ using namespace Polynomials;
 
 
 void
-check_at_one(const std::vector<Polynomial<double>> &p)
+check_at_one(const std::vector<Polynomial<double>>& p)
 {
   // Ignore first two polynomials as the integrated Legendre polynomials are
   // only defined for degree > 1, it is only added to maintain the recursive
@@ -48,7 +48,7 @@ check_at_one(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_at_half(const std::vector<Polynomial<double>> &p)
+check_at_half(const std::vector<Polynomial<double>>& p)
 {
   // Ignore first two polynomials as the integrated Legendre polynomials are
   // only defined for degree > 1, it is only added to maintain the recursive

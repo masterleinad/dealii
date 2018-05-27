@@ -33,7 +33,7 @@
 
 template <typename FullMatrix>
 void
-create_spd(FullMatrix &A)
+create_spd(FullMatrix& A)
 {
   const unsigned int size = A.n();
   Assert(size == A.m(), ExcDimensionMismatch(size, A.m()));
@@ -115,7 +115,7 @@ test(const unsigned int size, const unsigned int block_size)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);

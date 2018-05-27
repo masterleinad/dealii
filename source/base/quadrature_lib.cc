@@ -110,7 +110,7 @@ namespace internal
      * @return Vector containing weights.
      */
     std::vector<long double>
-    compute_quadrature_weights(const std::vector<long double> &x,
+    compute_quadrature_weights(const std::vector<long double>& x,
                                const int                       alpha,
                                const int                       beta)
     {
@@ -658,7 +658,7 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
       if (area > eps)
         for (unsigned int q = 0; q < quads[box].size(); ++q, ++q_id)
           {
-            const Point<2> &qp = quads[box].point(q);
+            const Point<2>& qp = quads[box].point(q);
             this->quadrature_points[q_id] =
               origins[box] + Point<2>(dist[0] * qp[0], dist[1] * qp[1]);
             this->weights[q_id] = quads[box].weight(q) * area;
@@ -705,13 +705,13 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
   //
   // And we get rid of R to take into account the singularity,
   // unless specified differently in the constructor.
-  std::vector<Point<2>> &ps  = this->quadrature_points;
-  std::vector<double> &  ws  = this->weights;
+  std::vector<Point<2>>& ps  = this->quadrature_points;
+  std::vector<double>&   ws  = this->weights;
   double                 pi4 = numbers::PI / 4;
 
   for (unsigned int q = 0; q < gauss.size(); ++q)
     {
-      const Point<2> &gp = gauss.point(q);
+      const Point<2>& gp = gauss.point(q);
       ps[q][0]           = gp[0];
       ps[q][1]           = gp[0] * std::tan(pi4 * gp[1]);
       ws[q]              = gauss.weight(q) * pi4 / std::cos(pi4 * gp[1]);
@@ -758,7 +758,7 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 
 
 template <int dim>
-QSorted<dim>::QSorted(const Quadrature<dim> &quad) : Quadrature<dim>(quad)
+QSorted<dim>::QSorted(const Quadrature<dim>& quad) : Quadrature<dim>(quad)
 {
   std::vector<unsigned int> permutation(quad.size());
   for (unsigned int i = 0; i < quad.size(); ++i)
@@ -842,8 +842,8 @@ QWeddle<dim>::QWeddle() : Quadrature<dim>(QWeddle<dim - 1>(), QWeddle<1>())
 {}
 
 template <int dim>
-QTelles<dim>::QTelles(const Quadrature<1> &base_quad,
-                      const Point<dim> &   singularity) :
+QTelles<dim>::QTelles(const Quadrature<1>& base_quad,
+                      const Point<dim>&    singularity) :
   // We need the explicit implementation if dim == 1. If dim > 1 we use the
   // former implementation and apply a tensorial product to obtain the higher
   // dimensions.
@@ -859,7 +859,7 @@ QTelles<dim>::QTelles(const Quadrature<1> &base_quad,
 {}
 
 template <int dim>
-QTelles<dim>::QTelles(const unsigned int n, const Point<dim> &singularity) :
+QTelles<dim>::QTelles(const unsigned int n, const Point<dim>& singularity) :
   // In this case we map the standard Gauss Legendre formula using the given
   // singularity point coordinates.
   Quadrature<dim>(QTelles<dim>(QGauss<1>(n), singularity))
@@ -868,8 +868,8 @@ QTelles<dim>::QTelles(const unsigned int n, const Point<dim> &singularity) :
 
 
 template <>
-QTelles<1>::QTelles(const Quadrature<1> &base_quad,
-                    const Point<1> &     singularity) :
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity) :
   // We explicitly implement the Telles' variable change if dim == 1.
   Quadrature<1>(base_quad)
 {
@@ -1184,7 +1184,7 @@ QGaussLobattoChebyshev<dim>::QGaussLobattoChebyshev(const unsigned int n) :
 
 
 template <int dim>
-QSimplex<dim>::QSimplex(const Quadrature<dim> &quad)
+QSimplex<dim>::QSimplex(const Quadrature<dim>& quad)
 {
   std::vector<Point<dim>> qpoints;
   std::vector<double>     weights;
@@ -1207,7 +1207,7 @@ QSimplex<dim>::QSimplex(const Quadrature<dim> &quad)
 template <int dim>
 Quadrature<dim>
 QSimplex<dim>::compute_affine_transformation(
-  const std::array<Point<dim>, dim + 1> &vertices) const
+  const std::array<Point<dim>, dim + 1>& vertices) const
 {
   Tensor<2, dim> B;
   for (unsigned int d = 0; d < dim; ++d)
@@ -1234,8 +1234,8 @@ QSimplex<dim>::compute_affine_transformation(
 
 
 
-QTrianglePolar::QTrianglePolar(const Quadrature<1> &radial_quadrature,
-                               const Quadrature<1> &angular_quadrature) :
+QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
+                               const Quadrature<1>& angular_quadrature) :
   QSimplex<2>(Quadrature<2>())
 {
   const QAnisotropic<2> base(radial_quadrature, angular_quadrature);
@@ -1264,14 +1264,14 @@ QTrianglePolar::QTrianglePolar(const Quadrature<1> &radial_quadrature,
 
 
 
-QTrianglePolar::QTrianglePolar(const unsigned int &n) :
+QTrianglePolar::QTrianglePolar(const unsigned int& n) :
   QTrianglePolar(QGauss<1>(n), QGauss<1>(n))
 {}
 
 
 
-QDuffy::QDuffy(const Quadrature<1> &radial_quadrature,
-               const Quadrature<1> &angular_quadrature,
+QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
+               const Quadrature<1>& angular_quadrature,
                const double         beta) :
   QSimplex<2>(Quadrature<2>())
 {
@@ -1305,7 +1305,7 @@ QDuffy::QDuffy(const unsigned int n, const double beta) :
 
 
 template <int dim>
-QSplit<dim>::QSplit(const QSimplex<dim> &base, const Point<dim> &split_point)
+QSplit<dim>::QSplit(const QSimplex<dim>& base, const Point<dim>& split_point)
 {
   AssertThrow(
     GeometryInfo<dim>::is_inside_unit_cell(split_point, 1e-12),

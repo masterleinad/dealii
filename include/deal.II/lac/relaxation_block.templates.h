@@ -32,7 +32,7 @@ inline RelaxationBlock<MatrixType, InverseNumberType, VectorType>::
     const typename PreconditionBlockBase<InverseNumberType>::Inversion
                  inversion,
     const double threshold,
-    VectorType * temp_ghost_vector) :
+    VectorType*  temp_ghost_vector) :
   relaxation(relaxation),
   invert_diagonal(invert_diagonal),
   same_diagonal(same_diagonal),
@@ -58,8 +58,8 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::AdditionalData::
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
 RelaxationBlock<MatrixType, InverseNumberType, VectorType>::initialize(
-  const MatrixType &    M,
-  const AdditionalData &parameters)
+  const MatrixType&     M,
+  const AdditionalData& parameters)
 {
   Assert(parameters.invert_diagonal, ExcNotImplemented());
 
@@ -120,7 +120,7 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::block_kernel(
   const size_type block_begin,
   const size_type block_end)
 {
-  const MatrixType &            M = *(this->A);
+  const MatrixType&             M = *(this->A);
   FullMatrix<InverseNumberType> M_cell;
 
   for (size_type block = block_begin; block < block_end; ++block)
@@ -184,8 +184,8 @@ namespace internal
    * copy into a ghosted vector, so just return a reference to @p prev.
    */
   template <class VectorType>
-  const VectorType &
-  prepare_ghost_vector(const VectorType &prev, VectorType *other)
+  const VectorType&
+  prepare_ghost_vector(const VectorType& prev, VectorType* other)
   {
     // If the following Assertion triggers, you either set temp_ghost_vector
     // for a serial computation (don't!), or nobody implemented, instantiated,
@@ -200,9 +200,9 @@ namespace internal
    * Specialization for Trilinos. Use the ghosted vector.
    */
   template <>
-  const TrilinosWrappers::MPI::Vector &
-  prepare_ghost_vector(const TrilinosWrappers::MPI::Vector &prev,
-                       TrilinosWrappers::MPI::Vector *      other)
+  const TrilinosWrappers::MPI::Vector&
+  prepare_ghost_vector(const TrilinosWrappers::MPI::Vector& prev,
+                       TrilinosWrappers::MPI::Vector*       other)
   {
     Assert(
       other != nullptr,
@@ -220,17 +220,17 @@ namespace internal
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 inline void
 RelaxationBlock<MatrixType, InverseNumberType, VectorType>::do_step(
-  VectorType &      dst,
-  const VectorType &prev,
-  const VectorType &src,
+  VectorType&       dst,
+  const VectorType& prev,
+  const VectorType& src,
   const bool        backward) const
 {
   Assert(additional_data->invert_diagonal, ExcNotImplemented());
 
-  const VectorType &ghosted_prev =
+  const VectorType& ghosted_prev =
     internal::prepare_ghost_vector(prev, additional_data->temp_ghost_vector);
 
-  const MatrixType &                      M = *this->A;
+  const MatrixType&                       M = *this->A;
   Vector<typename VectorType::value_type> b_cell, x_cell;
 
   const bool         permutation_empty = additional_data->order.size() == 0;
@@ -295,8 +295,8 @@ RelaxationBlock<MatrixType, InverseNumberType, VectorType>::do_step(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::step(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer aux(mem);
@@ -309,8 +309,8 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::step(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tstep(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer aux(mem);
@@ -323,8 +323,8 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tstep(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::vmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer aux(mem);
@@ -337,8 +337,8 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::vmult(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tvmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer aux(mem);
@@ -353,8 +353,8 @@ RelaxationBlockJacobi<MatrixType, InverseNumberType, VectorType>::Tvmult(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::step(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   this->do_step(dst, dst, src, false);
 }
@@ -363,8 +363,8 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::step(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   this->do_step(dst, dst, src, true);
 }
@@ -373,8 +373,8 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::vmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   dst = 0;
   this->do_step(dst, dst, src, false);
@@ -384,8 +384,8 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::vmult(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   dst = 0;
   this->do_step(dst, dst, src, true);
@@ -397,8 +397,8 @@ RelaxationBlockSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::step(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   this->do_step(dst, dst, src, false);
   this->do_step(dst, dst, src, true);
@@ -408,8 +408,8 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::step(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   this->do_step(dst, dst, src, true);
   this->do_step(dst, dst, src, false);
@@ -419,8 +419,8 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tstep(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::vmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   dst = 0;
   this->do_step(dst, dst, src, false);
@@ -431,8 +431,8 @@ RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::vmult(
 template <typename MatrixType, typename InverseNumberType, typename VectorType>
 void
 RelaxationBlockSSOR<MatrixType, InverseNumberType, VectorType>::Tvmult(
-  VectorType &      dst,
-  const VectorType &src) const
+  VectorType&       dst,
+  const VectorType& src) const
 {
   dst = 0;
   this->do_step(dst, dst, src, true);

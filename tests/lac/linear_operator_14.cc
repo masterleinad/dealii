@@ -53,10 +53,10 @@ using namespace dealii;
 
 template <int dim>
 void
-build_matrix_vector(TrilinosWrappers::BlockSparseMatrix &matrix,
-                    TrilinosWrappers::MPI::BlockVector & vector,
-                    const FE_Q<dim> &                    fe_test,
-                    const FE_Q<dim> &                    fe_trial)
+build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
+                    TrilinosWrappers::MPI::BlockVector&  vector,
+                    const FE_Q<dim>&                     fe_test,
+                    const FE_Q<dim>&                     fe_trial)
 {
   deallog.push("build_matrix_vector");
 
@@ -183,8 +183,8 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix &matrix,
 }
 
 void
-evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
-             const TrilinosWrappers::MPI::BlockVector & vector)
+evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
+             const TrilinosWrappers::MPI::BlockVector&  vector)
 {
   const double                                   tol = 1e-12;
   typedef dealii::TrilinosWrappers::SparseMatrix MatrixType;
@@ -223,9 +223,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
     {
       deallog.push("vmult");
 
-      const MatrixType &A = matrix.block(1, 0);
-      const VectorType &b = vector.block(0);
-      const VectorType &r = vector.block(1);
+      const MatrixType& A = matrix.block(1, 0);
+      const VectorType& b = vector.block(0);
+      const VectorType& r = vector.block(1);
       Assert(A.frobenius_norm() > 0.0, ExcInternalError());
       Assert(b.l2_norm() > 0.0, ExcInternalError());
       deallog << "System size: "
@@ -269,7 +269,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
       PayloadVectorType tril_out_lo_pyld(
         View,
         lo_A.OperatorRangeMap(),
-        const_cast<TrilinosScalar *>(out_lo_pyld.begin()),
+        const_cast<TrilinosScalar*>(out_lo_pyld.begin()),
         o_local_size,
         1);
       const size_type b_local_size = b.end() - b.begin();
@@ -278,7 +278,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
         static_cast<size_type>(lo_A.OperatorDomainMap().NumMyPoints()));
       PayloadVectorType tril_b_pyld(View,
                                     lo_A.OperatorDomainMap(),
-                                    const_cast<TrilinosScalar *>(b.begin()),
+                                    const_cast<TrilinosScalar*>(b.begin()),
                                     b_local_size,
                                     1);
 
@@ -299,9 +299,9 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
     {
       deallog.push("Tvmult");
 
-      const MatrixType &A = matrix.block(1, 0);
-      const VectorType &b = vector.block(1);
-      const VectorType &r = vector.block(0);
+      const MatrixType& A = matrix.block(1, 0);
+      const VectorType& b = vector.block(1);
+      const VectorType& r = vector.block(0);
       Assert(A.frobenius_norm() > 0.0, ExcInternalError());
       Assert(b.l2_norm() > 0.0, ExcInternalError());
       deallog << "System size: "
@@ -339,7 +339,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
       PayloadVectorType tril_out_lo_pyld(
         View,
         lo_A_T.OperatorRangeMap(),
-        const_cast<TrilinosScalar *>(out_lo_pyld.begin()),
+        const_cast<TrilinosScalar*>(out_lo_pyld.begin()),
         o_local_size,
         1);
       const size_type b_local_size = b.end() - b.begin();
@@ -348,7 +348,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
         static_cast<size_type>(lo_A_T.OperatorDomainMap().NumMyPoints()));
       PayloadVectorType tril_b_pyld(View,
                                     lo_A_T.OperatorDomainMap(),
-                                    const_cast<TrilinosScalar *>(b.begin()),
+                                    const_cast<TrilinosScalar*>(b.begin()),
                                     b_local_size,
                                     1);
 
@@ -369,10 +369,10 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
     {
       deallog.push("Composite vmult");
 
-      const MatrixType &A = matrix.block(1, 0);
-      const VectorType &b = vector.block(0);
-      const VectorType &r = vector.block(0);
-      const VectorType &i = vector.block(1);
+      const MatrixType& A = matrix.block(1, 0);
+      const VectorType& b = vector.block(0);
+      const VectorType& r = vector.block(0);
+      const VectorType& i = vector.block(1);
       Assert(A.frobenius_norm() > 0.0, ExcInternalError());
       Assert(b.l2_norm() > 0.0, ExcInternalError());
       deallog << "System size: "
@@ -416,7 +416,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
       PayloadVectorType tril_out_lo_pyld(
         View,
         lo_A_T_x_lo_A.OperatorRangeMap(),
-        const_cast<TrilinosScalar *>(out_lo_pyld.begin()),
+        const_cast<TrilinosScalar*>(out_lo_pyld.begin()),
         o_local_size,
         1);
       const size_type b_local_size = b.end() - b.begin();
@@ -425,7 +425,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
                         lo_A_T_x_lo_A.OperatorDomainMap().NumMyPoints()));
       PayloadVectorType tril_b_pyld(View,
                                     lo_A_T_x_lo_A.OperatorDomainMap(),
-                                    const_cast<TrilinosScalar *>(b.begin()),
+                                    const_cast<TrilinosScalar*>(b.begin()),
                                     b_local_size,
                                     1);
 
@@ -447,10 +447,10 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
     {
       deallog.push("Composite mult Tvmult");
 
-      const MatrixType &A = matrix.block(1, 0);
-      const VectorType &b = vector.block(1);
-      const VectorType &r = vector.block(1);
-      const VectorType &i = vector.block(0);
+      const MatrixType& A = matrix.block(1, 0);
+      const VectorType& b = vector.block(1);
+      const VectorType& r = vector.block(1);
+      const VectorType& i = vector.block(0);
       Assert(A.frobenius_norm() > 0.0, ExcInternalError());
       Assert(b.l2_norm() > 0.0, ExcInternalError());
       deallog << "System size: "
@@ -495,7 +495,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
       PayloadVectorType tril_out_lo_pyld(
         View,
         lo_A_x_lo_A_T.OperatorRangeMap(),
-        const_cast<TrilinosScalar *>(out_lo_pyld.begin()),
+        const_cast<TrilinosScalar*>(out_lo_pyld.begin()),
         o_local_size,
         1);
       const size_type b_local_size = b.end() - b.begin();
@@ -504,7 +504,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
                         lo_A_x_lo_A_T.OperatorDomainMap().NumMyPoints()));
       PayloadVectorType tril_b_pyld(View,
                                     lo_A_x_lo_A_T.OperatorDomainMap(),
-                                    const_cast<TrilinosScalar *>(b.begin()),
+                                    const_cast<TrilinosScalar*>(b.begin()),
                                     b_local_size,
                                     1);
 
@@ -528,7 +528,7 @@ evaluate_ops(const TrilinosWrappers::BlockSparseMatrix &matrix,
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   const int dim = 2;
 

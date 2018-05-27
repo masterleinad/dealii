@@ -43,7 +43,7 @@ namespace PETScWrappers
    * changed in PETSc 3.7.0).
    */
   inline void
-  set_option_value(const std::string &name, const std::string &value)
+  set_option_value(const std::string& name, const std::string& value)
   {
 #  if DEAL_II_PETSC_VERSION_LT(3, 7, 0)
     const PetscErrorCode ierr =
@@ -68,7 +68,7 @@ namespace PETScWrappers
    *
    */
   inline PetscErrorCode
-  destroy_matrix(Mat &matrix)
+  destroy_matrix(Mat& matrix)
   {
     // PETSc will check whether or not matrix is nullptr.
     return MatDestroy(&matrix);
@@ -87,7 +87,7 @@ namespace PETScWrappers
    * given by MatDestroy.
    */
   inline PetscErrorCode
-  destroy_krylov_solver(KSP &krylov_solver)
+  destroy_krylov_solver(KSP& krylov_solver)
   {
     // PETSc will check whether or not matrix is nullptr.
     return KSPDestroy(&krylov_solver);
@@ -103,7 +103,7 @@ namespace PETScWrappers
    * before 3.0.0 since the corresponding function did not take this argument.
    */
   inline void
-  set_matrix_option(Mat &           matrix,
+  set_matrix_option(Mat&            matrix,
                     const MatOption option_name,
                     const PetscBool option_value = PETSC_FALSE)
   {
@@ -118,7 +118,7 @@ namespace PETScWrappers
    * matrix. Generate errors in debug mode.
    */
   inline void
-  close_matrix(Mat &matrix)
+  close_matrix(Mat& matrix)
   {
 #  ifdef DEBUG
     set_matrix_option(matrix, MAT_NEW_NONZERO_LOCATION_ERR, PETSC_TRUE);
@@ -135,7 +135,7 @@ namespace PETScWrappers
    * not write into that row afterwards.
    */
   inline void
-  set_keep_zero_rows(Mat &matrix)
+  set_keep_zero_rows(Mat& matrix)
   {
     set_matrix_option(matrix, MAT_KEEP_NONZERO_PATTERN, PETSC_TRUE);
   }

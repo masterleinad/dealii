@@ -31,8 +31,8 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim>::Particle(const Point<spacedim> &location,
-                                    const Point<dim> &     reference_location,
+  Particle<dim, spacedim>::Particle(const Point<spacedim>& location,
+                                    const Point<dim>&      reference_location,
                                     const types::particle_index id) :
     location(location),
     reference_location(reference_location),
@@ -44,7 +44,7 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim>::Particle(const Particle<dim, spacedim> &particle) :
+  Particle<dim, spacedim>::Particle(const Particle<dim, spacedim>& particle) :
     location(particle.get_location()),
     reference_location(particle.get_reference_location()),
     id(particle.get_id()),
@@ -69,13 +69,13 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim>::Particle(const void *&       data,
-                                    PropertyPool *const new_property_pool)
+  Particle<dim, spacedim>::Particle(const void*&        data,
+                                    PropertyPool* const new_property_pool)
   {
-    const types::particle_index *id_data =
-      static_cast<const types::particle_index *>(data);
+    const types::particle_index* id_data =
+      static_cast<const types::particle_index*>(data);
     id                  = *id_data++;
-    const double *pdata = reinterpret_cast<const double *>(id_data);
+    const double* pdata = reinterpret_cast<const double*>(id_data);
 
     for (unsigned int i = 0; i < spacedim; ++i)
       location(i) = *pdata++;
@@ -99,14 +99,14 @@ namespace Particles
           particle_properties[i] = *pdata++;
       }
 
-    data = static_cast<const void *>(pdata);
+    data = static_cast<const void*>(pdata);
   }
 
 
 
   template <int dim, int spacedim>
   Particle<dim, spacedim>::Particle(
-    Particle<dim, spacedim> &&particle) noexcept :
+    Particle<dim, spacedim>&& particle) noexcept :
     location(std::move(particle.location)),
     reference_location(std::move(particle.reference_location)),
     id(std::move(particle.id)),
@@ -119,8 +119,8 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim> &
-  Particle<dim, spacedim>::operator=(const Particle<dim, spacedim> &particle)
+  Particle<dim, spacedim>&
+  Particle<dim, spacedim>::operator=(const Particle<dim, spacedim>& particle)
   {
     if (this != &particle)
       {
@@ -150,9 +150,9 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  Particle<dim, spacedim> &
+  Particle<dim, spacedim>&
   Particle<dim, spacedim>::
-  operator=(Particle<dim, spacedim> &&particle) noexcept
+  operator=(Particle<dim, spacedim>&& particle) noexcept
   {
     if (this != &particle)
       {
@@ -179,12 +179,12 @@ namespace Particles
 
   template <int dim, int spacedim>
   void
-  Particle<dim, spacedim>::write_data(void *&data) const
+  Particle<dim, spacedim>::write_data(void*& data) const
   {
-    types::particle_index *id_data = static_cast<types::particle_index *>(data);
+    types::particle_index* id_data = static_cast<types::particle_index*>(data);
     *id_data                       = id;
     ++id_data;
-    double *pdata = reinterpret_cast<double *>(id_data);
+    double* pdata = reinterpret_cast<double*>(id_data);
 
     // Write location data
     for (unsigned int i = 0; i < spacedim; ++i, ++pdata)
@@ -203,7 +203,7 @@ namespace Particles
           *pdata = particle_properties[i];
       }
 
-    data = static_cast<void *>(pdata);
+    data = static_cast<void*>(pdata);
   }
 
 
@@ -228,7 +228,7 @@ namespace Particles
 
   template <int dim, int spacedim>
   void
-  Particle<dim, spacedim>::set_location(const Point<spacedim> &new_loc)
+  Particle<dim, spacedim>::set_location(const Point<spacedim>& new_loc)
   {
     location = new_loc;
   }
@@ -236,7 +236,7 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  const Point<spacedim> &
+  const Point<spacedim>&
   Particle<dim, spacedim>::get_location() const
   {
     return location;
@@ -246,7 +246,7 @@ namespace Particles
 
   template <int dim, int spacedim>
   void
-  Particle<dim, spacedim>::set_reference_location(const Point<dim> &new_loc)
+  Particle<dim, spacedim>::set_reference_location(const Point<dim>& new_loc)
   {
     reference_location = new_loc;
   }
@@ -254,7 +254,7 @@ namespace Particles
 
 
   template <int dim, int spacedim>
-  const Point<dim> &
+  const Point<dim>&
   Particle<dim, spacedim>::get_reference_location() const
   {
     return reference_location;
@@ -273,7 +273,7 @@ namespace Particles
 
   template <int dim, int spacedim>
   void
-  Particle<dim, spacedim>::set_property_pool(PropertyPool &new_property_pool)
+  Particle<dim, spacedim>::set_property_pool(PropertyPool& new_property_pool)
   {
     property_pool = &new_property_pool;
   }
@@ -283,7 +283,7 @@ namespace Particles
   template <int dim, int spacedim>
   void
   Particle<dim, spacedim>::set_properties(
-    const ArrayView<const double> &new_properties)
+    const ArrayView<const double>& new_properties)
   {
     if (properties == PropertyPool::invalid_handle)
       properties = property_pool->allocate_properties_array();

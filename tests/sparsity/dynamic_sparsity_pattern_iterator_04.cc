@@ -59,7 +59,7 @@ operator!= (other=..., this=0x7fffffffc850) at
 
 
 void
-iterate(DynamicSparsityPattern &sp)
+iterate(DynamicSparsityPattern& sp)
 {
   DynamicSparsityPattern::const_iterator i = sp.begin();
   for (; i != sp.end(); ++i)
@@ -120,7 +120,7 @@ main()
     {
       test();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

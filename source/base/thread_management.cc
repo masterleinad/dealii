@@ -52,7 +52,7 @@ namespace Threads
 
 
     [[noreturn]] void
-    handle_std_exception(const std::exception &exc) {
+    handle_std_exception(const std::exception& exc) {
       // lock the following context
       // to ensure that we don't
       // print things over each other
@@ -149,7 +149,7 @@ namespace Threads
 
 
 #ifndef DEAL_II_WITH_THREADS
-  DummyBarrier::DummyBarrier(const unsigned int count, const char *, void *)
+  DummyBarrier::DummyBarrier(const unsigned int count, const char*, void*)
   {
     (void)count;
     Assert(count == 1, ExcBarrierSizeNotUseful(count));
@@ -162,8 +162,8 @@ namespace Threads
 
 #    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
   PosixThreadBarrier::PosixThreadBarrier(const unsigned int count,
-                                         const char *,
-                                         void *)
+                                         const char*,
+                                         void*)
   {
     pthread_barrier_init(&barrier, nullptr, count);
   }
@@ -171,8 +171,8 @@ namespace Threads
 #    else
 
   PosixThreadBarrier::PosixThreadBarrier(const unsigned int count,
-                                         const char *,
-                                         void *) :
+                                         const char*,
+                                         void*) :
     count(count)
   {
     // throw an exception unless we

@@ -21,7 +21,7 @@
 // doesn't do anything but is needed for genericity.
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   using namespace dealii;
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);

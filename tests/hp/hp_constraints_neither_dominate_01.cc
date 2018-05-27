@@ -195,7 +195,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
           {
             deallog << "cell=" << cell << " face=" << f << std::endl;
             fe_face_values_hp.reinit(cell, f);
-            const FEFaceValues<dim> &fe_face_values =
+            const FEFaceValues<dim>& fe_face_values =
               fe_face_values_hp.get_present_fe_values();
 
             const unsigned int n_q_points = fe_face_values.n_quadrature_points;
@@ -203,7 +203,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
 
             fe_face_values.get_function_values(solution, values);
 
-            const std::vector<dealii::Point<dim>> &q_points =
+            const std::vector<dealii::Point<dim>>& q_points =
               fe_face_values.get_quadrature_points();
 
             for (unsigned int q = 0; q < n_q_points; q++)
@@ -215,7 +215,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   dof_handler.clear();
 }
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -234,7 +234,7 @@ main(int argc, char **argv)
       test2cells<3>(
         2, 1); // Q(2) x FE_Nothing vs Q(1) x Q(1) => common Q(1) x FE_Nothing
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

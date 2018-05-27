@@ -35,7 +35,7 @@
 
 
 void
-create_triangulation(const unsigned int case_no, Triangulation<2> &tria)
+create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
 {
   switch (case_no)
     {
@@ -45,9 +45,9 @@ create_triangulation(const unsigned int case_no, Triangulation<2> &tria)
       case 1:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<2> &v0 = tria.begin_active()->vertex(0);
+          Point<2>& v0 = tria.begin_active()->vertex(0);
           v0           = Point<2>(-0.5, -1);
-          Point<2> &v1 = tria.begin_active()->vertex(1);
+          Point<2>& v1 = tria.begin_active()->vertex(1);
           v1           = Point<2>(1.25, 0.25);
           break;
         }

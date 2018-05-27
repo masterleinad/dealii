@@ -137,8 +137,8 @@ public:
   // documentation inherited from the base class
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const override;
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const override;
 
   /**
    * Return a list of constant modes of the element. This method is currently
@@ -269,32 +269,32 @@ public:
 
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const override;
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const override;
 
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim> &source,
-                                FullMatrix<double> &matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim>& source,
+                                FullMatrix<double>& matrix) const override;
 
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim> &source,
+  get_subface_interpolation_matrix(const FiniteElement<dim>& source,
                                    const unsigned int        subface,
-                                   FullMatrix<double> &matrix) const override;
+                                   FullMatrix<double>& matrix) const override;
   virtual bool
   hp_constraints_are_implemented() const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_vertex_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_vertex_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_line_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_line_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_quad_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_quad_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim> &fe_other) const override;
+    const FiniteElement<dim>& fe_other) const override;
 
 private:
   /**

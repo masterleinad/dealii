@@ -36,13 +36,13 @@ public:
   };
 
   void
-  vmult(Vector<double> &, const Vector<double> &) const
+  vmult(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix1::vmult" << std::endl;
   }
 
   void
-  Tvmult(Vector<double> &, const Vector<double> &) const
+  Tvmult(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix1::Tvmult" << std::endl;
   }
@@ -63,25 +63,25 @@ public:
   };
 
   void
-  vmult(Vector<double> &, const Vector<double> &) const
+  vmult(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix2::vmult" << std::endl;
   }
 
   void
-  Tvmult(Vector<double> &, const Vector<double> &) const
+  Tvmult(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix2::Tvmult" << std::endl;
   }
 
   void
-  vmult_add(Vector<double> &, const Vector<double> &) const
+  vmult_add(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix2::vmult_add" << std::endl;
   }
 
   void
-  Tvmult_add(Vector<double> &, const Vector<double> &) const
+  Tvmult_add(Vector<double>&, const Vector<double>&) const
   {
     deallog << "MyMatrix2::Tvmult_add" << std::endl;
   }
@@ -103,28 +103,28 @@ public:
 
   template <typename OutVector, typename InVector>
   void
-  vmult(OutVector &, const InVector &) const
+  vmult(OutVector&, const InVector&) const
   {
     deallog << "MyMatrix3::vmult" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  Tvmult(OutVector &, const InVector &) const
+  Tvmult(OutVector&, const InVector&) const
   {
     deallog << "MyMatrix3::Tvmult" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  vmult_add(OutVector &, const InVector &) const
+  vmult_add(OutVector&, const InVector&) const
   {
     deallog << "MyMatrix3::vmult_add" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  Tvmult_add(OutVector &, const InVector &) const
+  Tvmult_add(OutVector&, const InVector&) const
   {
     deallog << "MyMatrix3::Tvmult_add" << std::endl;
   }
@@ -146,28 +146,28 @@ public:
 
   template <typename OutVector, typename InVector>
   void
-  vmult(OutVector &, const InVector &, bool = true) const
+  vmult(OutVector&, const InVector&, bool = true) const
   {
     deallog << "MyMatrix4::vmult" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  Tvmult(OutVector &, const InVector &, bool = true) const
+  Tvmult(OutVector&, const InVector&, bool = true) const
   {
     deallog << "MyMatrix4::Tvmult" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  vmult_add(OutVector &, const InVector &, bool = true) const
+  vmult_add(OutVector&, const InVector&, bool = true) const
   {
     deallog << "MyMatrix4::vmult_add" << std::endl;
   }
 
   template <typename OutVector, typename InVector>
   void
-  Tvmult_add(OutVector &, const InVector &, bool = true) const
+  Tvmult_add(OutVector&, const InVector&, bool = true) const
   {
     deallog << "MyMatrix4::Tvmult_add" << std::endl;
   }
@@ -189,28 +189,28 @@ public:
 
   template <typename number>
   void
-  vmult(Vector<number> &, const Vector<number> &, bool = true) const
+  vmult(Vector<number>&, const Vector<number>&, bool = true) const
   {
     deallog << "MyMatrix5::vmult" << std::endl;
   }
 
   template <typename number>
   void
-  Tvmult(Vector<number> &, const Vector<number> &, bool = true) const
+  Tvmult(Vector<number>&, const Vector<number>&, bool = true) const
   {
     deallog << "MyMatrix5::Tvmult" << std::endl;
   }
 
   template <typename number>
   void
-  vmult_add(Vector<number> &, const Vector<number> &, bool = true) const
+  vmult_add(Vector<number>&, const Vector<number>&, bool = true) const
   {
     deallog << "MyMatrix5::vmult_add" << std::endl;
   }
 
   template <typename number>
   void
-  Tvmult_add(Vector<number> &, const Vector<number> &, bool = true) const
+  Tvmult_add(Vector<number>&, const Vector<number>&, bool = true) const
   {
     deallog << "MyMatrix5::Tvmult_add" << std::endl;
   }
@@ -232,21 +232,21 @@ public:
 
   template <typename number, typename number2>
   void
-  vmult(Vector<number> &, const Vector<number2> &, bool = true) const
+  vmult(Vector<number>&, const Vector<number2>&, bool = true) const
   {
     deallog << "MyMatrix6::vmult" << std::endl;
   }
 
   template <typename number, typename number2>
   void
-  Tvmult(Vector<number> &, const Vector<number2> &, bool = true) const
+  Tvmult(Vector<number>&, const Vector<number2>&, bool = true) const
   {
     deallog << "MyMatrix6::Tvmult" << std::endl;
   }
 
   template <typename number, typename number2>
   void
-  vmult_add(Vector<number> &, const Vector<number2> &, bool = true) const
+  vmult_add(Vector<number>&, const Vector<number2>&, bool = true) const
   {
     deallog << "MyMatrix6::vmult_add" << std::endl;
   }

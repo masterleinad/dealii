@@ -354,7 +354,7 @@ public:
    * parameters in the given section, otherwise a pretty printed
    * version of the derived class is used.
    */
-  ParameterAcceptor(const std::string &section_name = "");
+  ParameterAcceptor(const std::string& section_name = "");
 
   /**
    * Destructor.
@@ -389,11 +389,11 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(const std::string &                 filename        = "",
-             const std::string &                 output_filename = "",
+  initialize(const std::string&                  filename        = "",
+             const std::string&                  output_filename = "",
              const ParameterHandler::OutputStyle output_style_for_prm_format =
                ParameterHandler::ShortText,
-             ParameterHandler &prm = ParameterAcceptor::prm);
+             ParameterHandler& prm = ParameterAcceptor::prm);
 
   /**
    * Call declare_all_parameters(), read the parameters from the `input_stream`
@@ -405,8 +405,8 @@ public:
    * @param prm The ParameterHandler to use
    */
   static void
-  initialize(std::istream &    input_stream,
-             ParameterHandler &prm = ParameterAcceptor::prm);
+  initialize(std::istream&     input_stream,
+             ParameterHandler& prm = ParameterAcceptor::prm);
 
 
   /**
@@ -421,7 +421,7 @@ public:
    * default implementation is empty.
    */
   virtual void
-  declare_parameters(ParameterHandler &prm);
+  declare_parameters(ParameterHandler& prm);
 
   /**
    * Declare parameter call back. This signal is triggered right after
@@ -437,7 +437,7 @@ public:
    * default implementation is empty.
    */
   virtual void
-  parse_parameters(ParameterHandler &prm);
+  parse_parameters(ParameterHandler& prm);
 
   /**
    * Parse parameter call back. This function is called at the end of
@@ -456,7 +456,7 @@ public:
    * and parses all parameters that were added using add_parameter().
    */
   static void
-  parse_all_parameters(ParameterHandler &prm = ParameterAcceptor::prm);
+  parse_all_parameters(ParameterHandler& prm = ParameterAcceptor::prm);
 
   /**
    * Initialize the global ParameterHandler with all derived classes
@@ -465,7 +465,7 @@ public:
    * that were added using add_parameter().
    */
   static void
-  declare_all_parameters(ParameterHandler &prm = ParameterAcceptor::prm);
+  declare_all_parameters(ParameterHandler& prm = ParameterAcceptor::prm);
 
   /**
    * Return the section name of this class. If a name was provided
@@ -493,11 +493,11 @@ public:
    */
   template <class ParameterType>
   void
-  add_parameter(const std::string &          entry,
-                ParameterType &              parameter,
-                const std::string &          documentation = std::string(),
-                ParameterHandler &           prm_          = prm,
-                const Patterns::PatternBase &pattern =
+  add_parameter(const std::string&           entry,
+                ParameterType&               parameter,
+                const std::string&           documentation = std::string(),
+                ParameterHandler&            prm_          = prm,
+                const Patterns::PatternBase& pattern =
                   *Patterns::Tools::Convert<ParameterType>::to_pattern());
 
   /**
@@ -509,14 +509,14 @@ public:
    * Make sure we enter the right subsection of the given parameter.
    */
   void
-  enter_my_subsection(ParameterHandler &prm);
+  enter_my_subsection(ParameterHandler& prm);
 
   /**
    * This function undoes what the enter_my_subsection() function did. It only
    * makes sense if enter_my_subsection() was called on `prm` before this one.
    */
   void
-  leave_my_subsection(ParameterHandler &prm);
+  leave_my_subsection(ParameterHandler& prm);
 
 private:
   /**
@@ -608,14 +608,14 @@ public:
    * @p SourceClass::declare_parameters with @p prm as an argument.
    */
   virtual void
-  declare_parameters(ParameterHandler &prm) override;
+  declare_parameters(ParameterHandler& prm) override;
 
   /**
    * Overloads the ParameterAcceptor::parse_parameters function, by calling
    * @p SourceClass::parse_parameters with @p prm as an argument.
    */
   virtual void
-  parse_parameters(ParameterHandler &prm) override;
+  parse_parameters(ParameterHandler& prm) override;
 };
 
 
@@ -623,11 +623,11 @@ public:
 // Inline and template functions
 template <class ParameterType>
 void
-ParameterAcceptor::add_parameter(const std::string &          entry,
-                                 ParameterType &              parameter,
-                                 const std::string &          documentation,
-                                 ParameterHandler &           prm,
-                                 const Patterns::PatternBase &pattern)
+ParameterAcceptor::add_parameter(const std::string&           entry,
+                                 ParameterType&               parameter,
+                                 const std::string&           documentation,
+                                 ParameterHandler&            prm,
+                                 const Patterns::PatternBase& pattern)
 {
   enter_my_subsection(prm);
   prm.add_parameter(entry, parameter, documentation, pattern);
@@ -649,7 +649,7 @@ ParameterAcceptorProxy<SourceClass>::ParameterAcceptorProxy(
 
 template <class SourceClass>
 void
-ParameterAcceptorProxy<SourceClass>::declare_parameters(ParameterHandler &prm)
+ParameterAcceptorProxy<SourceClass>::declare_parameters(ParameterHandler& prm)
 {
   SourceClass::declare_parameters(prm);
 }
@@ -658,7 +658,7 @@ ParameterAcceptorProxy<SourceClass>::declare_parameters(ParameterHandler &prm)
 
 template <class SourceClass>
 void
-ParameterAcceptorProxy<SourceClass>::parse_parameters(ParameterHandler &prm)
+ParameterAcceptorProxy<SourceClass>::parse_parameters(ParameterHandler& prm)
 {
   SourceClass::parse_parameters(prm);
 }

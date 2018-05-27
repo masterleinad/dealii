@@ -51,10 +51,10 @@
 template <int dim, int fe_degree, typename Number>
 void
 helmholtz_operator(
-  const MatrixFree<dim, Number> &                                  data,
-  std::vector<LinearAlgebra::distributed::Vector<Number> *> &      dst,
-  const std::vector<LinearAlgebra::distributed::Vector<Number> *> &src,
-  const std::pair<unsigned int, unsigned int> &                    cell_range)
+  const MatrixFree<dim, Number>&                                  data,
+  std::vector<LinearAlgebra::distributed::Vector<Number>*>&       dst,
+  const std::vector<LinearAlgebra::distributed::Vector<Number>*>& src,
+  const std::pair<unsigned int, unsigned int>&                    cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 2, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
@@ -86,26 +86,26 @@ public:
   static const std::size_t        n_vectors =
     VectorizedArray<Number>::n_array_elements;
 
-  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
   vmult(
-    std::vector<LinearAlgebra::distributed::Vector<Number> *> &      dst,
-    const std::vector<LinearAlgebra::distributed::Vector<Number> *> &src) const
+    std::vector<LinearAlgebra::distributed::Vector<Number>*>&       dst,
+    const std::vector<LinearAlgebra::distributed::Vector<Number>*>& src) const
   {
     for (unsigned int i = 0; i < dst.size(); ++i)
       *dst[i] = 0;
     const std::function<void(
-      const MatrixFree<dim, Number> &,
-      std::vector<LinearAlgebra::distributed::Vector<Number> *> &,
-      const std::vector<LinearAlgebra::distributed::Vector<Number> *> &,
-      const std::pair<unsigned int, unsigned int> &)>
+      const MatrixFree<dim, Number>&,
+      std::vector<LinearAlgebra::distributed::Vector<Number>*>&,
+      const std::vector<LinearAlgebra::distributed::Vector<Number>*>&,
+      const std::pair<unsigned int, unsigned int>&)>
       wrap = helmholtz_operator<dim, fe_degree, Number>;
     data.cell_loop(wrap, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number> &data;
+  const MatrixFree<dim, Number>& data;
 };
 
 
@@ -196,7 +196,7 @@ test()
       in[1].local_element(i) = random_value<double>();
     }
 
-  std::vector<LinearAlgebra::distributed::Vector<number> *> in_ptr(2),
+  std::vector<LinearAlgebra::distributed::Vector<number>*> in_ptr(2),
     out_ptr(2);
   in_ptr[0]  = &in[0];
   in_ptr[1]  = &in[1];
@@ -274,7 +274,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -25,7 +25,7 @@
 
 
 void
-test(Vector<double> &v)
+test(Vector<double>& v)
 {
   for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
@@ -53,7 +53,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

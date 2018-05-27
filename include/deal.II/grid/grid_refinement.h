@@ -157,8 +157,8 @@ namespace GridRefinement
   template <int dim, typename Number, int spacedim>
   void
   refine_and_coarsen_fixed_number(
-    Triangulation<dim, spacedim> &triangulation,
-    const Vector<Number> &        criteria,
+    Triangulation<dim, spacedim>& triangulation,
+    const Vector<Number>&         criteria,
     const double                  top_fraction_of_cells,
     const double                  bottom_fraction_of_cells,
     const unsigned int max_n_cells = std::numeric_limits<unsigned int>::max());
@@ -222,8 +222,8 @@ namespace GridRefinement
   template <int dim, typename Number, int spacedim>
   void
   refine_and_coarsen_fixed_fraction(
-    Triangulation<dim, spacedim> &tria,
-    const Vector<Number> &        criteria,
+    Triangulation<dim, spacedim>& tria,
+    const Vector<Number>&         criteria,
     const double                  top_fraction,
     const double                  bottom_fraction,
     const unsigned int max_n_cells = std::numeric_limits<unsigned int>::max());
@@ -305,8 +305,8 @@ namespace GridRefinement
    */
   template <int dim, typename Number, int spacedim>
   void
-  refine_and_coarsen_optimize(Triangulation<dim, spacedim> &tria,
-                              const Vector<Number> &        criteria,
+  refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
+                              const Vector<Number>&         criteria,
                               const unsigned int            order = 2);
 
   /**
@@ -325,8 +325,8 @@ namespace GridRefinement
    */
   template <int dim, typename Number, int spacedim>
   void
-  refine(Triangulation<dim, spacedim> &tria,
-         const Vector<Number> &        criteria,
+  refine(Triangulation<dim, spacedim>& tria,
+         const Vector<Number>&         criteria,
          const double                  threshold,
          const unsigned int max_to_mark = numbers::invalid_unsigned_int);
 
@@ -346,8 +346,8 @@ namespace GridRefinement
    */
   template <int dim, typename Number, int spacedim>
   void
-  coarsen(Triangulation<dim, spacedim> &tria,
-          const Vector<Number> &        criteria,
+  coarsen(Triangulation<dim, spacedim>& tria,
+          const Vector<Number>&         criteria,
           const double                  threshold);
 
   /**

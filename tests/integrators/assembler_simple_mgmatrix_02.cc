@@ -41,7 +41,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test(FiniteElement<dim> &fe)
+test(FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 

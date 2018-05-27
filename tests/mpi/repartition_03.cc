@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-print_cells(parallel::distributed::Triangulation<dim> &tr)
+print_cells(parallel::distributed::Triangulation<dim>& tr)
 {
   for (typename Triangulation<dim>::active_cell_iterator cell =
          tr.begin_active();
@@ -94,7 +94,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

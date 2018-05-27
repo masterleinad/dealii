@@ -67,12 +67,12 @@ namespace ChunkSparsityPatternIterators
     /**
      * Constructor.
      */
-    Accessor(const ChunkSparsityPattern *matrix, const unsigned int row);
+    Accessor(const ChunkSparsityPattern* matrix, const unsigned int row);
 
     /**
      * Constructor. Construct the end accessor for the given sparsity pattern.
      */
-    Accessor(const ChunkSparsityPattern *matrix);
+    Accessor(const ChunkSparsityPattern* matrix);
 
     /**
      * Row number of the element represented by this object. This function can
@@ -111,7 +111,7 @@ namespace ChunkSparsityPatternIterators
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const Accessor &) const;
+    operator==(const Accessor&) const;
 
 
     /**
@@ -122,13 +122,13 @@ namespace ChunkSparsityPatternIterators
      * sparsity pattern.
      */
     bool
-    operator<(const Accessor &) const;
+    operator<(const Accessor&) const;
 
   protected:
     /**
      * The sparsity pattern we operate on accessed.
      */
-    const ChunkSparsityPattern *sparsity_pattern;
+    const ChunkSparsityPattern* sparsity_pattern;
 
     /**
      * The accessor of the (reduced) sparsity pattern.
@@ -169,12 +169,12 @@ namespace ChunkSparsityPatternIterators
      * Constructor. Create an iterator into the sparsity pattern @p sp for the
      * given row and the index within it.
      */
-    Iterator(const ChunkSparsityPattern *sp, const unsigned int row);
+    Iterator(const ChunkSparsityPattern* sp, const unsigned int row);
 
     /**
      * Prefix increment.
      */
-    Iterator &
+    Iterator&
     operator++();
 
     /**
@@ -186,24 +186,24 @@ namespace ChunkSparsityPatternIterators
     /**
      * Dereferencing operator.
      */
-    const Accessor &operator*() const;
+    const Accessor& operator*() const;
 
     /**
      * Dereferencing operator.
      */
-    const Accessor *operator->() const;
+    const Accessor* operator->() const;
 
     /**
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const Iterator &) const;
+    operator==(const Iterator&) const;
 
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const Iterator &) const;
+    operator!=(const Iterator&) const;
 
     /**
      * Comparison operator. Result is true if either the first row number is
@@ -213,7 +213,7 @@ namespace ChunkSparsityPatternIterators
      * matrix.
      */
     bool
-    operator<(const Iterator &) const;
+    operator<(const Iterator&) const;
 
   private:
     /**
@@ -295,7 +295,7 @@ public:
    * matrices can use the same sparsity structure, copies are only allowed for
    * empty objects, as described above.
    */
-  ChunkSparsityPattern(const ChunkSparsityPattern &);
+  ChunkSparsityPattern(const ChunkSparsityPattern&);
 
   /**
    * Initialize a rectangular matrix.
@@ -317,7 +317,7 @@ public:
    */
   ChunkSparsityPattern(const size_type               m,
                        const size_type               n,
-                       const std::vector<size_type> &row_lengths,
+                       const std::vector<size_type>& row_lengths,
                        const size_type               chunk_size);
 
   /**
@@ -340,7 +340,7 @@ public:
    * row.
    */
   ChunkSparsityPattern(const size_type               m,
-                       const std::vector<size_type> &row_lengths,
+                       const std::vector<size_type>& row_lengths,
                        const size_type               chunk_size);
 
   /**
@@ -353,8 +353,8 @@ public:
    * declared, defined and fine to be called, but the latter only for empty
    * objects.
    */
-  ChunkSparsityPattern &
-  operator=(const ChunkSparsityPattern &);
+  ChunkSparsityPattern&
+  operator=(const ChunkSparsityPattern&);
 
   /**
    * Reallocate memory and set up data structures for a new matrix with <tt>m
@@ -387,7 +387,7 @@ public:
   void
   reinit(const size_type               m,
          const size_type               n,
-         const std::vector<size_type> &row_lengths,
+         const std::vector<size_type>& row_lengths,
          const size_type               chunk_size);
 
   /**
@@ -396,7 +396,7 @@ public:
   void
   reinit(const size_type                                  m,
          const size_type                                  n,
-         const VectorSlice<const std::vector<size_type>> &row_lengths,
+         const VectorSlice<const std::vector<size_type>>& row_lengths,
          const size_type                                  chunk_size);
 
   /**
@@ -505,7 +505,7 @@ public:
    */
   template <typename SparsityPatternType>
   void
-  copy_from(const SparsityPatternType &dsp, const size_type chunk_size);
+  copy_from(const SparsityPatternType& dsp, const size_type chunk_size);
 
   /**
    * Take a full matrix and use its nonzero entries to generate a sparse
@@ -516,7 +516,7 @@ public:
    */
   template <typename number>
   void
-  copy_from(const FullMatrix<number> &matrix, const size_type chunk_size);
+  copy_from(const FullMatrix<number>& matrix, const size_type chunk_size);
 
   /**
    * Set the sparsity pattern of the chunk sparsity pattern to be given by
@@ -539,7 +539,7 @@ public:
   void
   create_from(const unsigned int m,
               const unsigned int n,
-              const Sparsity &   sparsity_pattern_for_chunks,
+              const Sparsity&    sparsity_pattern_for_chunks,
               const unsigned int chunk_size,
               const bool         optimize_diagonal = true);
 
@@ -697,7 +697,7 @@ public:
    * runs of the program.
    */
   void
-  block_write(std::ostream &out) const;
+  block_write(std::ostream& out) const;
 
   /**
    * Read data that has previously been written by block_write() from a file.
@@ -713,7 +713,7 @@ public:
    * file, but not more.
    */
   void
-  block_read(std::istream &in);
+  block_read(std::istream& in);
 
   /**
    * Print the sparsity of the matrix. The output consists of one line per row
@@ -721,7 +721,7 @@ public:
    * <i>jn</i> are the allocated columns in this row.
    */
   void
-  print(std::ostream &out) const;
+  print(std::ostream& out) const;
 
   /**
    * Print the sparsity of the matrix in a format that <tt>gnuplot</tt>
@@ -737,7 +737,7 @@ public:
    * or points and use the <tt>plot</tt> command.
    */
   void
-  print_gnuplot(std::ostream &out) const;
+  print_gnuplot(std::ostream& out) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -864,7 +864,7 @@ private:
 
 namespace ChunkSparsityPatternIterators
 {
-  inline Accessor::Accessor(const ChunkSparsityPattern *sparsity_pattern,
+  inline Accessor::Accessor(const ChunkSparsityPattern* sparsity_pattern,
                             const unsigned int          row) :
     sparsity_pattern(sparsity_pattern),
     reduced_accessor(row == sparsity_pattern->n_rows() ?
@@ -879,7 +879,7 @@ namespace ChunkSparsityPatternIterators
 
 
 
-  inline Accessor::Accessor(const ChunkSparsityPattern *sparsity_pattern) :
+  inline Accessor::Accessor(const ChunkSparsityPattern* sparsity_pattern) :
     sparsity_pattern(sparsity_pattern),
     reduced_accessor(*sparsity_pattern->sparsity_pattern.end()),
     chunk_row(0),
@@ -935,7 +935,7 @@ namespace ChunkSparsityPatternIterators
 
 
   inline bool
-  Accessor::operator==(const Accessor &other) const
+  Accessor::operator==(const Accessor& other) const
   {
     // no need to check for equality of sparsity patterns as this is done in
     // the reduced case already and every ChunkSparsityPattern has its own
@@ -947,7 +947,7 @@ namespace ChunkSparsityPatternIterators
 
 
   inline bool
-  Accessor::operator<(const Accessor &other) const
+  Accessor::operator<(const Accessor& other) const
   {
     Assert(sparsity_pattern == other.sparsity_pattern, ExcInternalError());
 
@@ -1039,14 +1039,14 @@ namespace ChunkSparsityPatternIterators
 
 
 
-  inline Iterator::Iterator(const ChunkSparsityPattern *sparsity_pattern,
+  inline Iterator::Iterator(const ChunkSparsityPattern* sparsity_pattern,
                             const unsigned int          row) :
     accessor(sparsity_pattern, row)
   {}
 
 
 
-  inline Iterator &
+  inline Iterator&
   Iterator::operator++()
   {
     accessor.advance();
@@ -1065,21 +1065,21 @@ namespace ChunkSparsityPatternIterators
 
 
 
-  inline const Accessor &Iterator::operator*() const
+  inline const Accessor& Iterator::operator*() const
   {
     return accessor;
   }
 
 
 
-  inline const Accessor *Iterator::operator->() const
+  inline const Accessor* Iterator::operator->() const
   {
     return &accessor;
   }
 
 
   inline bool
-  Iterator::operator==(const Iterator &other) const
+  Iterator::operator==(const Iterator& other) const
   {
     return (accessor == other.accessor);
   }
@@ -1087,14 +1087,14 @@ namespace ChunkSparsityPatternIterators
 
 
   inline bool
-  Iterator::operator!=(const Iterator &other) const
+  Iterator::operator!=(const Iterator& other) const
   {
     return !(accessor == other.accessor);
   }
 
 
   inline bool
-  Iterator::operator<(const Iterator &other) const
+  Iterator::operator<(const Iterator& other) const
   {
     return accessor < other.accessor;
   }

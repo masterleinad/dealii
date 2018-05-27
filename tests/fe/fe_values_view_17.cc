@@ -41,7 +41,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
+test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 {
   deallog << "FE=" << fe.get_name() << std::endl;
 

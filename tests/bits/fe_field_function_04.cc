@@ -40,7 +40,7 @@ class F : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     return p.square();
   }

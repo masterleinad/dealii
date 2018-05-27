@@ -62,7 +62,7 @@ tilt_coordinates(const Point<2> p)
 }
 
 
-void transform_grid(Triangulation<2> &tria, const unsigned int transform)
+void transform_grid(Triangulation<2>& tria, const unsigned int transform)
 {
   switch (transform)
     {

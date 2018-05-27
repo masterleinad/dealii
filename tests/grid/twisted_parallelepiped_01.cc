@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-check_parallelepiped(std::ostream &logfile)
+check_parallelepiped(std::ostream& logfile)
 {
   // Data structure defining dim coordinates that make up a
   // parallelepiped.
@@ -71,7 +71,7 @@ check_parallelepiped(std::ostream &logfile)
       GridGenerator::subdivided_parallelepiped<dim>(
         triangulation, origin, edges, subdivisions, false);
     }
-  catch (ExceptionBase &exc)
+  catch (ExceptionBase& exc)
     {
       logfile << exc.get_exc_name() << std::endl;
     }
@@ -82,7 +82,7 @@ main()
 {
   deal_II_exceptions::disable_abort_on_exception();
   initlog();
-  std::ostream &logfile = deallog.get_file_stream();
+  std::ostream& logfile = deallog.get_file_stream();
 
   check_parallelepiped<1>(logfile);
   check_parallelepiped<2>(logfile);

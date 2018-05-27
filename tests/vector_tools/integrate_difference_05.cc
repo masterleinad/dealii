@@ -55,7 +55,7 @@ public:
   {}
 
   void
-  vector_value(const Point<dim> &p, Vector<double> &values) const
+  vector_value(const Point<dim>& p, Vector<double>& values) const
   {
     switch (dim)
       {
@@ -155,7 +155,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
   test<2>();

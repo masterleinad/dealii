@@ -60,10 +60,10 @@ public:
   BubbleFunction(unsigned int degree, unsigned int direction);
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const;
+  gradient(const Point<dim>& p, const unsigned int component = 0) const;
 
 private:
   unsigned int m_degree;
@@ -80,7 +80,7 @@ BubbleFunction<dim>::BubbleFunction(unsigned int degree,
 
 template <int dim>
 double
-BubbleFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+BubbleFunction<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   double return_value = 1.;
   for (unsigned int i = 0; i < dim; ++i)
@@ -92,7 +92,7 @@ BubbleFunction<dim>::value(const Point<dim> &p, const unsigned int) const
 
 template <int dim>
 Tensor<1, dim>
-BubbleFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+BubbleFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> grad;
 
@@ -125,7 +125,7 @@ template <int dim>
 class Step3
 {
 public:
-  Step3(FiniteElement<dim> *fe, const unsigned int degree);
+  Step3(FiniteElement<dim>* fe, const unsigned int degree);
 
   void
   run();
@@ -144,7 +144,7 @@ private:
   output_results(unsigned int i) const;
 
   Triangulation<dim>  triangulation;
-  FiniteElement<dim> *fe;
+  FiniteElement<dim>* fe;
   DoFHandler<dim>     dof_handler;
 
   SparsityPattern      sparsity_pattern;
@@ -157,7 +157,7 @@ private:
 };
 
 template <int dim>
-Step3<dim>::Step3(FiniteElement<dim> *fe, const unsigned int degree) :
+Step3<dim>::Step3(FiniteElement<dim>* fe, const unsigned int degree) :
   fe(fe),
   dof_handler(triangulation),
   m_degree(degree + 1)
@@ -344,7 +344,7 @@ main()
       //     }
 
       {
-        FiniteElement<2> *fe = new FE_Q_Bubbles<2>(degree);
+        FiniteElement<2>* fe = new FE_Q_Bubbles<2>(degree);
         {
           Step3<2> laplace_problem(fe, degree);
           laplace_problem.run();
@@ -362,7 +362,7 @@ main()
       //     }
 
       {
-        FiniteElement<3> *fe = new FE_Q_Bubbles<3>(degree);
+        FiniteElement<3>* fe = new FE_Q_Bubbles<3>(degree);
         {
           Step3<3> laplace_problem(fe, degree);
           laplace_problem.run();

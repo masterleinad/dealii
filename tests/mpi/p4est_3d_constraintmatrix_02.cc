@@ -106,7 +106,7 @@ test()
     if (myid == 0)
       deallog << out.str() << std::endl;
     else
-      MPI_Send((void *)out.str().c_str(),
+      MPI_Send((void*)out.str().c_str(),
                out.str().size() + 1,
                MPI_CHAR,
                0,
@@ -137,7 +137,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

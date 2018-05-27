@@ -50,7 +50,7 @@ public:
   MyFunction() : Function<dim>(){};
 
   virtual double
-  value(const Point<dim> &p, const unsigned int) const
+  value(const Point<dim>& p, const unsigned int) const
   {
     double f = sin(p[0] * 4);
     if (dim > 1)
@@ -64,7 +64,7 @@ public:
 
 template <int dim>
 void
-transfer(std::ostream &out)
+transfer(std::ostream& out)
 {
   MyFunction<dim>    function;
   Triangulation<dim> tria;

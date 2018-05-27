@@ -43,7 +43,7 @@ namespace
 {
   template <typename number>
   inline number
-  max_element(const dealii::Vector<number> &criteria)
+  max_element(const dealii::Vector<number>& criteria)
   {
     return (criteria.size() > 0) ?
              (*std::max_element(criteria.begin(), criteria.end())) :
@@ -54,7 +54,7 @@ namespace
 
   template <typename number>
   inline number
-  min_element(const dealii::Vector<number> &criteria)
+  min_element(const dealii::Vector<number>& criteria)
   {
     return (criteria.size() > 0) ?
              (*std::min_element(criteria.begin(), criteria.end())) :
@@ -68,7 +68,7 @@ namespace
    */
   template <typename number>
   std::pair<number, number>
-  compute_global_min_and_max_at_root(const dealii::Vector<number> &criteria,
+  compute_global_min_and_max_at_root(const dealii::Vector<number>& criteria,
                                      MPI_Comm mpi_communicator)
   {
     // we'd like to compute the global max and min from the local ones in one
@@ -101,7 +101,7 @@ namespace
    */
   template <typename number>
   double
-  compute_global_sum(const dealii::Vector<number> &criteria,
+  compute_global_sum(const dealii::Vector<number>& criteria,
                      MPI_Comm                      mpi_communicator)
   {
     double my_sum =
@@ -132,9 +132,9 @@ namespace
   template <int dim, int spacedim, typename Number>
   void
   get_locally_owned_indicators(
-    const parallel::distributed::Triangulation<dim, spacedim> &tria,
-    const dealii::Vector<Number> &                             criteria,
-    Vector<Number> &locally_owned_indicators)
+    const parallel::distributed::Triangulation<dim, spacedim>& tria,
+    const dealii::Vector<Number>&                              criteria,
+    Vector<Number>& locally_owned_indicators)
   {
     Assert(locally_owned_indicators.size() ==
              tria.n_locally_owned_active_cells(),
@@ -191,8 +191,8 @@ namespace
    */
   template <int dim, int spacedim, typename Number>
   void
-  mark_cells(parallel::distributed::Triangulation<dim, spacedim> &tria,
-             const dealii::Vector<Number> &                       criteria,
+  mark_cells(parallel::distributed::Triangulation<dim, spacedim>& tria,
+             const dealii::Vector<Number>&                        criteria,
              const double                                         top_threshold,
              const double bottom_threshold)
   {
@@ -222,8 +222,8 @@ namespace
      */
     template <typename number>
     number
-    compute_threshold(const dealii::Vector<number> &   criteria,
-                      const std::pair<double, double> &global_min_and_max,
+    compute_threshold(const dealii::Vector<number>&    criteria,
+                      const std::pair<double, double>& global_min_and_max,
                       const unsigned int               n_target_cells,
                       MPI_Comm                         mpi_communicator)
     {
@@ -313,8 +313,8 @@ namespace
      */
     template <typename number>
     number
-    compute_threshold(const dealii::Vector<number> &   criteria,
-                      const std::pair<double, double> &global_min_and_max,
+    compute_threshold(const dealii::Vector<number>&    criteria,
+                      const std::pair<double, double>& global_min_and_max,
                       const double                     target_error,
                       MPI_Comm                         mpi_communicator)
     {
@@ -423,8 +423,8 @@ namespace parallel
       template <int dim, typename Number, int spacedim>
       void
       refine_and_coarsen_fixed_number(
-        parallel::distributed::Triangulation<dim, spacedim> &tria,
-        const dealii::Vector<Number> &                       criteria,
+        parallel::distributed::Triangulation<dim, spacedim>& tria,
+        const dealii::Vector<Number>&                        criteria,
         const double       top_fraction_of_cells,
         const double       bottom_fraction_of_cells,
         const unsigned int max_n_cells)
@@ -495,8 +495,8 @@ namespace parallel
       template <int dim, typename Number, int spacedim>
       void
       refine_and_coarsen_fixed_fraction(
-        parallel::distributed::Triangulation<dim, spacedim> &tria,
-        const dealii::Vector<Number> &                       criteria,
+        parallel::distributed::Triangulation<dim, spacedim>& tria,
+        const dealii::Vector<Number>&                        criteria,
         const double top_fraction_of_error,
         const double bottom_fraction_of_error)
       {

@@ -67,7 +67,7 @@ main()
       prm.parse_input(SOURCE_DIR "/prm/parameter_handler_3.prm");
       prm.print_parameters(logfile, ParameterHandler::LaTeX);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

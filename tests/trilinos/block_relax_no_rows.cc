@@ -42,7 +42,7 @@ test()
     dst(rows, MPI_COMM_WORLD);
 
   TrilinosWrappers::SparseMatrix mat(rows, rows, MPI_COMM_WORLD);
-  for (const auto &row : rows)
+  for (const auto& row : rows)
     {
       const unsigned int i = row;
       mat.set(i, i, 100.);
@@ -69,7 +69,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

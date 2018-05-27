@@ -64,7 +64,7 @@ namespace parallel
   template <int dim, int spacedim>
   void
   Triangulation<dim, spacedim>::copy_triangulation(
-    const dealii::Triangulation<dim, spacedim> &other_tria)
+    const dealii::Triangulation<dim, spacedim>& other_tria)
   {
 #ifndef DEAL_II_WITH_MPI
     (void)other_tria;
@@ -74,8 +74,8 @@ namespace parallel
 #else
     dealii::Triangulation<dim, spacedim>::copy_triangulation(other_tria);
 
-    if (const dealii::parallel::Triangulation<dim, spacedim> *other_tria_x =
-          dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim> *>(
+    if (const dealii::parallel::Triangulation<dim, spacedim>* other_tria_x =
+          dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim>*>(
             &other_tria))
       {
         mpi_communicator = other_tria_x->get_communicator();
@@ -143,7 +143,7 @@ namespace parallel
   }
 
   template <int dim, int spacedim>
-  const std::vector<unsigned int> &
+  const std::vector<unsigned int>&
   Triangulation<dim, spacedim>::n_locally_owned_active_cells_per_processor()
     const
   {
@@ -340,7 +340,7 @@ namespace parallel
 
 
   template <int dim, int spacedim>
-  const std::set<types::subdomain_id> &
+  const std::set<types::subdomain_id>&
   Triangulation<dim, spacedim>::ghost_owners() const
   {
     return number_cache.ghost_owners;
@@ -349,7 +349,7 @@ namespace parallel
 
 
   template <int dim, int spacedim>
-  const std::set<types::subdomain_id> &
+  const std::set<types::subdomain_id>&
   Triangulation<dim, spacedim>::level_ghost_owners() const
   {
     return number_cache.level_ghost_owners;

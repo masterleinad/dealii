@@ -44,7 +44,7 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <typename Number>
-Vector<Number>::Vector(const Vector<Number> &v) :
+Vector<Number>::Vector(const Vector<Number>& v) :
   Subscriptor(),
   vec_size(v.size()),
   max_vec_size(v.size()),
@@ -60,7 +60,7 @@ Vector<Number>::Vector(const Vector<Number> &v) :
 
 
 template <typename Number>
-Vector<Number>::Vector(Vector<Number> &&v) noexcept :
+Vector<Number>::Vector(Vector<Number>&& v) noexcept :
   Subscriptor(std::move(v)),
   vec_size(v.vec_size),
   max_vec_size(v.max_vec_size),
@@ -76,7 +76,7 @@ Vector<Number>::Vector(Vector<Number> &&v) noexcept :
 
 template <typename Number>
 template <typename OtherNumber>
-Vector<Number>::Vector(const Vector<OtherNumber> &v) :
+Vector<Number>::Vector(const Vector<OtherNumber>& v) :
   Subscriptor(),
   vec_size(v.size()),
   max_vec_size(v.size()),
@@ -96,8 +96,8 @@ namespace internal
 {
   template <typename Number>
   void
-  copy_petsc_vector(const PETScWrappers::VectorBase &v,
-                    ::dealii::Vector<Number> &       out)
+  copy_petsc_vector(const PETScWrappers::VectorBase& v,
+                    ::dealii::Vector<Number>&        out)
   {
     // Create a sequential PETSc vector and then copy over the entries into
     // the deal.II vector.
@@ -115,7 +115,7 @@ namespace internal
       scatter_context, v, sequential_vector, INSERT_VALUES, SCATTER_FORWARD);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    PetscScalar *start_ptr;
+    PetscScalar* start_ptr;
     ierr = VecGetArray(sequential_vector, &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -138,7 +138,7 @@ namespace internal
 
 
 template <typename Number>
-Vector<Number>::Vector(const PETScWrappers::VectorBase &v) :
+Vector<Number>::Vector(const PETScWrappers::VectorBase& v) :
   Subscriptor(),
   vec_size(0),
   max_vec_size(0),
@@ -155,7 +155,7 @@ Vector<Number>::Vector(const PETScWrappers::VectorBase &v) :
 #ifdef DEAL_II_WITH_TRILINOS
 
 template <typename Number>
-Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector &v) :
+Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector& v) :
   Subscriptor(),
   vec_size(v.size()),
   max_vec_size(v.size()),
@@ -182,7 +182,7 @@ Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector &v) :
 
       // get a representation of the vector
       // and copy it
-      TrilinosScalar **start_ptr;
+      TrilinosScalar** start_ptr;
 
       int ierr = localized_vector.trilinos_vector().ExtractView(&start_ptr);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -195,8 +195,8 @@ Vector<Number>::Vector(const TrilinosWrappers::MPI::Vector &v) :
 
 
 template <typename Number>
-inline Vector<Number> &
-Vector<Number>::operator=(const Vector<Number> &v)
+inline Vector<Number>&
+Vector<Number>::operator=(const Vector<Number>& v)
 {
   if (PointerComparison::equal(this, &v))
     return *this;
@@ -219,8 +219,8 @@ Vector<Number>::operator=(const Vector<Number> &v)
 
 
 template <typename Number>
-inline Vector<Number> &
-Vector<Number>::operator=(Vector<Number> &&v) noexcept
+inline Vector<Number>&
+Vector<Number>::operator=(Vector<Number>&& v) noexcept
 {
   Subscriptor::operator=(std::move(v));
 
@@ -239,8 +239,8 @@ Vector<Number>::operator=(Vector<Number> &&v) noexcept
 
 template <typename Number>
 template <typename Number2>
-inline Vector<Number> &
-Vector<Number>::operator=(const Vector<Number2> &v)
+inline Vector<Number>&
+Vector<Number>::operator=(const Vector<Number2>& v)
 {
   thread_loop_partitioner = v.thread_loop_partitioner;
   if (vec_size != v.vec_size)
@@ -335,7 +335,7 @@ Vector<Number>::grow_or_shrink(const size_type n)
 template <typename Number>
 template <typename Number2>
 void
-Vector<Number>::reinit(const Vector<Number2> &v,
+Vector<Number>::reinit(const Vector<Number2>& v,
                        const bool             omit_zeroing_entries)
 {
   thread_loop_partitioner = v.thread_loop_partitioner;
@@ -389,7 +389,7 @@ Vector<Number>::is_non_negative() const
 
 
 template <typename Number>
-Vector<Number> &
+Vector<Number>&
 Vector<Number>::operator=(const Number s)
 {
   AssertIsFinite(s);
@@ -409,7 +409,7 @@ Vector<Number>::operator=(const Number s)
 
 
 template <typename Number>
-Vector<Number> &
+Vector<Number>&
 Vector<Number>::operator*=(const Number factor)
 {
   AssertIsFinite(factor);
@@ -429,7 +429,7 @@ Vector<Number>::operator*=(const Number factor)
 
 template <typename Number>
 void
-Vector<Number>::add(const Number a, const Vector<Number> &v)
+Vector<Number>::add(const Number a, const Vector<Number>& v)
 {
   AssertIsFinite(a);
 
@@ -446,7 +446,7 @@ Vector<Number>::add(const Number a, const Vector<Number> &v)
 
 template <typename Number>
 void
-Vector<Number>::sadd(const Number x, const Number a, const Vector<Number> &v)
+Vector<Number>::sadd(const Number x, const Number a, const Vector<Number>& v)
 {
   AssertIsFinite(x);
   AssertIsFinite(a);
@@ -464,7 +464,7 @@ Vector<Number>::sadd(const Number x, const Number a, const Vector<Number> &v)
 
 template <typename Number>
 template <typename Number2>
-Number Vector<Number>::operator*(const Vector<Number2> &v) const
+Number Vector<Number>::operator*(const Vector<Number2>& v) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
@@ -641,8 +641,8 @@ Vector<Number>::linfty_norm() const
 template <typename Number>
 Number
 Vector<Number>::add_and_dot(const Number          a,
-                            const Vector<Number> &V,
-                            const Vector<Number> &W)
+                            const Vector<Number>& V,
+                            const Vector<Number>& W)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   AssertDimension(vec_size, V.size());
@@ -661,8 +661,8 @@ Vector<Number>::add_and_dot(const Number          a,
 
 
 template <typename Number>
-Vector<Number> &
-Vector<Number>::operator+=(const Vector<Number> &v)
+Vector<Number>&
+Vector<Number>::operator+=(const Vector<Number>& v)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == v.vec_size, ExcDimensionMismatch(vec_size, v.vec_size));
@@ -677,8 +677,8 @@ Vector<Number>::operator+=(const Vector<Number> &v)
 
 
 template <typename Number>
-Vector<Number> &
-Vector<Number>::operator-=(const Vector<Number> &v)
+Vector<Number>&
+Vector<Number>::operator-=(const Vector<Number>& v)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == v.vec_size, ExcDimensionMismatch(vec_size, v.vec_size));
@@ -710,9 +710,9 @@ Vector<Number>::add(const Number v)
 template <typename Number>
 void
 Vector<Number>::add(const Number          a,
-                    const Vector<Number> &v,
+                    const Vector<Number>& v,
                     const Number          b,
-                    const Vector<Number> &w)
+                    const Vector<Number>& w)
 {
   AssertIsFinite(a);
   AssertIsFinite(b);
@@ -731,7 +731,7 @@ Vector<Number>::add(const Number          a,
 
 template <typename Number>
 void
-Vector<Number>::sadd(const Number x, const Vector<Number> &v)
+Vector<Number>::sadd(const Number x, const Vector<Number>& v)
 {
   AssertIsFinite(x);
 
@@ -748,7 +748,7 @@ Vector<Number>::sadd(const Number x, const Vector<Number> &v)
 
 template <typename Number>
 void
-Vector<Number>::scale(const Vector<Number> &s)
+Vector<Number>::scale(const Vector<Number>& s)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == s.vec_size, ExcDimensionMismatch(vec_size, s.vec_size));
@@ -764,7 +764,7 @@ Vector<Number>::scale(const Vector<Number> &s)
 template <typename Number>
 template <typename Number2>
 void
-Vector<Number>::scale(const Vector<Number2> &s)
+Vector<Number>::scale(const Vector<Number2>& s)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == s.vec_size, ExcDimensionMismatch(vec_size, s.vec_size));
@@ -777,7 +777,7 @@ Vector<Number>::scale(const Vector<Number2> &s)
 
 template <typename Number>
 void
-Vector<Number>::equ(const Number a, const Vector<Number> &u)
+Vector<Number>::equ(const Number a, const Vector<Number>& u)
 {
   AssertIsFinite(a);
 
@@ -795,7 +795,7 @@ Vector<Number>::equ(const Number a, const Vector<Number> &u)
 template <typename Number>
 template <typename Number2>
 void
-Vector<Number>::equ(const Number a, const Vector<Number2> &u)
+Vector<Number>::equ(const Number a, const Vector<Number2>& u)
 {
   AssertIsFinite(a);
 
@@ -816,7 +816,7 @@ Vector<Number>::equ(const Number a, const Vector<Number2> &u)
 
 template <typename Number>
 void
-Vector<Number>::ratio(const Vector<Number> &a, const Vector<Number> &b)
+Vector<Number>::ratio(const Vector<Number>& a, const Vector<Number>& b)
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(a.vec_size == b.vec_size,
@@ -835,8 +835,8 @@ Vector<Number>::ratio(const Vector<Number> &a, const Vector<Number> &b)
 
 
 template <typename Number>
-Vector<Number> &
-Vector<Number>::operator=(const BlockVector<Number> &v)
+Vector<Number>&
+Vector<Number>::operator=(const BlockVector<Number>& v)
 {
   if (v.size() != vec_size)
     reinit(v.size(), true);
@@ -853,8 +853,8 @@ Vector<Number>::operator=(const BlockVector<Number> &v)
 
 #ifdef DEAL_II_WITH_PETSC
 template <typename Number>
-Vector<Number> &
-Vector<Number>::operator=(const PETScWrappers::VectorBase &v)
+Vector<Number>&
+Vector<Number>::operator=(const PETScWrappers::VectorBase& v)
 {
   internal::copy_petsc_vector(v, *this);
   return *this;
@@ -865,8 +865,8 @@ Vector<Number>::operator=(const PETScWrappers::VectorBase &v)
 #ifdef DEAL_II_WITH_TRILINOS
 
 template <typename Number>
-Vector<Number> &
-Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector &v)
+Vector<Number>&
+Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector& v)
 {
   if (v.size() != vec_size)
     reinit(v.size(), true);
@@ -889,7 +889,7 @@ Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector &v)
 
       // get a representation of the vector
       // and copy it
-      TrilinosScalar **start_ptr;
+      TrilinosScalar** start_ptr;
 
       int ierr = localized_vector.trilinos_vector().ExtractView(&start_ptr);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -905,7 +905,7 @@ Vector<Number>::operator=(const TrilinosWrappers::MPI::Vector &v)
 template <typename Number>
 template <typename Number2>
 bool
-Vector<Number>::operator==(const Vector<Number2> &v) const
+Vector<Number>::operator==(const Vector<Number2>& v) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
   Assert(vec_size == v.size(), ExcDimensionMismatch(vec_size, v.size()));
@@ -927,7 +927,7 @@ Vector<Number>::operator==(const Vector<Number2> &v) const
 
 template <typename Number>
 void
-Vector<Number>::print(const char *format) const
+Vector<Number>::print(const char* format) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
@@ -940,7 +940,7 @@ Vector<Number>::print(const char *format) const
 
 template <typename Number>
 void
-Vector<Number>::print(std::ostream &     out,
+Vector<Number>::print(std::ostream&      out,
                       const unsigned int precision,
                       const bool         scientific,
                       const bool         across) const
@@ -975,7 +975,7 @@ Vector<Number>::print(std::ostream &     out,
 
 template <typename Number>
 void
-Vector<Number>::print(LogStream &        out,
+Vector<Number>::print(LogStream&         out,
                       const unsigned int width,
                       const bool         across) const
 {
@@ -993,7 +993,7 @@ Vector<Number>::print(LogStream &        out,
 
 template <typename Number>
 void
-Vector<Number>::block_write(std::ostream &out) const
+Vector<Number>::block_write(std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -1014,9 +1014,9 @@ Vector<Number>::block_write(std::ostream &out) const
   std::strcat(buf, "\n[");
 
   out.write(buf, std::strlen(buf));
-  out.write(reinterpret_cast<const char *>(begin()),
-            reinterpret_cast<const char *>(end()) -
-              reinterpret_cast<const char *>(begin()));
+  out.write(reinterpret_cast<const char*>(begin()),
+            reinterpret_cast<const char*>(end()) -
+              reinterpret_cast<const char*>(begin()));
 
   // out << ']';
   const char outro = ']';
@@ -1029,7 +1029,7 @@ Vector<Number>::block_write(std::ostream &out) const
 
 template <typename Number>
 void
-Vector<Number>::block_read(std::istream &in)
+Vector<Number>::block_read(std::istream& in)
 {
   AssertThrow(in, ExcIO());
 
@@ -1050,9 +1050,9 @@ Vector<Number>::block_read(std::istream &in)
   in.read(&c, 1);
   AssertThrow(c == '[', ExcIO());
 
-  in.read(reinterpret_cast<char *>(begin()),
-          reinterpret_cast<const char *>(end()) -
-            reinterpret_cast<const char *>(begin()));
+  in.read(reinterpret_cast<char*>(begin()),
+          reinterpret_cast<const char*>(end()) -
+            reinterpret_cast<const char*>(begin()));
 
   //  in >> c;
   in.read(&c, 1);
@@ -1084,9 +1084,9 @@ void
 Vector<Number>::allocate(const size_type copy_n_el)
 {
   // allocate memory with the proper alignment requirements of 64 bytes
-  Number *new_values;
+  Number* new_values;
   Utilities::System::posix_memalign(
-    (void **)&new_values, 64, sizeof(Number) * max_vec_size);
+    (void**)&new_values, 64, sizeof(Number) * max_vec_size);
   // copy:
   for (size_type i = 0; i < copy_n_el; ++i)
     new_values[i] = values[i];

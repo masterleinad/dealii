@@ -50,7 +50,7 @@ public:
   F(){};
 
   virtual double
-  value(const Point<dim> &p, const unsigned int = 0) const
+  value(const Point<dim>& p, const unsigned int = 0) const
   {
     double s = 1;
     for (unsigned int i = 0; i < dim; ++i)

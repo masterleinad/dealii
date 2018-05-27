@@ -41,7 +41,7 @@
 
 
 bool
-operator==(const BlockSparsityPattern &sp1, const BlockSparsityPattern &sp2)
+operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
 {
   if (sp1.n_block_rows() != sp2.n_block_rows())
     return false;

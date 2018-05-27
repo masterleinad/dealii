@@ -32,7 +32,7 @@ const unsigned int PersistentTriangulation<dim, spacedim>::spacedimension;
 
 template <int dim, int spacedim>
 PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
-  const Triangulation<dim, spacedim> &coarse_grid) :
+  const Triangulation<dim, spacedim>& coarse_grid) :
   coarse_grid(&coarse_grid, typeid(*this).name())
 {}
 
@@ -40,7 +40,7 @@ PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
 
 template <int dim, int spacedim>
 PersistentTriangulation<dim, spacedim>::PersistentTriangulation(
-  const PersistentTriangulation<dim, spacedim> &old_tria) :
+  const PersistentTriangulation<dim, spacedim>& old_tria) :
   // default initialize
   // tria, i.e. it will be
   // empty on first use
@@ -123,7 +123,7 @@ PersistentTriangulation<dim, spacedim>::n_refinement_steps() const
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::copy_triangulation(
-  const Triangulation<dim, spacedim> &old_grid)
+  const Triangulation<dim, spacedim>& old_grid)
 {
   this->clear();
   coarse_grid = &old_grid;
@@ -136,9 +136,9 @@ PersistentTriangulation<dim, spacedim>::copy_triangulation(
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::create_triangulation(
-  const std::vector<Point<spacedim>> &,
-  const std::vector<CellData<dim>> &,
-  const SubCellData &)
+  const std::vector<Point<spacedim>>&,
+  const std::vector<CellData<dim>>&,
+  const SubCellData&)
 {
   Assert(false, ExcImpossibleInDim(dim));
 }
@@ -148,9 +148,9 @@ PersistentTriangulation<dim, spacedim>::create_triangulation(
 template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::create_triangulation_compatibility(
-  const std::vector<Point<spacedim>> &,
-  const std::vector<CellData<dim>> &,
-  const SubCellData &)
+  const std::vector<Point<spacedim>>&,
+  const std::vector<CellData<dim>>&,
+  const SubCellData&)
 {
   Assert(false, ExcImpossibleInDim(dim));
 }
@@ -159,7 +159,7 @@ PersistentTriangulation<dim, spacedim>::create_triangulation_compatibility(
 
 template <int dim, int spacedim>
 void
-PersistentTriangulation<dim, spacedim>::write_flags(std::ostream &out) const
+PersistentTriangulation<dim, spacedim>::write_flags(std::ostream& out) const
 {
   const unsigned int n_flag_levels = refine_flags.size();
 
@@ -188,7 +188,7 @@ PersistentTriangulation<dim, spacedim>::write_flags(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-PersistentTriangulation<dim, spacedim>::read_flags(std::istream &in)
+PersistentTriangulation<dim, spacedim>::read_flags(std::istream& in)
 {
   Assert(refine_flags.size() == 0 && coarsen_flags.size() == 0,
          ExcFlagsNotCleared());

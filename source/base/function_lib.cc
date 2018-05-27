@@ -30,7 +30,7 @@ namespace Functions
 {
   template <int dim>
   double
-  SquareFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  SquareFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     return p.square();
   }
@@ -38,8 +38,8 @@ namespace Functions
 
   template <int dim>
   void
-  SquareFunction<dim>::vector_value(const Point<dim> &p,
-                                    Vector<double> &  values) const
+  SquareFunction<dim>::vector_value(const Point<dim>& p,
+                                    Vector<double>&   values) const
   {
     AssertDimension(values.size(), 1);
     values(0) = p.square();
@@ -48,8 +48,8 @@ namespace Functions
 
   template <int dim>
   void
-  SquareFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                                  std::vector<double> &          values,
+  SquareFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                                  std::vector<double>&           values,
                                   const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -57,7 +57,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         values[i]           = p.square();
       }
   }
@@ -65,7 +65,7 @@ namespace Functions
 
   template <int dim>
   double
-  SquareFunction<dim>::laplacian(const Point<dim> &, const unsigned int) const
+  SquareFunction<dim>::laplacian(const Point<dim>&, const unsigned int) const
   {
     return 2 * dim;
   }
@@ -73,8 +73,8 @@ namespace Functions
 
   template <int dim>
   void
-  SquareFunction<dim>::laplacian_list(const std::vector<Point<dim>> &points,
-                                      std::vector<double> &          values,
+  SquareFunction<dim>::laplacian_list(const std::vector<Point<dim>>& points,
+                                      std::vector<double>&           values,
                                       const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -88,7 +88,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  SquareFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  SquareFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     return p * 2.;
   }
@@ -97,8 +97,8 @@ namespace Functions
   template <int dim>
   void
   SquareFunction<dim>::vector_gradient(
-    const Point<dim> &           p,
-    std::vector<Tensor<1, dim>> &values) const
+    const Point<dim>&            p,
+    std::vector<Tensor<1, dim>>& values) const
   {
     AssertDimension(values.size(), 1);
     values[0] = p * 2.;
@@ -108,8 +108,8 @@ namespace Functions
 
   template <int dim>
   void
-  SquareFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                     std::vector<Tensor<1, dim>> &  gradients,
+  SquareFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                     std::vector<Tensor<1, dim>>&   gradients,
                                      const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -125,7 +125,7 @@ namespace Functions
 
   template <int dim>
   double
-  Q1WedgeFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  Q1WedgeFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
     return p(0) * p(1);
@@ -135,8 +135,8 @@ namespace Functions
 
   template <int dim>
   void
-  Q1WedgeFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                                   std::vector<double> &          values,
+  Q1WedgeFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                                   std::vector<double>&           values,
                                    const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
@@ -145,7 +145,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         values[i]           = p(0) * p(1);
       }
   }
@@ -154,8 +154,8 @@ namespace Functions
   template <int dim>
   void
   Q1WedgeFunction<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(dim >= 2, ExcInternalError());
     Assert(values.size() == points.size(),
@@ -164,7 +164,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         values[i](0)        = p(0) * p(1);
       }
   }
@@ -172,7 +172,7 @@ namespace Functions
 
   template <int dim>
   double
-  Q1WedgeFunction<dim>::laplacian(const Point<dim> &, const unsigned int) const
+  Q1WedgeFunction<dim>::laplacian(const Point<dim>&, const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
     return 0.;
@@ -181,8 +181,8 @@ namespace Functions
 
   template <int dim>
   void
-  Q1WedgeFunction<dim>::laplacian_list(const std::vector<Point<dim>> &points,
-                                       std::vector<double> &          values,
+  Q1WedgeFunction<dim>::laplacian_list(const std::vector<Point<dim>>& points,
+                                       std::vector<double>&           values,
                                        const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
@@ -197,7 +197,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  Q1WedgeFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  Q1WedgeFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
     Tensor<1, dim> erg;
@@ -210,8 +210,8 @@ namespace Functions
 
   template <int dim>
   void
-  Q1WedgeFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                      std::vector<Tensor<1, dim>> &  gradients,
+  Q1WedgeFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                      std::vector<Tensor<1, dim>>&   gradients,
                                       const unsigned int) const
   {
     Assert(dim >= 2, ExcInternalError());
@@ -229,8 +229,8 @@ namespace Functions
   template <int dim>
   void
   Q1WedgeFunction<dim>::vector_gradient_list(
-    const std::vector<Point<dim>> &           points,
-    std::vector<std::vector<Tensor<1, dim>>> &gradients) const
+    const std::vector<Point<dim>>&            points,
+    std::vector<std::vector<Tensor<1, dim>>>& gradients) const
   {
     Assert(dim >= 2, ExcInternalError());
     Assert(gradients.size() == points.size(),
@@ -256,7 +256,7 @@ namespace Functions
 
   template <int dim>
   double
-  PillowFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  PillowFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -275,8 +275,8 @@ namespace Functions
 
   template <int dim>
   void
-  PillowFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                                  std::vector<double> &          values,
+  PillowFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                                  std::vector<double>&           values,
                                   const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -284,7 +284,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -308,7 +308,7 @@ namespace Functions
 
   template <int dim>
   double
-  PillowFunction<dim>::laplacian(const Point<dim> &p, const unsigned int) const
+  PillowFunction<dim>::laplacian(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -328,8 +328,8 @@ namespace Functions
 
   template <int dim>
   void
-  PillowFunction<dim>::laplacian_list(const std::vector<Point<dim>> &points,
-                                      std::vector<double> &          values,
+  PillowFunction<dim>::laplacian_list(const std::vector<Point<dim>>& points,
+                                      std::vector<double>&           values,
                                       const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -337,7 +337,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -359,7 +359,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  PillowFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  PillowFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     Tensor<1, dim> result;
     switch (dim)
@@ -384,8 +384,8 @@ namespace Functions
 
   template <int dim>
   void
-  PillowFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                     std::vector<Tensor<1, dim>> &  gradients,
+  PillowFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                     std::vector<Tensor<1, dim>>&   gradients,
                                      const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -393,7 +393,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -428,7 +428,7 @@ namespace Functions
 
   template <int dim>
   double
-  CosineFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  CosineFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -449,8 +449,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                                  std::vector<double> &          values,
+  CosineFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                                  std::vector<double>&           values,
                                   const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -464,8 +464,8 @@ namespace Functions
   template <int dim>
   void
   CosineFunction<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -481,7 +481,7 @@ namespace Functions
 
   template <int dim>
   double
-  CosineFunction<dim>::laplacian(const Point<dim> &p, const unsigned int) const
+  CosineFunction<dim>::laplacian(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -505,8 +505,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineFunction<dim>::laplacian_list(const std::vector<Point<dim>> &points,
-                                      std::vector<double> &          values,
+  CosineFunction<dim>::laplacian_list(const std::vector<Point<dim>>& points,
+                                      std::vector<double>&           values,
                                       const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -518,7 +518,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  CosineFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  CosineFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     Tensor<1, dim> result;
     switch (dim)
@@ -551,8 +551,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                     std::vector<Tensor<1, dim>> &  gradients,
+  CosineFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                     std::vector<Tensor<1, dim>>&   gradients,
                                      const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -560,7 +560,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -593,7 +593,7 @@ namespace Functions
 
   template <int dim>
   SymmetricTensor<2, dim>
-  CosineFunction<dim>::hessian(const Point<dim> &p, const unsigned int) const
+  CosineFunction<dim>::hessian(const Point<dim>& p, const unsigned int) const
   {
     const double pi2 = numbers::PI_2 * numbers::PI_2;
 
@@ -650,8 +650,8 @@ namespace Functions
   template <int dim>
   void
   CosineFunction<dim>::hessian_list(
-    const std::vector<Point<dim>> &       points,
-    std::vector<SymmetricTensor<2, dim>> &hessians,
+    const std::vector<Point<dim>>&        points,
+    std::vector<SymmetricTensor<2, dim>>& hessians,
     const unsigned int) const
   {
     Assert(hessians.size() == points.size(),
@@ -661,7 +661,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -720,7 +720,7 @@ namespace Functions
 
   template <int dim>
   double
-  CosineGradFunction<dim>::value(const Point<dim> & p,
+  CosineGradFunction<dim>::value(const Point<dim>&  p,
                                  const unsigned int d) const
   {
     AssertIndexRange(d, dim);
@@ -746,8 +746,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineGradFunction<dim>::vector_value(const Point<dim> &p,
-                                        Vector<double> &  result) const
+  CosineGradFunction<dim>::vector_value(const Point<dim>& p,
+                                        Vector<double>&   result) const
   {
     AssertDimension(result.size(), dim);
     switch (dim)
@@ -780,8 +780,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineGradFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                                      std::vector<double> &          values,
+  CosineGradFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                                      std::vector<double>&           values,
                                       const unsigned int             d) const
   {
     Assert(values.size() == points.size(),
@@ -792,7 +792,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -817,15 +817,15 @@ namespace Functions
   template <int dim>
   void
   CosineGradFunction<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -857,7 +857,7 @@ namespace Functions
 
   template <int dim>
   double
-  CosineGradFunction<dim>::laplacian(const Point<dim> & p,
+  CosineGradFunction<dim>::laplacian(const Point<dim>&  p,
                                      const unsigned int d) const
   {
     return -numbers::PI_2 * numbers::PI_2 * value(p, d);
@@ -866,7 +866,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  CosineGradFunction<dim>::gradient(const Point<dim> & p,
+  CosineGradFunction<dim>::gradient(const Point<dim>&  p,
                                     const unsigned int d) const
   {
     AssertIndexRange(d, dim);
@@ -906,8 +906,8 @@ namespace Functions
 
   template <int dim>
   void
-  CosineGradFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                         std::vector<Tensor<1, dim>> &gradients,
+  CosineGradFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                         std::vector<Tensor<1, dim>>& gradients,
                                          const unsigned int           d) const
   {
     AssertIndexRange(d, dim);
@@ -919,8 +919,8 @@ namespace Functions
            ExcDimensionMismatch(gradients.size(), points.size()));
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p      = points[i];
-        Tensor<1, dim> &  result = gradients[i];
+        const Point<dim>& p      = points[i];
+        Tensor<1, dim>&   result = gradients[i];
 
         switch (dim)
           {
@@ -954,15 +954,15 @@ namespace Functions
   template <int dim>
   void
   CosineGradFunction<dim>::vector_gradient_list(
-    const std::vector<Point<dim>> &           points,
-    std::vector<std::vector<Tensor<1, dim>>> &gradients) const
+    const std::vector<Point<dim>>&            points,
+    std::vector<std::vector<Tensor<1, dim>>>& gradients) const
   {
     AssertVectorVectorDimension(gradients, points.size(), dim);
     const double pi2 = numbers::PI_2 * numbers::PI_2;
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -1019,7 +1019,7 @@ namespace Functions
 
   template <int dim>
   double
-  ExpFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  ExpFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -1037,8 +1037,8 @@ namespace Functions
 
   template <int dim>
   void
-  ExpFunction<dim>::value_list(const std::vector<Point<dim>> &points,
-                               std::vector<double> &          values,
+  ExpFunction<dim>::value_list(const std::vector<Point<dim>>& points,
+                               std::vector<double>&           values,
                                const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1046,7 +1046,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -1066,7 +1066,7 @@ namespace Functions
 
   template <int dim>
   double
-  ExpFunction<dim>::laplacian(const Point<dim> &p, const unsigned int) const
+  ExpFunction<dim>::laplacian(const Point<dim>& p, const unsigned int) const
   {
     switch (dim)
       {
@@ -1084,8 +1084,8 @@ namespace Functions
 
   template <int dim>
   void
-  ExpFunction<dim>::laplacian_list(const std::vector<Point<dim>> &points,
-                                   std::vector<double> &          values,
+  ExpFunction<dim>::laplacian_list(const std::vector<Point<dim>>& points,
+                                   std::vector<double>&           values,
                                    const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1093,7 +1093,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -1113,7 +1113,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  ExpFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  ExpFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     Tensor<1, dim> result;
     switch (dim)
@@ -1138,8 +1138,8 @@ namespace Functions
 
   template <int dim>
   void
-  ExpFunction<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                                  std::vector<Tensor<1, dim>> &  gradients,
+  ExpFunction<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                                  std::vector<Tensor<1, dim>>&   gradients,
                                   const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -1147,7 +1147,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         switch (dim)
           {
             case 1:
@@ -1173,7 +1173,7 @@ namespace Functions
 
 
   double
-  LSingularityFunction::value(const Point<2> &p, const unsigned int) const
+  LSingularityFunction::value(const Point<2>& p, const unsigned int) const
   {
     double x = p(0);
     double y = p(1);
@@ -1189,8 +1189,8 @@ namespace Functions
 
 
   void
-  LSingularityFunction::value_list(const std::vector<Point<2>> &points,
-                                   std::vector<double> &        values,
+  LSingularityFunction::value_list(const std::vector<Point<2>>& points,
+                                   std::vector<double>&         values,
                                    const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1216,8 +1216,8 @@ namespace Functions
 
   void
   LSingularityFunction::vector_value_list(
-    const std::vector<Point<2>> &points,
-    std::vector<Vector<double>> &values) const
+    const std::vector<Point<2>>& points,
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -1243,15 +1243,15 @@ namespace Functions
 
 
   double
-  LSingularityFunction::laplacian(const Point<2> &, const unsigned int) const
+  LSingularityFunction::laplacian(const Point<2>&, const unsigned int) const
   {
     return 0.;
   }
 
 
   void
-  LSingularityFunction::laplacian_list(const std::vector<Point<2>> &points,
-                                       std::vector<double> &        values,
+  LSingularityFunction::laplacian_list(const std::vector<Point<2>>& points,
+                                       std::vector<double>&         values,
                                        const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1263,7 +1263,7 @@ namespace Functions
 
 
   Tensor<1, 2>
-  LSingularityFunction::gradient(const Point<2> &p, const unsigned int) const
+  LSingularityFunction::gradient(const Point<2>& p, const unsigned int) const
   {
     double x   = p(0);
     double y   = p(1);
@@ -1282,8 +1282,8 @@ namespace Functions
 
 
   void
-  LSingularityFunction::gradient_list(const std::vector<Point<2>> &points,
-                                      std::vector<Tensor<1, 2>> &  gradients,
+  LSingularityFunction::gradient_list(const std::vector<Point<2>>& points,
+                                      std::vector<Tensor<1, 2>>&   gradients,
                                       const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -1291,7 +1291,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         double          x   = p(0);
         double          y   = p(1);
         double          phi = std::atan2(y, -x) + numbers::PI;
@@ -1309,8 +1309,8 @@ namespace Functions
 
   void
   LSingularityFunction::vector_gradient_list(
-    const std::vector<Point<2>> &           points,
-    std::vector<std::vector<Tensor<1, 2>>> &gradients) const
+    const std::vector<Point<2>>&            points,
+    std::vector<std::vector<Tensor<1, 2>>>& gradients) const
   {
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
@@ -1319,7 +1319,7 @@ namespace Functions
       {
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         double          x   = p(0);
         double          y   = p(1);
         double          phi = std::atan2(y, -x) + numbers::PI;
@@ -1341,7 +1341,7 @@ namespace Functions
 
 
   double
-  LSingularityGradFunction::value(const Point<2> &p, const unsigned int d) const
+  LSingularityGradFunction::value(const Point<2>& p, const unsigned int d) const
   {
     AssertIndexRange(d, 2);
 
@@ -1359,8 +1359,8 @@ namespace Functions
 
 
   void
-  LSingularityGradFunction::value_list(const std::vector<Point<2>> &points,
-                                       std::vector<double> &        values,
+  LSingularityGradFunction::value_list(const std::vector<Point<2>>& points,
+                                       std::vector<double>&         values,
                                        const unsigned int           d) const
   {
     AssertIndexRange(d, 2);
@@ -1368,7 +1368,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         const double    x   = p(0);
         const double    y   = p(1);
         const double    phi = std::atan2(y, -x) + numbers::PI;
@@ -1385,8 +1385,8 @@ namespace Functions
 
   void
   LSingularityGradFunction::vector_value_list(
-    const std::vector<Point<2>> &points,
-    std::vector<Vector<double>> &values) const
+    const std::vector<Point<2>>& points,
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -1394,7 +1394,7 @@ namespace Functions
     for (unsigned int i = 0; i < points.size(); ++i)
       {
         AssertDimension(values[i].size(), 2);
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         const double    x   = p(0);
         const double    y   = p(1);
         const double    phi = std::atan2(y, -x) + numbers::PI;
@@ -1411,16 +1411,15 @@ namespace Functions
 
 
   double
-  LSingularityGradFunction::laplacian(const Point<2> &,
-                                      const unsigned int) const
+  LSingularityGradFunction::laplacian(const Point<2>&, const unsigned int) const
   {
     return 0.;
   }
 
 
   void
-  LSingularityGradFunction::laplacian_list(const std::vector<Point<2>> &points,
-                                           std::vector<double> &        values,
+  LSingularityGradFunction::laplacian_list(const std::vector<Point<2>>& points,
+                                           std::vector<double>&         values,
                                            const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1433,7 +1432,7 @@ namespace Functions
 
 
   Tensor<1, 2>
-  LSingularityGradFunction::gradient(const Point<2> & /*p*/,
+  LSingularityGradFunction::gradient(const Point<2>& /*p*/,
                                      const unsigned int /*component*/) const
   {
     Assert(false, ExcNotImplemented());
@@ -1443,8 +1442,8 @@ namespace Functions
 
   void
   LSingularityGradFunction::gradient_list(
-    const std::vector<Point<2>> & /*points*/,
-    std::vector<Tensor<1, 2>> & /*gradients*/,
+    const std::vector<Point<2>>& /*points*/,
+    std::vector<Tensor<1, 2>>& /*gradients*/,
     const unsigned int /*component*/) const
   {
     Assert(false, ExcNotImplemented());
@@ -1453,8 +1452,8 @@ namespace Functions
 
   void
   LSingularityGradFunction::vector_gradient_list(
-    const std::vector<Point<2>> & /*points*/,
-    std::vector<std::vector<Tensor<1, 2>>> & /*gradients*/) const
+    const std::vector<Point<2>>& /*points*/,
+    std::vector<std::vector<Tensor<1, 2>>>& /*gradients*/) const
   {
     Assert(false, ExcNotImplemented());
   }
@@ -1463,7 +1462,7 @@ namespace Functions
 
   template <int dim>
   double
-  SlitSingularityFunction<dim>::value(const Point<dim> &p,
+  SlitSingularityFunction<dim>::value(const Point<dim>& p,
                                       const unsigned int) const
   {
     double x = p(0);
@@ -1479,8 +1478,8 @@ namespace Functions
   template <int dim>
   void
   SlitSingularityFunction<dim>::value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<double> &          values,
+    const std::vector<Point<dim>>& points,
+    std::vector<double>&           values,
     const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1502,8 +1501,8 @@ namespace Functions
   template <int dim>
   void
   SlitSingularityFunction<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  values) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -1526,7 +1525,7 @@ namespace Functions
 
   template <int dim>
   double
-  SlitSingularityFunction<dim>::laplacian(const Point<dim> &,
+  SlitSingularityFunction<dim>::laplacian(const Point<dim>&,
                                           const unsigned int) const
   {
     return 0.;
@@ -1536,8 +1535,8 @@ namespace Functions
   template <int dim>
   void
   SlitSingularityFunction<dim>::laplacian_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<double> &          values,
+    const std::vector<Point<dim>>& points,
+    std::vector<double>&           values,
     const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1550,7 +1549,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  SlitSingularityFunction<dim>::gradient(const Point<dim> &p,
+  SlitSingularityFunction<dim>::gradient(const Point<dim>& p,
                                          const unsigned int) const
   {
     double x   = p(0);
@@ -1572,8 +1571,8 @@ namespace Functions
   template <int dim>
   void
   SlitSingularityFunction<dim>::gradient_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Tensor<1, dim>> &  gradients,
+    const std::vector<Point<dim>>& points,
+    std::vector<Tensor<1, dim>>&   gradients,
     const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -1581,7 +1580,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim> &p   = points[i];
+        const Point<dim>& p   = points[i];
         double            x   = p(0);
         double            y   = p(1);
         double            phi = std::atan2(x, y) + numbers::PI;
@@ -1601,8 +1600,8 @@ namespace Functions
   template <int dim>
   void
   SlitSingularityFunction<dim>::vector_gradient_list(
-    const std::vector<Point<dim>> &           points,
-    std::vector<std::vector<Tensor<1, dim>>> &gradients) const
+    const std::vector<Point<dim>>&            points,
+    std::vector<std::vector<Tensor<1, dim>>>& gradients) const
   {
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
@@ -1612,7 +1611,7 @@ namespace Functions
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
 
-        const Point<dim> &p   = points[i];
+        const Point<dim>& p   = points[i];
         double            x   = p(0);
         double            y   = p(1);
         double            phi = std::atan2(x, y) + numbers::PI;
@@ -1633,7 +1632,7 @@ namespace Functions
 
 
   double
-  SlitHyperSingularityFunction::value(const Point<2> &p,
+  SlitHyperSingularityFunction::value(const Point<2>& p,
                                       const unsigned int) const
   {
     double x = p(0);
@@ -1647,8 +1646,8 @@ namespace Functions
 
 
   void
-  SlitHyperSingularityFunction::value_list(const std::vector<Point<2>> &points,
-                                           std::vector<double> &        values,
+  SlitHyperSingularityFunction::value_list(const std::vector<Point<2>>& points,
+                                           std::vector<double>&         values,
                                            const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1669,8 +1668,8 @@ namespace Functions
 
   void
   SlitHyperSingularityFunction::vector_value_list(
-    const std::vector<Point<2>> &points,
-    std::vector<Vector<double>> &values) const
+    const std::vector<Point<2>>& points,
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -1692,7 +1691,7 @@ namespace Functions
 
 
   double
-  SlitHyperSingularityFunction::laplacian(const Point<2> &,
+  SlitHyperSingularityFunction::laplacian(const Point<2>&,
                                           const unsigned int) const
   {
     return 0.;
@@ -1701,8 +1700,8 @@ namespace Functions
 
   void
   SlitHyperSingularityFunction::laplacian_list(
-    const std::vector<Point<2>> &points,
-    std::vector<double> &        values,
+    const std::vector<Point<2>>& points,
+    std::vector<double>&         values,
     const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -1714,7 +1713,7 @@ namespace Functions
 
 
   Tensor<1, 2>
-  SlitHyperSingularityFunction::gradient(const Point<2> &p,
+  SlitHyperSingularityFunction::gradient(const Point<2>& p,
                                          const unsigned int) const
   {
     double x   = p(0);
@@ -1736,8 +1735,8 @@ namespace Functions
 
   void
   SlitHyperSingularityFunction::gradient_list(
-    const std::vector<Point<2>> &points,
-    std::vector<Tensor<1, 2>> &  gradients,
+    const std::vector<Point<2>>& points,
+    std::vector<Tensor<1, 2>>&   gradients,
     const unsigned int) const
   {
     Assert(gradients.size() == points.size(),
@@ -1745,7 +1744,7 @@ namespace Functions
 
     for (unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         double          x   = p(0);
         double          y   = p(1);
         double          phi = std::atan2(x, y) + numbers::PI;
@@ -1763,8 +1762,8 @@ namespace Functions
 
   void
   SlitHyperSingularityFunction::vector_gradient_list(
-    const std::vector<Point<2>> &           points,
-    std::vector<std::vector<Tensor<1, 2>>> &gradients) const
+    const std::vector<Point<2>>&            points,
+    std::vector<std::vector<Tensor<1, 2>>>& gradients) const
   {
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
@@ -1774,7 +1773,7 @@ namespace Functions
         Assert(gradients[i].size() == 1,
                ExcDimensionMismatch(gradients[i].size(), 1));
 
-        const Point<2> &p   = points[i];
+        const Point<2>& p   = points[i];
         double          x   = p(0);
         double          y   = p(1);
         double          phi = std::atan2(x, y) + numbers::PI;
@@ -1792,7 +1791,7 @@ namespace Functions
   //////////////////////////////////////////////////////////////////////
 
   template <int dim>
-  JumpFunction<dim>::JumpFunction(const Point<dim> &direction,
+  JumpFunction<dim>::JumpFunction(const Point<dim>& direction,
                                   const double      steepness) :
     direction(direction),
     steepness(steepness)
@@ -1816,7 +1815,7 @@ namespace Functions
 
   template <int dim>
   double
-  JumpFunction<dim>::value(const Point<dim> &p, const unsigned int) const
+  JumpFunction<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     double x = steepness * (-cosine * p(0) + sine * p(1));
     return -std::atan(x);
@@ -1826,8 +1825,8 @@ namespace Functions
 
   template <int dim>
   void
-  JumpFunction<dim>::value_list(const std::vector<Point<dim>> &p,
-                                std::vector<double> &          values,
+  JumpFunction<dim>::value_list(const std::vector<Point<dim>>& p,
+                                std::vector<double>&           values,
                                 const unsigned int) const
   {
     Assert(values.size() == p.size(),
@@ -1843,7 +1842,7 @@ namespace Functions
 
   template <int dim>
   double
-  JumpFunction<dim>::laplacian(const Point<dim> &p, const unsigned int) const
+  JumpFunction<dim>::laplacian(const Point<dim>& p, const unsigned int) const
   {
     double x = steepness * (-cosine * p(0) + sine * p(1));
     double r = 1 + x * x;
@@ -1853,8 +1852,8 @@ namespace Functions
 
   template <int dim>
   void
-  JumpFunction<dim>::laplacian_list(const std::vector<Point<dim>> &p,
-                                    std::vector<double> &          values,
+  JumpFunction<dim>::laplacian_list(const std::vector<Point<dim>>& p,
+                                    std::vector<double>&           values,
                                     const unsigned int) const
   {
     Assert(values.size() == p.size(),
@@ -1874,7 +1873,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  JumpFunction<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  JumpFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     double         x = steepness * (-cosine * p(0) + sine * p(1));
     double         r = -steepness * (1 + x * x);
@@ -1888,8 +1887,8 @@ namespace Functions
 
   template <int dim>
   void
-  JumpFunction<dim>::gradient_list(const std::vector<Point<dim>> &p,
-                                   std::vector<Tensor<1, dim>> &  gradients,
+  JumpFunction<dim>::gradient_list(const std::vector<Point<dim>>& p,
+                                   std::vector<Tensor<1, dim>>&   gradients,
                                    const unsigned int) const
   {
     Assert(gradients.size() == p.size(),
@@ -1922,7 +1921,7 @@ namespace Functions
 
   template <int dim>
   FourierCosineFunction<dim>::FourierCosineFunction(
-    const Tensor<1, dim> &fourier_coefficients) :
+    const Tensor<1, dim>& fourier_coefficients) :
     Function<dim>(1),
     fourier_coefficients(fourier_coefficients)
   {}
@@ -1931,7 +1930,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierCosineFunction<dim>::value(const Point<dim> & p,
+  FourierCosineFunction<dim>::value(const Point<dim>&  p,
                                     const unsigned int component) const
   {
     (void)component;
@@ -1943,7 +1942,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  FourierCosineFunction<dim>::gradient(const Point<dim> & p,
+  FourierCosineFunction<dim>::gradient(const Point<dim>&  p,
                                        const unsigned int component) const
   {
     (void)component;
@@ -1955,7 +1954,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierCosineFunction<dim>::laplacian(const Point<dim> & p,
+  FourierCosineFunction<dim>::laplacian(const Point<dim>&  p,
                                         const unsigned int component) const
   {
     (void)component;
@@ -1972,7 +1971,7 @@ namespace Functions
 
   template <int dim>
   FourierSineFunction<dim>::FourierSineFunction(
-    const Tensor<1, dim> &fourier_coefficients) :
+    const Tensor<1, dim>& fourier_coefficients) :
     Function<dim>(1),
     fourier_coefficients(fourier_coefficients)
   {}
@@ -1981,7 +1980,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierSineFunction<dim>::value(const Point<dim> & p,
+  FourierSineFunction<dim>::value(const Point<dim>&  p,
                                   const unsigned int component) const
   {
     (void)component;
@@ -1993,7 +1992,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  FourierSineFunction<dim>::gradient(const Point<dim> & p,
+  FourierSineFunction<dim>::gradient(const Point<dim>&  p,
                                      const unsigned int component) const
   {
     (void)component;
@@ -2005,7 +2004,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierSineFunction<dim>::laplacian(const Point<dim> & p,
+  FourierSineFunction<dim>::laplacian(const Point<dim>&  p,
                                       const unsigned int component) const
   {
     (void)component;
@@ -2022,8 +2021,8 @@ namespace Functions
 
   template <int dim>
   FourierSineSum<dim>::FourierSineSum(
-    const std::vector<Point<dim>> &fourier_coefficients,
-    const std::vector<double> &    weights) :
+    const std::vector<Point<dim>>& fourier_coefficients,
+    const std::vector<double>&     weights) :
     Function<dim>(1),
     fourier_coefficients(fourier_coefficients),
     weights(weights)
@@ -2037,7 +2036,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierSineSum<dim>::value(const Point<dim> & p,
+  FourierSineSum<dim>::value(const Point<dim>&  p,
                              const unsigned int component) const
   {
     (void)component;
@@ -2055,7 +2054,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  FourierSineSum<dim>::gradient(const Point<dim> & p,
+  FourierSineSum<dim>::gradient(const Point<dim>&  p,
                                 const unsigned int component) const
   {
     (void)component;
@@ -2073,7 +2072,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierSineSum<dim>::laplacian(const Point<dim> & p,
+  FourierSineSum<dim>::laplacian(const Point<dim>&  p,
                                  const unsigned int component) const
   {
     (void)component;
@@ -2096,8 +2095,8 @@ namespace Functions
 
   template <int dim>
   FourierCosineSum<dim>::FourierCosineSum(
-    const std::vector<Point<dim>> &fourier_coefficients,
-    const std::vector<double> &    weights) :
+    const std::vector<Point<dim>>& fourier_coefficients,
+    const std::vector<double>&     weights) :
     Function<dim>(1),
     fourier_coefficients(fourier_coefficients),
     weights(weights)
@@ -2111,7 +2110,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierCosineSum<dim>::value(const Point<dim> & p,
+  FourierCosineSum<dim>::value(const Point<dim>&  p,
                                const unsigned int component) const
   {
     (void)component;
@@ -2129,7 +2128,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  FourierCosineSum<dim>::gradient(const Point<dim> & p,
+  FourierCosineSum<dim>::gradient(const Point<dim>&  p,
                                   const unsigned int component) const
   {
     (void)component;
@@ -2147,7 +2146,7 @@ namespace Functions
 
   template <int dim>
   double
-  FourierCosineSum<dim>::laplacian(const Point<dim> & p,
+  FourierCosineSum<dim>::laplacian(const Point<dim>&  p,
                                    const unsigned int component) const
   {
     (void)component;
@@ -2169,7 +2168,7 @@ namespace Functions
 
 
   template <int dim>
-  Monomial<dim>::Monomial(const Tensor<1, dim> &exponents,
+  Monomial<dim>::Monomial(const Tensor<1, dim>& exponents,
                           const unsigned int    n_components) :
     Function<dim>(n_components),
     exponents(exponents)
@@ -2179,7 +2178,7 @@ namespace Functions
 
   template <int dim>
   double
-  Monomial<dim>::value(const Point<dim> &p, const unsigned int component) const
+  Monomial<dim>::value(const Point<dim>& p, const unsigned int component) const
   {
     (void)component;
     Assert(component < this->n_components,
@@ -2201,7 +2200,7 @@ namespace Functions
 
   template <int dim>
   void
-  Monomial<dim>::vector_value(const Point<dim> &p, Vector<double> &values) const
+  Monomial<dim>::vector_value(const Point<dim>& p, Vector<double>& values) const
   {
     Assert(values.size() == this->n_components,
            ExcDimensionMismatch(values.size(), this->n_components));
@@ -2214,7 +2213,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  Monomial<dim>::gradient(const Point<dim> & p,
+  Monomial<dim>::gradient(const Point<dim>&  p,
                           const unsigned int component) const
   {
     (void)component;
@@ -2253,8 +2252,8 @@ namespace Functions
 
   template <int dim>
   void
-  Monomial<dim>::value_list(const std::vector<Point<dim>> &points,
-                            std::vector<double> &          values,
+  Monomial<dim>::value_list(const std::vector<Point<dim>>& points,
+                            std::vector<double>&           values,
                             const unsigned int             component) const
   {
     Assert(values.size() == points.size(),
@@ -2276,7 +2275,7 @@ namespace Functions
 
   template <int dim>
   double
-  Bessel1<dim>::value(const Point<dim> &p, const unsigned int) const
+  Bessel1<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     Assert(dim == 2, ExcNotImplemented());
     const double r = p.distance(center);
@@ -2291,8 +2290,8 @@ namespace Functions
 
   template <int dim>
   void
-  Bessel1<dim>::value_list(const std::vector<Point<dim>> &points,
-                           std::vector<double> &          values,
+  Bessel1<dim>::value_list(const std::vector<Point<dim>>& points,
+                           std::vector<double>&           values,
                            const unsigned int) const
   {
     Assert(dim == 2, ExcNotImplemented());
@@ -2313,7 +2312,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  Bessel1<dim>::gradient(const Point<dim> &p, const unsigned int) const
+  Bessel1<dim>::gradient(const Point<dim>& p, const unsigned int) const
   {
     Assert(dim == 2, ExcNotImplemented());
 #ifndef DEAL_II_HAVE_JN
@@ -2339,8 +2338,8 @@ namespace Functions
 
   template <int dim>
   void
-  Bessel1<dim>::gradient_list(const std::vector<Point<dim>> &points,
-                              std::vector<Tensor<1, dim>> &  gradients,
+  Bessel1<dim>::gradient_list(const std::vector<Point<dim>>& points,
+                              std::vector<Tensor<1, dim>>&   gradients,
                               const unsigned int) const
   {
     Assert(dim == 2, ExcNotImplemented());
@@ -2350,7 +2349,7 @@ namespace Functions
 #else
     for (unsigned int k = 0; k < points.size(); ++k)
       {
-        const Point<dim> &p  = points[k];
+        const Point<dim>& p  = points[k];
         const double      r  = p.distance(center);
         const double      co = (r == 0.) ? 0. : (p(0) - center(0)) / r;
         const double      si = (r == 0.) ? 0. : (p(1) - center(1)) / r;
@@ -2359,7 +2358,7 @@ namespace Functions
                              (-jn(1, r * wave_number)) :
                              (.5 * (jn(order - 1, wave_number * r) -
                                     jn(order + 1, wave_number * r)));
-        Tensor<1, dim> &result = gradients[k];
+        Tensor<1, dim>& result = gradients[k];
         result[0]              = wave_number * co * dJn;
         result[1]              = wave_number * si * dJn;
       }
@@ -2374,18 +2373,18 @@ namespace Functions
     // the (lower) left endpoint of the interval to interpolate
     // in, and p_unit denotes the point in unit coordinates to do so.
     double
-    interpolate(const Table<1, double> &data_values,
-                const TableIndices<1> & ix,
-                const Point<1> &        xi)
+    interpolate(const Table<1, double>& data_values,
+                const TableIndices<1>&  ix,
+                const Point<1>&         xi)
     {
       return ((1 - xi[0]) * data_values[ix[0]] +
               xi[0] * data_values[ix[0] + 1]);
     }
 
     double
-    interpolate(const Table<2, double> &data_values,
-                const TableIndices<2> & ix,
-                const Point<2> &        p_unit)
+    interpolate(const Table<2, double>& data_values,
+                const TableIndices<2>&  ix,
+                const Point<2>&         p_unit)
     {
       return (((1 - p_unit[0]) * data_values[ix[0]][ix[1]] +
                p_unit[0] * data_values[ix[0] + 1][ix[1]]) *
@@ -2396,9 +2395,9 @@ namespace Functions
     }
 
     double
-    interpolate(const Table<3, double> &data_values,
-                const TableIndices<3> & ix,
-                const Point<3> &        p_unit)
+    interpolate(const Table<3, double>& data_values,
+                const TableIndices<3>&  ix,
+                const Point<3>&         p_unit)
     {
       return ((((1 - p_unit[0]) * data_values[ix[0]][ix[1]][ix[2]] +
                 p_unit[0] * data_values[ix[0] + 1][ix[1]][ix[2]]) *
@@ -2422,10 +2421,10 @@ namespace Functions
     // in, p_unit denotes the point in unit coordinates, and dx
     // denotes the width of the interval in each dimension.
     Tensor<1, 1>
-    gradient_interpolate(const Table<1, double> &data_values,
-                         const TableIndices<1> & ix,
-                         const Point<1> &        p_unit,
-                         const Point<1> &        dx)
+    gradient_interpolate(const Table<1, double>& data_values,
+                         const TableIndices<1>&  ix,
+                         const Point<1>&         p_unit,
+                         const Point<1>&         dx)
     {
       (void)p_unit;
       Tensor<1, 1> grad;
@@ -2435,10 +2434,10 @@ namespace Functions
 
 
     Tensor<1, 2>
-    gradient_interpolate(const Table<2, double> &data_values,
-                         const TableIndices<2> & ix,
-                         const Point<2> &        p_unit,
-                         const Point<2> &        dx)
+    gradient_interpolate(const Table<2, double>& data_values,
+                         const TableIndices<2>&  ix,
+                         const Point<2>&         p_unit,
+                         const Point<2>&         dx)
     {
       Tensor<1, 2> grad;
       double       u00 = data_values[ix[0]][ix[1]],
@@ -2455,10 +2454,10 @@ namespace Functions
 
 
     Tensor<1, 3>
-    gradient_interpolate(const Table<3, double> &data_values,
-                         const TableIndices<3> & ix,
-                         const Point<3> &        p_unit,
-                         const Point<3> &        dx)
+    gradient_interpolate(const Table<3, double>& data_values,
+                         const TableIndices<3>&  ix,
+                         const Point<3>&         p_unit,
+                         const Point<3>&         dx)
     {
       Tensor<1, 3> grad;
       double       u000 = data_values[ix[0]][ix[1]][ix[2]],
@@ -2495,8 +2494,8 @@ namespace Functions
 
   template <int dim>
   InterpolatedTensorProductGridData<dim>::InterpolatedTensorProductGridData(
-    const std::array<std::vector<double>, dim> &coordinate_values,
-    const Table<dim, double> &                  data_values) :
+    const std::array<std::vector<double>, dim>& coordinate_values,
+    const Table<dim, double>&                   data_values) :
     coordinate_values(coordinate_values),
     data_values(data_values)
   {
@@ -2523,7 +2522,7 @@ namespace Functions
   template <int dim>
   TableIndices<dim>
   InterpolatedTensorProductGridData<dim>::table_index_of_point(
-    const Point<dim> &p) const
+    const Point<dim>& p) const
   {
     // find out where this data point lies, relative to the given
     // points. if we run all the way to the end of the range,
@@ -2560,7 +2559,7 @@ namespace Functions
   template <int dim>
   double
   InterpolatedTensorProductGridData<dim>::value(
-    const Point<dim> & p,
+    const Point<dim>&  p,
     const unsigned int component) const
   {
     (void)component;
@@ -2591,7 +2590,7 @@ namespace Functions
   template <int dim>
   Tensor<1, dim>
   InterpolatedTensorProductGridData<dim>::gradient(
-    const Point<dim> & p,
+    const Point<dim>&  p,
     const unsigned int component) const
   {
     (void)component;
@@ -2619,9 +2618,9 @@ namespace Functions
 
   template <int dim>
   InterpolatedUniformGridData<dim>::InterpolatedUniformGridData(
-    const std::array<std::pair<double, double>, dim> &interval_endpoints,
-    const std::array<unsigned int, dim> &             n_subintervals,
-    const Table<dim, double> &                        data_values) :
+    const std::array<std::pair<double, double>, dim>& interval_endpoints,
+    const std::array<unsigned int, dim>&              n_subintervals,
+    const Table<dim, double>&                         data_values) :
     interval_endpoints(interval_endpoints),
     n_subintervals(n_subintervals),
     data_values(data_values)
@@ -2642,7 +2641,7 @@ namespace Functions
 
   template <int dim>
   double
-  InterpolatedUniformGridData<dim>::value(const Point<dim> & p,
+  InterpolatedUniformGridData<dim>::value(const Point<dim>&  p,
                                           const unsigned int component) const
   {
     (void)component;
@@ -2692,8 +2691,8 @@ namespace Functions
 
 
   template <int dim>
-  Polynomial<dim>::Polynomial(const Table<2, double> &   exponents,
-                              const std::vector<double> &coefficients) :
+  Polynomial<dim>::Polynomial(const Table<2, double>&    exponents,
+                              const std::vector<double>& coefficients) :
     Function<dim>(1),
     exponents(exponents),
     coefficients(coefficients)
@@ -2708,7 +2707,7 @@ namespace Functions
 
   template <int dim>
   double
-  Polynomial<dim>::value(const Point<dim> & p,
+  Polynomial<dim>::value(const Point<dim>&  p,
                          const unsigned int component) const
   {
     (void)component;
@@ -2735,8 +2734,8 @@ namespace Functions
 
   template <int dim>
   void
-  Polynomial<dim>::value_list(const std::vector<Point<dim>> &points,
-                              std::vector<double> &          values,
+  Polynomial<dim>::value_list(const std::vector<Point<dim>>& points,
+                              std::vector<double>&           values,
                               const unsigned int             component) const
   {
     Assert(values.size() == points.size(),
@@ -2750,7 +2749,7 @@ namespace Functions
 
   template <int dim>
   Tensor<1, dim>
-  Polynomial<dim>::gradient(const Point<dim> & p,
+  Polynomial<dim>::gradient(const Point<dim>&  p,
                             const unsigned int component) const
   {
     (void)component;

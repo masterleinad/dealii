@@ -62,7 +62,7 @@ public:
   {}
 
   double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     return p[component] * std::exp(-2. * std::abs(p[component]));
   }
@@ -99,13 +99,13 @@ test()
   dof_handler_euler.distribute_mg_dofs();
 
   // IndexSets and constraints
-  const IndexSet &locally_owned_dofs_euler =
+  const IndexSet& locally_owned_dofs_euler =
     dof_handler_euler.locally_owned_dofs();
   IndexSet locally_relevant_dofs_euler;
   DoFTools::extract_locally_relevant_dofs(dof_handler_euler,
                                           locally_relevant_dofs_euler);
 
-  const IndexSet &locally_owned_dofs = dof_handler.locally_owned_dofs();
+  const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
   IndexSet        locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
@@ -193,7 +193,7 @@ test()
            ++vertex_no)
         if (vertex_touched[cell->vertex_index(vertex_no)] == false)
           {
-            Point<dim> &   v = cell->vertex(vertex_no);
+            Point<dim>&    v = cell->vertex(vertex_no);
             Tensor<1, dim> d;
             for (unsigned int i = 0; i < dim; ++i)
               d[i] = displacement_function.value(v, i);
@@ -227,7 +227,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

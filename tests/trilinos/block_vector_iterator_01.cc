@@ -51,7 +51,7 @@ test()
   // way
   {
     TrilinosWrappers::MPI::BlockVector::const_iterator i =
-      const_cast<const TrilinosWrappers::MPI::BlockVector &>(v).begin();
+      const_cast<const TrilinosWrappers::MPI::BlockVector&>(v).begin();
     AssertThrow(*i == 1, ExcInternalError());
     ++i;
     AssertThrow(*i == 2, ExcInternalError());
@@ -88,7 +88,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -102,7 +102,7 @@ main(int argc, char **argv)
         test();
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

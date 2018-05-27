@@ -27,7 +27,7 @@
 
 template <typename VectorType>
 void
-test(const FilteredMatrix<VectorType> &M)
+test(const FilteredMatrix<VectorType>& M)
 {
   deallog << "Iterator";
 

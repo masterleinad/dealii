@@ -61,7 +61,7 @@ main()
   sleep(1);
 
   const unsigned int sz = 1000000;
-  char *             p  = new char[sz];
+  char*              p  = new char[sz];
   for (unsigned int i = 0; i < sz; ++i)
     p[i] = 0;
 

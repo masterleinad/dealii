@@ -24,14 +24,14 @@ DEAL_II_NAMESPACE_OPEN
 
 
 template <typename number, typename BlockVectorType>
-BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry &e) :
+BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry& e) :
   row(e.row),
   col(e.col),
   prefix(e.prefix),
   transpose(e.transpose),
   matrix(e.matrix)
 {
-  Entry &e2 = const_cast<Entry &>(e);
+  Entry& e2 = const_cast<Entry&>(e);
   e2.matrix = nullptr;
 }
 
@@ -98,8 +98,8 @@ BlockMatrixArray<number, BlockVectorType>::clear()
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult_add(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
   Assert(dst.n_blocks() == block_rows,
@@ -109,7 +109,7 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType &aux = *p_aux;
+  typename BlockVectorType::BlockType& aux = *p_aux;
 
   typename std::vector<Entry>::const_iterator m   = entries.begin();
   typename std::vector<Entry>::const_iterator end = entries.end();
@@ -130,8 +130,8 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   dst = 0.;
   vmult_add(dst, src);
@@ -142,8 +142,8 @@ BlockMatrixArray<number, BlockVectorType>::vmult(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
   Assert(dst.n_blocks() == block_cols,
@@ -156,7 +156,7 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType &aux = *p_aux;
+  typename BlockVectorType::BlockType& aux = *p_aux;
 
   for (; m != end; ++m)
     {
@@ -174,8 +174,8 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::Tvmult(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   dst = 0.;
   Tvmult_add(dst, src);
@@ -186,8 +186,8 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult(
 template <typename number, typename BlockVectorType>
 number
 BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
-  const BlockVectorType &u,
-  const BlockVectorType &v) const
+  const BlockVectorType& u,
+  const BlockVectorType& v) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
   Assert(u.n_blocks() == block_rows,
@@ -197,7 +197,7 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType &aux = *p_aux;
+  typename BlockVectorType::BlockType& aux = *p_aux;
 
   typename std::vector<Entry>::const_iterator m;
   typename std::vector<Entry>::const_iterator end = entries.end();
@@ -227,7 +227,7 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
 template <typename number, typename BlockVectorType>
 number
 BlockMatrixArray<number, BlockVectorType>::matrix_norm_square(
-  const BlockVectorType &u) const
+  const BlockVectorType& u) const
 {
   return matrix_scalar_product(u, u);
 }
@@ -281,7 +281,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::reinit(const unsigned int n)
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::do_row(
-  BlockVectorType &dst,
+  BlockVectorType& dst,
   size_type        row_num) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
@@ -297,7 +297,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
-  typename BlockVectorType::BlockType &aux = *p_aux;
+  typename BlockVectorType::BlockType& aux = *p_aux;
 
   aux.reinit(dst.block(row_num), true);
 
@@ -367,8 +367,8 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_rows()));
@@ -386,8 +386,8 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::vmult(
-  BlockVectorType &      dst,
-  const BlockVectorType &src) const
+  BlockVectorType&       dst,
+  const BlockVectorType& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),
          ExcDimensionMismatch(dst.n_blocks(), n_block_rows()));
@@ -411,8 +411,8 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::Tvmult(
-  BlockVectorType &,
-  const BlockVectorType &) const
+  BlockVectorType&,
+  const BlockVectorType&) const
 {
   Assert(false, ExcNotImplemented());
 }
@@ -421,8 +421,8 @@ BlockTrianglePrecondition<number, BlockVectorType>::Tvmult(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::Tvmult_add(
-  BlockVectorType &,
-  const BlockVectorType &) const
+  BlockVectorType&,
+  const BlockVectorType&) const
 {
   Assert(false, ExcNotImplemented());
 }

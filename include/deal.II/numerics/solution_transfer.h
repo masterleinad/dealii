@@ -306,7 +306,7 @@ public:
   /**
    * Constructor, takes the current DoFHandler as argument.
    */
-  SolutionTransfer(const DoFHandlerType &dof);
+  SolutionTransfer(const DoFHandlerType& dof);
 
   /**
    * Destructor
@@ -336,14 +336,14 @@ public:
    * coarsenend) grid.
    */
   void
-  prepare_for_coarsening_and_refinement(const std::vector<VectorType> &all_in);
+  prepare_for_coarsening_and_refinement(const std::vector<VectorType>& all_in);
 
   /**
    * Same as previous function but for only one discrete function to be
    * interpolated.
    */
   void
-  prepare_for_coarsening_and_refinement(const VectorType &in);
+  prepare_for_coarsening_and_refinement(const VectorType& in);
 
   /**
    * This function interpolates the discrete function @p in, which is a vector
@@ -357,7 +357,7 @@ public:
    * function is allowed. e.g. for interpolating several functions.
    */
   void
-  refine_interpolate(const VectorType &in, VectorType &out) const;
+  refine_interpolate(const VectorType& in, VectorType& out) const;
 
   /**
    * This function interpolates the discrete functions that are stored in @p
@@ -379,8 +379,8 @@ public:
    * thrown.
    */
   void
-  interpolate(const std::vector<VectorType> &all_in,
-              std::vector<VectorType> &      all_out) const;
+  interpolate(const std::vector<VectorType>& all_in,
+              std::vector<VectorType>&       all_out) const;
 
   /**
    * Same as the previous function. It interpolates only one function. It
@@ -392,7 +392,7 @@ public:
    * all_out)</tt>
    */
   void
-  interpolate(const VectorType &in, VectorType &out) const;
+  interpolate(const VectorType& in, VectorType& out) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -496,14 +496,14 @@ private:
       dof_values_ptr(nullptr),
       active_fe_index(0)
     {}
-    Pointerstruct(std::vector<types::global_dof_index> *indices_ptr_in,
+    Pointerstruct(std::vector<types::global_dof_index>* indices_ptr_in,
                   const unsigned int active_fe_index_in = 0) :
       indices_ptr(indices_ptr_in),
       dof_values_ptr(nullptr),
       active_fe_index(active_fe_index_in)
     {}
     Pointerstruct(
-      std::vector<Vector<typename VectorType::value_type>> *dof_values_ptr_in,
+      std::vector<Vector<typename VectorType::value_type>>* dof_values_ptr_in,
       const unsigned int active_fe_index_in = 0) :
       indices_ptr(nullptr),
       dof_values_ptr(dof_values_ptr_in),
@@ -512,8 +512,8 @@ private:
     std::size_t
     memory_consumption() const;
 
-    std::vector<types::global_dof_index> *                indices_ptr;
-    std::vector<Vector<typename VectorType::value_type>> *dof_values_ptr;
+    std::vector<types::global_dof_index>*                 indices_ptr;
+    std::vector<Vector<typename VectorType::value_type>>* dof_values_ptr;
     unsigned int                                          active_fe_index;
   };
 

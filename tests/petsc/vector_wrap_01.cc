@@ -27,7 +27,7 @@
 
 
 void
-test(PETScWrappers::VectorBase &v, PETScWrappers::MPI::Vector &w)
+test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
   for (unsigned int i = 0; i < v.size(); ++i)
@@ -45,7 +45,7 @@ test(PETScWrappers::VectorBase &v, PETScWrappers::MPI::Vector &w)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -69,7 +69,7 @@ main(int argc, char **argv)
 
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

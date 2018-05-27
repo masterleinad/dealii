@@ -52,12 +52,12 @@ PolynomialsNedelec<dim>::create_polynomials(const unsigned int k)
 template <int dim>
 void
 PolynomialsNedelec<dim>::compute(
-  const Point<dim> &           unit_point,
-  std::vector<Tensor<1, dim>> &values,
-  std::vector<Tensor<2, dim>> &grads,
-  std::vector<Tensor<3, dim>> &grad_grads,
-  std::vector<Tensor<4, dim>> &third_derivatives,
-  std::vector<Tensor<5, dim>> &fourth_derivatives) const
+  const Point<dim>&            unit_point,
+  std::vector<Tensor<1, dim>>& values,
+  std::vector<Tensor<2, dim>>& grads,
+  std::vector<Tensor<3, dim>>& grad_grads,
+  std::vector<Tensor<4, dim>>& third_derivatives,
+  std::vector<Tensor<5, dim>>& fourth_derivatives) const
 {
   Assert(values.size() == n_pols || values.size() == 0,
          ExcDimensionMismatch(values.size(), n_pols));
@@ -80,7 +80,7 @@ PolynomialsNedelec<dim>::compute(
   // and second derivatives vectors of
   // <tt>polynomial_space</tt> at
   // <tt>unit_point</tt>
-  const unsigned int &n_basis = polynomial_space.n();
+  const unsigned int& n_basis = polynomial_space.n();
   std::vector<double> unit_point_values((values.size() == 0) ? 0 : n_basis);
   std::vector<Tensor<1, dim>> unit_point_grads((grads.size() == 0) ? 0 :
                                                                      n_basis);

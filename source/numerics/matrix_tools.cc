@@ -80,10 +80,10 @@ namespace MatrixTools
   template <typename number>
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, number> &boundary_values,
-    SparseMatrix<number> &                           matrix,
-    Vector<number> &                                 solution,
-    Vector<number> &                                 right_hand_side,
+    const std::map<types::global_dof_index, number>& boundary_values,
+    SparseMatrix<number>&                            matrix,
+    Vector<number>&                                  solution,
+    Vector<number>&                                  right_hand_side,
     const bool                                       eliminate_columns)
   {
     Assert(matrix.n() == right_hand_side.size(),
@@ -239,10 +239,10 @@ namespace MatrixTools
   template <typename number>
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, number> &boundary_values,
-    BlockSparseMatrix<number> &                      matrix,
-    BlockVector<number> &                            solution,
-    BlockVector<number> &                            right_hand_side,
+    const std::map<types::global_dof_index, number>& boundary_values,
+    BlockSparseMatrix<number>&                       matrix,
+    BlockVector<number>&                             solution,
+    BlockVector<number>&                             right_hand_side,
     const bool                                       eliminate_columns)
   {
     const unsigned int blocks = matrix.n_block_rows();
@@ -302,7 +302,7 @@ namespace MatrixTools
     typename std::map<types::global_dof_index, number>::const_iterator
       dof  = boundary_values.begin(),
       endd = boundary_values.end();
-    const BlockSparsityPattern &sparsity_pattern =
+    const BlockSparsityPattern& sparsity_pattern =
       matrix.get_sparsity_pattern();
 
     // pointer to the mapping between
@@ -310,7 +310,7 @@ namespace MatrixTools
     // the row and column mappings are
     // equal, store a pointer on only
     // one of them
-    const BlockIndices &index_mapping = sparsity_pattern.get_column_indices();
+    const BlockIndices& index_mapping = sparsity_pattern.get_column_indices();
 
     // now loop over all boundary dofs
     for (; dof != endd; ++dof)
@@ -416,12 +416,12 @@ namespace MatrixTools
               {
                 // get pointers to the sparsity patterns of this block and of
                 // the transpose one
-                const SparsityPattern &this_sparsity =
+                const SparsityPattern& this_sparsity =
                   sparsity_pattern.block(block_row, block_index.first);
 
-                SparseMatrix<number> &this_matrix =
+                SparseMatrix<number>& this_matrix =
                   matrix.block(block_row, block_index.first);
-                SparseMatrix<number> &transpose_matrix =
+                SparseMatrix<number>& transpose_matrix =
                   matrix.block(block_index.first, block_row);
 
                 // traverse the row of the transpose block to find the
@@ -502,10 +502,10 @@ namespace MatrixTools
   template <typename number>
   void
   local_apply_boundary_values(
-    const std::map<types::global_dof_index, number> &boundary_values,
-    const std::vector<types::global_dof_index> &     local_dof_indices,
-    FullMatrix<number> &                             local_matrix,
-    Vector<number> &                                 local_rhs,
+    const std::map<types::global_dof_index, number>& boundary_values,
+    const std::vector<types::global_dof_index>&      local_dof_indices,
+    FullMatrix<number>&                              local_matrix,
+    Vector<number>&                                  local_rhs,
     const bool                                       eliminate_columns)
   {
     Assert(local_dof_indices.size() == local_matrix.m(),

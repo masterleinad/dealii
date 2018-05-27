@@ -51,16 +51,16 @@ main()
   std::vector<std::pair<unsigned int, double>> matches;
 
   // Get points within ball
-  for (auto &p : test_points)
+  for (auto& p : test_points)
     {
-      for (auto &r : radii)
+      for (auto& r : radii)
         {
           auto matches = kdtree.get_points_within_ball(p, r, true);
 
           deallog << std::endl
                   << "At distance less than " << r << " from " << p
                   << " we have:" << std::endl;
-          for (auto &m : matches)
+          for (auto& m : matches)
             {
               deallog << "points[" << m.first << "] = " << points[m.first]
                       << ", distance: " << m.second << std::endl;

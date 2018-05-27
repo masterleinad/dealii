@@ -341,8 +341,8 @@ public:
    * responsibility to guarantee that the lifetime of the two arguments is at
    * least as long as that of the solver object.
    */
-  Solver(SolverControl &           solver_control,
-         VectorMemory<VectorType> &vector_memory);
+  Solver(SolverControl&            solver_control,
+         VectorMemory<VectorType>& vector_memory);
 
   /**
    * Constructor. Takes a control object which evaluates the conditions for
@@ -354,7 +354,7 @@ public:
    * responsibility to guarantee that the lifetime of the argument is at least
    * as long as that of the solver object.
    */
-  Solver(SolverControl &solver_control);
+  Solver(SolverControl& solver_control);
 
   /**
    * Connect a function object that will be called periodically within
@@ -385,11 +385,10 @@ public:
    * library for more information on connection management.
    */
   boost::signals2::connection
-  connect(
-    const std::function<SolverControl::State(const unsigned int iteration,
-                                             const double       check_value,
-                                             const VectorType &current_iterate)>
-      &slot);
+  connect(const std::function<
+          SolverControl::State(const unsigned int iteration,
+                               const double       check_value,
+                               const VectorType&  current_iterate)>& slot);
 
 
 
@@ -403,7 +402,7 @@ protected:
   /**
    * A reference to an object that provides memory for auxiliary vectors.
    */
-  VectorMemory<VectorType> &memory;
+  VectorMemory<VectorType>& memory;
 
 private:
   /**
@@ -452,7 +451,7 @@ protected:
   boost::signals2::signal<SolverControl::State(
                             const unsigned int iteration,
                             const double       check_value,
-                            const VectorType & current_iterate),
+                            const VectorType&  current_iterate),
                           StateCombiner>
     iteration_status;
 };
@@ -498,8 +497,8 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
 
 
 template <class VectorType>
-inline Solver<VectorType>::Solver(SolverControl &           solver_control,
-                                  VectorMemory<VectorType> &vector_memory) :
+inline Solver<VectorType>::Solver(SolverControl&            solver_control,
+                                  VectorMemory<VectorType>& vector_memory) :
   memory(vector_memory)
 {
   // connect the solver control object to the signal. SolverControl::check
@@ -515,7 +514,7 @@ inline Solver<VectorType>::Solver(SolverControl &           solver_control,
 
 
 template <class VectorType>
-inline Solver<VectorType>::Solver(SolverControl &solver_control) :
+inline Solver<VectorType>::Solver(SolverControl& solver_control) :
   // use the static memory object this class owns
   memory(static_vector_memory)
 {
@@ -536,8 +535,8 @@ inline boost::signals2::connection
 Solver<VectorType>::connect(
   const std::function<SolverControl::State(const unsigned int iteration,
                                            const double       check_value,
-                                           const VectorType & current_iterate)>
-    &slot)
+                                           const VectorType&  current_iterate)>&
+    slot)
 {
   return iteration_status.connect(slot);
 }

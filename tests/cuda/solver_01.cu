@@ -29,7 +29,7 @@
 #include "../tests.h"
 
 void
-test(Utilities::CUDA::Handle &cuda_handle)
+test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Build the sparse matrix on the host
   const unsigned int   problem_size = 10;

@@ -80,7 +80,7 @@ test()
     (update_gradients | update_JxW_values);
 
   data.cell_vectorization_category.resize(tria.n_active_cells());
-  for (const auto &cell : tria.active_cell_iterators())
+  for (const auto& cell : tria.active_cell_iterators())
     if (cell->is_locally_owned())
       data.cell_vectorization_category[cell->active_cell_index()] =
         cell->center()[1] * 10.;
@@ -122,7 +122,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(
     argc, argv, testing_max_num_threads());

@@ -48,7 +48,7 @@ namespace internal
     template <int structdim, int spacedim, typename Number>
     void
     MappingInfoStorage<structdim, spacedim, Number>::QuadratureDescriptor ::
-      initialize(const Quadrature<1> &quadrature_1d,
+      initialize(const Quadrature<1>& quadrature_1d,
                  const UpdateFlags    update_flags_inner_faces)
     {
       Assert(structdim + 1 <= spacedim ||
@@ -137,8 +137,8 @@ namespace internal
     template <typename StreamType>
     void
     MappingInfoStorage<structdim, spacedim, Number>::print_memory_consumption(
-      StreamType &    out,
-      const SizeInfo &task_info) const
+      StreamType&     out,
+      const SizeInfo& task_info) const
     {
       // print_memory_statistics involves global communication, so we can
       // disable the check here only if no processor has any such data
@@ -215,7 +215,7 @@ namespace internal
     UpdateFlags
     MappingInfo<dim, Number>::compute_update_flags(
       const UpdateFlags                              update_flags,
-      const std::vector<dealii::hp::QCollection<1>> &quad)
+      const std::vector<dealii::hp::QCollection<1>>& quad)
     {
       // this class is build around the evaluation of jacobians, so compute
       // them in any case. The Jacobians will be inverted manually. Since we
@@ -261,12 +261,12 @@ namespace internal
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize(
-      const dealii::Triangulation<dim> &                         tria,
-      const std::vector<std::pair<unsigned int, unsigned int>> & cells,
-      const FaceInfo<VectorizedArray<Number>::n_array_elements> &face_info,
-      const std::vector<unsigned int> &              active_fe_index,
-      const Mapping<dim> &                           mapping,
-      const std::vector<dealii::hp::QCollection<1>> &quad,
+      const dealii::Triangulation<dim>&                          tria,
+      const std::vector<std::pair<unsigned int, unsigned int>>&  cells,
+      const FaceInfo<VectorizedArray<Number>::n_array_elements>& face_info,
+      const std::vector<unsigned int>&               active_fe_index,
+      const Mapping<dim>&                            mapping,
+      const std::vector<dealii::hp::QCollection<1>>& quad,
       const UpdateFlags                              update_flags_cells,
       const UpdateFlags update_flags_boundary_faces,
       const UpdateFlags update_flags_inner_faces,
@@ -299,7 +299,7 @@ namespace internal
     {
       template <int dim>
       double
-      get_jacobian_size(const dealii::Triangulation<dim> &tria)
+      get_jacobian_size(const dealii::Triangulation<dim>& tria)
       {
         if (tria.n_cells() == 0)
           return 1;
@@ -373,13 +373,13 @@ namespace internal
       template <int dim, typename Number>
       void
       evaluate_on_cell(
-        const dealii::Triangulation<dim> &           tria,
-        const std::pair<unsigned int, unsigned int> *cells,
+        const dealii::Triangulation<dim>&            tria,
+        const std::pair<unsigned int, unsigned int>* cells,
         const unsigned int                           my_q,
-        GeometryType &                               cell_t_prev,
+        GeometryType&                                cell_t_prev,
         GeometryType (&cell_t)[VectorizedArray<Number>::n_array_elements],
-        dealii::FEValues<dim, dim> &fe_val,
-        LocalData<dim, Number> &    cell_data)
+        dealii::FEValues<dim, dim>& fe_val,
+        LocalData<dim, Number>&     cell_data)
       {
         const unsigned int n_q_points   = fe_val.n_quadrature_points;
         const UpdateFlags  update_flags = fe_val.get_update_flags();
@@ -403,7 +403,7 @@ namespace internal
             if (update_flags & update_quadrature_points)
               for (unsigned int q = 0; q < n_q_points; ++q)
                 {
-                  const Point<dim> &point = fe_val.quadrature_point(q);
+                  const Point<dim>& point = fe_val.quadrature_point(q);
                   for (unsigned int d = 0; d < dim; ++d)
                     cell_data.quadrature_points[q][d][j] = point[d];
                 }
@@ -425,7 +425,7 @@ namespace internal
                   cell_t[j] = cell_t[j - 1];
               }
 
-            const DerivativeForm<1, dim, dim> &jac_0 = fe_val.jacobian(0);
+            const DerivativeForm<1, dim, dim>& jac_0 = fe_val.jacobian(0);
 
             if (my_q == 0)
               {
@@ -436,7 +436,7 @@ namespace internal
                     bool jacobian_constant = true;
                     for (unsigned int q = 1; q < n_q_points; ++q)
                       {
-                        const DerivativeForm<1, dim, dim> &jac =
+                        const DerivativeForm<1, dim, dim>& jac =
                           fe_val.jacobian(q);
                         for (unsigned int d = 0; d < dim; ++d)
                           for (unsigned int e = 0; e < dim; ++e)
@@ -471,9 +471,9 @@ namespace internal
                     if (cell_cartesian == false && n_q_points == 1 &&
                         update_flags & update_jacobian_grads)
                       {
-                        const DerivativeForm<1, dim, dim> &jac =
+                        const DerivativeForm<1, dim, dim>& jac =
                           fe_val.jacobian(0);
-                        const DerivativeForm<2, dim, dim> &jacobian_grad =
+                        const DerivativeForm<2, dim, dim>& jacobian_grad =
                           fe_val.jacobian_grad(0);
                         for (unsigned int d = 0; d < dim; ++d)
                           for (unsigned int e = 0; e < dim; ++e)
@@ -530,7 +530,7 @@ namespace internal
                 // compress out very small numbers which are only noise. Then it
                 // is cleaner to use zero straight away (though it does not save
                 // any memory)
-                const DerivativeForm<1, dim, dim> &jac = fe_val.jacobian(q);
+                const DerivativeForm<1, dim, dim>& jac = fe_val.jacobian(q);
                 for (unsigned int d = 0; d < dim; ++d)
                   for (unsigned int e = 0; e < dim; ++e)
                     cell_data.general_jac[q][d][e][j] =
@@ -544,7 +544,7 @@ namespace internal
                 // or floats. to this end, copy the gradients first
                 if (update_flags & update_jacobian_grads)
                   {
-                    const DerivativeForm<2, dim, dim> &jacobian_grad =
+                    const DerivativeForm<2, dim, dim>& jacobian_grad =
                       fe_val.jacobian_grad(q);
                     for (unsigned int d = 0; d < dim; ++d)
                       for (unsigned int e = 0; e < dim; ++e)
@@ -565,15 +565,15 @@ namespace internal
       void
       initialize_cell_range(
         const std::pair<unsigned int, unsigned int>               cell_range,
-        const dealii::Triangulation<dim> &                        tria,
-        const std::vector<std::pair<unsigned int, unsigned int>> &cells,
-        const std::vector<unsigned int> &              active_fe_index,
-        const Mapping<dim> &                           mapping,
-        const std::vector<dealii::hp::QCollection<1>> &quad,
+        const dealii::Triangulation<dim>&                         tria,
+        const std::vector<std::pair<unsigned int, unsigned int>>& cells,
+        const std::vector<unsigned int>&               active_fe_index,
+        const Mapping<dim>&                            mapping,
+        const std::vector<dealii::hp::QCollection<1>>& quad,
         const UpdateFlags                              update_flags,
-        MappingInfo<dim, Number> &                     mapping_info,
+        MappingInfo<dim, Number>&                      mapping_info,
         std::pair<std::vector<MappingInfoStorage<dim, dim, Number>>,
-                  CompressedCellData<dim, Number>> &   data)
+                  CompressedCellData<dim, Number>>&    data)
       {
         FE_Nothing<dim> dummy_fe;
 
@@ -664,7 +664,7 @@ namespace internal
                   dummy_fe,
                   mapping_info.cell_data[my_q].descriptor[fe_index].quadrature,
                   update_flags_feval));
-              dealii::FEValues<dim> &fe_val = *fe_values[my_q][fe_index];
+              dealii::FEValues<dim>& fe_val = *fe_values[my_q][fe_index];
               cell_data.resize(n_q_points);
 
               // if the fe index has changed from the previous cell, set the
@@ -756,9 +756,9 @@ namespace internal
                 {
                   for (unsigned int q = 0; q < n_q_points; ++q)
                     {
-                      Tensor<2, dim, VectorizedArray<Number>> &jac =
+                      Tensor<2, dim, VectorizedArray<Number>>& jac =
                         cell_data.general_jac[q];
-                      Tensor<3, dim, VectorizedArray<Number>> &jacobian_grad =
+                      Tensor<3, dim, VectorizedArray<Number>>& jacobian_grad =
                         cell_data.general_jac_grad[q];
                       for (unsigned int j = 0;
                            j < VectorizedArray<Number>::n_array_elements;
@@ -836,7 +836,7 @@ namespace internal
 
                           // the diagonal part of Jacobian gradient comes first
                           Tensor<1,
-                                 dim *(dim + 1) / 2,
+                                 dim*(dim + 1) / 2,
                                  Tensor<1, dim, VectorizedArray<Number>>>
                             final_grad;
                           for (unsigned int d = 0; d < dim; ++d)
@@ -900,9 +900,9 @@ namespace internal
 
       template <typename CONTAINER>
       void
-      merge_compressed_data(const CONTAINER &          source,
-                            CONTAINER &                destination,
-                            std::vector<unsigned int> &indices)
+      merge_compressed_data(const CONTAINER&           source,
+                            CONTAINER&                 destination,
+                            std::vector<unsigned int>& indices)
       {
         indices.resize(source.size());
         typename CONTAINER::iterator lookup = destination.begin();
@@ -925,11 +925,11 @@ namespace internal
       template <int structdim, int dim, typename Number>
       void
       copy_data(const unsigned int                          first_cell,
-                const std::array<std::size_t, 2> &          data_shift,
-                const std::vector<unsigned int> &           indices_compressed,
-                const std::vector<GeometryType> &           cell_type,
-                MappingInfoStorage<structdim, dim, Number> &data_cells_local,
-                MappingInfoStorage<structdim, dim, Number> &data_cells)
+                const std::array<std::size_t, 2>&           data_shift,
+                const std::vector<unsigned int>&            indices_compressed,
+                const std::vector<GeometryType>&            cell_type,
+                MappingInfoStorage<structdim, dim, Number>& data_cells_local,
+                MappingInfoStorage<structdim, dim, Number>& data_cells)
       {
         // Copy the index offsets and shift by the appropriate value
         for (unsigned int lcell = 0;
@@ -950,9 +950,9 @@ namespace internal
         // Copy quadrature points
         if (data_cells.quadrature_point_offsets.empty() == false)
           {
-            Point<dim, VectorizedArray<Number>> *out_point =
+            Point<dim, VectorizedArray<Number>>* out_point =
               &data_cells.quadrature_points[data_shift[1]];
-            for (const Point<dim, VectorizedArray<Number>> *point =
+            for (const Point<dim, VectorizedArray<Number>>* point =
                    data_cells_local.quadrature_points.begin();
                  point != data_cells_local.quadrature_points.end();
                  ++point, ++out_point)
@@ -998,11 +998,11 @@ namespace internal
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize_cells(
-      const dealii::Triangulation<dim> &                        tria,
-      const std::vector<std::pair<unsigned int, unsigned int>> &cells,
-      const std::vector<unsigned int> &                         active_fe_index,
-      const Mapping<dim> &                                      mapping,
-      const std::vector<dealii::hp::QCollection<1>> &           quad,
+      const dealii::Triangulation<dim>&                         tria,
+      const std::vector<std::pair<unsigned int, unsigned int>>& cells,
+      const std::vector<unsigned int>&                          active_fe_index,
+      const Mapping<dim>&                                       mapping,
+      const std::vector<dealii::hp::QCollection<1>>&            quad,
       const UpdateFlags update_flags_input)
     {
       const unsigned int n_quads = quad.size();
@@ -1129,7 +1129,7 @@ namespace internal
           // other tasks can already start copying the non-constant data)
           if (my_q == 0)
             {
-              for (auto &it : data_cells_local[0].second.data)
+              for (auto& it : data_cells_local[0].second.data)
                 {
                   Tensor<2, dim, VectorizedArray<Number>> jac;
                   for (unsigned int d = 0; d < dim; ++d)
@@ -1236,16 +1236,16 @@ namespace internal
       void
       initialize_face_range(
         const std::pair<unsigned int, unsigned int>               face_range,
-        const dealii::Triangulation<dim> &                        tria,
-        const std::vector<std::pair<unsigned int, unsigned int>> &cells,
+        const dealii::Triangulation<dim>&                         tria,
+        const std::vector<std::pair<unsigned int, unsigned int>>& cells,
         const std::vector<
-          FaceToCellTopology<VectorizedArray<Number>::n_array_elements>> &faces,
-        const Mapping<dim> &                        mapping,
+          FaceToCellTopology<VectorizedArray<Number>::n_array_elements>>& faces,
+        const Mapping<dim>&                         mapping,
         const UpdateFlags                           update_flags_boundary,
         const UpdateFlags                           update_flags_inner,
-        MappingInfo<dim, Number> &                  mapping_info,
+        MappingInfo<dim, Number>&                   mapping_info,
         std::pair<std::vector<MappingInfoStorage<dim - 1, dim, Number>>,
-                  CompressedFaceData<dim, Number>> &data)
+                  CompressedFaceData<dim, Number>>& data)
       {
         FE_Nothing<dim> dummy_fe;
 
@@ -1281,7 +1281,7 @@ namespace internal
               // currently only non-hp case...
               Assert(mapping_info.face_data[my_q].descriptor.size() == 1,
                      ExcNotImplemented());
-              const Quadrature<dim - 1> &quadrature =
+              const Quadrature<dim - 1>& quadrature =
                 mapping_info.face_data[my_q].descriptor[0].quadrature;
 
               const bool is_boundary_face =
@@ -1296,7 +1296,7 @@ namespace internal
                 fe_face_values_container[my_q][0].reset(new FEFaceValues<dim>(
                   mapping, dummy_fe, quadrature, update_flags_inner));
 
-              FEFaceValues<dim> &fe_face_values =
+              FEFaceValues<dim>& fe_face_values =
                 is_boundary_face ? *fe_boundary_face_values_container[my_q][0] :
                                    *fe_face_values_container[my_q][0];
               const unsigned int n_q_points =
@@ -1425,7 +1425,7 @@ namespace internal
                                 cells[faces[face].cells_exterior[v]].first,
                                 cells[faces[face].cells_exterior[v]].second);
 
-                      const FEValuesBase<dim> *actual_fe_face_values = nullptr;
+                      const FEValuesBase<dim>* actual_fe_face_values = nullptr;
                       if (faces[face].subface_index >=
                           GeometryInfo<dim>::max_children_per_cell)
                         {
@@ -1614,10 +1614,10 @@ namespace internal
       compute_normal_times_jacobian(
         const unsigned int               first_face,
         const unsigned int               last_face,
-        const std::vector<GeometryType> &face_type,
+        const std::vector<GeometryType>& face_type,
         const std::vector<
-          FaceToCellTopology<VectorizedArray<Number>::n_array_elements>> &faces,
-        MappingInfoStorage<dim - 1, dim, Number> &data_faces)
+          FaceToCellTopology<VectorizedArray<Number>::n_array_elements>>& faces,
+        MappingInfoStorage<dim - 1, dim, Number>& data_faces)
       {
         for (unsigned int face = first_face; face < last_face; ++face)
           {
@@ -1648,12 +1648,12 @@ namespace internal
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize_faces(
-      const dealii::Triangulation<dim> &                        tria,
-      const std::vector<std::pair<unsigned int, unsigned int>> &cells,
+      const dealii::Triangulation<dim>&                         tria,
+      const std::vector<std::pair<unsigned int, unsigned int>>& cells,
       const std::vector<
-        FaceToCellTopology<VectorizedArray<Number>::n_array_elements>> &faces,
-      const Mapping<dim> &                                              mapping,
-      const std::vector<dealii::hp::QCollection<1>> &                   quad,
+        FaceToCellTopology<VectorizedArray<Number>::n_array_elements>>& faces,
+      const Mapping<dim>&                                               mapping,
+      const std::vector<dealii::hp::QCollection<1>>&                    quad,
       const UpdateFlags update_flags_boundary_faces,
       const UpdateFlags update_flags_inner_faces)
     {
@@ -1801,7 +1801,7 @@ namespace internal
           if (my_q == 0)
             {
               const Number jac_size = get_jacobian_size(tria);
-              for (auto &it : data_faces_local[0].second.data)
+              for (auto& it : data_faces_local[0].second.data)
                 {
                   // JxW values; invert previously applied scaling
                   for (unsigned int v = 0;
@@ -1864,10 +1864,10 @@ namespace internal
     template <int dim, typename Number>
     void
     MappingInfo<dim, Number>::initialize_faces_by_cells(
-      const dealii::Triangulation<dim> &                        tria,
-      const std::vector<std::pair<unsigned int, unsigned int>> &cells,
-      const Mapping<dim> &                                      mapping,
-      const std::vector<dealii::hp::QCollection<1>> &           quad,
+      const dealii::Triangulation<dim>&                         tria,
+      const std::vector<std::pair<unsigned int, unsigned int>>& cells,
+      const Mapping<dim>&                                       mapping,
+      const std::vector<dealii::hp::QCollection<1>>&            quad,
       const UpdateFlags update_flags_faces_by_cells)
     {
       if (update_flags_faces_by_cells == update_default)
@@ -1968,7 +1968,7 @@ namespace internal
                     dummy_fe,
                     face_data_by_cells[my_q].descriptor[fe_index].quadrature,
                     update_flags));
-              dealii::FEFaceValues<dim> &fe_val =
+              dealii::FEFaceValues<dim>& fe_val =
                 *fe_face_values[my_q][fe_index];
               const unsigned int offset =
                 face_data_by_cells[my_q]
@@ -2094,8 +2094,8 @@ namespace internal
     template <typename StreamType>
     void
     MappingInfo<dim, Number>::print_memory_consumption(
-      StreamType &    out,
-      const SizeInfo &task_info) const
+      StreamType&     out,
+      const SizeInfo& task_info) const
     {
       out << "    Cell types:                      ";
       task_info.print_memory_statistics(
@@ -2124,8 +2124,8 @@ namespace internal
 
     template <typename Number>
     bool
-    FPArrayComparator<Number>::operator()(const std::vector<Number> &v1,
-                                          const std::vector<Number> &v2) const
+    FPArrayComparator<Number>::operator()(const std::vector<Number>& v1,
+                                          const std::vector<Number>& v2) const
     {
       const unsigned int s1 = v1.size(), s2 = v2.size();
       if (s1 < s2)
@@ -2146,8 +2146,8 @@ namespace internal
     template <typename Number>
     bool
     FPArrayComparator<Number>::operator()(
-      const Tensor<1, VectorizedArray<Number>::n_array_elements, Number> &t1,
-      const Tensor<1, VectorizedArray<Number>::n_array_elements, Number> &t2)
+      const Tensor<1, VectorizedArray<Number>::n_array_elements, Number>& t1,
+      const Tensor<1, VectorizedArray<Number>::n_array_elements, Number>& t2)
       const
     {
       for (unsigned int k = 0; k < VectorizedArray<Number>::n_array_elements;
@@ -2165,14 +2165,14 @@ namespace internal
     template <int dim>
     bool
     FPArrayComparator<Number>::operator()(
-      const Tensor<1,
-                   dim,
-                   Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>
-        &t1,
-      const Tensor<1,
-                   dim,
-                   Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>
-        &t2) const
+      const Tensor<
+        1,
+        dim,
+        Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>& t1,
+      const Tensor<
+        1,
+        dim,
+        Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>& t2) const
     {
       for (unsigned int d = 0; d < dim; ++d)
         for (unsigned int k = 0; k < VectorizedArray<Number>::n_array_elements;
@@ -2190,14 +2190,14 @@ namespace internal
     template <int dim>
     bool
     FPArrayComparator<Number>::operator()(
-      const Tensor<2,
-                   dim,
-                   Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>
-        &t1,
-      const Tensor<2,
-                   dim,
-                   Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>
-        &t2) const
+      const Tensor<
+        2,
+        dim,
+        Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>& t1,
+      const Tensor<
+        2,
+        dim,
+        Tensor<1, VectorizedArray<Number>::n_array_elements, Number>>& t2) const
     {
       for (unsigned int d = 0; d < dim; ++d)
         for (unsigned int e = 0; e < dim; ++e)

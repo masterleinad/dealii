@@ -56,7 +56,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
     const double   r    = dist.norm();
@@ -64,7 +64,7 @@ public:
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const
+  gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
     const double   r    = dist.norm();
@@ -85,7 +85,7 @@ public:
   }
 
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim> &p, const unsigned int component = 0) const
+  hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     const Tensor<1, dim> dist = p - origin;
     const double         r    = dist.norm();
@@ -129,13 +129,13 @@ public:
 
 private:
   virtual double
-  svalue(const std::array<double, dim> &sp, const unsigned int) const
+  svalue(const std::array<double, dim>& sp, const unsigned int) const
   {
     return sp[0] * sp[0] * std::cos(sp[1]) * std::sin(sp[2]);
   }
 
   virtual std::array<double, dim>
-  sgradient(const std::array<double, dim> &sp, const unsigned int) const
+  sgradient(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, dim> res;
     const double            r     = sp[0];
@@ -148,7 +148,7 @@ private:
   }
 
   virtual std::array<double, 6>
-  shessian(const std::array<double, dim> &sp, const unsigned int) const
+  shessian(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, 6> res;
     const double          r     = sp[0];

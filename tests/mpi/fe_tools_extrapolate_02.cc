@@ -23,9 +23,9 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe1,
-      const FiniteElement<dim> &fe2,
-      const std::string &       name)
+check(const FiniteElement<dim>& fe1,
+      const FiniteElement<dim>& fe2,
+      const std::string&        name)
 {
   if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
@@ -49,7 +49,7 @@ check(const FiniteElement<dim> &fe1,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

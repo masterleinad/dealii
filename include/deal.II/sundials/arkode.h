@@ -345,19 +345,19 @@ namespace SUNDIALS
        */
       AdditionalData(
         // Initial parameters
-        const double &initial_time      = 0.0,
-        const double &final_time        = 1.0,
-        const double &initial_step_size = 1e-2,
-        const double &output_period     = 1e-1,
+        const double& initial_time      = 0.0,
+        const double& final_time        = 1.0,
+        const double& initial_step_size = 1e-2,
+        const double& output_period     = 1e-1,
         // Running parameters
-        const double &      minimum_step_size                     = 1e-6,
-        const unsigned int &maximum_order                         = 5,
-        const unsigned int &maximum_non_linear_iterations         = 10,
+        const double&       minimum_step_size                     = 1e-6,
+        const unsigned int& maximum_order                         = 5,
+        const unsigned int& maximum_non_linear_iterations         = 10,
         const bool          implicit_function_is_linear           = false,
         const bool          implicit_function_is_time_independent = false,
         // Error parameters
-        const double &absolute_tolerance = 1e-6,
-        const double &relative_tolerance = 1e-5) :
+        const double& absolute_tolerance = 1e-6,
+        const double& relative_tolerance = 1e-5) :
         initial_time(initial_time),
         final_time(final_time),
         initial_step_size(initial_step_size),
@@ -415,7 +415,7 @@ namespace SUNDIALS
        * using `prm`.
        */
       void
-      add_parameters(ParameterHandler &prm)
+      add_parameters(ParameterHandler& prm)
       {
         prm.add_parameter("Initial time", initial_time);
         prm.add_parameter("Final time", final_time);
@@ -508,7 +508,7 @@ namespace SUNDIALS
      * @param data ARKode configuration data
      * @param mpi_comm MPI communicator
      */
-    ARKode(const AdditionalData &data     = AdditionalData(),
+    ARKode(const AdditionalData& data     = AdditionalData(),
            const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**
@@ -521,7 +521,7 @@ namespace SUNDIALS
      * number of computed steps.
      */
     unsigned int
-    solve_ode(VectorType &solution);
+    solve_ode(VectorType& solution);
 
     /**
      * Clear internal memory and start with clean objects. This function is
@@ -538,13 +538,13 @@ namespace SUNDIALS
      * @param[in,out] y   The new initial solution
      */
     void
-    reset(const double &t, const double &h, const VectorType &y);
+    reset(const double& t, const double& h, const VectorType& y);
 
     /**
      * A function object that users need to supply and that is intended to
      * reinit the given vector.
      */
-    std::function<void(VectorType &)> reinit_vector;
+    std::function<void(VectorType&)> reinit_vector;
 
     /**
      * A function object that users may supply and that is intended to compute
@@ -563,7 +563,7 @@ namespace SUNDIALS
      * assertion will be thrown.
      */
     std::function<
-      int(const double t, const VectorType &y, VectorType &explicit_f)>
+      int(const double t, const VectorType& y, VectorType& explicit_f)>
       explicit_function;
 
     /**
@@ -582,7 +582,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an
      * assertion will be thrown.
      */
-    std::function<int(const double t, const VectorType &y, VectorType &res)>
+    std::function<int(const double t, const VectorType& y, VectorType& res)>
       implicit_function;
 
     /**
@@ -672,9 +672,9 @@ namespace SUNDIALS
     std::function<int(const int         convfail,
                       const double      t,
                       const double      gamma,
-                      const VectorType &ypred,
-                      const VectorType &fpred,
-                      bool &            j_is_current)>
+                      const VectorType& ypred,
+                      const VectorType& fpred,
+                      bool&             j_is_current)>
       setup_jacobian;
 
     /**
@@ -723,10 +723,10 @@ namespace SUNDIALS
      */
     std::function<int(const double      t,
                       const double      gamma,
-                      const VectorType &ycur,
-                      const VectorType &fcur,
-                      const VectorType &rhs,
-                      VectorType &      dst)>
+                      const VectorType& ycur,
+                      const VectorType& fcur,
+                      const VectorType& rhs,
+                      VectorType&       dst)>
       solve_jacobian_system;
 
 
@@ -783,7 +783,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an
      * assertion will be thrown.
      */
-    std::function<int(const VectorType &rhs, VectorType &dst)>
+    std::function<int(const VectorType& rhs, VectorType& dst)>
       solve_mass_system;
 
     /**
@@ -801,7 +801,7 @@ namespace SUNDIALS
      * computed.
      */
     std::function<void(const double       t,
-                       const VectorType & sol,
+                       const VectorType&  sol,
                        const unsigned int step_number)>
       output_step;
 
@@ -822,7 +822,7 @@ namespace SUNDIALS
      * The default implementation simply returns `false`, i.e., no restart is
      * performed during the evolution.
      */
-    std::function<bool(const double t, VectorType &sol)> solver_should_restart;
+    std::function<bool(const double t, VectorType& sol)> solver_should_restart;
 
     /**
      * A function object that users may supply and that is intended to return a
@@ -830,7 +830,7 @@ namespace SUNDIALS
      * vector norm. The implementation of this function is optional, and it is
      * used only if implemented.
      */
-    std::function<VectorType &()> get_local_tolerances;
+    std::function<VectorType&()> get_local_tolerances;
 
     /**
      * Handle ARKode exceptions.
@@ -868,7 +868,7 @@ namespace SUNDIALS
     /**
      * ARKode memory object.
      */
-    void *arkode_mem;
+    void* arkode_mem;
 
     /**
      * ARKode solution vector.

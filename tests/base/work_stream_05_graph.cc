@@ -37,15 +37,13 @@ struct CopyData
 
 
 void
-worker(const std::vector<unsigned int>::iterator &i,
-       ScratchData &,
-       CopyData &ad)
+worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
 {
   ad.computed = *i * 2;
 }
 
 void
-copier(const CopyData &ad)
+copier(const CopyData& ad)
 {
   // write into the five elements of 'result' starting at
   // ad.computed%result.size()
@@ -56,7 +54,7 @@ copier(const CopyData &ad)
 
 // the function that computes conflicts
 std::vector<types::global_dof_index>
-conflictor(const std::vector<unsigned int>::iterator &i)
+conflictor(const std::vector<unsigned int>::iterator& i)
 {
   std::vector<types::global_dof_index> conflicts;
   const unsigned int                   ad_computed = *i * 2;
@@ -80,7 +78,7 @@ test()
       v.begin(),
       v.end(),
       std::function<std::vector<types::global_dof_index>(
-        const std::vector<unsigned int>::iterator &)>(&conflictor)),
+        const std::vector<unsigned int>::iterator&)>(&conflictor)),
     &worker,
     &copier,
     ScratchData(),

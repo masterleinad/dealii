@@ -31,26 +31,26 @@ struct LeftVector
   typedef double value_type;
   value_type     value;
 
-  LeftVector &
+  LeftVector&
   operator=(value_type new_value)
   {
     value = new_value;
     return *this;
   }
-  LeftVector &
+  LeftVector&
   operator*=(value_type scale)
   {
     value *= scale;
     return *this;
   }
-  LeftVector &
+  LeftVector&
   operator/=(value_type scale)
   {
     value /= scale;
     return *this;
   }
-  LeftVector &
-  operator+=(const LeftVector &u)
+  LeftVector&
+  operator+=(const LeftVector& u)
   {
     value += u.value;
     return *this;
@@ -72,26 +72,26 @@ struct RightVector
   typedef double value_type;
   value_type     value;
 
-  RightVector &
+  RightVector&
   operator=(value_type new_value)
   {
     value = new_value;
     return *this;
   }
-  RightVector &
+  RightVector&
   operator*=(value_type scale)
   {
     value *= scale;
     return *this;
   }
-  RightVector &
+  RightVector&
   operator/=(value_type scale)
   {
     value /= scale;
     return *this;
   }
-  RightVector &
-  operator+=(const RightVector &u)
+  RightVector&
+  operator+=(const RightVector& u)
   {
     value += u.value;
     return *this;
@@ -117,32 +117,32 @@ main()
 
   typedef dealii::internal::LinearOperatorImplementation::EmptyPayload Payload;
   LinearOperator<LeftVector, RightVector, Payload> multiply2;
-  multiply2.vmult = [](LeftVector &v, const RightVector &u) {
+  multiply2.vmult = [](LeftVector& v, const RightVector& u) {
     v.value = 2 * u.value;
   };
-  multiply2.vmult_add = [](LeftVector &v, const RightVector &u) {
+  multiply2.vmult_add = [](LeftVector& v, const RightVector& u) {
     v.value += 2 * u.value;
   };
-  multiply2.Tvmult = [](RightVector &v, const LeftVector &u) {
+  multiply2.Tvmult = [](RightVector& v, const LeftVector& u) {
     v.value = 2 * u.value;
   };
-  multiply2.Tvmult_add = [](RightVector &v, const LeftVector &u) {
+  multiply2.Tvmult_add = [](RightVector& v, const LeftVector& u) {
     v.value += 2 * u.value;
   };
-  multiply2.reinit_range_vector  = [](LeftVector &, bool) {};
-  multiply2.reinit_domain_vector = [](RightVector &, bool) {};
+  multiply2.reinit_range_vector  = [](LeftVector&, bool) {};
+  multiply2.reinit_domain_vector = [](RightVector&, bool) {};
 
   auto multiply4  = multiply2;
-  multiply4.vmult = [](LeftVector &v, const RightVector &u) {
+  multiply4.vmult = [](LeftVector& v, const RightVector& u) {
     v.value = 4 * u.value;
   };
-  multiply4.vmult_add = [](LeftVector &v, const RightVector &u) {
+  multiply4.vmult_add = [](LeftVector& v, const RightVector& u) {
     v.value += 4 * u.value;
   };
-  multiply4.Tvmult = [](RightVector &v, const LeftVector &u) {
+  multiply4.Tvmult = [](RightVector& v, const LeftVector& u) {
     v.value = 4 * u.value;
   };
-  multiply4.Tvmult_add = [](RightVector &v, const LeftVector &u) {
+  multiply4.Tvmult_add = [](RightVector& v, const LeftVector& u) {
     v.value += 4 * u.value;
   };
 

@@ -53,7 +53,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const
+  value(const Point<dim>& p, const unsigned int component = 0) const
   {
     double return_value = 0.;
     for (unsigned int d = 0; d < dim; ++d)
@@ -69,10 +69,10 @@ private:
 
 
 template <int dim>
-parallel::distributed::Triangulation<dim> *
+parallel::distributed::Triangulation<dim>*
 make_tria()
 {
-  parallel::distributed::Triangulation<dim> *tria =
+  parallel::distributed::Triangulation<dim>* tria =
     new parallel::distributed::Triangulation<dim>(MPI_COMM_WORLD);
   typename parallel::distributed::Triangulation<dim>::active_cell_iterator cell;
   GridGenerator::hyper_cube(*tria, 0., 1.);
@@ -93,11 +93,11 @@ make_tria()
 
 
 template <int dim>
-DoFHandler<dim> *
-make_dof_handler(const parallel::distributed::Triangulation<dim> &tria,
-                 const FiniteElement<dim> &                       fe)
+DoFHandler<dim>*
+make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
+                 const FiniteElement<dim>&                        fe)
 {
-  DoFHandler<dim> *dof_handler = new DoFHandler<dim>(tria);
+  DoFHandler<dim>* dof_handler = new DoFHandler<dim>(tria);
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
@@ -107,9 +107,9 @@ make_dof_handler(const parallel::distributed::Triangulation<dim> &tria,
 // output some indicators for a given vector
 template <unsigned int dim, typename VectorType>
 void
-output_vector(const VectorType &     v,
-              const std::string &    output_name,
-              const DoFHandler<dim> &dof_handler)
+output_vector(const VectorType&      v,
+              const std::string&     output_name,
+              const DoFHandler<dim>& dof_handler)
 {
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
@@ -130,14 +130,14 @@ output_vector(const VectorType &     v,
 
 template <typename VectorType>
 typename std::enable_if<!IsBlockVector<VectorType>::value, VectorType>::type
-build_ghosted(const IndexSet &owned_indices, const IndexSet &ghosted_indices)
+build_ghosted(const IndexSet& owned_indices, const IndexSet& ghosted_indices)
 {
   return VectorType(owned_indices, ghosted_indices, MPI_COMM_WORLD);
 }
 
 template <typename VectorType>
 typename std::enable_if<IsBlockVector<VectorType>::value, VectorType>::type
-build_ghosted(const IndexSet &owned_indices, const IndexSet &ghosted_indices)
+build_ghosted(const IndexSet& owned_indices, const IndexSet& ghosted_indices)
 {
   std::vector<IndexSet> owned_indices_vector(1, owned_indices);
   std::vector<IndexSet> ghosted_indices_vector(1, ghosted_indices);
@@ -149,14 +149,14 @@ build_ghosted(const IndexSet &owned_indices, const IndexSet &ghosted_indices)
 
 template <typename VectorType>
 typename std::enable_if<!IsBlockVector<VectorType>::value, VectorType>::type
-build_distributed(const IndexSet &owned_indices)
+build_distributed(const IndexSet& owned_indices)
 {
   return VectorType(owned_indices, MPI_COMM_WORLD);
 }
 
 template <typename VectorType>
 typename std::enable_if<IsBlockVector<VectorType>::value, VectorType>::type
-build_distributed(const IndexSet &owned_indices)
+build_distributed(const IndexSet& owned_indices)
 {
   std::vector<IndexSet> owned_indices_vector(1, owned_indices);
   return VectorType(owned_indices_vector, MPI_COMM_WORLD);
@@ -166,7 +166,7 @@ build_distributed(const IndexSet &owned_indices)
 
 template <int dim, typename VectorType>
 void
-check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
+check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 {
   deallog << std::setprecision(10);
 
@@ -297,7 +297,7 @@ check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
 
 template <int dim, typename VectorType>
 void
-check_this_dealii(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
+check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 {
   deallog << std::setprecision(10);
 

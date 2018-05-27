@@ -52,13 +52,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     return p(0) * p(0) + 2.0 * p(0) * p(1);
   }
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const
+  vector_value(const Point<dim>& p, Vector<double>& values) const
   {
     values(0) = value(p, 0);
   }
@@ -74,7 +74,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     double val = 0.0;
     if (std::abs(p(1) - 1.0) < 1e-5)
@@ -86,7 +86,7 @@ public:
   }
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const
+  vector_value(const Point<dim>& p, Vector<double>& values) const
   {
     values(0) = value(p, 0);
   }
@@ -95,7 +95,7 @@ public:
 
 
 template <int dim>
-Quadrature<dim - 1> &
+Quadrature<dim - 1>&
 get_q_face()
 {
   static QGauss<dim - 1> q(4);
@@ -106,7 +106,7 @@ get_q_face()
 
 template <int dim, int spacedim>
 void
-make_mesh(Triangulation<dim, spacedim> &tria)
+make_mesh(Triangulation<dim, spacedim>& tria)
 {
   // two faces of a hyper_cube
   Triangulation<spacedim, spacedim> volume_mesh;
@@ -140,15 +140,15 @@ check()
   dof.distribute_dofs(element);
 
   MappingQ<dim, spacedim> mapping(3);
-  Quadrature<dim - 1> &   q_face = get_q_face<dim>();
+  Quadrature<dim - 1>&    q_face = get_q_face<dim>();
 
   Vector<double> v(dof.n_dofs());
   VectorTools::interpolate(mapping, dof, function, v);
 
   Vector<float> error(tria.n_active_cells());
 
-  std::map<types::boundary_id, const Function<spacedim> *> neumann_bc;
-  MyNormalDerivative<spacedim>                             function_normal;
+  std::map<types::boundary_id, const Function<spacedim>*> neumann_bc;
+  MyNormalDerivative<spacedim>                            function_normal;
   neumann_bc[0] = &function_normal;
   neumann_bc[1] = &function_normal;
 

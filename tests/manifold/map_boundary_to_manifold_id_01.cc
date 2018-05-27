@@ -29,7 +29,7 @@
 
 template <int dim, int spacedim>
 void
-print_info(const Triangulation<dim, spacedim> &tria)
+print_info(const Triangulation<dim, spacedim>& tria)
 {
   for (auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     {

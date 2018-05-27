@@ -44,7 +44,7 @@ test()
     {
       m[v.size()];
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

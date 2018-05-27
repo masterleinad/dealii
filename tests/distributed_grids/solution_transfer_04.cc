@@ -39,7 +39,7 @@
 
 template <int dim>
 void
-test(std::ostream & /*out*/)
+test(std::ostream& /*out*/)
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -70,7 +70,7 @@ test(std::ostream & /*out*/)
   Vector<double> solution2(dofh.n_dofs());
   solution2 = 2.0;
 
-  std::vector<const Vector<double> *> sols;
+  std::vector<const Vector<double>*> sols;
   sols.push_back(&solution1);
   sols.push_back(&solution2);
 
@@ -85,7 +85,7 @@ test(std::ostream & /*out*/)
   Vector<double> interpolated_solution1(dofh.n_dofs());
   Vector<double> interpolated_solution2(dofh.n_dofs());
 
-  std::vector<Vector<double> *> sols_i;
+  std::vector<Vector<double>*> sols_i;
   sols_i.push_back(&interpolated_solution1);
   sols_i.push_back(&interpolated_solution2);
 
@@ -101,7 +101,7 @@ test(std::ostream & /*out*/)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

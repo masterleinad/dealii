@@ -20,7 +20,7 @@
 #include "../tests.h"
 
 void
-f(const std::vector<int> &v)
+f(const std::vector<int>& v)
 {
   const VectorSlice<const std::vector<int>> s = make_slice(v, 2, 3);
 
@@ -57,7 +57,7 @@ main()
     {
       make_slice(v, 3, 5);
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

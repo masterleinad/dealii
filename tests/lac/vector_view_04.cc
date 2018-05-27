@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkReinit2(Vector<number> &V)
+checkReinit2(Vector<number>& V)
 {
   deallog
     << "Reinit a ReadWrite VectorView<number> with Vector<number> and const size"

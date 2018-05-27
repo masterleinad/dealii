@@ -27,7 +27,7 @@
 
 
 void
-test(PETScWrappers::MPI::Vector &v)
+test(PETScWrappers::MPI::Vector& v)
 {
   Vector<double> w(v.size());
   Vector<float>  x(v.size());
@@ -66,7 +66,7 @@ test(PETScWrappers::MPI::Vector &v)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -80,7 +80,7 @@ main(int argc, char **argv)
         test(v);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

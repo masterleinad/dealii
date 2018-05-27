@@ -59,8 +59,8 @@ class MGTransferMF
   : public MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>
 {
 public:
-  MGTransferMF(const MGLevelObject<LAPLACEOPERATOR> &laplace,
-               const MGConstrainedDoFs &             mg_constrained_dofs) :
+  MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
+               const MGConstrainedDoFs&              mg_constrained_dofs) :
     MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
       mg_constrained_dofs),
     laplace_operator(laplace)
@@ -73,10 +73,10 @@ public:
    */
   template <class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim> &         mg_dof_handler,
+  copy_to_mg(const DoFHandler<dim, spacedim>&          mg_dof_handler,
              MGLevelObject<LinearAlgebra::distributed::Vector<
-               typename LAPLACEOPERATOR::value_type>> &dst,
-             const InVector &                          src) const
+               typename LAPLACEOPERATOR::value_type>>& dst,
+             const InVector&                           src) const
   {
     for (unsigned int level = dst.min_level(); level <= dst.max_level();
          ++level)
@@ -86,7 +86,7 @@ public:
   }
 
 private:
-  const MGLevelObject<LAPLACEOPERATOR> &laplace_operator;
+  const MGLevelObject<LAPLACEOPERATOR>& laplace_operator;
 };
 
 
@@ -100,15 +100,15 @@ public:
   {}
 
   void
-  initialize(const MatrixType &matrix)
+  initialize(const MatrixType& matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
   operator()(const unsigned int                                level,
-             LinearAlgebra::distributed::Vector<double> &      dst,
-             const LinearAlgebra::distributed::Vector<double> &src) const
+             LinearAlgebra::distributed::Vector<double>&       dst,
+             const LinearAlgebra::distributed::Vector<double>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
     SolverCG<LinearAlgebra::distributed::Vector<double>> solver_coarse(
@@ -116,14 +116,14 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MatrixType *coarse_matrix;
+  const MatrixType* coarse_matrix;
 };
 
 
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
-do_test(const DoFHandler<dim> &dof)
+do_test(const DoFHandler<dim>& dof)
 {
   if (std::is_same<number, float>::value == true)
     {
@@ -345,7 +345,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 

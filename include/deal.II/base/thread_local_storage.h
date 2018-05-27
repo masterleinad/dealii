@@ -80,13 +80,13 @@ namespace Threads
      * A kind of copy constructor. Initialize each thread local object by
      * copying the given object.
      */
-    explicit ThreadLocalStorage(const T &t);
+    explicit ThreadLocalStorage(const T& t);
 
     /**
      * Copy constructor. Initialize each thread local object with the
      * corresponding object of the given object.
      */
-    ThreadLocalStorage(const ThreadLocalStorage<T> &t);
+    ThreadLocalStorage(const ThreadLocalStorage<T>& t);
 
     /**
      * Return a reference to the data stored by this object for the current
@@ -101,15 +101,15 @@ namespace Threads
      * member function, then you need to declare the member variable
      * <code>mutable</code> to allow such access.
      */
-    T &
+    T&
     get();
 
     /**
      * Same as above, except that @p exists is set to true if an element was
      * already present for the current thread; false otherwise.
      */
-    T &
-    get(bool &exists);
+    T&
+    get(bool& exists);
 
     /**
      * Conversion operator that simply converts the thread-local object to the
@@ -117,7 +117,7 @@ namespace Threads
      * get() member function; it's purpose is to make the TLS object look more
      * like the object it is storing.
      */
-    operator T &();
+    operator T&();
 
     /**
      * Copy the given argument into the storage space used to represent the
@@ -131,8 +131,8 @@ namespace Threads
      *
      * @return The current object, after the changes have been made
      */
-    ThreadLocalStorage<T> &
-    operator=(const T &t);
+    ThreadLocalStorage<T>&
+    operator=(const T& t);
 
     /**
      * Remove the thread-local objects stored for all threads that have
@@ -162,9 +162,9 @@ namespace Threads
      * configured with multithreading and has no useful purpose otherwise.
      */
 #  ifdef DEAL_II_WITH_THREADS
-    tbb::enumerable_thread_specific<T> &
+    tbb::enumerable_thread_specific<T>&
 #  else
-    T &
+    T&
 #  endif
     get_implementation();
 
@@ -184,19 +184,19 @@ namespace Threads
   // ----------------- inline and template functions --------------------------
 
   template <typename T>
-  inline ThreadLocalStorage<T>::ThreadLocalStorage(const T &t) : data(t)
+  inline ThreadLocalStorage<T>::ThreadLocalStorage(const T& t) : data(t)
   {}
 
 
   template <typename T>
   inline ThreadLocalStorage<T>::ThreadLocalStorage(
-    const ThreadLocalStorage<T> &t) :
+    const ThreadLocalStorage<T>& t) :
     data(t)
   {}
 
 
   template <typename T>
-  inline T &
+  inline T&
   ThreadLocalStorage<T>::get()
   {
 #  ifdef DEAL_II_WITH_THREADS
@@ -208,8 +208,8 @@ namespace Threads
 
 
   template <typename T>
-  inline T &
-  ThreadLocalStorage<T>::get(bool &exists)
+  inline T&
+  ThreadLocalStorage<T>::get(bool& exists)
   {
 #  ifdef DEAL_II_WITH_THREADS
     return data.local(exists);
@@ -221,15 +221,15 @@ namespace Threads
 
 
   template <typename T>
-  inline ThreadLocalStorage<T>::operator T &()
+  inline ThreadLocalStorage<T>::operator T&()
   {
     return get();
   }
 
 
   template <typename T>
-  inline ThreadLocalStorage<T> &
-  ThreadLocalStorage<T>::operator=(const T &t)
+  inline ThreadLocalStorage<T>&
+  ThreadLocalStorage<T>::operator=(const T& t)
   {
     get() = t;
     return *this;
@@ -239,9 +239,9 @@ namespace Threads
   template <typename T>
   inline
 #  ifdef DEAL_II_WITH_THREADS
-    tbb::enumerable_thread_specific<T> &
+    tbb::enumerable_thread_specific<T>&
 #  else
-    T &
+    T&
 #  endif
     ThreadLocalStorage<T>::get_implementation()
   {

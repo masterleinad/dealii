@@ -44,10 +44,10 @@ const unsigned int
 
 template <int structdim, int dim, int spacedim>
 DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
-  const Triangulation<dim, spacedim> *,
+  const Triangulation<dim, spacedim>*,
   const int,
   const int,
-  const AccessorData *)
+  const AccessorData*)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -61,9 +61,9 @@ DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
 
 template <int structdim, int dim, int spacedim>
 DoFInvalidAccessor<structdim, dim, spacedim>::DoFInvalidAccessor(
-  const DoFInvalidAccessor &i) :
+  const DoFInvalidAccessor& i) :
   InvalidAccessor<structdim, dim, spacedim>(
-    static_cast<const InvalidAccessor<structdim, dim, spacedim> &>(i))
+    static_cast<const InvalidAccessor<structdim, dim, spacedim>&>(i))
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -110,7 +110,7 @@ DoFCellAccessor<DoFHandlerType, lda>::update_cell_dof_indices_cache() const
 template <typename DoFHandlerType, bool lda>
 void
 DoFCellAccessor<DoFHandlerType, lda>::set_dof_indices(
-  const std::vector<types::global_dof_index> &local_dof_indices)
+  const std::vector<types::global_dof_index>& local_dof_indices)
 {
   Assert(static_cast<unsigned int>(this->present_level) <
            this->dof_handler->levels.size(),

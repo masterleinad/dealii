@@ -59,7 +59,7 @@ main()
   transfinite0.initialize(tria);
   tria.set_manifold(0, transfinite0);
 
-  const auto &transfinite = tria.get_manifold(0);
+  const auto& transfinite = tria.get_manifold(0);
 
   const std::array<Point<3>, 2> points(
     {{Point<3>(0, 0.360566, 0), Point<3>(0, 0.321132, 0)}});

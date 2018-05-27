@@ -40,7 +40,7 @@ const double delta_x = 1e-8;
 
 template <int dim>
 void
-test(const FiniteElement<dim> &fe, const Quadrature<dim> &quadrature)
+test(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
 {
   deallog << fe.get_name() << ' ' << fe.dofs_per_cell << ' ';
 

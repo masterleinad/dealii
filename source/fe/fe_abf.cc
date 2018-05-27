@@ -165,7 +165,7 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 
   // These might be required when the faces contribution is computed
   // Therefore they will be initialized at this point.
-  std::vector<AnisotropicPolynomials<dim> *> polynomials_abf(dim);
+  std::vector<AnisotropicPolynomials<dim>*> polynomials_abf(dim);
 
   // Generate x_1^{i} x_2^{r+1} ...
   for (unsigned int dd = 0; dd < dim; ++dd)
@@ -239,7 +239,7 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   // space D_xi Q_k
   if (deg > 0)
     {
-      std::vector<AnisotropicPolynomials<dim> *> polynomials(dim);
+      std::vector<AnisotropicPolynomials<dim>*> polynomials(dim);
 
       for (unsigned int dd = 0; dd < dim; ++dd)
         {
@@ -400,7 +400,7 @@ FE_ABF<dim>::initialize_restriction()
   // Create Legendre basis for the
   // space D_xi Q_k. Here, we cannot
   // use the shape functions
-  std::vector<AnisotropicPolynomials<dim> *> polynomials(dim);
+  std::vector<AnisotropicPolynomials<dim>*> polynomials(dim);
   for (unsigned int dd = 0; dd < dim; ++dd)
     {
       std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
@@ -529,8 +529,8 @@ FE_ABF<dim>::has_support_on_face(const unsigned int shape_index,
 template <int dim>
 void
 FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>> &support_point_values,
-  std::vector<double> &              nodal_values) const
+  const std::vector<Vector<double>>& support_point_values,
+  std::vector<double>&               nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),

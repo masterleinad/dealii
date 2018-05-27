@@ -71,7 +71,7 @@ main()
 
           deallog << list << std::endl;
         }
-      catch (ParameterHandler::ExcInvalidEntryForPattern &exc)
+      catch (ParameterHandler::ExcInvalidEntryForPattern& exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

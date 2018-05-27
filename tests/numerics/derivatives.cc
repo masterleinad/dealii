@@ -50,9 +50,9 @@ const bool errors = false;
 template <int dim>
 void
 check(const unsigned int        level,
-      const Mapping<dim> &      mapping,
-      const FiniteElement<dim> &element,
-      const Quadrature<dim> &   quadrature)
+      const Mapping<dim>&       mapping,
+      const FiniteElement<dim>& element,
+      const Quadrature<dim>&    quadrature)
 {
   Triangulation<dim> tr;
 
@@ -187,12 +187,12 @@ loop()
 {
   QGauss<dim> gauss((dim < 3) ? 5 : 3);
 
-  std::vector<Mapping<dim> *> maps;
+  std::vector<Mapping<dim>*> maps;
   //  maps.push_back (new MappingCartesian<dim>);
   maps.push_back(new MappingQGeneric<dim>(1));
   maps.push_back(new MappingQ<dim>(2));
 
-  std::vector<FiniteElement<dim> *> elements;
+  std::vector<FiniteElement<dim>*> elements;
   elements.push_back(new FE_Q<dim>(1));
   elements.push_back(new FE_Q<dim>(2));
   if (dim < 3)

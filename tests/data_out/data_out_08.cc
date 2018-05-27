@@ -79,7 +79,7 @@ public:
   }
 
   virtual typename DataOut<dim>::cell_iterator
-  next_cell(const typename DataOut<dim>::cell_iterator &old_cell)
+  next_cell(const typename DataOut<dim>::cell_iterator& old_cell)
   {
     if (old_cell != this->dofs->end())
       {
@@ -135,7 +135,7 @@ check()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(2);

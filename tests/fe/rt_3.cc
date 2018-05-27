@@ -34,7 +34,7 @@ test(const unsigned int degree)
   deallog << "FE_RaviartThomas<" << dim << "> (" << degree << ")" << std::endl;
 
   FE_RaviartThomas<dim>     fe_rt(degree);
-  const FullMatrix<double> &constraints = fe_rt.constraints();
+  const FullMatrix<double>& constraints = fe_rt.constraints();
 
   for (unsigned int i = 0; i < constraints.m(); ++i)
     {

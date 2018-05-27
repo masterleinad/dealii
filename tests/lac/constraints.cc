@@ -41,7 +41,7 @@
 std::ofstream logfile("output");
 
 
-void make_tria(Triangulation<3> &tria, int step)
+void make_tria(Triangulation<3>& tria, int step)
 {
   switch (step)
     {
@@ -254,7 +254,7 @@ main()
   logfile << std::setprecision(2);
   deallog.attach(logfile);
 
-  FiniteElement<3> *fe = nullptr;
+  FiniteElement<3>* fe = nullptr;
 
   for (unsigned int element = 0; element < 2; ++element)
     {

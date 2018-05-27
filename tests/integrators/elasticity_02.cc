@@ -31,7 +31,7 @@ using namespace LocalIntegrators::Elasticity;
 
 template <int dim>
 void
-test_boundary(const FEValuesBase<dim> &fev)
+test_boundary(const FEValuesBase<dim>& fev)
 {
   const unsigned int n = fev.dofs_per_cell;
   unsigned int       d = fev.get_fe().n_components();
@@ -87,7 +87,7 @@ test_boundary(const FEValuesBase<dim> &fev)
 
 template <int dim>
 void
-test_fe(Triangulation<dim> &tr, FiniteElement<dim> &fe)
+test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
   typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
@@ -109,7 +109,7 @@ test_fe(Triangulation<dim> &tr, FiniteElement<dim> &fe)
 
 template <int dim>
 void
-test(Triangulation<dim> &tr)
+test(Triangulation<dim>& tr)
 {
   FE_DGQ<dim>   q1(1);
   FESystem<dim> fe1(q1, dim);

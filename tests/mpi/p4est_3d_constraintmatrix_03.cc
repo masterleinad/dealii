@@ -76,7 +76,7 @@ public:
   }
 
   virtual typename DataOut<dim>::cell_iterator
-  next_cell(const typename DataOut<dim>::cell_iterator &old_cell)
+  next_cell(const typename DataOut<dim>::cell_iterator& old_cell)
   {
     if (old_cell != this->triangulation->end())
       {
@@ -101,17 +101,17 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  value(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &value) const;
+  vector_value(const Point<dim>& p, Vector<double>& value) const;
 };
 
 
 
 template <int dim>
 double
-TemperatureInitialValues<dim>::value(const Point<dim> &p,
+TemperatureInitialValues<dim>::value(const Point<dim>& p,
                                      const unsigned int) const
 {
   return p(0) * T1 + p(1) * (T0 - T1); // simple
@@ -120,8 +120,8 @@ TemperatureInitialValues<dim>::value(const Point<dim> &p,
 
 template <int dim>
 void
-TemperatureInitialValues<dim>::vector_value(const Point<dim> &p,
-                                            Vector<double> &  values) const
+TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
+                                            Vector<double>&   values) const
 {
   for (unsigned int c = 0; c < this->n_components; ++c)
     values(c) = TemperatureInitialValues<dim>::value(p, c);
@@ -306,7 +306,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -23,8 +23,8 @@ namespace PETScWrappers
 {
   namespace MPI
   {
-    BlockSparseMatrix &
-    BlockSparseMatrix::operator=(const BlockSparseMatrix &m)
+    BlockSparseMatrix&
+    BlockSparseMatrix::operator=(const BlockSparseMatrix& m)
     {
       BaseClass::operator=(m);
 
@@ -51,16 +51,16 @@ namespace PETScWrappers
       for (size_type r = 0; r < this->n_block_rows(); ++r)
         for (size_type c = 0; c < this->n_block_cols(); ++c)
           {
-            BlockType *p            = new BlockType();
+            BlockType* p            = new BlockType();
             this->sub_objects[r][c] = p;
           }
     }
 
     void
-    BlockSparseMatrix::reinit(const std::vector<IndexSet> &      rows,
-                              const std::vector<IndexSet> &      cols,
-                              const BlockDynamicSparsityPattern &bdsp,
-                              const MPI_Comm &                   com)
+    BlockSparseMatrix::reinit(const std::vector<IndexSet>&       rows,
+                              const std::vector<IndexSet>&       cols,
+                              const BlockDynamicSparsityPattern& bdsp,
+                              const MPI_Comm&                    com)
     {
       Assert(rows.size() == bdsp.n_block_rows(), ExcMessage("invalid size"));
       Assert(cols.size() == bdsp.n_block_cols(), ExcMessage("invalid size"));
@@ -87,7 +87,7 @@ namespace PETScWrappers
             Assert(cols[c].size() == bdsp.block(r, c).n_cols(),
                    ExcMessage("invalid size"));
 
-            BlockType *p = new BlockType();
+            BlockType* p = new BlockType();
             p->reinit(rows[r], cols[c], bdsp.block(r, c), com);
             this->sub_objects[r][c] = p;
           }
@@ -96,9 +96,9 @@ namespace PETScWrappers
     }
 
     void
-    BlockSparseMatrix::reinit(const std::vector<IndexSet> &      sizes,
-                              const BlockDynamicSparsityPattern &bdsp,
-                              const MPI_Comm &                   com)
+    BlockSparseMatrix::reinit(const std::vector<IndexSet>&       sizes,
+                              const BlockDynamicSparsityPattern& bdsp,
+                              const MPI_Comm&                    com)
     {
       reinit(sizes, sizes, bdsp, com);
     }
@@ -133,7 +133,7 @@ namespace PETScWrappers
       return index_sets;
     }
 
-    const MPI_Comm &
+    const MPI_Comm&
     BlockSparseMatrix::get_mpi_communicator() const
     {
       return block(0, 0).get_mpi_communicator();

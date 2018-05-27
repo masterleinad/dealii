@@ -23,7 +23,7 @@
 #include "../tests.h"
 
 void
-testor(IndexSet &a, IndexSet &other, bool verbose = true)
+testor(IndexSet& a, IndexSet& other, bool verbose = true)
 {
   IndexSet merged(a);
 

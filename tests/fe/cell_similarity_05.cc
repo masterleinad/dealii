@@ -52,7 +52,7 @@
 
 
 bool
-equal(const FullMatrix<double> &m1, const FullMatrix<double> &m2)
+equal(const FullMatrix<double>& m1, const FullMatrix<double>& m2)
 {
   double d = 0, s = 0;
   for (unsigned int i = 0; i < m1.m(); ++i)
@@ -67,7 +67,7 @@ equal(const FullMatrix<double> &m1, const FullMatrix<double> &m2)
 
 template <int dim>
 void
-test(const Triangulation<dim> &tr)
+test(const Triangulation<dim>& tr)
 {
   FE_Q<dim> fe(1);
   deallog << "FE=" << fe.get_name() << std::endl;

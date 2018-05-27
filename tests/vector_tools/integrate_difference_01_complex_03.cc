@@ -52,7 +52,7 @@ public:
   {}
 
   std::complex<double>
-  value(const Point<dim> &p, const unsigned int c) const
+  value(const Point<dim>& p, const unsigned int c) const
   {
     if (c == 0)
       return (p[0] + p[1] + ((dim == 3) ? p[2] : 0.0)) *
@@ -120,7 +120,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
   test<2>();

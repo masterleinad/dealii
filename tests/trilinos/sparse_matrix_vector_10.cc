@@ -30,8 +30,8 @@
 
 
 void
-test(LinearAlgebra::distributed::Vector<double> &v,
-     LinearAlgebra::distributed::Vector<double> &w)
+test(LinearAlgebra::distributed::Vector<double>& v,
+     LinearAlgebra::distributed::Vector<double>& w)
 {
   TrilinosWrappers::SparseMatrix m(w.size(), v.size(), v.size());
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -71,7 +71,7 @@ test(LinearAlgebra::distributed::Vector<double> &v,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -87,7 +87,7 @@ main(int argc, char **argv)
         test(v, w);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

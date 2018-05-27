@@ -33,7 +33,7 @@
 
 
 void
-test(const char *filename)
+test(const char* filename)
 {
   Triangulation<3> tria;
   GridIn<3>        gi;

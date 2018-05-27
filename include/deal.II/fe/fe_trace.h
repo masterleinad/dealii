@@ -74,8 +74,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>> &support_point_values,
-    std::vector<double> &              nodal_values) const override;
+    const std::vector<Vector<double>>& support_point_values,
+    std::vector<double>&               nodal_values) const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
@@ -108,8 +108,8 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim, spacedim> &source,
-                                FullMatrix<double> &matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
+                                FullMatrix<double>& matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -120,9 +120,9 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim> &source,
+  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
                                    const unsigned int                  subface,
-                                   FullMatrix<double> &matrix) const override;
+                                   FullMatrix<double>& matrix) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -135,7 +135,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
 
 private:
   /**

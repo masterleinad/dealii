@@ -47,7 +47,7 @@ using namespace std;
 
 template <int dim>
 void
-setup_tria(parallel::distributed::Triangulation<dim> &tr)
+setup_tria(parallel::distributed::Triangulation<dim>& tr)
 {
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
@@ -65,7 +65,7 @@ setup_tria(parallel::distributed::Triangulation<dim> &tr)
 
 template <int dim>
 void
-check_fe(FiniteElement<dim> &fe)
+check_fe(FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -106,7 +106,7 @@ check_fe(FiniteElement<dim> &fe)
         if (!cell->is_locally_owned_on_level())
           continue;
 
-        std::vector<types::global_dof_index> &d =
+        std::vector<types::global_dof_index>& d =
           mgdofmap[cell->id().to_string()];
         d.resize(fe.dofs_per_cell);
         cell->get_mg_dof_indices(d);
@@ -119,7 +119,7 @@ check_fe(FiniteElement<dim> &fe)
         if (cell->level_subdomain_id() == numbers::artificial_subdomain_id)
           continue;
 
-        std::vector<types::global_dof_index> &renumbered =
+        std::vector<types::global_dof_index>& renumbered =
           mgdofmap[cell->id().to_string()];
         cell->set_mg_dof_indices(renumbered);
         cell->update_cell_dof_indices_cache();
@@ -191,7 +191,7 @@ check()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

@@ -98,7 +98,7 @@ public:
    * length of the given vector is zero, then this interpreted as the case
    * where <i>every</i> component is selected.
    */
-  ComponentMask(const std::vector<bool> &component_mask);
+  ComponentMask(const std::vector<bool>& component_mask);
 
   /**
    * Initialize the component mask with a number of elements that are either
@@ -194,25 +194,25 @@ public:
    * selected by the current object and the one passed as an argument.
    */
   ComponentMask
-  operator|(const ComponentMask &mask) const;
+  operator|(const ComponentMask& mask) const;
 
   /**
    * Return a component mask that has only those elements set that are set
    * both in the current object as well as the one passed as an argument.
    */
-  ComponentMask operator&(const ComponentMask &mask) const;
+  ComponentMask operator&(const ComponentMask& mask) const;
 
   /**
    * Return whether this object and the argument are identical.
    */
   bool
-  operator==(const ComponentMask &mask) const;
+  operator==(const ComponentMask& mask) const;
 
   /**
    * Return whether this object and the argument are not identical.
    */
   bool
-  operator!=(const ComponentMask &mask) const;
+  operator!=(const ComponentMask& mask) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -236,8 +236,8 @@ private:
 
   // make the output operator a friend so it can access
   // the component_mask array
-  friend std::ostream &
-  operator<<(std::ostream &out, const ComponentMask &mask);
+  friend std::ostream&
+  operator<<(std::ostream& out, const ComponentMask& mask);
 };
 
 
@@ -251,13 +251,13 @@ private:
  * @param out The stream to write to.
  * @param mask The mask to write. @return A reference to the first argument.
  */
-std::ostream &
-operator<<(std::ostream &out, const ComponentMask &mask);
+std::ostream&
+operator<<(std::ostream& out, const ComponentMask& mask);
 
 
 // -------------------- inline functions ---------------------
 
-inline ComponentMask::ComponentMask(const std::vector<bool> &component_mask) :
+inline ComponentMask::ComponentMask(const std::vector<bool>& component_mask) :
   component_mask(component_mask)
 {}
 
@@ -357,7 +357,7 @@ ComponentMask::represents_the_all_selected_mask() const
 
 
 inline ComponentMask
-ComponentMask::operator|(const ComponentMask &mask) const
+ComponentMask::operator|(const ComponentMask& mask) const
 {
   // if one of the two masks denotes the all-component mask,
   // then return the other one
@@ -379,7 +379,7 @@ ComponentMask::operator|(const ComponentMask &mask) const
 }
 
 
-inline ComponentMask ComponentMask::operator&(const ComponentMask &mask) const
+inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
 {
   // if one of the two masks denotes the all-component mask,
   // then return the other one
@@ -402,14 +402,14 @@ inline ComponentMask ComponentMask::operator&(const ComponentMask &mask) const
 
 
 inline bool
-ComponentMask::operator==(const ComponentMask &mask) const
+ComponentMask::operator==(const ComponentMask& mask) const
 {
   return component_mask == mask.component_mask;
 }
 
 
 inline bool
-ComponentMask::operator!=(const ComponentMask &mask) const
+ComponentMask::operator!=(const ComponentMask& mask) const
 {
   return component_mask != mask.component_mask;
 }

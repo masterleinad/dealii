@@ -23,11 +23,11 @@
 
 template <int dim>
 void
-test(const unsigned int &size)
+test(const unsigned int& size)
 {
   std::vector<Point<dim>> points(size);
 
-  for (auto &p : points)
+  for (auto& p : points)
     p = random_point<dim>();
 
   auto buffer = Utilities::pack(points);
@@ -36,7 +36,7 @@ test(const unsigned int &size)
 
   unsigned int i  = 0;
   bool         ok = true;
-  for (const auto &p : points)
+  for (const auto& p : points)
     if (p.distance(unpacked[i++]) > 1e-12)
       {
         deallog << "NOT OK: " << p << " != " << unpacked[i - 1] << std::endl;

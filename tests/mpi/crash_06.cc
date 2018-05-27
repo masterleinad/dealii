@@ -45,7 +45,7 @@
 
 template <int dim>
 void
-test(FiniteElement<dim> &fe)
+test(FiniteElement<dim>& fe)
 {
   deallog << "dim=" << dim << std::endl;
 
@@ -99,7 +99,7 @@ testit()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

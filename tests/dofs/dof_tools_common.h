@@ -44,12 +44,12 @@
 // .cc files
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler);
+check_this(const DoFHandler<dim>& dof_handler);
 
 
 
 void
-output_bool_vector(std::vector<bool> &v)
+output_bool_vector(std::vector<bool>& v)
 {
   for (unsigned int i = 0; i < v.size(); ++i)
     deallog << (v[i] ? '1' : '0');
@@ -60,21 +60,21 @@ output_bool_vector(std::vector<bool> &v)
 
 template <int dim>
 void
-set_boundary_ids(Triangulation<dim> &tria)
+set_boundary_ids(Triangulation<dim>& tria)
 {
   for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_boundary_id(f);
 }
 
 
-void set_boundary_ids(Triangulation<1> &)
+void set_boundary_ids(Triangulation<1>&)
 {}
 
 
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe, const std::string &name)
+check(const FiniteElement<dim>& fe, const std::string& name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 
@@ -228,7 +228,7 @@ main()
 
       return 0;
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

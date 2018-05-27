@@ -149,7 +149,7 @@ SolverControl::enable_history_data()
 
 
 
-const std::vector<double> &
+const std::vector<double>&
 SolverControl::get_history_data() const
 {
   Assert(history_data_enabled, ExcHistoryDataRequired());
@@ -201,7 +201,7 @@ SolverControl::final_reduction() const
 
 
 void
-SolverControl::declare_parameters(ParameterHandler &param)
+SolverControl::declare_parameters(ParameterHandler& param)
 {
   param.declare_entry("Max steps", "100", Patterns::Integer());
   param.declare_entry("Tolerance", "1.e-10", Patterns::Double());
@@ -212,7 +212,7 @@ SolverControl::declare_parameters(ParameterHandler &param)
 
 
 void
-SolverControl::parse_parameters(ParameterHandler &param)
+SolverControl::parse_parameters(ParameterHandler& param)
 {
   set_max_steps(param.get_integer("Max steps"));
   set_tolerance(param.get_double("Tolerance"));
@@ -235,7 +235,7 @@ ReductionControl::ReductionControl(const unsigned int n,
 {}
 
 
-ReductionControl::ReductionControl(const SolverControl &c) :
+ReductionControl::ReductionControl(const SolverControl& c) :
   SolverControl(c),
   reduce(numbers::signaling_nan<double>()),
   reduced_tol(numbers::signaling_nan<double>())
@@ -244,8 +244,8 @@ ReductionControl::ReductionControl(const SolverControl &c) :
 }
 
 
-ReductionControl &
-ReductionControl::operator=(const SolverControl &c)
+ReductionControl&
+ReductionControl::operator=(const SolverControl& c)
 {
   SolverControl::operator=(c);
   set_reduction(0.);
@@ -291,7 +291,7 @@ ReductionControl::check(const unsigned int step, const double check_value)
 
 
 void
-ReductionControl::declare_parameters(ParameterHandler &param)
+ReductionControl::declare_parameters(ParameterHandler& param)
 {
   SolverControl::declare_parameters(param);
   param.declare_entry("Reduction", "1.e-2", Patterns::Double());
@@ -299,7 +299,7 @@ ReductionControl::declare_parameters(ParameterHandler &param)
 
 
 void
-ReductionControl::parse_parameters(ParameterHandler &param)
+ReductionControl::parse_parameters(ParameterHandler& param)
 {
   SolverControl::parse_parameters(param);
   set_reduction(param.get_double("Reduction"));
@@ -357,7 +357,7 @@ ConsecutiveControl::ConsecutiveControl(
 
 
 
-ConsecutiveControl::ConsecutiveControl(const SolverControl &c) :
+ConsecutiveControl::ConsecutiveControl(const SolverControl& c) :
   SolverControl(c),
   n_consecutive_iterations(1),
   n_converged_iterations(0)
@@ -365,8 +365,8 @@ ConsecutiveControl::ConsecutiveControl(const SolverControl &c) :
 
 
 
-ConsecutiveControl &
-ConsecutiveControl::operator=(const SolverControl &c)
+ConsecutiveControl&
+ConsecutiveControl::operator=(const SolverControl& c)
 {
   SolverControl::operator  =(c);
   n_consecutive_iterations = 1;

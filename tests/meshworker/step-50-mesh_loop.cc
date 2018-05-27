@@ -88,7 +88,7 @@ namespace Step50
   template <int dim>
   struct ScratchData
   {
-    ScratchData(const FiniteElement<dim> &fe,
+    ScratchData(const FiniteElement<dim>& fe,
                 const unsigned int        quadrature_degree) :
       fe_values(fe,
                 QGauss<dim>(quadrature_degree),
@@ -96,7 +96,7 @@ namespace Step50
                   update_JxW_values)
     {}
 
-    ScratchData(const ScratchData<dim> &scratch_data) :
+    ScratchData(const ScratchData<dim>& scratch_data) :
       fe_values(scratch_data.fe_values.get_fe(),
                 scratch_data.fe_values.get_quadrature(),
                 update_values | update_gradients | update_quadrature_points |
@@ -130,9 +130,9 @@ namespace Step50
 
     template <class IteratorType>
     void
-    assemble_cell(const IteratorType &cell,
-                  ScratchData<dim> &  scratch_data,
-                  CopyData &          copy_data);
+    assemble_cell(const IteratorType& cell,
+                  ScratchData<dim>&   scratch_data,
+                  CopyData&           copy_data);
 
     void
     assemble_system_and_multigrid();
@@ -172,11 +172,11 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component = 0) const;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const;
   };
 
@@ -184,7 +184,7 @@ namespace Step50
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim> &p, const unsigned int) const
+  Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     if (p.square() < 0.5 * 0.5)
       return 5;
@@ -196,8 +196,8 @@ namespace Step50
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                               std::vector<double> &          values,
+  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                               std::vector<double>&           values,
                                const unsigned int             component) const
   {
     (void)component;
@@ -307,9 +307,9 @@ namespace Step50
   template <int dim>
   template <class IteratorType>
   void
-  LaplaceProblem<dim>::assemble_cell(const IteratorType &cell,
-                                     ScratchData<dim> &  scratch_data,
-                                     CopyData &          copy_data)
+  LaplaceProblem<dim>::assemble_cell(const IteratorType& cell,
+                                     ScratchData<dim>&   scratch_data,
+                                     CopyData&           copy_data)
   {
     const unsigned int level = cell->level();
     copy_data.level          = level;
@@ -373,19 +373,19 @@ namespace Step50
       }
 
     auto cell_worker_active =
-      [&](const decltype(mg_dof_handler.begin_active()) &cell,
-          ScratchData<dim> &                             scratch_data,
-          CopyData &                                     copy_data) {
+      [&](const decltype(mg_dof_handler.begin_active())& cell,
+          ScratchData<dim>&                              scratch_data,
+          CopyData&                                      copy_data) {
         this->assemble_cell(cell, scratch_data, copy_data);
       };
 
-    auto cell_worker_mg = [&](const decltype(mg_dof_handler.begin_mg()) &cell,
-                              ScratchData<dim> &scratch_data,
-                              CopyData &        copy_data) {
+    auto cell_worker_mg = [&](const decltype(mg_dof_handler.begin_mg())& cell,
+                              ScratchData<dim>& scratch_data,
+                              CopyData&         copy_data) {
       this->assemble_cell(cell, scratch_data, copy_data);
     };
 
-    auto copier_active = [&](const CopyData &c) {
+    auto copier_active = [&](const CopyData& c) {
       constraints.distribute_local_to_global(c.cell_matrix,
                                              c.cell_rhs,
                                              c.local_dof_indices,
@@ -393,7 +393,7 @@ namespace Step50
                                              system_rhs);
     };
 
-    auto copier_mg = [&](const CopyData &c) {
+    auto copier_mg = [&](const CopyData& c) {
       boundary_constraints[c.level].distribute_local_to_global(
         c.cell_matrix, c.local_dof_indices, mg_matrices[c.level]);
 
@@ -447,7 +447,7 @@ namespace Step50
     MGTransferPrebuilt<vector_t> mg_transfer(mg_constrained_dofs);
     mg_transfer.build_matrices(mg_dof_handler);
 
-    matrix_t &coarse_matrix = mg_matrices[0];
+    matrix_t& coarse_matrix = mg_matrices[0];
 
     SolverControl        coarse_solver_control(1000, 1e-10, false, false);
     SolverCG<vector_t>   coarse_solver(coarse_solver_control);
@@ -542,7 +542,7 @@ namespace Step50
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog(true);
@@ -555,7 +555,7 @@ main(int argc, char *argv[])
       LaplaceProblem<2> laplace_problem(1 /*degree*/);
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

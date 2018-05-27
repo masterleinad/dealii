@@ -53,14 +53,14 @@ output_name(const unsigned int subdomain)
 
 template <int dim>
 bool
-pred_d(const typename DoFHandler<dim>::active_cell_iterator &cell)
+pred_d(const typename DoFHandler<dim>::active_cell_iterator& cell)
 {
   return (cell->center()(0) < 0.49);
 }
 
 template <int dim>
 bool
-pred_r(const typename Triangulation<dim>::active_cell_iterator &cell)
+pred_r(const typename Triangulation<dim>::active_cell_iterator& cell)
 {
   return (cell->center()(0) < 0.49 && cell->center()(1) < 0.49) ||
          (cell->center()(0) > 0.49 && cell->center()(1) > 0.49);
@@ -96,7 +96,7 @@ test()
   FE_Q<dim> fe(2);
   dh.distribute_dofs(fe);
 
-  const IndexSet &locally_owned_set = dh.locally_owned_dofs();
+  const IndexSet& locally_owned_set = dh.locally_owned_dofs();
   IndexSet        locally_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_set);
 
@@ -110,7 +110,7 @@ test()
   // get support on the predicate
   IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
     dh,
-    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator &)>(
+    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
       &pred_d<dim>),
     cm);
   IndexSet local_support = support & locally_owned_set;
@@ -125,8 +125,8 @@ test()
   rhs.zero_out_ghosts();
 
   // assemble RHS which has a local support:
-  const std::function<double(const Point<dim> &)> rhs_func =
-    [=](const Point<dim> &p) -> double { return p[0] > 0.5 ? 0. : 0.5 - p[0]; };
+  const std::function<double(const Point<dim>&)> rhs_func =
+    [=](const Point<dim>& p) -> double { return p[0] > 0.5 ? 0. : 0.5 - p[0]; };
 
   Vector<double> local_rhs(fe.dofs_per_cell);
   QGauss<dim>    quadrature(3);
@@ -142,7 +142,7 @@ test()
         fe_values.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
 
-        const std::vector<Point<dim>> &q_points =
+        const std::vector<Point<dim>>& q_points =
           fe_values.get_quadrature_points();
 
         local_rhs = 0.;
@@ -158,7 +158,7 @@ test()
         auto       local_vector_begin  = local_rhs.begin();
         const auto local_vector_end    = local_rhs.end();
         auto       local_indices_begin = local_dof_indices.begin();
-        const std::vector<std::pair<types::global_dof_index, double>> *line_ptr;
+        const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
         for (; local_vector_begin != local_vector_end;
              ++local_vector_begin, ++local_indices_begin)
           {
@@ -261,7 +261,7 @@ test()
               sl[i] = 1.0;
             cm.distribute(sl);
 
-            LinearAlgebra::distributed::Vector<double> &s = shape_functions[i];
+            LinearAlgebra::distributed::Vector<double>& s = shape_functions[i];
             s.reinit(locally_owned_set, locally_relevant_set, MPI_COMM_WORLD);
             s = 0.;
             s = sl;
@@ -317,7 +317,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile, /*do not print job id*/ false);

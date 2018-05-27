@@ -33,7 +33,7 @@
 // Symmetric matrix with constant diagonals [-1,2,-1]
 template <typename number>
 void
-matrix1(TridiagonalMatrix<number> &M)
+matrix1(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   for (unsigned int i = 0; i < n; ++i)
@@ -50,7 +50,7 @@ matrix1(TridiagonalMatrix<number> &M)
 // Nonsymmetric matrix with constant diagonals [-1,2,-3]
 template <typename number>
 void
-matrix2(TridiagonalMatrix<number> &M)
+matrix2(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   for (unsigned int i = 0; i < n; ++i)
@@ -67,7 +67,7 @@ matrix2(TridiagonalMatrix<number> &M)
 // Matrix with increasing diagonals and symmetric rows
 template <typename number>
 void
-matrix3(TridiagonalMatrix<number> &M)
+matrix3(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   for (unsigned int i = 0; i < n; ++i)
@@ -84,7 +84,7 @@ matrix3(TridiagonalMatrix<number> &M)
 // Symmetric matrix with increasing diagonals
 template <typename number>
 void
-matrix4(TridiagonalMatrix<number> &M)
+matrix4(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   for (unsigned int i = 0; i < n; ++i)
@@ -101,7 +101,7 @@ matrix4(TridiagonalMatrix<number> &M)
 // Nonsymmetric matrix with increasing diagonals
 template <typename number>
 void
-matrix5(TridiagonalMatrix<number> &M)
+matrix5(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   for (unsigned int i = 0; i < n; ++i)
@@ -117,7 +117,7 @@ matrix5(TridiagonalMatrix<number> &M)
 
 template <typename number>
 void
-check_vmult(TridiagonalMatrix<number> &M)
+check_vmult(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
   Vector<number>     u(n);

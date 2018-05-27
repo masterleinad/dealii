@@ -27,7 +27,7 @@ using namespace dealii;
 // Vectors are prepared similar to deal.II's test: parallel_vector_07
 template <typename VectorType>
 void
-prepare_vector(VectorType &v)
+prepare_vector(VectorType& v)
 {
   const unsigned int myid =
                        dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD),
@@ -115,7 +115,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
@@ -133,7 +133,7 @@ main(int argc, char **argv)
     {
       test<LinearAlgebra::distributed::Vector<double>>();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

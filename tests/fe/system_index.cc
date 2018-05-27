@@ -31,7 +31,7 @@
 
 template <int dim>
 void
-check_fe(const FiniteElement<dim> &fe)
+check_fe(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
   const unsigned int n_dofs   = fe.dofs_per_cell;

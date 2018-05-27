@@ -255,7 +255,7 @@ public:
    * since it does not know about the additional member `fraction` of this
    * class.
    */
-  QGaussLogR(QGaussLogR<dim> &&) noexcept = default;
+  QGaussLogR(QGaussLogR<dim>&&) noexcept = default;
 
 protected:
   /**
@@ -395,7 +395,7 @@ public:
    * The constructor takes an arbitrary quadrature formula @p quad and sorts
    * its points and weights according to ascending weights.
    */
-  QSorted(const Quadrature<dim> &quad);
+  QSorted(const Quadrature<dim>& quad);
 
 private:
   /**
@@ -473,13 +473,13 @@ public:
    * sure that the order of the quadrature rule is appropriate for the
    * singularity in question.
    */
-  QTelles(const Quadrature<1> &base_quad, const Point<dim> &singularity);
+  QTelles(const Quadrature<1>& base_quad, const Point<dim>& singularity);
   /**
    * A variant of above constructor that takes as parameters the order @p n
    * and location of a singularity. A Gauss Legendre quadrature of order n
    * will be used
    */
-  QTelles(const unsigned int n, const Point<dim> &singularity);
+  QTelles(const unsigned int n, const Point<dim>& singularity);
 };
 
 /**
@@ -546,7 +546,7 @@ public:
    * Move constructor. We cannot rely on the move constructor for `Quadrature`,
    * since it does not know about the additional member `ep` of this class.
    */
-  QGaussRadauChebyshev(QGaussRadauChebyshev<dim> &&) noexcept = default;
+  QGaussRadauChebyshev(QGaussRadauChebyshev<dim>&&) noexcept = default;
 
 private:
   const EndPoint ep;
@@ -617,7 +617,7 @@ public:
    *
    * @param[in] quad The input quadrature.
    */
-  QSimplex(const Quadrature<dim> &quad);
+  QSimplex(const Quadrature<dim>& quad);
 
   /**
    * Return an affine transformation of this quadrature, that can be used to
@@ -644,7 +644,7 @@ public:
    */
   Quadrature<dim>
   compute_affine_transformation(
-    const std::array<Point<dim>, dim + 1> &vertices) const;
+    const std::array<Point<dim>, dim + 1>& vertices) const;
 };
 
 /**
@@ -677,8 +677,8 @@ public:
    * @param radial_quadrature Radial quadrature
    * @param angular_quadrature Angular quadrature
    */
-  QTrianglePolar(const Quadrature<1> &radial_quadrature,
-                 const Quadrature<1> &angular_quadrature);
+  QTrianglePolar(const Quadrature<1>& radial_quadrature,
+                 const Quadrature<1>& angular_quadrature);
 
   /**
    * Call the other constructor, with QGauss<1>(n) for both radial and
@@ -686,7 +686,7 @@ public:
    *
    * @param n Order of QGauss quadrature
    */
-  QTrianglePolar(const unsigned int &n);
+  QTrianglePolar(const unsigned int& n);
 };
 
 /**
@@ -739,8 +739,8 @@ public:
    * @param radial_quadrature Base quadrature to use in the radial direction
    * @param angular_quadrature Base quadrature to use in the angular direction
    */
-  QDuffy(const Quadrature<1> &radial_quadrature,
-         const Quadrature<1> &angular_quadrature,
+  QDuffy(const Quadrature<1>& radial_quadrature,
+         const Quadrature<1>& angular_quadrature,
          const double         beta = 1.0);
 
   /**
@@ -796,7 +796,7 @@ public:
    * @param base Base QSimplex quadrature to use
    * @param split_point Where to split the hyper cube
    */
-  QSplit(const QSimplex<dim> &base, const Point<dim> &split_point);
+  QSplit(const QSimplex<dim>& base, const Point<dim>& split_point);
 };
 
 /*@}*/
@@ -837,8 +837,8 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
                                   const unsigned int index,
                                   const bool         flag);
 template <>
-QTelles<1>::QTelles(const Quadrature<1> &base_quad,
-                    const Point<1> &     singularity);
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity);
 
 
 

@@ -89,7 +89,7 @@ namespace Step40
     void
     get_point_value(const Point<dim>     point,
                     const int            proc,
-                    Vector<PetscScalar> &value) const;
+                    Vector<PetscScalar>& value) const;
     void
     check_periodicity(const unsigned int cycle) const;
     void
@@ -307,7 +307,7 @@ namespace Step40
   void
   LaplaceProblem<dim>::get_point_value(const Point<dim>     point,
                                        const int            proc,
-                                       Vector<PetscScalar> &value) const
+                                       Vector<PetscScalar>& value) const
   {
     typename DoFHandler<dim>::active_cell_iterator cell =
       GridTools::find_active_cell_around_point(dof_handler, point);
@@ -547,7 +547,7 @@ namespace Step40
 } // namespace Step40
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   try
     {
@@ -581,7 +581,7 @@ main(int argc, char *argv[])
           }
         }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -41,17 +41,17 @@ namespace internal
       ParallelData(
         const unsigned int               n_datasets,
         const unsigned int               n_subdivisions,
-        const std::vector<unsigned int> &n_postprocessor_outputs,
-        const Mapping<dim, spacedim> &   mapping,
+        const std::vector<unsigned int>& n_postprocessor_outputs,
+        const Mapping<dim, spacedim>&    mapping,
         const std::vector<
-          std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
-          &                                           finite_elements,
+          std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
+                                                      finite_elements,
         const UpdateFlags                             update_flags,
-        const std::vector<std::vector<unsigned int>> &cell_to_patch_index_map);
+        const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map);
 
       std::vector<Point<spacedim>> patch_evaluation_points;
 
-      const std::vector<std::vector<unsigned int>> *cell_to_patch_index_map;
+      const std::vector<std::vector<unsigned int>>* cell_to_patch_index_map;
     };
   } // namespace DataOutImplementation
 } // namespace internal
@@ -296,7 +296,7 @@ public:
    */
   virtual void
   build_patches(const Mapping<DoFHandlerType::dimension,
-                              DoFHandlerType::space_dimension> &mapping,
+                              DoFHandlerType::space_dimension>& mapping,
                 const unsigned int     n_subdivisions = 0,
                 const CurvedCellRegion curved_region  = curved_boundary);
 
@@ -320,7 +320,7 @@ public:
    * good idea.
    */
   virtual cell_iterator
-  next_cell(const cell_iterator &cell);
+  next_cell(const cell_iterator& cell);
 
 private:
   /**
@@ -337,7 +337,7 @@ private:
    * result equals what first_cell() returns.
    */
   virtual cell_iterator
-  next_locally_owned_cell(const cell_iterator &cell);
+  next_locally_owned_cell(const cell_iterator& cell);
 
   /**
    * Build one patch. This function is called in a WorkStream context.
@@ -349,10 +349,10 @@ private:
    * reasons.
    */
   void
-  build_one_patch(const std::pair<cell_iterator, unsigned int> *cell_and_index,
+  build_one_patch(const std::pair<cell_iterator, unsigned int>* cell_and_index,
                   internal::DataOutImplementation::ParallelData<
                     DoFHandlerType::dimension,
-                    DoFHandlerType::space_dimension> &scratch_data,
+                    DoFHandlerType::space_dimension>& scratch_data,
                   const unsigned int                  n_subdivisions,
                   const CurvedCellRegion              curved_cell_region);
 };

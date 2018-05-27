@@ -57,7 +57,7 @@ test(unsigned int ref = 1)
   GridGenerator::hyper_rectangle(tria, p0, p1);
   tria.refine_global(3);
 
-  const std::vector<Point<spacedim>> &vertices = tria.get_vertices();
+  const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
 
   for (unsigned int i = 0; i < vertices.size(); ++i)
     {

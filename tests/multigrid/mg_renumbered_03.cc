@@ -68,8 +68,8 @@ using namespace dealii;
 
 template <int dim, typename number, int spacedim>
 void
-reinit_vector(const dealii::DoFHandler<dim, spacedim> &mg_dof,
-              MGLevelObject<dealii::Vector<number>> &  v)
+reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
+              MGLevelObject<dealii::Vector<number>>&   v)
 {
   for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
@@ -80,7 +80,7 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim> &mg_dof,
 
 template <int dim>
 void
-initialize(const DoFHandler<dim> &dof, Vector<double> &u)
+initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
@@ -102,7 +102,7 @@ initialize(const DoFHandler<dim> &dof, Vector<double> &u)
 
 template <int dim>
 void
-initialize(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
+initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
   unsigned int       counter       = 0;
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
@@ -116,9 +116,9 @@ initialize(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
 
 template <int dim>
 void
-diff(Vector<double> &       diff,
-     const DoFHandler<dim> &dof,
-     const Vector<double> & v,
+diff(Vector<double>&        diff,
+     const DoFHandler<dim>& dof,
+     const Vector<double>&  v,
      const unsigned int     level)
 {
   diff.reinit(v);
@@ -145,11 +145,11 @@ diff(Vector<double> &       diff,
 
 template <int dim>
 void
-diff(Vector<double> &       diff,
-     const DoFHandler<dim> &dof_1,
-     const DoFHandler<dim> &dof_2,
-     const Vector<double> & u,
-     const Vector<double> & v,
+diff(Vector<double>&        diff,
+     const DoFHandler<dim>& dof_1,
+     const DoFHandler<dim>& dof_2,
+     const Vector<double>&  u,
+     const Vector<double>&  v,
      const unsigned int     level)
 {
   diff.reinit(u);
@@ -170,8 +170,8 @@ diff(Vector<double> &       diff,
 
 template <int dim>
 void
-print(const DoFHandler<dim> &         dof,
-      std::vector<std::vector<bool>> &interface_dofs)
+print(const DoFHandler<dim>&          dof,
+      std::vector<std::vector<bool>>& interface_dofs)
 {
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
@@ -195,16 +195,16 @@ class OutputCreator : public Subscriptor
 {
 public:
   void
-  cell(MeshWorker::DoFInfo<dim> &dinfo, MeshWorker::IntegrationInfo<dim> &info);
+  cell(MeshWorker::DoFInfo<dim>& dinfo, MeshWorker::IntegrationInfo<dim>& info);
 };
 
 template <int dim>
 void
-OutputCreator<dim>::cell(MeshWorker::DoFInfo<dim> &        dinfo,
-                         MeshWorker::IntegrationInfo<dim> &info)
+OutputCreator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
+                         MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FEValuesBase<dim> &               fe = info.fe_values();
-  const std::vector<std::vector<double>> &uh = info.values[0];
+  const FEValuesBase<dim>&                fe = info.fe_values();
+  const std::vector<std::vector<double>>& uh = info.values[0];
 
   const unsigned int square_root =
     static_cast<unsigned int>(std::pow(fe.n_quadrature_points, 1. / dim) + .5);
@@ -239,7 +239,7 @@ private:
   void
   test();
   void
-  output_gpl(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &v);
+  output_gpl(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& v);
   void
   refine_local();
 
@@ -277,7 +277,7 @@ LaplaceProblem<dim>::setup_system()
 
   const unsigned int nlevels = triangulation.n_levels();
 
-  DoFHandler<dim> &dof = mg_dof_handler_renumbered;
+  DoFHandler<dim>& dof = mg_dof_handler_renumbered;
   DoFRenumbering::component_wise(dof);
   for (unsigned int level = 0; level < nlevels; ++level)
     DoFRenumbering::component_wise(mg_dof_handler_renumbered, level);
@@ -300,8 +300,8 @@ LaplaceProblem<dim>::setup_system()
 
 template <int dim>
 void
-LaplaceProblem<dim>::output_gpl(const DoFHandler<dim> &        dof,
-                                MGLevelObject<Vector<double>> &v)
+LaplaceProblem<dim>::output_gpl(const DoFHandler<dim>&         dof,
+                                MGLevelObject<Vector<double>>& v)
 {
   MeshWorker::IntegrationInfoBox<dim> info_box;
   const unsigned int n_gauss_points = dof.get_fe().tensor_degree();
@@ -309,7 +309,7 @@ LaplaceProblem<dim>::output_gpl(const DoFHandler<dim> &        dof,
   QIterated<dim>     quadrature(trapez, n_gauss_points);
   info_box.cell_quadrature = quadrature;
   AnyData data;
-  data.add<MGLevelObject<Vector<double>> *>(&v, "mg_vector");
+  data.add<MGLevelObject<Vector<double>>*>(&v, "mg_vector");
   info_box.cell_selector.add("mg_vector");
   info_box.initialize_update_flags();
   UpdateFlags update_flags =

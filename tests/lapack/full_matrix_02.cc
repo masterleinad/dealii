@@ -28,7 +28,7 @@
 // Fill a matrix with the values of the Hilbert matrix
 template <typename number>
 void
-hilbert(LAPACKFullMatrix<number> &M, const bool nonsymmetric)
+hilbert(LAPACKFullMatrix<number>& M, const bool nonsymmetric)
 {
   const unsigned int n = M.n_rows();
   for (unsigned int i = 0; i < n; ++i)

@@ -112,7 +112,7 @@ public:
   }
 
   virtual Point<dim>
-  push_forward(const Point<dim> &xi) const override
+  push_forward(const Point<dim>& xi) const override
   {
     Point<dim> x = xi;
 
@@ -135,7 +135,7 @@ public:
   }
 
   virtual Point<dim>
-  pull_back(const Point<dim> &x) const override
+  pull_back(const Point<dim>& x) const override
   {
     Point<dim> xi = x;
 

@@ -47,7 +47,7 @@ namespace mg
 
     template <typename DoFHandlerType>
     void
-    reinit(const DoFHandlerType &dof_handler);
+    reinit(const DoFHandlerType& dof_handler);
 
     void
     set_zero();
@@ -86,7 +86,7 @@ namespace mg
   template <typename number>
   template <typename DoFHandlerType>
   void
-  SparseMatrixCollection<number>::reinit(const DoFHandlerType &dof_handler)
+  SparseMatrixCollection<number>::reinit(const DoFHandlerType& dof_handler)
   {
     AssertIndexRange(sparsity.max_level(),
                      dof_handler.get_triangulation().n_levels());

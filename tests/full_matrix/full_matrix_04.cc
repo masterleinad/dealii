@@ -23,7 +23,7 @@
 #include "../tests.h"
 
 void
-diff(FullMatrix<double> &M)
+diff(FullMatrix<double>& M)
 {
   const double err = M.frobenius_norm();
   if (err < 1.e-14)

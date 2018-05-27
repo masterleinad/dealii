@@ -171,9 +171,9 @@ namespace Functions
      * lay. Otherwise the standard Q1 mapping is used.
      */
     FEFieldFunction(
-      const DoFHandlerType &dh,
-      const VectorType &    data_vector,
-      const Mapping<dim> &  mapping = StaticMappingQ1<dim>::mapping);
+      const DoFHandlerType& dh,
+      const VectorType&     data_vector,
+      const Mapping<dim>&   mapping = StaticMappingQ1<dim>::mapping);
 
     /**
      * Set the current cell. If you know in advance where your points lie, you
@@ -182,7 +182,7 @@ namespace Functions
      */
     void
     set_active_cell(
-      const typename DoFHandlerType::active_cell_iterator &newcell);
+      const typename DoFHandlerType::active_cell_iterator& newcell);
 
     /**
      * Get one vector value at the given point. It is inefficient to use
@@ -201,8 +201,8 @@ namespace Functions
      */
     virtual void
     vector_value(
-      const Point<dim> &                       p,
-      Vector<typename VectorType::value_type> &values) const override;
+      const Point<dim>&                        p,
+      Vector<typename VectorType::value_type>& values) const override;
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -222,7 +222,7 @@ namespace Functions
      * information.
      */
     virtual typename VectorType::value_type
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     /**
      * Set @p values to the point values of the specified component of the
@@ -240,8 +240,8 @@ namespace Functions
      * information.
      */
     virtual void
-    value_list(const std::vector<Point<dim>> &               points,
-               std::vector<typename VectorType::value_type> &values,
+    value_list(const std::vector<Point<dim>>&                points,
+               std::vector<typename VectorType::value_type>& values,
                const unsigned int component = 0) const override;
 
 
@@ -261,9 +261,9 @@ namespace Functions
      * information.
      */
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<typename VectorType::value_type>>
-                        &values) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<typename VectorType::value_type>>&
+                        values) const override;
 
     /**
      * Return the gradient of all components of the function at the given
@@ -281,9 +281,10 @@ namespace Functions
      * information.
      */
     virtual void
-    vector_gradient(const Point<dim> &p,
-                    std::vector<Tensor<1, dim, typename VectorType::value_type>>
-                      &gradients) const override;
+    vector_gradient(
+      const Point<dim>&                                             p,
+      std::vector<Tensor<1, dim, typename VectorType::value_type>>& gradients)
+      const override;
 
     /**
      * Return the gradient of the specified component of the function at the
@@ -301,7 +302,7 @@ namespace Functions
      * information.
      */
     virtual Tensor<1, dim, typename VectorType::value_type>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
 
     /**
@@ -319,9 +320,9 @@ namespace Functions
      */
     virtual void
     vector_gradient_list(
-      const std::vector<Point<dim>> &p,
-      std::vector<std::vector<Tensor<1, dim, typename VectorType::value_type>>>
-        &gradients) const override;
+      const std::vector<Point<dim>>& p,
+      std::vector<std::vector<Tensor<1, dim, typename VectorType::value_type>>>&
+        gradients) const override;
 
     /**
      * Return the gradient of the specified component of the function at all
@@ -338,8 +339,8 @@ namespace Functions
      */
     virtual void
     gradient_list(
-      const std::vector<Point<dim>> &                               p,
-      std::vector<Tensor<1, dim, typename VectorType::value_type>> &gradients,
+      const std::vector<Point<dim>>&                                p,
+      std::vector<Tensor<1, dim, typename VectorType::value_type>>& gradients,
       const unsigned int component = 0) const override;
 
 
@@ -355,7 +356,7 @@ namespace Functions
      * information.
      */
     virtual typename VectorType::value_type
-    laplacian(const Point<dim> & p,
+    laplacian(const Point<dim>&  p,
               const unsigned int component = 0) const override;
 
     /**
@@ -372,8 +373,8 @@ namespace Functions
      */
     virtual void
     vector_laplacian(
-      const Point<dim> &                       p,
-      Vector<typename VectorType::value_type> &values) const override;
+      const Point<dim>&                        p,
+      Vector<typename VectorType::value_type>& values) const override;
 
     /**
      * Compute the Laplacian of one component at a set of points.
@@ -387,8 +388,8 @@ namespace Functions
      * information.
      */
     virtual void
-    laplacian_list(const std::vector<Point<dim>> &               points,
-                   std::vector<typename VectorType::value_type> &values,
+    laplacian_list(const std::vector<Point<dim>>&                points,
+                   std::vector<typename VectorType::value_type>& values,
                    const unsigned int component = 0) const override;
 
     /**
@@ -403,9 +404,9 @@ namespace Functions
      * information.
      */
     virtual void
-    vector_laplacian_list(const std::vector<Point<dim>> &points,
-                          std::vector<Vector<typename VectorType::value_type>>
-                            &values) const override;
+    vector_laplacian_list(const std::vector<Point<dim>>& points,
+                          std::vector<Vector<typename VectorType::value_type>>&
+                            values) const override;
 
     /**
      * Given a set of points located in the domain (or, in the case of
@@ -431,10 +432,10 @@ namespace Functions
      */
     unsigned int
     compute_point_locations(
-      const std::vector<Point<dim>> &                             points,
-      std::vector<typename DoFHandlerType::active_cell_iterator> &cells,
-      std::vector<std::vector<Point<dim>>> &                      qpoints,
-      std::vector<std::vector<unsigned int>> &                    maps) const;
+      const std::vector<Point<dim>>&                              points,
+      std::vector<typename DoFHandlerType::active_cell_iterator>& cells,
+      std::vector<std::vector<Point<dim>>>&                       qpoints,
+      std::vector<std::vector<unsigned int>>&                     maps) const;
 
   private:
     /**
@@ -454,12 +455,12 @@ namespace Functions
     /**
      * A reference to the actual data vector.
      */
-    const VectorType &data_vector;
+    const VectorType& data_vector;
 
     /**
      * A reference to the mapping being used.
      */
-    const Mapping<dim> &mapping;
+    const Mapping<dim>& mapping;
 
     /**
      * The Cache object
@@ -478,8 +479,8 @@ namespace Functions
      */
     boost::optional<Point<dim>>
     get_reference_coordinates(
-      const typename DoFHandlerType::active_cell_iterator &cell,
-      const Point<dim> &                                   point) const;
+      const typename DoFHandlerType::active_cell_iterator& cell,
+      const Point<dim>&                                    point) const;
   };
 } // namespace Functions
 

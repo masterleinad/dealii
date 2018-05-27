@@ -47,7 +47,7 @@ Threads::ThreadLocalStorage<X> tls_data(forty_two);
 
 
 void
-execute(Threads::Mutex &m)
+execute(Threads::Mutex& m)
 {
   // check correct default initialization
   bool exists;

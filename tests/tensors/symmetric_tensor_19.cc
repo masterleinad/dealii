@@ -24,7 +24,7 @@
 
 template <int dim>
 void
-check(const SymmetricTensor<4, dim> &A)
+check(const SymmetricTensor<4, dim>& A)
 {
   const SymmetricTensor<4, dim> B = invert(A);
 

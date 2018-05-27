@@ -25,7 +25,7 @@
 
 template <int rank, int dim, typename NumberType>
 void
-fill_tensor(SymmetricTensor<rank, dim, NumberType> &t)
+fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
 {
   for (unsigned int i = 0; i != t.n_independent_components; ++i)
     {

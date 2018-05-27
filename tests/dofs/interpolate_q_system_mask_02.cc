@@ -54,7 +54,7 @@ public:
   {}
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &v) const
+  vector_value(const Point<dim>& p, Vector<double>& v) const
   {
     for (unsigned int c = 0; c < v.size(); ++c)
       {

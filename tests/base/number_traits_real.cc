@@ -24,7 +24,7 @@
 
 template <typename number>
 void
-check(const number &x)
+check(const number& x)
 {
   deallog << "typeid(x).name() = " << typeid(x).name() << std::endl;
 

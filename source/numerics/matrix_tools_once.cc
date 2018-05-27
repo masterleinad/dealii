@@ -64,10 +64,10 @@ namespace MatrixTools
 #ifdef DEAL_II_WITH_PETSC
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, PetscScalar> &boundary_values,
-    PETScWrappers::MatrixBase &                           matrix,
-    PETScWrappers::VectorBase &                           solution,
-    PETScWrappers::VectorBase &                           right_hand_side,
+    const std::map<types::global_dof_index, PetscScalar>& boundary_values,
+    PETScWrappers::MatrixBase&                            matrix,
+    PETScWrappers::VectorBase&                            solution,
+    PETScWrappers::VectorBase&                            right_hand_side,
     const bool                                            eliminate_columns)
   {
     (void)eliminate_columns;
@@ -164,10 +164,10 @@ namespace MatrixTools
 
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, PetscScalar> &boundary_values,
-    PETScWrappers::MPI::BlockSparseMatrix &               matrix,
-    PETScWrappers::MPI::BlockVector &                     solution,
-    PETScWrappers::MPI::BlockVector &                     right_hand_side,
+    const std::map<types::global_dof_index, PetscScalar>& boundary_values,
+    PETScWrappers::MPI::BlockSparseMatrix&                matrix,
+    PETScWrappers::MPI::BlockVector&                      solution,
+    PETScWrappers::MPI::BlockVector&                      right_hand_side,
     const bool                                            eliminate_columns)
   {
     Assert(matrix.n() == right_hand_side.size(),
@@ -251,10 +251,10 @@ namespace MatrixTools
       template <typename TrilinosMatrix, typename TrilinosVector>
       void
       apply_boundary_values(const std::map<types::global_dof_index,
-                                           TrilinosScalar> &boundary_values,
-                            TrilinosMatrix &                matrix,
-                            TrilinosVector &                solution,
-                            TrilinosVector &                right_hand_side,
+                                           TrilinosScalar>& boundary_values,
+                            TrilinosMatrix&                 matrix,
+                            TrilinosVector&                 solution,
+                            TrilinosVector&                 right_hand_side,
                             const bool                      eliminate_columns)
       {
         Assert(eliminate_columns == false, ExcNotImplemented());
@@ -353,11 +353,11 @@ namespace MatrixTools
       template <typename TrilinosMatrix, typename TrilinosBlockVector>
       void
       apply_block_boundary_values(
-        const std::map<types::global_dof_index, TrilinosScalar>
-          &                  boundary_values,
-        TrilinosMatrix &     matrix,
-        TrilinosBlockVector &solution,
-        TrilinosBlockVector &right_hand_side,
+        const std::map<types::global_dof_index, TrilinosScalar>&
+                             boundary_values,
+        TrilinosMatrix&      matrix,
+        TrilinosBlockVector& solution,
+        TrilinosBlockVector& right_hand_side,
         const bool           eliminate_columns)
       {
         Assert(eliminate_columns == false, ExcNotImplemented());
@@ -438,10 +438,10 @@ namespace MatrixTools
 
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, TrilinosScalar> &boundary_values,
-    TrilinosWrappers::SparseMatrix &                         matrix,
-    TrilinosWrappers::MPI::Vector &                          solution,
-    TrilinosWrappers::MPI::Vector &                          right_hand_side,
+    const std::map<types::global_dof_index, TrilinosScalar>& boundary_values,
+    TrilinosWrappers::SparseMatrix&                          matrix,
+    TrilinosWrappers::MPI::Vector&                           solution,
+    TrilinosWrappers::MPI::Vector&                           right_hand_side,
     const bool                                               eliminate_columns)
   {
     // simply redirect to the generic function
@@ -454,10 +454,10 @@ namespace MatrixTools
 
   void
   apply_boundary_values(
-    const std::map<types::global_dof_index, TrilinosScalar> &boundary_values,
-    TrilinosWrappers::BlockSparseMatrix &                    matrix,
-    TrilinosWrappers::MPI::BlockVector &                     solution,
-    TrilinosWrappers::MPI::BlockVector &                     right_hand_side,
+    const std::map<types::global_dof_index, TrilinosScalar>& boundary_values,
+    TrilinosWrappers::BlockSparseMatrix&                     matrix,
+    TrilinosWrappers::MPI::BlockVector&                      solution,
+    TrilinosWrappers::MPI::BlockVector&                      right_hand_side,
     const bool                                               eliminate_columns)
   {
     internal::TrilinosWrappers::apply_block_boundary_values(

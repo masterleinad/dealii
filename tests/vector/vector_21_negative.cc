@@ -27,7 +27,7 @@
 
 
 void
-test(Vector<double> &v)
+test(Vector<double>& v)
 {
   // set only certain elements of the
   // vector. have a bit pattern of where we
@@ -64,7 +64,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

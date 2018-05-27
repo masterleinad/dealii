@@ -31,7 +31,7 @@
 
 template <int dim>
 void
-test(std::ostream &out)
+test(std::ostream& out)
 {
   Point<dim> p1;
   p1[0] = 2.;

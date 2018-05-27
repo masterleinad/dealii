@@ -78,10 +78,10 @@ namespace LocalIntegrators
     template <int dim>
     void
     cell_matrix(
-      FullMatrix<double> &                                       M,
-      const FEValuesBase<dim> &                                  fe,
-      const FEValuesBase<dim> &                                  fetest,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      FullMatrix<double>&                                        M,
+      const FEValuesBase<dim>&                                   fe,
+      const FEValuesBase<dim>&                                   fetest,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       const double                                               factor = 1.)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
@@ -135,10 +135,10 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     cell_residual(
-      Vector<double> &                                           result,
-      const FEValuesBase<dim> &                                  fe,
-      const std::vector<Tensor<1, dim>> &                        input,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result,
+      const FEValuesBase<dim>&                                   fe,
+      const std::vector<Tensor<1, dim>>&                         input,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -179,10 +179,10 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     cell_residual(
-      Vector<double> &                                                   result,
-      const FEValuesBase<dim> &                                          fe,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &input,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                                    result,
+      const FEValuesBase<dim>&                                           fe,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -222,10 +222,10 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     cell_residual(
-      Vector<double> &                                           result,
-      const FEValuesBase<dim> &                                  fe,
-      const std::vector<double> &                                input,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result,
+      const FEValuesBase<dim>&                                   fe,
+      const std::vector<double>&                                 input,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -263,10 +263,10 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     cell_residual(
-      Vector<double> &                                           result,
-      const FEValuesBase<dim> &                                  fe,
-      const VectorSlice<const std::vector<std::vector<double>>> &input,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result,
+      const FEValuesBase<dim>&                                   fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -318,10 +318,10 @@ namespace LocalIntegrators
     template <int dim>
     void
     upwind_value_matrix(
-      FullMatrix<double> &                                       M,
-      const FEValuesBase<dim> &                                  fe,
-      const FEValuesBase<dim> &                                  fetest,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      FullMatrix<double>&                                        M,
+      const FEValuesBase<dim>&                                   fe,
+      const FEValuesBase<dim>&                                   fetest,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int n_dofs       = fe.dofs_per_cell;
@@ -392,11 +392,11 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     upwind_value_residual(
-      Vector<double> &                                           result,
-      const FEValuesBase<dim> &                                  fe,
-      const std::vector<double> &                                input,
-      const std::vector<double> &                                data,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result,
+      const FEValuesBase<dim>&                                   fe,
+      const std::vector<double>&                                 input,
+      const std::vector<double>&                                 data,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
@@ -460,11 +460,11 @@ namespace LocalIntegrators
     template <int dim>
     inline void
     upwind_value_residual(
-      Vector<double> &                                           result,
-      const FEValuesBase<dim> &                                  fe,
-      const VectorSlice<const std::vector<std::vector<double>>> &input,
-      const VectorSlice<const std::vector<std::vector<double>>> &data,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result,
+      const FEValuesBase<dim>&                                   fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
+      const VectorSlice<const std::vector<std::vector<double>>>& data,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       double                                                     factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
@@ -528,15 +528,15 @@ namespace LocalIntegrators
     template <int dim>
     void
     upwind_value_matrix(
-      FullMatrix<double> &                                       M11,
-      FullMatrix<double> &                                       M12,
-      FullMatrix<double> &                                       M21,
-      FullMatrix<double> &                                       M22,
-      const FEValuesBase<dim> &                                  fe1,
-      const FEValuesBase<dim> &                                  fe2,
-      const FEValuesBase<dim> &                                  fetest1,
-      const FEValuesBase<dim> &                                  fetest2,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      FullMatrix<double>&                                        M11,
+      FullMatrix<double>&                                        M12,
+      FullMatrix<double>&                                        M21,
+      FullMatrix<double>&                                        M22,
+      const FEValuesBase<dim>&                                   fe1,
+      const FEValuesBase<dim>&                                   fe2,
+      const FEValuesBase<dim>&                                   fetest1,
+      const FEValuesBase<dim>&                                   fetest2,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       const double                                               factor = 1.)
     {
       const unsigned int n1 = fe1.dofs_per_cell;
@@ -557,11 +557,11 @@ namespace LocalIntegrators
           for (unsigned int d = 1; d < dim; ++d)
             nbeta += fe1.normal_vector(k)[d] * velocity[d][k * v_increment];
           const double        dx_nbeta = factor * std::abs(nbeta) * fe1.JxW(k);
-          FullMatrix<double> &M1       = nbeta > 0. ? M11 : M22;
-          FullMatrix<double> &M2       = nbeta > 0. ? M21 : M12;
-          const FEValuesBase<dim> &fe  = nbeta > 0. ? fe1 : fe2;
-          const FEValuesBase<dim> &fetest  = nbeta > 0. ? fetest1 : fetest2;
-          const FEValuesBase<dim> &fetestn = nbeta > 0. ? fetest2 : fetest1;
+          FullMatrix<double>& M1       = nbeta > 0. ? M11 : M22;
+          FullMatrix<double>& M2       = nbeta > 0. ? M21 : M12;
+          const FEValuesBase<dim>& fe  = nbeta > 0. ? fe1 : fe2;
+          const FEValuesBase<dim>& fetest  = nbeta > 0. ? fetest1 : fetest2;
+          const FEValuesBase<dim>& fetestn = nbeta > 0. ? fetest2 : fetest1;
           for (unsigned i = 0; i < n1; ++i)
             for (unsigned j = 0; j < n1; ++j)
               {
@@ -614,13 +614,13 @@ namespace LocalIntegrators
     template <int dim>
     void
     upwind_face_residual(
-      Vector<double> &                                           result1,
-      Vector<double> &                                           result2,
-      const FEValuesBase<dim> &                                  fe1,
-      const FEValuesBase<dim> &                                  fe2,
-      const std::vector<double> &                                input1,
-      const std::vector<double> &                                input2,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result1,
+      Vector<double>&                                            result2,
+      const FEValuesBase<dim>&                                   fe1,
+      const FEValuesBase<dim>&                                   fe2,
+      const std::vector<double>&                                 input1,
+      const std::vector<double>&                                 input2,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       const double                                               factor = 1.)
     {
       Assert(fe1.get_fe().n_components() == 1,
@@ -692,13 +692,13 @@ namespace LocalIntegrators
     template <int dim>
     void
     upwind_face_residual(
-      Vector<double> &                                           result1,
-      Vector<double> &                                           result2,
-      const FEValuesBase<dim> &                                  fe1,
-      const FEValuesBase<dim> &                                  fe2,
-      const VectorSlice<const std::vector<std::vector<double>>> &input1,
-      const VectorSlice<const std::vector<std::vector<double>>> &input2,
-      const VectorSlice<const std::vector<std::vector<double>>> &velocity,
+      Vector<double>&                                            result1,
+      Vector<double>&                                            result2,
+      const FEValuesBase<dim>&                                   fe1,
+      const FEValuesBase<dim>&                                   fe2,
+      const VectorSlice<const std::vector<std::vector<double>>>& input1,
+      const VectorSlice<const std::vector<std::vector<double>>>& input2,
+      const VectorSlice<const std::vector<std::vector<double>>>& velocity,
       const double                                               factor = 1.)
     {
       const unsigned int n_comp = fe1.get_fe().n_components();

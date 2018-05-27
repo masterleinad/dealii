@@ -28,16 +28,16 @@ public:
   {
     deallog << "Default construct." << std::endl;
   }
-  T(const T &) = delete;
-  T(T &&)
+  T(const T&) = delete;
+  T(T&&)
   {
     deallog << "Move construct." << std::endl;
   }
 
-  T &
-  operator=(const T &) = delete;
-  T &
-  operator=(T &&)
+  T&
+  operator=(const T&) = delete;
+  T&
+  operator=(T&&)
   {
     deallog << "Move assign." << std::endl;
     return *this;

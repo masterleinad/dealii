@@ -36,7 +36,7 @@
 
 template <int dim>
 void
-test(std::ostream & /*out*/)
+test(std::ostream& /*out*/)
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
   Triangulation<dim>                        tr2(
@@ -116,7 +116,7 @@ test(std::ostream & /*out*/)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

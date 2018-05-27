@@ -66,14 +66,14 @@ namespace hp
      * push_back(), if desired, though it would probably be clearer to add all
      * mappings the same way.
      */
-    explicit FECollection(const FiniteElement<dim, spacedim> &fe);
+    explicit FECollection(const FiniteElement<dim, spacedim>& fe);
 
     /**
      * Constructor. This constructor creates a FECollection from more than
      * one finite element.
      */
     template <class... FETypes>
-    explicit FECollection(const FETypes &... fes);
+    explicit FECollection(const FETypes&... fes);
 
     /**
      * Constructor. Same as above but for any number of elements. Pointers to
@@ -82,37 +82,37 @@ namespace hp
      * other than to create copies internally. Consequently, you can delete
      * these pointers immediately again after calling this constructor.
      */
-    FECollection(const std::vector<const FiniteElement<dim, spacedim> *> &fes);
+    FECollection(const std::vector<const FiniteElement<dim, spacedim>*>& fes);
 
     /**
      * Copy constructor.
      */
-    FECollection(const FECollection<dim, spacedim> &) = default;
+    FECollection(const FECollection<dim, spacedim>&) = default;
 
     /**
      * Move constructor.
      */
-    FECollection(FECollection<dim, spacedim> &&) noexcept = default;
+    FECollection(FECollection<dim, spacedim>&&) noexcept = default;
 
     /**
      * Move assignment operator.
      */
-    FECollection<dim, spacedim> &
-    operator=(FECollection<dim, spacedim> &&) = default; // NOLINT
+    FECollection<dim, spacedim>&
+    operator=(FECollection<dim, spacedim>&&) = default; // NOLINT
 
     /**
      * Equality comparison operator. All stored FiniteElement objects are
      * compared in order.
      */
     bool
-    operator==(const FECollection<dim, spacedim> &fe_collection) const;
+    operator==(const FECollection<dim, spacedim>& fe_collection) const;
 
     /**
      * Non-equality comparison operator. All stored FiniteElement objects are
      * compared in order.
      */
     bool
-    operator!=(const FECollection<dim, spacedim> &fe_collection) const;
+    operator!=(const FECollection<dim, spacedim>& fe_collection) const;
 
     /**
      * Add a finite element. This function generates a copy of the given
@@ -124,7 +124,7 @@ namespace hp
      * components as all other elements already in the collection.
      */
     void
-    push_back(const FiniteElement<dim, spacedim> &new_fe);
+    push_back(const FiniteElement<dim, spacedim>& new_fe);
 
     /**
      * Get a reference to the given element in this collection.
@@ -132,7 +132,7 @@ namespace hp
      * @pre @p index must be between zero and the number of elements of the
      * collection.
      */
-    const FiniteElement<dim, spacedim> &
+    const FiniteElement<dim, spacedim>&
     operator[](const unsigned int index) const;
 
     /**
@@ -265,7 +265,7 @@ namespace hp
      * dominating element in the sense described above .
      */
     unsigned int
-    find_least_face_dominating_fe(const std::set<unsigned int> &fes) const;
+    find_least_face_dominating_fe(const std::set<unsigned int>& fes) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -284,7 +284,7 @@ namespace hp
      * one that corresponds to the argument.
      */
     ComponentMask
-    component_mask(const FEValuesExtractors::Scalar &scalar) const;
+    component_mask(const FEValuesExtractors::Scalar& scalar) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -303,7 +303,7 @@ namespace hp
      * ones that corresponds to the argument.
      */
     ComponentMask
-    component_mask(const FEValuesExtractors::Vector &vector) const;
+    component_mask(const FEValuesExtractors::Vector& vector) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -324,7 +324,7 @@ namespace hp
      */
     ComponentMask
     component_mask(
-      const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+      const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const;
 
     /**
      * Given a block mask (see
@@ -347,7 +347,7 @@ namespace hp
      * selected blocks of the input argument.
      */
     ComponentMask
-    component_mask(const BlockMask &block_mask) const;
+    component_mask(const BlockMask& block_mask) const;
 
     /**
      * Return a block mask with as many elements as this object has blocks and
@@ -376,7 +376,7 @@ namespace hp
      * one that corresponds to the argument.
      */
     BlockMask
-    block_mask(const FEValuesExtractors::Scalar &scalar) const;
+    block_mask(const FEValuesExtractors::Scalar& scalar) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -401,7 +401,7 @@ namespace hp
      * ones that corresponds to the argument.
      */
     BlockMask
-    block_mask(const FEValuesExtractors::Vector &vector) const;
+    block_mask(const FEValuesExtractors::Vector& vector) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -427,7 +427,7 @@ namespace hp
      * ones that corresponds to the argument.
      */
     BlockMask
-    block_mask(const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+    block_mask(const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const;
 
     /**
      * Given a component mask (see
@@ -458,7 +458,7 @@ namespace hp
      * blocks of the input argument.
      */
     BlockMask
-    block_mask(const ComponentMask &component_mask) const;
+    block_mask(const ComponentMask& component_mask) const;
 
 
     /**
@@ -480,7 +480,7 @@ namespace hp
 
   template <int dim, int spacedim>
   template <class... FETypes>
-  FECollection<dim, spacedim>::FECollection(const FETypes &... fes)
+  FECollection<dim, spacedim>::FECollection(const FETypes&... fes)
   {
     static_assert(
       is_base_of_all<FiniteElement<dim, spacedim>, FETypes...>::value,
@@ -526,7 +526,7 @@ namespace hp
   template <int dim, int spacedim>
   inline bool
   FECollection<dim, spacedim>::
-  operator==(const FECollection<dim, spacedim> &fe_collection) const
+  operator==(const FECollection<dim, spacedim>& fe_collection) const
   {
     const unsigned int n_elements = size();
     if (n_elements != fe_collection.size())
@@ -544,7 +544,7 @@ namespace hp
   template <int dim, int spacedim>
   inline bool
   FECollection<dim, spacedim>::
-  operator!=(const FECollection<dim, spacedim> &fe_collection) const
+  operator!=(const FECollection<dim, spacedim>& fe_collection) const
   {
     return !(*this == fe_collection);
   }
@@ -552,7 +552,7 @@ namespace hp
 
 
   template <int dim, int spacedim>
-  inline const FiniteElement<dim, spacedim> &FECollection<dim, spacedim>::
+  inline const FiniteElement<dim, spacedim>& FECollection<dim, spacedim>::
                                              operator[](const unsigned int index) const
   {
     Assert(index < finite_elements.size(),

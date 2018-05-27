@@ -36,7 +36,7 @@ test_tria_bounding_box()
   tria.refine_global(1);
   const BoundingBox<spacedim> bounding_box =
     GridTools::compute_bounding_box(tria);
-  const std::pair<Point<spacedim>, Point<spacedim>> &boundary_points =
+  const std::pair<Point<spacedim>, Point<spacedim>>& boundary_points =
     bounding_box.get_boundary_points();
 
   deallog << boundary_points.first << ", " << boundary_points.second

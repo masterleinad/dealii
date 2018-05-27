@@ -87,13 +87,13 @@ namespace Maxwell
     ExactSolution();
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  values) const;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   values) const;
 
 
     void
-    curl_value_list(const std::vector<Point<dim>> &points,
-                    std::vector<Vector<double>> &  value_list);
+    curl_value_list(const std::vector<Point<dim>>& points,
+                    std::vector<Vector<double>>&   value_list);
   };
 
   template <int dim>
@@ -102,8 +102,8 @@ namespace Maxwell
   template <int dim>
   void
   ExactSolution<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  value_list) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   value_list) const
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -111,7 +111,7 @@ namespace Maxwell
 
     for (unsigned int i = 0; i < n_points; ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
 
         /* quadratic: */
         value_list[i](0) = p(0) * p(0);
@@ -122,8 +122,8 @@ namespace Maxwell
   // Additional functions to create Neumann conditions, zero in this case.
   template <int dim>
   void
-  ExactSolution<dim>::curl_value_list(const std::vector<Point<dim>> &points,
-                                      std::vector<Vector<double>> &  value_list)
+  ExactSolution<dim>::curl_value_list(const std::vector<Point<dim>>& points,
+                                      std::vector<Vector<double>>&   value_list)
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -133,7 +133,7 @@ namespace Maxwell
     double exponent;
     for (unsigned int i = 0; i < n_points; ++i)
       {
-        const Point<dim> &p = points[i];
+        const Point<dim>& p = points[i];
         // Real:
         value_list[i](0) = 0.0;
         value_list[i](1) = 0.0;

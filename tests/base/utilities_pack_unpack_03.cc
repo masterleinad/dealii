@@ -34,16 +34,16 @@ struct X
   double d;
 
   bool
-  operator!=(const X &x) const
+  operator!=(const X& x) const
   {
     return i != x.i || k != x.k || d != x.d;
   }
 
   template <class Archive>
   void
-  serialize(Archive &ar, const unsigned int)
+  serialize(Archive& ar, const unsigned int)
   {
-    ar &i &k &d;
+    ar& i& k& d;
   }
 };
 
@@ -51,7 +51,7 @@ struct X
 
 template <typename T>
 void
-check(const T &object)
+check(const T& object)
 {
   const std::vector<char> buffer = Utilities::pack(object);
   if (buffer.size() != sizeof(object))

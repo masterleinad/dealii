@@ -54,7 +54,7 @@ test(const unsigned int m = 13, const unsigned int n = 5)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

@@ -74,7 +74,7 @@ boundary_component=0 '\000', constraints=..., mapping=...) at
 
 template <int dim>
 void
-test(FiniteElement<dim> &fe)
+test(FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
   Triangulation<dim> tria;

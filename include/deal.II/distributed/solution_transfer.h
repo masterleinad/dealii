@@ -145,7 +145,7 @@ namespace parallel
        *   is called, the DoFHandler still points to the triangulation
        *   before the refinement in question happens.
        */
-      SolutionTransfer(const DoFHandlerType &dof);
+      SolutionTransfer(const DoFHandlerType& dof);
 
       /**
        * Destructor.
@@ -161,14 +161,14 @@ namespace parallel
        */
       void
       prepare_for_coarsening_and_refinement(
-        const std::vector<const VectorType *> &all_in);
+        const std::vector<const VectorType*>& all_in);
 
       /**
        * Same as the previous function but for only one discrete function to be
        * interpolated.
        */
       void
-      prepare_for_coarsening_and_refinement(const VectorType &in);
+      prepare_for_coarsening_and_refinement(const VectorType& in);
 
       /**
        * Interpolate the data previously stored in this object before the mesh
@@ -178,7 +178,7 @@ namespace parallel
        * given set of vectors.
        */
       void
-      interpolate(std::vector<VectorType *> &all_out);
+      interpolate(std::vector<VectorType*>& all_out);
 
       /**
        * Same as the previous function. It interpolates only one function. It
@@ -190,7 +190,7 @@ namespace parallel
        * <tt>interpolate (all_in, all_out)</tt>
        */
       void
-      interpolate(VectorType &out);
+      interpolate(VectorType& out);
 
 
       /**
@@ -207,14 +207,14 @@ namespace parallel
        * this class for more information.
        */
       void
-      prepare_serialization(const VectorType &in);
+      prepare_serialization(const VectorType& in);
 
 
       /**
        * Same as the function above, only for a list of vectors.
        */
       void
-      prepare_serialization(const std::vector<const VectorType *> &all_in);
+      prepare_serialization(const std::vector<const VectorType*>& all_in);
 
 
       /**
@@ -224,14 +224,14 @@ namespace parallel
        * this class for more information.
        */
       void
-      deserialize(VectorType &in);
+      deserialize(VectorType& in);
 
 
       /**
        * Same as the function above, only for a list of vectors.
        */
       void
-      deserialize(std::vector<VectorType *> &all_in);
+      deserialize(std::vector<VectorType*>& all_in);
 
     private:
       /**
@@ -245,7 +245,7 @@ namespace parallel
        * A vector that stores pointers to all the vectors we are supposed to
        * copy over from the old to the new mesh.
        */
-      std::vector<const VectorType *> input_vectors;
+      std::vector<const VectorType*> input_vectors;
 
       /**
        * The handle that the Triangulation has assigned to this object
@@ -261,10 +261,10 @@ namespace parallel
       void
       pack_callback(
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
-          cell_iterator &cell,
+          cell_iterator& cell,
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
           CellStatus status,
-        void *       data);
+        void*        data);
 
       /**
        * A callback function used to unpack the data on the current mesh that
@@ -274,11 +274,11 @@ namespace parallel
       void
       unpack_callback(
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
-          cell_iterator &cell,
+          cell_iterator& cell,
         const typename Triangulation<dim, DoFHandlerType::space_dimension>::
-          CellStatus               status,
-        const void *               data,
-        std::vector<VectorType *> &all_out);
+          CellStatus              status,
+        const void*               data,
+        std::vector<VectorType*>& all_out);
 
 
       /**

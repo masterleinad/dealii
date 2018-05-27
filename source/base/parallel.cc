@@ -86,7 +86,7 @@ namespace parallel
 
     void
     TBBPartitioner::release_one_partitioner(
-      std::shared_ptr<tbb::affinity_partitioner> &p)
+      std::shared_ptr<tbb::affinity_partitioner>& p)
     {
       if (p.get() == my_partitioner.get())
         {

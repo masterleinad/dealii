@@ -27,14 +27,14 @@ using namespace dealii;
 
 void
 test_applies(std::string                              description,
-             const PackagedOperation<Vector<double>> &expr)
+             const PackagedOperation<Vector<double>>& expr)
 {
   // test apply
   Vector<double> tmp = expr;
   deallog << description << ": " << tmp << std::endl;
 
   // test apply_add
-  for (auto &i : tmp)
+  for (auto& i : tmp)
     i = 100.;
   expr.apply_add(tmp);
   deallog << "100. * 1_n + " << description << ": " << tmp << std::endl;

@@ -54,7 +54,7 @@ public:
    * be copied element by element into a private variable.
    */
   template <class Pol>
-  TensorProductPolynomialsBubbles(const std::vector<Pol> &pols);
+  TensorProductPolynomialsBubbles(const std::vector<Pol>& pols);
 
   /**
    * Compute the value and the first and second derivatives of each tensor
@@ -69,12 +69,12 @@ public:
    * over all tensor product polynomials.
    */
   void
-  compute(const Point<dim> &           unit_point,
-          std::vector<double> &        values,
-          std::vector<Tensor<1, dim>> &grads,
-          std::vector<Tensor<2, dim>> &grad_grads,
-          std::vector<Tensor<3, dim>> &third_derivatives,
-          std::vector<Tensor<4, dim>> &fourth_derivatives) const;
+  compute(const Point<dim>&            unit_point,
+          std::vector<double>&         values,
+          std::vector<Tensor<1, dim>>& grads,
+          std::vector<Tensor<2, dim>>& grad_grads,
+          std::vector<Tensor<3, dim>>& third_derivatives,
+          std::vector<Tensor<4, dim>>& fourth_derivatives) const;
 
   /**
    * Compute the value of the <tt>i</tt>th tensor product polynomial at
@@ -89,7 +89,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   double
-  compute_value(const unsigned int i, const Point<dim> &p) const;
+  compute_value(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the order @p order derivative of the <tt>i</tt>th tensor product
@@ -105,7 +105,7 @@ public:
    */
   template <int order>
   Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim> &p) const;
+  compute_derivative(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -120,7 +120,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th tensor
@@ -135,7 +135,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Return the number of tensor product polynomials plus the bubble
@@ -157,7 +157,7 @@ public:
 template <int dim>
 template <class Pol>
 inline TensorProductPolynomialsBubbles<dim>::TensorProductPolynomialsBubbles(
-  const std::vector<Pol> &pols) :
+  const std::vector<Pol>& pols) :
   TensorProductPolynomials<dim>(pols)
 {
   const unsigned int q_degree  = this->polynomials.size() - 1;
@@ -193,7 +193,7 @@ template <int order>
 Tensor<order, dim>
 TensorProductPolynomialsBubbles<dim>::compute_derivative(
   const unsigned int i,
-  const Point<dim> & p) const
+  const Point<dim>&  p) const
 {
   const unsigned int q_degree      = this->polynomials.size() - 1;
   const unsigned int max_q_indices = this->n_tensor_pols;
@@ -213,8 +213,8 @@ TensorProductPolynomialsBubbles<dim>::compute_derivative(
     {
       case 1:
         {
-          Tensor<1, dim> &derivative_1 =
-            *reinterpret_cast<Tensor<1, dim> *>(&derivative);
+          Tensor<1, dim>& derivative_1 =
+            *reinterpret_cast<Tensor<1, dim>*>(&derivative);
 
           for (unsigned int d = 0; d < dim; ++d)
             {
@@ -245,8 +245,8 @@ TensorProductPolynomialsBubbles<dim>::compute_derivative(
         }
       case 2:
         {
-          Tensor<2, dim> &derivative_2 =
-            *reinterpret_cast<Tensor<2, dim> *>(&derivative);
+          Tensor<2, dim>& derivative_2 =
+            *reinterpret_cast<Tensor<2, dim>*>(&derivative);
 
           double v[dim + 1][3];
           {

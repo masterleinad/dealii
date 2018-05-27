@@ -28,7 +28,7 @@ template <int dim, int spacedim>
 class MyFlatManifold : public ChartManifold<dim, spacedim, spacedim>
 {
 public:
-  MyFlatManifold(const Tensor<1, spacedim> &periodicity) :
+  MyFlatManifold(const Tensor<1, spacedim>& periodicity) :
     ChartManifold<dim, spacedim, spacedim>(periodicity)
   {}
 
@@ -40,7 +40,7 @@ public:
   }
 
   virtual Point<spacedim>
-  pull_back(const Point<spacedim> &space_point) const override
+  pull_back(const Point<spacedim>& space_point) const override
   {
     Point<spacedim> p;
     for (unsigned int d = 0; d < spacedim; ++d)
@@ -50,7 +50,7 @@ public:
 
 
   virtual Point<spacedim>
-  push_forward(const Point<spacedim> &chart_point) const override
+  push_forward(const Point<spacedim>& chart_point) const override
   {
     Point<spacedim> p;
     for (unsigned int d = 0; d < spacedim; ++d)
@@ -59,7 +59,7 @@ public:
   }
 
   virtual DerivativeForm<1, spacedim, spacedim>
-  push_forward_gradient(const Point<spacedim> &chart_point) const override
+  push_forward_gradient(const Point<spacedim>& chart_point) const override
   {
     DerivativeForm<1, spacedim, spacedim> x;
     for (unsigned int d = 0; d < spacedim; ++d)

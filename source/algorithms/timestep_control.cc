@@ -50,7 +50,7 @@ TimestepControl::TimestepControl(double start,
 
 
 void
-TimestepControl::declare_parameters(ParameterHandler &param)
+TimestepControl::declare_parameters(ParameterHandler& param)
 {
   param.declare_entry("Start", "0.", Patterns::Double());
   param.declare_entry("Final", "1.", Patterns::Double());
@@ -65,7 +65,7 @@ TimestepControl::declare_parameters(ParameterHandler &param)
 
 
 void
-TimestepControl::parse_parameters(ParameterHandler &param)
+TimestepControl::parse_parameters(ParameterHandler& param)
 {
   start(param.get_double("Start"));
   start_step(param.get_double("First step"));

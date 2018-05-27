@@ -23,7 +23,7 @@
 #include "../tests.h"
 
 template <int dim>
-void check_line(Quadrature<1> &quadrature)
+void check_line(Quadrature<1>& quadrature)
 {
   Point<dim> p1;
   Point<dim> p2;
@@ -51,7 +51,7 @@ void check_line(Quadrature<1> &quadrature)
 }
 
 template <int dim>
-void check_face(Quadrature<1> &q1)
+void check_face(Quadrature<1>& q1)
 {
   deallog << "Checking dim " << dim << " 1d-points " << q1.size() << std::endl;
 
@@ -79,7 +79,7 @@ void check_face(Quadrature<1> &q1)
 }
 
 template <int dim>
-void check_faces(Quadrature<1> &q1)
+void check_faces(Quadrature<1>& q1)
 {
   const unsigned int nq = q1.size();
 
@@ -142,7 +142,7 @@ void check_faces(Quadrature<1> &q1)
 }
 
 
-void check(Quadrature<1> &q)
+void check(Quadrature<1>& q)
 {
   deallog << std::endl;
   deallog.push("line");

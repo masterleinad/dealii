@@ -64,8 +64,8 @@ test();
 
 template <int dim>
 void
-do_check(const Triangulation<dim> &   triangulation,
-         const hp::FECollection<dim> &fe)
+do_check(const Triangulation<dim>&    triangulation,
+         const hp::FECollection<dim>& fe)
 {
   hp::DoFHandler<dim> dof_handler(triangulation);
 
@@ -91,7 +91,7 @@ do_check(const Triangulation<dim> &   triangulation,
 // check on a uniformly refined mesh
 template <int dim>
 void
-test_no_hanging_nodes(const hp::FECollection<dim> &fe)
+test_no_hanging_nodes(const hp::FECollection<dim>& fe)
 {
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -105,7 +105,7 @@ test_no_hanging_nodes(const hp::FECollection<dim> &fe)
 // same test as above, but this time with a mesh that has hanging nodes
 template <int dim>
 void
-test_with_hanging_nodes(const hp::FECollection<dim> &fe)
+test_with_hanging_nodes(const hp::FECollection<dim>& fe)
 {
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -122,7 +122,7 @@ test_with_hanging_nodes(const hp::FECollection<dim> &fe)
 // (a quarter of all cells is refined in each step)
 template <int dim>
 void
-test_with_hanging_nodes_random(const hp::FECollection<dim> &fe)
+test_with_hanging_nodes_random(const hp::FECollection<dim>& fe)
 {
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -146,7 +146,7 @@ test_with_hanging_nodes_random(const hp::FECollection<dim> &fe)
 
 template <int dim>
 void
-test_with_hanging_nodes_random_aniso(const hp::FECollection<dim> &fe)
+test_with_hanging_nodes_random_aniso(const hp::FECollection<dim>& fe)
 {
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
@@ -181,7 +181,7 @@ test_with_hanging_nodes_random_aniso(const hp::FECollection<dim> &fe)
 // having face_orientation==false
 template <int dim>
 void
-test_with_wrong_face_orientation(const hp::FECollection<dim> &fe)
+test_with_wrong_face_orientation(const hp::FECollection<dim>& fe)
 {
   if (dim != 3)
     return;
@@ -207,7 +207,7 @@ test_with_wrong_face_orientation(const hp::FECollection<dim> &fe)
 // fe_poly_tensor.cc
 template <int dim>
 void
-test_with_2d_deformed_mesh(const hp::FECollection<dim> &fe)
+test_with_2d_deformed_mesh(const hp::FECollection<dim>& fe)
 {
   if (dim != 2)
     return;
@@ -256,7 +256,7 @@ test_with_2d_deformed_mesh(const hp::FECollection<dim> &fe)
 // makes sure we also check the sign_change thingy for refined cells
 template <int dim>
 void
-test_with_2d_deformed_refined_mesh(const hp::FECollection<dim> &fe)
+test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
 {
   if (dim != 2)
     return;
@@ -325,8 +325,8 @@ test_with_2d_deformed_refined_mesh(const hp::FECollection<dim> &fe)
 // error. we do so with every pair of finite elements given
 template <int dim>
 void
-test_interpolation_base(const hp::FECollection<dim> &    fe,
-                        const std::vector<unsigned int> &polynomial_degrees,
+test_interpolation_base(const hp::FECollection<dim>&     fe,
+                        const std::vector<unsigned int>& polynomial_degrees,
                         const bool                       do_refine)
 {
   // create a mesh like this (viewed
@@ -460,8 +460,8 @@ test_interpolation_base(const hp::FECollection<dim> &    fe,
 
 template <int dim>
 void
-test_interpolation(const hp::FECollection<dim> &    fe,
-                   const std::vector<unsigned int> &polynomial_degrees)
+test_interpolation(const hp::FECollection<dim>&     fe,
+                   const std::vector<unsigned int>& polynomial_degrees)
 {
   test_interpolation_base(fe, polynomial_degrees, false);
   test_interpolation_base(fe, polynomial_degrees, true);

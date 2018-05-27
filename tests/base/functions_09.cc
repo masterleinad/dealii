@@ -27,7 +27,7 @@ template <int rank, int dim>
 struct FillTensor
 {
   static void
-  fill_tensor(Tensor<rank, dim> &tensor, int base)
+  fill_tensor(Tensor<rank, dim>& tensor, int base)
   {
     for (int i = 0; i < dim; ++i)
       FillTensor<rank - 1, dim>::fill_tensor(tensor[i], 10 * base + i);
@@ -37,7 +37,7 @@ struct FillTensor
 template <int dim>
 struct FillTensor<1, dim>
 {
-  static void fill_tensor(Tensor<1, dim> &tensor, int base)
+  static void fill_tensor(Tensor<1, dim>& tensor, int base)
   {
     for (int i = 0; i < dim; ++i)
       tensor[i] = 10 * base + i;
@@ -51,7 +51,7 @@ template <int rank, int dim>
 struct PrintTensor
 {
   static void
-  print_tensor(const Tensor<rank, dim> &tensor)
+  print_tensor(const Tensor<rank, dim>& tensor)
   {
     for (int i = 0; i < dim; ++i)
       {
@@ -65,7 +65,7 @@ template <int dim>
 struct PrintTensor<1, dim>
 {
   static void
-  print_tensor(const Tensor<1, dim> &tensor)
+  print_tensor(const Tensor<1, dim>& tensor)
   {
     for (int i = 0; i < dim; ++i)
       deallog << tensor[i] << " ";
@@ -85,7 +85,7 @@ check()
   FillTensor<rank, dim>::fill_tensor(value, 0);
 
   ConstantTensorFunction<rank, dim> tensor_function(value);
-  TensorFunction<rank, dim> *       foo = &tensor_function;
+  TensorFunction<rank, dim>*        foo = &tensor_function;
 
 
   Point<dim> point;

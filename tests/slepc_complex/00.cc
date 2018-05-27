@@ -31,7 +31,7 @@
 std::ofstream logfile("output");
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   deallog.attach(logfile);
   deallog.depth_console(1);
@@ -62,7 +62,7 @@ main(int argc, char **argv)
       logfile << "ok" << std::endl << std::endl;
     }
 
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

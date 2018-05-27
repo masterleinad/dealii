@@ -67,13 +67,13 @@ public:
   {}
 
   double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     return p[component];
   }
 
   void
-  vector_value(const Point<dim> &p, Vector<double> &v) const
+  vector_value(const Point<dim>& p, Vector<double>& v) const
   {
     for (unsigned int i = 0; i < dim; ++i)
       v(i) = p[i];

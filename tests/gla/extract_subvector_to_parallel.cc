@@ -31,7 +31,7 @@
 
 template <typename VectorType>
 void
-set(VectorType &vector)
+set(VectorType& vector)
 {
   for (unsigned int i = 0; i < vector.size(); ++i)
     if (vector.locally_owned_elements().is_element(i))
@@ -42,7 +42,7 @@ set(VectorType &vector)
 
 template <typename VectorType>
 void
-test(VectorType &vector)
+test(VectorType& vector)
 {
   const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
@@ -74,7 +74,7 @@ test(VectorType &vector)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

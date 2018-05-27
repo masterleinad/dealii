@@ -180,7 +180,7 @@ LaplaceProblem::run()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   try
     {
@@ -192,7 +192,7 @@ main(int argc, char **argv)
       }
     }
 
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

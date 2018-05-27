@@ -49,7 +49,7 @@ namespace Assembly
     template <int dim, int fe_degree>
     struct Data
     {
-      Data(const FiniteElement<dim> &fe) :
+      Data(const FiniteElement<dim>& fe) :
         fe_values(fe,
                   QGauss<dim>(fe.degree + 1),
                   update_values | update_gradients | update_JxW_values),
@@ -61,7 +61,7 @@ namespace Assembly
         test_matrix(cell_matrix)
       {}
 
-      Data(const Data &data) :
+      Data(const Data& data) :
         fe_values(data.fe_values.get_mapping(),
                   data.fe_values.get_fe(),
                   data.fe_values.get_quadrature(),
@@ -87,9 +87,9 @@ namespace Assembly
 // compute matrix with (\nabla v, \nabla u) + (v, 10 * u)
 template <int dim, int fe_degree>
 void
-assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator &cell,
-                 Assembly::Scratch::Data<dim, fe_degree> &             data,
-                 unsigned int &)
+assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator& cell,
+                 Assembly::Scratch::Data<dim, fe_degree>&              data,
+                 unsigned int&)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
   const unsigned int n_q_points    = data.fe_values.get_quadrature().size();
@@ -109,7 +109,7 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator &cell,
              data.fe_values.JxW(q_point));
       }
 
-  FEEvaluation<dim, fe_degree> &fe_eval = data.fe_eval[0];
+  FEEvaluation<dim, fe_degree>& fe_eval = data.fe_eval[0];
   fe_eval.reinit(cell);
   for (unsigned int i = 0; i < dofs_per_cell;
        i += VectorizedArray<double>::n_array_elements)
@@ -143,13 +143,13 @@ assemble_on_cell(const typename DoFHandler<dim>::active_cell_iterator &cell,
 
 
 void
-copy_data_local_to_global(const unsigned int &)
+copy_data_local_to_global(const unsigned int&)
 {}
 
 
 template <int dim, int fe_degree>
 void
-do_test(const DoFHandler<dim> &dof)
+do_test(const DoFHandler<dim>& dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 

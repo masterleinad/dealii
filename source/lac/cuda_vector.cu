@@ -36,7 +36,7 @@ namespace LinearAlgebra
     {
       template <typename Number>
       __global__ void
-      vec_scale(Number *                                 val,
+      vec_scale(Number*                                  val,
                 const Number                             a,
                 const typename Vector<Number>::size_type N)
       {
@@ -79,8 +79,8 @@ namespace LinearAlgebra
 
       template <typename Number, typename Binop>
       __global__ void
-      vector_bin_op(Number *                                 v1,
-                    Number *                                 v2,
+      vector_bin_op(Number*                                  v1,
+                    Number*                                  v2,
                     const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -106,7 +106,7 @@ namespace LinearAlgebra
         }
 
         __device__ static Number
-        atomic_op(Number *dst, const Number a)
+        atomic_op(Number* dst, const Number a)
         {
           return atomicAdd_wrapper(dst, a);
         }
@@ -136,7 +136,7 @@ namespace LinearAlgebra
         }
 
         __device__ static Number
-        atomic_op(Number *dst, const Number a)
+        atomic_op(Number* dst, const Number a)
         {
           return atomicAdd_wrapper(dst, a);
         }
@@ -169,7 +169,7 @@ namespace LinearAlgebra
         }
 
         __device__ static Number
-        atomic_op(Number *dst, const Number a)
+        atomic_op(Number* dst, const Number a)
         {
           return atomicMax_wrapper(dst, a);
         }
@@ -191,7 +191,7 @@ namespace LinearAlgebra
 
       template <typename Number, typename Operation>
       __device__ void
-      reduce_within_warp(volatile Number *                  result_buffer,
+      reduce_within_warp(volatile Number*                   result_buffer,
                          typename Vector<Number>::size_type local_idx)
       {
         if (block_size >= 64)
@@ -218,8 +218,8 @@ namespace LinearAlgebra
 
       template <typename Number, typename Operation>
       __device__ void
-      reduce(Number *                                 result,
-             Number *                                 result_buffer,
+      reduce(Number*                                  result,
+             Number*                                  result_buffer,
              const typename Vector<Number>::size_type local_idx,
              const typename Vector<Number>::size_type global_idx,
              const typename Vector<Number>::size_type N)
@@ -244,8 +244,8 @@ namespace LinearAlgebra
 
       template <typename Number, typename Operation>
       __global__ void
-      reduction(Number *                                 result,
-                const Number *                           v,
+      reduction(Number*                                  result,
+                const Number*                            v,
                 const typename Vector<Number>::size_type N)
       {
         __shared__ Number result_buffer[block_size];
@@ -283,7 +283,7 @@ namespace LinearAlgebra
         }
 
         __device__ static Number
-        atomic_op(Number *dst, const Number a)
+        atomic_op(Number* dst, const Number a)
         {
           return atomicAdd_wrapper(dst, a);
         }
@@ -299,9 +299,9 @@ namespace LinearAlgebra
 
       template <typename Number, typename Operation>
       __global__ void
-      double_vector_reduction(Number *                                 result,
-                              Number *                                 v1,
-                              Number *                                 v2,
+      double_vector_reduction(Number*                                  result,
+                              Number*                                  v1,
+                              Number*                                  v2,
                               const typename Vector<Number>::size_type N)
       {
         __shared__ Number result_buffer[block_size];
@@ -336,7 +336,7 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      vec_add(Number *                                 val,
+      vec_add(Number*                                  val,
               const Number                             a,
               const typename Vector<Number>::size_type N)
       {
@@ -355,9 +355,9 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      add_aV(Number *                                 val,
+      add_aV(Number*                                  val,
              const Number                             a,
-             Number *                                 V_val,
+             Number*                                  V_val,
              const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -375,11 +375,11 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      add_aVbW(Number *                                 val,
+      add_aVbW(Number*                                  val,
                const Number                             a,
-               Number *                                 V_val,
+               Number*                                  V_val,
                const Number                             b,
-               Number *                                 W_val,
+               Number*                                  W_val,
                const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -398,9 +398,9 @@ namespace LinearAlgebra
       template <typename Number>
       __global__ void
       sadd(const Number                             s,
-           Number *                                 val,
+           Number*                                  val,
            const Number                             a,
-           const Number *                           V_val,
+           const Number*                            V_val,
            const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -418,8 +418,8 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      scale(Number *                                 val,
-            const Number *                           V_val,
+      scale(Number*                                  val,
+            const Number*                            V_val,
             const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -437,9 +437,9 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      equ(Number *                                 val,
+      equ(Number*                                  val,
           const Number                             a,
-          const Number *                           V_val,
+          const Number*                            V_val,
           const typename Vector<Number>::size_type N)
       {
         const typename Vector<Number>::size_type idx_base =
@@ -457,10 +457,10 @@ namespace LinearAlgebra
 
       template <typename Number>
       __global__ void
-      add_and_dot(Number *                                 res,
-                  Number *                                 v1,
-                  const Number *                           v2,
-                  const Number *                           v3,
+      add_and_dot(Number*                                  res,
+                  Number*                                  v1,
+                  const Number*                            v2,
+                  const Number*                            v3,
                   const Number                             a,
                   const typename Vector<Number>::size_type N)
       {
@@ -505,7 +505,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number>::Vector(const Vector<Number> &V) : n_elements(V.n_elements)
+    Vector<Number>::Vector(const Vector<Number>& V) : n_elements(V.n_elements)
     {
       // Allocate the memory
       cudaError_t error_code = cudaMalloc(&val, n_elements * sizeof(Number));
@@ -579,7 +579,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::reinit(const VectorSpaceVector<Number> &V,
+    Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
                            const bool omit_zeroing_entries)
     {
       reinit(V.size(), omit_zeroing_entries);
@@ -589,7 +589,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::import(const ReadWriteVector<Number> &V,
+    Vector<Number>::import(const ReadWriteVector<Number>& V,
                            VectorOperation::values        operation,
                            std::shared_ptr<const CommunicationPatternBase>)
     {
@@ -604,7 +604,7 @@ namespace LinearAlgebra
       else
         {
           // Create a temporary vector on the device
-          Number *    tmp;
+          Number*     tmp;
           cudaError_t error_code =
             cudaMalloc(&tmp, n_elements * sizeof(Number));
           AssertCuda(error_code);
@@ -635,7 +635,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator=(const Number s)
     {
       Assert(s == Number(), ExcMessage("Onlyt 0 can be assigned to a vector."));
@@ -650,7 +650,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator*=(const Number factor)
     {
       AssertIsFinite(factor);
@@ -669,7 +669,7 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
+    Vector<Number>&
     Vector<Number>::operator/=(const Number factor)
     {
       AssertIsFinite(factor);
@@ -689,15 +689,15 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator+=(const VectorSpaceVector<Number> &V)
+    Vector<Number>&
+    Vector<Number>::operator+=(const VectorSpaceVector<Number>& V)
     {
       // Check that casting will work
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If it fails, it throw an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements"));
@@ -718,15 +718,15 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Vector<Number> &
-    Vector<Number>::operator-=(const VectorSpaceVector<Number> &V)
+    Vector<Number>&
+    Vector<Number>::operator-=(const VectorSpaceVector<Number>& V)
     {
       // Check that casting will work
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements."));
@@ -747,19 +747,19 @@ namespace LinearAlgebra
 
 
     template <typename Number>
-    Number Vector<Number>::operator*(const VectorSpaceVector<Number> &V) const
+    Number Vector<Number>::operator*(const VectorSpaceVector<Number>& V) const
     {
       // Check that casting will work
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements"));
 
-      Number *    result_device;
+      Number*     result_device;
       cudaError_t error_code =
         cudaMalloc(&result_device, n_elements * sizeof(Number));
       AssertCuda(error_code);
@@ -805,16 +805,16 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::add(const Number a, const VectorSpaceVector<Number> &V)
+    Vector<Number>::add(const Number a, const VectorSpaceVector<Number>& V)
     {
       AssertIsFinite(a);
 
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements."));
@@ -834,29 +834,29 @@ namespace LinearAlgebra
     template <typename Number>
     void
     Vector<Number>::add(const Number                     a,
-                        const VectorSpaceVector<Number> &V,
+                        const VectorSpaceVector<Number>& V,
                         const Number                     b,
-                        const VectorSpaceVector<Number> &W)
+                        const VectorSpaceVector<Number>& W)
     {
       AssertIsFinite(a);
       AssertIsFinite(b);
 
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements."));
 
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&W) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&W) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+      const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
       Assert(down_W.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements."));
@@ -877,17 +877,17 @@ namespace LinearAlgebra
     void
     Vector<Number>::sadd(const Number                     s,
                          const Number                     a,
-                         const VectorSpaceVector<Number> &V)
+                         const VectorSpaceVector<Number>& V)
     {
       AssertIsFinite(s);
       AssertIsFinite(a);
 
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage(
                "Cannot add two vectors with different numbers of elements."));
@@ -906,15 +906,15 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::scale(const VectorSpaceVector<Number> &scaling_factors)
+    Vector<Number>::scale(const VectorSpaceVector<Number>& scaling_factors)
     {
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&scaling_factors) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&scaling_factors) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_scaling_factors =
-        dynamic_cast<const Vector<Number> &>(scaling_factors);
+      const Vector<Number>& down_scaling_factors =
+        dynamic_cast<const Vector<Number>&>(scaling_factors);
       Assert(down_scaling_factors.size() == this->size(),
              ExcMessage(
                "Cannot scale two vectors with different numbers of elements."));
@@ -933,16 +933,16 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::equ(const Number a, const VectorSpaceVector<Number> &V)
+    Vector<Number>::equ(const Number a, const VectorSpaceVector<Number>& V)
     {
       AssertIsFinite(a);
 
       // Check that casting will work.
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throw an exception.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(
         down_V.size() == this->size(),
         ExcMessage(
@@ -973,7 +973,7 @@ namespace LinearAlgebra
     typename Vector<Number>::value_type
     Vector<Number>::mean_value() const
     {
-      Number *    result_device;
+      Number*     result_device;
       cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
       error_code = cudaMemset(result_device, Number(), sizeof(Number));
@@ -1002,7 +1002,7 @@ namespace LinearAlgebra
     typename Vector<Number>::real_type
     Vector<Number>::l1_norm() const
     {
-      Number *    result_device;
+      Number*     result_device;
       cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
       error_code = cudaMemset(result_device, Number(), sizeof(Number));
@@ -1039,7 +1039,7 @@ namespace LinearAlgebra
     typename Vector<Number>::real_type
     Vector<Number>::linfty_norm() const
     {
-      Number *    result_device;
+      Number*     result_device;
       cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
       error_code = cudaMemset(result_device, Number(), sizeof(Number));
@@ -1066,26 +1066,26 @@ namespace LinearAlgebra
     template <typename Number>
     Number
     Vector<Number>::add_and_dot(const Number                     a,
-                                const VectorSpaceVector<Number> &V,
-                                const VectorSpaceVector<Number> &W)
+                                const VectorSpaceVector<Number>& V,
+                                const VectorSpaceVector<Number>& W)
     {
       AssertIsFinite(a);
 
       // Check that casting will work
-      Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
-      Assert(dynamic_cast<const Vector<Number> *>(&W) != nullptr,
+      Assert(dynamic_cast<const Vector<Number>*>(&W) != nullptr,
              ExcVectorTypeNotCompatible());
 
       // Downcast V and W. If it fails, throw an exceptiion.
-      const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+      const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
       Assert(down_V.size() == this->size(),
              ExcMessage("Vector V has the wrong size."));
-      const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+      const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
       Assert(down_W.size() == this->size(),
              ExcMessage("Vector W has the wrong size."));
 
-      Number *    res_d;
+      Number*     res_d;
       cudaError_t error_code = cudaMalloc(&res_d, sizeof(Number));
       AssertCuda(error_code);
       error_code = cudaMemset(res_d, 0., sizeof(Number));
@@ -1108,7 +1108,7 @@ namespace LinearAlgebra
 
     template <typename Number>
     void
-    Vector<Number>::print(std::ostream &     out,
+    Vector<Number>::print(std::ostream&      out,
                           const unsigned int precision,
                           const bool         scientific,
                           const bool) const
@@ -1128,7 +1128,7 @@ namespace LinearAlgebra
       out << std::endl;
 
       // Copy the vector to the host
-      Number *    cpu_val    = new Number[n_elements];
+      Number*     cpu_val    = new Number[n_elements];
       cudaError_t error_code = cudaMemcpy(
         cpu_val, val, n_elements * sizeof(Number), cudaMemcpyHostToDevice);
       AssertCuda(error_code);

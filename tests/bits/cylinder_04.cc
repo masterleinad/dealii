@@ -41,7 +41,7 @@ const double xy_angle = numbers::PI / 6;
 
 template <int dim>
 Point<dim>
-rotate_by_xy_angle(const Point<dim> &p)
+rotate_by_xy_angle(const Point<dim>& p)
 {
   return Point<dim>(p[0] * std::cos(xy_angle) - p[1] * std::sin(xy_angle),
                     p[0] * std::sin(xy_angle) + p[1] * std::cos(xy_angle),
@@ -56,7 +56,7 @@ check()
   Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation);
 
-  GridTools::transform((Point<dim>(*)(const Point<dim> &)) &
+  GridTools::transform((Point<dim>(*)(const Point<dim>&)) &
                          rotate_by_xy_angle<dim>,
                        triangulation);
 

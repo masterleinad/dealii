@@ -642,16 +642,16 @@ public:
    * present one. Interpolation only between FE_Q_Hierarchical is supported.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim> &source,
-                           FullMatrix<double> &      matrix) const override;
+  get_interpolation_matrix(const FiniteElement<dim>& source,
+                           FullMatrix<double>&       matrix) const override;
 
   /**
    * Embedding matrix between grids. Only isotropic refinement is supported.
    */
-  virtual const FullMatrix<double> &
+  virtual const FullMatrix<double>&
   get_prolongation_matrix(
     const unsigned int         child,
-    const RefinementCase<dim> &refinement_case =
+    const RefinementCase<dim>& refinement_case =
       RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -670,19 +670,19 @@ public:
    * corresponding index of the other finite element.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_vertex_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_vertex_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   /**
    * Same as above but for lines.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_line_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_line_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   /**
    * Same as above but for faces.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_quad_dof_identities(const FiniteElement<dim> &fe_other) const override;
+  hp_quad_dof_identities(const FiniteElement<dim>& fe_other) const override;
 
   /*@}*/
 
@@ -698,8 +698,8 @@ public:
    * <tt>FiniteElement<dim>::ExcInterpolationNotImplemented</tt>.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim> &source,
-                                FullMatrix<double> &matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim>& source,
+                                FullMatrix<double>& matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the subface
@@ -713,9 +713,9 @@ public:
    * <tt>ExcInterpolationNotImplemented</tt>.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim> &source,
+  get_subface_interpolation_matrix(const FiniteElement<dim>& source,
                                    const unsigned int        subface,
-                                   FullMatrix<double> &matrix) const override;
+                                   FullMatrix<double>& matrix) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -728,7 +728,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim> &fe_other) const override;
+    const FiniteElement<dim>& fe_other) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -795,7 +795,7 @@ private:
    * finite element.
    */
   static std::vector<unsigned int>
-  hierarchic_to_fe_q_hierarchical_numbering(const FiniteElementData<dim> &fe);
+  hierarchic_to_fe_q_hierarchical_numbering(const FiniteElementData<dim>& fe);
 
   /**
    * This is an analogon to the previous function, but working on faces.
@@ -808,23 +808,23 @@ private:
    * various matrices in the constructor.
    */
   void
-  build_dofs_cell(std::vector<FullMatrix<double>> &dofs_cell,
-                  std::vector<FullMatrix<double>> &dofs_subcell) const;
+  build_dofs_cell(std::vector<FullMatrix<double>>& dofs_cell,
+                  std::vector<FullMatrix<double>>& dofs_subcell) const;
 
   /**
    * Initialize the hanging node constraints matrices. Called from the
    * constructor.
    */
   void
-  initialize_constraints(const std::vector<FullMatrix<double>> &dofs_subcell);
+  initialize_constraints(const std::vector<FullMatrix<double>>& dofs_subcell);
 
   /**
    * Initialize the embedding matrices. Called from the constructor.
    */
   void
   initialize_embedding_and_restriction(
-    const std::vector<FullMatrix<double>> &dofs_cell,
-    const std::vector<FullMatrix<double>> &dofs_subcell);
+    const std::vector<FullMatrix<double>>& dofs_cell,
+    const std::vector<FullMatrix<double>>& dofs_subcell);
 
   /**
    * Initialize the @p generalized_support_points field of the FiniteElement class.

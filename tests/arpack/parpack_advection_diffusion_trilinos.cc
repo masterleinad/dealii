@@ -61,7 +61,7 @@ const double eps = 1e-10;
 
 template <typename DoFHandlerType>
 std::vector<IndexSet>
-locally_owned_dofs_per_subdomain(const DoFHandlerType &dof_handler)
+locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
 {
   std::vector<types::subdomain_id> subdomain_association(dof_handler.n_dofs());
   DoFTools::get_subdomain_association(dof_handler, subdomain_association);
@@ -150,7 +150,7 @@ test()
                                              endc = triangulation.end();
     for (; cell != endc; ++cell)
       {
-        const Point<dim> &center = cell->center();
+        const Point<dim>& center = cell->center();
         const double      x      = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
@@ -388,7 +388,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile, /*do not print job id*/ false);
@@ -400,7 +400,7 @@ main(int argc, char **argv)
         test();
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

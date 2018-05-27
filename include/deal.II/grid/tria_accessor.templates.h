@@ -46,10 +46,10 @@ namespace parallel
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
-  const Triangulation<dim, spacedim> *tria,
+  const Triangulation<dim, spacedim>* tria,
   const int                           level,
   const int                           index,
-  const AccessorData *) :
+  const AccessorData*) :
   present_level((structdim == dim) ? level : 0),
   present_index(index),
   tria(tria)
@@ -69,7 +69,7 @@ inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
-  const TriaAccessorBase<structdim, dim, spacedim> &a) :
+  const TriaAccessorBase<structdim, dim, spacedim>& a) :
   present_level(a.present_level),
   present_index(a.present_index),
   tria(a.tria)
@@ -79,7 +79,7 @@ inline TriaAccessorBase<structdim, dim, spacedim>::TriaAccessorBase(
 template <int structdim, int dim, int spacedim>
 inline void
 TriaAccessorBase<structdim, dim, spacedim>::copy_from(
-  const TriaAccessorBase<structdim, dim, spacedim> &a)
+  const TriaAccessorBase<structdim, dim, spacedim>& a)
 {
   present_level = a.present_level;
   present_index = a.present_index;
@@ -96,9 +96,9 @@ TriaAccessorBase<structdim, dim, spacedim>::copy_from(
 
 
 template <int structdim, int dim, int spacedim>
-inline TriaAccessorBase<structdim, dim, spacedim> &
+inline TriaAccessorBase<structdim, dim, spacedim>&
 TriaAccessorBase<structdim, dim, spacedim>::
-operator=(const TriaAccessorBase<structdim, dim, spacedim> &a)
+operator=(const TriaAccessorBase<structdim, dim, spacedim>& a)
 {
   present_level = a.present_level;
   present_index = a.present_index;
@@ -118,7 +118,7 @@ operator=(const TriaAccessorBase<structdim, dim, spacedim> &a)
 template <int structdim, int dim, int spacedim>
 inline bool
 TriaAccessorBase<structdim, dim, spacedim>::
-operator==(const TriaAccessorBase<structdim, dim, spacedim> &a) const
+operator==(const TriaAccessorBase<structdim, dim, spacedim>& a) const
 {
   Assert(tria == a.tria || tria == nullptr || a.tria == nullptr,
          TriaAccessorExceptions::ExcCantCompareIterators());
@@ -131,7 +131,7 @@ operator==(const TriaAccessorBase<structdim, dim, spacedim> &a) const
 template <int structdim, int dim, int spacedim>
 inline bool
 TriaAccessorBase<structdim, dim, spacedim>::
-operator!=(const TriaAccessorBase<structdim, dim, spacedim> &a) const
+operator!=(const TriaAccessorBase<structdim, dim, spacedim>& a) const
 {
   Assert(tria == a.tria || tria == nullptr || a.tria == nullptr,
          TriaAccessorExceptions::ExcCantCompareIterators());
@@ -144,7 +144,7 @@ operator!=(const TriaAccessorBase<structdim, dim, spacedim> &a) const
 template <int structdim, int dim, int spacedim>
 inline bool
 TriaAccessorBase<structdim, dim, spacedim>::
-operator<(const TriaAccessorBase<structdim, dim, spacedim> &other) const
+operator<(const TriaAccessorBase<structdim, dim, spacedim>& other) const
 {
   Assert(tria == other.tria, TriaAccessorExceptions::ExcCantCompareIterators());
 
@@ -191,7 +191,7 @@ TriaAccessorBase<structdim, dim, spacedim>::state() const
 
 
 template <int structdim, int dim, int spacedim>
-inline const Triangulation<dim, spacedim> &
+inline const Triangulation<dim, spacedim>&
 TriaAccessorBase<structdim, dim, spacedim>::get_triangulation() const
 {
   return *tria;
@@ -283,9 +283,9 @@ namespace internal
      */
     template <int dim>
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<1>> *
+      dealii::internal::TriangulationImplementation::TriaObject<1>>*
     get_objects(
-      dealii::internal::TriangulationImplementation::TriaFaces<dim> *faces,
+      dealii::internal::TriangulationImplementation::TriaFaces<dim>* faces,
       const std::integral_constant<int, 1>)
     {
       return &faces->lines;
@@ -294,17 +294,17 @@ namespace internal
 
     template <int dim>
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<2>> *
+      dealii::internal::TriangulationImplementation::TriaObject<2>>*
     get_objects(
-      dealii::internal::TriangulationImplementation::TriaFaces<dim> *faces,
+      dealii::internal::TriangulationImplementation::TriaFaces<dim>* faces,
       const std::integral_constant<int, 2>)
     {
       return &faces->quads;
     }
 
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<1>> *
-      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<1> *,
+      dealii::internal::TriangulationImplementation::TriaObject<1>>*
+      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<1>*,
                   const std::integral_constant<int, 1>)
     {
       Assert(false, ExcInternalError());
@@ -312,8 +312,8 @@ namespace internal
     }
 
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<2>> *
-      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<2> *,
+      dealii::internal::TriangulationImplementation::TriaObject<2>>*
+      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<2>*,
                   const std::integral_constant<int, 2>)
     {
       Assert(false, ExcInternalError());
@@ -321,8 +321,8 @@ namespace internal
     }
 
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<3>> *
-      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<3> *,
+      dealii::internal::TriangulationImplementation::TriaObject<3>>*
+      get_objects(dealii::internal::TriangulationImplementation::TriaFaces<3>*,
                   const std::integral_constant<int, 3>)
     {
       Assert(false, ExcInternalError());
@@ -335,8 +335,8 @@ namespace internal
      */
     template <int dim>
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<3>> *
-    get_objects(dealii::internal::TriangulationImplementation::TriaFaces<dim> *,
+      dealii::internal::TriangulationImplementation::TriaObject<3>>*
+    get_objects(dealii::internal::TriangulationImplementation::TriaFaces<dim>*,
                 const std::integral_constant<int, 3>)
     {
       Assert(false, ExcInternalError());
@@ -348,10 +348,10 @@ namespace internal
      */
     template <int structdim, int dim>
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<structdim>> *
+      dealii::internal::TriangulationImplementation::TriaObject<structdim>>*
     get_objects(
       dealii::internal::TriangulationImplementation::TriaObjects<
-        dealii::internal::TriangulationImplementation::TriaObject<dim>> *,
+        dealii::internal::TriangulationImplementation::TriaObject<dim>>*,
       const std::integral_constant<int, structdim>)
     {
       Assert(false, ExcInternalError());
@@ -360,10 +360,10 @@ namespace internal
 
     template <int dim>
     inline dealii::internal::TriangulationImplementation::TriaObjects<
-      dealii::internal::TriangulationImplementation::TriaObject<dim>> *
+      dealii::internal::TriangulationImplementation::TriaObject<dim>>*
     get_objects(
       dealii::internal::TriangulationImplementation::TriaObjects<
-        dealii::internal::TriangulationImplementation::TriaObject<dim>> *cells,
+        dealii::internal::TriangulationImplementation::TriaObject<dim>>* cells,
       const std::integral_constant<int, dim>)
     {
       return cells;
@@ -375,7 +375,7 @@ namespace internal
 
 template <int structdim, int dim, int spacedim>
 inline dealii::internal::TriangulationImplementation::TriaObjects<
-  dealii::internal::TriangulationImplementation::TriaObject<structdim>> &
+  dealii::internal::TriangulationImplementation::TriaObject<structdim>>&
 TriaAccessorBase<structdim, dim, spacedim>::objects() const
 {
   if (structdim != dim)
@@ -396,10 +396,10 @@ TriaAccessorBase<structdim, dim, spacedim>::objects() const
 
 template <int structdim, int dim, int spacedim>
 InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
-  const Triangulation<dim, spacedim> *,
+  const Triangulation<dim, spacedim>*,
   const int,
   const int,
-  const AccessorData *)
+  const AccessorData*)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -413,9 +413,9 @@ InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
 
 template <int structdim, int dim, int spacedim>
 InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
-  const InvalidAccessor &i) :
+  const InvalidAccessor& i) :
   TriaAccessorBase<structdim, dim, spacedim>(
-    static_cast<const TriaAccessorBase<structdim, dim, spacedim> &>(i))
+    static_cast<const TriaAccessorBase<structdim, dim, spacedim>&>(i))
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -429,7 +429,7 @@ InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
 
 template <int structdim, int dim, int spacedim>
 void
-InvalidAccessor<structdim, dim, spacedim>::copy_from(const InvalidAccessor &)
+InvalidAccessor<structdim, dim, spacedim>::copy_from(const InvalidAccessor&)
 {
   // nothing to do here. we could
   // throw an exception but we can't
@@ -443,7 +443,7 @@ InvalidAccessor<structdim, dim, spacedim>::copy_from(const InvalidAccessor &)
 template <int structdim, int dim, int spacedim>
 bool
 InvalidAccessor<structdim, dim, spacedim>::
-operator==(const InvalidAccessor &) const
+operator==(const InvalidAccessor&) const
 {
   // nothing to do here. we could
   // throw an exception but we can't
@@ -458,7 +458,7 @@ operator==(const InvalidAccessor &) const
 template <int structdim, int dim, int spacedim>
 bool
 InvalidAccessor<structdim, dim, spacedim>::
-operator!=(const InvalidAccessor &) const
+operator!=(const InvalidAccessor&) const
 {
   // nothing to do here. we could
   // throw an exception but we can't
@@ -521,7 +521,7 @@ InvalidAccessor<structdim, dim, spacedim>::manifold_id() const
 
 
 template <int structdim, int dim, int spacedim>
-inline Point<spacedim> &
+inline Point<spacedim>&
 InvalidAccessor<structdim, dim, spacedim>::vertex(const unsigned int) const
 {
   // nothing to do here. we could throw an exception but we can't get here
@@ -582,7 +582,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       inline static unsigned int
-      line_index(const TriaAccessor<1, dim, spacedim> &, const unsigned int)
+      line_index(const TriaAccessor<1, dim, spacedim>&, const unsigned int)
       {
         Assert(false,
                ExcMessage("You can't ask for the index of a line bounding "
@@ -594,7 +594,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static unsigned int
-      line_index(const TriaAccessor<2, dim, spacedim> &accessor,
+      line_index(const TriaAccessor<2, dim, spacedim>& accessor,
                  const unsigned int                    i)
       {
         return accessor.objects().cells[accessor.present_index].face(i);
@@ -603,7 +603,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static unsigned int
-      line_index(const TriaAccessor<3, dim, spacedim> &accessor,
+      line_index(const TriaAccessor<3, dim, spacedim>& accessor,
                  const unsigned int                    i)
       {
         // get the line index by asking the
@@ -653,7 +653,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static unsigned int
-      quad_index(const TriaAccessor<structdim, dim, spacedim> &,
+      quad_index(const TriaAccessor<structdim, dim, spacedim>&,
                  const unsigned int)
       {
         Assert(false,
@@ -666,7 +666,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static unsigned int
-      quad_index(const TriaAccessor<3, dim, spacedim> &accessor,
+      quad_index(const TriaAccessor<3, dim, spacedim>& accessor,
                  const unsigned int                    i)
       {
         Assert(i < GeometryInfo<3>::quads_per_cell,
@@ -683,7 +683,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static bool
-      face_orientation(const TriaAccessor<structdim, dim, spacedim> &,
+      face_orientation(const TriaAccessor<structdim, dim, spacedim>&,
                        const unsigned int)
       {
         /*
@@ -698,7 +698,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static bool
-      face_orientation(const TriaAccessor<3, dim, spacedim> &accessor,
+      face_orientation(const TriaAccessor<3, dim, spacedim>& accessor,
                        const unsigned int                    face)
       {
         return (
@@ -713,7 +713,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static bool
-      face_flip(const TriaAccessor<structdim, dim, spacedim> &,
+      face_flip(const TriaAccessor<structdim, dim, spacedim>&,
                 const unsigned int)
       {
         /*
@@ -733,7 +733,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static bool
-      face_flip(const TriaAccessor<3, dim, spacedim> &accessor,
+      face_flip(const TriaAccessor<3, dim, spacedim>& accessor,
                 const unsigned int                    face)
       {
         Assert(face < GeometryInfo<3>::faces_per_cell,
@@ -755,7 +755,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static bool
-      face_rotation(const TriaAccessor<structdim, dim, spacedim> &,
+      face_rotation(const TriaAccessor<structdim, dim, spacedim>&,
                     const unsigned int)
       {
         /*
@@ -770,7 +770,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static bool
-      face_rotation(const TriaAccessor<3, dim, spacedim> &accessor,
+      face_rotation(const TriaAccessor<3, dim, spacedim>& accessor,
                     const unsigned int                    face)
       {
         Assert(face < GeometryInfo<3>::faces_per_cell,
@@ -790,7 +790,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       inline static bool
-      line_orientation(const TriaAccessor<1, dim, spacedim> &,
+      line_orientation(const TriaAccessor<1, dim, spacedim>&,
                        const unsigned int)
       {
         return true;
@@ -799,7 +799,7 @@ namespace internal
 
       template <int spacedim>
       inline static bool
-      line_orientation(const TriaAccessor<2, 2, spacedim> &, const unsigned int)
+      line_orientation(const TriaAccessor<2, 2, spacedim>&, const unsigned int)
       {
         // quads in 2d have no non-standard orientation
         return true;
@@ -808,7 +808,7 @@ namespace internal
 
       template <int spacedim>
       inline static bool
-      line_orientation(const TriaAccessor<2, 3, spacedim> &accessor,
+      line_orientation(const TriaAccessor<2, 3, spacedim>& accessor,
                        const unsigned int                  line)
       {
         // quads as part of 3d hexes can have non-standard orientation
@@ -822,7 +822,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static bool
-      line_orientation(const TriaAccessor<3, dim, spacedim> &accessor,
+      line_orientation(const TriaAccessor<3, dim, spacedim>& accessor,
                        const unsigned int                    line)
       {
         Assert(accessor.used(), TriaAccessorExceptions::ExcCellNotUsed());
@@ -914,7 +914,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static void
-      set_face_orientation(const TriaAccessor<structdim, dim, spacedim> &,
+      set_face_orientation(const TriaAccessor<structdim, dim, spacedim>&,
                            const unsigned int,
                            const bool)
       {
@@ -924,7 +924,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static void
-      set_face_orientation(const TriaAccessor<3, dim, spacedim> &accessor,
+      set_face_orientation(const TriaAccessor<3, dim, spacedim>& accessor,
                            const unsigned int                    face,
                            const bool                            value)
       {
@@ -947,7 +947,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static void
-      set_face_flip(const TriaAccessor<structdim, dim, spacedim> &,
+      set_face_flip(const TriaAccessor<structdim, dim, spacedim>&,
                     const unsigned int,
                     const bool)
       {
@@ -957,7 +957,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static void
-      set_face_flip(const TriaAccessor<3, dim, spacedim> &accessor,
+      set_face_flip(const TriaAccessor<3, dim, spacedim>& accessor,
                     const unsigned int                    face,
                     const bool                            value)
       {
@@ -980,7 +980,7 @@ namespace internal
        */
       template <int structdim, int dim, int spacedim>
       inline static void
-      set_face_rotation(const TriaAccessor<structdim, dim, spacedim> &,
+      set_face_rotation(const TriaAccessor<structdim, dim, spacedim>&,
                         const unsigned int,
                         const bool)
       {
@@ -990,7 +990,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static void
-      set_face_rotation(const TriaAccessor<3, dim, spacedim> &accessor,
+      set_face_rotation(const TriaAccessor<3, dim, spacedim>& accessor,
                         const unsigned int                    face,
                         const bool                            value)
       {
@@ -1011,7 +1011,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       inline static void
-      set_line_orientation(const TriaAccessor<1, dim, spacedim> &,
+      set_line_orientation(const TriaAccessor<1, dim, spacedim>&,
                            const unsigned int,
                            const bool)
       {
@@ -1021,7 +1021,7 @@ namespace internal
 
       template <int spacedim>
       inline static void
-      set_line_orientation(const TriaAccessor<2, 2, spacedim> &,
+      set_line_orientation(const TriaAccessor<2, 2, spacedim>&,
                            const unsigned int,
                            const bool)
       {
@@ -1033,7 +1033,7 @@ namespace internal
 
       template <int spacedim>
       inline static void
-      set_line_orientation(const TriaAccessor<2, 3, spacedim> &accessor,
+      set_line_orientation(const TriaAccessor<2, 3, spacedim>& accessor,
                            const unsigned int                  line,
                            const bool                          value)
       {
@@ -1054,7 +1054,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static void
-      set_line_orientation(const TriaAccessor<3, dim, spacedim> &,
+      set_line_orientation(const TriaAccessor<3, dim, spacedim>&,
                            const unsigned int,
                            const bool)
       {
@@ -1069,7 +1069,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       inline static unsigned int
-      vertex_index(const TriaAccessor<1, dim, spacedim> &accessor,
+      vertex_index(const TriaAccessor<1, dim, spacedim>& accessor,
                    const unsigned int                    corner)
       {
         return accessor.objects().cells[accessor.present_index].face(corner);
@@ -1078,7 +1078,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static unsigned int
-      vertex_index(const TriaAccessor<2, dim, spacedim> &accessor,
+      vertex_index(const TriaAccessor<2, dim, spacedim>& accessor,
                    const unsigned int                    corner)
       {
         // table used to switch the vertices, if the
@@ -1101,7 +1101,7 @@ namespace internal
 
       template <int dim, int spacedim>
       inline static unsigned int
-      vertex_index(const TriaAccessor<3, dim, spacedim> &accessor,
+      vertex_index(const TriaAccessor<3, dim, spacedim>& accessor,
                    const unsigned int                    corner)
       {
         // get the corner indices by asking either
@@ -1129,10 +1129,10 @@ namespace internal
 
 template <int structdim, int dim, int spacedim>
 inline TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
-  const Triangulation<dim, spacedim> *parent,
+  const Triangulation<dim, spacedim>* parent,
   const int                           level,
   const int                           index,
-  const AccessorData *                local_data) :
+  const AccessorData*                 local_data) :
   TriaAccessorBase<structdim, dim, spacedim>(parent, level, index, local_data)
 {}
 
@@ -1176,10 +1176,10 @@ TriaAccessor<structdim, dim, spacedim>::vertex_index(
 
 
 template <int structdim, int dim, int spacedim>
-inline Point<spacedim> &
+inline Point<spacedim>&
 TriaAccessor<structdim, dim, spacedim>::vertex(const unsigned int i) const
 {
-  return const_cast<Point<spacedim> &>(this->tria->vertices[vertex_index(i)]);
+  return const_cast<Point<spacedim>&>(this->tria->vertices[vertex_index(i)]);
 }
 
 
@@ -1563,7 +1563,7 @@ TriaAccessor<structdim, dim, spacedim>::n_children() const
 template <int structdim, int dim, int spacedim>
 inline void
 TriaAccessor<structdim, dim, spacedim>::set_refinement_case(
-  const RefinementCase<structdim> &refinement_case) const
+  const RefinementCase<structdim>& refinement_case) const
 {
   Assert(
     this->state() == IteratorState::valid,
@@ -1712,7 +1712,7 @@ TriaAccessor<structdim, dim, spacedim>::clear_user_data() const
 
 template <int structdim, int dim, int spacedim>
 void
-TriaAccessor<structdim, dim, spacedim>::set_user_pointer(void *p) const
+TriaAccessor<structdim, dim, spacedim>::set_user_pointer(void* p) const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
   this->objects().user_pointer(this->present_index) = p;
@@ -1731,7 +1731,7 @@ TriaAccessor<structdim, dim, spacedim>::clear_user_pointer() const
 
 
 template <int structdim, int dim, int spacedim>
-void *
+void*
 TriaAccessor<structdim, dim, spacedim>::user_pointer() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
@@ -1743,7 +1743,7 @@ TriaAccessor<structdim, dim, spacedim>::user_pointer() const
 template <int structdim, int dim, int spacedim>
 void
 TriaAccessor<structdim, dim, spacedim>::recursively_set_user_pointer(
-  void *p) const
+  void* p) const
 {
   set_user_pointer(p);
 
@@ -1946,7 +1946,7 @@ TriaAccessor<structdim, dim, spacedim>::at_boundary() const
 
 
 template <int structdim, int dim, int spacedim>
-const Manifold<dim, spacedim> &
+const Manifold<dim, spacedim>&
 TriaAccessor<structdim, dim, spacedim>::get_manifold() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
@@ -2200,7 +2200,7 @@ TriaAccessor<structdim, dim, spacedim>::minimum_vertex_distance() const
 template <int structdim, int dim, int spacedim>
 bool
 TriaAccessor<structdim, dim, spacedim>::is_translation_of(
-  const TriaIterator<TriaAccessor<structdim, dim, spacedim>> &o) const
+  const TriaIterator<TriaAccessor<structdim, dim, spacedim>>& o) const
 {
   // go through the vertices and check... The
   // cell is a translation of the previous
@@ -2238,7 +2238,7 @@ TriaAccessor<structdim, dim, spacedim>::is_translation_of(
 
 template <int dim, int spacedim>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const Triangulation<dim, spacedim> *tria,
+  const Triangulation<dim, spacedim>* tria,
   const unsigned int                  vertex_index) :
   tria(tria),
   global_vertex_index(vertex_index)
@@ -2248,10 +2248,10 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
 
 template <int dim, int spacedim>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const Triangulation<dim, spacedim> *tria,
+  const Triangulation<dim, spacedim>* tria,
   const int /*level*/,
   const int index,
-  const AccessorData *) :
+  const AccessorData*) :
   tria(tria),
   global_vertex_index(index)
 {}
@@ -2261,7 +2261,7 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2> &) :
+  const TriaAccessor<structdim2, dim2, spacedim2>&) :
   tria(nullptr),
   global_vertex_index(numbers::invalid_unsigned_int)
 {
@@ -2273,7 +2273,7 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2> &) :
+  const InvalidAccessor<structdim2, dim2, spacedim2>&) :
   tria(nullptr),
   global_vertex_index(numbers::invalid_unsigned_int)
 {
@@ -2284,7 +2284,7 @@ inline TriaAccessor<0, dim, spacedim>::TriaAccessor(
 
 template <int dim, int spacedim>
 inline void
-TriaAccessor<0, dim, spacedim>::copy_from(const TriaAccessor &t)
+TriaAccessor<0, dim, spacedim>::copy_from(const TriaAccessor& t)
 {
   tria                = t.tria;
   global_vertex_index = t.global_vertex_index;
@@ -2350,7 +2350,7 @@ TriaAccessor<0, dim, spacedim>::operator--()
 
 template <int dim, int spacedim>
 inline bool
-TriaAccessor<0, dim, spacedim>::operator==(const TriaAccessor &t) const
+TriaAccessor<0, dim, spacedim>::operator==(const TriaAccessor& t) const
 {
   const bool result =
     ((tria == t.tria) && (global_vertex_index == t.global_vertex_index));
@@ -2362,7 +2362,7 @@ TriaAccessor<0, dim, spacedim>::operator==(const TriaAccessor &t) const
 
 template <int dim, int spacedim>
 inline bool
-TriaAccessor<0, dim, spacedim>::operator!=(const TriaAccessor &t) const
+TriaAccessor<0, dim, spacedim>::operator!=(const TriaAccessor& t) const
 {
   return !(*this == t);
 }
@@ -2379,10 +2379,10 @@ TriaAccessor<0, dim, spacedim>::vertex_index(const unsigned int) const
 
 
 template <int dim, int spacedim>
-inline Point<spacedim> &
+inline Point<spacedim>&
 TriaAccessor<0, dim, spacedim>::vertex(const unsigned int) const
 {
-  return const_cast<Point<spacedim> &>(
+  return const_cast<Point<spacedim>&>(
     this->tria->vertices[global_vertex_index]);
 }
 
@@ -2596,7 +2596,7 @@ TriaAccessor<0, dim, spacedim>::used() const
 
 template <int spacedim>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const Triangulation<1, spacedim> *tria,
+  const Triangulation<1, spacedim>* tria,
   const VertexKind                  vertex_kind,
   const unsigned int                vertex_index) :
   tria(tria),
@@ -2608,10 +2608,10 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 
 template <int spacedim>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const Triangulation<1, spacedim> *tria,
+  const Triangulation<1, spacedim>* tria,
   const int                         level,
   const int                         index,
-  const AccessorData *) :
+  const AccessorData*) :
   tria(tria),
   vertex_kind(interior_vertex),
   global_vertex_index(numbers::invalid_unsigned_int)
@@ -2633,7 +2633,7 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 template <int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2> &) :
+  const TriaAccessor<structdim2, dim2, spacedim2>&) :
   tria(nullptr),
   vertex_kind(interior_vertex),
   global_vertex_index(numbers::invalid_unsigned_int)
@@ -2646,7 +2646,7 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 template <int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2> &) :
+  const InvalidAccessor<structdim2, dim2, spacedim2>&) :
   tria(nullptr),
   vertex_kind(interior_vertex),
   global_vertex_index(numbers::invalid_unsigned_int)
@@ -2658,7 +2658,7 @@ inline TriaAccessor<0, 1, spacedim>::TriaAccessor(
 
 template <int spacedim>
 inline void
-TriaAccessor<0, 1, spacedim>::copy_from(const TriaAccessor &t)
+TriaAccessor<0, 1, spacedim>::copy_from(const TriaAccessor& t)
 {
   tria                = t.tria;
   vertex_kind         = t.vertex_kind;
@@ -2712,7 +2712,7 @@ TriaAccessor<0, 1, spacedim>::operator--() const
 
 template <int spacedim>
 inline bool
-TriaAccessor<0, 1, spacedim>::operator==(const TriaAccessor &t) const
+TriaAccessor<0, 1, spacedim>::operator==(const TriaAccessor& t) const
 {
   const bool result =
     ((tria == t.tria) && (global_vertex_index == t.global_vertex_index));
@@ -2729,7 +2729,7 @@ TriaAccessor<0, 1, spacedim>::operator==(const TriaAccessor &t) const
 
 template <int spacedim>
 inline bool
-TriaAccessor<0, 1, spacedim>::operator!=(const TriaAccessor &t) const
+TriaAccessor<0, 1, spacedim>::operator!=(const TriaAccessor& t) const
 {
   return !(*this == t);
 }
@@ -2748,12 +2748,12 @@ TriaAccessor<0, 1, spacedim>::vertex_index(const unsigned int i) const
 
 
 template <int spacedim>
-inline Point<spacedim> &
+inline Point<spacedim>&
 TriaAccessor<0, 1, spacedim>::vertex(const unsigned int i) const
 {
   Assert(i == 0, ExcIndexRange(i, 0, 1));
   (void)i;
-  return const_cast<Point<spacedim> &>(
+  return const_cast<Point<spacedim>&>(
     this->tria->vertices[global_vertex_index]);
 }
 
@@ -2840,7 +2840,7 @@ TriaAccessor<0, 1, spacedim>::boundary_id() const
 
 
 template <int spacedim>
-inline const Manifold<1, spacedim> &
+inline const Manifold<1, spacedim>&
 TriaAccessor<0, 1, spacedim>::get_manifold() const
 {
   return this->tria->get_manifold(this->manifold_id());
@@ -3023,10 +3023,10 @@ TriaAccessor<0, 1, spacedim>::used() const
 
 template <int dim, int spacedim>
 inline CellAccessor<dim, spacedim>::CellAccessor(
-  const Triangulation<dim, spacedim> *parent,
+  const Triangulation<dim, spacedim>* parent,
   const int                           level,
   const int                           index,
-  const AccessorData *                local_data) :
+  const AccessorData*                 local_data) :
   TriaAccessor<dim, dim, spacedim>(parent, level, index, local_data)
 {}
 
@@ -3034,9 +3034,9 @@ inline CellAccessor<dim, spacedim>::CellAccessor(
 
 template <int dim, int spacedim>
 inline CellAccessor<dim, spacedim>::CellAccessor(
-  const TriaAccessor<dim, dim, spacedim> &cell_accessor) :
+  const TriaAccessor<dim, dim, spacedim>& cell_accessor) :
   TriaAccessor<dim, dim, spacedim>(
-    static_cast<const TriaAccessor<dim, dim, spacedim> &>(cell_accessor))
+    static_cast<const TriaAccessor<dim, dim, spacedim>&>(cell_accessor))
 {}
 
 
@@ -3047,7 +3047,7 @@ namespace internal
   {
     template <int spacedim>
     inline dealii::TriaIterator<dealii::TriaAccessor<0, 1, spacedim>>
-    get_face(const dealii::CellAccessor<1, spacedim> &cell,
+    get_face(const dealii::CellAccessor<1, spacedim>& cell,
              const unsigned int                       i)
     {
       dealii::TriaAccessor<0, 1, spacedim> a(
@@ -3064,7 +3064,7 @@ namespace internal
 
     template <int spacedim>
     inline dealii::TriaIterator<dealii::TriaAccessor<1, 2, spacedim>>
-    get_face(const dealii::CellAccessor<2, spacedim> &cell,
+    get_face(const dealii::CellAccessor<2, spacedim>& cell,
              const unsigned int                       i)
     {
       return cell.line(i);
@@ -3073,7 +3073,7 @@ namespace internal
 
     template <int spacedim>
     inline dealii::TriaIterator<dealii::TriaAccessor<2, 3, spacedim>>
-    get_face(const dealii::CellAccessor<3, spacedim> &cell,
+    get_face(const dealii::CellAccessor<3, spacedim>& cell,
              const unsigned int                       i)
     {
       return cell.quad(i);
@@ -3188,7 +3188,7 @@ template <int dim, int spacedim>
 inline bool
 CellAccessor<dim, spacedim>::flag_for_face_refinement(
   const unsigned int             face_no,
-  const RefinementCase<dim - 1> &face_refinement_case) const
+  const RefinementCase<dim - 1>& face_refinement_case) const
 {
   Assert(dim > 1, ExcImpossibleInDim(dim));
   Assert(face_no < GeometryInfo<dim>::faces_per_cell,
@@ -3465,8 +3465,8 @@ CellAccessor<dim, spacedim>::is_locally_owned() const
   if (is_artificial())
     return false;
 
-  const parallel::Triangulation<dim, spacedim> *pt =
-    dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
+  const parallel::Triangulation<dim, spacedim>* pt =
+    dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(this->tria);
 
   if (pt == nullptr)
     return true;
@@ -3485,8 +3485,8 @@ CellAccessor<dim, spacedim>::is_locally_owned_on_level() const
   return true;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
-    dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
+  const parallel::Triangulation<dim, spacedim>* pt =
+    dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(this->tria);
 
   if (pt == nullptr)
     return true;
@@ -3510,8 +3510,8 @@ CellAccessor<dim, spacedim>::is_ghost() const
   return false;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
-    dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
+  const parallel::Triangulation<dim, spacedim>* pt =
+    dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(this->tria);
 
   if (pt == nullptr)
     return false;
@@ -3533,8 +3533,8 @@ CellAccessor<dim, spacedim>::is_artificial() const
   return false;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
-    dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
+  const parallel::Triangulation<dim, spacedim>* pt =
+    dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(this->tria);
 
   if (pt == nullptr)
     return false;

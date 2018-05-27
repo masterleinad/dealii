@@ -352,7 +352,7 @@ public:
   /**
    * Constructor. Take @p tria as the triangulation to work on.
    */
-  DoFHandler(const Triangulation<dim, spacedim> &tria);
+  DoFHandler(const Triangulation<dim, spacedim>& tria);
 
   /**
    * Copy constructor. DoFHandler objects are large and expensive.
@@ -360,7 +360,7 @@ public:
    * rather deliberately constructed. As a consequence, this constructor
    * is explicitly removed from the interface of this class.
    */
-  DoFHandler(const DoFHandler &) = delete;
+  DoFHandler(const DoFHandler&) = delete;
 
   /**
    * Destructor.
@@ -373,16 +373,16 @@ public:
    * rather deliberately constructed. As a consequence, this operator
    * is explicitly removed from the interface of this class.
    */
-  DoFHandler &
-  operator=(const DoFHandler &) = delete;
+  DoFHandler&
+  operator=(const DoFHandler&) = delete;
 
   /**
    * Assign a Triangulation and a FiniteElement to the DoFHandler and compute
    * the distribution of degrees of freedom over the mesh.
    */
   void
-  initialize(const Triangulation<dim, spacedim> &tria,
-             const FiniteElement<dim, spacedim> &fe);
+  initialize(const Triangulation<dim, spacedim>& tria,
+             const FiniteElement<dim, spacedim>& fe);
 
   /**
    * Go through the triangulation and "distribute" the degrees of
@@ -423,7 +423,7 @@ public:
    * This is what all tutorial programs do.
    */
   virtual void
-  distribute_dofs(const FiniteElement<dim, spacedim> &fe);
+  distribute_dofs(const FiniteElement<dim, spacedim>& fe);
 
   /**
    * Distribute level degrees of freedom on each level for geometric
@@ -435,7 +435,7 @@ public:
    */
   DEAL_II_DEPRECATED
   virtual void
-  distribute_mg_dofs(const FiniteElement<dim, spacedim> &fe);
+  distribute_mg_dofs(const FiniteElement<dim, spacedim>& fe);
 
   /**
    * Distribute level degrees of freedom on each level for geometric
@@ -538,7 +538,7 @@ public:
    *   contiguous locally owned DoF indices.
    */
   void
-  renumber_dofs(const std::vector<types::global_dof_index> &new_numbers);
+  renumber_dofs(const std::vector<types::global_dof_index>& new_numbers);
 
   /**
    * The same function as above, but renumber the degrees of freedom of a
@@ -546,7 +546,7 @@ public:
    */
   void
   renumber_dofs(const unsigned int                          level,
-                const std::vector<types::global_dof_index> &new_numbers);
+                const std::vector<types::global_dof_index>& new_numbers);
 
   /**
    * Return the maximum number of degrees of freedom a degree of freedom in
@@ -864,15 +864,15 @@ public:
   template <typename number>
   types::global_dof_index
   n_boundary_dofs(
-    const std::map<types::boundary_id, const Function<spacedim, number> *>
-      &boundary_ids) const;
+    const std::map<types::boundary_id, const Function<spacedim, number>*>&
+      boundary_ids) const;
 
   /**
    * Return the number of degrees of freedom located on those parts of the
    * boundary which have a boundary indicator listed in the given set. The
    */
   types::global_dof_index
-  n_boundary_dofs(const std::set<types::boundary_id> &boundary_ids) const;
+  n_boundary_dofs(const std::set<types::boundary_id>& boundary_ids) const;
 
   /**
    * Access to an object informing of the block structure of the dof handler.
@@ -889,7 +889,7 @@ public:
    * structure on each cell can be generated in this object by calling
    * initialize_local_block_info().
    */
-  const BlockInfo &
+  const BlockInfo&
   block_info() const;
 
 
@@ -920,14 +920,14 @@ public:
    * of 0..n_dofs(). The number of elements of this set equals
    * n_locally_owned_dofs().
    */
-  const IndexSet &
+  const IndexSet&
   locally_owned_dofs() const;
 
   /**
    * Return an IndexSet describing the set of locally owned DoFs used for the
    * given multigrid level as a subset of 0..n_dofs(level).
    */
-  const IndexSet &
+  const IndexSet&
   locally_owned_mg_dofs(const unsigned int level) const;
 
   /**
@@ -942,7 +942,7 @@ public:
    * MPI processes but the Triangulation on which this DoFHandler builds works
    * only on one MPI process.)
    */
-  const std::vector<IndexSet> &
+  const std::vector<IndexSet>&
   locally_owned_dofs_per_processor() const;
 
   /**
@@ -960,7 +960,7 @@ public:
    * or that there are multiple MPI processes but the Triangulation on which
    * this DoFHandler builds works only on one MPI process.)
    */
-  const std::vector<types::global_dof_index> &
+  const std::vector<types::global_dof_index>&
   n_locally_owned_dofs_per_processor() const;
 
   /**
@@ -974,7 +974,7 @@ public:
    * MPI processes but the Triangulation on which this DoFHandler builds works
    * only on one MPI process.)
    */
-  const std::vector<IndexSet> &
+  const std::vector<IndexSet>&
   locally_owned_mg_dofs_per_processor(const unsigned int level) const;
 
   /**
@@ -982,7 +982,7 @@ public:
    * Since there is only one FiniteElement @p index must be equal to zero
    * which is also the default value.
    */
-  const FiniteElement<dim, spacedim> &
+  const FiniteElement<dim, spacedim>&
   get_fe(const unsigned int index = 0) const;
 
   /**
@@ -991,13 +991,13 @@ public:
    * FiniteElement, only this one object is returned wrapped in a
    * hp::FECollection.
    */
-  const hp::FECollection<dim, spacedim> &
+  const hp::FECollection<dim, spacedim>&
   get_fe_collection() const;
 
   /**
    * Return a constant reference to the triangulation underlying this object.
    */
-  const Triangulation<dim, spacedim> &
+  const Triangulation<dim, spacedim>&
   get_triangulation() const;
 
   /**
@@ -1017,7 +1017,7 @@ public:
    */
   template <class Archive>
   void
-  save(Archive &ar, const unsigned int version) const;
+  save(Archive& ar, const unsigned int version) const;
 
   /**
    * Read the data of this object from a stream for the purpose of
@@ -1025,7 +1025,7 @@ public:
    */
   template <class Archive>
   void
-  load(Archive &ar, const unsigned int version);
+  load(Archive& ar, const unsigned int version);
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -1332,7 +1332,7 @@ DoFHandler<dim, spacedim>::n_locally_owned_dofs() const
 
 
 template <int dim, int spacedim>
-const IndexSet &
+const IndexSet&
 DoFHandler<dim, spacedim>::locally_owned_dofs() const
 {
   return number_cache.locally_owned_dofs;
@@ -1341,7 +1341,7 @@ DoFHandler<dim, spacedim>::locally_owned_dofs() const
 
 
 template <int dim, int spacedim>
-const IndexSet &
+const IndexSet&
 DoFHandler<dim, spacedim>::locally_owned_mg_dofs(const unsigned int level) const
 {
   Assert(level < this->get_triangulation().n_global_levels(),
@@ -1356,7 +1356,7 @@ DoFHandler<dim, spacedim>::locally_owned_mg_dofs(const unsigned int level) const
 
 
 template <int dim, int spacedim>
-const std::vector<types::global_dof_index> &
+const std::vector<types::global_dof_index>&
 DoFHandler<dim, spacedim>::n_locally_owned_dofs_per_processor() const
 {
   return number_cache.n_locally_owned_dofs_per_processor;
@@ -1365,7 +1365,7 @@ DoFHandler<dim, spacedim>::n_locally_owned_dofs_per_processor() const
 
 
 template <int dim, int spacedim>
-const std::vector<IndexSet> &
+const std::vector<IndexSet>&
 DoFHandler<dim, spacedim>::locally_owned_dofs_per_processor() const
 {
   return number_cache.locally_owned_dofs_per_processor;
@@ -1374,7 +1374,7 @@ DoFHandler<dim, spacedim>::locally_owned_dofs_per_processor() const
 
 
 template <int dim, int spacedim>
-const std::vector<IndexSet> &
+const std::vector<IndexSet>&
 DoFHandler<dim, spacedim>::locally_owned_mg_dofs_per_processor(
   const unsigned int level) const
 {
@@ -1390,7 +1390,7 @@ DoFHandler<dim, spacedim>::locally_owned_mg_dofs_per_processor(
 
 
 template <int dim, int spacedim>
-inline const FiniteElement<dim, spacedim> &
+inline const FiniteElement<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_fe(const unsigned int index) const
 {
   (void)index;
@@ -1403,7 +1403,7 @@ DoFHandler<dim, spacedim>::get_fe(const unsigned int index) const
 
 
 template <int dim, int spacedim>
-inline const hp::FECollection<dim, spacedim> &
+inline const hp::FECollection<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_fe_collection() const
 {
   Assert(
@@ -1416,7 +1416,7 @@ DoFHandler<dim, spacedim>::get_fe_collection() const
 
 
 template <int dim, int spacedim>
-inline const Triangulation<dim, spacedim> &
+inline const Triangulation<dim, spacedim>&
 DoFHandler<dim, spacedim>::get_triangulation() const
 {
   Assert(tria != nullptr,
@@ -1428,7 +1428,7 @@ DoFHandler<dim, spacedim>::get_triangulation() const
 
 
 template <int dim, int spacedim>
-inline const BlockInfo &
+inline const BlockInfo&
 DoFHandler<dim, spacedim>::block_info() const
 {
   return block_info_object;
@@ -1440,14 +1440,14 @@ template <int dim, int spacedim>
 template <typename number>
 types::global_dof_index
 DoFHandler<dim, spacedim>::n_boundary_dofs(
-  const std::map<types::boundary_id, const Function<spacedim, number> *>
-    &boundary_ids) const
+  const std::map<types::boundary_id, const Function<spacedim, number>*>&
+    boundary_ids) const
 {
   // extract the set of boundary ids and forget about the function object
   // pointers
   std::set<types::boundary_id> boundary_ids_only;
   for (typename std::map<types::boundary_id,
-                         const Function<spacedim, number> *>::const_iterator p =
+                         const Function<spacedim, number>*>::const_iterator p =
          boundary_ids.begin();
        p != boundary_ids.end();
        ++p)
@@ -1471,7 +1471,7 @@ namespace internal
   template <int dim, int spacedim>
   std::string
   policy_to_string(const dealii::internal::DoFHandlerImplementation::Policy::
-                     PolicyBase<dim, spacedim> &policy);
+                     PolicyBase<dim, spacedim>& policy);
 } // namespace internal
 
 
@@ -1479,27 +1479,27 @@ namespace internal
 template <int dim, int spacedim>
 template <class Archive>
 void
-DoFHandler<dim, spacedim>::save(Archive &ar, const unsigned int) const
+DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
 {
-  ar &block_info_object;
-  ar &vertex_dofs;
-  ar &number_cache;
+  ar& block_info_object;
+  ar& vertex_dofs;
+  ar& number_cache;
 
   // some versions of gcc have trouble with loading vectors of
   // std::unique_ptr objects because std::unique_ptr does not
   // have a copy constructor. do it one level at a time
   unsigned int n_levels = levels.size();
-  ar &         n_levels;
+  ar&          n_levels;
   for (unsigned int i = 0; i < levels.size(); ++i)
-    ar &levels[i];
+    ar& levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
-  ar & faces_is_nullptr;
+  ar&  faces_is_nullptr;
   if (!faces_is_nullptr)
-    ar &faces;
+    ar& faces;
 
   // write out the number of triangulation cells and later check during
   // loading that this number is indeed correct; same with something that
@@ -1508,7 +1508,7 @@ DoFHandler<dim, spacedim>::save(Archive &ar, const unsigned int) const
   std::string  fe_name     = this->get_fe(0).get_name();
   std::string  policy_name = internal::policy_to_string(*policy);
 
-  ar &n_cells &fe_name &policy_name;
+  ar& n_cells& fe_name& policy_name;
 }
 
 
@@ -1516,11 +1516,11 @@ DoFHandler<dim, spacedim>::save(Archive &ar, const unsigned int) const
 template <int dim, int spacedim>
 template <class Archive>
 void
-DoFHandler<dim, spacedim>::load(Archive &ar, const unsigned int)
+DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
 {
-  ar &block_info_object;
-  ar &vertex_dofs;
-  ar &number_cache;
+  ar& block_info_object;
+  ar& vertex_dofs;
+  ar& number_cache;
 
   // boost::serialization can restore pointers just fine, but if the
   // pointer object still points to something useful, that object is not
@@ -1533,20 +1533,20 @@ DoFHandler<dim, spacedim>::load(Archive &ar, const unsigned int)
   // std::unique_ptr objects because std::unique_ptr does not
   // have a copy constructor. do it one level at a time
   unsigned int size;
-  ar &         size;
+  ar&          size;
   levels.resize(size);
   for (unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<dim>> level;
-      ar &                                                               level;
+      ar&                                                                level;
       levels[i] = std::move(level);
     }
 
   // Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
-  ar & faces_is_nullptr;
+  ar&  faces_is_nullptr;
   if (!faces_is_nullptr)
-    ar &faces;
+    ar& faces;
 
   // these are the checks that correspond to the last block in the save()
   // function
@@ -1554,7 +1554,7 @@ DoFHandler<dim, spacedim>::load(Archive &ar, const unsigned int)
   std::string  fe_name;
   std::string  policy_name;
 
-  ar &n_cells &fe_name &policy_name;
+  ar& n_cells& fe_name& policy_name;
 
   AssertThrow(
     n_cells == tria->n_cells(),

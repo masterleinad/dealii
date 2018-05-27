@@ -41,7 +41,7 @@
 
 
 void
-print(const std::vector<types::global_dof_index> &v)
+print(const std::vector<types::global_dof_index>& v)
 {
   deallog << v.size();
   for (unsigned int i = 0; i < v.size(); ++i)

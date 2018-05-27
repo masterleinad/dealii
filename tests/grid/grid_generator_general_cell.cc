@@ -22,7 +22,7 @@
 #include "../tests.h"
 
 void
-dim_2(std::ostream &os)
+dim_2(std::ostream& os)
 {
   std::vector<Point<2>> vertices(4);
   vertices[0](0) = -1.;
@@ -42,7 +42,7 @@ dim_2(std::ostream &os)
 }
 
 void
-dim_3(std::ostream &os)
+dim_3(std::ostream& os)
 {
   std::vector<Point<3>> vertices(8);
   vertices[0](0) = -1.;
@@ -82,7 +82,7 @@ int
 main()
 {
   initlog(true);
-  std::ostream &logfile = deallog.get_file_stream();
+  std::ostream& logfile = deallog.get_file_stream();
   dim_2(logfile);
   dim_3(logfile);
 }

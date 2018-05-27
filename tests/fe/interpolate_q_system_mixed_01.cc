@@ -55,7 +55,7 @@ public:
   {}
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &v) const
+  vector_value(const Point<dim>& p, Vector<double>& v) const
   {
     for (unsigned int c = 0; c < v.size(); ++c)
       {
@@ -157,7 +157,7 @@ test()
           VectorTools::interpolate(
             dof_handler, F<dim>(0, 0.0), interpolant, mask_fail);
         }
-      catch (const ExceptionBase &e)
+      catch (const ExceptionBase& e)
         {
           deallog << "OK" << std::endl;
           deallog << "\tFails with " << e.get_exc_name() << std::endl;

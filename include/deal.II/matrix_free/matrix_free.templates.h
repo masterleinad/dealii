@@ -61,7 +61,7 @@ MatrixFree<dim, Number>::MatrixFree() :
 
 
 template <int dim, typename Number>
-MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number> &other) :
+MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number>& other) :
   Subscriptor()
 {
   copy_from(other);
@@ -72,12 +72,12 @@ MatrixFree<dim, Number>::MatrixFree(const MatrixFree<dim, Number> &other) :
 template <int dim, typename Number>
 std::pair<unsigned int, unsigned int>
 MatrixFree<dim, Number>::create_cell_subrange_hp_by_index(
-  const std::pair<unsigned int, unsigned int> &range,
+  const std::pair<unsigned int, unsigned int>& range,
   const unsigned int                           fe_index,
   const unsigned int                           vector_component) const
 {
   AssertIndexRange(fe_index, dof_info[vector_component].max_fe_index);
-  const std::vector<unsigned int> &fe_indices =
+  const std::vector<unsigned int>& fe_indices =
     dof_info[vector_component].cell_active_fe_index;
   if (fe_indices.empty() == true)
     return range;
@@ -116,7 +116,7 @@ MatrixFree<dim, Number>::create_cell_subrange_hp_by_index(
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::renumber_dofs(
-  std::vector<types::global_dof_index> &renumbering,
+  std::vector<types::global_dof_index>& renumbering,
   const unsigned int                    vector_component)
 {
   AssertIndexRange(vector_component, dof_info.size());
@@ -126,7 +126,7 @@ MatrixFree<dim, Number>::renumber_dofs(
 
 
 template <int dim, typename Number>
-const DoFHandler<dim> &
+const DoFHandler<dim>&
 MatrixFree<dim, Number>::get_dof_handler(const unsigned int dof_index) const
 {
   AssertIndexRange(dof_index, n_components());
@@ -159,7 +159,7 @@ MatrixFree<dim, Number>::get_cell_iterator(const unsigned int macro_cell_number,
   AssertIndexRange(macro_cell_number, task_info.cell_partition_data.back());
   AssertIndexRange(vector_number, n_components_filled(macro_cell_number));
 
-  const DoFHandler<dim> *dofh = nullptr;
+  const DoFHandler<dim>* dofh = nullptr;
   if (dof_handlers.active_dof_handler == DoFHandlers::usual)
     {
       AssertDimension(dof_handlers.dof_handler.size(),
@@ -196,7 +196,7 @@ MatrixFree<dim, Number>::get_hp_cell_iterator(
 
   Assert(dof_handlers.active_dof_handler == DoFHandlers::hp,
          ExcNotImplemented());
-  const hp::DoFHandler<dim> *dofh = dof_handlers.hp_dof_handler[dof_index];
+  const hp::DoFHandler<dim>* dofh = dof_handlers.hp_dof_handler[dof_index];
   std::pair<unsigned int, unsigned int> index =
     cell_level_index[macro_cell_number * vectorization_length + vector_number];
   return typename hp::DoFHandler<dim>::cell_iterator(
@@ -207,7 +207,7 @@ MatrixFree<dim, Number>::get_hp_cell_iterator(
 
 template <int dim, typename Number>
 void
-MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number> &v)
+MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number>& v)
 {
   clear();
   dof_handlers              = v.dof_handlers;
@@ -227,12 +227,12 @@ MatrixFree<dim, Number>::copy_from(const MatrixFree<dim, Number> &v)
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::internal_reinit(
-  const Mapping<dim> &                                    mapping,
-  const std::vector<const DoFHandler<dim> *> &            dof_handler,
-  const std::vector<const ConstraintMatrix *> &           constraint,
-  const std::vector<IndexSet> &                           locally_owned_set,
-  const std::vector<hp::QCollection<1>> &                 quad,
-  const typename MatrixFree<dim, Number>::AdditionalData &additional_data)
+  const Mapping<dim>&                                     mapping,
+  const std::vector<const DoFHandler<dim>*>&              dof_handler,
+  const std::vector<const ConstraintMatrix*>&             constraint,
+  const std::vector<IndexSet>&                            locally_owned_set,
+  const std::vector<hp::QCollection<1>>&                  quad,
+  const typename MatrixFree<dim, Number>::AdditionalData& additional_data)
 {
   // Reads out the FE information and stores the shape function values,
   // gradients and Hessians for quadrature points.
@@ -263,8 +263,8 @@ MatrixFree<dim, Number>::internal_reinit(
       // set variables that are independent of FE
       if (Utilities::MPI::job_supports_mpi() == true)
         {
-          const parallel::Triangulation<dim> *dist_tria =
-            dynamic_cast<const parallel::Triangulation<dim> *>(
+          const parallel::Triangulation<dim>* dist_tria =
+            dynamic_cast<const parallel::Triangulation<dim>*>(
               &(dof_handler[0]->get_triangulation()));
           task_info.communicator = dist_tria != nullptr ?
                                      dist_tria->get_communicator() :
@@ -386,12 +386,12 @@ MatrixFree<dim, Number>::internal_reinit(
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::internal_reinit(
-  const Mapping<dim> &                                    mapping,
-  const std::vector<const hp::DoFHandler<dim> *> &        dof_handler,
-  const std::vector<const ConstraintMatrix *> &           constraint,
-  const std::vector<IndexSet> &                           locally_owned_set,
-  const std::vector<hp::QCollection<1>> &                 quad,
-  const typename MatrixFree<dim, Number>::AdditionalData &additional_data)
+  const Mapping<dim>&                                     mapping,
+  const std::vector<const hp::DoFHandler<dim>*>&          dof_handler,
+  const std::vector<const ConstraintMatrix*>&             constraint,
+  const std::vector<IndexSet>&                            locally_owned_set,
+  const std::vector<hp::QCollection<1>>&                  quad,
+  const typename MatrixFree<dim, Number>::AdditionalData& additional_data)
 {
   // Reads out the FE information and stores the shape function values,
   // gradients and Hessians for quadrature points.
@@ -431,8 +431,8 @@ MatrixFree<dim, Number>::internal_reinit(
       // set variables that are independent of FE
       if (Utilities::MPI::job_supports_mpi() == true)
         {
-          const parallel::Triangulation<dim> *dist_tria =
-            dynamic_cast<const parallel::Triangulation<dim> *>(
+          const parallel::Triangulation<dim>* dist_tria =
+            dynamic_cast<const parallel::Triangulation<dim>*>(
               &(dof_handler[0]->get_triangulation()));
           task_info.communicator = dist_tria != nullptr ?
                                      dist_tria->get_communicator() :
@@ -551,7 +551,7 @@ MatrixFree<dim, Number>::internal_reinit(
 template <int dim, typename Number>
 template <int spacedim>
 bool
-MatrixFree<dim, Number>::is_supported(const FiniteElement<dim, spacedim> &fe)
+MatrixFree<dim, Number>::is_supported(const FiniteElement<dim, spacedim>& fe)
 {
   if (dim != spacedim)
     return false;
@@ -560,22 +560,23 @@ MatrixFree<dim, Number>::is_supported(const FiniteElement<dim, spacedim> &fe)
   if (fe.degree == 0 || fe.n_base_elements() != 1)
     return false;
 
-  const FiniteElement<dim, spacedim> *fe_ptr = &(fe.base_element(0));
+  const FiniteElement<dim, spacedim>* fe_ptr = &(fe.base_element(0));
   if (fe_ptr->n_components() != 1)
     return false;
 
   // then check of the base element is supported
-  if (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>
-                     *>(fe_ptr) != nullptr)
+  if (dynamic_cast<
+        const FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>*>(fe_ptr) !=
+      nullptr)
     return true;
   if (dynamic_cast<const FE_Poly<
         TensorProductPolynomials<dim, Polynomials::PiecewisePolynomial<double>>,
         dim,
-        spacedim> *>(fe_ptr) != nullptr)
+        spacedim>*>(fe_ptr) != nullptr)
     return true;
-  if (dynamic_cast<const FE_DGP<dim, spacedim> *>(fe_ptr) != nullptr)
+  if (dynamic_cast<const FE_DGP<dim, spacedim>*>(fe_ptr) != nullptr)
     return true;
-  if (dynamic_cast<const FE_Q_DG0<dim, spacedim> *>(fe_ptr) != nullptr)
+  if (dynamic_cast<const FE_Q_DG0<dim, spacedim>*>(fe_ptr) != nullptr)
     return true;
 
   // if the base element is not in the above list it is not supported
@@ -591,8 +592,8 @@ namespace internal
     // steps through all children and adds the active cells recursively
     template <typename InIterator>
     void
-    resolve_cell(const InIterator &                                  cell,
-                 std::vector<std::pair<unsigned int, unsigned int>> &cell_its,
+    resolve_cell(const InIterator&                                   cell,
+                 std::vector<std::pair<unsigned int, unsigned int>>& cell_its,
                  const unsigned int subdomain_id)
     {
       if (cell->has_children())
@@ -613,8 +614,8 @@ namespace internal
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::initialize_dof_handlers(
-  const std::vector<const DoFHandler<dim> *> &dof_handler,
-  const AdditionalData &                      additional_data)
+  const std::vector<const DoFHandler<dim>*>& dof_handler,
+  const AdditionalData&                      additional_data)
 {
   cell_level_index.clear();
   dof_handlers.active_dof_handler = DoFHandlers::usual;
@@ -635,7 +636,7 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
   const unsigned int n_mpi_procs = task_info.n_procs;
   const unsigned int my_pid      = task_info.my_pid;
 
-  const Triangulation<dim> &tria =
+  const Triangulation<dim>& tria =
     dof_handlers.dof_handler[0]->get_triangulation();
   const unsigned int level = additional_data.level_mg_handler;
   if (level == numbers::invalid_unsigned_int)
@@ -646,7 +647,7 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
                                                  end_cell = tria.end(0);
       // For serial Triangulations always take all cells
       const unsigned int subdomain_id =
-        (dynamic_cast<const parallel::Triangulation<dim> *>(
+        (dynamic_cast<const parallel::Triangulation<dim>*>(
            &dof_handler[0]->get_triangulation()) != nullptr) ?
           my_pid :
           numbers::invalid_subdomain_id;
@@ -682,8 +683,8 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::initialize_dof_handlers(
-  const std::vector<const hp::DoFHandler<dim> *> &dof_handler,
-  const AdditionalData &                          additional_data)
+  const std::vector<const hp::DoFHandler<dim>*>& dof_handler,
+  const AdditionalData&                          additional_data)
 {
   cell_level_index.clear();
   dof_handlers.active_dof_handler = DoFHandlers::hp;
@@ -708,7 +709,7 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
 
   // if we have no level given, use the same as for the standard DoFHandler,
   // otherwise we must loop through the respective level
-  const Triangulation<dim> &tria = dof_handler[0]->get_triangulation();
+  const Triangulation<dim>& tria = dof_handler[0]->get_triangulation();
 
   if (n_mpi_procs == 1)
     {
@@ -718,7 +719,7 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
                                               end_cell = dof_handler[0]->end(0);
   // For serial Triangulations always take all cells
   const unsigned int subdomain_id =
-    (dynamic_cast<const parallel::Triangulation<dim> *>(
+    (dynamic_cast<const parallel::Triangulation<dim>*>(
        &dof_handler[0]->get_triangulation()) != nullptr) ?
       my_pid :
       numbers::invalid_subdomain_id;
@@ -739,9 +740,9 @@ MatrixFree<dim, Number>::initialize_dof_handlers(
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::initialize_indices(
-  const std::vector<const ConstraintMatrix *> &constraint,
-  const std::vector<IndexSet> &                locally_owned_set,
-  const AdditionalData &                       additional_data)
+  const std::vector<const ConstraintMatrix*>& constraint,
+  const std::vector<IndexSet>&                locally_owned_set,
+  const AdditionalData&                       additional_data)
 {
   // insert possible ghost cells and construct face topology
   const bool do_face_integrals =
@@ -773,11 +774,11 @@ MatrixFree<dim, Number>::initialize_indices(
 
   for (unsigned int no = 0; no < n_fe; ++no)
     {
-      std::vector<const FiniteElement<dim> *> fes;
+      std::vector<const FiniteElement<dim>*> fes;
       if (dof_handlers.active_dof_handler == DoFHandlers::hp)
         {
-          const hp::DoFHandler<dim> *  hpdof = dof_handlers.hp_dof_handler[no];
-          const hp::FECollection<dim> &fe    = hpdof->get_fe_collection();
+          const hp::DoFHandler<dim>*   hpdof = dof_handlers.hp_dof_handler[no];
+          const hp::FECollection<dim>& fe    = hpdof->get_fe_collection();
           for (unsigned int f = 0; f < fe.size(); ++f)
             fes.push_back(&fe[f]);
 
@@ -790,7 +791,7 @@ MatrixFree<dim, Number>::initialize_indices(
         }
       else
         {
-          const DoFHandler<dim> *dofh = &*dof_handlers.dof_handler[no];
+          const DoFHandler<dim>* dofh = &*dof_handlers.dof_handler[no];
           fes.push_back(&dofh->get_fe());
           if (cell_categorization_enabled == true)
             dof_info[no].cell_active_fe_index.resize(
@@ -805,7 +806,7 @@ MatrixFree<dim, Number>::initialize_indices(
       dof_info[no].component_dof_indices_offset.resize(fes.size());
       for (unsigned int fe_index = 0; fe_index < fes.size(); ++fe_index)
         {
-          const FiniteElement<dim> &fe = *fes[fe_index];
+          const FiniteElement<dim>& fe = *fes[fe_index];
           // cache number of finite elements and dofs_per_cell
           dof_info[no].dofs_per_cell.push_back(fe.dofs_per_cell);
           dof_info[no].dofs_per_face.push_back(fe.dofs_per_face);
@@ -893,7 +894,7 @@ MatrixFree<dim, Number>::initialize_indices(
           if (dof_handlers.active_dof_handler == DoFHandlers::usual &&
               dof_handlers.level == numbers::invalid_unsigned_int)
             {
-              const DoFHandler<dim> *dofh = &*dof_handlers.dof_handler[no];
+              const DoFHandler<dim>* dofh = &*dof_handlers.dof_handler[no];
               typename DoFHandler<dim>::active_cell_iterator cell_it(
                 &dofh->get_triangulation(),
                 cell_level_index[counter].first,
@@ -921,7 +922,7 @@ MatrixFree<dim, Number>::initialize_indices(
           else if (dof_handlers.active_dof_handler == DoFHandlers::usual &&
                    dof_handlers.level != numbers::invalid_unsigned_int)
             {
-              const DoFHandler<dim> *dofh = dof_handlers.dof_handler[no];
+              const DoFHandler<dim>* dofh = dof_handlers.dof_handler[no];
               AssertIndexRange(dof_handlers.level,
                                dofh->get_triangulation().n_levels());
               typename DoFHandler<dim>::cell_iterator cell_it(
@@ -950,7 +951,7 @@ MatrixFree<dim, Number>::initialize_indices(
           // hp case where we need to decode the FE index and similar
           else if (dof_handlers.active_dof_handler == DoFHandlers::hp)
             {
-              const hp::DoFHandler<dim> *dofh = dof_handlers.hp_dof_handler[no];
+              const hp::DoFHandler<dim>* dofh = dof_handlers.hp_dof_handler[no];
               typename hp::DoFHandler<dim>::active_cell_iterator cell_it(
                 &dofh->get_triangulation(),
                 cell_level_index[counter].first,
@@ -1002,7 +1003,7 @@ MatrixFree<dim, Number>::initialize_indices(
             // in case of adaptivity, go through the cells on the next finer
             // level and check whether we need to get read access to some of
             // those entries for the mg flux matrices
-            const DoFHandler<dim> &dof_handler = *dof_handlers.dof_handler[no];
+            const DoFHandler<dim>& dof_handler = *dof_handlers.dof_handler[no];
             std::vector<types::global_dof_index> dof_indices;
             if (additional_data.level_mg_handler + 1 <
                 dof_handler.get_triangulation().n_global_levels())
@@ -1277,7 +1278,7 @@ MatrixFree<dim, Number>::initialize_indices(
                     internal::MatrixFreeFunctions::FPArrayComparator<double>>::
     iterator it  = constraint_values.constraints.begin(),
              end = constraint_values.constraints.end();
-  std::vector<const std::vector<double> *> constraints(
+  std::vector<const std::vector<double>*> constraints(
     constraint_values.constraints.size());
   unsigned int length = 0;
   for (; it != end; ++it)
@@ -1424,7 +1425,7 @@ MatrixFree<dim, Number>::initialize_indices(
       // compute tighter index sets for various sets of face integrals
       for (unsigned int no = 0; no < n_fe; ++no)
         {
-          const Utilities::MPI::Partitioner &part =
+          const Utilities::MPI::Partitioner& part =
             *dof_info[no].vector_partitioner;
 
           // partitioner 0: no face integrals, simply use the indices present
@@ -1484,7 +1485,7 @@ MatrixFree<dim, Number>::initialize_indices(
                 dof_info[no].vector_partitioner_face_variants[0].reset(
                   new Utilities::MPI::Partitioner(part.locally_owned_range(),
                                                   part.get_mpi_communicator()));
-                const_cast<Utilities::MPI::Partitioner *>(
+                const_cast<Utilities::MPI::Partitioner*>(
                   dof_info[no].vector_partitioner_face_variants[0].get())
                   ->set_ghost_indices(compressed_set, part.ghost_indices());
               }
@@ -1538,7 +1539,7 @@ MatrixFree<dim, Number>::initialize_indices(
                                  ++c)
                               {
                                 const internal::MatrixFreeFunctions::ShapeInfo<
-                                  VectorizedArray<Number>> &shape =
+                                  VectorizedArray<Number>>& shape =
                                   shape_info(
                                     dof_info[no].global_base_element_offset + e,
                                     0,
@@ -1594,7 +1595,7 @@ MatrixFree<dim, Number>::initialize_indices(
                       new Utilities::MPI::Partitioner(
                         part.locally_owned_range(),
                         part.get_mpi_communicator()));
-                    const_cast<Utilities::MPI::Partitioner *>(
+                    const_cast<Utilities::MPI::Partitioner*>(
                       dof_info[no].vector_partitioner_face_variants[1].get())
                       ->set_ghost_indices(compressed_set, part.ghost_indices());
                   }
@@ -1651,7 +1652,7 @@ MatrixFree<dim, Number>::initialize_indices(
                                  ++c)
                               {
                                 const internal::MatrixFreeFunctions::ShapeInfo<
-                                  VectorizedArray<Number>> &shape =
+                                  VectorizedArray<Number>>& shape =
                                   shape_info(
                                     dof_info[no].global_base_element_offset + e,
                                     0,
@@ -1698,7 +1699,7 @@ MatrixFree<dim, Number>::initialize_indices(
                       new Utilities::MPI::Partitioner(
                         part.locally_owned_range(),
                         part.get_mpi_communicator()));
-                    const_cast<Utilities::MPI::Partitioner *>(
+                    const_cast<Utilities::MPI::Partitioner*>(
                       dof_info[no].vector_partitioner_face_variants[2].get())
                       ->set_ghost_indices(compressed_set, part.ghost_indices());
                   }
@@ -1742,10 +1743,10 @@ namespace internal
     fill_index_subrange(
       const unsigned int begin,
       const unsigned int end,
-      const std::vector<std::pair<unsigned int, unsigned int>>
-        &                                          cell_level_index,
+      const std::vector<std::pair<unsigned int, unsigned int>>&
+                                                   cell_level_index,
       tbb::concurrent_unordered_map<std::pair<unsigned int, unsigned int>,
-                                    unsigned int> &map)
+                                    unsigned int>& map)
     {
       if (cell_level_index.empty())
         return;
@@ -1762,12 +1763,12 @@ namespace internal
     fill_connectivity_subrange(
       const unsigned int                begin,
       const unsigned int                end,
-      const dealii::Triangulation<dim> &tria,
-      const std::vector<std::pair<unsigned int, unsigned int>>
-        &                                                cell_level_index,
+      const dealii::Triangulation<dim>& tria,
+      const std::vector<std::pair<unsigned int, unsigned int>>&
+                                                         cell_level_index,
       const tbb::concurrent_unordered_map<std::pair<unsigned int, unsigned int>,
-                                          unsigned int> &map,
-      DynamicSparsityPattern &                           connectivity_direct)
+                                          unsigned int>& map,
+      DynamicSparsityPattern&                            connectivity_direct)
     {
       std::vector<types::global_dof_index> new_indices;
       for (unsigned int cell = begin; cell < end; ++cell)
@@ -1806,8 +1807,8 @@ namespace internal
     fill_connectivity_indirect_subrange(
       const unsigned int            begin,
       const unsigned int            end,
-      const DynamicSparsityPattern &connectivity_direct,
-      DynamicSparsityPattern &      connectivity)
+      const DynamicSparsityPattern& connectivity_direct,
+      DynamicSparsityPattern&       connectivity)
     {
       std::vector<types::global_dof_index> new_indices;
       for (unsigned int block = begin; block < end; ++block)
@@ -1843,7 +1844,7 @@ namespace internal
 template <int dim, typename Number>
 void
 MatrixFree<dim, Number>::make_connectivity_graph_faces(
-  DynamicSparsityPattern &connectivity)
+  DynamicSparsityPattern& connectivity)
 {
   (void)connectivity;
 #ifdef DEAL_II_WITH_THREADS
@@ -1865,7 +1866,7 @@ MatrixFree<dim, Number>::make_connectivity_graph_faces(
   // cell (due to the faces that are associated to it)
   DynamicSparsityPattern    connectivity_direct(connectivity.n_rows(),
                                              connectivity.n_cols());
-  const Triangulation<dim> &tria =
+  const Triangulation<dim>& tria =
     dof_handlers.active_dof_handler == DoFHandlers::usual ?
       dof_handlers.dof_handler[0]->get_triangulation() :
       dof_handlers.hp_dof_handler[0]->get_triangulation();
@@ -1919,7 +1920,7 @@ MatrixFree<dim, Number>::memory_consumption() const
 template <int dim, typename Number>
 template <typename StreamType>
 void
-MatrixFree<dim, Number>::print_memory_consumption(StreamType &out) const
+MatrixFree<dim, Number>::print_memory_consumption(StreamType& out) const
 {
   out << "  Memory matrix-free data total: --> ";
   task_info.print_memory_statistics(out, memory_consumption());
@@ -1956,7 +1957,7 @@ MatrixFree<dim, Number>::print_memory_consumption(StreamType &out) const
 
 template <int dim, typename Number>
 void
-MatrixFree<dim, Number>::print(std::ostream &out) const
+MatrixFree<dim, Number>::print(std::ostream& out) const
 {
   // print indices local to global
   for (unsigned int no = 0; no < dof_info.size(); ++no)

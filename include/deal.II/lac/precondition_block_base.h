@@ -148,8 +148,8 @@ public:
   template <typename number2>
   void
   inverse_vmult(size_type              i,
-                Vector<number2> &      dst,
-                const Vector<number2> &src) const;
+                Vector<number2>&       dst,
+                const Vector<number2>& src) const;
 
   /**
    * Multiply with the transposed inverse block at position <tt>i</tt>.
@@ -157,55 +157,55 @@ public:
   template <typename number2>
   void
   inverse_Tvmult(size_type              i,
-                 Vector<number2> &      dst,
-                 const Vector<number2> &src) const;
+                 Vector<number2>&       dst,
+                 const Vector<number2>& src) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #gauss_jordan.
    */
-  FullMatrix<number> &
+  FullMatrix<number>&
   inverse(size_type i);
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  Householder<number> &
+  Householder<number>&
   inverse_householder(size_type i);
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  LAPACKFullMatrix<number> &
+  LAPACKFullMatrix<number>&
   inverse_svd(size_type i);
 
   /**
    * Access to the inverse diagonal blocks.
    */
-  const FullMatrix<number> &
+  const FullMatrix<number>&
   inverse(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const Householder<number> &
+  const Householder<number>&
   inverse_householder(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const LAPACKFullMatrix<number> &
+  const LAPACKFullMatrix<number>&
   inverse_svd(size_type i) const;
 
   /**
    * Access to the diagonal blocks.
    */
-  FullMatrix<number> &
+  FullMatrix<number>&
   diagonal(size_type i);
 
   /**
    * Access to the diagonal blocks.
    */
-  const FullMatrix<number> &
+  const FullMatrix<number>&
   diagonal(size_type i) const;
 
   /**
@@ -417,8 +417,8 @@ template <typename number>
 template <typename number2>
 inline void
 PreconditionBlockBase<number>::inverse_vmult(size_type              i,
-                                             Vector<number2> &      dst,
-                                             const Vector<number2> &src) const
+                                             Vector<number2>&       dst,
+                                             const Vector<number2>& src) const
 {
   const size_type ii = same_diagonal() ? 0U : i;
 
@@ -446,8 +446,8 @@ template <typename number>
 template <typename number2>
 inline void
 PreconditionBlockBase<number>::inverse_Tvmult(size_type              i,
-                                              Vector<number2> &      dst,
-                                              const Vector<number2> &src) const
+                                              Vector<number2>&       dst,
+                                              const Vector<number2>& src) const
 {
   const size_type ii = same_diagonal() ? 0U : i;
 
@@ -472,7 +472,7 @@ PreconditionBlockBase<number>::inverse_Tvmult(size_type              i,
 
 
 template <typename number>
-inline const FullMatrix<number> &
+inline const FullMatrix<number>&
 PreconditionBlockBase<number>::inverse(size_type i) const
 {
   if (same_diagonal())
@@ -485,7 +485,7 @@ PreconditionBlockBase<number>::inverse(size_type i) const
 
 
 template <typename number>
-inline const Householder<number> &
+inline const Householder<number>&
 PreconditionBlockBase<number>::inverse_householder(size_type i) const
 {
   if (same_diagonal())
@@ -497,7 +497,7 @@ PreconditionBlockBase<number>::inverse_householder(size_type i) const
 
 
 template <typename number>
-inline const LAPACKFullMatrix<number> &
+inline const LAPACKFullMatrix<number>&
 PreconditionBlockBase<number>::inverse_svd(size_type i) const
 {
   if (same_diagonal())
@@ -509,7 +509,7 @@ PreconditionBlockBase<number>::inverse_svd(size_type i) const
 
 
 template <typename number>
-inline const FullMatrix<number> &
+inline const FullMatrix<number>&
 PreconditionBlockBase<number>::diagonal(size_type i) const
 {
   Assert(store_diagonals(), ExcDiagonalsNotStored());
@@ -523,7 +523,7 @@ PreconditionBlockBase<number>::diagonal(size_type i) const
 
 
 template <typename number>
-inline FullMatrix<number> &
+inline FullMatrix<number>&
 PreconditionBlockBase<number>::inverse(size_type i)
 {
   Assert(var_inverse_full.size() != 0, ExcInverseNotAvailable());
@@ -538,7 +538,7 @@ PreconditionBlockBase<number>::inverse(size_type i)
 
 
 template <typename number>
-inline Householder<number> &
+inline Householder<number>&
 PreconditionBlockBase<number>::inverse_householder(size_type i)
 {
   Assert(var_inverse_householder.size() != 0, ExcInverseNotAvailable());
@@ -552,7 +552,7 @@ PreconditionBlockBase<number>::inverse_householder(size_type i)
 
 
 template <typename number>
-inline LAPACKFullMatrix<number> &
+inline LAPACKFullMatrix<number>&
 PreconditionBlockBase<number>::inverse_svd(size_type i)
 {
   Assert(var_inverse_svd.size() != 0, ExcInverseNotAvailable());
@@ -566,7 +566,7 @@ PreconditionBlockBase<number>::inverse_svd(size_type i)
 
 
 template <typename number>
-inline FullMatrix<number> &
+inline FullMatrix<number>&
 PreconditionBlockBase<number>::diagonal(size_type i)
 {
   Assert(store_diagonals(), ExcDiagonalsNotStored());
@@ -625,7 +625,7 @@ PreconditionBlockBase<number>::log_statistics() const
 
       for (size_type b = 0; b < size(); ++b)
         {
-          const LAPACKFullMatrix<number> &matrix = inverse_svd(b);
+          const LAPACKFullMatrix<number>& matrix = inverse_svd(b);
           size_type                       k      = 1;
           while (k <= matrix.n_cols() &&
                  matrix.singular_value(matrix.n_cols() - k) == 0)

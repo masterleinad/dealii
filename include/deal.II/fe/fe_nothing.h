@@ -116,53 +116,47 @@ public:
    * exception.
    */
   virtual double
-  shape_value(const unsigned int i, const Point<dim> &p) const override;
+  shape_value(const unsigned int i, const Point<dim>& p) const override;
 
   virtual void
   fill_fe_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
     const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim> &                                     quadrature,
-    const Mapping<dim, spacedim> &                              mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase &mapping_internal,
-    const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                       spacedim>
-      &                                                            mapping_data,
-    const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                       spacedim>
-      &output_data) const override;
+    const Quadrature<dim>&                                      quadrature,
+    const Mapping<dim, spacedim>&                               mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const dealii::internal::FEValuesImplementation::
+      MappingRelatedData<dim, spacedim>&                           mapping_data,
+    const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+    dealii::internal::FEValuesImplementation::
+      FiniteElementRelatedData<dim, spacedim>& output_data) const override;
 
   virtual void
   fill_fe_face_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
     const unsigned int                                          face_no,
-    const Quadrature<dim - 1> &                                 quadrature,
-    const Mapping<dim, spacedim> &                              mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase &mapping_internal,
-    const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                       spacedim>
-      &                                                            mapping_data,
-    const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                       spacedim>
-      &output_data) const override;
+    const Quadrature<dim - 1>&                                  quadrature,
+    const Mapping<dim, spacedim>&                               mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const dealii::internal::FEValuesImplementation::
+      MappingRelatedData<dim, spacedim>&                           mapping_data,
+    const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+    dealii::internal::FEValuesImplementation::
+      FiniteElementRelatedData<dim, spacedim>& output_data) const override;
 
   virtual void
   fill_fe_subface_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
     const unsigned int                                          face_no,
     const unsigned int                                          sub_no,
-    const Quadrature<dim - 1> &                                 quadrature,
-    const Mapping<dim, spacedim> &                              mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase &mapping_internal,
-    const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                       spacedim>
-      &                                                            mapping_data,
-    const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                       spacedim>
-      &output_data) const override;
+    const Quadrature<dim - 1>&                                  quadrature,
+    const Mapping<dim, spacedim>&                               mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const dealii::internal::FEValuesImplementation::
+      MappingRelatedData<dim, spacedim>&                           mapping_data,
+    const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+    dealii::internal::FEValuesImplementation::
+      FiniteElementRelatedData<dim, spacedim>& output_data) const override;
 
   /**
    * Prepare internal data structures and fill in values independent of the
@@ -175,13 +169,12 @@ public:
    */
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
-  get_data(
-    const UpdateFlags             update_flags,
-    const Mapping<dim, spacedim> &mapping,
-    const Quadrature<dim> &       quadrature,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                       spacedim>
-      &output_data) const override;
+  get_data(const UpdateFlags             update_flags,
+           const Mapping<dim, spacedim>& mapping,
+           const Quadrature<dim>&        quadrature,
+           dealii::internal::FEValuesImplementation::FiniteElementRelatedData<
+             dim,
+             spacedim>& output_data) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -199,21 +192,21 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
 
 
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_line_dof_identities(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_quad_dof_identities(
-    const FiniteElement<dim, spacedim> &fe_other) const override;
+    const FiniteElement<dim, spacedim>& fe_other) const override;
 
   virtual bool
   hp_constraints_are_implemented() const override;
@@ -225,8 +218,8 @@ public:
    */
   virtual void
   get_interpolation_matrix(
-    const FiniteElement<dim, spacedim> &source_fe,
-    FullMatrix<double> &                interpolation_matrix) const override;
+    const FiniteElement<dim, spacedim>& source_fe,
+    FullMatrix<double>&                 interpolation_matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -239,8 +232,8 @@ public:
 
   virtual void
   get_face_interpolation_matrix(
-    const FiniteElement<dim, spacedim> &source_fe,
-    FullMatrix<double> &                interpolation_matrix) const override;
+    const FiniteElement<dim, spacedim>& source_fe,
+    FullMatrix<double>&                 interpolation_matrix) const override;
 
 
   /**
@@ -254,9 +247,9 @@ public:
 
   virtual void
   get_subface_interpolation_matrix(
-    const FiniteElement<dim, spacedim> &source_fe,
+    const FiniteElement<dim, spacedim>& source_fe,
     const unsigned int                  index,
-    FullMatrix<double> &                interpolation_matrix) const override;
+    FullMatrix<double>&                 interpolation_matrix) const override;
 
   /**
    * @return true if the FE dominates any other.
@@ -272,7 +265,7 @@ public:
    * for this purpose obviously also needs to be of type FE_Nothing).
    */
   virtual bool
-  operator==(const FiniteElement<dim, spacedim> &fe) const override;
+  operator==(const FiniteElement<dim, spacedim>& fe) const override;
 
 private:
   /**

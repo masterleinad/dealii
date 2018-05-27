@@ -80,7 +80,7 @@ test()
       solution(i)        = entry;
     }
 
-  constraints.distribute(static_cast<Vector<number> &>(solution));
+  constraints.distribute(static_cast<Vector<number>&>(solution));
   MappingQ<dim>           mapping(4);
   MatrixFree<dim, number> mf_data;
   {

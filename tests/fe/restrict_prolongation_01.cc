@@ -43,7 +43,7 @@ using namespace dealii;
 
 template <int dim, int spacedim>
 void
-check(const FiniteElement<dim, spacedim> &fe,
+check(const FiniteElement<dim, spacedim>& fe,
       const bool                          isotropic_only = false,
       unsigned int                        nested_size    = 0)
 {

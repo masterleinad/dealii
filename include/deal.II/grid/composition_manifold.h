@@ -78,8 +78,8 @@ public:
   /**
    * Construct the composition of the two given manifolds.
    */
-  CompositionManifold(const ChartManifold<dim1, intermediate_dim, chartdim> &F,
-                      const ChartManifold<dim2, spacedim, intermediate_dim> &G);
+  CompositionManifold(const ChartManifold<dim1, intermediate_dim, chartdim>& F,
+                      const ChartManifold<dim2, spacedim, intermediate_dim>& G);
 
   /**
    * Make a clone of this Manifold.
@@ -93,7 +93,7 @@ public:
    * of G, and then the pull_back() function of F.
    */
   virtual Point<chartdim>
-  pull_back(const Point<spacedim> &space_point) const;
+  pull_back(const Point<spacedim>& space_point) const;
 
 
   /**
@@ -102,13 +102,13 @@ public:
    * F, and then the push_forward() of G.
    */
   virtual Point<spacedim>
-  push_forward(const Point<chartdim> &chart_point) const;
+  push_forward(const Point<chartdim>& chart_point) const;
 
   /**
    * Return the derivative of the composition of G after F.
    */
   virtual DerivativeForm<1, chartdim, spacedim>
-  push_forward_gradient(const Point<chartdim> &chart_point) const;
+  push_forward_gradient(const Point<chartdim>& chart_point) const;
 
 private:
   /**
@@ -140,8 +140,8 @@ template <int dim,
           int dim2>
 CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
   CompositionManifold(
-    const ChartManifold<dim1, intermediate_dim, chartdim> &F,
-    const ChartManifold<dim2, spacedim, intermediate_dim> &G) :
+    const ChartManifold<dim1, intermediate_dim, chartdim>& F,
+    const ChartManifold<dim2, spacedim, intermediate_dim>& G) :
   ChartManifold<dim, spacedim, chartdim>(F.get_periodicity()),
   F(&F),
   G(&G)
@@ -177,7 +177,7 @@ template <int dim,
           int dim2>
 Point<chartdim>
 CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
-  pull_back(const Point<spacedim> &space_point) const
+  pull_back(const Point<spacedim>& space_point) const
 {
   return F->pull_back(G->pull_back(space_point));
 }
@@ -192,7 +192,7 @@ template <int dim,
           int dim2>
 Point<spacedim>
 CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
-  push_forward(const Point<chartdim> &chart_point) const
+  push_forward(const Point<chartdim>& chart_point) const
 {
   return G->push_forward(F->push_forward(chart_point));
 }
@@ -207,7 +207,7 @@ template <int dim,
           int dim2>
 DerivativeForm<1, chartdim, spacedim>
 CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
-  push_forward_gradient(const Point<chartdim> &chart_point) const
+  push_forward_gradient(const Point<chartdim>& chart_point) const
 {
   DerivativeForm<1, chartdim, intermediate_dim> DF =
     F->push_forward_gradient(chart_point);

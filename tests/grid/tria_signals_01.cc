@@ -54,7 +54,7 @@ f_post_refinement()
 template <int dim, int spacedim>
 void
 f_pre_coarsening_on_cell(
-  const typename Triangulation<dim, spacedim>::cell_iterator &)
+  const typename Triangulation<dim, spacedim>::cell_iterator&)
 {
   ++signal_counter_pre_coarsening_on_cell;
   return;
@@ -63,7 +63,7 @@ f_pre_coarsening_on_cell(
 template <int dim, int spacedim>
 void
 f_post_refinement_on_cell(
-  const typename Triangulation<dim, spacedim>::cell_iterator &)
+  const typename Triangulation<dim, spacedim>::cell_iterator&)
 {
   ++signal_counter_post_refinement_on_cell;
   return;
@@ -71,7 +71,7 @@ f_post_refinement_on_cell(
 
 template <int dim, int spacedim>
 void
-f_copy(const Triangulation<dim, spacedim> &)
+f_copy(const Triangulation<dim, spacedim>&)
 {
   ++signal_counter_copy;
   return;
@@ -168,7 +168,7 @@ test()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   initlog();
 

@@ -28,14 +28,14 @@ template <int dim>
 class ExpFunc : public Function<dim>
 {
 public:
-  ExpFunc(const Point<dim> &origin, const double &Z) :
+  ExpFunc(const Point<dim>& origin, const double& Z) :
     Function<dim>(1),
     origin(origin),
     Z(Z)
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = point - origin;
     const double   r    = dist.norm();
@@ -43,7 +43,7 @@ public:
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const
+  gradient(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dist = p - origin;
     const double   r    = dist.norm();
@@ -53,7 +53,7 @@ public:
   }
 
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim> &p, const unsigned int component = 0) const
+  hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p - origin;
     const double   r   = dir.norm();
@@ -79,20 +79,20 @@ template <int dim>
 class ExpFunc2 : public Functions::Spherical<dim>
 {
 public:
-  ExpFunc2(const Point<dim> &origin, const double &Z) :
+  ExpFunc2(const Point<dim>& origin, const double& Z) :
     Functions::Spherical<dim>(origin),
     Z(Z)
   {}
 
 private:
   virtual double
-  svalue(const std::array<double, dim> &sp, const unsigned int) const
+  svalue(const std::array<double, dim>& sp, const unsigned int) const
   {
     return std::exp(-Z * sp[0]);
   }
 
   virtual std::array<double, dim>
-  sgradient(const std::array<double, dim> &sp, const unsigned int) const
+  sgradient(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, dim> res;
     res[0] = -Z * std::exp(-Z * sp[0]);
@@ -102,7 +102,7 @@ private:
   }
 
   virtual std::array<double, 6>
-  shessian(const std::array<double, dim> &sp, const unsigned int) const
+  shessian(const std::array<double, dim>& sp, const unsigned int) const
   {
     std::array<double, 6> res;
     res[0] = Z * Z * std::exp(-Z * sp[0]);

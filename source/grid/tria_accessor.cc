@@ -41,7 +41,7 @@ namespace
   // subface concerning the FaceRefineCase of
   // the face
   inline unsigned int
-  translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>> &face,
+  translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>>& face,
                        const unsigned int                         subface_no)
   {
     Assert(face->has_children(), ExcInternalError());
@@ -83,7 +83,7 @@ namespace
   // subface concerning the FaceRefineCase of
   // the face
   inline unsigned int
-  translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>> &face,
+  translate_subface_no(const TriaIterator<TriaAccessor<2, 3, 3>>& face,
                        const unsigned int                         subface_no,
                        const unsigned int                         subsubface_no)
   {
@@ -129,14 +129,14 @@ namespace
 
   template <int dim, int spacedim>
   Point<spacedim>
-  barycenter(const TriaAccessor<1, dim, spacedim> &accessor)
+  barycenter(const TriaAccessor<1, dim, spacedim>& accessor)
   {
     return (accessor.vertex(1) + accessor.vertex(0)) / 2.;
   }
 
 
   Point<2>
-  barycenter(const TriaAccessor<2, 2, 2> &accessor)
+  barycenter(const TriaAccessor<2, 2, 2>& accessor)
   {
     // the evaluation of the formulae
     // is a bit tricky when done dimension
@@ -216,7 +216,7 @@ namespace
 
 
   Point<3>
-  barycenter(const TriaAccessor<3, 3, 3> &accessor)
+  barycenter(const TriaAccessor<3, 3, 3>& accessor)
   {
     /*
       Get the computation of the barycenter by this little Maple script. We
@@ -1240,7 +1240,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   Point<spacedim>
-  barycenter(const TriaAccessor<structdim, dim, spacedim> &)
+  barycenter(const TriaAccessor<structdim, dim, spacedim>&)
   {
     // this function catches all the cases not
     // explicitly handled above
@@ -1252,7 +1252,7 @@ namespace
 
   template <int dim, int spacedim>
   double
-  measure(const TriaAccessor<1, dim, spacedim> &accessor)
+  measure(const TriaAccessor<1, dim, spacedim>& accessor)
   {
     // remember that we use (dim-)linear
     // mappings
@@ -1262,7 +1262,7 @@ namespace
 
 
   double
-  measure(const TriaAccessor<2, 2, 2> &accessor)
+  measure(const TriaAccessor<2, 2, 2>& accessor)
   {
     // the evaluation of the formulae
     // is a bit tricky when done dimension
@@ -1314,7 +1314,7 @@ namespace
 
 
   double
-  measure(const TriaAccessor<3, 3, 3> &accessor)
+  measure(const TriaAccessor<3, 3, 3>& accessor)
   {
     unsigned int vertex_indices[GeometryInfo<3>::vertices_per_cell];
     for (unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
@@ -1327,7 +1327,7 @@ namespace
 
   // a 2d face in 3d space
   double
-  measure(const dealii::TriaAccessor<2, 3, 3> &accessor)
+  measure(const dealii::TriaAccessor<2, 3, 3>& accessor)
   {
     // If the face is planar, the diagonal from vertex 0 to vertex 3,
     // v_03, should be in the plane P_012 of vertices 0, 1 and 2.  Get
@@ -1366,7 +1366,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   double
-  measure(const TriaAccessor<structdim, dim, spacedim> &)
+  measure(const TriaAccessor<structdim, dim, spacedim>&)
   {
     // catch-all for all cases not explicitly
     // listed above
@@ -1377,7 +1377,7 @@ namespace
 
   template <int dim, int spacedim>
   Point<spacedim>
-  get_new_point_on_object(const TriaAccessor<1, dim, spacedim> &obj)
+  get_new_point_on_object(const TriaAccessor<1, dim, spacedim>& obj)
   {
     TriaIterator<TriaAccessor<1, dim, spacedim>> it(obj);
     return obj.get_manifold().get_new_point_on_line(it);
@@ -1385,7 +1385,7 @@ namespace
 
   template <int dim, int spacedim>
   Point<spacedim>
-  get_new_point_on_object(const TriaAccessor<2, dim, spacedim> &obj)
+  get_new_point_on_object(const TriaAccessor<2, dim, spacedim>& obj)
   {
     TriaIterator<TriaAccessor<2, dim, spacedim>> it(obj);
     return obj.get_manifold().get_new_point_on_quad(it);
@@ -1393,7 +1393,7 @@ namespace
 
   template <int dim, int spacedim>
   Point<spacedim>
-  get_new_point_on_object(const TriaAccessor<3, dim, spacedim> &obj)
+  get_new_point_on_object(const TriaAccessor<3, dim, spacedim>& obj)
   {
     TriaIterator<TriaAccessor<3, dim, spacedim>> it(obj);
     return obj.get_manifold().get_new_point_on_hex(it);
@@ -1401,7 +1401,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   Point<spacedim>
-  get_new_point_on_object(const TriaAccessor<structdim, dim, spacedim> &obj,
+  get_new_point_on_object(const TriaAccessor<structdim, dim, spacedim>& obj,
                           const bool use_interpolation)
   {
     if (use_interpolation)
@@ -1442,7 +1442,7 @@ const unsigned int
 template <int structdim, int dim, int spacedim>
 void
 TriaAccessor<structdim, dim, spacedim>::set(
-  const internal::TriangulationImplementation::TriaObject<structdim> &object)
+  const internal::TriangulationImplementation::TriaObject<structdim>& object)
   const
 {
   this->objects().cells[this->present_index] = object;
@@ -1481,7 +1481,7 @@ TriaAccessor<structdim, dim, spacedim>::bounding_box() const
 
   for (unsigned int v = 1; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     {
-      const Point<spacedim> &x = this->vertex(v);
+      const Point<spacedim>& x = this->vertex(v);
       for (unsigned int k = 0; k < spacedim; ++k)
         {
           boundary_points.first[k]  = std::min(boundary_points.first[k], x[k]);
@@ -1604,7 +1604,7 @@ TriaAccessor<3, 3, 3>::set_all_manifold_ids(
 template <int structdim, int dim, int spacedim>
 Point<spacedim>
 TriaAccessor<structdim, dim, spacedim>::intermediate_point(
-  const Point<structdim> &coordinates) const
+  const Point<structdim>& coordinates) const
 {
   // Surrounding points and weights.
   std::array<Point<spacedim>, GeometryInfo<structdim>::vertices_per_cell> p;
@@ -1722,7 +1722,7 @@ namespace
 template <int structdim, int dim, int spacedim>
 Point<structdim>
 TriaAccessor<structdim, dim, spacedim>::real_to_unit_cell_affine_approximation(
-  const Point<spacedim> &point) const
+  const Point<spacedim>& point) const
 {
   // A = vertex * KA
   DerivativeForm<1, structdim, spacedim> A;
@@ -1774,7 +1774,7 @@ TriaAccessor<structdim, dim, spacedim>::center(
 
 template <>
 bool
-CellAccessor<1>::point_inside(const Point<1> &p) const
+CellAccessor<1>::point_inside(const Point<1>& p) const
 {
   return (this->vertex(0)[0] <= p[0]) && (p[0] <= this->vertex(1)[0]);
 }
@@ -1787,7 +1787,7 @@ CellAccessor<1>::point_inside(const Point<1> &p) const
 
 template <>
 bool
-CellAccessor<2>::point_inside(const Point<2> &p) const
+CellAccessor<2>::point_inside(const Point<2>& p) const
 {
   // we check whether the point is
   // inside the cell by making sure
@@ -1849,7 +1849,7 @@ CellAccessor<2>::point_inside(const Point<2> &p) const
 
 template <>
 bool
-CellAccessor<3>::point_inside(const Point<3> &p) const
+CellAccessor<3>::point_inside(const Point<3>& p) const
 {
   // original implementation by Joerg
   // Weimar
@@ -1891,7 +1891,7 @@ CellAccessor<3>::point_inside(const Point<3> &p) const
         StaticMappingQ1<dim, spacedim>::mapping.transform_real_to_unit_cell(
           cell_iterator, p)));
     }
-  catch (const Mapping<dim, spacedim>::ExcTransformationFailed &)
+  catch (const Mapping<dim, spacedim>::ExcTransformationFailed&)
     {
       return false;
     }
@@ -1908,7 +1908,7 @@ CellAccessor<3>::point_inside(const Point<3> &p) const
 template <int dim, int spacedim>
 template <int dim_, int spacedim_>
 bool
-CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_> &p) const
+CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_>& p) const
 {
   const TriaRawIterator<CellAccessor<dim_, spacedim_>> cell_iterator(*this);
   const Point<dim_>                                    p_unit =
@@ -1922,7 +1922,7 @@ CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_> &p) const
 
 template <>
 bool
-CellAccessor<1, 2>::point_inside(const Point<2> &p) const
+CellAccessor<1, 2>::point_inside(const Point<2>& p) const
 {
   return point_inside_codim<1, 2>(p);
 }
@@ -1930,7 +1930,7 @@ CellAccessor<1, 2>::point_inside(const Point<2> &p) const
 
 template <>
 bool
-CellAccessor<1, 3>::point_inside(const Point<3> &p) const
+CellAccessor<1, 3>::point_inside(const Point<3>& p) const
 {
   return point_inside_codim<1, 3>(p);
 }
@@ -1938,7 +1938,7 @@ CellAccessor<1, 3>::point_inside(const Point<3> &p) const
 
 template <>
 bool
-CellAccessor<2, 3>::point_inside(const Point<3> &p) const
+CellAccessor<2, 3>::point_inside(const Point<3>& p) const
 {
   return point_inside_codim<2, 3>(p);
 }
@@ -2157,7 +2157,7 @@ template <int dim, int spacedim>
 void
 CellAccessor<dim, spacedim>::set_neighbor(
   const unsigned int                               i,
-  const TriaIterator<CellAccessor<dim, spacedim>> &pointer) const
+  const TriaIterator<CellAccessor<dim, spacedim>>& pointer) const
 {
   AssertIndexRange(i, GeometryInfo<dim>::faces_per_cell);
 

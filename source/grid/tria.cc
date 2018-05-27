@@ -130,7 +130,7 @@ namespace
   template <int dim, int spacedim>
   bool
   cell_is_patch_level_1(
-    const TriaIterator<dealii::CellAccessor<dim, spacedim>> &cell)
+    const TriaIterator<dealii::CellAccessor<dim, spacedim>>& cell)
   {
     Assert(cell->active() == false, ExcInternalError());
 
@@ -153,7 +153,7 @@ namespace
   template <int dim, int spacedim>
   bool
   cell_will_be_coarsened(
-    const TriaIterator<dealii::CellAccessor<dim, spacedim>> &cell)
+    const TriaIterator<dealii::CellAccessor<dim, spacedim>>& cell)
   {
     // only cells with children should be
     // considered for coarsening
@@ -210,9 +210,9 @@ namespace
   template <int dim, int spacedim>
   bool
   face_will_be_refined_by_neighbor_internal(
-    const TriaIterator<dealii::CellAccessor<dim, spacedim>> &cell,
+    const TriaIterator<dealii::CellAccessor<dim, spacedim>>& cell,
     const unsigned int                                       face_no,
-    RefinementCase<dim - 1> &expected_face_ref_case)
+    RefinementCase<dim - 1>& expected_face_ref_case)
   {
     // first of all: set the default value for
     // expected_face_ref_case, which is no
@@ -359,7 +359,7 @@ namespace
   template <int dim, int spacedim>
   bool
   face_will_be_refined_by_neighbor(
-    const TriaIterator<dealii::CellAccessor<dim, spacedim>> &cell,
+    const TriaIterator<dealii::CellAccessor<dim, spacedim>>& cell,
     const unsigned int                                       face_no)
   {
     RefinementCase<dim - 1> dummy = RefinementCase<dim - 1>::no_refinement;
@@ -373,9 +373,9 @@ namespace
   template <int dim, int spacedim>
   bool
   face_will_be_refined_by_neighbor(
-    const TriaActiveIterator<dealii::CellAccessor<dim, spacedim>> &cell,
+    const TriaActiveIterator<dealii::CellAccessor<dim, spacedim>>& cell,
     const unsigned int                                             face_no,
-    RefinementCase<dim - 1> &expected_face_ref_case)
+    RefinementCase<dim - 1>& expected_face_ref_case)
   {
     return face_will_be_refined_by_neighbor_internal(
       cell, face_no, expected_face_ref_case);
@@ -386,7 +386,7 @@ namespace
   template <int dim, int spacedim>
   bool
   satisfies_level1_at_vertex_rule(
-    const Triangulation<dim, spacedim> &triangulation)
+    const Triangulation<dim, spacedim>& triangulation)
   {
     std::vector<unsigned int> min_adjacent_cell_level(
       triangulation.n_vertices(), triangulation.n_levels());
@@ -424,7 +424,7 @@ namespace
    */
   template <int dim, int spacedim>
   std::vector<unsigned int>
-  count_cells_bounded_by_line(const Triangulation<dim, spacedim> &triangulation)
+  count_cells_bounded_by_line(const Triangulation<dim, spacedim>& triangulation)
   {
     if (dim >= 2)
       {
@@ -452,7 +452,7 @@ namespace
    */
   template <int dim, int spacedim>
   std::vector<unsigned int>
-  count_cells_bounded_by_quad(const Triangulation<dim, spacedim> &triangulation)
+  count_cells_bounded_by_quad(const Triangulation<dim, spacedim>& triangulation)
   {
     if (dim >= 3)
       {
@@ -484,23 +484,23 @@ namespace
    * in-place.
    */
   void
-  reorder_compatibility(const std::vector<CellData<1>> &, const SubCellData &)
+  reorder_compatibility(const std::vector<CellData<1>>&, const SubCellData&)
   {
     // nothing to do here: the format
     // hasn't changed for 1d
   }
 
 
-  void reorder_compatibility(std::vector<CellData<2>> &cells,
-                             const SubCellData &)
+  void reorder_compatibility(std::vector<CellData<2>>& cells,
+                             const SubCellData&)
   {
     for (unsigned int cell = 0; cell < cells.size(); ++cell)
       std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
   }
 
 
-  void reorder_compatibility(std::vector<CellData<3>> &cells,
-                             SubCellData &             subcelldata)
+  void reorder_compatibility(std::vector<CellData<3>>& cells,
+                             SubCellData&              subcelldata)
   {
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
     for (unsigned int cell = 0; cell < cells.size(); ++cell)
@@ -543,7 +543,7 @@ namespace
   template <int dim, int spacedim>
   unsigned int
   middle_vertex_index(
-    const typename Triangulation<dim, spacedim>::line_iterator &line)
+    const typename Triangulation<dim, spacedim>::line_iterator& line)
   {
     if (line->has_children())
       return line->child(0)->vertex_index(1);
@@ -554,7 +554,7 @@ namespace
   template <int dim, int spacedim>
   unsigned int
   middle_vertex_index(
-    const typename Triangulation<dim, spacedim>::quad_iterator &quad)
+    const typename Triangulation<dim, spacedim>::quad_iterator& quad)
   {
     switch (static_cast<unsigned char>(quad->refinement_case()))
       {
@@ -577,7 +577,7 @@ namespace
   template <int dim, int spacedim>
   unsigned int
   middle_vertex_index(
-    const typename Triangulation<dim, spacedim>::hex_iterator &hex)
+    const typename Triangulation<dim, spacedim>::hex_iterator& hex)
   {
     switch (static_cast<unsigned char>(hex->refinement_case()))
       {
@@ -623,7 +623,7 @@ namespace
    */
   template <class TRIANGULATION>
   inline typename TRIANGULATION::DistortedCellList
-  collect_distorted_coarse_cells(const TRIANGULATION &)
+  collect_distorted_coarse_cells(const TRIANGULATION&)
   {
     return typename TRIANGULATION::DistortedCellList();
   }
@@ -640,7 +640,7 @@ namespace
    */
   template <int dim>
   inline typename Triangulation<dim, dim>::DistortedCellList
-  collect_distorted_coarse_cells(const Triangulation<dim, dim> &triangulation)
+  collect_distorted_coarse_cells(const Triangulation<dim, dim>& triangulation)
   {
     typename Triangulation<dim, dim>::DistortedCellList distorted_cells;
     for (typename Triangulation<dim, dim>::cell_iterator cell =
@@ -676,7 +676,7 @@ namespace
   template <int dim>
   bool
   has_distorted_children(
-    const typename Triangulation<dim, dim>::cell_iterator &cell,
+    const typename Triangulation<dim, dim>::cell_iterator& cell,
     std::integral_constant<int, dim>,
     std::integral_constant<int, dim>)
   {
@@ -711,7 +711,7 @@ namespace
   template <int dim, int spacedim>
   bool
   has_distorted_children(
-    const typename Triangulation<dim, spacedim>::cell_iterator &,
+    const typename Triangulation<dim, spacedim>::cell_iterator&,
     std::integral_constant<int, dim>,
     std::integral_constant<int, spacedim>)
   {
@@ -725,13 +725,13 @@ namespace
    * neighbor information on all cells.
    */
   template <int spacedim>
-  void update_neighbors(Triangulation<1, spacedim> &)
+  void update_neighbors(Triangulation<1, spacedim>&)
   {}
 
 
   template <int dim, int spacedim>
   void
-  update_neighbors(Triangulation<dim, spacedim> &triangulation)
+  update_neighbors(Triangulation<dim, spacedim>& triangulation)
   {
     // each face can be neighbored on two sides
     // by cells. according to the face's
@@ -907,17 +907,17 @@ namespace
   template <int dim, int spacedim>
   void
   update_periodic_face_map_recursively(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell_1,
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell_2,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell_1,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell_2,
     unsigned int                                                n_face_1,
     unsigned int                                                n_face_2,
-    const std::bitset<3> &                                      orientation,
+    const std::bitset<3>&                                       orientation,
     typename std::map<
       std::pair<typename Triangulation<dim, spacedim>::cell_iterator,
                 unsigned int>,
       std::pair<std::pair<typename Triangulation<dim, spacedim>::cell_iterator,
                           unsigned int>,
-                std::bitset<3>>> &periodic_face_map)
+                std::bitset<3>>>& periodic_face_map)
   {
     typedef typename Triangulation<dim, spacedim>::face_iterator FaceIterator;
     const FaceIterator face_1 = cell_1->face(n_face_1);
@@ -1362,9 +1362,9 @@ namespace internal
       template <int dim, int spacedim>
       static void
       compute_number_cache(
-        const Triangulation<dim, spacedim> &                   triangulation,
+        const Triangulation<dim, spacedim>&                    triangulation,
         const unsigned int                                     level_objects,
-        internal::TriangulationImplementation::NumberCache<1> &number_cache)
+        internal::TriangulationImplementation::NumberCache<1>& number_cache)
       {
         typedef
           typename Triangulation<dim, spacedim>::line_iterator line_iterator;
@@ -1450,21 +1450,21 @@ namespace internal
       template <int dim, int spacedim>
       static void
       compute_number_cache(
-        const Triangulation<dim, spacedim> &                   triangulation,
+        const Triangulation<dim, spacedim>&                    triangulation,
         const unsigned int                                     level_objects,
-        internal::TriangulationImplementation::NumberCache<2> &number_cache)
+        internal::TriangulationImplementation::NumberCache<2>& number_cache)
       {
         // update lines and n_levels in number_cache. since we don't
         // access any of these numbers, we can do this in the
         // background
         Threads::Task<void> update_lines = Threads::new_task(
-          (void (*)(const Triangulation<dim, spacedim> &,
+          (void (*)(const Triangulation<dim, spacedim>&,
                     const unsigned int,
-                    internal::TriangulationImplementation::NumberCache<1> &))(
+                    internal::TriangulationImplementation::NumberCache<1>&))(
             &compute_number_cache<dim, spacedim>),
           triangulation,
           level_objects,
-          static_cast<internal::TriangulationImplementation::NumberCache<1> &>(
+          static_cast<internal::TriangulationImplementation::NumberCache<1>&>(
             number_cache));
 
         typedef
@@ -1556,21 +1556,21 @@ namespace internal
       template <int dim, int spacedim>
       static void
       compute_number_cache(
-        const Triangulation<dim, spacedim> &                   triangulation,
+        const Triangulation<dim, spacedim>&                    triangulation,
         const unsigned int                                     level_objects,
-        internal::TriangulationImplementation::NumberCache<3> &number_cache)
+        internal::TriangulationImplementation::NumberCache<3>& number_cache)
       {
         // update quads, lines and n_levels in number_cache. since we
         // don't access any of these numbers, we can do this in the
         // background
         Threads::Task<void> update_quads_and_lines = Threads::new_task(
-          (void (*)(const Triangulation<dim, spacedim> &,
+          (void (*)(const Triangulation<dim, spacedim>&,
                     const unsigned int,
-                    internal::TriangulationImplementation::NumberCache<2> &))(
+                    internal::TriangulationImplementation::NumberCache<2>&))(
             &compute_number_cache<dim, spacedim>),
           triangulation,
           level_objects,
-          static_cast<internal::TriangulationImplementation::NumberCache<2> &>(
+          static_cast<internal::TriangulationImplementation::NumberCache<2>&>(
             number_cache));
 
         typedef
@@ -1654,10 +1654,10 @@ namespace internal
        */
       template <int spacedim>
       static void
-      create_triangulation(const std::vector<Point<spacedim>> &v,
-                           const std::vector<CellData<1>> &    cells,
-                           const SubCellData & /*subcelldata*/,
-                           Triangulation<1, spacedim> &triangulation)
+      create_triangulation(const std::vector<Point<spacedim>>& v,
+                           const std::vector<CellData<1>>&     cells,
+                           const SubCellData& /*subcelldata*/,
+                           Triangulation<1, spacedim>& triangulation)
       {
         AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
         AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
@@ -1863,10 +1863,10 @@ namespace internal
        */
       template <int spacedim>
       static void
-      create_triangulation(const std::vector<Point<spacedim>> &v,
-                           const std::vector<CellData<2>> &    cells,
-                           const SubCellData &                 subcelldata,
-                           Triangulation<2, spacedim> &        triangulation)
+      create_triangulation(const std::vector<Point<spacedim>>& v,
+                           const std::vector<CellData<2>>&     cells,
+                           const SubCellData&                  subcelldata,
+                           Triangulation<2, spacedim>&         triangulation)
       {
         AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
         AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
@@ -2230,8 +2230,8 @@ namespace internal
       {
         inline bool
         operator()(
-          const internal::TriangulationImplementation::TriaObject<2> &q1,
-          const internal::TriangulationImplementation::TriaObject<2> &q2) const
+          const internal::TriangulationImplementation::TriaObject<2>& q1,
+          const internal::TriangulationImplementation::TriaObject<2>& q2) const
         {
           // here is room to
           // optimize the repeated
@@ -2262,10 +2262,10 @@ namespace internal
        */
       template <int spacedim>
       static void
-      create_triangulation(const std::vector<Point<spacedim>> &v,
-                           const std::vector<CellData<3>> &    cells,
-                           const SubCellData &                 subcelldata,
-                           Triangulation<3, spacedim> &        triangulation)
+      create_triangulation(const std::vector<Point<spacedim>>& v,
+                           const std::vector<CellData<3>>&     cells,
+                           const SubCellData&                  subcelldata,
+                           Triangulation<3, spacedim>&         triangulation)
       {
         AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
         AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
@@ -3310,10 +3310,10 @@ namespace internal
        */
       template <int spacedim>
       static void delete_children(
-        Triangulation<1, spacedim> &                        triangulation,
-        typename Triangulation<1, spacedim>::cell_iterator &cell,
-        std::vector<unsigned int> &,
-        std::vector<unsigned int> &)
+        Triangulation<1, spacedim>&                         triangulation,
+        typename Triangulation<1, spacedim>::cell_iterator& cell,
+        std::vector<unsigned int>&,
+        std::vector<unsigned int>&)
       {
         const unsigned int dim = 1;
 
@@ -3414,10 +3414,10 @@ namespace internal
 
       template <int spacedim>
       static void delete_children(
-        Triangulation<2, spacedim> &                        triangulation,
-        typename Triangulation<2, spacedim>::cell_iterator &cell,
-        std::vector<unsigned int> &                         line_cell_count,
-        std::vector<unsigned int> &)
+        Triangulation<2, spacedim>&                         triangulation,
+        typename Triangulation<2, spacedim>::cell_iterator& cell,
+        std::vector<unsigned int>&                          line_cell_count,
+        std::vector<unsigned int>&)
       {
         const unsigned int        dim      = 2;
         const RefinementCase<dim> ref_case = cell->refinement_case();
@@ -3552,10 +3552,10 @@ namespace internal
 
       template <int spacedim>
       static void delete_children(
-        Triangulation<3, spacedim> &                        triangulation,
-        typename Triangulation<3, spacedim>::cell_iterator &cell,
-        std::vector<unsigned int> &                         line_cell_count,
-        std::vector<unsigned int> &                         quad_cell_count)
+        Triangulation<3, spacedim>&                         triangulation,
+        typename Triangulation<3, spacedim>::cell_iterator& cell,
+        std::vector<unsigned int>&                          line_cell_count,
+        std::vector<unsigned int>&                          quad_cell_count)
       {
         const unsigned int dim = 3;
 
@@ -4186,13 +4186,13 @@ namespace internal
        */
       template <int spacedim>
       static void create_children(
-        Triangulation<2, spacedim> &triangulation,
-        unsigned int &              next_unused_vertex,
-        typename Triangulation<2, spacedim>::raw_line_iterator
-          &next_unused_line,
-        typename Triangulation<2, spacedim>::raw_cell_iterator
-          &                                                 next_unused_cell,
-        typename Triangulation<2, spacedim>::cell_iterator &cell)
+        Triangulation<2, spacedim>& triangulation,
+        unsigned int&               next_unused_vertex,
+        typename Triangulation<2, spacedim>::raw_line_iterator&
+          next_unused_line,
+        typename Triangulation<2, spacedim>::raw_cell_iterator&
+                                                            next_unused_cell,
+        typename Triangulation<2, spacedim>::cell_iterator& cell)
       {
         const unsigned int dim = 2;
         // clear refinement flag
@@ -4628,7 +4628,7 @@ namespace internal
        */
       template <int spacedim>
       static typename Triangulation<1, spacedim>::DistortedCellList
-        execute_refinement(Triangulation<1, spacedim> &triangulation,
+        execute_refinement(Triangulation<1, spacedim>& triangulation,
                            const bool /*check_for_distorted_cells*/)
       {
         const unsigned int dim = 1;
@@ -4873,7 +4873,7 @@ namespace internal
        */
       template <int spacedim>
       static typename Triangulation<2, spacedim>::DistortedCellList
-        execute_refinement(Triangulation<2, spacedim> &triangulation,
+        execute_refinement(Triangulation<2, spacedim>& triangulation,
                            const bool check_for_distorted_cells)
       {
         const unsigned int dim = 2;
@@ -5250,7 +5250,7 @@ namespace internal
        */
       template <int spacedim>
       static typename Triangulation<3, spacedim>::DistortedCellList
-        execute_refinement(Triangulation<3, spacedim> &triangulation,
+        execute_refinement(Triangulation<3, spacedim>& triangulation,
                            const bool check_for_distorted_cells)
       {
         const unsigned int dim = 3;
@@ -9740,13 +9740,13 @@ namespace internal
        */
       template <int spacedim>
       static void
-      prevent_distorted_boundary_cells(const Triangulation<1, spacedim> &);
+      prevent_distorted_boundary_cells(const Triangulation<1, spacedim>&);
 
 
       template <int dim, int spacedim>
       static void
       prevent_distorted_boundary_cells(
-        Triangulation<dim, spacedim> &triangulation)
+        Triangulation<dim, spacedim>& triangulation)
       {
         // If the codimension is one, we cannot perform this check
         // yet.
@@ -9828,7 +9828,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       static void
-      prepare_refinement_dim_dependent(const Triangulation<dim, spacedim> &)
+      prepare_refinement_dim_dependent(const Triangulation<dim, spacedim>&)
       {
         Assert(dim < 3,
                ExcMessage("Wrong function called -- there should "
@@ -9838,7 +9838,7 @@ namespace internal
 
       template <int spacedim>
       static void prepare_refinement_dim_dependent(
-        Triangulation<3, spacedim> &triangulation)
+        Triangulation<3, spacedim>& triangulation)
       {
         const unsigned int dim = 3;
 
@@ -10039,7 +10039,7 @@ namespace internal
       template <int dim, int spacedim>
       static bool
       coarsening_allowed(
-        const typename Triangulation<dim, spacedim>::cell_iterator &cell)
+        const typename Triangulation<dim, spacedim>::cell_iterator& cell)
       {
         // in 1d, coarsening is always allowed since we don't enforce
         // the 2:1 constraint there
@@ -10103,7 +10103,7 @@ namespace internal
 
 
     template <int dim, int spacedim>
-    const Manifold<dim, spacedim> &
+    const Manifold<dim, spacedim>&
     get_default_flat_manifold()
     {
       static const FlatManifold<dim, spacedim> flat_manifold;
@@ -10146,7 +10146,7 @@ Triangulation<dim, spacedim>::Triangulation(
 
 template <int dim, int spacedim>
 Triangulation<dim, spacedim>::Triangulation(
-  Triangulation<dim, spacedim> &&tria) noexcept :
+  Triangulation<dim, spacedim>&& tria) noexcept :
   Subscriptor(std::move(tria)),
   smooth_grid(tria.smooth_grid),
   periodic_face_pairs_level_0(std::move(tria.periodic_face_pairs_level_0)),
@@ -10167,9 +10167,9 @@ Triangulation<dim, spacedim>::Triangulation(
 
 
 template <int dim, int spacedim>
-Triangulation<dim, spacedim> &
+Triangulation<dim, spacedim>&
 Triangulation<dim, spacedim>::
-operator=(Triangulation<dim, spacedim> &&tria) noexcept
+operator=(Triangulation<dim, spacedim>&& tria) noexcept
 {
   Subscriptor::operator=(std::move(tria));
 
@@ -10249,7 +10249,7 @@ Triangulation<dim, spacedim>::set_mesh_smoothing(
 
 
 template <int dim, int spacedim>
-const typename Triangulation<dim, spacedim>::MeshSmoothing &
+const typename Triangulation<dim, spacedim>::MeshSmoothing&
 Triangulation<dim, spacedim>::get_mesh_smoothing() const
 {
   return smooth_grid;
@@ -10261,7 +10261,7 @@ template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::set_manifold(
   const types::manifold_id       m_number,
-  const Manifold<dim, spacedim> &manifold_object)
+  const Manifold<dim, spacedim>& manifold_object)
 {
   Assert(m_number < numbers::invalid_manifold_id,
          ExcIndexRange(m_number, 0, numbers::invalid_manifold_id));
@@ -10384,7 +10384,7 @@ Triangulation<dim, spacedim>::set_all_manifold_ids_on_boundary(
 
 
 template <int dim, int spacedim>
-const Manifold<dim, spacedim> &
+const Manifold<dim, spacedim>&
 Triangulation<dim, spacedim>::get_manifold(
   const types::manifold_id m_number) const
 {
@@ -10465,7 +10465,7 @@ Triangulation<dim, spacedim>::get_manifold_ids() const
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::copy_triangulation(
-  const Triangulation<dim, spacedim> &other_tria)
+  const Triangulation<dim, spacedim>& other_tria)
 {
   Assert((vertices.size() == 0) && (levels.size() == 0) && (faces == nullptr),
          ExcTriangulationNotEmpty(vertices.size(), levels.size()));
@@ -10528,9 +10528,9 @@ Triangulation<dim, spacedim>::copy_triangulation(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::create_triangulation_compatibility(
-  const std::vector<Point<spacedim>> &v,
-  const std::vector<CellData<dim>> &  cells,
-  const SubCellData &                 subcelldata)
+  const std::vector<Point<spacedim>>& v,
+  const std::vector<CellData<dim>>&   cells,
+  const SubCellData&                  subcelldata)
 {
   std::vector<CellData<dim>> reordered_cells(cells);             // NOLINT
   SubCellData                reordered_subcelldata(subcelldata); // NOLINT
@@ -10548,9 +10548,9 @@ Triangulation<dim, spacedim>::create_triangulation_compatibility(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::create_triangulation(
-  const std::vector<Point<spacedim>> &v,
-  const std::vector<CellData<dim>> &  cells,
-  const SubCellData &                 subcelldata)
+  const std::vector<Point<spacedim>>& v,
+  const std::vector<CellData<dim>>&   cells,
+  const SubCellData&                  subcelldata)
 {
   Assert((vertices.size() == 0) && (levels.size() == 0) && (faces == nullptr),
          ExcTriangulationNotEmpty(vertices.size(), levels.size()));
@@ -10781,7 +10781,7 @@ Triangulation<dim, spacedim>::refine_global(const unsigned int times)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_refine_flags(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_refine_flags(std::vector<bool>& v) const
 {
   v.resize(dim * n_active_cells(), false);
   std::vector<bool>::iterator i    = v.begin();
@@ -10798,7 +10798,7 @@ Triangulation<dim, spacedim>::save_refine_flags(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_refine_flags(std::ostream &out) const
+Triangulation<dim, spacedim>::save_refine_flags(std::ostream& out) const
 {
   std::vector<bool> v;
   save_refine_flags(v);
@@ -10810,7 +10810,7 @@ Triangulation<dim, spacedim>::save_refine_flags(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_refine_flags(std::istream &in)
+Triangulation<dim, spacedim>::load_refine_flags(std::istream& in)
 {
   std::vector<bool> v;
   read_bool_vector(mn_tria_refine_flags_begin, v, mn_tria_refine_flags_end, in);
@@ -10821,7 +10821,7 @@ Triangulation<dim, spacedim>::load_refine_flags(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_refine_flags(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_refine_flags(const std::vector<bool>& v)
 {
   AssertThrow(v.size() == dim * n_active_cells(), ExcGridReadError());
 
@@ -10849,7 +10849,7 @@ Triangulation<dim, spacedim>::load_refine_flags(const std::vector<bool> &v)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_coarsen_flags(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_coarsen_flags(std::vector<bool>& v) const
 {
   v.resize(n_active_cells(), false);
   std::vector<bool>::iterator i    = v.begin();
@@ -10864,7 +10864,7 @@ Triangulation<dim, spacedim>::save_coarsen_flags(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_coarsen_flags(std::ostream &out) const
+Triangulation<dim, spacedim>::save_coarsen_flags(std::ostream& out) const
 {
   std::vector<bool> v;
   save_coarsen_flags(v);
@@ -10876,7 +10876,7 @@ Triangulation<dim, spacedim>::save_coarsen_flags(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_coarsen_flags(std::istream &in)
+Triangulation<dim, spacedim>::load_coarsen_flags(std::istream& in)
 {
   std::vector<bool> v;
   read_bool_vector(
@@ -10888,7 +10888,7 @@ Triangulation<dim, spacedim>::load_coarsen_flags(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_coarsen_flags(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_coarsen_flags(const std::vector<bool>& v)
 {
   Assert(v.size() == n_active_cells(), ExcGridReadError());
 
@@ -10923,8 +10923,8 @@ namespace
   void
   clear_user_data(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>>
-      &levels)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>>&
+      levels)
   {
     for (unsigned int level = 0; level < levels.size(); ++level)
       levels[level]->cells.clear_user_data();
@@ -10932,21 +10932,21 @@ namespace
 
 
   // clear user data of faces
-  void clear_user_data(internal::TriangulationImplementation::TriaFaces<1> *)
+  void clear_user_data(internal::TriangulationImplementation::TriaFaces<1>*)
   {
     // nothing to do in 1d
   }
 
 
   void
-    clear_user_data(internal::TriangulationImplementation::TriaFaces<2> *faces)
+    clear_user_data(internal::TriangulationImplementation::TriaFaces<2>* faces)
   {
     faces->lines.clear_user_data();
   }
 
 
   void
-    clear_user_data(internal::TriangulationImplementation::TriaFaces<3> *faces)
+    clear_user_data(internal::TriangulationImplementation::TriaFaces<3>* faces)
   {
     faces->lines.clear_user_data();
     faces->quads.clear_user_data();
@@ -10968,10 +10968,9 @@ Triangulation<dim, spacedim>::clear_user_data()
 namespace
 {
   void clear_user_flags_line(
-    std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<1>>>
-      &levels,
-    internal::TriangulationImplementation::TriaFaces<1> *)
+    std::vector<std::unique_ptr<
+      internal::TriangulationImplementation::TriaLevel<1>>>& levels,
+    internal::TriangulationImplementation::TriaFaces<1>*)
   {
     for (unsigned int level = 0; level < levels.size(); ++level)
       levels[level]->cells.clear_user_flags();
@@ -10981,8 +10980,8 @@ namespace
   void
   clear_user_flags_line(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>> &,
-    internal::TriangulationImplementation::TriaFaces<dim> *faces)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>>&,
+    internal::TriangulationImplementation::TriaFaces<dim>* faces)
   {
     faces->lines.clear_user_flags();
   }
@@ -11002,17 +11001,16 @@ namespace
 {
   void clear_user_flags_quad(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<1>>> &,
-    internal::TriangulationImplementation::TriaFaces<1> *)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<1>>>&,
+    internal::TriangulationImplementation::TriaFaces<1>*)
   {
     // nothing to do in 1d
   }
 
   void clear_user_flags_quad(
-    std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<2>>>
-      &levels,
-    internal::TriangulationImplementation::TriaFaces<2> *)
+    std::vector<std::unique_ptr<
+      internal::TriangulationImplementation::TriaLevel<2>>>& levels,
+    internal::TriangulationImplementation::TriaFaces<2>*)
   {
     for (unsigned int level = 0; level < levels.size(); ++level)
       levels[level]->cells.clear_user_flags();
@@ -11022,8 +11020,8 @@ namespace
   void
   clear_user_flags_quad(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>> &,
-    internal::TriangulationImplementation::TriaFaces<dim> *faces)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>>&,
+    internal::TriangulationImplementation::TriaFaces<dim>* faces)
   {
     faces->quads.clear_user_flags();
   }
@@ -11043,8 +11041,8 @@ namespace
 {
   void clear_user_flags_hex(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<1>>> &,
-    internal::TriangulationImplementation::TriaFaces<1> *)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<1>>>&,
+    internal::TriangulationImplementation::TriaFaces<1>*)
   {
     // nothing to do in 1d
   }
@@ -11052,17 +11050,16 @@ namespace
 
   void clear_user_flags_hex(
     std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<2>>> &,
-    internal::TriangulationImplementation::TriaFaces<2> *)
+      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<2>>>&,
+    internal::TriangulationImplementation::TriaFaces<2>*)
   {
     // nothing to do in 2d
   }
 
   void clear_user_flags_hex(
-    std::vector<
-      std::unique_ptr<internal::TriangulationImplementation::TriaLevel<3>>>
-      &levels,
-    internal::TriangulationImplementation::TriaFaces<3> *)
+    std::vector<std::unique_ptr<
+      internal::TriangulationImplementation::TriaLevel<3>>>& levels,
+    internal::TriangulationImplementation::TriaFaces<3>*)
   {
     for (unsigned int level = 0; level < levels.size(); ++level)
       levels[level]->cells.clear_user_flags();
@@ -11092,7 +11089,7 @@ Triangulation<dim, spacedim>::clear_user_flags()
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags(std::ostream &out) const
+Triangulation<dim, spacedim>::save_user_flags(std::ostream& out) const
 {
   save_user_flags_line(out);
 
@@ -11110,7 +11107,7 @@ Triangulation<dim, spacedim>::save_user_flags(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_user_flags(std::vector<bool>& v) const
 {
   // clear vector and append
   // all the stuff later on
@@ -11141,7 +11138,7 @@ Triangulation<dim, spacedim>::save_user_flags(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags(std::istream &in)
+Triangulation<dim, spacedim>::load_user_flags(std::istream& in)
 {
   load_user_flags_line(in);
 
@@ -11159,7 +11156,7 @@ Triangulation<dim, spacedim>::load_user_flags(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_user_flags(const std::vector<bool>& v)
 {
   Assert(v.size() == n_lines() + n_quads() + n_hexs(), ExcInternalError());
   std::vector<bool> tmp;
@@ -11195,7 +11192,7 @@ Triangulation<dim, spacedim>::load_user_flags(const std::vector<bool> &v)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_line(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_user_flags_line(std::vector<bool>& v) const
 {
   v.resize(n_lines(), false);
   std::vector<bool>::iterator i    = v.begin();
@@ -11210,7 +11207,7 @@ Triangulation<dim, spacedim>::save_user_flags_line(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_line(std::ostream &out) const
+Triangulation<dim, spacedim>::save_user_flags_line(std::ostream& out) const
 {
   std::vector<bool> v;
   save_user_flags_line(v);
@@ -11222,7 +11219,7 @@ Triangulation<dim, spacedim>::save_user_flags_line(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_line(std::istream &in)
+Triangulation<dim, spacedim>::load_user_flags_line(std::istream& in)
 {
   std::vector<bool> v;
   read_bool_vector(
@@ -11234,7 +11231,7 @@ Triangulation<dim, spacedim>::load_user_flags_line(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_line(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_user_flags_line(const std::vector<bool>& v)
 {
   Assert(v.size() == n_lines(), ExcGridReadError());
 
@@ -11254,7 +11251,7 @@ namespace
 {
   template <typename Iterator>
   bool
-  get_user_flag(const Iterator &i)
+  get_user_flag(const Iterator& i)
   {
     return i->user_flag_set();
   }
@@ -11263,7 +11260,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   bool
-  get_user_flag(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &)
+  get_user_flag(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&)
   {
     Assert(false, ExcInternalError());
     return false;
@@ -11273,7 +11270,7 @@ namespace
 
   template <typename Iterator>
   void
-  set_user_flag(const Iterator &i)
+  set_user_flag(const Iterator& i)
   {
     i->set_user_flag();
   }
@@ -11282,7 +11279,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   void
-  set_user_flag(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &)
+  set_user_flag(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&)
   {
     Assert(false, ExcInternalError());
   }
@@ -11291,7 +11288,7 @@ namespace
 
   template <typename Iterator>
   void
-  clear_user_flag(const Iterator &i)
+  clear_user_flag(const Iterator& i)
   {
     i->clear_user_flag();
   }
@@ -11301,7 +11298,7 @@ namespace
   template <int structdim, int dim, int spacedim>
   void
   clear_user_flag(
-    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &)
+    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&)
   {
     Assert(false, ExcInternalError());
   }
@@ -11310,7 +11307,7 @@ namespace
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_quad(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_user_flags_quad(std::vector<bool>& v) const
 {
   v.resize(n_quads(), false);
 
@@ -11329,7 +11326,7 @@ Triangulation<dim, spacedim>::save_user_flags_quad(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_quad(std::ostream &out) const
+Triangulation<dim, spacedim>::save_user_flags_quad(std::ostream& out) const
 {
   std::vector<bool> v;
   save_user_flags_quad(v);
@@ -11341,7 +11338,7 @@ Triangulation<dim, spacedim>::save_user_flags_quad(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_quad(std::istream &in)
+Triangulation<dim, spacedim>::load_user_flags_quad(std::istream& in)
 {
   std::vector<bool> v;
   read_bool_vector(
@@ -11353,7 +11350,7 @@ Triangulation<dim, spacedim>::load_user_flags_quad(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_quad(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_user_flags_quad(const std::vector<bool>& v)
 {
   Assert(v.size() == n_quads(), ExcGridReadError());
 
@@ -11375,7 +11372,7 @@ Triangulation<dim, spacedim>::load_user_flags_quad(const std::vector<bool> &v)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_hex(std::vector<bool> &v) const
+Triangulation<dim, spacedim>::save_user_flags_hex(std::vector<bool>& v) const
 {
   v.resize(n_hexs(), false);
 
@@ -11394,7 +11391,7 @@ Triangulation<dim, spacedim>::save_user_flags_hex(std::vector<bool> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_flags_hex(std::ostream &out) const
+Triangulation<dim, spacedim>::save_user_flags_hex(std::ostream& out) const
 {
   std::vector<bool> v;
   save_user_flags_hex(v);
@@ -11406,7 +11403,7 @@ Triangulation<dim, spacedim>::save_user_flags_hex(std::ostream &out) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_hex(std::istream &in)
+Triangulation<dim, spacedim>::load_user_flags_hex(std::istream& in)
 {
   std::vector<bool> v;
   read_bool_vector(
@@ -11418,7 +11415,7 @@ Triangulation<dim, spacedim>::load_user_flags_hex(std::istream &in)
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_flags_hex(const std::vector<bool> &v)
+Triangulation<dim, spacedim>::load_user_flags_hex(const std::vector<bool>& v)
 {
   Assert(v.size() == n_hexs(), ExcGridReadError());
 
@@ -11441,7 +11438,7 @@ Triangulation<dim, spacedim>::load_user_flags_hex(const std::vector<bool> &v)
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_indices(
-  std::vector<unsigned int> &v) const
+  std::vector<unsigned int>& v) const
 {
   // clear vector and append all the
   // stuff later on
@@ -11473,7 +11470,7 @@ Triangulation<dim, spacedim>::save_user_indices(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_indices(
-  const std::vector<unsigned int> &v)
+  const std::vector<unsigned int>& v)
 {
   Assert(v.size() == n_lines() + n_quads() + n_hexs(), ExcInternalError());
   std::vector<unsigned int> tmp;
@@ -11511,7 +11508,7 @@ namespace
 {
   template <typename Iterator>
   unsigned int
-  get_user_index(const Iterator &i)
+  get_user_index(const Iterator& i)
   {
     return i->user_index();
   }
@@ -11520,8 +11517,7 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   unsigned int
-  get_user_index(
-    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &)
+  get_user_index(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&)
   {
     Assert(false, ExcInternalError());
     return numbers::invalid_unsigned_int;
@@ -11531,7 +11527,7 @@ namespace
 
   template <typename Iterator>
   void
-  set_user_index(const Iterator &i, const unsigned int x)
+  set_user_index(const Iterator& i, const unsigned int x)
   {
     i->set_user_index(x);
   }
@@ -11540,9 +11536,8 @@ namespace
 
   template <int structdim, int dim, int spacedim>
   void
-  set_user_index(
-    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &,
-    const unsigned int)
+  set_user_index(const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&,
+                 const unsigned int)
   {
     Assert(false, ExcInternalError());
   }
@@ -11552,7 +11547,7 @@ namespace
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_indices_line(
-  std::vector<unsigned int> &v) const
+  std::vector<unsigned int>& v) const
 {
   v.resize(n_lines(), 0);
   std::vector<unsigned int>::iterator i    = v.begin();
@@ -11566,7 +11561,7 @@ Triangulation<dim, spacedim>::save_user_indices_line(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_indices_line(
-  const std::vector<unsigned int> &v)
+  const std::vector<unsigned int>& v)
 {
   Assert(v.size() == n_lines(), ExcGridReadError());
 
@@ -11580,7 +11575,7 @@ Triangulation<dim, spacedim>::load_user_indices_line(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_indices_quad(
-  std::vector<unsigned int> &v) const
+  std::vector<unsigned int>& v) const
 {
   v.resize(n_quads(), 0);
 
@@ -11598,7 +11593,7 @@ Triangulation<dim, spacedim>::save_user_indices_quad(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_indices_quad(
-  const std::vector<unsigned int> &v)
+  const std::vector<unsigned int>& v)
 {
   Assert(v.size() == n_quads(), ExcGridReadError());
 
@@ -11615,7 +11610,7 @@ Triangulation<dim, spacedim>::load_user_indices_quad(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_indices_hex(
-  std::vector<unsigned int> &v) const
+  std::vector<unsigned int>& v) const
 {
   v.resize(n_hexs(), 0);
 
@@ -11633,7 +11628,7 @@ Triangulation<dim, spacedim>::save_user_indices_hex(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_indices_hex(
-  const std::vector<unsigned int> &v)
+  const std::vector<unsigned int>& v)
 {
   Assert(v.size() == n_hexs(), ExcGridReadError());
 
@@ -11654,8 +11649,8 @@ Triangulation<dim, spacedim>::load_user_indices_hex(
 namespace
 {
   template <typename Iterator>
-  void *
-  get_user_pointer(const Iterator &i)
+  void*
+  get_user_pointer(const Iterator& i)
   {
     return i->user_pointer();
   }
@@ -11663,9 +11658,9 @@ namespace
 
 
   template <int structdim, int dim, int spacedim>
-  void *
+  void*
   get_user_pointer(
-    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &)
+    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&)
   {
     Assert(false, ExcInternalError());
     return nullptr;
@@ -11675,7 +11670,7 @@ namespace
 
   template <typename Iterator>
   void
-  set_user_pointer(const Iterator &i, void *x)
+  set_user_pointer(const Iterator& i, void* x)
   {
     i->set_user_pointer(x);
   }
@@ -11685,8 +11680,8 @@ namespace
   template <int structdim, int dim, int spacedim>
   void
   set_user_pointer(
-    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>> &,
-    void *)
+    const TriaIterator<InvalidAccessor<structdim, dim, spacedim>>&,
+    void*)
   {
     Assert(false, ExcInternalError());
   }
@@ -11695,13 +11690,13 @@ namespace
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::save_user_pointers(std::vector<void *> &v) const
+Triangulation<dim, spacedim>::save_user_pointers(std::vector<void*>& v) const
 {
   // clear vector and append all the
   // stuff later on
   v.clear();
 
-  std::vector<void *> tmp;
+  std::vector<void*> tmp;
 
   save_user_pointers_line(tmp);
   v.insert(v.end(), tmp.begin(), tmp.end());
@@ -11726,10 +11721,10 @@ Triangulation<dim, spacedim>::save_user_pointers(std::vector<void *> &v) const
 
 template <int dim, int spacedim>
 void
-Triangulation<dim, spacedim>::load_user_pointers(const std::vector<void *> &v)
+Triangulation<dim, spacedim>::load_user_pointers(const std::vector<void*>& v)
 {
   Assert(v.size() == n_lines() + n_quads() + n_hexs(), ExcInternalError());
-  std::vector<void *> tmp;
+  std::vector<void*> tmp;
 
   // first extract the pointers
   // belonging to lines
@@ -11763,11 +11758,11 @@ Triangulation<dim, spacedim>::load_user_pointers(const std::vector<void *> &v)
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_pointers_line(
-  std::vector<void *> &v) const
+  std::vector<void*>& v) const
 {
   v.resize(n_lines(), nullptr);
-  std::vector<void *>::iterator i    = v.begin();
-  line_iterator                 line = begin_line(), endl = end_line();
+  std::vector<void*>::iterator i    = v.begin();
+  line_iterator                line = begin_line(), endl = end_line();
   for (; line != endl; ++line, ++i)
     *i = line->user_pointer();
 }
@@ -11777,12 +11772,12 @@ Triangulation<dim, spacedim>::save_user_pointers_line(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_pointers_line(
-  const std::vector<void *> &v)
+  const std::vector<void*>& v)
 {
   Assert(v.size() == n_lines(), ExcGridReadError());
 
-  line_iterator                       line = begin_line(), endl = end_line();
-  std::vector<void *>::const_iterator i = v.begin();
+  line_iterator                      line = begin_line(), endl = end_line();
+  std::vector<void*>::const_iterator i = v.begin();
   for (; line != endl; ++line, ++i)
     line->set_user_pointer(*i);
 }
@@ -11792,14 +11787,14 @@ Triangulation<dim, spacedim>::load_user_pointers_line(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_pointers_quad(
-  std::vector<void *> &v) const
+  std::vector<void*>& v) const
 {
   v.resize(n_quads(), nullptr);
 
   if (dim >= 2)
     {
-      std::vector<void *>::iterator i    = v.begin();
-      quad_iterator                 quad = begin_quad(), endq = end_quad();
+      std::vector<void*>::iterator i    = v.begin();
+      quad_iterator                quad = begin_quad(), endq = end_quad();
       for (; quad != endq; ++quad, ++i)
         *i = get_user_pointer(quad);
     }
@@ -11810,14 +11805,14 @@ Triangulation<dim, spacedim>::save_user_pointers_quad(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_pointers_quad(
-  const std::vector<void *> &v)
+  const std::vector<void*>& v)
 {
   Assert(v.size() == n_quads(), ExcGridReadError());
 
   if (dim >= 2)
     {
-      quad_iterator quad = begin_quad(), endq = end_quad();
-      std::vector<void *>::const_iterator i = v.begin();
+      quad_iterator                      quad = begin_quad(), endq = end_quad();
+      std::vector<void*>::const_iterator i = v.begin();
       for (; quad != endq; ++quad, ++i)
         set_user_pointer(quad, *i);
     }
@@ -11827,14 +11822,14 @@ Triangulation<dim, spacedim>::load_user_pointers_quad(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::save_user_pointers_hex(
-  std::vector<void *> &v) const
+  std::vector<void*>& v) const
 {
   v.resize(n_hexs(), nullptr);
 
   if (dim >= 3)
     {
-      std::vector<void *>::iterator i   = v.begin();
-      hex_iterator                  hex = begin_hex(), endh = end_hex();
+      std::vector<void*>::iterator i   = v.begin();
+      hex_iterator                 hex = begin_hex(), endh = end_hex();
       for (; hex != endh; ++hex, ++i)
         *i = get_user_pointer(hex);
     }
@@ -11845,14 +11840,14 @@ Triangulation<dim, spacedim>::save_user_pointers_hex(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::load_user_pointers_hex(
-  const std::vector<void *> &v)
+  const std::vector<void*>& v)
 {
   Assert(v.size() == n_hexs(), ExcGridReadError());
 
   if (dim >= 3)
     {
-      hex_iterator                        hex = begin_hex(), endh = end_hex();
-      std::vector<void *>::const_iterator i = v.begin();
+      hex_iterator                       hex = begin_hex(), endh = end_hex();
+      std::vector<void*>::const_iterator i = v.begin();
       for (; hex != endh; ++hex, ++i)
         set_user_pointer(hex, *i);
     }
@@ -11936,7 +11931,7 @@ Triangulation<dim, spacedim>::last() const
 
   // find the last raw iterator on
   // this level
-  raw_cell_iterator ri(const_cast<Triangulation<dim, spacedim> *>(this),
+  raw_cell_iterator ri(const_cast<Triangulation<dim, spacedim>*>(this),
                        level,
                        levels[level]->cells.cells.size() - 1);
 
@@ -11976,8 +11971,7 @@ template <int dim, int spacedim>
 typename Triangulation<dim, spacedim>::cell_iterator
 Triangulation<dim, spacedim>::end() const
 {
-  return cell_iterator(
-    const_cast<Triangulation<dim, spacedim> *>(this), -1, -1);
+  return cell_iterator(const_cast<Triangulation<dim, spacedim>*>(this), -1, -1);
 }
 
 
@@ -12142,7 +12136,7 @@ Triangulation<dim, spacedim>::begin_vertex() const
   else
     {
       vertex_iterator i = raw_vertex_iterator(
-        const_cast<Triangulation<dim, spacedim> *>(this), 0, 0);
+        const_cast<Triangulation<dim, spacedim>*>(this), 0, 0);
       if (i.state() != IteratorState::valid)
         return i;
       // This loop will end because every triangulation has used vertices.
@@ -12174,7 +12168,7 @@ Triangulation<dim, spacedim>::end_vertex() const
       return raw_vertex_iterator();
     }
   else
-    return raw_vertex_iterator(const_cast<Triangulation<dim, spacedim> *>(this),
+    return raw_vertex_iterator(const_cast<Triangulation<dim, spacedim>*>(this),
                                -1,
                                numbers::invalid_unsigned_int);
 }
@@ -12199,12 +12193,12 @@ Triangulation<dim, spacedim>::begin_raw_line(const unsigned int level) const
           return end_line();
 
         return raw_line_iterator(
-          const_cast<Triangulation<dim, spacedim> *>(this), level, 0);
+          const_cast<Triangulation<dim, spacedim>*>(this), level, 0);
 
       default:
         Assert(level == 0, ExcFacesHaveNoLevel());
         return raw_line_iterator(
-          const_cast<Triangulation<dim, spacedim> *>(this), 0, 0);
+          const_cast<Triangulation<dim, spacedim>*>(this), 0, 0);
     }
 }
 
@@ -12246,7 +12240,7 @@ typename Triangulation<dim, spacedim>::line_iterator
 Triangulation<dim, spacedim>::end_line() const
 {
   return raw_line_iterator(
-    const_cast<Triangulation<dim, spacedim> *>(this), -1, -1);
+    const_cast<Triangulation<dim, spacedim>*>(this), -1, -1);
 }
 
 
@@ -12272,7 +12266,7 @@ Triangulation<dim, spacedim>::begin_raw_quad(const unsigned int level) const
             return end_quad();
 
           return raw_quad_iterator(
-            const_cast<Triangulation<dim, spacedim> *>(this), level, 0);
+            const_cast<Triangulation<dim, spacedim>*>(this), level, 0);
         }
 
       case 3:
@@ -12280,7 +12274,7 @@ Triangulation<dim, spacedim>::begin_raw_quad(const unsigned int level) const
           Assert(level == 0, ExcFacesHaveNoLevel());
 
           return raw_quad_iterator(
-            const_cast<Triangulation<dim, spacedim> *>(this), 0, 0);
+            const_cast<Triangulation<dim, spacedim>*>(this), 0, 0);
         }
 
 
@@ -12329,7 +12323,7 @@ typename Triangulation<dim, spacedim>::quad_iterator
 Triangulation<dim, spacedim>::end_quad() const
 {
   return raw_quad_iterator(
-    const_cast<Triangulation<dim, spacedim> *>(this), -1, -1);
+    const_cast<Triangulation<dim, spacedim>*>(this), -1, -1);
 }
 
 
@@ -12355,7 +12349,7 @@ Triangulation<dim, spacedim>::begin_raw_hex(const unsigned int level) const
             return end_hex();
 
           return raw_hex_iterator(
-            const_cast<Triangulation<dim, spacedim> *>(this), level, 0);
+            const_cast<Triangulation<dim, spacedim>*>(this), level, 0);
         }
 
       default:
@@ -12403,7 +12397,7 @@ typename Triangulation<dim, spacedim>::hex_iterator
 Triangulation<dim, spacedim>::end_hex() const
 {
   return raw_hex_iterator(
-    const_cast<Triangulation<dim, spacedim> *>(this), -1, -1);
+    const_cast<Triangulation<dim, spacedim>*>(this), -1, -1);
 }
 
 
@@ -12416,7 +12410,7 @@ namespace internal
   namespace TriangulationImplementation
   {
     inline unsigned int
-    n_cells(const internal::TriangulationImplementation::NumberCache<1> &c)
+    n_cells(const internal::TriangulationImplementation::NumberCache<1>& c)
     {
       return c.n_lines;
     }
@@ -12424,14 +12418,14 @@ namespace internal
 
     inline unsigned int
     n_active_cells(
-      const internal::TriangulationImplementation::NumberCache<1> &c)
+      const internal::TriangulationImplementation::NumberCache<1>& c)
     {
       return c.n_active_lines;
     }
 
 
     inline unsigned int
-    n_cells(const internal::TriangulationImplementation::NumberCache<2> &c)
+    n_cells(const internal::TriangulationImplementation::NumberCache<2>& c)
     {
       return c.n_quads;
     }
@@ -12439,14 +12433,14 @@ namespace internal
 
     inline unsigned int
     n_active_cells(
-      const internal::TriangulationImplementation::NumberCache<2> &c)
+      const internal::TriangulationImplementation::NumberCache<2>& c)
     {
       return c.n_active_quads;
     }
 
 
     inline unsigned int
-    n_cells(const internal::TriangulationImplementation::NumberCache<3> &c)
+    n_cells(const internal::TriangulationImplementation::NumberCache<3>& c)
     {
       return c.n_hexes;
     }
@@ -12454,7 +12448,7 @@ namespace internal
 
     inline unsigned int
     n_active_cells(
-      const internal::TriangulationImplementation::NumberCache<3> &c)
+      const internal::TriangulationImplementation::NumberCache<3>& c)
     {
       return c.n_active_hexes;
     }
@@ -13066,7 +13060,7 @@ Triangulation<dim, spacedim>::n_used_vertices() const
 
 
 template <int dim, int spacedim>
-const std::vector<bool> &
+const std::vector<bool>&
 Triangulation<dim, spacedim>::get_used_vertices() const
 {
   return vertices_used;
@@ -13144,7 +13138,7 @@ Triangulation<dim, spacedim>::locally_owned_subdomain() const
 
 
 template <int dim, int spacedim>
-Triangulation<dim, spacedim> &
+Triangulation<dim, spacedim>&
 Triangulation<dim, spacedim>::get_triangulation()
 {
   return *this;
@@ -13153,7 +13147,7 @@ Triangulation<dim, spacedim>::get_triangulation()
 
 
 template <int dim, int spacedim>
-const Triangulation<dim, spacedim> &
+const Triangulation<dim, spacedim>&
 Triangulation<dim, spacedim>::get_triangulation() const
 {
   return *this;
@@ -13164,8 +13158,8 @@ Triangulation<dim, spacedim>::get_triangulation() const
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::add_periodicity(
-  const std::vector<GridTools::PeriodicFacePair<cell_iterator>>
-    &periodicity_vector)
+  const std::vector<GridTools::PeriodicFacePair<cell_iterator>>&
+    periodicity_vector)
 {
   periodic_face_pairs_level_0.insert(periodic_face_pairs_level_0.end(),
                                      periodicity_vector.begin(),
@@ -13182,7 +13176,7 @@ const typename std::map<
   std::pair<typename Triangulation<dim, spacedim>::cell_iterator, unsigned int>,
   std::pair<std::pair<typename Triangulation<dim, spacedim>::cell_iterator,
                       unsigned int>,
-            std::bitset<3>>> &
+            std::bitset<3>>>&
 Triangulation<dim, spacedim>::get_periodic_face_map() const
 {
   return periodic_face_map;
@@ -13716,7 +13710,7 @@ namespace
   template <int dim, int spacedim>
   void
   possibly_do_not_produce_unrefined_islands(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell)
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
     Assert(cell->has_children(), ExcInternalError());
 
@@ -13768,7 +13762,7 @@ namespace
   template <int dim, int spacedim>
   void
   possibly_refine_unrefined_island(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
     const bool allow_anisotropic_smoothing)
   {
     Assert(cell->has_children() == false, ExcInternalError());
@@ -14848,12 +14842,12 @@ template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::write_bool_vector(
   const unsigned int       magic_number1,
-  const std::vector<bool> &v,
+  const std::vector<bool>& v,
   const unsigned int       magic_number2,
-  std::ostream &           out)
+  std::ostream&            out)
 {
   const unsigned int N     = v.size();
-  unsigned char *    flags = new unsigned char[N / 8 + 1];
+  unsigned char*     flags = new unsigned char[N / 8 + 1];
   for (unsigned int i = 0; i < N / 8 + 1; ++i)
     flags[i] = 0;
 
@@ -14882,9 +14876,9 @@ Triangulation<dim, spacedim>::write_bool_vector(
 template <int dim, int spacedim>
 void
 Triangulation<dim, spacedim>::read_bool_vector(const unsigned int magic_number1,
-                                               std::vector<bool> &v,
+                                               std::vector<bool>& v,
                                                const unsigned int magic_number2,
-                                               std::istream &     in)
+                                               std::istream&      in)
 {
   AssertThrow(in, ExcIO());
 
@@ -14896,7 +14890,7 @@ Triangulation<dim, spacedim>::read_bool_vector(const unsigned int magic_number1,
   in >> N;
   v.resize(N);
 
-  unsigned char *    flags = new unsigned char[N / 8 + 1];
+  unsigned char*     flags = new unsigned char[N / 8 + 1];
   unsigned short int tmp;
   for (unsigned int i = 0; i < N / 8 + 1; ++i)
     {

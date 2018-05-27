@@ -250,11 +250,11 @@ periodicity_tests<dim>::check_periodicity()
                 {
                   if (cell_it->has_periodic_neighbor(i_face))
                     {
-                      const cell_iterator &nb_it =
+                      const cell_iterator& nb_it =
                         cell_it->periodic_neighbor(i_face);
                       unsigned nb_i_face =
                         cell_it->periodic_neighbor_face_no(i_face);
-                      const cell_iterator &nb_of_nb_it =
+                      const cell_iterator& nb_of_nb_it =
                         nb_it->periodic_neighbor(nb_i_face);
                       unsigned nb_of_nb_i_face =
                         nb_it->periodic_neighbor_face_no(nb_i_face);
@@ -323,7 +323,7 @@ periodicity_tests<dim>::check_periodicity()
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   try
     {
@@ -374,7 +374,7 @@ main(int argc, char *argv[])
       //  test_3D.write_grid();
       test_3D.check_periodicity();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

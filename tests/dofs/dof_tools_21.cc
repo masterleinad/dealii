@@ -46,7 +46,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler)
+check_this(const DoFHandler<dim>& dof_handler)
 {
   Functions::CosineFunction<dim> test_func(dof_handler.get_fe().n_components());
 

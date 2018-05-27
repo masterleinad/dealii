@@ -42,7 +42,7 @@
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim> &dof)
+print_dofs(const DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
   for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
@@ -61,7 +61,7 @@ print_dofs(const DoFHandler<dim> &dof)
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim> &dof, unsigned int level)
+print_dofs(const DoFHandler<dim>& dof, unsigned int level)
 {
   std::vector<types::global_dof_index> v(dof.get_fe().dofs_per_cell);
   for (typename DoFHandler<dim>::cell_iterator cell = dof.begin(level);
@@ -79,10 +79,10 @@ print_dofs(const DoFHandler<dim> &dof, unsigned int level)
 
 template <int dim>
 void
-check_renumbering(DoFHandler<dim> &mgdof, bool discontinuous)
+check_renumbering(DoFHandler<dim>& mgdof, bool discontinuous)
 {
-  const FiniteElement<dim> &element = mgdof.get_fe();
-  DoFHandler<dim> &         dof     = mgdof;
+  const FiniteElement<dim>& element = mgdof.get_fe();
+  DoFHandler<dim>&          dof     = mgdof;
 
   // Prepare a reordering of
   // components for later use
@@ -146,7 +146,7 @@ check_renumbering(DoFHandler<dim> &mgdof, bool discontinuous)
       // behavior of the
       // DoFRenumbering::component_wise set
       // of functions before December 2005
-      DoFRenumbering::component_wise(static_cast<DoFHandler<dim> &>(mgdof),
+      DoFRenumbering::component_wise(static_cast<DoFHandler<dim>&>(mgdof),
                                      order);
       print_dofs(mgdof, level);
     }

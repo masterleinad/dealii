@@ -208,7 +208,7 @@ check(const unsigned int fe_degree)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   // no threading in this test...
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);

@@ -40,7 +40,7 @@ check_value(const int    dim,
 
 template <int dim>
 bool
-is_unit_vector(const Tensor<1, dim> &v)
+is_unit_vector(const Tensor<1, dim>& v)
 {
   return std::abs(v.norm() - 1.0) < 1e-9;
 }

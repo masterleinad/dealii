@@ -54,7 +54,7 @@ main()
            ++i)
         test(chunk_sizes[i]);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

@@ -26,7 +26,7 @@
 
 template <int dim>
 void
-check1(const Function<dim> &f,
+check1(const Function<dim>& f,
        const unsigned int   degree,
        const unsigned int   comp)
 {
@@ -45,7 +45,7 @@ check1(const Function<dim> &f,
 
 template <int dim>
 void
-check3(const Function<dim> &f,
+check3(const Function<dim>& f,
        const unsigned int   degree,
        const unsigned int   comp1,
        const unsigned int   comp2,

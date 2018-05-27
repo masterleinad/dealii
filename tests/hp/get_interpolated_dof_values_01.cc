@@ -82,7 +82,7 @@ test()
     {
       dofs_per_cell = cell->get_fe().dofs_per_cell;
     }
-  catch (const ExceptionBase &e)
+  catch (const ExceptionBase& e)
     {
       deallog << "Yes, exception 1!" << std::endl;
       deallog << e.get_exc_name() << std::endl;
@@ -93,7 +93,7 @@ test()
     {
       cell->get_interpolated_dof_values(solution, local);
     }
-  catch (const ExceptionBase &e)
+  catch (const ExceptionBase& e)
     {
       deallog << "Yes, exception 2!" << std::endl;
       deallog << e.get_exc_name() << std::endl;

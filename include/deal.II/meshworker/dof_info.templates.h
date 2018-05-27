@@ -27,7 +27,7 @@ DEAL_II_NAMESPACE_OPEN
 namespace MeshWorker
 {
   template <int dim, int spacedim, typename number>
-  DoFInfo<dim, spacedim, number>::DoFInfo(const BlockInfo &info) :
+  DoFInfo<dim, spacedim, number>::DoFInfo(const BlockInfo& info) :
     face_number(numbers::invalid_unsigned_int),
     sub_number(numbers::invalid_unsigned_int),
     block_info(&info, typeid(*this).name()),

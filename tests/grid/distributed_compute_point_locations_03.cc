@@ -73,7 +73,7 @@ test_distributed_cpt(unsigned int ref_cube)
     GridTools::compute_mesh_predicate_bounding_box(
       cube_d,
       std::function<bool(
-        const typename Triangulation<dim>::active_cell_iterator &)>(
+        const typename Triangulation<dim>::active_cell_iterator&)>(
         locally_owned_cell_predicate),
       1,
       false,
@@ -87,9 +87,9 @@ test_distributed_cpt(unsigned int ref_cube)
   GridTools::Cache<dim, dim> cache_d(cube_d);
   auto                       output_tuple =
     distributed_compute_point_locations(cache_d, test_points, global_bboxes);
-  const auto &maps   = std::get<2>(output_tuple);
-  const auto &points = std::get<3>(output_tuple);
-  const auto &ranks  = std::get<4>(output_tuple);
+  const auto& maps   = std::get<2>(output_tuple);
+  const auto& points = std::get<3>(output_tuple);
+  const auto& ranks  = std::get<4>(output_tuple);
 
   // Testing the results: if the map in maps is correct test_points[maps[i][j]]
   // == points[i][j]
@@ -115,7 +115,7 @@ test_distributed_cpt(unsigned int ref_cube)
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

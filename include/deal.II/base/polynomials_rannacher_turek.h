@@ -55,7 +55,7 @@ public:
    * Value of basis function @p i at @p p.
    */
   double
-  compute_value(const unsigned int i, const Point<dim> &p) const;
+  compute_value(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * <tt>order</tt>-th of basis function @p i at @p p.
@@ -64,19 +64,19 @@ public:
    */
   template <int order>
   Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim> &p) const;
+  compute_derivative(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Gradient of basis function @p i at @p p.
    */
   Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Gradient of gradient of basis function @p i at @p p.
    */
   Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  compute_grad_grad(const unsigned int i, const Point<dim>& p) const;
 
   /**
    * Compute values and derivatives of all basis functions at @p unit_point.
@@ -85,12 +85,12 @@ public:
    * zero. A size of zero means that we are not computing the vector entries.
    */
   void
-  compute(const Point<dim> &           unit_point,
-          std::vector<double> &        values,
-          std::vector<Tensor<1, dim>> &grads,
-          std::vector<Tensor<2, dim>> &grad_grads,
-          std::vector<Tensor<3, dim>> &third_derivatives,
-          std::vector<Tensor<4, dim>> &fourth_derivatives) const;
+  compute(const Point<dim>&            unit_point,
+          std::vector<double>&         values,
+          std::vector<Tensor<1, dim>>& grads,
+          std::vector<Tensor<2, dim>>& grad_grads,
+          std::vector<Tensor<3, dim>>& third_derivatives,
+          std::vector<Tensor<4, dim>>& fourth_derivatives) const;
 };
 
 
@@ -100,7 +100,7 @@ namespace internal
   {
     template <int order, int dim>
     inline Tensor<order, dim>
-    compute_derivative(const unsigned int, const Point<dim> &)
+    compute_derivative(const unsigned int, const Point<dim>&)
     {
       Assert(dim == 2, ExcNotImplemented());
       return Tensor<order, dim>();
@@ -109,7 +109,7 @@ namespace internal
 
     template <int order>
     inline Tensor<order, 2>
-    compute_derivative(const unsigned int i, const Point<2> &p)
+    compute_derivative(const unsigned int i, const Point<2>& p)
     {
       const unsigned int dim = 2;
 
@@ -118,8 +118,8 @@ namespace internal
         {
           case 1:
             {
-              Tensor<1, dim> &grad =
-                *reinterpret_cast<Tensor<1, dim> *>(&derivative);
+              Tensor<1, dim>& grad =
+                *reinterpret_cast<Tensor<1, dim>*>(&derivative);
               if (i == 0)
                 {
                   grad[0] = -2.5 + 3 * p(0);
@@ -148,8 +148,8 @@ namespace internal
             }
           case 2:
             {
-              Tensor<2, dim> &grad_grad =
-                *reinterpret_cast<Tensor<2, dim> *>(&derivative);
+              Tensor<2, dim>& grad_grad =
+                *reinterpret_cast<Tensor<2, dim>*>(&derivative);
               if (i == 0)
                 {
                   grad_grad[0][0] = 3;
@@ -197,7 +197,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
-                                                   const Point<dim> & p) const
+                                                   const Point<dim>&  p) const
 {
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<
     order>(i, p);

@@ -60,13 +60,13 @@ public:
   ImposedDisplacement() : Function<dim>(dim)
   {}
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &value) const;
+  vector_value(const Point<dim>& p, Vector<double>& value) const;
 };
 
 template <>
 void
-ImposedDisplacement<2>::vector_value(const Point<2> &p,
-                                     Vector<double> &value) const
+ImposedDisplacement<2>::vector_value(const Point<2>& p,
+                                     Vector<double>& value) const
 {
   double radius = 1 + (sqrt(5) - 1) * p(0);
   double angle  = 0.5 * numbers::PI * (1 - p(1));

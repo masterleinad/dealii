@@ -247,8 +247,8 @@ enum UpdateFlags
  * @ref UpdateFlags
  */
 template <class StreamType>
-inline StreamType &
-operator<<(StreamType &s, const UpdateFlags u)
+inline StreamType&
+operator<<(StreamType& s, const UpdateFlags u)
 {
   s << " UpdateFlags|";
   if (u & update_values)
@@ -319,8 +319,8 @@ operator|(const UpdateFlags f1, const UpdateFlags f2)
  *
  * @ref UpdateFlags
  */
-inline UpdateFlags &
-operator|=(UpdateFlags &f1, const UpdateFlags f2)
+inline UpdateFlags&
+operator|=(UpdateFlags& f1, const UpdateFlags f2)
 {
   f1 = f1 | f2;
   return f1;
@@ -349,8 +349,8 @@ inline UpdateFlags operator&(const UpdateFlags f1, const UpdateFlags f2)
  *
  * @ref UpdateFlags
  */
-inline UpdateFlags &
-operator&=(UpdateFlags &f1, const UpdateFlags f2)
+inline UpdateFlags&
+operator&=(UpdateFlags& f1, const UpdateFlags f2)
 {
   f1 = f1 & f2;
   return f1;
@@ -524,7 +524,7 @@ namespace internal
        */
       void
       initialize(const unsigned int                  n_quadrature_points,
-                 const FiniteElement<dim, spacedim> &fe,
+                 const FiniteElement<dim, spacedim>& fe,
                  const UpdateFlags                   flags);
 
       /**

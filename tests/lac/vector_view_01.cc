@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkReadOnlyConstructor(const Vector<number> &V)
+checkReadOnlyConstructor(const Vector<number>& V)
 {
   deallog << "Read-only constructor" << std::endl;
   VectorView<number> VV(V.size(), V.begin());

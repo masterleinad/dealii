@@ -25,7 +25,7 @@
 
 
 void
-test(Vector<double> &v)
+test(Vector<double>& v)
 {
   // set only certain elements of the
   // vector. they are all positive
@@ -62,7 +62,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

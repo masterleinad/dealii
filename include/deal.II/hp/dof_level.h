@@ -251,7 +251,7 @@ namespace internal
        * @return A pointer to the first DoF index for the current cell. The
        * next dofs_per_cell indices are for the current cell.
        */
-      const types::global_dof_index *
+      const types::global_dof_index*
       get_cell_cache_start(const unsigned int obj_index,
                            const unsigned int dofs_per_cell) const;
 
@@ -268,7 +268,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
 
     private:
       /**
@@ -282,7 +282,7 @@ namespace internal
       template <int dim, int spacedim>
       void
       compress_data(
-        const dealii::hp::FECollection<dim, spacedim> &fe_collection);
+        const dealii::hp::FECollection<dim, spacedim>& fe_collection);
 
       /**
        * Uncompress the arrays that store dof indices by using a variant of
@@ -295,7 +295,7 @@ namespace internal
       template <int dim, int spacedim>
       void
       uncompress_data(
-        const dealii::hp::FECollection<dim, spacedim> &fe_collection);
+        const dealii::hp::FECollection<dim, spacedim>& fe_collection);
 
 
       /**
@@ -461,7 +461,7 @@ namespace internal
 
 
 
-    inline const types::global_dof_index *
+    inline const types::global_dof_index*
     DoFLevel::get_cell_cache_start(const unsigned int obj_index,
                                    const unsigned int dofs_per_cell) const
     {
@@ -484,7 +484,7 @@ namespace internal
 
     template <class Archive>
     inline void
-    DoFLevel::serialize(Archive &ar, const unsigned int)
+    DoFLevel::serialize(Archive& ar, const unsigned int)
     {
       ar & this->active_fe_indices;
       ar & this->cell_cache_offsets;

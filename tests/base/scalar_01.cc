@@ -24,7 +24,7 @@
 
 template <typename U, typename V>
 void
-compare(const U &u, const V &v)
+compare(const U& u, const V& v)
 {
   AssertThrow(static_cast<double>(u) == static_cast<double>(v),
               ExcInternalError());
@@ -46,7 +46,7 @@ main()
   compare(T(13.), 13.);
   compare(T(t1), 13.);
   compare(static_cast<double>(t1), 13.);
-  compare(static_cast<double &>(t1), 13.);
+  compare(static_cast<double&>(t1), 13.);
   compare((T() = t1), 13.);
   compare((T() = 13.), 13.);
   compare((t1 == t1), true);

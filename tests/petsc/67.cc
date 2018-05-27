@@ -27,7 +27,7 @@
 
 
 void
-test(PETScWrappers::MatrixBase &m)
+test(PETScWrappers::MatrixBase& m)
 {
   typedef PETScWrappers::MatrixBase::size_type size_type;
 
@@ -103,7 +103,7 @@ test(PETScWrappers::MatrixBase &m)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -115,7 +115,7 @@ main(int argc, char **argv)
         test(v);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

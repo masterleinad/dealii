@@ -54,7 +54,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &p, const unsigned int component = 0) const
+  value(const Point<dim>& p, const unsigned int component = 0) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
@@ -65,7 +65,7 @@ public:
   }
 
   VectorizedArray<double>
-  value(const Point<dim, VectorizedArray<double>> &p_vec) const
+  value(const Point<dim, VectorizedArray<double>>& p_vec) const
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
     Point<dim>              p;
@@ -262,7 +262,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

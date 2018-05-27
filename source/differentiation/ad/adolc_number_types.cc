@@ -40,10 +40,10 @@ namespace numbers
       // the list of implemented comparative operations can be easily extended.
       bool
       adouble_boolean_comparator(
-        const adouble &value_1,
-        const adouble &value_2,
-        const std::function<adouble(const adouble &, const adouble &)>
-          &comparator)
+        const adouble& value_1,
+        const adouble& value_2,
+        const std::function<adouble(const adouble&, const adouble&)>&
+          comparator)
       {
         typedef typename Differentiation::AD::NumberTraits<
           double,
@@ -59,19 +59,19 @@ namespace numbers
   }   // namespace internal
 
   bool
-  values_are_equal(const adouble &value_1, const adouble &value_2)
+  values_are_equal(const adouble& value_1, const adouble& value_2)
   {
     return internal::adouble_boolean_comparator(
-      value_1, value_2, [](const adouble &a, const adouble &b) -> adouble {
+      value_1, value_2, [](const adouble& a, const adouble& b) -> adouble {
         return dealii::internal::NumberType<adouble>::value(a == b);
       });
   }
 
   bool
-  value_is_less_than(const adouble &value_1, const adouble &value_2)
+  value_is_less_than(const adouble& value_1, const adouble& value_2)
   {
     return internal::adouble_boolean_comparator(
-      value_1, value_2, [](const adouble &a, const adouble &b) -> adouble {
+      value_1, value_2, [](const adouble& a, const adouble& b) -> adouble {
         return dealii::internal::NumberType<adouble>::value(a < b);
       });
   }

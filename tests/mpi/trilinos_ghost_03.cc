@@ -65,7 +65,7 @@ test()
     {
       v_tmp.l2_norm();
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -73,7 +73,7 @@ test()
     {
       v_tmp(0) = 3.0;
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -85,7 +85,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   deal_II_exceptions::disable_abort_on_exception();
 

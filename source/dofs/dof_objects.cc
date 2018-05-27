@@ -40,7 +40,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     void
     DoFObjects<dim>::set_dof_index(
-      const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
+      const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
       const unsigned int                          obj_index,
       const unsigned int                          fe_index,
       const unsigned int                          local_index,

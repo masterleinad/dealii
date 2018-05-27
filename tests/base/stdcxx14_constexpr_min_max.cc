@@ -24,7 +24,7 @@
 #include "../tests.h"
 
 constexpr bool
-comp(const int &a, const int &b)
+comp(const int& a, const int& b)
 {
   return b < a;
 }

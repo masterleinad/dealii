@@ -34,7 +34,7 @@ namespace CUDA = LinearAlgebra::CUDAWrappers;
 
 template <int M, int N, int type, bool add, bool dof_to_quad>
 __global__ void
-evaluate_tensor_product(double *dst, double *src)
+evaluate_tensor_product(double* dst, double* src)
 {
   CUDAWrappers::internal::EvaluatorTensorProduct<
     CUDAWrappers::internal::evaluate_general,

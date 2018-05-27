@@ -139,7 +139,7 @@ LaplaceProblem<dim>::assemble_and_solve()
 {
   const unsigned int gauss_degree = std::max(
     static_cast<unsigned int>(std::ceil(
-      1. * (static_cast<const MappingQ<dim> &>(mapping[0]).get_degree() + 1) /
+      1. * (static_cast<const MappingQ<dim>&>(mapping[0]).get_degree() + 1) /
       2)),
     2U);
   MatrixTools::create_laplace_matrix(
@@ -239,7 +239,7 @@ main()
            ++mapping_degree)
         LaplaceProblem<2>(mapping_degree).run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

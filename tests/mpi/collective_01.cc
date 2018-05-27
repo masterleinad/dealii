@@ -22,7 +22,7 @@
 #include "../tests.h"
 
 void
-print_it(Utilities::MPI::MinMaxAvg &result)
+print_it(Utilities::MPI::MinMaxAvg& result)
 {
   deallog << "sum: " << result.sum << " avg: " << result.avg
           << " min: " << result.min << " @" << result.min_index
@@ -78,7 +78,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
 #ifdef DEAL_II_WITH_MPI
   Utilities::MPI::MPI_InitFinalize mpi_initialization(

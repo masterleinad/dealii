@@ -33,7 +33,7 @@
 
 template <int dim, int spacedim>
 void
-test(std::ostream &out)
+test(std::ostream& out)
 {
   Triangulation<dim, spacedim> triangulation;
 

@@ -26,7 +26,7 @@
 
 
 void
-test(Vector<std::complex<double>> &v, Vector<std::complex<double>> &w)
+test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 {
   // set only certain elements of each
   // vector
@@ -55,7 +55,7 @@ main()
       Vector<std::complex<double>> w(100);
       test(v, w);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

@@ -113,8 +113,8 @@ public:
    */
   template <typename number>
   void
-  evaluate(const std::vector<Vector<number>> &values,
-           const std::vector<double> &        y_values,
+  evaluate(const std::vector<Vector<number>>& values,
+           const std::vector<double>&         y_values,
            const unsigned int                 n_intervals,
            const IntervalSpacing              interval_spacing = linear);
 
@@ -124,7 +124,7 @@ public:
    */
   template <typename number>
   void
-  evaluate(const Vector<number> &values,
+  evaluate(const Vector<number>& values,
            const unsigned int    n_intervals,
            const IntervalSpacing interval_spacing = linear);
 
@@ -134,7 +134,7 @@ public:
    * histograms.
    */
   void
-  write_gnuplot(std::ostream &out) const;
+  write_gnuplot(std::ostream& out) const;
 
   /**
    * Return allowed names for the interval spacing as string. At present this
@@ -149,7 +149,7 @@ public:
    * the string is no valid one.
    */
   static IntervalSpacing
-  parse_interval_spacing(const std::string &name);
+  parse_interval_spacing(const std::string& name);
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this

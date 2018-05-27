@@ -191,7 +191,7 @@ test(const unsigned int poly_degree = 1)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   initlog();
 
@@ -200,7 +200,7 @@ main(int argc, char *argv[])
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       test<2>();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

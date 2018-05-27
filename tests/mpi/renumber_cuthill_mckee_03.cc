@@ -61,7 +61,7 @@ test()
   dofh.distribute_dofs(fe);
 
   deallog << "Before:" << std::endl;
-  for (const auto &cell : dofh.active_cell_iterators())
+  for (const auto& cell : dofh.active_cell_iterators())
     if (cell->is_locally_owned())
       {
         deallog << "locally owned cell: " << cell << std::endl;
@@ -77,7 +77,7 @@ test()
       }
 
   std::set<types::global_dof_index> starting_indices;
-  for (const auto &cell : dofh.active_cell_iterators())
+  for (const auto& cell : dofh.active_cell_iterators())
     if (cell->is_locally_owned())
       for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if (!cell->at_boundary(f) && cell->neighbor(f)->is_ghost())
@@ -100,7 +100,7 @@ test()
 
   // output the renumbered DoF indices
   deallog << "After:" << std::endl;
-  for (const auto &cell : dofh.active_cell_iterators())
+  for (const auto& cell : dofh.active_cell_iterators())
     if (cell->is_locally_owned())
       {
         deallog << "locally owned cell: " << cell << std::endl;
@@ -123,7 +123,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

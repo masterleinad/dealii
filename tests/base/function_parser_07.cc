@@ -29,7 +29,7 @@
 
 
 void
-eval(const std::string &exp, const Point<2> &p, double expected)
+eval(const std::string& exp, const Point<2>& p, double expected)
 {
   std::string                   variables = "x,y";
   std::map<std::string, double> constants;

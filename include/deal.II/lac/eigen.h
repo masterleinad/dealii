@@ -80,9 +80,9 @@ public:
   /**
    * Constructor.
    */
-  EigenPower(SolverControl &           cn,
-             VectorMemory<VectorType> &mem,
-             const AdditionalData &    data = AdditionalData());
+  EigenPower(SolverControl&            cn,
+             VectorMemory<VectorType>& mem,
+             const AdditionalData&     data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -97,7 +97,7 @@ public:
    */
   template <typename MatrixType>
   void
-  solve(double &value, const MatrixType &A, VectorType &x);
+  solve(double& value, const MatrixType& A, VectorType& x);
 
 protected:
   /**
@@ -171,9 +171,9 @@ public:
   /**
    * Constructor.
    */
-  EigenInverse(SolverControl &           cn,
-               VectorMemory<VectorType> &mem,
-               const AdditionalData &    data = AdditionalData());
+  EigenInverse(SolverControl&            cn,
+               VectorMemory<VectorType>& mem,
+               const AdditionalData&     data = AdditionalData());
 
 
   /**
@@ -190,7 +190,7 @@ public:
    */
   template <typename MatrixType>
   void
-  solve(double &value, const MatrixType &A, VectorType &x);
+  solve(double& value, const MatrixType& A, VectorType& x);
 
 protected:
   /**
@@ -204,9 +204,9 @@ protected:
 
 
 template <class VectorType>
-EigenPower<VectorType>::EigenPower(SolverControl &           cn,
-                                   VectorMemory<VectorType> &mem,
-                                   const AdditionalData &    data) :
+EigenPower<VectorType>::EigenPower(SolverControl&            cn,
+                                   VectorMemory<VectorType>& mem,
+                                   const AdditionalData&     data) :
   Solver<VectorType>(cn, mem),
   additional_data(data)
 {}
@@ -222,17 +222,17 @@ EigenPower<VectorType>::~EigenPower()
 template <class VectorType>
 template <typename MatrixType>
 void
-EigenPower<VectorType>::solve(double &value, const MatrixType &A, VectorType &x)
+EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 {
   SolverControl::State conv = SolverControl::iterate;
 
   LogStream::Prefix prefix("Power method");
 
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType &                               y = *Vy;
+  VectorType&                                y = *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType &                               r = *Vr;
+  VectorType&                                r = *Vr;
   r.reinit(x);
 
   double length     = x.l2_norm();
@@ -292,9 +292,9 @@ EigenPower<VectorType>::solve(double &value, const MatrixType &A, VectorType &x)
 //---------------------------------------------------------------------------
 
 template <class VectorType>
-EigenInverse<VectorType>::EigenInverse(SolverControl &           cn,
-                                       VectorMemory<VectorType> &mem,
-                                       const AdditionalData &    data) :
+EigenInverse<VectorType>::EigenInverse(SolverControl&            cn,
+                                       VectorMemory<VectorType>& mem,
+                                       const AdditionalData&     data) :
   Solver<VectorType>(cn, mem),
   additional_data(data)
 {}
@@ -310,9 +310,9 @@ EigenInverse<VectorType>::~EigenInverse()
 template <class VectorType>
 template <typename MatrixType>
 void
-EigenInverse<VectorType>::solve(double &          value,
-                                const MatrixType &A,
-                                VectorType &      x)
+EigenInverse<VectorType>::solve(double&           value,
+                                const MatrixType& A,
+                                VectorType&       x)
 {
   LogStream::Prefix prefix("Wielandt");
 
@@ -333,10 +333,10 @@ EigenInverse<VectorType>::solve(double &          value,
 
   // Auxiliary vector
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType &                               y = *Vy;
+  VectorType&                                y = *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType &                               r = *Vr;
+  VectorType&                                r = *Vr;
   r.reinit(x);
 
   double length    = x.l2_norm();
@@ -373,7 +373,7 @@ EigenInverse<VectorType>::solve(double &          value,
 
       if (iter == goal)
         {
-          const auto & relaxation = additional_data.relaxation;
+          const auto&  relaxation = additional_data.relaxation;
           const double new_shift =
             relaxation * (-value) + (1. - relaxation) * current_shift;
 

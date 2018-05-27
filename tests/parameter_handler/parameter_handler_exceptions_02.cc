@@ -31,13 +31,13 @@ std::string input = "set test_1 = 1\n"
 
 
 void
-check(const char *p)
+check(const char* p)
 {
   ParameterHandler prm;
   prm.declare_entry("test_1", "0", Patterns::Integer(-1, 1));
   prm.enter_subsection("subsec");
   prm.declare_entry("test_2", "0", Patterns::Integer(-1, 1));
-  prm.add_action("test_2", [](const std::string &s) {
+  prm.add_action("test_2", [](const std::string& s) {
     // throw an exception from the action for
     // everything but the default value
     if (s != "0")

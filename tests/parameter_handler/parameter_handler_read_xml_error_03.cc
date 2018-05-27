@@ -60,7 +60,7 @@ main()
     {
       prm.parse_input_from_xml(in);
     }
-  catch (const ParameterHandler::ExcInvalidXMLParameterFile &exc)
+  catch (const ParameterHandler::ExcInvalidXMLParameterFile& exc)
     {
       deallog << exc.get_exc_name() << std::endl;
       exc.print_info(deallog.get_file_stream());

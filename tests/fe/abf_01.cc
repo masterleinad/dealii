@@ -62,7 +62,7 @@
  * Check the value of the derivative field.
  */
 
-void EvaluateDerivative(DoFHandler<2> *dof_handler, Vector<double> &solution)
+void EvaluateDerivative(DoFHandler<2>* dof_handler, Vector<double>& solution)
 {
   // This quadrature rule determines the points, where the
   // derivative will be evaluated.
@@ -132,13 +132,13 @@ void EvaluateDerivative(DoFHandler<2> *dof_handler, Vector<double> &solution)
 
 template <int dim>
 void
-create_mass_matrix(const Mapping<dim> &       mapping,
-                   const DoFHandler<dim> &    dof,
-                   const Quadrature<dim> &    q,
-                   SparseMatrix<double> &     matrix,
-                   const Function<dim> &      rhs_function,
-                   Vector<double> &           rhs_vector,
-                   const Function<dim> *const coefficient = nullptr)
+create_mass_matrix(const Mapping<dim>&        mapping,
+                   const DoFHandler<dim>&     dof,
+                   const Quadrature<dim>&     q,
+                   SparseMatrix<double>&      matrix,
+                   const Function<dim>&       rhs_function,
+                   Vector<double>&            rhs_vector,
+                   const Function<dim>* const coefficient = nullptr)
 {
   UpdateFlags update_flags =
     UpdateFlags(update_values | update_JxW_values | update_quadrature_points);
@@ -149,7 +149,7 @@ create_mass_matrix(const Mapping<dim> &       mapping,
 
   const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
                      n_q_points          = fe_values.n_quadrature_points;
-  const FiniteElement<dim> &fe           = fe_values.get_fe();
+  const FiniteElement<dim>& fe           = fe_values.get_fe();
   const unsigned int        n_components = fe.n_components();
 
   Assert(coefficient == nullptr || coefficient->n_components == 1 ||
@@ -176,7 +176,7 @@ create_mass_matrix(const Mapping<dim> &       mapping,
       cell_matrix = 0;
       cell->get_dof_indices(dof_indices);
 
-      const std::vector<double> &weights = fe_values.get_JxW_values();
+      const std::vector<double>& weights = fe_values.get_JxW_values();
       rhs_function.vector_value_list(fe_values.get_quadrature_points(),
                                      rhs_values);
       cell_vector = 0;
@@ -329,13 +329,13 @@ create_mass_matrix(const Mapping<dim> &       mapping,
 
 template <int dim>
 void
-create_right_hand_side(const Mapping<dim> &   mapping,
-                       const DoFHandler<dim> &dof_handler,
-                       const Quadrature<dim> &quadrature,
-                       const Function<dim> &  rhs_function,
-                       Vector<double> &       rhs_vector)
+create_right_hand_side(const Mapping<dim>&    mapping,
+                       const DoFHandler<dim>& dof_handler,
+                       const Quadrature<dim>& quadrature,
+                       const Function<dim>&   rhs_function,
+                       Vector<double>&        rhs_vector)
 {
-  const FiniteElement<dim> &fe = dof_handler.get_fe();
+  const FiniteElement<dim>& fe = dof_handler.get_fe();
   Assert(fe.n_components() == rhs_function.n_components, ExcInternalError());
   Assert(rhs_vector.size() == dof_handler.n_dofs(),
          ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
@@ -364,7 +364,7 @@ create_right_hand_side(const Mapping<dim> &   mapping,
         {
           fe_values.reinit(cell);
 
-          const std::vector<double> &weights = fe_values.get_JxW_values();
+          const std::vector<double>& weights = fe_values.get_JxW_values();
           rhs_function.value_list(fe_values.get_quadrature_points(),
                                   rhs_values);
 
@@ -390,7 +390,7 @@ create_right_hand_side(const Mapping<dim> &   mapping,
         {
           fe_values.reinit(cell);
 
-          const std::vector<double> &weights = fe_values.get_JxW_values();
+          const std::vector<double>& weights = fe_values.get_JxW_values();
           rhs_function.vector_value_list(fe_values.get_quadrature_points(),
                                          rhs_values);
 
@@ -426,20 +426,20 @@ create_right_hand_side(const Mapping<dim> &   mapping,
 
 template <int dim>
 void
-project(const Mapping<dim> &    mapping,
-        const DoFHandler<dim> & dof,
-        const ConstraintMatrix &constraints,
-        const Quadrature<dim> & quadrature,
-        const Function<dim> &   function,
-        Vector<double> &        vec,
+project(const Mapping<dim>&     mapping,
+        const DoFHandler<dim>&  dof,
+        const ConstraintMatrix& constraints,
+        const Quadrature<dim>&  quadrature,
+        const Function<dim>&    function,
+        Vector<double>&         vec,
         const bool              enforce_zero_boundary = false,
-        const Quadrature<dim - 1> &                   = QGauss<dim - 1>(2),
+        const Quadrature<dim - 1>&                    = QGauss<dim - 1>(2),
         const bool project_to_boundary_first          = false)
 {
   Assert(dof.get_fe().n_components() == function.n_components,
          ExcInternalError());
 
-  const FiniteElement<dim> &fe = dof.get_fe();
+  const FiniteElement<dim>& fe = dof.get_fe();
 
   // make up boundary values
   std::map<types::global_dof_index, double> boundary_values;
@@ -543,7 +543,7 @@ project(const Mapping<dim> &    mapping,
 }
 
 
-int create_alternate_unitsquare(Triangulation<2> &tria)
+int create_alternate_unitsquare(Triangulation<2>& tria)
 {
   std::vector<Point<2>> points;
 
@@ -586,7 +586,7 @@ int create_alternate_unitsquare(Triangulation<2> &tria)
 
 
 int
-main(int /*argc*/, char ** /*argv*/)
+main(int /*argc*/, char** /*argv*/)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(PRECISION);
@@ -617,7 +617,7 @@ main(int /*argc*/, char ** /*argv*/)
   deallog << "Dofs/cell " << fe.dofs_per_cell << "Dofs/face "
           << fe.dofs_per_face << std::endl;
 
-  DoFHandler<2> *dof_handler;
+  DoFHandler<2>* dof_handler;
   dof_handler = new DoFHandler<2>(tria_test);
   dof_handler->distribute_dofs(fe);
 
@@ -642,7 +642,7 @@ main(int /*argc*/, char ** /*argv*/)
   EvaluateDerivative(dof_handler, solution);
   solution.print(deallog);
 
-  DataOut<2> *data_out = new DataOut<2>;
+  DataOut<2>* data_out = new DataOut<2>;
   data_out->attach_dof_handler(*dof_handler);
   data_out->add_data_vector(solution, "solution");
   data_out->build_patches(4);

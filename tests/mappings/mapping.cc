@@ -47,10 +47,10 @@
 
 template <int dim>
 inline void
-plot_transformation(Mapping<dim> &                           mapping,
-                    FiniteElement<dim> &                     fe,
-                    typename DoFHandler<dim>::cell_iterator &cell,
-                    const std::string &                      name)
+plot_transformation(Mapping<dim>&                            mapping,
+                    FiniteElement<dim>&                      fe,
+                    typename DoFHandler<dim>::cell_iterator& cell,
+                    const std::string&                       name)
 {
   const unsigned int div = 7;
 
@@ -86,10 +86,10 @@ plot_transformation(Mapping<dim> &                           mapping,
 
 template <int dim>
 inline void
-plot_faces(Mapping<dim> &                           mapping,
-           FiniteElement<dim> &                     fe,
-           typename DoFHandler<dim>::cell_iterator &cell,
-           const std::string &                      name)
+plot_faces(Mapping<dim>&                            mapping,
+           FiniteElement<dim>&                      fe,
+           typename DoFHandler<dim>::cell_iterator& cell,
+           const std::string&                       name)
 {
   deallog.push(name);
 
@@ -132,10 +132,10 @@ plot_faces(Mapping<dim> &                           mapping,
 
 template <int dim>
 inline void
-plot_subfaces(Mapping<dim> &                           mapping,
-              FiniteElement<dim> &                     fe,
-              typename DoFHandler<dim>::cell_iterator &cell,
-              const std::string &                      name)
+plot_subfaces(Mapping<dim>&                            mapping,
+              FiniteElement<dim>&                      fe,
+              typename DoFHandler<dim>::cell_iterator& cell,
+              const std::string&                       name)
 {
   deallog.push(name);
 
@@ -156,7 +156,7 @@ plot_subfaces(Mapping<dim> &                           mapping,
       {
         fe_values.reinit(cell, face_nr, sub_nr);
 
-        const std::vector<Tensor<1, dim>> &normals =
+        const std::vector<Tensor<1, dim>>& normals =
           fe_values.get_all_normal_vectors();
 
         unsigned int k = 0;
@@ -179,33 +179,33 @@ plot_subfaces(Mapping<dim> &                           mapping,
 
 
 template <>
-inline void plot_faces(Mapping<1> &,
-                       FiniteElement<1> &,
-                       DoFHandler<1>::cell_iterator &,
-                       const std::string &)
+inline void plot_faces(Mapping<1>&,
+                       FiniteElement<1>&,
+                       DoFHandler<1>::cell_iterator&,
+                       const std::string&)
 {}
 
 
 
 template <>
-inline void plot_subfaces(Mapping<1> &,
-                          FiniteElement<1> &,
-                          DoFHandler<1>::cell_iterator &,
-                          const std::string &)
+inline void plot_subfaces(Mapping<1>&,
+                          FiniteElement<1>&,
+                          DoFHandler<1>::cell_iterator&,
+                          const std::string&)
 {}
 
 
 
 template <int dim>
 inline void
-compute_area(Mapping<dim> &                           mapping,
-             FiniteElement<dim> &                     fe,
-             typename DoFHandler<dim>::cell_iterator &cell)
+compute_area(Mapping<dim>&                            mapping,
+             FiniteElement<dim>&                      fe,
+             typename DoFHandler<dim>::cell_iterator& cell)
 {
   QGauss<dim>   gauss4(4);
   FEValues<dim> fe_values(mapping, fe, gauss4, UpdateFlags(update_JxW_values));
   fe_values.reinit(cell);
-  const std::vector<double> &JxW = fe_values.get_JxW_values();
+  const std::vector<double>& JxW = fe_values.get_JxW_values();
 
   double area = 0;
   for (unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
@@ -216,9 +216,9 @@ compute_area(Mapping<dim> &                           mapping,
 
 template <int dim>
 void
-create_triangulations(std::vector<Triangulation<dim> *> &,
-                      std::vector<Manifold<dim> *> &,
-                      std::vector<double> &)
+create_triangulations(std::vector<Triangulation<dim>*>&,
+                      std::vector<Manifold<dim>*>&,
+                      std::vector<double>&)
 {
   Assert(false, ExcNotImplemented());
 }
@@ -230,12 +230,12 @@ unsigned int                           mapping_size;
 
 
 template <>
-void create_triangulations(std::vector<Triangulation<1> *> &tria_ptr,
-                           std::vector<Manifold<1> *> &,
-                           std::vector<double> &exact_areas)
+void create_triangulations(std::vector<Triangulation<1>*>& tria_ptr,
+                           std::vector<Manifold<1>*>&,
+                           std::vector<double>& exact_areas)
 {
   show.resize(1, std::vector<unsigned int>(mapping_size, 0));
-  Triangulation<1> *tria = new Triangulation<1>();
+  Triangulation<1>* tria = new Triangulation<1>();
   tria_ptr.push_back(tria);
   GridGenerator::hyper_cube(*tria, 1., 3.);
   exact_areas.push_back(2.);
@@ -247,11 +247,11 @@ void create_triangulations(std::vector<Triangulation<1> *> &tria_ptr,
 
 
 template <>
-void create_triangulations(std::vector<Triangulation<2> *> &tria_ptr,
-                           std::vector<Manifold<2> *> &     boundary_ptr,
-                           std::vector<double> &            exact_areas)
+void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
+                           std::vector<Manifold<2>*>&      boundary_ptr,
+                           std::vector<double>&            exact_areas)
 {
-  Triangulation<2> *tria;
+  Triangulation<2>* tria;
   show.clear();
   show.resize(4, std::vector<unsigned int>(mapping_size, 0));
   // tria0: 3x3 square rotated
@@ -285,9 +285,9 @@ void create_triangulations(std::vector<Triangulation<2> *> &tria_ptr,
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 1., 3.);
-      Point<2> &v0 = tria->begin_active()->vertex(0);
+      Point<2>& v0 = tria->begin_active()->vertex(0);
       v0(0)        = 0.;
-      Point<2> &v3 = tria->begin_active()->vertex(3);
+      Point<2>& v3 = tria->begin_active()->vertex(3);
       v3(0)        = 5.;
       v3(1)        = 4.;
       exact_areas.push_back(7.);
@@ -297,15 +297,15 @@ void create_triangulations(std::vector<Triangulation<2> *> &tria_ptr,
   // tria2: crazy cell
   if (2)
     {
-      Manifold<2> *boundary1 = new SphericalManifold<2>(Point<2>(3, 1));
-      Manifold<2> *boundary2 = new SphericalManifold<2>(Point<2>(2, 5));
+      Manifold<2>* boundary1 = new SphericalManifold<2>(Point<2>(3, 1));
+      Manifold<2>* boundary2 = new SphericalManifold<2>(Point<2>(2, 5));
       boundary_ptr.push_back(boundary1);
       boundary_ptr.push_back(boundary2);
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 1., 5.);
-      Point<2> &v2 = tria->begin_active()->vertex(2);
-      Point<2> &v3 = tria->begin_active()->vertex(3);
+      Point<2>& v2 = tria->begin_active()->vertex(2);
+      Point<2>& v3 = tria->begin_active()->vertex(3);
       v2(0)        = 1.;
       v2(1)        = 3.;
       v3(0)        = 3.;
@@ -338,13 +338,13 @@ void create_triangulations(std::vector<Triangulation<2> *> &tria_ptr,
 
   if (4 && false)
     {
-      Manifold<2> *boundary1 = new SphericalManifold<2>(Point<2>(2.5, -0.5));
+      Manifold<2>* boundary1 = new SphericalManifold<2>(Point<2>(2.5, -0.5));
       boundary_ptr.push_back(boundary1);
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 0., 1.);
-      Point<2> &v2 = tria->begin_active()->vertex(2);
-      Point<2> &v3 = tria->begin_active()->vertex(3);
+      Point<2>& v2 = tria->begin_active()->vertex(2);
+      Point<2>& v3 = tria->begin_active()->vertex(3);
       v2(0)        = 2.;
       v2(1)        = 1.;
       v3(0)        = 0.5;
@@ -360,11 +360,11 @@ void create_triangulations(std::vector<Triangulation<2> *> &tria_ptr,
 
 
 template <>
-void create_triangulations(std::vector<Triangulation<3> *> &tria_ptr,
-                           std::vector<Manifold<3> *> &     boundary_ptr,
-                           std::vector<double> &            exact_areas)
+void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
+                           std::vector<Manifold<3>*>&      boundary_ptr,
+                           std::vector<double>&            exact_areas)
 {
-  Triangulation<3> *tria;
+  Triangulation<3>* tria;
   show.clear();
   show.resize(4, std::vector<unsigned int>(mapping_size, 0));
 
@@ -383,7 +383,7 @@ void create_triangulations(std::vector<Triangulation<3> *> &tria_ptr,
       tria = new Triangulation<3>();
       tria_ptr.push_back(tria);
       GridGenerator::hyper_cube(*tria, 1., 3.);
-      Point<3> &v = tria->begin()->vertex(7);
+      Point<3>& v = tria->begin()->vertex(7);
       v(0)        = 5.;
       v(1)        = 4.;
       v(2)        = 4.5;
@@ -397,7 +397,7 @@ void create_triangulations(std::vector<Triangulation<3> *> &tria_ptr,
       Point<3> v(3, 3, 3);
       double   r = std::sqrt((m - v).norm_square()), h = r - 1.5,
              pi              = std::acos(-1.);
-      Manifold<3> *boundary1 = new SphericalManifold<3>(m);
+      Manifold<3>* boundary1 = new SphericalManifold<3>(m);
       boundary_ptr.push_back(boundary1);
 
       tria = new Triangulation<3>();
@@ -433,8 +433,8 @@ mapping_test()
 {
   deallog << "dim=" << dim << std::endl;
 
-  std::vector<Mapping<dim> *> mapping_ptr;
-  std::vector<std::string>    mapping_strings;
+  std::vector<Mapping<dim>*> mapping_ptr;
+  std::vector<std::string>   mapping_strings;
 
   MappingCartesian<dim> cart;
   MappingQGeneric<dim>  q1_old(1);
@@ -461,9 +461,9 @@ mapping_test()
 
   mapping_size = mapping_ptr.size();
 
-  std::vector<Triangulation<dim> *> tria_ptr;
-  std::vector<Manifold<dim> *>      boundary_ptr;
-  std::vector<double>               exact_areas;
+  std::vector<Triangulation<dim>*> tria_ptr;
+  std::vector<Manifold<dim>*>      boundary_ptr;
+  std::vector<double>              exact_areas;
 
   create_triangulations(tria_ptr, boundary_ptr, exact_areas);
   Assert(show.size() == tria_ptr.size(), ExcInternalError());
@@ -514,7 +514,7 @@ mapping_test()
             // Test for transform_*_to_*_cell
             if (true)
               {
-                Mapping<dim> &mapping = *mapping_ptr[j];
+                Mapping<dim>& mapping = *mapping_ptr[j];
                 Point<dim>    p_unit;
                 switch (dim)
                   {

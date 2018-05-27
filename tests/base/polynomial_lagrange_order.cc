@@ -28,8 +28,8 @@ using namespace Polynomials;
 
 
 void
-check_interpolation(const std::vector<Polynomial<double>> &p,
-                    const std::vector<Point<1>> &          x)
+check_interpolation(const std::vector<Polynomial<double>>& p,
+                    const std::vector<Point<1>>&           x)
 {
   for (unsigned int i = 0; i < p.size(); ++i)
     {
@@ -58,7 +58,7 @@ check_interpolation(const std::vector<Polynomial<double>> &p,
 
 
 void
-check_constant(const std::vector<Polynomial<double>> &p)
+check_constant(const std::vector<Polynomial<double>>& p)
 {
   // check whether the sum of all polynomials in
   // the basis gives one for a given point
@@ -82,7 +82,7 @@ check_constant(const std::vector<Polynomial<double>> &p)
 
 
 void
-check_poly(const Quadrature<1> &q)
+check_poly(const Quadrature<1>& q)
 {
   deallog << "Points: " << q.size() << std::endl;
   std::vector<Polynomial<double>> p =

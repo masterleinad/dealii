@@ -22,7 +22,7 @@
 #include "../tests.h"
 
 void
-check(const char *p)
+check(const char* p)
 {
   ParameterHandler prm;
   prm.declare_entry(
@@ -38,7 +38,7 @@ check(const char *p)
 
   const std::vector<std::string> split_entries =
     Utilities::split_string_list(prm.get("test_13"), ',');
-  for (const std::string &entry : split_entries)
+  for (const std::string& entry : split_entries)
     {
       const std::vector<std::string> parts =
         Utilities::split_string_list(entry, ':');

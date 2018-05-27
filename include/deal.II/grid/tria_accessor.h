@@ -321,15 +321,15 @@ protected:
   /**
    * Constructor. Protected, thus only callable from friend classes.
    */
-  TriaAccessorBase(const Triangulation<dim, spacedim> *parent = nullptr,
+  TriaAccessorBase(const Triangulation<dim, spacedim>* parent = nullptr,
                    const int                           level  = -1,
                    const int                           index  = -1,
-                   const AccessorData *                       = nullptr);
+                   const AccessorData*                        = nullptr);
 
   /**
    * Copy constructor. Creates an object with exactly the same data.
    */
-  TriaAccessorBase(const TriaAccessorBase &);
+  TriaAccessorBase(const TriaAccessorBase&);
 
   /**
    * Copy operator. These operators are usually used in a context like
@@ -341,7 +341,7 @@ protected:
    * Consequently, this operator is declared as deleted and can not be used.
    */
   void
-  operator=(const TriaAccessorBase *) = delete;
+  operator=(const TriaAccessorBase*) = delete;
 
   /**
    * Copy operator. Since this is only called from iterators, do not return
@@ -351,13 +351,13 @@ protected:
    * class.
    */
   void
-  copy_from(const TriaAccessorBase &);
+  copy_from(const TriaAccessorBase&);
 
   /**
    * Copy operator. Creates an object with exactly the same data.
    */
-  TriaAccessorBase &
-  operator=(const TriaAccessorBase &);
+  TriaAccessorBase&
+  operator=(const TriaAccessorBase&);
 
   /**
    * Ordering of accessors. If #structure_dimension is less than #dimension,
@@ -366,20 +366,20 @@ protected:
    * levels are equal.
    */
   bool
-  operator<(const TriaAccessorBase &other) const;
+  operator<(const TriaAccessorBase& other) const;
 
 protected:
   /**
    * Compare for equality.
    */
   bool
-  operator==(const TriaAccessorBase &) const;
+  operator==(const TriaAccessorBase&) const;
 
   /**
    * Compare for inequality.
    */
   bool
-  operator!=(const TriaAccessorBase &) const;
+  operator!=(const TriaAccessorBase&) const;
 
   /**
    * @name Advancement of iterators
@@ -414,7 +414,7 @@ protected:
    * Access to the other objects of a Triangulation with same dimension.
    */
   dealii::internal::TriangulationImplementation::TriaObjects<
-    dealii::internal::TriangulationImplementation::TriaObject<structdim>> &
+    dealii::internal::TriangulationImplementation::TriaObject<structdim>>&
   objects() const;
 
 public:
@@ -423,7 +423,7 @@ public:
    * accessor classes in a unified way, no matter what the type of number of
    * these parameters is.
    */
-  typedef void *LocalData;
+  typedef void* LocalData;
 
   /**
    * @name Iterator address and state
@@ -491,7 +491,7 @@ public:
    * Return a pointer to the triangulation which the object pointed to by this
    * class belongs to.
    */
-  const Triangulation<dim, spacedim> &
+  const Triangulation<dim, spacedim>&
   get_triangulation() const;
 
   /**
@@ -514,7 +514,7 @@ protected:
   /**
    * Pointer to the triangulation which we act on.
    */
-  const Triangulation<dim, spacedim> *tria;
+  const Triangulation<dim, spacedim>* tria;
 
 private:
   template <typename Accessor>
@@ -565,10 +565,10 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  InvalidAccessor(const Triangulation<dim, spacedim> *parent     = nullptr,
+  InvalidAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
                   const int                           level      = -1,
                   const int                           index      = -1,
-                  const AccessorData *                local_data = nullptr);
+                  const AccessorData*                 local_data = nullptr);
 
   /**
    * Copy constructor.  This class is used for iterators that do not make
@@ -577,28 +577,28 @@ public:
    * semantic sense, and we generate an exception when such an object is
    * actually generated.
    */
-  InvalidAccessor(const InvalidAccessor &);
+  InvalidAccessor(const InvalidAccessor&);
 
   /**
    * Conversion from other accessors to the current invalid one. This of
    * course also leads to a run-time error.
    */
   template <typename OtherAccessor>
-  InvalidAccessor(const OtherAccessor &);
+  InvalidAccessor(const OtherAccessor&);
 
   /**
    * Dummy copy operation.
    */
   void
-  copy_from(const InvalidAccessor &);
+  copy_from(const InvalidAccessor&);
 
   /**
    * Dummy comparison operators.
    */
   bool
-  operator==(const InvalidAccessor &) const;
+  operator==(const InvalidAccessor&) const;
   bool
-  operator!=(const InvalidAccessor &) const;
+  operator!=(const InvalidAccessor&) const;
 
   /**
    * Dummy operators to make things compile. Does nothing.
@@ -631,7 +631,7 @@ public:
   /**
    * Dummy function to extract vertices. Returns the origin.
    */
-  Point<spacedim> &
+  Point<spacedim>&
   vertex(const unsigned int i) const;
 
   /**
@@ -684,10 +684,10 @@ public:
   /**
    * Constructor.
    */
-  TriaAccessor(const Triangulation<dim, spacedim> *parent     = nullptr,
+  TriaAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
                const int                           level      = -1,
                const int                           index      = -1,
-               const AccessorData *                local_data = nullptr);
+               const AccessorData*                 local_data = nullptr);
 
   /**
    * Conversion constructor. This constructor exists to make certain
@@ -702,14 +702,14 @@ public:
    * 2d).
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Another conversion operator between objects that don't make sense, just
    * like the previous one.
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Copy operator. These operators are usually used in a context like
@@ -721,7 +721,7 @@ public:
    * Consequently, this operator is declared as deleted and can not be used.
    */
   void
-  operator=(const TriaAccessor &) = delete;
+  operator=(const TriaAccessor&) = delete;
 
   /**
    * Test for the element being used or not.  The return value is @p true for
@@ -801,7 +801,7 @@ public:
    * positions may or may not be preserved across the re-partitioning that
    * accompanies mesh refinement.
    */
-  Point<spacedim> &
+  Point<spacedim>&
   vertex(const unsigned int i) const;
 
   /**
@@ -1098,7 +1098,7 @@ public:
    * description involves querying both the manifold or boundary
    * indicators. See there for more information.
    */
-  const Manifold<dim, spacedim> &
+  const Manifold<dim, spacedim>&
   get_manifold() const;
 
   /**
@@ -1231,7 +1231,7 @@ public:
    * for more information.
    */
   void
-  set_user_pointer(void *p) const;
+  set_user_pointer(void* p) const;
 
   /**
    * Reset the user pointer to a @p nullptr pointer. See
@@ -1256,7 +1256,7 @@ public:
    * @ref GlossUserData
    * for more information.
    */
-  void *
+  void*
   user_pointer() const;
 
   /**
@@ -1281,7 +1281,7 @@ public:
    * for more information.
    */
   void
-  recursively_set_user_pointer(void *p) const;
+  recursively_set_user_pointer(void* p) const;
 
   /**
    * Clear the user pointer of this object and all of its descendants. The
@@ -1444,7 +1444,7 @@ public:
    * equivalent to asking the line for its center.
    */
   Point<spacedim>
-  intermediate_point(const Point<structdim> &coordinates) const;
+  intermediate_point(const Point<structdim>& coordinates) const;
 
   /**
    * This function computes a fast approximate transformation from the real to
@@ -1469,7 +1469,7 @@ public:
    * @note If dim<spacedim we first project p onto the plane.
    */
   Point<structdim>
-  real_to_unit_cell_affine_approximation(const Point<spacedim> &point) const;
+  real_to_unit_cell_affine_approximation(const Point<spacedim>& point) const;
 
   /**
    * Center of the object. The center of an object is defined to be the
@@ -1573,7 +1573,7 @@ public:
    */
   bool
   is_translation_of(
-    const TriaIterator<TriaAccessor<structdim, dim, spacedim>> &o) const;
+    const TriaIterator<TriaAccessor<structdim, dim, spacedim>>& o) const;
 
   /**
    * @}
@@ -1593,8 +1593,9 @@ private:
    * triangulation.
    */
   void
-  set(const dealii::internal::TriangulationImplementation::TriaObject<structdim>
-        &o) const;
+  set(
+    const dealii::internal::TriangulationImplementation::TriaObject<structdim>&
+      o) const;
 
   /**
    * Set the flag indicating, what <code>line_orientation()</code> will
@@ -1658,7 +1659,7 @@ private:
    * function. It is exclusively for internal use in the library.
    */
   void
-  set_refinement_case(const RefinementCase<structdim> &ref_case) const;
+  set_refinement_case(const RefinementCase<structdim>& ref_case) const;
 
   /**
    * Clear the RefinementCase<dim> of this TriaObject, i.e. reset it to
@@ -1749,7 +1750,7 @@ public:
    * Constructor. The second argument is the global index of the vertex we
    * point to.
    */
-  TriaAccessor(const Triangulation<dim, spacedim> *tria,
+  TriaAccessor(const Triangulation<dim, spacedim>* tria,
                const unsigned int                  vertex_index);
 
   /**
@@ -1757,22 +1758,22 @@ public:
    * compatibility with the other accessor classes. @p index can be used to
    * set the global index of the vertex we point to.
    */
-  TriaAccessor(const Triangulation<dim, spacedim> *tria  = nullptr,
+  TriaAccessor(const Triangulation<dim, spacedim>* tria  = nullptr,
                const int                           level = 0,
                const int                           index = 0,
-               const AccessorData *                      = nullptr);
+               const AccessorData*                       = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Constructor. Should never be called and thus produces an error.
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Return the state of the iterator.
@@ -1815,13 +1816,13 @@ public:
    * Compare for equality.
    */
   bool
-  operator==(const TriaAccessor &) const;
+  operator==(const TriaAccessor&) const;
 
   /**
    * Compare for inequality.
    */
   bool
-  operator!=(const TriaAccessor &) const;
+  operator!=(const TriaAccessor&) const;
 
   /**
    * @}
@@ -1858,7 +1859,7 @@ public:
    * reference to the current point to which this object refers. Otherwise, it
    * throws an exception.
    */
-  Point<spacedim> &
+  Point<spacedim>&
   vertex(const unsigned int i = 0) const;
 
   /**
@@ -2056,12 +2057,12 @@ protected:
    * class.
    */
   void
-  copy_from(const TriaAccessor &);
+  copy_from(const TriaAccessor&);
 
   /**
    * Pointer to the triangulation we operate on.
    */
-  const Triangulation<dim, spacedim> *tria;
+  const Triangulation<dim, spacedim>* tria;
 
   /**
    * The global vertex index of the vertex this object corresponds to.
@@ -2157,7 +2158,7 @@ public:
    *
    * The third argument is the global index of the vertex we point to.
    */
-  TriaAccessor(const Triangulation<1, spacedim> *tria,
+  TriaAccessor(const Triangulation<1, spacedim>* tria,
                const VertexKind                  vertex_kind,
                const unsigned int                vertex_index);
 
@@ -2166,29 +2167,29 @@ public:
    * compatibility with the other accessor classes. However, it doesn't do
    * anything useful here and so may not actually be called.
    */
-  TriaAccessor(const Triangulation<1, spacedim> *tria = nullptr,
+  TriaAccessor(const Triangulation<1, spacedim>* tria = nullptr,
                const int                              = 0,
                const int                              = 0,
-               const AccessorData *                   = nullptr);
+               const AccessorData*                    = nullptr);
 
   /**
    * Constructor. Should never be called and thus produces an error.
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const TriaAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Constructor. Should never be called and thus produces an error.
    */
   template <int structdim2, int dim2, int spacedim2>
-  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2> &);
+  TriaAccessor(const InvalidAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Copy operator. Since this is only called from iterators, do not return
    * anything, since the iterator will return itself.
    */
   void
-  copy_from(const TriaAccessor &);
+  copy_from(const TriaAccessor&);
 
   /**
    * Return the state of the iterator. Since an iterator to points can not be
@@ -2235,13 +2236,13 @@ public:
    * Compare for equality.
    */
   bool
-  operator==(const TriaAccessor &) const;
+  operator==(const TriaAccessor&) const;
 
   /**
    * Compare for inequality.
    */
   bool
-  operator!=(const TriaAccessor &) const;
+  operator!=(const TriaAccessor&) const;
 
   /**
    * @}
@@ -2277,7 +2278,7 @@ public:
    * reference to the current point to which this object refers. Otherwise, it
    * throws an exception.
    */
-  Point<spacedim> &
+  Point<spacedim>&
   vertex(const unsigned int i = 0) const;
 
   /**
@@ -2351,7 +2352,7 @@ public:
   /**
    * Return a constant reference to the manifold object used for this object.
    */
-  const Manifold<1, spacedim> &
+  const Manifold<1, spacedim>&
   get_manifold() const;
 
   /**
@@ -2546,7 +2547,7 @@ protected:
   /**
    * Pointer to the triangulation we operate on.
    */
-  const Triangulation<1, spacedim> *tria;
+  const Triangulation<1, spacedim>* tria;
 
   /**
    * Whether this is a left end, right end, or interior vertex. This
@@ -2602,15 +2603,15 @@ public:
   /**
    * Constructor.
    */
-  CellAccessor(const Triangulation<dim, spacedim> *parent     = nullptr,
+  CellAccessor(const Triangulation<dim, spacedim>* parent     = nullptr,
                const int                           level      = -1,
                const int                           index      = -1,
-               const AccessorData *                local_data = nullptr);
+               const AccessorData*                 local_data = nullptr);
 
   /**
    * Copy constructor.
    */
-  CellAccessor(const TriaAccessor<dim, dim, spacedim> &cell_accessor);
+  CellAccessor(const TriaAccessor<dim, dim, spacedim>& cell_accessor);
 
   /**
    * Conversion constructor. This constructor exists to make certain
@@ -2625,14 +2626,14 @@ public:
    * 2d).
    */
   template <int structdim2, int dim2, int spacedim2>
-  CellAccessor(const InvalidAccessor<structdim2, dim2, spacedim2> &);
+  CellAccessor(const InvalidAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Another conversion operator between objects that don't make sense, just
    * like the previous one.
    */
   template <int structdim2, int dim2, int spacedim2>
-  CellAccessor(const TriaAccessor<structdim2, dim2, spacedim2> &);
+  CellAccessor(const TriaAccessor<structdim2, dim2, spacedim2>&);
 
   /**
    * Copy operator. These operators are usually used in a context like
@@ -2644,7 +2645,7 @@ public:
    * Consequently, this operator is declared as deleted and can not be used.
    */
   void
-  operator=(const CellAccessor<dim, spacedim> &) = delete;
+  operator=(const CellAccessor<dim, spacedim>&) = delete;
 
   /**
    * @}
@@ -3060,7 +3061,7 @@ public:
   bool
   flag_for_face_refinement(
     const unsigned int             face_no,
-    const RefinementCase<dim - 1> &face_refinement_case =
+    const RefinementCase<dim - 1>& face_refinement_case =
       RefinementCase<dim - 1>::isotropic_refinement) const;
 
   /**
@@ -3415,7 +3416,7 @@ public:
    * cell.
    */
   bool
-  point_inside(const Point<spacedim> &p) const;
+  point_inside(const Point<spacedim>& p) const;
 
   /**
    * Set the neighbor @p i of this cell to the cell pointed to by @p pointer.
@@ -3427,7 +3428,7 @@ public:
    */
   void
   set_neighbor(const unsigned int                               i,
-               const TriaIterator<CellAccessor<dim, spacedim>> &pointer) const;
+               const TriaIterator<CellAccessor<dim, spacedim>>& pointer) const;
 
   /**
    * Return a unique ID for the current cell. This ID is constructed from the
@@ -3489,7 +3490,7 @@ protected:
    */
   template <int dim_, int spacedim_>
   bool
-  point_inside_codim(const Point<spacedim_> &p) const;
+  point_inside_codim(const Point<spacedim_>& p) const;
 
 
 
@@ -3529,8 +3530,7 @@ private:
 
 template <int structdim, int dim, int spacedim>
 template <typename OtherAccessor>
-InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
-  const OtherAccessor &)
+InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(const OtherAccessor&)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -3545,7 +3545,7 @@ InvalidAccessor<structdim, dim, spacedim>::InvalidAccessor(
 template <int structdim, int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2> &)
+  const InvalidAccessor<structdim2, dim2, spacedim2>&)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -3560,7 +3560,7 @@ TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 CellAccessor<dim, spacedim>::CellAccessor(
-  const InvalidAccessor<structdim2, dim2, spacedim2> &)
+  const InvalidAccessor<structdim2, dim2, spacedim2>&)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -3575,7 +3575,7 @@ CellAccessor<dim, spacedim>::CellAccessor(
 template <int structdim, int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2> &)
+  const TriaAccessor<structdim2, dim2, spacedim2>&)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -3590,7 +3590,7 @@ TriaAccessor<structdim, dim, spacedim>::TriaAccessor(
 template <int dim, int spacedim>
 template <int structdim2, int dim2, int spacedim2>
 CellAccessor<dim, spacedim>::CellAccessor(
-  const TriaAccessor<structdim2, dim2, spacedim2> &)
+  const TriaAccessor<structdim2, dim2, spacedim2>&)
 {
   Assert(false,
          ExcMessage("You are attempting an illegal conversion between "
@@ -3605,22 +3605,22 @@ CellAccessor<dim, spacedim>::CellAccessor(
 
 template <>
 bool
-CellAccessor<1, 1>::point_inside(const Point<1> &) const;
+CellAccessor<1, 1>::point_inside(const Point<1>&) const;
 template <>
 bool
-CellAccessor<2, 2>::point_inside(const Point<2> &) const;
+CellAccessor<2, 2>::point_inside(const Point<2>&) const;
 template <>
 bool
-CellAccessor<3, 3>::point_inside(const Point<3> &) const;
+CellAccessor<3, 3>::point_inside(const Point<3>&) const;
 template <>
 bool
-CellAccessor<1, 2>::point_inside(const Point<2> &) const;
+CellAccessor<1, 2>::point_inside(const Point<2>&) const;
 template <>
 bool
-CellAccessor<1, 3>::point_inside(const Point<3> &) const;
+CellAccessor<1, 3>::point_inside(const Point<3>&) const;
 template <>
 bool
-CellAccessor<2, 3>::point_inside(const Point<3> &) const;
+CellAccessor<2, 3>::point_inside(const Point<3>&) const;
 // -------------------------------------------------------------------
 
 template <>

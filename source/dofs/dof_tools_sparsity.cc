@@ -56,9 +56,9 @@ namespace DoFTools
 {
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_sparsity_pattern(const DoFHandlerType &    dof,
-                        SparsityPatternType &     sparsity,
-                        const ConstraintMatrix &  constraints,
+  make_sparsity_pattern(const DoFHandlerType&     dof,
+                        SparsityPatternType&      sparsity,
+                        const ConstraintMatrix&   constraints,
                         const bool                keep_constrained_dofs,
                         const types::subdomain_id subdomain_id)
   {
@@ -112,10 +112,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_sparsity_pattern(const DoFHandlerType &    dof,
-                        const Table<2, Coupling> &couplings,
-                        SparsityPatternType &     sparsity,
-                        const ConstraintMatrix &  constraints,
+  make_sparsity_pattern(const DoFHandlerType&     dof,
+                        const Table<2, Coupling>& couplings,
+                        SparsityPatternType&      sparsity,
+                        const ConstraintMatrix&   constraints,
                         const bool                keep_constrained_dofs,
                         const types::subdomain_id subdomain_id)
   {
@@ -147,7 +147,7 @@ namespace DoFTools
         "than the locally owned one does not make sense."));
 
     const hp::FECollection<DoFHandlerType::dimension,
-                           DoFHandlerType::space_dimension> &fe_collection =
+                           DoFHandlerType::space_dimension>& fe_collection =
       dof.get_fe_collection();
 
     const std::vector<Table<2, Coupling>> dof_mask //(fe_collection.size())
@@ -202,9 +202,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_sparsity_pattern(const DoFHandlerType &dof_row,
-                        const DoFHandlerType &dof_col,
-                        SparsityPatternType & sparsity)
+  make_sparsity_pattern(const DoFHandlerType& dof_row,
+                        const DoFHandlerType& dof_col,
+                        SparsityPatternType&  sparsity)
   {
     const types::global_dof_index n_dofs_row = dof_row.n_dofs();
     const types::global_dof_index n_dofs_col = dof_col.n_dofs();
@@ -309,16 +309,16 @@ namespace DoFTools
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
   make_boundary_sparsity_pattern(
-    const DoFHandlerType &                      dof,
-    const std::vector<types::global_dof_index> &dof_to_boundary_mapping,
-    SparsityPatternType &                       sparsity)
+    const DoFHandlerType&                       dof,
+    const std::vector<types::global_dof_index>& dof_to_boundary_mapping,
+    SparsityPatternType&                        sparsity)
   {
     if (DoFHandlerType::dimension == 1)
       {
         // there are only 2 boundary indicators in 1d, so it is no
         // performance problem to call the other function
         std::map<types::boundary_id,
-                 const Function<DoFHandlerType::space_dimension, double> *>
+                 const Function<DoFHandlerType::space_dimension, double>*>
           boundary_ids;
         boundary_ids[0] = nullptr;
         boundary_ids[1] = nullptr;
@@ -383,12 +383,12 @@ namespace DoFTools
             typename number>
   void
   make_boundary_sparsity_pattern(
-    const DoFHandlerType &dof,
+    const DoFHandlerType& dof,
     const std::map<types::boundary_id,
-                   const Function<DoFHandlerType::space_dimension, number> *>
-      &                                         boundary_ids,
-    const std::vector<types::global_dof_index> &dof_to_boundary_mapping,
-    SparsityPatternType &                       sparsity)
+                   const Function<DoFHandlerType::space_dimension, number>*>&
+                                                boundary_ids,
+    const std::vector<types::global_dof_index>& dof_to_boundary_mapping,
+    SparsityPatternType&                        sparsity)
   {
     if (DoFHandlerType::dimension == 1)
       {
@@ -479,9 +479,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_flux_sparsity_pattern(const DoFHandlerType &    dof,
-                             SparsityPatternType &     sparsity,
-                             const ConstraintMatrix &  constraints,
+  make_flux_sparsity_pattern(const DoFHandlerType&     dof,
+                             SparsityPatternType&      sparsity,
+                             const ConstraintMatrix&   constraints,
                              const bool                keep_constrained_dofs,
                              const types::subdomain_id subdomain_id)
 
@@ -648,8 +648,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_flux_sparsity_pattern(const DoFHandlerType &dof,
-                             SparsityPatternType & sparsity)
+  make_flux_sparsity_pattern(const DoFHandlerType& dof,
+                             SparsityPatternType&  sparsity)
   {
     ConstraintMatrix constraints;
     make_flux_sparsity_pattern(dof, sparsity, constraints);
@@ -658,8 +658,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   Table<2, Coupling>
   dof_couplings_from_component_couplings(
-    const FiniteElement<dim, spacedim> &fe,
-    const Table<2, Coupling> &          component_couplings)
+    const FiniteElement<dim, spacedim>& fe,
+    const Table<2, Coupling>&           component_couplings)
   {
     Assert(
       component_couplings.n_rows() == fe.n_components(),
@@ -699,8 +699,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   std::vector<Table<2, Coupling>>
   dof_couplings_from_component_couplings(
-    const hp::FECollection<dim, spacedim> &fe,
-    const Table<2, Coupling> &             component_couplings)
+    const hp::FECollection<dim, spacedim>& fe,
+    const Table<2, Coupling>&              component_couplings)
   {
     std::vector<Table<2, Coupling>> return_value(fe.size());
     for (unsigned int i = 0; i < fe.size(); ++i)
@@ -720,16 +720,16 @@ namespace DoFTools
       // non-hp DoFHandlers
       template <typename DoFHandlerType, typename SparsityPatternType>
       void
-      make_flux_sparsity_pattern(const DoFHandlerType &  dof,
-                                 SparsityPatternType &   sparsity,
-                                 const ConstraintMatrix &constraints,
+      make_flux_sparsity_pattern(const DoFHandlerType&   dof,
+                                 SparsityPatternType&    sparsity,
+                                 const ConstraintMatrix& constraints,
                                  const bool              keep_constrained_dofs,
-                                 const Table<2, Coupling> &int_mask,
-                                 const Table<2, Coupling> &flux_mask,
+                                 const Table<2, Coupling>& int_mask,
+                                 const Table<2, Coupling>& flux_mask,
                                  const types::subdomain_id subdomain_id)
       {
         const FiniteElement<DoFHandlerType::dimension,
-                            DoFHandlerType::space_dimension> &fe = dof.get_fe();
+                            DoFHandlerType::space_dimension>& fe = dof.get_fe();
 
         std::vector<types::global_dof_index> dofs_on_this_cell(
           fe.dofs_per_cell);
@@ -1010,12 +1010,12 @@ namespace DoFTools
       template <int dim, int spacedim, typename SparsityPatternType>
       void
       make_flux_sparsity_pattern(
-        const dealii::hp::DoFHandler<dim, spacedim> &dof,
-        SparsityPatternType &                        sparsity,
-        const ConstraintMatrix &                     constraints,
+        const dealii::hp::DoFHandler<dim, spacedim>& dof,
+        SparsityPatternType&                         sparsity,
+        const ConstraintMatrix&                      constraints,
         const bool                                   keep_constrained_dofs,
-        const Table<2, Coupling> &                   int_mask,
-        const Table<2, Coupling> &                   flux_mask,
+        const Table<2, Coupling>&                    int_mask,
+        const Table<2, Coupling>&                    flux_mask,
         const types::subdomain_id                    subdomain_id)
       {
         // while the implementation above is quite optimized and caches a
@@ -1025,7 +1025,7 @@ namespace DoFTools
         // consequently, the implementation here is simpler and probably
         // less efficient but at least readable...
 
-        const dealii::hp::FECollection<dim, spacedim> &fe =
+        const dealii::hp::FECollection<dim, spacedim>& fe =
           dof.get_fe_collection();
 
         std::vector<types::global_dof_index> dofs_on_this_cell(
@@ -1265,10 +1265,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_flux_sparsity_pattern(const DoFHandlerType &    dof,
-                             SparsityPatternType &     sparsity,
-                             const Table<2, Coupling> &int_mask,
-                             const Table<2, Coupling> &flux_mask,
+  make_flux_sparsity_pattern(const DoFHandlerType&     dof,
+                             SparsityPatternType&      sparsity,
+                             const Table<2, Coupling>& int_mask,
+                             const Table<2, Coupling>& flux_mask,
                              const types::subdomain_id subdomain_id)
   {
     ConstraintMatrix constraints;
@@ -1284,12 +1284,12 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_flux_sparsity_pattern(const DoFHandlerType &    dof,
-                             SparsityPatternType &     sparsity,
-                             const ConstraintMatrix &  constraints,
+  make_flux_sparsity_pattern(const DoFHandlerType&     dof,
+                             SparsityPatternType&      sparsity,
+                             const ConstraintMatrix&   constraints,
                              const bool                keep_constrained_dofs,
-                             const Table<2, Coupling> &int_mask,
-                             const Table<2, Coupling> &flux_mask,
+                             const Table<2, Coupling>& int_mask,
+                             const Table<2, Coupling>& flux_mask,
                              const types::subdomain_id subdomain_id)
   {
     // do the error checking and frame code here, and then pass on to more

@@ -26,9 +26,9 @@
 
 
 void
-test(PETScWrappers::MPI::Vector &v,
-     PETScWrappers::MPI::Vector &w,
-     PETScWrappers::MPI::Vector &x)
+test(PETScWrappers::MPI::Vector& v,
+     PETScWrappers::MPI::Vector& w,
+     PETScWrappers::MPI::Vector& x)
 {
   for (unsigned int i = 0; i < v.size(); ++i)
     {
@@ -59,7 +59,7 @@ test(PETScWrappers::MPI::Vector &v,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -75,7 +75,7 @@ main(int argc, char **argv)
         test(v, w, x);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -29,7 +29,7 @@ struct X
     ++counter;
   }
 
-  X(const X &)
+  X(const X&)
   {
     ++counter;
   }
@@ -51,7 +51,7 @@ main()
   {
     AssertThrow(counter == 0, ExcInternalError());
     {
-      X *p = new X;
+      X* p = new X;
       AssertThrow(counter == 1, ExcInternalError());
       delete p;
     }

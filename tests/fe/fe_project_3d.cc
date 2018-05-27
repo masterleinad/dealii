@@ -116,16 +116,16 @@ public:
   VectorFunction() : Function<dim>(dim)
   {}
   virtual double
-  value(const Point<dim> &p, const unsigned int component) const;
+  value(const Point<dim>& p, const unsigned int component) const;
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const;
+  vector_value(const Point<dim>& p, Vector<double>& values) const;
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &p, const unsigned int component = 0) const;
+  gradient(const Point<dim>& p, const unsigned int component = 0) const;
 };
 
 template <>
 double
-VectorFunction<3>::value(const Point<3> &p, const unsigned int component) const
+VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
@@ -148,8 +148,8 @@ VectorFunction<3>::value(const Point<3> &p, const unsigned int component) const
 
 template <int dim>
 void
-VectorFunction<dim>::vector_value(const Point<dim> &p,
-                                  Vector<double> &  values) const
+VectorFunction<dim>::vector_value(const Point<dim>& p,
+                                  Vector<double>&   values) const
 {
   for (int i = 0; i < dim; ++i)
     values(i) = value(p, i);
@@ -157,7 +157,7 @@ VectorFunction<dim>::vector_value(const Point<dim> &p,
 
 template <>
 Tensor<1, 3>
-VectorFunction<3>::gradient(const Point<3> &   p,
+VectorFunction<3>::gradient(const Point<3>&    p,
                             const unsigned int component) const
 {
   const double PI = numbers::PI;
@@ -185,8 +185,8 @@ VectorFunction<3>::gradient(const Point<3> &   p,
   return val;
 }
 
-void create_tria(Triangulation<3> &triangulation,
-                 const Point<3> *  vertices_parallelograms)
+void create_tria(Triangulation<3>& triangulation,
+                 const Point<3>*   vertices_parallelograms)
 {
   const std::vector<Point<3>> vertices(&vertices_parallelograms[0],
                                        &vertices_parallelograms[n_vertices]);
@@ -220,10 +220,10 @@ void create_tria(Triangulation<3> &triangulation,
 
 template <int dim>
 void
-test(const FiniteElement<dim> &fe,
+test(const FiniteElement<dim>& fe,
      unsigned                  n_cycles,
      bool                      global,
-     const Point<dim> *        vertices_parallelograms)
+     const Point<dim>*         vertices_parallelograms)
 {
   deallog << "dim: " << dim << "\t" << fe.get_name() << std::endl;
   deallog
@@ -301,7 +301,7 @@ test(const FiniteElement<dim> &fe,
            ++cell, ++cell_index)
         {
           fe_values.reinit(cell);
-          const std::vector<double> &JxW_values = fe_values.get_JxW_values();
+          const std::vector<double>& JxW_values = fe_values.get_JxW_values();
           fe_values[vec].get_function_divergences(v, div_v);
           fe_values[vec].get_function_curls(v, curl_v);
           fe_values[vec].get_function_hessians(v, hessians);
@@ -330,7 +330,7 @@ test(const FiniteElement<dim> &fe,
                ++face)
             {
               fe_face_values.reinit(cell, face);
-              const std::vector<double> &face_JxW_values =
+              const std::vector<double>& face_JxW_values =
                 fe_face_values.get_JxW_values();
               fe_face_values[vec].get_function_values(v, face_values);
               if (dim == 3)
@@ -338,7 +338,7 @@ test(const FiniteElement<dim> &fe,
               for (unsigned int q_point = 0; q_point < n_face_q_points;
                    ++q_point)
                 {
-                  const Tensor<1, dim> &normal =
+                  const Tensor<1, dim>& normal =
                     fe_face_values.normal_vector(q_point);
 
                   // boundary flux
@@ -355,7 +355,7 @@ test(const FiniteElement<dim> &fe,
                     n_x_v[0] = (-normal[1] * face_values[q_point][0] +
                                 normal[0] * face_values[q_point][1]);
                   else if (dim == 3)
-                    cross_product(*reinterpret_cast<Tensor<1, dim> *>(&n_x_v),
+                    cross_product(*reinterpret_cast<Tensor<1, dim>*>(&n_x_v),
                                   normal,
                                   face_values[q_point]);
 
@@ -370,7 +370,7 @@ test(const FiniteElement<dim> &fe,
                       Tensor<1, dim> n_x_curl_u;
                       cross_product(n_x_curl_u,
                                     normal,
-                                    *reinterpret_cast<Tensor<1, dim> *>(
+                                    *reinterpret_cast<Tensor<1, dim>*>(
                                       &face_curls[q_point]));
                       if (cell->at_boundary(face))
                         boundary_curl_curl_traces +=
@@ -415,7 +415,7 @@ main()
 
   deallog << "3d\nRectangular grid:\n";
 
-  const Point<dim> *vertices = &vertices_rectangular[0];
+  const Point<dim>* vertices = &vertices_rectangular[0];
   test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
 

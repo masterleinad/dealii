@@ -67,13 +67,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> res = point;
     Assert(point.norm() > 0,
@@ -83,7 +83,7 @@ public:
   }
 
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim> &p, const unsigned int component = 0) const
+  hessian(const Point<dim>& p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p;
     const double   r   = dir.norm();
@@ -115,17 +115,17 @@ public:
  */
 template <int dim>
 void
-check_consistency(const Point<dim> &    p,
-                  const Function<dim> & func,
-                  const double &        v_e,
-                  const Tensor<1, dim> &g_e,
-                  const Tensor<2, dim> &h_e,
-                  const double &        v_s0,
-                  const Tensor<1, dim> &g_s0,
-                  const Tensor<2, dim> &h_s0,
-                  const double &        v_s1,
-                  const Tensor<1, dim> &g_s1,
-                  const Tensor<2, dim> &h_s1)
+check_consistency(const Point<dim>&     p,
+                  const Function<dim>&  func,
+                  const double&         v_e,
+                  const Tensor<1, dim>& g_e,
+                  const Tensor<2, dim>& h_e,
+                  const double&         v_s0,
+                  const Tensor<1, dim>& g_s0,
+                  const Tensor<2, dim>& h_s0,
+                  const double&         v_s1,
+                  const Tensor<1, dim>& g_s1,
+                  const Tensor<2, dim>& h_s1)
 {
   const double                  v_f = func.value(p);
   const Tensor<1, dim>          g_f = func.gradient(p);
@@ -156,10 +156,10 @@ check_consistency(const Point<dim> &    p,
 
 template <int dim>
 void
-test(const FiniteElement<dim> & fe1,
-     const FiniteElement<dim> & fe2,
-     const Quadrature<dim> &    volume_quad,
-     const Quadrature<dim - 1> &face_quad,
+test(const FiniteElement<dim>&  fe1,
+     const FiniteElement<dim>&  fe2,
+     const Quadrature<dim>&     volume_quad,
+     const Quadrature<dim - 1>& face_quad,
      const bool                 distort)
 {
   Triangulation<dim> triangulation;
@@ -222,7 +222,7 @@ test(const FiniteElement<dim> & fe1,
       fe_values_enriched.reinit(cell_enriched);
       fe_values_system.reinit(cell_system);
       const unsigned int                     n_q_points = volume_quad.size();
-      const std::vector<dealii::Point<dim>> &q_points =
+      const std::vector<dealii::Point<dim>>& q_points =
         fe_values_system.get_quadrature_points();
 
       // check shape functions
@@ -247,7 +247,7 @@ test(const FiniteElement<dim> & fe1,
           fe_face_values_enriched.reinit(cell_enriched, face);
           fe_face_values_system.reinit(cell_system, face);
           const unsigned int n_q_points_face = face_quad.size();
-          const std::vector<dealii::Point<dim>> &q_points =
+          const std::vector<dealii::Point<dim>>& q_points =
             fe_face_values_system.get_quadrature_points();
 
           for (unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -276,7 +276,7 @@ test(const FiniteElement<dim> & fe1,
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -309,7 +309,7 @@ main(int argc, char **argv)
           FE_Q<dim>(3), FE_Q<dim>(2), QGauss<dim>(2), QGauss<dim - 1>(2), true);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

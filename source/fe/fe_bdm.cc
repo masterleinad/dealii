@@ -133,8 +133,8 @@ FE_BDM<dim>::clone() const
 template <int dim>
 void
 FE_BDM<dim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>> &support_point_values,
-  std::vector<double> &              nodal_values) const
+  const std::vector<Vector<double>>& support_point_values,
+  std::vector<double>&               nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -279,8 +279,8 @@ namespace internal
       // of freedom.
       template <int dim>
       void
-      initialize_test_values(std::vector<std::vector<double>> &test_values,
-                             const Quadrature<dim> &           quadrature,
+      initialize_test_values(std::vector<std::vector<double>>& test_values,
+                             const Quadrature<dim>&            quadrature,
                              const unsigned int                deg)
       {
         PolynomialsP<dim>           poly(deg);
@@ -312,8 +312,8 @@ namespace internal
       // length stays zero.
       template <>
       void
-      initialize_test_values(std::vector<std::vector<double>> &,
-                             const Quadrature<0> &,
+      initialize_test_values(std::vector<std::vector<double>>&,
+                             const Quadrature<0>&,
                              const unsigned int)
       {}
     } // namespace

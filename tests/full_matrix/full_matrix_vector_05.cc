@@ -26,7 +26,7 @@
 
 
 void
-test(Vector<double> &v, Vector<double> &w)
+test(Vector<double>& v, Vector<double>& w)
 {
   FullMatrix<double> m(v.size(), v.size());
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -75,7 +75,7 @@ main()
       Vector<double> w(100);
       test(v, w);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

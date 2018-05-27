@@ -22,7 +22,7 @@ class EmptyInfo
 public:
   template <class DOFINFO>
   void
-  reinit(const DOFINFO &)
+  reinit(const DOFINFO&)
   {}
 };
 
@@ -33,12 +33,12 @@ public:
   typedef EmptyInfo CellInfo;
   template <int dim, class DOFINFO>
   void
-  post_cell(const MeshWorker::DoFInfoBox<dim, DOFINFO> &)
+  post_cell(const MeshWorker::DoFInfoBox<dim, DOFINFO>&)
   {}
 
   template <int dim, class DOFINFO>
   void
-  post_faces(const MeshWorker::DoFInfoBox<dim, DOFINFO> &)
+  post_faces(const MeshWorker::DoFInfoBox<dim, DOFINFO>&)
   {}
 
   EmptyInfo cell;

@@ -23,7 +23,7 @@
 
 template <typename number>
 void
-checkConstructor4(const FullMatrix<number> &A, char *name)
+checkConstructor4(const FullMatrix<number>& A, char* name)
 {
   deallog << "Init with matrix name and matrix" << std::endl;
   PointerMatrix<FullMatrix<number>, Vector<number>> P(&A, name);
@@ -43,7 +43,7 @@ main()
   FullMatrix<double> A(2, 2);
   A.fill(Adata);
 
-  char *name = "Matrix A";
+  char* name = "Matrix A";
 
   checkConstructor4<double>(A, name);
 }

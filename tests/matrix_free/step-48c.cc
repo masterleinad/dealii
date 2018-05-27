@@ -62,32 +62,32 @@ namespace Step48
   class SineGordonOperation
   {
   public:
-    SineGordonOperation(const MatrixFree<dim, double> &data_in,
+    SineGordonOperation(const MatrixFree<dim, double>& data_in,
                         const double                   time_step);
 
     void
-    apply(LinearAlgebra::distributed::Vector<double> &                     dst,
-          const std::vector<LinearAlgebra::distributed::Vector<double> *> &src)
+    apply(LinearAlgebra::distributed::Vector<double>&                     dst,
+          const std::vector<LinearAlgebra::distributed::Vector<double>*>& src)
       const;
 
   private:
-    const MatrixFree<dim, double> &            data;
+    const MatrixFree<dim, double>&             data;
     const VectorizedArray<double>              delta_t_sqr;
     LinearAlgebra::distributed::Vector<double> inv_mass_matrix;
 
     void
     local_apply(
-      const MatrixFree<dim, double> &                                  data,
-      LinearAlgebra::distributed::Vector<double> &                     dst,
-      const std::vector<LinearAlgebra::distributed::Vector<double> *> &src,
-      const std::pair<unsigned int, unsigned int> &cell_range) const;
+      const MatrixFree<dim, double>&                                  data,
+      LinearAlgebra::distributed::Vector<double>&                     dst,
+      const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
+      const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
 
 
 
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
-    const MatrixFree<dim, double> &data_in,
+    const MatrixFree<dim, double>& data_in,
     const double                   time_step) :
     data(data_in),
     delta_t_sqr(make_vectorized_array(time_step * time_step))
@@ -122,10 +122,10 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::local_apply(
-    const MatrixFree<dim> &                                          data,
-    LinearAlgebra::distributed::Vector<double> &                     dst,
-    const std::vector<LinearAlgebra::distributed::Vector<double> *> &src,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
+    const MatrixFree<dim>&                                          data,
+    LinearAlgebra::distributed::Vector<double>&                     dst,
+    const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
+    const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
@@ -159,8 +159,8 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::apply(
-    LinearAlgebra::distributed::Vector<double> &                     dst,
-    const std::vector<LinearAlgebra::distributed::Vector<double> *> &src) const
+    LinearAlgebra::distributed::Vector<double>&                     dst,
+    const std::vector<LinearAlgebra::distributed::Vector<double>*>& src) const
   {
     dst = 0;
     data.cell_loop(
@@ -179,12 +179,12 @@ namespace Step48
       Function<dim>(n_components, time)
     {}
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component = 0) const;
   };
 
   template <int dim>
   double
-  InitialSolution<dim>::value(const Point<dim> &p,
+  InitialSolution<dim>::value(const Point<dim>& p,
                               const unsigned int /* component */) const
   {
     return 4. * std::exp(-p.square() * 10);
@@ -334,8 +334,7 @@ namespace Step48
       dof_handler, InitialSolution<dim>(1, time - time_step), old_solution);
     output_results(0);
 
-    std::vector<LinearAlgebra::distributed::Vector<double> *>
-      previous_solutions;
+    std::vector<LinearAlgebra::distributed::Vector<double>*> previous_solutions;
     previous_solutions.push_back(&old_solution);
     previous_solutions.push_back(&old_old_solution);
 
@@ -365,7 +364,7 @@ namespace Step48
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

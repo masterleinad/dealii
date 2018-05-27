@@ -35,7 +35,7 @@ const double c01 = 20.0;
 // and S = 2 dpsi/dC
 template <int dim>
 SymmetricTensor<2, dim>
-get_S(const Tensor<2, dim> &F)
+get_S(const Tensor<2, dim>& F)
 {
   const SymmetricTensor<2, dim> C  = symmetrize(transpose(F) * F);
   const double                  I1 = first_invariant(C);
@@ -47,7 +47,7 @@ get_S(const Tensor<2, dim> &F)
 //  I2(b) == I2(C)
 template <int dim>
 SymmetricTensor<2, dim>
-get_tau(const Tensor<2, dim> &F)
+get_tau(const Tensor<2, dim>& F)
 {
   const SymmetricTensor<2, dim> b  = symmetrize(F * transpose(F));
   const double                  I1 = first_invariant(b);

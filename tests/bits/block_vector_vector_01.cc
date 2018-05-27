@@ -27,7 +27,7 @@
 
 
 void
-test(BlockVector<double> &v)
+test(BlockVector<double>& v)
 {
   for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i + 1.;
@@ -51,7 +51,7 @@ main()
       BlockVector<double>                  v(block_sizes);
       test(v);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

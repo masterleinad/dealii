@@ -40,7 +40,7 @@ namespace GeometricUtilities
 
     template <int dim>
     std::array<double, dim>
-    to_spherical(const Point<dim> &position)
+    to_spherical(const Point<dim>& position)
     {
       std::array<double, dim> scoord;
 
@@ -66,7 +66,7 @@ namespace GeometricUtilities
 
     template <std::size_t dim>
     Point<dim>
-    from_spherical(const std::array<double, dim> &scoord)
+    from_spherical(const std::array<double, dim>& scoord)
     {
       Point<dim> ccoord;
 

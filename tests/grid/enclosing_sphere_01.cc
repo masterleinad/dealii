@@ -36,7 +36,7 @@
 
 template <int dim>
 void
-create_triangulation(const unsigned int, Triangulation<dim> &)
+create_triangulation(const unsigned int, Triangulation<dim>&)
 {
   Assert(false, ExcNotImplemented());
 }
@@ -44,7 +44,7 @@ create_triangulation(const unsigned int, Triangulation<dim> &)
 
 template <>
 void
-create_triangulation(const unsigned int case_no, Triangulation<2> &tria)
+create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
 {
   switch (case_no)
     {
@@ -54,26 +54,26 @@ create_triangulation(const unsigned int case_no, Triangulation<2> &tria)
       case 1:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<2> &v0 = tria.begin_active()->vertex(0);
+          Point<2>& v0 = tria.begin_active()->vertex(0);
           v0(0)        = 0.;
           break;
         }
       case 2:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<2> &v0 = tria.begin_active()->vertex(0);
+          Point<2>& v0 = tria.begin_active()->vertex(0);
           v0(0)        = 0.;
-          Point<2> &v3 = tria.begin_active()->vertex(3);
+          Point<2>& v3 = tria.begin_active()->vertex(3);
           v3(0)        = 4.;
           break;
         }
       case 3:
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<2> &v0 = tria.begin_active()->vertex(0);
+          Point<2>& v0 = tria.begin_active()->vertex(0);
           v0           = Point<2>(1.9, 1.9);
 
-          Point<2> &v3 = tria.begin_active()->vertex(3);
+          Point<2>& v3 = tria.begin_active()->vertex(3);
           v3           = Point<2>(3.1, 3.);
           break;
 
@@ -108,7 +108,7 @@ create_triangulation(const unsigned int case_no, Triangulation<2> &tria)
 
 template <>
 void
-create_triangulation(const unsigned int case_no, Triangulation<3> &tria)
+create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
 {
   switch (case_no)
     {
@@ -119,7 +119,7 @@ create_triangulation(const unsigned int case_no, Triangulation<3> &tria)
       case 2: // like case 1
         {
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<3> &v0 = tria.begin_active()->vertex(0);
+          Point<3>& v0 = tria.begin_active()->vertex(0);
           v0(0)        = 0.;
           break;
         }
@@ -159,12 +159,12 @@ create_triangulation(const unsigned int case_no, Triangulation<3> &tria)
           //
 
           GridGenerator::hyper_cube(tria, 1., 3.);
-          Point<3> &v1 = tria.begin_active()->vertex(1);
-          Point<3> &v6 = tria.begin_active()->vertex(6);
+          Point<3>& v1 = tria.begin_active()->vertex(1);
+          Point<3>& v6 = tria.begin_active()->vertex(6);
           v1 += Point<3>(-0.9, 0.9, 0.9); // v1 was (3.,1.,1.)
           v6 += Point<3>(-0.2, 0.2, 0.2); // v7 was (1.,3.,3.)
-          const Point<3> &v0 = tria.begin_active()->vertex(0);
-          const Point<3> &v7 = tria.begin_active()->vertex(7);
+          const Point<3>& v0 = tria.begin_active()->vertex(0);
+          const Point<3>& v7 = tria.begin_active()->vertex(7);
           AssertThrow(v1.distance(v6) < v0.distance(v7),
                       ExcMessage("Vertices not moved as drawn above"));
           break;
@@ -185,8 +185,8 @@ test()
       create_triangulation(case_no, tria);
       const std::pair<Point<dim>, double> smallest_sphere =
         tria.begin_active()->enclosing_ball();
-      const double &    radius = smallest_sphere.second;
-      const Point<dim> &center = smallest_sphere.first;
+      const double&     radius = smallest_sphere.second;
+      const Point<dim>& center = smallest_sphere.first;
 
       deallog << "dim" << dim << ":case" << case_no << ":diameter=" << radius
               << ":center=" << center << std::endl;

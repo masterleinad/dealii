@@ -362,11 +362,11 @@ public:
    * these can therefore omit this argument. On the other hand, composed
    * elements such as FESystem will want to pass a different value here.
    */
-  FiniteElementData(const std::vector<unsigned int> &dofs_per_object,
+  FiniteElementData(const std::vector<unsigned int>& dofs_per_object,
                     const unsigned int               n_components,
                     const unsigned int               degree,
                     const Conformity                 conformity = unknown,
-                    const BlockIndices &block_indices = BlockIndices());
+                    const BlockIndices& block_indices = BlockIndices());
 
   /**
    * Number of dofs per vertex.
@@ -437,7 +437,7 @@ public:
   /**
    * Detailed information on block sizes.
    */
-  const BlockIndices &
+  const BlockIndices&
   block_indices() const;
 
   /**
@@ -462,7 +462,7 @@ public:
    * Comparison operator.
    */
   bool
-  operator==(const FiniteElementData &) const;
+  operator==(const FiniteElementData&) const;
 };
 
 
@@ -607,7 +607,7 @@ FiniteElementData<dim>::n_components() const
 
 
 template <int dim>
-inline const BlockIndices &
+inline const BlockIndices&
 FiniteElementData<dim>::block_indices() const
 {
   return block_indices_data;

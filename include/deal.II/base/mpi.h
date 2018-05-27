@@ -78,7 +78,7 @@ namespace Utilities
      * only one process and the function returns 1.
      */
     unsigned int
-    n_mpi_processes(const MPI_Comm &mpi_communicator);
+    n_mpi_processes(const MPI_Comm& mpi_communicator);
 
     /**
      * Return the
@@ -89,7 +89,7 @@ namespace Utilities
      * than) the number of all processes (given by get_n_mpi_processes()).
      */
     unsigned int
-    this_mpi_process(const MPI_Comm &mpi_communicator);
+    this_mpi_process(const MPI_Comm& mpi_communicator);
 
     /**
      * Consider an unstructured communication pattern where every process in
@@ -114,8 +114,8 @@ namespace Utilities
      */
     std::vector<unsigned int>
     compute_point_to_point_communication_pattern(
-      const MPI_Comm &                 mpi_comm,
-      const std::vector<unsigned int> &destinations);
+      const MPI_Comm&                  mpi_comm,
+      const std::vector<unsigned int>& destinations);
 
     /**
      * Given a
@@ -131,7 +131,7 @@ namespace Utilities
      * destroyed using <code>MPI_Comm_free</code>.
      */
     MPI_Comm
-    duplicate_communicator(const MPI_Comm &mpi_communicator);
+    duplicate_communicator(const MPI_Comm& mpi_communicator);
 
     /**
      * If @p comm is an intracommunicator, this function returns a new
@@ -162,10 +162,10 @@ namespace Utilities
      */
 #ifdef DEAL_II_WITH_MPI
     int
-    create_group(const MPI_Comm & comm,
-                 const MPI_Group &group,
+    create_group(const MPI_Comm&  comm,
+                 const MPI_Group& group,
                  const int        tag,
-                 MPI_Comm *       new_comm);
+                 MPI_Comm*        new_comm);
 #endif
 
     /**
@@ -189,7 +189,7 @@ namespace Utilities
      */
     template <typename T>
     T
-    sum(const T &t, const MPI_Comm &mpi_communicator);
+    sum(const T& t, const MPI_Comm& mpi_communicator);
 
     /**
      * Like the previous function, but take the sums over the elements of an
@@ -202,7 +202,7 @@ namespace Utilities
      */
     template <typename T, typename U>
     void
-    sum(const T &values, const MPI_Comm &mpi_communicator, U &sums);
+    sum(const T& values, const MPI_Comm& mpi_communicator, U& sums);
 
     /**
      * Like the previous function, but take the sums over the elements of an
@@ -215,9 +215,9 @@ namespace Utilities
      */
     template <typename T>
     void
-    sum(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      sums);
+    sum(const ArrayView<const T>& values,
+        const MPI_Comm&           mpi_communicator,
+        const ArrayView<T>&       sums);
 
     /**
      * Perform an MPI sum of the entries of a symmetric tensor.
@@ -226,8 +226,8 @@ namespace Utilities
      */
     template <int rank, int dim, typename Number>
     SymmetricTensor<rank, dim, Number>
-    sum(const SymmetricTensor<rank, dim, Number> &local,
-        const MPI_Comm &                          mpi_communicator);
+    sum(const SymmetricTensor<rank, dim, Number>& local,
+        const MPI_Comm&                           mpi_communicator);
 
     /**
      * Perform an MPI sum of the entries of a tensor.
@@ -236,8 +236,8 @@ namespace Utilities
      */
     template <int rank, int dim, typename Number>
     Tensor<rank, dim, Number>
-    sum(const Tensor<rank, dim, Number> &local,
-        const MPI_Comm &                 mpi_communicator);
+    sum(const Tensor<rank, dim, Number>& local,
+        const MPI_Comm&                  mpi_communicator);
 
     /**
      * Perform an MPI sum of the entries of a SparseMatrix.
@@ -249,9 +249,9 @@ namespace Utilities
      */
     template <typename Number>
     void
-    sum(const SparseMatrix<Number> &local,
-        const MPI_Comm &            mpi_communicator,
-        SparseMatrix<Number> &      global);
+    sum(const SparseMatrix<Number>& local,
+        const MPI_Comm&             mpi_communicator,
+        SparseMatrix<Number>&       global);
 
     /**
      * Return the maximum over all processors of the value @p t. This function
@@ -274,7 +274,7 @@ namespace Utilities
      */
     template <typename T>
     T
-    max(const T &t, const MPI_Comm &mpi_communicator);
+    max(const T& t, const MPI_Comm& mpi_communicator);
 
     /**
      * Like the previous function, but take the maximum over the elements of an
@@ -287,7 +287,7 @@ namespace Utilities
      */
     template <typename T, typename U>
     void
-    max(const T &values, const MPI_Comm &mpi_communicator, U &maxima);
+    max(const T& values, const MPI_Comm& mpi_communicator, U& maxima);
 
     /**
      * Like the previous function, but take the maximum over the elements of an
@@ -300,9 +300,9 @@ namespace Utilities
      */
     template <typename T>
     void
-    max(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      maxima);
+    max(const ArrayView<const T>& values,
+        const MPI_Comm&           mpi_communicator,
+        const ArrayView<T>&       maxima);
 
     /**
      * Return the minimum over all processors of the value @p t. This function
@@ -325,7 +325,7 @@ namespace Utilities
      */
     template <typename T>
     T
-    min(const T &t, const MPI_Comm &mpi_communicator);
+    min(const T& t, const MPI_Comm& mpi_communicator);
 
     /**
      * Like the previous function, but take the minima over the elements of an
@@ -338,7 +338,7 @@ namespace Utilities
      */
     template <typename T, typename U>
     void
-    min(const T &values, const MPI_Comm &mpi_communicator, U &minima);
+    min(const T& values, const MPI_Comm& mpi_communicator, U& minima);
 
     /**
      * Like the previous function, but take the minimum over the elements of an
@@ -351,9 +351,9 @@ namespace Utilities
      */
     template <typename T>
     void
-    min(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      minima);
+    min(const ArrayView<const T>& values,
+        const MPI_Comm&           mpi_communicator,
+        const ArrayView<T>&       minima);
 
     /**
      * A data structure to store the result of the min_max_avg() function.
@@ -431,7 +431,7 @@ namespace Utilities
      * everywhere.
      */
     MinMaxAvg
-    min_max_avg(const double my_value, const MPI_Comm &mpi_communicator);
+    min_max_avg(const double my_value, const MPI_Comm& mpi_communicator);
 
     /**
      * A class that is used to initialize the MPI system at the beginning of a
@@ -525,8 +525,8 @@ namespace Utilities
        * <code>main()</code>.
        */
       MPI_InitFinalize(
-        int &              argc,
-        char **&           argv,
+        int&               argc,
+        char**&            argv,
         const unsigned int max_num_threads = numbers::invalid_unsigned_int);
 
       /**
@@ -568,8 +568,8 @@ namespace Utilities
      */
     template <typename T>
     std::map<unsigned int, T>
-    some_to_some(const MPI_Comm &                 comm,
-                 const std::map<unsigned int, T> &objects_to_send);
+    some_to_some(const MPI_Comm&                  comm,
+                 const std::map<unsigned int, T>& objects_to_send);
 
     /**
      * A generalization of the classic MPI_Allgather function, that accepts
@@ -588,7 +588,7 @@ namespace Utilities
      */
     template <typename T>
     std::vector<T>
-    all_gather(const MPI_Comm &comm, const T &object_to_send);
+    all_gather(const MPI_Comm& comm, const T& object_to_send);
 
     /**
      * A generalization of the classic MPI_Gather function, that accepts
@@ -609,8 +609,8 @@ namespace Utilities
      */
     template <typename T>
     std::vector<T>
-    gather(const MPI_Comm &   comm,
-           const T &          object_to_send,
+    gather(const MPI_Comm&    comm,
+           const T&           object_to_send,
            const unsigned int root_process = 0);
 
 #ifndef DOXYGEN
@@ -619,16 +619,16 @@ namespace Utilities
     {
       template <typename T>
       void
-      all_reduce(const MPI_Op &            mpi_op,
-                 const ArrayView<const T> &values,
-                 const MPI_Comm &          mpi_communicator,
-                 const ArrayView<T> &      output);
+      all_reduce(const MPI_Op&             mpi_op,
+                 const ArrayView<const T>& values,
+                 const MPI_Comm&           mpi_communicator,
+                 const ArrayView<T>&       output);
     }
 
     // Since these depend on N they must live in the header file
     template <typename T, unsigned int N>
     void
-    sum(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&sums)[N])
+    sum(const T (&values)[N], const MPI_Comm& mpi_communicator, T (&sums)[N])
     {
       internal::all_reduce(MPI_SUM,
                            ArrayView<const T>(values, N),
@@ -638,7 +638,7 @@ namespace Utilities
 
     template <typename T, unsigned int N>
     void
-    max(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&maxima)[N])
+    max(const T (&values)[N], const MPI_Comm& mpi_communicator, T (&maxima)[N])
     {
       internal::all_reduce(MPI_MAX,
                            ArrayView<const T>(values, N),
@@ -648,7 +648,7 @@ namespace Utilities
 
     template <typename T, unsigned int N>
     void
-    min(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&minima)[N])
+    min(const T (&values)[N], const MPI_Comm& mpi_communicator, T (&minima)[N])
     {
       internal::all_reduce(MPI_MIN,
                            ArrayView<const T>(values, N),
@@ -658,8 +658,8 @@ namespace Utilities
 
     template <typename T>
     std::map<unsigned int, T>
-    some_to_some(const MPI_Comm &                 comm,
-                 const std::map<unsigned int, T> &objects_to_send)
+    some_to_some(const MPI_Comm&                  comm,
+                 const std::map<unsigned int, T>& objects_to_send)
     {
 #  ifndef DEAL_II_WITH_MPI
       (void)comm;
@@ -674,7 +674,7 @@ namespace Utilities
       std::vector<unsigned int> send_to(objects_to_send.size());
       {
         unsigned int i = 0;
-        for (const auto &m : objects_to_send)
+        for (const auto& m : objects_to_send)
           send_to[i++] = m.first;
       }
       AssertDimension(send_to.size(), objects_to_send.size());
@@ -688,9 +688,9 @@ namespace Utilities
       std::vector<MPI_Request>       buffer_send_requests(send_to.size());
       {
         unsigned int i = 0;
-        for (const auto &rank_obj : objects_to_send)
+        for (const auto& rank_obj : objects_to_send)
           {
-            const auto &rank   = rank_obj.first;
+            const auto& rank   = rank_obj.first;
             buffers_to_send[i] = Utilities::pack(rank_obj.second);
             const int ierr     = MPI_Isend(buffers_to_send[i].data(),
                                        buffers_to_send[i].size(),
@@ -746,7 +746,7 @@ namespace Utilities
 
     template <typename T>
     std::vector<T>
-    all_gather(const MPI_Comm &comm, const T &object)
+    all_gather(const MPI_Comm& comm, const T& object)
     {
 #  ifndef DEAL_II_WITH_MPI
       (void)comm;
@@ -801,8 +801,8 @@ namespace Utilities
 
     template <typename T>
     std::vector<T>
-    gather(const MPI_Comm &   comm,
-           const T &          object_to_send,
+    gather(const MPI_Comm&    comm,
+           const T&           object_to_send,
            const unsigned int root_process)
     {
 #  ifndef DEAL_II_WITH_MPI

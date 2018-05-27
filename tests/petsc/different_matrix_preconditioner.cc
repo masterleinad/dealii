@@ -44,7 +44,7 @@
 using namespace dealii;
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   initlog();

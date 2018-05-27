@@ -43,11 +43,11 @@ using namespace std;
 
 template <int dim, int spacedim>
 void
-reinit_vector(const dealii::DoFHandler<dim, spacedim> &     mg_dof,
-              MGLevelObject<TrilinosWrappers::MPI::Vector> &v)
+reinit_vector(const dealii::DoFHandler<dim, spacedim>&      mg_dof,
+              MGLevelObject<TrilinosWrappers::MPI::Vector>& v)
 {
-  const dealii::parallel::distributed::Triangulation<dim, spacedim> *tria =
-    (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim> *>(
+  const dealii::parallel::distributed::Triangulation<dim, spacedim>* tria =
+    (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
       &mg_dof.get_triangulation()));
   AssertThrow(
     tria != nullptr,
@@ -64,7 +64,7 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim> &     mg_dof,
 
 template <int dim>
 void
-check_simple(const FiniteElement<dim> &fe)
+check_simple(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -149,7 +149,7 @@ check_simple(const FiniteElement<dim> &fe)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

@@ -59,7 +59,7 @@ class HarmonicOscillator
 public:
   HarmonicOscillator(
     double                                                        _kappa,
-    const typename SUNDIALS::IDA<Vector<double>>::AdditionalData &data) :
+    const typename SUNDIALS::IDA<Vector<double>>::AdditionalData& data) :
     time_stepper(data),
     y(2),
     y_dot(2),
@@ -71,21 +71,21 @@ public:
   {
     typedef Vector<double> VectorType;
 
-    time_stepper.reinit_vector = [&](VectorType &v) { v.reinit(2); };
+    time_stepper.reinit_vector = [&](VectorType& v) { v.reinit(2); };
 
 
     time_stepper.residual = [&](const double      t,
-                                const VectorType &y,
-                                const VectorType &y_dot,
-                                VectorType &      res) -> int {
+                                const VectorType& y,
+                                const VectorType& y_dot,
+                                VectorType&       res) -> int {
       res = y_dot;
       A.vmult_add(res, y);
       return 0;
     };
 
     time_stepper.setup_jacobian = [&](const double,
-                                      const VectorType &,
-                                      const VectorType &,
+                                      const VectorType&,
+                                      const VectorType&,
                                       const double alpha) -> int {
       A(0, 1) = -1.0;
       A(1, 0) = kappa * kappa;
@@ -99,15 +99,15 @@ public:
       return 0;
     };
 
-    time_stepper.solve_jacobian_system = [&](const VectorType &src,
-                                             VectorType &      dst) -> int {
+    time_stepper.solve_jacobian_system = [&](const VectorType& src,
+                                             VectorType&       dst) -> int {
       Jinv.vmult(dst, src);
       return 0;
     };
 
     time_stepper.output_step = [&](const double       t,
-                                   const VectorType & sol,
-                                   const VectorType & sol_dot,
+                                   const VectorType&  sol,
+                                   const VectorType&  sol_dot,
                                    const unsigned int step_number) -> int {
       out << t << " " << sol[0] << " " << sol[1] << " " << sol_dot[0] << " "
           << sol_dot[1] << std::endl;
@@ -137,7 +137,7 @@ private:
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);

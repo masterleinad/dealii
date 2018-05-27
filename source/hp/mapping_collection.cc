@@ -25,7 +25,7 @@ namespace hp
 {
   template <int dim, int spacedim>
   MappingCollection<dim, spacedim>::MappingCollection(
-    const Mapping<dim, spacedim> &mapping)
+    const Mapping<dim, spacedim>& mapping)
   {
     mappings.push_back(
       std::shared_ptr<const Mapping<dim, spacedim>>(mapping.clone()));
@@ -35,7 +35,7 @@ namespace hp
 
   template <int dim, int spacedim>
   MappingCollection<dim, spacedim>::MappingCollection(
-    const MappingCollection<dim, spacedim> &mapping_collection) :
+    const MappingCollection<dim, spacedim>& mapping_collection) :
     Subscriptor(),
     // copy the array
     // of shared
@@ -65,7 +65,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   MappingCollection<dim, spacedim>::push_back(
-    const Mapping<dim, spacedim> &new_mapping)
+    const Mapping<dim, spacedim>& new_mapping)
   {
     mappings.push_back(
       std::shared_ptr<const Mapping<dim, spacedim>>(new_mapping.clone()));
@@ -86,7 +86,7 @@ namespace hp
      * this function is called.
      */
     template <int dim, int spacedim>
-    MappingQGeneric<dim, spacedim> &
+    MappingQGeneric<dim, spacedim>&
     get_static_mapping_q1()
     {
       static MappingQ1<dim, spacedim> mapping;

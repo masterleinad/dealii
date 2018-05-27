@@ -83,7 +83,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   using namespace dealii;
 
@@ -96,7 +96,7 @@ main(int argc, char *argv[])
     {
       test<3>();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

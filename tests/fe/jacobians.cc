@@ -39,7 +39,7 @@
 
 template <int dim>
 void
-do_test(const Triangulation<dim> &tria, const Mapping<dim> &mapping)
+do_test(const Triangulation<dim>& tria, const Mapping<dim>& mapping)
 {
   FE_Nothing<dim> dummy;
   // choose a point that is not right in the

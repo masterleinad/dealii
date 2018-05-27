@@ -62,13 +62,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim> &point, const unsigned int component = 0) const
+  value(const Point<dim>& point, const unsigned int component = 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim> &point, const unsigned int component = 0) const
+  gradient(const Point<dim>& point, const unsigned int component = 0) const
   {
     Tensor<1, dim> res = point;
     Assert(point.norm() > 0,
@@ -123,7 +123,7 @@ test3()
       fe_values.reinit(cell);
 
       const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
-      const std::vector<dealii::Point<dim>> &q_points =
+      const std::vector<dealii::Point<dim>>& q_points =
         fe_values.get_quadrature_points();
       fe_values.get_function_values(solution_fe, solution_values_fe);
       fe_values.get_function_values(solution_pou, solution_values_pou);
@@ -191,7 +191,7 @@ plot_shape_function()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -208,7 +208,7 @@ main(int argc, char **argv)
       plot_shape_function<3>();
 #endif
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

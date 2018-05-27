@@ -25,34 +25,34 @@ DEAL_II_NAMESPACE_OPEN
 // inside the library
 template class FullMatrix<long double>;
 template void
-FullMatrix<long double>::invert<long double>(const FullMatrix<long double> &);
+FullMatrix<long double>::invert<long double>(const FullMatrix<long double>&);
 template void
-FullMatrix<long double>::mmult<long double>(FullMatrix<long double> &,
-                                            const FullMatrix<long double> &,
+FullMatrix<long double>::mmult<long double>(FullMatrix<long double>&,
+                                            const FullMatrix<long double>&,
                                             const bool) const;
 template void
-FullMatrix<long double>::Tmmult<long double>(FullMatrix<long double> &,
-                                             const FullMatrix<long double> &,
+FullMatrix<long double>::Tmmult<long double>(FullMatrix<long double>&,
+                                             const FullMatrix<long double>&,
                                              const bool) const;
 template void
-FullMatrix<long double>::mTmult<long double>(FullMatrix<long double> &,
-                                             const FullMatrix<long double> &,
+FullMatrix<long double>::mTmult<long double>(FullMatrix<long double>&,
+                                             const FullMatrix<long double>&,
                                              const bool) const;
 template void
-FullMatrix<long double>::TmTmult<long double>(FullMatrix<long double> &,
-                                              const FullMatrix<long double> &,
+FullMatrix<long double>::TmTmult<long double>(FullMatrix<long double>&,
+                                              const FullMatrix<long double>&,
                                               const bool) const;
 template void
-FullMatrix<long double>::vmult<long double>(Vector<long double> &,
-                                            const Vector<long double> &,
+FullMatrix<long double>::vmult<long double>(Vector<long double>&,
+                                            const Vector<long double>&,
                                             bool) const;
 template void
-FullMatrix<long double>::Tvmult<long double>(Vector<long double> &,
-                                             const Vector<long double> &,
+FullMatrix<long double>::Tvmult<long double>(Vector<long double>&,
+                                             const Vector<long double>&,
                                              bool) const;
 template void
 FullMatrix<long double>::add<long double>(const long double,
-                                          const FullMatrix<long double> &);
+                                          const FullMatrix<long double>&);
 
 
 // do a few functions that currently don't fit the scheme because they have
@@ -61,7 +61,7 @@ FullMatrix<long double>::add<long double>(const long double,
 // is declared separately)
 
 #define TEMPL_OP_EQ(S1, S2) \
-  template FullMatrix<S1> &FullMatrix<S1>::operator=(const FullMatrix<S2> &)
+  template FullMatrix<S1>& FullMatrix<S1>::operator=(const FullMatrix<S2>&)
 
 TEMPL_OP_EQ(double, float);
 TEMPL_OP_EQ(float, double);

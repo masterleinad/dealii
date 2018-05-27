@@ -38,7 +38,7 @@ using namespace dealii;
 
 template <int dim>
 void
-check(Triangulation<dim> &tr)
+check(Triangulation<dim>& tr)
 {
   typename Triangulation<dim>::cell_iterator cell = tr.begin(), endc = tr.end();
 
@@ -70,7 +70,7 @@ check(Triangulation<dim> &tr)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   // Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv,
   // testing_max_num_threads());

@@ -124,7 +124,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       void
-      set_dof_index(const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      set_dof_index(const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
                     const unsigned int                           obj_index,
                     const unsigned int                           fe_index,
                     const unsigned int                           local_index,
@@ -144,7 +144,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       types::global_dof_index
-      get_dof_index(const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      get_dof_index(const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
                     const unsigned int                           obj_index,
                     const unsigned int                           fe_index,
                     const unsigned int                           local_index,
@@ -164,7 +164,7 @@ namespace internal
       template <int dim, int spacedim>
       unsigned int
       n_active_fe_indices(
-        const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+        const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
         const unsigned int                           obj_index) const;
 
       /**
@@ -173,7 +173,7 @@ namespace internal
       template <int dim, int spacedim>
       types::global_dof_index
       nth_active_fe_index(
-        const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+        const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
         const unsigned int                           obj_level,
         const unsigned int                           obj_index,
         const unsigned int                           n) const;
@@ -185,7 +185,7 @@ namespace internal
       template <int dim, int spacedim>
       bool
       fe_index_is_active(
-        const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+        const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
         const unsigned int                           obj_index,
         const unsigned int                           fe_index,
         const unsigned int                           obj_level) const;
@@ -203,7 +203,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
 
@@ -263,7 +263,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
     /**
@@ -295,7 +295,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
     /**
@@ -332,37 +332,37 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive &ar, const unsigned int version);
+      serialize(Archive& ar, const unsigned int version);
     };
 
 
     // --------------------- inline and template functions ------------------
     template <class Archive>
     void
-    DoFIndicesOnFaces<1>::serialize(Archive &, const unsigned int)
+    DoFIndicesOnFaces<1>::serialize(Archive&, const unsigned int)
     {}
 
 
     template <class Archive>
     void
-    DoFIndicesOnFaces<2>::serialize(Archive &ar, const unsigned int)
+    DoFIndicesOnFaces<2>::serialize(Archive& ar, const unsigned int)
     {
-      ar &lines;
+      ar& lines;
     }
 
 
     template <class Archive>
     void
-    DoFIndicesOnFaces<3>::serialize(Archive &ar, const unsigned int)
+    DoFIndicesOnFaces<3>::serialize(Archive& ar, const unsigned int)
     {
-      ar &lines &quads;
+      ar& lines& quads;
     }
 
     template <int structdim>
     template <int dim, int spacedim>
     inline types::global_dof_index
     DoFIndicesOnFacesOrEdges<structdim>::get_dof_index(
-      const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
       const unsigned int                           obj_index,
       const unsigned int                           fe_index,
       const unsigned int                           local_index,
@@ -402,7 +402,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index *pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer         = &dofs[starting_offset];
       while (true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -422,7 +422,7 @@ namespace internal
     template <int dim, int spacedim>
     inline void
     DoFIndicesOnFacesOrEdges<structdim>::set_dof_index(
-      const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
       const unsigned int                           obj_index,
       const unsigned int                           fe_index,
       const unsigned int                           local_index,
@@ -463,7 +463,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index starting_offset = dof_offsets[obj_index];
-      types::global_dof_index *     pointer         = &dofs[starting_offset];
+      types::global_dof_index*      pointer         = &dofs[starting_offset];
       while (true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -485,7 +485,7 @@ namespace internal
     template <int dim, int spacedim>
     inline unsigned int
     DoFIndicesOnFacesOrEdges<structdim>::n_active_fe_indices(
-      const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
       const unsigned int                           obj_index) const
     {
       Assert(obj_index < dof_offsets.size(),
@@ -506,7 +506,7 @@ namespace internal
       // part. trigger an exception if we can't find a set for this
       // particular fe_index
       const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index *pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer         = &dofs[starting_offset];
       unsigned int                   counter         = 0;
       while (true)
         {
@@ -529,7 +529,7 @@ namespace internal
     template <int dim, int spacedim>
     inline types::global_dof_index
     DoFIndicesOnFacesOrEdges<structdim>::nth_active_fe_index(
-      const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
       const unsigned int /*obj_level*/,
       const unsigned int obj_index,
       const unsigned int n) const
@@ -557,7 +557,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index *pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer         = &dofs[starting_offset];
       unsigned int                   counter         = 0;
       while (true)
         {
@@ -584,7 +584,7 @@ namespace internal
     template <int dim, int spacedim>
     inline bool
     DoFIndicesOnFacesOrEdges<structdim>::fe_index_is_active(
-      const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
+      const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
       const unsigned int                           obj_index,
       const unsigned int                           fe_index,
       const unsigned int /*obj_level*/) const
@@ -617,7 +617,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index *pointer         = &dofs[starting_offset];
+      const types::global_dof_index* pointer         = &dofs[starting_offset];
       while (true)
         {
           if (*pointer == numbers::invalid_dof_index)
@@ -636,11 +636,11 @@ namespace internal
     template <int structdim>
     template <class Archive>
     void
-    DoFIndicesOnFacesOrEdges<structdim>::serialize(Archive &ar,
+    DoFIndicesOnFacesOrEdges<structdim>::serialize(Archive& ar,
                                                    const unsigned int)
     {
-      ar &dofs;
-      ar &dof_offsets;
+      ar& dofs;
+      ar& dof_offsets;
     }
 
 

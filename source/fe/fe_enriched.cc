@@ -34,7 +34,7 @@ namespace internal
        */
       template <typename T>
       std::vector<unsigned int>
-      build_multiplicities(const std::vector<std::vector<T>> &functions)
+      build_multiplicities(const std::vector<std::vector<T>>& functions)
       {
         std::vector<unsigned int> multiplicities;
         multiplicities.push_back(1); // the first one is non-enriched FE
@@ -49,12 +49,12 @@ namespace internal
        * Auxiliary function to build FiniteElement's vector
        */
       template <int dim, int spacedim>
-      std::vector<const FiniteElement<dim, spacedim> *>
+      std::vector<const FiniteElement<dim, spacedim>*>
       build_fes(
-        const FiniteElement<dim, spacedim> *                     fe_base,
-        const std::vector<const FiniteElement<dim, spacedim> *> &fe_enriched)
+        const FiniteElement<dim, spacedim>*                     fe_base,
+        const std::vector<const FiniteElement<dim, spacedim>*>& fe_enriched)
       {
-        std::vector<const FiniteElement<dim, spacedim> *> fes;
+        std::vector<const FiniteElement<dim, spacedim>*> fes;
         fes.push_back(fe_base);
         for (unsigned int i = 0; i < fe_enriched.size(); i++)
           fes.push_back(fe_enriched[i]);
@@ -70,11 +70,12 @@ namespace internal
       template <int dim, int spacedim>
       bool
       consistency_check(
-        const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-        const std::vector<unsigned int> &                        multiplicities,
-        const std::vector<std::vector<std::function<const Function<spacedim> *(
-          const typename dealii::Triangulation<dim, spacedim>::cell_iterator
-            &)>>> &                                              functions)
+        const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+        const std::vector<unsigned int>&                        multiplicities,
+        const std::vector<std::vector<std::function<const Function<spacedim>*(
+          const typename dealii::Triangulation<dim,
+                                               spacedim>::cell_iterator&)>>>&
+          functions)
       {
         AssertThrow(fes.size() > 0, ExcMessage("FEs size should be >=1"));
         AssertThrow(
@@ -92,8 +93,8 @@ namespace internal
         // start from fe=1 as 0th is always non-enriched FE.
         for (unsigned int fe = 1; fe < fes.size(); fe++)
           {
-            const FE_Nothing<dim> *fe_nothing =
-              dynamic_cast<const FE_Nothing<dim> *>(fes[fe]);
+            const FE_Nothing<dim>* fe_nothing =
+              dynamic_cast<const FE_Nothing<dim>*>(fes[fe]);
             if (fe_nothing)
               AssertThrow(
                 fe_nothing->is_dominating(),
@@ -116,11 +117,11 @@ namespace internal
       template <int dim, int spacedim>
       bool
       check_if_enriched(
-        const std::vector<const FiniteElement<dim, spacedim> *> &fes)
+        const std::vector<const FiniteElement<dim, spacedim>*>& fes)
       {
         // start from fe=1 as 0th is always non-enriched FE.
         for (unsigned int fe = 1; fe < fes.size(); fe++)
-          if (dynamic_cast<const FE_Nothing<dim> *>(fes[fe]) == nullptr)
+          if (dynamic_cast<const FE_Nothing<dim>*>(fes[fe]) == nullptr)
             // this is not FE_Nothing => there will be enrichment
             return true;
 
@@ -133,7 +134,7 @@ namespace internal
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
-  const FiniteElement<dim, spacedim> &fe_base) :
+  const FiniteElement<dim, spacedim>& fe_base) :
   FE_Enriched<dim, spacedim>(
     fe_base,
     FE_Nothing<dim, spacedim>(fe_base.n_components(), true),
@@ -143,30 +144,30 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
-  const FiniteElement<dim, spacedim> &fe_base,
-  const FiniteElement<dim, spacedim> &fe_enriched,
-  const Function<spacedim> *          enrichment_function) :
+  const FiniteElement<dim, spacedim>& fe_base,
+  const FiniteElement<dim, spacedim>& fe_enriched,
+  const Function<spacedim>*           enrichment_function) :
   FE_Enriched<dim, spacedim>(
     &fe_base,
-    std::vector<const FiniteElement<dim, spacedim> *>(1, &fe_enriched),
-    std::vector<std::vector<std::function<const Function<spacedim> *(
-      const typename Triangulation<dim, spacedim>::cell_iterator &)>>>(
+    std::vector<const FiniteElement<dim, spacedim>*>(1, &fe_enriched),
+    std::vector<std::vector<std::function<const Function<spacedim>*(
+      const typename Triangulation<dim, spacedim>::cell_iterator&)>>>(
       1,
-      std::vector<std::function<const Function<spacedim> *(
-        const typename Triangulation<dim, spacedim>::cell_iterator &)>>(
+      std::vector<std::function<const Function<spacedim>*(
+        const typename Triangulation<dim, spacedim>::cell_iterator&)>>(
         1,
-        [=](const typename Triangulation<dim, spacedim>::cell_iterator &)
-          -> const Function<spacedim> * { return enrichment_function; })))
+        [=](const typename Triangulation<dim, spacedim>::cell_iterator&)
+          -> const Function<spacedim>* { return enrichment_function; })))
 {}
 
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
-  const FiniteElement<dim, spacedim> *                     fe_base,
-  const std::vector<const FiniteElement<dim, spacedim> *> &fe_enriched,
-  const std::vector<std::vector<std::function<const Function<spacedim> *(
-    const typename Triangulation<dim, spacedim>::cell_iterator &)>>>
-    &functions) :
+  const FiniteElement<dim, spacedim>*                     fe_base,
+  const std::vector<const FiniteElement<dim, spacedim>*>& fe_enriched,
+  const std::vector<std::vector<std::function<const Function<spacedim>*(
+    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>&
+    functions) :
   FE_Enriched<dim, spacedim>(
     internal::FE_Enriched::build_fes(fe_base, fe_enriched),
     internal::FE_Enriched::build_multiplicities(functions),
@@ -176,11 +177,11 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
 
 template <int dim, int spacedim>
 FE_Enriched<dim, spacedim>::FE_Enriched(
-  const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-  const std::vector<unsigned int> &                        multiplicities,
-  const std::vector<std::vector<std::function<const Function<spacedim> *(
-    const typename Triangulation<dim, spacedim>::cell_iterator &)>>>
-    &functions) :
+  const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+  const std::vector<unsigned int>&                        multiplicities,
+  const std::vector<std::vector<std::function<const Function<spacedim>*(
+    const typename Triangulation<dim, spacedim>::cell_iterator&)>>>&
+    functions) :
   FiniteElement<dim, spacedim>(
     FETools::Compositing::multiply_dof_numbers(fes, multiplicities, false),
     FETools::Compositing::compute_restriction_is_additive_flags(fes,
@@ -257,8 +258,8 @@ FE_Enriched<dim, spacedim>::FE_Enriched(
 
 
 template <int dim, int spacedim>
-const std::vector<std::vector<std::function<const Function<spacedim> *(
-  const typename Triangulation<dim, spacedim>::cell_iterator &)>>>
+const std::vector<std::vector<std::function<const Function<spacedim>*(
+  const typename Triangulation<dim, spacedim>::cell_iterator&)>>>
 FE_Enriched<dim, spacedim>::get_enrichments() const
 {
   return enrichments;
@@ -268,7 +269,7 @@ FE_Enriched<dim, spacedim>::get_enrichments() const
 template <int dim, int spacedim>
 double
 FE_Enriched<dim, spacedim>::shape_value(const unsigned int i,
-                                        const Point<dim> & p) const
+                                        const Point<dim>&  p) const
 {
   Assert(
     !is_enriched,
@@ -282,8 +283,8 @@ template <int dim, int spacedim>
 std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_Enriched<dim, spacedim>::clone() const
 {
-  std::vector<const FiniteElement<dim, spacedim> *> fes;
-  std::vector<unsigned int>                         multiplicities;
+  std::vector<const FiniteElement<dim, spacedim>*> fes;
+  std::vector<unsigned int>                        multiplicities;
 
   for (unsigned int i = 0; i < this->n_base_elements(); i++)
     {
@@ -325,7 +326,7 @@ std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FE_Enriched<dim, spacedim>::setup_data(
   std::unique_ptr<typename FESystem<dim, spacedim>::InternalData> fes_data,
   const UpdateFlags                                               flags,
-  const Quadrature<dim_1> &quadrature) const
+  const Quadrature<dim_1>& quadrature) const
 {
   // Pass ownership of the FiniteElement::InternalDataBase object
   // that fes_data points to, to the new InternalData object.
@@ -364,10 +365,10 @@ template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FE_Enriched<dim, spacedim>::get_face_data(
   const UpdateFlags             update_flags,
-  const Mapping<dim, spacedim> &mapping,
-  const Quadrature<dim - 1> &   quadrature,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+  const Mapping<dim, spacedim>& mapping,
+  const Quadrature<dim - 1>&    quadrature,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
   auto data =
     fe_system->get_face_data(update_flags, mapping, quadrature, output_data);
@@ -383,11 +384,11 @@ template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FE_Enriched<dim, spacedim>::get_subface_data(
   const UpdateFlags             update_flags,
-  const Mapping<dim, spacedim> &mapping,
-  const Quadrature<dim - 1> &   quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const Quadrature<dim - 1>&    quadrature,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>
-    &output_data) const
+                                                                     spacedim>&
+    output_data) const
 {
   auto data =
     fe_system->get_subface_data(update_flags, mapping, quadrature, output_data);
@@ -403,10 +404,10 @@ template <int dim, int spacedim>
 std::unique_ptr<typename FiniteElement<dim, spacedim>::InternalDataBase>
 FE_Enriched<dim, spacedim>::get_data(
   const UpdateFlags             flags,
-  const Mapping<dim, spacedim> &mapping,
-  const Quadrature<dim> &       quadrature,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+  const Mapping<dim, spacedim>& mapping,
+  const Quadrature<dim>&        quadrature,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
   auto data = fe_system->get_data(flags, mapping, quadrature, output_data);
   return setup_data(
@@ -420,8 +421,8 @@ FE_Enriched<dim, spacedim>::get_data(
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::initialize(
-  const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-  const std::vector<unsigned int> &                        multiplicities)
+  const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+  const std::vector<unsigned int>&                        multiplicities)
 {
   Assert(fes.size() == multiplicities.size(),
          ExcDimensionMismatch(fes.size(), multiplicities.size()));
@@ -500,7 +501,7 @@ FE_Enriched<dim, spacedim>::get_name() const
 
 
 template <int dim, int spacedim>
-const FiniteElement<dim, spacedim> &
+const FiniteElement<dim, spacedim>&
 FE_Enriched<dim, spacedim>::base_element(const unsigned int index) const
 {
   return fe_system->base_element(index);
@@ -510,21 +511,21 @@ FE_Enriched<dim, spacedim>::base_element(const unsigned int index) const
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const CellSimilarity::Similarity                            cell_similarity,
-  const Quadrature<dim> &                                     quadrature,
-  const Mapping<dim, spacedim> &                              mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
+  const Quadrature<dim>&                                      quadrature,
+  const Mapping<dim, spacedim>&                               mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
-    &                                                            mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+                                                                     spacedim>&
+                                                                 mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
-  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_values(cell,
@@ -545,21 +546,21 @@ FE_Enriched<dim, spacedim>::fill_fe_values(
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::fill_fe_face_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const unsigned int                                          face_no,
-  const Quadrature<dim - 1> &                                 quadrature,
-  const Mapping<dim, spacedim> &                              mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
+  const Quadrature<dim - 1>&                                  quadrature,
+  const Mapping<dim, spacedim>&                               mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
-    &                                                            mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+                                                                     spacedim>&
+                                                                 mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
-  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_face_values(cell,
@@ -580,22 +581,22 @@ FE_Enriched<dim, spacedim>::fill_fe_face_values(
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::fill_fe_subface_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const unsigned int                                          face_no,
   const unsigned int                                          sub_no,
-  const Quadrature<dim - 1> &                                 quadrature,
-  const Mapping<dim, spacedim> &                              mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
+  const Quadrature<dim - 1>&                                  quadrature,
+  const Mapping<dim, spacedim>&                               mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
-    &                                                            mapping_data,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+                                                                     spacedim>&
+                                                                 mapping_data,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
-  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_subface_values(cell,
@@ -618,13 +619,13 @@ template <int dim, int spacedim>
 template <int dim_1>
 void
 FE_Enriched<dim, spacedim>::multiply_by_enrichment(
-  const Quadrature<dim_1> &quadrature,
-  const InternalData &     fe_data,
-  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
-    &                                                         mapping_data,
-  const typename Triangulation<dim, spacedim>::cell_iterator &cell,
-  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>
-    &output_data) const
+  const Quadrature<dim_1>& quadrature,
+  const InternalData&      fe_data,
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+                                                              mapping_data,
+  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
+  internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
+    output_data) const
 {
   // mapping_data will contain quadrature points on the real element.
   // fe_internal is needed to get update flags
@@ -648,12 +649,12 @@ FE_Enriched<dim, spacedim>::multiply_by_enrichment(
   if (dim_1 == dim)
     for (unsigned int base_no = 1; base_no < this->n_base_elements(); base_no++)
       {
-        const FiniteElement<dim, spacedim> &base_fe = base_element(base_no);
-        typename FiniteElement<dim, spacedim>::InternalDataBase &base_fe_data =
+        const FiniteElement<dim, spacedim>& base_fe = base_element(base_no);
+        typename FiniteElement<dim, spacedim>::InternalDataBase& base_fe_data =
           fe_data.get_fe_data(base_no);
         internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                   spacedim>
-          &base_data = fe_data.get_fe_output_object(base_no);
+                                                                   spacedim>&
+          base_data = fe_data.get_fe_output_object(base_no);
 
         const UpdateFlags base_flags = base_fe_data.update_each;
 
@@ -855,7 +856,7 @@ FE_Enriched<dim, spacedim>::multiply_by_enrichment(
 
 
 template <int dim, int spacedim>
-const FESystem<dim, spacedim> &
+const FESystem<dim, spacedim>&
 FE_Enriched<dim, spacedim>::get_fe_system() const
 {
   return *fe_system;
@@ -873,11 +874,11 @@ FE_Enriched<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &source,
-  FullMatrix<double> &                matrix) const
+  const FiniteElement<dim, spacedim>& source,
+  FullMatrix<double>&                 matrix) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&source))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&source))
     {
       fe_system->get_face_interpolation_matrix(fe_enr_other->get_fe_system(),
                                                matrix);
@@ -895,12 +896,12 @@ FE_Enriched<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_Enriched<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim> &source,
+  const FiniteElement<dim, spacedim>& source,
   const unsigned int                  subface,
-  FullMatrix<double> &                matrix) const
+  FullMatrix<double>&                 matrix) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&source))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&source))
     {
       fe_system->get_subface_interpolation_matrix(
         fe_enr_other->get_fe_system(), subface, matrix);
@@ -918,10 +919,10 @@ FE_Enriched<dim, spacedim>::get_subface_interpolation_matrix(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim> &fe_other) const
+  const FiniteElement<dim, spacedim>& fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&fe_other))
     {
       return fe_system->hp_vertex_dof_identities(fe_enr_other->get_fe_system());
     }
@@ -936,10 +937,10 @@ FE_Enriched<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim> &fe_other) const
+  const FiniteElement<dim, spacedim>& fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&fe_other))
     {
       return fe_system->hp_line_dof_identities(fe_enr_other->get_fe_system());
     }
@@ -954,10 +955,10 @@ FE_Enriched<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim> &fe_other) const
+  const FiniteElement<dim, spacedim>& fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&fe_other))
     {
       return fe_system->hp_quad_dof_identities(fe_enr_other->get_fe_system());
     }
@@ -972,7 +973,7 @@ FE_Enriched<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_Enriched<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim> &fe_other) const
+  const FiniteElement<dim, spacedim>& fe_other) const
 {
   // need to decide which element constrain another.
   // for example Q(2) dominate Q(4) and thus some DoFs of Q(4) will be
@@ -984,8 +985,8 @@ FE_Enriched<dim, spacedim>::compare_for_face_domination(
   // continuous. In that case, through an error
 
   // if it's also enriched, do domination based on each one's FESystem
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
-        dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
+  if (const FE_Enriched<dim, spacedim>* fe_enr_other =
+        dynamic_cast<const FE_Enriched<dim, spacedim>*>(&fe_other))
     {
       return fe_system->compare_for_face_domination(
         fe_enr_other->get_fe_system());
@@ -998,20 +999,20 @@ FE_Enriched<dim, spacedim>::compare_for_face_domination(
 }
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FE_Enriched<dim, spacedim>::get_prolongation_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   return fe_system->get_prolongation_matrix(child, refinement_case);
 }
 
 
 template <int dim, int spacedim>
-const FullMatrix<double> &
+const FullMatrix<double>&
 FE_Enriched<dim, spacedim>::get_restriction_matrix(
   const unsigned int         child,
-  const RefinementCase<dim> &refinement_case) const
+  const RefinementCase<dim>& refinement_case) const
 {
   return fe_system->get_restriction_matrix(child, refinement_case);
 }
@@ -1029,7 +1030,7 @@ FE_Enriched<dim, spacedim>::InternalData::InternalData(
 
 
 template <int dim, int spacedim>
-typename FiniteElement<dim, spacedim>::InternalDataBase &
+typename FiniteElement<dim, spacedim>::InternalDataBase&
 FE_Enriched<dim, spacedim>::InternalData::get_fe_data(
   const unsigned int base_no) const
 {
@@ -1038,7 +1039,7 @@ FE_Enriched<dim, spacedim>::InternalData::get_fe_data(
 
 
 template <int dim, int spacedim>
-internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim> &
+internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
 FE_Enriched<dim, spacedim>::InternalData::get_fe_output_object(
   const unsigned int base_no) const
 {

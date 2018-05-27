@@ -27,7 +27,7 @@ const unsigned int N = 15;
 
 // reinitialize sparsity patterns for 5-point star
 void
-do_reinit(TrilinosWrappers::SparsityPattern &sp)
+do_reinit(TrilinosWrappers::SparsityPattern& sp)
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1));
 }
@@ -35,7 +35,7 @@ do_reinit(TrilinosWrappers::SparsityPattern &sp)
 
 
 void
-build_sparsity(TrilinosWrappers::SparsityPattern &sparsity_pattern)
+build_sparsity(TrilinosWrappers::SparsityPattern& sparsity_pattern)
 {
   // generate usual 5-point sparsity pattern
   do_reinit(sparsity_pattern);

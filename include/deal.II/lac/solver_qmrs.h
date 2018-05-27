@@ -162,25 +162,25 @@ public:
   /**
    * Constructor.
    */
-  SolverQMRS(SolverControl &           cn,
-             VectorMemory<VectorType> &mem,
-             const AdditionalData &    data = AdditionalData());
+  SolverQMRS(SolverControl&            cn,
+             VectorMemory<VectorType>& mem,
+             const AdditionalData&     data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverQMRS(SolverControl &cn, const AdditionalData &data = AdditionalData());
+  SolverQMRS(SolverControl& cn, const AdditionalData& data = AdditionalData());
 
   /**
    * Solve the linear system $Ax=b$ for x.
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType &        A,
-        VectorType &              x,
-        const VectorType &        b,
-        const PreconditionerType &preconditioner);
+  solve(const MatrixType&         A,
+        VectorType&               x,
+        const VectorType&         b,
+        const PreconditionerType& preconditioner);
 
   /**
    * Interface for derived class. This function gets the current iteration
@@ -189,9 +189,9 @@ public:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType & x,
-                const VectorType & r,
-                const VectorType & d) const;
+                const VectorType&  x,
+                const VectorType&  r,
+                const VectorType&  d) const;
 
 protected:
   /**
@@ -219,15 +219,15 @@ private:
    */
   template <typename MatrixType, typename PreconditionerType>
   IterationResult
-  iterate(const MatrixType &        A,
-          VectorType &              x,
-          const VectorType &        b,
-          const PreconditionerType &preconditioner,
-          VectorType &              r,
-          VectorType &              u,
-          VectorType &              q,
-          VectorType &              t,
-          VectorType &              d);
+  iterate(const MatrixType&         A,
+          VectorType&               x,
+          const VectorType&         b,
+          const PreconditionerType& preconditioner,
+          VectorType&               r,
+          VectorType&               u,
+          VectorType&               q,
+          VectorType&               t,
+          VectorType&               d);
 
   /**
    * Number of the current iteration (accumulated over restarts)
@@ -252,17 +252,17 @@ SolverQMRS<VectorType>::IterationResult::IterationResult(
 
 
 template <class VectorType>
-SolverQMRS<VectorType>::SolverQMRS(SolverControl &           cn,
-                                   VectorMemory<VectorType> &mem,
-                                   const AdditionalData &    data) :
+SolverQMRS<VectorType>::SolverQMRS(SolverControl&            cn,
+                                   VectorMemory<VectorType>& mem,
+                                   const AdditionalData&     data) :
   Solver<VectorType>(cn, mem),
   additional_data(data),
   step(0)
 {}
 
 template <class VectorType>
-SolverQMRS<VectorType>::SolverQMRS(SolverControl &       cn,
-                                   const AdditionalData &data) :
+SolverQMRS<VectorType>::SolverQMRS(SolverControl&        cn,
+                                   const AdditionalData& data) :
   Solver<VectorType>(cn),
   additional_data(data),
   step(0)
@@ -271,18 +271,18 @@ SolverQMRS<VectorType>::SolverQMRS(SolverControl &       cn,
 template <class VectorType>
 void
 SolverQMRS<VectorType>::print_vectors(const unsigned int,
-                                      const VectorType &,
-                                      const VectorType &,
-                                      const VectorType &) const
+                                      const VectorType&,
+                                      const VectorType&,
+                                      const VectorType&) const
 {}
 
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverQMRS<VectorType>::solve(const MatrixType &        A,
-                              VectorType &              x,
-                              const VectorType &        b,
-                              const PreconditionerType &preconditioner)
+SolverQMRS<VectorType>::solve(const MatrixType&         A,
+                              VectorType&               x,
+                              const VectorType&         b,
+                              const PreconditionerType& preconditioner)
 {
   LogStream::Prefix prefix("SQMR");
 
@@ -327,15 +327,15 @@ SolverQMRS<VectorType>::solve(const MatrixType &        A,
 template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 typename SolverQMRS<VectorType>::IterationResult
-SolverQMRS<VectorType>::iterate(const MatrixType &        A,
-                                VectorType &              x,
-                                const VectorType &        b,
-                                const PreconditionerType &preconditioner,
-                                VectorType &              r,
-                                VectorType &              u,
-                                VectorType &              q,
-                                VectorType &              t,
-                                VectorType &              d)
+SolverQMRS<VectorType>::iterate(const MatrixType&         A,
+                                VectorType&               x,
+                                const VectorType&         b,
+                                const PreconditionerType& preconditioner,
+                                VectorType&               r,
+                                VectorType&               u,
+                                VectorType&               q,
+                                VectorType&               t,
+                                VectorType&               d)
 {
   SolverControl::State state = SolverControl::iterate;
 

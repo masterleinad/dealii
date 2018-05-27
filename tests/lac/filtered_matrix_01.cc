@@ -21,8 +21,8 @@
 
 template <typename number>
 void
-checkVmult(FullMatrix<number> &A,
-           Vector<number> &    V,
+checkVmult(FullMatrix<number>& A,
+           Vector<number>&     V,
            bool                expect_constrained_source = false)
 {
   deallog << "vmult" << std::endl;

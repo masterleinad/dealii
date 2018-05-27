@@ -37,7 +37,7 @@
 
 
 
-void check_this(Triangulation<3> &tria)
+void check_this(Triangulation<3>& tria)
 {
   QMidpoint<2>    q;
   FE_Q<3>         fe(1);
@@ -87,7 +87,7 @@ void check_this(Triangulation<3> &tria)
 }
 
 
-void check(Triangulation<3> &tria)
+void check(Triangulation<3>& tria)
 {
   deallog << "Initial check" << std::endl;
   check_this(tria);

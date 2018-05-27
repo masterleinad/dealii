@@ -50,8 +50,8 @@
 #include "../tests.h"
 
 
-void colorize_sixty_deg_hyper_shell(Triangulation<3> &tria,
-                                    const Point<3> &  center,
+void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
+                                    const Point<3>&   center,
                                     const double      inner_radius,
                                     const double      outer_radius)
 {
@@ -136,8 +136,8 @@ void colorize_sixty_deg_hyper_shell(Triangulation<3> &tria,
       }
 }
 
-void sixty_deg_hyper_shell(Triangulation<3> &tria,
-                           const Point<3> &  center,
+void sixty_deg_hyper_shell(Triangulation<3>& tria,
+                           const Point<3>&   center,
                            const double      inner_radius,
                            const double      outer_radius)
 {

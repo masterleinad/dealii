@@ -76,7 +76,7 @@ test()
         deallog << "RWVector contents:" << std::endl;
         readwrite.print(deallog.get_file_stream());
       }
-    catch (ExceptionBase &exc)
+    catch (ExceptionBase& exc)
       {
         deallog << exc.get_exc_name() << std::endl;
       }
@@ -93,7 +93,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

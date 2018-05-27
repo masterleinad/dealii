@@ -136,11 +136,11 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component = 0) const;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const;
   };
 
@@ -148,7 +148,7 @@ namespace Step50
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim> &p, const unsigned int) const
+  Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     if (p.square() < 0.5 * 0.5)
       return 5;
@@ -160,8 +160,8 @@ namespace Step50
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                               std::vector<double> &          values,
+  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                               std::vector<double>&           values,
                                const unsigned int             component) const
   {
     const unsigned int n_points = points.size();
@@ -384,7 +384,7 @@ namespace Step50
             cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
 
-          const IndexSet &interface_dofs_on_level =
+          const IndexSet& interface_dofs_on_level =
             mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
@@ -489,7 +489,7 @@ namespace Step50
     temp_solution = solution;
 
     KellyErrorEstimator<dim>::estimate(
-      static_cast<DoFHandler<dim> &>(mg_dof_handler),
+      static_cast<DoFHandler<dim>&>(mg_dof_handler),
       QGauss<dim - 1>(degree + 1),
       typename FunctionMap<dim>::type(),
       temp_solution,
@@ -554,7 +554,7 @@ namespace Step50
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
@@ -568,7 +568,7 @@ main(int argc, char *argv[])
       LaplaceProblem<2> laplace_problem(1 /*degree*/);
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

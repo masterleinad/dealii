@@ -40,19 +40,19 @@ public:
   typedef MeshWorker::IntegrationInfo<dim> CellInfo;
 
   void
-  cell(MeshWorker::DoFInfo<dim> &dinfo, CellInfo &info) const;
+  cell(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
   void
-  boundary(MeshWorker::DoFInfo<dim> &dinfo, CellInfo &info) const;
+  boundary(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
   void
-  face(MeshWorker::DoFInfo<dim> &dinfo1,
-       MeshWorker::DoFInfo<dim> &dinfo2,
-       CellInfo &                info1,
-       CellInfo &                info2) const;
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
+       CellInfo&                 info1,
+       CellInfo&                 info2) const;
 };
 
 template <int dim>
 void
-myIntegrator<dim>::cell(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
+myIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   deallog << "C " << info.cell->id() << std::endl;
 }
@@ -60,7 +60,7 @@ myIntegrator<dim>::cell(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
 
 template <int dim>
 void
-myIntegrator<dim>::boundary(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
+myIntegrator<dim>::boundary(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
   deallog << "B cell = " << info.cell->id() << " face = " << info.face_number
           << std::endl;
@@ -69,10 +69,10 @@ myIntegrator<dim>::boundary(MeshWorker::DoFInfo<dim> &info, CellInfo &) const
 
 template <int dim>
 void
-myIntegrator<dim>::face(MeshWorker::DoFInfo<dim> &info1,
-                        MeshWorker::DoFInfo<dim> &info2,
-                        CellInfo &,
-                        CellInfo &) const
+myIntegrator<dim>::face(MeshWorker::DoFInfo<dim>& info1,
+                        MeshWorker::DoFInfo<dim>& info2,
+                        CellInfo&,
+                        CellInfo&) const
 {
   deallog << "F cell1 = " << info1.cell->id() << " face = " << info1.face_number
           << " cell2 = " << info2.cell->id() << " face2 = " << info2.face_number
@@ -85,21 +85,21 @@ class DoNothingAssembler
 public:
   template <class DOFINFO>
   void
-  initialize_info(DOFINFO &info, bool face) const
+  initialize_info(DOFINFO& info, bool face) const
   {}
   template <class DOFINFO>
   void
-  assemble(const DOFINFO &info)
+  assemble(const DOFINFO& info)
   {}
   template <class DOFINFO>
   void
-  assemble(const DOFINFO &info1, const DOFINFO &info2)
+  assemble(const DOFINFO& info1, const DOFINFO& info2)
   {}
 };
 
 template <int dim>
 void
-test_simple(DoFHandler<dim> &dofs, MeshWorker::LoopControl &lctrl)
+test_simple(DoFHandler<dim>& dofs, MeshWorker::LoopControl& lctrl)
 {
   myIntegrator<dim>                   local;
   DoNothingAssembler                  assembler;
@@ -151,7 +151,7 @@ test_simple(DoFHandler<dim> &dofs, MeshWorker::LoopControl &lctrl)
 
 template <int dim>
 void
-test_loop(DoFHandler<dim> &dofs, MeshWorker::LoopControl &lctrl)
+test_loop(DoFHandler<dim>& dofs, MeshWorker::LoopControl& lctrl)
 {
   deallog << "* own_cells=" << lctrl.own_cells
           << " ghost_cells=" << lctrl.ghost_cells
@@ -194,7 +194,7 @@ test()
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

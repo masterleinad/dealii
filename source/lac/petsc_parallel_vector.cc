@@ -38,7 +38,7 @@ namespace PETScWrappers
 
 
 
-    Vector::Vector(const MPI_Comm &communicator,
+    Vector::Vector(const MPI_Comm& communicator,
                    const size_type n,
                    const size_type local_size) :
       communicator(communicator)
@@ -48,8 +48,8 @@ namespace PETScWrappers
 
 
 
-    Vector::Vector(const MPI_Comm &  communicator,
-                   const VectorBase &v,
+    Vector::Vector(const MPI_Comm&   communicator,
+                   const VectorBase& v,
                    const size_type   local_size) :
       VectorBase(v),
       communicator(communicator)
@@ -68,9 +68,9 @@ namespace PETScWrappers
 
 
 
-    Vector::Vector(const IndexSet &local,
-                   const IndexSet &ghost,
-                   const MPI_Comm &communicator) :
+    Vector::Vector(const IndexSet& local,
+                   const IndexSet& ghost,
+                   const MPI_Comm& communicator) :
       communicator(communicator)
     {
       Assert(local.is_ascending_and_one_to_one(communicator),
@@ -84,7 +84,7 @@ namespace PETScWrappers
 
 
 
-    Vector::Vector(const IndexSet &local, const MPI_Comm &communicator) :
+    Vector::Vector(const IndexSet& local, const MPI_Comm& communicator) :
       communicator(communicator)
     {
       Assert(local.is_ascending_and_one_to_one(communicator),
@@ -94,8 +94,8 @@ namespace PETScWrappers
 
 
 
-    Vector &
-    Vector::operator=(const Vector &v)
+    Vector&
+    Vector::operator=(const Vector& v)
     {
       // make sure left- and right-hand side of the assignment are
       // compress()'ed:
@@ -143,7 +143,7 @@ namespace PETScWrappers
 
 
     void
-    Vector::reinit(const MPI_Comm &comm,
+    Vector::reinit(const MPI_Comm& comm,
                    const size_type n,
                    const size_type local_sz,
                    const bool      omit_zeroing_entries)
@@ -186,7 +186,7 @@ namespace PETScWrappers
 
 
     void
-    Vector::reinit(const Vector &v, const bool omit_zeroing_entries)
+    Vector::reinit(const Vector& v, const bool omit_zeroing_entries)
     {
       if (v.has_ghost_elements())
         {
@@ -204,9 +204,9 @@ namespace PETScWrappers
 
 
     void
-    Vector::reinit(const IndexSet &local,
-                   const IndexSet &ghost,
-                   const MPI_Comm &comm)
+    Vector::reinit(const IndexSet& local,
+                   const IndexSet& ghost,
+                   const MPI_Comm& comm)
     {
       const PetscErrorCode ierr = VecDestroy(&vector);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -222,7 +222,7 @@ namespace PETScWrappers
     }
 
     void
-    Vector::reinit(const IndexSet &local, const MPI_Comm &comm)
+    Vector::reinit(const IndexSet& local, const MPI_Comm& comm)
     {
       const PetscErrorCode ierr = VecDestroy(&vector);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -254,7 +254,7 @@ namespace PETScWrappers
     void
     Vector::create_vector(const size_type n,
                           const size_type local_size,
-                          const IndexSet &ghostnodes)
+                          const IndexSet& ghostnodes)
     {
       (void)n;
       Assert(local_size <= n, ExcIndexRange(local_size, 0, n));
@@ -264,8 +264,8 @@ namespace PETScWrappers
       std::vector<size_type> ghostindices;
       ghostnodes.fill_index_vector(ghostindices);
 
-      const PetscInt *ptr =
-        (ghostindices.size() > 0 ? (const PetscInt *)(&(ghostindices[0])) :
+      const PetscInt* ptr =
+        (ghostindices.size() > 0 ? (const PetscInt*)(&(ghostindices[0])) :
                                    nullptr);
 
       PetscErrorCode ierr = VecCreateGhost(communicator,
@@ -335,7 +335,7 @@ namespace PETScWrappers
 
 
     void
-    Vector::print(std::ostream &     out,
+    Vector::print(std::ostream&      out,
                   const unsigned int precision,
                   const bool         scientific,
                   const bool         across) const
@@ -344,7 +344,7 @@ namespace PETScWrappers
 
       // get a representation of the vector and
       // loop over all the elements
-      PetscScalar *val;
+      PetscScalar* val;
       PetscInt     nlocal, istart, iend;
 
       PetscErrorCode ierr = VecGetArray(vector, &val);

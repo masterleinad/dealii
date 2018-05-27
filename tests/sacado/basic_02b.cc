@@ -34,50 +34,50 @@
 // The function to differentiate
 template <typename NumberType, typename NumberType2>
 NumberType
-f(const NumberType &x, const NumberType &y, const NumberType2 &z)
+f(const NumberType& x, const NumberType& y, const NumberType2& z)
 {
   return z * (x * x * x + z * y * y + 0.5 * x * y * y);
 }
 template <typename NumberType>
 NumberType
-g(const NumberType &x, const NumberType &y, const NumberType &z)
+g(const NumberType& x, const NumberType& y, const NumberType& z)
 {
   return std::sin(x * z) * std::cos(y / z);
 }
 template <typename NumberType>
 NumberType
-h(const NumberType &x, const NumberType &y, const NumberType &z)
+h(const NumberType& x, const NumberType& y, const NumberType& z)
 {
   return x * x * y * y * z;
 }
 
 // The analytic derivative of the functions with respect to x and y
 void
-df(const double &x,
-   const double &y,
-   const double &z,
-   double &      df_dx,
-   double &      df_dy)
+df(const double& x,
+   const double& y,
+   const double& z,
+   double&       df_dx,
+   double&       df_dy)
 {
   df_dx = z * (3.0 * x * x + 0.5 * y * y);
   df_dy = z * (2.0 * z * y + x * y);
 }
 void
-dg(const double &x,
-   const double &y,
-   const double &z,
-   double &      dg_dx,
-   double &      dg_dy)
+dg(const double& x,
+   const double& y,
+   const double& z,
+   double&       dg_dx,
+   double&       dg_dy)
 {
   dg_dx = z * std::cos(x * z) * std::cos(y / z);
   dg_dy = -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
 }
 void
-dh(const double &x,
-   const double &y,
-   const double &z,
-   double &      dh_dx,
-   double &      dh_dy)
+dh(const double& x,
+   const double& y,
+   const double& z,
+   double&       dh_dx,
+   double&       dh_dy)
 {
   dh_dx = 2 * x * y * y * z;
   dh_dy = 2 * x * x * y * z;
@@ -85,36 +85,36 @@ dh(const double &x,
 
 // The analytic second derivatives of the functions with respect to x and y
 void
-d2f(const double &x,
-    const double &y,
-    const double &z,
-    double &      d2f_dx_dx,
-    double &      d2f_dy_dy,
-    double &      d2f_dy_dx)
+d2f(const double& x,
+    const double& y,
+    const double& z,
+    double&       d2f_dx_dx,
+    double&       d2f_dy_dy,
+    double&       d2f_dy_dx)
 {
   d2f_dx_dx = z * (6.0 * x);
   d2f_dy_dx = z * y;
   d2f_dy_dy = z * (2.0 * z + x);
 }
 void
-d2g(const double &x,
-    const double &y,
-    const double &z,
-    double &      d2g_dx_dx,
-    double &      d2g_dy_dy,
-    double &      d2g_dy_dx)
+d2g(const double& x,
+    const double& y,
+    const double& z,
+    double&       d2g_dx_dx,
+    double&       d2g_dy_dy,
+    double&       d2g_dy_dx)
 {
   d2g_dx_dx = -z * z * std::sin(x * z) * std::cos(y / z);
   d2g_dy_dx = -std::cos(x * z) * std::sin(y / z);
   d2g_dy_dy = -(1.0 / (z * z)) * std::sin(x * z) * std::cos(y / z);
 }
 void
-d2h(const double &x,
-    const double &y,
-    const double &z,
-    double &      d2h_dx_dx,
-    double &      d2h_dy_dy,
-    double &      d2h_dy_dx)
+d2h(const double& x,
+    const double& y,
+    const double& z,
+    double&       d2h_dx_dx,
+    double&       d2h_dy_dy,
+    double&       d2h_dy_dx)
 {
   d2h_dx_dx = 2 * y * y * z;
   d2h_dy_dx = 4 * x * y * z;

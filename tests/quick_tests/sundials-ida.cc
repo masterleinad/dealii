@@ -69,23 +69,23 @@ public:
     diff[0] = 1.0;
     diff[1] = 1.0;
 
-    time_stepper.reinit_vector = [&](Vector<double> &v) { v.reinit(2); };
+    time_stepper.reinit_vector = [&](Vector<double>& v) { v.reinit(2); };
 
 
     typedef Vector<double> VectorType;
 
     time_stepper.residual = [&](const double      t,
-                                const VectorType &y,
-                                const VectorType &y_dot,
-                                VectorType &      res) -> int {
+                                const VectorType& y,
+                                const VectorType& y_dot,
+                                VectorType&       res) -> int {
       res = y_dot;
       A.vmult_add(res, y);
       return 0;
     };
 
     time_stepper.setup_jacobian = [&](const double,
-                                      const VectorType &,
-                                      const VectorType &,
+                                      const VectorType&,
+                                      const VectorType&,
                                       const double alpha) -> int {
       A(0, 1) = -1.0;
       A(1, 0) = kappa * kappa;
@@ -99,22 +99,22 @@ public:
       return 0;
     };
 
-    time_stepper.solve_jacobian_system = [&](const VectorType &src,
-                                             VectorType &      dst) -> int {
+    time_stepper.solve_jacobian_system = [&](const VectorType& src,
+                                             VectorType&       dst) -> int {
       Jinv.vmult(dst, src);
       return 0;
     };
 
     time_stepper.output_step = [&](const double       t,
-                                   const VectorType & sol,
-                                   const VectorType & sol_dot,
+                                   const VectorType&  sol,
+                                   const VectorType&  sol_dot,
                                    const unsigned int step_number) -> int {
       // In this test, don't output anything.
       return 0;
     };
 
     time_stepper.solver_should_restart =
-      [](const double, VectorType &, VectorType &) -> bool { return false; };
+      [](const double, VectorType&, VectorType&) -> bool { return false; };
 
 
     time_stepper.differential_components = [&]() -> IndexSet {
@@ -142,7 +142,7 @@ private:
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);

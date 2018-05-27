@@ -56,7 +56,7 @@ test()
       VectorTools::compute_no_normal_flux_constraints(
         dof_handler, 0, no_normal_flux_boundaries, constraints);
     }
-  catch (ExceptionBase &e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

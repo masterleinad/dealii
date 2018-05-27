@@ -24,7 +24,7 @@
 
 
 
-void cylinder(Triangulation<3> &tria,
+void cylinder(Triangulation<3>& tria,
               const double      radius      = 1,
               const double      half_length = 1)
 {

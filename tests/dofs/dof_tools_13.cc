@@ -26,7 +26,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler)
+check_this(const DoFHandler<dim>& dof_handler)
 {
   // this doesn't make much sense if
   // the element is not primitive

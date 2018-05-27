@@ -43,7 +43,7 @@ using namespace std;
 
 template <int dim>
 void
-check(const FiniteElement<dim> &fe, const unsigned int selected_block)
+check(const FiniteElement<dim>& fe, const unsigned int selected_block)
 {
   deallog << fe.get_name() << std::endl;
 

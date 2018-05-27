@@ -44,7 +44,7 @@ public:
   {}
 
   double
-  value(const Point<dim> &p, const unsigned int component) const
+  value(const Point<dim>& p, const unsigned int component) const
   {
     return p[component];
   }

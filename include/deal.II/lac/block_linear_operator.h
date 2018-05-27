@@ -52,7 +52,7 @@ template <typename Range  = BlockVector<double>,
             internal::BlockLinearOperatorImplementation::EmptyBlockPayload<>,
           typename BlockMatrixType>
 BlockLinearOperator<Range, Domain, BlockPayload>
-block_operator(const BlockMatrixType &matrix);
+block_operator(const BlockMatrixType& matrix);
 
 template <size_t m,
           size_t n,
@@ -66,7 +66,7 @@ block_operator(
                                              typename Domain::BlockType,
                                              typename BlockPayload::BlockType>,
                               n>,
-                   m> &);
+                   m>&);
 
 template <size_t m,
           typename Range  = BlockVector<double>,
@@ -78,7 +78,7 @@ block_diagonal_operator(
   const std::array<LinearOperator<typename Range::BlockType,
                                   typename Domain::BlockType,
                                   typename BlockPayload::BlockType>,
-                   m> &);
+                   m>&);
 
 template <size_t m,
           typename Range  = BlockVector<double>,
@@ -89,7 +89,7 @@ BlockLinearOperator<Range, Domain, BlockPayload>
 block_diagonal_operator(
   const LinearOperator<typename Range::BlockType,
                        typename Domain::BlockType,
-                       typename BlockPayload::BlockType> &op);
+                       typename BlockPayload::BlockType>& op);
 
 // This is a workaround for a bug in <=gcc-4.7 that does not like partial
 // template default values in combination with local lambda expressions [1]
@@ -104,7 +104,7 @@ template <typename Range  = BlockVector<double>,
             internal::BlockLinearOperatorImplementation::EmptyBlockPayload<>,
           typename BlockMatrixType>
 BlockLinearOperator<Range, Domain, BlockPayload>
-block_diagonal_operator(const BlockMatrixType &block_matrix);
+block_diagonal_operator(const BlockMatrixType& block_matrix);
 
 template <typename Range  = BlockVector<double>,
           typename Domain = Range,
@@ -112,8 +112,8 @@ template <typename Range  = BlockVector<double>,
             internal::BlockLinearOperatorImplementation::EmptyBlockPayload<>>
 LinearOperator<Domain, Range, typename BlockPayload::BlockType>
 block_forward_substitution(
-  const BlockLinearOperator<Range, Domain, BlockPayload> &,
-  const BlockLinearOperator<Domain, Range, BlockPayload> &);
+  const BlockLinearOperator<Range, Domain, BlockPayload>&,
+  const BlockLinearOperator<Domain, Range, BlockPayload>&);
 
 template <typename Range  = BlockVector<double>,
           typename Domain = Range,
@@ -121,8 +121,8 @@ template <typename Range  = BlockVector<double>,
             internal::BlockLinearOperatorImplementation::EmptyBlockPayload<>>
 LinearOperator<Domain, Range, typename BlockPayload::BlockType>
 block_back_substitution(
-  const BlockLinearOperator<Range, Domain, BlockPayload> &,
-  const BlockLinearOperator<Domain, Range, BlockPayload> &);
+  const BlockLinearOperator<Range, Domain, BlockPayload>&,
+  const BlockLinearOperator<Domain, Range, BlockPayload>&);
 
 // end of workaround
 
@@ -213,7 +213,7 @@ public:
    * class LinearOperator are initialized with default variants that throw an
    * exception upon invocation.
    */
-  BlockLinearOperator(const BlockPayload &payload) :
+  BlockLinearOperator(const BlockPayload& payload) :
     LinearOperator<Range, Domain, typename BlockPayload::BlockType>(
       typename BlockPayload::BlockType(payload, payload))
   {
@@ -245,8 +245,8 @@ public:
   /**
    * Default copy constructor.
    */
-  BlockLinearOperator(
-    const BlockLinearOperator<Range, Domain, BlockPayload> &) = default;
+  BlockLinearOperator(const BlockLinearOperator<Range, Domain, BlockPayload>&) =
+    default;
 
   /**
    * Templated copy constructor that creates a BlockLinearOperator object from
@@ -254,7 +254,7 @@ public:
    * <code>block_operator</code> is defined.
    */
   template <typename Op>
-  BlockLinearOperator(const Op &op)
+  BlockLinearOperator(const Op& op)
   {
     *this = block_operator<Range, Domain, BlockPayload, Op>(op);
   }
@@ -265,7 +265,7 @@ public:
    * specialization.
    */
   template <size_t m, size_t n>
-  BlockLinearOperator(const std::array<std::array<BlockType, n>, m> &ops)
+  BlockLinearOperator(const std::array<std::array<BlockType, n>, m>& ops)
   {
     *this = block_operator<m, n, Range, Domain, BlockPayload>(ops);
   }
@@ -276,7 +276,7 @@ public:
    * block_operator() specialization.
    */
   template <size_t m>
-  BlockLinearOperator(const std::array<BlockType, m> &ops)
+  BlockLinearOperator(const std::array<BlockType, m>& ops)
   {
     *this = block_diagonal_operator<m, Range, Domain, BlockPayload>(ops);
   }
@@ -284,16 +284,16 @@ public:
   /**
    * Default copy assignment operator.
    */
-  BlockLinearOperator<Range, Domain, BlockPayload> &
-  operator=(const BlockLinearOperator<Range, Domain, BlockPayload> &) = default;
+  BlockLinearOperator<Range, Domain, BlockPayload>&
+  operator=(const BlockLinearOperator<Range, Domain, BlockPayload>&) = default;
 
   /**
    * Templated copy assignment operator for an object @p op for which the
    * conversion function <code>block_operator</code> is defined.
    */
   template <typename Op>
-  BlockLinearOperator<Range, Domain, BlockPayload> &
-  operator=(const Op &op)
+  BlockLinearOperator<Range, Domain, BlockPayload>&
+  operator=(const Op& op)
   {
     *this = block_operator<Range, Domain, BlockPayload, Op>(op);
     return *this;
@@ -305,8 +305,8 @@ public:
    * specialization.
    */
   template <size_t m, size_t n>
-  BlockLinearOperator<Range, Domain, BlockPayload> &
-  operator=(const std::array<std::array<BlockType, n>, m> &ops)
+  BlockLinearOperator<Range, Domain, BlockPayload>&
+  operator=(const std::array<std::array<BlockType, n>, m>& ops)
   {
     *this = block_operator<m, n, Range, Domain, BlockPayload>(ops);
     return *this;
@@ -318,8 +318,8 @@ public:
    * operator calls the corresponding block_operator() specialization.
    */
   template <size_t m>
-  BlockLinearOperator<Range, Domain, BlockPayload> &
-  operator=(const std::array<BlockType, m> &ops)
+  BlockLinearOperator<Range, Domain, BlockPayload>&
+  operator=(const std::array<BlockType, m>& ops)
   {
     *this = block_diagonal_operator<m, Range, Domain, BlockPayload>(ops);
     return *this;
@@ -356,9 +356,9 @@ namespace internal
     template <typename Range, typename Domain, typename BlockPayload>
     inline void
     populate_linear_operator_functions(
-      dealii::BlockLinearOperator<Range, Domain, BlockPayload> &op)
+      dealii::BlockLinearOperator<Range, Domain, BlockPayload>& op)
     {
-      op.reinit_range_vector = [=](Range &v, bool omit_zeroing_entries) {
+      op.reinit_range_vector = [=](Range& v, bool omit_zeroing_entries) {
         const unsigned int m = op.n_block_rows();
 
         // Reinitialize the block vector to m blocks:
@@ -371,7 +371,7 @@ namespace internal
         v.collect_sizes();
       };
 
-      op.reinit_domain_vector = [=](Domain &v, bool omit_zeroing_entries) {
+      op.reinit_domain_vector = [=](Domain& v, bool omit_zeroing_entries) {
         const unsigned int n = op.n_block_cols();
 
         // Reinitialize the block vector to n blocks:
@@ -384,7 +384,7 @@ namespace internal
         v.collect_sizes();
       };
 
-      op.vmult = [=](Range &v, const Domain &u) {
+      op.vmult = [=](Range& v, const Domain& u) {
         const unsigned int m = op.n_block_rows();
         const unsigned int n = op.n_block_cols();
         Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
@@ -408,7 +408,7 @@ namespace internal
           }
       };
 
-      op.vmult_add = [=](Range &v, const Domain &u) {
+      op.vmult_add = [=](Range& v, const Domain& u) {
         const unsigned int m = op.n_block_rows();
         const unsigned int n = op.n_block_cols();
         Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
@@ -430,7 +430,7 @@ namespace internal
             op.block(i, j).vmult_add(v.block(i), u.block(j));
       };
 
-      op.Tvmult = [=](Domain &v, const Range &u) {
+      op.Tvmult = [=](Domain& v, const Range& u) {
         const unsigned int n = op.n_block_cols();
         const unsigned int m = op.n_block_rows();
         Assert(v.n_blocks() == n, ExcDimensionMismatch(v.n_blocks(), n));
@@ -454,7 +454,7 @@ namespace internal
           }
       };
 
-      op.Tvmult_add = [=](Domain &v, const Range &u) {
+      op.Tvmult_add = [=](Domain& v, const Range& u) {
         const unsigned int n = op.n_block_cols();
         const unsigned int m = op.n_block_rows();
         Assert(v.n_blocks() == n, ExcDimensionMismatch(v.n_blocks(), n));
@@ -509,7 +509,7 @@ namespace internal
        * be called under any conditions.
        */
       template <typename... Args>
-      EmptyBlockPayload(const Args &...)
+      EmptyBlockPayload(const Args&...)
       {}
     };
 
@@ -539,7 +539,7 @@ template <typename Range,
           typename BlockPayload,
           typename BlockMatrixType>
 BlockLinearOperator<Range, Domain, BlockPayload>
-block_operator(const BlockMatrixType &block_matrix)
+block_operator(const BlockMatrixType& block_matrix)
 {
   typedef typename BlockLinearOperator<Range, Domain, BlockPayload>::BlockType
     BlockType;
@@ -612,7 +612,7 @@ block_operator(
                                              typename Domain::BlockType,
                                              typename BlockPayload::BlockType>,
                               n>,
-                   m> &ops)
+                   m>& ops)
 {
   static_assert(m > 0 && n > 0,
                 "a blocked LinearOperator must consist of at least one block");
@@ -662,7 +662,7 @@ template <typename Range,
           typename BlockPayload,
           typename BlockMatrixType>
 BlockLinearOperator<Range, Domain, BlockPayload>
-block_diagonal_operator(const BlockMatrixType &block_matrix)
+block_diagonal_operator(const BlockMatrixType& block_matrix)
 {
   typedef typename BlockLinearOperator<Range, Domain, BlockPayload>::BlockType
     BlockType;
@@ -723,7 +723,7 @@ block_diagonal_operator(
   const std::array<LinearOperator<typename Range::BlockType,
                                   typename Domain::BlockType,
                                   typename BlockPayload::BlockType>,
-                   m> &ops)
+                   m>& ops)
 {
   static_assert(
     m > 0, "a blockdiagonal LinearOperator must consist of at least one block");
@@ -771,7 +771,7 @@ BlockLinearOperator<Range, Domain, BlockPayload>
 block_diagonal_operator(
   const LinearOperator<typename Range::BlockType,
                        typename Domain::BlockType,
-                       typename BlockPayload::BlockType> &op)
+                       typename BlockPayload::BlockType>& op)
 {
   static_assert(m > 0,
                 "a blockdiagonal LinearOperator must consist of at least "
@@ -831,8 +831,8 @@ block_diagonal_operator(
 template <typename Range, typename Domain, typename BlockPayload>
 LinearOperator<Domain, Range, typename BlockPayload::BlockType>
 block_forward_substitution(
-  const BlockLinearOperator<Range, Domain, BlockPayload> &block_operator,
-  const BlockLinearOperator<Domain, Range, BlockPayload> &diagonal_inverse)
+  const BlockLinearOperator<Range, Domain, BlockPayload>& block_operator,
+  const BlockLinearOperator<Domain, Range, BlockPayload>& diagonal_inverse)
 {
   LinearOperator<Range, Range, typename BlockPayload::BlockType> return_op(
     (typename BlockPayload::BlockType(diagonal_inverse)));
@@ -840,8 +840,8 @@ block_forward_substitution(
   return_op.reinit_range_vector  = diagonal_inverse.reinit_range_vector;
   return_op.reinit_domain_vector = diagonal_inverse.reinit_domain_vector;
 
-  return_op.vmult = [block_operator, diagonal_inverse](Range &      v,
-                                                       const Range &u) {
+  return_op.vmult = [block_operator, diagonal_inverse](Range&       v,
+                                                       const Range& u) {
     const unsigned int m = block_operator.n_block_rows();
     Assert(block_operator.n_block_cols() == m,
            ExcDimensionMismatch(block_operator.n_block_cols(), m));
@@ -858,7 +858,7 @@ block_forward_substitution(
     diagonal_inverse.block(0, 0).vmult(v.block(0), u.block(0));
     for (unsigned int i = 1; i < m; ++i)
       {
-        auto &dst = v.block(i);
+        auto& dst = v.block(i);
         dst       = u.block(i);
         dst *= -1.;
         for (unsigned int j = 0; j < i; ++j)
@@ -869,8 +869,8 @@ block_forward_substitution(
       }
   };
 
-  return_op.vmult_add = [block_operator, diagonal_inverse](Range &      v,
-                                                           const Range &u) {
+  return_op.vmult_add = [block_operator, diagonal_inverse](Range&       v,
+                                                           const Range& u) {
     const unsigned int m = block_operator.n_block_rows();
     Assert(block_operator.n_block_cols() == m,
            ExcDimensionMismatch(block_operator.n_block_cols(), m));
@@ -946,8 +946,8 @@ block_forward_substitution(
 template <typename Range, typename Domain, typename BlockPayload>
 LinearOperator<Domain, Range, typename BlockPayload::BlockType>
 block_back_substitution(
-  const BlockLinearOperator<Range, Domain, BlockPayload> &block_operator,
-  const BlockLinearOperator<Domain, Range, BlockPayload> &diagonal_inverse)
+  const BlockLinearOperator<Range, Domain, BlockPayload>& block_operator,
+  const BlockLinearOperator<Domain, Range, BlockPayload>& diagonal_inverse)
 {
   LinearOperator<Range, Range, typename BlockPayload::BlockType> return_op(
     (typename BlockPayload::BlockType(diagonal_inverse)));
@@ -955,8 +955,8 @@ block_back_substitution(
   return_op.reinit_range_vector  = diagonal_inverse.reinit_range_vector;
   return_op.reinit_domain_vector = diagonal_inverse.reinit_domain_vector;
 
-  return_op.vmult = [block_operator, diagonal_inverse](Range &      v,
-                                                       const Range &u) {
+  return_op.vmult = [block_operator, diagonal_inverse](Range&       v,
+                                                       const Range& u) {
     const unsigned int m = block_operator.n_block_rows();
     Assert(block_operator.n_block_cols() == m,
            ExcDimensionMismatch(block_operator.n_block_cols(), m));
@@ -974,7 +974,7 @@ block_back_substitution(
 
     for (int i = m - 2; i >= 0; --i)
       {
-        auto &dst = v.block(i);
+        auto& dst = v.block(i);
         dst       = u.block(i);
         dst *= -1.;
         for (unsigned int j = i + 1; j < m; ++j)
@@ -985,8 +985,8 @@ block_back_substitution(
       }
   };
 
-  return_op.vmult_add = [block_operator, diagonal_inverse](Range &      v,
-                                                           const Range &u) {
+  return_op.vmult_add = [block_operator, diagonal_inverse](Range&       v,
+                                                           const Range& u) {
     const unsigned int m = block_operator.n_block_rows();
     Assert(block_operator.n_block_cols() == m,
            ExcDimensionMismatch(block_operator.n_block_cols(), m));

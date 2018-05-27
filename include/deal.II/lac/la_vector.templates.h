@@ -39,7 +39,7 @@ namespace LinearAlgebra
   template <typename Number>
   template <typename Number2>
   void
-  Vector<Number>::reinit(const ReadWriteVector<Number2> &in_vector,
+  Vector<Number>::reinit(const ReadWriteVector<Number2>& in_vector,
                          const bool                      omit_zeroing_entries)
   {
     ReadWriteVector<Number>::reinit(in_vector, omit_zeroing_entries);
@@ -49,7 +49,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::reinit(const IndexSet &locally_stored_indices,
+  Vector<Number>::reinit(const IndexSet& locally_stored_indices,
                          const bool      omit_zeroing_entries)
   {
     ReadWriteVector<Number>::reinit(locally_stored_indices,
@@ -60,15 +60,15 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::reinit(const VectorSpaceVector<Number> &V,
+  Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
                          const bool                       omit_zeroing_entries)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     Assert(
       down_V.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
@@ -79,8 +79,8 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
-  Vector<Number>::operator=(const Vector<Number> &in_vector)
+  Vector<Number>&
+  Vector<Number>::operator=(const Vector<Number>& in_vector)
   {
     if (PointerComparison::equal(this, &in_vector))
       return *this;
@@ -101,8 +101,8 @@ namespace LinearAlgebra
 
   template <typename Number>
   template <typename Number2>
-  Vector<Number> &
-  Vector<Number>::operator=(const Vector<Number2> &in_vector)
+  Vector<Number>&
+  Vector<Number>::operator=(const Vector<Number2>& in_vector)
   {
     this->thread_loop_partitioner = in_vector.thread_loop_partitioner;
     if (this->size() != in_vector.size())
@@ -119,7 +119,7 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
+  Vector<Number>&
   Vector<Number>::operator=(const Number s)
   {
     Assert(s == static_cast<Number>(0),
@@ -137,7 +137,7 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
+  Vector<Number>&
   Vector<Number>::operator*=(const Number factor)
   {
     AssertIsFinite(factor);
@@ -153,7 +153,7 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
+  Vector<Number>&
   Vector<Number>::operator/=(const Number factor)
   {
     AssertIsFinite(factor);
@@ -166,15 +166,15 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
-  Vector<Number>::operator+=(const VectorSpaceVector<Number> &V)
+  Vector<Number>&
+  Vector<Number>::operator+=(const VectorSpaceVector<Number>& V)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     Assert(
       down_V.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
@@ -190,15 +190,15 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Vector<Number> &
-  Vector<Number>::operator-=(const VectorSpaceVector<Number> &V)
+  Vector<Number>&
+  Vector<Number>::operator-=(const VectorSpaceVector<Number>& V)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage(
              "Cannot subtract two vectors with different numbers of elements"));
@@ -213,14 +213,14 @@ namespace LinearAlgebra
 
 
   template <typename Number>
-  Number Vector<Number>::operator*(const VectorSpaceVector<Number> &V) const
+  Number Vector<Number>::operator*(const VectorSpaceVector<Number>& V) const
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage("Cannot compute the scalar product "
                       "of two vectors with different numbers of elements"));
@@ -237,7 +237,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::import(const ReadWriteVector<Number> &,
+  Vector<Number>::import(const ReadWriteVector<Number>&,
                          VectorOperation::values,
                          std::shared_ptr<const CommunicationPatternBase>)
   {
@@ -262,14 +262,14 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::add(const Number a, const VectorSpaceVector<Number> &V)
+  Vector<Number>::add(const Number a, const VectorSpaceVector<Number>& V)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -286,21 +286,21 @@ namespace LinearAlgebra
   template <typename Number>
   void
   Vector<Number>::add(const Number                     a,
-                      const VectorSpaceVector<Number> &V,
+                      const VectorSpaceVector<Number>& V,
                       const Number                     b,
-                      const VectorSpaceVector<Number> &W)
+                      const VectorSpaceVector<Number>& W)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&W) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&W) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+    const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -322,17 +322,17 @@ namespace LinearAlgebra
   void
   Vector<Number>::sadd(const Number                     s,
                        const Number                     a,
-                       const VectorSpaceVector<Number> &V)
+                       const VectorSpaceVector<Number>& V)
   {
     AssertIsFinite(s);
     AssertIsFinite(a);
 
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. It fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     internal::VectorOperations::Vectorization_sadd_xav<Number> vector_sadd_xav(
       this->values.get(), down_V.values.get(), a, s);
     internal::VectorOperations::parallel_for(
@@ -343,15 +343,15 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::scale(const VectorSpaceVector<Number> &scaling_factors)
+  Vector<Number>::scale(const VectorSpaceVector<Number>& scaling_factors)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&scaling_factors) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&scaling_factors) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast scaling_factors. If fails, throws an exception.
-    const Vector<Number> &down_scaling_factors =
-      dynamic_cast<const Vector<Number> &>(scaling_factors);
+    const Vector<Number>& down_scaling_factors =
+      dynamic_cast<const Vector<Number>&>(scaling_factors);
     Assert(
       down_scaling_factors.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
@@ -366,16 +366,16 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::equ(const Number a, const VectorSpaceVector<Number> &V)
+  Vector<Number>::equ(const Number a, const VectorSpaceVector<Number>& V)
   {
     AssertIsFinite(a);
 
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     internal::VectorOperations::Vectorization_equ_au<Number> vector_equ(
       this->values.get(), down_V.values.get(), a);
     internal::VectorOperations::parallel_for(
@@ -500,20 +500,20 @@ namespace LinearAlgebra
   template <typename Number>
   Number
   Vector<Number>::add_and_dot(const Number                     a,
-                              const VectorSpaceVector<Number> &V,
-                              const VectorSpaceVector<Number> &W)
+                              const VectorSpaceVector<Number>& V,
+                              const VectorSpaceVector<Number>& W)
   {
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&V) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
            ExcVectorTypeNotCompatible());
     // Check that casting will work.
-    Assert(dynamic_cast<const Vector<Number> *>(&W) != nullptr,
+    Assert(dynamic_cast<const Vector<Number>*>(&W) != nullptr,
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const Vector<Number>& down_V = dynamic_cast<const Vector<Number>&>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+    const Vector<Number>& down_W = dynamic_cast<const Vector<Number>&>(W);
     AssertIsFinite(a);
     Assert(
       down_V.size() == this->size(),
@@ -536,7 +536,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::block_write(std::ostream &out) const
+  Vector<Number>::block_write(std::ostream& out) const
   {
     AssertThrow(out, ExcIO());
 
@@ -554,9 +554,9 @@ namespace LinearAlgebra
     std::strcat(buf, "\n[");
 
     out.write(buf, std::strlen(buf));
-    out.write(reinterpret_cast<const char *>(this->begin()),
-              reinterpret_cast<const char *>(this->end()) -
-                reinterpret_cast<const char *>(this->begin()));
+    out.write(reinterpret_cast<const char*>(this->begin()),
+              reinterpret_cast<const char*>(this->end()) -
+                reinterpret_cast<const char*>(this->begin()));
 
     // out << ']';
     const char outro = ']';
@@ -569,7 +569,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::block_read(std::istream &in)
+  Vector<Number>::block_read(std::istream& in)
   {
     AssertThrow(in, ExcIO());
 
@@ -586,9 +586,9 @@ namespace LinearAlgebra
     in.read(&c, 1);
     AssertThrow(c == '[', ExcIO());
 
-    in.read(reinterpret_cast<char *>(this->begin()),
-            reinterpret_cast<const char *>(this->end()) -
-              reinterpret_cast<const char *>(this->begin()));
+    in.read(reinterpret_cast<char*>(this->begin()),
+            reinterpret_cast<const char*>(this->end()) -
+              reinterpret_cast<const char*>(this->begin()));
 
     // in >> c;
     in.read(&c, 1);

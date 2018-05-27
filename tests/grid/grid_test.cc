@@ -37,8 +37,8 @@ class Ball : public FlatManifold<dim>
 {
 public:
   virtual Point<dim>
-  get_new_point(const ArrayView<const Point<dim>> &surrounding_points,
-                const ArrayView<const double> &    weights) const override
+  get_new_point(const ArrayView<const Point<dim>>& surrounding_points,
+                const ArrayView<const double>&     weights) const override
   {
     Point<dim> middle =
       FlatManifold<dim>::get_new_point(surrounding_points, weights);
@@ -67,18 +67,18 @@ class CurvedLine : public FlatManifold<dim>
 public:
   virtual Point<dim>
   get_new_point_on_line(
-    const typename Triangulation<dim>::line_iterator &line) const;
+    const typename Triangulation<dim>::line_iterator& line) const;
 
   virtual Point<dim>
   get_new_point_on_quad(
-    const typename Triangulation<dim>::quad_iterator &quad) const;
+    const typename Triangulation<dim>::quad_iterator& quad) const;
 };
 
 
 template <int dim>
 Point<dim>
 CurvedLine<dim>::get_new_point_on_line(
-  const typename Triangulation<dim>::line_iterator &line) const
+  const typename Triangulation<dim>::line_iterator& line) const
 {
   Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
 
@@ -126,7 +126,7 @@ CurvedLine<dim>::get_new_point_on_line(
 template <int dim>
 Point<dim>
 CurvedLine<dim>::get_new_point_on_quad(
-  const typename Triangulation<dim>::quad_iterator &quad) const
+  const typename Triangulation<dim>::quad_iterator& quad) const
 {
   Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
 

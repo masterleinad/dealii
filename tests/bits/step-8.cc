@@ -101,11 +101,11 @@ public:
   RightHandSide();
 
   virtual void
-  vector_value(const Point<dim> &p, Vector<double> &values) const;
+  vector_value(const Point<dim>& p, Vector<double>& values) const;
 
   virtual void
-  vector_value_list(const std::vector<Point<dim>> &points,
-                    std::vector<Vector<double>> &  value_list) const;
+  vector_value_list(const std::vector<Point<dim>>& points,
+                    std::vector<Vector<double>>&   value_list) const;
 };
 
 
@@ -116,8 +116,8 @@ RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
 
 template <int dim>
 inline void
-RightHandSide<dim>::vector_value(const Point<dim> &p,
-                                 Vector<double> &  values) const
+RightHandSide<dim>::vector_value(const Point<dim>& p,
+                                 Vector<double>&   values) const
 {
   Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
   Assert(dim >= 2, ExcNotImplemented());
@@ -143,8 +143,8 @@ RightHandSide<dim>::vector_value(const Point<dim> &p,
 template <int dim>
 void
 RightHandSide<dim>::vector_value_list(
-  const std::vector<Point<dim>> &points,
-  std::vector<Vector<double>> &  value_list) const
+  const std::vector<Point<dim>>& points,
+  std::vector<Vector<double>>&   value_list) const
 {
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
@@ -236,7 +236,7 @@ ElasticProblem<dim>::assemble_system()
       cell_rhs    = 0;
 
       x_fe_values.reinit(cell);
-      const FEValues<dim> &fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
 
       lambda.value_list(fe_values.get_quadrature_points(), lambda_values);
       mu.value_list(fe_values.get_quadrature_points(), mu_values);
@@ -430,7 +430,7 @@ main()
       ElasticProblem<2> elastic_problem_2d;
       elastic_problem_2d.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

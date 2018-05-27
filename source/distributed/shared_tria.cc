@@ -162,7 +162,7 @@ namespace parallel
           // parallel::shared::Triangulation<dim>::
           std::function<bool(
             const typename parallel::shared::Triangulation<dim, spacedim>::
-              active_cell_iterator &)>
+              active_cell_iterator&)>
             predicate = IteratorFilters::SubdomainEqualTo(this->my_subdomain);
 
           const std::vector<typename parallel::shared::Triangulation<
@@ -193,7 +193,7 @@ namespace parallel
 
               std::function<bool(
                 const typename parallel::shared::Triangulation<dim, spacedim>::
-                  cell_iterator &)>
+                  cell_iterator&)>
                 predicate = IteratorFilters::LocallyOwnedLevelCell();
               for (unsigned int lvl = 0; lvl < this->n_levels(); ++lvl)
                 {
@@ -320,7 +320,7 @@ namespace parallel
 
 
     template <int dim, int spacedim>
-    const std::vector<types::subdomain_id> &
+    const std::vector<types::subdomain_id>&
     Triangulation<dim, spacedim>::get_true_subdomain_ids_of_cells() const
     {
       return true_subdomain_ids_of_cells;
@@ -329,7 +329,7 @@ namespace parallel
 
 
     template <int dim, int spacedim>
-    const std::vector<types::subdomain_id> &
+    const std::vector<types::subdomain_id>&
     Triangulation<dim, spacedim>::get_true_level_subdomain_ids_of_cells(
       const unsigned int level) const
     {
@@ -352,9 +352,9 @@ namespace parallel
     template <int dim, int spacedim>
     void
     Triangulation<dim, spacedim>::create_triangulation(
-      const std::vector<Point<spacedim>> &vertices,
-      const std::vector<CellData<dim>> &  cells,
-      const SubCellData &                 subcelldata)
+      const std::vector<Point<spacedim>>& vertices,
+      const std::vector<CellData<dim>>&   cells,
+      const SubCellData&                  subcelldata)
     {
       try
         {
@@ -362,8 +362,7 @@ namespace parallel
             vertices, cells, subcelldata);
         }
       catch (
-        const typename dealii::Triangulation<dim, spacedim>::DistortedCellList
-          &)
+        const typename dealii::Triangulation<dim, spacedim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -378,11 +377,11 @@ namespace parallel
     template <int dim, int spacedim>
     void
     Triangulation<dim, spacedim>::copy_triangulation(
-      const dealii::Triangulation<dim, spacedim> &other_tria)
+      const dealii::Triangulation<dim, spacedim>& other_tria)
     {
       Assert(
         (dynamic_cast<
-           const dealii::parallel::distributed::Triangulation<dim, spacedim> *>(
+           const dealii::parallel::distributed::Triangulation<dim, spacedim>*>(
            &other_tria) == nullptr),
         ExcMessage(
           "Cannot use this function on parallel::distributed::Triangulation."));
@@ -424,7 +423,7 @@ namespace parallel
 
 
     template <int dim, int spacedim>
-    const std::vector<unsigned int> &
+    const std::vector<unsigned int>&
     Triangulation<dim, spacedim>::get_true_subdomain_ids_of_cells() const
     {
       Assert(false, ExcNotImplemented());
@@ -434,7 +433,7 @@ namespace parallel
 
 
     template <int dim, int spacedim>
-    const std::vector<unsigned int> &
+    const std::vector<unsigned int>&
     Triangulation<dim, spacedim>::get_true_level_subdomain_ids_of_cells(
       const unsigned int) const
     {

@@ -21,8 +21,8 @@
 
 template <typename number>
 void
-checkTvmult_Add(FullMatrix<number> &A,
-                Vector<number> &    V,
+checkTvmult_Add(FullMatrix<number>& A,
+                Vector<number>&     V,
                 bool                expect_constrained_source = false)
 {
   deallog << "Tvmult_add" << std::endl;

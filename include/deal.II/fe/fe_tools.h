@@ -100,7 +100,7 @@ namespace FETools
      */
 
     virtual std::unique_ptr<FiniteElement<dim, spacedim>>
-    get(const Quadrature<1> &quad) const = 0;
+    get(const Quadrature<1>& quad) const = 0;
 
     /**
      * Virtual destructor doing nothing but making the compiler happy.
@@ -134,7 +134,7 @@ namespace FETools
      * implemented for FE_Q) and return a pointer to it.
      */
     virtual std::unique_ptr<FiniteElement<FE::dimension, FE::space_dimension>>
-    get(const Quadrature<1> &quad) const override;
+    get(const Quadrature<1>& quad) const override;
   };
 
   /**
@@ -154,9 +154,9 @@ namespace FETools
    */
   template <int dim, int spacedim>
   void
-  compute_component_wise(const FiniteElement<dim, spacedim> &    fe,
-                         std::vector<unsigned int> &             renumbering,
-                         std::vector<std::vector<unsigned int>> &start_indices);
+  compute_component_wise(const FiniteElement<dim, spacedim>&     fe,
+                         std::vector<unsigned int>&              renumbering,
+                         std::vector<std::vector<unsigned int>>& start_indices);
 
   /**
    * Compute the vector required to renumber the dofs of a cell by block.
@@ -175,9 +175,9 @@ namespace FETools
    */
   template <int dim, int spacedim>
   void
-  compute_block_renumbering(const FiniteElement<dim, spacedim> &  fe,
-                            std::vector<types::global_dof_index> &renumbering,
-                            std::vector<types::global_dof_index> &block_data,
+  compute_block_renumbering(const FiniteElement<dim, spacedim>&   fe,
+                            std::vector<types::global_dof_index>& renumbering,
+                            std::vector<types::global_dof_index>& block_data,
                             bool return_start_indices = true);
 
   /**
@@ -195,9 +195,9 @@ namespace FETools
    */
   template <int dim, typename number, int spacedim>
   void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim> &fe1,
-                           const FiniteElement<dim, spacedim> &fe2,
-                           FullMatrix<number> &interpolation_matrix);
+  get_interpolation_matrix(const FiniteElement<dim, spacedim>& fe1,
+                           const FiniteElement<dim, spacedim>& fe2,
+                           FullMatrix<number>& interpolation_matrix);
 
   /**
    * Compute the interpolation matrix that interpolates a @p fe1-function to a
@@ -212,9 +212,9 @@ namespace FETools
    */
   template <int dim, typename number, int spacedim>
   void
-  get_back_interpolation_matrix(const FiniteElement<dim, spacedim> &fe1,
-                                const FiniteElement<dim, spacedim> &fe2,
-                                FullMatrix<number> &interpolation_matrix);
+  get_back_interpolation_matrix(const FiniteElement<dim, spacedim>& fe1,
+                                const FiniteElement<dim, spacedim>& fe2,
+                                FullMatrix<number>& interpolation_matrix);
 
   /**
    * Compute the identity matrix minus the back interpolation matrix.
@@ -229,18 +229,18 @@ namespace FETools
    */
   template <int dim, typename number, int spacedim>
   void
-  get_interpolation_difference_matrix(const FiniteElement<dim, spacedim> &fe1,
-                                      const FiniteElement<dim, spacedim> &fe2,
-                                      FullMatrix<number> &difference_matrix);
+  get_interpolation_difference_matrix(const FiniteElement<dim, spacedim>& fe1,
+                                      const FiniteElement<dim, spacedim>& fe2,
+                                      FullMatrix<number>& difference_matrix);
 
   /**
    * Compute the local $L^2$-projection matrix from fe1 to fe2.
    */
   template <int dim, typename number, int spacedim>
   void
-  get_projection_matrix(const FiniteElement<dim, spacedim> &fe1,
-                        const FiniteElement<dim, spacedim> &fe2,
-                        FullMatrix<number> &                matrix);
+  get_projection_matrix(const FiniteElement<dim, spacedim>& fe1,
+                        const FiniteElement<dim, spacedim>& fe2,
+                        FullMatrix<number>&                 matrix);
 
   /**
    * This is a rather specialized function used during the construction of
@@ -312,7 +312,7 @@ namespace FETools
    */
   template <int dim, int spacedim>
   FullMatrix<double>
-  compute_node_matrix(const FiniteElement<dim, spacedim> &fe);
+  compute_node_matrix(const FiniteElement<dim, spacedim>& fe);
 
   /**
    * For all possible (isotropic and anisotropic) refinement cases compute the
@@ -355,8 +355,8 @@ namespace FETools
   template <int dim, typename number, int spacedim>
   void
   compute_embedding_matrices(
-    const FiniteElement<dim, spacedim> &          fe,
-    std::vector<std::vector<FullMatrix<number>>> &matrices,
+    const FiniteElement<dim, spacedim>&           fe,
+    std::vector<std::vector<FullMatrix<number>>>& matrices,
     const bool                                    isotropic_only = false,
     const double                                  threshold      = 1.e-12);
 
@@ -384,7 +384,7 @@ namespace FETools
   template <int dim, typename number, int spacedim>
   void
   compute_face_embedding_matrices(
-    const FiniteElement<dim, spacedim> &fe,
+    const FiniteElement<dim, spacedim>& fe,
     FullMatrix<number> (&matrices)[GeometryInfo<dim>::max_children_per_face],
     const unsigned int face_coarse,
     const unsigned int face_fine,
@@ -424,8 +424,8 @@ namespace FETools
   template <int dim, typename number, int spacedim>
   void
   compute_projection_matrices(
-    const FiniteElement<dim, spacedim> &          fe,
-    std::vector<std::vector<FullMatrix<number>>> &matrices,
+    const FiniteElement<dim, spacedim>&           fe,
+    std::vector<std::vector<FullMatrix<number>>>& matrices,
     const bool                                    isotropic_only = false);
 
   /**
@@ -516,10 +516,10 @@ namespace FETools
   template <int dim, int spacedim>
   void
   compute_projection_from_quadrature_points_matrix(
-    const FiniteElement<dim, spacedim> &fe,
-    const Quadrature<dim> &             lhs_quadrature,
-    const Quadrature<dim> &             rhs_quadrature,
-    FullMatrix<double> &                X);
+    const FiniteElement<dim, spacedim>& fe,
+    const Quadrature<dim>&              lhs_quadrature,
+    const Quadrature<dim>&              rhs_quadrature,
+    FullMatrix<double>&                 X);
 
   /**
    * Given a (scalar) local finite element function, compute the matrix that
@@ -531,9 +531,9 @@ namespace FETools
   template <int dim, int spacedim>
   void
   compute_interpolation_to_quadrature_points_matrix(
-    const FiniteElement<dim, spacedim> &fe,
-    const Quadrature<dim> &             quadrature,
-    FullMatrix<double> &                I_q);
+    const FiniteElement<dim, spacedim>& fe,
+    const Quadrature<dim>&              quadrature,
+    FullMatrix<double>&                 I_q);
 
   /**
    * Compute the projection of tensorial (first-order tensor) data stored at
@@ -551,9 +551,9 @@ namespace FETools
   template <int dim>
   void
   compute_projection_from_quadrature_points(
-    const FullMatrix<double> &         projection_matrix,
-    const std::vector<Tensor<1, dim>> &vector_of_tensors_at_qp,
-    std::vector<Tensor<1, dim>> &      vector_of_tensors_at_nodes);
+    const FullMatrix<double>&          projection_matrix,
+    const std::vector<Tensor<1, dim>>& vector_of_tensors_at_qp,
+    std::vector<Tensor<1, dim>>&       vector_of_tensors_at_nodes);
 
 
 
@@ -563,9 +563,9 @@ namespace FETools
   template <int dim>
   void
   compute_projection_from_quadrature_points(
-    const FullMatrix<double> &                  projection_matrix,
-    const std::vector<SymmetricTensor<2, dim>> &vector_of_tensors_at_qp,
-    std::vector<SymmetricTensor<2, dim>> &      vector_of_tensors_at_nodes);
+    const FullMatrix<double>&                   projection_matrix,
+    const std::vector<SymmetricTensor<2, dim>>& vector_of_tensors_at_qp,
+    std::vector<SymmetricTensor<2, dim>>&       vector_of_tensors_at_nodes);
 
 
 
@@ -581,12 +581,12 @@ namespace FETools
   template <int dim, int spacedim>
   void
   compute_projection_from_face_quadrature_points_matrix(
-    const FiniteElement<dim, spacedim> &fe,
-    const Quadrature<dim - 1> &         lhs_quadrature,
-    const Quadrature<dim - 1> &         rhs_quadrature,
-    const typename DoFHandler<dim, spacedim>::active_cell_iterator &cell,
+    const FiniteElement<dim, spacedim>& fe,
+    const Quadrature<dim - 1>&          lhs_quadrature,
+    const Quadrature<dim - 1>&          rhs_quadrature,
+    const typename DoFHandler<dim, spacedim>::active_cell_iterator& cell,
     const unsigned int                                              face,
-    FullMatrix<double> &                                            X);
+    FullMatrix<double>&                                             X);
 
 
 
@@ -608,9 +608,9 @@ namespace FETools
   template <int dim, int spacedim, typename number>
   void
   convert_generalized_support_point_values_to_dof_values(
-    const FiniteElement<dim, spacedim> &finite_element,
-    const std::vector<Vector<number>> & support_point_values,
-    std::vector<number> &               dof_values);
+    const FiniteElement<dim, spacedim>& finite_element,
+    const std::vector<Vector<number>>&  support_point_values,
+    std::vector<number>&                dof_values);
 
 
 
@@ -654,10 +654,10 @@ namespace FETools
             class InVector,
             class OutVector>
   void
-  interpolate(const DoFHandlerType1<dim, spacedim> &dof1,
-              const InVector &                      u1,
-              const DoFHandlerType2<dim, spacedim> &dof2,
-              OutVector &                           u2);
+  interpolate(const DoFHandlerType1<dim, spacedim>& dof1,
+              const InVector&                       u1,
+              const DoFHandlerType2<dim, spacedim>& dof2,
+              OutVector&                            u2);
 
   /**
    * Compute the interpolation of a the @p dof1-function @p u1 to a @p
@@ -682,11 +682,11 @@ namespace FETools
             class InVector,
             class OutVector>
   void
-  interpolate(const DoFHandlerType1<dim, spacedim> &dof1,
-              const InVector &                      u1,
-              const DoFHandlerType2<dim, spacedim> &dof2,
-              const ConstraintMatrix &              constraints,
-              OutVector &                           u2);
+  interpolate(const DoFHandlerType1<dim, spacedim>& dof1,
+              const InVector&                       u1,
+              const DoFHandlerType2<dim, spacedim>& dof2,
+              const ConstraintMatrix&               constraints,
+              OutVector&                            u2);
 
   /**
    * Compute the interpolation of the @p fe1-function @p u1 to a @p
@@ -709,10 +709,10 @@ namespace FETools
             class OutVector,
             int spacedim>
   void
-  back_interpolate(const DoFHandlerType<dim, spacedim> &dof1,
-                   const InVector &                     u1,
-                   const FiniteElement<dim, spacedim> & fe2,
-                   OutVector &                          u1_interpolated);
+  back_interpolate(const DoFHandlerType<dim, spacedim>& dof1,
+                   const InVector&                      u1,
+                   const FiniteElement<dim, spacedim>&  fe2,
+                   OutVector&                           u1_interpolated);
 
   /**
    * Compute the interpolation of the @p dof1-function @p u1 to a @p
@@ -728,12 +728,12 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  back_interpolate(const DoFHandler<dim, spacedim> &dof1,
-                   const ConstraintMatrix &         constraints1,
-                   const InVector &                 u1,
-                   const DoFHandler<dim, spacedim> &dof2,
-                   const ConstraintMatrix &         constraints2,
-                   OutVector &                      u1_interpolated);
+  back_interpolate(const DoFHandler<dim, spacedim>& dof1,
+                   const ConstraintMatrix&          constraints1,
+                   const InVector&                  u1,
+                   const DoFHandler<dim, spacedim>& dof2,
+                   const ConstraintMatrix&          constraints2,
+                   OutVector&                       u1_interpolated);
 
   /**
    * Compute $(Id-I_h)z_1$ for a given @p dof1-function $z_1$, where $I_h$ is
@@ -746,10 +746,10 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  interpolation_difference(const DoFHandler<dim, spacedim> &   dof1,
-                           const InVector &                    z1,
-                           const FiniteElement<dim, spacedim> &fe2,
-                           OutVector &                         z1_difference);
+  interpolation_difference(const DoFHandler<dim, spacedim>&    dof1,
+                           const InVector&                     z1,
+                           const FiniteElement<dim, spacedim>& fe2,
+                           OutVector&                          z1_difference);
 
   /**
    * Compute $(Id-I_h)z_1$ for a given @p dof1-function $z_1$, where $I_h$ is
@@ -765,12 +765,12 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  interpolation_difference(const DoFHandler<dim, spacedim> &dof1,
-                           const ConstraintMatrix &         constraints1,
-                           const InVector &                 z1,
-                           const DoFHandler<dim, spacedim> &dof2,
-                           const ConstraintMatrix &         constraints2,
-                           OutVector &                      z1_difference);
+  interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
+                           const ConstraintMatrix&          constraints1,
+                           const InVector&                  z1,
+                           const DoFHandler<dim, spacedim>& dof2,
+                           const ConstraintMatrix&          constraints2,
+                           OutVector&                       z1_difference);
 
 
 
@@ -784,10 +784,10 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  project_dg(const DoFHandler<dim, spacedim> &dof1,
-             const InVector &                 u1,
-             const DoFHandler<dim, spacedim> &dof2,
-             OutVector &                      u2);
+  project_dg(const DoFHandler<dim, spacedim>& dof1,
+             const InVector&                  u1,
+             const DoFHandler<dim, spacedim>& dof2,
+             OutVector&                       u2);
 
   /**
    * Compute the patchwise extrapolation of a @p dof1 function @p z1 to a @p
@@ -851,10 +851,10 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  extrapolate(const DoFHandler<dim, spacedim> &dof1,
-              const InVector &                 z1,
-              const DoFHandler<dim, spacedim> &dof2,
-              OutVector &                      z2);
+  extrapolate(const DoFHandler<dim, spacedim>& dof1,
+              const InVector&                  z1,
+              const DoFHandler<dim, spacedim>& dof2,
+              OutVector&                       z2);
 
   /**
    * Compute the patchwise extrapolation of a @p dof1 function @p z1 to a @p
@@ -870,11 +870,11 @@ namespace FETools
    */
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  extrapolate(const DoFHandler<dim, spacedim> &dof1,
-              const InVector &                 z1,
-              const DoFHandler<dim, spacedim> &dof2,
-              const ConstraintMatrix &         constraints,
-              OutVector &                      z2);
+  extrapolate(const DoFHandler<dim, spacedim>& dof1,
+              const InVector&                  z1,
+              const DoFHandler<dim, spacedim>& dof2,
+              const ConstraintMatrix&          constraints,
+              OutVector&                       z2);
 
   //@}
   /**
@@ -905,12 +905,12 @@ namespace FETools
   template <int dim>
   void
   hierarchic_to_lexicographic_numbering(unsigned int               degree,
-                                        std::vector<unsigned int> &h2l);
+                                        std::vector<unsigned int>& h2l);
 
   template <int dim>
   void
-  hierarchic_to_lexicographic_numbering(const FiniteElementData<dim> &fe_data,
-                                        std::vector<unsigned int> &   h2l);
+  hierarchic_to_lexicographic_numbering(const FiniteElementData<dim>& fe_data,
+                                        std::vector<unsigned int>&    h2l);
 
   /**
    * Like the previous function but instead of returning its result through
@@ -918,7 +918,7 @@ namespace FETools
    */
   template <int dim>
   std::vector<unsigned int>
-  hierarchic_to_lexicographic_numbering(const FiniteElementData<dim> &fe_data);
+  hierarchic_to_lexicographic_numbering(const FiniteElementData<dim>& fe_data);
 
   /**
    * This is the reverse function to the above one, generating the map from
@@ -927,8 +927,8 @@ namespace FETools
    */
   template <int dim>
   void
-  lexicographic_to_hierarchic_numbering(const FiniteElementData<dim> &fe_data,
-                                        std::vector<unsigned int> &   l2h);
+  lexicographic_to_hierarchic_numbering(const FiniteElementData<dim>& fe_data,
+                                        std::vector<unsigned int>&    l2h);
 
   /**
    * Like the previous function but instead of returning its result through
@@ -936,7 +936,7 @@ namespace FETools
    */
   template <int dim>
   std::vector<unsigned int>
-  lexicographic_to_hierarchic_numbering(const FiniteElementData<dim> &fe_data);
+  lexicographic_to_hierarchic_numbering(const FiniteElementData<dim>& fe_data);
 
 
   /**
@@ -1033,8 +1033,8 @@ namespace FETools
     template <int dim, int spacedim>
     FiniteElementData<dim>
     multiply_dof_numbers(
-      const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-      const std::vector<unsigned int> &                        multiplicities,
+      const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+      const std::vector<unsigned int>&                        multiplicities,
       const bool do_tensor_product = true);
 
     /**
@@ -1046,23 +1046,23 @@ namespace FETools
     FiniteElementData<dim>
     multiply_dof_numbers(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems);
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems);
 
     /**
      * Same as above but for a specific number of sub-elements.
      */
     template <int dim, int spacedim>
     FiniteElementData<dim>
-    multiply_dof_numbers(const FiniteElement<dim, spacedim> *fe1,
+    multiply_dof_numbers(const FiniteElement<dim, spacedim>* fe1,
                          const unsigned int                  N1,
-                         const FiniteElement<dim, spacedim> *fe2 = nullptr,
+                         const FiniteElement<dim, spacedim>* fe2 = nullptr,
                          const unsigned int                  N2  = 0,
-                         const FiniteElement<dim, spacedim> *fe3 = nullptr,
+                         const FiniteElement<dim, spacedim>* fe3 = nullptr,
                          const unsigned int                  N3  = 0,
-                         const FiniteElement<dim, spacedim> *fe4 = nullptr,
+                         const FiniteElement<dim, spacedim>* fe4 = nullptr,
                          const unsigned int                  N4  = 0,
-                         const FiniteElement<dim, spacedim> *fe5 = nullptr,
+                         const FiniteElement<dim, spacedim>* fe5 = nullptr,
                          const unsigned int                  N5  = 0);
 
     /**
@@ -1080,8 +1080,8 @@ namespace FETools
     template <int dim, int spacedim>
     std::vector<bool>
     compute_restriction_is_additive_flags(
-      const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-      const std::vector<unsigned int> &                        multiplicities);
+      const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+      const std::vector<unsigned int>&                        multiplicities);
 
     /**
      * Same as above for an arbitrary number of parameters of type
@@ -1092,8 +1092,8 @@ namespace FETools
     std::vector<bool>
     compute_restriction_is_additive_flags(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems);
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems);
 
     /**
      * Take a @p FiniteElement object and return a boolean vector
@@ -1112,15 +1112,15 @@ namespace FETools
     template <int dim, int spacedim>
     std::vector<bool>
     compute_restriction_is_additive_flags(
-      const FiniteElement<dim, spacedim> *fe1,
+      const FiniteElement<dim, spacedim>* fe1,
       const unsigned int                  N1,
-      const FiniteElement<dim, spacedim> *fe2 = nullptr,
+      const FiniteElement<dim, spacedim>* fe2 = nullptr,
       const unsigned int                  N2  = 0,
-      const FiniteElement<dim, spacedim> *fe3 = nullptr,
+      const FiniteElement<dim, spacedim>* fe3 = nullptr,
       const unsigned int                  N3  = 0,
-      const FiniteElement<dim, spacedim> *fe4 = nullptr,
+      const FiniteElement<dim, spacedim>* fe4 = nullptr,
       const unsigned int                  N4  = 0,
-      const FiniteElement<dim, spacedim> *fe5 = nullptr,
+      const FiniteElement<dim, spacedim>* fe5 = nullptr,
       const unsigned int                  N5  = 0);
 
 
@@ -1143,8 +1143,8 @@ namespace FETools
     template <int dim, int spacedim>
     std::vector<ComponentMask>
     compute_nonzero_components(
-      const std::vector<const FiniteElement<dim, spacedim> *> &fes,
-      const std::vector<unsigned int> &                        multiplicities,
+      const std::vector<const FiniteElement<dim, spacedim>*>& fes,
+      const std::vector<unsigned int>&                        multiplicities,
       const bool do_tensor_product = true);
 
     /**
@@ -1156,8 +1156,8 @@ namespace FETools
     std::vector<ComponentMask>
     compute_nonzero_components(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems);
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems);
 
     /**
      * Compute the non-zero vector components of a composed finite
@@ -1180,15 +1180,15 @@ namespace FETools
     template <int dim, int spacedim>
     std::vector<ComponentMask>
     compute_nonzero_components(
-      const FiniteElement<dim, spacedim> *fe1,
+      const FiniteElement<dim, spacedim>* fe1,
       const unsigned int                  N1,
-      const FiniteElement<dim, spacedim> *fe2               = nullptr,
+      const FiniteElement<dim, spacedim>* fe2               = nullptr,
       const unsigned int                  N2                = 0,
-      const FiniteElement<dim, spacedim> *fe3               = nullptr,
+      const FiniteElement<dim, spacedim>* fe3               = nullptr,
       const unsigned int                  N3                = 0,
-      const FiniteElement<dim, spacedim> *fe4               = nullptr,
+      const FiniteElement<dim, spacedim>* fe4               = nullptr,
       const unsigned int                  N4                = 0,
-      const FiniteElement<dim, spacedim> *fe5               = nullptr,
+      const FiniteElement<dim, spacedim>* fe5               = nullptr,
       const unsigned int                  N5                = 0,
       const bool                          do_tensor_product = true);
 
@@ -1212,12 +1212,12 @@ namespace FETools
     void
     build_cell_tables(
       std::vector<std::pair<std::pair<unsigned int, unsigned int>,
-                            unsigned int>> &system_to_base_table,
-      std::vector<std::pair<unsigned int, unsigned int>>
-        &                                   system_to_component_table,
+                            unsigned int>>& system_to_base_table,
+      std::vector<std::pair<unsigned int, unsigned int>>&
+                                            system_to_component_table,
       std::vector<std::pair<std::pair<unsigned int, unsigned int>,
-                            unsigned int>> &component_to_base_table,
-      const FiniteElement<dim, spacedim> &  finite_element,
+                            unsigned int>>& component_to_base_table,
+      const FiniteElement<dim, spacedim>&   finite_element,
       const bool                            do_tensor_product = true);
 
     /**
@@ -1239,10 +1239,10 @@ namespace FETools
     void
     build_face_tables(
       std::vector<std::pair<std::pair<unsigned int, unsigned int>,
-                            unsigned int>> &face_system_to_base_table,
-      std::vector<std::pair<unsigned int, unsigned int>>
-        &                                 face_system_to_component_table,
-      const FiniteElement<dim, spacedim> &finite_element,
+                            unsigned int>>& face_system_to_base_table,
+      std::vector<std::pair<unsigned int, unsigned int>>&
+                                          face_system_to_component_table,
+      const FiniteElement<dim, spacedim>& finite_element,
       const bool                          do_tensor_product = true);
 
   } // namespace Compositing
@@ -1283,15 +1283,15 @@ namespace FETools
    */
   template <int dim, int spacedim = dim>
   std::unique_ptr<FiniteElement<dim, spacedim>>
-  get_fe_by_name(const std::string &name);
+  get_fe_by_name(const std::string& name);
 
 
   /**
    * @deprecated Use get_fe_by_name() with two template parameters instead
    */
   template <int dim>
-  DEAL_II_DEPRECATED FiniteElement<dim, dim> *
-                     get_fe_from_name(const std::string &name);
+  DEAL_II_DEPRECATED FiniteElement<dim, dim>*
+                     get_fe_from_name(const std::string& name);
 
 
   /**
@@ -1338,8 +1338,8 @@ namespace FETools
    */
   template <int dim, int spacedim>
   void
-  add_fe_name(const std::string &                 name,
-              const FEFactoryBase<dim, spacedim> *factory);
+  add_fe_name(const std::string&                  name,
+              const FEFactoryBase<dim, spacedim>* factory);
 
   /**
    * The string used for get_fe_by_name() cannot be translated to a finite
@@ -1464,21 +1464,21 @@ namespace FETools
     std::vector<bool>
     compute_restriction_is_additive_flags(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems)
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems)
     {
-      std::vector<const FiniteElement<dim, spacedim> *> fes;
-      std::vector<unsigned int>                         multiplicities;
+      std::vector<const FiniteElement<dim, spacedim>*> fes;
+      std::vector<unsigned int>                        multiplicities;
 
       const auto extract =
         [&fes, &multiplicities](
           const std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
-                          unsigned int> &fe_system) {
+                          unsigned int>& fe_system) {
           fes.push_back(fe_system.first.get());
           multiplicities.push_back(fe_system.second);
         };
 
-      for (const auto &p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return compute_restriction_is_additive_flags(fes, multiplicities);
@@ -1490,21 +1490,21 @@ namespace FETools
     FiniteElementData<dim>
     multiply_dof_numbers(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems)
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems)
     {
-      std::vector<const FiniteElement<dim, spacedim> *> fes;
-      std::vector<unsigned int>                         multiplicities;
+      std::vector<const FiniteElement<dim, spacedim>*> fes;
+      std::vector<unsigned int>                        multiplicities;
 
       const auto extract =
         [&fes, &multiplicities](
           const std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
-                          unsigned int> &fe_system) {
+                          unsigned int>& fe_system) {
           fes.push_back(fe_system.first.get());
           multiplicities.push_back(fe_system.second);
         };
 
-      for (const auto &p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return multiply_dof_numbers(fes, multiplicities, true);
@@ -1516,21 +1516,21 @@ namespace FETools
     std::vector<ComponentMask>
     compute_nonzero_components(
       const std::initializer_list<
-        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>
-        &fe_systems)
+        std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>, unsigned int>>&
+        fe_systems)
     {
-      std::vector<const FiniteElement<dim, spacedim> *> fes;
-      std::vector<unsigned int>                         multiplicities;
+      std::vector<const FiniteElement<dim, spacedim>*> fes;
+      std::vector<unsigned int>                        multiplicities;
 
       const auto extract =
         [&fes, &multiplicities](
           const std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
-                          unsigned int> &fe_system) {
+                          unsigned int>& fe_system) {
           fes.push_back(fe_system.first.get());
           multiplicities.push_back(fe_system.second);
         };
 
-      for (const auto &p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return compute_nonzero_components(fes, multiplicities, true);

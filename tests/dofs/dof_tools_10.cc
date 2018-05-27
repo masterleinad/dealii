@@ -28,7 +28,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim> &dof_handler)
+check_this(const DoFHandler<dim>& dof_handler)
 {
   // don't check if fe has no support
   // points

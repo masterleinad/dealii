@@ -34,7 +34,7 @@
 
 
 
-void check(Triangulation<3> &tria)
+void check(Triangulation<3>& tria)
 {
   deallog << "Coarse cell 0 vertices:" << std::endl;
   for (unsigned int i = 0; i < 8; ++i)

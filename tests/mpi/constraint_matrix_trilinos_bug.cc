@@ -114,7 +114,7 @@ test()
     {
       cm.distribute(x_test);
     }
-  catch (const ExceptionBase &e)
+  catch (const ExceptionBase& e)
     {
       if (myid == 0)
         deallog << "Exception: " << e.get_exc_name() << std::endl;
@@ -139,7 +139,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

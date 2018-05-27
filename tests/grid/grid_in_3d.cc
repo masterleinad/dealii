@@ -36,7 +36,7 @@ std::ofstream logfile("output");
 
 
 void
-test(const char *filename)
+test(const char* filename)
 {
   const unsigned int dim = 3;
 
@@ -49,7 +49,7 @@ test(const char *filename)
     {
       gi.read_xda(in);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << "  caught exception:" << std::endl << exc.what() << std::endl;
       return;

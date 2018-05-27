@@ -40,7 +40,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-flatten_triangulation(Triangulation<dim> &tria_in, Triangulation<dim> &tria_out)
+flatten_triangulation(Triangulation<dim>& tria_in, Triangulation<dim>& tria_out)
 // takes a possibly refined triangulation and returns a new coarse triangulation
 // created from the vertices of the input
 {
@@ -83,7 +83,7 @@ flatten_triangulation(Triangulation<dim> &tria_in, Triangulation<dim> &tria_out)
 
 template <int dim>
 void
-mesh_info(const Triangulation<dim> &tria, const std::string &filename)
+mesh_info(const Triangulation<dim>& tria, const std::string& filename)
 {
   deallog << "Mesh info for " << filename << ":" << std::endl
           << " dimension: " << dim << std::endl

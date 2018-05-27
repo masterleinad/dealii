@@ -28,7 +28,7 @@
 
 
 void
-test(TrilinosWrappers::SparseMatrix &m)
+test(TrilinosWrappers::SparseMatrix& m)
 {
   // first set a few entries
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -57,7 +57,7 @@ test(TrilinosWrappers::SparseMatrix &m)
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 
@@ -71,7 +71,7 @@ main(int argc, char **argv)
         test(m);
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

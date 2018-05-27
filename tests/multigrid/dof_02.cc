@@ -45,7 +45,7 @@ using namespace std;
 
 template <int dim>
 void
-dofs(const DoFHandler<dim> &dof)
+dofs(const DoFHandler<dim>& dof)
 {
   typename DoFHandler<dim>::cell_iterator       cell;
   const typename DoFHandler<dim>::cell_iterator end = dof.end();
@@ -76,7 +76,7 @@ dofs(const DoFHandler<dim> &dof)
 
 template <int dim>
 void
-check_fe(FiniteElement<dim> &fe)
+check_fe(FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 

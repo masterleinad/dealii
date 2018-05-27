@@ -119,11 +119,11 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const;
+    value(const Point<dim>& p, const unsigned int component = 0) const;
 
     virtual void
-    value_list(const std::vector<Point<dim>> &points,
-               std::vector<double> &          values,
+    value_list(const std::vector<Point<dim>>& points,
+               std::vector<double>&           values,
                const unsigned int             component = 0) const;
   };
 
@@ -131,7 +131,7 @@ namespace Step50
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim> &p, const unsigned int) const
+  Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     if (p.square() < 0.5 * 0.5)
       return 20;
@@ -143,8 +143,8 @@ namespace Step50
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                               std::vector<double> &          values,
+  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                               std::vector<double>&           values,
                                const unsigned int             component) const
   {
     const unsigned int n_points = points.size();
@@ -196,7 +196,7 @@ namespace Step50
     Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     VectorTools::interpolate_boundary_values(
-      static_cast<const DoFHandler<dim> &>(mg_dof_handler),
+      static_cast<const DoFHandler<dim>&>(mg_dof_handler),
       dirichlet_boundary,
       constraints);
     constraints.close();
@@ -459,7 +459,7 @@ namespace Step50
     temp_solution = solution;
 
     KellyErrorEstimator<dim>::estimate(
-      static_cast<DoFHandler<dim> &>(mg_dof_handler),
+      static_cast<DoFHandler<dim>&>(mg_dof_handler),
       QGauss<dim - 1>(3),
       typename FunctionMap<dim>::type(),
       temp_solution,
@@ -520,7 +520,7 @@ namespace Step50
 // This is again the same function as
 // in step-6:
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   using namespace dealii;
   using namespace Step50;
@@ -534,7 +534,7 @@ main(int argc, char *argv[])
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

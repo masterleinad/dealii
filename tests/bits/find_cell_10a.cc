@@ -49,7 +49,7 @@
 using namespace dealii;
 
 
-void create_coarse_grid(Triangulation<2> &coarse_grid)
+void create_coarse_grid(Triangulation<2>& coarse_grid)
 {
   static const Point<2> vertices_1[] = {
     Point<2>(9.6982181981258408e-02, 1.1255621492491609e+03), // 0
@@ -87,7 +87,7 @@ test()
   ePos(1) = 1125.59175030825804242340382189;
 
   MappingQ<2>         mapping(1);
-  MappingQGeneric<2> &mapping2 = StaticMappingQ1<2>::mapping;
+  MappingQGeneric<2>& mapping2 = StaticMappingQ1<2>::mapping;
 
   Triangulation<2> triangulation;
   create_coarse_grid(triangulation); // first Tria with just one cell
@@ -106,7 +106,7 @@ test()
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   initlog();
 

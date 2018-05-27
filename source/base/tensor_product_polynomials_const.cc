@@ -28,7 +28,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim>
 double
 TensorProductPolynomialsConst<dim>::compute_value(const unsigned int i,
-                                                  const Point<dim> & p) const
+                                                  const Point<dim>&  p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
@@ -46,7 +46,7 @@ TensorProductPolynomialsConst<dim>::compute_value(const unsigned int i,
 template <>
 double
 TensorProductPolynomialsConst<0>::compute_value(const unsigned int,
-                                                const Point<0> &) const
+                                                const Point<0>&) const
 {
   Assert(false, ExcNotImplemented());
   return 0.;
@@ -56,7 +56,7 @@ TensorProductPolynomialsConst<0>::compute_value(const unsigned int,
 template <int dim>
 Tensor<1, dim>
 TensorProductPolynomialsConst<dim>::compute_grad(const unsigned int i,
-                                                 const Point<dim> & p) const
+                                                 const Point<dim>&  p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
@@ -72,7 +72,7 @@ TensorProductPolynomialsConst<dim>::compute_grad(const unsigned int i,
 template <int dim>
 Tensor<2, dim>
 TensorProductPolynomialsConst<dim>::compute_grad_grad(const unsigned int i,
-                                                      const Point<dim> &p) const
+                                                      const Point<dim>& p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());
@@ -88,12 +88,12 @@ TensorProductPolynomialsConst<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 TensorProductPolynomialsConst<dim>::compute(
-  const Point<dim> &           p,
-  std::vector<double> &        values,
-  std::vector<Tensor<1, dim>> &grads,
-  std::vector<Tensor<2, dim>> &grad_grads,
-  std::vector<Tensor<3, dim>> &third_derivatives,
-  std::vector<Tensor<4, dim>> &fourth_derivatives) const
+  const Point<dim>&            p,
+  std::vector<double>&         values,
+  std::vector<Tensor<1, dim>>& grads,
+  std::vector<Tensor<2, dim>>& grad_grads,
+  std::vector<Tensor<3, dim>>& third_derivatives,
+  std::vector<Tensor<4, dim>>& fourth_derivatives) const
 {
   Assert(values.size() == this->n_tensor_pols + 1 || values.size() == 0,
          ExcDimensionMismatch2(values.size(), this->n_tensor_pols + 1, 0));

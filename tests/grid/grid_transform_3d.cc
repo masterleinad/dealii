@@ -86,7 +86,7 @@ main()
                vertex_no < GeometryInfo<dim>::vertices_per_face;
                ++vertex_no)
             {
-              const Point<dim> &old_vertex = face->vertex(vertex_no);
+              const Point<dim>& old_vertex = face->vertex(vertex_no);
 
               Point<dim> new_vertex(
                 old_vertex[0],

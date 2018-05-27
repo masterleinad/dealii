@@ -128,7 +128,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
     GridTools::compute_mesh_predicate_bounding_box(
       cache.get_triangulation(),
       std::function<bool(
-        const typename Triangulation<dim>::active_cell_iterator &)>(
+        const typename Triangulation<dim>::active_cell_iterator&)>(
         locally_owned_cell_predicate),
       1,
       true,
@@ -142,10 +142,10 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   auto output_tuple =
     distributed_compute_point_locations(cache, loc_owned_points, global_bboxes);
   deallog << "Comparing results" << std::endl;
-  const auto &output_cells   = std::get<0>(output_tuple);
-  const auto &output_qpoints = std::get<1>(output_tuple);
-  const auto &output_points  = std::get<3>(output_tuple);
-  const auto &output_ranks   = std::get<4>(output_tuple);
+  const auto& output_cells   = std::get<0>(output_tuple);
+  const auto& output_qpoints = std::get<1>(output_tuple);
+  const auto& output_points  = std::get<3>(output_tuple);
+  const auto& output_ranks   = std::get<4>(output_tuple);
 
   // Comparing the output with the previously computed computed result
   bool test_passed = true;
@@ -159,7 +159,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   for (unsigned int c = 0; c < output_cells.size(); c++)
     {
       output_computed_pts += output_points[c].size();
-      const auto &cell = output_cells[c];
+      const auto& cell = output_cells[c];
       auto        cell_it =
         std::find(computed_cells.begin(), computed_cells.end(), cell);
       if (cell_it == computed_cells.end())
@@ -195,7 +195,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
               for (unsigned int pt_idx = 0; pt_idx < output_points[c].size();
                    pt_idx++)
                 {
-                  const auto &pt    = output_points[c][pt_idx];
+                  const auto& pt    = output_points[c][pt_idx];
                   auto        pt_it = std::find(computed_points[c_cell].begin(),
                                          computed_points[c_cell].end(),
                                          pt);
@@ -253,7 +253,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

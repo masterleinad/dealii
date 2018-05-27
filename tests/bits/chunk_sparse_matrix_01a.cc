@@ -72,7 +72,7 @@ test(const unsigned int chunk_size)
             {
               m(i, j);
             }
-          catch (const std::exception &)
+          catch (const std::exception&)
             {
               exc_thrown = true;
             }
@@ -97,7 +97,7 @@ main()
            ++i)
         test(chunk_sizes[i]);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl

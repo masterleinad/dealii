@@ -54,7 +54,7 @@ template <
   typename OperatorExemplar,
   typename Matrix>
 LinearOperator<Range, Domain, Payload>
-linear_operator(const OperatorExemplar &, const Matrix &);
+linear_operator(const OperatorExemplar&, const Matrix&);
 
 template <
   typename Range   = Vector<double>,
@@ -62,14 +62,14 @@ template <
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload,
   typename Matrix>
 LinearOperator<Range, Domain, Payload>
-linear_operator(const Matrix &);
+linear_operator(const Matrix&);
 
 template <
   typename Range   = Vector<double>,
   typename Domain  = Range,
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload>
 LinearOperator<Range, Domain, Payload>
-null_operator(const LinearOperator<Range, Domain, Payload> &);
+null_operator(const LinearOperator<Range, Domain, Payload>&);
 
 
 /**
@@ -167,41 +167,41 @@ public:
    * be used for any linear operator operations, and will throw an exception
    * upon invocation.
    */
-  LinearOperator(const Payload &payload = Payload()) :
+  LinearOperator(const Payload& payload = Payload()) :
     Payload(payload),
     is_null_operator(false)
   {
-    vmult = [](Range &, const Domain &) {
+    vmult = [](Range&, const Domain&) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::vmult called"));
     };
 
-    vmult_add = [](Range &, const Domain &) {
+    vmult_add = [](Range&, const Domain&) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::vmult_add called"));
     };
 
-    Tvmult = [](Domain &, const Range &) {
+    Tvmult = [](Domain&, const Range&) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::Tvmult called"));
     };
 
-    Tvmult_add = [](Domain &, const Range &) {
+    Tvmult_add = [](Domain&, const Range&) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::Tvmult_add called"));
     };
 
-    reinit_range_vector = [](Range &, bool) {
+    reinit_range_vector = [](Range&, bool) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::reinit_range_vector method called"));
     };
 
-    reinit_domain_vector = [](Domain &, bool) {
+    reinit_domain_vector = [](Domain&, bool) {
       Assert(false,
              ExcMessage("Uninitialized LinearOperator<Range, "
                         "Domain>::reinit_domain_vector method called"));
@@ -211,7 +211,7 @@ public:
   /**
    * Default copy constructor.
    */
-  LinearOperator(const LinearOperator<Range, Domain, Payload> &) = default;
+  LinearOperator(const LinearOperator<Range, Domain, Payload>&) = default;
 
   /**
    * Templated copy constructor that creates a LinearOperator object from an
@@ -222,7 +222,7 @@ public:
             typename = typename std::enable_if<
               !std::is_base_of<LinearOperator<Range, Domain, Payload>,
                                Op>::value>::type>
-  LinearOperator(const Op &op)
+  LinearOperator(const Op& op)
   {
     *this = linear_operator<Range, Domain, Payload, Op>(op);
   }
@@ -230,8 +230,8 @@ public:
   /**
    * Default copy assignment operator.
    */
-  LinearOperator<Range, Domain, Payload> &
-  operator=(const LinearOperator<Range, Domain, Payload> &) = default;
+  LinearOperator<Range, Domain, Payload>&
+  operator=(const LinearOperator<Range, Domain, Payload>&) = default;
 
   /**
    * Templated copy assignment operator for an object @p op for which the
@@ -241,8 +241,8 @@ public:
             typename = typename std::enable_if<
               !std::is_base_of<LinearOperator<Range, Domain, Payload>,
                                Op>::value>::type>
-  LinearOperator<Range, Domain, Payload> &
-  operator=(const Op &op)
+  LinearOperator<Range, Domain, Payload>&
+  operator=(const Op& op)
   {
     *this = linear_operator<Range, Domain, Payload, Op>(op);
     return *this;
@@ -252,25 +252,25 @@ public:
    * Application of the LinearOperator object to a vector u of the @p Domain
    * space giving a vector v of the @p Range space.
    */
-  std::function<void(Range &v, const Domain &u)> vmult;
+  std::function<void(Range& v, const Domain& u)> vmult;
 
   /**
    * Application of the LinearOperator object to a vector u of the @p Domain
    * space. The result is added to the vector v.
    */
-  std::function<void(Range &v, const Domain &u)> vmult_add;
+  std::function<void(Range& v, const Domain& u)> vmult_add;
 
   /**
    * Application of the transpose LinearOperator object to a vector u of the
    * @p Range space giving a vector v of the @p Domain space.
    */
-  std::function<void(Domain &v, const Range &u)> Tvmult;
+  std::function<void(Domain& v, const Range& u)> Tvmult;
 
   /**
    * Application of the transpose LinearOperator object to a vector @p u of
    * the @p Range space.The result is added to the vector @p v.
    */
-  std::function<void(Domain &v, const Range &u)> Tvmult_add;
+  std::function<void(Domain& v, const Range& u)> Tvmult_add;
 
   /**
    * Initializes a vector v of the Range space to be directly usable as the
@@ -279,7 +279,7 @@ public:
    * initialization is done, i.e., if it is set to false the content of the
    * vector is set to 0.
    */
-  std::function<void(Range &v, bool omit_zeroing_entries)> reinit_range_vector;
+  std::function<void(Range& v, bool omit_zeroing_entries)> reinit_range_vector;
 
   /**
    * Initializes a vector of the Domain space to be directly usable as the
@@ -288,7 +288,7 @@ public:
    * initialization is done, i.e., if it is set to false the content of the
    * vector is set to 0.
    */
-  std::function<void(Domain &v, bool omit_zeroing_entries)>
+  std::function<void(Domain& v, bool omit_zeroing_entries)>
     reinit_domain_vector;
 
   /**
@@ -300,8 +300,8 @@ public:
    * Addition with a LinearOperator @p second_op with the same @p Domain and
    * @p Range.
    */
-  LinearOperator<Range, Domain, Payload> &
-  operator+=(const LinearOperator<Range, Domain, Payload> &second_op)
+  LinearOperator<Range, Domain, Payload>&
+  operator+=(const LinearOperator<Range, Domain, Payload>& second_op)
   {
     *this = *this + second_op;
     return *this;
@@ -311,8 +311,8 @@ public:
    * Subtraction with a LinearOperator @p second_op with the same @p Domain
    * and @p Range.
    */
-  LinearOperator<Range, Domain, Payload> &
-  operator-=(const LinearOperator<Range, Domain, Payload> &second_op)
+  LinearOperator<Range, Domain, Payload>&
+  operator-=(const LinearOperator<Range, Domain, Payload>& second_op)
   {
     *this = *this - second_op;
     return *this;
@@ -322,8 +322,8 @@ public:
    * Composition of the LinearOperator with an endomorphism @p second_op of
    * the @p Domain space.
    */
-  LinearOperator<Range, Domain, Payload> &
-  operator*=(const LinearOperator<Domain, Domain, Payload> &second_op)
+  LinearOperator<Range, Domain, Payload>&
+  operator*=(const LinearOperator<Domain, Domain, Payload>& second_op)
   {
     *this = *this * second_op;
     return *this;
@@ -367,8 +367,8 @@ public:
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator+(const LinearOperator<Range, Domain, Payload> &first_op,
-          const LinearOperator<Range, Domain, Payload> &second_op)
+operator+(const LinearOperator<Range, Domain, Payload>& first_op,
+          const LinearOperator<Range, Domain, Payload>& second_op)
 {
   if (first_op.is_null_operator)
     {
@@ -381,8 +381,8 @@ operator+(const LinearOperator<Range, Domain, Payload> &first_op,
   else
     {
       LinearOperator<Range, Domain, Payload> return_op(
-        static_cast<const Payload &>(first_op) +
-        static_cast<const Payload &>(second_op));
+        static_cast<const Payload&>(first_op) +
+        static_cast<const Payload&>(second_op));
 
       return_op.reinit_range_vector  = first_op.reinit_range_vector;
       return_op.reinit_domain_vector = first_op.reinit_domain_vector;
@@ -390,22 +390,22 @@ operator+(const LinearOperator<Range, Domain, Payload> &first_op,
       // ensure to have valid computation objects by catching first_op and
       // second_op by value
 
-      return_op.vmult = [first_op, second_op](Range &v, const Domain &u) {
+      return_op.vmult = [first_op, second_op](Range& v, const Domain& u) {
         first_op.vmult(v, u);
         second_op.vmult_add(v, u);
       };
 
-      return_op.vmult_add = [first_op, second_op](Range &v, const Domain &u) {
+      return_op.vmult_add = [first_op, second_op](Range& v, const Domain& u) {
         first_op.vmult_add(v, u);
         second_op.vmult_add(v, u);
       };
 
-      return_op.Tvmult = [first_op, second_op](Domain &v, const Range &u) {
+      return_op.Tvmult = [first_op, second_op](Domain& v, const Range& u) {
         second_op.Tvmult(v, u);
         first_op.Tvmult_add(v, u);
       };
 
-      return_op.Tvmult_add = [first_op, second_op](Domain &v, const Range &u) {
+      return_op.Tvmult_add = [first_op, second_op](Domain& v, const Range& u) {
         second_op.Tvmult_add(v, u);
         first_op.Tvmult_add(v, u);
       };
@@ -426,8 +426,8 @@ operator+(const LinearOperator<Range, Domain, Payload> &first_op,
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator-(const LinearOperator<Range, Domain, Payload> &first_op,
-          const LinearOperator<Range, Domain, Payload> &second_op)
+operator-(const LinearOperator<Range, Domain, Payload>& first_op,
+          const LinearOperator<Range, Domain, Payload>& second_op)
 {
   if (first_op.is_null_operator)
     {
@@ -465,7 +465,7 @@ operator-(const LinearOperator<Range, Domain, Payload> &first_op,
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
 operator*(typename Range::value_type                    number,
-          const LinearOperator<Range, Domain, Payload> &op)
+          const LinearOperator<Range, Domain, Payload>& op)
 {
   static_assert(
     std::is_convertible<typename Range::value_type,
@@ -487,23 +487,23 @@ operator*(typename Range::value_type                    number,
       // ensure to have valid computation objects by catching number and op by
       // value
 
-      return_op.vmult = [number, op](Range &v, const Domain &u) {
+      return_op.vmult = [number, op](Range& v, const Domain& u) {
         op.vmult(v, u);
         v *= number;
       };
 
-      return_op.vmult_add = [number, op](Range &v, const Domain &u) {
+      return_op.vmult_add = [number, op](Range& v, const Domain& u) {
         v /= number;
         op.vmult_add(v, u);
         v *= number;
       };
 
-      return_op.Tvmult = [number, op](Domain &v, const Range &u) {
+      return_op.Tvmult = [number, op](Domain& v, const Range& u) {
         op.Tvmult(v, u);
         v *= number;
       };
 
-      return_op.Tvmult_add = [number, op](Domain &v, const Range &u) {
+      return_op.Tvmult_add = [number, op](Domain& v, const Range& u) {
         v /= number;
         op.Tvmult_add(v, u);
         v *= number;
@@ -531,7 +531,7 @@ operator*(typename Range::value_type                    number,
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator*(const LinearOperator<Range, Domain, Payload> &op,
+operator*(const LinearOperator<Range, Domain, Payload>& op,
           typename Domain::value_type                   number)
 {
   static_assert(
@@ -564,8 +564,8 @@ template <typename Range,
           typename Domain,
           typename Payload>
 LinearOperator<Range, Domain, Payload>
-operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
-          const LinearOperator<Intermediate, Domain, Payload> &second_op)
+operator*(const LinearOperator<Range, Intermediate, Payload>&  first_op,
+          const LinearOperator<Intermediate, Domain, Payload>& second_op)
 {
   if (first_op.is_null_operator || second_op.is_null_operator)
     {
@@ -577,8 +577,8 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
   else
     {
       LinearOperator<Range, Domain, Payload> return_op(
-        static_cast<const Payload &>(first_op) *
-        static_cast<const Payload &>(second_op));
+        static_cast<const Payload&>(first_op) *
+        static_cast<const Payload&>(second_op));
 
       return_op.reinit_domain_vector = second_op.reinit_domain_vector;
       return_op.reinit_range_vector  = first_op.reinit_range_vector;
@@ -586,7 +586,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
       // ensure to have valid computation objects by catching first_op and
       // second_op by value
 
-      return_op.vmult = [first_op, second_op](Range &v, const Domain &u) {
+      return_op.vmult = [first_op, second_op](Range& v, const Domain& u) {
         GrowingVectorMemory<Intermediate> vector_memory;
 
         typename VectorMemory<Intermediate>::Pointer i(vector_memory);
@@ -595,7 +595,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
         first_op.vmult(v, *i);
       };
 
-      return_op.vmult_add = [first_op, second_op](Range &v, const Domain &u) {
+      return_op.vmult_add = [first_op, second_op](Range& v, const Domain& u) {
         GrowingVectorMemory<Intermediate> vector_memory;
 
         typename VectorMemory<Intermediate>::Pointer i(vector_memory);
@@ -604,7 +604,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
         first_op.vmult_add(v, *i);
       };
 
-      return_op.Tvmult = [first_op, second_op](Domain &v, const Range &u) {
+      return_op.Tvmult = [first_op, second_op](Domain& v, const Range& u) {
         GrowingVectorMemory<Intermediate> vector_memory;
 
         typename VectorMemory<Intermediate>::Pointer i(vector_memory);
@@ -613,7 +613,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
         second_op.Tvmult(v, *i);
       };
 
-      return_op.Tvmult_add = [first_op, second_op](Domain &v, const Range &u) {
+      return_op.Tvmult_add = [first_op, second_op](Domain& v, const Range& u) {
         GrowingVectorMemory<Intermediate> vector_memory;
 
         typename VectorMemory<Intermediate>::Pointer i(vector_memory);
@@ -637,7 +637,7 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Domain, Range, Payload>
-transpose_operator(const LinearOperator<Range, Domain, Payload> &op)
+transpose_operator(const LinearOperator<Range, Domain, Payload>& op)
 {
   LinearOperator<Domain, Range, Payload> return_op(op.transpose_payload());
 
@@ -679,9 +679,9 @@ template <typename Payload,
           typename Range  = typename Solver::vector_type,
           typename Domain = Range>
 LinearOperator<Domain, Range, Payload>
-inverse_operator(const LinearOperator<Range, Domain, Payload> &op,
-                 Solver &                                      solver,
-                 const Preconditioner &                        preconditioner)
+inverse_operator(const LinearOperator<Range, Domain, Payload>& op,
+                 Solver&                                       solver,
+                 const Preconditioner&                         preconditioner)
 {
   LinearOperator<Domain, Range, Payload> return_op(
     op.inverse_payload(solver, preconditioner));
@@ -689,13 +689,13 @@ inverse_operator(const LinearOperator<Range, Domain, Payload> &op,
   return_op.reinit_range_vector  = op.reinit_domain_vector;
   return_op.reinit_domain_vector = op.reinit_range_vector;
 
-  return_op.vmult = [op, &solver, &preconditioner](Range &v, const Domain &u) {
+  return_op.vmult = [op, &solver, &preconditioner](Range& v, const Domain& u) {
     op.reinit_range_vector(v, /*bool omit_zeroing_entries =*/false);
     solver.solve(op, v, u, preconditioner);
   };
 
-  return_op.vmult_add = [op, &solver, &preconditioner](Range &       v,
-                                                       const Domain &u) {
+  return_op.vmult_add = [op, &solver, &preconditioner](Range&        v,
+                                                       const Domain& u) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer v2(vector_memory);
@@ -704,13 +704,13 @@ inverse_operator(const LinearOperator<Range, Domain, Payload> &op,
     v += *v2;
   };
 
-  return_op.Tvmult = [op, &solver, &preconditioner](Range &v, const Domain &u) {
+  return_op.Tvmult = [op, &solver, &preconditioner](Range& v, const Domain& u) {
     op.reinit_range_vector(v, /*bool omit_zeroing_entries =*/false);
     solver.solve(transpose_operator(op), v, u, preconditioner);
   };
 
-  return_op.Tvmult_add = [op, &solver, &preconditioner](Range &       v,
-                                                        const Domain &u) {
+  return_op.Tvmult_add = [op, &solver, &preconditioner](Range&        v,
+                                                        const Domain& u) {
     GrowingVectorMemory<Range> vector_memory;
 
     typename VectorMemory<Range>::Pointer v2(vector_memory);
@@ -745,20 +745,20 @@ template <
   typename Range,
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload>
 LinearOperator<Range, Range, Payload>
-identity_operator(const std::function<void(Range &, bool)> &reinit_vector)
+identity_operator(const std::function<void(Range&, bool)>& reinit_vector)
 {
   LinearOperator<Range, Range, Payload> return_op((Payload()));
 
   return_op.reinit_range_vector  = reinit_vector;
   return_op.reinit_domain_vector = reinit_vector;
 
-  return_op.vmult = [](Range &v, const Range &u) { v = u; };
+  return_op.vmult = [](Range& v, const Range& u) { v = u; };
 
-  return_op.vmult_add = [](Range &v, const Range &u) { v += u; };
+  return_op.vmult_add = [](Range& v, const Range& u) { v += u; };
 
-  return_op.Tvmult = [](Range &v, const Range &u) { v = u; };
+  return_op.Tvmult = [](Range& v, const Range& u) { v = u; };
 
-  return_op.Tvmult_add = [](Range &v, const Range &u) { v += u; };
+  return_op.Tvmult_add = [](Range& v, const Range& u) { v += u; };
 
   return return_op;
 }
@@ -778,10 +778,10 @@ identity_operator(const std::function<void(Range &, bool)> &reinit_vector)
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-identity_operator(const LinearOperator<Range, Domain, Payload> &op)
+identity_operator(const LinearOperator<Range, Domain, Payload>& op)
 {
   auto return_op = identity_operator<Range, Payload>(op.reinit_range_vector);
-  static_cast<Payload &>(return_op) = op.identity_payload();
+  static_cast<Payload&>(return_op) = op.identity_payload();
 
   return return_op;
 }
@@ -798,7 +798,7 @@ identity_operator(const LinearOperator<Range, Domain, Payload> &op)
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-null_operator(const LinearOperator<Range, Domain, Payload> &op)
+null_operator(const LinearOperator<Range, Domain, Payload>& op)
 {
   LinearOperator<Range, Domain, Payload> return_op(op.null_payload());
 
@@ -807,13 +807,13 @@ null_operator(const LinearOperator<Range, Domain, Payload> &op)
   return_op.reinit_range_vector  = op.reinit_range_vector;
   return_op.reinit_domain_vector = op.reinit_domain_vector;
 
-  return_op.vmult = [](Range &v, const Domain &) { v = 0.; };
+  return_op.vmult = [](Range& v, const Domain&) { v = 0.; };
 
-  return_op.vmult_add = [](Range &, const Domain &) {};
+  return_op.vmult_add = [](Range&, const Domain&) {};
 
-  return_op.Tvmult = [](Domain &v, const Range &) { v = 0.; };
+  return_op.Tvmult = [](Domain& v, const Range&) { v = 0.; };
 
-  return_op.Tvmult_add = [](Domain &, const Range &) {};
+  return_op.Tvmult_add = [](Domain&, const Range&) {};
 
   return return_op;
 }
@@ -835,21 +835,21 @@ template <
   typename Range,
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload>
 LinearOperator<Range, Range, Payload>
-mean_value_filter(const std::function<void(Range &, bool)> &reinit_vector)
+mean_value_filter(const std::function<void(Range&, bool)>& reinit_vector)
 {
   LinearOperator<Range, Range, Payload> return_op((Payload()));
 
   return_op.reinit_range_vector  = reinit_vector;
   return_op.reinit_domain_vector = reinit_vector;
 
-  return_op.vmult = [](Range &v, const Range &u) {
+  return_op.vmult = [](Range& v, const Range& u) {
     const auto mean = u.mean_value();
 
     v = u;
     v.add(-mean);
   };
 
-  return_op.vmult_add = [](Range &v, const Range &u) {
+  return_op.vmult_add = [](Range& v, const Range& u) {
     const auto mean = u.mean_value();
 
     v += u;
@@ -877,10 +877,10 @@ mean_value_filter(const std::function<void(Range &, bool)> &reinit_vector)
  */
 template <typename Range, typename Domain, typename Payload>
 LinearOperator<Range, Domain, Payload>
-mean_value_filter(const LinearOperator<Range, Domain, Payload> &op)
+mean_value_filter(const LinearOperator<Range, Domain, Payload>& op)
 {
   auto return_op = mean_value_filter<Range, Payload>(op.reinit_range_vector);
-  static_cast<Payload &>(return_op) = op.identity_payload();
+  static_cast<Payload&>(return_op) = op.identity_payload();
 
   return return_op;
 }
@@ -918,8 +918,8 @@ namespace internal
        */
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix &matrix,
-                          Vector &      v,
+      reinit_range_vector(const Matrix& matrix,
+                          Vector&       v,
                           bool          omit_zeroing_entries)
       {
         v.reinit(matrix.m(), omit_zeroing_entries);
@@ -938,8 +938,8 @@ namespace internal
        */
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix &matrix,
-                           Vector &      v,
+      reinit_domain_vector(const Matrix& matrix,
+                           Vector&       v,
                            bool          omit_zeroing_entries)
       {
         v.reinit(matrix.n(), omit_zeroing_entries);
@@ -970,7 +970,7 @@ namespace internal
        * be called under any conditions.
        */
       template <typename... Args>
-      EmptyPayload(const Args &...)
+      EmptyPayload(const Args&...)
       {}
 
 
@@ -1009,7 +1009,7 @@ namespace internal
        */
       template <typename Solver, typename Preconditioner>
       EmptyPayload
-      inverse_payload(Solver &, const Preconditioner &) const
+      inverse_payload(Solver&, const Preconditioner&) const
       {
         return *this;
       }
@@ -1020,7 +1020,7 @@ namespace internal
      * two LinearOperators
      */
     inline EmptyPayload
-    operator+(const EmptyPayload &, const EmptyPayload &)
+    operator+(const EmptyPayload&, const EmptyPayload&)
     {
       return EmptyPayload();
     }
@@ -1029,7 +1029,7 @@ namespace internal
      * Operator that returns a payload configured to support the
      * multiplication of two LinearOperators
      */
-    inline EmptyPayload operator*(const EmptyPayload &, const EmptyPayload &)
+    inline EmptyPayload operator*(const EmptyPayload&, const EmptyPayload&)
     {
       return EmptyPayload();
     }
@@ -1051,7 +1051,7 @@ namespace
 
     template <typename C>
     static auto
-    test(Range *r, Domain *d) -> decltype(std::declval<C>().vmult_add(*r, *d),
+    test(Range* r, Domain* d) -> decltype(std::declval<C>().vmult_add(*r, *d),
                                           std::declval<C>().Tvmult_add(*d, *r),
                                           std::true_type());
 
@@ -1068,8 +1068,8 @@ namespace
   template <typename Function, typename Range, typename Domain>
   void
   apply_with_intermediate_storage(Function      function,
-                                  Range &       v,
-                                  const Domain &u,
+                                  Range&        v,
+                                  const Domain& u,
                                   bool          add)
   {
     GrowingVectorMemory<Range> vector_memory;
@@ -1094,14 +1094,14 @@ namespace
   public:
     template <typename Matrix>
     void
-    operator()(LinearOperator<Range, Domain, Payload> &op, const Matrix &matrix)
+    operator()(LinearOperator<Range, Domain, Payload>& op, const Matrix& matrix)
     {
-      op.vmult = [&matrix](Range &v, const Domain &u) {
+      op.vmult = [&matrix](Range& v, const Domain& u) {
         if (PointerComparison::equal(&v, &u))
           {
             // If v and u are the same memory location use intermediate storage
             apply_with_intermediate_storage(
-              [&matrix](Range &b, const Domain &a) { matrix.vmult(b, a); },
+              [&matrix](Range& b, const Domain& a) { matrix.vmult(b, a); },
               v,
               u,
               /*bool add =*/false);
@@ -1112,21 +1112,21 @@ namespace
           }
       };
 
-      op.vmult_add = [&matrix](Range &v, const Domain &u) {
+      op.vmult_add = [&matrix](Range& v, const Domain& u) {
         // use intermediate storage to implement vmult_add with vmult
         apply_with_intermediate_storage(
-          [&matrix](Range &b, const Domain &a) { matrix.vmult(b, a); },
+          [&matrix](Range& b, const Domain& a) { matrix.vmult(b, a); },
           v,
           u,
           /*bool add =*/true);
       };
 
-      op.Tvmult = [&matrix](Domain &v, const Range &u) {
+      op.Tvmult = [&matrix](Domain& v, const Range& u) {
         if (PointerComparison::equal(&v, &u))
           {
             // If v and u are the same memory location use intermediate storage
             apply_with_intermediate_storage(
-              [&matrix](Domain &b, const Range &a) { matrix.Tvmult(b, a); },
+              [&matrix](Domain& b, const Range& a) { matrix.Tvmult(b, a); },
               v,
               u,
               /*bool add =*/false);
@@ -1137,10 +1137,10 @@ namespace
           }
       };
 
-      op.Tvmult_add = [&matrix](Domain &v, const Range &u) {
+      op.Tvmult_add = [&matrix](Domain& v, const Range& u) {
         // use intermediate storage to implement Tvmult_add with Tvmult
         apply_with_intermediate_storage(
-          [&matrix](Domain &b, const Range &a) { matrix.Tvmult(b, a); },
+          [&matrix](Domain& b, const Range& a) { matrix.Tvmult(b, a); },
           v,
           u,
           /*bool add =*/true);
@@ -1156,7 +1156,7 @@ namespace
   public:
     template <typename Matrix>
     void
-    operator()(LinearOperator<Range, Domain, Payload> &op, const Matrix &matrix)
+    operator()(LinearOperator<Range, Domain, Payload>& op, const Matrix& matrix)
     {
       // As above ...
 
@@ -1165,11 +1165,11 @@ namespace
 
       // ... but add native vmult_add and Tvmult_add variants:
 
-      op.vmult_add = [&matrix](Range &v, const Domain &u) {
+      op.vmult_add = [&matrix](Range& v, const Domain& u) {
         if (PointerComparison::equal(&v, &u))
           {
             apply_with_intermediate_storage(
-              [&matrix](Range &b, const Domain &a) { matrix.vmult(b, a); },
+              [&matrix](Range& b, const Domain& a) { matrix.vmult(b, a); },
               v,
               u,
               /*bool add =*/false);
@@ -1180,11 +1180,11 @@ namespace
           }
       };
 
-      op.Tvmult_add = [&matrix](Domain &v, const Range &u) {
+      op.Tvmult_add = [&matrix](Domain& v, const Range& u) {
         if (PointerComparison::equal(&v, &u))
           {
             apply_with_intermediate_storage(
-              [&matrix](Domain &b, const Range &a) { matrix.Tvmult(b, a); },
+              [&matrix](Domain& b, const Range& a) { matrix.Tvmult(b, a); },
               v,
               u,
               /*bool add =*/true);
@@ -1259,7 +1259,7 @@ namespace
  */
 template <typename Range, typename Domain, typename Payload, typename Matrix>
 LinearOperator<Range, Domain, Payload>
-linear_operator(const Matrix &matrix)
+linear_operator(const Matrix& matrix)
 {
   // implement with the more generic variant below...
   return linear_operator<Range, Domain, Payload, Matrix, Matrix>(matrix,
@@ -1288,7 +1288,7 @@ template <typename Range,
           typename OperatorExemplar,
           typename Matrix>
 LinearOperator<Range, Domain, Payload>
-linear_operator(const OperatorExemplar &operator_exemplar, const Matrix &matrix)
+linear_operator(const OperatorExemplar& operator_exemplar, const Matrix& matrix)
 {
   // Initialize the payload based on the input exemplar matrix
   LinearOperator<Range, Domain, Payload> return_op(
@@ -1300,13 +1300,13 @@ linear_operator(const OperatorExemplar &operator_exemplar, const Matrix &matrix)
   // or an operator_exemplar cannot usually be copied...
 
   return_op.reinit_range_vector =
-    [&operator_exemplar](Range &v, bool omit_zeroing_entries) {
+    [&operator_exemplar](Range& v, bool omit_zeroing_entries) {
       internal::LinearOperatorImplementation::ReinitHelper<
         Range>::reinit_range_vector(operator_exemplar, v, omit_zeroing_entries);
     };
 
   return_op.reinit_domain_vector = [&operator_exemplar](
-                                     Domain &v, bool omit_zeroing_entries) {
+                                     Domain& v, bool omit_zeroing_entries) {
     internal::LinearOperatorImplementation::ReinitHelper<
       Domain>::reinit_domain_vector(operator_exemplar, v, omit_zeroing_entries);
   };
@@ -1342,8 +1342,8 @@ linear_operator(const OperatorExemplar &operator_exemplar, const Matrix &matrix)
  */
 template <typename Range, typename Domain, typename Payload, typename Matrix>
 LinearOperator<Range, Domain, Payload>
-linear_operator(const LinearOperator<Range, Domain, Payload> &operator_exemplar,
-                const Matrix &                                matrix)
+linear_operator(const LinearOperator<Range, Domain, Payload>& operator_exemplar,
+                const Matrix&                                 matrix)
 {
   // Initialize the payload based on the LinearOperator exemplar
   auto return_op = operator_exemplar;

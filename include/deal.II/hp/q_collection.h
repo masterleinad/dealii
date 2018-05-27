@@ -60,7 +60,7 @@ namespace hp
      * push_back(), if desired, though it would probably be clearer to add all
      * mappings the same way.
      */
-    explicit QCollection(const Quadrature<dim> &quadrature);
+    explicit QCollection(const Quadrature<dim>& quadrature);
 
     /**
      * Adds a new quadrature rule to the QCollection. In most cases, you will
@@ -87,7 +87,7 @@ namespace hp
      * collection.
      */
     void
-    push_back(const Quadrature<dim> &new_quadrature);
+    push_back(const Quadrature<dim>& new_quadrature);
 
     /**
      * Return a reference to the quadrature rule specified by the argument.
@@ -95,7 +95,7 @@ namespace hp
      * @pre @p index must be between zero and the number of elements of the
      * collection.
      */
-    const Quadrature<dim> &operator[](const unsigned int index) const;
+    const Quadrature<dim>& operator[](const unsigned int index) const;
 
     /**
      * Return the number of quadrature pointers stored in this object.
@@ -163,7 +163,7 @@ namespace hp
 
 
   template <int dim>
-  inline const Quadrature<dim> &QCollection<dim>::
+  inline const Quadrature<dim>& QCollection<dim>::
                                 operator[](const unsigned int index) const
   {
     Assert(index < quadratures.size(),
@@ -174,7 +174,7 @@ namespace hp
 
 
   template <int dim>
-  inline QCollection<dim>::QCollection(const Quadrature<dim> &quadrature)
+  inline QCollection<dim>::QCollection(const Quadrature<dim>& quadrature)
   {
     quadratures.push_back(std::make_shared<const Quadrature<dim>>(quadrature));
   }
@@ -191,7 +191,7 @@ namespace hp
 
   template <int dim>
   inline void
-  QCollection<dim>::push_back(const Quadrature<dim> &new_quadrature)
+  QCollection<dim>::push_back(const Quadrature<dim>& new_quadrature)
   {
     quadratures.push_back(
       std::make_shared<const Quadrature<dim>>(new_quadrature));

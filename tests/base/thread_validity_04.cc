@@ -39,9 +39,9 @@ struct X
   }
 
 private:
-  X(const X &);
-  X &
-  operator=(const X &);
+  X(const X&);
+  X&
+  operator=(const X&);
 };
 
 

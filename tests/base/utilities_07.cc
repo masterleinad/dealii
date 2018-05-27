@@ -27,7 +27,7 @@ using namespace dealii;
 
 
 void
-verify(const std::string &s)
+verify(const std::string& s)
 {
   bool exception_caught = false;
   try

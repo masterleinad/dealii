@@ -27,7 +27,7 @@
 
 
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
@@ -56,7 +56,7 @@ main(int argc, char **argv)
         deallog << numbers::PI << std::endl;
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

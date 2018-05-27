@@ -28,7 +28,7 @@
 
 template <int dim>
 void
-write_active_fe_index_to_file(const hp::DoFHandler<dim> &dof_handler)
+write_active_fe_index_to_file(const hp::DoFHandler<dim>& dof_handler)
 {
   int                                                count = 0;
   typename hp::DoFHandler<dim>::active_cell_iterator cell  = dof_handler
@@ -43,7 +43,7 @@ write_active_fe_index_to_file(const hp::DoFHandler<dim> &dof_handler)
 
 template <int dim>
 void
-write_vtk(const hp::DoFHandler<dim> &dof_handler, const std::string filename)
+write_vtk(const hp::DoFHandler<dim>& dof_handler, const std::string filename)
 {
   Vector<double> active_fe_index(
     dof_handler.get_triangulation().n_active_cells());
@@ -116,7 +116,7 @@ test()
 
   // Compute a halo layer around active fe index 2 and set it to active fe index
   // 3
-  std::function<bool(const cell_iterator &)> predicate =
+  std::function<bool(const cell_iterator&)> predicate =
     IteratorFilters::ActiveFEIndexEqualTo(2, true);
   std::vector<cell_iterator> active_halo_layer =
     GridTools::compute_active_cell_halo_layer(dof_handler, predicate);

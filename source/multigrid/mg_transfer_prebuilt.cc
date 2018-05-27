@@ -47,7 +47,7 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename VectorType>
 MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
-  const MGConstrainedDoFs &mg_c)
+  const MGConstrainedDoFs& mg_c)
 {
   this->mg_constrained_dofs = &mg_c;
 }
@@ -56,8 +56,8 @@ MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
 
 template <typename VectorType>
 MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
-  const ConstraintMatrix & /*c*/,
-  const MGConstrainedDoFs &mg_c)
+  const ConstraintMatrix& /*c*/,
+  const MGConstrainedDoFs& mg_c)
 {
   this->mg_constrained_dofs = &mg_c;
 }
@@ -67,7 +67,7 @@ MGTransferPrebuilt<VectorType>::MGTransferPrebuilt(
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::initialize_constraints(
-  const MGConstrainedDoFs &mg_c)
+  const MGConstrainedDoFs& mg_c)
 {
   this->mg_constrained_dofs = &mg_c;
 }
@@ -77,8 +77,8 @@ MGTransferPrebuilt<VectorType>::initialize_constraints(
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::initialize_constraints(
-  const ConstraintMatrix & /*c*/,
-  const MGConstrainedDoFs &mg_c)
+  const ConstraintMatrix& /*c*/,
+  const MGConstrainedDoFs& mg_c)
 {
   initialize_constraints(mg_c);
 }
@@ -100,8 +100,8 @@ MGTransferPrebuilt<VectorType>::clear()
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::prolongate(const unsigned int to_level,
-                                           VectorType &       dst,
-                                           const VectorType & src) const
+                                           VectorType&        dst,
+                                           const VectorType&  src) const
 {
   Assert((to_level >= 1) && (to_level <= prolongation_matrices.size()),
          ExcIndexRange(to_level, 1, prolongation_matrices.size() + 1));
@@ -114,8 +114,8 @@ MGTransferPrebuilt<VectorType>::prolongate(const unsigned int to_level,
 template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::restrict_and_add(const unsigned int from_level,
-                                                 VectorType &       dst,
-                                                 const VectorType & src) const
+                                                 VectorType&        dst,
+                                                 const VectorType&  src) const
 {
   Assert((from_level >= 1) && (from_level <= prolongation_matrices.size()),
          ExcIndexRange(from_level, 1, prolongation_matrices.size() + 1));
@@ -132,14 +132,14 @@ namespace
    * and replace with the indices of the dofs to which they are constrained
    */
   void
-  replace(const MGConstrainedDoFs *             mg_constrained_dofs,
+  replace(const MGConstrainedDoFs*              mg_constrained_dofs,
           const unsigned int                    level,
-          std::vector<types::global_dof_index> &dof_indices)
+          std::vector<types::global_dof_index>& dof_indices)
   {
     if (mg_constrained_dofs != nullptr &&
         mg_constrained_dofs->get_level_constraint_matrix(level)
             .n_constraints() > 0)
-      for (auto &ind : dof_indices)
+      for (auto& ind : dof_indices)
         if (mg_constrained_dofs->get_level_constraint_matrix(level)
               .is_identity_constrained(ind))
           {
@@ -159,7 +159,7 @@ template <typename VectorType>
 template <int dim, int spacedim>
 void
 MGTransferPrebuilt<VectorType>::build_matrices(
-  const DoFHandler<dim, spacedim> &mg_dof)
+  const DoFHandler<dim, spacedim>& mg_dof)
 {
   const unsigned int n_levels = mg_dof.get_triangulation().n_global_levels();
   const unsigned int dofs_per_cell = mg_dof.get_fe().dofs_per_cell;
@@ -235,7 +235,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
             for (unsigned int child = 0; child < cell->n_children(); ++child)
               {
                 // set an alias to the prolongation matrix for this child
-                const FullMatrix<double> &prolongation =
+                const FullMatrix<double>& prolongation =
                   mg_dof.get_fe().get_prolongation_matrix(
                     child, cell->refinement_case());
 
@@ -270,8 +270,8 @@ MGTransferPrebuilt<VectorType>::build_matrices(
           // be manually distributed.
 
           // Retrieve communicator from triangulation if it is parallel
-          const parallel::Triangulation<dim, spacedim> *dist_tria =
-            dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
+          const parallel::Triangulation<dim, spacedim>* dist_tria =
+            dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
               &(mg_dof.get_triangulation()));
 
           MPI_Comm communicator = dist_tria != nullptr ?
@@ -279,8 +279,8 @@ MGTransferPrebuilt<VectorType>::build_matrices(
                                     MPI_COMM_SELF;
 
           // Compute # of locally owned MG dofs / processor for distribution
-          const std::vector<::dealii::IndexSet>
-            &locally_owned_mg_dofs_per_processor =
+          const std::vector<::dealii::IndexSet>&
+            locally_owned_mg_dofs_per_processor =
               mg_dof.locally_owned_mg_dofs_per_processor(level + 1);
           std::vector<::dealii::types::global_dof_index>
             n_locally_owned_mg_dofs_per_processor(
@@ -374,7 +374,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
 
 template <typename VectorType>
 void
-MGTransferPrebuilt<VectorType>::print_matrices(std::ostream &os) const
+MGTransferPrebuilt<VectorType>::print_matrices(std::ostream& os) const
 {
   for (unsigned int level = 0; level < prolongation_matrices.size(); ++level)
     {

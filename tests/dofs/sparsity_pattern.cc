@@ -42,7 +42,7 @@
 
 
 bool
-operator==(const BlockSparsityPattern &sp1, const BlockSparsityPattern &sp2)
+operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
 {
   if (sp1.n_block_rows() != sp2.n_block_rows())
     return false;
@@ -62,7 +62,7 @@ operator==(const BlockSparsityPattern &sp1, const BlockSparsityPattern &sp2)
 
 template <int dim>
 void
-check_boundary(const DoFHandler<dim> &dof)
+check_boundary(const DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> dof_to_boundary_mapping;
   DoFTools::map_dof_to_boundary_indices(dof, dof_to_boundary_mapping);

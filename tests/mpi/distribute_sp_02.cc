@@ -154,7 +154,7 @@ test_mpi()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
 #ifdef DEAL_II_WITH_MPI
   Utilities::MPI::MPI_InitFinalize mpi_initialization(

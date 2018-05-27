@@ -114,32 +114,32 @@ public:
   /**
    * Copy constructor.
    */
-  IndexSet(const IndexSet &) = default;
+  IndexSet(const IndexSet&) = default;
 
   /**
    * Copy assignment operator.
    */
-  IndexSet &
-  operator=(const IndexSet &) = default;
+  IndexSet&
+  operator=(const IndexSet&) = default;
 
   /**
    * Move constructor. Create a new IndexSet by transferring the internal data
    * of the input set.
    */
-  IndexSet(IndexSet &&is) noexcept;
+  IndexSet(IndexSet&& is) noexcept;
 
   /**
    * Move assignment operator. Transfer the internal data of the input set into
    * the current one.
    */
-  IndexSet &
-  operator=(IndexSet &&is) noexcept;
+  IndexSet&
+  operator=(IndexSet&& is) noexcept;
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
    * Constructor from a trilinos Epetra_Map.
    */
-  explicit IndexSet(const Epetra_Map &map);
+  explicit IndexSet(const Epetra_Map& map);
 #endif
 
   /**
@@ -194,7 +194,7 @@ public:
    */
   template <typename ForwardIterator>
   void
-  add_indices(const ForwardIterator &begin, const ForwardIterator &end);
+  add_indices(const ForwardIterator& begin, const ForwardIterator& end);
 
   /**
    * Add the given IndexSet @p other to the current one, constructing the
@@ -212,7 +212,7 @@ public:
    * <code>[0,size())</code> represented by the current object.
    */
   void
-  add_indices(const IndexSet &other, const unsigned int offset = 0);
+  add_indices(const IndexSet& other, const unsigned int offset = 0);
 
   /**
    * Return whether the specified index is an element of the index set.
@@ -244,7 +244,7 @@ public:
    * is complete.
    */
   bool
-  is_ascending_and_one_to_one(const MPI_Comm &communicator) const;
+  is_ascending_and_one_to_one(const MPI_Comm& communicator) const;
 
   /**
    * Return the number of elements stored in this index set.
@@ -300,7 +300,7 @@ public:
    * to have the same number of indices).
    */
   bool
-  operator==(const IndexSet &is) const;
+  operator==(const IndexSet& is) const;
 
   /**
    * Comparison for inequality of index sets. This operation is only allowed
@@ -308,7 +308,7 @@ public:
    * have to have the same number of indices).
    */
   bool
-  operator!=(const IndexSet &is) const;
+  operator!=(const IndexSet& is) const;
 
   /**
    * Return the intersection of the current index set and the argument given,
@@ -316,7 +316,7 @@ public:
    * sets must have the same size (though of course they do not have to have
    * the same number of indices).
    */
-  IndexSet operator&(const IndexSet &is) const;
+  IndexSet operator&(const IndexSet& is) const;
 
   /**
    * This command takes an interval <tt>[begin, end)</tt> and returns the
@@ -340,7 +340,7 @@ public:
    * \leftarrow x \backslash o$.
    */
   void
-  subtract_set(const IndexSet &other);
+  subtract_set(const IndexSet& other);
 
   /**
    * Remove and return the last element of the last range.
@@ -360,7 +360,7 @@ public:
    * Fill the given vector with all indices contained in this IndexSet.
    */
   void
-  fill_index_vector(std::vector<size_type> &indices) const;
+  fill_index_vector(std::vector<size_type>& indices) const;
 
   /**
    * Fill the given vector with either zero or one elements, providing a
@@ -376,7 +376,7 @@ public:
    */
   template <typename VectorType>
   void
-  fill_binary_vector(VectorType &vector) const;
+  fill_binary_vector(VectorType& vector) const;
 
   /**
    * Output a text representation of this IndexSet to the given stream. Used
@@ -384,35 +384,35 @@ public:
    */
   template <class StreamType>
   void
-  print(StreamType &out) const;
+  print(StreamType& out) const;
 
   /**
    * Write the IndexSet into a text based file format, that can be read in
    * again using the read() function.
    */
   void
-  write(std::ostream &out) const;
+  write(std::ostream& out) const;
 
   /**
    * Construct the IndexSet from a text based representation given by the
    * stream @p in written by the write() function.
    */
   void
-  read(std::istream &in);
+  read(std::istream& in);
 
   /**
    * Write the IndexSet into a binary, compact representation, that can be
    * read in again using the block_read() function.
    */
   void
-  block_write(std::ostream &out) const;
+  block_write(std::ostream& out) const;
 
   /**
    * Construct the IndexSet from a binary representation given by the stream
    * @p in written by the write_block() function.
    */
   void
-  block_read(std::istream &in);
+  block_read(std::istream& in);
 
 #ifdef DEAL_II_WITH_TRILINOS
   /**
@@ -444,7 +444,7 @@ public:
    * vector, e.g. for extracting only certain solution components.
    */
   Epetra_Map
-  make_trilinos_map(const MPI_Comm &communicator = MPI_COMM_WORLD,
+  make_trilinos_map(const MPI_Comm& communicator = MPI_COMM_WORLD,
                     const bool      overlapping  = false) const;
 #endif
 
@@ -467,7 +467,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive &ar, const unsigned int version);
+  serialize(Archive& ar, const unsigned int version);
 
 
   /**
@@ -487,12 +487,12 @@ public:
      * Construct a valid accessor given an IndexSet and the index @p range_idx
      * of the range to point to.
      */
-    IntervalAccessor(const IndexSet *idxset, const size_type range_idx);
+    IntervalAccessor(const IndexSet* idxset, const size_type range_idx);
 
     /**
      * Construct an invalid accessor for the IndexSet.
      */
-    explicit IntervalAccessor(const IndexSet *idxset);
+    explicit IntervalAccessor(const IndexSet* idxset);
 
     /**
      * Number of elements in this interval.
@@ -529,23 +529,23 @@ public:
     /**
      * Private copy constructor.
      */
-    IntervalAccessor(const IntervalAccessor &other);
+    IntervalAccessor(const IntervalAccessor& other);
     /**
      * Private copy operator.
      */
-    IntervalAccessor &
-    operator=(const IntervalAccessor &other);
+    IntervalAccessor&
+    operator=(const IntervalAccessor& other);
 
     /**
      * Test for equality, used by IntervalIterator.
      */
     bool
-    operator==(const IntervalAccessor &other) const;
+    operator==(const IntervalAccessor& other) const;
     /**
      * Smaller-than operator, used by IntervalIterator.
      */
     bool
-    operator<(const IntervalAccessor &other) const;
+    operator<(const IntervalAccessor& other) const;
     /**
      * Advance this accessor to point to the next interval in the @p
      * index_set.
@@ -555,7 +555,7 @@ public:
     /**
      * Reference to the IndexSet.
      */
-    const IndexSet *index_set;
+    const IndexSet* index_set;
 
     /**
      * Index into index_set.ranges[]. Set to numbers::invalid_dof_index if
@@ -577,12 +577,12 @@ public:
      * Construct a valid iterator pointing to the interval with index @p
      * range_idx.
      */
-    IntervalIterator(const IndexSet *idxset, const size_type range_idx);
+    IntervalIterator(const IndexSet* idxset, const size_type range_idx);
 
     /**
      * Construct an invalid iterator (used as end()).
      */
-    explicit IntervalIterator(const IndexSet *idxset);
+    explicit IntervalIterator(const IndexSet* idxset);
 
     /**
      * Construct an empty iterator.
@@ -592,18 +592,18 @@ public:
     /**
      * Copy constructor from @p other iterator.
      */
-    IntervalIterator(const IntervalIterator &other);
+    IntervalIterator(const IntervalIterator& other);
 
     /**
      * Assignment of another iterator.
      */
-    IntervalIterator &
-    operator=(const IntervalIterator &other);
+    IntervalIterator&
+    operator=(const IntervalIterator& other);
 
     /**
      * Prefix increment.
      */
-    IntervalIterator &
+    IntervalIterator&
     operator++();
 
     /**
@@ -615,30 +615,30 @@ public:
     /**
      * Dereferencing operator, returns an IntervalAccessor.
      */
-    const IntervalAccessor &operator*() const;
+    const IntervalAccessor& operator*() const;
 
     /**
      * Dereferencing operator, returns a pointer to an IntervalAccessor.
      */
-    const IntervalAccessor *operator->() const;
+    const IntervalAccessor* operator->() const;
 
     /**
      * Comparison.
      */
     bool
-    operator==(const IntervalIterator &) const;
+    operator==(const IntervalIterator&) const;
 
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const IntervalIterator &) const;
+    operator!=(const IntervalIterator&) const;
 
     /**
      * Comparison operator.
      */
     bool
-    operator<(const IntervalIterator &) const;
+    operator<(const IntervalIterator&) const;
 
     /**
      * Return the distance between the current iterator and the argument. The
@@ -647,7 +647,7 @@ public:
      * operator-- (for a negative return value).
      */
     int
-    operator-(const IntervalIterator &p) const;
+    operator-(const IntervalIterator& p) const;
 
     /**
      * Mark the class as forward iterator and declare some typedefs which are
@@ -657,8 +657,8 @@ public:
     typedef std::forward_iterator_tag iterator_category;
     typedef IntervalAccessor          value_type;
     typedef std::ptrdiff_t            difference_type;
-    typedef IntervalAccessor *        pointer;
-    typedef IntervalAccessor &        reference;
+    typedef IntervalAccessor*         pointer;
+    typedef IntervalAccessor&         reference;
 
   private:
     /**
@@ -678,14 +678,14 @@ public:
      * Construct an iterator pointing to the global index @p index in the
      * interval @p range_idx
      */
-    ElementIterator(const IndexSet *idxset,
+    ElementIterator(const IndexSet* idxset,
                     const size_type range_idx,
                     const size_type index);
 
     /**
      * Construct an iterator pointing to the end of the IndexSet.
      */
-    explicit ElementIterator(const IndexSet *idxset);
+    explicit ElementIterator(const IndexSet* idxset);
 
     /**
      * Dereferencing operator. The returned value is the index of the element
@@ -702,7 +702,7 @@ public:
     /**
      * Prefix increment.
      */
-    ElementIterator &
+    ElementIterator&
     operator++();
 
     /**
@@ -715,19 +715,19 @@ public:
      * Comparison.
      */
     bool
-    operator==(const ElementIterator &) const;
+    operator==(const ElementIterator&) const;
 
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const ElementIterator &) const;
+    operator!=(const ElementIterator&) const;
 
     /**
      * Comparison operator.
      */
     bool
-    operator<(const ElementIterator &) const;
+    operator<(const ElementIterator&) const;
 
     /**
      * Return the distance between the current iterator and the argument. In
@@ -738,7 +738,7 @@ public:
      * value).
      */
     std::ptrdiff_t
-    operator-(const ElementIterator &p) const;
+    operator-(const ElementIterator& p) const;
 
     /**
      * Mark the class as forward iterator and declare some typedefs which are
@@ -748,8 +748,8 @@ public:
     typedef std::forward_iterator_tag iterator_category;
     typedef size_type                 value_type;
     typedef std::ptrdiff_t            difference_type;
-    typedef size_type *               pointer;
-    typedef size_type &               reference;
+    typedef size_type*                pointer;
+    typedef size_type&                reference;
 
   private:
     /**
@@ -761,7 +761,7 @@ public:
     /**
      * The parent IndexSet.
      */
-    const IndexSet *index_set;
+    const IndexSet* index_set;
     /**
      * Index into index_set.ranges.
      */
@@ -856,7 +856,7 @@ private:
     Range(const size_type i1, const size_type i2);
 
     friend inline bool
-    operator<(const Range &range_1, const Range &range_2)
+    operator<(const Range& range_1, const Range& range_2)
     {
       return (
         (range_1.begin < range_2.begin) ||
@@ -864,20 +864,20 @@ private:
     }
 
     static bool
-    end_compare(const IndexSet::Range &x, const IndexSet::Range &y)
+    end_compare(const IndexSet::Range& x, const IndexSet::Range& y)
     {
       return x.end < y.end;
     }
 
     static bool
-    nth_index_compare(const IndexSet::Range &x, const IndexSet::Range &y)
+    nth_index_compare(const IndexSet::Range& x, const IndexSet::Range& y)
     {
       return (x.nth_index_in_set + (x.end - x.begin) <
               y.nth_index_in_set + (y.end - y.begin));
     }
 
     friend inline bool
-    operator==(const Range &range_1, const Range &range_2)
+    operator==(const Range& range_1, const Range& range_2)
     {
       return ((range_1.begin == range_2.begin) && (range_1.end == range_2.end));
     }
@@ -894,7 +894,7 @@ private:
      */
     template <class Archive>
     void
-    serialize(Archive &ar, const unsigned int version);
+    serialize(Archive& ar, const unsigned int version);
   };
 
   /**
@@ -980,7 +980,7 @@ complete_index_set(const unsigned int N)
 /* IntervalAccessor */
 
 inline IndexSet::IntervalAccessor::IntervalAccessor(
-  const IndexSet *          idxset,
+  const IndexSet*           idxset,
   const IndexSet::size_type range_idx) :
   index_set(idxset),
   range_idx(range_idx)
@@ -991,7 +991,7 @@ inline IndexSet::IntervalAccessor::IntervalAccessor(
 
 
 
-inline IndexSet::IntervalAccessor::IntervalAccessor(const IndexSet *idxset) :
+inline IndexSet::IntervalAccessor::IntervalAccessor(const IndexSet* idxset) :
   index_set(idxset),
   range_idx(numbers::invalid_dof_index)
 {}
@@ -999,7 +999,7 @@ inline IndexSet::IntervalAccessor::IntervalAccessor(const IndexSet *idxset) :
 
 
 inline IndexSet::IntervalAccessor::IntervalAccessor(
-  const IndexSet::IntervalAccessor &other) :
+  const IndexSet::IntervalAccessor& other) :
   index_set(other.index_set),
   range_idx(other.range_idx)
 {
@@ -1061,8 +1061,8 @@ IndexSet::IntervalAccessor::last() const
 
 
 
-inline IndexSet::IntervalAccessor &
-IndexSet::IntervalAccessor::operator=(const IndexSet::IntervalAccessor &other)
+inline IndexSet::IntervalAccessor&
+IndexSet::IntervalAccessor::operator=(const IndexSet::IntervalAccessor& other)
 {
   index_set = other.index_set;
   range_idx = other.range_idx;
@@ -1075,7 +1075,7 @@ IndexSet::IntervalAccessor::operator=(const IndexSet::IntervalAccessor &other)
 
 inline bool
 IndexSet::IntervalAccessor::
-operator==(const IndexSet::IntervalAccessor &other) const
+operator==(const IndexSet::IntervalAccessor& other) const
 {
   Assert(
     index_set == other.index_set,
@@ -1087,7 +1087,7 @@ operator==(const IndexSet::IntervalAccessor &other) const
 
 inline bool
 IndexSet::IntervalAccessor::
-operator<(const IndexSet::IntervalAccessor &other) const
+operator<(const IndexSet::IntervalAccessor& other) const
 {
   Assert(
     index_set == other.index_set,
@@ -1115,7 +1115,7 @@ IndexSet::IntervalAccessor::advance()
 /* IntervalIterator */
 
 inline IndexSet::IntervalIterator::IntervalIterator(
-  const IndexSet *          idxset,
+  const IndexSet*           idxset,
   const IndexSet::size_type range_idx) :
   accessor(idxset, range_idx)
 {}
@@ -1127,21 +1127,21 @@ inline IndexSet::IntervalIterator::IntervalIterator() : accessor(nullptr)
 
 
 
-inline IndexSet::IntervalIterator::IntervalIterator(const IndexSet *idxset) :
+inline IndexSet::IntervalIterator::IntervalIterator(const IndexSet* idxset) :
   accessor(idxset)
 {}
 
 
 
 inline IndexSet::IntervalIterator::IntervalIterator(
-  const IndexSet::IntervalIterator &other) :
+  const IndexSet::IntervalIterator& other) :
   accessor(other.accessor)
 {}
 
 
 
-inline IndexSet::IntervalIterator &
-IndexSet::IntervalIterator::operator=(const IntervalIterator &other)
+inline IndexSet::IntervalIterator&
+IndexSet::IntervalIterator::operator=(const IntervalIterator& other)
 {
   accessor = other.accessor;
   return *this;
@@ -1149,7 +1149,7 @@ IndexSet::IntervalIterator::operator=(const IntervalIterator &other)
 
 
 
-inline IndexSet::IntervalIterator &
+inline IndexSet::IntervalIterator&
 IndexSet::IntervalIterator::operator++()
 {
   accessor.advance();
@@ -1168,7 +1168,7 @@ IndexSet::IntervalIterator::operator++(int)
 
 
 
-inline const IndexSet::IntervalAccessor &IndexSet::IntervalIterator::
+inline const IndexSet::IntervalAccessor& IndexSet::IntervalIterator::
                                          operator*() const
 {
   return accessor;
@@ -1176,7 +1176,7 @@ inline const IndexSet::IntervalAccessor &IndexSet::IntervalIterator::
 
 
 
-inline const IndexSet::IntervalAccessor *IndexSet::IntervalIterator::
+inline const IndexSet::IntervalAccessor* IndexSet::IntervalIterator::
                                          operator->() const
 {
   return &accessor;
@@ -1186,7 +1186,7 @@ inline const IndexSet::IntervalAccessor *IndexSet::IntervalIterator::
 
 inline bool
 IndexSet::IntervalIterator::
-operator==(const IndexSet::IntervalIterator &other) const
+operator==(const IndexSet::IntervalIterator& other) const
 {
   return accessor == other.accessor;
 }
@@ -1195,7 +1195,7 @@ operator==(const IndexSet::IntervalIterator &other) const
 
 inline bool
 IndexSet::IntervalIterator::
-operator!=(const IndexSet::IntervalIterator &other) const
+operator!=(const IndexSet::IntervalIterator& other) const
 {
   return !(*this == other);
 }
@@ -1204,7 +1204,7 @@ operator!=(const IndexSet::IntervalIterator &other) const
 
 inline bool
 IndexSet::IntervalIterator::
-operator<(const IndexSet::IntervalIterator &other) const
+operator<(const IndexSet::IntervalIterator& other) const
 {
   return accessor < other.accessor;
 }
@@ -1213,7 +1213,7 @@ operator<(const IndexSet::IntervalIterator &other) const
 
 inline int
 IndexSet::IntervalIterator::
-operator-(const IndexSet::IntervalIterator &other) const
+operator-(const IndexSet::IntervalIterator& other) const
 {
   Assert(
     accessor.index_set == other.accessor.index_set,
@@ -1238,7 +1238,7 @@ operator-(const IndexSet::IntervalIterator &other) const
 /* ElementIterator */
 
 inline IndexSet::ElementIterator::ElementIterator(
-  const IndexSet *          idxset,
+  const IndexSet*           idxset,
   const IndexSet::size_type range_idx,
   const IndexSet::size_type index) :
   index_set(idxset),
@@ -1257,7 +1257,7 @@ inline IndexSet::ElementIterator::ElementIterator(
 
 
 
-inline IndexSet::ElementIterator::ElementIterator(const IndexSet *idxset) :
+inline IndexSet::ElementIterator::ElementIterator(const IndexSet* idxset) :
   index_set(idxset),
   range_idx(numbers::invalid_dof_index),
   idx(numbers::invalid_dof_index)
@@ -1293,7 +1293,7 @@ inline IndexSet::size_type IndexSet::ElementIterator::operator*() const
 
 inline bool
 IndexSet::ElementIterator::
-operator==(const IndexSet::ElementIterator &other) const
+operator==(const IndexSet::ElementIterator& other) const
 {
   Assert(
     index_set == other.index_set,
@@ -1332,7 +1332,7 @@ IndexSet::ElementIterator::advance()
 
 
 
-inline IndexSet::ElementIterator &
+inline IndexSet::ElementIterator&
 IndexSet::ElementIterator::operator++()
 {
   advance();
@@ -1353,7 +1353,7 @@ IndexSet::ElementIterator::operator++(int)
 
 inline bool
 IndexSet::ElementIterator::
-operator!=(const IndexSet::ElementIterator &other) const
+operator!=(const IndexSet::ElementIterator& other) const
 {
   return !(*this == other);
 }
@@ -1362,7 +1362,7 @@ operator!=(const IndexSet::ElementIterator &other) const
 
 inline bool
 IndexSet::ElementIterator::
-operator<(const IndexSet::ElementIterator &other) const
+operator<(const IndexSet::ElementIterator& other) const
 {
   Assert(
     index_set == other.index_set,
@@ -1375,7 +1375,7 @@ operator<(const IndexSet::ElementIterator &other) const
 
 inline std::ptrdiff_t
 IndexSet::ElementIterator::
-operator-(const IndexSet::ElementIterator &other) const
+operator-(const IndexSet::ElementIterator& other) const
 {
   Assert(
     index_set == other.index_set,
@@ -1451,7 +1451,7 @@ inline IndexSet::IndexSet(const size_type size) :
 
 
 
-inline IndexSet::IndexSet(IndexSet &&is) noexcept :
+inline IndexSet::IndexSet(IndexSet&& is) noexcept :
   ranges(std::move(is.ranges)),
   is_compressed(is.is_compressed),
   index_space_size(is.index_space_size),
@@ -1467,8 +1467,8 @@ inline IndexSet::IndexSet(IndexSet &&is) noexcept :
 
 
 
-inline IndexSet &
-IndexSet::operator=(IndexSet &&is) noexcept
+inline IndexSet&
+IndexSet::operator=(IndexSet&& is) noexcept
 {
   ranges           = std::move(is.ranges);
   is_compressed    = is.is_compressed;
@@ -1645,7 +1645,7 @@ IndexSet::add_index(const size_type index)
 
 template <typename ForwardIterator>
 inline void
-IndexSet::add_indices(const ForwardIterator &begin, const ForwardIterator &end)
+IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
 {
   // insert each element of the range. if some of them happen to be
   // consecutive, merge them to a range
@@ -1744,7 +1744,7 @@ IndexSet::n_elements() const
   size_type v = 0;
   if (!ranges.empty())
     {
-      Range &r = ranges.back();
+      Range& r = ranges.back();
       v        = r.nth_index_in_set + r.end - r.begin;
     }
 
@@ -1875,7 +1875,7 @@ IndexSet::index_within_set(const size_type n) const
 
 
 inline bool
-IndexSet::operator==(const IndexSet &is) const
+IndexSet::operator==(const IndexSet& is) const
 {
   Assert(size() == is.size(), ExcDimensionMismatch(size(), is.size()));
 
@@ -1888,7 +1888,7 @@ IndexSet::operator==(const IndexSet &is) const
 
 
 inline bool
-IndexSet::operator!=(const IndexSet &is) const
+IndexSet::operator!=(const IndexSet& is) const
 {
   Assert(size() == is.size(), ExcDimensionMismatch(size(), is.size()));
 
@@ -1902,7 +1902,7 @@ IndexSet::operator!=(const IndexSet &is) const
 
 template <typename Vector>
 void
-IndexSet::fill_binary_vector(Vector &vector) const
+IndexSet::fill_binary_vector(Vector& vector) const
 {
   Assert(vector.size() == size(), ExcDimensionMismatch(vector.size(), size()));
 
@@ -1922,7 +1922,7 @@ IndexSet::fill_binary_vector(Vector &vector) const
 
 template <class StreamType>
 inline void
-IndexSet::print(StreamType &out) const
+IndexSet::print(StreamType& out) const
 {
   compress();
   out << "{";
@@ -1944,18 +1944,18 @@ IndexSet::print(StreamType &out) const
 
 template <class Archive>
 inline void
-IndexSet::Range::serialize(Archive &ar, const unsigned int)
+IndexSet::Range::serialize(Archive& ar, const unsigned int)
 {
-  ar &begin &end &nth_index_in_set;
+  ar& begin& end& nth_index_in_set;
 }
 
 
 
 template <class Archive>
 inline void
-IndexSet::serialize(Archive &ar, const unsigned int)
+IndexSet::serialize(Archive& ar, const unsigned int)
 {
-  ar &ranges &is_compressed &index_space_size &largest_range;
+  ar& ranges& is_compressed& index_space_size& largest_range;
 }
 
 DEAL_II_NAMESPACE_CLOSE

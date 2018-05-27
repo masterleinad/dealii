@@ -28,7 +28,7 @@
 
 
 
-void check(Triangulation<3> &tria)
+void check(Triangulation<3>& tria)
 {
   for (unsigned i = 0; i < tria.n_vertices(); i++)
     {
@@ -58,7 +58,7 @@ main()
       coarse_grid.execute_coarsening_and_refinement();
       check(coarse_grid);
     }
-  catch (const std::exception &exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

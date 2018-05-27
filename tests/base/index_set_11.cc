@@ -28,12 +28,12 @@ test()
 
   {
     const unsigned int array[] = {2, 3, 4};
-    index_set.add_indices((const unsigned int *)array,
+    index_set.add_indices((const unsigned int*)array,
                           array + sizeof(array) / sizeof(array[0]));
   }
   {
     const unsigned int array[] = {7, 6};
-    index_set.add_indices((const unsigned int *)array,
+    index_set.add_indices((const unsigned int*)array,
                           array + sizeof(array) / sizeof(array[0]));
   }
 
@@ -46,7 +46,7 @@ test()
 
   {
     const unsigned int array[] = {5};
-    index_set.add_indices((const unsigned int *)array,
+    index_set.add_indices((const unsigned int*)array,
                           array + sizeof(array) / sizeof(array[0]));
   }
 

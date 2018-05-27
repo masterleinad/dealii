@@ -52,8 +52,8 @@ using namespace std;
 
 template <int dim, typename number, int spacedim>
 void
-reinit_vector(const dealii::DoFHandler<dim, spacedim> &mg_dof,
-              MGLevelObject<dealii::Vector<number>> &  v)
+reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
+              MGLevelObject<dealii::Vector<number>>&   v)
 {
   for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
@@ -65,7 +65,7 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim> &mg_dof,
 
 template <int dim>
 void
-refine_mesh(Triangulation<dim> &triangulation)
+refine_mesh(Triangulation<dim>& triangulation)
 {
   bool cell_refined = false;
   for (typename Triangulation<dim>::active_cell_iterator cell =
@@ -100,7 +100,7 @@ refine_mesh(Triangulation<dim> &triangulation)
 
 template <int dim>
 void
-initialize(const DoFHandler<dim> &dof, Vector<double> &u)
+initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
   unsigned int       counter       = 0;
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
@@ -117,7 +117,7 @@ initialize(const DoFHandler<dim> &dof, Vector<double> &u)
 
 template <int dim>
 void
-initialize(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
+initialize(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   const unsigned int dofs_per_face = dof.get_fe().dofs_per_face;
@@ -152,7 +152,7 @@ initialize(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
 
 template <int dim>
 void
-print(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
+print(const DoFHandler<dim>& dof, MGLevelObject<Vector<double>>& u)
 {
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
@@ -173,10 +173,10 @@ print(const DoFHandler<dim> &dof, MGLevelObject<Vector<double>> &u)
 
 template <int dim>
 void
-print_diff(const DoFHandler<dim> &dof_1,
-           const DoFHandler<dim> &dof_2,
-           const Vector<double> & u,
-           const Vector<double> & v)
+print_diff(const DoFHandler<dim>& dof_1,
+           const DoFHandler<dim>& dof_2,
+           const Vector<double>&  u,
+           const Vector<double>&  v)
 {
   Vector<double> diff;
   diff.reinit(u);
@@ -200,7 +200,7 @@ print_diff(const DoFHandler<dim> &dof_1,
 
 template <int dim>
 void
-check_simple(const FiniteElement<dim> &fe)
+check_simple(const FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl;
 

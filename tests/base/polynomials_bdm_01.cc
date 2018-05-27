@@ -29,7 +29,7 @@ using namespace std;
 
 template <int dim>
 void
-plot(const PolynomialsBDM<dim> &poly)
+plot(const PolynomialsBDM<dim>& poly)
 {
   QTrapez<1>                  base_quadrature;
   QIterated<dim>              quadrature(base_quadrature, poly.degree() + 4);

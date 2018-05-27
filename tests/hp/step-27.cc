@@ -84,7 +84,7 @@ namespace Step27
     void
     create_coarse_grid();
     void
-    estimate_smoothness(Vector<float> &smoothness_indicators);
+    estimate_smoothness(Vector<float>& smoothness_indicators);
     void
     postprocess(const unsigned int cycle);
 
@@ -121,13 +121,13 @@ namespace Step27
     {}
 
     virtual double
-    value(const Point<dim> &p, const unsigned int component) const;
+    value(const Point<dim>& p, const unsigned int component) const;
   };
 
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim> &p,
+  RightHandSide<dim>::value(const Point<dim>& p,
                             const unsigned int /*component*/) const
   {
     double product = 1;
@@ -138,7 +138,7 @@ namespace Step27
 
 
   template <typename T>
-  void resize(Table<2, T> &coeff, const unsigned int N)
+  void resize(Table<2, T>& coeff, const unsigned int N)
   {
     coeff.reinit(N, N);
   }
@@ -233,7 +233,7 @@ namespace Step27
 
         hp_fe_values.reinit(cell);
 
-        const FEValues<dim> &fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
 
         std::vector<double> rhs_values(fe_values.n_quadrature_points);
         rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -454,11 +454,11 @@ namespace Step27
 
   template <int dim>
   std::pair<bool, unsigned int>
-  predicate_ind(const TableIndices<dim> &ind);
+  predicate_ind(const TableIndices<dim>& ind);
 
   template <>
   std::pair<bool, unsigned int>
-  predicate_ind<2>(const TableIndices<2> &ind)
+  predicate_ind<2>(const TableIndices<2>& ind)
   {
     const unsigned int v = ind[0] * ind[0] + ind[1] * ind[1];
     if (v > 0 && v < 7 * 7)
@@ -469,7 +469,7 @@ namespace Step27
 
   template <int dim>
   void
-  LaplaceProblem<dim>::estimate_smoothness(Vector<float> &smoothness_indicators)
+  LaplaceProblem<dim>::estimate_smoothness(Vector<float>& smoothness_indicators)
   {
 #ifdef OLD
     const unsigned int N = max_degree;
@@ -650,7 +650,7 @@ main()
       LaplaceProblem<2> laplace_problem;
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

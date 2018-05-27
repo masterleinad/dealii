@@ -125,7 +125,7 @@ check(const int          degree,
   // p[H]x = \sum_i x_i p(\lambda_i) v_i
   const double c = (a + b) / 2.;
   const double e = (b - a) / 2.;
-  auto         L = [&](const double &x) { return (x - c) / e; };
+  auto         L = [&](const double& x) { return (x - c) / e; };
 
   const double scaling = scale ? cheb2(degree, L(a_L)) : 1.; // p(L(a_L))
   deallog << " Scaling: " << scaling << " @ " << a_L << std::endl;

@@ -40,7 +40,7 @@
 
 template <int dim>
 void
-output(parallel::distributed::Triangulation<dim> &tr, std::ostream &stream)
+output(parallel::distributed::Triangulation<dim>& tr, std::ostream& stream)
 {
   GridOut out;
   out.write_vtk(tr, stream);
@@ -103,7 +103,7 @@ test()
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

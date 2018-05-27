@@ -41,9 +41,9 @@
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim> &dof)
+print_dofs(const DoFHandler<dim>& dof)
 {
-  const FiniteElement<dim> &           fe = dof.get_fe();
+  const FiniteElement<dim>&            fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
@@ -76,9 +76,9 @@ print_dofs(const DoFHandler<dim> &dof)
 
 template <int dim>
 void
-check_renumbering(DoFHandler<dim> &dof)
+check_renumbering(DoFHandler<dim>& dof)
 {
-  const FiniteElement<dim> &element = dof.get_fe();
+  const FiniteElement<dim>& element = dof.get_fe();
   deallog << element.get_name() << std::endl;
 
   DoFRenumbering::random(dof);

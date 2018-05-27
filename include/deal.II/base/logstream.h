@@ -106,13 +106,13 @@ public:
      * Set a new prefix for @p deallog, which will be removed when the
      * variable is destroyed.
      */
-    Prefix(const std::string &text);
+    Prefix(const std::string& text);
 
     /**
      * Set a new prefix for the given stream, which will be removed when the
      * variable is destroyed.
      */
-    Prefix(const std::string &text, LogStream &stream);
+    Prefix(const std::string& text, LogStream& stream);
 
     /**
      * Remove the prefix associated with this variable.
@@ -147,7 +147,7 @@ public:
    * The optional argument @p print_job_id specifies whether
    */
   void
-  attach(std::ostream &o, const bool print_job_id = true);
+  attach(std::ostream& o, const bool print_job_id = true);
 
 
   /**
@@ -161,14 +161,14 @@ public:
   /**
    * Return the default stream (<tt>std_out</tt>).
    */
-  std::ostream &
+  std::ostream&
   get_console();
 
 
   /**
    * Return the file stream.
    */
-  std::ostream &
+  std::ostream&
   get_file_stream();
 
 
@@ -183,7 +183,7 @@ public:
   /**
    * Return the prefix string.
    */
-  const std::string &
+  const std::string&
   get_prefix() const;
 
 
@@ -200,7 +200,7 @@ public:
    * is not immediately caught.
    */
   void
-  push(const std::string &text);
+  push(const std::string& text);
 
 
   /**
@@ -283,8 +283,8 @@ public:
    * @p std::wostream, and potentially more of this kind. This function is
    * therefore necessary to pick one element from this overload set.
    */
-  LogStream &
-  operator<<(std::ostream &(*p)(std::ostream &));
+  LogStream&
+  operator<<(std::ostream& (*p)(std::ostream&));
 
 
   /**
@@ -303,7 +303,7 @@ private:
    * that created this LogStream instance (usually, in the case of deallog,
    * the "main" thread).
    */
-  std::stack<std::string> &
+  std::stack<std::string>&
   get_prefixes() const;
 
   /**
@@ -317,7 +317,7 @@ private:
    * <tt>std::cout</tt>, but can be set to another stream through the
    * constructor.
    */
-  std::ostream *std_out;
+  std::ostream* std_out;
 
   /**
    * Pointer to a stream, where a copy of the output is to go to. Usually,
@@ -325,7 +325,7 @@ private:
    *
    * You can set and reset this stream by the <tt>attach</tt> function.
    */
-  std::ostream *file;
+  std::ostream* file;
 
   /**
    * Value denoting the number of prefixes to be printed to the standard
@@ -360,7 +360,7 @@ private:
    * Internal wrapper around "thread local" outstreams. This private function
    * will return the correct internal ostringstream buffer for operator<<.
    */
-  std::ostringstream &
+  std::ostringstream&
   get_stream();
 
   /**
@@ -370,8 +370,8 @@ private:
   Threads::ThreadLocalStorage<std::shared_ptr<std::ostringstream>> outstreams;
 
   template <typename T>
-  friend LogStream &
-  operator<<(LogStream &log, const T &t);
+  friend LogStream&
+  operator<<(LogStream& log, const T& t);
 };
 
 
@@ -387,8 +387,8 @@ private:
  * C++11 overload resolution rules
  */
 template <typename T>
-inline LogStream &
-operator<<(LogStream &log, const T &t)
+inline LogStream&
+operator<<(LogStream& log, const T& t)
 {
   // print to the internal stringstream
   log.get_stream() << t;

@@ -261,15 +261,15 @@ namespace FEValuesViews
      * a FEValuesBase object (or of one of the classes derived from
      * FEValuesBase).
      */
-    Scalar(const FEValuesBase<dim, spacedim> &fe_values_base,
+    Scalar(const FEValuesBase<dim, spacedim>& fe_values_base,
            const unsigned int                 component);
 
     /**
      * Copy operator. This is not a lightweight object so we don't allow
      * copying and generate an exception if this function is called.
      */
-    Scalar &
-    operator=(const Scalar<dim, spacedim> &);
+    Scalar&
+    operator=(const Scalar<dim, spacedim>&);
 
     /**
      * Return the value of the vector component selected by this view, for the
@@ -349,10 +349,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &values) const;
+                                       typename InputVector::value_type>::type>&
+        values) const;
 
     /**
      * Same as above, but using a vector of local degree-of-freedom values.
@@ -378,10 +378,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::value_type>
-        &values) const;
+        typename OutputType<typename InputVector::value_type>::value_type>&
+        values) const;
 
     /**
      * Return the gradients of the selected scalar component of the finite
@@ -403,10 +403,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<gradient_type,
-                                       typename InputVector::value_type>::type>
-        &gradients) const;
+                                       typename InputVector::value_type>::type>&
+        gradients) const;
 
     /**
      * @copydoc FEValuesViews::Scalar::get_function_values_from_local_dof_values()
@@ -414,10 +414,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::gradient_type>
-        &gradients) const;
+        typename OutputType<typename InputVector::value_type>::gradient_type>&
+        gradients) const;
 
     /**
      * Return the Hessians of the selected scalar component of the finite
@@ -439,10 +439,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_hessians(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<hessian_type,
-                                       typename InputVector::value_type>::type>
-        &hessians) const;
+                                       typename InputVector::value_type>::type>&
+        hessians) const;
 
     /**
      * @copydoc FEValuesViews::Scalar::get_function_values_from_local_dof_values()
@@ -450,10 +450,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_hessians_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::hessian_type>
-        &hessians) const;
+        typename OutputType<typename InputVector::value_type>::hessian_type>&
+        hessians) const;
 
 
     /**
@@ -477,10 +477,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_laplacians(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &laplacians) const;
+                                       typename InputVector::value_type>::type>&
+        laplacians) const;
 
     /**
      * @copydoc FEValuesViews::Scalar::get_function_values_from_local_dof_values()
@@ -488,10 +488,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_laplacians_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::laplacian_type>
-        &laplacians) const;
+        typename OutputType<typename InputVector::value_type>::laplacian_type>&
+        laplacians) const;
 
 
     /**
@@ -515,10 +515,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_third_derivatives(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<third_derivative_type,
-                                       typename InputVector::value_type>::type>
-        &third_derivatives) const;
+                                       typename InputVector::value_type>::type>&
+        third_derivatives) const;
 
     /**
      * @copydoc FEValuesViews::Scalar::get_function_values_from_local_dof_values()
@@ -526,9 +526,9 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_third_derivatives_from_local_dof_values(
-      const InputVector &                   dof_values,
+      const InputVector&                    dof_values,
       std::vector<typename OutputType<typename InputVector::value_type>::
-                    third_derivative_type> &third_derivatives) const;
+                    third_derivative_type>& third_derivatives) const;
 
 
   private:
@@ -772,15 +772,15 @@ namespace FEValuesViews
      * The second argument denotes the index of the first component of the
      * selected vector.
      */
-    Vector(const FEValuesBase<dim, spacedim> &fe_values_base,
+    Vector(const FEValuesBase<dim, spacedim>& fe_values_base,
            const unsigned int                 first_vector_component);
 
     /**
      * Copy operator. This is not a lightweight object so we don't allow
      * copying and generate an exception if this function is called.
      */
-    Vector &
-    operator=(const Vector<dim, spacedim> &);
+    Vector&
+    operator=(const Vector<dim, spacedim>&);
 
     /**
      * Return the value of the vector components selected by this view, for
@@ -922,10 +922,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &values) const;
+                                       typename InputVector::value_type>::type>&
+        values) const;
 
     /**
      * Same as above, but using a vector of local degree-of-freedom values.
@@ -951,10 +951,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::value_type>
-        &values) const;
+        typename OutputType<typename InputVector::value_type>::value_type>&
+        values) const;
 
     /**
      * Return the gradients of the selected vector components of the finite
@@ -976,10 +976,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<gradient_type,
-                                       typename InputVector::value_type>::type>
-        &gradients) const;
+                                       typename InputVector::value_type>::type>&
+        gradients) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -987,10 +987,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::gradient_type>
-        &gradients) const;
+        typename OutputType<typename InputVector::value_type>::gradient_type>&
+        gradients) const;
 
     /**
      * Return the symmetrized gradients of the selected vector components of
@@ -1018,10 +1018,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_symmetric_gradients(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<symmetric_gradient_type,
-                                       typename InputVector::value_type>::type>
-        &symmetric_gradients) const;
+                                       typename InputVector::value_type>::type>&
+        symmetric_gradients) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1029,9 +1029,9 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_symmetric_gradients_from_local_dof_values(
-      const InputVector &                     dof_values,
+      const InputVector&                      dof_values,
       std::vector<typename OutputType<typename InputVector::value_type>::
-                    symmetric_gradient_type> &symmetric_gradients) const;
+                    symmetric_gradient_type>& symmetric_gradients) const;
 
     /**
      * Return the divergence of the selected vector components of the finite
@@ -1054,10 +1054,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<divergence_type,
-                                       typename InputVector::value_type>::type>
-        &divergences) const;
+                                       typename InputVector::value_type>::type>&
+        divergences) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1065,10 +1065,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::divergence_type>
-        &divergences) const;
+        typename OutputType<typename InputVector::value_type>::divergence_type>&
+        divergences) const;
 
     /**
      * Return the curl of the selected vector components of the finite element
@@ -1091,10 +1091,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_curls(
-      const InputVector &fe_function,
-      std::vector<
-        typename ProductType<curl_type, typename InputVector::value_type>::type>
-        &curls) const;
+      const InputVector& fe_function,
+      std::vector<typename ProductType<curl_type,
+                                       typename InputVector::value_type>::type>&
+        curls) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1102,10 +1102,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_curls_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::curl_type>
-        &curls) const;
+        typename OutputType<typename InputVector::value_type>::curl_type>&
+        curls) const;
 
     /**
      * Return the Hessians of the selected vector components of the finite
@@ -1127,10 +1127,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_hessians(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<hessian_type,
-                                       typename InputVector::value_type>::type>
-        &hessians) const;
+                                       typename InputVector::value_type>::type>&
+        hessians) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1138,10 +1138,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_hessians_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::hessian_type>
-        &hessians) const;
+        typename OutputType<typename InputVector::value_type>::hessian_type>&
+        hessians) const;
 
     /**
      * Return the Laplacians of the selected vector components of the finite
@@ -1164,10 +1164,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_laplacians(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &laplacians) const;
+                                       typename InputVector::value_type>::type>&
+        laplacians) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1175,10 +1175,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_laplacians_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::laplacian_type>
-        &laplacians) const;
+        typename OutputType<typename InputVector::value_type>::laplacian_type>&
+        laplacians) const;
 
     /**
      * Return the third derivatives of the selected scalar component of the
@@ -1201,10 +1201,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_third_derivatives(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<third_derivative_type,
-                                       typename InputVector::value_type>::type>
-        &third_derivatives) const;
+                                       typename InputVector::value_type>::type>&
+        third_derivatives) const;
 
     /**
      * @copydoc FEValuesViews::Vector::get_function_values_from_local_dof_values()
@@ -1212,9 +1212,9 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_third_derivatives_from_local_dof_values(
-      const InputVector &                   dof_values,
+      const InputVector&                    dof_values,
       std::vector<typename OutputType<typename InputVector::value_type>::
-                    third_derivative_type> &third_derivatives) const;
+                    third_derivative_type>& third_derivatives) const;
 
   private:
     /**
@@ -1369,15 +1369,15 @@ namespace FEValuesViews
      * The second argument denotes the index of the first component of the
      * selected symmetric second order tensor.
      */
-    SymmetricTensor(const FEValuesBase<dim, spacedim> &fe_values_base,
+    SymmetricTensor(const FEValuesBase<dim, spacedim>& fe_values_base,
                     const unsigned int                 first_tensor_component);
 
     /**
      * Copy operator. This is not a lightweight object so we don't allow
      * copying and generate an exception if this function is called.
      */
-    SymmetricTensor &
-    operator=(const SymmetricTensor<2, dim, spacedim> &);
+    SymmetricTensor&
+    operator=(const SymmetricTensor<2, dim, spacedim>&);
 
     /**
      * Return the value of the vector components selected by this view, for
@@ -1436,10 +1436,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &values) const;
+                                       typename InputVector::value_type>::type>&
+        values) const;
 
     /**
      * Same as above, but using a vector of local degree-of-freedom values.
@@ -1465,10 +1465,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::value_type>
-        &values) const;
+        typename OutputType<typename InputVector::value_type>::value_type>&
+        values) const;
 
     /**
      * Return the divergence of the selected vector components of the finite
@@ -1494,10 +1494,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<divergence_type,
-                                       typename InputVector::value_type>::type>
-        &divergences) const;
+                                       typename InputVector::value_type>::type>&
+        divergences) const;
 
     /**
      * @copydoc FEValuesViews::SymmetricTensor<2,dim,spacedim>::get_function_values_from_local_dof_values()
@@ -1505,10 +1505,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::divergence_type>
-        &divergences) const;
+        typename OutputType<typename InputVector::value_type>::divergence_type>&
+        divergences) const;
 
   private:
     /**
@@ -1664,7 +1664,7 @@ namespace FEValuesViews
      * The second argument denotes the index of the first component of the
      * selected symmetric second order tensor.
      */
-    Tensor(const FEValuesBase<dim, spacedim> &fe_values_base,
+    Tensor(const FEValuesBase<dim, spacedim>& fe_values_base,
            const unsigned int                 first_tensor_component);
 
 
@@ -1672,8 +1672,8 @@ namespace FEValuesViews
      * Copy operator. This is not a lightweight object so we don't allow
      * copying and generate an exception if this function is called.
      */
-    Tensor &
-    operator=(const Tensor<2, dim, spacedim> &);
+    Tensor&
+    operator=(const Tensor<2, dim, spacedim>&);
 
     /**
      * Return the value of the vector components selected by this view, for
@@ -1748,10 +1748,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<value_type,
-                                       typename InputVector::value_type>::type>
-        &values) const;
+                                       typename InputVector::value_type>::type>&
+        values) const;
 
     /**
      * Same as above, but using a vector of local degree-of-freedom values.
@@ -1777,10 +1777,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_values_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::value_type>
-        &values) const;
+        typename OutputType<typename InputVector::value_type>::value_type>&
+        values) const;
 
     /**
      * Return the divergence of the selected vector components of the finite
@@ -1806,10 +1806,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<divergence_type,
-                                       typename InputVector::value_type>::type>
-        &divergences) const;
+                                       typename InputVector::value_type>::type>&
+        divergences) const;
 
     /**
      * @copydoc FEValuesViews::Tensor<2,dim,spacedim>::get_function_values_from_local_dof_values()
@@ -1817,10 +1817,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_divergences_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::divergence_type>
-        &divergences) const;
+        typename OutputType<typename InputVector::value_type>::divergence_type>&
+        divergences) const;
 
     /**
      * Return the gradient of the selected vector components of the finite
@@ -1841,10 +1841,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients(
-      const InputVector &fe_function,
+      const InputVector& fe_function,
       std::vector<typename ProductType<gradient_type,
-                                       typename InputVector::value_type>::type>
-        &gradients) const;
+                                       typename InputVector::value_type>::type>&
+        gradients) const;
 
     /**
      * @copydoc FEValuesViews::Tensor<2,dim,spacedim>::get_function_values_from_local_dof_values()
@@ -1852,10 +1852,10 @@ namespace FEValuesViews
     template <class InputVector>
     void
     get_function_gradients_from_local_dof_values(
-      const InputVector &dof_values,
+      const InputVector& dof_values,
       std::vector<
-        typename OutputType<typename InputVector::value_type>::gradient_type>
-        &gradients) const;
+        typename OutputType<typename InputVector::value_type>::gradient_type>&
+        gradients) const;
 
   private:
     /**
@@ -1906,7 +1906,7 @@ namespace internal
       /**
        * Constructor.
        */
-      Cache(const FEValuesBase<dim, spacedim> &fe_values);
+      Cache(const FEValuesBase<dim, spacedim>& fe_values);
     };
   } // namespace FEValuesViews
 } // namespace internal
@@ -2052,8 +2052,8 @@ public:
   FEValuesBase(const unsigned int                  n_q_points,
                const unsigned int                  dofs_per_cell,
                const UpdateFlags                   update_flags,
-               const Mapping<dim, spacedim> &      mapping,
-               const FiniteElement<dim, spacedim> &fe);
+               const Mapping<dim, spacedim>&       mapping,
+               const FiniteElement<dim, spacedim>& fe);
 
 
   /**
@@ -2086,7 +2086,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_values}
    */
-  const double &
+  const double&
   shape_value(const unsigned int function_no,
               const unsigned int point_no) const;
 
@@ -2140,7 +2140,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_gradients}
    */
-  const Tensor<1, spacedim> &
+  const Tensor<1, spacedim>&
   shape_grad(const unsigned int function_no,
              const unsigned int quadrature_point) const;
 
@@ -2184,7 +2184,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_hessians}
    */
-  const Tensor<2, spacedim> &
+  const Tensor<2, spacedim>&
   shape_hessian(const unsigned int function_no,
                 const unsigned int point_no) const;
 
@@ -2228,7 +2228,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_3rd_derivatives}
    */
-  const Tensor<3, spacedim> &
+  const Tensor<3, spacedim>&
   shape_3rd_derivative(const unsigned int function_no,
                        const unsigned int point_no) const;
 
@@ -2298,8 +2298,8 @@ public:
   template <class InputVector>
   void
   get_function_values(
-    const InputVector &                            fe_function,
-    std::vector<typename InputVector::value_type> &values) const;
+    const InputVector&                             fe_function,
+    std::vector<typename InputVector::value_type>& values) const;
 
   /**
    * This function does the same as the other get_function_values(), but
@@ -2317,8 +2317,8 @@ public:
   template <class InputVector>
   void
   get_function_values(
-    const InputVector &                                    fe_function,
-    std::vector<Vector<typename InputVector::value_type>> &values) const;
+    const InputVector&                                     fe_function,
+    std::vector<Vector<typename InputVector::value_type>>& values) const;
 
   /**
    * Generate function values from an arbitrary vector.
@@ -2341,9 +2341,9 @@ public:
   template <class InputVector>
   void
   get_function_values(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<typename InputVector::value_type> &values) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<typename InputVector::value_type>& values) const;
 
   /**
    * Generate vector function values from an arbitrary vector.
@@ -2369,9 +2369,9 @@ public:
   template <class InputVector>
   void
   get_function_values(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<Vector<typename InputVector::value_type>> &values) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<Vector<typename InputVector::value_type>>& values) const;
 
 
   /**
@@ -2407,8 +2407,8 @@ public:
   template <class InputVector>
   void
   get_function_values(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     VectorSlice<std::vector<std::vector<typename InputVector::value_type>>>
                values,
     const bool quadrature_points_fastest) const;
@@ -2458,9 +2458,9 @@ public:
   template <class InputVector>
   void
   get_function_gradients(
-    const InputVector &fe_function,
-    std::vector<Tensor<1, spacedim, typename InputVector::value_type>>
-      &gradients) const;
+    const InputVector& fe_function,
+    std::vector<Tensor<1, spacedim, typename InputVector::value_type>>&
+      gradients) const;
 
   /**
    * This function does the same as the other get_function_gradients(), but
@@ -2481,10 +2481,10 @@ public:
   template <class InputVector>
   void
   get_function_gradients(
-    const InputVector &fe_function,
+    const InputVector& fe_function,
     std::vector<
-      std::vector<Tensor<1, spacedim, typename InputVector::value_type>>>
-      &gradients) const;
+      std::vector<Tensor<1, spacedim, typename InputVector::value_type>>>&
+      gradients) const;
 
   /**
    * Function gradient access with more flexibility. See get_function_values()
@@ -2495,10 +2495,10 @@ public:
   template <class InputVector>
   void
   get_function_gradients(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<Tensor<1, spacedim, typename InputVector::value_type>>
-      &gradients) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<Tensor<1, spacedim, typename InputVector::value_type>>&
+      gradients) const;
 
   /**
    * Function gradient access with more flexibility. See get_function_values()
@@ -2509,8 +2509,8 @@ public:
   template <class InputVector>
   void
   get_function_gradients(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     VectorSlice<std::vector<
       std::vector<Tensor<1, spacedim, typename InputVector::value_type>>>>
          gradients,
@@ -2563,9 +2563,9 @@ public:
   template <class InputVector>
   void
   get_function_hessians(
-    const InputVector &fe_function,
-    std::vector<Tensor<2, spacedim, typename InputVector::value_type>>
-      &hessians) const;
+    const InputVector& fe_function,
+    std::vector<Tensor<2, spacedim, typename InputVector::value_type>>&
+      hessians) const;
 
   /**
    * This function does the same as the other get_function_hessians(), but
@@ -2587,10 +2587,10 @@ public:
   template <class InputVector>
   void
   get_function_hessians(
-    const InputVector &fe_function,
+    const InputVector& fe_function,
     std::vector<
-      std::vector<Tensor<2, spacedim, typename InputVector::value_type>>>
-      &  hessians,
+      std::vector<Tensor<2, spacedim, typename InputVector::value_type>>>&
+         hessians,
     bool quadrature_points_fastest = false) const;
 
   /**
@@ -2600,10 +2600,10 @@ public:
   template <class InputVector>
   void
   get_function_hessians(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<Tensor<2, spacedim, typename InputVector::value_type>>
-      &hessians) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<Tensor<2, spacedim, typename InputVector::value_type>>&
+      hessians) const;
 
   /**
    * Access to the second derivatives of a function with more flexibility. See
@@ -2614,8 +2614,8 @@ public:
   template <class InputVector>
   void
   get_function_hessians(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     VectorSlice<std::vector<
       std::vector<Tensor<2, spacedim, typename InputVector::value_type>>>>
          hessians,
@@ -2666,8 +2666,8 @@ public:
   template <class InputVector>
   void
   get_function_laplacians(
-    const InputVector &                            fe_function,
-    std::vector<typename InputVector::value_type> &laplacians) const;
+    const InputVector&                             fe_function,
+    std::vector<typename InputVector::value_type>& laplacians) const;
 
   /**
    * This function does the same as the other get_function_laplacians(), but
@@ -2691,8 +2691,8 @@ public:
   template <class InputVector>
   void
   get_function_laplacians(
-    const InputVector &                                    fe_function,
-    std::vector<Vector<typename InputVector::value_type>> &laplacians) const;
+    const InputVector&                                     fe_function,
+    std::vector<Vector<typename InputVector::value_type>>& laplacians) const;
 
   /**
    * Access to the second derivatives of a function with more flexibility. See
@@ -2703,9 +2703,9 @@ public:
   template <class InputVector>
   void
   get_function_laplacians(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<typename InputVector::value_type> &laplacians) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<typename InputVector::value_type>& laplacians) const;
 
   /**
    * Access to the second derivatives of a function with more flexibility. See
@@ -2716,9 +2716,9 @@ public:
   template <class InputVector>
   void
   get_function_laplacians(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<Vector<typename InputVector::value_type>> &laplacians) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<Vector<typename InputVector::value_type>>& laplacians) const;
 
   /**
    * Access to the second derivatives of a function with more flexibility. See
@@ -2729,9 +2729,9 @@ public:
   template <class InputVector>
   void
   get_function_laplacians(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<std::vector<typename InputVector::value_type>> &   laplacians,
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<std::vector<typename InputVector::value_type>>&    laplacians,
     bool quadrature_points_fastest = false) const;
 
   //@}
@@ -2781,9 +2781,9 @@ public:
   template <class InputVector>
   void
   get_function_third_derivatives(
-    const InputVector &fe_function,
-    std::vector<Tensor<3, spacedim, typename InputVector::value_type>>
-      &third_derivatives) const;
+    const InputVector& fe_function,
+    std::vector<Tensor<3, spacedim, typename InputVector::value_type>>&
+      third_derivatives) const;
 
   /**
    * This function does the same as the other
@@ -2806,10 +2806,10 @@ public:
   template <class InputVector>
   void
   get_function_third_derivatives(
-    const InputVector &fe_function,
+    const InputVector& fe_function,
     std::vector<
-      std::vector<Tensor<3, spacedim, typename InputVector::value_type>>>
-      &  third_derivatives,
+      std::vector<Tensor<3, spacedim, typename InputVector::value_type>>>&
+         third_derivatives,
     bool quadrature_points_fastest = false) const;
 
   /**
@@ -2819,10 +2819,10 @@ public:
   template <class InputVector>
   void
   get_function_third_derivatives(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
-    std::vector<Tensor<3, spacedim, typename InputVector::value_type>>
-      &third_derivatives) const;
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
+    std::vector<Tensor<3, spacedim, typename InputVector::value_type>>&
+      third_derivatives) const;
 
   /**
    * Access to the third derivatives of a function with more flexibility. See
@@ -2833,8 +2833,8 @@ public:
   template <class InputVector>
   void
   get_function_third_derivatives(
-    const InputVector &                                            fe_function,
-    const VectorSlice<const std::vector<types::global_dof_index>> &indices,
+    const InputVector&                                             fe_function,
+    const VectorSlice<const std::vector<types::global_dof_index>>& indices,
     VectorSlice<std::vector<
       std::vector<Tensor<3, spacedim, typename InputVector::value_type>>>>
          third_derivatives,
@@ -2849,7 +2849,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_quadrature_points}
    */
-  const Point<spacedim> &
+  const Point<spacedim>&
   quadrature_point(const unsigned int q) const;
 
   /**
@@ -2857,7 +2857,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_quadrature_points}
    */
-  const std::vector<Point<spacedim>> &
+  const std::vector<Point<spacedim>>&
   get_quadrature_points() const;
 
   /**
@@ -2881,7 +2881,7 @@ public:
   /**
    * Return a reference to the array holding the values returned by JxW().
    */
-  const std::vector<double> &
+  const std::vector<double>&
   get_JxW_values() const;
 
   /**
@@ -2890,7 +2890,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobians}
    */
-  const DerivativeForm<1, dim, spacedim> &
+  const DerivativeForm<1, dim, spacedim>&
   jacobian(const unsigned int quadrature_point) const;
 
   /**
@@ -2899,7 +2899,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobians}
    */
-  const std::vector<DerivativeForm<1, dim, spacedim>> &
+  const std::vector<DerivativeForm<1, dim, spacedim>>&
   get_jacobians() const;
 
   /**
@@ -2909,7 +2909,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_grads}
    */
-  const DerivativeForm<2, dim, spacedim> &
+  const DerivativeForm<2, dim, spacedim>&
   jacobian_grad(const unsigned int quadrature_point) const;
 
   /**
@@ -2918,7 +2918,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_grads}
    */
-  const std::vector<DerivativeForm<2, dim, spacedim>> &
+  const std::vector<DerivativeForm<2, dim, spacedim>>&
   get_jacobian_grads() const;
 
   /**
@@ -2929,7 +2929,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_grads}
    */
-  const Tensor<3, spacedim> &
+  const Tensor<3, spacedim>&
   jacobian_pushed_forward_grad(const unsigned int quadrature_point) const;
 
   /**
@@ -2938,7 +2938,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_grads}
    */
-  const std::vector<Tensor<3, spacedim>> &
+  const std::vector<Tensor<3, spacedim>>&
   get_jacobian_pushed_forward_grads() const;
 
   /**
@@ -2948,7 +2948,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_2nd_derivatives}
    */
-  const DerivativeForm<3, dim, spacedim> &
+  const DerivativeForm<3, dim, spacedim>&
   jacobian_2nd_derivative(const unsigned int quadrature_point) const;
 
   /**
@@ -2957,7 +2957,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_2nd_derivatives}
    */
-  const std::vector<DerivativeForm<3, dim, spacedim>> &
+  const std::vector<DerivativeForm<3, dim, spacedim>>&
   get_jacobian_2nd_derivatives() const;
 
   /**
@@ -2969,7 +2969,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const Tensor<4, spacedim> &
+  const Tensor<4, spacedim>&
   jacobian_pushed_forward_2nd_derivative(
     const unsigned int quadrature_point) const;
 
@@ -2979,7 +2979,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const std::vector<Tensor<4, spacedim>> &
+  const std::vector<Tensor<4, spacedim>>&
   get_jacobian_pushed_forward_2nd_derivatives() const;
 
   /**
@@ -2990,7 +2990,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_3rd_derivatives}
    */
-  const DerivativeForm<4, dim, spacedim> &
+  const DerivativeForm<4, dim, spacedim>&
   jacobian_3rd_derivative(const unsigned int quadrature_point) const;
 
   /**
@@ -2999,7 +2999,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_3rd_derivatives}
    */
-  const std::vector<DerivativeForm<4, dim, spacedim>> &
+  const std::vector<DerivativeForm<4, dim, spacedim>>&
   get_jacobian_3rd_derivatives() const;
 
   /**
@@ -3011,7 +3011,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_3rd_derivatives}
    */
-  const Tensor<5, spacedim> &
+  const Tensor<5, spacedim>&
   jacobian_pushed_forward_3rd_derivative(
     const unsigned int quadrature_point) const;
 
@@ -3021,7 +3021,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const std::vector<Tensor<5, spacedim>> &
+  const std::vector<Tensor<5, spacedim>>&
   get_jacobian_pushed_forward_3rd_derivatives() const;
 
   /**
@@ -3030,7 +3030,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_inverse_jacobians}
    */
-  const DerivativeForm<1, spacedim, dim> &
+  const DerivativeForm<1, spacedim, dim>&
   inverse_jacobian(const unsigned int quadrature_point) const;
 
   /**
@@ -3039,7 +3039,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_inverse_jacobians}
    */
-  const std::vector<DerivativeForm<1, spacedim, dim>> &
+  const std::vector<DerivativeForm<1, spacedim, dim>>&
   get_inverse_jacobians() const;
 
   /**
@@ -3055,7 +3055,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_normal_vectors}
    */
-  const Tensor<1, spacedim> &
+  const Tensor<1, spacedim>&
   normal_vector(const unsigned int i) const;
 
   /**
@@ -3069,7 +3069,7 @@ public:
    * same thing.
    */
   DEAL_II_DEPRECATED
-  const std::vector<Tensor<1, spacedim>> &
+  const std::vector<Tensor<1, spacedim>>&
   get_all_normal_vectors() const;
 
   /**
@@ -3079,7 +3079,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_normal_vectors}
    */
-  const std::vector<Tensor<1, spacedim>> &
+  const std::vector<Tensor<1, spacedim>>&
   get_normal_vectors() const;
 
   //@}
@@ -3095,8 +3095,8 @@ public:
    * @ref vector_valued
    * module.
    */
-  const FEValuesViews::Scalar<dim, spacedim> &
-  operator[](const FEValuesExtractors::Scalar &scalar) const;
+  const FEValuesViews::Scalar<dim, spacedim>&
+  operator[](const FEValuesExtractors::Scalar& scalar) const;
 
   /**
    * Create a view of the current FEValues object that represents a set of
@@ -3106,8 +3106,8 @@ public:
    * @ref vector_valued
    * module.
    */
-  const FEValuesViews::Vector<dim, spacedim> &
-  operator[](const FEValuesExtractors::Vector &vector) const;
+  const FEValuesViews::Vector<dim, spacedim>&
+  operator[](const FEValuesExtractors::Vector& vector) const;
 
   /**
    * Create a view of the current FEValues object that represents a set of
@@ -3118,8 +3118,8 @@ public:
    * @ref vector_valued
    * module.
    */
-  const FEValuesViews::SymmetricTensor<2, dim, spacedim> &
-  operator[](const FEValuesExtractors::SymmetricTensor<2> &tensor) const;
+  const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
+  operator[](const FEValuesExtractors::SymmetricTensor<2>& tensor) const;
 
 
   /**
@@ -3130,8 +3130,8 @@ public:
    * @ref vector_valued
    * module.
    */
-  const FEValuesViews::Tensor<2, dim, spacedim> &
-  operator[](const FEValuesExtractors::Tensor<2> &tensor) const;
+  const FEValuesViews::Tensor<2, dim, spacedim>&
+  operator[](const FEValuesExtractors::Tensor<2>& tensor) const;
 
   //@}
 
@@ -3141,13 +3141,13 @@ public:
   /**
    * Constant reference to the selected mapping object.
    */
-  const Mapping<dim, spacedim> &
+  const Mapping<dim, spacedim>&
   get_mapping() const;
 
   /**
    * Constant reference to the selected finite element object.
    */
-  const FiniteElement<dim, spacedim> &
+  const FiniteElement<dim, spacedim>&
   get_fe() const;
 
   /**
@@ -3187,7 +3187,7 @@ public:
    */
   DeclException1(
     ExcAccessToUninitializedField,
-    char *,
+    char*,
     << "You are requesting information from an FEValues/FEFaceValues/FESubfaceValues "
     << "object for which this kind of information has not been computed. What "
     << "information these objects compute is determined by the update_* flags you "
@@ -3314,7 +3314,7 @@ protected:
    */
   void
   maybe_invalidate_previous_present_cell(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell);
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell);
 
   /**
    * A pointer to the mapping object associated with this FEValues object.
@@ -3393,21 +3393,21 @@ protected:
    */
   void
   check_cell_similarity(
-    const typename Triangulation<dim, spacedim>::cell_iterator &cell);
+    const typename Triangulation<dim, spacedim>::cell_iterator& cell);
 
 private:
   /**
    * Copy constructor. Since objects of this class are not copyable, we make
    * it private, and also do not implement it.
    */
-  FEValuesBase(const FEValuesBase &);
+  FEValuesBase(const FEValuesBase&);
 
   /**
    * Copy operator. Since objects of this class are not copyable, we make it
    * private, and also do not implement it.
    */
-  FEValuesBase &
-  operator=(const FEValuesBase &);
+  FEValuesBase&
+  operator=(const FEValuesBase&);
 
   /**
    * A cache for all possible FEValuesViews objects.
@@ -3454,9 +3454,9 @@ public:
    * Constructor. Gets cell independent data from mapping and finite element
    * objects, matching the quadrature rule and update flags.
    */
-  FEValues(const Mapping<dim, spacedim> &      mapping,
-           const FiniteElement<dim, spacedim> &fe,
-           const Quadrature<dim> &             quadrature,
+  FEValues(const Mapping<dim, spacedim>&       mapping,
+           const FiniteElement<dim, spacedim>& fe,
+           const Quadrature<dim>&              quadrature,
            const UpdateFlags                   update_flags);
 
   /**
@@ -3464,8 +3464,8 @@ public:
    * it makes the object use a $Q_1$ mapping (i.e., an object of type
    * MappingQGeneric(1)) implicitly.
    */
-  FEValues(const FiniteElement<dim, spacedim> &fe,
-           const Quadrature<dim> &             quadrature,
+  FEValues(const FiniteElement<dim, spacedim>& fe,
+           const Quadrature<dim>&              quadrature,
            const UpdateFlags                   update_flags);
 
   /**
@@ -3477,7 +3477,7 @@ public:
   template <template <int, int> class DoFHandlerType, bool level_dof_access>
   void
   reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType<dim, spacedim>,
-                                            level_dof_access>> &cell);
+                                            level_dof_access>>& cell);
 
   /**
    * Reinitialize the gradients, Jacobi determinants, etc for the given cell
@@ -3493,13 +3493,13 @@ public:
    * type objects.
    */
   void
-  reinit(const typename Triangulation<dim, spacedim>::cell_iterator &cell);
+  reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell);
 
   /**
    * Return a reference to the copy of the quadrature formula stored by this
    * object.
    */
-  const Quadrature<dim> &
+  const Quadrature<dim>&
   get_quadrature() const;
 
   /**
@@ -3523,7 +3523,7 @@ public:
    * provides the same interface so that one can templatize on FEValues and
    * hp::FEValues).
    */
-  const FEValues<dim, spacedim> &
+  const FEValues<dim, spacedim>&
   get_present_fe_values() const;
 
 private:
@@ -3583,9 +3583,9 @@ public:
   FEFaceValuesBase(const unsigned int                  n_q_points,
                    const unsigned int                  dofs_per_cell,
                    const UpdateFlags                   update_flags,
-                   const Mapping<dim, spacedim> &      mapping,
-                   const FiniteElement<dim, spacedim> &fe,
-                   const Quadrature<dim - 1> &         quadrature);
+                   const Mapping<dim, spacedim>&       mapping,
+                   const FiniteElement<dim, spacedim>& fe,
+                   const Quadrature<dim - 1>&          quadrature);
 
   /**
    * Boundary form of the transformation of the cell at the <tt>i</tt>th
@@ -3594,7 +3594,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_boundary_forms}
    */
-  const Tensor<1, spacedim> &
+  const Tensor<1, spacedim>&
   boundary_form(const unsigned int i) const;
 
   /**
@@ -3603,7 +3603,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_boundary_forms}
    */
-  const std::vector<Tensor<1, spacedim>> &
+  const std::vector<Tensor<1, spacedim>>&
   get_boundary_forms() const;
 
   /**
@@ -3617,7 +3617,7 @@ public:
    * Return a reference to the copy of the quadrature formula stored by this
    * object.
    */
-  const Quadrature<dim - 1> &
+  const Quadrature<dim - 1>&
   get_quadrature() const;
 
   /**
@@ -3678,9 +3678,9 @@ public:
    * Constructor. Gets cell independent data from mapping and finite element
    * objects, matching the quadrature rule and update flags.
    */
-  FEFaceValues(const Mapping<dim, spacedim> &      mapping,
-               const FiniteElement<dim, spacedim> &fe,
-               const Quadrature<dim - 1> &         quadrature,
+  FEFaceValues(const Mapping<dim, spacedim>&       mapping,
+               const FiniteElement<dim, spacedim>& fe,
+               const Quadrature<dim - 1>&          quadrature,
                const UpdateFlags                   update_flags);
 
   /**
@@ -3688,8 +3688,8 @@ public:
    * it makes the object use a $Q_1$ mapping (i.e., an object of type
    * MappingQGeneric(1)) implicitly.
    */
-  FEFaceValues(const FiniteElement<dim, spacedim> &fe,
-               const Quadrature<dim - 1> &         quadrature,
+  FEFaceValues(const FiniteElement<dim, spacedim>& fe,
+               const Quadrature<dim - 1>&          quadrature,
                const UpdateFlags                   update_flags);
 
   /**
@@ -3699,7 +3699,7 @@ public:
   template <template <int, int> class DoFHandlerType, bool level_dof_access>
   void
   reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType<dim, spacedim>,
-                                            level_dof_access>> &cell,
+                                            level_dof_access>>& cell,
          const unsigned int                                     face_no);
 
   /**
@@ -3716,7 +3716,7 @@ public:
    * type objects.
    */
   void
-  reinit(const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
          const unsigned int                                          face_no);
 
   /**
@@ -3733,7 +3733,7 @@ public:
    * provides the same interface so that one can templatize on FEValues and
    * hp::FEValues).
    */
-  const FEFaceValues<dim, spacedim> &
+  const FEFaceValues<dim, spacedim>&
   get_present_fe_values() const;
 
 private:
@@ -3795,9 +3795,9 @@ public:
    * Constructor. Gets cell independent data from mapping and finite element
    * objects, matching the quadrature rule and update flags.
    */
-  FESubfaceValues(const Mapping<dim, spacedim> &      mapping,
-                  const FiniteElement<dim, spacedim> &fe,
-                  const Quadrature<dim - 1> &         face_quadrature,
+  FESubfaceValues(const Mapping<dim, spacedim>&       mapping,
+                  const FiniteElement<dim, spacedim>& fe,
+                  const Quadrature<dim - 1>&          face_quadrature,
                   const UpdateFlags                   update_flags);
 
   /**
@@ -3805,8 +3805,8 @@ public:
    * it makes the object use a $Q_1$ mapping (i.e., an object of type
    * MappingQGeneric(1)) implicitly.
    */
-  FESubfaceValues(const FiniteElement<dim, spacedim> &fe,
-                  const Quadrature<dim - 1> &         face_quadrature,
+  FESubfaceValues(const FiniteElement<dim, spacedim>& fe,
+                  const Quadrature<dim - 1>&          face_quadrature,
                   const UpdateFlags                   update_flags);
 
   /**
@@ -3818,7 +3818,7 @@ public:
   template <template <int, int> class DoFHandlerType, bool level_dof_access>
   void
   reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType<dim, spacedim>,
-                                            level_dof_access>> &cell,
+                                            level_dof_access>>& cell,
          const unsigned int                                     face_no,
          const unsigned int                                     subface_no);
 
@@ -3836,7 +3836,7 @@ public:
    * type objects.
    */
   void
-  reinit(const typename Triangulation<dim, spacedim>::cell_iterator &cell,
+  reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
          const unsigned int                                          face_no,
          const unsigned int subface_no);
 
@@ -3854,7 +3854,7 @@ public:
    * provides the same interface so that one can templatize on FEValues and
    * hp::FEValues).
    */
-  const FESubfaceValues<dim, spacedim> &
+  const FESubfaceValues<dim, spacedim>&
   get_present_fe_values() const;
 
   /**
@@ -4370,7 +4370,7 @@ namespace FEValuesViews
      * second argument, with all other rows equal to zero.
      */
     inline dealii::SymmetricTensor<2, 1>
-    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 1> &t)
+    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 1>& t)
     {
       Assert(n < 1, ExcIndexRange(n, 0, 1));
       (void)n;
@@ -4382,7 +4382,7 @@ namespace FEValuesViews
 
 
     inline dealii::SymmetricTensor<2, 2>
-    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 2> &t)
+    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 2>& t)
     {
       switch (n)
         {
@@ -4407,7 +4407,7 @@ namespace FEValuesViews
 
 
     inline dealii::SymmetricTensor<2, 3>
-    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 3> &t)
+    symmetrize_single_row(const unsigned int n, const dealii::Tensor<1, 3>& t)
     {
       switch (n)
         {
@@ -4577,7 +4577,7 @@ namespace FEValuesViews
         // b_ii := \dfrac{\partial phi_{ii,jj}}{\partial x_ii}.
         // b_jj := \dfrac{\partial phi_{ii,jj}}{\partial x_jj}.
         // again, all other entries of 'b' are zero
-        const dealii::Tensor<1, spacedim> &phi_grad =
+        const dealii::Tensor<1, spacedim>& phi_grad =
           fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         divergence_type return_value;
@@ -4687,7 +4687,7 @@ namespace FEValuesViews
         const unsigned int ii = indices[0];
         const unsigned int jj = indices[1];
 
-        const dealii::Tensor<1, spacedim> &phi_grad =
+        const dealii::Tensor<1, spacedim>& phi_grad =
           fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         divergence_type return_value;
@@ -4744,7 +4744,7 @@ namespace FEValuesViews
         const unsigned int ii = indices[0];
         const unsigned int jj = indices[1];
 
-        const dealii::Tensor<1, spacedim> &phi_grad =
+        const dealii::Tensor<1, spacedim>& phi_grad =
           fe_values->finite_element_output.shape_gradients[snc][q_point];
 
         gradient_type return_value;
@@ -4769,8 +4769,8 @@ namespace FEValuesViews
 
 
 template <int dim, int spacedim>
-inline const FEValuesViews::Scalar<dim, spacedim> &FEValuesBase<dim, spacedim>::
-                                                   operator[](const FEValuesExtractors::Scalar &scalar) const
+inline const FEValuesViews::Scalar<dim, spacedim>& FEValuesBase<dim, spacedim>::
+                                                   operator[](const FEValuesExtractors::Scalar& scalar) const
 {
   Assert(
     scalar.component < fe_values_views_cache.scalars.size(),
@@ -4782,8 +4782,8 @@ inline const FEValuesViews::Scalar<dim, spacedim> &FEValuesBase<dim, spacedim>::
 
 
 template <int dim, int spacedim>
-inline const FEValuesViews::Vector<dim, spacedim> &FEValuesBase<dim, spacedim>::
-                                                   operator[](const FEValuesExtractors::Vector &vector) const
+inline const FEValuesViews::Vector<dim, spacedim>& FEValuesBase<dim, spacedim>::
+                                                   operator[](const FEValuesExtractors::Vector& vector) const
 {
   Assert(vector.first_vector_component < fe_values_views_cache.vectors.size(),
          ExcIndexRange(vector.first_vector_component,
@@ -4796,9 +4796,9 @@ inline const FEValuesViews::Vector<dim, spacedim> &FEValuesBase<dim, spacedim>::
 
 
 template <int dim, int spacedim>
-inline const FEValuesViews::SymmetricTensor<2, dim, spacedim> &
+inline const FEValuesViews::SymmetricTensor<2, dim, spacedim>&
   FEValuesBase<dim, spacedim>::
-  operator[](const FEValuesExtractors::SymmetricTensor<2> &tensor) const
+  operator[](const FEValuesExtractors::SymmetricTensor<2>& tensor) const
 {
   Assert(
     tensor.first_tensor_component <
@@ -4814,9 +4814,9 @@ inline const FEValuesViews::SymmetricTensor<2, dim, spacedim> &
 
 
 template <int dim, int spacedim>
-inline const FEValuesViews::Tensor<2, dim, spacedim> &
+inline const FEValuesViews::Tensor<2, dim, spacedim>&
   FEValuesBase<dim, spacedim>::
-  operator[](const FEValuesExtractors::Tensor<2> &tensor) const
+  operator[](const FEValuesExtractors::Tensor<2>& tensor) const
 {
   Assert(tensor.first_tensor_component <
            fe_values_views_cache.second_order_tensors.size(),
@@ -4831,7 +4831,7 @@ inline const FEValuesViews::Tensor<2, dim, spacedim> &
 
 
 template <int dim, int spacedim>
-inline const double &
+inline const double&
 FEValuesBase<dim, spacedim>::shape_value(const unsigned int i,
                                          const unsigned int j) const
 {
@@ -4898,7 +4898,7 @@ FEValuesBase<dim, spacedim>::shape_value_component(
 
 
 template <int dim, int spacedim>
-inline const Tensor<1, spacedim> &
+inline const Tensor<1, spacedim>&
 FEValuesBase<dim, spacedim>::shape_grad(const unsigned int i,
                                         const unsigned int j) const
 {
@@ -4964,7 +4964,7 @@ FEValuesBase<dim, spacedim>::shape_grad_component(
 
 
 template <int dim, int spacedim>
-inline const Tensor<2, spacedim> &
+inline const Tensor<2, spacedim>&
 FEValuesBase<dim, spacedim>::shape_hessian(const unsigned int i,
                                            const unsigned int j) const
 {
@@ -5030,7 +5030,7 @@ FEValuesBase<dim, spacedim>::shape_hessian_component(
 
 
 template <int dim, int spacedim>
-inline const Tensor<3, spacedim> &
+inline const Tensor<3, spacedim>&
 FEValuesBase<dim, spacedim>::shape_3rd_derivative(const unsigned int i,
                                                   const unsigned int j) const
 {
@@ -5096,7 +5096,7 @@ FEValuesBase<dim, spacedim>::shape_3rd_derivative_component(
 
 
 template <int dim, int spacedim>
-inline const FiniteElement<dim, spacedim> &
+inline const FiniteElement<dim, spacedim>&
 FEValuesBase<dim, spacedim>::get_fe() const
 {
   return *fe;
@@ -5105,7 +5105,7 @@ FEValuesBase<dim, spacedim>::get_fe() const
 
 
 template <int dim, int spacedim>
-inline const Mapping<dim, spacedim> &
+inline const Mapping<dim, spacedim>&
 FEValuesBase<dim, spacedim>::get_mapping() const
 {
   return *mapping;
@@ -5123,7 +5123,7 @@ FEValuesBase<dim, spacedim>::get_update_flags() const
 
 
 template <int dim, int spacedim>
-inline const std::vector<Point<spacedim>> &
+inline const std::vector<Point<spacedim>>&
 FEValuesBase<dim, spacedim>::get_quadrature_points() const
 {
   Assert(this->update_flags & update_quadrature_points,
@@ -5136,7 +5136,7 @@ FEValuesBase<dim, spacedim>::get_quadrature_points() const
 
 
 template <int dim, int spacedim>
-inline const std::vector<double> &
+inline const std::vector<double>&
 FEValuesBase<dim, spacedim>::get_JxW_values() const
 {
   Assert(this->update_flags & update_JxW_values,
@@ -5149,7 +5149,7 @@ FEValuesBase<dim, spacedim>::get_JxW_values() const
 
 
 template <int dim, int spacedim>
-inline const std::vector<DerivativeForm<1, dim, spacedim>> &
+inline const std::vector<DerivativeForm<1, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobians() const
 {
   Assert(this->update_flags & update_jacobians,
@@ -5162,7 +5162,7 @@ FEValuesBase<dim, spacedim>::get_jacobians() const
 
 
 template <int dim, int spacedim>
-inline const std::vector<DerivativeForm<2, dim, spacedim>> &
+inline const std::vector<DerivativeForm<2, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_grads() const
 {
   Assert(this->update_flags & update_jacobian_grads,
@@ -5175,7 +5175,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_grads() const
 
 
 template <int dim, int spacedim>
-inline const Tensor<3, spacedim> &
+inline const Tensor<3, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_pushed_forward_grad(
   const unsigned int i) const
 {
@@ -5189,7 +5189,7 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_grad(
 
 
 template <int dim, int spacedim>
-inline const std::vector<Tensor<3, spacedim>> &
+inline const std::vector<Tensor<3, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_grads() const
 {
   Assert(this->update_flags & update_jacobian_pushed_forward_grads,
@@ -5202,7 +5202,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_grads() const
 
 
 template <int dim, int spacedim>
-inline const DerivativeForm<3, dim, spacedim> &
+inline const DerivativeForm<3, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_2nd_derivative(const unsigned int i) const
 {
   Assert(this->update_flags & update_jacobian_2nd_derivatives,
@@ -5215,7 +5215,7 @@ FEValuesBase<dim, spacedim>::jacobian_2nd_derivative(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const std::vector<DerivativeForm<3, dim, spacedim>> &
+inline const std::vector<DerivativeForm<3, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_2nd_derivatives() const
 {
   Assert(this->update_flags & update_jacobian_2nd_derivatives,
@@ -5228,7 +5228,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_2nd_derivatives() const
 
 
 template <int dim, int spacedim>
-inline const Tensor<4, spacedim> &
+inline const Tensor<4, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_pushed_forward_2nd_derivative(
   const unsigned int i) const
 {
@@ -5243,7 +5243,7 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_2nd_derivative(
 
 
 template <int dim, int spacedim>
-inline const std::vector<Tensor<4, spacedim>> &
+inline const std::vector<Tensor<4, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_2nd_derivatives() const
 {
   Assert(this->update_flags & update_jacobian_pushed_forward_2nd_derivatives,
@@ -5257,7 +5257,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_2nd_derivatives() const
 
 
 template <int dim, int spacedim>
-inline const DerivativeForm<4, dim, spacedim> &
+inline const DerivativeForm<4, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_3rd_derivative(const unsigned int i) const
 {
   Assert(this->update_flags & update_jacobian_3rd_derivatives,
@@ -5270,7 +5270,7 @@ FEValuesBase<dim, spacedim>::jacobian_3rd_derivative(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const std::vector<DerivativeForm<4, dim, spacedim>> &
+inline const std::vector<DerivativeForm<4, dim, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_3rd_derivatives() const
 {
   Assert(this->update_flags & update_jacobian_3rd_derivatives,
@@ -5283,7 +5283,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_3rd_derivatives() const
 
 
 template <int dim, int spacedim>
-inline const Tensor<5, spacedim> &
+inline const Tensor<5, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_pushed_forward_3rd_derivative(
   const unsigned int i) const
 {
@@ -5298,7 +5298,7 @@ FEValuesBase<dim, spacedim>::jacobian_pushed_forward_3rd_derivative(
 
 
 template <int dim, int spacedim>
-inline const std::vector<Tensor<5, spacedim>> &
+inline const std::vector<Tensor<5, spacedim>>&
 FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_3rd_derivatives() const
 {
   Assert(this->update_flags & update_jacobian_pushed_forward_3rd_derivatives,
@@ -5312,7 +5312,7 @@ FEValuesBase<dim, spacedim>::get_jacobian_pushed_forward_3rd_derivatives() const
 
 
 template <int dim, int spacedim>
-inline const std::vector<DerivativeForm<1, spacedim, dim>> &
+inline const std::vector<DerivativeForm<1, spacedim, dim>>&
 FEValuesBase<dim, spacedim>::get_inverse_jacobians() const
 {
   Assert(this->update_flags & update_inverse_jacobians,
@@ -5325,7 +5325,7 @@ FEValuesBase<dim, spacedim>::get_inverse_jacobians() const
 
 
 template <int dim, int spacedim>
-inline const Point<spacedim> &
+inline const Point<spacedim>&
 FEValuesBase<dim, spacedim>::quadrature_point(const unsigned int i) const
 {
   Assert(this->update_flags & update_quadrature_points,
@@ -5357,7 +5357,7 @@ FEValuesBase<dim, spacedim>::JxW(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const DerivativeForm<1, dim, spacedim> &
+inline const DerivativeForm<1, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian(const unsigned int i) const
 {
   Assert(this->update_flags & update_jacobians,
@@ -5373,7 +5373,7 @@ FEValuesBase<dim, spacedim>::jacobian(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const DerivativeForm<2, dim, spacedim> &
+inline const DerivativeForm<2, dim, spacedim>&
 FEValuesBase<dim, spacedim>::jacobian_grad(const unsigned int i) const
 {
   Assert(this->update_flags & update_jacobian_grads,
@@ -5389,7 +5389,7 @@ FEValuesBase<dim, spacedim>::jacobian_grad(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const DerivativeForm<1, spacedim, dim> &
+inline const DerivativeForm<1, spacedim, dim>&
 FEValuesBase<dim, spacedim>::inverse_jacobian(const unsigned int i) const
 {
   Assert(this->update_flags & update_inverse_jacobians,
@@ -5405,7 +5405,7 @@ FEValuesBase<dim, spacedim>::inverse_jacobian(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const Tensor<1, spacedim> &
+inline const Tensor<1, spacedim>&
 FEValuesBase<dim, spacedim>::normal_vector(const unsigned int i) const
 {
   Assert(this->update_flags & update_normal_vectors,
@@ -5425,7 +5425,7 @@ FEValuesBase<dim, spacedim>::normal_vector(const unsigned int i) const
 
 
 template <int dim, int spacedim>
-inline const Quadrature<dim> &
+inline const Quadrature<dim>&
 FEValues<dim, spacedim>::get_quadrature() const
 {
   return quadrature;
@@ -5434,7 +5434,7 @@ FEValues<dim, spacedim>::get_quadrature() const
 
 
 template <int dim, int spacedim>
-inline const FEValues<dim, spacedim> &
+inline const FEValues<dim, spacedim>&
 FEValues<dim, spacedim>::get_present_fe_values() const
 {
   return *this;
@@ -5455,7 +5455,7 @@ FEFaceValuesBase<dim, spacedim>::get_face_index() const
 /*----------------------- Inline functions: FE*FaceValues -------------------*/
 
 template <int dim, int spacedim>
-inline const Quadrature<dim - 1> &
+inline const Quadrature<dim - 1>&
 FEFaceValuesBase<dim, spacedim>::get_quadrature() const
 {
   return quadrature;
@@ -5464,7 +5464,7 @@ FEFaceValuesBase<dim, spacedim>::get_quadrature() const
 
 
 template <int dim, int spacedim>
-inline const FEFaceValues<dim, spacedim> &
+inline const FEFaceValues<dim, spacedim>&
 FEFaceValues<dim, spacedim>::get_present_fe_values() const
 {
   return *this;
@@ -5473,7 +5473,7 @@ FEFaceValues<dim, spacedim>::get_present_fe_values() const
 
 
 template <int dim, int spacedim>
-inline const FESubfaceValues<dim, spacedim> &
+inline const FESubfaceValues<dim, spacedim>&
 FESubfaceValues<dim, spacedim>::get_present_fe_values() const
 {
   return *this;
@@ -5482,7 +5482,7 @@ FESubfaceValues<dim, spacedim>::get_present_fe_values() const
 
 
 template <int dim, int spacedim>
-inline const Tensor<1, spacedim> &
+inline const Tensor<1, spacedim>&
 FEFaceValuesBase<dim, spacedim>::boundary_form(const unsigned int i) const
 {
   Assert(i < this->mapping_output.boundary_forms.size(),

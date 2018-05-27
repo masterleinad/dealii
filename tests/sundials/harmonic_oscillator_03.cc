@@ -51,7 +51,7 @@
  *
  */
 int
-main(int argc, char **argv)
+main(int argc, char** argv)
 {
   std::ofstream out("output");
 
@@ -70,19 +70,19 @@ main(int argc, char **argv)
 
   SUNDIALS::ARKode<VectorType> ode(data);
 
-  ode.reinit_vector = [&](VectorType &v) { v.reinit(2); };
+  ode.reinit_vector = [&](VectorType& v) { v.reinit(2); };
 
   double kappa = 1.0;
 
   ode.implicit_function =
-    [&](double, const VectorType &y, VectorType &ydot) -> int {
+    [&](double, const VectorType& y, VectorType& ydot) -> int {
     ydot[0] = y[1];
     ydot[1] = -kappa * kappa * y[0];
     return 0;
   };
 
   ode.output_step = [&](const double       t,
-                        const VectorType & sol,
+                        const VectorType&  sol,
                         const unsigned int step_number) -> int {
     // limit the output to every 10th step and increase the precision to make
     // the test more robust

@@ -28,6 +28,6 @@ main()
 {
   initlog();
 
-  FEEvaluationAccess<1, 1, double, false> *test; // didn't compile before
+  FEEvaluationAccess<1, 1, double, false>* test; // didn't compile before
   deallog << "OK" << std::endl;
 }

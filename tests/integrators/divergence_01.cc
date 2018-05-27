@@ -32,7 +32,7 @@ using namespace LocalIntegrators::Divergence;
 
 template <int dim>
 void
-test_cell(const FEValuesBase<dim> &fev, const FEValuesBase<dim> &fes)
+test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
 {
   AssertDimension(fev.get_fe().n_components(), dim);
   AssertDimension(fes.get_fe().n_components(), 1);
@@ -99,7 +99,7 @@ test_cell(const FEValuesBase<dim> &fev, const FEValuesBase<dim> &fes)
 
 template <int dim>
 void
-test_boundary(const FEValuesBase<dim> &fev, const FEValuesBase<dim> &fes)
+test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
 {
   AssertDimension(fev.get_fe().n_components(), dim);
   AssertDimension(fes.get_fe().n_components(), 1);
@@ -138,10 +138,10 @@ test_boundary(const FEValuesBase<dim> &fev, const FEValuesBase<dim> &fes)
 
 template <int dim>
 void
-test_face(const FEValuesBase<dim> &fev1,
-          const FEValuesBase<dim> &fev2,
-          const FEValuesBase<dim> &fes1,
-          const FEValuesBase<dim> &fes2)
+test_face(const FEValuesBase<dim>& fev1,
+          const FEValuesBase<dim>& fev2,
+          const FEValuesBase<dim>& fes1,
+          const FEValuesBase<dim>& fes2)
 {
   AssertDimension(fev1.get_fe().n_components(), dim);
   AssertDimension(fes1.get_fe().n_components(), 1);
@@ -172,7 +172,7 @@ test_face(const FEValuesBase<dim> &fev1,
 
 template <int dim>
 void
-test_fe(Triangulation<dim> &tr, FiniteElement<dim> &fv, FiniteElement<dim> &fs)
+test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
 {
   deallog << fv.get_name() << " x " << fs.get_name() << std::endl
           << "cell matrix" << std::endl;
@@ -222,7 +222,7 @@ test_fe(Triangulation<dim> &tr, FiniteElement<dim> &fv, FiniteElement<dim> &fs)
 
 template <int dim>
 void
-test(Triangulation<dim> &tr)
+test(Triangulation<dim>& tr)
 {
   FE_DGQ<dim>           q1(1);
   FE_Nedelec<dim>       n1(1);
