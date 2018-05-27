@@ -30,43 +30,43 @@ DEAL_II_NAMESPACE_OPEN
 /*@{*/
 
 /**
-* This class represents an implementation of the
-* H<sup>curl</sup>-conforming Nédélec element described in the PhD
-* thesis of S. Zaglmayr, <b>High Order Finite Element Methods
-* for Electromagnetic Field Computation</b>, Johannes Kepler
-* Univerität Linz, 2006.
-*
-* This element overcomes the sign conflict issues present in
-* traditional Nédélec elements which arise from the edge and face
-* parameterizations used in the basis functions. Therefore, this
-* element should provide consistent results for general quadrilateral
-* and hexahedral elements.
-*
-* The way this element addresses the sign conflict problem is to assign
-* local edges and faces a globally defined orientation for all cells. The
-* local edge orientation is always chosen such that the first vertex defining
-* the edge is always chosen to be that which has the highest global vertex
-* numbering, with the second being that which has the lowest global vertex
-* numbering.
-*
-* Similarly, the face orientation is always chosen such that the first
-* vertex is chosen to be that with the highest global vertex numbering of the
-* four vertices making up the face. The third vertex is then chosen to be that
-* which is geometrically opposite the first vertex, and the second and fourth
-* vertices are decided such that the second has a higher global vertex numbering
-* than the fourth.
-*
-* Note that this element does not support non-conforming meshes at this time.
-*
-* Further details on this element, including some benchmarking, can be
-* in the paper R. Kynch, P. Ledger: <b>Resolving the sign conflict
-* problem for hp–hexahedral Nédélec elements with application to eddy
-* current problems</b>, Computers & Structures 181, 41-54, 2017 (see
-* https://doi.org/10.1016/j.compstruc.2016.05.021).
-*
-* @author Ross Kynch
-* @date 2016, 2017, 2018
-*/
+ * This class represents an implementation of the
+ * H<sup>curl</sup>-conforming Nedelec element described in the PhD
+ * thesis of S. Zaglmayr, <b>High Order Finite Element Methods
+ * for Electromagnetic Field Computation</b>, Johannes Kepler
+ * Univeritaet Linz, 2006.
+ *
+ * This element overcomes the sign conflict issues present in
+ * traditional Nedelec elements which arise from the edge and face
+ * parameterizations used in the basis functions. Therefore, this
+ * element should provide consistent results for general quadrilateral
+ * and hexahedral elements.
+ *
+ * The way this element addresses the sign conflict problem is to assign
+ * local edges and faces a globally defined orientation for all cells. The
+ * local edge orientation is always chosen such that the first vertex defining
+ * the edge is always chosen to be that which has the highest global vertex
+ * numbering, with the second being that which has the lowest global vertex
+ * numbering.
+ *
+ * Similarly, the face orientation is always chosen such that the first
+ * vertex is chosen to be that with the highest global vertex numbering of the
+ * four vertices making up the face. The third vertex is then chosen to be that
+ * which is geometrically opposite the first vertex, and the second and fourth
+ * vertices are decided such that the second has a higher global vertex
+ * numbering than the fourth.
+ *
+ * Note that this element does not support non-conforming meshes at this time.
+ *
+ * Further details on this element, including some benchmarking, can be
+ * in the paper R. Kynch, P. Ledger: <b>Resolving the sign conflict
+ * problem for hp-hexahedral Nedelec elements with application to eddy
+ * current problems</b>, Computers & Structures 181, 41-54, 2017 (see
+ * https://doi.org/10.1016/j.compstruc.2016.05.021).
+ *
+ * @author Ross Kynch
+ * @date 2016, 2017, 2018
+ */
 template <int dim>
 class FE_NedelecSZ : public FiniteElement<dim, dim>
 {
