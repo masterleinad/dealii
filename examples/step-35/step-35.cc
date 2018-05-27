@@ -98,7 +98,7 @@ namespace Step35
     public:
       Data_Storage();
 
-      void              read_data(const char *filename);
+      void              read_data(const char* filename);
       MethodFormulation form;
       double            initial_time, final_time, Reynolds;
       double            dt;
@@ -218,7 +218,7 @@ namespace Step35
 
 
 
-    void Data_Storage::read_data(const char *filename)
+    void Data_Storage::read_data(const char* filename)
     {
       std::ifstream file(filename);
       AssertThrow(file, ExcFileNotOpen(filename));
@@ -317,11 +317,11 @@ namespace Step35
     public:
       Velocity(const double initial_time = 0.0);
 
-      virtual double value(const Point<dim> & p,
+      virtual double value(const Point<dim>&  p,
                            const unsigned int component = 0) const override;
 
-      virtual void value_list(const std::vector<Point<dim>> &points,
-                              std::vector<double> &          values,
+      virtual void value_list(const std::vector<Point<dim>>& points,
+                              std::vector<double>&           values,
                               const unsigned int component = 0) const override;
     };
 
@@ -333,8 +333,8 @@ namespace Step35
 
 
     template <int dim>
-    void Velocity<dim>::value_list(const std::vector<Point<dim>> &points,
-                                   std::vector<double> &          values,
+    void Velocity<dim>::value_list(const std::vector<Point<dim>>& points,
+                                   std::vector<double>&           values,
                                    const unsigned int) const
     {
       const unsigned int n_points = points.size();
@@ -346,7 +346,7 @@ namespace Step35
 
 
     template <int dim>
-    double Velocity<dim>::value(const Point<dim> &p, const unsigned int) const
+    double Velocity<dim>::value(const Point<dim>& p, const unsigned int) const
     {
       if (this->comp == 0)
         {
@@ -366,11 +366,11 @@ namespace Step35
     public:
       Pressure(const double initial_time = 0.0);
 
-      virtual double value(const Point<dim> & p,
+      virtual double value(const Point<dim>&  p,
                            const unsigned int component = 0) const override;
 
-      virtual void value_list(const std::vector<Point<dim>> &points,
-                              std::vector<double> &          values,
+      virtual void value_list(const std::vector<Point<dim>>& points,
+                              std::vector<double>&           values,
                               const unsigned int component = 0) const override;
     };
 
@@ -381,14 +381,14 @@ namespace Step35
 
 
     template <int dim>
-    double Pressure<dim>::value(const Point<dim> &p, const unsigned int) const
+    double Pressure<dim>::value(const Point<dim>& p, const unsigned int) const
     {
       return 25. - p(0);
     }
 
     template <int dim>
-    void Pressure<dim>::value_list(const std::vector<Point<dim>> &points,
-                                   std::vector<double> &          values,
+    void Pressure<dim>::value_list(const std::vector<Point<dim>>& points,
+                                   std::vector<double>&           values,
                                    const unsigned int) const
     {
       const unsigned int n_points = points.size();
@@ -411,7 +411,7 @@ namespace Step35
   class NavierStokesProjection
   {
   public:
-    NavierStokesProjection(const RunTimeParameters::Data_Storage &data);
+    NavierStokesProjection(const RunTimeParameters::Data_Storage& data);
 
     void run(const bool verbose = false, const unsigned int n_plots = 10);
 
@@ -560,16 +560,16 @@ namespace Step35
       unsigned int  nqp;
       FEValues<dim> fe_val_vel;
       FEValues<dim> fe_val_pres;
-      InitGradScratchData(const FE_Q<dim> &  fe_v,
-                          const FE_Q<dim> &  fe_p,
-                          const QGauss<dim> &quad,
+      InitGradScratchData(const FE_Q<dim>&   fe_v,
+                          const FE_Q<dim>&   fe_p,
+                          const QGauss<dim>& quad,
                           const UpdateFlags  flags_v,
                           const UpdateFlags  flags_p) :
         nqp(quad.size()),
         fe_val_vel(fe_v, quad, flags_v),
         fe_val_pres(fe_p, quad, flags_p)
       {}
-      InitGradScratchData(const InitGradScratchData &data) :
+      InitGradScratchData(const InitGradScratchData& data) :
         nqp(data.nqp),
         fe_val_vel(data.fe_val_vel.get_fe(),
                    data.fe_val_vel.get_quadrature(),
@@ -580,11 +580,11 @@ namespace Step35
       {}
     };
 
-    void assemble_one_cell_of_gradient(const IteratorPair & SI,
-                                       InitGradScratchData &scratch,
-                                       InitGradPerTaskData &data);
+    void assemble_one_cell_of_gradient(const IteratorPair&  SI,
+                                       InitGradScratchData& scratch,
+                                       InitGradPerTaskData& data);
 
-    void copy_gradient_local_to_global(const InitGradPerTaskData &data);
+    void copy_gradient_local_to_global(const InitGradPerTaskData& data);
 
     // The same general layout also applies to the following classes and
     // functions implementing the assembly of the advection term:
@@ -608,8 +608,8 @@ namespace Step35
       std::vector<Tensor<1, dim>> grad_u_star;
       std::vector<double>         u_star_tmp;
       FEValues<dim>               fe_val;
-      AdvectionScratchData(const FE_Q<dim> &  fe,
-                           const QGauss<dim> &quad,
+      AdvectionScratchData(const FE_Q<dim>&   fe,
+                           const QGauss<dim>& quad,
                            const UpdateFlags  flags) :
         nqp(quad.size()),
         dpc(fe.dofs_per_cell),
@@ -619,7 +619,7 @@ namespace Step35
         fe_val(fe, quad, flags)
       {}
 
-      AdvectionScratchData(const AdvectionScratchData &data) :
+      AdvectionScratchData(const AdvectionScratchData& data) :
         nqp(data.nqp),
         dpc(data.dpc),
         u_star_local(nqp),
@@ -632,11 +632,11 @@ namespace Step35
     };
 
     void assemble_one_cell_of_advection(
-      const typename DoFHandler<dim>::active_cell_iterator &cell,
-      AdvectionScratchData &                                scratch,
-      AdvectionPerTaskData &                                data);
+      const typename DoFHandler<dim>::active_cell_iterator& cell,
+      AdvectionScratchData&                                 scratch,
+      AdvectionPerTaskData&                                 data);
 
-    void copy_advection_local_to_global(const AdvectionPerTaskData &data);
+    void copy_advection_local_to_global(const AdvectionPerTaskData& data);
 
     // The final few functions implement the diffusion solve as well as
     // postprocessing the output, including computing the curl of the
@@ -658,7 +658,7 @@ namespace Step35
   // triangulation and load the initial data.
   template <int dim>
   NavierStokesProjection<dim>::NavierStokesProjection(
-    const RunTimeParameters::Data_Storage &data) :
+    const RunTimeParameters::Data_Storage& data) :
     type(data.form),
     deg(data.pressure_degree),
     dt(data.dt),
@@ -885,9 +885,9 @@ namespace Step35
 
   template <int dim>
   void NavierStokesProjection<dim>::assemble_one_cell_of_gradient(
-    const IteratorPair & SI,
-    InitGradScratchData &scratch,
-    InitGradPerTaskData &data)
+    const IteratorPair&  SI,
+    InitGradScratchData& scratch,
+    InitGradPerTaskData& data)
   {
     scratch.fe_val_vel.reinit(std::get<0>(*SI));
     scratch.fe_val_pres.reinit(std::get<1>(*SI));
@@ -910,7 +910,7 @@ namespace Step35
 
   template <int dim>
   void NavierStokesProjection<dim>::copy_gradient_local_to_global(
-    const InitGradPerTaskData &data)
+    const InitGradPerTaskData& data)
   {
     for (unsigned int i = 0; i < data.vel_dpc; ++i)
       for (unsigned int j = 0; j < data.pres_dpc; ++j)
@@ -1126,9 +1126,9 @@ namespace Step35
 
   template <int dim>
   void NavierStokesProjection<dim>::assemble_one_cell_of_advection(
-    const typename DoFHandler<dim>::active_cell_iterator &cell,
-    AdvectionScratchData &                                scratch,
-    AdvectionPerTaskData &                                data)
+    const typename DoFHandler<dim>::active_cell_iterator& cell,
+    AdvectionScratchData&                                 scratch,
+    AdvectionPerTaskData&                                 data)
   {
     scratch.fe_val.reinit(cell);
     cell->get_dof_indices(data.local_dof_indices);
@@ -1166,7 +1166,7 @@ namespace Step35
 
   template <int dim>
   void NavierStokesProjection<dim>::copy_advection_local_to_global(
-    const AdvectionPerTaskData &data)
+    const AdvectionPerTaskData& data)
   {
     for (unsigned int i = 0; i < fe_velocity.dofs_per_cell; ++i)
       for (unsigned int j = 0; j < fe_velocity.dofs_per_cell; ++j)
@@ -1411,7 +1411,7 @@ int main()
       NavierStokesProjection<2> test(data);
       test.run(data.verbose, data.output_interval);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

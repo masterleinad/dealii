@@ -413,7 +413,7 @@ int main()
       Step10::compute_pi_by_area<2>();
       Step10::compute_pi_by_perimeter<2>();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

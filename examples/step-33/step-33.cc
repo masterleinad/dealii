@@ -169,7 +169,7 @@ namespace Step33
     // velocities $v_i$).
     template <typename InputVector>
     static typename InputVector::value_type
-    compute_kinetic_energy(const InputVector &W)
+    compute_kinetic_energy(const InputVector& W)
     {
       typename InputVector::value_type kinetic_energy = 0;
       for (unsigned int d = 0; d < dim; ++d)
@@ -183,7 +183,7 @@ namespace Step33
 
     template <typename InputVector>
     static typename InputVector::value_type
-    compute_pressure(const InputVector &W)
+    compute_pressure(const InputVector& W)
     {
       return ((gas_gamma - 1.0) *
               (W[energy_component] - compute_kinetic_energy(W)));
@@ -208,9 +208,9 @@ namespace Step33
     // on it as well:
     template <typename InputVector>
     static void compute_flux_matrix(
-      const InputVector &                            W,
+      const InputVector&                             W,
       std::array<std::array<typename InputVector::value_type, dim>,
-                 EulerEquations<dim>::n_components> &flux)
+                 EulerEquations<dim>::n_components>& flux)
     {
       // First compute the pressure that appears in the flux matrix, and then
       // compute the first <code>dim</code> columns of the matrix that
@@ -247,11 +247,11 @@ namespace Step33
     // $\alpha$. It's form has also been given already in the introduction:
     template <typename InputVector>
     static void numerical_normal_flux(
-      const Tensor<1, dim> &                                      normal,
-      const InputVector &                                         Wplus,
-      const InputVector &                                         Wminus,
+      const Tensor<1, dim>&                                       normal,
+      const InputVector&                                          Wplus,
+      const InputVector&                                          Wminus,
       const double                                                alpha,
-      std::array<typename InputVector::value_type, n_components> &normal_flux)
+      std::array<typename InputVector::value_type, n_components>& normal_flux)
     {
       std::array<std::array<typename InputVector::value_type, dim>,
                  EulerEquations<dim>::n_components>
@@ -282,8 +282,8 @@ namespace Step33
     // 2d. This naturally leads to the following function:
     template <typename InputVector>
     static void compute_forcing_vector(
-      const InputVector &                                         W,
-      std::array<typename InputVector::value_type, n_components> &forcing)
+      const InputVector&                                          W,
+      std::array<typename InputVector::value_type, n_components>& forcing)
     {
       const double gravity = -1.0;
 
@@ -356,10 +356,10 @@ namespace Step33
     template <typename DataVector>
     static void
     compute_Wminus(const BoundaryKind (&boundary_kind)[n_components],
-                   const Tensor<1, dim> &normal_vector,
-                   const DataVector &    Wplus,
-                   const Vector<double> &boundary_values,
-                   const DataVector &    Wminus)
+                   const Tensor<1, dim>& normal_vector,
+                   const DataVector&     Wplus,
+                   const Vector<double>& boundary_values,
+                   const DataVector&     Wminus)
     {
       for (unsigned int c = 0; c < n_components; c++)
         switch (boundary_kind[c])
@@ -442,10 +442,10 @@ namespace Step33
     // There are certainly a number of equally reasonable refinement
     // indicators, but this one does, and it is easy to compute:
     static void
-    compute_refinement_indicators(const DoFHandler<dim> &dof_handler,
-                                  const Mapping<dim> &   mapping,
-                                  const Vector<double> & solution,
-                                  Vector<double> &       refinement_indicators)
+    compute_refinement_indicators(const DoFHandler<dim>& dof_handler,
+                                  const Mapping<dim>&    mapping,
+                                  const Vector<double>&  solution,
+                                  Vector<double>&        refinement_indicators)
     {
       const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
       std::vector<unsigned int> dofs(dofs_per_cell);
@@ -518,8 +518,8 @@ namespace Step33
       Postprocessor(const bool do_schlieren_plot);
 
       virtual void evaluate_vector_field(
-        const DataPostprocessorInputs::Vector<dim> &inputs,
-        std::vector<Vector<double>> &computed_quantities) const override;
+        const DataPostprocessorInputs::Vector<dim>& inputs,
+        std::vector<Vector<double>>& computed_quantities) const override;
 
       virtual std::vector<std::string> get_names() const override;
 
@@ -558,8 +558,8 @@ namespace Step33
   // ("inputs.normals").
   template <int dim>
   void EulerEquations<dim>::Postprocessor::evaluate_vector_field(
-    const DataPostprocessorInputs::Vector<dim> &inputs,
-    std::vector<Vector<double>> &               computed_quantities) const
+    const DataPostprocessorInputs::Vector<dim>& inputs,
+    std::vector<Vector<double>>&                computed_quantities) const
   {
     // At the beginning of the function, let us make sure that all variables
     // have the correct sizes, so that we can access individual vector
@@ -745,13 +745,13 @@ namespace Step33
       double ilut_rtol;
       double ilut_drop;
 
-      static void declare_parameters(ParameterHandler &prm);
-      void        parse_parameters(ParameterHandler &prm);
+      static void declare_parameters(ParameterHandler& prm);
+      void        parse_parameters(ParameterHandler& prm);
     };
 
 
 
-    void Solver::declare_parameters(ParameterHandler &prm)
+    void Solver::declare_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("linear solver");
       {
@@ -790,7 +790,7 @@ namespace Step33
 
 
 
-    void Solver::parse_parameters(ParameterHandler &prm)
+    void Solver::parse_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("linear solver");
       {
@@ -829,13 +829,13 @@ namespace Step33
       double shock_val;
       double shock_levels;
 
-      static void declare_parameters(ParameterHandler &prm);
-      void        parse_parameters(ParameterHandler &prm);
+      static void declare_parameters(ParameterHandler& prm);
+      void        parse_parameters(ParameterHandler& prm);
     };
 
 
 
-    void Refinement::declare_parameters(ParameterHandler &prm)
+    void Refinement::declare_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("refinement");
       {
@@ -868,7 +868,7 @@ namespace Step33
     }
 
 
-    void Refinement::parse_parameters(ParameterHandler &prm)
+    void Refinement::parse_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("refinement");
       {
@@ -904,12 +904,12 @@ namespace Step33
 
       double stabilization_value;
 
-      static void declare_parameters(ParameterHandler &prm);
-      void        parse_parameters(ParameterHandler &prm);
+      static void declare_parameters(ParameterHandler& prm);
+      void        parse_parameters(ParameterHandler& prm);
     };
 
 
-    void Flux::declare_parameters(ParameterHandler &prm)
+    void Flux::declare_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("flux");
       {
@@ -926,7 +926,7 @@ namespace Step33
     }
 
 
-    void Flux::parse_parameters(ParameterHandler &prm)
+    void Flux::parse_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("flux");
       {
@@ -956,13 +956,13 @@ namespace Step33
       bool   schlieren_plot;
       double output_step;
 
-      static void declare_parameters(ParameterHandler &prm);
-      void        parse_parameters(ParameterHandler &prm);
+      static void declare_parameters(ParameterHandler& prm);
+      void        parse_parameters(ParameterHandler& prm);
     };
 
 
 
-    void Output::declare_parameters(ParameterHandler &prm)
+    void Output::declare_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("output");
       {
@@ -978,7 +978,7 @@ namespace Step33
 
 
 
-    void Output::parse_parameters(ParameterHandler &prm)
+    void Output::parse_parameters(ParameterHandler& prm)
     {
       prm.enter_subsection("output");
       {
@@ -1068,8 +1068,8 @@ namespace Step33
       FunctionParser<dim> initial_conditions;
       BoundaryConditions  boundary_conditions[max_n_boundaries];
 
-      static void declare_parameters(ParameterHandler &prm);
-      void        parse_parameters(ParameterHandler &prm);
+      static void declare_parameters(ParameterHandler& prm);
+      void        parse_parameters(ParameterHandler& prm);
     };
 
 
@@ -1095,7 +1095,7 @@ namespace Step33
 
 
     template <int dim>
-    void AllParameters<dim>::declare_parameters(ParameterHandler &prm)
+    void AllParameters<dim>::declare_parameters(ParameterHandler& prm)
     {
       prm.declare_entry(
         "mesh", "grid.inp", Patterns::Anything(), "intput file name");
@@ -1168,7 +1168,7 @@ namespace Step33
 
 
     template <int dim>
-    void AllParameters<dim>::parse_parameters(ParameterHandler &prm)
+    void AllParameters<dim>::parse_parameters(ParameterHandler& prm)
     {
       mesh_filename   = prm.get("mesh");
       diffusion_power = prm.get_double("diffusion power");
@@ -1272,29 +1272,29 @@ namespace Step33
   class ConservationLaw
   {
   public:
-    ConservationLaw(const char *input_filename);
+    ConservationLaw(const char* input_filename);
     void run();
 
   private:
     void setup_system();
 
     void assemble_system();
-    void assemble_cell_term(const FEValues<dim> &                       fe_v,
-                            const std::vector<types::global_dof_index> &dofs);
+    void assemble_cell_term(const FEValues<dim>&                        fe_v,
+                            const std::vector<types::global_dof_index>& dofs);
     void assemble_face_term(
       const unsigned int                          face_no,
-      const FEFaceValuesBase<dim> &               fe_v,
-      const FEFaceValuesBase<dim> &               fe_v_neighbor,
-      const std::vector<types::global_dof_index> &dofs,
-      const std::vector<types::global_dof_index> &dofs_neighbor,
+      const FEFaceValuesBase<dim>&                fe_v,
+      const FEFaceValuesBase<dim>&                fe_v_neighbor,
+      const std::vector<types::global_dof_index>& dofs,
+      const std::vector<types::global_dof_index>& dofs_neighbor,
       const bool                                  external_face,
       const unsigned int                          boundary_id,
       const double                                face_diameter);
 
-    std::pair<unsigned int, double> solve(Vector<double> &solution);
+    std::pair<unsigned int, double> solve(Vector<double>& solution);
 
-    void compute_refinement_indicators(Vector<double> &indicator) const;
-    void refine_grid(const Vector<double> &indicator);
+    void compute_refinement_indicators(Vector<double>& indicator) const;
+    void refine_grid(const Vector<double>& indicator);
 
     void output_results() const;
 
@@ -1356,7 +1356,7 @@ namespace Step33
   // There is nothing much to say about the constructor. Essentially, it reads
   // the input file and fills the parameter object with the parsed values:
   template <int dim>
-  ConservationLaw<dim>::ConservationLaw(const char *input_filename) :
+  ConservationLaw<dim>::ConservationLaw(const char* input_filename) :
     mapping(),
     fe(FE_Q<dim>(1), EulerEquations<dim>::n_components),
     dof_handler(triangulation),
@@ -1651,8 +1651,8 @@ namespace Step33
   // residual:
   template <int dim>
   void ConservationLaw<dim>::assemble_cell_term(
-    const FEValues<dim> &                       fe_v,
-    const std::vector<types::global_dof_index> &dof_indices)
+    const FEValues<dim>&                        fe_v,
+    const std::vector<types::global_dof_index>& dof_indices)
   {
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
     const unsigned int n_q_points    = fe_v.n_quadrature_points;
@@ -1880,10 +1880,10 @@ namespace Step33
   template <int dim>
   void ConservationLaw<dim>::assemble_face_term(
     const unsigned int                          face_no,
-    const FEFaceValuesBase<dim> &               fe_v,
-    const FEFaceValuesBase<dim> &               fe_v_neighbor,
-    const std::vector<types::global_dof_index> &dof_indices,
-    const std::vector<types::global_dof_index> &dof_indices_neighbor,
+    const FEFaceValuesBase<dim>&                fe_v,
+    const FEFaceValuesBase<dim>&                fe_v_neighbor,
+    const std::vector<types::global_dof_index>& dof_indices,
+    const std::vector<types::global_dof_index>& dof_indices_neighbor,
     const bool                                  external_face,
     const unsigned int                          boundary_id,
     const double                                face_diameter)
@@ -2095,7 +2095,7 @@ namespace Step33
 
   template <int dim>
   std::pair<unsigned int, double>
-  ConservationLaw<dim>::solve(Vector<double> &newton_update)
+  ConservationLaw<dim>::solve(Vector<double>& newton_update)
   {
     switch (parameters.solver)
       {
@@ -2178,7 +2178,7 @@ namespace Step33
             solver.SetAztecParam(AZ_rthresh, parameters.ilut_rtol);
 
             solver.SetUserMatrix(
-              const_cast<Epetra_CrsMatrix *>(&system_matrix.trilinos_matrix()));
+              const_cast<Epetra_CrsMatrix*>(&system_matrix.trilinos_matrix()));
 
             solver.Iterate(parameters.max_iterations,
                            parameters.linear_residual);
@@ -2201,7 +2201,7 @@ namespace Step33
   // defer to the respective function we've implemented there:
   template <int dim>
   void ConservationLaw<dim>::compute_refinement_indicators(
-    Vector<double> &refinement_indicators) const
+    Vector<double>& refinement_indicators) const
   {
     EulerEquations<dim>::compute_refinement_indicators(
       dof_handler, mapping, predictor, refinement_indicators);
@@ -2216,7 +2216,7 @@ namespace Step33
   // think should be refined:
   template <int dim>
   void
-  ConservationLaw<dim>::refine_grid(const Vector<double> &refinement_indicators)
+  ConservationLaw<dim>::refine_grid(const Vector<double>& refinement_indicators)
   {
     typename DoFHandler<dim>::active_cell_iterator cell =
                                                      dof_handler.begin_active(),
@@ -2509,7 +2509,7 @@ namespace Step33
 // The following ``main'' function is similar to previous examples and need
 // not to be commented on. Note that the program aborts if no input file name
 // is given on the command line.
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try
     {
@@ -2528,7 +2528,7 @@ int main(int argc, char *argv[])
       ConservationLaw<2> cons(argv[1]);
       cons.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

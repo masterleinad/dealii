@@ -104,10 +104,10 @@ namespace Step46
     };
 
     static bool cell_is_in_fluid_domain(
-      const typename hp::DoFHandler<dim>::cell_iterator &cell);
+      const typename hp::DoFHandler<dim>::cell_iterator& cell);
 
     static bool cell_is_in_solid_domain(
-      const typename hp::DoFHandler<dim>::cell_iterator &cell);
+      const typename hp::DoFHandler<dim>::cell_iterator& cell);
 
 
     void make_grid();
@@ -115,12 +115,12 @@ namespace Step46
     void setup_dofs();
     void assemble_system();
     void assemble_interface_term(
-      const FEFaceValuesBase<dim> &         elasticity_fe_face_values,
-      const FEFaceValuesBase<dim> &         stokes_fe_face_values,
-      std::vector<Tensor<1, dim>> &         elasticity_phi,
-      std::vector<SymmetricTensor<2, dim>> &stokes_symgrad_phi_u,
-      std::vector<double> &                 stokes_phi_p,
-      FullMatrix<double> &                  local_interface_matrix) const;
+      const FEFaceValuesBase<dim>&          elasticity_fe_face_values,
+      const FEFaceValuesBase<dim>&          stokes_fe_face_values,
+      std::vector<Tensor<1, dim>>&          elasticity_phi,
+      std::vector<SymmetricTensor<2, dim>>& stokes_symgrad_phi_u,
+      std::vector<double>&                  stokes_phi_p,
+      FullMatrix<double>&                   local_interface_matrix) const;
     void solve();
     void output_results(const unsigned int refinement_cycle) const;
     void refine_mesh();
@@ -163,16 +163,16 @@ namespace Step46
     StokesBoundaryValues() : Function<dim>(dim + 1 + dim)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  value) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   value) const override;
   };
 
 
   template <int dim>
-  double StokesBoundaryValues<dim>::value(const Point<dim> & p,
+  double StokesBoundaryValues<dim>::value(const Point<dim>&  p,
                                           const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -194,8 +194,8 @@ namespace Step46
 
 
   template <int dim>
-  void StokesBoundaryValues<dim>::vector_value(const Point<dim> &p,
-                                               Vector<double> &  values) const
+  void StokesBoundaryValues<dim>::vector_value(const Point<dim>& p,
+                                               Vector<double>&   values) const
   {
     for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = StokesBoundaryValues<dim>::value(p, c);
@@ -210,16 +210,16 @@ namespace Step46
     RightHandSide() : Function<dim>(dim + 1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  value) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   value) const override;
   };
 
 
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> & /*p*/,
+  double RightHandSide<dim>::value(const Point<dim>& /*p*/,
                                    const unsigned int /*component*/) const
   {
     return 0;
@@ -227,8 +227,8 @@ namespace Step46
 
 
   template <int dim>
-  void RightHandSide<dim>::vector_value(const Point<dim> &p,
-                                        Vector<double> &  values) const
+  void RightHandSide<dim>::vector_value(const Point<dim>& p,
+                                        Vector<double>&   values) const
   {
     for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -281,7 +281,7 @@ namespace Step46
 
   template <int dim>
   bool FluidStructureProblem<dim>::cell_is_in_fluid_domain(
-    const typename hp::DoFHandler<dim>::cell_iterator &cell)
+    const typename hp::DoFHandler<dim>::cell_iterator& cell)
   {
     return (cell->material_id() == fluid_domain_id);
   }
@@ -289,7 +289,7 @@ namespace Step46
 
   template <int dim>
   bool FluidStructureProblem<dim>::cell_is_in_solid_domain(
-    const typename hp::DoFHandler<dim>::cell_iterator &cell)
+    const typename hp::DoFHandler<dim>::cell_iterator& cell)
   {
     return (cell->material_id() == solid_domain_id);
   }
@@ -577,7 +577,7 @@ namespace Step46
       {
         hp_fe_values.reinit(cell);
 
-        const FEValues<dim> &fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
 
         local_matrix.reinit(cell->get_fe().dofs_per_cell,
                             cell->get_fe().dofs_per_cell);
@@ -815,12 +815,12 @@ namespace Step46
   // here are given in the introduction.
   template <int dim>
   void FluidStructureProblem<dim>::assemble_interface_term(
-    const FEFaceValuesBase<dim> &         elasticity_fe_face_values,
-    const FEFaceValuesBase<dim> &         stokes_fe_face_values,
-    std::vector<Tensor<1, dim>> &         elasticity_phi,
-    std::vector<SymmetricTensor<2, dim>> &stokes_symgrad_phi_u,
-    std::vector<double> &                 stokes_phi_p,
-    FullMatrix<double> &                  local_interface_matrix) const
+    const FEFaceValuesBase<dim>&          elasticity_fe_face_values,
+    const FEFaceValuesBase<dim>&          stokes_fe_face_values,
+    std::vector<Tensor<1, dim>>&          elasticity_phi,
+    std::vector<SymmetricTensor<2, dim>>& stokes_symgrad_phi_u,
+    std::vector<double>&                  stokes_phi_p,
+    FullMatrix<double>&                   local_interface_matrix) const
   {
     Assert(stokes_fe_face_values.n_quadrature_points ==
              elasticity_fe_face_values.n_quadrature_points,
@@ -1081,7 +1081,7 @@ int main()
       FluidStructureProblem<2> flow_problem(1, 1);
       flow_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

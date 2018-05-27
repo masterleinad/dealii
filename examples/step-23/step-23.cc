@@ -166,7 +166,7 @@ namespace Step23
     InitialValuesU() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
@@ -178,14 +178,14 @@ namespace Step23
     InitialValuesV() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
 
 
   template <int dim>
-  double InitialValuesU<dim>::value(const Point<dim> & /*p*/,
+  double InitialValuesU<dim>::value(const Point<dim>& /*p*/,
                                     const unsigned int component) const
   {
     (void)component;
@@ -196,7 +196,7 @@ namespace Step23
 
 
   template <int dim>
-  double InitialValuesV<dim>::value(const Point<dim> & /*p*/,
+  double InitialValuesV<dim>::value(const Point<dim>& /*p*/,
                                     const unsigned int component) const
   {
     (void)component;
@@ -215,14 +215,14 @@ namespace Step23
     RightHandSide() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
 
 
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> & /*p*/,
+  double RightHandSide<dim>::value(const Point<dim>& /*p*/,
                                    const unsigned int component) const
   {
     (void)component;
@@ -241,7 +241,7 @@ namespace Step23
     BoundaryValuesU() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
@@ -254,14 +254,14 @@ namespace Step23
     BoundaryValuesV() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
 
 
   template <int dim>
-  double BoundaryValuesU<dim>::value(const Point<dim> & p,
+  double BoundaryValuesU<dim>::value(const Point<dim>&  p,
                                      const unsigned int component) const
   {
     (void)component;
@@ -277,7 +277,7 @@ namespace Step23
 
 
   template <int dim>
-  double BoundaryValuesV<dim>::value(const Point<dim> & p,
+  double BoundaryValuesV<dim>::value(const Point<dim>&  p,
                                      const unsigned int component) const
   {
     (void)component;
@@ -633,7 +633,7 @@ int main()
       WaveEquation<2> wave_equation_solver;
       wave_equation_solver.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -58,8 +58,8 @@ using namespace dealii;
 // Finally, the function outputs the mesh in encapsulated postscript (EPS)
 // format that can easily be visualized in the same way as was done in step-1.
 template <int dim>
-void print_mesh_info(const Triangulation<dim> &triangulation,
-                     const std::string &       filename)
+void print_mesh_info(const Triangulation<dim>& triangulation,
+                     const std::string&        filename)
 {
   std::cout << "Mesh info:" << std::endl
             << " dimension: " << dim << std::endl
@@ -83,7 +83,7 @@ void print_mesh_info(const Triangulation<dim> &triangulation,
       }
 
     std::cout << " boundary indicators: ";
-    for (const std::pair<const types::boundary_id, unsigned int> &pair :
+    for (const std::pair<const types::boundary_id, unsigned int>& pair :
          boundary_count)
       {
         std::cout << pair.first << "(" << pair.second << " times) ";
@@ -170,11 +170,11 @@ void grid_3()
   Triangulation<2> triangulation;
   GridGenerator::hyper_cube_with_cylindrical_hole(triangulation, 0.25, 1.0);
 
-  for (const auto &cell : triangulation.active_cell_iterators())
+  for (const auto& cell : triangulation.active_cell_iterators())
     {
       for (unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
         {
-          Point<2> &v = cell->vertex(i);
+          Point<2>& v = cell->vertex(i);
           if (std::abs(v(1) - 1.0) < 1e-5)
             v(1) += 0.5;
         }
@@ -246,7 +246,7 @@ void grid_5()
     triangulation, repetitions, Point<2>(0.0, 0.0), Point<2>(10.0, 1.0));
 
   GridTools::transform(
-    [](const Point<2> &in) -> Point<2> {
+    [](const Point<2>& in) -> Point<2> {
       return {in[0], in[1] + std::sin(in[0] / 5.0 * numbers::PI)};
     },
     triangulation);
@@ -272,7 +272,7 @@ struct Grid6Func
     return std::tanh(2 * y) / tanh(2);
   }
 
-  Point<2> operator()(const Point<2> &in) const
+  Point<2> operator()(const Point<2>& in) const
   {
     return Point<2>(in(0), trans(in(1)));
   }
@@ -329,7 +329,7 @@ int main()
       grid_6();
       grid_7();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

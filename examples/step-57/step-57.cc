@@ -151,15 +151,15 @@ namespace Step57
   public:
     BoundaryValues() : Function<dim>(dim + 1)
     {}
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component) const override;
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  values) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   values) const override;
   };
 
   template <int dim>
-  double BoundaryValues<dim>::value(const Point<dim> & p,
+  double BoundaryValues<dim>::value(const Point<dim>&  p,
                                     const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -171,8 +171,8 @@ namespace Step57
   }
 
   template <int dim>
-  void BoundaryValues<dim>::vector_value(const Point<dim> &p,
-                                         Vector<double> &  values) const
+  void BoundaryValues<dim>::vector_value(const Point<dim>& p,
+                                         Vector<double>&   values) const
   {
     for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -201,18 +201,18 @@ namespace Step57
   public:
     BlockSchurPreconditioner(double                           gamma,
                              double                           viscosity,
-                             const BlockSparseMatrix<double> &S,
-                             const SparseMatrix<double> &     P,
-                             const PreconditionerMp &         Mppreconditioner);
+                             const BlockSparseMatrix<double>& S,
+                             const SparseMatrix<double>&      P,
+                             const PreconditionerMp&          Mppreconditioner);
 
-    void vmult(BlockVector<double> &dst, const BlockVector<double> &src) const;
+    void vmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
 
   private:
     const double                     gamma;
     const double                     viscosity;
-    const BlockSparseMatrix<double> &stokes_matrix;
-    const SparseMatrix<double> &     pressure_mass_matrix;
-    const PreconditionerMp &         mp_preconditioner;
+    const BlockSparseMatrix<double>& stokes_matrix;
+    const SparseMatrix<double>&      pressure_mass_matrix;
+    const PreconditionerMp&          mp_preconditioner;
     SparseDirectUMFPACK              A_inverse;
   };
 
@@ -225,9 +225,9 @@ namespace Step57
   BlockSchurPreconditioner<PreconditionerMp>::BlockSchurPreconditioner(
     double                           gamma,
     double                           viscosity,
-    const BlockSparseMatrix<double> &S,
-    const SparseMatrix<double> &     P,
-    const PreconditionerMp &         Mppreconditioner) :
+    const BlockSparseMatrix<double>& S,
+    const SparseMatrix<double>&      P,
+    const PreconditionerMp&          Mppreconditioner) :
     gamma(gamma),
     viscosity(viscosity),
     stokes_matrix(S),
@@ -239,8 +239,8 @@ namespace Step57
 
   template <class PreconditionerMp>
   void BlockSchurPreconditioner<PreconditionerMp>::vmult(
-    BlockVector<double> &      dst,
-    const BlockVector<double> &src) const
+    BlockVector<double>&       dst,
+    const BlockVector<double>& src) const
   {
     Vector<double> utmp(src.block(0));
 
@@ -487,7 +487,7 @@ namespace Step57
 
         cell->get_dof_indices(local_dof_indices);
 
-        const ConstraintMatrix &constraints_used =
+        const ConstraintMatrix& constraints_used =
           initial_step ? nonzero_constraints : zero_constraints;
 
         if (assemble_matrix)
@@ -546,7 +546,7 @@ namespace Step57
   template <int dim>
   void StationaryNavierStokes<dim>::solve(const bool initial_step)
   {
-    const ConstraintMatrix &constraints_used =
+    const ConstraintMatrix& constraints_used =
       initial_step ? nonzero_constraints : zero_constraints;
 
     SolverControl solver_control(
@@ -878,7 +878,7 @@ int main()
       StationaryNavierStokes<2> flow(/* degree = */ 1);
       flow.run(4);
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

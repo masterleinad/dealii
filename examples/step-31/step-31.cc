@@ -133,16 +133,16 @@ namespace Step31
       TemperatureInitialValues() : Function<dim>(1)
       {}
 
-      virtual double value(const Point<dim> & p,
+      virtual double value(const Point<dim>&  p,
                            const unsigned int component = 0) const override;
 
-      virtual void vector_value(const Point<dim> &p,
-                                Vector<double> &  value) const override;
+      virtual void vector_value(const Point<dim>& p,
+                                Vector<double>&   value) const override;
     };
 
 
     template <int dim>
-    double TemperatureInitialValues<dim>::value(const Point<dim> &,
+    double TemperatureInitialValues<dim>::value(const Point<dim>&,
                                                 const unsigned int) const
     {
       return 0;
@@ -151,8 +151,8 @@ namespace Step31
 
     template <int dim>
     void
-    TemperatureInitialValues<dim>::vector_value(const Point<dim> &p,
-                                                Vector<double> &  values) const
+    TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
+                                                Vector<double>&   values) const
     {
       for (unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureInitialValues<dim>::value(p, c);
@@ -166,17 +166,17 @@ namespace Step31
       TemperatureRightHandSide() : Function<dim>(1)
       {}
 
-      virtual double value(const Point<dim> & p,
+      virtual double value(const Point<dim>&  p,
                            const unsigned int component = 0) const override;
 
-      virtual void vector_value(const Point<dim> &p,
-                                Vector<double> &  value) const override;
+      virtual void vector_value(const Point<dim>& p,
+                                Vector<double>&   value) const override;
     };
 
 
     template <int dim>
     double
-    TemperatureRightHandSide<dim>::value(const Point<dim> & p,
+    TemperatureRightHandSide<dim>::value(const Point<dim>&  p,
                                          const unsigned int component) const
     {
       (void)component;
@@ -201,8 +201,8 @@ namespace Step31
 
     template <int dim>
     void
-    TemperatureRightHandSide<dim>::vector_value(const Point<dim> &p,
-                                                Vector<double> &  values) const
+    TemperatureRightHandSide<dim>::vector_value(const Point<dim>& p,
+                                                Vector<double>&   values) const
     {
       for (unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureRightHandSide<dim>::value(p, c);
@@ -265,23 +265,23 @@ namespace Step31
     class InverseMatrix : public Subscriptor
     {
     public:
-      InverseMatrix(const MatrixType &        m,
-                    const PreconditionerType &preconditioner);
+      InverseMatrix(const MatrixType&         m,
+                    const PreconditionerType& preconditioner);
 
 
       template <typename VectorType>
-      void vmult(VectorType &dst, const VectorType &src) const;
+      void vmult(VectorType& dst, const VectorType& src) const;
 
     private:
       const SmartPointer<const MatrixType> matrix;
-      const PreconditionerType &           preconditioner;
+      const PreconditionerType&            preconditioner;
     };
 
 
     template <class MatrixType, class PreconditionerType>
     InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
-      const MatrixType &        m,
-      const PreconditionerType &preconditioner) :
+      const MatrixType&         m,
+      const PreconditionerType& preconditioner) :
       matrix(&m),
       preconditioner(preconditioner)
     {}
@@ -291,8 +291,8 @@ namespace Step31
     template <class MatrixType, class PreconditionerType>
     template <typename VectorType>
     void InverseMatrix<MatrixType, PreconditionerType>::vmult(
-      VectorType &      dst,
-      const VectorType &src) const
+      VectorType&       dst,
+      const VectorType& src) const
     {
       SolverControl        solver_control(src.size(), 1e-7 * src.l2_norm());
       SolverCG<VectorType> cg(solver_control);
@@ -303,7 +303,7 @@ namespace Step31
         {
           cg.solve(*matrix, dst, src, preconditioner);
         }
-      catch (std::exception &e)
+      catch (std::exception& e)
         {
           Assert(false, ExcMessage(e.what()));
         }
@@ -366,13 +366,13 @@ namespace Step31
     {
     public:
       BlockSchurPreconditioner(
-        const TrilinosWrappers::BlockSparseMatrix &S,
+        const TrilinosWrappers::BlockSparseMatrix& S,
         const InverseMatrix<TrilinosWrappers::SparseMatrix,
-                            PreconditionerTypeMp> &Mpinv,
-        const PreconditionerTypeA &                Apreconditioner);
+                            PreconditionerTypeMp>& Mpinv,
+        const PreconditionerTypeA&                 Apreconditioner);
 
-      void vmult(TrilinosWrappers::MPI::BlockVector &      dst,
-                 const TrilinosWrappers::MPI::BlockVector &src) const;
+      void vmult(TrilinosWrappers::MPI::BlockVector&       dst,
+                 const TrilinosWrappers::MPI::BlockVector& src) const;
 
     private:
       const SmartPointer<const TrilinosWrappers::BlockSparseMatrix>
@@ -380,7 +380,7 @@ namespace Step31
       const SmartPointer<const InverseMatrix<TrilinosWrappers::SparseMatrix,
                                              PreconditionerTypeMp>>
                                  m_inverse;
-      const PreconditionerTypeA &a_preconditioner;
+      const PreconditionerTypeA& a_preconditioner;
 
       mutable TrilinosWrappers::MPI::Vector tmp;
     };
@@ -399,10 +399,10 @@ namespace Step31
     template <class PreconditionerTypeA, class PreconditionerTypeMp>
     BlockSchurPreconditioner<PreconditionerTypeA, PreconditionerTypeMp>::
       BlockSchurPreconditioner(
-        const TrilinosWrappers::BlockSparseMatrix &S,
+        const TrilinosWrappers::BlockSparseMatrix& S,
         const InverseMatrix<TrilinosWrappers::SparseMatrix,
-                            PreconditionerTypeMp> &Mpinv,
-        const PreconditionerTypeA &                Apreconditioner) :
+                            PreconditionerTypeMp>& Mpinv,
+        const PreconditionerTypeA&                 Apreconditioner) :
       stokes_matrix(&S),
       m_inverse(&Mpinv),
       a_preconditioner(Apreconditioner),
@@ -428,8 +428,8 @@ namespace Step31
     template <class PreconditionerTypeA, class PreconditionerTypeMp>
     void
     BlockSchurPreconditioner<PreconditionerTypeA, PreconditionerTypeMp>::vmult(
-      TrilinosWrappers::MPI::BlockVector &      dst,
-      const TrilinosWrappers::MPI::BlockVector &src) const
+      TrilinosWrappers::MPI::BlockVector&       dst,
+      const TrilinosWrappers::MPI::BlockVector& src) const
     {
       a_preconditioner.vmult(dst.block(0), src.block(0));
       stokes_matrix->block(1, 0).residual(tmp, dst.block(0), src.block(1));
@@ -484,15 +484,15 @@ namespace Step31
     void                      refine_mesh(const unsigned int max_grid_level);
 
     double compute_viscosity(
-      const std::vector<double> &        old_temperature,
-      const std::vector<double> &        old_old_temperature,
-      const std::vector<Tensor<1, dim>> &old_temperature_grads,
-      const std::vector<Tensor<1, dim>> &old_old_temperature_grads,
-      const std::vector<double> &        old_temperature_laplacians,
-      const std::vector<double> &        old_old_temperature_laplacians,
-      const std::vector<Tensor<1, dim>> &old_velocity_values,
-      const std::vector<Tensor<1, dim>> &old_old_velocity_values,
-      const std::vector<double> &        gamma_values,
+      const std::vector<double>&         old_temperature,
+      const std::vector<double>&         old_old_temperature,
+      const std::vector<Tensor<1, dim>>& old_temperature_grads,
+      const std::vector<Tensor<1, dim>>& old_old_temperature_grads,
+      const std::vector<double>&         old_temperature_laplacians,
+      const std::vector<double>&         old_old_temperature_laplacians,
+      const std::vector<Tensor<1, dim>>& old_velocity_values,
+      const std::vector<Tensor<1, dim>>& old_old_velocity_values,
+      const std::vector<double>&         gamma_values,
       const double                       global_u_infty,
       const double                       global_T_variation,
       const double                       cell_diameter) const;
@@ -774,15 +774,15 @@ namespace Step31
   // discussed in the introduction:
   template <int dim>
   double BoussinesqFlowProblem<dim>::compute_viscosity(
-    const std::vector<double> &        old_temperature,
-    const std::vector<double> &        old_old_temperature,
-    const std::vector<Tensor<1, dim>> &old_temperature_grads,
-    const std::vector<Tensor<1, dim>> &old_old_temperature_grads,
-    const std::vector<double> &        old_temperature_laplacians,
-    const std::vector<double> &        old_old_temperature_laplacians,
-    const std::vector<Tensor<1, dim>> &old_velocity_values,
-    const std::vector<Tensor<1, dim>> &old_old_velocity_values,
-    const std::vector<double> &        gamma_values,
+    const std::vector<double>&         old_temperature,
+    const std::vector<double>&         old_old_temperature,
+    const std::vector<Tensor<1, dim>>& old_temperature_grads,
+    const std::vector<Tensor<1, dim>>& old_old_temperature_grads,
+    const std::vector<double>&         old_temperature_laplacians,
+    const std::vector<double>&         old_old_temperature_laplacians,
+    const std::vector<Tensor<1, dim>>& old_velocity_values,
+    const std::vector<Tensor<1, dim>>& old_old_velocity_values,
+    const std::vector<double>&         gamma_values,
     const double                       global_u_infty,
     const double                       global_T_variation,
     const double                       cell_diameter) const
@@ -2156,7 +2156,7 @@ namespace Step31
 // the arguments given to main() (i.e., <code>argc</code> and
 // <code>argv</code>) and de-initializes it again when the object goes out of
 // scope.
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try
     {
@@ -2174,7 +2174,7 @@ int main(int argc, char *argv[])
       BoussinesqFlowProblem<2> flow_problem;
       flow_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

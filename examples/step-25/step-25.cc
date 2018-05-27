@@ -103,12 +103,12 @@ namespace Step25
   private:
     void         make_grid_and_dofs();
     void         assemble_system();
-    void         compute_nl_term(const Vector<double> &old_data,
-                                 const Vector<double> &new_data,
-                                 Vector<double> &      nl_term) const;
-    void         compute_nl_matrix(const Vector<double> &old_data,
-                                   const Vector<double> &new_data,
-                                   SparseMatrix<double> &nl_matrix) const;
+    void         compute_nl_term(const Vector<double>& old_data,
+                                 const Vector<double>& new_data,
+                                 Vector<double>&       nl_term) const;
+    void         compute_nl_matrix(const Vector<double>& old_data,
+                                   const Vector<double>& new_data,
+                                   SparseMatrix<double>& nl_matrix) const;
     unsigned int solve();
     void         output_results(const unsigned int timestep_number) const;
 
@@ -156,12 +156,12 @@ namespace Step25
     ExactSolution(const unsigned int n_components = 1, const double time = 0.) :
       Function<dim>(n_components, time)
     {}
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <int dim>
-  double ExactSolution<dim>::value(const Point<dim> &p,
+  double ExactSolution<dim>::value(const Point<dim>& p,
                                    const unsigned int /*component*/) const
   {
     double t = this->get_time();
@@ -223,12 +223,12 @@ namespace Step25
       Function<dim>(n_components, time)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <int dim>
-  double InitialValues<dim>::value(const Point<dim> & p,
+  double InitialValues<dim>::value(const Point<dim>&  p,
                                    const unsigned int component) const
   {
     return ExactSolution<dim>(1, this->get_time()).value(p, component);
@@ -392,9 +392,9 @@ namespace Step25
   // constant in the asymptotic statement of convergence by choosing a more
   // accurate quadrature formula.
   template <int dim>
-  void SineGordonProblem<dim>::compute_nl_term(const Vector<double> &old_data,
-                                               const Vector<double> &new_data,
-                                               Vector<double> &nl_term) const
+  void SineGordonProblem<dim>::compute_nl_term(const Vector<double>& old_data,
+                                               const Vector<double>& new_data,
+                                               Vector<double>& nl_term) const
   {
     nl_term = 0;
     const QGauss<dim> quadrature_formula(3);
@@ -457,9 +457,9 @@ namespace Step25
   // below, respectively.
   template <int dim>
   void SineGordonProblem<dim>::compute_nl_matrix(
-    const Vector<double> &old_data,
-    const Vector<double> &new_data,
-    SparseMatrix<double> &nl_matrix) const
+    const Vector<double>& old_data,
+    const Vector<double>& new_data,
+    SparseMatrix<double>& nl_matrix) const
   {
     QGauss<dim>   quadrature_formula(3);
     FEValues<dim> fe_values(fe,
@@ -701,7 +701,7 @@ int main()
       SineGordonProblem<1> sg_problem;
       sg_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

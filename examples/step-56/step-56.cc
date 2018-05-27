@@ -107,15 +107,15 @@ namespace Step56
   public:
     Solution() : Function<dim>(dim + 1)
     {}
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
   };
 
   template <>
-  double Solution<2>::value(const Point<2> &   p,
+  double Solution<2>::value(const Point<2>&    p,
                             const unsigned int component) const
   {
     Assert(component <= 2 + 1, ExcIndexRange(component, 0, 2 + 1));
@@ -135,7 +135,7 @@ namespace Step56
   }
 
   template <>
-  double Solution<3>::value(const Point<3> &   p,
+  double Solution<3>::value(const Point<3>&    p,
                             const unsigned int component) const
   {
     Assert(component <= 3 + 1, ExcIndexRange(component, 0, 3 + 1));
@@ -159,7 +159,7 @@ namespace Step56
 
   // Note that for the gradient we need to return a Tensor<1,dim>
   template <>
-  Tensor<1, 2> Solution<2>::gradient(const Point<2> &   p,
+  Tensor<1, 2> Solution<2>::gradient(const Point<2>&    p,
                                      const unsigned int component) const
   {
     Assert(component <= 2, ExcIndexRange(component, 0, 2 + 1));
@@ -189,7 +189,7 @@ namespace Step56
   }
 
   template <>
-  Tensor<1, 3> Solution<3>::gradient(const Point<3> &   p,
+  Tensor<1, 3> Solution<3>::gradient(const Point<3>&    p,
                                      const unsigned int component) const
   {
     Assert(component <= 3, ExcIndexRange(component, 0, 3 + 1));
@@ -236,12 +236,12 @@ namespace Step56
     RightHandSide() : Function<dim>(dim + 1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <>
-  double RightHandSide<2>::value(const Point<2> &   p,
+  double RightHandSide<2>::value(const Point<2>&    p,
                                  const unsigned int component) const
   {
     Assert(component <= 2, ExcIndexRange(component, 0, 2 + 1));
@@ -260,7 +260,7 @@ namespace Step56
   }
 
   template <>
-  double RightHandSide<3>::value(const Point<3> &   p,
+  double RightHandSide<3>::value(const Point<3>&    p,
                                  const unsigned int component) const
   {
     Assert(component <= 3, ExcIndexRange(component, 0, 3 + 1));
@@ -312,22 +312,22 @@ namespace Step56
   {
   public:
     BlockSchurPreconditioner(
-      const BlockSparseMatrix<double> &system_matrix,
-      const SparseMatrix<double> &     schur_complement_matrix,
-      const PreconditionerAType &      preconditioner_A,
-      const PreconditionerSType &      preconditioner_S,
+      const BlockSparseMatrix<double>& system_matrix,
+      const SparseMatrix<double>&      schur_complement_matrix,
+      const PreconditionerAType&       preconditioner_A,
+      const PreconditionerSType&       preconditioner_S,
       const bool                       do_solve_A);
 
-    void vmult(BlockVector<double> &dst, const BlockVector<double> &src) const;
+    void vmult(BlockVector<double>& dst, const BlockVector<double>& src) const;
 
     mutable unsigned int n_iterations_A;
     mutable unsigned int n_iterations_S;
 
   private:
-    const BlockSparseMatrix<double> &system_matrix;
-    const SparseMatrix<double> &     schur_complement_matrix;
-    const PreconditionerAType &      preconditioner_A;
-    const PreconditionerSType &      preconditioner_S;
+    const BlockSparseMatrix<double>& system_matrix;
+    const SparseMatrix<double>&      schur_complement_matrix;
+    const PreconditionerAType&       preconditioner_A;
+    const PreconditionerSType&       preconditioner_S;
 
     const bool do_solve_A;
   };
@@ -335,10 +335,10 @@ namespace Step56
   template <class PreconditionerAType, class PreconditionerSType>
   BlockSchurPreconditioner<PreconditionerAType, PreconditionerSType>::
     BlockSchurPreconditioner(
-      const BlockSparseMatrix<double> &system_matrix,
-      const SparseMatrix<double> &     schur_complement_matrix,
-      const PreconditionerAType &      preconditioner_A,
-      const PreconditionerSType &      preconditioner_S,
+      const BlockSparseMatrix<double>& system_matrix,
+      const SparseMatrix<double>&      schur_complement_matrix,
+      const PreconditionerAType&       preconditioner_A,
+      const PreconditionerSType&       preconditioner_S,
       const bool                       do_solve_A) :
     n_iterations_A(0),
     n_iterations_S(0),
@@ -354,8 +354,8 @@ namespace Step56
   template <class PreconditionerAType, class PreconditionerSType>
   void
   BlockSchurPreconditioner<PreconditionerAType, PreconditionerSType>::vmult(
-    BlockVector<double> &      dst,
-    const BlockVector<double> &src) const
+    BlockVector<double>&       dst,
+    const BlockVector<double>& src) const
   {
     Vector<double> utmp(src.block(0));
 
@@ -1115,7 +1115,7 @@ int main()
 
       flow_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

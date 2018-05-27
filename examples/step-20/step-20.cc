@@ -128,7 +128,7 @@ namespace Step20
     RightHandSide() : Function<dim>(1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
@@ -141,7 +141,7 @@ namespace Step20
     PressureBoundaryValues() : Function<dim>(1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
@@ -153,8 +153,8 @@ namespace Step20
     ExactSolution() : Function<dim>(dim + 1)
     {}
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  value) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   value) const override;
   };
 
 
@@ -162,7 +162,7 @@ namespace Step20
   // course. Given our discussion in the introduction of how the solution
   // should look like, the following computations should be straightforward:
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> & /*p*/,
+  double RightHandSide<dim>::value(const Point<dim>& /*p*/,
                                    const unsigned int /*component*/) const
   {
     return 0;
@@ -172,7 +172,7 @@ namespace Step20
 
   template <int dim>
   double
-  PressureBoundaryValues<dim>::value(const Point<dim> &p,
+  PressureBoundaryValues<dim>::value(const Point<dim>& p,
                                      const unsigned int /*component*/) const
   {
     const double alpha = 0.3;
@@ -184,8 +184,8 @@ namespace Step20
 
 
   template <int dim>
-  void ExactSolution<dim>::vector_value(const Point<dim> &p,
-                                        Vector<double> &  values) const
+  void ExactSolution<dim>::vector_value(const Point<dim>& p,
+                                        Vector<double>&   values) const
   {
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
@@ -234,8 +234,8 @@ namespace Step20
     KInverse() : TensorFunction<2, dim>()
     {}
 
-    virtual void value_list(const std::vector<Point<dim>> &points,
-                            std::vector<Tensor<2, dim>> &values) const override;
+    virtual void value_list(const std::vector<Point<dim>>& points,
+                            std::vector<Tensor<2, dim>>& values) const override;
   };
 
 
@@ -246,8 +246,8 @@ namespace Step20
   // first clear the output tensor and then set all its diagonal elements to
   // one (i.e. fill the tensor with the identity matrix):
   template <int dim>
-  void KInverse<dim>::value_list(const std::vector<Point<dim>> &points,
-                                 std::vector<Tensor<2, dim>> &  values) const
+  void KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
+                                 std::vector<Tensor<2, dim>>&   values) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
@@ -571,9 +571,9 @@ namespace Step20
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType &m);
+    InverseMatrix(const MatrixType& m);
 
-    void vmult(Vector<double> &dst, const Vector<double> &src) const;
+    void vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
     const SmartPointer<const MatrixType> matrix;
@@ -581,13 +581,13 @@ namespace Step20
 
 
   template <class MatrixType>
-  InverseMatrix<MatrixType>::InverseMatrix(const MatrixType &m) : matrix(&m)
+  InverseMatrix<MatrixType>::InverseMatrix(const MatrixType& m) : matrix(&m)
   {}
 
 
   template <class MatrixType>
-  void InverseMatrix<MatrixType>::vmult(Vector<double> &      dst,
-                                        const Vector<double> &src) const
+  void InverseMatrix<MatrixType>::vmult(Vector<double>&       dst,
+                                        const Vector<double>& src) const
   {
     // To make the control flow simpler, we recreate both the ReductionControl
     // and SolverCG objects every time this is called. This is not the most
@@ -628,10 +628,10 @@ namespace Step20
   class SchurComplement : public Subscriptor
   {
   public:
-    SchurComplement(const BlockSparseMatrix<double> &          A,
-                    const InverseMatrix<SparseMatrix<double>> &Minv);
+    SchurComplement(const BlockSparseMatrix<double>&           A,
+                    const InverseMatrix<SparseMatrix<double>>& Minv);
 
-    void vmult(Vector<double> &dst, const Vector<double> &src) const;
+    void vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
     const SmartPointer<const BlockSparseMatrix<double>>           system_matrix;
@@ -642,8 +642,8 @@ namespace Step20
 
 
   SchurComplement ::SchurComplement(
-    const BlockSparseMatrix<double> &          A,
-    const InverseMatrix<SparseMatrix<double>> &Minv) :
+    const BlockSparseMatrix<double>&           A,
+    const InverseMatrix<SparseMatrix<double>>& Minv) :
     system_matrix(&A),
     m_inverse(&Minv),
     tmp1(A.block(0, 0).m()),
@@ -651,8 +651,8 @@ namespace Step20
   {}
 
 
-  void SchurComplement::vmult(Vector<double> &      dst,
-                              const Vector<double> &src) const
+  void SchurComplement::vmult(Vector<double>&       dst,
+                              const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     m_inverse->vmult(tmp2, tmp1);
@@ -669,9 +669,9 @@ namespace Step20
   class ApproximateSchurComplement : public Subscriptor
   {
   public:
-    ApproximateSchurComplement(const BlockSparseMatrix<double> &A);
+    ApproximateSchurComplement(const BlockSparseMatrix<double>& A);
 
-    void vmult(Vector<double> &dst, const Vector<double> &src) const;
+    void vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
     const SmartPointer<const BlockSparseMatrix<double>> system_matrix;
@@ -682,15 +682,15 @@ namespace Step20
 
 
   ApproximateSchurComplement::ApproximateSchurComplement(
-    const BlockSparseMatrix<double> &A) :
+    const BlockSparseMatrix<double>& A) :
     system_matrix(&A),
     tmp1(A.block(0, 0).m()),
     tmp2(A.block(0, 0).m())
   {}
 
 
-  void ApproximateSchurComplement::vmult(Vector<double> &      dst,
-                                         const Vector<double> &src) const
+  void ApproximateSchurComplement::vmult(Vector<double>&       dst,
+                                         const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     system_matrix->block(0, 0).precondition_Jacobi(tmp2, tmp1);
@@ -911,7 +911,7 @@ int main()
       MixedLaplaceProblem<2> mixed_laplace_problem(0);
       mixed_laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

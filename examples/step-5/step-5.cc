@@ -104,7 +104,7 @@ private:
 // point. We let it return 20 if the distance to the origin is less than 0.5,
 // and 1 otherwise.
 template <int dim>
-double coefficient(const Point<dim> &p)
+double coefficient(const Point<dim>& p)
 {
   if (p.square() < 0.5 * 0.5)
     return 20;
@@ -186,7 +186,7 @@ void Step5<dim>::assemble_system()
   // change in this part, compared to step-4, is that we will use the
   // <code>coefficient</code> function defined above to compute the
   // coefficient value at each quadrature point.
-  for (const auto &cell : dof_handler.active_cell_iterators())
+  for (const auto& cell : dof_handler.active_cell_iterators())
     {
       cell_matrix = 0;
       cell_rhs    = 0;

@@ -137,7 +137,7 @@ public:
   RightHandSide() : Function<dim>()
   {}
 
-  virtual double value(const Point<dim> & p,
+  virtual double value(const Point<dim>&  p,
                        const unsigned int component = 0) const override;
 };
 
@@ -150,7 +150,7 @@ public:
   BoundaryValues() : Function<dim>()
   {}
 
-  virtual double value(const Point<dim> & p,
+  virtual double value(const Point<dim>&  p,
                        const unsigned int component = 0) const override;
 };
 
@@ -177,7 +177,7 @@ public:
 // operator will work just as well) with indices starting at zero as usual in
 // C and C++.
 template <int dim>
-double RightHandSide<dim>::value(const Point<dim> &p,
+double RightHandSide<dim>::value(const Point<dim>& p,
                                  const unsigned int /*component*/) const
 {
   double return_value = 0.0;
@@ -193,7 +193,7 @@ double RightHandSide<dim>::value(const Point<dim> &p,
 // point at which we would like to evaluate the function, irrespective of the
 // dimension. So that is what we return:
 template <int dim>
-double BoundaryValues<dim>::value(const Point<dim> &p,
+double BoundaryValues<dim>::value(const Point<dim>& p,
                                   const unsigned int /*component*/) const
 {
   return p.square();
@@ -342,7 +342,7 @@ void Step4<dim>::assemble_system()
   // depending on the dimension we are in, but to the outside world they look
   // alike and you will probably never see a difference. In any case, the real
   // type is hidden by using `auto`:
-  for (const auto &cell : dof_handler.active_cell_iterators())
+  for (const auto& cell : dof_handler.active_cell_iterators())
     {
       fe_values.reinit(cell);
       cell_matrix = 0;

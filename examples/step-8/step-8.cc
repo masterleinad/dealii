@@ -135,8 +135,8 @@ namespace Step8
   // we terminate the program in the second assertion. The program will work
   // just fine in 3d, however.
   template <int dim>
-  void right_hand_side(const std::vector<Point<dim>> &points,
-                       std::vector<Tensor<1, dim>> &  values)
+  void right_hand_side(const std::vector<Point<dim>>& points,
+                       std::vector<Tensor<1, dim>>&   values)
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -645,7 +645,7 @@ int main()
       Step8::ElasticProblem<2> elastic_problem_2d;
       elastic_problem_2d.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

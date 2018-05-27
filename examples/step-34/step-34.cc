@@ -79,7 +79,7 @@ namespace Step34
   namespace LaplaceKernel
   {
     template <int dim>
-    double single_layer(const Tensor<1, dim> &R)
+    double single_layer(const Tensor<1, dim>& R)
     {
       switch (dim)
         {
@@ -98,7 +98,7 @@ namespace Step34
 
 
     template <int dim>
-    Tensor<1, dim> double_layer(const Tensor<1, dim> &R)
+    Tensor<1, dim> double_layer(const Tensor<1, dim>& R)
     {
       switch (dim)
         {
@@ -134,7 +134,7 @@ namespace Step34
     void run();
 
   private:
-    void read_parameters(const std::string &filename);
+    void read_parameters(const std::string& filename);
 
     void read_domain();
 
@@ -215,8 +215,8 @@ namespace Step34
     // To allow for dimension independent programming, we specialize this
     // single function to extract the singular quadrature formula needed to
     // integrate the singular kernels in the interior of the cells.
-    const Quadrature<dim - 1> &get_singular_quadrature(
-      const typename DoFHandler<dim - 1, dim>::active_cell_iterator &cell,
+    const Quadrature<dim - 1>& get_singular_quadrature(
+      const typename DoFHandler<dim - 1, dim>::active_cell_iterator& cell,
       const unsigned int index) const;
 
 
@@ -329,7 +329,7 @@ namespace Step34
 
 
   template <int dim>
-  void BEMProblem<dim>::read_parameters(const std::string &filename)
+  void BEMProblem<dim>::read_parameters(const std::string& filename)
   {
     deallog << std::endl
             << "Parsing parameter file " << filename << std::endl
@@ -602,8 +602,8 @@ namespace Step34
         fe_v.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
 
-        const std::vector<Point<dim>> &q_points = fe_v.get_quadrature_points();
-        const std::vector<Tensor<1, dim>> &normals = fe_v.get_normal_vectors();
+        const std::vector<Point<dim>>& q_points = fe_v.get_quadrature_points();
+        const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
         wind.vector_value_list(q_points, cell_wind);
 
         // We then form the integral over the current cell for all degrees of
@@ -671,7 +671,7 @@ namespace Step34
                 Assert(singular_index != numbers::invalid_unsigned_int,
                        ExcInternalError());
 
-                const Quadrature<dim - 1> &singular_quadrature =
+                const Quadrature<dim - 1>& singular_quadrature =
                   get_singular_quadrature(cell, singular_index);
 
                 FEValues<dim - 1, dim> fe_v_singular(
@@ -686,9 +686,9 @@ namespace Step34
                 std::vector<Vector<double>> singular_cell_wind(
                   singular_quadrature.size(), Vector<double>(dim));
 
-                const std::vector<Tensor<1, dim>> &singular_normals =
+                const std::vector<Tensor<1, dim>>& singular_normals =
                   fe_v_singular.get_normal_vectors();
-                const std::vector<Point<dim>> &singular_q_points =
+                const std::vector<Point<dim>>& singular_q_points =
                   fe_v_singular.get_quadrature_points();
 
                 wind.vector_value_list(singular_q_points, singular_cell_wind);
@@ -863,8 +863,8 @@ namespace Step34
   // singularity is located.
 
   template <>
-  const Quadrature<2> &BEMProblem<3>::get_singular_quadrature(
-    const DoFHandler<2, 3>::active_cell_iterator &,
+  const Quadrature<2>& BEMProblem<3>::get_singular_quadrature(
+    const DoFHandler<2, 3>::active_cell_iterator&,
     const unsigned int index) const
   {
     Assert(index < fe.dofs_per_cell, ExcIndexRange(0, fe.dofs_per_cell, index));
@@ -879,13 +879,13 @@ namespace Step34
 
 
   template <>
-  const Quadrature<1> &BEMProblem<2>::get_singular_quadrature(
-    const DoFHandler<1, 2>::active_cell_iterator &cell,
+  const Quadrature<1>& BEMProblem<2>::get_singular_quadrature(
+    const DoFHandler<1, 2>::active_cell_iterator& cell,
     const unsigned int                            index) const
   {
     Assert(index < fe.dofs_per_cell, ExcIndexRange(0, fe.dofs_per_cell, index));
 
-    static Quadrature<1> *q_pointer = nullptr;
+    static Quadrature<1>* q_pointer = nullptr;
     if (q_pointer)
       delete q_pointer;
 
@@ -955,8 +955,8 @@ namespace Step34
       {
         fe_v.reinit(cell);
 
-        const std::vector<Point<dim>> &q_points = fe_v.get_quadrature_points();
-        const std::vector<Tensor<1, dim>> &normals = fe_v.get_normal_vectors();
+        const std::vector<Point<dim>>& q_points = fe_v.get_quadrature_points();
+        const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
 
         cell->get_dof_indices(dofs);
         fe_v.get_function_values(phi, local_phi);
@@ -1097,7 +1097,7 @@ int main()
       BEMProblem<3> laplace_problem_3d(degree, mapping_degree);
       laplace_problem_3d.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -93,15 +93,15 @@ namespace Step37
     Coefficient() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
     template <typename number>
-    number value(const Point<dim, number> &p,
+    number value(const Point<dim, number>& p,
                  const unsigned int        component = 0) const;
 
-    virtual void value_list(const std::vector<Point<dim>> &points,
-                            std::vector<double> &          values,
+    virtual void value_list(const std::vector<Point<dim>>& points,
+                            std::vector<double>&           values,
                             const unsigned int component = 0) const override;
   };
 
@@ -130,7 +130,7 @@ namespace Step37
   // with double type, in order to avoid duplicating code.
   template <int dim>
   template <typename number>
-  number Coefficient<dim>::value(const Point<dim, number> &p,
+  number Coefficient<dim>::value(const Point<dim, number>& p,
                                  const unsigned int /*component*/) const
   {
     return 1. / (0.05 + 2. * p.square());
@@ -139,7 +139,7 @@ namespace Step37
 
 
   template <int dim>
-  double Coefficient<dim>::value(const Point<dim> & p,
+  double Coefficient<dim>::value(const Point<dim>&  p,
                                  const unsigned int component) const
   {
     return value<double>(p, component);
@@ -148,8 +148,8 @@ namespace Step37
 
 
   template <int dim>
-  void Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
-                                    std::vector<double> &          values,
+  void Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
+                                    std::vector<double>&           values,
                                     const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -250,26 +250,26 @@ namespace Step37
 
     void clear() override;
 
-    void evaluate_coefficient(const Coefficient<dim> &coefficient_function);
+    void evaluate_coefficient(const Coefficient<dim>& coefficient_function);
 
     virtual void compute_diagonal() override;
 
   private:
     virtual void apply_add(
-      LinearAlgebra::distributed::Vector<number> &      dst,
-      const LinearAlgebra::distributed::Vector<number> &src) const override;
+      LinearAlgebra::distributed::Vector<number>&       dst,
+      const LinearAlgebra::distributed::Vector<number>& src) const override;
 
     void
-    local_apply(const MatrixFree<dim, number> &                   data,
-                LinearAlgebra::distributed::Vector<number> &      dst,
-                const LinearAlgebra::distributed::Vector<number> &src,
-                const std::pair<unsigned int, unsigned int> &cell_range) const;
+    local_apply(const MatrixFree<dim, number>&                    data,
+                LinearAlgebra::distributed::Vector<number>&       dst,
+                const LinearAlgebra::distributed::Vector<number>& src,
+                const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     void local_compute_diagonal(
-      const MatrixFree<dim, number> &              data,
-      LinearAlgebra::distributed::Vector<number> & dst,
-      const unsigned int &                         dummy,
-      const std::pair<unsigned int, unsigned int> &cell_range) const;
+      const MatrixFree<dim, number>&               data,
+      LinearAlgebra::distributed::Vector<number>&  dst,
+      const unsigned int&                          dummy,
+      const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     Table<2, VectorizedArray<number>> coefficient;
   };
@@ -307,7 +307,7 @@ namespace Step37
   // FEEvaluation class (and its template arguments) will be explained below.
   template <int dim, int fe_degree, typename number>
   void LaplaceOperator<dim, fe_degree, number>::evaluate_coefficient(
-    const Coefficient<dim> &coefficient_function)
+    const Coefficient<dim>& coefficient_function)
   {
     const unsigned int n_cells = this->data->n_macro_cells();
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(*this->data);
@@ -417,10 +417,10 @@ namespace Step37
   // degrees of freedom).  </ol>
   template <int dim, int fe_degree, typename number>
   void LaplaceOperator<dim, fe_degree, number>::local_apply(
-    const MatrixFree<dim, number> &                   data,
-    LinearAlgebra::distributed::Vector<number> &      dst,
-    const LinearAlgebra::distributed::Vector<number> &src,
-    const std::pair<unsigned int, unsigned int> &     cell_range) const
+    const MatrixFree<dim, number>&                    data,
+    LinearAlgebra::distributed::Vector<number>&       dst,
+    const LinearAlgebra::distributed::Vector<number>& src,
+    const std::pair<unsigned int, unsigned int>&      cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
 
@@ -517,8 +517,8 @@ namespace Step37
   // entry of vmult() functions, so no information gets lost.
   template <int dim, int fe_degree, typename number>
   void LaplaceOperator<dim, fe_degree, number>::apply_add(
-    LinearAlgebra::distributed::Vector<number> &      dst,
-    const LinearAlgebra::distributed::Vector<number> &src) const
+    LinearAlgebra::distributed::Vector<number>&       dst,
+    const LinearAlgebra::distributed::Vector<number>& src) const
   {
     this->data->cell_loop(&LaplaceOperator::local_apply, this, dst, src);
   }
@@ -565,7 +565,7 @@ namespace Step37
   {
     this->inverse_diagonal_entries.reset(
       new DiagonalMatrix<LinearAlgebra::distributed::Vector<number>>());
-    LinearAlgebra::distributed::Vector<number> &inverse_diagonal =
+    LinearAlgebra::distributed::Vector<number>& inverse_diagonal =
       this->inverse_diagonal_entries->get_vector();
     this->data->initialize_dof_vector(inverse_diagonal);
     unsigned int dummy = 0;
@@ -634,10 +634,10 @@ namespace Step37
   // level matrices where no hanging node constraints appear.
   template <int dim, int fe_degree, typename number>
   void LaplaceOperator<dim, fe_degree, number>::local_compute_diagonal(
-    const MatrixFree<dim, number> &             data,
-    LinearAlgebra::distributed::Vector<number> &dst,
-    const unsigned int &,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
+    const MatrixFree<dim, number>&              data,
+    LinearAlgebra::distributed::Vector<number>& dst,
+    const unsigned int&,
+    const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
 
@@ -1206,7 +1206,7 @@ namespace Step37
 
 // Apart from the fact that we set up the MPI framework according to step-40,
 // there are no surprises in the main function.
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try
     {
@@ -1217,7 +1217,7 @@ int main(int argc, char *argv[])
       LaplaceProblem<dimension> laplace_problem;
       laplace_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

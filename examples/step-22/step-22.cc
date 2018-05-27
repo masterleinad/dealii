@@ -183,16 +183,16 @@ namespace Step22
     BoundaryValues() : Function<dim>(dim + 1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  value) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   value) const override;
   };
 
 
   template <int dim>
-  double BoundaryValues<dim>::value(const Point<dim> & p,
+  double BoundaryValues<dim>::value(const Point<dim>&  p,
                                     const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -205,8 +205,8 @@ namespace Step22
 
 
   template <int dim>
-  void BoundaryValues<dim>::vector_value(const Point<dim> &p,
-                                         Vector<double> &  values) const
+  void BoundaryValues<dim>::vector_value(const Point<dim>& p,
+                                         Vector<double>&   values) const
   {
     for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -223,16 +223,16 @@ namespace Step22
     RightHandSide() : Function<dim>(dim + 1)
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  value) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   value) const override;
   };
 
 
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> & /*p*/,
+  double RightHandSide<dim>::value(const Point<dim>& /*p*/,
                                    const unsigned int /*component*/) const
   {
     return 0;
@@ -240,8 +240,8 @@ namespace Step22
 
 
   template <int dim>
-  void RightHandSide<dim>::vector_value(const Point<dim> &p,
-                                        Vector<double> &  values) const
+  void RightHandSide<dim>::vector_value(const Point<dim>& p,
+                                        Vector<double>&   values) const
   {
     for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -270,10 +270,10 @@ namespace Step22
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType &        m,
-                  const PreconditionerType &preconditioner);
+    InverseMatrix(const MatrixType&         m,
+                  const PreconditionerType& preconditioner);
 
-    void vmult(Vector<double> &dst, const Vector<double> &src) const;
+    void vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
     const SmartPointer<const MatrixType>         matrix;
@@ -283,8 +283,8 @@ namespace Step22
 
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
-    const MatrixType &        m,
-    const PreconditionerType &preconditioner) :
+    const MatrixType&         m,
+    const PreconditionerType& preconditioner) :
     matrix(&m),
     preconditioner(&preconditioner)
   {}
@@ -302,8 +302,8 @@ namespace Step22
   // tolerance, either.
   template <class MatrixType, class PreconditionerType>
   void InverseMatrix<MatrixType, PreconditionerType>::vmult(
-    Vector<double> &      dst,
-    const Vector<double> &src) const
+    Vector<double>&       dst,
+    const Vector<double>& src) const
   {
     SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
     SolverCG<>    cg(solver_control);
@@ -329,10 +329,10 @@ namespace Step22
   {
   public:
     SchurComplement(
-      const BlockSparseMatrix<double> &system_matrix,
-      const InverseMatrix<SparseMatrix<double>, PreconditionerType> &A_inverse);
+      const BlockSparseMatrix<double>& system_matrix,
+      const InverseMatrix<SparseMatrix<double>, PreconditionerType>& A_inverse);
 
-    void vmult(Vector<double> &dst, const Vector<double> &src) const;
+    void vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
     const SmartPointer<const BlockSparseMatrix<double>> system_matrix;
@@ -347,8 +347,8 @@ namespace Step22
 
   template <class PreconditionerType>
   SchurComplement<PreconditionerType>::SchurComplement(
-    const BlockSparseMatrix<double> &system_matrix,
-    const InverseMatrix<SparseMatrix<double>, PreconditionerType> &A_inverse) :
+    const BlockSparseMatrix<double>& system_matrix,
+    const InverseMatrix<SparseMatrix<double>, PreconditionerType>& A_inverse) :
     system_matrix(&system_matrix),
     A_inverse(&A_inverse),
     tmp1(system_matrix.block(0, 0).m()),
@@ -358,8 +358,8 @@ namespace Step22
 
   template <class PreconditionerType>
   void
-  SchurComplement<PreconditionerType>::vmult(Vector<double> &      dst,
-                                             const Vector<double> &src) const
+  SchurComplement<PreconditionerType>::vmult(Vector<double>&       dst,
+                                             const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     A_inverse->vmult(tmp2, tmp1);
@@ -1038,7 +1038,7 @@ int main()
       StokesProblem<2> flow_problem(1);
       flow_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

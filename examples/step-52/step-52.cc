@@ -85,14 +85,14 @@ namespace Step52
 
     void assemble_system();
 
-    double get_source(const double time, const Point<2> &point) const;
+    double get_source(const double time, const Point<2>& point) const;
 
     Vector<double> evaluate_diffusion(const double          time,
-                                      const Vector<double> &y) const;
+                                      const Vector<double>& y) const;
 
     Vector<double> id_minus_tau_J_inverse(const double          time,
                                           const double          tau,
-                                          const Vector<double> &y);
+                                          const Vector<double>& y);
 
     void output_results(const unsigned int               time_step,
                         TimeStepping::runge_kutta_method method) const;
@@ -255,7 +255,7 @@ namespace Step52
   //
   // In this function, the source term of the equation for a given time and a
   // given point is computed.
-  double Diffusion::get_source(const double time, const Point<2> &point) const
+  double Diffusion::get_source(const double time, const Point<2>& point) const
   {
     const double intensity = 10.;
     const double frequency = numbers::PI / 10.;
@@ -284,7 +284,7 @@ namespace Step52
   // lines of code, or wanted to take advantage of doing the integration in
   // parallel.) The result is then multiplied by $M^{-1}$.
   Vector<double> Diffusion::evaluate_diffusion(const double          time,
-                                               const Vector<double> &y) const
+                                               const Vector<double>& y) const
   {
     Vector<double> tmp(dof_handler.n_dofs());
     tmp = 0.;
@@ -349,7 +349,7 @@ namespace Step52
   //   - return z.
   Vector<double> Diffusion::id_minus_tau_J_inverse(const double          time,
                                                    const double          tau,
-                                                   const Vector<double> &y)
+                                                   const Vector<double>& y)
   {
     (void)time;
     SparseDirectUMFPACK inverse_mass_minus_tau_Jacobian;
@@ -743,7 +743,7 @@ int main()
       Step52::Diffusion diffusion;
       diffusion.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

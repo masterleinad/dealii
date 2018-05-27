@@ -697,7 +697,7 @@ namespace Step40
 // <code>PetscFinalize</code> first deletes all PETSc vectors that are still
 // around, and the destructor of the LaplaceProblem class then tries to delete
 // them again.
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try
     {
@@ -709,7 +709,7 @@ int main(int argc, char *argv[])
       LaplaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

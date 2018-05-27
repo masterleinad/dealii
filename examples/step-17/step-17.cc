@@ -188,12 +188,12 @@ namespace Step17
   public:
     RightHandSide();
 
-    virtual void vector_value(const Point<dim> &p,
-                              Vector<double> &  values) const override;
+    virtual void vector_value(const Point<dim>& p,
+                              Vector<double>&   values) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>> &points,
-                      std::vector<Vector<double>> &  value_list) const override;
+    vector_value_list(const std::vector<Point<dim>>& points,
+                      std::vector<Vector<double>>&   value_list) const override;
   };
 
 
@@ -203,8 +203,8 @@ namespace Step17
 
 
   template <int dim>
-  inline void RightHandSide<dim>::vector_value(const Point<dim> &p,
-                                               Vector<double> &  values) const
+  inline void RightHandSide<dim>::vector_value(const Point<dim>& p,
+                                               Vector<double>&   values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
     Assert(dim >= 2, ExcInternalError());
@@ -229,8 +229,8 @@ namespace Step17
 
   template <int dim>
   void RightHandSide<dim>::vector_value_list(
-    const std::vector<Point<dim>> &points,
-    std::vector<Vector<double>> &  value_list) const
+    const std::vector<Point<dim>>& points,
+    std::vector<Vector<double>>&   value_list) const
   {
     const unsigned int n_points = points.size();
 
@@ -1027,7 +1027,7 @@ namespace Step17
 // functions in the other example programs, i.e., it delegates work to
 // the <code>run</code> function of a master object, and only wraps
 // everything into some code to catch exceptions:
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   try
     {
@@ -1043,7 +1043,7 @@ int main(int argc, char **argv)
       ElasticProblem<2> elastic_problem;
       elastic_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

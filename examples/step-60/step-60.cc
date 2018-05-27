@@ -277,14 +277,14 @@ namespace Step60
       bool initialized = false;
     };
 
-    DistributedLagrangeProblem(const Parameters &parameters);
+    DistributedLagrangeProblem(const Parameters& parameters);
 
     // Entry point for the DistributedLagrangeProblem
     void run();
 
   private:
     // Object containing the actual parameters
-    const Parameters &parameters;
+    const Parameters& parameters;
 
     // The following functions are similar to all other tutorial programs, with
     // the exception that we now need to set up things for two different
@@ -572,7 +572,7 @@ namespace Step60
   // `ParameterAcceptorProxy` objects, as explained earlier.
   template <int dim, int spacedim>
   DistributedLagrangeProblem<dim, spacedim>::DistributedLagrangeProblem(
-    const Parameters &parameters) :
+    const Parameters& parameters) :
     parameters(parameters),
     embedded_configuration_function("Embedded configuration", spacedim),
     embedded_value_function("Embedded value"),
@@ -815,7 +815,7 @@ namespace Step60
       {
         const auto point_locations = GridTools::compute_point_locations(
           *space_grid_tools_cache, support_points);
-        const auto &cells = std::get<0>(point_locations);
+        const auto& cells = std::get<0>(point_locations);
         for (auto cell : cells)
           {
             cell->set_refine_flag();
@@ -947,7 +947,7 @@ namespace Step60
         *space_dh,
         QGauss<spacedim>(2 * space_fe->degree + 1),
         stiffness_matrix,
-        (const Function<spacedim> *)nullptr,
+        (const Function<spacedim>*)nullptr,
         constraints);
 
       VectorTools::create_right_hand_side(
@@ -1068,7 +1068,7 @@ namespace Step60
 
 
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   try
     {
@@ -1103,7 +1103,7 @@ int main(int argc, char **argv)
       ParameterAcceptor::initialize(parameter_file, "used_parameters.prm");
       problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

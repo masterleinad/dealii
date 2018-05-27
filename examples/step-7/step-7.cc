@@ -188,11 +188,11 @@ namespace Step7
     Solution() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim> & p,
+    gradient(const Point<dim>&  p,
              const unsigned int component = 0) const override;
   };
 
@@ -212,7 +212,7 @@ namespace Step7
   // explain it, so if you are interested you can look it up under the phrase
   // <code>two-stage (name) lookup</code>.
   template <int dim>
-  double Solution<dim>::value(const Point<dim> &p, const unsigned int) const
+  double Solution<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     double return_value = 0;
     for (unsigned int i = 0; i < this->n_source_centers; ++i)
@@ -251,7 +251,7 @@ namespace Step7
   // dimension of their components is not that of a length, but of one over
   // length).
   template <int dim>
-  Tensor<1, dim> Solution<dim>::gradient(const Point<dim> &p,
+  Tensor<1, dim> Solution<dim>::gradient(const Point<dim>& p,
                                          const unsigned int) const
   {
     Tensor<1, dim> return_value;
@@ -287,7 +287,7 @@ namespace Step7
     RightHandSide() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
@@ -296,7 +296,7 @@ namespace Step7
   // the solution plus the solution itself, since we wanted to solve
   // Helmholtz's equation:
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> &p,
+  double RightHandSide<dim>::value(const Point<dim>& p,
                                    const unsigned int) const
   {
     double return_value = 0;
@@ -346,7 +346,7 @@ namespace Step7
       adaptive_refinement
     };
 
-    HelmholtzProblem(const FiniteElement<dim> &fe,
+    HelmholtzProblem(const FiniteElement<dim>& fe,
                      const RefinementMode      refinement_mode);
 
     ~HelmholtzProblem();
@@ -481,7 +481,7 @@ namespace Step7
   // (which is empty at present, however).
   template <int dim>
   HelmholtzProblem<dim>::HelmholtzProblem(
-    const FiniteElement<dim> &fe,
+    const FiniteElement<dim>& fe,
     const RefinementMode      refinement_mode) :
     dof_handler(triangulation),
     fe(&fe),
@@ -1373,7 +1373,7 @@ int main()
         std::cout << std::endl;
       }
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

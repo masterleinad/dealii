@@ -85,7 +85,7 @@ namespace Step41
     void setup_system();
     void assemble_system();
     void
-         assemble_mass_matrix_diagonal(TrilinosWrappers::SparseMatrix &mass_matrix);
+         assemble_mass_matrix_diagonal(TrilinosWrappers::SparseMatrix& mass_matrix);
     void update_solution_and_constraints();
     void solve();
     void output_results(const unsigned int iteration) const;
@@ -124,12 +124,12 @@ namespace Step41
     RightHandSide() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <int dim>
-  double RightHandSide<dim>::value(const Point<dim> &,
+  double RightHandSide<dim>::value(const Point<dim>&,
                                    const unsigned int component) const
   {
     (void)component;
@@ -147,12 +147,12 @@ namespace Step41
     BoundaryValues() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <int dim>
-  double BoundaryValues<dim>::value(const Point<dim> &,
+  double BoundaryValues<dim>::value(const Point<dim>&,
                                     const unsigned int component) const
   {
     (void)component;
@@ -172,12 +172,12 @@ namespace Step41
     Obstacle() : Function<dim>()
     {}
 
-    virtual double value(const Point<dim> & p,
+    virtual double value(const Point<dim>&  p,
                          const unsigned int component = 0) const override;
   };
 
   template <int dim>
-  double Obstacle<dim>::value(const Point<dim> & p,
+  double Obstacle<dim>::value(const Point<dim>&  p,
                               const unsigned int component) const
   {
     (void)component;
@@ -362,7 +362,7 @@ namespace Step41
   // is in fact satisfied.
   template <int dim>
   void ObstacleProblem<dim>::assemble_mass_matrix_diagonal(
-    TrilinosWrappers::SparseMatrix &mass_matrix)
+    TrilinosWrappers::SparseMatrix& mass_matrix)
   {
     Assert(fe.degree == 1, ExcNotImplemented());
 
@@ -647,7 +647,7 @@ namespace Step41
 // And this is the main function. It follows the pattern of all other main
 // functions. The call to initialize MPI exists because the Trilinos library
 // upon which we build our linear solvers in this program requires it.
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try
     {
@@ -665,7 +665,7 @@ int main(int argc, char *argv[])
       ObstacleProblem<2> obstacle_problem;
       obstacle_problem.run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl

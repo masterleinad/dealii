@@ -206,9 +206,9 @@ namespace Step53
   class AfricaGeometry : public ChartManifold<3, 3>
   {
   public:
-    virtual Point<3> pull_back(const Point<3> &space_point) const override;
+    virtual Point<3> pull_back(const Point<3>& space_point) const override;
 
-    virtual Point<3> push_forward(const Point<3> &chart_point) const override;
+    virtual Point<3> push_forward(const Point<3>& chart_point) const override;
 
     virtual std::unique_ptr<Manifold<3, 3>> clone() const override;
 
@@ -218,11 +218,11 @@ namespace Step53
 
     const AfricaTopography topography;
 
-    Point<3> push_forward_wgs84(const Point<3> &phi_theta_d) const;
-    Point<3> pull_back_wgs84(const Point<3> &x) const;
+    Point<3> push_forward_wgs84(const Point<3>& phi_theta_d) const;
+    Point<3> pull_back_wgs84(const Point<3>& x) const;
 
-    Point<3> push_forward_topo(const Point<3> &phi_theta_d_hat) const;
-    Point<3> pull_back_topo(const Point<3> &phi_theta_d) const;
+    Point<3> push_forward_topo(const Point<3>& phi_theta_d_hat) const;
+    Point<3> pull_back_topo(const Point<3>& phi_theta_d) const;
   };
 
 
@@ -234,12 +234,12 @@ namespace Step53
   // read the introduction. In particular, both of the pull back and
   // push forward functions are just concatenations of the respective
   // functions of the WGS 84 and topography mappings:
-  Point<3> AfricaGeometry::pull_back(const Point<3> &space_point) const
+  Point<3> AfricaGeometry::pull_back(const Point<3>& space_point) const
   {
     return pull_back_topo(pull_back_wgs84(space_point));
   }
 
-  Point<3> AfricaGeometry::push_forward(const Point<3> &chart_point) const
+  Point<3> AfricaGeometry::push_forward(const Point<3>& chart_point) const
   {
     return push_forward_wgs84(push_forward_topo(chart_point));
   }
@@ -268,7 +268,7 @@ namespace Step53
   // fact that it returns an angle that at the end of the function we
   // need to clip back into the interval $[0,2\pi]$ if it should have
   // escaped from there.
-  Point<3> AfricaGeometry::push_forward_wgs84(const Point<3> &phi_theta_d) const
+  Point<3> AfricaGeometry::push_forward_wgs84(const Point<3>& phi_theta_d) const
   {
     const double phi   = phi_theta_d[0];
     const double theta = phi_theta_d[1];
@@ -283,7 +283,7 @@ namespace Step53
                       std::sin(theta));
   }
 
-  Point<3> AfricaGeometry::pull_back_wgs84(const Point<3> &x) const
+  Point<3> AfricaGeometry::pull_back_wgs84(const Point<3>& x) const
   {
     const double b     = std::sqrt(R * R * (1 - ellipticity * ellipticity));
     const double ep    = std::sqrt((R * R - b * b) / (b * b));
@@ -315,7 +315,7 @@ namespace Step53
   // description in the introduction. There is not consequently not
   // much to add:
   Point<3>
-  AfricaGeometry::push_forward_topo(const Point<3> &phi_theta_d_hat) const
+  AfricaGeometry::push_forward_topo(const Point<3>& phi_theta_d_hat) const
   {
     const double   d_hat = phi_theta_d_hat[2];
     const double   h = topography.value(phi_theta_d_hat[0], phi_theta_d_hat[1]);
@@ -324,7 +324,7 @@ namespace Step53
     return phi_theta_d;
   }
 
-  Point<3> AfricaGeometry::pull_back_topo(const Point<3> &phi_theta_d) const
+  Point<3> AfricaGeometry::pull_back_topo(const Point<3>& phi_theta_d) const
   {
     const double   d     = phi_theta_d[2];
     const double   h     = topography.value(phi_theta_d[0], phi_theta_d[1]);
@@ -451,7 +451,7 @@ int main()
     {
       Step53::run();
     }
-  catch (std::exception &exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
