@@ -125,7 +125,7 @@ check(const double (&array)[N], const Point<dim>(&point))
                                       point_compressed.cend(),
                                       false);
     }
-  catch (boost::archive::archive_exception)
+  catch (const boost::archive::archive_exception &)
     {
       deallog << "unpacking compressed point without decompression failed!"
               << std::endl;
@@ -138,7 +138,7 @@ check(const double (&array)[N], const Point<dim>(&point))
                         forbidden,
                         false);
     }
-  catch (boost::archive::archive_exception)
+  catch (const boost::archive::archive_exception &)
     {
       deallog << "unpacking compressed array without decompression failed!"
               << std::endl;
@@ -151,7 +151,7 @@ check(const double (&array)[N], const Point<dim>(&point))
                                       point_uncompressed.cend(),
                                       true);
     }
-  catch (boost::archive::archive_exception)
+  catch (const boost::archive::archive_exception &)
     {
       deallog << "unpacking uncompressed point with decompression failed!"
               << std::endl;
@@ -164,7 +164,7 @@ check(const double (&array)[N], const Point<dim>(&point))
                         forbidden,
                         true);
     }
-  catch (boost::archive::archive_exception)
+  catch (const boost::archive::archive_exception &)
     {
       deallog << "unpacking uncompressed array with decompression failed!"
               << std::endl;
