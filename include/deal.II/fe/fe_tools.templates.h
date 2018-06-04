@@ -3311,6 +3311,13 @@ namespace FETools
       hierarchic_to_lexicographic_numbering(fe));
   }
 
+  template <int dim>
+  std::vector<unsigned int>
+  general_lexicographic_to_hierarchic(const std::vector<unsigned int> &)
+  {
+    Assert(false, ExcNotImplemented());
+    return {};
+  }
 } // end of namespace FETools
 
 
