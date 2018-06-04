@@ -944,6 +944,14 @@ namespace FETools
   std::vector<unsigned int>
   lexicographic_to_hierarchic_numbering(const FiniteElementData<dim> &fe_data);
 
+  /**
+   * Like the previous function but assume that the number of degrees of freedom
+   * per object can be determined from the one-dimensional number of degrees
+   * of freedom
+   */
+  template <int dim>
+  std::vector<unsigned int>
+  general_lexicographic_to_hierarchic(const std::vector<unsigned int> &dpo);
 
   /**
    * A namespace that contains functions that help setting up internal
