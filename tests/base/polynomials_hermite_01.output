@@ -1,0 +1,93 @@
+
+DEAL::Polynomial 0
+DEAL::n_points: 2
+DEAL::value at 0.00000: 1.00000 derivative at 0.00000: 0.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 1
+DEAL::n_points: 2
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 1.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 2
+DEAL::n_points: 2
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 1.00000: 1.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 3
+DEAL::n_points: 2
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 1.00000
+DEAL::
+DEAL::Polynomial 0
+DEAL::n_points: 3
+DEAL::value at 0.00000: 1.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.500000: 0.00000 derivative at 0.500000: -1.50000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 1
+DEAL::n_points: 3
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 1.00000
+DEAL::value at 0.500000: 0.00000 derivative at 0.500000: -0.250000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 2
+DEAL::n_points: 3
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.500000: 0.00000 derivative at 0.500000: 1.50000
+DEAL::value at 1.00000: 1.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 3
+DEAL::n_points: 3
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.500000: 0.00000 derivative at 0.500000: -0.250000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 1.00000
+DEAL::
+DEAL::Polynomial 4
+DEAL::n_points: 3
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.500000: 1.00000 derivative at 0.500000: 0.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 0
+DEAL::n_points: 4
+DEAL::value at 0.00000: 1.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.333333: 0.00000 derivative at 0.333333: -2.11111
+DEAL::value at 0.666667: 0.00000 derivative at 0.666667: 0.888889
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 1
+DEAL::n_points: 4
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 1.00000
+DEAL::value at 0.333333: 0.00000 derivative at 0.333333: -0.222222
+DEAL::value at 0.666667: 0.00000 derivative at 0.666667: 0.111111
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 2
+DEAL::n_points: 4
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.333333: 0.00000 derivative at 0.333333: -0.888889
+DEAL::value at 0.666667: 1.18424e-15 derivative at 0.666667: 2.11111
+DEAL::value at 1.00000: 1.00000 derivative at 1.00000: 1.59872e-14
+DEAL::
+DEAL::Polynomial 3
+DEAL::n_points: 4
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.333333: 0.00000 derivative at 0.333333: 0.111111
+DEAL::value at 0.666667: -1.48030e-16 derivative at 0.666667: -0.222222
+DEAL::value at 1.00000: -5.55112e-16 derivative at 1.00000: 1.00000
+DEAL::
+DEAL::Polynomial 4
+DEAL::n_points: 4
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.333333: 1.00000 derivative at 0.333333: 0.00000
+DEAL::value at 0.666667: 0.00000 derivative at 0.666667: -3.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: 0.00000
+DEAL::
+DEAL::Polynomial 5
+DEAL::n_points: 4
+DEAL::value at 0.00000: 0.00000 derivative at 0.00000: 0.00000
+DEAL::value at 0.333333: 0.00000 derivative at 0.333333: 3.00000
+DEAL::value at 0.666667: 1.00000 derivative at 0.666667: 0.00000
+DEAL::value at 1.00000: 0.00000 derivative at 1.00000: -7.10543e-15
+DEAL::

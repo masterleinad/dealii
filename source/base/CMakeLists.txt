@@ -60,6 +60,7 @@ SET(_unity_include_src
   polynomials_bdm.cc
   polynomials_bernardi_raugel.cc
   polynomials_nedelec.cc
+  polynomials_hermite.cc
   polynomials_integrated_legendre_sz.cc
   polynomial_space.cc
   polynomials_p.cc
