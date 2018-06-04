@@ -67,6 +67,7 @@ SET(_separate_src
   fe_values_inst5.cc
   fe_values_inst6.cc
   mapping_fe_field.cc
+  mapping_hermite.cc
   mapping_fe_field_inst2.cc
   fe_tools_interpolate.cc
   fe_tools_extrapolate.cc
@@ -126,6 +127,7 @@ SET(_inst
   mapping_cartesian.inst.in
   mapping.inst.in
   mapping_fe_field.inst.in
+  mapping_hermite.inst.in
   mapping_q_generic.inst.in
   mapping_q1_eulerian.inst.in
   mapping_q1.inst.in
