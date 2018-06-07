@@ -444,7 +444,9 @@ public:
   /**
    * Invert the matrix by first computing a Cholesky for symmetric matrices
    * or a LU factorization for general matrices and then
-   * building the actual inverse using <code>pXpotri</code> or <code>pXgetri</code>.
+   * building the actual inverse using <code>pXpotri</code> or
+   * <code>pXgetri</code>. If the matrix is triangular, the LU factorization
+   * step is skipped, and <code>pXtrtri</code> is used directly.
    *
    * If a Cholesky or LU factorization has been applied previously,
    * <code>pXpotri</code> or <code>pXgetri</code> are called directly.
