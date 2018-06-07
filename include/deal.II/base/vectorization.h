@@ -159,7 +159,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 1;
+  static const unsigned int n_array_elements = 1;
 
   // POD means that there should be no user-defined constructors, destructors
   // and copy functions (the standard is somewhat relaxed in C++2011, though).
@@ -565,7 +565,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 8;
+  static const unsigned int n_array_elements = 8;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -967,7 +967,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 16;
+  static const unsigned int n_array_elements = 16;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -1402,7 +1402,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 4;
+  static const unsigned int n_array_elements = 4;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -1781,7 +1781,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 8;
+  static const unsigned int n_array_elements = 8;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -2191,7 +2191,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 2;
+  static const unsigned int n_array_elements = 2;
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -2529,7 +2529,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static constexpr unsigned int n_array_elements = 4;
+  static const unsigned int n_array_elements = 4;
 
   /**
    * This function can be used to set all data fields to a given scalar.
