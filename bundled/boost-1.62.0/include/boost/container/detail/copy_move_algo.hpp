@@ -143,21 +143,21 @@ struct is_memtransfer_copy_assignable
 {};
 
 template <typename I, typename O>
-struct is_memtransfer_copy_constructible
+struct is_memtransfer_copyable
    : boost::move_detail::and_
       < are_contiguous_and_same<I, O>
-      , container_detail::is_trivially_copy_constructible< typename ::boost::container::iterator_traits<I>::value_type >
+      , std::is_trivially_copyable< typename ::boost::container::iterator_traits<I>::value_type >
       >
 {};
 
 template <typename I, typename O, typename R>
-struct enable_if_memtransfer_copy_constructible
-   : enable_if<container_detail::is_memtransfer_copy_constructible<I, O>, R>
+struct enable_if_memtransfer_copyable
+   : enable_if<container_detail::is_memtransfer_copyable<I, O>, R>
 {};
 
 template <typename I, typename O, typename R>
-struct disable_if_memtransfer_copy_constructible
-   : disable_if<container_detail::is_memtransfer_copy_constructible<I, O>, R>
+struct disable_if_memtransfer_copyable
+   : disable_if<container_detail::is_memtransfer_copyable<I, O>, R>
 {};
 
 template <typename I, typename O, typename R>
@@ -286,7 +286,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_move_alloc(Allocator &a, I f, I l, F r)
 {
    F back = r;
@@ -310,7 +310,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_move_alloc(Allocator &, I f, I l, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove(f, l, r); }
 
@@ -331,7 +331,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_move_alloc_n(Allocator &a, I f, typename boost::container::iterator_traits<I>::difference_type n, F r)
 {
    F back = r;
@@ -355,7 +355,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_move_alloc_n(Allocator &, I f, typename boost::container::iterator_traits<I>::difference_type n, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove_n(f, n, r); }
 
@@ -376,7 +376,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, I>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, I>::type
    uninitialized_move_alloc_n_source(Allocator &a, I f, typename boost::container::iterator_traits<I>::difference_type n, F r)
 {
    F back = r;
@@ -400,7 +400,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, I>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, I>::type
    uninitialized_move_alloc_n_source(Allocator &, I f, typename boost::container::iterator_traits<I>::difference_type n, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove_n_source(f, n, r); }
 
@@ -421,7 +421,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_copy_alloc(Allocator &a, I f, I l, F r)
 {
    F back = r;
@@ -445,7 +445,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_copy_alloc(Allocator &, I f, I l, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove(f, l, r); }
 
@@ -466,7 +466,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_copy_alloc_n(Allocator &a, I f, typename boost::container::iterator_traits<I>::difference_type n, F r)
 {
    F back = r;
@@ -490,7 +490,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, F>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, F>::type
    uninitialized_copy_alloc_n(Allocator &, I f, typename boost::container::iterator_traits<I>::difference_type n, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove_n(f, n, r); }
 
@@ -511,7 +511,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::disable_if_memtransfer_copy_constructible<I, F, I>::type
+inline typename container_detail::disable_if_memtransfer_copyable<I, F, I>::type
    uninitialized_copy_alloc_n_source(Allocator &a, I f, typename boost::container::iterator_traits<I>::difference_type n, F r)
 {
    F back = r;
@@ -535,7 +535,7 @@ template
    <typename Allocator,
     typename I, // I models InputIterator
     typename F> // F models ForwardIterator
-inline typename container_detail::enable_if_memtransfer_copy_constructible<I, F, I>::type
+inline typename container_detail::enable_if_memtransfer_copyable<I, F, I>::type
    uninitialized_copy_alloc_n_source(Allocator &, I f, typename boost::container::iterator_traits<I>::difference_type n, F r) BOOST_NOEXCEPT_OR_NOTHROW
 {  return container_detail::memmove_n_source(f, n, r); }
 
