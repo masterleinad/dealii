@@ -1171,7 +1171,7 @@ namespace
               [&matrix](Range &b, const Domain &a) { matrix.vmult(b, a); },
               v,
               u,
-              /*bool add =*/false);
+              /*bool add =*/true);
           }
         else
           {
