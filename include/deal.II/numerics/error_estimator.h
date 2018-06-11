@@ -22,8 +22,6 @@
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/function.h>
 
-#include <deal.II/dofs/function_map.h>
-
 #include <deal.II/fe/component_mask.h>
 
 #include <map>
@@ -338,7 +336,8 @@ public:
     const Mapping<dim, spacedim> &mapping,
     const DoFHandlerType &        dof,
     const Quadrature<dim - 1> &   quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -358,7 +357,8 @@ public:
   estimate(
     const DoFHandlerType &     dof,
     const Quadrature<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -388,7 +388,8 @@ public:
     const Mapping<dim, spacedim> &mapping,
     const DoFHandlerType &        dof,
     const Quadrature<dim - 1> &   quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -408,7 +409,8 @@ public:
   estimate(
     const DoFHandlerType &     dof,
     const Quadrature<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -430,7 +432,8 @@ public:
     const Mapping<dim, spacedim> &  mapping,
     const DoFHandlerType &          dof,
     const hp::QCollection<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -451,7 +454,8 @@ public:
   estimate(
     const DoFHandlerType &          dof,
     const hp::QCollection<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -473,7 +477,8 @@ public:
     const Mapping<dim, spacedim> &  mapping,
     const DoFHandlerType &          dof,
     const hp::QCollection<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -494,7 +499,8 @@ public:
   estimate(
     const DoFHandlerType &          dof,
     const hp::QCollection<dim - 1> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -617,7 +623,8 @@ public:
     const Mapping<1, spacedim> &mapping,
     const DoFHandlerType &      dof,
     const Quadrature<0> &       quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -637,7 +644,8 @@ public:
   estimate(
     const DoFHandlerType &dof,
     const Quadrature<0> & quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -667,7 +675,8 @@ public:
     const Mapping<1, spacedim> &mapping,
     const DoFHandlerType &      dof,
     const Quadrature<0> &       quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -687,7 +696,8 @@ public:
   estimate(
     const DoFHandlerType &dof,
     const Quadrature<0> & quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -709,7 +719,8 @@ public:
     const Mapping<1, spacedim> &mapping,
     const DoFHandlerType &      dof,
     const hp::QCollection<0> &  quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -730,7 +741,8 @@ public:
   estimate(
     const DoFHandlerType &    dof,
     const hp::QCollection<0> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                       neumann_bc,
     const InputVector &       solution,
     Vector<float> &           error,
@@ -752,7 +764,8 @@ public:
     const Mapping<1, spacedim> &mapping,
     const DoFHandlerType &      dof,
     const hp::QCollection<0> &  quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
@@ -773,7 +786,8 @@ public:
   estimate(
     const DoFHandlerType &    dof,
     const hp::QCollection<0> &quadrature,
-    const typename FunctionMap<spacedim, typename InputVector::value_type>::type
+    const std::map<types::boundary_id,
+                   const Function<spacedim, typename InputVector::value_type> *>
       &                                     neumann_bc,
     const std::vector<const InputVector *> &solutions,
     std::vector<Vector<float> *> &          errors,
