@@ -3362,6 +3362,201 @@ namespace VectorTools
       solve_for_one_component(false);
     }
 
+    /**
+     * Operator representing a boundary mass matrix used in
+     * project_boundary_values.
+     */
+    template <int dim, int fe_degree, typename number>
+    class MassBoundaryOperator : public Subscriptor
+    {
+    public:
+      MassBoundaryOperator() = default;
+
+      void
+      initialize(const std::shared_ptr<const MatrixFree<dim, number>> &data)
+      {
+        this->data = data;
+      }
+
+      void
+      initialize_dof_vector(
+        LinearAlgebra::distributed::Vector<number> &vec) const
+      {
+        data->initialize_dof_vector(vec);
+      }
+
+      void
+      vmult(LinearAlgebra::distributed::Vector<number> &      dst,
+            const LinearAlgebra::distributed::Vector<number> &src) const
+      {
+        data->loop(&MassBoundaryOperator::apply_cell,
+                   &MassBoundaryOperator::apply_face,
+                   &MassBoundaryOperator::apply_boundary,
+                   this,
+                   dst,
+                   src,
+                   /*zero_dst =*/true,
+                   MatrixFree<dim, number>::DataAccessOnFaces::none,
+                   MatrixFree<dim, number>::DataAccessOnFaces::none);
+      }
+
+    private:
+      void
+      apply_cell(
+        const MatrixFree<dim, number> & /*data*/,
+        LinearAlgebra::distributed::Vector<number> & /*dst*/,
+        const LinearAlgebra::distributed::Vector<number> & /*src*/,
+        const std::pair<unsigned int, unsigned int> & /*cell_range*/) const
+      {}
+
+      void
+      apply_face(
+        const MatrixFree<dim, number> & /*data*/,
+        LinearAlgebra::distributed::Vector<number> & /*dst*/,
+        const LinearAlgebra::distributed::Vector<number> & /*src*/,
+        const std::pair<unsigned int, unsigned int> & /*face_range*/) const
+      {}
+
+      void
+      apply_boundary(
+        const MatrixFree<dim, number> &                   data,
+        LinearAlgebra::distributed::Vector<number> &      dst,
+        const LinearAlgebra::distributed::Vector<number> &src,
+        const std::pair<unsigned int, unsigned int> &     face_range) const
+      {
+        FEFaceEvaluation<dim, fe_degree, fe_degree + 2, 1, number> phi(data,
+                                                                       true);
+        for (unsigned int face = face_range.first; face < face_range.second;
+             ++face)
+          {
+            phi.reinit(face);
+            phi.gather_evaluate(src, true, false);
+
+            for (unsigned int q = 0; q < phi.n_q_points; ++q)
+              phi.submit_value(phi.get_value(q), q);
+
+            phi.integrate_scatter(true, false, dst);
+          }
+      }
+
+      std::shared_ptr<const MatrixFree<dim, number>> data;
+    };
+
+    /*
+     * MatrixFree implementation of project_boundary_values() for an arbitrary
+     * number of components and arbitrary degree of the FiniteElement.
+     */
+    template <int components,
+              int dim,
+              typename number,
+              int spacedim,
+              template <int, int> class DoFHandlerType,
+              template <int, int> class M_or_MC>
+    std::map<types::global_dof_index, number>
+    project_boundary_values_matrix_free(
+      const M_or_MC<dim, spacedim> &       mapping,
+      const DoFHandlerType<dim, spacedim> &dof,
+      const std::map<types::boundary_id, const Function<spacedim, number> *>
+        &boundary_functions,
+      const std::vector<unsigned int> & /*component_mapping*/)
+    {
+      const FiniteElement<dim, spacedim> &fe = dof.get_fe(0);
+
+      Assert(fe.n_components() == 1, ExcNotImplemented());
+
+      // set up mass matrix and right hand side
+      MassBoundaryOperator<dim, -1, number> system_matrix;
+      ConstraintMatrix                      dummy;
+      dummy.close();
+      std::shared_ptr<MatrixFree<dim, double>> system_mf_storage(
+        new MatrixFree<dim, double>());
+      {
+        typename MatrixFree<dim, double>::AdditionalData additional_data;
+        additional_data.tasks_parallel_scheme =
+          MatrixFree<dim, double>::AdditionalData::none;
+        additional_data.mapping_update_flags_boundary_faces =
+          (update_JxW_values | update_quadrature_points);
+        system_mf_storage->reinit(
+          mapping, dof, dummy, QGauss<1>(fe.degree + 2), additional_data);
+        system_matrix.initialize(system_mf_storage);
+      }
+
+      LinearAlgebra::distributed::Vector<number> solution, system_rhs;
+      system_matrix.initialize_dof_vector(solution);
+      system_matrix.initialize_dof_vector(system_rhs);
+
+      {
+        system_rhs = 0;
+
+        FEFaceEvaluation<dim, -1, 0> phi_face(*system_mf_storage, true);
+        for (unsigned int face = system_mf_storage->n_inner_face_batches();
+             face < system_mf_storage->n_inner_face_batches() +
+                      system_mf_storage->n_boundary_face_batches();
+             ++face)
+          {
+            phi_face.reinit(face);
+
+            const Function<spacedim, number> &approximated_function =
+              *boundary_functions.at(system_mf_storage->get_boundary_id(face));
+
+            for (unsigned int q = 0; q < phi_face.n_q_points; ++q)
+              {
+                VectorizedArray<double>             test_value{};
+                Point<dim, VectorizedArray<double>> point_batch =
+                  phi_face.quadrature_point(q);
+
+                for (unsigned int v = 0;
+                     v < VectorizedArray<double>::n_array_elements;
+                     ++v)
+                  {
+                    Point<dim> single_point;
+                    for (unsigned int d = 0; d < dim; ++d)
+                      single_point[d] = point_batch[d][v];
+
+                    test_value[v] = approximated_function.value(single_point);
+                  }
+                phi_face.submit_value(test_value, q);
+              }
+            phi_face.integrate_scatter(true, false, system_rhs);
+          }
+
+        system_rhs.compress(VectorOperation::add);
+      }
+
+      // now invert the matrix
+      // Allow for a maximum of 6*n steps to reduce the residual by 10^-12. n
+      // steps may not be sufficient, since roundoff errors may accumulate for
+      // badly conditioned matrices. This behavior can be observed, e.g. for
+      // FE_Q_Hierarchical for degree higher than three.
+      ReductionControl control(6. * system_rhs.size(), 0., 1e-12, false, false);
+      SolverCG<LinearAlgebra::distributed::Vector<number>> cg(control);
+      cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
+
+      // now loop over all cells and check whether their faces are at the
+      // boundary. note that we need not take special care of single lines
+      // being at the boundary (using @p{cell->has_boundary_lines}), since we
+      // do not support boundaries of dimension dim-2, and so every isolated
+      // boundary line is also part of a boundary face which we will be
+      // visiting sooner or later
+      std::vector<types::global_dof_index> dofs_on_face;
+      dofs_on_face.reserve(dof.get_fe_collection().max_dofs_per_face());
+      std::map<types::global_dof_index, number> boundary_values;
+      typename DoFHandlerType<dim, spacedim>::active_cell_iterator
+        cell = dof.begin_active(),
+        endc = dof.end();
+      for (; cell != endc; ++cell)
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->at_boundary(f))
+            {
+              const unsigned int dofs_per_face = cell->get_fe().dofs_per_face;
+              dofs_on_face.resize(dofs_per_face);
+              cell->face(f)->get_dof_indices(dofs_on_face,
+                                             cell->active_fe_index());
+              for (unsigned int i = 0; i < dofs_per_face; ++i)
+                boundary_values[dofs_on_face[i]] = solution(dofs_on_face[i]);
+            }
+      return boundary_values;
+    }
 
     template <int dim,
               int spacedim,
@@ -3388,12 +3583,6 @@ namespace VectorTools
           return;
         }
 
-      // TODO:[?] In project_boundary_values, no condensation of sparsity
-      //    structures, matrices and right hand sides or distribution of
-      //    solution vectors is performed. This is ok for dim<3 because then
-      //    there are no constrained nodes on the boundary, but is not
-      //    acceptable for higher dimensions. Fix this.
-
       if (component_mapping.size() == 0)
         {
           AssertDimension(dof.get_fe(0).n_components(),
@@ -3407,6 +3596,16 @@ namespace VectorTools
         }
       else
         AssertDimension(dof.get_fe(0).n_components(), component_mapping.size());
+
+      boundary_values = project_boundary_values_matrix_free<1>(
+        mapping, dof, boundary_functions, component_mapping);
+      return;
+
+      // TODO:[?] In project_boundary_values, no condensation of sparsity
+      //    structures, matrices and right hand sides or distribution of
+      //    solution vectors is performed. This is ok for dim<3 because then
+      //    there are no constrained nodes on the boundary, but is not
+      //    acceptable for higher dimensions. Fix this.
 
       std::vector<types::global_dof_index> dof_to_boundary_mapping;
       std::set<types::boundary_id>         selected_boundary_components;

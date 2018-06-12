@@ -7325,9 +7325,10 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
 
   constexpr unsigned int stack_array_size_threshold = 100;
 
-  VectorizedArray<Number> temp_data[dofs_per_face < stack_array_size_threshold ?
-                                      n_components_ * 2 * dofs_per_face :
-                                      1];
+  std::vector<VectorizedArray<Number>> temp_data(
+    dofs_per_face < stack_array_size_threshold ?
+      n_components_ * 2 * dofs_per_face :
+      1);
   VectorizedArray<Number> *__restrict temp1;
   if (dofs_per_face < stack_array_size_threshold)
     temp1 = &temp_data[0];
