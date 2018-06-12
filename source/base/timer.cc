@@ -551,10 +551,8 @@ TimerOutput::print_summary() const
 
   // get the maximum width among all sections
   unsigned int max_width = 0;
-  for (std::map<std::string, Section>::const_iterator i = sections.begin();
-       i != sections.end();
-       ++i)
-    max_width = std::max(max_width, (unsigned int)i->first.length());
+  for (const auto &i : sections)
+    max_width = std::max(max_width, (unsigned int)i.first.length());
 
   // 32 is the default width until | character
   max_width                     = std::max(max_width + 1, (unsigned int)32);
@@ -573,11 +571,8 @@ TimerOutput::print_summary() const
           // time. otherwise, we might have generated a lot of overhead in this
           // function.
           double check_time = 0.;
-          for (std::map<std::string, Section>::const_iterator i =
-                 sections.begin();
-               i != sections.end();
-               ++i)
-            check_time += i->second.total_cpu_time;
+          for (const auto &i : sections)
+            check_time += i.second.total_cpu_time;
 
           const double time_gap = check_time - total_cpu_time;
           if (time_gap > 0.0)
@@ -604,12 +599,9 @@ TimerOutput::print_summary() const
           out_stream << "+---------------------------------" << extra_dash
                      << "+-----------+------------"
                      << "+------------+";
-          for (std::map<std::string, Section>::const_iterator i =
-                 sections.begin();
-               i != sections.end();
-               ++i)
+          for (const auto &i : sections)
             {
-              std::string name_out = i->first;
+              std::string name_out = i.first;
 
               // resize the array so that it is always of the same size
               unsigned int pos_non_space = name_out.find_first_not_of(' ');
@@ -619,10 +611,10 @@ TimerOutput::print_summary() const
               out_stream << "| " << name_out;
               out_stream << "| ";
               out_stream << std::setw(9);
-              out_stream << i->second.n_calls << " |";
+              out_stream << i.second.n_calls << " |";
               out_stream << std::setw(10);
               out_stream << std::setprecision(3);
-              out_stream << i->second.total_cpu_time << "s |";
+              out_stream << i.second.total_cpu_time << "s |";
               out_stream << std::setw(10);
               if (total_cpu_time != 0)
                 {
@@ -630,7 +622,7 @@ TimerOutput::print_summary() const
                   // printing silly things such as "2.45e-6%". otherwise print
                   // the actual percentage
                   const double fraction =
-                    i->second.total_cpu_time / total_cpu_time;
+                    i.second.total_cpu_time / total_cpu_time;
                   if (fraction > 0.001)
                     {
                       out_stream << std::setprecision(2);
@@ -684,12 +676,9 @@ TimerOutput::print_summary() const
           out_stream << "+---------------------------------" << extra_dash
                      << "+-----------+------------"
                      << "+------------+";
-          for (std::map<std::string, Section>::const_iterator i =
-                 sections.begin();
-               i != sections.end();
-               ++i)
+          for (const auto &i : sections)
             {
-              std::string name_out = i->first;
+              std::string name_out = i.first;
 
               // resize the array so that it is always of the same size
               unsigned int pos_non_space = name_out.find_first_not_of(' ');
@@ -699,10 +688,10 @@ TimerOutput::print_summary() const
               out_stream << "| " << name_out;
               out_stream << "| ";
               out_stream << std::setw(9);
-              out_stream << i->second.n_calls << " |";
+              out_stream << i.second.n_calls << " |";
               out_stream << std::setw(10);
               out_stream << std::setprecision(3);
-              out_stream << i->second.total_wall_time << "s |";
+              out_stream << i.second.total_wall_time << "s |";
               out_stream << std::setw(10);
 
               if (total_wall_time != 0)
@@ -711,7 +700,7 @@ TimerOutput::print_summary() const
                   // printing silly things such as "2.45e-6%". otherwise print
                   // the actual percentage
                   const double fraction =
-                    i->second.total_wall_time / total_wall_time;
+                    i.second.total_wall_time / total_wall_time;
                   if (fraction > 0.001)
                     {
                       out_stream << std::setprecision(2);
@@ -743,10 +732,8 @@ TimerOutput::print_summary() const
       // otherwise, we might have generated a lot of overhead in this function.
       double check_time = 0.;
 
-      for (std::map<std::string, Section>::const_iterator i = sections.begin();
-           i != sections.end();
-           ++i)
-        check_time += i->second.total_cpu_time;
+      for (const auto &i : sections)
+        check_time += i.second.total_cpu_time;
 
       const double time_gap = check_time - total_cpu_time;
       if (time_gap > 0.0)
@@ -776,11 +763,9 @@ TimerOutput::print_summary() const
                  << "------------+------------+"
                  << "------------+------------+" << std::endl;
 
-      for (std::map<std::string, Section>::const_iterator i = sections.begin();
-           i != sections.end();
-           ++i)
+      for (const auto &i : sections)
         {
-          std::string name_out = i->first;
+          std::string name_out = i.first;
 
           // resize the array so that it is always of the same size
           unsigned int pos_non_space = name_out.find_first_not_of(' ');
@@ -789,13 +774,13 @@ TimerOutput::print_summary() const
           out_stream << "| " << name_out << "| ";
 
           out_stream << std::setw(9);
-          out_stream << i->second.n_calls << " |";
+          out_stream << i.second.n_calls << " |";
 
           if (output_type != wall_times)
             {
               out_stream << std::setw(10);
               out_stream << std::setprecision(3);
-              out_stream << i->second.total_cpu_time << "s |";
+              out_stream << i.second.total_cpu_time << "s |";
               out_stream << std::setw(10);
               if (total_cpu_time != 0)
                 {
@@ -803,7 +788,7 @@ TimerOutput::print_summary() const
                   // printing silly things such as "2.45e-6%". otherwise print
                   // the actual percentage
                   const double fraction =
-                    i->second.total_cpu_time / total_cpu_time;
+                    i.second.total_cpu_time / total_cpu_time;
                   if (fraction > 0.001)
                     {
                       out_stream << std::setprecision(2);
@@ -822,7 +807,7 @@ TimerOutput::print_summary() const
             {
               out_stream << std::setw(10);
               out_stream << std::setprecision(3);
-              out_stream << i->second.total_wall_time << "s |";
+              out_stream << i.second.total_wall_time << "s |";
               out_stream << std::setw(10);
 
               if (total_wall_time != 0)
@@ -831,7 +816,7 @@ TimerOutput::print_summary() const
                   // printing silly things such as "2.45e-6%". otherwise print
                   // the actual percentage
                   const double fraction =
-                    i->second.total_wall_time / total_wall_time;
+                    i.second.total_wall_time / total_wall_time;
                   if (fraction > 0.001)
                     {
                       out_stream << std::setprecision(2);
