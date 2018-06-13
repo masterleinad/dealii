@@ -138,25 +138,25 @@ namespace MatrixCreator
                 const Function<spacedim, number> *               coefficient,
                 const Function<spacedim, number> *               rhs_function,
                 const ::dealii::hp::QCollection<dim> &           quadrature,
-                const ::dealii::hp::MappingCollection<dim, spacedim> &mapping) :
-          fe_collection(fe),
-          quadrature_collection(quadrature),
-          mapping_collection(mapping),
-          x_fe_values(mapping_collection,
-                      fe_collection,
-                      quadrature_collection,
-                      update_flags),
-          coefficient_values(quadrature_collection.max_n_quadrature_points()),
-          coefficient_vector_values(
-            quadrature_collection.max_n_quadrature_points(),
-            dealii::Vector<number>(fe_collection.n_components())),
-          rhs_values(quadrature_collection.max_n_quadrature_points()),
-          rhs_vector_values(
-            quadrature_collection.max_n_quadrature_points(),
-            dealii::Vector<number>(fe_collection.n_components())),
-          coefficient(coefficient),
-          rhs_function(rhs_function),
-          update_flags(update_flags)
+                const ::dealii::hp::MappingCollection<dim, spacedim> &mapping)
+          : fe_collection(fe)
+          , quadrature_collection(quadrature)
+          , mapping_collection(mapping)
+          , x_fe_values(mapping_collection,
+                        fe_collection,
+                        quadrature_collection,
+                        update_flags)
+          , coefficient_values(quadrature_collection.max_n_quadrature_points())
+          , coefficient_vector_values(
+              quadrature_collection.max_n_quadrature_points(),
+              dealii::Vector<number>(fe_collection.n_components()))
+          , rhs_values(quadrature_collection.max_n_quadrature_points())
+          , rhs_vector_values(quadrature_collection.max_n_quadrature_points(),
+                              dealii::Vector<number>(
+                                fe_collection.n_components()))
+          , coefficient(coefficient)
+          , rhs_function(rhs_function)
+          , update_flags(update_flags)
         {}
 
         Scratch(const Scratch &data)

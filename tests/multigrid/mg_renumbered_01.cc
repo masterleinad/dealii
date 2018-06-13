@@ -227,7 +227,7 @@ LaplaceProblem<dim>::setup_system()
       DoFRenumbering::component_wise(mg_dof_handler_renumbered,
                                      level,
                                      block_component);
-      //DoFRenumbering::Cuthill_McKee (mg_dof_handler_renumbered, level);
+      // DoFRenumbering::Cuthill_McKee (mg_dof_handler_renumbered, level);
     }
 
   deallog << "Number of degrees of freedom: " << mg_dof_handler.n_dofs();

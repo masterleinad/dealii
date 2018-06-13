@@ -209,11 +209,12 @@ namespace WorkStream
             //TODO: when we push back an object to the list of scratch objects, in
             //  Worker::operator(), we first create an object and then copy
             //  it to the end of this list. this involves having two objects
-            //      of the current type having pointers to it, each with their own
-            //      currently_in_use flag. there is probably little harm in this because
-            //      the original one goes out of scope right away again, but it's
-            //      certainly awkward. one way to avoid this would be to use unique_ptr
-            //      but we'd need to figure out a way to use it in non-C++11 mode
+            //      of the current type having pointers to it, each with their
+            //      own currently_in_use flag. there is probably little harm in
+            //      this because the original one goes out of scope right away
+            //      again, but it's certainly awkward. one way to avoid this
+            //      would be to use unique_ptr but we'd need to figure out a way
+            //      to use it in non-C++11 mode
             ScratchDataObject(const ScratchDataObject &o)
               : scratch_data(o.scratch_data)
               , currently_in_use(o.currently_in_use)
@@ -720,10 +721,11 @@ namespace WorkStream
         //      Worker::operator(), we first create an object and then copy
         //      it to the end of this list. this involves having two objects
         //      of the current type having pointers to it, each with their own
-        //      currently_in_use flag. there is probably little harm in this because
-        //      the original one goes out of scope right away again, but it's
-        //      certainly awkward. one way to avoid this would be to use unique_ptr
-        //      but we'd need to figure out a way to use it in non-C++11 mode
+        //      currently_in_use flag. there is probably little harm in this
+        //      because the original one goes out of scope right away again, but
+        //      it's certainly awkward. one way to avoid this would be to use
+        //      unique_ptr but we'd need to figure out a way to use it in
+        //      non-C++11 mode
         ScratchAndCopyDataObjects(const ScratchAndCopyDataObjects &o)
           : scratch_data(o.scratch_data)
           , copy_data(o.copy_data)

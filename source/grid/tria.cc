@@ -2575,48 +2575,48 @@ namespace internal
                 // later set the
                 // face_orientation flag
                 const internal::TriangulationImplementation::TriaObject<2>
-                  test_quad_1(
-                    quad.face(2),
-                    quad.face(3),
-                    quad.face(0),
-                    quad.face(
-                      1)), //face_orientation=false, face_flip=false, face_rotation=false
-                  test_quad_2(
-                    quad.face(0),
-                    quad.face(1),
-                    quad.face(3),
-                    quad.face(
-                      2)), //face_orientation=false, face_flip=false, face_rotation=true
-                  test_quad_3(
-                    quad.face(3),
-                    quad.face(2),
-                    quad.face(1),
-                    quad.face(
-                      0)), //face_orientation=false, face_flip=true,  face_rotation=false
-                  test_quad_4(
-                    quad.face(1),
-                    quad.face(0),
-                    quad.face(2),
-                    quad.face(
-                      3)), //face_orientation=false, face_flip=true,  face_rotation=true
-                  test_quad_5(
-                    quad.face(2),
-                    quad.face(3),
-                    quad.face(1),
-                    quad.face(
-                      0)), //face_orientation=true,  face_flip=false, face_rotation=true
-                  test_quad_6(
-                    quad.face(1),
-                    quad.face(0),
-                    quad.face(3),
-                    quad.face(
-                      2)), //face_orientation=true,  face_flip=true,  face_rotation=false
-                  test_quad_7(
-                    quad.face(3),
-                    quad.face(2),
-                    quad.face(0),
-                    quad.face(
-                      1)); //face_orientation=true,  face_flip=true,  face_rotation=true
+                  test_quad_1(quad.face(2),
+                              quad.face(3),
+                              quad.face(0),
+                              quad.face(
+                                1)), // face_orientation=false, face_flip=false,
+                                     // face_rotation=false
+                  test_quad_2(quad.face(0),
+                              quad.face(1),
+                              quad.face(3),
+                              quad.face(
+                                2)), // face_orientation=false, face_flip=false,
+                                     // face_rotation=true
+                  test_quad_3(quad.face(3),
+                              quad.face(2),
+                              quad.face(1),
+                              quad.face(
+                                0)), // face_orientation=false, face_flip=true,
+                                     // face_rotation=false
+                  test_quad_4(quad.face(1),
+                              quad.face(0),
+                              quad.face(2),
+                              quad.face(
+                                3)), // face_orientation=false, face_flip=true,
+                                     // face_rotation=true
+                  test_quad_5(quad.face(2),
+                              quad.face(3),
+                              quad.face(1),
+                              quad.face(
+                                0)), // face_orientation=true,  face_flip=false,
+                                     // face_rotation=true
+                  test_quad_6(quad.face(1),
+                              quad.face(0),
+                              quad.face(3),
+                              quad.face(
+                                2)), // face_orientation=true,  face_flip=true,
+                                     // face_rotation=false
+                  test_quad_7(quad.face(3),
+                              quad.face(2),
+                              quad.face(0),
+                              quad.face(
+                                1)); // face_orientation=true,  face_flip=true,
+                                     // face_rotation=true
                 if (needed_quads.find(test_quad_1) == needed_quads.end() &&
                     needed_quads.find(test_quad_2) == needed_quads.end() &&
                     needed_quads.find(test_quad_3) == needed_quads.end() &&
@@ -2788,14 +2788,14 @@ namespace internal
                           quad.face(3),
                           quad.face(2),
                           quad.face(1),
-                          quad.face(
-                            0)), //face_orientation=false, face_flip=true,  face_rotation=false
-                        test_quad_4(
-                          quad.face(1),
-                          quad.face(0),
-                          quad.face(2),
-                          quad.face(
-                            3)), //face_orientation=false, face_flip=true,  face_rotation=true
+                          quad.face(0)), // face_orientation=false,
+                                         // face_flip=true,  face_rotation=false
+                        test_quad_4(quad.face(1),
+                                    quad.face(0),
+                                    quad.face(2),
+                                    quad.face(
+                                      3)), // face_orientation=false,
+                                           // face_flip=true, face_rotation=true
                         test_quad_5(
                           quad.face(2),
                           quad.face(3),
@@ -2806,14 +2806,14 @@ namespace internal
                           quad.face(1),
                           quad.face(0),
                           quad.face(3),
-                          quad.face(
-                            2)), //face_orientation=true,  face_flip=true,  face_rotation=false
-                        test_quad_7(
-                          quad.face(3),
-                          quad.face(2),
-                          quad.face(0),
-                          quad.face(
-                            1)); //face_orientation=true,  face_flip=true,  face_rotation=true
+                          quad.face(2)), // face_orientation=true,
+                                         // face_flip=true,  face_rotation=false
+                        test_quad_7(quad.face(3),
+                                    quad.face(2),
+                                    quad.face(0),
+                                    quad.face(
+                                      1)); // face_orientation=true,
+                                           // face_flip=true, face_rotation=true
                       if (needed_quads.find(test_quad_1) != needed_quads.end())
                         {
                           face_iterator[face] = needed_quads[test_quad_1].first;
@@ -10685,8 +10685,8 @@ Triangulation<dim, spacedim>::create_triangulation(
                       // If we already saw this guy, check that everything is fine
                       if (neighbor->user_flag_set())
                         {
-                          // If we have visited this guy, then the ordering and the orientation should
-                          // agree
+                          // If we have visited this guy, then the ordering and
+                          // the orientation should agree
                           Assert(!(correct(i, j) ^
                                    (neighbor->direction_flag() ==
                                     (*cell)->direction_flag())),

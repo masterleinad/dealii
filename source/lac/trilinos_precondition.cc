@@ -278,8 +278,8 @@ namespace TrilinosWrappers
     // release memory before reallocation
     preconditioner.reset();
 
-    // Block relaxation setup fails if we have no locally owned rows. As a work-around
-    // we just pretend to use point relaxation on those processors:
+    // Block relaxation setup fails if we have no locally owned rows. As a
+    // work-around we just pretend to use point relaxation on those processors:
     preconditioner.reset(
       Ifpack().Create((matrix.trilinos_matrix().NumMyRows() == 0) ?
                         "point relaxation" :
@@ -346,8 +346,8 @@ namespace TrilinosWrappers
   {
     preconditioner.reset();
 
-    // Block relaxation setup fails if we have no locally owned rows. As a work-around
-    // we just pretend to use point relaxation on those processors:
+    // Block relaxation setup fails if we have no locally owned rows. As a
+    // work-around we just pretend to use point relaxation on those processors:
     preconditioner.reset(
       Ifpack().Create((matrix.trilinos_matrix().NumMyRows() == 0) ?
                         "point relaxation" :
@@ -415,8 +415,8 @@ namespace TrilinosWrappers
   {
     preconditioner.reset();
 
-    // Block relaxation setup fails if we have no locally owned rows. As a work-around
-    // we just pretend to use point relaxation on those processors:
+    // Block relaxation setup fails if we have no locally owned rows. As a
+    // work-around we just pretend to use point relaxation on those processors:
     preconditioner.reset(
       Ifpack().Create((matrix.trilinos_matrix().NumMyRows() == 0) ?
                         "point relaxation" :

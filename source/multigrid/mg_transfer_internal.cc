@@ -154,7 +154,7 @@ namespace internal
                       copy_indices_global_mine[level].emplace_back(
                         global_dof_indices[i], level_dof_indices[i]);
 
-                      //send this to the owner of the level_dof:
+                      // send this to the owner of the level_dof:
                       send_data_temp.emplace_back(level,
                                                   global_dof_indices[i],
                                                   level_dof_indices[i]);

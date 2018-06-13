@@ -495,7 +495,7 @@ namespace SparsityTools
     for (int i = 0; i < num_objects; i++)
       global_ids[i] = i;
 
-    //Call ZOLTAN coloring algorithm
+    // Call ZOLTAN coloring algorithm
     int rc = zz->Color(num_gid_entries,
                        num_objects,
                        global_ids.data(),

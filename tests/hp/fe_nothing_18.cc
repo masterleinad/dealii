@@ -195,8 +195,8 @@ public:
 
 template <int dim>
 ConstrainValues<dim>::ConstrainValues()
-  : Function<dim>(
-      dim) /*pass down to the main class the number of components of the function*/
+  : Function<dim>(dim) /*pass down to the main class the number of components of
+                          the function*/
 {}
 
 template <int dim>
@@ -282,10 +282,10 @@ ElasticProblem<dim>::make_grid()
   Triangulation<dim> triangulationR;
   GridGenerator::hyper_cube(triangulationL,
                             -1,
-                            0); //create a square [-1,1]^d domain
+                            0); // create a square [-1,1]^d domain
   GridGenerator::hyper_cube(triangulationR,
                             -1,
-                            0); //create a square [-1,1]^d domain
+                            0); // create a square [-1,1]^d domain
   Point<dim> shift_vector;
   shift_vector[0] = 1.0;
   GridTools::shift(shift_vector, triangulationR);

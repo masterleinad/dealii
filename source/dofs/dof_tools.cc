@@ -1359,7 +1359,8 @@ namespace DoFTools
              "related to a subdomain other than the locally owned one does "
              "not make sense."));
 
-    // The following is a random process (flip of a coin), thus should be called once only.
+    // The following is a random process (flip of a coin), thus should be called
+    // once only.
     std::vector<dealii::types::subdomain_id> subdomain_association(
       dof_handler.n_dofs());
     dealii::DoFTools::get_subdomain_association(dof_handler,

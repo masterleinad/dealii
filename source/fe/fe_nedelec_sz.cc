@@ -1969,8 +1969,8 @@ FE_NedelecSZ<dim>::fill_fe_face_values(
   const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Now update the edge-based DoFs, which depend on the cell.
-  // This will fill in the missing items in the InternalData (fe_internal/fe_data)
-  // which was not filled in by get_data.
+  // This will fill in the missing items in the InternalData
+  // (fe_internal/fe_data) which was not filled in by get_data.
   fill_edge_values(cell,
                    QProjector<dim>::project_to_all_faces(quadrature),
                    fe_data);

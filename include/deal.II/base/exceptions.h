@@ -225,7 +225,8 @@ private:
     class Exception1 : public dealii::ExceptionBase      \
     {                                                    \
     public:                                              \
-      Exception1(type1 const &a1) : arg1(a1)             \
+      Exception1(type1 const &a1)                        \
+        : arg1(a1)                                       \
       {}                                                 \
       virtual ~Exception1() noexcept                     \
       {}                                                 \
@@ -246,23 +247,25 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclException2(Exception2, type1, type2, outsequence)         \
-    class Exception2 : public dealii::ExceptionBase                     \
-    {                                                                   \
-    public:                                                             \
-      Exception2(type1 const &a1, type2 const &a2) : arg1(a1), arg2(a2) \
-      {}                                                                \
-      virtual ~Exception2() noexcept                                    \
-      {}                                                                \
-      virtual void                                                      \
-      print_info(std::ostream &out) const override                      \
-      {                                                                 \
-        out << "    " outsequence << std::endl;                         \
-      }                                                                 \
-                                                                        \
-    private:                                                            \
-      type1 const arg1;                                                 \
-      type2 const arg2;                                                 \
+#  define DeclException2(Exception2, type1, type2, outsequence) \
+    class Exception2 : public dealii::ExceptionBase             \
+    {                                                           \
+    public:                                                     \
+      Exception2(type1 const &a1, type2 const &a2)              \
+        : arg1(a1)                                              \
+        , arg2(a2)                                              \
+      {}                                                        \
+      virtual ~Exception2() noexcept                            \
+      {}                                                        \
+      virtual void                                              \
+      print_info(std::ostream &out) const override              \
+      {                                                         \
+        out << "    " outsequence << std::endl;                 \
+      }                                                         \
+                                                                \
+    private:                                                    \
+      type1 const arg1;                                         \
+      type2 const arg2;                                         \
     }
 
 
@@ -276,10 +279,10 @@ private:
     class Exception3 : public dealii::ExceptionBase                    \
     {                                                                  \
     public:                                                            \
-      Exception3(type1 const &a1, type2 const &a2, type3 const &a3) :  \
-        arg1(a1),                                                      \
-        arg2(a2),                                                      \
-        arg3(a3)                                                       \
+      Exception3(type1 const &a1, type2 const &a2, type3 const &a3)    \
+        : arg1(a1)                                                     \
+        , arg2(a2)                                                     \
+        , arg3(a3)                                                     \
       {}                                                               \
       virtual ~Exception3() noexcept                                   \
       {}                                                               \
@@ -309,11 +312,11 @@ private:
       Exception4(type1 const &a1,                                             \
                  type2 const &a2,                                             \
                  type3 const &a3,                                             \
-                 type4 const &a4) :                                           \
-        arg1(a1),                                                             \
-        arg2(a2),                                                             \
-        arg3(a3),                                                             \
-        arg4(a4)                                                              \
+                 type4 const &a4)                                             \
+        : arg1(a1)                                                            \
+        , arg2(a2)                                                            \
+        , arg3(a3)                                                            \
+        , arg4(a4)                                                            \
       {}                                                                      \
       virtual ~Exception4() noexcept                                          \
       {}                                                                      \
@@ -346,12 +349,12 @@ private:
                  type2 const &a2,                               \
                  type3 const &a3,                               \
                  type4 const &a4,                               \
-                 type5 const &a5) :                             \
-        arg1(a1),                                               \
-        arg2(a2),                                               \
-        arg3(a3),                                               \
-        arg4(a4),                                               \
-        arg5(a5)                                                \
+                 type5 const &a5)                               \
+        : arg1(a1)                                              \
+        , arg2(a2)                                              \
+        , arg3(a3)                                              \
+        , arg4(a4)                                              \
+        , arg5(a5)                                              \
       {}                                                        \
       virtual ~Exception5() noexcept                            \
       {}                                                        \

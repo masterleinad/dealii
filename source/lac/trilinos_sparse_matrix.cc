@@ -3002,7 +3002,8 @@ namespace TrilinosWrappers
       TrilinosPayload::TrilinosPayload(const TrilinosPayload &first_op,
                                        const TrilinosPayload &second_op)
         : use_transpose(false)
-        , // The combination of operators provides the exact definition of the operation
+        , // The combination of operators provides the exact
+          // definition of the operation
         communicator(first_op.communicator)
         , domain_map(second_op.domain_map)
         , range_map(first_op.range_map)

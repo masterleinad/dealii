@@ -4630,7 +4630,8 @@ namespace GridTools
         if (!std::binary_search(classified_pts.begin(),
                                 classified_pts.end(),
                                 point_idx))
-          // The point wasn't found in ghost or locally owned cells: adding it to the map
+          // The point wasn't found in ghost or locally owned cells: adding it
+          // to the map
           for (unsigned int i = 0; i < probable_owners_rks.size(); ++i)
             if (probable_owners_rks[i] != my_rank)
               {

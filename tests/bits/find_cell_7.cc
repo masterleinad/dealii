@@ -85,7 +85,7 @@ check2()
 
   GridTools::find_active_cell_around_point(mappings,
                                            dof_handler,
-                                           p2); //triggered exception
+                                           p2); // triggered exception
 }
 
 

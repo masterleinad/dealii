@@ -288,7 +288,8 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
             polynomials_abf[i % dim]->compute_grad(i / dim,
                                                    cell_quadrature.point(k)) *
             cell_quadrature.weight(k);
-          // The minus sign comes from the use of the Gauss theorem to replace the divergence.
+          // The minus sign comes from the use of the Gauss theorem to replace
+          // the divergence.
           for (unsigned int d = 0; d < dim; ++d)
             interior_weights_abf(k, i, d) = -poly_grad[d];
         }

@@ -1844,9 +1844,9 @@ namespace internal
                                                                fe_index,
                                                                d);
 
-                      // if check_validity was set, then we are to verify that the
-                      // previous indices were all valid. this really should be
-                      // the case: we allocated space for these vertex dofs,
+                      // if check_validity was set, then we are to verify that
+                      // the previous indices were all valid. this really should
+                      // be the case: we allocated space for these vertex dofs,
                       // i.e., at least one adjacent cell has a valid
                       // active_fe_index, so there are DoFs that really live
                       // on this vertex. if check_validity is set, then we
@@ -2832,10 +2832,10 @@ namespace internal
                                       *this->dof_handler,
                                       true);
 
-        // update the number cache. for this, we first have to find the subdomain
-        // association for each DoF again following renumbering, from which we
-        // can then compute the IndexSets of locally owned DoFs for all processors.
-        // all other fields then follow from this
+        // update the number cache. for this, we first have to find the
+        // subdomain association for each DoF again following renumbering, from
+        // which we can then compute the IndexSets of locally owned DoFs for all
+        // processors. all other fields then follow from this
         //
         // given the way we enumerate degrees of freedom, the locally owned
         // ranges must all be contiguous and consecutive. this makes filling
@@ -2977,11 +2977,11 @@ namespace internal
                                                       n_procs,
                                                       lvl);
 
-              // then renumber the subdomains by first looking at those belonging
-              // to subdomain 0, then those of subdomain 1, etc. note that the
-              // algorithm is stable, i.e. if two dofs i,j have i<j and belong to
-              // the same subdomain, then they will be in this order also after
-              // reordering
+              // then renumber the subdomains by first looking at those
+              // belonging to subdomain 0, then those of subdomain 1, etc. note
+              // that the algorithm is stable, i.e. if two dofs i,j have i<j and
+              // belong to the same subdomain, then they will be in this order
+              // also after reordering
               types::global_dof_index next_free_index = 0;
               for (types::subdomain_id level_subdomain = 0;
                    level_subdomain < n_procs;

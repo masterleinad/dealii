@@ -395,7 +395,7 @@ namespace FETools
               }
           // Now check that all FEs have the same number of components:
           for (unsigned int i = 0; i < fes.size(); ++i)
-            if (multiplicities[i] > 0) //needed because fe might be NULL
+            if (multiplicities[i] > 0) // needed because fe might be NULL
               Assert(n_components == fes[i]->n_components(),
                      ExcDimensionMismatch(n_components,
                                           fes[i]->n_components()));
@@ -406,10 +406,11 @@ namespace FETools
                                             std::vector<bool>(n_components,
                                                               false));
 
-      // finally go through all the shape functions of the base elements, and copy
-      // their flags. this somehow copies the code in build_cell_table, which is
-      // not nice as it uses too much implicit knowledge about the layout of the
-      // individual bases in the composed FE, but there seems no way around...
+      // finally go through all the shape functions of the base elements, and
+      // copy their flags. this somehow copies the code in build_cell_table,
+      // which is not nice as it uses too much implicit knowledge about the
+      // layout of the individual bases in the composed FE, but there seems no
+      // way around...
       //
       // for each shape function, copy the non-zero flags from the base element to
       // this one, taking into account multiplicities, multiple components in base

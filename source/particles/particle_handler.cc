@@ -613,8 +613,8 @@ namespace Particles
                               std::cref(
                                 vertex_to_cell_centers[closest_vertex_index])));
 
-          // Search all of the cells adjacent to the closest vertex of the previous cell
-          // Most likely we will find the particle in them.
+          // Search all of the cells adjacent to the closest vertex of the
+          // previous cell Most likely we will find the particle in them.
           for (unsigned int i = 0; i < n_neighbor_cells; ++i)
             {
               try

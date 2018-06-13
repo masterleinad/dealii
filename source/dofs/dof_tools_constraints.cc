@@ -2616,8 +2616,9 @@ namespace DoFTools
     GridTools::collect_periodic_faces(
       dof_handler, b_id1, b_id2, direction, matched_faces);
 
-    make_periodicity_constraints<DoFHandlerType>(
-      matched_faces, constraints, component_mask);
+    make_periodicity_constraints<DoFHandlerType>(matched_faces,
+                                                 constraints,
+                                                 component_mask);
   }
 
 
@@ -2645,11 +2646,14 @@ namespace DoFTools
       matched_faces;
 
     // Collect matching periodic cells on the coarsest level:
-    GridTools::collect_periodic_faces(
-      dof_handler, b_id, direction, matched_faces);
+    GridTools::collect_periodic_faces(dof_handler,
+                                      b_id,
+                                      direction,
+                                      matched_faces);
 
-    make_periodicity_constraints<DoFHandlerType>(
-      matched_faces, constraints, component_mask);
+    make_periodicity_constraints<DoFHandlerType>(matched_faces,
+                                                 constraints,
+                                                 component_mask);
   }
 
 

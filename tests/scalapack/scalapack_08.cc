@@ -105,7 +105,7 @@ test(const unsigned int size,
         }
       NumberType product_1 = eigenvector * l_singular_vector;
       NumberType product_2 = eigenvector * r_singular_vector;
-      //the tolerance is reduced for the singular vectors
+      // the tolerance is reduced for the singular vectors
       AssertThrow((std::abs(product_1) - 1) < tol * 10,
                   ExcMessage(
                     "left singular vectors and eigenvectors do not coincide"));

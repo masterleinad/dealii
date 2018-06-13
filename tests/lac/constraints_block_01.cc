@@ -148,7 +148,7 @@ main()
     } //comp
 
   std::vector<types::global_dof_index> dofs_per_block(
-    3, 0); //3 blocks, count dofs:
+    3, 0); // 3 blocks, count dofs:
   DoFTools::count_dofs_per_component(dh,
                                      dofs_per_block,
                                      false,

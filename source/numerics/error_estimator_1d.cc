@@ -422,9 +422,8 @@ KellyErrorEstimator<1, spacedim>::estimate(
                                       fe,
                                       q_collection,
                                       update_gradients);
-  hp::FEFaceValues<1, spacedim> fe_face_values(/*mapping_collection,*/ fe,
-                                               q_face_collection,
-                                               update_normal_vectors);
+  hp::FEFaceValues<1, spacedim> fe_face_values(
+    /*mapping_collection,*/ fe, q_face_collection, update_normal_vectors);
 
   // loop over all cells and do something on the cells which we're told to
   // work on. note that the error indicator is only a sum over the two

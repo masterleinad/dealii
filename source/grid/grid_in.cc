@@ -783,7 +783,8 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
                  ExcIndexRange(material_id,
                                0,
                                std::numeric_limits<types::boundary_id>::max()));
-          // we use only boundary_ids in the range from 0 to numbers::internal_face_boundary_id-1
+          // we use only boundary_ids in the range from 0 to
+          // numbers::internal_face_boundary_id-1
           Assert(material_id < numbers::internal_face_boundary_id,
                  ExcIndexRange(material_id,
                                0,
@@ -830,7 +831,8 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
                  ExcIndexRange(material_id,
                                0,
                                std::numeric_limits<types::boundary_id>::max()));
-          // we use only boundary_ids in the range from 0 to numbers::internal_face_boundary_id-1
+          // we use only boundary_ids in the range from 0 to
+          // numbers::internal_face_boundary_id-1
           Assert(material_id < numbers::internal_face_boundary_id,
                  ExcIndexRange(material_id,
                                0,
@@ -1530,7 +1532,8 @@ GridIn<dim, spacedim>::read_msh(std::istream &in)
                  ExcIndexRange(material_id,
                                0,
                                std::numeric_limits<types::boundary_id>::max()));
-          // we use only boundary_ids in the range from 0 to numbers::internal_face_boundary_id-1
+          // we use only boundary_ids in the range from 0 to
+          // numbers::internal_face_boundary_id-1
           Assert(material_id < numbers::internal_face_boundary_id,
                  ExcIndexRange(material_id,
                                0,
@@ -1573,7 +1576,8 @@ GridIn<dim, spacedim>::read_msh(std::istream &in)
                  ExcIndexRange(material_id,
                                0,
                                std::numeric_limits<types::boundary_id>::max()));
-          // we use only boundary_ids in the range from 0 to numbers::internal_face_boundary_id-1
+          // we use only boundary_ids in the range from 0 to
+          // numbers::internal_face_boundary_id-1
           Assert(material_id < numbers::internal_face_boundary_id,
                  ExcIndexRange(material_id,
                                0,
@@ -3185,8 +3189,8 @@ namespace
 {
   template <int dim>
   Abaqus_to_UCD<dim>::Abaqus_to_UCD()
-    : tolerance(
-        5e-16) // Used to offset Cubit tolerance error when outputting value close to zero
+    : tolerance(5e-16) // Used to offset Cubit tolerance error when outputting
+                       // value close to zero
   {
     AssertThrow(dim == 2 || dim == 3, ExcNotImplemented());
   }

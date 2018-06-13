@@ -345,7 +345,7 @@ namespace Step36
     for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       {
         eigenfunctions[i].reinit(locally_owned_dofs,
-                                 mpi_communicator); //without ghost dofs
+                                 mpi_communicator); // without ghost dofs
         eigenfunctions_locally_relevant[i].reinit(locally_owned_dofs,
                                                   locally_relevant_dofs,
                                                   mpi_communicator);

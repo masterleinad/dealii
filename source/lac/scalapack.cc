@@ -1768,7 +1768,8 @@ ScaLAPACKMatrix<NumberType>::least_squares(ScaLAPACKMatrix<NumberType> &B,
       Assert(n_rows == B.n_rows, ExcDimensionMismatch(n_rows, B.n_rows));
     }
 
-  //see https://www.ibm.com/support/knowledgecenter/en/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_lgels.htm
+  // see
+  // https://www.ibm.com/support/knowledgecenter/en/SSNR5K_4.2.0/com.ibm.cluster.pessl.v4r2.pssl100.doc/am6gr_lgels.htm
   Assert(row_block_size == column_block_size,
          ExcMessage(
            "Use identical block sizes for rows and columns of matrix A"));
@@ -2432,7 +2433,7 @@ ScaLAPACKMatrix<NumberType>::save_parallel(
    * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
    *
    * Create a 1xn_processes column grid
-  */
+   */
   const auto column_grid =
     std::make_shared<Utilities::MPI::ProcessGrid>(this->grid->mpi_communicator,
                                                   1,
@@ -2662,7 +2663,7 @@ ScaLAPACKMatrix<NumberType>::load_serial(const char *filename)
    * The content of the distributed matrix is copied to a matrix using a 1x1 process grid.
    * Therefore, one process has all the data and can write it to a file
    */
-  //create a 1xP column grid with P being the number of MPI processes
+  // create a 1xP column grid with P being the number of MPI processes
   const auto one_grid =
     std::make_shared<Utilities::MPI::ProcessGrid>(this->grid->mpi_communicator,
                                                   1,
@@ -2842,7 +2843,7 @@ ScaLAPACKMatrix<NumberType>::load_parallel(const char *filename)
    * The content of the distributed matrix is copied to a matrix using a 1xn_processes process grid.
    * Therefore, the processes hold contiguous chunks of the matrix, which they can write to the file
    */
-  //create a 1xP column grid with P being the number of MPI processes
+  // create a 1xP column grid with P being the number of MPI processes
   const auto column_grid =
     std::make_shared<Utilities::MPI::ProcessGrid>(this->grid->mpi_communicator,
                                                   1,
