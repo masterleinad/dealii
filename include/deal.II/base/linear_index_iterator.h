@@ -56,14 +56,16 @@ DEAL_II_NAMESPACE_OPEN
  *   {
  *   public:
  *     // const iterators store a const pointer
- *     typedef typename std::conditional<Constness, const Container<T>*, Container<T>*>::type
+ *     typedef typename std::conditional<Constness, const Container<T>*,
+ *                                       Container<T>*>::type
  *     container_pointer_type;
  *
  *     // This typedef is assumed to exist.
  *     typedef std::size_t size_type;
  *
  *     // constructor.
- *     Accessor(const container_pointer_type container, const std::ptrdiff_t index);
+ *     Accessor(const container_pointer_type container,
+ *              const std::ptrdiff_t index);
  *
  *     // constructor.
  *     Accessor();
@@ -76,17 +78,19 @@ DEAL_II_NAMESPACE_OPEN
  *     std::ptrdiff_t linear_index;
  *
  *     // LinearIndexIterator needs access to linear_index and container.
- *     friend class LinearIndexIterator<Iterator<Constness>, Accessor<Constness>>;
+ *     friend class LinearIndexIterator<Iterator<Constness>,
+ *                                      Accessor<Constness>>;
  *   };
  *
  *   template <bool Constness>
- *   class Iterator : public LinearIndexIterator<Iterator<Constness>, Accessor<Constness>>
+ *   class Iterator : public LinearIndexIterator<Iterator<Constness>,
+ *                                               Accessor<Constness>>
  *   {
  *     // Constructor.
  *     Iterator(Container<T> * const container, const std::ptrdiff_t index);
  *
- *     // implement additional constructors here, but all state should be contained
- *     // in the Accessor, which is a member of the base class.
+ *     // implement additional constructors here, but all state should be
+ *     // contained in the Accessor, which is a member of the base class.
  *   };
  *
  * public:
