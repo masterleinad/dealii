@@ -275,8 +275,8 @@ namespace parallel
        * communicator provided to the constructor.
        *
        * @note This function can not be used with parallel::distributed::Triangulation,
-       * since it only stores those cells that it owns, one layer of ghost cells around
-       * the ones it locally owns, and a number of artificial cells.
+       * since it only stores those cells that it owns, one layer of ghost cells
+       * around the ones it locally owns, and a number of artificial cells.
        */
       virtual void
       copy_triangulation(

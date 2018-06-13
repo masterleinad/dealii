@@ -215,24 +215,24 @@ protected:
       &data) const override;
 
   /**
-  * Derived Internal data which is used to store cell-independent data.
-  * Note that due to the nature of this element, a number of useful
-  * pre-computed quantities are stored for the computation of cell-dependent
-  * shape functions.
-  *
-  * The main quantities which are stored are associated with edge and face
-  * parameterizations. These are:
-  * <ul>
-  * <li> $\lambda_{i}$ - trilinear function, equal to one at the $i$-th vertex
-  * and zero at all other vertices.</li>
-  * <li> $\sigma_{i}$ - linear functional associated with the $i$-th vertex.</li>
-  * </ul>
-  *
-  * The definitions of these functionals, as well as the edge and face
-  * parameterizations and edge and face extension parameters, can be found on
-  * page 82 of Zaglmayr's thesis. The details of the definition of the
-  * globally-defined edge and face orientations can be found on page 67.
-  */
+   * Derived Internal data which is used to store cell-independent data.
+   * Note that due to the nature of this element, a number of useful
+   * pre-computed quantities are stored for the computation of cell-dependent
+   * shape functions.
+   *
+   * The main quantities which are stored are associated with edge and face
+   * parameterizations. These are:
+   * <ul>
+   * <li> $\lambda_{i}$ - trilinear function, equal to one at the $i$-th vertex
+   * and zero at all other vertices.</li>
+   * <li> $\sigma_{i}$ - linear functional associated with the $i$-th vertex.</li>
+   * </ul>
+   *
+   * The definitions of these functionals, as well as the edge and face
+   * parameterizations and edge and face extension parameters, can be found on
+   * page 82 of Zaglmayr's thesis. The details of the definition of the
+   * globally-defined edge and face orientations can be found on page 67.
+   */
   class InternalData : public FiniteElement<dim, dim>::InternalDataBase
   {
   public:

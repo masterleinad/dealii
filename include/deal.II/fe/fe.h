@@ -207,15 +207,16 @@ class FESystem;
  * |     20 |          0 |            0 |                          8 |            0 |
  * |     21 |          1 |            0 |                          8 |            1 |
  *
- * What we see is the following: there are a total of 22 degrees-of-freedom on this
- * element with components ranging from 0 to 2. Each DoF corresponds to
- * one of the two base elements used to build FESystem : $\mathbb Q_2$ or $\mathbb Q_1$.
- * Since FE_Q are primitive elements, we have a total of 9 distinct
- * scalar-valued shape functions for the quadratic element and 4 for the linear element.
- * Finally, for DoFs corresponding to the first base element multiplicity
- * is either zero or one, meaning that we use the same scalar valued $\mathbb Q_2$
- * for both $x$ and $y$ components of the velocity field $\mathbb Q_2 \otimes \mathbb Q_2$.
- * For DoFs corresponding to the second base element multiplicity is zero.
+ * What we see is the following: there are a total of 22 degrees-of-freedom on
+ * this element with components ranging from 0 to 2. Each DoF corresponds to one
+ * of the two base elements used to build FESystem : $\mathbb Q_2$ or $\mathbb
+ * Q_1$. Since FE_Q are primitive elements, we have a total of 9 distinct
+ * scalar-valued shape functions for the quadratic element and 4 for the linear
+ * element. Finally, for DoFs corresponding to the first base element
+ * multiplicity is either zero or one, meaning that we use the same scalar
+ * valued $\mathbb Q_2$ for both $x$ and $y$ components of the velocity field
+ * $\mathbb Q_2 \otimes \mathbb Q_2$. For DoFs corresponding to the second base
+ * element multiplicity is zero.
  *
  * <h4>Support points</h4>
  *

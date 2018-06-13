@@ -285,7 +285,8 @@ public:
   /**
    * Matrix-matrix-multiplication:
    *
-   * The operations based on the input parameters and the alignment conditions are summarized in the following table:
+   * The operations based on the input parameters and the alignment conditions
+   * are summarized in the following table:
    *
    * | transpose_A | transpose_B |                  Block Sizes                  |                             Operation                           |
    * | :---------: | :---------: | :-------------------------------------------: | :-------------------------------------------------------------: |
@@ -294,7 +295,8 @@ public:
    * | true        |   false     | $MB_A=MB_B$ <br> $NB_A=MB_C$ <br> $NB_B=NB_C$ | $\mathbf{C} = b \mathbf{A}^T \cdot \mathbf{B} + c \mathbf{C}$   |
    * | true        |   true      | $MB_A=NB_B$ <br> $NB_A=MB_C$ <br> $MB_B=NB_C$ | $\mathbf{C} = b \mathbf{A}^T \cdot \mathbf{B}^T + c \mathbf{C}$ |
    *
-   * It is assumed that $\mathbf{A}$ and $\mathbf{B}$ have compatible sizes and that
+   * It is assumed that $\mathbf{A}$ and $\mathbf{B}$ have compatible sizes and
+   * that
    * $\mathbf{C}$ already has the right size.
    *
    * The matrices $\mathbf{A}$, $\mathbf{B}$ and $\mathbf{C}$ must have the same process grid.

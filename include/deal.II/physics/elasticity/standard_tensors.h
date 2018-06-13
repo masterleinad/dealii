@@ -90,7 +90,8 @@ namespace Physics
        * which is returned by identity_tensor().
        *
        * @note If you apply this to a standard tensor then it doesn't behave like
-       * the fourth-order identity tensor, but rather as a symmetrization operator.
+       * the fourth-order identity tensor, but rather as a symmetrization
+       * operator.
        */
       static const SymmetricTensor<4, dim> S;
 
@@ -192,11 +193,11 @@ namespace Physics
        * @f]
        *
        * @note Comparing the definition of this tensor in Holzapfel (2001) to that
-       * adopted here, the inclusion of the extra factor $J^{-2/\textrm{dim}}$ does not,
-       * at the outset, seem to be a reasonable choice.
-       * However, in the author's view it makes direct implementation of the
-       * expressions for isochoric (referential) stress contributions and their
-       * linearization simpler in practise.
+       * adopted here, the inclusion of the extra factor $J^{-2/\textrm{dim}}$
+       * does not, at the outset, seem to be a reasonable choice. However, in
+       * the author's view it makes direct implementation of the expressions for
+       * isochoric (referential) stress contributions and their linearization
+       * simpler in practise.
        *
        * @dealiiWriggersA{46,3.125}
        * @dealiiHolzapfelA{229,6.83}
