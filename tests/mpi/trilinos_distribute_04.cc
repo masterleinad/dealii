@@ -43,7 +43,7 @@ While distributing the constraint for DoF 41, it turns out that one of the proce
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 
-#include <deal.II/lac/constraint_matrix.h>
+#include <deal.II/lac/affine_constraints.h>
 #include <deal.II/lac/trilinos_vector.h>
 
 #include <deal.II/numerics/vector_tools.h>

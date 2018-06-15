@@ -19,8 +19,8 @@
 // reported by francesco.cattoglio on the mailing list on 2013/11/22
 /*
 905: --------------------------------------------------------
-905: An error occurred in line <1898> of file </scratch/deal-trunk/deal.II/include/deal.II/lac/constraint_matrix.h> in function
-905:     void dealii::ConstraintMatrix::add_line(dealii::ConstraintMatrix::size_type)
+905: An error occurred in line <1898> of file </scratch/deal-trunk/deal.II/include/deal.II/lac/affine_constraints.h> in function
+905:     void dealii::AffineConstraints::add_line(dealii::AffineConstraints::size_type)
 905: The violated condition was:
 905:     line != numbers::invalid_size_type
 905: The name and call sequence of the exception was:
