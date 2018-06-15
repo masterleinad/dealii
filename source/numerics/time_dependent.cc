@@ -100,9 +100,8 @@ TimeDependent::insert_timestep(const TimeStepBase *position,
   else
     {
       // inner time step
-      const std::vector<SmartPointer<TimeStepBase, TimeDependent>>::iterator
-        insert_position =
-          std::find(timesteps.begin(), timesteps.end(), position);
+      const auto insert_position =
+        std::find(timesteps.begin(), timesteps.end(), position);
       // check iterators again to satisfy coverity: both insert_position and
       // insert_position - 1 must be valid iterators
       Assert(insert_position != timesteps.begin() &&

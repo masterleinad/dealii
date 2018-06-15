@@ -520,10 +520,8 @@ namespace
       }
 
     // now points in boundary quads
-    std::vector<CellData<2>>::iterator boundary_quad =
-      subcelldata.boundary_quads.begin();
-    std::vector<CellData<2>>::iterator end_quad =
-      subcelldata.boundary_quads.end();
+    auto boundary_quad = subcelldata.boundary_quads.begin();
+    auto end_quad      = subcelldata.boundary_quads.end();
     for (unsigned int quad_no = 0; boundary_quad != end_quad;
          ++boundary_quad, ++quad_no)
       std::swap(boundary_quad->vertices[2], boundary_quad->vertices[3]);
@@ -2125,10 +2123,8 @@ namespace internal
           }
 
         // set boundary indicators where given
-        std::vector<CellData<1>>::const_iterator boundary_line =
-          subcelldata.boundary_lines.begin();
-        std::vector<CellData<1>>::const_iterator end_boundary_line =
-          subcelldata.boundary_lines.end();
+        auto boundary_line     = subcelldata.boundary_lines.begin();
+        auto end_boundary_line = subcelldata.boundary_lines.end();
         for (; boundary_line != end_boundary_line; ++boundary_line)
           {
             typename Triangulation<dim, spacedim>::line_iterator line;
@@ -2953,9 +2949,7 @@ namespace internal
                               std::pair<unsigned int, unsigned int>>(
                       GeometryInfo<dim>::face_to_cell_lines(face, line),
                       std::pair<unsigned int, unsigned int>(face, line)));
-              std::multimap<unsigned int,
-                            std::pair<unsigned int, unsigned int>>::
-                const_iterator map_iter = cell_to_face_lines.begin();
+              auto map_iter = cell_to_face_lines.begin();
 
               for (; map_iter != cell_to_face_lines.end(); ++map_iter)
                 {
@@ -3071,10 +3065,8 @@ namespace internal
         // where given
         //
         // first do so for lines
-        std::vector<CellData<1>>::const_iterator boundary_line =
-          subcelldata.boundary_lines.begin();
-        std::vector<CellData<1>>::const_iterator end_boundary_line =
-          subcelldata.boundary_lines.end();
+        auto boundary_line     = subcelldata.boundary_lines.begin();
+        auto end_boundary_line = subcelldata.boundary_lines.end();
         for (; boundary_line != end_boundary_line; ++boundary_line)
           {
             typename Triangulation<dim, spacedim>::line_iterator line;
@@ -3126,10 +3118,8 @@ namespace internal
 
 
         // now go on with boundary faces
-        std::vector<CellData<2>>::const_iterator boundary_quad =
-          subcelldata.boundary_quads.begin();
-        std::vector<CellData<2>>::const_iterator end_boundary_quad =
-          subcelldata.boundary_quads.end();
+        auto boundary_quad     = subcelldata.boundary_quads.begin();
+        auto end_boundary_quad = subcelldata.boundary_quads.end();
         for (; boundary_quad != end_boundary_quad; ++boundary_quad)
           {
             typename Triangulation<dim, spacedim>::quad_iterator quad;
@@ -3548,10 +3538,7 @@ namespace internal
         // later on...
         // same for user flags, then finally
         // delete the lines
-        typename std::vector<
-          typename Triangulation<dim, spacedim>::line_iterator>::iterator
-          line    = lines_to_delete.begin(),
-          endline = lines_to_delete.end();
+        auto line = lines_to_delete.begin(), endline = lines_to_delete.end();
         for (; line != endline; ++line)
           {
             (*line)->clear_user_data();
@@ -4153,10 +4140,7 @@ namespace internal
         // later on...
         // same for user flags, then finally
         // delete the quads and lines
-        typename std::vector<
-          typename Triangulation<dim, spacedim>::line_iterator>::iterator
-          line    = lines_to_delete.begin(),
-          endline = lines_to_delete.end();
+        auto line = lines_to_delete.begin(), endline = lines_to_delete.end();
         for (; line != endline; ++line)
           {
             (*line)->clear_user_data();
@@ -4164,10 +4148,7 @@ namespace internal
             (*line)->clear_used_flag();
           }
 
-        typename std::vector<
-          typename Triangulation<dim, spacedim>::quad_iterator>::iterator
-          quad    = quads_to_delete.begin(),
-          endquad = quads_to_delete.end();
+        auto quad = quads_to_delete.begin(), endquad = quads_to_delete.end();
         for (; quad != endquad; ++quad)
           {
             (*quad)->clear_user_data();
@@ -10430,8 +10411,7 @@ Triangulation<dim, spacedim>::get_boundary_ids() const
   if (dim == 1)
     {
       std::vector<types::boundary_id> boundary_ids;
-      for (std::map<unsigned int, types::boundary_id>::const_iterator p =
-             vertex_to_boundary_id_map_1d->begin();
+      for (auto p = vertex_to_boundary_id_map_1d->begin();
            p != vertex_to_boundary_id_map_1d->end();
            ++p)
         boundary_ids.push_back(p->second);
@@ -10678,10 +10658,7 @@ Triangulation<dim, spacedim>::create_triangulation(
 
       while (this_round.size() > 0)
         {
-          for (typename std::list<active_cell_iterator>::iterator cell =
-                 this_round.begin();
-               cell != this_round.end();
-               ++cell)
+          for (auto cell = this_round.begin(); cell != this_round.end(); ++cell)
             {
               for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
                    ++i)
@@ -10799,8 +10776,8 @@ void
 Triangulation<dim, spacedim>::save_refine_flags(std::vector<bool> &v) const
 {
   v.resize(dim * n_active_cells(), false);
-  std::vector<bool>::iterator i    = v.begin();
-  active_cell_iterator        cell = begin_active(), endc = end();
+  auto                 i    = v.begin();
+  active_cell_iterator cell = begin_active(), endc = end();
   for (; cell != endc; ++cell)
     for (unsigned int j = 0; j < dim; ++j, ++i)
       if (cell->refine_flag_set() & (1 << j))
@@ -10842,8 +10819,8 @@ Triangulation<dim, spacedim>::load_refine_flags(const std::vector<bool> &v)
 {
   AssertThrow(v.size() == dim * n_active_cells(), ExcGridReadError());
 
-  active_cell_iterator              cell = begin_active(), endc = end();
-  std::vector<bool>::const_iterator i = v.begin();
+  active_cell_iterator cell = begin_active(), endc = end();
+  auto                 i = v.begin();
   for (; cell != endc; ++cell)
     {
       unsigned int ref_case = 0;
@@ -10869,8 +10846,8 @@ void
 Triangulation<dim, spacedim>::save_coarsen_flags(std::vector<bool> &v) const
 {
   v.resize(n_active_cells(), false);
-  std::vector<bool>::iterator i    = v.begin();
-  active_cell_iterator        cell = begin_active(), endc = end();
+  auto                 i    = v.begin();
+  active_cell_iterator cell = begin_active(), endc = end();
   for (; cell != endc; ++cell, ++i)
     *i = cell->coarsen_flag_set();
 
@@ -10913,8 +10890,8 @@ Triangulation<dim, spacedim>::load_coarsen_flags(const std::vector<bool> &v)
 {
   Assert(v.size() == n_active_cells(), ExcGridReadError());
 
-  active_cell_iterator              cell = begin_active(), endc = end();
-  std::vector<bool>::const_iterator i = v.begin();
+  active_cell_iterator cell = begin_active(), endc = end();
+  auto                 i = v.begin();
   for (; cell != endc; ++cell, ++i)
     if (*i == true)
       cell->set_coarsen_flag();
@@ -11220,8 +11197,8 @@ void
 Triangulation<dim, spacedim>::save_user_flags_line(std::vector<bool> &v) const
 {
   v.resize(n_lines(), false);
-  std::vector<bool>::iterator i    = v.begin();
-  line_iterator               line = begin_line(), endl = end_line();
+  auto          i    = v.begin();
+  line_iterator line = begin_line(), endl = end_line();
   for (; line != endl; ++line, ++i)
     *i = line->user_flag_set();
 
@@ -11264,8 +11241,8 @@ Triangulation<dim, spacedim>::load_user_flags_line(const std::vector<bool> &v)
 {
   Assert(v.size() == n_lines(), ExcGridReadError());
 
-  line_iterator                     line = begin_line(), endl = end_line();
-  std::vector<bool>::const_iterator i = v.begin();
+  line_iterator line = begin_line(), endl = end_line();
+  auto          i = v.begin();
   for (; line != endl; ++line, ++i)
     if (*i == true)
       line->set_user_flag();
@@ -11342,8 +11319,8 @@ Triangulation<dim, spacedim>::save_user_flags_quad(std::vector<bool> &v) const
 
   if (dim >= 2)
     {
-      std::vector<bool>::iterator i    = v.begin();
-      quad_iterator               quad = begin_quad(), endq = end_quad();
+      auto          i    = v.begin();
+      quad_iterator quad = begin_quad(), endq = end_quad();
       for (; quad != endq; ++quad, ++i)
         *i = get_user_flag(quad);
 
@@ -11389,8 +11366,8 @@ Triangulation<dim, spacedim>::load_user_flags_quad(const std::vector<bool> &v)
 
   if (dim >= 2)
     {
-      quad_iterator                     quad = begin_quad(), endq = end_quad();
-      std::vector<bool>::const_iterator i = v.begin();
+      quad_iterator quad = begin_quad(), endq = end_quad();
+      auto          i = v.begin();
       for (; quad != endq; ++quad, ++i)
         if (*i == true)
           set_user_flag(quad);
@@ -11411,8 +11388,8 @@ Triangulation<dim, spacedim>::save_user_flags_hex(std::vector<bool> &v) const
 
   if (dim >= 3)
     {
-      std::vector<bool>::iterator i   = v.begin();
-      hex_iterator                hex = begin_hex(), endh = end_hex();
+      auto         i   = v.begin();
+      hex_iterator hex = begin_hex(), endh = end_hex();
       for (; hex != endh; ++hex, ++i)
         *i = get_user_flag(hex);
 
@@ -11458,8 +11435,8 @@ Triangulation<dim, spacedim>::load_user_flags_hex(const std::vector<bool> &v)
 
   if (dim >= 3)
     {
-      hex_iterator                      hex = begin_hex(), endh = end_hex();
-      std::vector<bool>::const_iterator i = v.begin();
+      hex_iterator hex = begin_hex(), endh = end_hex();
+      auto         i = v.begin();
       for (; hex != endh; ++hex, ++i)
         if (*i == true)
           set_user_flag(hex);
@@ -11590,8 +11567,8 @@ Triangulation<dim, spacedim>::save_user_indices_line(
   std::vector<unsigned int> &v) const
 {
   v.resize(n_lines(), 0);
-  std::vector<unsigned int>::iterator i    = v.begin();
-  line_iterator                       line = begin_line(), endl = end_line();
+  auto          i    = v.begin();
+  line_iterator line = begin_line(), endl = end_line();
   for (; line != endl; ++line, ++i)
     *i = line->user_index();
 }
@@ -11606,7 +11583,7 @@ Triangulation<dim, spacedim>::load_user_indices_line(
   Assert(v.size() == n_lines(), ExcGridReadError());
 
   line_iterator line = begin_line(), endl = end_line();
-  std::vector<unsigned int>::const_iterator i = v.begin();
+  auto          i = v.begin();
   for (; line != endl; ++line, ++i)
     line->set_user_index(*i);
 }
@@ -11621,7 +11598,7 @@ Triangulation<dim, spacedim>::save_user_indices_quad(
 
   if (dim >= 2)
     {
-      std::vector<unsigned int>::iterator i = v.begin();
+      auto          i    = v.begin();
       quad_iterator quad = begin_quad(), endq = end_quad();
       for (; quad != endq; ++quad, ++i)
         *i = get_user_index(quad);
@@ -11640,7 +11617,7 @@ Triangulation<dim, spacedim>::load_user_indices_quad(
   if (dim >= 2)
     {
       quad_iterator quad = begin_quad(), endq = end_quad();
-      std::vector<unsigned int>::const_iterator i = v.begin();
+      auto          i = v.begin();
       for (; quad != endq; ++quad, ++i)
         set_user_index(quad, *i);
     }
@@ -11656,8 +11633,8 @@ Triangulation<dim, spacedim>::save_user_indices_hex(
 
   if (dim >= 3)
     {
-      std::vector<unsigned int>::iterator i   = v.begin();
-      hex_iterator                        hex = begin_hex(), endh = end_hex();
+      auto         i   = v.begin();
+      hex_iterator hex = begin_hex(), endh = end_hex();
       for (; hex != endh; ++hex, ++i)
         *i = get_user_index(hex);
     }
@@ -11675,7 +11652,7 @@ Triangulation<dim, spacedim>::load_user_indices_hex(
   if (dim >= 3)
     {
       hex_iterator hex = begin_hex(), endh = end_hex();
-      std::vector<unsigned int>::const_iterator i = v.begin();
+      auto         i = v.begin();
       for (; hex != endh; ++hex, ++i)
         set_user_index(hex, *i);
     }
@@ -11802,8 +11779,8 @@ Triangulation<dim, spacedim>::save_user_pointers_line(
   std::vector<void *> &v) const
 {
   v.resize(n_lines(), nullptr);
-  std::vector<void *>::iterator i    = v.begin();
-  line_iterator                 line = begin_line(), endl = end_line();
+  auto          i    = v.begin();
+  line_iterator line = begin_line(), endl = end_line();
   for (; line != endl; ++line, ++i)
     *i = line->user_pointer();
 }
@@ -11817,8 +11794,8 @@ Triangulation<dim, spacedim>::load_user_pointers_line(
 {
   Assert(v.size() == n_lines(), ExcGridReadError());
 
-  line_iterator                       line = begin_line(), endl = end_line();
-  std::vector<void *>::const_iterator i = v.begin();
+  line_iterator line = begin_line(), endl = end_line();
+  auto          i = v.begin();
   for (; line != endl; ++line, ++i)
     line->set_user_pointer(*i);
 }
@@ -11834,8 +11811,8 @@ Triangulation<dim, spacedim>::save_user_pointers_quad(
 
   if (dim >= 2)
     {
-      std::vector<void *>::iterator i    = v.begin();
-      quad_iterator                 quad = begin_quad(), endq = end_quad();
+      auto          i    = v.begin();
+      quad_iterator quad = begin_quad(), endq = end_quad();
       for (; quad != endq; ++quad, ++i)
         *i = get_user_pointer(quad);
     }
@@ -11853,7 +11830,7 @@ Triangulation<dim, spacedim>::load_user_pointers_quad(
   if (dim >= 2)
     {
       quad_iterator quad = begin_quad(), endq = end_quad();
-      std::vector<void *>::const_iterator i = v.begin();
+      auto          i = v.begin();
       for (; quad != endq; ++quad, ++i)
         set_user_pointer(quad, *i);
     }
@@ -11869,8 +11846,8 @@ Triangulation<dim, spacedim>::save_user_pointers_hex(
 
   if (dim >= 3)
     {
-      std::vector<void *>::iterator i   = v.begin();
-      hex_iterator                  hex = begin_hex(), endh = end_hex();
+      auto         i   = v.begin();
+      hex_iterator hex = begin_hex(), endh = end_hex();
       for (; hex != endh; ++hex, ++i)
         *i = get_user_pointer(hex);
     }
@@ -11887,8 +11864,8 @@ Triangulation<dim, spacedim>::load_user_pointers_hex(
 
   if (dim >= 3)
     {
-      hex_iterator                        hex = begin_hex(), endh = end_hex();
-      std::vector<void *>::const_iterator i = v.begin();
+      hex_iterator hex = begin_hex(), endh = end_hex();
+      auto         i = v.begin();
       for (; hex != endh; ++hex, ++i)
         set_user_pointer(hex, *i);
     }
@@ -14912,7 +14889,7 @@ Triangulation<dim, spacedim>::write_bool_vector(
   std::ostream &           out)
 {
   const unsigned int N     = v.size();
-  unsigned char *    flags = new unsigned char[N / 8 + 1];
+  auto *             flags = new unsigned char[N / 8 + 1];
   for (unsigned int i = 0; i < N / 8 + 1; ++i)
     flags[i] = 0;
 
@@ -14955,7 +14932,7 @@ Triangulation<dim, spacedim>::read_bool_vector(const unsigned int magic_number1,
   in >> N;
   v.resize(N);
 
-  unsigned char *    flags = new unsigned char[N / 8 + 1];
+  auto *             flags = new unsigned char[N / 8 + 1];
   unsigned short int tmp;
   for (unsigned int i = 0; i < N / 8 + 1; ++i)
     {

@@ -104,7 +104,7 @@ namespace Utilities
   std::string
   to_string(const number value, const unsigned int digits)
   {
-    std::string lc_string = boost::lexical_cast<std::string>(value);
+    auto lc_string = boost::lexical_cast<std::string>(value);
 
     if (digits == numbers::invalid_unsigned_int)
       return lc_string;

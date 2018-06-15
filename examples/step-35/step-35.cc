@@ -962,7 +962,7 @@ namespace Step35
   {
     ConditionalOStream verbose_cout(std::cout, verbose);
 
-    const unsigned int n_steps = static_cast<unsigned int>((T - t_0) / dt);
+    const auto n_steps = static_cast<unsigned int>((T - t_0) / dt);
     vel_exact.set_time(2. * dt);
     output_results(1);
     for (unsigned int n = 2; n <= n_steps; ++n)
@@ -1039,8 +1039,7 @@ namespace Step35
 
         vel_exact.set_component(d);
         boundary_values.clear();
-        for (std::vector<types::boundary_id>::const_iterator boundaries =
-               boundary_ids.begin();
+        for (auto boundaries = boundary_ids.begin();
              boundaries != boundary_ids.end();
              ++boundaries)
           {

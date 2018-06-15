@@ -435,7 +435,7 @@ namespace SUNDIALS
     AssertARKode(status);
 
     // Initialize solver
-    ARKodeMem ARKode_mem = (ARKodeMem)arkode_mem;
+    auto ARKode_mem = (ARKodeMem)arkode_mem;
 
     if (solve_jacobian_system)
       {

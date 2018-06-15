@@ -851,11 +851,7 @@ namespace DoFTools
     const std::vector<typename DoFHandlerType::active_cell_iterator>
       halo_cells =
         GridTools::compute_active_cell_halo_layer(dof_handler, predicate_local);
-    for (typename std::vector<
-           typename DoFHandlerType::active_cell_iterator>::const_iterator it =
-           halo_cells.begin();
-         it != halo_cells.end();
-         ++it)
+    for (auto it = halo_cells.begin(); it != halo_cells.end(); ++it)
       {
         // skip halo cells that satisfy the given predicate and thereby
         // shall be a part of the index set on another MPI core.
@@ -883,8 +879,7 @@ namespace DoFTools
         // achieve this by extending halo_dofs with DoFs to which
         // halo_dofs are constrained.
         std::set<types::global_dof_index> extra_halo;
-        for (std::set<types::global_dof_index>::iterator it =
-               dofs_with_support_on_halo_cells.begin();
+        for (auto it = dofs_with_support_on_halo_cells.begin();
              it != dofs_with_support_on_halo_cells.end();
              ++it)
           // if halo DoF is constrained, add all DoFs to which it's constrained
@@ -1123,10 +1118,7 @@ namespace DoFTools
           dof_indices.resize(cell->get_fe().dofs_per_cell);
           cell->get_dof_indices(dof_indices);
 
-          for (std::vector<types::global_dof_index>::iterator it =
-                 dof_indices.begin();
-               it != dof_indices.end();
-               ++it)
+          for (auto it = dof_indices.begin(); it != dof_indices.end(); ++it)
             if (!dof_set.is_element(*it))
               global_dof_indices.insert(*it);
         }
@@ -1484,9 +1476,7 @@ namespace DoFTools
         // Extract DoFs associated with halo layer
         std::vector<types::global_dof_index> local_dof_indices;
         std::set<types::global_dof_index>    subdomain_halo_global_dof_indices;
-        for (typename std::vector<
-               typename DoFHandlerType::active_cell_iterator>::const_iterator
-               it_cell = active_halo_layer.begin();
+        for (auto it_cell = active_halo_layer.begin();
              it_cell != active_halo_layer.end();
              ++it_cell)
           {
@@ -1500,8 +1490,7 @@ namespace DoFTools
             local_dof_indices.resize(cell->get_fe().dofs_per_cell);
             cell->get_dof_indices(local_dof_indices);
 
-            for (std::vector<types::global_dof_index>::iterator it =
-                   local_dof_indices.begin();
+            for (auto it = local_dof_indices.begin();
                  it != local_dof_indices.end();
                  ++it)
               subdomain_halo_global_dof_indices.insert(*it);
@@ -2329,18 +2318,14 @@ namespace DoFTools
     point_map_t point_map;
 
     // convert to map point -> list of DoFs
-    for (typename dof_map_t::const_iterator it = support_points.begin();
-         it != support_points.end();
-         ++it)
+    for (auto it = support_points.begin(); it != support_points.end(); ++it)
       {
         std::vector<types::global_dof_index> &v = point_map[it->second];
         v.push_back(it->first);
       }
 
     // print the newly created map:
-    for (typename point_map_t::iterator it = point_map.begin();
-         it != point_map.end();
-         ++it)
+    for (auto it = point_map.begin(); it != point_map.end(); ++it)
       {
         out << it->first << " \"";
         const std::vector<types::global_dof_index> &v = it->second;

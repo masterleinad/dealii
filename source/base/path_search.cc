@@ -113,8 +113,8 @@ PathSearch::find(const std::string &filename,
                  const std::string &suffix,
                  const char *       open_mode)
 {
-  std::vector<std::string>::const_iterator       path;
-  const std::vector<std::string>::const_iterator endp = my_path_list.end();
+  std::vector<std::string>::const_iterator path;
+  const auto                               endp = my_path_list.end();
 
   std::string real_name;
 
@@ -170,8 +170,8 @@ PathSearch::find(const std::string &filename,
 std::string
 PathSearch::find(const std::string &filename, const char *open_mode)
 {
-  std::vector<std::string>::const_iterator       suffix;
-  const std::vector<std::string>::const_iterator ends = my_suffix_list.end();
+  std::vector<std::string>::const_iterator suffix;
+  const auto                               ends = my_suffix_list.end();
 
   if (debug > 2)
     deallog << "PathSearch[" << cls << "] " << my_path_list.size()
@@ -219,8 +219,7 @@ PathSearch::add_path(const std::string &path, Position pos)
     my_path_list.insert(my_path_list.begin(), path);
   else if (pos == after_none)
     {
-      std::vector<std::string>::iterator i =
-        std::find(my_path_list.begin(), my_path_list.end(), empty);
+      auto i = std::find(my_path_list.begin(), my_path_list.end(), empty);
       if (i != my_path_list.end())
         ++i;
       my_path_list.insert(i, path);
@@ -237,8 +236,7 @@ PathSearch::add_suffix(const std::string &suffix, Position pos)
     my_suffix_list.insert(my_suffix_list.begin(), suffix);
   else if (pos == after_none)
     {
-      std::vector<std::string>::iterator i =
-        std::find(my_suffix_list.begin(), my_suffix_list.end(), empty);
+      auto i = std::find(my_suffix_list.begin(), my_suffix_list.end(), empty);
       if (i != my_suffix_list.end())
         ++i;
       my_suffix_list.insert(i, suffix);

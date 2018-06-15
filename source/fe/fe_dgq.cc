@@ -271,7 +271,7 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
 
   // ok, source is a Q element, so
   // we will be able to do the work
-  const FE_DGQ<dim, spacedim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_DGQ<dim, spacedim> &>(x_source_fe);
 
   Assert(interpolation_matrix.m() == this->dofs_per_cell,
@@ -417,8 +417,7 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      auto &this_nonconst = const_cast<FE_DGQ<dim, spacedim> &>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(
@@ -497,8 +496,7 @@ FE_DGQ<dim, spacedim>::get_restriction_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      auto &this_nonconst = const_cast<FE_DGQ<dim, spacedim> &>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(

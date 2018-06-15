@@ -1698,8 +1698,7 @@ namespace internal
           // correct but also faster; note, however, that dof numbers
           // may be invalid_dof_index, namely when the appropriate
           // vertex/line/etc is unused
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.vertex_dofs.begin();
+          for (auto i = dof_handler.vertex_dofs.begin();
                i != dof_handler.vertex_dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -1733,8 +1732,7 @@ namespace internal
         {
           for (unsigned int level = 0; level < dof_handler.levels.size();
                ++level)
-            for (std::vector<types::global_dof_index>::iterator i =
-                   dof_handler.levels[level]->dof_object.dofs.begin();
+            for (auto i = dof_handler.levels[level]->dof_object.dofs.begin();
                  i != dof_handler.levels[level]->dof_object.dofs.end();
                  ++i)
               if (*i != numbers::invalid_dof_index)
@@ -1772,8 +1770,7 @@ namespace internal
           DoFHandler<2, spacedim> &                   dof_handler)
         {
           // treat dofs on lines
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->lines.dofs.begin();
+          for (auto i = dof_handler.faces->lines.dofs.begin();
                i != dof_handler.faces->lines.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -1792,8 +1789,7 @@ namespace internal
           DoFHandler<3, spacedim> &                   dof_handler)
         {
           // treat dofs on lines
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->lines.dofs.begin();
+          for (auto i = dof_handler.faces->lines.dofs.begin();
                i != dof_handler.faces->lines.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -1802,8 +1798,7 @@ namespace internal
                       new_numbers[indices.index_within_set(*i)]);
 
           // treat dofs on quads
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->quads.dofs.begin();
+          for (auto i = dof_handler.faces->quads.dofs.begin();
                i != dof_handler.faces->quads.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -2203,9 +2198,7 @@ namespace internal
           Assert(level < dof_handler.get_triangulation().n_levels(),
                  ExcInternalError());
 
-          for (typename std::vector<
-                 typename DoFHandler<dim, spacedim>::MGVertexDoFs>::iterator i =
-                 dof_handler.mg_vertex_dofs.begin();
+          for (auto i = dof_handler.mg_vertex_dofs.begin();
                i != dof_handler.mg_vertex_dofs.end();
                ++i)
             // if the present vertex lives on the current level
@@ -2251,8 +2244,7 @@ namespace internal
           DoFHandler<dim, spacedim> &                         dof_handler,
           const unsigned int                                  level)
         {
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.mg_levels[level]->dof_object.dofs.begin();
+          for (auto i = dof_handler.mg_levels[level]->dof_object.dofs.begin();
                i != dof_handler.mg_levels[level]->dof_object.dofs.end();
                ++i)
             {

@@ -275,7 +275,7 @@ namespace SUNDIALS
 
     if (solve_jacobian_system)
       {
-        KINMem KIN_mem      = (KINMem)kinsol_mem;
+        auto KIN_mem        = (KINMem)kinsol_mem;
         KIN_mem->kin_lsolve = t_kinsol_solve_jacobian<VectorType>;
         if (setup_jacobian)
           {

@@ -150,7 +150,7 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
   FullMatrix<double> &      matrix) const
 {
   // support interpolation between FE_Q_Hierarchical only.
-  if (const FE_Q_Hierarchical<dim> *source_fe =
+  if (const auto *source_fe =
         dynamic_cast<const FE_Q_Hierarchical<dim> *>(&source))
     {
       // ok, source is a Q_Hierarchical element, so we will be able to do the
@@ -336,7 +336,7 @@ FiniteElementDomination::Domination
 FE_Q_Hierarchical<dim>::compare_for_face_domination(
   const FiniteElement<dim> &fe_other) const
 {
-  if (const FE_Q_Hierarchical<dim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other))
     {
       // the element with lowest polynomial degree
@@ -348,7 +348,7 @@ FE_Q_Hierarchical<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())
@@ -922,7 +922,7 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
   (void)source_fe;
 
@@ -1009,7 +1009,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
 
   // Make sure, that the element,

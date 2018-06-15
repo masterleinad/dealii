@@ -1542,7 +1542,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   const unsigned int               n_q_points = quadrature.size();
   const CellSimilarity::Similarity updated_cell_similarity =
@@ -1772,7 +1772,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_face_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1812,7 +1812,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   update_internal_dofs(cell, data);
 
@@ -1863,14 +1863,10 @@ namespace internal
                     MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
                       InternalData *>(&mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingFEField<dim,
-                                              spacedim,
-                                              VectorType,
-                                              DoFHandlerType>::InternalData
-          &data = static_cast<
-            const typename dealii::
-              MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                InternalData &>(mapping_data);
+        const auto &data = static_cast<
+          const typename dealii::
+            MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
+              InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1949,14 +1945,10 @@ namespace internal
                     MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
                       InternalData *>(&mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingFEField<dim,
-                                              spacedim,
-                                              VectorType,
-                                              DoFHandlerType>::InternalData
-          &data = static_cast<
-            const typename dealii::
-              MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
-                InternalData &>(mapping_data);
+        const auto &data = static_cast<
+          const typename dealii::
+            MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
+              InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -2047,7 +2039,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {

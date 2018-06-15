@@ -909,10 +909,9 @@ namespace internal
         communicate_active_fe_indices(
           dealii::hp::DoFHandler<dim, spacedim> &dof_handler)
         {
-          if (const parallel::shared::Triangulation<dim, spacedim> *tr =
-                dynamic_cast<
-                  const parallel::shared::Triangulation<dim, spacedim> *>(
-                  &dof_handler.get_triangulation()))
+          if (const auto *tr = dynamic_cast<
+                const parallel::shared::Triangulation<dim, spacedim> *>(
+                &dof_handler.get_triangulation()))
             {
               // we have a shared triangulation. in this case, every processor
               // knows about all cells, but every processor only has knowledge
@@ -947,10 +946,9 @@ namespace internal
                     cell->index(),
                     active_fe_indices[cell->active_cell_index()]);
             }
-          else if (const parallel::distributed::Triangulation<dim, spacedim>
-                     *tr = dynamic_cast<
-                       const parallel::distributed::Triangulation<dim, spacedim>
-                         *>(&dof_handler.get_triangulation()))
+          else if (const auto *tr = dynamic_cast<
+                     const parallel::distributed::Triangulation<dim, spacedim>
+                       *>(&dof_handler.get_triangulation()))
             {
               // For completely distributed meshes, use the function that is
               // able to move data from locally owned cells on one processor to
@@ -1521,8 +1519,8 @@ namespace hp
       {
         std::vector<types::global_dof_index> tmp(new_numbers);
         std::sort(tmp.begin(), tmp.end());
-        std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-        types::global_dof_index                              i = 0;
+        auto                    p = tmp.begin();
+        types::global_dof_index i = 0;
         for (; p != tmp.end(); ++p, ++i)
           Assert(*p == i, ExcNewNumbersNotConsecutive(i));
       }

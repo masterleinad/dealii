@@ -2277,7 +2277,7 @@ FiniteElementDomination::Domination
 FE_Nedelec<dim>::compare_for_face_domination(
   const FiniteElement<dim> &fe_other) const
 {
-  if (const FE_Nedelec<dim> *fe_nedelec_other =
+  if (const auto *fe_nedelec_other =
         dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       if (this->degree < fe_nedelec_other->degree)
@@ -2287,7 +2287,7 @@ FE_Nedelec<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       // TODO: ???
@@ -2344,7 +2344,7 @@ FE_Nedelec<dim>::hp_line_dof_identities(
   // identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if (const FE_Nedelec<dim> *fe_nedelec_other =
+  if (const auto *fe_nedelec_other =
         dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       // dofs are located on lines, so
@@ -2386,7 +2386,7 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
   // these identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if (const FE_Nedelec<dim> *fe_nedelec_other =
+  if (const auto *fe_nedelec_other =
         dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       // dofs are located on the interior
@@ -2450,8 +2450,7 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
 
   // ok, source is a Nedelec element, so
   // we will be able to do the work
-  const FE_Nedelec<dim> &source_fe =
-    dynamic_cast<const FE_Nedelec<dim> &>(source);
+  const auto &source_fe = dynamic_cast<const FE_Nedelec<dim> &>(source);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -2553,8 +2552,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a Nedelec element, so
   // we will be able to do the work
-  const FE_Nedelec<dim> &source_fe =
-    dynamic_cast<const FE_Nedelec<dim> &>(source);
+  const auto &source_fe = dynamic_cast<const FE_Nedelec<dim> &>(source);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -2994,7 +2992,7 @@ FE_Nedelec<dim>::get_prolongation_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_Nedelec<dim> &this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
+      auto &this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
 
       // Reinit the vectors of
       // restriction and prolongation
@@ -3056,7 +3054,7 @@ FE_Nedelec<dim>::get_restriction_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_Nedelec<dim> &this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
+      auto &this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
 
       // Reinit the vectors of
       // restriction and prolongation

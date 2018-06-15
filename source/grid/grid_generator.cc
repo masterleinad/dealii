@@ -2845,7 +2845,7 @@ namespace GridGenerator
                       const double      half_length)
   {
     // Determine number of cells and vertices
-    const unsigned int n_cells = static_cast<unsigned int>(
+    const auto n_cells = static_cast<unsigned int>(
       std::ceil(half_length / std::max(radius_0, radius_1)));
     const unsigned int    n_vertices = 4 * (n_cells + 1);
     std::vector<Point<3>> vertices_tmp(n_vertices);
@@ -4363,9 +4363,8 @@ namespace GridGenerator
   flatten_triangulation(const Triangulation<dim, spacedim1> &in_tria,
                         Triangulation<dim, spacedim2> &      out_tria)
   {
-    const parallel::distributed::Triangulation<dim, spacedim1> *pt =
-      dynamic_cast<
-        const parallel::distributed::Triangulation<dim, spacedim1> *>(&in_tria);
+    const auto *pt = dynamic_cast<
+      const parallel::distributed::Triangulation<dim, spacedim1> *>(&in_tria);
 
     (void)pt;
     Assert(

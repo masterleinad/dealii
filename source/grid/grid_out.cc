@@ -1451,8 +1451,8 @@ GridOut::write_xfig(const Triangulation<2> &tria,
             cell->vertex(GeometryInfo<dim>::ucd_to_deal[k % nv]);
           for (unsigned int d = 0; d < static_cast<unsigned int>(dim); ++d)
             {
-              int val = (int)(1200 * xfig_flags.scaling(d) *
-                              (p(d) - xfig_flags.offset(d)));
+              auto val = (int)(1200 * xfig_flags.scaling(d) *
+                               (p(d) - xfig_flags.offset(d)));
               out << '\t' << ((d == 0) ? val : -val);
             }
           out << std::endl;
@@ -1496,8 +1496,8 @@ GridOut::write_xfig(const Triangulation<2> &tria,
                     for (unsigned int d = 0; d < static_cast<unsigned int>(dim);
                          ++d)
                       {
-                        int val = (int)(1200 * xfig_flags.scaling(d) *
-                                        (p(d) - xfig_flags.offset(d)));
+                        auto val = (int)(1200 * xfig_flags.scaling(d) *
+                                         (p(d) - xfig_flags.offset(d)));
                         out << '\t' << ((d == 0) ? val : -val);
                       }
                     out << std::endl;
@@ -1912,8 +1912,7 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
       .5 + width * (y_dimension_perspective / x_dimension_perspective));
   unsigned int additional_width = 0;
   // font size for date, time, legend, and colorbar
-  unsigned int font_size =
-    static_cast<unsigned int>(.5 + (height / 100.) * 1.75);
+  auto font_size       = static_cast<unsigned int>(.5 + (height / 100.) * 1.75);
   cell_label_font_size = static_cast<unsigned int>(
     .5 + (height * .15 * svg_flags.cell_font_scaling *
           min_level_min_vertex_distance / std::min(x_dimension, y_dimension)));
@@ -1999,7 +1998,7 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
           unsigned int g = 0;
           unsigned int b = 0;
 
-          unsigned int i = static_cast<unsigned int>(h * 6);
+          auto i = static_cast<unsigned int>(h * 6);
 
           double f = h * 6 - i;
           double q = 1 - f;
@@ -2325,11 +2324,10 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
                                            camera_horizontal,
                                            camera_focus);
 
-              const unsigned int font_size_this_cell =
-                static_cast<unsigned int>(
-                  .5 +
-                  cell_label_font_size *
-                    pow(.5, (float)cell->level() - 4. + 3.5 * distance_factor));
+              const auto font_size_this_cell = static_cast<unsigned int>(
+                .5 +
+                cell_label_font_size *
+                  pow(.5, (float)cell->level() - 4. + 3.5 * distance_factor));
 
               out << "  <text"
                   << " x=\""
@@ -2657,9 +2655,9 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
 
       out << "</text>" << '\n';
 
-      unsigned int element_height = static_cast<unsigned int>(
+      auto element_height = static_cast<unsigned int>(
         ((height / 100.) * (71. - 2. * margin_in_percent)) / n);
-      unsigned int element_width =
+      auto element_width =
         static_cast<unsigned int>(.5 + (height / 100.) * 2.5);
 
       int labeling_index = 0;
@@ -3057,7 +3055,7 @@ GridOut::write_mesh_per_processor_as_vtu(
   // if not, just create a .vtu file with no reference
   // to the processor number
   std::string new_file = filename_without_extension + ".vtu";
-  if (const parallel::Triangulation<dim, spacedim> *tr =
+  if (const auto *tr =
         dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(&tria))
     {
       new_file = filename_without_extension + ".proc" +
@@ -4358,9 +4356,7 @@ namespace internal
       double       y_max     = y_min;
       unsigned int max_level = line_list.begin()->level;
 
-      for (LineList::const_iterator line = line_list.begin();
-           line != line_list.end();
-           ++line)
+      for (auto line = line_list.begin(); line != line_list.end(); ++line)
         {
           x_min = std::min(x_min, line->first(0));
           x_min = std::min(x_min, line->second(0));
@@ -4472,9 +4468,7 @@ namespace internal
       // now write the lines
       const Point<2> offset(x_min, y_min);
 
-      for (LineList::const_iterator line = line_list.begin();
-           line != line_list.end();
-           ++line)
+      for (auto line = line_list.begin(); line != line_list.end(); ++line)
         if (eps_flags_base.color_lines_level && (line->level > 0))
           out << line->level << " l " << (line->first - offset) * scale << " m "
               << (line->second - offset) * scale << " x" << '\n';

@@ -120,7 +120,7 @@ namespace MGTools
     // triangulation for the user
     // flags. Since we restore them in
     // the end, this cast is safe.
-    Triangulation<dim, spacedim> &user_flags_triangulation =
+    auto &user_flags_triangulation =
       const_cast<Triangulation<dim, spacedim> &>(dofs.get_triangulation());
     user_flags_triangulation.save_user_flags(old_flags);
     user_flags_triangulation.clear_user_flags();
@@ -305,7 +305,7 @@ namespace MGTools
     // triangulation for the user
     // flags. Since we restore them in
     // the end, this cast is safe.
-    Triangulation<dim, spacedim> &user_flags_triangulation =
+    auto &user_flags_triangulation =
       const_cast<Triangulation<dim, spacedim> &>(dofs.get_triangulation());
     user_flags_triangulation.save_user_flags(old_flags);
     user_flags_triangulation.clear_user_flags();
@@ -1653,7 +1653,7 @@ namespace MGTools
     unsigned int global_min = min_level;
     // If necessary, communicate to find minimum
     // level for an active cell over all subdomains
-    if (const parallel::Triangulation<dim, spacedim> *tr =
+    if (const auto *tr =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(&tria))
       global_min = Utilities::MPI::min(min_level, tr->get_communicator());
 

@@ -195,7 +195,7 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
   const FiniteElement<dim> &source_fe,
   FullMatrix<double> &      interpolation_matrix) const
 {
-  const FE_DGPMonomial<dim> *source_dgp_monomial =
+  const auto *source_dgp_monomial =
     dynamic_cast<const FE_DGPMonomial<dim> *>(&source_fe);
 
   if (source_dgp_monomial)

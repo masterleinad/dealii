@@ -1278,8 +1278,7 @@ namespace Patterns
 
 
     // check the different possibilities
-    for (std::vector<std::string>::const_iterator test_string =
-           split_names.begin();
+    for (auto test_string = split_names.begin();
          test_string != split_names.end();
          ++test_string)
       {

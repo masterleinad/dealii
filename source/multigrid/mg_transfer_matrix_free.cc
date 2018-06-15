@@ -388,8 +388,7 @@ MGTransferMatrixFree<dim, Number>::do_prolongate_add(
                               j * n_child_dofs_1d + i]);
 
               // apply Dirichlet boundary conditions on parent cell
-              for (std::vector<unsigned short>::const_iterator i =
-                     dirichlet_indices[to_level - 1][cell + v].begin();
+              for (auto i = dirichlet_indices[to_level - 1][cell + v].begin();
                    i != dirichlet_indices[to_level - 1][cell + v].end();
                    ++i)
                 evaluation_data[*i][v] = 0.;
@@ -558,8 +557,7 @@ MGTransferMatrixFree<dim, Number>::do_restrict_add(
           for (unsigned int c = 0, m = 0; c < n_components; ++c)
             {
               // apply Dirichlet boundary conditions on parent cell
-              for (std::vector<unsigned short>::const_iterator i =
-                     dirichlet_indices[from_level - 1][cell + v].begin();
+              for (auto i = dirichlet_indices[from_level - 1][cell + v].begin();
                    i != dirichlet_indices[from_level - 1][cell + v].end();
                    ++i)
                 evaluation_data[*i][v] = 0.;

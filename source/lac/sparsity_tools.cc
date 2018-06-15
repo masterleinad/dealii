@@ -689,10 +689,7 @@ namespace SparsityTools
           dofs_by_coordination;
 
         // find coordination number for each of these dofs
-        for (std::vector<DynamicSparsityPattern::size_type>::iterator s =
-               next_round_dofs.begin();
-             s != next_round_dofs.end();
-             ++s)
+        for (auto s = next_round_dofs.begin(); s != next_round_dofs.end(); ++s)
           {
             const DynamicSparsityPattern::size_type coordination =
               sparsity.row_length(*s);
@@ -793,8 +790,7 @@ namespace SparsityTools
               // next set of possible neighbors
               min_neighbors = std::make_pair(numbers::invalid_dof_index,
                                              numbers::invalid_dof_index);
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
+              for (auto it = current_neighbors.begin();
                    it != current_neighbors.end();
                    ++it)
                 {
@@ -810,8 +806,7 @@ namespace SparsityTools
               // i.e., the one with the largest row length
               const types::global_dof_index best_row_length =
                 min_neighbors.second;
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
+              for (auto it = current_neighbors.begin();
                    it != current_neighbors.end();
                    ++it)
                 if (n_remaining_neighbors[*it] == best_row_length)

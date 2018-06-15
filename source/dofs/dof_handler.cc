@@ -1366,8 +1366,8 @@ DoFHandler<dim, spacedim>::renumber_dofs(
     {
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
-      std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-      types::global_dof_index                              i = 0;
+      auto                    p = tmp.begin();
+      types::global_dof_index i = 0;
       for (; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }
@@ -1405,8 +1405,8 @@ DoFHandler<dim, spacedim>::renumber_dofs(
     {
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
-      std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-      types::global_dof_index                              i = 0;
+      auto                    p = tmp.begin();
+      types::global_dof_index i = 0;
       for (; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }

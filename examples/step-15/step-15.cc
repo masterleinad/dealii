@@ -476,10 +476,7 @@ namespace Step15
                                              0,
                                              BoundaryValues<dim>(),
                                              boundary_values);
-    for (std::map<types::global_dof_index, double>::const_iterator p =
-           boundary_values.begin();
-         p != boundary_values.end();
-         ++p)
+    for (auto p = boundary_values.begin(); p != boundary_values.end(); ++p)
       present_solution(p->first) = p->second;
   }
 

@@ -550,8 +550,7 @@ namespace DoFRenumbering
             std::vector<types::global_dof_index> translate_indices(
               my_new_indices.size());
             {
-              std::set<types::global_dof_index>::const_iterator
-                                      next_erased_index = erase_these_indices.begin();
+              auto next_erased_index = erase_these_indices.begin();
               types::global_dof_index next_new_index = 0;
               for (unsigned int i = 0; i < translate_indices.size(); ++i)
                 if ((next_erased_index != erase_these_indices.end()) &&
@@ -917,15 +916,12 @@ namespace DoFRenumbering
     for (unsigned int component = 0; component < fe_collection.n_components();
          ++component)
       {
-        const typename std::vector<types::global_dof_index>::const_iterator
-          begin_of_component = component_to_dof_map[component].begin(),
-          end_of_component   = component_to_dof_map[component].end();
+        const auto begin_of_component = component_to_dof_map[component].begin(),
+                   end_of_component   = component_to_dof_map[component].end();
 
         next_free_index = shifts[component];
 
-        for (typename std::vector<types::global_dof_index>::const_iterator
-               dof_index = begin_of_component;
-             dof_index != end_of_component;
+        for (auto dof_index = begin_of_component; dof_index != end_of_component;
              ++dof_index)
           {
             Assert(
@@ -1219,15 +1215,12 @@ namespace DoFRenumbering
     types::global_dof_index next_free_index = 0;
     for (unsigned int block = 0; block < fe_collection.n_blocks(); ++block)
       {
-        const typename std::vector<types::global_dof_index>::const_iterator
-          begin_of_component = block_to_dof_map[block].begin(),
-          end_of_component   = block_to_dof_map[block].end();
+        const auto begin_of_component = block_to_dof_map[block].begin(),
+                   end_of_component   = block_to_dof_map[block].end();
 
         next_free_index = shifts[block];
 
-        for (typename std::vector<types::global_dof_index>::const_iterator
-               dof_index = begin_of_component;
-             dof_index != end_of_component;
+        for (auto dof_index = begin_of_component; dof_index != end_of_component;
              ++dof_index)
           {
             Assert(
@@ -1365,9 +1358,8 @@ namespace DoFRenumbering
     // DoFs for all previous processes
     types::global_dof_index my_starting_index = 0;
 
-    if (const parallel::Triangulation<dim> *tria =
-          dynamic_cast<const parallel::Triangulation<dim> *>(
-            &dof_handler.get_triangulation()))
+    if (const auto *tria = dynamic_cast<const parallel::Triangulation<dim> *>(
+          &dof_handler.get_triangulation()))
       {
         const std::vector<types::global_dof_index>
           &n_locally_owned_dofs_per_processor =
@@ -1379,7 +1371,7 @@ namespace DoFRenumbering
                           types::global_dof_index(0));
       }
 
-    if (const parallel::distributed::Triangulation<dim> *tria =
+    if (const auto *tria =
           dynamic_cast<const parallel::distributed::Triangulation<dim> *>(
             &dof_handler.get_triangulation()))
       {

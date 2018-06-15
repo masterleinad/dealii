@@ -402,7 +402,7 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if (const FE_RaviartThomasNodal<dim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       // dofs are located on faces; these are
@@ -466,7 +466,7 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if (const FE_RaviartThomasNodal<dim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       // dofs are located on faces; these are
@@ -509,7 +509,7 @@ FiniteElementDomination::Domination
 FE_RaviartThomasNodal<dim>::compare_for_face_domination(
   const FiniteElement<dim> &fe_other) const
 {
-  if (const FE_RaviartThomasNodal<dim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       if (this->degree < fe_q_other->degree)
@@ -519,7 +519,7 @@ FE_RaviartThomasNodal<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_q_other =
+  else if (const auto *fe_q_other =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_q_other->is_dominating())
@@ -585,7 +585,7 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
 
   // ok, source is a RaviartThomasNodal element, so
   // we will be able to do the work
-  const FE_RaviartThomasNodal<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_RaviartThomasNodal<dim> &>(x_source_fe);
 
   // Make sure, that the element,
@@ -689,7 +689,7 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a RaviartThomasNodal element, so
   // we will be able to do the work
-  const FE_RaviartThomasNodal<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_RaviartThomasNodal<dim> &>(x_source_fe);
 
   // Make sure, that the element,

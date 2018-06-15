@@ -181,9 +181,7 @@ TableHandler::Column::invalidate_cache()
 {
   max_length = 0;
 
-  for (std::vector<dealii::internal::TableEntry>::iterator it = entries.begin();
-       it != entries.end();
-       ++it)
+  for (auto it = entries.begin(); it != entries.end(); ++it)
     {
       it->cache_string(this->scientific, this->precision);
       max_length =
@@ -221,18 +219,14 @@ TableHandler::start_new_row()
 {
   // figure out the longest current column
   unsigned int max_col_length = 0;
-  for (std::map<std::string, Column>::iterator p = columns.begin();
-       p != columns.end();
-       ++p)
+  for (auto p = columns.begin(); p != columns.end(); ++p)
     max_col_length =
       std::max(max_col_length,
                static_cast<unsigned int>(p->second.entries.size()));
 
 
   // then pad all columns to that length with empty strings
-  for (std::map<std::string, Column>::iterator col = columns.begin();
-       col != columns.end();
-       ++col)
+  for (auto col = columns.begin(); col != columns.end(); ++col)
     while (col->second.entries.size() < max_col_length)
       {
         col->second.entries.emplace_back("");
@@ -278,7 +272,7 @@ TableHandler::add_column_to_supercolumn(const std::string &key,
     {
       // remove key from column_order
       // for erase we need an iterator
-      for (std::vector<std::string>::iterator order_iter = column_order.begin();
+      for (auto order_iter = column_order.begin();
            order_iter != column_order.end();
            ++order_iter)
         if (*order_iter == key)
@@ -398,14 +392,10 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
   if (auto_fill_mode == true)
     {
       unsigned int max_rows = 0;
-      for (std::map<std::string, Column>::const_iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         max_rows = std::max<unsigned int>(max_rows, p->second.entries.size());
 
-      for (std::map<std::string, Column>::iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         p->second.pad_column_below(max_rows);
     }
 
@@ -420,9 +410,8 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
   std::vector<unsigned int>   column_widths(n_cols, 0);
   for (unsigned int j = 0; j < n_cols; ++j)
     {
-      std::string                                         key = sel_columns[j];
-      const std::map<std::string, Column>::const_iterator col_iter =
-        columns.find(key);
+      std::string key      = sel_columns[j];
+      const auto  col_iter = columns.find(key);
       Assert(col_iter != columns.end(), ExcInternalError());
       cols.push_back(&(col_iter->second));
 
@@ -513,16 +502,14 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
               unsigned int       width = 0;
               {
                 // compute the width of this column or supercolumn
-                const std::map<std::string,
-                               std::vector<std::string>>::const_iterator
-                  super_iter = supercolumns.find(key);
+                const auto super_iter = supercolumns.find(key);
                 if (super_iter != supercolumns.end())
                   {
                     const unsigned int n_subcolumns = super_iter->second.size();
                     for (unsigned int k = 0; k < n_subcolumns; ++k)
                       {
-                        const std::map<std::string, Column>::const_iterator
-                          col_iter = columns.find(super_iter->second[k]);
+                        const auto col_iter =
+                          columns.find(super_iter->second[k]);
                         Assert(col_iter != columns.end(), ExcInternalError());
 
                         width += col_iter->second.max_length;
@@ -531,8 +518,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
                   }
                 else
                   {
-                    const std::map<std::string, Column>::const_iterator
-                      col_iter = columns.find(key);
+                    const auto col_iter = columns.find(key);
 
                     width = col_iter->second.max_length;
                   }
@@ -545,9 +531,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
                   // supercolumn wide enough
                   std::string colname;
 
-                  const std::map<std::string,
-                                 std::vector<std::string>>::const_iterator
-                    super_iter = supercolumns.find(key);
+                  const auto super_iter = supercolumns.find(key);
                   if (super_iter != supercolumns.end())
                     colname = super_iter->second.back();
                   else
@@ -627,14 +611,10 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
   if (auto_fill_mode == true)
     {
       unsigned int max_rows = 0;
-      for (std::map<std::string, Column>::const_iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         max_rows = std::max<unsigned int>(max_rows, p->second.entries.size());
 
-      for (std::map<std::string, Column>::iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         p->second.pad_column_below(max_rows);
     }
 
@@ -646,8 +626,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
     {
       std::string key = column_order[j];
       // avoid `supercolumns[key]'
-      const std::map<std::string, std::vector<std::string>>::const_iterator
-        super_iter = supercolumns.find(key);
+      const auto super_iter = supercolumns.find(key);
 
       if (super_iter != supercolumns.end())
         {
@@ -655,8 +634,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
           for (unsigned int k = 0; k < n_subcolumns; ++k)
             {
               // avoid `columns[supercolumns[key]]'
-              const std::map<std::string, Column>::const_iterator col_iter =
-                columns.find(super_iter->second[k]);
+              const auto col_iter = columns.find(super_iter->second[k]);
               Assert(col_iter != columns.end(), ExcInternalError());
 
               out << col_iter->second.tex_format << "|";
@@ -665,8 +643,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
       else
         {
           // avoid `columns[key]';
-          const std::map<std::string, Column>::const_iterator col_iter =
-            columns.find(key);
+          const auto col_iter = columns.find(key);
           Assert(col_iter != columns.end(), ExcInternalError());
           out << col_iter->second.tex_format << "|";
         }
@@ -677,16 +654,14 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
 
   for (unsigned int j = 0; j < column_order.size(); ++j)
     {
-      std::string key = column_order[j];
-      const std::map<std::string, std::vector<std::string>>::const_iterator
-        super_iter = supercolumns.find(key);
+      std::string key        = column_order[j];
+      const auto  super_iter = supercolumns.find(key);
 
       if (super_iter != supercolumns.end())
         {
           const unsigned int n_subcolumns = super_iter->second.size();
           // avoid use of `tex_supercaptions[key]'
-          std::map<std::string, std::string>::const_iterator
-            tex_super_cap_iter = tex_supercaptions.find(key);
+          auto tex_super_cap_iter = tex_supercaptions.find(key);
           out << std::endl
               << "\\multicolumn{" << n_subcolumns << "}{|c|}{"
               << tex_super_cap_iter->second << "}";
@@ -694,8 +669,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
       else
         {
           // col_iter->second=columns[col];
-          const std::map<std::string, Column>::const_iterator col_iter =
-            columns.find(key);
+          const auto col_iter = columns.find(key);
           Assert(col_iter != columns.end(), ExcInternalError());
           out << col_iter->second.tex_caption;
         }
@@ -714,8 +688,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
         {
           std::string key = sel_columns[j];
           // avoid `column[key]'
-          const std::map<std::string, Column>::const_iterator col_iter =
-            columns.find(key);
+          const auto col_iter = columns.find(key);
           Assert(col_iter != columns.end(), ExcInternalError());
 
           const Column &column = col_iter->second;
@@ -765,7 +738,7 @@ TableHandler::n_rows() const
   if (columns.size() == 0)
     return 0;
 
-  std::map<std::string, Column>::const_iterator col_iter = columns.begin();
+  auto         col_iter   = columns.begin();
   unsigned int n          = col_iter->second.entries.size();
   std::string  first_name = col_iter->first;
 
@@ -785,9 +758,8 @@ TableHandler::get_selected_columns(std::vector<std::string> &sel_columns) const
 
   for (unsigned int j = 0; j < column_order.size(); ++j)
     {
-      std::string key = column_order[j];
-      const std::map<std::string, std::vector<std::string>>::const_iterator
-        super_iter = supercolumns.find(key);
+      std::string key        = column_order[j];
+      const auto  super_iter = supercolumns.find(key);
 
       if (super_iter != supercolumns.end())
         {
@@ -816,16 +788,12 @@ TableHandler::clear_current_row()
   // Figure out what is the currect (max) length of the columns
   // so that we "shave" one off.
   std::vector<internal::TableEntry>::size_type n = 0;
-  for (std::map<std::string, Column>::iterator p = columns.begin();
-       p != columns.end();
-       ++p)
+  for (auto p = columns.begin(); p != columns.end(); ++p)
     n = std::max(n, p->second.entries.size());
 
   // shave the top most element
   if (n != 0)
-    for (std::map<std::string, Column>::iterator p = columns.begin();
-         p != columns.end();
-         ++p)
+    for (auto p = columns.begin(); p != columns.end(); ++p)
       if (p->second.entries.size() == n)
         p->second.entries.pop_back();
 }

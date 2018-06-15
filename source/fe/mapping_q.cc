@@ -252,7 +252,7 @@ MappingQ<dim, spacedim>::fill_fe_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is in the interior of the domain
@@ -306,7 +306,7 @@ MappingQ<dim, spacedim>::fill_fe_face_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is entirely in the interior of the
@@ -343,7 +343,7 @@ MappingQ<dim, spacedim>::fill_fe_subface_values(
   // exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   // check whether this cell needs the full mapping or can be treated by a
   // reduced Q1 mapping, e.g. if the cell is entirely in the interior of the
@@ -384,7 +384,7 @@ MappingQ<dim, spacedim>::transform(
 {
   AssertDimension(input.size(), output.size());
 
-  const InternalData *data = dynamic_cast<const InternalData *>(&mapping_data);
+  const auto *data = dynamic_cast<const InternalData *>(&mapping_data);
   Assert(data != nullptr, ExcInternalError());
 
   // check whether we should in fact work on the Q1 portion of it
@@ -409,7 +409,7 @@ MappingQ<dim, spacedim>::transform(
   Assert((dynamic_cast<const typename MappingQ<dim, spacedim>::InternalData *>(
             &mapping_data) != nullptr),
          ExcInternalError());
-  const InternalData *data = dynamic_cast<const InternalData *>(&mapping_data);
+  const auto *data = dynamic_cast<const InternalData *>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if (data->use_mapping_q1_on_current_cell)
@@ -433,7 +433,7 @@ MappingQ<dim, spacedim>::transform(
   Assert((dynamic_cast<const typename MappingQ<dim, spacedim>::InternalData *>(
             &mapping_data) != nullptr),
          ExcInternalError());
-  const InternalData *data = dynamic_cast<const InternalData *>(&mapping_data);
+  const auto *data = dynamic_cast<const InternalData *>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if (data->use_mapping_q1_on_current_cell)
@@ -457,7 +457,7 @@ MappingQ<dim, spacedim>::transform(
   Assert((dynamic_cast<const typename MappingQ<dim, spacedim>::InternalData *>(
             &mapping_data) != nullptr),
          ExcInternalError());
-  const InternalData *data = dynamic_cast<const InternalData *>(&mapping_data);
+  const auto *data = dynamic_cast<const InternalData *>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if (data->use_mapping_q1_on_current_cell)
@@ -481,7 +481,7 @@ MappingQ<dim, spacedim>::transform(
   Assert((dynamic_cast<const typename MappingQ<dim, spacedim>::InternalData *>(
             &mapping_data) != nullptr),
          ExcInternalError());
-  const InternalData *data = dynamic_cast<const InternalData *>(&mapping_data);
+  const auto *data = dynamic_cast<const InternalData *>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
   if (data->use_mapping_q1_on_current_cell)

@@ -126,7 +126,7 @@ CellId::to_binary() const
 
       for (unsigned int j = 0; j < children_per_value; ++j)
         {
-          const unsigned int child_index =
+          const auto child_index =
             static_cast<unsigned int>(child_indices[child_level]);
           // Shift the child index to its position in the unsigned int and store
           // it

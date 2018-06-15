@@ -484,7 +484,7 @@ namespace
 
             // first make sure that the new entry actually satisfies its
             // constraints
-            const unsigned int pattern_index = destination.get<unsigned int>(
+            const auto pattern_index = destination.get<unsigned int>(
               full_path + path_separator + "pattern");
             AssertThrow(patterns[pattern_index]->match(new_value),
                         ParameterHandler::ExcInvalidEntryForPatternXML
@@ -855,7 +855,7 @@ ParameterHandler::set(const std::string &entry_string,
   if (entries->get_optional<std::string>(path + path_separator + "value"))
     {
       // verify that the new value satisfies the provided pattern
-      const unsigned int pattern_index =
+      const auto pattern_index =
         entries->get<unsigned int>(path + path_separator + "pattern");
       AssertThrow(patterns[pattern_index]->match(new_value),
                   ExcValueDoesNotMatchPattern(new_value,
@@ -1199,7 +1199,7 @@ ParameterHandler::recursively_print_parameters(
 
                     // also output possible values, do not escape because the
                     // description internally will use LaTeX formatting
-                    const unsigned int pattern_index =
+                    const auto pattern_index =
                       p->second.get<unsigned int>("pattern");
                     const std::string desc_str =
                       patterns[pattern_index]->description(
@@ -1290,7 +1290,7 @@ ParameterHandler::recursively_print_parameters(
                     << " = ";
 
                 // print possible values:
-                const unsigned int pattern_index =
+                const auto pattern_index =
                   p->second.get<unsigned int>("pattern");
                 const std::string full_desc_str =
                   patterns[pattern_index]->description(
@@ -1667,7 +1667,7 @@ ParameterHandler::print_parameters_section(
                           << std::endl;
 
                     // also output possible values
-                    const unsigned int pattern_index =
+                    const auto pattern_index =
                       p->second.get<unsigned int>("pattern");
                     const std::string desc_str =
                       patterns[pattern_index]->description(
@@ -1751,7 +1751,7 @@ ParameterHandler::print_parameters_section(
                     << " = ";
 
                 // print possible values:
-                const unsigned int pattern_index =
+                const auto pattern_index =
                   p->second.get<unsigned int>("pattern");
                 const std::string full_desc_str =
                   patterns[pattern_index]->description(
@@ -2080,7 +2080,7 @@ ParameterHandler::scan_line(std::string        line,
           if (entry_value.find('{') == std::string::npos)
             {
               // verify that the new value satisfies the provided pattern
-              const unsigned int pattern_index =
+              const auto pattern_index =
                 entries->get<unsigned int>(path + path_separator + "pattern");
               AssertThrow(patterns[pattern_index]->match(entry_value),
                           ExcInvalidEntryForPattern(

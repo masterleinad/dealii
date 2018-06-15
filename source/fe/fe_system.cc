@@ -650,7 +650,7 @@ FESystem<dim, spacedim>::get_interpolation_matrix(
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 
   // ok, source is a system element, so we may be able to do the work
-  const FESystem<dim, spacedim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FESystem<dim, spacedim> &>(x_source_fe);
 
   // condition 2: same number of basis elements
@@ -1217,7 +1217,7 @@ FESystem<dim, spacedim>::compute_fill(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Either dim_1==dim
   // (fill_fe_values) or dim_1==dim-1
@@ -2014,7 +2014,7 @@ FESystem<dim, spacedim>::get_subface_interpolation_matrix(
   // FESystem(FE_Q(p),1,FE_Q(q),2) vs FESystem(FE_Q(r),2,FE_Q(s),1), but not
   // FESystem(FE_Q(p),1,FE_Q(q),2) vs
   // FESystem(FESystem(FE_Q(r),2),1,FE_Q(s),1)
-  const FESystem<dim, spacedim> *fe_other_system =
+  const auto *fe_other_system =
     dynamic_cast<const FESystem<dim, spacedim> *>(&x_source_fe);
   if (fe_other_system != nullptr)
     {
@@ -2120,7 +2120,7 @@ FESystem<dim, spacedim>::hp_object_dof_identities(
   // FESystem(FE_Q(p),1,FE_Q(q),2) vs FESystem(FE_Q(r),2,FE_Q(s),1), but not
   // FESystem(FE_Q(p),1,FE_Q(q),2) vs
   // FESystem(FESystem(FE_Q(r),2),1,FE_Q(s),1)
-  if (const FESystem<dim, spacedim> *fe_other_system =
+  if (const auto *fe_other_system =
         dynamic_cast<const FESystem<dim, spacedim> *>(&fe_other))
     {
       // loop over all the base elements of this and the other element,
@@ -2250,7 +2250,7 @@ FESystem<dim, spacedim>::compare_for_face_domination(
 {
   // at present all we can do is to compare with other FESystems that have the
   // same number of components and bases
-  if (const FESystem<dim, spacedim> *fe_sys_other =
+  if (const auto *fe_sys_other =
         dynamic_cast<const FESystem<dim, spacedim> *>(&fe_other))
     {
       Assert(this->n_components() == fe_sys_other->n_components(),

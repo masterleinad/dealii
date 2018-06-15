@@ -115,7 +115,7 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
                               x_source_fe.dofs_per_face));
 
   // see if source is a Bernstein element
-  if (const FE_Bernstein<dim, spacedim> *source_fe =
+  if (const auto *source_fe =
         dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&x_source_fe))
     {
       // have this test in here since a table of size 2x0 reports its size as
@@ -281,7 +281,7 @@ FiniteElementDomination::Domination
 FE_Bernstein<dim, spacedim>::compare_for_face_domination(
   const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if (const FE_Bernstein<dim, spacedim> *fe_b_other =
+  if (const auto *fe_b_other =
         dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_b_other->degree)
@@ -291,7 +291,7 @@ FE_Bernstein<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())

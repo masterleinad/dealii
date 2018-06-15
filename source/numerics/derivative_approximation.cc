@@ -825,9 +825,7 @@ namespace DerivativeApproximation
       // now loop over all active
       // neighbors and collect the
       // data we need
-      typename std::vector<TriaActiveIterator<
-        dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>>::
-        const_iterator neighbor_ptr = active_neighbors.begin();
+      auto neighbor_ptr = active_neighbors.begin();
       for (; neighbor_ptr != active_neighbors.end(); ++neighbor_ptr)
         {
           const TriaActiveIterator<

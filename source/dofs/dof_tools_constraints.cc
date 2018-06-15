@@ -293,10 +293,7 @@ namespace DoFTools
 
         // finally copy the list into the mask
         std::fill(master_dof_mask.begin(), master_dof_mask.end(), false);
-        for (std::vector<types::global_dof_index>::const_iterator i =
-               master_dof_list.begin();
-             i != master_dof_list.end();
-             ++i)
+        for (auto i = master_dof_list.begin(); i != master_dof_list.end(); ++i)
           master_dof_mask[*i] = true;
       }
 
@@ -2275,10 +2272,9 @@ namespace DoFTools
 
       for (unsigned int i = 0; i < n_dofs_per_face; ++i)
         {
-          std::vector<unsigned int>::const_iterator comp_it =
-            std::find(first_vector_components.begin(),
-                      first_vector_components.end(),
-                      fe.face_system_to_component_index(i).first);
+          auto comp_it = std::find(first_vector_components.begin(),
+                                   first_vector_components.end(),
+                                   fe.face_system_to_component_index(i).first);
           if (comp_it != first_vector_components.end())
             {
               const unsigned int first_vector_component = *comp_it;
@@ -3289,8 +3285,7 @@ namespace DoFTools
           Assert(weights[parameter_dof].size() > 0, ExcInternalError());
 
           // find the column where the representant is mentioned
-          std::map<types::global_dof_index, float>::const_iterator i =
-            weights[parameter_dof].begin();
+          auto i = weights[parameter_dof].begin();
           for (; i != weights[parameter_dof].end(); ++i)
             if (i->second == 1)
               break;
@@ -3343,8 +3338,7 @@ namespace DoFTools
 
           {
             Assert(weights.size() > 0, ExcInternalError());
-            std::map<types::global_dof_index, float>::const_iterator col_entry =
-              weights[0].end();
+            auto col_entry = weights[0].end();
             for (; first_used_row < n_coarse_dofs; ++first_used_row)
               {
                 col_entry = weights[first_used_row].find(col);
@@ -3372,8 +3366,7 @@ namespace DoFTools
                row < n_coarse_dofs;
                ++row)
             {
-              const std::map<types::global_dof_index, float>::const_iterator j =
-                weights[row].find(col);
+              const auto j = weights[row].find(col);
               if ((j != weights[row].end()) && (j->second != 0))
                 constraint_line.emplace_back(representants[row], j->second);
             };
@@ -3467,8 +3460,7 @@ namespace DoFTools
     const types::global_dof_index n_coarse_dofs = coarse_grid.n_dofs();
     for (types::global_dof_index i = 0; i < n_coarse_dofs; ++i)
       {
-        std::map<types::global_dof_index, float>::const_iterator j =
-          weights[i].begin();
+        auto j = weights[i].begin();
         for (; j != weights[i].end(); ++j)
           {
             const types::global_dof_index p = inverse_weight_mapping[j->first];
@@ -3544,10 +3536,9 @@ namespace DoFTools
                     {
                       // Find out if a dof has a contribution in this
                       // component, and if so, add it to the list
-                      const std::vector<types::global_dof_index>::iterator
-                        it_index_on_cell = std::find(cell_dofs.begin(),
-                                                     cell_dofs.end(),
-                                                     face_dofs[i]);
+                      const auto it_index_on_cell = std::find(cell_dofs.begin(),
+                                                              cell_dofs.end(),
+                                                              face_dofs[i]);
                       Assert(it_index_on_cell != cell_dofs.end(),
                              ExcInvalidIterator());
                       const unsigned int index_on_cell =

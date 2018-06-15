@@ -61,13 +61,9 @@ DataOutStack<dim, spacedim, DoFHandlerType>::new_parameter_value(
   // previous parameter step
   //
   // this is to prevent serious waste of memory
-  for (typename std::vector<DataVector>::const_iterator i = dof_data.begin();
-       i != dof_data.end();
-       ++i)
+  for (auto i = dof_data.begin(); i != dof_data.end(); ++i)
     Assert(i->data.size() == 0, ExcDataNotCleared());
-  for (typename std::vector<DataVector>::const_iterator i = cell_data.begin();
-       i != cell_data.end();
-       ++i)
+  for (auto i = cell_data.begin(); i != cell_data.end(); ++i)
     Assert(i->data.size() == 0, ExcDataNotCleared());
 }
 
@@ -112,20 +108,14 @@ DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
 
   // also make sure that no name is
   // used twice
-  for (std::vector<std::string>::const_iterator name = names.begin();
-       name != names.end();
-       ++name)
+  for (auto name = names.begin(); name != names.end(); ++name)
     {
-      for (typename std::vector<DataVector>::const_iterator data_set =
-             dof_data.begin();
-           data_set != dof_data.end();
+      for (auto data_set = dof_data.begin(); data_set != dof_data.end();
            ++data_set)
         for (unsigned int i = 0; i < data_set->names.size(); ++i)
           Assert(*name != data_set->names[i], ExcNameAlreadyUsed(*name));
 
-      for (typename std::vector<DataVector>::const_iterator data_set =
-             cell_data.begin();
-           data_set != cell_data.end();
+      for (auto data_set = cell_data.begin(); data_set != cell_data.end();
            ++data_set)
         for (unsigned int i = 0; i < data_set->names.size(); ++i)
           Assert(*name != data_set->names[i], ExcNameAlreadyUsed(*name));
@@ -210,7 +200,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
 
   if (vec.size() == dof_handler->n_dofs())
     {
-      typename std::vector<DataVector>::iterator data_vector = dof_data.begin();
+      auto data_vector = dof_data.begin();
       for (; data_vector != dof_data.end(); ++data_vector)
         if (data_vector->names == names)
           {
@@ -234,8 +224,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
       (dof_handler->n_dofs() ==
        dof_handler->get_triangulation().n_active_cells()))
     {
-      typename std::vector<DataVector>::iterator data_vector =
-        cell_data.begin();
+      auto data_vector = cell_data.begin();
       for (; data_vector != cell_data.end(); ++data_vector)
         if (data_vector->names == names)
           {
@@ -326,8 +315,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
 
   // now loop over all cells and
   // actually create the patches
-  typename std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>::iterator
-               patch       = patches.begin() + (patches.size() - n_patches);
+  auto         patch       = patches.begin() + (patches.size() - n_patches);
   unsigned int cell_number = 0;
   for (typename DoFHandlerType::active_cell_iterator cell =
          dof_handler->begin_active();
@@ -445,14 +433,10 @@ DataOutStack<dim, spacedim, DoFHandlerType>::finish_parameter_value()
 {
   // release lock on dof handler
   dof_handler = nullptr;
-  for (typename std::vector<DataVector>::iterator i = dof_data.begin();
-       i != dof_data.end();
-       ++i)
+  for (auto i = dof_data.begin(); i != dof_data.end(); ++i)
     i->data.reinit(0);
 
-  for (typename std::vector<DataVector>::iterator i = cell_data.begin();
-       i != cell_data.end();
-       ++i)
+  for (auto i = cell_data.begin(); i != cell_data.end(); ++i)
     i->data.reinit(0);
 }
 
@@ -487,15 +471,9 @@ std::vector<std::string>
 DataOutStack<dim, spacedim, DoFHandlerType>::get_dataset_names() const
 {
   std::vector<std::string> names;
-  for (typename std::vector<DataVector>::const_iterator dataset =
-         dof_data.begin();
-       dataset != dof_data.end();
-       ++dataset)
+  for (auto dataset = dof_data.begin(); dataset != dof_data.end(); ++dataset)
     names.insert(names.end(), dataset->names.begin(), dataset->names.end());
-  for (typename std::vector<DataVector>::const_iterator dataset =
-         cell_data.begin();
-       dataset != cell_data.end();
-       ++dataset)
+  for (auto dataset = cell_data.begin(); dataset != cell_data.end(); ++dataset)
     names.insert(names.end(), dataset->names.begin(), dataset->names.end());
 
   return names;

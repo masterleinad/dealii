@@ -817,8 +817,7 @@ namespace internal
           // the list (these are needed for the transfer from level to level+1
           // but not for the transfer from level-1 to level).
           if (level < n_levels - 1)
-            for (std::vector<std::pair<unsigned int, unsigned int>>::iterator
-                   i = parent_child_connect[level].begin();
+            for (auto i = parent_child_connect[level].begin();
                  i != parent_child_connect[level].end();
                  ++i)
               if (i->first >= tria.n_cells(level))

@@ -1926,8 +1926,7 @@ GridIn<2>::read_netcdf(const std::string &filename)
         zero_plane_markers[bmarker[quad]] = true;
     }
   unsigned int sum_of_zero_plane_cells = 0;
-  for (std::map<int, bool>::const_iterator iter = zero_plane_markers.begin();
-       iter != zero_plane_markers.end();
+  for (auto iter = zero_plane_markers.begin(); iter != zero_plane_markers.end();
        ++iter)
     sum_of_zero_plane_cells += n_bquads_per_bmarker[iter->first];
   AssertThrow(sum_of_zero_plane_cells == n_cells, ExcIO());
@@ -1939,8 +1938,7 @@ GridIn<2>::read_netcdf(const std::string &filename)
   for (unsigned int quad = 0, cell = 0; quad < n_bquads; ++quad)
     {
       bool zero_plane = false;
-      for (std::map<int, bool>::const_iterator iter =
-             zero_plane_markers.begin();
+      for (auto iter = zero_plane_markers.begin();
            iter != zero_plane_markers.end();
            ++iter)
         if (bmarker[quad] == iter->first)

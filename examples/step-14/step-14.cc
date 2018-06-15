@@ -2843,8 +2843,7 @@ namespace Step14
         std::cout << "   Number of degrees of freedom=" << solver->n_dofs()
                   << std::endl;
 
-        for (typename EvaluatorList::const_iterator e =
-               descriptor.evaluator_list.begin();
+        for (auto e = descriptor.evaluator_list.begin();
              e != descriptor.evaluator_list.end();
              ++e)
           {

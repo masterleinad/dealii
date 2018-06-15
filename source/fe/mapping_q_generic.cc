@@ -2775,7 +2775,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
   // ensure that the following static_cast is really correct:
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   const unsigned int n_q_points = quadrature.size();
 
@@ -3256,7 +3256,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_face_values(
   // ensure that the following cast is really correct:
   Assert((dynamic_cast<const InternalData *>(&internal_data) != nullptr),
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   // if necessary, recompute the support points of the transformation of this
   // cell (note that we need to first check the triangulation pointer, since
@@ -3302,7 +3302,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_subface_values(
   // ensure that the following cast is really correct:
   Assert((dynamic_cast<const InternalData *>(&internal_data) != nullptr),
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   // if necessary, recompute the support points of the transformation of this
   // cell (note that we need to first check the triangulation pointer, since
@@ -3355,10 +3355,9 @@ namespace internal
                                MappingQGeneric<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingQGeneric<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -3433,10 +3432,9 @@ namespace internal
                                MappingQGeneric<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingQGeneric<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -3535,10 +3533,9 @@ namespace internal
                                MappingQGeneric<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingQGeneric<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -3704,10 +3701,9 @@ namespace internal
                                MappingQGeneric<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingQGeneric<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingQGeneric<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -3804,7 +3800,7 @@ MappingQGeneric<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {

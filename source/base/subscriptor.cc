@@ -88,8 +88,7 @@ Subscriptor::check_no_subscribers() const noexcept
       if (std::uncaught_exception() == false)
         {
           std::string infostring;
-          for (map_iterator it = counter_map.begin(); it != counter_map.end();
-               ++it)
+          for (auto it = counter_map.begin(); it != counter_map.end(); ++it)
             {
               if (it->second > 0)
                 infostring +=

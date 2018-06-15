@@ -220,8 +220,8 @@ ConvergenceTable::omit_column_from_convergence_rate_evaluation(
 {
   Assert(columns.count(key), ExcColumnNotExistent(key));
 
-  const std::map<std::string, Column>::iterator col_iter = columns.find(key);
-  col_iter->second.flag                                  = 1;
+  const auto col_iter   = columns.find(key);
+  col_iter->second.flag = 1;
 }
 
 
@@ -231,9 +231,7 @@ ConvergenceTable::evaluate_all_convergence_rates(
   const std::string &reference_column_key,
   const RateMode     rate_mode)
 {
-  for (std::map<std::string, Column>::const_iterator col_iter = columns.begin();
-       col_iter != columns.end();
-       ++col_iter)
+  for (auto col_iter = columns.begin(); col_iter != columns.end(); ++col_iter)
     if (!col_iter->second.flag)
       evaluate_convergence_rates(col_iter->first,
                                  reference_column_key,
@@ -245,9 +243,7 @@ ConvergenceTable::evaluate_all_convergence_rates(
 void
 ConvergenceTable::evaluate_all_convergence_rates(const RateMode rate_mode)
 {
-  for (std::map<std::string, Column>::const_iterator col_iter = columns.begin();
-       col_iter != columns.end();
-       ++col_iter)
+  for (auto col_iter = columns.begin(); col_iter != columns.end(); ++col_iter)
     if (!col_iter->second.flag)
       evaluate_convergence_rates(col_iter->first, rate_mode);
 }

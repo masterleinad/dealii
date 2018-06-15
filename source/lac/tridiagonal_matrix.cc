@@ -95,12 +95,12 @@ TridiagonalMatrix<number>::vmult(Vector<number> &      w,
   const size_type e = n() - 1;
   // Let iterators point to the first
   // entry of each diagonal
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
+  auto d = diagonal.begin();
+  auto r = right.begin();
   // The left diagonal starts one
   // later or is equal to the right
   // one for symmetric storage
-  typename std::vector<number>::const_iterator l = left.begin();
+  auto l = left.begin();
   if (is_symmetric)
     l = r;
   else
@@ -154,10 +154,10 @@ TridiagonalMatrix<number>::Tvmult(Vector<number> &      w,
   if (n() == 0)
     return;
 
-  const size_type                              e = n() - 1;
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
-  typename std::vector<number>::const_iterator l = left.begin();
+  const size_type e = n() - 1;
+  auto            d = diagonal.begin();
+  auto            r = right.begin();
+  auto            l = left.begin();
   if (is_symmetric)
     l = r;
   else
@@ -202,10 +202,10 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number> &w,
 {
   Assert(state == matrix, ExcState(state));
 
-  const size_type                              e = n() - 1;
-  typename std::vector<number>::const_iterator d = diagonal.begin();
-  typename std::vector<number>::const_iterator r = right.begin();
-  typename std::vector<number>::const_iterator l = left.begin();
+  const size_type e = n() - 1;
+  auto            d = diagonal.begin();
+  auto            r = right.begin();
+  auto            l = left.begin();
   if (is_symmetric)
     l = r;
   else

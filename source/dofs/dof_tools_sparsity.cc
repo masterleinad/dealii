@@ -229,9 +229,7 @@ namespace DoFTools
       cell_list = GridTools::get_finest_common_cells(dof_row, dof_col);
 
 
-    typename std::list<std::pair<typename DoFHandlerType::cell_iterator,
-                                 typename DoFHandlerType::cell_iterator>>::
-      const_iterator cell_iter = cell_list.begin();
+    auto cell_iter = cell_list.begin();
 
     for (; cell_iter != cell_list.end(); ++cell_iter)
       {
@@ -343,8 +341,7 @@ namespace DoFTools
     if (sparsity.n_rows() != 0)
       {
         types::global_dof_index max_element = 0;
-        for (std::vector<types::global_dof_index>::const_iterator i =
-               dof_to_boundary_mapping.begin();
+        for (auto i = dof_to_boundary_mapping.begin();
              i != dof_to_boundary_mapping.end();
              ++i)
           if ((*i != numbers::invalid_dof_index) && (*i > max_element))
@@ -447,8 +444,7 @@ namespace DoFTools
     if (sparsity.n_rows() != 0)
       {
         types::global_dof_index max_element = 0;
-        for (std::vector<types::global_dof_index>::const_iterator i =
-               dof_to_boundary_mapping.begin();
+        for (auto i = dof_to_boundary_mapping.begin();
              i != dof_to_boundary_mapping.end();
              ++i)
           if ((*i != numbers::invalid_dof_index) && (*i > max_element))

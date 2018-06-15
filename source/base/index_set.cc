@@ -135,10 +135,10 @@ IndexSet::do_compress() const
   // std::vector::erase in-place as it is quadratic in the number of
   // ranges. since the ranges are sorted by their first index, determining
   // overlap isn't all that hard
-  std::vector<Range>::iterator store = ranges.begin();
-  for (std::vector<Range>::iterator i = ranges.begin(); i != ranges.end();)
+  auto store = ranges.begin();
+  for (auto i = ranges.begin(); i != ranges.end();)
     {
-      std::vector<Range>::iterator next = i;
+      auto next = i;
       ++next;
 
       size_type first_index = i->begin;
@@ -165,7 +165,7 @@ IndexSet::do_compress() const
 
   // now compute indices within set and the range with most elements
   size_type next_index = 0, largest_range_size = 0;
-  for (std::vector<Range>::iterator i = ranges.begin(); i != ranges.end(); ++i)
+  for (auto i = ranges.begin(); i != ranges.end(); ++i)
     {
       Assert(i->begin < i->end, ExcInternalError());
 
@@ -193,8 +193,7 @@ IndexSet IndexSet::operator&(const IndexSet &is) const
   compress();
   is.compress();
 
-  std::vector<Range>::const_iterator r1 = ranges.begin(),
-                                     r2 = is.ranges.begin();
+  auto     r1 = ranges.begin(), r2 = is.ranges.begin();
   IndexSet result(size());
 
   while ((r1 != ranges.end()) && (r2 != is.ranges.end()))
@@ -239,8 +238,8 @@ IndexSet::get_view(const size_type begin, const size_type end) const
          ExcMessage("End index needs to be larger or equal to begin index!"));
   Assert(end <= size(), ExcMessage("Given range exceeds index set dimension"));
 
-  IndexSet                           result(end - begin);
-  std::vector<Range>::const_iterator r1 = ranges.begin();
+  IndexSet result(end - begin);
+  auto     r1 = ranges.begin();
 
   while (r1 != ranges.end())
     {
@@ -273,8 +272,8 @@ IndexSet::subtract_set(const IndexSet &other)
   // add all of them in one go at the end.
   std::vector<Range> new_ranges;
 
-  std::vector<Range>::iterator own_it   = ranges.begin();
-  std::vector<Range>::iterator other_it = other.ranges.begin();
+  auto own_it   = ranges.begin();
+  auto other_it = other.ranges.begin();
 
   while (own_it != ranges.end() && other_it != other.ranges.end())
     {
@@ -315,7 +314,7 @@ IndexSet::subtract_set(const IndexSet &other)
 
   // Now delete all empty ranges we might
   // have created.
-  for (std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();)
+  for (auto it = ranges.begin(); it != ranges.end();)
     {
       if (it->begin >= it->end)
         it = ranges.erase(it);
@@ -324,8 +323,8 @@ IndexSet::subtract_set(const IndexSet &other)
     }
 
   // done, now add the temporary ranges
-  const std::vector<Range>::iterator end = new_ranges.end();
-  for (std::vector<Range>::iterator it = new_ranges.begin(); it != end; ++it)
+  const auto end = new_ranges.end();
+  for (auto it = new_ranges.begin(); it != end; ++it)
     add_range(it->begin, it->end);
 
   compress();
@@ -388,8 +387,7 @@ IndexSet::add_indices(const IndexSet &other, const unsigned int offset)
   compress();
   other.compress();
 
-  std::vector<Range>::const_iterator r1 = ranges.begin(),
-                                     r2 = other.ranges.begin();
+  auto r1 = ranges.begin(), r2 = other.ranges.begin();
 
   std::vector<Range> new_ranges;
   // just get the start and end of the ranges right in this method, everything
@@ -434,7 +432,7 @@ IndexSet::write(std::ostream &out) const
   compress();
   out << size() << " ";
   out << ranges.size() << std::endl;
-  std::vector<Range>::const_iterator r = ranges.begin();
+  auto r = ranges.begin();
   for (; r != ranges.end(); ++r)
     {
       out << r->begin << " " << r->end << std::endl;
@@ -507,8 +505,7 @@ IndexSet::fill_index_vector(std::vector<size_type> &indices) const
   indices.clear();
   indices.reserve(n_elements());
 
-  for (std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();
-       ++it)
+  for (auto it = ranges.begin(); it != ranges.end(); ++it)
     for (size_type i = it->begin; i < it->end; ++i)
       indices.push_back(i);
 

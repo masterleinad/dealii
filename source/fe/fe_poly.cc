@@ -49,7 +49,7 @@ FE_Poly<TensorProductPolynomials<1>, 1, 2>::fill_fe_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -117,7 +117,7 @@ FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
   // cast is really well-defined.
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -187,7 +187,7 @@ FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
 
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -252,7 +252,7 @@ FE_Poly<PolynomialSpace<2>, 2, 3>::fill_fe_values(
 {
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when

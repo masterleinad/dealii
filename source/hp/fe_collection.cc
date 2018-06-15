@@ -48,9 +48,7 @@ namespace hp
         FiniteElementDomination::Domination domination =
           FiniteElementDomination::no_requirements;
         // check if cur_fe can dominate all FEs in @p fes:
-        for (std::set<unsigned int>::const_iterator it = fes.begin();
-             it != fes.end();
-             ++it)
+        for (auto it = fes.begin(); it != fes.end(); ++it)
           {
             Assert(*it < fe_collection.size(),
                    ExcIndexRangeType<unsigned int>(*it,
@@ -75,15 +73,11 @@ namespace hp
         return *candidate_fes.begin();
       }
     else
-      for (std::set<unsigned int>::const_iterator it = candidate_fes.begin();
-           it != candidate_fes.end();
-           ++it)
+      for (auto it = candidate_fes.begin(); it != candidate_fes.end(); ++it)
         {
           FiniteElementDomination::Domination domination =
             FiniteElementDomination::no_requirements;
-          for (std::set<unsigned int>::const_iterator ito =
-                 candidate_fes.begin();
-               ito != candidate_fes.end();
+          for (auto ito = candidate_fes.begin(); ito != candidate_fes.end();
                ++ito)
             if (it != ito)
               {

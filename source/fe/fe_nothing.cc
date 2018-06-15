@@ -194,7 +194,7 @@ operator==(const FiniteElement<dim, spacedim> &f) const
   // Then make sure the other object is really of type FE_Nothing,
   // and compare the data that has been passed to both objects'
   // constructors.
-  if (const FE_Nothing<dim, spacedim> *f_nothing =
+  if (const auto *f_nothing =
         dynamic_cast<const FE_Nothing<dim, spacedim> *>(&f))
     return ((dominate == f_nothing->dominate) &&
             (this->components == f_nothing->components));

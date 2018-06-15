@@ -49,7 +49,7 @@
 #include <sstream>
 
 // we use uint32_t and uint8_t below, which are declared here:
-#include <stdint.h>
+#include <cstdint>
 
 #ifdef DEAL_II_WITH_ZLIB
 #  include <zlib.h>
@@ -221,7 +221,7 @@ namespace
     base64::base64_encodestate state;
     base64::base64_init_encodestate(&state);
 
-    char *encoded_data = new char[2 * data_size + 1];
+    auto *encoded_data = new char[2 * data_size + 1];
 
     const int encoded_length_data =
       base64::base64_encode_block(data, data_size, encoded_data, &state);
@@ -272,7 +272,7 @@ namespace
         // allocate a buffer for compressing
         // data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
-        char * compressed_data        = new char[compressed_data_length];
+        auto * compressed_data        = new char[compressed_data_length];
         int    err =
           compress2((Bytef *)compressed_data,
                     &compressed_data_length,
@@ -432,10 +432,7 @@ namespace DataOutBase
 
       // loop over all patches
       unsigned int next_value = 0;
-      for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-             patches.begin();
-           patch != patches.end();
-           ++patch)
+      for (auto patch = patches.begin(); patch != patches.end(); ++patch)
         {
           const unsigned int n_subdivisions = patch->n_subdivisions;
           (void)n_subdivisions;
@@ -492,8 +489,8 @@ namespace DataOutBase
     for (unsigned int d = 0; d < dim; ++d)
       int_pt(d) = p(d);
 
-    const Map3DPoint::const_iterator it = existing_points.find(int_pt);
-    unsigned int                     internal_ind;
+    const auto   it = existing_points.find(int_pt);
+    unsigned int internal_ind;
 
     // If the point isn't in the set, or we're not filtering duplicate points,
     // add it
@@ -526,9 +523,7 @@ namespace DataOutBase
   {
     node_data.resize(existing_points.size() * node_dim);
 
-    for (Map3DPoint::const_iterator it = existing_points.begin();
-         it != existing_points.end();
-         ++it)
+    for (auto it = existing_points.begin(); it != existing_points.end(); ++it)
       {
         for (unsigned int d = 0; d < node_dim; ++d)
           node_data[node_dim * it->second + d] = it->first(d);
@@ -543,10 +538,7 @@ namespace DataOutBase
   {
     cell_data.resize(filtered_cells.size());
 
-    for (std::map<unsigned int, unsigned int>::const_iterator it =
-           filtered_cells.begin();
-         it != filtered_cells.end();
-         ++it)
+    for (auto it = filtered_cells.begin(); it != filtered_cells.end(); ++it)
       {
         cell_data[it->first] = it->second + local_node_offset;
       }
@@ -805,10 +797,7 @@ namespace
   {
     n_nodes = 0;
     n_cells = 0;
-    for (typename std::vector<DataOutBase::Patch<dim, spacedim>>::const_iterator
-           patch = patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         n_nodes += Utilities::fixed_power<dim>(patch->n_subdivisions + 1);
         n_cells += Utilities::fixed_power<dim>(patch->n_subdivisions);
@@ -2415,10 +2404,7 @@ namespace DataOutBase
     // it here.
     Point<spacedim> node;
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -2451,10 +2437,7 @@ namespace DataOutBase
     // Array to hold all the node
     // numbers of a cell. 8 is
     // sufficient for 3D
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -2495,10 +2478,7 @@ namespace DataOutBase
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count = 0;
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -3034,10 +3014,7 @@ namespace DataOutBase
             << GeometryInfo<dim>::faces_per_cell << " items " << n_cells
             << " data follows";
 
-        for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-               patches.begin();
-             patch != patches.end();
-             ++patch)
+        for (auto patch = patches.begin(); patch != patches.end(); ++patch)
           {
             const unsigned int n               = patch->n_subdivisions;
             const unsigned int n1              = (dim > 0) ? n : 1;
@@ -3288,10 +3265,7 @@ namespace DataOutBase
 
 
     // loop over all patches
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -3547,10 +3521,7 @@ namespace DataOutBase
     double hmin = patches[0].data(0, 0);
     double hmax = patches[0].data(0, 0);
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
 
@@ -3604,10 +3575,7 @@ namespace DataOutBase
       }
 
     // loop over all patches
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -3888,10 +3856,7 @@ namespace DataOutBase
     // note that since dim==2, we
     // have exactly four vertices per
     // patch and per cell
-    for (typename std::vector<Patch<2, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -4077,9 +4042,7 @@ namespace DataOutBase
     double y_min = cells.begin()->vertices[0](1);
     double y_max = y_min;
 
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       for (unsigned int vertex = 0; vertex < 4; ++vertex)
         {
           x_min = std::min(x_min, cell->vertices[vertex](0));
@@ -4156,9 +4119,7 @@ namespace DataOutBase
     // note: due to the ordering, we
     // traverse the list of cells
     // back-to-front
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       {
         if (flags.draw_cells)
           {
@@ -5860,15 +5821,20 @@ namespace DataOutBase
 
         out
       << "!NBLOCKS " << nblocks << '\n';
-    for (std::vector<std::vector<std::string>>::const_iterator domain =
-           piece_names.begin();
-         domain != piece_names.end();
+    for (auto domain = piece_names.begin(); domain != piece_names.end();
          ++domain)
       {
-        Assert(domain->size() == nblocks, ExcMessage("piece_names should be a vector of equal sized vectors.")) for (
-          std::vector<std::string>::const_iterator subdomain = domain->begin();
-          subdomain != domain->end();
-          ++subdomain) out
+        Assert(
+          domain->size() == nblocks,
+          ExcMessage(
+            "piece_names should be a vector of equal sized vectors.")) for (auto subdomain =
+                                                                              domain
+                                                                                ->begin();
+                                                                            subdomain !=
+                                                                            domain
+                                                                              ->end();
+                                                                            ++subdomain)
+            out
           << *subdomain << '\n';
       }
 
@@ -5894,24 +5860,29 @@ namespace DataOutBase
       ExcMessage(
         "time_and_piece_names should contain nonempty vectors of filenames for every timestep."))
 
-        for (std::vector<std::pair<double, std::vector<std::string>>>::
-               const_iterator domain = times_and_piece_names.begin();
+        for (auto domain = times_and_piece_names.begin();
              domain != times_and_piece_names.end();
              ++domain) out
       << "!TIME " << domain->first << '\n';
 
     out << "!NBLOCKS " << nblocks << '\n';
-    for (std::vector<
-           std::pair<double, std::vector<std::string>>>::const_iterator domain =
-           times_and_piece_names.begin();
+    for (auto domain = times_and_piece_names.begin();
          domain != times_and_piece_names.end();
          ++domain)
       {
-        Assert(domain->second.size() == nblocks, ExcMessage("piece_names should be a vector of equal sized vectors.")) for (
-          std::vector<std::string>::const_iterator subdomain =
-            domain->second.begin();
-          subdomain != domain->second.end();
-          ++subdomain) out
+        Assert(
+          domain->second.size() == nblocks,
+          ExcMessage(
+            "piece_names should be a vector of equal sized vectors.")) for (auto subdomain =
+                                                                              domain
+                                                                                ->second
+                                                                                .begin();
+                                                                            subdomain !=
+                                                                            domain
+                                                                              ->second
+                                                                              .end();
+                                                                            ++subdomain)
+            out
           << *subdomain << '\n';
       }
 
@@ -5955,8 +5926,7 @@ namespace DataOutBase
     // determine the bounding box in the model space
     double x_dimension, y_dimension, z_dimension;
 
-    typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-      patches.begin();
+    auto patch = patches.begin();
 
     unsigned int       n_subdivisions = patch->n_subdivisions;
     unsigned int       n              = n_subdivisions + 1;
@@ -6479,9 +6449,7 @@ namespace DataOutBase
     unsigned int triangle_counter = 0;
 
     // write the cells in the correct order
-    for (typename std::multiset<SvgCell>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       {
         Point<3> points3d_triangle[3];
 
@@ -6530,8 +6498,8 @@ namespace DataOutBase
             unsigned int stop_g = 0;
             unsigned int stop_b = 0;
 
-            unsigned int start_i = static_cast<unsigned int>(start_h * 6.);
-            unsigned int stop_i  = static_cast<unsigned int>(stop_h * 6.);
+            auto start_i = static_cast<unsigned int>(start_h * 6.);
+            auto stop_i  = static_cast<unsigned int>(stop_h * 6.);
 
             double start_f = start_h * 6. - start_i;
             double start_q = 1. - start_f;
@@ -6754,9 +6722,9 @@ namespace DataOutBase
       {
         out << '\n' << " <!-- colorbar -->" << '\n';
 
-        unsigned int element_height = static_cast<unsigned int>(
+        auto element_height = static_cast<unsigned int>(
           ((height / 100.) * (71. - 2. * margin_in_percent)) / 4);
-        unsigned int element_width =
+        auto element_width =
           static_cast<unsigned int>(.5 + (height / 100.) * 2.5);
 
         additional_width = 0;
@@ -6777,8 +6745,8 @@ namespace DataOutBase
             unsigned int stop_g = 0;
             unsigned int stop_b = 0;
 
-            unsigned int start_i = static_cast<unsigned int>(start_h * 6.);
-            unsigned int stop_i  = static_cast<unsigned int>(stop_h * 6.);
+            auto start_i = static_cast<unsigned int>(start_h * 6.);
+            auto stop_i  = static_cast<unsigned int>(stop_h * 6.);
 
             double start_f = start_h * 6. - start_i;
             double start_q = 1. - start_f;
@@ -8577,10 +8545,7 @@ XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
       ss << indent(indent_level + 1) << "</Topology>\n";
     }
 
-  for (std::map<std::string, unsigned int>::const_iterator it =
-         attribute_dims.begin();
-       it != attribute_dims.end();
-       ++it)
+  for (auto it = attribute_dims.begin(); it != attribute_dims.end(); ++it)
     {
       ss << indent(indent_level + 1) << "<Attribute Name=\"" << it->first
          << "\" AttributeType=\"" << (it->second > 1 ? "Vector" : "Scalar")

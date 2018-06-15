@@ -78,9 +78,7 @@ namespace
   {
     std::set<CheapEdge> edges;
 
-    for (typename std::vector<CellData<dim>>::const_iterator c = cells.begin();
-         c != cells.end();
-         ++c)
+    for (auto c = cells.begin(); c != cells.end(); ++c)
       {
         // construct the edges in reverse order. for each of them,
         // ensure that the reverse edge is not yet in the list of
@@ -679,8 +677,7 @@ namespace
       {
         Delta_k.clear();
 
-        for (typename EdgeDeltaSet<dim>::const_iterator delta =
-               Delta_k_minus_1.begin();
+        for (auto delta = Delta_k_minus_1.begin();
              delta != Delta_k_minus_1.end();
              ++delta)
           {
@@ -688,8 +685,7 @@ namespace
                    ExcInternalError());
 
             // now go through the cells adjacent to this edge
-            for (typename AdjacentCells<dim>::const_iterator adjacent_cell =
-                   edges[*delta].adjacent_cells.begin();
+            for (auto adjacent_cell = edges[*delta].adjacent_cells.begin();
                  adjacent_cell != edges[*delta].adjacent_cells.end();
                  ++adjacent_cell)
               {

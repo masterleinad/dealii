@@ -1376,10 +1376,7 @@ namespace Step13
         // annoying, but could be shortened by a typedef, if so desired.
         solver.solve_problem();
 
-        for (typename std::list<
-               Evaluation::EvaluationBase<dim> *>::const_iterator i =
-               postprocessor_list.begin();
-             i != postprocessor_list.end();
+        for (auto i = postprocessor_list.begin(); i != postprocessor_list.end();
              ++i)
           {
             (*i)->set_refinement_cycle(step);
