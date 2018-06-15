@@ -94,7 +94,7 @@ private:
   std::vector<Vector<double>>       eigenvectors;
   std::vector<std::complex<double>> eigenvalues;
 
-  ConstraintMatrix constraints;
+  AffineConstraints<double> constraints;
 
   unsigned int n_eigenvalues;
 };

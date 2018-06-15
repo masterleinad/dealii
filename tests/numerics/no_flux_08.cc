@@ -18,7 +18,7 @@
 // we used to get this crash:
 //
 // An error occurred in line <4646> of file </w/heister/deal-trunk/deal.II/include/deal.II/numerics/vectors.templates.h> in function
-//     static void dealii::VectorTools::compute_no_normal_flux_constraints(const DoFHandlerType<dim, spacedim>&, unsigned int, const std::set<types::boundary_id>&, dealii::ConstraintMatrix&, const dealii::Mapping<dim, spacedim>&) [with int dim = 3, DoFHandlerType = dealii::DoFHandler, int spacedim = 3]
+//     static void dealii::VectorTools::compute_no_normal_flux_constraints(const DoFHandlerType<dim, spacedim>&, unsigned int, const std::set<types::boundary_id>&, dealii::AffineConstraints<double>&, const dealii::Mapping<dim, spacedim>&) [with int dim = 3, DoFHandlerType = dealii::DoFHandler, int spacedim = 3]
 // The violated condition was:
 //     std::fabs (tangent.norm()-1) < 1e-12
 // The name and call sequence of the exception was:
@@ -52,8 +52,8 @@ check()
   GridGenerator::half_hyper_shell(tr, Point<dim>(), 0.5, 1, 0);
   tr.reset_manifold(0);
 
-  ConstraintMatrix cm;
-  MappingQ<dim>    mapping(1);
+  AffineConstraints<double> cm;
+  MappingQ<dim>             mapping(1);
 
   FESystem<dim>   fe(FE_Q<dim>(1), dim);
   DoFHandler<dim> dofh(tr);

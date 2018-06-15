@@ -114,7 +114,7 @@ check()
       // now compute intergrid constraints
       InterGridMap<DoFHandler<dim>> intergrid_map;
       intergrid_map.make_mapping(dof_1, dof_2);
-      ConstraintMatrix intergrid_constraints;
+      AffineConstraints<double> intergrid_constraints;
 
       if (dim != 3)
         {
