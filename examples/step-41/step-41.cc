@@ -309,11 +309,7 @@ namespace Step41
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
@@ -385,11 +381,7 @@ namespace Step41
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
@@ -475,10 +467,7 @@ namespace Step41
     const Obstacle<dim> obstacle;
     std::vector<bool>   dof_touched(dof_handler.n_dofs(), false);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
           Assert(dof_handler.get_fe().dofs_per_cell ==

@@ -453,8 +453,7 @@ namespace Step44
       , delta_t(delta_t)
     {}
 
-    virtual ~Time()
-    {}
+    virtual ~Time() = default;
 
     double current() const
     {
@@ -530,8 +529,7 @@ namespace Step44
       Assert(kappa > 0, ExcInternalError());
     }
 
-    ~Material_Compressible_Neo_Hook_Three_Field()
-    {}
+    ~Material_Compressible_Neo_Hook_Three_Field() = default;
 
     // We update the material model with various deformation dependent data
     // based on $F$ and the pressure $\widetilde{p}$ and dilatation
@@ -693,8 +691,7 @@ namespace Step44
       , Jc(SymmetricTensor<4, dim>())
     {}
 
-    virtual ~PointHistory()
-    {}
+    virtual ~PointHistory() = default;
 
     // The first function is used to create a material object and to
     // initialize all tensors correctly: The second one updates the stored
@@ -1483,11 +1480,7 @@ namespace Step44
     // a distinct boundary ID number.  The faces we are looking for are on the
     // +y surface and will get boundary ID 6 (zero through five are already
     // used when creating the six faces of the cube domain):
-    typename Triangulation<dim>::active_cell_iterator cell = triangulation
-                                                               .begin_active(),
-                                                      endc =
-                                                        triangulation.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
            ++face)
         {
@@ -1669,10 +1662,7 @@ namespace Step44
     // Next we setup the initial quadrature point data.
     // Note that when the quadrature point data is retrieved,
     // it is returned as a vector of smart pointers.
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       {
         const std::vector<std::shared_ptr<PointHistory<dim>>> lqph =
           quadrature_point_history.get_data(cell);
@@ -1927,10 +1917,7 @@ namespace Step44
 
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
 
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       {
         fe_values_ref.reinit(cell);
 
@@ -1970,10 +1957,7 @@ namespace Step44
 
     FEValues<dim> fe_values_ref(fe, qf_cell, update_JxW_values);
 
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       {
         fe_values_ref.reinit(cell);
 

@@ -88,14 +88,14 @@ namespace Step22
   template <>
   struct InnerPreconditioner<2>
   {
-    typedef SparseDirectUMFPACK type;
+    using type = SparseDirectUMFPACK;
   };
 
   // And the ILU preconditioning in 3D, called by SparseILU:
   template <>
   struct InnerPreconditioner<3>
   {
-    typedef SparseILU<double> type;
+    using type = SparseILU<double>;
   };
 
 
@@ -666,10 +666,7 @@ namespace Step22
     std::vector<double>                  div_phi_u(dofs_per_cell);
     std::vector<double>                  phi_p(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         local_matrix                = 0;

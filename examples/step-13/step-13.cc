@@ -134,8 +134,7 @@ namespace Step13
     // After the declaration has been discussed above, the implementation is
     // rather straightforward:
     template <int dim>
-    EvaluationBase<dim>::~EvaluationBase()
-    {}
+    EvaluationBase<dim>::~EvaluationBase() = default;
 
 
 
@@ -225,10 +224,10 @@ namespace Step13
       // vertex matches the evaluation point. If this is the case, then
       // extract the point value, set a flag that we have found the point of
       // interest, and exit the loop.
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      bool evaluation_point_found                         = false;
+      bool evaluation_point_found = false;
+      using cell_iterator = typename DoFHandler<dim>::active_cell_iterator;
+      cell_iterator cell  = dof_handler.begin_active();
+      cell_iterator endc  = dof_handler.end();
       for (; (cell != endc) && !evaluation_point_found; ++cell)
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<dim>::vertices_per_cell;
@@ -529,8 +528,7 @@ namespace Step13
 
 
     template <int dim>
-    Base<dim>::~Base()
-    {}
+    Base<dim>::~Base() = default;
 
 
     // @sect4{A general solver class}
@@ -1111,11 +1109,7 @@ namespace Step13
       std::vector<double>                  rhs_values(n_q_points);
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-      typename DoFHandler<dim>::active_cell_iterator cell = this->dof_handler
-                                                              .begin_active(),
-                                                     endc =
-                                                       this->dof_handler.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : this->dof_handler.active_cell_iterators())
         {
           cell_rhs = 0;
           fe_values.reinit(cell);
@@ -1376,10 +1370,7 @@ namespace Step13
         // annoying, but could be shortened by a typedef, if so desired.
         solver.solve_problem();
 
-        for (typename std::list<
-               Evaluation::EvaluationBase<dim> *>::const_iterator i =
-               postprocessor_list.begin();
-             i != postprocessor_list.end();
+        for (auto i = postprocessor_list.begin(); i != postprocessor_list.end();
              ++i)
           {
             (*i)->set_refinement_cycle(step);

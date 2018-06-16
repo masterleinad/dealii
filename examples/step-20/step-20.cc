@@ -479,10 +479,7 @@ namespace Step20
     // With all this in place, we can go on with the loop over all cells. The
     // body of this loop has been discussed in the introduction, and will not
     // be commented any further here:
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         local_matrix = 0;

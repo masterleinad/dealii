@@ -149,9 +149,7 @@ inactive on it. The general outline of this reads like this:
 
 @code
   hp::DoFHandler<dim> dof_handler (triangulation);
-  for (typename hp::DoFHandler<dim>::active_cell_iterator
-         cell = dof_handler.begin_active();
-       cell != dof_handler.end(); ++cell)
+  for (auto &cell: dof_handler.active_cell_iterators())
     cell->set_active_fe_index (...);
   dof_handler.distribute_dofs (fe_collection);
 @endcode
@@ -218,10 +216,7 @@ i.e. the interesting part of the loop over all cells would look like this:
 				  update_values    |  update_gradients |
 				  update_q_points  |  update_JxW_values);
 
-  typename hp::DoFHandler<dim>::active_cell_iterator
-    cell = dof_handler.begin_active(),
-    endc = dof_handler.end();
-  for (; cell!=endc; ++cell)
+  for (const auto &cell: dof_handler.active_cell_iterators())
     {
       hp_fe_values.reinit (cell,
                            cell->active_fe_index(),

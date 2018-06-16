@@ -523,7 +523,7 @@ namespace Step16
     // iteration (which requires a symmetric preconditioner) below, we need to
     // let the multilevel preconditioner make sure that we get a symmetric
     // operator even for nonsymmetric smoothers:
-    typedef PreconditionSOR<SparseMatrix<double>>    Smoother;
+    using Smoother = PreconditionSOR<SparseMatrix<double>>;
     mg::SmootherRelaxation<Smoother, Vector<double>> mg_smoother;
     mg_smoother.initialize(mg_matrices);
     mg_smoother.set_steps(2);

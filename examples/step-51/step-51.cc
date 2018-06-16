@@ -1359,9 +1359,7 @@ namespace Step51
     // conditions. Since we re-create the triangulation every time for global
     // refinement, the flags are set in every refinement step, not just at the
     // beginning.
-    typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
-                                               endc = triangulation.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
            ++face)
         if (cell->face(face)->at_boundary())

@@ -1203,8 +1203,7 @@ namespace Step9
     // iteration of this inner loop (memory allocation is a rather
     // expensive operation):
     std::vector<double> neighbor_midpoint_value(1);
-    typename std::vector<typename DoFHandler<dim>::active_cell_iterator>::
-      const_iterator neighbor_ptr = active_neighbors.begin();
+    auto                neighbor_ptr = active_neighbors.begin();
     for (; neighbor_ptr != active_neighbors.end(); ++neighbor_ptr)
       {
         // First define an abbreviation for the iterator to the active

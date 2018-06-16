@@ -460,15 +460,13 @@ namespace Step33
       std::vector<std::vector<Tensor<1, dim>>> dU(
         1, std::vector<Tensor<1, dim>>(n_components));
 
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+      unsigned int cell_no = 0;
+      for (const auto &cell : dof_handler.active_cell_iterators())
         {
           fe_v.reinit(cell);
           fe_v.get_function_gradients(solution, dU);
 
-          refinement_indicators(cell_no) = std::log(
+          refinement_indicators(cell_no++) = std::log(
             1 + std::sqrt(dU[0][density_component] * dU[0][density_component]));
         }
     }
@@ -1469,10 +1467,7 @@ namespace Step33
     // Then loop over all cells, initialize the FEValues object for the
     // current cell and call the function that assembles the problem on this
     // cell.
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_v.reinit(cell);
         cell->get_dof_indices(dof_indices);
@@ -2249,11 +2244,8 @@ namespace Step33
   void
   ConservationLaw<dim>::refine_grid(const Vector<double> &refinement_indicators)
   {
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+    unsigned int cell_no = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell->clear_coarsen_flag();
         cell->clear_refine_flag();
@@ -2265,6 +2257,7 @@ namespace Step33
                  (std::fabs(refinement_indicators(cell_no)) <
                   0.75 * parameters.shock_val))
           cell->set_coarsen_flag();
+        ++cell_no;
       }
 
     // Then we need to transfer the various solution vectors from the old to

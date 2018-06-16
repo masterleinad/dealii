@@ -1301,11 +1301,7 @@ namespace Step32
 
     double max_local_velocity = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell = stokes_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     stokes_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : stokes_dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
@@ -1347,11 +1343,7 @@ namespace Step32
 
     double max_local_cfl = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell = stokes_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     stokes_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : stokes_dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
@@ -1426,10 +1418,7 @@ namespace Step32
            max_entropy = -std::numeric_limits<double>::max(), area = 0,
            entropy_integrated = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : temperature_dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
@@ -1511,10 +1500,7 @@ namespace Step32
 
     if (timestep_number != 0)
       {
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : temperature_dof_handler.active_cell_iterators())
           if (cell->is_locally_owned())
             {
               fe_values.reinit(cell);
@@ -1539,10 +1525,7 @@ namespace Step32
       }
     else
       {
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : temperature_dof_handler.active_cell_iterators())
           if (cell->is_locally_owned())
             {
               fe_values.reinit(cell);
@@ -1706,7 +1689,7 @@ namespace Step32
     assemble_temperature_matrix();
 
     QGauss<dim> quadrature(parameters.temperature_degree + 2);
-    UpdateFlags update_flags =
+    auto        update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     FEValues<dim> fe_values(mapping, temperature_fe, quadrature, update_flags);
 
@@ -1729,11 +1712,7 @@ namespace Step32
 
     const EquationData::TemperatureInitialValues<dim> initial_temperature;
 
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : temperature_dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           cell->get_dof_indices(local_dof_indices);
@@ -2308,8 +2287,8 @@ namespace Step32
 
     const QGauss<dim> quadrature_formula(parameters.stokes_velocity_degree + 1);
 
-    typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-      CellFilter;
+    using CellFilter =
+      FilteredIterator<typename DoFHandler<2>::active_cell_iterator>;
 
     WorkStream::run(
       CellFilter(IteratorFilters::LocallyOwnedCell(),
@@ -2497,8 +2476,8 @@ namespace Step32
 
     const QGauss<dim> quadrature_formula(parameters.stokes_velocity_degree + 1);
 
-    typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-      CellFilter;
+    using CellFilter =
+      FilteredIterator<typename DoFHandler<2>::active_cell_iterator>;
 
     WorkStream::run(
       CellFilter(IteratorFilters::LocallyOwnedCell(),
@@ -2610,8 +2589,8 @@ namespace Step32
 
     const QGauss<dim> quadrature_formula(parameters.temperature_degree + 2);
 
-    typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-      CellFilter;
+    using CellFilter =
+      FilteredIterator<typename DoFHandler<2>::active_cell_iterator>;
 
     WorkStream::run(
       CellFilter(IteratorFilters::LocallyOwnedCell(),
@@ -2878,8 +2857,8 @@ namespace Step32
     const double global_entropy_variation =
       get_entropy_variation(average_temperature);
 
-    typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-      CellFilter;
+    using CellFilter =
+      FilteredIterator<typename DoFHandler<2>::active_cell_iterator>;
 
     WorkStream::run(
       CellFilter(IteratorFilters::LocallyOwnedCell(),

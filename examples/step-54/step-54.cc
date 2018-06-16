@@ -123,8 +123,7 @@ namespace Step54
     , surface_projection_kind(surface_projection_kind)
   {}
 
-  TriangulationOnCAD::~TriangulationOnCAD()
-  {}
+  TriangulationOnCAD::~TriangulationOnCAD() = default;
 
 
 

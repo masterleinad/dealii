@@ -640,11 +640,7 @@ namespace Step31
 
     const FEValuesExtractors::Vector velocities(0);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = stokes_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     stokes_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : stokes_dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         fe_values[velocities].get_function_values(stokes_solution,
@@ -700,10 +696,7 @@ namespace Step31
         double min_temperature = std::numeric_limits<double>::max(),
                max_temperature = -std::numeric_limits<double>::max();
 
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : temperature_dof_handler.active_cell_iterators())
           {
             fe_values.reinit(cell);
             fe_values.get_function_values(old_temperature_solution,
@@ -729,10 +722,7 @@ namespace Step31
         double min_temperature = std::numeric_limits<double>::max(),
                max_temperature = -std::numeric_limits<double>::max();
 
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = temperature_dof_handler.begin_active(),
-          endc = temperature_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : temperature_dof_handler.active_cell_iterators())
           {
             fe_values.reinit(cell);
             fe_values.get_function_values(old_temperature_solution,
@@ -1092,11 +1082,7 @@ namespace Step31
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = stokes_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     stokes_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : stokes_dof_handler.active_cell_iterators())
       {
         stokes_fe_values.reinit(cell);
         local_matrix = 0;
@@ -1331,12 +1317,10 @@ namespace Step31
     // the update flags, zeroing out the local arrays and getting the values
     // of the old solution at the quadrature points. Then we are ready to loop
     // over the quadrature points on the cell.
-    typename DoFHandler<dim>::active_cell_iterator cell = stokes_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     stokes_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator temperature_cell =
-      temperature_dof_handler.begin_active();
+    using cell_iterator = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell  = stokes_dof_handler.begin_active();
+    cell_iterator endc  = stokes_dof_handler.end();
+    cell_iterator temperature_cell = temperature_dof_handler.begin_active();
 
     for (; cell != endc; ++cell, ++temperature_cell)
       {
@@ -1475,10 +1459,7 @@ namespace Step31
     // <code>EquationData::kappa</code>. Finally, we let the constraints
     // object insert these values into the global matrix, and directly
     // condense the constraints into the matrix.
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : temperature_dof_handler.active_cell_iterators())
       {
         local_mass_matrix      = 0;
         local_stiffness_matrix = 0;
@@ -1616,11 +1597,10 @@ namespace Step31
     // Stokes part we restrict ourselves to extracting the velocity part (and
     // ignoring the pressure part) by using
     // <code>stokes_fe_values[velocities].get_function_values</code>.
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = temperature_dof_handler.begin_active(),
-      endc = temperature_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator stokes_cell =
-      stokes_dof_handler.begin_active();
+    using cell_iterator       = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell        = temperature_dof_handler.begin_active();
+    cell_iterator endc        = temperature_dof_handler.end();
+    cell_iterator stokes_cell = stokes_dof_handler.begin_active();
 
     for (; cell != endc; ++cell, ++stokes_cell)
       {
@@ -1985,10 +1965,7 @@ namespace Step31
                                                       0.8,
                                                       0.1);
     if (triangulation.n_levels() > max_grid_level)
-      for (typename Triangulation<dim>::active_cell_iterator cell =
-             triangulation.begin_active(max_grid_level);
-           cell != triangulation.end();
-           ++cell)
+      for (const auto &cell : triangulation.active_cell_iterators())
         cell->clear_refine_flag();
 
     // As part of mesh refinement we need to transfer the solution vectors

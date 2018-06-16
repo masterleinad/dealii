@@ -532,11 +532,11 @@ namespace Step35
     // class that facilitates this sort of thing. (What is important here is to
     // know that two DoFHandler objects built on the same triangulation will
     // walk over the cells of the triangulation in the same order.)
-    typedef std::tuple<typename DoFHandler<dim>::active_cell_iterator,
-                       typename DoFHandler<dim>::active_cell_iterator>
-      IteratorTuple;
+    using IteratorTuple =
+      std::tuple<typename DoFHandler<dim>::active_cell_iterator,
+                 typename DoFHandler<dim>::active_cell_iterator>;
 
-    typedef SynchronousIterators<IteratorTuple> IteratorPair;
+    using IteratorPair = SynchronousIterators<IteratorTuple>;
 
     void initialize_gradient_operator();
 
@@ -962,7 +962,7 @@ namespace Step35
   {
     ConditionalOStream verbose_cout(std::cout, verbose);
 
-    const unsigned int n_steps = static_cast<unsigned int>((T - t_0) / dt);
+    const auto n_steps = static_cast<unsigned int>((T - t_0) / dt);
     vel_exact.set_time(2. * dt);
     output_results(1);
     for (unsigned int n = 2; n <= n_steps; ++n)
@@ -1039,8 +1039,7 @@ namespace Step35
 
         vel_exact.set_component(d);
         boundary_values.clear();
-        for (std::vector<types::boundary_id>::const_iterator boundaries =
-               boundary_ids.begin();
+        for (auto boundaries = boundary_ids.begin();
              boundaries != boundary_ids.end();
              ++boundaries)
           {
@@ -1385,11 +1384,7 @@ namespace Step35
     std::vector<Tensor<1, dim>> grad_u1(nqp), grad_u2(nqp);
     rot_u = 0.;
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof_handler_velocity
-                                                            .begin_active(),
-                                                   end =
-                                                     dof_handler_velocity.end();
-    for (; cell != end; ++cell)
+    for (const auto &cell : dof_handler_velocity.active_cell_iterators())
       {
         fe_val_vel.reinit(cell);
         cell->get_dof_indices(ldi);

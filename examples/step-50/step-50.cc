@@ -122,8 +122,8 @@ namespace Step50
     FE_Q<dim>                                 fe;
     DoFHandler<dim>                           mg_dof_handler;
 
-    typedef LA::MPI::SparseMatrix matrix_t;
-    typedef LA::MPI::Vector       vector_t;
+    using matrix_t = LA::MPI::SparseMatrix;
+    using vector_t = LA::MPI::Vector;
 
     matrix_t system_matrix;
 
@@ -420,10 +420,7 @@ namespace Step50
     const Coefficient<dim> coefficient;
     std::vector<double>    coefficient_values(n_q_points);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = mg_dof_handler
-                                                            .begin_active(),
-                                                   endc = mg_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : mg_dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           cell_matrix = 0;
@@ -558,10 +555,7 @@ namespace Step50
     // or not. Consequently, the correct iterator to use is
     // DoFHandler::cell_iterator rather than
     // DoFHandler::active_cell_iterator. Let's go about it:
-    typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
-                                            endc = mg_dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : mg_dof_handler.active_cell_iterators())
       if (cell->level_subdomain_id() == triangulation.locally_owned_subdomain())
         {
           cell_matrix = 0;
@@ -751,7 +745,7 @@ namespace Step50
     // preconditioner make sure that we get a
     // symmetric operator even for nonsymmetric
     // smoothers:
-    typedef LA::MPI::PreconditionJacobi                  Smoother;
+    using Smoother = LA::MPI::PreconditionJacobi;
     MGSmootherPrecondition<matrix_t, Smoother, vector_t> mg_smoother;
     mg_smoother.initialize(mg_matrices, Smoother::AdditionalData(0.5));
     mg_smoother.set_steps(2);

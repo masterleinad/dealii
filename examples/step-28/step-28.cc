@@ -668,11 +668,7 @@ namespace Step28
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_matrix = 0;
 
@@ -743,11 +739,7 @@ namespace Step28
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_rhs = 0;
 
@@ -803,9 +795,7 @@ namespace Step28
       cell_list =
         GridTools::get_finest_common_cells(dof_handler, g_prime.dof_handler);
 
-    typename std::list<std::pair<typename DoFHandler<dim>::cell_iterator,
-                                 typename DoFHandler<dim>::cell_iterator>>::
-      const_iterator cell_iter = cell_list.begin();
+    auto cell_iter = cell_list.begin();
 
     for (; cell_iter != cell_list.end(); ++cell_iter)
       {
@@ -993,10 +983,7 @@ namespace Step28
 
     double fission_source = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
 
@@ -1080,12 +1067,7 @@ namespace Step28
                                      const double         refine_threshold,
                                      const double         coarsen_threshold)
   {
-    typename Triangulation<dim>::active_cell_iterator cell = triangulation
-                                                               .begin_active(),
-                                                      endc =
-                                                        triangulation.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       if (error_indicators(cell->active_cell_index()) > refine_threshold)
         cell->set_refine_flag();
       else if (error_indicators(cell->active_cell_index()) < coarsen_threshold)
@@ -1457,10 +1439,7 @@ namespace Step28
     // add a few checks to see that the locations we compute are within the
     // bounds of the arrays in which we have to look up materials.) At the end
     // of the loop, we set material identifiers accordingly:
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           coarse_grid.begin_active();
-         cell != coarse_grid.end();
-         ++cell)
+    for (const auto &cell : coarse_grid.active_cell_iterators())
       {
         const Point<dim> cell_center = cell->center();
 

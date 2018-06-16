@@ -89,8 +89,7 @@ namespace Step14
 
 
     template <int dim>
-    EvaluationBase<dim>::~EvaluationBase()
-    {}
+    EvaluationBase<dim>::~EvaluationBase() = default;
 
 
 
@@ -137,11 +136,8 @@ namespace Step14
     {
       double point_value = 1e20;
 
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      bool evaluation_point_found                         = false;
-      for (; (cell != endc) && !evaluation_point_found; ++cell)
+      bool evaluation_point_found = false;
+      for (const auto &cell : dof_handler.active_cell_iterators())
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<dim>::vertices_per_cell;
              ++vertex)
@@ -223,11 +219,8 @@ namespace Step14
 
       // ...and next loop over all cells and their vertices, and count how
       // often the vertex has been found:
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      unsigned int evaluation_point_hits                  = 0;
-      for (; cell != endc; ++cell)
+      unsigned int evaluation_point_hits = 0;
+      for (const auto &cell : dof_handler.active_cell_iterators())
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<dim>::vertices_per_cell;
              ++vertex)
@@ -388,8 +381,7 @@ namespace Step14
 
 
     template <int dim>
-    Base<dim>::~Base()
-    {}
+    Base<dim>::~Base() = default;
 
 
 
@@ -782,11 +774,7 @@ namespace Step14
       std::vector<double>                  rhs_values(n_q_points);
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-      typename DoFHandler<dim>::active_cell_iterator cell = this->dof_handler
-                                                              .begin_active(),
-                                                     endc =
-                                                       this->dof_handler.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : this->dof_handler.active_cell_iterators())
         {
           cell_rhs = 0;
 
@@ -987,11 +975,7 @@ namespace Step14
       // one for the second cell, etc., and we could as well just keep track of
       // this index using an integer counter; but using
       // CellAccessor::active_cell_index() makes this more explicit.)
-      typename DoFHandler<dim>::active_cell_iterator cell = this->dof_handler
-                                                              .begin_active(),
-                                                     endc =
-                                                       this->dof_handler.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : this->dof_handler.active_cell_iterators())
         estimated_error_per_cell(cell->active_cell_index()) *=
           weighting_function->value(cell->center());
 
@@ -1241,7 +1225,7 @@ namespace Step14
       // We need a class to denote the boundary values of the problem. In this
       // case, this is simple: it's the zero function, so don't even declare a
       // class, just a typedef:
-      typedef Functions::ZeroFunction<dim> BoundaryValues;
+      using BoundaryValues = Functions::ZeroFunction<dim>;
 
       // Second, a class that denotes the right hand side. Since they are
       // constant, just subclass the corresponding class of the library and be
@@ -1498,10 +1482,7 @@ namespace Step14
       // ...then loop over cells and find the evaluation point among the
       // vertices (or very close to a vertex, which may happen due to floating
       // point round-off):
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : dof_handler.active_cell_iterators())
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<dim>::vertices_per_cell;
              ++vertex)
@@ -1602,10 +1583,7 @@ namespace Step14
 
       // Then start the loop over all cells, and select those cells which are
       // close enough to the evaluation point:
-      typename DoFHandler<dim>::active_cell_iterator cell = dof_handler
-                                                              .begin_active(),
-                                                     endc = dof_handler.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : dof_handler.active_cell_iterators())
         if (cell->center().distance(evaluation_point) <= cell->diameter())
           {
             // If we have found such a cell, then initialize the
@@ -1760,8 +1738,8 @@ namespace Step14
       // Then declare abbreviations for active cell iterators, to avoid that
       // we have to write this lengthy name over and over again:
 
-      typedef
-        typename DoFHandler<dim>::active_cell_iterator active_cell_iterator;
+      using active_cell_iterator =
+        typename DoFHandler<dim>::active_cell_iterator;
 
       // Next, declare a data type that we will us to store the contribution
       // of faces to the error estimator. The idea is that we can compute the
@@ -1774,8 +1752,8 @@ namespace Step14
       // cells a second time and grabbing the values from the map.
       //
       // The data type of this map is declared here:
-      typedef typename std::map<typename DoFHandler<dim>::face_iterator, double>
-        FaceIntegrals;
+      using FaceIntegrals =
+        typename std::map<typename DoFHandler<dim>::face_iterator, double>;
 
       // In the computation of the error estimates on cells and faces, we need
       // a number of helper objects, such as <code>FEValues</code> and
@@ -2104,10 +2082,8 @@ namespace Step14
       // Then note that marking cells for refinement or coarsening only works
       // if all indicators are positive, to allow their comparison. Thus, drop
       // the signs on all these indicators:
-      for (Vector<float>::iterator i = error_indicators.begin();
-           i != error_indicators.end();
-           ++i)
-        *i = std::fabs(*i);
+      for (float &error_indicator : error_indicators)
+        error_indicator = std::fabs(error_indicator);
 
       // Finally, we can select between different strategies for
       // refinement. The default here is to refine those cells with the
@@ -2244,10 +2220,8 @@ namespace Step14
       // the threads through a mutex each time they write to (and modify the
       // structure of) this map.
       FaceIntegrals face_integrals;
-      for (active_cell_iterator cell =
-             DualSolver<dim>::dof_handler.begin_active();
-           cell != DualSolver<dim>::dof_handler.end();
-           ++cell)
+      for (const auto &cell :
+           DualSolver<dim>::dof_handler.active_cell_iterators())
         for (unsigned int face_no = 0;
              face_no < GeometryInfo<dim>::faces_per_cell;
              ++face_no)
@@ -2281,10 +2255,8 @@ namespace Step14
       // there, and add them up. Only take minus one half of the jump term,
       // since the other half will be taken by the neighboring cell.
       unsigned int present_cell = 0;
-      for (active_cell_iterator cell =
-             DualSolver<dim>::dof_handler.begin_active();
-           cell != DualSolver<dim>::dof_handler.end();
-           ++cell, ++present_cell)
+      for (const auto &cell :
+           DualSolver<dim>::dof_handler.active_cell_iterators())
         for (unsigned int face_no = 0;
              face_no < GeometryInfo<dim>::faces_per_cell;
              ++face_no)
@@ -2292,7 +2264,7 @@ namespace Step14
             Assert(face_integrals.find(cell->face(face_no)) !=
                      face_integrals.end(),
                    ExcInternalError());
-            error_indicators(present_cell) -=
+            error_indicators(present_cell++) -=
               0.5 * face_integrals[cell->face(face_no)];
           }
       std::cout << "   Estimated error="
@@ -2660,8 +2632,8 @@ namespace Step14
   public:
     // First, we declare two abbreviations for simple use of the respective
     // data types:
-    typedef Evaluation::EvaluationBase<dim> Evaluator;
-    typedef std::list<Evaluator *>          EvaluatorList;
+    using Evaluator     = Evaluation::EvaluationBase<dim>;
+    using EvaluatorList = std::list<Evaluator *>;
 
 
     // Then we have the structure which declares all the parameters that may
@@ -2843,8 +2815,7 @@ namespace Step14
         std::cout << "   Number of degrees of freedom=" << solver->n_dofs()
                   << std::endl;
 
-        for (typename EvaluatorList::const_iterator e =
-               descriptor.evaluator_list.begin();
+        for (auto e = descriptor.evaluator_list.begin();
              e != descriptor.evaluator_list.end();
              ++e)
           {

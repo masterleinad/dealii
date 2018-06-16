@@ -412,11 +412,7 @@ namespace Step25
     std::vector<double>                  old_data_values(n_q_points);
     std::vector<double>                  new_data_values(n_q_points);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         local_nl_term = 0;
         // Once we re-initialize our <code>FEValues</code> instantiation to
@@ -476,11 +472,7 @@ namespace Step25
     std::vector<double>                  old_data_values(n_q_points);
     std::vector<double>                  new_data_values(n_q_points);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         local_nl_matrix = 0;
         // Again, first we re-initialize our <code>FEValues</code>

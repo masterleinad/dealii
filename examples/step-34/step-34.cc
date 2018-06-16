@@ -595,11 +595,7 @@ namespace Step34
     // we first initialize the FEValues object and get the values of
     // $\mathbf{\tilde v}$ at the quadrature points (this vector field should
     // be constant, but it doesn't hurt to be more general):
-    typename DoFHandler<dim - 1, dim>::active_cell_iterator cell =
-                                                              dh.begin_active(),
-                                                            endc = dh.end();
-
-    for (cell = dh.begin_active(); cell != endc; ++cell)
+    for (const auto &cell : dh.active_cell_iterators())
       {
         fe_v.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
@@ -933,11 +929,6 @@ namespace Step34
     external_dh.distribute_dofs(external_fe);
     external_phi.reinit(external_dh.n_dofs());
 
-    typename DoFHandler<dim - 1, dim>::active_cell_iterator cell =
-                                                              dh.begin_active(),
-                                                            endc = dh.end();
-
-
     FEValues<dim - 1, dim> fe_v(mapping,
                                 fe,
                                 *quadrature,
@@ -957,7 +948,7 @@ namespace Step34
                                               external_dh,
                                               external_support_points);
 
-    for (cell = dh.begin_active(); cell != endc; ++cell)
+    for (const auto &cell : dh.active_cell_iterators())
       {
         fe_v.reinit(cell);
 

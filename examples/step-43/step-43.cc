@@ -913,13 +913,10 @@ namespace Step43
     const FEValuesExtractors::Vector velocities(0);
     const FEValuesExtractors::Scalar pressure(dim);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = darcy_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     darcy_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator saturation_cell =
-      saturation_dof_handler.begin_active();
-
+    using cell_iterator = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell  = darcy_dof_handler.begin_active();
+    cell_iterator endc  = darcy_dof_handler.end();
+    cell_iterator saturation_cell = saturation_dof_handler.begin_active();
     for (; cell != endc; ++cell, ++saturation_cell)
       {
         darcy_fe_values.reinit(cell);
@@ -1115,12 +1112,10 @@ namespace Step43
     // ConstraintMatrix class do the insertion of the cell matrix elements to
     // the global matrix, which already condenses the hanging node
     // constraints.
-    typename DoFHandler<dim>::active_cell_iterator cell = darcy_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     darcy_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator saturation_cell =
-      saturation_dof_handler.begin_active();
+    using cell_iterator = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell  = darcy_dof_handler.begin_active();
+    cell_iterator endc  = darcy_dof_handler.end();
+    cell_iterator saturation_cell = saturation_dof_handler.begin_active();
 
     for (; cell != endc; ++cell, ++saturation_cell)
       {
@@ -1248,10 +1243,7 @@ namespace Step43
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = saturation_dof_handler.begin_active(),
-      endc = saturation_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : saturation_dof_handler.active_cell_iterators())
       {
         saturation_fe_values.reinit(cell);
         local_matrix = 0;
@@ -1335,11 +1327,10 @@ namespace Step43
     const double global_S_variation =
       global_S_range.second - global_S_range.first;
 
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = saturation_dof_handler.begin_active(),
-      endc = saturation_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator darcy_cell =
-      darcy_dof_handler.begin_active();
+    using cell_iterator      = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell       = saturation_dof_handler.begin_active();
+    cell_iterator endc       = saturation_dof_handler.end();
+    cell_iterator darcy_cell = darcy_dof_handler.begin_active();
     for (; cell != endc; ++cell, ++darcy_cell)
       {
         saturation_fe_values.reinit(cell);
@@ -1694,25 +1685,20 @@ namespace Step43
                                               time_step / old_time_step,
                                               old_saturation_solution);
 
-      typename DoFHandler<dim>::active_cell_iterator
-        cell = saturation_dof_handler.begin_active(),
-        endc = saturation_dof_handler.end();
-      for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+      unsigned int cell_no = 0;
+      for (const auto &cell : saturation_dof_handler.active_cell_iterators())
         {
           fe_values.reinit(cell);
           fe_values.get_function_gradients(extrapolated_saturation_solution,
                                            grad_saturation);
 
-          refinement_indicators(cell_no) = grad_saturation[0].norm();
+          refinement_indicators(cell_no++) = grad_saturation[0].norm();
         }
     }
 
     {
-      typename DoFHandler<dim>::active_cell_iterator
-        cell = saturation_dof_handler.begin_active(),
-        endc = saturation_dof_handler.end();
-
-      for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+      unsigned int cell_no = 0;
+      for (const auto &cell : saturation_dof_handler.active_cell_iterators())
         {
           cell->clear_coarsen_flag();
           cell->clear_refine_flag();
@@ -1726,6 +1712,7 @@ namespace Step43
                    (std::fabs(refinement_indicators(cell_no)) <
                     0.5 * saturation_refinement_threshold))
             cell->set_coarsen_flag();
+          ++cell_no;
         }
     }
 
@@ -1919,10 +1906,7 @@ namespace Step43
 
     double max_global_aop_indicator = 0.0;
 
-    typename DoFHandler<dim>::active_cell_iterator
-      cell = saturation_dof_handler.begin_active(),
-      endc = saturation_dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : saturation_dof_handler.active_cell_iterators())
       {
         double max_local_mobility_reciprocal_difference = 0.0;
         double max_local_permeability_inverse_l1_norm   = 0.0;
@@ -2010,12 +1994,10 @@ namespace Step43
 
     double max_velocity_times_dF_dS = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell = darcy_dof_handler
-                                                            .begin_active(),
-                                                   endc =
-                                                     darcy_dof_handler.end();
-    typename DoFHandler<dim>::active_cell_iterator saturation_cell =
-      saturation_dof_handler.begin_active();
+    using cell_iterator = typename DoFHandler<dim>::active_cell_iterator;
+    cell_iterator cell  = darcy_dof_handler.begin_active();
+    cell_iterator endc  = darcy_dof_handler.end();
+    cell_iterator saturation_cell = saturation_dof_handler.begin_active();
     for (; cell != endc; ++cell, ++saturation_cell)
       {
         darcy_fe_values.reinit(cell);
@@ -2070,10 +2052,7 @@ namespace Step43
         double min_saturation = std::numeric_limits<double>::max(),
                max_saturation = -std::numeric_limits<double>::max();
 
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = saturation_dof_handler.begin_active(),
-          endc = saturation_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : saturation_dof_handler.active_cell_iterators())
           {
             fe_values.reinit(cell);
             fe_values.get_function_values(old_saturation_solution,
@@ -2099,10 +2078,7 @@ namespace Step43
         double min_saturation = std::numeric_limits<double>::max(),
                max_saturation = -std::numeric_limits<double>::max();
 
-        typename DoFHandler<dim>::active_cell_iterator
-          cell = saturation_dof_handler.begin_active(),
-          endc = saturation_dof_handler.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : saturation_dof_handler.active_cell_iterators())
           {
             fe_values.reinit(cell);
             fe_values.get_function_values(old_saturation_solution,

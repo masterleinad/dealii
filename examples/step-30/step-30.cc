@@ -80,8 +80,7 @@ namespace Step30
   class Beta
   {
   public:
-    Beta()
-    {}
+    Beta() = default;
     void value_list(const std::vector<Point<dim>> &points,
                     std::vector<Point<dim>> &      values) const;
   };
@@ -96,8 +95,8 @@ namespace Step30
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for (unsigned int i = 0; i < values.size(); ++i)
-      values[i] = 0;
+    for (double &value : values)
+      value = 0;
   }
 
 
@@ -466,10 +465,7 @@ namespace Step30
 
     Vector<double> cell_vector(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         ui_vi_matrix = 0;
         cell_vector  = 0;
@@ -664,11 +660,10 @@ namespace Step30
                                                   gradient_indicator);
 
     // and scale it to obtain an error indicator.
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
-      gradient_indicator(cell_no) *=
+    //
+    unsigned int cell_no = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      gradient_indicator(cell_no++) *=
         std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
     // Then we use this indicator to flag the 30 percent of the cells with
     // highest error indicator to be refined.
@@ -699,8 +694,7 @@ namespace Step30
   {
     // We want to evaluate the jump over faces of the flagged cells, so we
     // need some objects to evaluate values of the solution on faces.
-    UpdateFlags face_update_flags =
-      UpdateFlags(update_values | update_JxW_values);
+    auto face_update_flags = UpdateFlags(update_values | update_JxW_values);
 
     FEFaceValues<dim>    fe_v_face(mapping,
                                 fe,
@@ -716,11 +710,7 @@ namespace Step30
                                          update_values);
 
     // Now we need to loop over all active cells.
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       // We only need to consider cells which are flagged for refinement.
       if (cell->refine_flag_set())
         {

@@ -114,10 +114,7 @@ Matrixfree<dim>::vmult (Vector<double>       &dst,
 
   std::vector<unsigned int> local_dof_indices (dofs_per_cell);
 
-  typename DoFHandler<dim>::active_cell_iterator
-    cell = dof_handler.begin_active(),
-    endc = dof_handler.end();
-  for (; cell!=endc; ++cell)
+  for (const auto &cell: dof_handler.active_cell_iterators())
     {
       cell_matrix = 0;
       fe_values.reinit (cell);

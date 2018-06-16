@@ -516,10 +516,7 @@ namespace Step55
     const FEValuesExtractors::Vector     velocities(0);
     const FEValuesExtractors::Scalar     pressure(dim);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           cell_matrix  = 0;
@@ -625,9 +622,8 @@ namespace Step55
     }
 
     // The InverseMatrix is used to solve for the mass matrix:
-    typedef LinearSolvers::InverseMatrix<LA::MPI::SparseMatrix,
-                                         LA::MPI::PreconditionAMG>
-                       mp_inverse_t;
+    using mp_inverse_t = LinearSolvers::InverseMatrix<LA::MPI::SparseMatrix,
+                                                      LA::MPI::PreconditionAMG>;
     const mp_inverse_t mp_inverse(preconditioner_matrix.block(1, 1), prec_S);
 
     // This constructs the block preconditioner based on the preconditioners

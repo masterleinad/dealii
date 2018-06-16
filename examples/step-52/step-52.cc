@@ -131,7 +131,7 @@ namespace Step52
 
     DoFHandler<2> dof_handler;
 
-    ConstraintMatrix constraint_matrix;
+    ConstraintMatrix affine_constraints;
 
     SparsityPattern sparsity_pattern;
 
@@ -167,11 +167,11 @@ namespace Step52
     VectorTools::interpolate_boundary_values(dof_handler,
                                              1,
                                              Functions::ZeroFunction<2>(),
-                                             constraint_matrix);
-    constraint_matrix.close();
+                                             affine_constraints);
+    affine_constraints.close();
 
     DynamicSparsityPattern dsp(dof_handler.n_dofs());
-    DoFTools::make_sparsity_pattern(dof_handler, dsp, constraint_matrix);
+    DoFTools::make_sparsity_pattern(dof_handler, dsp, affine_constraints);
     sparsity_pattern.copy_from(dsp);
 
     system_matrix.reinit(sparsity_pattern);
@@ -214,10 +214,7 @@ namespace Step52
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                        endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_matrix      = 0.;
         cell_mass_matrix = 0.;
@@ -242,12 +239,12 @@ namespace Step52
 
         cell->get_dof_indices(local_dof_indices);
 
-        constraint_matrix.distribute_local_to_global(cell_matrix,
-                                                     local_dof_indices,
-                                                     system_matrix);
-        constraint_matrix.distribute_local_to_global(cell_mass_matrix,
-                                                     local_dof_indices,
-                                                     mass_matrix);
+        affine_constraints.distribute_local_to_global(cell_matrix,
+                                                      local_dof_indices,
+                                                      system_matrix);
+        affine_constraints.distribute_local_to_global(cell_mass_matrix,
+                                                      local_dof_indices,
+                                                      mass_matrix);
       }
 
     inverse_mass_matrix.initialize(mass_matrix);
@@ -309,10 +306,7 @@ namespace Step52
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
-                                        endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_source = 0.;
 
@@ -329,9 +323,9 @@ namespace Step52
 
         cell->get_dof_indices(local_dof_indices);
 
-        constraint_matrix.distribute_local_to_global(cell_source,
-                                                     local_dof_indices,
-                                                     tmp);
+        affine_constraints.distribute_local_to_global(cell_source,
+                                                      local_dof_indices,
+                                                      tmp);
       }
 
     Vector<double> value(dof_handler.n_dofs());
@@ -628,10 +622,7 @@ namespace Step52
     GridGenerator::hyper_cube(triangulation, 0., 5.);
     triangulation.refine_global(4);
 
-    Triangulation<2>::active_cell_iterator cell = triangulation.begin_active(),
-                                           endc = triangulation.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         if (cell->face(f)->at_boundary())
           {

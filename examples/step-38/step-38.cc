@@ -378,11 +378,7 @@ namespace Step38
 
     const RightHandSide<spacedim> rhs;
 
-    for (typename DoFHandler<dim, spacedim>::active_cell_iterator
-           cell = dof_handler.begin_active(),
-           endc = dof_handler.end();
-         cell != endc;
-         ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_matrix = 0;
         cell_rhs    = 0;

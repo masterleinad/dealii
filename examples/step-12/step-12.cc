@@ -88,8 +88,7 @@ namespace Step12
   class BoundaryValues : public Function<dim>
   {
   public:
-    BoundaryValues()
-    {}
+    BoundaryValues() = default;
     virtual void value_list(const std::vector<Point<dim>> &points,
                             std::vector<double> &          values,
                             const unsigned int component = 0) const override;
@@ -191,8 +190,8 @@ namespace Step12
     // then work on intermediate objects for which first, we here define
     // typedefs to the info objects handed to the local integration functions
     // in order to make our life easier below.
-    typedef MeshWorker::DoFInfo<dim>         DoFInfo;
-    typedef MeshWorker::IntegrationInfo<dim> CellInfo;
+    using DoFInfo  = MeshWorker::DoFInfo<dim>;
+    using CellInfo = MeshWorker::IntegrationInfo<dim>;
 
     // The following three functions are then the ones that get called inside
     // the generic loop over all cells and faces. They are the ones doing the
@@ -554,11 +553,9 @@ namespace Step12
                                                   gradient_indicator);
 
     // and they are cell-wise scaled by the factor $h^{1+d/2}$
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
-      gradient_indicator(cell_no) *=
+    unsigned int cell_no = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      gradient_indicator(cell_no++) *=
         std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
 
     // Finally they serve as refinement indicator.

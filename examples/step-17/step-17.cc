@@ -505,10 +505,7 @@ namespace Step17
     // distributing local contributions into the global matrix
     // and right hand sides also takes care of hanging node constraints in the
     // same way as is done in step-6.
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->subdomain_id() == this_mpi_process)
         {
           cell_matrix = 0;

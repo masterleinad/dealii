@@ -954,10 +954,7 @@ namespace Step42
 
         GridGenerator::hyper_rectangle(triangulation, p1, p2);
 
-        Triangulation<3>::active_cell_iterator cell =
-                                                 triangulation.begin_active(),
-                                               endc = triangulation.end();
-        for (; cell != endc; ++cell)
+        for (const auto &cell : triangulation.active_cell_iterators())
           for (unsigned int face_no = 0;
                face_no < GeometryInfo<dim>::faces_per_cell;
                ++face_no)
@@ -1167,11 +1164,7 @@ namespace Step42
 
     const FEValuesExtractors::Vector displacement(0);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
              ++face)
@@ -1262,11 +1255,7 @@ namespace Step42
 
     std::vector<types::global_dof_index> dof_indices(dofs_per_face);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (!cell->is_artificial())
         for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
              ++face)
@@ -1394,13 +1383,9 @@ namespace Step42
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
     const FEValuesExtractors::Vector displacement(0);
 
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
@@ -1559,11 +1544,8 @@ namespace Step42
 
     fraction_of_plastic_q_points_per_cell = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    unsigned int cell_number                            = 0;
-    for (; cell != endc; ++cell, ++cell_number)
+    unsigned int cell_number = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
@@ -1625,6 +1607,7 @@ namespace Step42
 
           for (unsigned int i = 0; i < dofs_per_cell; ++i)
             newton_rhs_uncondensed(local_dof_indices[i]) += cell_rhs(i);
+          ++cell_number;
         }
 
     fraction_of_plastic_q_points_per_cell /= quadrature_formula.size();
@@ -2155,10 +2138,7 @@ namespace Step42
 
     const FEValuesExtractors::Vector displacement(0);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
              ++face)

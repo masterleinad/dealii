@@ -965,10 +965,7 @@ namespace Step18
 
     // As in step-17, we only need to loop over all cells that belong to the
     // present processor:
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           cell_matrix = 0;
@@ -1230,10 +1227,7 @@ namespace Step18
     Vector<double> norm_of_stress(triangulation.n_active_cells());
     {
       // Loop over all the cells...
-      typename Triangulation<dim>::active_cell_iterator
-        cell = triangulation.begin_active(),
-        endc = triangulation.end();
-      for (; cell != endc; ++cell)
+      for (const auto &cell : triangulation.active_cell_iterators())
         if (cell->is_locally_owned())
           {
             // On these cells, add up the stresses over all quadrature
@@ -1578,10 +1572,7 @@ namespace Step18
     pcout << "    Moving mesh..." << std::endl;
 
     std::vector<bool> vertex_touched(triangulation.n_vertices(), false);
-    for (typename DoFHandler<dim>::active_cell_iterator cell =
-           dof_handler.begin_active();
-         cell != dof_handler.end();
-         ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         if (vertex_touched[cell->vertex_index(v)] == false)
           {
@@ -1744,16 +1735,13 @@ namespace Step18
 
     // Then loop over all cells and do the job in the cells that belong to our
     // subdomain:
-    for (typename DoFHandler<dim>::active_cell_iterator cell =
-           dof_handler.begin_active();
-         cell != dof_handler.end();
-         ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           // Next, get a pointer to the quadrature point history data local to
           // the present cell, and, as a defensive measure, make sure that
           // this pointer is within the bounds of the global array:
-          PointHistory<dim> *local_quadrature_points_history =
+          auto *local_quadrature_points_history =
             reinterpret_cast<PointHistory<dim> *>(cell->user_pointer());
           Assert(local_quadrature_points_history >=
                    &quadrature_point_history.front(),

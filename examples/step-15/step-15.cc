@@ -255,10 +255,7 @@ namespace Step15
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_matrix = 0;
         cell_rhs    = 0;
@@ -476,11 +473,8 @@ namespace Step15
                                              0,
                                              BoundaryValues<dim>(),
                                              boundary_values);
-    for (std::map<types::global_dof_index, double>::const_iterator p =
-           boundary_values.begin();
-         p != boundary_values.end();
-         ++p)
-      present_solution(p->first) = p->second;
+    for (auto &boundary_value : boundary_values)
+      present_solution(boundary_value.first) = boundary_value.second;
   }
 
 
@@ -524,10 +518,7 @@ namespace Step15
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         cell_residual = 0;
         fe_values.reinit(cell);

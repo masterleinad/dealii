@@ -259,11 +259,7 @@ namespace Step36
 
     std::vector<double> potential_values(n_q_points);
 
-
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;

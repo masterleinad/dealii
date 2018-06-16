@@ -466,10 +466,7 @@ namespace Step29
     // boundary indicator.
     GridGenerator::subdivided_hyper_cube(triangulation, 5, 0, 1);
 
-    typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
-                                               endc = triangulation.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
            ++face)
         if (cell->face(face)->at_boundary() &&
@@ -581,11 +578,7 @@ namespace Step29
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         // On each cell, we first need to reset the local contribution matrix
         // and request the FEValues object to compute the shape functions for

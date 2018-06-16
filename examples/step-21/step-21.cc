@@ -720,10 +720,7 @@ namespace Step21
     const FEValuesExtractors::Scalar pressure(dim);
     const FEValuesExtractors::Scalar saturation(dim + 1);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         local_matrix = 0;
@@ -878,10 +875,7 @@ namespace Step21
 
     const FEValuesExtractors::Scalar saturation(dim + 1);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         local_rhs = 0;
         fe_values.reinit(cell);
@@ -1169,10 +1163,7 @@ namespace Step21
                                                 Vector<double>(dim + 2));
     double                      max_velocity = 0;
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       {
         fe_values.reinit(cell);
         fe_values.get_function_values(solution, solution_values);
