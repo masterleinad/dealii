@@ -431,10 +431,10 @@ namespace Step14
 
         void solve(Vector<double> &solution) const;
 
-        ConstraintMatrix     hanging_node_constraints;
-        SparsityPattern      sparsity_pattern;
-        SparseMatrix<double> matrix;
-        Vector<double>       rhs;
+        AffineConstraints<double> hanging_node_constraints;
+        SparsityPattern           sparsity_pattern;
+        SparseMatrix<double>      matrix;
+        Vector<double>            rhs;
       };
 
 
@@ -657,7 +657,7 @@ namespace Step14
     {
       hanging_node_constraints.clear();
 
-      void (*mhnc_p)(const DoFHandler<dim> &, ConstraintMatrix &) =
+      void (*mhnc_p)(const DoFHandler<dim> &, AffineConstraints<double> &) =
         &DoFTools::make_hanging_node_constraints;
 
       // Start a side task then continue on the main thread
@@ -2107,12 +2107,12 @@ namespace Step14
     // solutions only to see them qualitatively, we contend ourselves with
     // interpolating the dual solution to the (smaller) primal space. For the
     // interpolation, there is a library function, that takes a
-    // ConstraintMatrix object including the hanging node
+    // AffineConstraints object including the hanging node
     // constraints. The rest is standard.
     template <int dim>
     void WeightedResidual<dim>::output_solution() const
     {
-      ConstraintMatrix primal_hanging_node_constraints;
+      AffineConstraints<double> primal_hanging_node_constraints;
       DoFTools::make_hanging_node_constraints(PrimalSolver<dim>::dof_handler,
                                               primal_hanging_node_constraints);
       primal_hanging_node_constraints.close();
@@ -2165,9 +2165,9 @@ namespace Step14
       // interpolated into the finite element space in which we have solved
       // the dual problem: But, again as in the
       // <code>WeightedResidual::output_solution</code> function we first need
-      // to create a ConstraintMatrix including the hanging node constraints,
-      // but this time of the dual finite element space.
-      ConstraintMatrix dual_hanging_node_constraints;
+      // to create a AffineConstraints including the hanging node
+      // constraints, but this time of the dual finite element space.
+      AffineConstraints<double> dual_hanging_node_constraints;
       DoFTools::make_hanging_node_constraints(DualSolver<dim>::dof_handler,
                                               dual_hanging_node_constraints);
       dual_hanging_node_constraints.close();
@@ -2183,7 +2183,7 @@ namespace Step14
       // and subtracting it from z: use the
       // <code>interpolate_difference</code> function, that gives (z-I_hz) in
       // the element space of the dual solution.
-      ConstraintMatrix primal_hanging_node_constraints;
+      AffineConstraints<double> primal_hanging_node_constraints;
       DoFTools::make_hanging_node_constraints(PrimalSolver<dim>::dof_handler,
                                               primal_hanging_node_constraints);
       primal_hanging_node_constraints.close();

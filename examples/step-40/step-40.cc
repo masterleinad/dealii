@@ -176,7 +176,7 @@ namespace Step40
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
 
-    ConstraintMatrix constraints;
+    AffineConstraints<double> constraints;
 
     LA::MPI::SparseMatrix system_matrix;
     LA::MPI::Vector       locally_relevant_solution;
@@ -285,10 +285,10 @@ namespace Step40
     // information to store. In our case, as explained in the @ref distributed
     // module, the degrees of freedom we need to care about on each processor
     // are the locally relevant ones, so we pass this to the
-    // ConstraintMatrix::reinit function. As a side note, if you forget to
-    // pass this argument, the ConstraintMatrix class will allocate an array
-    // with length equal to the largest DoF index it has seen so far. For
-    // processors with high MPI process number, this may be very large --
+    // AffineConstraints::reinit function. As a side note, if you forget
+    // to pass this argument, the AffineConstraints class will allocate
+    // an array with length equal to the largest DoF index it has seen so far.
+    // For processors with high MPI process number, this may be very large --
     // maybe on the order of billions. The program would then allocate more
     // memory than for likely all other operations combined for this single
     // array.

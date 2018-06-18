@@ -122,7 +122,7 @@ namespace Step15
     DoFHandler<dim> dof_handler;
     FE_Q<dim>       fe;
 
-    ConstraintMatrix hanging_node_constraints;
+    AffineConstraints<double> hanging_node_constraints;
 
     SparsityPattern      sparsity_pattern;
     SparseMatrix<double> system_matrix;

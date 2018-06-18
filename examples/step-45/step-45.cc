@@ -28,7 +28,7 @@
 // In order to implement periodic boundary conditions only two functions
 // have to be modified:
 // - <code>StokesProblem<dim>::setup_dofs()</code>:
-//   To populate a ConstraintMatrix object with periodicity constraints
+//   To populate a AffineConstraints object with periodicity constraints
 // - <code>StokesProblem<dim>::run()</code>:
 //   To supply a distributed triangulation with periodicity information.
 //
@@ -92,9 +92,9 @@ namespace Step45
     FESystem<dim>                             fe;
     DoFHandler<dim>                           dof_handler;
 
-    ConstraintMatrix      constraints;
-    std::vector<IndexSet> owned_partitioning;
-    std::vector<IndexSet> relevant_partitioning;
+    AffineConstraints<double> constraints;
+    std::vector<IndexSet>     owned_partitioning;
+    std::vector<IndexSet>     relevant_partitioning;
 
     TrilinosWrappers::BlockSparsityPattern sparsity_pattern;
     TrilinosWrappers::BlockSparseMatrix    system_matrix;

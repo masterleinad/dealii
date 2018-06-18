@@ -131,7 +131,7 @@ namespace Step52
 
     DoFHandler<2> dof_handler;
 
-    ConstraintMatrix affine_constraints;
+    AffineConstraints<double> affine_constraints;
 
     SparsityPattern sparsity_pattern;
 

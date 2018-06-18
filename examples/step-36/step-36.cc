@@ -106,7 +106,7 @@ namespace Step36
     // had adaptively refined meshes (which we don't have in the current
     // program). Here, we will store the constraints for boundary nodes
     // $U_i=0$.
-    ConstraintMatrix constraints;
+    AffineConstraints<double> constraints;
   };
 
   // @sect3{Implementation of the <code>EigenvalueProblem</code> class}

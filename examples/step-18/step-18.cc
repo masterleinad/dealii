@@ -415,7 +415,7 @@ namespace Step18
 
     DoFHandler<dim> dof_handler;
 
-    ConstraintMatrix hanging_node_constraints;
+    AffineConstraints<double> hanging_node_constraints;
 
     // One difference of this program is that we declare the quadrature
     // formula in the class declaration. The reason is that in all the other

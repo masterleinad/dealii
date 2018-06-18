@@ -616,10 +616,10 @@ namespace Step13
 
         void solve(Vector<double> &solution) const;
 
-        ConstraintMatrix     hanging_node_constraints;
-        SparsityPattern      sparsity_pattern;
-        SparseMatrix<double> matrix;
-        Vector<double>       rhs;
+        AffineConstraints<double> hanging_node_constraints;
+        SparsityPattern           sparsity_pattern;
+        SparseMatrix<double>      matrix;
+        Vector<double>            rhs;
       };
 
 
@@ -995,7 +995,7 @@ namespace Step13
     {
       hanging_node_constraints.clear();
 
-      void (*mhnc_p)(const DoFHandler<dim> &, ConstraintMatrix &) =
+      void (*mhnc_p)(const DoFHandler<dim> &, AffineConstraints<double> &) =
         &DoFTools::make_hanging_node_constraints;
 
       // Start a side task then continue on the main thread

@@ -140,7 +140,7 @@ namespace Step12
   //
   // After this preparations, we proceed with the main class of this program,
   // called AdvectionProblem. It is basically the main class of step-6. We do
-  // not have a ConstraintMatrix, because there are no hanging node
+  // not have a AffineConstraints, because there are no hanging node
   // constraints in DG discretizations.
 
   // Major differences will only come up in the implementation of the assemble

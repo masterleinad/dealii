@@ -198,7 +198,7 @@ namespace Step16
     SparsityPattern      sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
-    ConstraintMatrix constraints;
+    AffineConstraints<double> constraints;
 
     Vector<double> solution;
     Vector<double> system_rhs;
@@ -218,7 +218,7 @@ namespace Step16
     // The last object stores information about the boundary indices
     // on each level and information about indices lying on a
     // refinement edge between two different refinement levels. It
-    // thus serves a similar purpose as ConstraintMatrix, but on each
+    // thus serves a similar purpose as AffineConstraints, but on each
     // level.
     MGLevelObject<SparsityPattern>      mg_sparsity_patterns;
     MGLevelObject<SparseMatrix<double>> mg_matrices;

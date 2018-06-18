@@ -108,8 +108,8 @@ namespace Step22
   // <code>preconditioner_sparsity_pattern</code>.
   // In this example we also use adaptive grid refinement, which is handled
   // in analogy to step-6. According to the discussion in the introduction,
-  // we are also going to use the ConstraintMatrix for implementing Dirichlet
-  // boundary conditions. Hence, we change the name
+  // we are also going to use the AffineConstraints for implementing
+  // Dirichlet boundary conditions. Hence, we change the name
   // <code>hanging_node_constraints</code> into <code>constraints</code>.
   template <int dim>
   class StokesProblem
@@ -131,7 +131,7 @@ namespace Step22
     FESystem<dim>      fe;
     DoFHandler<dim>    dof_handler;
 
-    ConstraintMatrix constraints;
+    AffineConstraints<double> constraints;
 
     BlockSparsityPattern      sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
@@ -723,9 +723,9 @@ namespace Step22
         // line of the local matrix contribution.
 
         // Before we can write the local data into the global matrix (and
-        // simultaneously use the ConstraintMatrix object to apply Dirichlet
-        // boundary conditions and eliminate hanging node constraints, as we
-        // discussed in the introduction), we have to be careful about one
+        // simultaneously use the AffineConstraints object to apply
+        // Dirichlet boundary conditions and eliminate hanging node constraints,
+        // as we discussed in the introduction), we have to be careful about one
         // thing, though. We have only built half of the local matrices
         // because of symmetry, but we're going to save the full matrices
         // in order to use the standard functions for solving. This is done
