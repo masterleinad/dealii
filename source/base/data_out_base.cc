@@ -210,10 +210,8 @@ namespace
   /**
    * Do a base64 encoding of the given data.
    *
-   * The function allocates memory as
-   * necessary and returns a pointer to
-   * it. The calling function must release
-   * this memory again.
+   * The function allocates memory as necessary and returns a pointer to it. The
+   * calling function must release this memory again.
    */
   char *
   encode_block(const char *data, const int data_size)
@@ -256,10 +254,8 @@ namespace
   }
 
   /**
-   * Do a zlib compression followed
-   * by a base64 encoding of the
-   * given data. The result is then
-   * written to the given stream.
+   * Do a zlib compression followed by a base64 encoding of the given data. The
+   * result is then written to the given stream.
    */
   template <typename T>
   void
@@ -269,8 +265,7 @@ namespace
   {
     if (data.size() != 0)
       {
-        // allocate a buffer for compressing
-        // data and do so
+        // allocate a buffer for compressing data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
         char * compressed_data        = new char[compressed_data_length];
         int    err =
@@ -296,8 +291,7 @@ namespace
         output_stream << encoded_header;
         delete[] encoded_header;
 
-        // next do the compressed
-        // data encoding in base64
+        // next do the compressed data encoding in base64
         char *encoded_data =
           encode_block(compressed_data, compressed_data_length);
         delete[] compressed_data;
@@ -316,10 +310,9 @@ namespace DataOutBase
   namespace
   {
     /**
-     * Class holding the data of one cell of a patch in two space
-     * dimensions for output. It is the projection of a cell in
-     * three-dimensional space (two coordinates, one height value) to
-     * the direction of sight.
+     * Class holding the data of one cell of a patch in two space dimensions for
+     * output. It is the projection of a cell in three-dimensional space (two
+     * coordinates, one height value) to the direction of sight.
      */
     class SvgCell
     {
@@ -333,8 +326,8 @@ namespace DataOutBase
       Point<3> vertices[4];
 
       /**
-       * Depth into the picture, which is defined as the distance from
-       * an observer at an the origin in direction of the line of sight.
+       * Depth into the picture, which is defined as the distance from an
+       * observer at an the origin in direction of the line of sight.
        */
       float depth;
 
@@ -356,18 +349,16 @@ namespace DataOutBase
     bool
     SvgCell::operator<(const SvgCell &e) const
     {
-      // note the "wrong" order in
-      // which we sort the elements
+      // note the "wrong" order in which we sort the elements
       return depth > e.depth;
     }
 
 
 
     /**
-     * Class holding the data of one cell of a patch in two space
-     * dimensions for output. It is the projection of a cell in
-     * three-dimensional space (two coordinates, one height value) to
-     * the direction of sight.
+     * Class holding the data of one cell of a patch in two space dimensions for
+     * output. It is the projection of a cell in three-dimensional space (two
+     * coordinates, one height value) to the direction of sight.
      */
     class EpsCell2d
     {
@@ -384,8 +375,8 @@ namespace DataOutBase
       float color_value;
 
       /**
-       * Depth into the picture, which is defined as the distance from
-       * an observer at an the origin in direction of the line of sight.
+       * Depth into the picture, which is defined as the distance from an
+       * observer at an the origin in direction of the line of sight.
        */
       float depth;
 
@@ -398,14 +389,14 @@ namespace DataOutBase
 
 
     /**
-     * This is a helper function for the write_gmv() function. There,
-     * the data in the patches needs to be copied around as output is
-     * one variable globally at a time, rather than all data on each
-     * vertex at a time. This copying around can be done detached from
-     * the main thread, and is thus moved into this separate function.
+     * This is a helper function for the write_gmv() function. There, the data
+     * in the patches needs to be copied around as output is one variable
+     * globally at a time, rather than all data on each vertex at a time. This
+     * copying around can be done detached from the main thread, and is thus
+     * moved into this separate function.
      *
-     * Note that because of the similarity of the formats, this function
-     * is also used by the Vtk and Tecplot output functions.
+     * Note that because of the similarity of the formats, this function is also
+     * used by the Vtk and Tecplot output functions.
      */
     template <int dim, int spacedim, typename Number = double>
     void
@@ -413,17 +404,13 @@ namespace DataOutBase
       const std::vector<Patch<dim, spacedim>> &patches,
       Table<2, Number> &                       data_vectors)
     {
-      // unlike in the main function, we
-      // don't have here the data_names
-      // field, so we initialize it with
-      // the number of data sets in the
-      // first patch. the equivalence of
-      // these two definitions is checked
-      // in the main function.
+      // unlike in the main function, we don't have here the data_names field,
+      // so we initialize it with the number of data sets in the first patch.
+      // the equivalence of these two definitions is checked in the main
+      // function.
 
-      // we have to take care, however, whether the
-      // points are appended to the end of the
-      // patch->data table
+      // we have to take care, however, whether the points are appended to the
+      // end of the patch->data table
       const unsigned int n_data_sets = patches[0].points_are_available ?
                                          (patches[0].data.n_rows() - spacedim) :
                                          patches[0].data.n_rows();
@@ -699,9 +686,9 @@ namespace
 #endif
 
   // NOTE: The dimension of the array is chosen to 5 to allow the choice
-  // DataOutBase<deal_II_dimension,deal_II_dimension+1> in general
-  // Wolfgang supposed that we don't need it in general, but however this
-  // choice avoids a -Warray-bounds check warning
+  // DataOutBase<deal_II_dimension,deal_II_dimension+1> in general Wolfgang
+  // supposed that we don't need it in general, but however this choice avoids a
+  // -Warray-bounds check warning
   const unsigned int vtk_cell_type[5] = {1,
                                          3,
                                          9,
@@ -711,13 +698,12 @@ namespace
   //----------------------------------------------------------------------//
   //Auxiliary functions
   //----------------------------------------------------------------------//
-  //For a given patch, compute the node interpolating the corner nodes
-  //linearly at the point (xstep, ystep, zstep)*1./n_subdivisions.
-  //If the points are saved in the patch->data member, return the
-  //saved point instead
+  // For a given patch, compute the node interpolating the corner nodes linearly
+  // at the point (xstep, ystep, zstep)*1./n_subdivisions. If the points are
+  // saved in the patch->data member, return the saved point instead
 
-  //TODO: Make this function return its value, rather than using a reference
-  // as first argument; take a reference for 'patch', not a pointer
+  // TODO: Make this function return its value, rather than using a reference as
+  // first argument; take a reference for 'patch', not a pointer
   template <int dim, int spacedim>
   inline void
   compute_node(Point<spacedim> &                        node,
@@ -856,8 +842,8 @@ namespace
 
     /**
      * Write dim-dimensional cell with first vertex at number start and further
-     * vertices offset by the specified values. Values not needed are
-     * ignored. All inheriting classes should implement this function.
+     * vertices offset by the specified values. Values not needed are ignored.
+     * All inheriting classes should implement this function.
      */
     template <int dim>
     void
@@ -917,10 +903,7 @@ namespace
   };
 
   /**
-   * Class for writing basic
-   * entities in @ref
-   * SoftwareOpenDX format,
-   * depending on the flags.
+   * Class for writing basic entities in @ref SoftwareOpenDX format, depending on the flags.
    */
   class DXStream : public StreamBase<DataOutBase::DXFlags>
   {
@@ -932,9 +915,7 @@ namespace
     write_point(const unsigned int index, const Point<dim> &);
 
     /**
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> [0,2,1,3]
@@ -950,14 +931,10 @@ namespace
                const unsigned int z_offset);
 
     /**
-     * Write a complete set of
-     * data for a single node.
+     * Write a complete set of data for a single node.
      *
-     * The index given as first
-     * argument indicates the
-     * number of a data set, as
-     * some output formats require
-     * this number to be printed.
+     * The index given as first argument indicates the number of a data set, as
+     * some output formats require this number to be printed.
      */
     template <typename data>
     void
@@ -965,10 +942,7 @@ namespace
   };
 
   /**
-   * Class for writing basic
-   * entities in @ref SoftwareGMV
-   * format, depending on the
-   * flags.
+   * Class for writing basic entities in @ref SoftwareGMV format, depending on the flags.
    */
   class GmvStream : public StreamBase<DataOutBase::GmvFlags>
   {
@@ -980,9 +954,7 @@ namespace
     write_point(const unsigned int index, const Point<dim> &);
 
     /**
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> [0,1,3,2]
@@ -999,10 +971,7 @@ namespace
   };
 
   /**
-   * Class for writing basic
-   * entities in @ref
-   * SoftwareTecplot format,
-   * depending on the flags.
+   * Class for writing basic entities in @ref SoftwareTecplot format, depending on the flags.
    */
   class TecplotStream : public StreamBase<DataOutBase::TecplotFlags>
   {
@@ -1014,9 +983,7 @@ namespace
     write_point(const unsigned int index, const Point<dim> &);
 
     /**
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> [0,1,3,2]
@@ -1033,10 +1000,7 @@ namespace
   };
 
   /**
-   * Class for writing basic
-   * entities in UCD format for
-   * @ref SoftwareAVS, depending on
-   * the flags.
+   * Class for writing basic entities in UCD format for @ref SoftwareAVS, depending on the flags.
    */
   class UcdStream : public StreamBase<DataOutBase::UcdFlags>
   {
@@ -1048,13 +1012,9 @@ namespace
     write_point(const unsigned int index, const Point<dim> &);
 
     /**
-     * The additional offset 1 is
-     * added inside this
-     * function.
+     * The additional offset 1 is added inside this function.
      *
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> [0,1,3,2]
@@ -1070,14 +1030,10 @@ namespace
                const unsigned int z_offset);
 
     /**
-     * Write a complete set of
-     * data for a single node.
+     * Write a complete set of data for a single node.
      *
-     * The index given as first
-     * argument indicates the
-     * number of a data set, as
-     * some output formats require
-     * this number to be printed.
+     * The index given as first argument indicates the number of a data set, as
+     * some output formats require this number to be printed.
      */
     template <typename data>
     void
@@ -1085,10 +1041,7 @@ namespace
   };
 
   /**
-   * Class for writing basic
-   * entities in @ref SoftwareVTK
-   * format, depending on the
-   * flags.
+   * Class for writing basic entities in @ref SoftwareVTK format, depending on the flags.
    */
   class VtkStream : public StreamBase<DataOutBase::VtkFlags>
   {
@@ -1100,9 +1053,7 @@ namespace
     write_point(const unsigned int index, const Point<dim> &);
 
     /**
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> []
@@ -1132,9 +1083,7 @@ namespace
     flush_points();
 
     /**
-     * The order of vertices for
-     * these cells in different
-     * dimensions is
+     * The order of vertices for these cells in different dimensions is
      * <ol>
      * <li> [0,1]
      * <li> []
@@ -1159,12 +1108,8 @@ namespace
     /**
      * Forwarding of output stream.
      *
-     * If libz was found during
-     * configuration, this operator
-     * compresses and encodes the
-     * entire data
-     * block. Otherwise, it simply
-     * writes it element by
+     * If libz was found during configuration, this operator compresses and
+     * encodes the entire data block. Otherwise, it simply writes it element by
      * element.
      */
     template <typename T>
@@ -1173,15 +1118,11 @@ namespace
 
   private:
     /**
-     * A list of vertices and
-     * cells, to be used in case we
-     * want to compress the data.
+     * A list of vertices and cells, to be used in case we want to compress the
+     * data.
      *
-     * The data types of these
-     * arrays needs to match what
-     * we print in the XML-preamble
-     * to the respective parts of
-     * VTU files (e.g. Float32 and
+     * The data types of these arrays needs to match what we print in the
+     * XML-preamble to the respective parts of VTU files (e.g. Float32 and
      * Int32)
      */
     std::vector<float>   vertices;
@@ -1305,8 +1246,7 @@ namespace
                         unsigned int d2,
                         unsigned int d3)
   {
-    // Vertices are numbered starting
-    // with one.
+    // Vertices are numbered starting with one.
     const unsigned int start = s + 1;
     stream << gmv_cell_type[dim] << '\n';
 
@@ -1425,9 +1365,7 @@ namespace
           }
       }
 
-    // Write out all cells and remember
-    // that all indices must be shifted
-    // by one.
+    // Write out all cells and remember that all indices must be shifted by one.
     stream << index + 1 << "\t0 " << ucd_cell_type[dim];
     const unsigned int final = (1 << dim);
     for (unsigned int i = 0; i < final; ++i)
@@ -1515,9 +1453,7 @@ namespace
       stream << " 0";
     stream << '\n';
 #else
-    // if we want to compress, then
-    // first collect all the data in
-    // an array
+    // if we want to compress, then first collect all the data in an array
     for (unsigned int i = 0; i < dim; ++i)
       vertices.push_back(p[i]);
     for (unsigned int i = dim; i < 3; ++i)
@@ -1530,9 +1466,8 @@ namespace
   VtuStream::flush_points()
   {
 #ifdef DEAL_II_WITH_ZLIB
-    // compress the data we have in
-    // memory and write them to the
-    // stream. then release the data
+    // compress the data we have in memory and write them to the stream. then
+    // release the data
     *this << vertices << '\n';
     vertices.clear();
 #endif
@@ -1590,9 +1525,8 @@ namespace
   VtuStream::flush_cells()
   {
 #ifdef DEAL_II_WITH_ZLIB
-    // compress the data we have in
-    // memory and write them to the
-    // stream. then release the data
+    // compress the data we have in memory and write them to the stream. then
+    // release the data
     *this << cells << '\n';
     cells.clear();
 #endif
@@ -1604,9 +1538,8 @@ namespace
   VtuStream::operator<<(const std::vector<T> &data)
   {
 #ifdef DEAL_II_WITH_ZLIB
-    // compress the data we have in
-    // memory and write them to the
-    // stream. then release the data
+    // compress the data we have in memory and write them to the stream. then
+    // release the data
     write_compressed_block(data, flags, stream);
 #else
     for (unsigned int i = 0; i < data.size(); ++i)
@@ -1637,8 +1570,8 @@ namespace DataOutBase
     : patch_index(no_neighbor)
     , n_subdivisions(1)
     , points_are_available(false)
-  // all the other data has a constructor of its own, except for the
-  // "neighbors" field, which we set to invalid values.
+  // all the other data has a constructor of its own, except for the "neighbors"
+  // field, which we set to invalid values.
   {
     for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
       neighbors[i] = no_neighbor;
@@ -2161,8 +2094,7 @@ namespace DataOutBase
   bool
   EpsCell2d::operator<(const EpsCell2d &e) const
   {
-    // note the "wrong" order in
-    // which we sort the elements
+    // note the "wrong" order in which we sort the elements
     return depth > e.depth;
   }
 
@@ -2259,10 +2191,8 @@ namespace DataOutBase
     else if (prm.get("Color function") == "reverse grey scale")
       color_function = &reverse_grey_scale_color_function;
     else
-      // we shouldn't get here, since
-      // the parameter object should
-      // already have checked that the
-      // given value is valid
+      // we shouldn't get here, since the parameter object should already have
+      // checked that the given value is valid
       Assert(false, ExcInternalError());
   }
 
@@ -2408,9 +2338,7 @@ namespace DataOutBase
   {
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count = 0;
-    // We only need this point below,
-    // but it does not harm to declare
-    // it here.
+    // We only need this point below, but it does not harm to declare it here.
     Point<spacedim> node;
 
     for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
@@ -2420,10 +2348,8 @@ namespace DataOutBase
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
-        // Length of loops in all
-        // dimensions. If a dimension
-        // is not used, a loop of
-        // length one will do the job.
+        // Length of loops in all dimensions. If a dimension is not used, a loop
+        // of length one will do the job.
         const unsigned int n1 = (dim > 0) ? n : 1;
         const unsigned int n2 = (dim > 1) ? n : 1;
         const unsigned int n3 = (dim > 2) ? n : 1;
@@ -2446,9 +2372,7 @@ namespace DataOutBase
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count                 = 0;
     unsigned int first_vertex_of_patch = 0;
-    // Array to hold all the node
-    // numbers of a cell. 8 is
-    // sufficient for 3D
+    // Array to hold all the node numbers of a cell. 8 is sufficient for 3D
     for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
            patches.begin();
          patch != patches.end();
@@ -2473,8 +2397,7 @@ namespace DataOutBase
                 // First write line in x direction
                 out.template write_cell<dim>(count++, offset, d1, d2, d3);
               }
-        // finally update the number
-        // of the first vertex of this patch
+        // finally update the number of the first vertex of this patch
         first_vertex_of_patch +=
           Utilities::fixed_power<dim>(n_subdivisions + 1);
       }
@@ -2515,8 +2438,7 @@ namespace DataOutBase
         std::vector<float>  floats(n_data_sets);
         std::vector<double> doubles(n_data_sets);
 
-        // Data is already in
-        // lexicographic ordering
+        // Data is already in lexicographic ordering
         for (unsigned int i = 0; i < Utilities::fixed_power<dim>(n);
              ++i, ++count)
           if (double_precision)
@@ -2602,8 +2524,8 @@ namespace DataOutBase
 
 
     /**
-     * Function to compute the gradient parameters for a triangle with
-     * given values for the vertices.
+     * Function to compute the gradient parameters for a triangle with given
+     * values for the vertices.
      */
     Point<6> svg_get_gradient_parameters(Point<3> points[])
     {
@@ -2841,26 +2763,19 @@ namespace DataOutBase
     const UcdFlags &flags,
     std::ostream &  out)
   {
-    // Note that while in theory dim==0 should be implemented,
-    // this is not tested, therefore currently not allowed.
+    // Note that while in theory dim==0 should be implemented, this is not
+    // tested, therefore currently not allowed.
     AssertThrow(dim > 0, ExcNotImplemented());
 
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -2871,8 +2786,7 @@ namespace DataOutBase
 
     UcdStream ucd_out(out, flags);
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
@@ -2919,8 +2833,7 @@ namespace DataOutBase
 
         write_data(patches, n_data_sets, true, ucd_out);
       }
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -2943,19 +2856,12 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -2964,20 +2870,16 @@ namespace DataOutBase
     // Stream with special features for dx output
     DXStream dx_out(out, flags);
 
-    // Variable counting the offset of
-    // binary data.
+    // Variable counting the offset of binary data.
     unsigned int offset = 0;
 
     const unsigned int n_data_sets = data_names.size();
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
-    // start with vertices order is
-    // lexicographical, x varying
-    // fastest
+    // start with vertices order is lexicographical, x varying fastest
     out << "object \"vertices\" class array type float rank 1 shape "
         << spacedim << " items " << n_nodes;
 
@@ -3056,17 +2958,14 @@ namespace DataOutBase
                     const unsigned int ny = i2 * dy;
                     const unsigned int nz = i3 * dz;
 
-                    // There are no neighbors for dim==0.
-                    // Note that this case is caught by the
-                    // AssertThrow at the beginning of this function anyway.
-                    // This condition avoids compiler warnings.
+                    // There are no neighbors for dim==0. Note that this case is
+                    // caught by the AssertThrow at the beginning of this
+                    // function anyway. This condition avoids compiler warnings.
                     if (dim < 1)
                       continue;
 
                     out << '\n';
-                    // Direction -x
-                    // Last cell in row
-                    // of other patch
+                    // Direction -x Last cell in row of other patch
                     if (i1 == 0)
                       {
                         const unsigned int nn = patch->neighbors[0];
@@ -3081,9 +2980,7 @@ namespace DataOutBase
                       {
                         out << '\t' << patch_start + nx - dx + ny + nz;
                       }
-                    // Direction +x
-                    // First cell in row
-                    // of other patch
+                    // Direction +x First cell in row of other patch
                     if (i1 == n - 1)
                       {
                         const unsigned int nn = patch->neighbors[1];
@@ -3217,8 +3114,7 @@ namespace DataOutBase
     if (flags.data_binary)
       write_data(patches, n_data_sets, flags.data_double, dx_out);
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -3239,18 +3135,12 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
+    // verify that there are indeed patches to be written out. most
+    // of the times, people just forget to call build_patches when there
+    // are no patches, so a warning is in order. that said, the
+    // assertion is disabled if we support MPI since then it can
+    // happen that on the coarsest mesh, a processor simply has no
+    // cells it actually owns, and in that case it is legit if there
     // are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
@@ -3319,8 +3209,7 @@ namespace DataOutBase
               {
                 for (unsigned int i1 = 0; i1 < n1; ++i1)
                   {
-                    // compute coordinates for
-                    // this patch point
+                    // compute coordinates for this patch point
                     compute_node(node, &*patch, i1, i2, 0, n_subdivisions);
                     out << node << ' ';
 
@@ -3340,25 +3229,19 @@ namespace DataOutBase
           }
         else if (dim == 3)
           {
-            // for all grid points: draw
-            // lines into all positive
-            // coordinate directions if
-            // there is another grid point
-            // there
+            // for all grid points: draw lines into all positive coordinate
+            // directions if there is another grid point there
             for (unsigned int i3 = 0; i3 < n3; ++i3)
               for (unsigned int i2 = 0; i2 < n2; ++i2)
                 for (unsigned int i1 = 0; i1 < n1; ++i1)
                   {
-                    // compute coordinates for
-                    // this patch point
+                    // compute coordinates for this patch point
                     compute_node(
                       this_point, &*patch, i1, i2, i3, n_subdivisions);
-                    // line into positive x-direction
-                    // if possible
+                    // line into positive x-direction if possible
                     if (i1 < n_subdivisions)
                       {
-                        // write point here
-                        // and its data
+                        // write point here and its data
                         out << this_point;
                         for (unsigned int data_set = 0; data_set < n_data_sets;
                              ++data_set)
@@ -3367,8 +3250,7 @@ namespace DataOutBase
                                              i1 * d1 + i2 * d2 + i3 * d3);
                         out << '\n';
 
-                        // write point there
-                        // and its data
+                        // write point there and its data
                         compute_node(
                           node, &*patch, i1 + 1, i2, i3, n_subdivisions);
                         out << node;
@@ -3384,12 +3266,10 @@ namespace DataOutBase
                         out << '\n' << '\n';
                       }
 
-                    // line into positive y-direction
-                    // if possible
+                    // line into positive y-direction if possible
                     if (i2 < n_subdivisions)
                       {
-                        // write point here
-                        // and its data
+                        // write point here and its data
                         out << this_point;
                         for (unsigned int data_set = 0; data_set < n_data_sets;
                              ++data_set)
@@ -3398,8 +3278,7 @@ namespace DataOutBase
                                              i1 * d1 + i2 * d2 + i3 * d3);
                         out << '\n';
 
-                        // write point there
-                        // and its data
+                        // write point there and its data
                         compute_node(
                           node, &*patch, i1, i2 + 1, i3, n_subdivisions);
                         out << node;
@@ -3415,12 +3294,10 @@ namespace DataOutBase
                         out << '\n' << '\n';
                       }
 
-                    // line into positive z-direction
-                    // if possible
+                    // line into positive z-direction if possible
                     if (i3 < n_subdivisions)
                       {
-                        // write point here
-                        // and its data
+                        // write point here and its data
                         out << this_point;
                         for (unsigned int data_set = 0; data_set < n_data_sets;
                              ++data_set)
@@ -3429,8 +3306,7 @@ namespace DataOutBase
                                              i1 * d1 + i2 * d2 + i3 * d3);
                         out << '\n';
 
-                        // write point there
-                        // and its data
+                        // write point there and its data
                         compute_node(
                           node, &*patch, i1, i2, i3 + 1, n_subdivisions);
                         out << node;
@@ -3449,8 +3325,7 @@ namespace DataOutBase
         else
           Assert(false, ExcNotImplemented());
       }
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     AssertThrow(out, ExcIO());
@@ -3470,19 +3345,12 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most
+    // of the times, people just forget to call build_patches when there
+    // are no patches, so a warning is in order. that said, the
+    // assertion is disabled if we support MPI since then it can
+    // happen that on the coarsest mesh, a processor simply has no cells it
+    // actually owns, and in that case it is legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -3510,8 +3378,7 @@ namespace DataOutBase
           << "#include \"textures.inc\" " << '\n';
 
 
-      // use external include file for textures,
-      // camera and light
+      // use external include file for textures, camera and light
       if (flags.external_data)
         out << "#include \"data.inc\" " << '\n';
       else // all definitions in data file
@@ -3580,8 +3447,7 @@ namespace DataOutBase
 
     if (!flags.external_data)
       {
-        // texture with scaled niveau lines
-        // 10 lines in the surface
+        // texture with scaled niveau lines 10 lines in the surface
         out << "#declare Tex=texture{" << '\n'
             << "  pigment {" << '\n'
             << "    gradient y" << '\n'
@@ -3628,8 +3494,7 @@ namespace DataOutBase
         for (unsigned int i2 = 0; i2 < n; ++i2)
           for (unsigned int i1 = 0; i1 < n; ++i1)
             {
-              // compute coordinates for
-              // this patch point, storing in ver
+              // compute coordinates for this patch point, storing in ver
               compute_node(
                 ver[i1 * d1 + i2 * d2], &*patch, i1, i2, 0, n_subdivisions);
             }
@@ -3637,24 +3502,15 @@ namespace DataOutBase
 
         if (!flags.bicubic_patch)
           {
-            // approximate normal
-            // vectors in patch
+            // approximate normal vectors in patch
             std::vector<Point<3>> nrml;
             // only if smooth triangles are used
             if (flags.smooth)
               {
                 nrml.resize(n * n);
-                // These are
-                // difference
-                // quotients of
-                // the surface
-                // mapping. We
-                // take them
-                // symmetric
-                // inside the
-                // patch and
-                // one-sided at
-                // the edges
+                // These are difference quotients of the surface
+                // mapping. We take them symmetric inside the
+                // patch and one-sided at the edges
                 Point<3> h1, h2;
                 // Now compute normals in every point
                 for (unsigned int i = 0; i < n; ++i)
@@ -3745,8 +3601,7 @@ namespace DataOutBase
                     }
                   else
                     {
-                      // writing standard triangles
-                      // down/right triangle
+                      // writing standard triangles down/right triangle
                       out << "triangle {" << '\n'
                           << "\t<" << ver[dl](0) << "," << patch->data(0, dl)
                           << "," << ver[dl](1) << ">," << '\n';
@@ -3799,8 +3654,7 @@ namespace DataOutBase
         out << "  texture {Tex}" << '\n' << "}" << '\n' << '\n';
       }
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     AssertThrow(out, ExcIO());
@@ -3834,57 +3688,38 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
       return;
 #endif
 
-    // set up an array of cells to be
-    // written later. this array holds the
-    // cells of all the patches as
-    // projected to the plane perpendicular
-    // to the line of sight.
+    // set up an array of cells to be written later. this array holds the cells
+    // of all the patches as projected to the plane perpendicular to the line of
+    // sight.
     //
-    // note that they are kept sorted by
-    // the set, where we chose the value
-    // of the center point of the cell
-    // along the line of sight as value
-    // for sorting
+    // note that they are kept sorted by the set, where we chose the value of
+    // the center point of the cell along the line of sight as value for sorting
     std::multiset<EpsCell2d> cells;
 
-    // two variables in which we
-    // will store the minimum and
-    // maximum values of the field
-    // to be used for colorization
+    // two variables in which we will store the minimum and maximum values of
+    // the field to be used for colorization
     //
-    // preset them by 0 to calm down the
-    // compiler; they are initialized later
+    // preset them by 0 to calm down the compiler; they are initialized later
     double min_color_value = 0, max_color_value = 0;
 
-    // Array for z-coordinates of points.
-    // The elevation determined by a function if spacedim=2
-    // or the z-cooridate of the grid point if spacedim=3
+    // Array for z-coordinates of points. The elevation determined by a function
+    // if spacedim=2 or the z-cooridate of the grid point if spacedim=3
     double heights[4] = {0, 0, 0, 0};
 
-    // compute the cells for output and
-    // enter them into the set above
-    // note that since dim==2, we
-    // have exactly four vertices per
-    // patch and per cell
+    // compute the cells for output and enter them into the set above note that
+    // since dim==2, we have exactly four vertices per patch and per cell
     for (typename std::vector<Patch<2, spacedim>>::const_iterator patch =
            patches.begin();
          patch != patches.end();
@@ -3945,25 +3780,16 @@ namespace DataOutBase
                 }
 
 
-              // now compute the projection of
-              // the bilinear cell given by the
-              // four vertices and their heights
-              // and write them to a proper
-              // cell object. note that we only
-              // need the first two components
-              // of the projected position for
-              // output, but we need the value
-              // along the line of sight for
-              // sorting the cells for back-to-
-              // front-output
+              // now compute the projection of the bilinear cell given by the
+              // four vertices and their heights and write them to a proper cell
+              // object. note that we only need the first two components of the
+              // projected position for output, but we need the value along the
+              // line of sight for sorting the cells for back-to- front-output
               //
-              // this computation was first written
-              // by Stefan Nauber. please no-one
-              // ask me why it works that way (or
-              // may be not), especially not about
-              // the angles and the sign of
-              // the height field, I don't know
-              // it.
+              // this computation was first written by Stefan Nauber. please
+              // no-one ask me why it works that way (or may be not), especially
+              // not about the angles and the sign of the height field, I don't
+              // know it.
               EpsCell2d    eps_cell;
               const double pi = numbers::PI;
               const double cx =
@@ -3998,15 +3824,13 @@ namespace DataOutBase
                   //       (  0   0 1 )( 0 sx  cx )(z)   (  0*x+  *(cx*y-sx*z)+1*(sx*y+cx*z) )
                 }
 
-              // compute coordinates of
-              // center of cell
+              // compute coordinates of center of cell
               const Point<spacedim> center_point =
                 (points[0] + points[1] + points[2] + points[3]) / 4;
               const double center_height =
                 -(heights[0] + heights[1] + heights[2] + heights[3]) / 4;
 
-              // compute the depth into
-              // the picture
+              // compute the depth into the picture
               eps_cell.depth = -sx * sz * center_point(0) -
                                sx * cz * center_point(1) + cx * center_height;
 
@@ -4035,14 +3859,12 @@ namespace DataOutBase
                                   (i1 + 1) * d1 + (i2 + 1) * d2) :
                       1};
 
-                  // set color value to average of the value
-                  // at the vertices
+                  // set color value to average of the value at the vertices
                   eps_cell.color_value = (color_values[0] + color_values[1] +
                                           color_values[3] + color_values[2]) /
                                          4;
 
-                  // update bounds of color
-                  // field
+                  // update bounds of color field
                   if (patch == patches.begin())
                     min_color_value = max_color_value = eps_cell.color_value;
                   else
@@ -4063,9 +3885,8 @@ namespace DataOutBase
             }
       }
 
-    // find out minimum and maximum x and
-    // y coordinates to compute offsets
-    // and scaling factors
+    // find out minimum and maximum x and y coordinates to compute offsets and
+    // scaling factors
     double x_min = cells.begin()->vertices[0](0);
     double x_max = x_min;
     double y_min = cells.begin()->vertices[0](1);
@@ -4082,11 +3903,8 @@ namespace DataOutBase
           y_max = std::max(y_max, cell->vertices[vertex](1));
         }
 
-    // scale in x-direction such that
-    // in the output 0 <= x <= 300.
-    // don't scale in y-direction to
-    // preserve the shape of the
-    // triangulation
+    // scale in x-direction such that in the output 0 <= x <= 300. don't scale
+    // in y-direction to preserve the shape of the triangulation
     const double scale =
       (flags.size /
        (flags.size_type == EpsFlags::width ? x_max - x_min : y_min - y_max));
@@ -4108,8 +3926,7 @@ namespace DataOutBase
           << static_cast<unsigned int>((x_max - x_min) * scale + 0.5) << ' '
           << static_cast<unsigned int>((y_max - y_min) * scale + 0.5) << '\n';
 
-      // define some abbreviations to keep
-      // the output small:
+      // define some abbreviations to keep the output small:
       // m=move turtle to
       // l=define a line
       // s=set rgb color
@@ -4128,28 +3945,16 @@ namespace DataOutBase
       out << flags.line_width << " setlinewidth" << '\n';
     }
 
-    // check if min and max
-    // values for the color are
-    // actually different. If
-    // that is not the case (such
-    // things happen, for
-    // example, in the very first
-    // time step of a time
-    // dependent problem, if the
-    // initial values are zero),
-    // all values are equal, and
-    // then we can draw
-    // everything in an arbitrary
-    // color. Thus, change one of
-    // the two values arbitrarily
+    // check if min and max values for the color are actually different. If
+    // that is not the case (such things happen, for example, in the very first
+    // time step of a time dependent problem, if the initial values are zero),
+    // all values are equal, and then we can draw everything in an arbitrary
+    // color. Thus, change one of the two values arbitrarily
     if (max_color_value == min_color_value)
       max_color_value = min_color_value + 1;
 
-    // now we've got all the information
-    // we need. write the cells.
-    // note: due to the ordering, we
-    // traverse the list of cells
-    // back-to-front
+    // now we've got all the information we need. write the cells. note: due to
+    // the ordering, we traverse the list of cells back-to-front
     for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
          cell != cells.end();
          ++cell)
@@ -4204,29 +4009,22 @@ namespace DataOutBase
     const GmvFlags &flags,
     std::ostream &  out)
   {
-    // The gmv format does not support cells that only consist
-    // of a single point. It does support the output of point data
-    // using the keyword 'tracers' instead of 'nodes' and 'cells',
-    // but this output format is currently not implemented.
+    // The gmv format does not support cells that only consist of a single
+    // point. It does support the output of point data using the keyword
+    // 'tracers' instead of 'nodes' and 'cells', but this output format is
+    // currently not implemented.
     AssertThrow(dim > 0, ExcNotImplemented());
 
     Assert(dim <= 3, ExcNotImplemented());
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -4235,10 +4033,8 @@ namespace DataOutBase
 
     GmvStream          gmv_out(out, flags);
     const unsigned int n_data_sets = data_names.size();
-    // check against # of data sets in
-    // first patch. checks against all
-    // other patches are made in
-    // write_gmv_reorder_data_vectors
+    // check against # of data sets in first patch. checks against all other
+    // patches are made in write_gmv_reorder_data_vectors
     Assert((patches[0].data.n_rows() == n_data_sets &&
             !patches[0].points_are_available) ||
              (patches[0].data.n_rows() == n_data_sets + spacedim &&
@@ -4252,33 +4048,23 @@ namespace DataOutBase
     // preamble
     out << "gmvinput ascii" << '\n' << '\n';
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
 
-    // in gmv format the vertex
-    // coordinates and the data have an
-    // order that is a bit unpleasant
-    // (first all x coordinates, then
-    // all y coordinate, ...; first all
-    // data of variable 1, then
-    // variable 2, etc), so we have to
-    // copy the data vectors a bit around
+    // in gmv format the vertex coordinates and the data have an order that is a
+    // bit unpleasant (first all x coordinates, then all y coordinate, ...;
+    // first all data of variable 1, then variable 2, etc), so we have to copy
+    // the data vectors a bit around
     //
-    // note that we copy vectors when
-    // looping over the patches since we
-    // have to write them one variable
-    // at a time and don't want to use
-    // more than one loop
+    // note that we copy vectors when looping over the patches since we have to
+    // write them one variable at a time and don't want to use more than one
+    // loop
     //
-    // this copying of data vectors can
-    // be done while we already output
-    // the vertices, so do this on a
-    // separate task and when wanting
-    // to write out the data, we wait
-    // for that task to finish
+    // this copying of data vectors can be done while we already output the
+    // vertices, so do this on a separate task and when wanting to write out the
+    // data, we wait for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
     void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
                     Table<2, double> &) =
@@ -4287,12 +4073,9 @@ namespace DataOutBase
       Threads::new_task(fun_ptr, patches, data_vectors);
 
     ///////////////////////////////
-    // first make up a list of used
-    // vertices along with their
-    // coordinates
+    // first make up a list of used vertices along with their coordinates
     //
-    // note that we have to print
-    // 3 dimensions
+    // note that we have to print 3 dimensions
     out << "nodes " << n_nodes << '\n';
     for (unsigned int d = 0; d < spacedim; ++d)
       {
@@ -4310,8 +4093,7 @@ namespace DataOutBase
       }
 
     /////////////////////////////////
-    // now for the cells. note that
-    // vertices are counted from 1 onwards
+    // now for the cells. note that vertices are counted from 1 onwards
     out << "cells " << n_cells << '\n';
     write_cells(patches, gmv_out);
 
@@ -4319,15 +4101,12 @@ namespace DataOutBase
     // data output.
     out << "variable" << '\n';
 
-    // now write the data vectors to
-    // @p{out} first make sure that all
-    // data is in place
+    // now write the data vectors to @p{out} first make sure that all data is in
+    // place
     reorder_task.join();
 
-    // then write data.
-    // the '1' means: node data (as opposed
-    // to cell data, which we do not
-    // support explicitly here)
+    // then write data. the '1' means: node data (as opposed to cell data, which
+    // we do not support explicitly here)
     for (unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
       {
         out << data_names[data_set] << " 1" << '\n';
@@ -4345,8 +4124,7 @@ namespace DataOutBase
     // end of output
     out << "endgmv" << '\n';
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -4366,25 +4144,18 @@ namespace DataOutBase
   {
     AssertThrow(out, ExcIO());
 
-    // The FEBLOCK or FEPOINT formats of tecplot only allows full elements
-    // (e.g. triangles), not single points. Other tecplot format allow
-    // point output, but they are currently not implemented.
+    // The FEBLOCK or FEPOINT formats of tecplot only allows full elements (e.g.
+    // triangles), not single points. Other tecplot format allow point output,
+    // but they are currently not implemented.
     AssertThrow(dim > 0, ExcNotImplemented());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -4394,10 +4165,8 @@ namespace DataOutBase
     TecplotStream tecplot_out(out, flags);
 
     const unsigned int n_data_sets = data_names.size();
-    // check against # of data sets in
-    // first patch. checks against all
-    // other patches are made in
-    // write_gmv_reorder_data_vectors
+    // check against # of data sets in first patch. checks against all other
+    // patches are made in write_gmv_reorder_data_vectors
     Assert((patches[0].data.n_rows() == n_data_sets &&
             !patches[0].points_are_available) ||
              (patches[0].data.n_rows() == n_data_sets + spacedim &&
@@ -4407,8 +4176,7 @@ namespace DataOutBase
                                   n_data_sets,
                                 patches[0].data.n_rows()));
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
@@ -4460,27 +4228,18 @@ namespace DataOutBase
     }
 
 
-    // in Tecplot FEBLOCK format the vertex
-    // coordinates and the data have an
-    // order that is a bit unpleasant
-    // (first all x coordinates, then
-    // all y coordinate, ...; first all
-    // data of variable 1, then
-    // variable 2, etc), so we have to
-    // copy the data vectors a bit around
+    // in Tecplot FEBLOCK format the vertex coordinates and the data have an
+    // order that is a bit unpleasant (first all x coordinates, then all y
+    // coordinate, ...; first all data of variable 1, then variable 2, etc), so
+    // we have to copy the data vectors a bit around
     //
-    // note that we copy vectors when
-    // looping over the patches since we
-    // have to write them one variable
-    // at a time and don't want to use
-    // more than one loop
+    // note that we copy vectors when looping over the patches since we have to
+    // write them one variable at a time and don't want to use more than one
+    // loop
     //
-    // this copying of data vectors can
-    // be done while we already output
-    // the vertices, so do this on a
-    // separate task and when wanting
-    // to write out the data, we wait
-    // for that task to finish
+    // this copying of data vectors can be done while we already output the
+    // vertices, so do this on a separate task and when wanting to write out the
+    // data, we wait for that task to finish
 
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
@@ -4491,9 +4250,7 @@ namespace DataOutBase
       Threads::new_task(fun_ptr, patches, data_vectors);
 
     ///////////////////////////////
-    // first make up a list of used
-    // vertices along with their
-    // coordinates
+    // first make up a list of used vertices along with their coordinates
 
 
     for (unsigned int d = 0; d < spacedim; ++d)
@@ -4507,9 +4264,8 @@ namespace DataOutBase
     ///////////////////////////////////////
     // data output.
     //
-    // now write the data vectors to
-    // @p{out} first make sure that all
-    // data is in place
+    // now write the data vectors to @p{out} first make sure that all data is in
+    // place
     reorder_task.join();
 
     // then write data.
@@ -4523,8 +4279,7 @@ namespace DataOutBase
 
     write_cells(patches, tecplot_out);
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -4615,42 +4370,35 @@ namespace DataOutBase
     const TecplotFlags &flags,
     std::ostream &      out)
   {
-    // The FEBLOCK or FEPOINT formats of tecplot only allows full elements
-    // (e.g. triangles), not single points. Other tecplot format allow
-    // point output, but they are currently not implemented.
+    // The FEBLOCK or FEPOINT formats of tecplot only allows full elements (e.g.
+    // triangles), not single points. Other tecplot format allow point output,
+    // but they are currently not implemented.
     AssertThrow(dim > 0, ExcNotImplemented());
 
 #ifndef DEAL_II_HAVE_TECPLOT
 
-    // simply call the ASCII output
-    // function if the Tecplot API
-    // isn't present
+    // simply call the ASCII output function if the Tecplot API isn't present
     write_tecplot(patches, data_names, vector_data_ranges, flags, out);
     return;
 
 #else
 
-    // Tecplot binary output only good
-    // for 2D & 3D
+    // Tecplot binary output only good for 2D & 3D
     if (dim == 1)
       {
         write_tecplot(patches, data_names, vector_data_ranges, flags, out);
         return;
       }
 
-    // if the user hasn't specified a
-    // file name we should call the
-    // ASCII function and use the
-    // ostream @p{out} instead of doing
-    // something silly later
+    // if the user hasn't specified a file name we should call the ASCII
+    // function and use the ostream @p{out} instead of doing something silly
+    // later
     char *file_name = (char *)flags.tecplot_binary_file_name;
 
     if (file_name == NULL)
       {
-        // At least in debug mode we
-        // should tell users why they
-        // don't get tecplot binary
-        // output
+        // At least in debug mode we should tell users why they don't get
+        // tecplot binary output
         Assert(false,
                ExcMessage("Specify the name of the tecplot_binary"
                           " file through the TecplotFlags interface."));
@@ -4662,19 +4410,12 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #  ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #  else
     if (patches.size() == 0)
@@ -4682,10 +4423,8 @@ namespace DataOutBase
 #  endif
 
     const unsigned int n_data_sets = data_names.size();
-    // check against # of data sets in
-    // first patch. checks against all
-    // other patches are made in
-    // write_gmv_reorder_data_vectors
+    // check against # of data sets in first patch. checks against all other
+    // patches are made in write_gmv_reorder_data_vectors
     Assert((patches[0].data.n_rows() == n_data_sets &&
             !patches[0].points_are_available) ||
              (patches[0].data.n_rows() == n_data_sets + spacedim &&
@@ -4695,13 +4434,11 @@ namespace DataOutBase
                                   n_data_sets,
                                 patches[0].data.n_rows()));
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
-    // local variables only needed to write Tecplot
-    // binary output files
+    // local variables only needed to write Tecplot binary output files
     const unsigned int vars_per_node  = (spacedim + n_data_sets),
                        nodes_per_cell = GeometryInfo<dim>::vertices_per_cell;
 
@@ -4727,27 +4464,18 @@ namespace DataOutBase
         tec_var_names += " ";
         tec_var_names += data_names[data_set];
       }
-    // in Tecplot FEBLOCK format the vertex
-    // coordinates and the data have an
-    // order that is a bit unpleasant
-    // (first all x coordinates, then
-    // all y coordinate, ...; first all
-    // data of variable 1, then
-    // variable 2, etc), so we have to
-    // copy the data vectors a bit around
+    // in Tecplot FEBLOCK format the vertex coordinates and the data have an
+    // order that is a bit unpleasant (first all x coordinates, then all y
+    // coordinate, ...; first all data of variable 1, then variable 2, etc), so
+    // we have to copy the data vectors a bit around
     //
-    // note that we copy vectors when
-    // looping over the patches since we
-    // have to write them one variable
-    // at a time and don't want to use
-    // more than one loop
+    // note that we copy vectors when looping over the patches since we have to
+    // write them one variable at a time and don't want to use more than one
+    // loop
     //
-    // this copying of data vectors can
-    // be done while we already output
-    // the vertices, so do this on a
-    // separate task and when wanting
-    // to write out the data, we wait
-    // for that task to finish
+    // this copying of data vectors can be done while we already output the
+    // vertices, so do this on a separate task and when wanting to write out the
+    // data, we wait for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
     void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
@@ -4757,9 +4485,7 @@ namespace DataOutBase
       Threads::new_task(fun_ptr, patches, data_vectors);
 
     ///////////////////////////////
-    // first make up a list of used
-    // vertices along with their
-    // coordinates
+    // first make up a list of used vertices along with their coordinates
     for (unsigned int d = 1; d <= spacedim; ++d)
       {
         unsigned int entry = 0;
@@ -4803,8 +4529,7 @@ namespace DataOutBase
                                          y_frac = k * 1. / n_subdivisions,
                                          z_frac = j * 1. / n_subdivisions;
 
-                            // compute coordinates for
-                            // this patch point
+                            // compute coordinates for this patch point
                             tm.nd((d - 1), entry) = static_cast<float>(
                               ((((patch->vertices[1](d - 1) * x_frac) +
                                  (patch->vertices[0](d - 1) * (1 - x_frac))) *
@@ -4847,8 +4572,7 @@ namespace DataOutBase
 
 
     /////////////////////////////////
-    // now for the cells. note that
-    // vertices are counted from 1 onwards
+    // now for the cells. note that vertices are counted from 1 onwards
     unsigned int first_vertex_of_patch = 0;
     unsigned int elem                  = 0;
 
@@ -4862,8 +4586,7 @@ namespace DataOutBase
         const unsigned int d1             = 1;
         const unsigned int d2             = n;
         const unsigned int d3             = n * n;
-        // write out the cells making
-        // up this patch
+        // write out the cells making up this patch
         switch (dim)
           {
             case 2:
@@ -4921,8 +4644,7 @@ namespace DataOutBase
           }
 
 
-        // finally update the number
-        // of the first vertex of this patch
+        // finally update the number of the first vertex of this patch
         first_vertex_of_patch += Utilities::fixed_power<dim>(n);
       }
 
@@ -4932,12 +4654,9 @@ namespace DataOutBase
           num_cells = static_cast<int>(n_cells);
 
       char dot[2] = {'.', 0};
-      // Unfortunately, TECINI takes a
-      // char *, but c_str() gives a
-      // const char *.  As we don't do
-      // anything else with
-      // tec_var_names following
-      // const_cast is ok
+      // Unfortunately, TECINI takes a char *, but c_str() gives a const char *.
+      // As we don't do anything else with tec_var_names following const_cast is
+      // ok
       char *var_names = const_cast<char *>(tec_var_names.c_str());
       ierr = TECINI(NULL, var_names, file_name, dot, &tec_debug, &is_double);
 
@@ -4980,19 +4699,12 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
@@ -5002,8 +4714,7 @@ namespace DataOutBase
     VtkStream vtk_out(out, flags);
 
     const unsigned int n_data_sets = data_names.size();
-    // check against # of data sets in
-    // first patch.
+    // check against # of data sets in first patch.
     if (patches[0].points_are_available)
       {
         AssertDimension(n_data_sets + spacedim, patches[0].data.n_rows())
@@ -5030,8 +4741,8 @@ namespace DataOutBase
       out << "DATASET UNSTRUCTURED_GRID\n" << '\n';
     }
 
-    // if desired, output time and cycle of the simulation, following
-    // the instructions at
+    // if desired, output time and cycle of the simulation, following the
+    // instructions at
     // http://www.visitusers.org/index.php?title=Time_and_Cycle_in_VTK_files
     {
       const unsigned int n_metadata =
@@ -5050,32 +4761,22 @@ namespace DataOutBase
         }
     }
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
-    // in gmv format the vertex
-    // coordinates and the data have an
-    // order that is a bit unpleasant
-    // (first all x coordinates, then
-    // all y coordinate, ...; first all
-    // data of variable 1, then
-    // variable 2, etc), so we have to
-    // copy the data vectors a bit around
+    // in gmv format the vertex coordinates and the data have an order that is a
+    // bit unpleasant (first all x coordinates, then all y coordinate, ...;
+    // first all data of variable 1, then variable 2, etc), so we have to copy
+    // the data vectors a bit around
     //
-    // note that we copy vectors when
-    // looping over the patches since we
-    // have to write them one variable
-    // at a time and don't want to use
-    // more than one loop
+    // note that we copy vectors when looping over the patches since we have to
+    // write them one variable at a time and don't want to use more than one
+    // loop
     //
-    // this copying of data vectors can
-    // be done while we already output
-    // the vertices, so do this on a
-    // separate task and when wanting
-    // to write out the data, we wait
-    // for that task to finish
+    // this copying of data vectors can be done while we already output the
+    // vertices, so do this on a separate task and when wanting to write out the
+    // data, we wait for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
     void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
@@ -5085,12 +4786,9 @@ namespace DataOutBase
       Threads::new_task(fun_ptr, patches, data_vectors);
 
     ///////////////////////////////
-    // first make up a list of used
-    // vertices along with their
-    // coordinates
+    // first make up a list of used vertices along with their coordinates
     //
-    // note that we have to print
-    // d=1..3 dimensions
+    // note that we have to print d=1..3 dimensions
     out << "POINTS " << n_nodes << " double" << '\n';
     write_nodes(patches, vtk_out);
     out << '\n';
@@ -5100,9 +4798,8 @@ namespace DataOutBase
         << n_cells * (GeometryInfo<dim>::vertices_per_cell + 1) << '\n';
     write_cells(patches, vtk_out);
     out << '\n';
-    // next output the types of the
-    // cells. since all cells are
-    // the same, this is simple
+    // next output the types of the cells. since all cells are the same, this is
+    // simple
     out << "CELL_TYPES " << n_cells << '\n';
     for (unsigned int i = 0; i < n_cells; ++i)
       out << ' ' << vtk_cell_type[dim];
@@ -5110,23 +4807,17 @@ namespace DataOutBase
     ///////////////////////////////////////
     // data output.
 
-    // now write the data vectors to
-    // @p{out} first make sure that all
-    // data is in place
+    // now write the data vectors to @p{out} first make sure that all data is in
+    // place
     reorder_task.join();
 
-    // then write data.  the
-    // 'POINT_DATA' means: node data
-    // (as opposed to cell data, which
-    // we do not support explicitly
-    // here). all following data sets
+    // then write data.  the 'POINT_DATA' means: node data (as opposed to cell
+    // data, which we do not support explicitly here). all following data sets
     // are point data
     out << "POINT_DATA " << n_nodes << '\n';
 
-    // when writing, first write out
-    // all vector data, then handle the
-    // scalar data sets that have been
-    // left over
+    // when writing, first write out all vector data, then handle the scalar
+    // data sets that have been left over
     std::vector<bool> data_set_written(n_data_sets, false);
     for (unsigned int n_th_vector = 0; n_th_vector < vector_data_ranges.size();
          ++n_th_vector)
@@ -5153,11 +4844,8 @@ namespace DataOutBase
              ++i)
           data_set_written[i] = true;
 
-        // write the
-        // header. concatenate all the
-        // component names with double
-        // underscores unless a vector
-        // name has been specified
+        // write the header. concatenate all the component names with double
+        // underscores unless a vector name has been specified
         out << "VECTORS ";
 
         if (std::get<2>(vector_data_ranges[n_th_vector]) != "")
@@ -5173,9 +4861,7 @@ namespace DataOutBase
 
         out << " double" << '\n';
 
-        // now write data. pad all
-        // vectors to have three
-        // components
+        // now write data. pad all vectors to have three components
         for (unsigned int n = 0; n < n_nodes; ++n)
           {
             switch (std::get<1>(vector_data_ranges[n_th_vector]) -
@@ -5208,12 +4894,8 @@ namespace DataOutBase
                   break;
 
                 default:
-                  // VTK doesn't
-                  // support
-                  // anything else
-                  // than vectors
-                  // with 1, 2, or
-                  // 3 components
+                  // VTK doesn't support anything else than vectors with 1, 2,
+                  // or 3 components
                   Assert(false, ExcInternalError());
               }
           }
@@ -5231,8 +4913,7 @@ namespace DataOutBase
           out << '\n';
         }
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -5314,26 +4995,19 @@ namespace DataOutBase
     AssertThrow(out, ExcIO());
 
 #ifndef DEAL_II_WITH_MPI
-    // verify that there are indeed
-    // patches to be written out. most
-    // of the times, people just forget
-    // to call build_patches when there
-    // are no patches, so a warning is
-    // in order. that said, the
-    // assertion is disabled if we
-    // support MPI since then it can
-    // happen that on the coarsest
-    // mesh, a processor simply has no
-    // cells it actually owns, and in
-    // that case it is legit if there
-    // are no patches
+    // verify that there are indeed patches to be written out. most of the
+    // times, people just forget to call build_patches when there are no
+    // patches, so a warning is in order. that said, the assertion is disabled
+    // if we support MPI since then it can happen that on the coarsest mesh, a
+    // processor simply has no cells it actually owns, and in that case it is
+    // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
     if (patches.size() == 0)
       {
-        // we still need to output a valid vtu file, because other CPUs
-        // might output data. This is the minimal file that is accepted by paraview and visit.
-        // if we remove the field definitions, visit is complaining.
+        // we still need to output a valid vtu file, because other CPUs might
+        // output data. This is the minimal file that is accepted by paraview
+        // and visit. if we remove the field definitions, visit is complaining.
         out << "<Piece NumberOfPoints=\"0\" NumberOfCells=\"0\" >\n"
             << "<Cells>\n"
             << "<DataArray type=\"UInt8\" Name=\"types\"></DataArray>\n"
@@ -5344,18 +5018,14 @@ namespace DataOutBase
              n_th_vector < vector_data_ranges.size();
              ++n_th_vector)
           {
-            // mark these components as already
-            // written:
+            // mark these components as already written:
             for (unsigned int i = std::get<0>(vector_data_ranges[n_th_vector]);
                  i <= std::get<1>(vector_data_ranges[n_th_vector]);
                  ++i)
               data_set_written[i] = true;
 
-            // write the
-            // header. concatenate all the
-            // component names with double
-            // underscores unless a vector
-            // name has been specified
+            // write the header. concatenate all the component names with double
+            // underscores unless a vector name has been specified
             out << "    <DataArray type=\"Float32\" Name=\"";
 
             if (std::get<2>(vector_data_ranges[n_th_vector]) != "")
@@ -5392,8 +5062,8 @@ namespace DataOutBase
 
     // first up: metadata
     //
-    // if desired, output time and cycle of the simulation, following
-    // the instructions at
+    // if desired, output time and cycle of the simulation, following the
+    // instructions at
     // http://www.visitusers.org/index.php?title=Time_and_Cycle_in_VTK_files
     {
       const unsigned int n_metadata =
@@ -5423,10 +5093,8 @@ namespace DataOutBase
     VtuStream vtu_out(out, flags);
 
     const unsigned int n_data_sets = data_names.size();
-    // check against # of data sets in
-    // first patch. checks against all
-    // other patches are made in
-    // write_gmv_reorder_data_vectors
+    // check against # of data sets in first patch. checks against all other
+    // patches are made in write_gmv_reorder_data_vectors
     if (patches[0].points_are_available)
       {
         AssertDimension(n_data_sets + spacedim, patches[0].data.n_rows())
@@ -5443,32 +5111,22 @@ namespace DataOutBase
 #endif
 
 
-    // first count the number of cells
-    // and cells for later use
+    // first count the number of cells and cells for later use
     unsigned int n_nodes;
     unsigned int n_cells;
     compute_sizes<dim, spacedim>(patches, n_nodes, n_cells);
-    // in gmv format the vertex
-    // coordinates and the data have an
-    // order that is a bit unpleasant
-    // (first all x coordinates, then
-    // all y coordinate, ...; first all
-    // data of variable 1, then
-    // variable 2, etc), so we have to
-    // copy the data vectors a bit around
+    // in gmv format the vertex coordinates and the data have an order that is a
+    // bit unpleasant (first all x coordinates, then all y coordinate, ...;
+    // first all data of variable 1, then variable 2, etc), so we have to copy
+    // the data vectors a bit around
     //
-    // note that we copy vectors when
-    // looping over the patches since we
-    // have to write them one variable
-    // at a time and don't want to use
-    // more than one loop
+    // note that we copy vectors when looping over the patches since we have to
+    // write them one variable at a time and don't want to use more than one
+    // loop
     //
-    // this copying of data vectors can
-    // be done while we already output
-    // the vertices, so do this on a
-    // separate task and when wanting
-    // to write out the data, we wait
-    // for that task to finish
+    // this copying of data vectors can be done while we already output the
+    // vertices, so do this on a separate task and when wanting to write out the
+    // data, we wait for that task to finish
     Table<2, float> data_vectors(n_data_sets, n_nodes);
 
     void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
@@ -5478,13 +5136,10 @@ namespace DataOutBase
       Threads::new_task(fun_ptr, patches, data_vectors);
 
     ///////////////////////////////
-    // first make up a list of used
-    // vertices along with their
-    // coordinates
+    // first make up a list of used vertices along with their coordinates
     //
-    // note that according to the standard, we
-    // have to print d=1..3 dimensions, even if
-    // we are in reality in 2d, for example
+    // note that according to the standard, we have to print d=1..3 dimensions,
+    // even if we are in reality in 2d, for example
     out << "<Piece NumberOfPoints=\"" << n_nodes << "\" NumberOfCells=\""
         << n_cells << "\" >\n";
     out << "  <Points>\n";
@@ -5501,10 +5156,8 @@ namespace DataOutBase
     write_cells(patches, vtu_out);
     out << "    </DataArray>\n";
 
-    // XML VTU format uses offsets; this is
-    // different than the VTK format, which
-    // puts the number of nodes per cell in
-    // front of the connectivity list.
+    // XML VTU format uses offsets; this is different than the VTK format, which
+    // puts the number of nodes per cell in front of the connectivity list.
     out << "    <DataArray type=\"Int32\" Name=\"offsets\" format=\""
         << ascii_or_binary << "\">\n";
 
@@ -5515,16 +5168,14 @@ namespace DataOutBase
     out << "\n";
     out << "    </DataArray>\n";
 
-    // next output the types of the
-    // cells. since all cells are
-    // the same, this is simple
+    // next output the types of the cells. since all cells are the same, this is
+    // simple
     out << "    <DataArray type=\"UInt8\" Name=\"types\" format=\""
         << ascii_or_binary << "\">\n";
 
     {
-      // uint8_t might be a typedef to unsigned
-      // char which is then not printed as
-      // ascii integers
+      // uint8_t might be a typedef to unsigned char which is then not printed
+      // as ascii integers
 #ifdef DEAL_II_WITH_ZLIB
       std::vector<uint8_t> cell_types(n_cells,
                                       static_cast<uint8_t>(vtk_cell_type[dim]));
@@ -5542,23 +5193,17 @@ namespace DataOutBase
     ///////////////////////////////////////
     // data output.
 
-    // now write the data vectors to
-    // @p{out} first make sure that all
-    // data is in place
+    // now write the data vectors to @p{out} first make sure that all data is in
+    // place
     reorder_task.join();
 
-    // then write data.  the
-    // 'POINT_DATA' means: node data
-    // (as opposed to cell data, which
-    // we do not support explicitly
-    // here). all following data sets
+    // then write data.  the 'POINT_DATA' means: node data (as opposed to cell
+    // data, which we do not support explicitly here). all following data sets
     // are point data
     out << "  <PointData Scalars=\"scalars\">\n";
 
-    // when writing, first write out
-    // all vector data, then handle the
-    // scalar data sets that have been
-    // left over
+    // when writing, first write out all vector data, then handle the scalar
+    // data sets that have been left over
     std::vector<bool> data_set_written(n_data_sets, false);
     for (unsigned int n_th_vector = 0; n_th_vector < vector_data_ranges.size();
          ++n_th_vector)
@@ -5579,18 +5224,14 @@ namespace DataOutBase
                       "Can't declare a vector with more than 3 components "
                       "in VTK"));
 
-        // mark these components as already
-        // written:
+        // mark these components as already written:
         for (unsigned int i = std::get<0>(vector_data_ranges[n_th_vector]);
              i <= std::get<1>(vector_data_ranges[n_th_vector]);
              ++i)
           data_set_written[i] = true;
 
-        // write the
-        // header. concatenate all the
-        // component names with double
-        // underscores unless a vector
-        // name has been specified
+        // write the header. concatenate all the component names with double
+        // underscores unless a vector name has been specified
         out << "    <DataArray type=\"Float32\" Name=\"";
 
         if (std::get<2>(vector_data_ranges[n_th_vector]) != "")
@@ -5607,9 +5248,7 @@ namespace DataOutBase
         out << "\" NumberOfComponents=\"3\" format=\"" << ascii_or_binary
             << "\">\n";
 
-        // now write data. pad all
-        // vectors to have three
-        // components
+        // now write data. pad all vectors to have three components
         std::vector<float> data;
         data.reserve(n_nodes * dim);
 
@@ -5645,12 +5284,8 @@ namespace DataOutBase
                   break;
 
                 default:
-                  // VTK doesn't
-                  // support
-                  // anything else
-                  // than vectors
-                  // with 1, 2, or
-                  // 3 components
+                  // VTK doesn't support anything else than vectors with 1, 2,
+                  // or 3 components
                   Assert(false, ExcInternalError());
               }
           }
@@ -5677,8 +5312,7 @@ namespace DataOutBase
     // Finish up writing a valid XML file
     out << " </Piece>\n";
 
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
 
     // assert the stream is still ok
@@ -5711,8 +5345,7 @@ namespace DataOutBase
     out << "  <PUnstructuredGrid GhostLevel=\"0\">\n";
     out << "    <PPointData Scalars=\"scalars\">\n";
 
-    // We need to output in the same order as
-    // the write_vtu function does:
+    // We need to output in the same order as the write_vtu function does:
     std::vector<bool> data_set_written(n_data_sets, false);
     for (unsigned int n_th_vector = 0; n_th_vector < vector_data_ranges.size();
          ++n_th_vector)
@@ -5733,18 +5366,14 @@ namespace DataOutBase
                       "Can't declare a vector with more than 3 components "
                       "in VTK"));
 
-        // mark these components as already
-        // written:
+        // mark these components as already written:
         for (unsigned int i = std::get<0>(vector_data_ranges[n_th_vector]);
              i <= std::get<1>(vector_data_ranges[n_th_vector]);
              ++i)
           data_set_written[i] = true;
 
-        // write the
-        // header. concatenate all the
-        // component names with double
-        // underscores unless a vector
-        // name has been specified
+        // write the header. concatenate all the component names with double
+        // underscores unless a vector name has been specified
         out << "    <PDataArray type=\"Float32\" Name=\"";
 
         if (std::get<2>(vector_data_ranges[n_th_vector]) != "")
@@ -6923,11 +6552,9 @@ namespace DataOutBase
   {
     AssertThrow(out, ExcIO());
 
-    // first write tokens indicating the
-    // template parameters. we need this in
-    // here because we may want to read in data
-    // again even if we don't know in advance
-    // the template parameters, see step-19
+    // first write tokens indicating the template parameters. we need this in
+    // here because we may want to read in data again even if we don't know in
+    // advance the template parameters, see step-19
     out << dim << ' ' << spacedim << '\n';
 
     // then write a header
@@ -6952,8 +6579,7 @@ namespace DataOutBase
           << std::get<2>(vector_data_ranges[i]) << '\n';
 
     out << '\n';
-    // make sure everything now gets to
-    // disk
+    // make sure everything now gets to disk
     out.flush();
   }
 
@@ -7153,8 +6779,8 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char *filename,
 
   ierr = MPI_File_set_size(fh, 0); // delete the file contents
   AssertThrowMPI(ierr);
-  // this barrier is necessary, because otherwise others might already
-  // write while one core is still setting the size to zero.
+  // this barrier is necessary, because otherwise others might already write
+  // while one core is still setting the size to zero.
   ierr = MPI_Barrier(comm);
   AssertThrowMPI(ierr);
   ierr = MPI_Info_free(&info);
@@ -7269,8 +6895,7 @@ DataOutInterface<dim, spacedim>::create_xdmf_entry(
   int          myrank;
 
 #ifndef DEAL_II_WITH_HDF5
-  // throw an exception, but first make
-  // sure the compiler does not warn about
+  // throw an exception, but first make sure the compiler does not warn about
   // the now unused function arguments
   (void)data_filter;
   (void)h5_mesh_filename;
@@ -7376,8 +7001,8 @@ DataOutInterface<dim, spacedim>::write_xdmf_file(
 
 
 /*
- * Write the data in this DataOutInterface to a DataOutFilter object.
- * Filtering is performed based on the DataOutFilter flags.
+ * Write the data in this DataOutInterface to a DataOutFilter object. Filtering
+ * is performed based on the DataOutFilter flags.
  */
 template <int dim, int spacedim>
 void
@@ -7405,19 +7030,12 @@ DataOutBase::write_filtered_data(
   Threads::Task<>    reorder_task;
 
 #ifndef DEAL_II_WITH_MPI
-  // verify that there are indeed
-  // patches to be written out. most
-  // of the times, people just forget
-  // to call build_patches when there
-  // are no patches, so a warning is
-  // in order. that said, the
-  // assertion is disabled if we
-  // support MPI since then it can
-  // happen that on the coarsest
-  // mesh, a processor simply has no
-  // cells it actually owns, and in
-  // that case it is legit if there
-  // are no patches
+  // verify that there are indeed patches to be written out. most of the times,
+  // people just forget to call build_patches when there are no patches, so a
+  // warning is in order. that said, the assertion is disabled if we support MPI
+  // since then it can happen that on the coarsest mesh, a processor simply has
+  // no cells it actually owns, and in that case it is legit if there are no
+  // patches
   Assert(patches.size() > 0, ExcNoPatches());
 #endif
 
@@ -7436,10 +7054,8 @@ DataOutBase::write_filtered_data(
   // Ensure reordering is done before we output data set values
   reorder_task.join();
 
-  // when writing, first write out
-  // all vector data, then handle the
-  // scalar data sets that have been
-  // left over
+  // when writing, first write out all vector data, then handle the scalar data
+  // sets that have been left over
   unsigned int i, n_th_vector, data_set, pt_data_vector_dim;
   std::string  vector_name;
   for (n_th_vector = 0, data_set = 0; data_set < n_data_sets;)
@@ -7469,11 +7085,8 @@ DataOutBase::write_filtered_data(
                           0,
                           n_data_sets));
 
-          // Determine the vector name
-          // Concatenate all the
-          // component names with double
-          // underscores unless a vector
-          // name has been specified
+          // Determine the vector name. Concatenate all the component names with
+          // double underscores unless a vector name has been specified
           if (std::get<2>(vector_data_ranges[n_th_vector]) != "")
             {
               vector_name = std::get<2>(vector_data_ranges[n_th_vector]);
@@ -7582,12 +7195,12 @@ DataOutBase::write_hdf5_parallel(
   AssertThrow(false, ExcMessage("HDF5 support is disabled."));
 #else
 #  ifndef DEAL_II_WITH_MPI
-  // verify that there are indeed patches to be written out.
-  // most of the times, people just forget to call build_patches when there
-  // are no patches, so a warning is in order. that said, the assertion is
-  // disabled if we support MPI since then it can happen that on the coarsest
-  // mesh, a processor simply has no cells it actually owns, and in that case
-  // it is legit if there are no patches
+  // verify that there are indeed patches to be written out. most of the times,
+  // people just forget to call build_patches when there are no patches, so a
+  // warning is in order. that said, the assertion is disabled if we support MPI
+  // since then it can happen that on the coarsest mesh, a processor simply has
+  // no cells it actually owns, and in that case it is legit if there are no
+  // patches
   Assert(data_filter.n_nodes() > 0, ExcNoPatches());
   (void)comm;
 #  endif
@@ -7634,8 +7247,8 @@ DataOutBase::write_hdf5_parallel(
 #    endif
 #  endif
 
-  // Compute the global total number of nodes/cells
-  // And determine the offset of the data for this process
+  // Compute the global total number of nodes/cells and determine the offset of
+  // the data for this process
 #  ifdef DEAL_II_WITH_MPI
   ierr = MPI_Allreduce(local_node_cell_count,
                        global_node_cell_count,
@@ -7678,8 +7291,8 @@ DataOutBase::write_hdf5_parallel(
                                   file_plist_id);
       AssertThrow(h5_mesh_file_id >= 0, ExcIO());
 
-      // Create the dataspace for the nodes and cells
-      // HDF5 only supports 2- or 3-dimensional coordinates
+      // Create the dataspace for the nodes and cells. HDF5 only supports 2- or
+      // 3-dimensional coordinates
       node_ds_dim[0] = global_node_cell_count[0];
       node_ds_dim[1] = (spacedim < 2) ? 2 : spacedim;
       node_dataspace = H5Screate_simple(2, node_ds_dim, nullptr);
@@ -7727,8 +7340,8 @@ DataOutBase::write_hdf5_parallel(
       status = H5Sclose(cell_dataspace);
       AssertThrow(status >= 0, ExcIO());
 
-      // Create the data subset we'll use to read from memory
-      // HDF5 only supports 2- or 3-dimensional coordinates
+      // Create the data subset we'll use to read from memory. HDF5 only
+      // supports 2- or 3-dimensional coordinates
       count[0] = local_node_cell_count[0];
       count[1] = (spacedim < 2) ? 2 : spacedim;
 
@@ -7822,10 +7435,8 @@ DataOutBase::write_hdf5_parallel(
       AssertThrow(h5_solution_file_id >= 0, ExcIO());
     }
 
-  // when writing, first write out
-  // all vector data, then handle the
-  // scalar data sets that have been
-  // left over
+  // when writing, first write out all vector data, then handle the scalar data
+  // sets that have been left over
   unsigned int i;
   std::string vector_name;
   for (i = 0; i < data_filter.n_data_sets(); ++i)
@@ -8243,14 +7854,9 @@ DataOutReader<dim, spacedim>::read(std::istream &in)
     tmp.swap(vector_data_ranges);
   }
 
-  // then check that we have the
-  // correct header of this
-  // file. both the first and second
-  // real lines have to match, as
-  // well as the dimension
-  // information written before that
-  // and the Version information
-  // written in the third line
+  // then check that we have the correct header of this file. both the first and
+  // second real lines have to match, as well as the dimension information
+  // written before that and the Version information written in the third line
   {
     std::pair<unsigned int, unsigned int> dimension_info =
       DataOutBase::determine_intermediate_format_dimensions(in);
@@ -8319,14 +7925,10 @@ DataOutReader<dim, spacedim>::read(std::istream &in)
       in >> std::get<0>(vector_data_ranges[i]) >>
         std::get<1>(vector_data_ranges[i]);
 
-      // read in the name of that vector
-      // range. because it is on a separate
-      // line, we first need to read to the
-      // end of the previous line (nothing
-      // should be there any more after we've
-      // read the previous two integers) and
-      // then read the entire next line for
-      // the name
+      // read in the name of that vector range. because it is on a separate
+      // line, we first need to read to the end of the previous line (nothing
+      // should be there any more after we've read the previous two integers)
+      // and then read the entire next line for the name
       std::string name;
       getline(in, name);
       getline(in, name);
@@ -8348,13 +7950,11 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim> &source)
   const std::vector<Patch> &source_patches = source.get_patches();
   Assert(patches.size() != 0, DataOutBase::ExcNoPatches());
   Assert(source_patches.size() != 0, DataOutBase::ExcNoPatches());
-  // check equality of component
-  // names
+  // check equality of component names
   Assert(get_dataset_names() == source.get_dataset_names(),
          ExcIncompatibleDatasetNames());
 
-  // check equality of the vector data
-  // specifications
+  // check equality of the vector data specifications
   Assert(get_vector_data_ranges().size() ==
            source.get_vector_data_ranges().size(),
          ExcMessage("Both sources need to declare the same components "
@@ -8383,10 +7983,8 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim> &source)
   Assert(patches[0].data.n_cols() == source_patches[0].data.n_cols(),
          ExcIncompatiblePatchLists());
 
-  // merge patches. store old number
-  // of elements, since we need to
-  // adjust patch numbers, etc
-  // afterwards
+  // merge patches. store old number of elements, since we need to adjust patch
+  // numbers, etc afterwards
   const unsigned int old_n_patches = patches.size();
   patches.insert(patches.end(), source_patches.begin(), source_patches.end());
 
@@ -8603,8 +8201,7 @@ namespace DataOutBase
     out << "[deal.II intermediate Patch<" << dim << ',' << spacedim << ">]"
         << '\n';
 
-    // then write all the data that is
-    // in this patch
+    // then write all the data that is in this patch
     for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       out << patch.vertices[GeometryInfo<dim>::ucd_to_deal[i]] << ' ';
     out << '\n';
@@ -8634,10 +8231,8 @@ namespace DataOutBase
   {
     AssertThrow(in, ExcIO());
 
-    // read a header line and compare
-    // it to what we usually
-    // write. skip all lines that
-    // contain only blanks at the start
+    // read a header line and compare it to what we usually write. skip all
+    // lines that contain only blanks at the start
     {
       std::string header;
       do
