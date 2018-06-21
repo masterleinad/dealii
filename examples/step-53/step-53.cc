@@ -394,10 +394,7 @@ namespace Step53
     // mother to children, this also happens after several recursive
     // refinement steps.
     triangulation.set_manifold(0, geometry);
-    for (Triangulation<3>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       cell->set_all_manifold_ids(0);
 
     // The last step is to refine the mesh beyond its initial $1\times 2\times
@@ -413,10 +410,7 @@ namespace Step53
     // the boundaries by assigning each boundary a unique boundary indicator).
     for (unsigned int i = 0; i < 6; ++i)
       {
-        for (Triangulation<3>::active_cell_iterator cell =
-               triangulation.begin_active();
-             cell != triangulation.end();
-             ++cell)
+        for (const auto &cell : triangulation.active_cell_iterators())
           for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
             if (cell->face(f)->boundary_id() == 5)
               {

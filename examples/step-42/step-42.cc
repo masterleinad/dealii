@@ -1885,10 +1885,7 @@ namespace Step42
   {
     if (refinement_strategy == RefinementStrategy::refine_global)
       {
-        for (typename Triangulation<dim>::active_cell_iterator cell =
-               triangulation.begin_active();
-             cell != triangulation.end();
-             ++cell)
+        for (const auto &cell : triangulation.active_cell_iterators())
           if (cell->is_locally_owned())
             cell->set_refine_flag();
       }
@@ -1954,10 +1951,7 @@ namespace Step42
   {
     std::vector<bool> vertex_touched(triangulation.n_vertices(), false);
 
-    for (typename DoFHandler<dim>::active_cell_iterator cell =
-           dof_handler.begin_active();
-         cell != dof_handler.end();
-         ++cell)
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->is_locally_owned())
         for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           if (vertex_touched[cell->vertex_index(v)] == false)

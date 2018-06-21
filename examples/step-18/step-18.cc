@@ -774,10 +774,7 @@ namespace Step18
   {
     const double inner_radius = 0.8, outer_radius = 1;
     GridGenerator::cylinder_shell(triangulation, 3, inner_radius, outer_radius);
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         if (cell->face(f)->at_boundary())
           {
@@ -1617,10 +1614,7 @@ namespace Step18
     // pointer of a cell which we should not have accessed, a segmentation
     // fault will let us know that this should not have happened:
     unsigned int our_cells = 0;
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       if (cell->is_locally_owned())
         ++our_cells;
 
@@ -1650,10 +1644,7 @@ namespace Step18
     // quadrature point objects corresponding to this cell in the vector of
     // such objects:
     unsigned int history_index = 0;
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active();
-         cell != triangulation.end();
-         ++cell)
+    for (const auto &cell : triangulation.active_cell_iterators())
       if (cell->is_locally_owned())
         {
           cell->set_user_pointer(&quadrature_point_history[history_index]);

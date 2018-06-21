@@ -3478,10 +3478,7 @@ namespace Step32
         triangulation, estimated_error_per_cell, 0.3, 0.1);
 
       if (triangulation.n_levels() > max_grid_level)
-        for (typename Triangulation<dim>::active_cell_iterator cell =
-               triangulation.begin_active(max_grid_level);
-             cell != triangulation.end();
-             ++cell)
+        for (const auto &cell : triangulation.active_cell_iterators())
           cell->clear_refine_flag();
 
       // With all flags marked as necessary, we can then tell the

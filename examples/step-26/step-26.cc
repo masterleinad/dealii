@@ -351,15 +351,11 @@ namespace Step26
                                                       0.4);
 
     if (triangulation.n_levels() > max_grid_level)
-      for (typename Triangulation<dim>::active_cell_iterator cell =
-             triangulation.begin_active(max_grid_level);
-           cell != triangulation.end();
-           ++cell)
+      for (const auto &cell :
+           triangulation.active_cell_iterators_on_level(max_grid_level))
         cell->clear_refine_flag();
-    for (typename Triangulation<dim>::active_cell_iterator cell =
-           triangulation.begin_active(min_grid_level);
-         cell != triangulation.end_active(min_grid_level);
-         ++cell)
+    for (const auto &cell :
+         triangulation.active_cell_iterators_on_level(min_grid_level))
       cell->clear_coarsen_flag();
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
