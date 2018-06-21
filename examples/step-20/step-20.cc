@@ -473,8 +473,14 @@ namespace Step20
     // refer to the velocities (a set of <code>dim</code> components starting
     // at component zero) or the pressure (a scalar component located at
     // position <code>dim</code>):
-    const FEValuesExtractors::Vector u(0);
-    const FEValuesExtractors::Scalar p(dim);
+    const FEValuesExtractors::Vector velocities(0);
+    const FEValuesExtractors::Scalar pressure(dim);
+
+    // We want to store all the extracted values for all the degrees of freedom
+    // in a quadrature point so we don't have to compute them twice.
+    std::vector<Tensor<1, dim>> phi_u(dofs_per_cell);
+    std::vector<double>         div_phi_u(dofs_per_cell);
+    std::vector<double>         phi_p(dofs_per_cell);
 
     // With all this in place, we can go on with the loop over all cells. The
     // body of this loop has been discussed in the introduction, and will not
@@ -491,27 +497,28 @@ namespace Step20
                              k_inverse_values);
 
         for (unsigned int q = 0; q < n_q_points; ++q)
-          for (unsigned int i = 0; i < dofs_per_cell; ++i)
-            {
-              const Tensor<1, dim> phi_i_u     = fe_values[u].value(i, q);
-              const double         div_phi_i_u = fe_values[u].divergence(i, q);
-              const double         phi_i_p     = fe_values[p].value(i, q);
+          {
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
+              {
+                phi_u[k]     = fe_values[velocities].value(k, q);
+                div_phi_u[k] = fe_values[velocities].divergence(k, q);
+                phi_p[k]     = fe_values[pressure].value(k, q);
+              }
 
-              for (unsigned int j = 0; j < dofs_per_cell; ++j)
-                {
-                  const Tensor<1, dim> phi_j_u = fe_values[u].value(j, q);
-                  const double div_phi_j_u     = fe_values[u].divergence(j, q);
-                  const double phi_j_p         = fe_values[p].value(j, q);
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              {
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                  {
+                    local_matrix(i, j) +=
+                      (phi_u[i] * k_inverse_values[q] * phi_u[j] //
+                       - phi_p[i] * div_phi_u[j]                 //
+                       - div_phi_u[i] * phi_p[j])                //
+                      * fe_values.JxW(q);
+                  }
 
-                  local_matrix(i, j) +=
-                    (phi_i_u * k_inverse_values[q] * phi_j_u //
-                     - phi_i_p * div_phi_j_u                 //
-                     - div_phi_i_u * phi_j_p)                //
-                    * fe_values.JxW(q);
-                }
-
-              local_rhs(i) += -phi_i_p * rhs_values[q] * fe_values.JxW(q);
-            }
+                local_rhs(i) += -phi_p[i] * rhs_values[q] * fe_values.JxW(q);
+              }
+          }
 
         for (unsigned int face_n = 0;
              face_n < GeometryInfo<dim>::faces_per_cell;
@@ -525,19 +532,19 @@ namespace Step20
 
               for (unsigned int q = 0; q < n_face_q_points; ++q)
                 for (unsigned int i = 0; i < dofs_per_cell; ++i)
-                  local_rhs(i) += -(fe_face_values[u].value(i, q) *   //
-                                    fe_face_values.normal_vector(q) * //
-                                    boundary_values[q] *              //
+                  local_rhs(i) += -(fe_face_values[velocities].value(i, q) * //
+                                    fe_face_values.normal_vector(q) *        //
+                                    boundary_values[q] *                     //
                                     fe_face_values.JxW(q));
             }
 
         // The final step in the loop over all cells is to transfer local
         // contributions into the global matrix and right hand side
-        // vector. Note that we use exactly the same interface as in previous
-        // examples, although we now use block matrices and vectors instead of
-        // the regular ones. In other words, to the outside world, block
-        // objects have the same interface as matrices and vectors, but they
-        // additionally allow to access individual blocks.
+        // vector. Note that we use exactly the same interface as in
+        // previous examples, although we now use block matrices and vectors
+        // instead of the regular ones. In other words, to the outside
+        // world, block objects have the same interface as matrices and
+        // vectors, but they additionally allow to access individual blocks.
         cell->get_dof_indices(local_dof_indices);
         for (unsigned int i = 0; i < dofs_per_cell; ++i)
           for (unsigned int j = 0; j < dofs_per_cell; ++j)
@@ -722,8 +729,9 @@ namespace Step20
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
       schur_rhs -= system_rhs.block(1);
 
-      // Now that we have the right hand side we can go ahead and solve for the
-      // pressure, using our approximation of the inverse as a preconditioner:
+      // Now that we have the right hand side we can go ahead and solve for
+      // the pressure, using our approximation of the inverse as a
+      // preconditioner:
       SolverControl solver_control(solution.block(1).size(),
                                    1e-12 * schur_rhs.l2_norm());
       SolverCG<>    cg(solver_control);
@@ -773,10 +781,10 @@ namespace Step20
   // frequently the case in mixed finite element applications). What we
   // therefore have to do is to `mask' the components that we are interested
   // in. This is easily done: the
-  // <code>VectorTools::integrate_difference</code> function takes as one of its
-  // arguments a pointer to a weight function (the parameter defaults to the
-  // null pointer, meaning unit weights). What we have to do is to pass
-  // a function object that equals one in the components we are interested in,
+  // <code>VectorTools::integrate_difference</code> function takes as one of
+  // its arguments a pointer to a weight function (the parameter defaults to
+  // the null pointer, meaning unit weights). What we have to do is to pass a
+  // function object that equals one in the components we are interested in,
   // and zero in the other ones. For example, to compute the pressure error,
   // we should pass a function that represents the constant vector with a unit
   // value in component <code>dim</code>, whereas for the velocity the
