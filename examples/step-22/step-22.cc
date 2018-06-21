@@ -108,7 +108,7 @@ namespace Step22
   // <code>preconditioner_sparsity_pattern</code>.
   // In this example we also use adaptive grid refinement, which is handled
   // in analogy to step-6. According to the discussion in the introduction,
-  // we are also going to use the AffineConstraints for implementing
+  // we are also going to use the AffineConstraints object for implementing
   // Dirichlet boundary conditions. Hence, we change the name
   // <code>hanging_node_constraints</code> into <code>constraints</code>.
   template <int dim>

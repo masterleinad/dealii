@@ -522,7 +522,7 @@ namespace Step50
     // freedom: their value should be zero after each application of
     // the level operators. To this end, we construct AffineConstraints
     // objects for each level, and add to each of these constraints
-    // for each degree of freedom. Due to the way the AffineConstraints
+    // for each degree of freedom. Due to the way the AffineConstraints class
     // stores its data, the function to add a constraint on a single
     // degree of freedom and force it to be zero is called
     // AffineConstraints::add_line(); doing so for several degrees of

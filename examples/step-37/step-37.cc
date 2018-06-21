@@ -415,7 +415,7 @@ namespace Step37
   // $v_\mathrm{cell}$ as mentioned in the introduction need to be added into
   // the result vector (and constraints are applied). This is done with a call
   // to @p distribute_local_to_global, the same name as the corresponding
-  // function in the AffineConstraints (only that we now store the local
+  // function in the AffineConstraints class (only that we now store the local
   // vector in the FEEvaluation object, as are the indices between local and
   // global degrees of freedom).  </ol>
   template <int dim, int fe_degree, typename number>

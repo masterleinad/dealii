@@ -1675,7 +1675,7 @@ namespace Step32
   // having the matrix data available, we choose to create a dummy matrix
   // <code>matrix_for_bc</code> that we only fill with data when we need it
   // for imposing boundary conditions. These positions are exactly those where
-  // we have an inhomogeneous entry in the AffineConstraints. There are
+  // we have an inhomogeneous entry in the AffineConstraints object. There are
   // only a few such positions (on the boundary DoFs), so it is still much
   // cheaper to use this function than to create the full matrix here. To
   // implement this, we ask the constraint matrix whether the DoF under

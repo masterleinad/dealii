@@ -621,7 +621,7 @@ left by the outward motion of material at this location.
 
 <h4>Using imhomogeneous constraints for implementing Dirichlet boundary conditions</h4>
 
-In all the previous tutorial programs, we used the AffineConstraints merely
+In all the previous tutorial programs, we used the AffineConstraints object merely
 for handling hanging node constraints (with exception of step-11). However,
 the class can also be used to implement Dirichlet boundary conditions, as we
 will show in this program, by fixing some node values $x_i = b_i$. Note that
@@ -652,7 +652,7 @@ Note that we call this on the system matrix and system right hand side
 simultaneously, since resolving inhomogeneous constraints requires knowledge
 about both the matrix entries and the right hand side. For efficiency
 reasons, though, we choose another strategy: all the constraints collected
-in the AffineConstraints can be resolved on the fly while writing local data
+in the AffineConstraints object can be resolved on the fly while writing local data
 into the global matrix, by using the call
 @code
   constraints.distribute_local_to_global (local_matrix, local_rhs,
@@ -667,7 +667,7 @@ side, it distributes the hanging node constraints and additionally
 implements (inhomogeneous) Dirichlet boundary conditions. That's nice, isn't
 it?
 
-We can conclude that the AffineConstraints provides an alternative to using
+We can conclude that the AffineConstraints class provides an alternative to using
 MatrixTools::apply_boundary_values for implementing Dirichlet boundary
 conditions.
 

@@ -507,7 +507,7 @@ unrelated to the real entries.
 In a matrix-free method, we need to take a different approach, since the @p
 LaplaceOperator class represents the matrix-vector product of a
 <b>homogeneous</b> operator (the left-hand side of the last formula).  It does
-not matter whether the AffineConstraints passed to the MatrixFree::reinit()
+not matter whether the AffineConstraints object passed to the MatrixFree::reinit()
 contains inhomogeneous constraints or not, the MatrixFree::cell_loop() call
 will only resolve the homogeneous part of the constraints as long as it
 represents a <b>linear</b> operator.
