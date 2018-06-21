@@ -26,38 +26,44 @@
 // for the 4th component of the rhs-vector distribute_local_to_global fill in
 // 1*4 ( mat(4,4)*inhomogeneity(4) ).
 
-#include "../tests.h"
-
-#include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/function.h>
+#include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
-#include <deal.II/lac/vector.h>
-#include <deal.II/lac/full_matrix.h>
-#include <deal.II/lac/sparse_matrix.h>
-#include <deal.II/lac/solver_cg.h>
-#include <deal.II/lac/precondition.h>
-#include <deal.II/grid/tria.h>
-#include <deal.II/grid/grid_generator.h>
-#include <deal.II/grid/tria_accessor.h>
-#include <deal.II/grid/tria_iterator.h>
-#include <deal.II/grid/grid_refinement.h>
+
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_tools.h>
-#include <deal.II/lac/constraint_matrix.h>
-#include <deal.II/fe/fe_q.h>
-#include <deal.II/numerics/vector_tools.h>
-#include <deal.II/numerics/matrix_tools.h>
-#include <deal.II/numerics/error_estimator.h>
-#include <deal.II/lac/dynamic_sparsity_pattern.h>
 
-#include <iostream>
+#include <deal.II/fe/fe_q.h>
+
+#include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/grid_refinement.h>
+#include <deal.II/grid/tria.h>
+#include <deal.II/grid/tria_accessor.h>
+#include <deal.II/grid/tria_iterator.h>
+
+#include <deal.II/lac/constraint_matrix.h>
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
+#include <deal.II/lac/full_matrix.h>
+#include <deal.II/lac/precondition.h>
+#include <deal.II/lac/solver_cg.h>
+#include <deal.II/lac/sparse_matrix.h>
+#include <deal.II/lac/vector.h>
+
+#include <deal.II/numerics/error_estimator.h>
+#include <deal.II/numerics/matrix_tools.h>
+#include <deal.II/numerics/vector_tools.h>
+
 #include <complex>
+#include <iostream>
+
+#include "../tests.h"
 
 std::ofstream logfile("output");
 
 using namespace dealii;
 
-void test(bool use_inhomogeneity_for_rhs)
+void
+test(bool use_inhomogeneity_for_rhs)
 {
   ConstraintMatrix cm;
 
@@ -71,44 +77,46 @@ void test(bool use_inhomogeneity_for_rhs)
   cm.print(logfile);
 
 
-  DynamicSparsityPattern csp(8,8);
-  for (unsigned int i=0; i<8; ++i)
-    csp.add(i,i);
+  DynamicSparsityPattern csp(8, 8);
+  for (unsigned int i = 0; i < 8; ++i)
+    csp.add(i, i);
 
   SparsityPattern sp;
   sp.copy_from(csp);
   SparseMatrix<double> mat(sp);
-  Vector<double> rhs(8);
+  Vector<double>       rhs(8);
 
   // "assemble":
 
   std::vector<types::global_dof_index> local_dofs1;
-  for (unsigned int i=0; i<5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     local_dofs1.push_back(i);
 
   std::vector<types::global_dof_index> local_dofs2;
   local_dofs2.push_back(1);
-  for (unsigned int i=1; i<5; ++i)
-    local_dofs2.push_back(3+i);
+  for (unsigned int i = 1; i < 5; ++i)
+    local_dofs2.push_back(3 + i);
 
-  FullMatrix<double> local_mat(5,5);
-  Vector<double> local_vec(5);
-  for (unsigned int i=0; i<5; ++i)
-    local_mat(i,i)=2.0;
+  FullMatrix<double> local_mat(5, 5);
+  Vector<double>     local_vec(5);
+  for (unsigned int i = 0; i < 5; ++i)
+    local_mat(i, i) = 2.0;
 
   local_vec = 1;
 
-  cm.distribute_local_to_global(local_mat, local_vec, local_dofs1, mat, rhs, use_inhomogeneity_for_rhs);
-  cm.distribute_local_to_global(local_mat, local_vec, local_dofs2, mat, rhs, use_inhomogeneity_for_rhs);
+  cm.distribute_local_to_global(
+    local_mat, local_vec, local_dofs1, mat, rhs, use_inhomogeneity_for_rhs);
+  cm.distribute_local_to_global(
+    local_mat, local_vec, local_dofs2, mat, rhs, use_inhomogeneity_for_rhs);
 
 
   mat.print(logfile);
   rhs.print(logfile);
 
   Vector<double> solution(8);
-  for (unsigned int i=0; i<8; ++i)
+  for (unsigned int i = 0; i < 8; ++i)
     {
-      solution(i)=rhs(i)/mat(i,i);
+      solution(i) = rhs(i) / mat(i, i);
     }
 
   solution.print(logfile);
@@ -117,10 +125,11 @@ void test(bool use_inhomogeneity_for_rhs)
 }
 
 
-int main ()
+int
+main()
 {
-  deallog << std::setprecision (2);
-  logfile << std::setprecision (2);
+  deallog << std::setprecision(2);
+  logfile << std::setprecision(2);
   deallog.attach(logfile);
 
   // Use the constraints for the right-hand-side

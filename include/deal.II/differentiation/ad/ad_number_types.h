@@ -26,7 +26,6 @@ namespace Differentiation
 {
   namespace AD
   {
-
     /**
      * An enumeration to indicate which type of auto-differentiable number
      * is to be used for computations. If a type that is selected for use

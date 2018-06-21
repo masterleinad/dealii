@@ -23,62 +23,63 @@
 //[t500u:16597] [21] /scratch/deal-trunk/deal.II/lib/libdeal_II.g.so.6.4.pre(_ZN6dealii8parallel11distributed13TriangulationILi3ELi3EE33execute_coarsening_and_refinementEv+0x483) [0x2afcbfba1b8f]
 //[t500u:16597] [22] ./p4est_3d_refine_02/exe(_Z4testILi3EEvv+0x109) [0x410f1c]
 
-#include "../tests.h"
 #include <deal.II/base/tensor.h>
-#include <deal.II/grid/tria.h>
+#include <deal.II/base/utilities.h>
+
 #include <deal.II/distributed/tria.h>
-#include <deal.II/grid/tria_accessor.h>
+
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_tools.h>
-#include <deal.II/base/utilities.h>
+#include <deal.II/grid/tria.h>
+#include <deal.II/grid/tria_accessor.h>
 
 #include <ostream>
 
+#include "../tests.h"
+
 template <int dim>
-void test()
+void
+test()
 {
-  unsigned int myid = Utilities::MPI::this_mpi_process (MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
-  GridGenerator::hyper_shell (tr,
-                              Point<dim>(),
-                              0.5, 1.0,
-                              12,
-                              true);
+  GridGenerator::hyper_shell(tr, Point<dim>(), 0.5, 1.0, 12, true);
 
   int ind = 0;
-  for (typename Triangulation<dim>::active_cell_iterator
-       cell = tr.begin_active(); cell != tr.end(); ++cell, ++ind)
+  for (typename Triangulation<dim>::active_cell_iterator cell =
+         tr.begin_active();
+       cell != tr.end();
+       ++cell, ++ind)
     if (!cell->is_artificial())
       {
-        if (myid==0 && (ind==4 || ind==5 || ind==6 || ind== 8))
+        if (myid == 0 && (ind == 4 || ind == 5 || ind == 6 || ind == 8))
           cell->set_refine_flag();
-        if (myid==1 && (ind==0 || ind==2 || ind==10))
+        if (myid == 1 && (ind == 0 || ind == 2 || ind == 10))
           cell->set_refine_flag();
       }
 
-  tr.execute_coarsening_and_refinement ();
+  tr.execute_coarsening_and_refinement();
 
-  unsigned int checksum = tr.get_checksum ();
+  unsigned int checksum = tr.get_checksum();
   if (myid == 0)
     {
       deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
-      deallog << "Checksum: "
-              << checksum
-              << std::endl;
+      deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if (Utilities::MPI::this_mpi_process (MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
-  Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, 1);
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  unsigned int myid = Utilities::MPI::this_mpi_process (MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
 
   deallog.push(Utilities::int_to_string(myid));
@@ -93,5 +94,4 @@ int main(int argc, char *argv[])
     }
   else
     test<3>();
-
 }

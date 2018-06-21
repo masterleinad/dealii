@@ -16,12 +16,14 @@
 
 // document a bug that would fill all memory if you try to create a FE_Q<dim>(0).
 
-#include "../tests.h"
-#include <iostream>
-
 #include <deal.II/fe/fe_q.h>
 
-int main()
+#include <iostream>
+
+#include "../tests.h"
+
+int
+main()
 {
   initlog();
   deal_II_exceptions::disable_abort_on_exception();
@@ -34,6 +36,3 @@ int main()
       deallog << e.get_exc_name() << std::endl;
     }
 }
-
-
-

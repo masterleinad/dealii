@@ -19,28 +19,30 @@
 #include <deal.II/base/config.h>
 #ifdef DEAL_II_WITH_SUNDIALS
 
-#include <deal.II/base/logstream.h>
-#include <deal.II/base/exceptions.h>
-#include <deal.II/base/parameter_handler.h>
-#include <deal.II/base/conditional_ostream.h>
-#include <deal.II/base/mpi.h>
-#include <deal.II/lac/vector.h>
-#include <deal.II/lac/vector_memory.h>
+#  include <deal.II/base/conditional_ostream.h>
+#  include <deal.II/base/exceptions.h>
+#  include <deal.II/base/logstream.h>
+#  include <deal.II/base/mpi.h>
+#  include <deal.II/base/parameter_handler.h>
 
-#include <kinsol/kinsol.h>
-#include <kinsol/kinsol_impl.h>
-#include <nvector/nvector_serial.h>
-#include <sundials/sundials_math.h>
-#include <sundials/sundials_types.h>
+#  include <deal.II/lac/vector.h>
+#  include <deal.II/lac/vector_memory.h>
 
-#include <boost/signals2.hpp>
-#include <memory>
+#  include <boost/signals2.hpp>
+
+#  include <kinsol/kinsol.h>
+#  include <kinsol/kinsol_impl.h>
+#  include <nvector/nvector_serial.h>
+#  include <sundials/sundials_math.h>
+#  include <sundials/sundials_types.h>
+
+#  include <memory>
 
 
 DEAL_II_NAMESPACE_OPEN
 
 // Shorthand notation for KINSOL error codes.
-#define AssertKINSOL(code) Assert(code >= 0, ExcKINSOLError(code))
+#  define AssertKINSOL(code) Assert(code >= 0, ExcKINSOLError(code))
 
 namespace SUNDIALS
 {
@@ -192,11 +194,10 @@ namespace SUNDIALS
    *
    * @author Luca Heltai, 2017.
    */
-  template<typename VectorType=Vector<double> >
+  template <typename VectorType = Vector<double>>
   class KINSOL
   {
   public:
-
     /**
      * Additional parameters that can be passed to the KINSOL class.
      */
@@ -212,11 +213,11 @@ namespace SUNDIALS
         /**
          * Standard Newton iteration.
          */
-        newton      = KIN_NONE,
+        newton = KIN_NONE,
         /**
          * Newton iteration with linesearch.
          */
-        linesearch  = KIN_LINESEARCH,
+        linesearch = KIN_LINESEARCH,
         /**
          * Fixed point iteration.
          */
@@ -224,7 +225,7 @@ namespace SUNDIALS
         /**
          * Picard iteration.
          */
-        picard      = KIN_PICARD,
+        picard = KIN_PICARD,
       };
 
       /**
@@ -254,26 +255,26 @@ namespace SUNDIALS
        */
       AdditionalData(
         // Global parameters
-        const SolutionStrategy &strategy = linesearch,
-        const unsigned int &maximum_non_linear_iterations = 200,
-        const double &function_tolerance = 0.0,
-        const double &step_tolerance = 0.0,
-        const bool &no_init_setup = false,
-        const unsigned int &maximum_setup_calls = 0,
-        const double &maximum_newton_step = 0.0,
-        const double &dq_relative_error = 0.0,
-        const unsigned int &maximum_beta_failures = 0,
-        const unsigned int &anderson_subspace_size = 0) :
-        strategy(strategy),
-        maximum_non_linear_iterations(maximum_non_linear_iterations),
-        function_tolerance(function_tolerance),
-        step_tolerance(step_tolerance),
-        no_init_setup(no_init_setup),
-        maximum_setup_calls(maximum_setup_calls),
-        maximum_newton_step(maximum_newton_step),
-        dq_relative_error(dq_relative_error),
-        maximum_beta_failures(maximum_beta_failures),
-        anderson_subspace_size(anderson_subspace_size)
+        const SolutionStrategy &strategy                      = linesearch,
+        const unsigned int &    maximum_non_linear_iterations = 200,
+        const double &          function_tolerance            = 0.0,
+        const double &          step_tolerance                = 0.0,
+        const bool &            no_init_setup                 = false,
+        const unsigned int &    maximum_setup_calls           = 0,
+        const double &          maximum_newton_step           = 0.0,
+        const double &          dq_relative_error             = 0.0,
+        const unsigned int &    maximum_beta_failures         = 0,
+        const unsigned int &    anderson_subspace_size        = 0)
+        : strategy(strategy)
+        , maximum_non_linear_iterations(maximum_non_linear_iterations)
+        , function_tolerance(function_tolerance)
+        , step_tolerance(step_tolerance)
+        , no_init_setup(no_init_setup)
+        , maximum_setup_calls(maximum_setup_calls)
+        , maximum_newton_step(maximum_newton_step)
+        , dq_relative_error(dq_relative_error)
+        , maximum_beta_failures(maximum_beta_failures)
+        , anderson_subspace_size(anderson_subspace_size)
       {}
 
       /**
@@ -313,14 +314,16 @@ namespace SUNDIALS
        * will occur if you destroy this class, and then parse a parameter file
        * using `prm`.
        */
-      void add_parameters(ParameterHandler &prm)
+      void
+      add_parameters(ParameterHandler &prm)
       {
         static std::string strategy_str("newton");
-        prm.add_parameter("Solution strategy", strategy_str,
+        prm.add_parameter("Solution strategy",
+                          strategy_str,
                           "Choose among newton|linesearch|fixed_point|picard",
-                          Patterns::Selection("newton|linesearch|fixed_point|picard"));
-        prm.add_action("Solution strategy", [&](const std::string &value)
-        {
+                          Patterns::Selection(
+                            "newton|linesearch|fixed_point|picard"));
+        prm.add_action("Solution strategy", [&](const std::string &value) {
           if (value == "newton")
             strategy = newton;
           else if (value == "linesearch")
@@ -331,18 +334,15 @@ namespace SUNDIALS
             strategy = picard;
           else
             Assert(false, ExcInternalError());
-        }
-                      );
+        });
         prm.add_parameter("Maximum number of nonlinear iterations",
                           maximum_non_linear_iterations);
         prm.add_parameter("Function norm stopping tolerance",
                           function_tolerance);
-        prm.add_parameter("Scaled step stopping tolerance",
-                          step_tolerance);
+        prm.add_parameter("Scaled step stopping tolerance", step_tolerance);
 
         prm.enter_subsection("Newton parameters");
-        prm.add_parameter("No initial matrix setup",
-                          no_init_setup);
+        prm.add_parameter("No initial matrix setup", no_init_setup);
         prm.add_parameter("Maximum iterations without matrix setup",
                           maximum_setup_calls);
         prm.add_parameter("Maximum allowable scaled length of the Newton step",
@@ -451,8 +451,8 @@ namespace SUNDIALS
      * @param data KINSOL configuration data
      * @param mpi_comm MPI communicator
      */
-    KINSOL(const AdditionalData &data=AdditionalData(),
-           const MPI_Comm mpi_comm = MPI_COMM_WORLD);
+    KINSOL(const AdditionalData &data     = AdditionalData(),
+           const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**
      * Destructor.
@@ -464,7 +464,8 @@ namespace SUNDIALS
      * to converge. KINSOL uses the content of `initial_guess_and_solution` as
      * initial guess, and stores the final solution in the same vector.
      */
-    unsigned int solve(VectorType &initial_guess_and_solution);
+    unsigned int
+    solve(VectorType &initial_guess_and_solution);
 
     /**
      * A function object that users need to supply and that is intended to
@@ -484,8 +485,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType &src,
-                      VectorType &dst)> residual;
+    std::function<int(const VectorType &src, VectorType &dst)> residual;
 
     /**
      * A function object that users should supply and that is intended to compute
@@ -500,8 +500,8 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType &src,
-                      VectorType &dst)> iteration_function;
+    std::function<int(const VectorType &src, VectorType &dst)>
+      iteration_function;
 
 
     /**
@@ -544,8 +544,8 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType &current_u,
-                      const VectorType &current_f)> setup_jacobian;
+    std::function<int(const VectorType &current_u, const VectorType &current_f)>
+      setup_jacobian;
 
     /**
      * A function object that users may supply and that is intended to solve
@@ -586,7 +586,8 @@ namespace SUNDIALS
     std::function<int(const VectorType &ycur,
                       const VectorType &fcur,
                       const VectorType &rhs,
-                      VectorType &dst)> solve_jacobian_system;
+                      VectorType &      dst)>
+      solve_jacobian_system;
 
     /**
      * A function object that users may supply and that is intended to return a
@@ -594,7 +595,7 @@ namespace SUNDIALS
      * vector norm of the solution. The implementation of this function is
      * optional, and it is used only if implemented.
      */
-    std::function<VectorType&()> get_solution_scaling;
+    std::function<VectorType &()> get_solution_scaling;
 
     /**
      * A function object that users may supply and that is intended to return a
@@ -603,30 +604,34 @@ namespace SUNDIALS
      * implementation of this function is optional, and it is used only if
      * implemented.
      */
-    std::function<VectorType&()> get_function_scaling;
+    std::function<VectorType &()> get_function_scaling;
 
     /**
      * Handle KINSOL exceptions.
      */
-    DeclException1(ExcKINSOLError, int, << "One of the SUNDIALS KINSOL internal functions "
-                   << " returned a negative error code: "
-                   << arg1 << ". Please consult SUNDIALS manual.");
+    DeclException1(ExcKINSOLError,
+                   int,
+                   << "One of the SUNDIALS KINSOL internal functions "
+                   << " returned a negative error code: " << arg1
+                   << ". Please consult SUNDIALS manual.");
 
 
   private:
-
     /**
      * Throw an exception when a function with the given name is not implemented.
      */
-    DeclException1(ExcFunctionNotProvided, std::string,
-                   << "Please provide an implementation for the function \"" << arg1 << "\"");
+    DeclException1(ExcFunctionNotProvided,
+                   std::string,
+                   << "Please provide an implementation for the function \""
+                   << arg1 << "\"");
 
     /**
      * This function is executed at construction time to set the
      * std::function above to trigger an assert if they are not
      * implemented.
      */
-    void set_functions_to_trigger_an_assert();
+    void
+    set_functions_to_trigger_an_assert();
 
     /**
      * KINSOL configuration data.
@@ -664,7 +669,7 @@ namespace SUNDIALS
     GrowingVectorMemory<VectorType> mem;
   };
 
-}
+} // namespace SUNDIALS
 
 
 DEAL_II_NAMESPACE_CLOSE

@@ -15,33 +15,38 @@
 
 
 #include <deal.II/base/exceptions.h>
+
 #include <array>
 #include <iostream>
 #include <numeric>
 
 using namespace dealii;
 
-__global__ void double_value(double *x, double *y)
+__global__ void
+double_value(double *x, double *y)
 {
   y[threadIdx.x] = 2. * x[threadIdx.x];
 }
 
-int main()
+int
+main()
 {
   constexpr int n = 4;
 
-  std::array<double, n> host_x {};
+  std::array<double, n> host_x{};
   std::iota(host_x.begin(), host_x.end(), 1);
-  std::array<double, n> host_y {};
+  std::array<double, n> host_y{};
 
   // Copy input data to device.
-  double *device_x;
-  double *device_y;
+  double *    device_x;
+  double *    device_y;
   cudaError_t cuda_error = cudaMalloc(&device_x, n * sizeof(double));
   AssertCuda(cuda_error);
   cuda_error = cudaMalloc(&device_y, n * sizeof(double));
   AssertCuda(cuda_error);
-  cuda_error = cudaMemcpy(device_x, host_x.data(), n * sizeof(double),
+  cuda_error = cudaMemcpy(device_x,
+                          host_x.data(),
+                          n * sizeof(double),
                           cudaMemcpyHostToDevice);
   AssertCuda(cuda_error);
 
@@ -51,7 +56,9 @@ int main()
   // Copy output data to host.
   cuda_error = cudaDeviceSynchronize();
   AssertCuda(cuda_error);
-  cuda_error = cudaMemcpy(host_y.data(), device_y, n * sizeof(double),
+  cuda_error = cudaMemcpy(host_y.data(),
+                          device_y,
+                          n * sizeof(double),
                           cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error);
 
@@ -59,7 +66,8 @@ int main()
   for (int i = 0; i < n; ++i)
     {
       std::cout << "y[" << i << "] = " << host_y[i] << "\n";
-      AssertThrow(std::abs(host_y[i]-2*host_x[i])<1.e-10, ExcInternalError());
+      AssertThrow(std::abs(host_y[i] - 2 * host_x[i]) < 1.e-10,
+                  ExcInternalError());
     }
 
   cuda_error = cudaDeviceReset();

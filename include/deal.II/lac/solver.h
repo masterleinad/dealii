@@ -17,16 +17,19 @@
 #define dealii_solver_h
 
 #include <deal.II/base/config.h>
+
 #include <deal.II/base/subscriptor.h>
-#include <deal.II/lac/vector_memory.h>
+
 #include <deal.II/lac/solver_control.h>
+#include <deal.II/lac/vector_memory.h>
 
 // Ignore deprecation warnings for auto_ptr.
 #include <boost/signals2.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
-template <typename number> class Vector;
+template <typename number>
+class Vector;
 
 /**
  * A base class for iterative linear solvers. This class provides interfaces
@@ -318,7 +321,7 @@ template <typename number> class Vector;
  * @author Wolfgang Bangerth, Guido Kanschat, Ralf Hartmann, 1997-2001, 2005,
  * 2014
  */
-template <class VectorType = Vector<double> >
+template <class VectorType = Vector<double>>
 class Solver : public Subscriptor
 {
 public:
@@ -336,8 +339,8 @@ public:
    * responsibility to guarantee that the lifetime of the two arguments is at
    * least as long as that of the solver object.
    */
-  Solver (SolverControl            &solver_control,
-          VectorMemory<VectorType> &vector_memory);
+  Solver(SolverControl &           solver_control,
+         VectorMemory<VectorType> &vector_memory);
 
   /**
    * Constructor. Takes a control object which evaluates the conditions for
@@ -349,7 +352,7 @@ public:
    * responsibility to guarantee that the lifetime of the argument is at least
    * as long as that of the solver object.
    */
-  Solver (SolverControl &solver_control);
+  Solver(SolverControl &solver_control);
 
   /**
    * Connect a function object that will be called periodically within
@@ -380,9 +383,11 @@ public:
    * library for more information on connection management.
    */
   boost::signals2::connection
-  connect (const std::function<SolverControl::State (const unsigned int iteration,
-                                                     const double       check_value,
-                                                     const VectorType   &current_iterate)> &slot);
+  connect(
+    const std::function<SolverControl::State(const unsigned int iteration,
+                                             const double       check_value,
+                                             const VectorType &current_iterate)>
+      &slot);
 
 
 
@@ -412,12 +417,13 @@ private:
   {
     typedef SolverControl::State result_type;
 
-    SolverControl::State operator() (const SolverControl::State state1,
-                                     const SolverControl::State state2) const;
+    SolverControl::State
+    operator()(const SolverControl::State state1,
+               const SolverControl::State state2) const;
 
     template <typename Iterator>
-    SolverControl::State operator() (const Iterator begin,
-                                     const Iterator end) const;
+    SolverControl::State
+    operator()(const Iterator begin, const Iterator end) const;
   };
 
 protected:
@@ -441,10 +447,12 @@ protected:
    * signal is called, but not the vector that will be returned if the
    * signal's return value indicates that the iteration should be terminated.
    */
-  boost::signals2::signal<SolverControl::State (const unsigned int iteration,
-                                                const double       check_value,
-                                                const VectorType   &current_iterate),
-                                                      StateCombiner> iteration_status;
+  boost::signals2::signal<
+    SolverControl::State(const unsigned int iteration,
+                         const double       check_value,
+                         const VectorType & current_iterate),
+    StateCombiner>
+    iteration_status;
 };
 
 
@@ -452,17 +460,14 @@ protected:
 
 
 template <class VectorType>
-inline
-SolverControl::State
-Solver<VectorType>::StateCombiner::operator ()(const SolverControl::State state1,
-                                               const SolverControl::State state2) const
+inline SolverControl::State
+Solver<VectorType>::StateCombiner::
+operator()(const SolverControl::State state1,
+           const SolverControl::State state2) const
 {
-  if ((state1 == SolverControl::failure)
-      ||
-      (state2 == SolverControl::failure))
+  if ((state1 == SolverControl::failure) || (state2 == SolverControl::failure))
     return SolverControl::failure;
-  else if ((state1 == SolverControl::iterate)
-           ||
+  else if ((state1 == SolverControl::iterate) ||
            (state2 == SolverControl::iterate))
     return SolverControl::iterate;
   else
@@ -472,16 +477,16 @@ Solver<VectorType>::StateCombiner::operator ()(const SolverControl::State state1
 
 template <class VectorType>
 template <typename Iterator>
-inline
-SolverControl::State
-Solver<VectorType>::StateCombiner::operator ()(const Iterator begin,
-                                               const Iterator end) const
+inline SolverControl::State
+Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
+                                              const Iterator end) const
 {
-  Assert (begin != end, ExcMessage ("You can't combine iterator states if no state is given."));
+  Assert(begin != end,
+         ExcMessage("You can't combine iterator states if no state is given."));
 
   // combine the first with all of the following states
   SolverControl::State state = *begin;
-  Iterator p = begin;
+  Iterator             p     = begin;
   ++p;
   for (; p != end; ++p)
     state = this->operator()(state, *p);
@@ -491,52 +496,48 @@ Solver<VectorType>::StateCombiner::operator ()(const Iterator begin,
 
 
 template <class VectorType>
-inline
-Solver<VectorType>::Solver (SolverControl        &solver_control,
-                            VectorMemory<VectorType> &vector_memory)
-  :
-  memory(vector_memory)
+inline Solver<VectorType>::Solver(SolverControl &           solver_control,
+                                  VectorMemory<VectorType> &vector_memory)
+  : memory(vector_memory)
 {
   // connect the solver control object to the signal. SolverControl::check
   // only takes two arguments, the iteration and the check_value, and so
   // we simply ignore the third argument that is passed in whenever the
   // signal is executed
-  connect (std::bind(&SolverControl::check,
-                     std::ref(solver_control),
-                     std::placeholders::_1,
-                     std::placeholders::_2));
+  connect(std::bind(&SolverControl::check,
+                    std::ref(solver_control),
+                    std::placeholders::_1,
+                    std::placeholders::_2));
 }
 
 
 
 template <class VectorType>
-inline
-Solver<VectorType>::Solver (SolverControl &solver_control)
-  :
-  // use the static memory object this class owns
+inline Solver<VectorType>::Solver(SolverControl &solver_control)
+  : // use the static memory object this class owns
   memory(static_vector_memory)
 {
   // connect the solver control object to the signal. SolverControl::check
   // only takes two arguments, the iteration and the check_value, and so
   // we simply ignore the third argument that is passed in whenever the
   // signal is executed
-  connect (std::bind(&SolverControl::check,
-                     std::ref(solver_control),
-                     std::placeholders::_1,
-                     std::placeholders::_2));
+  connect(std::bind(&SolverControl::check,
+                    std::ref(solver_control),
+                    std::placeholders::_1,
+                    std::placeholders::_2));
 }
 
 
 
 template <class VectorType>
-inline
-boost::signals2::connection
-Solver<VectorType>::
-connect (const std::function<SolverControl::State (const unsigned int iteration,
-                                                   const double       check_value,
-                                                   const VectorType   &current_iterate)> &slot)
+inline boost::signals2::connection
+Solver<VectorType>::connect(
+  const std::function<SolverControl::State(const unsigned int iteration,
+                                           const double       check_value,
+                                           const VectorType & current_iterate)>
+    &slot)
 {
-  return iteration_status.connect (slot);
+  return iteration_status.connect(slot);
 }
 
 

@@ -30,35 +30,41 @@
 905: --------------------------------------------------------
 */
 
-#include "../tests.h"
 #include <deal.II/base/tensor.h>
-#include <deal.II/distributed/tria.h>
-#include <deal.II/grid/tria_accessor.h>
-#include <deal.II/grid/tria_iterator.h>
-#include <deal.II/grid/grid_generator.h>
-#include <deal.II/grid/intergrid_map.h>
 #include <deal.II/base/utilities.h>
+
+#include <deal.II/distributed/tria.h>
+
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
-#include <deal.II/fe/fe_raviart_thomas.h>
+
 #include <deal.II/fe/fe_q.h>
+#include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
+
+#include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/intergrid_map.h>
+#include <deal.II/grid/tria_accessor.h>
+#include <deal.II/grid/tria_iterator.h>
 
 #include <numeric>
 
+#include "../tests.h"
+
 
 template <int dim>
-void test()
+void
+test()
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_ball(triangulation);
 
   if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
-      typename Triangulation<dim>::active_cell_iterator
-      cell = triangulation.begin_active();
+      typename Triangulation<dim>::active_cell_iterator cell =
+        triangulation.begin_active();
       //cell->set_refine_flag ();
-      (++cell)->set_refine_flag ();
+      (++cell)->set_refine_flag();
     }
 
   triangulation.execute_coarsening_and_refinement();
@@ -73,22 +79,22 @@ void test()
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
   IndexSet relevant_set;
-  DoFTools::extract_locally_relevant_dofs (dof_handler, relevant_set);
+  DoFTools::extract_locally_relevant_dofs(dof_handler, relevant_set);
   deallog << "relevant set:" << std::endl;
   relevant_set.print(deallog.get_file_stream());
   deallog << "constraints:" << std::endl;
   constraints.print(deallog.get_file_stream());
 
-  if (Utilities::MPI::this_mpi_process (MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
-  Utilities::MPI::MPI_InitFinalize mpi_initialization (argc, argv, 1);
-  MPILogInitAll log;
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
+  MPILogInitAll                    log;
 
   test<2>();
-
 }

@@ -16,22 +16,24 @@
 
 // test rand function
 
-#include "../tests.h"
-#include <map>
-#include <deal.II/base/point.h>
-#include <deal.II/lac/vector.h>
 #include <deal.II/base/function_parser.h>
+#include <deal.II/base/point.h>
+
+#include <deal.II/lac/vector.h>
+
+#include <map>
+
+#include "../tests.h"
 
 
-double eval(const std::string &exp)
+double
+eval(const std::string &exp)
 {
-  std::string variables = "x,y";
-  std::map<std::string,double> constants;
+  std::string                   variables = "x,y";
+  std::map<std::string, double> constants;
 
   FunctionParser<2> fp(1);
-  fp.initialize(variables,
-                exp,
-                constants);
+  fp.initialize(variables, exp, constants);
 
   Point<2> p;
 
@@ -39,7 +41,8 @@ double eval(const std::string &exp)
 }
 
 
-int main()
+int
+main()
 {
   initlog();
 
@@ -49,5 +52,4 @@ int main()
     deallog << "OK" << std::endl;
 
   deallog << eval("rand_seed(10)") << std::endl;
-
 }

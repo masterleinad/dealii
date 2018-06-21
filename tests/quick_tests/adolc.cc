@@ -23,21 +23,21 @@
 #include <adolc/adouble.h>
 #include <adolc/drivers/drivers.h>
 #include <adolc/taping.h>
-
 #include <math.h>
 
 using namespace dealii;
 
-int main(void)
+int
+main(void)
 {
-  const double tol = 1e-12;
-  const unsigned int n = 10;
-  std::size_t tape_stats[STAT_SIZE];
+  const double       tol = 1e-12;
+  const unsigned int n   = 10;
+  std::size_t        tape_stats[STAT_SIZE];
 
-  double *xp = new double[n];
-  double  yp = 0.0;
-  adouble *x = new adouble[n];
-  adouble  y = 1.0;
+  double * xp = new double[n];
+  double   yp = 0.0;
+  adouble *x  = new adouble[n];
+  adouble  y  = 1.0;
 
   for (unsigned int i = 0; i < n; i++)
     xp[i] = (i + 1.0) / (2.0 + i);
@@ -74,14 +74,14 @@ int main(void)
   for (unsigned int i = 0; i < n; i++)
     err_grad += std::abs(g[i] - yp / xp[i]);
 
-  deallog << "Error (gradient): " <<  err_grad << std::endl;
+  deallog << "Error (gradient): " << err_grad << std::endl;
   Assert(err_grad < tol, ExcMessage("Should be zero!"));
 
   // --- Hessian ---
 
-  double **H = new double*[n];
+  double **H = new double *[n];
   for (unsigned int i = 0; i < n; ++i)
-    H[i] = new double[i+1];
+    H[i] = new double[i + 1];
 
   hessian(1, n, xp, H);
 
@@ -91,7 +91,7 @@ int main(void)
       if (i > j)
         error_hess += std::abs(H[i][j] - g[i] / xp[j]);
 
-  deallog << "Error (hessian): " <<  error_hess << std::endl;
+  deallog << "Error (hessian): " << error_hess << std::endl;
   Assert(error_hess < tol, ExcMessage("Should be zero!"));
 
   // -- Cleanup ---

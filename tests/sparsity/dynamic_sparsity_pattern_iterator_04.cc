@@ -40,30 +40,30 @@ backtrace:
 #7  iterate (sp=...) at /scratch/deal-git/tests/bits/dynamic_sparsity_pattern_iterator_04.cc:30
 */
 
-#include "../tests.h"
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
+#include "../tests.h"
 
-void iterate(DynamicSparsityPattern &sp)
+
+void
+iterate(DynamicSparsityPattern &sp)
 {
   DynamicSparsityPattern::const_iterator i = sp.begin();
-  for (; i!=sp.end(); ++i)
+  for (; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
 
   {
-    for (unsigned int row=0; row<sp.n_rows(); ++row)
+    for (unsigned int row = 0; row < sp.n_rows(); ++row)
       {
-        DynamicSparsityPattern::iterator col = sp.begin(row),
+        DynamicSparsityPattern::iterator col     = sp.begin(row),
                                          end_col = sp.end(row);
         deallog << "row " << row << ":" << std::endl;
         for (; col != end_col; ++col)
           {
-            deallog << "row= " << col->row()
-                    << ", col= "<< col->column()
-                    << ", index= " << col->index()
-                    << std::endl;
+            deallog << "row= " << col->row() << ", col= " << col->column()
+                    << ", index= " << col->index() << std::endl;
           }
       }
   }
@@ -71,43 +71,46 @@ void iterate(DynamicSparsityPattern &sp)
 }
 
 
-void test ()
+void
+test()
 {
   {
-    DynamicSparsityPattern sp (5,4);
-    sp.add (0,0);
-    sp.add (0,1);
-    sp.add (3,3);
-    sp.compress ();
+    DynamicSparsityPattern sp(5, 4);
+    sp.add(0, 0);
+    sp.add(0, 1);
+    sp.add(3, 3);
+    sp.compress();
 
     deallog << "** 5 by 4 ** " << std::endl;
-    iterate (sp);
+    iterate(sp);
   }
   {
-    DynamicSparsityPattern sp (5,5);
-    sp.add (0,0);
-    sp.add (0,1);
-    sp.add (3,3);
-    sp.compress ();
+    DynamicSparsityPattern sp(5, 5);
+    sp.add(0, 0);
+    sp.add(0, 1);
+    sp.add(3, 3);
+    sp.compress();
 
     deallog << "** 5 by 5 ** " << std::endl;
-    iterate (sp);
+    iterate(sp);
   }
 }
 
 
 
-int main ()
+int
+main()
 {
   initlog();
 
   try
     {
-      test ();
+      test();
     }
   catch (std::exception &exc)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Exception on processing: " << std::endl
@@ -120,7 +123,8 @@ int main ()
     }
   catch (...)
     {
-      deallog << std::endl << std::endl
+      deallog << std::endl
+              << std::endl
               << "----------------------------------------------------"
               << std::endl;
       deallog << "Unknown exception!" << std::endl

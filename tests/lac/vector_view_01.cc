@@ -15,9 +15,10 @@
 
 // check VectorView::checkReadOnlyConstructor
 
-#include "../tests.h"
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/vector_view.h>
+
+#include "../tests.h"
 
 template <typename number>
 void
@@ -62,4 +63,3 @@ main()
 
   checkReadOnlyConstructor<double>(V2);
 }
-

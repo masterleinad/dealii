@@ -25,44 +25,32 @@
 
 
 
-
 template <typename number>
 void
-check ()
+check()
 {
-  const std::complex<number> array[] = { std::complex<number>(1.,1.+1),
-                                         std::complex<number>(2.,2.+1),
-                                         std::complex<number>(3.,3.+1),
-                                         std::complex<number>(4.,4.+1),
-                                         std::complex<number>(5.,5.+1),
+  const std::complex<number> array[] = {
+    std::complex<number>(1., 1. + 1), std::complex<number>(2., 2. + 1),
+    std::complex<number>(3., 3. + 1), std::complex<number>(4., 4. + 1),
+    std::complex<number>(5., 5. + 1),
 
-                                         std::complex<number>(6.,6.+1),
-                                         std::complex<number>(7.,7.+1),
-                                         std::complex<number>(8.,8.+1),
-                                         std::complex<number>(9.,9.+1),
-                                         std::complex<number>(0.,0.+1),
+    std::complex<number>(6., 6. + 1), std::complex<number>(7., 7. + 1),
+    std::complex<number>(8., 8. + 1), std::complex<number>(9., 9. + 1),
+    std::complex<number>(0., 0. + 1),
 
-                                         std::complex<number>(1.,1.+1),
-                                         std::complex<number>(2.,2.+1),
-                                         std::complex<number>(3.,3.+1),
-                                         std::complex<number>(4.,4.+1),
-                                         std::complex<number>(5.,5.+1),
+    std::complex<number>(1., 1. + 1), std::complex<number>(2., 2. + 1),
+    std::complex<number>(3., 3. + 1), std::complex<number>(4., 4. + 1),
+    std::complex<number>(5., 5. + 1),
 
-                                         std::complex<number>(6.,6.+1),
-                                         std::complex<number>(7.,7.+1),
-                                         std::complex<number>(8.,8.+1),
-                                         std::complex<number>(9.,9.+1),
-                                         std::complex<number>(0.,0.+1),
+    std::complex<number>(6., 6. + 1), std::complex<number>(7., 7. + 1),
+    std::complex<number>(8., 8. + 1), std::complex<number>(9., 9. + 1),
+    std::complex<number>(0., 0. + 1),
 
-                                         std::complex<number>(1.,1.+1),
-                                         std::complex<number>(2.,2.+1),
-                                         std::complex<number>(3.,3.+1),
-                                         std::complex<number>(4.,4.+1),
-                                         std::complex<number>(5.,5.+1)
-                                       };
+    std::complex<number>(1., 1. + 1), std::complex<number>(2., 2. + 1),
+    std::complex<number>(3., 3. + 1), std::complex<number>(4., 4. + 1),
+    std::complex<number>(5., 5. + 1)};
 
-  FullMatrix<std::complex<number> > m (5,5,array);
+  FullMatrix<std::complex<number>> m(5, 5, array);
 
-  print_matrix (m);
+  print_matrix(m);
 }
-

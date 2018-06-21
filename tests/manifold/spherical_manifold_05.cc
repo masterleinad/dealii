@@ -15,10 +15,11 @@
 
 // test tangent vectors for linear dependent positions
 
-#include "../tests.h"
-
 #include <deal.II/base/utilities.h>
+
 #include <deal.II/grid/manifold_lib.h>
+
+#include "../tests.h"
 
 
 int
@@ -30,8 +31,9 @@ main()
   const SphericalManifold<3> manifold_3;
 
   // get tangent vectors for positions that are on a line as seen from the center
-  deallog << manifold_2.get_tangent_vector (Point<2>(0.5, 0),
-                                            Point<2>(1.0, 0)) << std::endl
-          << manifold_3.get_tangent_vector (Point<3>(0, 0, -0.5),
-                                            Point<3>(0, 0, -1.0)) << std::endl;
+  deallog << manifold_2.get_tangent_vector(Point<2>(0.5, 0), Point<2>(1.0, 0))
+          << std::endl
+          << manifold_3.get_tangent_vector(Point<3>(0, 0, -0.5),
+                                           Point<3>(0, 0, -1.0))
+          << std::endl;
 }
