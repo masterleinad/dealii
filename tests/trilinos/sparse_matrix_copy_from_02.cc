@@ -34,18 +34,19 @@
 void
 test()
 {
-  const auto MyPID{Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)};
-  const auto NumProc{Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)};
+  const unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  const unsigned int n_processes =
+    Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if (!MyPID)
-    deallog << "NumProc=" << NumProc << std::endl;
+  if (my_id == 0)
+    deallog << "n_processes=" << n_processes << std::endl;
 
-  // create non-contiguous index set for NumProc > 1
-  dealii::IndexSet parallel_partitioning(NumProc * 2);
+  // create non-contiguous index set for n_processes > 1
+  dealii::IndexSet parallel_partitioning(n_processes * 2);
 
   // non-contiguous
-  parallel_partitioning.add_index(MyPID);
-  parallel_partitioning.add_index(NumProc + MyPID);
+  parallel_partitioning.add_index(my_id);
+  parallel_partitioning.add_index(n_processes + my_id);
 
   // create sparsity pattern from parallel_partitioning
 
@@ -58,10 +59,10 @@ test()
                                                  MPI_COMM_WORLD,
                                                  2);
 
-  sp_M.add(MyPID, MyPID);
-  sp_M.add(MyPID, NumProc + MyPID);
-  sp_M.add(NumProc + MyPID, MyPID);
-  sp_M.add(NumProc + MyPID, NumProc + MyPID);
+  sp_M.add(my_id, my_id);
+  sp_M.add(my_id, n_processes + my_id);
+  sp_M.add(n_processes + my_id, my_id);
+  sp_M.add(n_processes + my_id, n_processes + my_id);
 
   sp_M.compress();
 
@@ -89,14 +90,14 @@ test()
     {
       const auto &el = M1.el(i, i);
 
-      if (!MyPID)
+      if (my_id == 0)
         deallog << "i = " << i << " , j = " << i << " , el = " << el
                 << std::endl;
 
       AssertThrow(el == dealii::numbers::PI, dealii::ExcInternalError());
     }
 
-  if (!MyPID)
+  if (my_id == 0)
     deallog << "OK" << std::endl;
 }
 
